@@ -17,6 +17,13 @@
 	],
 	"Plugins": [
 		{
+			"Name": "CascadeToNiagaraConverter",
+			"Enabled": true,
+			"TargetAllowList": [
+				"Editor"
+			]
+		},
+		{
 			"Name": "GameplayAbilities",
 			"Enabled": true
 		},

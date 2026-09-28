@@ -1,0 +1,2537 @@
+{
+  "notes": [
+    "AnimPoseSpaces.WORLD is animation component space, compared to runtime raw_cs.",
+    "clip_s is recorded montage segment time; SourceABP includes montage blending and graph adjustments.",
+    "No assets are changed. Property unavailable entries are API limitations, not default values."
+  ],
+  "clips": {
+    "straight": {
+      "sequence_metadata": {
+        "additive_anim_type": "<AdditiveAnimationType.AAT_NONE: 0>",
+        "ref_pose_type": "<AdditiveBasePoseType.ABPT_NONE: 0>",
+        "ref_pose_seq": null,
+        "ref_frame_index": 0,
+        "enable_root_motion": true,
+        "force_root_lock": false,
+        "root_motion_root_lock": "<RootMotionRootLock.REF_POSE: 0>",
+        "rate_scale": 1.0,
+        "interpolation": "<AnimInterpolationType.LINEAR: 0>",
+        "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+        "data_model": null,
+        "length_seconds": 1.0,
+        "data_model_error": "'AnimSequence' object has no attribute 'get_data_model'"
+      },
+      "montage_metadata": {
+        "slot_anim_tracks": [
+          "(SlotName=\"DefaultSlot\",AnimTrack=(AnimSegments=((CachedPlayLength=1.000000,AnimReference=\"/Script/Engine.AnimSequence'/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_02.MM_Attack_02'\",AnimEndTime=1.000000))))"
+        ],
+        "blend_in": "(CustomCurve=None,BlendTime=0.250000,BlendOption=HermiteCubic)",
+        "blend_out": "(CustomCurve=None,BlendTime=0.250000,BlendOption=HermiteCubic)",
+        "blend_out_trigger_time": -1.0,
+        "enable_auto_blend_out": true,
+        "rate_scale": 1.0,
+        "composite_sections": {
+          "unavailable": "AnimMontage: Failed to find property 'composite_sections' for attribute 'composite_sections' on 'AnimMontage'"
+        },
+        "sync_group": "None",
+        "length_seconds": 1.0
+      },
+      "sampled_summary": {
+        "root": {
+          "start_world_position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "start_world_rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "max_world_displacement_from_first_cm": 90.0,
+          "max_world_rotation_from_first_deg": 0.0,
+          "max_world_rotation_from_reference_deg": 0.0,
+          "start_world_rotation_from_reference_deg": 0.0,
+          "max_world_step_rotation_deg": 0.0,
+          "max_local_rotation_from_reference_deg": 0.0,
+          "max_local_translation_delta_reference_cm": 90.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "pelvis": {
+          "start_world_position": [
+            4.56226921081543,
+            20.754011154174805,
+            86.0609359741211
+          ],
+          "start_world_rotation": [
+            -0.40073027284396123,
+            -0.5925514823920487,
+            -0.3172528962104622,
+            0.6226143180071142
+          ],
+          "max_world_displacement_from_first_cm": 98.51823122898041,
+          "max_world_rotation_from_first_deg": 126.46978915726336,
+          "max_world_rotation_from_reference_deg": 96.20232619950457,
+          "start_world_rotation_from_reference_deg": 62.04854982666942,
+          "max_world_step_rotation_deg": 31.124068612869277,
+          "max_local_rotation_from_reference_deg": 96.20232619950457,
+          "max_local_translation_delta_reference_cm": 35.040085506280214,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "spine_01": {
+          "start_world_position": [
+            4.916982353593934,
+            21.047639474776858,
+            89.70904275451402
+          ],
+          "start_world_rotation": [
+            -0.4781144744181933,
+            -0.5339841813306863,
+            -0.22855763723384837,
+            0.6588086595533582
+          ],
+          "max_world_displacement_from_first_cm": 97.5318211977737,
+          "max_world_rotation_from_first_deg": 125.82723549541602,
+          "max_world_rotation_from_reference_deg": 94.80617034489323,
+          "start_world_rotation_from_reference_deg": 62.18920863274582,
+          "max_world_step_rotation_deg": 30.70661814563909,
+          "max_local_rotation_from_reference_deg": 4.293160454849173,
+          "max_local_translation_delta_reference_cm": 6.224196247834407e-16,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "spine_02": {
+          "start_world_position": [
+            7.127038053537189,
+            22.470929669972286,
+            95.97503848460865
+          ],
+          "start_world_rotation": [
+            -0.5663395226334295,
+            -0.49986284946517734,
+            -0.3037463283149051,
+            0.5806331413750918
+          ],
+          "max_world_displacement_from_first_cm": 96.48265140537613,
+          "max_world_rotation_from_first_deg": 153.93312032435435,
+          "max_world_rotation_from_reference_deg": 105.67051939034617,
+          "start_world_rotation_from_reference_deg": 78.50443574792692,
+          "max_world_step_rotation_deg": 34.64045667789198,
+          "max_local_rotation_from_reference_deg": 20.051056253283733,
+          "max_local_translation_delta_reference_cm": 2.0439313529645282e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "spine_03": {
+          "start_world_position": [
+            9.412512834814418,
+            24.01595694851191,
+            102.66693194295216
+          ],
+          "start_world_rotation": [
+            -0.596172015279529,
+            -0.47922781789422864,
+            -0.4151514329532139,
+            0.4925128571629122
+          ],
+          "max_world_displacement_from_first_cm": 95.60774518897652,
+          "max_world_rotation_from_first_deg": 177.05721868345296,
+          "max_world_rotation_from_reference_deg": 133.50563511166052,
+          "start_world_rotation_from_reference_deg": 93.87706231444459,
+          "max_world_step_rotation_deg": 42.42919422863257,
+          "max_local_rotation_from_reference_deg": 28.722419128182352,
+          "max_local_translation_delta_reference_cm": 2.140320742008889e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "neck_01": {
+          "start_world_position": [
+            14.136021701278334,
+            34.94957350132472,
+            140.58970346513416
+          ],
+          "start_world_rotation": [
+            0.6718240894863732,
+            0.2793392758184219,
+            0.27791145708696846,
+            -0.6272058543977767
+          ],
+          "max_world_displacement_from_first_cm": 87.5011588147285,
+          "max_world_rotation_from_first_deg": 178.195048275038,
+          "max_world_rotation_from_reference_deg": 172.0699975287958,
+          "start_world_rotation_from_reference_deg": 95.89161139741036,
+          "max_world_step_rotation_deg": 47.259506361443215,
+          "max_local_rotation_from_reference_deg": 30.226021231538617,
+          "max_local_translation_delta_reference_cm": 6.250135040961616e-08,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "head": {
+          "start_world_position": [
+            21.28083686810715,
+            36.79508576387228,
+            147.13498865581028
+          ],
+          "start_world_rotation": [
+            0.4269236147522014,
+            0.5514677416862974,
+            0.1892149979327708,
+            -0.6912432579082651
+          ],
+          "max_world_displacement_from_first_cm": 92.55695485098894,
+          "max_world_rotation_from_first_deg": 80.81445737136184,
+          "max_world_rotation_from_reference_deg": 105.6290176051506,
+          "start_world_rotation_from_reference_deg": 57.02106756849747,
+          "max_world_step_rotation_deg": 24.623781682614137,
+          "max_local_rotation_from_reference_deg": 97.981499612723,
+          "max_local_translation_delta_reference_cm": 2.0615130520927184e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "clavicle_l": {
+          "start_world_position": [
+            11.837082712082186,
+            32.20000132850481,
+            134.97559367241368
+          ],
+          "start_world_rotation": [
+            0.23530401970824188,
+            0.07104682099861498,
+            0.8185638144208316,
+            -0.5191701544348962
+          ],
+          "max_world_displacement_from_first_cm": 90.44498025267126,
+          "max_world_rotation_from_first_deg": 176.3590006998331,
+          "max_world_rotation_from_reference_deg": 163.38895816834022,
+          "start_world_rotation_from_reference_deg": 115.8642650556142,
+          "max_world_step_rotation_deg": 47.65098389872398,
+          "max_local_rotation_from_reference_deg": 27.636395875967068,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "upperarm_l": {
+          "start_world_position": [
+            5.600388443095284,
+            17.658301713993858,
+            143.15004858890168
+          ],
+          "start_world_rotation": [
+            -0.27933282504699863,
+            -0.4569957931325082,
+            0.5241905458870466,
+            -0.6620817846105528
+          ],
+          "max_world_displacement_from_first_cm": 123.96300871901411,
+          "max_world_rotation_from_first_deg": 154.9509750729232,
+          "max_world_rotation_from_reference_deg": 172.61669782601118,
+          "start_world_rotation_from_reference_deg": 72.26751502489729,
+          "max_world_step_rotation_deg": 54.279836025305585,
+          "max_local_rotation_from_reference_deg": 81.93329139745455,
+          "max_local_translation_delta_reference_cm": 3.2987511270483544e-08,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "lowerarm_l": {
+          "start_world_position": [
+            6.510121898867649,
+            5.472154444489904,
+            118.21199795997985
+          ],
+          "start_world_rotation": [
+            -0.7621049100858274,
+            -0.14971842504082428,
+            -0.35667953476812775,
+            -0.5191918804295398
+          ],
+          "max_world_displacement_from_first_cm": 160.26784203512688,
+          "max_world_rotation_from_first_deg": 143.30891775913074,
+          "max_world_rotation_from_reference_deg": 178.77825044200964,
+          "start_world_rotation_from_reference_deg": 84.2376959344415,
+          "max_world_step_rotation_deg": 41.65495760309935,
+          "max_local_rotation_from_reference_deg": 126.90282038011827,
+          "max_local_translation_delta_reference_cm": 7.114303597610951e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "hand_l": {
+          "start_world_position": [
+            25.60571796304624,
+            21.783898668528558,
+            128.79057237282825
+          ],
+          "start_world_rotation": [
+            -0.9194646081285449,
+            -0.2646036346958408,
+            -0.2657649128826063,
+            0.1180625342150243
+          ],
+          "max_world_displacement_from_first_cm": 159.1140730677749,
+          "max_world_rotation_from_first_deg": 159.4044433749955,
+          "max_world_rotation_from_reference_deg": 177.04384766580972,
+          "start_world_rotation_from_reference_deg": 102.72794364154893,
+          "max_world_step_rotation_deg": 43.31745598145474,
+          "max_local_rotation_from_reference_deg": 32.65973113695305,
+          "max_local_translation_delta_reference_cm": 7.402448961587951e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "clavicle_r": {
+          "start_world_position": [
+            12.825257125668102,
+            34.719291605386296,
+            134.0633713472805
+          ],
+          "start_world_rotation": [
+            0.5608403771691717,
+            -0.8164333542893869,
+            -0.003160629055051111,
+            0.13742146762605822
+          ],
+          "max_world_displacement_from_first_cm": 85.032169725268,
+          "max_world_rotation_from_first_deg": 176.72620314459326,
+          "max_world_rotation_from_reference_deg": 179.15695375532323,
+          "start_world_rotation_from_reference_deg": 114.63060375332637,
+          "max_world_step_rotation_deg": 49.20330414640392,
+          "max_local_rotation_from_reference_deg": 26.219964179454948,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "upperarm_r": {
+          "start_world_position": [
+            18.75838012260101,
+            51.044351967199034,
+            130.12976984196152
+          ],
+          "start_world_rotation": [
+            0.35280731101648355,
+            -0.9336463207490288,
+            -0.01397050948744242,
+            0.060302354098187516
+          ],
+          "max_world_displacement_from_first_cm": 74.2500423156348,
+          "max_world_rotation_from_first_deg": 178.044088732985,
+          "max_world_rotation_from_reference_deg": 177.84583839966763,
+          "start_world_rotation_from_reference_deg": 144.80557056751928,
+          "max_world_step_rotation_deg": 55.25585717848352,
+          "max_local_rotation_from_reference_deg": 84.73447764691294,
+          "max_local_translation_delta_reference_cm": 1.4171691560255672e-07,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "lowerarm_r": {
+          "start_world_position": [
+            39.41370229661671,
+            69.38632389921962,
+            127.27648796533006
+          ],
+          "start_world_rotation": [
+            0.12986399841016275,
+            -0.9772847074698661,
+            0.16713236627342354,
+            -0.010803453443765636
+          ],
+          "max_world_displacement_from_first_cm": 88.27967119796834,
+          "max_world_rotation_from_first_deg": 160.68901548366617,
+          "max_world_rotation_from_reference_deg": 168.55713682207627,
+          "start_world_rotation_from_reference_deg": 124.13590866202878,
+          "max_world_step_rotation_deg": 50.93193017246832,
+          "max_local_rotation_from_reference_deg": 80.93700786880447,
+          "max_local_translation_delta_reference_cm": 6.61081645103266e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "hand_r": {
+          "start_world_position": [
+            65.73919404705879,
+            76.40180814409133,
+            126.6689851303282
+          ],
+          "start_world_rotation": [
+            -0.004996601797043507,
+            -0.6149821492987447,
+            0.7846675273858066,
+            0.07790289776782701
+          ],
+          "max_world_displacement_from_first_cm": 104.6999712998411,
+          "max_world_rotation_from_first_deg": 160.68901548366617,
+          "max_world_rotation_from_reference_deg": 178.2405923067489,
+          "start_world_rotation_from_reference_deg": 138.76347176352064,
+          "max_world_step_rotation_deg": 50.931930172468384,
+          "max_local_rotation_from_reference_deg": 28.12893460062619,
+          "max_local_translation_delta_reference_cm": 3.527365678179455e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "thigh_l": {
+          "start_world_position": [
+            9.250861095740426,
+            11.894813578043465,
+            83.9336297022035
+          ],
+          "start_world_rotation": [
+            -0.13514316801431137,
+            -0.7947805258969793,
+            0.05876577230867569,
+            0.5887332365332719
+          ],
+          "max_world_displacement_from_first_cm": 111.94272185884813,
+          "max_world_rotation_from_first_deg": 72.0958664177193,
+          "max_world_rotation_from_reference_deg": 66.65002557198929,
+          "start_world_rotation_from_reference_deg": 21.253915441254044,
+          "max_world_step_rotation_deg": 23.233906582131056,
+          "max_local_rotation_from_reference_deg": 79.97728442374253,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "calf_l": {
+          "start_world_position": [
+            20.964239844460685,
+            -0.41468336105583425,
+            44.06205995615512
+          ],
+          "start_world_rotation": [
+            -0.3918319866606358,
+            -0.7045618882934295,
+            0.25126228226138153,
+            0.5356561446551122
+          ],
+          "max_world_displacement_from_first_cm": 144.42758068101617,
+          "max_world_rotation_from_first_deg": 64.03770465568438,
+          "max_world_rotation_from_reference_deg": 80.42934432844947,
+          "start_world_rotation_from_reference_deg": 51.0496407439891,
+          "max_world_step_rotation_deg": 37.256269223312955,
+          "max_local_rotation_from_reference_deg": 88.538086047153,
+          "max_local_translation_delta_reference_cm": 1.0695084443661336e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "foot_l": {
+          "start_world_position": [
+            25.991565064655113,
+            -35.08910686101741,
+            20.50865961417572
+          ],
+          "start_world_rotation": [
+            -0.3584923742219135,
+            -0.6091492662323768,
+            0.14037041191107127,
+            0.693337245886307
+          ],
+          "max_world_displacement_from_first_cm": 167.61092003150137,
+          "max_world_rotation_from_first_deg": 65.35491036681995,
+          "max_world_rotation_from_reference_deg": 78.53332555335177,
+          "start_world_rotation_from_reference_deg": 41.41029696667597,
+          "max_world_step_rotation_deg": 31.14896324095013,
+          "max_local_rotation_from_reference_deg": 33.3763443324283,
+          "max_local_translation_delta_reference_cm": 8.815618249216203e-15,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "ball_l": {
+          "start_world_position": [
+            27.639868611115403,
+            -28.61858731566159,
+            5.113134666672499
+          ],
+          "start_world_rotation": [
+            -0.6373620681224242,
+            -0.27559732701293327,
+            0.5129848931854742,
+            0.5046406709982072
+          ],
+          "max_world_displacement_from_first_cm": 175.8977566049275,
+          "max_world_rotation_from_first_deg": 62.25608150426362,
+          "max_world_rotation_from_reference_deg": 78.39954598720577,
+          "start_world_rotation_from_reference_deg": 23.748674168799187,
+          "max_world_step_rotation_deg": 30.554257199989987,
+          "max_local_rotation_from_reference_deg": 20.084304663519877,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "thigh_r": {
+          "start_world_position": [
+            -0.38301173256768983,
+            29.344894337434077,
+            83.46581668763658
+          ],
+          "start_world_rotation": [
+            -0.6015264387058561,
+            -0.31734239096955374,
+            0.720189390022856,
+            0.1370656518974899
+          ],
+          "max_world_displacement_from_first_cm": 89.26377789822587,
+          "max_world_rotation_from_first_deg": 66.78236299880352,
+          "max_world_rotation_from_reference_deg": 73.24460140842993,
+          "start_world_rotation_from_reference_deg": 38.46137464863567,
+          "max_world_step_rotation_deg": 40.724218447958144,
+          "max_local_rotation_from_reference_deg": 81.13866213107559,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "calf_r": {
+          "start_world_position": [
+            -10.731080678876838,
+            54.448419575260225,
+            49.68423069287148
+          ],
+          "start_world_rotation": [
+            -0.6784807470135837,
+            -0.046948114981462806,
+            0.7140943523839025,
+            -0.16591867382845216
+          ],
+          "max_world_displacement_from_first_cm": 81.44363170680508,
+          "max_world_rotation_from_first_deg": 69.90194106491656,
+          "max_world_rotation_from_reference_deg": 71.15849175562015,
+          "start_world_rotation_from_reference_deg": 10.118369908835183,
+          "max_world_step_rotation_deg": 40.69729312912207,
+          "max_local_rotation_from_reference_deg": 80.52893840311,
+          "max_local_translation_delta_reference_cm": 1.9131948672901813e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "foot_r": {
+          "start_world_position": [
+            -11.755699289150664,
+            47.13389008469234,
+            8.117380613700718
+          ],
+          "start_world_rotation": [
+            -0.706915727688207,
+            -0.0021851258477452173,
+            0.7068735889825474,
+            -0.024394843123412613
+          ],
+          "max_world_displacement_from_first_cm": 60.698847624798546,
+          "max_world_rotation_from_first_deg": 87.91892998008962,
+          "max_world_rotation_from_reference_deg": 81.85967511157169,
+          "start_world_rotation_from_reference_deg": 6.363868473829111,
+          "max_world_step_rotation_deg": 26.735541882392354,
+          "max_local_rotation_from_reference_deg": 54.17852426342667,
+          "max_local_translation_delta_reference_cm": 3.379749385324339e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "ball_r": {
+          "start_world_position": [
+            -11.785170267216486,
+            62.15336891181501,
+            0.6326401049877974
+          ],
+          "start_world_rotation": [
+            0.5014100220804406,
+            -0.49831978747106737,
+            -0.4825853492126846,
+            0.5170848672097788
+          ],
+          "max_world_displacement_from_first_cm": 53.56849251403568,
+          "max_world_rotation_from_first_deg": 86.09373370502927,
+          "max_world_rotation_from_reference_deg": 79.8609739865575,
+          "start_world_rotation_from_reference_deg": 6.363868473828882,
+          "max_world_step_rotation_deg": 26.759960523348482,
+          "max_local_rotation_from_reference_deg": 11.412007191285099,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "index_01_l": {
+          "start_world_position": [
+            31.29141799745902,
+            24.347107280937543,
+            136.28666301230015
+          ],
+          "start_world_rotation": [
+            0.42228519342022847,
+            0.8368791055214921,
+            0.30205290240602034,
+            0.17341459658197345
+          ],
+          "max_world_displacement_from_first_cm": 162.1661018221185,
+          "max_world_rotation_from_first_deg": 159.4044433749955,
+          "max_world_rotation_from_reference_deg": 178.61265884281482,
+          "start_world_rotation_from_reference_deg": 67.40348252684882,
+          "max_world_step_rotation_deg": 43.31745598145477,
+          "max_local_rotation_from_reference_deg": 73.12970115915009,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "index_03_l": {
+          "start_world_position": [
+            27.279783905847232,
+            26.5632924406884,
+            134.4488304330675
+          ],
+          "start_world_rotation": [
+            -0.8298071980884436,
+            0.4360177012932151,
+            -0.16841391659613225,
+            0.30486936687102656
+          ],
+          "max_world_displacement_from_first_cm": 154.52789794206362,
+          "max_world_rotation_from_first_deg": 159.4044433749955,
+          "max_world_rotation_from_reference_deg": 178.64971763070477,
+          "start_world_rotation_from_reference_deg": 147.29260362546526,
+          "max_world_step_rotation_deg": 43.31745598145474,
+          "max_local_rotation_from_reference_deg": 78.3072302890741,
+          "max_local_translation_delta_reference_cm": 1.5981548528998355e-07,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "index_01_r": {
+          "start_world_position": [
+            74.6796775120549,
+            72.51909645647011,
+            126.95705130977449
+          ],
+          "start_world_rotation": [
+            -0.25770315147016476,
+            0.5724151148725948,
+            -0.6004891019280982,
+            -0.49532096710449003
+          ],
+          "max_world_displacement_from_first_cm": 113.67526201765078,
+          "max_world_rotation_from_first_deg": 160.68901548366617,
+          "max_world_rotation_from_reference_deg": 170.4406098699171,
+          "start_world_rotation_from_reference_deg": 148.19734828597345,
+          "max_world_step_rotation_deg": 50.931930172468384,
+          "max_local_rotation_from_reference_deg": 38.02013821653979,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "index_03_r": {
+          "start_world_position": [
+            73.8965160166585,
+            71.68256010743148,
+            122.2826014090968
+          ],
+          "start_world_rotation": [
+            -0.5770414177717825,
+            -0.24717058294029584,
+            0.4842339482811362,
+            -0.6094648377363124
+          ],
+          "max_world_displacement_from_first_cm": 109.2792441091896,
+          "max_world_rotation_from_first_deg": 160.68901548366617,
+          "max_world_rotation_from_reference_deg": 178.96078925915393,
+          "start_world_rotation_from_reference_deg": 159.00802951553177,
+          "max_world_step_rotation_deg": 50.931930172468384,
+          "max_local_rotation_from_reference_deg": 74.7965949130977,
+          "max_local_translation_delta_reference_cm": 1.5230762073770165e-07,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "runtime_summary": {
+        "root": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 0.0,
+            "frame": 139
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 0.0,
+            "frame": 139
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 90.0,
+            "frame": 153
+          },
+          "clip_step_deg": {
+            "max": 0.0,
+            "frame": 140
+          },
+          "source_step_deg": {
+            "max": 0.0,
+            "frame": 140
+          }
+        },
+        "pelvis": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 82.3172562823583,
+            "frame": 139
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 82.3172562823583,
+            "frame": 139
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 90.02874514761595,
+            "frame": 155
+          },
+          "clip_step_deg": {
+            "max": 31.229899786574165,
+            "frame": 149
+          },
+          "source_step_deg": {
+            "max": 31.229906566535508,
+            "frame": 149
+          }
+        },
+        "spine_01": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 81.32567727094835,
+            "frame": 139
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 6.062002851421379,
+            "frame": 139
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 90.0287453134754,
+            "frame": 153
+          },
+          "clip_step_deg": {
+            "max": 30.801891926227853,
+            "frame": 149
+          },
+          "source_step_deg": {
+            "max": 30.80189879224844,
+            "frame": 149
+          }
+        },
+        "spine_02": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 95.14503418104655,
+            "frame": 139
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 14.240698755613746,
+            "frame": 139
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 90.02874592489798,
+            "frame": 153
+          },
+          "clip_step_deg": {
+            "max": 35.06284224951414,
+            "frame": 149
+          },
+          "source_step_deg": {
+            "max": 35.06284985353066,
+            "frame": 149
+          }
+        },
+        "spine_03": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 110.10999139198253,
+            "frame": 139
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 14.985155681862178,
+            "frame": 139
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 90.0287465643405,
+            "frame": 153
+          },
+          "clip_step_deg": {
+            "max": 43.45616761333013,
+            "frame": 149
+          },
+          "source_step_deg": {
+            "max": 43.456175999615134,
+            "frame": 149
+          }
+        },
+        "neck_01": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 111.34684823742265,
+            "frame": 139
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 29.08145793044927,
+            "frame": 139
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 90.02874873261413,
+            "frame": 153
+          },
+          "clip_step_deg": {
+            "max": 48.62881581548448,
+            "frame": 149
+          },
+          "source_step_deg": {
+            "max": 48.628825527804516,
+            "frame": 149
+          }
+        },
+        "head": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 58.01690267024544,
+            "frame": 139
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 30.56053158644652,
+            "frame": 141
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 90.0287494081921,
+            "frame": 153
+          },
+          "clip_step_deg": {
+            "max": 24.442881429070976,
+            "frame": 149
+          },
+          "source_step_deg": {
+            "max": 24.44288420859746,
+            "frame": 149
+          }
+        },
+        "upperarm_l": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 106.51087625833996,
+            "frame": 139
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 35.596624198341864,
+            "frame": 139
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 90.02875240139247,
+            "frame": 156
+          },
+          "clip_step_deg": {
+            "max": 55.996114269556905,
+            "frame": 150
+          },
+          "source_step_deg": {
+            "max": 55.99613179255423,
+            "frame": 150
+          }
+        },
+        "lowerarm_l": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 125.69948694966565,
+            "frame": 139
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 103.55723128067791,
+            "frame": 139
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 90.02875264486636,
+            "frame": 156
+          },
+          "clip_step_deg": {
+            "max": 42.510241447684216,
+            "frame": 149
+          },
+          "source_step_deg": {
+            "max": 51.3900361749643,
+            "frame": 143
+          }
+        },
+        "hand_l": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 136.62798193322536,
+            "frame": 139
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 26.664320302323283,
+            "frame": 139
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 90.0287510387568,
+            "frame": 156
+          },
+          "clip_step_deg": {
+            "max": 44.14903686223236,
+            "frame": 149
+          },
+          "source_step_deg": {
+            "max": 50.19634889302939,
+            "frame": 143
+          }
+        },
+        "upperarm_r": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 147.55295666112858,
+            "frame": 139
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 76.10972624998502,
+            "frame": 139
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 90.02875578827721,
+            "frame": 158
+          },
+          "clip_step_deg": {
+            "max": 56.8942084170149,
+            "frame": 149
+          },
+          "source_step_deg": {
+            "max": 56.89422243738525,
+            "frame": 149
+          }
+        },
+        "lowerarm_r": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 148.23837255587293,
+            "frame": 140
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 37.301959868879095,
+            "frame": 141
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 100.74702389908995,
+            "frame": 139
+          },
+          "clip_step_deg": {
+            "max": 52.45710796337336,
+            "frame": 149
+          },
+          "source_step_deg": {
+            "max": 64.35652791647816,
+            "frame": 143
+          }
+        },
+        "hand_r": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 178.93975934623268,
+            "frame": 140
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 35.6334406816293,
+            "frame": 139
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 124.95633674231314,
+            "frame": 139
+          },
+          "clip_step_deg": {
+            "max": 52.45710796337336,
+            "frame": 149
+          },
+          "source_step_deg": {
+            "max": 70.96936341980648,
+            "frame": 143
+          }
+        },
+        "thigh_l": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 45.53751045859231,
+            "frame": 149
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 70.18482453432695,
+            "frame": 139
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 90.02874769098302,
+            "frame": 156
+          },
+          "clip_step_deg": {
+            "max": 23.700112205726814,
+            "frame": 148
+          },
+          "source_step_deg": {
+            "max": 31.936896820377765,
+            "frame": 150
+          }
+        },
+        "calf_l": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 55.20726189975044,
+            "frame": 150
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 30.738399010168056,
+            "frame": 154
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 119.99052113753032,
+            "frame": 156
+          },
+          "clip_step_deg": {
+            "max": 33.94622181615994,
+            "frame": 149
+          },
+          "source_step_deg": {
+            "max": 20.83116459428529,
+            "frame": 148
+          }
+        },
+        "foot_l": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 79.28511846942703,
+            "frame": 144
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 80.86796736910131,
+            "frame": 145
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 134.96319855718258,
+            "frame": 151
+          },
+          "clip_step_deg": {
+            "max": 29.684092744053405,
+            "frame": 148
+          },
+          "source_step_deg": {
+            "max": 2.387314906638341,
+            "frame": 142
+          }
+        },
+        "thigh_r": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 55.072689635230766,
+            "frame": 141
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 70.51951759046055,
+            "frame": 139
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 90.02874623563818,
+            "frame": 155
+          },
+          "clip_step_deg": {
+            "max": 36.42186248414214,
+            "frame": 150
+          },
+          "source_step_deg": {
+            "max": 40.64162047574268,
+            "frame": 150
+          }
+        },
+        "calf_r": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 52.82272796018902,
+            "frame": 141
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 55.865430197995636,
+            "frame": 159
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 112.0077406241299,
+            "frame": 159
+          },
+          "clip_step_deg": {
+            "max": 36.37643944227103,
+            "frame": 150
+          },
+          "source_step_deg": {
+            "max": 36.48165815691366,
+            "frame": 151
+          }
+        },
+        "foot_r": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 81.7188309371556,
+            "frame": 154
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 70.77262903780979,
+            "frame": 153
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 107.03099862643401,
+            "frame": 159
+          },
+          "clip_step_deg": {
+            "max": 27.246622577865278,
+            "frame": 149
+          },
+          "source_step_deg": {
+            "max": 7.9661180813403645,
+            "frame": 142
+          }
+        }
+      }
+    },
+    "hook": {
+      "sequence_metadata": {
+        "additive_anim_type": "<AdditiveAnimationType.AAT_NONE: 0>",
+        "ref_pose_type": "<AdditiveBasePoseType.ABPT_NONE: 0>",
+        "ref_pose_seq": null,
+        "ref_frame_index": 0,
+        "enable_root_motion": true,
+        "force_root_lock": false,
+        "root_motion_root_lock": "<RootMotionRootLock.REF_POSE: 0>",
+        "rate_scale": 1.0,
+        "interpolation": "<AnimInterpolationType.LINEAR: 0>",
+        "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+        "data_model": null,
+        "length_seconds": 1.6666666269302368,
+        "data_model_error": "'AnimSequence' object has no attribute 'get_data_model'"
+      },
+      "montage_metadata": {
+        "slot_anim_tracks": [
+          "(SlotName=\"DefaultSlot\",AnimTrack=(AnimSegments=((CachedPlayLength=1.666667,AnimReference=\"/Script/Engine.AnimSequence'/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_03.MM_Attack_03'\",AnimEndTime=1.666667))))"
+        ],
+        "blend_in": "(CustomCurve=None,BlendTime=0.250000,BlendOption=HermiteCubic)",
+        "blend_out": "(CustomCurve=None,BlendTime=0.250000,BlendOption=HermiteCubic)",
+        "blend_out_trigger_time": -1.0,
+        "enable_auto_blend_out": true,
+        "rate_scale": 1.0,
+        "composite_sections": {
+          "unavailable": "AnimMontage: Failed to find property 'composite_sections' for attribute 'composite_sections' on 'AnimMontage'"
+        },
+        "sync_group": "None",
+        "length_seconds": 1.6666666269302368
+      },
+      "sampled_summary": {
+        "root": {
+          "start_world_position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "start_world_rotation": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "max_world_displacement_from_first_cm": 216.0,
+          "max_world_rotation_from_first_deg": 0.0,
+          "max_world_rotation_from_reference_deg": 0.0,
+          "start_world_rotation_from_reference_deg": 0.0,
+          "max_world_step_rotation_deg": 0.0,
+          "max_local_rotation_from_reference_deg": 0.0,
+          "max_local_translation_delta_reference_cm": 216.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "pelvis": {
+          "start_world_position": [
+            25.456684112548828,
+            19.15848159790039,
+            85.17914581298828
+          ],
+          "start_world_rotation": [
+            0.3967857702040203,
+            -0.6140475364306521,
+            0.3257954286696446,
+            0.599469777574326
+          ],
+          "max_world_displacement_from_first_cm": 199.6283127232521,
+          "max_world_rotation_from_first_deg": 176.60053364722515,
+          "max_world_rotation_from_reference_deg": 170.26653961965292,
+          "start_world_rotation_from_reference_deg": 61.535868169462894,
+          "max_world_step_rotation_deg": 27.4075157952708,
+          "max_local_rotation_from_reference_deg": 170.26653961965292,
+          "max_local_translation_delta_reference_cm": 70.15287864613668,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "spine_01": {
+          "start_world_position": [
+            25.58025488889513,
+            18.80297810216266,
+            88.83688686631882
+          ],
+          "start_world_rotation": [
+            0.30273046314100294,
+            -0.6517167358762688,
+            0.4094157866582917,
+            0.5621372399158302
+          ],
+          "max_world_displacement_from_first_cm": 200.40970465065683,
+          "max_world_rotation_from_first_deg": 177.15400360756595,
+          "max_world_rotation_from_reference_deg": 172.70531257397295,
+          "start_world_rotation_from_reference_deg": 61.00359874102665,
+          "max_world_step_rotation_deg": 26.753642439955488,
+          "max_local_rotation_from_reference_deg": 15.7231438946292,
+          "max_local_translation_delta_reference_cm": 8.882142707381363e-16,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "spine_02": {
+          "start_world_position": [
+            24.325126398867347,
+            19.249458907053647,
+            95.50007762079521
+          ],
+          "start_world_rotation": [
+            0.38686751632962196,
+            -0.5832030061398875,
+            0.46917655416605797,
+            0.5385918115411821
+          ],
+          "max_world_displacement_from_first_cm": 201.67542848449506,
+          "max_world_rotation_from_first_deg": 177.36660096772027,
+          "max_world_rotation_from_reference_deg": 175.85081511780186,
+          "start_world_rotation_from_reference_deg": 74.62736897888597,
+          "max_world_step_rotation_deg": 29.963812212063875,
+          "max_local_rotation_from_reference_deg": 23.305291493914552,
+          "max_local_translation_delta_reference_cm": 1.8792604949915833e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "spine_03": {
+          "start_world_position": [
+            23.45288541222686,
+            19.64137060739539,
+            102.6748628583801
+          ],
+          "start_world_rotation": [
+            0.48294102953821866,
+            -0.40084462696543477,
+            0.5466465130363435,
+            0.5543186239039004
+          ],
+          "max_world_displacement_from_first_cm": 203.70453351054897,
+          "max_world_rotation_from_first_deg": 179.13926308323101,
+          "max_world_rotation_from_reference_deg": 175.5251664927025,
+          "start_world_rotation_from_reference_deg": 95.29932055597033,
+          "max_world_step_rotation_deg": 34.527420584998104,
+          "max_local_rotation_from_reference_deg": 45.98627634046402,
+          "max_local_translation_delta_reference_cm": 2.438294232532733e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "neck_01": {
+          "start_world_position": [
+            29.84113597083733,
+            30.759921898770024,
+            140.3453774977997
+          ],
+          "start_world_rotation": [
+            -0.2521672687336812,
+            0.5278300709519438,
+            -0.7378241441262421,
+            -0.336782744692539
+          ],
+          "max_world_displacement_from_first_cm": 197.81689725314902,
+          "max_world_rotation_from_first_deg": 155.17051284006556,
+          "max_world_rotation_from_reference_deg": 170.00896653703296,
+          "start_world_rotation_from_reference_deg": 99.18986600867957,
+          "max_world_step_rotation_deg": 73.60559835857904,
+          "max_local_rotation_from_reference_deg": 97.85906676578759,
+          "max_local_translation_delta_reference_cm": 6.508265233804807e-08,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "head": {
+          "start_world_position": [
+            22.475550865954467,
+            31.335434521476,
+            146.75690429392284
+          ],
+          "start_world_rotation": [
+            -0.010753452468704683,
+            0.7783810949523733,
+            -0.2565804762817463,
+            -0.57286446343946
+          ],
+          "max_world_displacement_from_first_cm": 200.83747248980814,
+          "max_world_rotation_from_first_deg": 174.8376333351679,
+          "max_world_rotation_from_reference_deg": 179.1947800584404,
+          "start_world_rotation_from_reference_deg": 34.32375845885105,
+          "max_world_step_rotation_deg": 38.78163761305731,
+          "max_local_rotation_from_reference_deg": 101.5868702323653,
+          "max_local_translation_delta_reference_cm": 1.2127851294466601e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "clavicle_l": {
+          "start_world_position": [
+            29.80958555024657,
+            30.267662016045286,
+            133.70307511949352
+          ],
+          "start_world_rotation": [
+            -0.010211913049152588,
+            0.0034375954904920167,
+            -0.6706326225350013,
+            -0.7417113895316338
+          ],
+          "max_world_displacement_from_first_cm": 196.5386034909194,
+          "max_world_rotation_from_first_deg": 177.84553784001085,
+          "max_world_rotation_from_reference_deg": 166.774272723902,
+          "start_world_rotation_from_reference_deg": 87.2888039907723,
+          "max_world_step_rotation_deg": 45.46253373417758,
+          "max_local_rotation_from_reference_deg": 32.300417398902354,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "upperarm_l": {
+          "start_world_position": [
+            31.59908877928142,
+            47.98388946444754,
+            134.0378279461107
+          ],
+          "start_world_rotation": [
+            -0.3708896235690341,
+            -0.4868517496289551,
+            -0.6903310535416896,
+            -0.38582288362416595
+          ],
+          "max_world_displacement_from_first_cm": 178.41167657425115,
+          "max_world_rotation_from_first_deg": 176.95276413190123,
+          "max_world_rotation_from_reference_deg": 168.47017252977656,
+          "start_world_rotation_from_reference_deg": 109.66906007847903,
+          "max_world_step_rotation_deg": 47.88361335569154,
+          "max_local_rotation_from_reference_deg": 81.9263228748784,
+          "max_local_translation_delta_reference_cm": 1.5930737714888044e-07,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "lowerarm_l": {
+          "start_world_position": [
+            19.73628069209959,
+            72.80649899845167,
+            137.82570460913934
+          ],
+          "start_world_rotation": [
+            -0.3508247011130704,
+            -0.8875438699567479,
+            -0.21983259282452416,
+            0.2021423733984829
+          ],
+          "max_world_displacement_from_first_cm": 165.85040842608825,
+          "max_world_rotation_from_first_deg": 178.47597581970314,
+          "max_world_rotation_from_reference_deg": 170.72102833735417,
+          "start_world_rotation_from_reference_deg": 140.79915399162383,
+          "max_world_step_rotation_deg": 47.602073039851504,
+          "max_local_rotation_from_reference_deg": 106.32270984587434,
+          "max_local_translation_delta_reference_cm": 7.646592070653527e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "hand_l": {
+          "start_world_position": [
+            1.4202622404009055,
+            87.3550205682912,
+            151.8073001366122
+          ],
+          "start_world_rotation": [
+            0.02361083571712625,
+            -0.813023389005338,
+            0.23572588121075796,
+            0.5318541212535877
+          ],
+          "max_world_displacement_from_first_cm": 171.27744154528153,
+          "max_world_rotation_from_first_deg": 169.3902486114307,
+          "max_world_rotation_from_reference_deg": 175.68715290867405,
+          "start_world_rotation_from_reference_deg": 169.34315564068825,
+          "max_world_step_rotation_deg": 43.77947939445276,
+          "max_local_rotation_from_reference_deg": 30.63521360117751,
+          "max_local_translation_delta_reference_cm": 5.826883674891095e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "clavicle_r": {
+          "start_world_position": [
+            30.036523906412572,
+            27.540050011999817,
+            134.51799442790053
+          ],
+          "start_world_rotation": [
+            0.6396099550882103,
+            0.7252630724019655,
+            -0.19946559939283606,
+            0.1584489060264419
+          ],
+          "max_world_displacement_from_first_cm": 199.32307503527073,
+          "max_world_rotation_from_first_deg": 179.70333451033778,
+          "max_world_rotation_from_reference_deg": 175.07859413334242,
+          "start_world_rotation_from_reference_deg": 100.5657305287651,
+          "max_world_step_rotation_deg": 46.509682972461945,
+          "max_local_rotation_from_reference_deg": 25.907175864489684,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "upperarm_r": {
+          "start_world_position": [
+            32.380009133618955,
+            12.142330796556257,
+            143.15518639454666
+          ],
+          "start_world_rotation": [
+            0.8592738491889385,
+            0.43877707072119376,
+            0.258482488207499,
+            0.04806181019702695
+          ],
+          "max_world_displacement_from_first_cm": 212.02417403375682,
+          "max_world_rotation_from_first_deg": 168.24310910766056,
+          "max_world_rotation_from_reference_deg": 160.7808023417891,
+          "start_world_rotation_from_reference_deg": 56.470334662535876,
+          "max_world_step_rotation_deg": 98.36141500925167,
+          "max_local_rotation_from_reference_deg": 99.53472083587465,
+          "max_local_translation_delta_reference_cm": 1.558493575748319e-07,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "lowerarm_r": {
+          "start_world_position": [
+            19.013335838192077,
+            -9.488418778954594,
+            131.99032169542093
+          ],
+          "start_world_rotation": [
+            0.773831613478575,
+            -0.35719138332304146,
+            0.1779505169245694,
+            -0.49186640786619773
+          ],
+          "max_world_displacement_from_first_cm": 244.4140164885589,
+          "max_world_rotation_from_first_deg": 154.56180046494256,
+          "max_world_rotation_from_reference_deg": 172.56049207561549,
+          "start_world_rotation_from_reference_deg": 46.78629351298052,
+          "max_world_step_rotation_deg": 91.98605395579001,
+          "max_local_rotation_from_reference_deg": 81.9384494083797,
+          "max_local_translation_delta_reference_cm": 4.877708980809097e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "hand_r": {
+          "start_world_position": [
+            0.4418847758595952,
+            10.346712716557702,
+            134.06067402830857
+          ],
+          "start_world_rotation": [
+            0.18812836246263978,
+            -0.2848003543393487,
+            0.4760693147778525,
+            -0.8104655976241396
+          ],
+          "max_world_displacement_from_first_cm": 234.99439903205484,
+          "max_world_rotation_from_first_deg": 170.99665682981103,
+          "max_world_rotation_from_reference_deg": 178.27579393207907,
+          "start_world_rotation_from_reference_deg": 63.3255000458467,
+          "max_world_step_rotation_deg": 98.06362119739171,
+          "max_local_rotation_from_reference_deg": 28.128931886757545,
+          "max_local_translation_delta_reference_cm": 2.6407442894293542e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "thigh_l": {
+          "start_world_position": [
+            30.042503200559285,
+            28.170561354163972,
+            83.52192244553328
+          ],
+          "start_world_rotation": [
+            0.39652430108413245,
+            -0.6639916727501892,
+            0.01950253649877748,
+            0.6336427923035658
+          ],
+          "max_world_displacement_from_first_cm": 185.33134982821227,
+          "max_world_rotation_from_first_deg": 173.70850694495604,
+          "max_world_rotation_from_reference_deg": 173.77789210707817,
+          "start_world_rotation_from_reference_deg": 53.117492100636596,
+          "max_world_step_rotation_deg": 48.13876945654005,
+          "max_local_rotation_from_reference_deg": 92.92328002515596,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "calf_l": {
+          "start_world_position": [
+            24.95122485367867,
+            49.921933834875816,
+            46.38130168310411
+          ],
+          "start_world_rotation": [
+            0.07920757651458088,
+            -0.7693130849365173,
+            0.28513353558490684,
+            0.5661999682559128
+          ],
+          "max_world_displacement_from_first_cm": 166.52825791480677,
+          "max_world_rotation_from_first_deg": 174.06533879527993,
+          "max_world_rotation_from_reference_deg": 174.56518082305556,
+          "start_world_rotation_from_reference_deg": 42.85291230055266,
+          "max_world_step_rotation_deg": 47.21152807360289,
+          "max_local_rotation_from_reference_deg": 75.68679057596157,
+          "max_local_translation_delta_reference_cm": 2.5137175360052498e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "foot_l": {
+          "start_world_position": [
+            39.57076143641878,
+            41.43552728182195,
+            7.695356360337939
+          ],
+          "start_world_rotation": [
+            0.04814057768786853,
+            -0.7029778097769854,
+            0.0424202511494336,
+            0.7083115176484499
+          ],
+          "max_world_displacement_from_first_cm": 149.28526485189522,
+          "max_world_rotation_from_first_deg": 174.73698824837984,
+          "max_world_rotation_from_reference_deg": 178.3753854660038,
+          "start_world_rotation_from_reference_deg": 16.02401424870929,
+          "max_world_step_rotation_deg": 27.316360873921504,
+          "max_local_rotation_from_reference_deg": 58.72126425041443,
+          "max_local_translation_delta_reference_cm": 7.351822764409068e-15,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "ball_l": {
+          "start_world_position": [
+            37.03290115495916,
+            56.53196145719065,
+            0.8204995212576627
+          ],
+          "start_world_rotation": [
+            0.4630398473836436,
+            0.531120905250303,
+            -0.5308475245691547,
+            -0.4708562300743529
+          ],
+          "max_world_displacement_from_first_cm": 148.75533978396064,
+          "max_world_rotation_from_first_deg": 174.73698824837982,
+          "max_world_rotation_from_reference_deg": 178.3753854660038,
+          "start_world_rotation_from_reference_deg": 16.024014248709474,
+          "max_world_step_rotation_deg": 27.31636087392145,
+          "max_local_rotation_from_reference_deg": 0.0,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "thigh_r": {
+          "start_world_position": [
+            20.51040831935788,
+            10.712473580742692,
+            82.14714549302124
+          ],
+          "start_world_rotation": [
+            -0.338365641873704,
+            -0.5003536543981124,
+            0.7688003094574898,
+            -0.21000237405305366
+          ],
+          "max_world_displacement_from_first_cm": 212.99863122227546,
+          "max_world_rotation_from_first_deg": 173.33359852509903,
+          "max_world_rotation_from_reference_deg": 174.0567321179811,
+          "start_world_rotation_from_reference_deg": 68.59744366977662,
+          "max_world_step_rotation_deg": 124.08890372895064,
+          "max_local_rotation_from_reference_deg": 117.94168751915817,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "calf_r": {
+          "start_world_position": [
+            -9.083672979651908,
+            11.39315637200853,
+            50.489727948143624
+          ],
+          "start_world_rotation": [
+            -0.5616109522687326,
+            -0.2223470830974781,
+            0.5164209204878842,
+            -0.6070126405704391
+          ],
+          "max_world_displacement_from_first_cm": 231.86910064668044,
+          "max_world_rotation_from_first_deg": 179.89907262876903,
+          "max_world_rotation_from_reference_deg": 179.77604193087097,
+          "start_world_rotation_from_reference_deg": 71.15823857608675,
+          "max_world_step_rotation_deg": 96.58585286393941,
+          "max_local_rotation_from_reference_deg": 150.1926041745944,
+          "max_local_translation_delta_reference_cm": 7.105427357601002e-15,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "foot_r": {
+          "start_world_position": [
+            6.441657511902562,
+            -4.531578038315521,
+            14.604882155555728
+          ],
+          "start_world_rotation": [
+            -0.5595195151958913,
+            -0.3446204809196361,
+            0.4397054987161238,
+            -0.6122366459503048
+          ],
+          "max_world_displacement_from_first_cm": 233.31103561619884,
+          "max_world_rotation_from_first_deg": 171.20616631047,
+          "max_world_rotation_from_reference_deg": 175.8352585333073,
+          "start_world_rotation_from_reference_deg": 81.45261670630666,
+          "max_world_step_rotation_deg": 43.98166987171575,
+          "max_local_rotation_from_reference_deg": 69.9934697117496,
+          "max_local_translation_delta_reference_cm": 1.5280799322856756e-14,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "ball_r": {
+          "start_world_position": [
+            -4.966812462346201,
+            -4.874658518201157,
+            2.30300986347401
+          ],
+          "start_world_rotation": [
+            -0.6539042805014746,
+            0.11265080031320385,
+            -0.07856935639525481,
+            -0.744006616480176
+          ],
+          "max_world_displacement_from_first_cm": 247.38356783008777,
+          "max_world_rotation_from_first_deg": 171.20616631047,
+          "max_world_rotation_from_reference_deg": 176.51472064542062,
+          "start_world_rotation_from_reference_deg": 79.85885568887598,
+          "max_world_step_rotation_deg": 43.98166987171568,
+          "max_local_rotation_from_reference_deg": 6.918066197540705,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "index_01_l": {
+          "start_world_position": [
+            -0.26546856930017615,
+            90.88078546053008,
+            160.74127415208304
+          ],
+          "start_world_rotation": [
+            -0.576590213278976,
+            0.5315577851483376,
+            0.28931004734455,
+            -0.5488986641490339
+          ],
+          "max_world_displacement_from_first_cm": 171.49289311465142,
+          "max_world_rotation_from_first_deg": 169.3902486114307,
+          "max_world_rotation_from_reference_deg": 165.16821287624427,
+          "start_world_rotation_from_reference_deg": 150.19018914203292,
+          "max_world_step_rotation_deg": 43.77947939445283,
+          "max_local_rotation_from_reference_deg": 73.12970115915009,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "index_03_l": {
+          "start_world_position": [
+            1.6243898171472186,
+            86.53507757324763,
+            159.3536244937917
+          ],
+          "start_world_rotation": [
+            -0.5409864960590296,
+            -0.5677530837280188,
+            0.5535913053203523,
+            0.2802261830607703
+          ],
+          "max_world_displacement_from_first_cm": 172.94445186093466,
+          "max_world_rotation_from_first_deg": 169.3902486114307,
+          "max_world_rotation_from_reference_deg": 175.42170354439793,
+          "start_world_rotation_from_reference_deg": 113.07702705255299,
+          "max_world_step_rotation_deg": 43.779479394452785,
+          "max_local_rotation_from_reference_deg": 78.3072302890741,
+          "max_local_translation_delta_reference_cm": 1.598154852899828e-07,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "index_01_r": {
+          "start_world_position": [
+            -1.562958843239766,
+            18.422772150451713,
+            139.14482025397592
+          ],
+          "start_world_rotation": [
+            -0.3255635687324975,
+            0.22210884375080628,
+            -0.8114965371893069,
+            0.4314503382448611
+          ],
+          "max_world_displacement_from_first_cm": 230.70817576033866,
+          "max_world_rotation_from_first_deg": 170.99665682981103,
+          "max_world_rotation_from_reference_deg": 158.37608032154643,
+          "start_world_rotation_from_reference_deg": 48.099697254730884,
+          "max_world_step_rotation_deg": 98.06362119739168,
+          "max_local_rotation_from_reference_deg": 38.02013821653979,
+          "max_local_translation_delta_reference_cm": 0.0,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "index_03_r": {
+          "start_world_position": [
+            1.5639237717612176,
+            20.47450477689604,
+            136.11552739809878
+          ],
+          "start_world_rotation": [
+            -0.22803739199747575,
+            -0.3214389326078764,
+            -0.4462483510182734,
+            -0.8034540246139612
+          ],
+          "max_world_displacement_from_first_cm": 226.71058904084916,
+          "max_world_rotation_from_first_deg": 170.99665682981103,
+          "max_world_rotation_from_reference_deg": 179.82345462535523,
+          "start_world_rotation_from_reference_deg": 146.6818655344136,
+          "max_world_step_rotation_deg": 98.06362119739165,
+          "max_local_rotation_from_reference_deg": 74.7965949130977,
+          "max_local_translation_delta_reference_cm": 1.5230762073770165e-07,
+          "local_scale_min": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "local_scale_max": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "runtime_summary": {
+        "root": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 0.0,
+            "frame": 247
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 0.0,
+            "frame": 247
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.3646697998047,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 0.0,
+            "frame": 248
+          },
+          "source_step_deg": {
+            "max": 0.0,
+            "frame": 248
+          }
+        },
+        "pelvis": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 54.69576462636562,
+            "frame": 249
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 54.69576462636562,
+            "frame": 249
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.37697259324102,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 40.39638954906255,
+            "frame": 252
+          },
+          "source_step_deg": {
+            "max": 58.87122452030299,
+            "frame": 252
+          }
+        },
+        "spine_01": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 54.71197364784092,
+            "frame": 249
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 5.181231348129249,
+            "frame": 247
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.37697255839518,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 39.38908201105649,
+            "frame": 252
+          },
+          "source_step_deg": {
+            "max": 57.38594701856061,
+            "frame": 252
+          }
+        },
+        "spine_02": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 55.77050630603027,
+            "frame": 248
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 10.91653206480983,
+            "frame": 247
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.37697256015272,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 43.919387562301324,
+            "frame": 252
+          },
+          "source_step_deg": {
+            "max": 59.6420017035831,
+            "frame": 252
+          }
+        },
+        "spine_03": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 72.47141963486743,
+            "frame": 247
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 21.531542594780152,
+            "frame": 247
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.37697236182538,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 50.49030518752348,
+            "frame": 252
+          },
+          "source_step_deg": {
+            "max": 67.40692547881001,
+            "frame": 252
+          }
+        },
+        "neck_01": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 73.03497939593787,
+            "frame": 247
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 23.83840717006201,
+            "frame": 247
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.37697199807013,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 106.8048578414881,
+            "frame": 252
+          },
+          "source_step_deg": {
+            "max": 119.39732144541497,
+            "frame": 252
+          }
+        },
+        "head": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 67.30483025775253,
+            "frame": 249
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 71.34990909831177,
+            "frame": 247
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.37697204590103,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 56.39423079545118,
+            "frame": 252
+          },
+          "source_step_deg": {
+            "max": 82.84051469315128,
+            "frame": 252
+          }
+        },
+        "upperarm_l": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 99.93488161445636,
+            "frame": 247
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 87.98593452980882,
+            "frame": 247
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.37697109606296,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 69.65774579735685,
+            "frame": 252
+          },
+          "source_step_deg": {
+            "max": 77.83158197458057,
+            "frame": 252
+          }
+        },
+        "lowerarm_l": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 126.42189990332457,
+            "frame": 247
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 97.15466497170347,
+            "frame": 247
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.37697217088157,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 71.63432853988873,
+            "frame": 252
+          },
+          "source_step_deg": {
+            "max": 94.58574181679136,
+            "frame": 252
+          }
+        },
+        "hand_l": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 147.7849537682165,
+            "frame": 247
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 33.42552368325892,
+            "frame": 247
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.37697179413757,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 65.5103266704971,
+            "frame": 252
+          },
+          "source_step_deg": {
+            "max": 89.35511476659978,
+            "frame": 252
+          }
+        },
+        "upperarm_r": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 60.94678613411245,
+            "frame": 247
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 51.206789928678695,
+            "frame": 249
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.37695768634194,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 132.29296109106613,
+            "frame": 252
+          },
+          "source_step_deg": {
+            "max": 132.5128626670662,
+            "frame": 252
+          }
+        },
+        "lowerarm_r": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 74.26468619809981,
+            "frame": 247
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 80.58026049302798,
+            "frame": 247
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.37696424001817,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 122.225665827741,
+            "frame": 252
+          },
+          "source_step_deg": {
+            "max": 119.48565998706681,
+            "frame": 252
+          }
+        },
+        "hand_r": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 91.56949814467788,
+            "frame": 247
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 31.907261306784108,
+            "frame": 247
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.37697773782543,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 130.52229663987782,
+            "frame": 252
+          },
+          "source_step_deg": {
+            "max": 125.2278858815533,
+            "frame": 252
+          }
+        },
+        "thigh_l": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 68.13021274373651,
+            "frame": 264
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 68.13021687285234,
+            "frame": 264
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.3769750333028,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 58.23109810660063,
+            "frame": 262
+          },
+          "source_step_deg": {
+            "max": 58.97120208988184,
+            "frame": 262
+          }
+        },
+        "calf_l": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 53.275489726574236,
+            "frame": 249
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 66.70107751888557,
+            "frame": 263
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 196.50553811147554,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 54.50760127137277,
+            "frame": 261
+          },
+          "source_step_deg": {
+            "max": 57.17950312213301,
+            "frame": 252
+          }
+        },
+        "foot_l": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 179.21370936176854,
+            "frame": 256
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 170.52408594238383,
+            "frame": 257
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 192.3096865560674,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 40.9188238189123,
+            "frame": 262
+          },
+          "source_step_deg": {
+            "max": 2.3783532542306407,
+            "frame": 250
+          }
+        },
+        "thigh_r": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 176.43173413964487,
+            "frame": 257
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 176.43172987584282,
+            "frame": 257
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 210.3769702083377,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 121.00447865465864,
+            "frame": 253
+          },
+          "source_step_deg": {
+            "max": 164.34388077581696,
+            "frame": 259
+          }
+        },
+        "calf_r": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 146.2106199025999,
+            "frame": 254
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 168.72478529563145,
+            "frame": 252
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 218.29599105190812,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 85.14519580786526,
+            "frame": 253
+          },
+          "source_step_deg": {
+            "max": 152.24368144444173,
+            "frame": 252
+          }
+        },
+        "foot_r": {
+          "clip_to_source_cs_angle_deg": {
+            "max": 155.95916425038737,
+            "frame": 252
+          },
+          "clip_to_source_local_angle_deg": {
+            "max": 144.11625150080494,
+            "frame": 251
+          },
+          "clip_to_source_cs_distance_cm": {
+            "max": 224.63734660472574,
+            "frame": 270
+          },
+          "clip_step_deg": {
+            "max": 65.87363448069553,
+            "frame": 252
+          },
+          "source_step_deg": {
+            "max": 7.971799862329577,
+            "frame": 250
+          }
+        }
+      }
+    }
+  }
+}

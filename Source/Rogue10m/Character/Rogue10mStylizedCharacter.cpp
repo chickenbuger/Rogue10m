@@ -57,8 +57,8 @@ ARogue10mStylizedCharacter::ARogue10mStylizedCharacter()
 			"/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple")));
 	AnimationSourceAnimClass = TSoftClassPtr<UAnimInstance>(
 		FSoftClassPath(TEXT(
-			"/Game/Characters/Mannequins/Anims/Unarmed/"
-			"ABP_Unarmed.ABP_Unarmed_C")));
+			"/Game/Rogue10m/Animation/Common/"
+			"ABP_Common_Unarmed.ABP_Common_Unarmed_C")));
 }
 
 void ARogue10mStylizedCharacter::PostInitializeComponents()

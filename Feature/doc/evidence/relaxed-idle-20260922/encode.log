@@ -1,0 +1,45 @@
+ffmpeg version 6.0 Copyright (c) 2000-2023 the FFmpeg developers
+  built with gcc 10.3.0 (Rev8, Built by MSYS2 project)
+  configuration: --prefix=.. --disable-iconv --disable-opencl --disable-vulkan --disable-sdl2 --disable-bzlib --disable-lzma --disable-linux-perf --disable-xlib --enable-shared --enable-version3 --enable-runtime-cpudetect --enable-zlib --enable-libmp3lame --enable-libspeex --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libvo-amrwbenc --enable-openssl --enable-libopenh264 --enable-libvpx --enable-libfreetype --enable-libopus --enable-libxml2 --enable-libsrt --enable-libwebp --enable-libaom --enable-libsvtav1 --enable-cuda --enable-cuvid --enable-nvenc --enable-libmfx --enable-w32threads --enable-indev=dshow --target-os=mingw32 --cc='gcc -m64' --extra-cflags='-DLIBXML_STATIC -I../include/ -I../include/libxml2 -I../include/mfx/ -I../include/svt-av1' --extra-ldflags=-L../lib/ --extra-libs='-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lgcc_eh -lWs2_32 -lcrypt32 -lpthread -lz -lm -Wl,-Bdynamic -lole32 -luuid'
+  libavutil      58.  2.100 / 58.  2.100
+  libavcodec     60.  3.100 / 60.  3.100
+  libavformat    60.  3.100 / 60.  3.100
+  libavdevice    60.  1.100 / 60.  1.100
+  libavfilter     9.  3.100 /  9.  3.100
+  libswscale      7.  1.100 /  7.  1.100
+  libswresample   4. 10.100 /  4. 10.100
+Input #0, image2, from 'tmp/relaxed-idle/labeled/frame_%04d.png':
+  Duration: 00:00:15.00, start: 0.000000, bitrate: N/A
+  Stream #0:0: Video: png, rgb24(pc), 1280x720, 30 fps, 30 tbr, 30 tbn
+Stream mapping:
+  Stream #0:0 -> #0:0 (png (native) -> h264 (libopenh264))
+Press [q] to stop, [?] for help
+[libopenh264 @ 00000283fd55e440] [OpenH264] this = 0x0000028383127cc0, Warning:layerId(0) doesn't support profile(578), change to UNSPECIFIC profile
+[libopenh264 @ 00000283fd55e440] [OpenH264] this = 0x0000028383127cc0, Warning:bEnableFrameSkip = 0,bitrate can't be controlled for RC_QUALITY_MODE,RC_BITRATE_MODE and RC_TIMESTAMP_MODE without enabling skip frame.
+Output #0, mp4, to 'Feature/doc/images/relaxed-idle-20260922/relaxed-idle-combat.mp4':
+  Metadata:
+    encoder         : Lavf60.3.100
+  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(tv, progressive), 1280x720, q=2-31, 5000 kb/s, 30 fps, 15360 tbn
+    Metadata:
+      encoder         : Lavc60.3.100 libopenh264
+    Side data:
+      cpb: bitrate max/min/avg: 5000000/0/5000000 buffer size: 0 vbv_delay: N/A
+frame=    0 fps=0.0 q=-0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    
+frame=   32 fps=0.0 q=-0.0 size=     256kB time=00:00:01.06 bitrate=1966.4kbits/s speed=1.83x    
+frame=   53 fps= 48 q=-0.0 size=     768kB time=00:00:01.76 bitrate=3561.4kbits/s speed=1.61x    
+frame=   73 fps= 46 q=-0.0 size=    1024kB time=00:00:02.43 bitrate=3447.5kbits/s speed=1.52x    
+frame=  102 fps= 48 q=-0.0 size=    1792kB time=00:00:03.40 bitrate=4317.8kbits/s speed=1.61x    
+frame=  140 fps= 53 q=-0.0 size=    2304kB time=00:00:04.66 bitrate=4044.6kbits/s speed=1.78x    
+frame=  193 fps= 62 q=-0.0 size=    2816kB time=00:00:06.43 bitrate=3585.9kbits/s speed=2.05x    
+frame=  216 fps= 59 q=-0.0 size=    3328kB time=00:00:07.20 bitrate=3786.6kbits/s speed=1.97x    
+frame=  245 fps= 59 q=-0.0 size=    4096kB time=00:00:08.16 bitrate=4108.8kbits/s speed=1.97x    
+frame=  279 fps= 60 q=-0.0 size=    4608kB time=00:00:09.30 bitrate=4059.0kbits/s speed=1.99x    
+frame=  318 fps= 61 q=-0.0 size=    5120kB time=00:00:10.60 bitrate=3956.9kbits/s speed=2.05x    
+frame=  351 fps= 62 q=-0.0 size=    5888kB time=00:00:11.70 bitrate=4122.6kbits/s speed=2.05x    
+frame=  375 fps= 60 q=-0.0 size=    6144kB time=00:00:12.50 bitrate=4026.6kbits/s speed=2.02x    
+frame=  409 fps= 61 q=-0.0 size=    6912kB time=00:00:13.63 bitrate=4153.3kbits/s speed=2.03x    
+frame=  422 fps= 58 q=-0.0 size=    7168kB time=00:00:14.03 bitrate=4184.4kbits/s speed=1.94x    
+frame=  433 fps= 56 q=-0.0 size=    7424kB time=00:00:14.43 bitrate=4213.7kbits/s speed=1.86x    
+[mp4 @ 00000283fed4c240] Starting second pass: moving the moov atom to the beginning of the file
+frame=  450 fps= 56 q=-0.0 Lsize=    7846kB time=00:00:14.96 bitrate=4294.6kbits/s speed=1.85x    
+video:7844kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.034189%

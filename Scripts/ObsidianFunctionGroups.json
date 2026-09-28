@@ -1,0 +1,134 @@
+[
+  {
+    "name": "전투",
+    "description": "공격 실행, 격투 입력, 피격 반응과 공격 대상 인터페이스",
+    "documentPatterns": [
+      "*attack*",
+      "*multihit*",
+      "*stone-fist*",
+      "*brawler*",
+      "*boxing*",
+      "*equipment-damage-feedback*",
+      "*class-combat*",
+      "*gas-skill*",
+      "*framework-consolidation*"
+    ]
+  },
+  {
+    "name": "스킬",
+    "description": "스킬 데이터, 슬롯 배치, 해금 상태와 스킬 트리 UI",
+    "documentPatterns": [
+      "*skill*",
+      "*attack-patterns*",
+      "*directional-dodge*",
+      "*stone-fist*",
+      "*class-combat*"
+    ]
+  },
+  {
+    "name": "인벤토리·장비",
+    "description": "아이템 데이터, 획득, 보관, 장착과 장비 미리보기",
+    "documentPatterns": [
+      "*inventory*",
+      "*equipment*",
+      "*item*",
+      "*helmet*",
+      "*loot-bag*",
+      "*weapon-driven-skill-tree*"
+    ]
+  },
+  {
+    "name": "체력·성장",
+    "description": "GAS 속성, 회복, 레벨·경험치와 플레이어 상태",
+    "documentPatterns": [
+      "*level-experience*",
+      "*experience-hover*",
+      "*monster-experience*",
+      "*monster-data-regen*",
+      "*player-stat*",
+      "*sprint-postprocess*",
+      "*gas-skill*",
+      "*character-base-stats*",
+      "*full-width-xp*",
+      "*framework-consolidation*"
+    ]
+  },
+  {
+    "name": "캐릭터·프로필",
+    "description": "캐릭터 조립, 외형 설정, 정체성과 프로필 저장",
+    "documentPatterns": [
+      "*character-customization*",
+      "*inherited-character*",
+      "*character-selection*",
+      "*lobby-preview*",
+      "*character-assets*",
+      "*identity-ui*",
+      "*adventurer-unarmed*"
+    ]
+  },
+  {
+    "name": "애니메이션·1인칭",
+    "description": "캐릭터 모션, 팔 표현, 카메라와 관련 저작·검증 도구",
+    "documentPatterns": [
+      "*animation*",
+      "*motion*",
+      "*first-person*",
+      "*hand-orientation*",
+      "*arms-only*",
+      "*boxing*",
+      "*brawler*",
+      "*combat-vfx*",
+      "*character-vfx*"
+    ]
+  },
+  {
+    "name": "몬스터·AI",
+    "description": "몬스터 본체, AI 판단, 몬스터 설정과 생성",
+    "documentPatterns": [
+      "*monster*",
+      "*multihit*"
+    ]
+  },
+  {
+    "name": "HUD·메뉴",
+    "description": "HUD 상태 표시, 공용 위젯과 메뉴·로비 화면",
+    "documentPatterns": [
+      "*hud*",
+      "*widget*",
+      "*menu*",
+      "*identity-ui*",
+      "*skill-tree*",
+      "*equipment-window*",
+      "*full-width-xp*",
+      "*monster-info*",
+      "*gothic-ui*",
+      "*framework-consolidation*"
+    ]
+  },
+  {
+    "name": "월드·상호작용",
+    "description": "맵 정의, 포탈, 파괴 가능한 오브젝트와 월드 아이템",
+    "documentPatterns": [
+      "*loot-bag*",
+      "*reward-chest*",
+      "*area-spawner*",
+      "*menu-map*",
+      "*prototype-run-flow*",
+      "*grid-inventory*"
+    ]
+  },
+  {
+    "name": "입력·게임흐름",
+    "description": "플레이어 입력, 게임 모드·상태와 플랫폼 진입점",
+    "documentPatterns": [
+      "*prototype-run-flow*",
+      "*menu-map*",
+      "*jump-roll*",
+      "*directional-dodge*",
+      "*brawler-inputs*",
+      "*equipment-p-key*",
+      "*character-selection*",
+      "*framework-consolidation*"
+    ]
+  }
+]

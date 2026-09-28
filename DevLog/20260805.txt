@@ -1,0 +1,46 @@
+제목: 기존 배치를 유지한 고딕 전투 HUD 제작 및 UMG 적용
+
+1. 작업 배경
+
+전투 HUD의 기능 배치와 바인딩은 유지하면서, 제공된 레퍼런스처럼 어두운 고딕 액션 RPG 분위기를 적용했다. 이미지 한 장을 단순 배경으로 늘이는 대신 현재 1920×1080 Designer 좌표에 맞게 재사용 가능한 장식 조각으로 분리했다.
+
+2. 주요 작업
+
+- 레퍼런스를 스타일 참고로 사용해 독창적인 흑철·청동 HUD 프레임을 생성했다.
+- 마젠타 크로마키를 제거하고 알파가 있는 최종 PNG를 만들었다.
+- 좌측 바, 우측 바, 중앙 메달, 경험치 프레임, 슬롯 프레임을 파생했다.
+- 5개 PNG를 UI 전용 Texture2D로 임포트했다.
+- MainHUD 장식 Image 4개를 ZOrder 0으로 배치했다.
+- QuickSlot 프레임과 HUD 파트의 배경 브러시/색상을 고딕 팔레트로 통일했다.
+- UMG 수정·재적용·검증이 가능한 Unreal Python 스크립트를 추가했다.
+
+3. 배치 보존
+
+- HealthBarWidget: 670, 930 / 360×34 / ZOrder 2 유지
+- StaminaBarWidget: 1160, 930 / 360×34 / ZOrder 2 유지
+- IdentityWidget: 1048, 930 / 96×116 / ZOrder 3 유지
+- SkillSlotPanelWidget: 760, 968 / 280×82 / ZOrder 2 유지
+- ItemSlotPanelWidget: 1160, 968 / 230×72 / ZOrder 2 유지
+- 경험치, 몬스터 정보, 로그, 획득 피드의 기존 배치도 자동 비교에서 일치했다.
+
+4. 검증 결과
+
+- UnrealEditor-Cmd Widget Blueprint 컴파일: 오류 0건, 경고 0건
+- Gothic Combat HUD Validator: PASSED
+- Texture2D 5개 로드 성공
+- QuickSlot 필수 바인딩 4개 유지
+- CheckGeneratedChanges: 통과
+- 모든 `.uasset` 변경은 Unreal Editor Python API로 수행했다.
+
+5. 후속 확인
+
+- 실제 게임 플레이 해상도에서 게이지 색과 생성 프레임의 대비를 최종 체감 QA할 수 있다.
+- 다른 비율의 화면을 지원할 때는 장식 Image를 하단 중앙 앵커 기반으로 전환하는 후속 작업을 권장한다.
+
+Notion 요약 후보
+
+- 기존 전투 HUD 위치와 기능 바인딩을 100% 유지한 고딕 비주얼 개편 완료
+- 생성 이미지 1종에서 UMG용 투명 텍스처 5종 파생 및 임포트
+- MainHUD 장식 레이어와 QuickSlot 프레임 실제 배치 완료
+- 주요 위젯 9개 배치 값 자동 비교 통과
+- 재현 가능한 생성·적용·검증 스크립트 제공

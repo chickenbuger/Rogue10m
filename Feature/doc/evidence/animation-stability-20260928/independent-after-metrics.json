@@ -1,0 +1,6332 @@
+{
+  "capture": "after",
+  "warning": "Attack windows include only active montage samples. Cross-rig reference deltas can include retarget-pose offsets; derivatives and A/B isolate causality.",
+  "windows": {
+    "0": {
+      "frames": [
+        0,
+        44
+      ],
+      "samples": 45,
+      "montages": [
+        ""
+      ],
+      "bones": {
+        "root": {
+          "source": {
+            "max_step_deg": 0.0,
+            "max_step_frame": 0,
+            "max_rotation_from_capture_idle_deg": 0.0,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 0.0,
+            "max_step_frame": 0,
+            "max_rotation_from_capture_idle_deg": 0.0,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 44
+          }
+        },
+        "pelvis": {
+          "source": {
+            "max_step_deg": 0.121513968,
+            "max_step_frame": 6,
+            "max_rotation_from_capture_idle_deg": 1.5279216883392803,
+            "local_length_ratio": [
+              0.954204276,
+              0.957093559
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 0.121513968,
+            "max_step_frame": 6,
+            "max_rotation_from_capture_idle_deg": 1.5279216647034535,
+            "local_length_ratio": [
+              0.954319115,
+              0.957208746
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.7075472925031877e-06,
+            "frame": 32
+          }
+        },
+        "head": {
+          "source": {
+            "max_step_deg": 0.174608402,
+            "max_step_frame": 5,
+            "max_rotation_from_capture_idle_deg": 2.48189399758168,
+            "local_length_ratio": [
+              0.999999224,
+              0.999999224
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 0.174608402,
+            "max_step_frame": 5,
+            "max_rotation_from_capture_idle_deg": 2.4818941073690204,
+            "local_length_ratio": [
+              0.999999578,
+              0.999999586
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 2.4148365394514667e-06,
+            "frame": 28
+          }
+        },
+        "hand_l": {
+          "source": {
+            "max_step_deg": 0.237503505,
+            "max_step_frame": 22,
+            "max_rotation_from_capture_idle_deg": 3.655045689771191,
+            "local_length_ratio": [
+              1.00000063,
+              1.00000063
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 0.237503505,
+            "max_step_frame": 22,
+            "max_rotation_from_capture_idle_deg": 3.655045642814778,
+            "local_length_ratio": [
+              0.999999971,
+              0.999999972
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 44
+          }
+        },
+        "hand_r": {
+          "source": {
+            "max_step_deg": 0.209320128,
+            "max_step_frame": 7,
+            "max_rotation_from_capture_idle_deg": 3.1131945481276238,
+            "local_length_ratio": [
+              1.00000042,
+              1.00000042
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 0.209320128,
+            "max_step_frame": 7,
+            "max_rotation_from_capture_idle_deg": 3.1131945132202574,
+            "local_length_ratio": [
+              0.999999886,
+              0.999999893
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 2.4148365394514667e-06,
+            "frame": 2
+          }
+        },
+        "thigh_l": {
+          "source": {
+            "max_step_deg": 0.06334761,
+            "max_step_frame": 43,
+            "max_rotation_from_capture_idle_deg": 0.7216964802250206,
+            "local_length_ratio": [
+              0.999999787,
+              0.999999787
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 0.06334761,
+            "max_step_frame": 43,
+            "max_rotation_from_capture_idle_deg": 0.7216964345313146,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.7075472925031877e-06,
+            "frame": 42
+          }
+        },
+        "thigh_r": {
+          "source": {
+            "max_step_deg": 0.081356095,
+            "max_step_frame": 5,
+            "max_rotation_from_capture_idle_deg": 1.1949600264848195,
+            "local_length_ratio": [
+              0.999999935,
+              0.999999935
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 0.081356095,
+            "max_step_frame": 5,
+            "max_rotation_from_capture_idle_deg": 1.1949599613352953,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 2.4148365394514667e-06,
+            "frame": 5
+          }
+        },
+        "calf_l": {
+          "source": {
+            "max_step_deg": 0.082236863,
+            "max_step_frame": 43,
+            "max_rotation_from_capture_idle_deg": 0.7452357181369589,
+            "local_length_ratio": [
+              1.000001496,
+              1.000001496
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 0.075130853,
+            "max_step_frame": 43,
+            "max_rotation_from_capture_idle_deg": 0.6775801138274004,
+            "local_length_ratio": [
+              1.000000137,
+              1.000000138
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.1274530386056667,
+            "frame": 44
+          }
+        },
+        "calf_r": {
+          "source": {
+            "max_step_deg": 0.076274319,
+            "max_step_frame": 27,
+            "max_rotation_from_capture_idle_deg": 1.194082917906655,
+            "local_length_ratio": [
+              1.000000352,
+              1.000000352
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 0.069570212,
+            "max_step_frame": 27,
+            "max_rotation_from_capture_idle_deg": 1.0881593537564347,
+            "local_length_ratio": [
+              1.000000007,
+              1.000000007
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.1885155139759167,
+            "frame": 0
+          }
+        },
+        "foot_l": {
+          "source": {
+            "max_step_deg": 0.025691527,
+            "max_step_frame": 31,
+            "max_rotation_from_capture_idle_deg": 0.08089592418201905,
+            "local_length_ratio": [
+              1.000001807,
+              1.000001807
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 0.025529476,
+            "max_step_frame": 31,
+            "max_rotation_from_capture_idle_deg": 0.09331200064553122,
+            "local_length_ratio": [
+              1.000000158,
+              1.000000158
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.2418743555896002,
+            "frame": 41
+          }
+        },
+        "foot_r": {
+          "source": {
+            "max_step_deg": 0.030667153,
+            "max_step_frame": 12,
+            "max_rotation_from_capture_idle_deg": 0.11713901023098199,
+            "local_length_ratio": [
+              1.000001084,
+              1.000001084
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 0.03114476,
+            "max_step_frame": 12,
+            "max_rotation_from_capture_idle_deg": 0.12320858833185201,
+            "local_length_ratio": [
+              1.000000025,
+              1.000000026
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.05172465774745679,
+            "frame": 44
+          }
+        }
+      }
+    },
+    "1": {
+      "frames": [
+        46,
+        56
+      ],
+      "samples": 11,
+      "montages": [
+        "/Game/Rogue10m/Animation/Combat/Boxing/AM_BoxingLeftJab_Appearance.AM_BoxingLeftJab_Appearance"
+      ],
+      "bones": {
+        "root": {
+          "source": {
+            "max_step_deg": 16.954089484,
+            "max_step_frame": 50,
+            "max_rotation_from_capture_idle_deg": 70.37278646024288,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 16.954089484,
+            "max_step_frame": 50,
+            "max_rotation_from_capture_idle_deg": 70.37278646024288,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 56
+          }
+        },
+        "pelvis": {
+          "source": {
+            "max_step_deg": 12.593102766,
+            "max_step_frame": 50,
+            "max_rotation_from_capture_idle_deg": 48.43891913968042,
+            "local_length_ratio": [
+              0.02321339,
+              0.906412226
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 12.593102766,
+            "max_step_frame": 50,
+            "max_rotation_from_capture_idle_deg": 48.43891925203229,
+            "local_length_ratio": [
+              0.023216166,
+              0.906521288
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 56
+          }
+        },
+        "head": {
+          "source": {
+            "max_step_deg": 8.910125921,
+            "max_step_frame": 52,
+            "max_rotation_from_capture_idle_deg": 42.657603402743256,
+            "local_length_ratio": [
+              0.999999235,
+              1.0
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 8.910125921,
+            "max_step_frame": 52,
+            "max_rotation_from_capture_idle_deg": 42.65760340600353,
+            "local_length_ratio": [
+              0.99999941,
+              0.999999582
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 56
+          }
+        },
+        "hand_l": {
+          "source": {
+            "max_step_deg": 31.524507563,
+            "max_step_frame": 53,
+            "max_rotation_from_capture_idle_deg": 117.3198800840439,
+            "local_length_ratio": [
+              1.0,
+              1.000000573
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 31.524507563,
+            "max_step_frame": 53,
+            "max_rotation_from_capture_idle_deg": 117.31988015837645,
+            "local_length_ratio": [
+              0.999999915,
+              0.999999968
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 56
+          }
+        },
+        "hand_r": {
+          "source": {
+            "max_step_deg": 28.67890352,
+            "max_step_frame": 49,
+            "max_rotation_from_capture_idle_deg": 130.59314100297178,
+            "local_length_ratio": [
+              1.0,
+              1.000000376
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 28.67890352,
+            "max_step_frame": 49,
+            "max_rotation_from_capture_idle_deg": 130.59314104615996,
+            "local_length_ratio": [
+              0.999999862,
+              0.999999912
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 56
+          }
+        },
+        "thigh_l": {
+          "source": {
+            "max_step_deg": 13.079523901,
+            "max_step_frame": 49,
+            "max_rotation_from_capture_idle_deg": 60.03839004685149,
+            "local_length_ratio": [
+              0.999999771,
+              1.0
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 13.079523901,
+            "max_step_frame": 49,
+            "max_rotation_from_capture_idle_deg": 60.03838998623046,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 56
+          }
+        },
+        "thigh_r": {
+          "source": {
+            "max_step_deg": 14.324757226,
+            "max_step_frame": 49,
+            "max_rotation_from_capture_idle_deg": 68.28824980054895,
+            "local_length_ratio": [
+              0.999999912,
+              1.0
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 14.324757226,
+            "max_step_frame": 49,
+            "max_rotation_from_capture_idle_deg": 68.28824963628271,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.7075472925031877e-06,
+            "frame": 55
+          }
+        },
+        "calf_l": {
+          "source": {
+            "max_step_deg": 19.908105772,
+            "max_step_frame": 50,
+            "max_rotation_from_capture_idle_deg": 62.5610886036103,
+            "local_length_ratio": [
+              1.0,
+              1.000001397
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 19.4794294,
+            "max_step_frame": 50,
+            "max_rotation_from_capture_idle_deg": 62.00418621464857,
+            "local_length_ratio": [
+              1.000000086,
+              1.000000137
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 3.474658329105934,
+            "frame": 53
+          }
+        },
+        "calf_r": {
+          "source": {
+            "max_step_deg": 12.527108871,
+            "max_step_frame": 50,
+            "max_rotation_from_capture_idle_deg": 64.60415243682016,
+            "local_length_ratio": [
+              1.0,
+              1.00000032
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 12.394455796,
+            "max_step_frame": 50,
+            "max_rotation_from_capture_idle_deg": 63.740009448345454,
+            "local_length_ratio": [
+              1.000000007,
+              1.00000001
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 2.828592135522977,
+            "frame": 56
+          }
+        },
+        "foot_l": {
+          "source": {
+            "max_step_deg": 23.569167697,
+            "max_step_frame": 51,
+            "max_rotation_from_capture_idle_deg": 61.329980414135406,
+            "local_length_ratio": [
+              1.0,
+              1.000001693
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 23.874931183,
+            "max_step_frame": 51,
+            "max_rotation_from_capture_idle_deg": 61.42914737329965,
+            "local_length_ratio": [
+              1.000000159,
+              1.000000217
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 2.1222129427599543,
+            "frame": 55
+          }
+        },
+        "foot_r": {
+          "source": {
+            "max_step_deg": 17.383924552,
+            "max_step_frame": 52,
+            "max_rotation_from_capture_idle_deg": 54.569760187129305,
+            "local_length_ratio": [
+              1.0,
+              1.000001006
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 17.182742313,
+            "max_step_frame": 52,
+            "max_rotation_from_capture_idle_deg": 54.36767759011377,
+            "local_length_ratio": [
+              1.000000017,
+              1.000000025
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.4143787206355396,
+            "frame": 54
+          }
+        }
+      }
+    },
+    "2": {
+      "frames": [
+        57,
+        68
+      ],
+      "samples": 12,
+      "montages": [
+        "/Game/Rogue10m/Animation/Combat/Boxing/AM_BoxingRightJab_Appearance.AM_BoxingRightJab_Appearance"
+      ],
+      "bones": {
+        "root": {
+          "source": {
+            "max_step_deg": 10.259378178,
+            "max_step_frame": 68,
+            "max_rotation_from_capture_idle_deg": 70.37278646024288,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 10.259378178,
+            "max_step_frame": 68,
+            "max_rotation_from_capture_idle_deg": 70.37278646024288,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 68
+          }
+        },
+        "pelvis": {
+          "source": {
+            "max_step_deg": 10.259101529,
+            "max_step_frame": 68,
+            "max_rotation_from_capture_idle_deg": 48.43891913968042,
+            "local_length_ratio": [
+              0.053651918,
+              0.087408788
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 10.259101529,
+            "max_step_frame": 68,
+            "max_rotation_from_capture_idle_deg": 48.43891925203229,
+            "local_length_ratio": [
+              0.053658394,
+              0.087419328
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 68
+          }
+        },
+        "head": {
+          "source": {
+            "max_step_deg": 10.402854952,
+            "max_step_frame": 62,
+            "max_rotation_from_capture_idle_deg": 36.831378843098655,
+            "local_length_ratio": [
+              0.999999953,
+              1.000000021
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 10.402854952,
+            "max_step_frame": 62,
+            "max_rotation_from_capture_idle_deg": 36.83137881289138,
+            "local_length_ratio": [
+              0.99999946,
+              0.999999609
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 2.4148365394514667e-06,
+            "frame": 63
+          }
+        },
+        "hand_l": {
+          "source": {
+            "max_step_deg": 11.856856106,
+            "max_step_frame": 60,
+            "max_rotation_from_capture_idle_deg": 132.75067936805914,
+            "local_length_ratio": [
+              0.999999976,
+              1.000000037
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 11.856856106,
+            "max_step_frame": 60,
+            "max_rotation_from_capture_idle_deg": 132.7506794026742,
+            "local_length_ratio": [
+              0.999999908,
+              0.999999918
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 2.4148365394514667e-06,
+            "frame": 68
+          }
+        },
+        "hand_r": {
+          "source": {
+            "max_step_deg": 40.125966212,
+            "max_step_frame": 63,
+            "max_rotation_from_capture_idle_deg": 132.26612269945304,
+            "local_length_ratio": [
+              0.999999975,
+              1.000000035
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 40.125966212,
+            "max_step_frame": 63,
+            "max_rotation_from_capture_idle_deg": 132.26612272506156,
+            "local_length_ratio": [
+              0.999999864,
+              0.999999969
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 68
+          }
+        },
+        "thigh_l": {
+          "source": {
+            "max_step_deg": 10.221174974,
+            "max_step_frame": 68,
+            "max_rotation_from_capture_idle_deg": 60.037416101569185,
+            "local_length_ratio": [
+              0.999999966,
+              1.000000027
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 10.221174974,
+            "max_step_frame": 68,
+            "max_rotation_from_capture_idle_deg": 60.037416014504885,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.7075472925031877e-06,
+            "frame": 61
+          }
+        },
+        "thigh_r": {
+          "source": {
+            "max_step_deg": 11.441358414,
+            "max_step_frame": 68,
+            "max_rotation_from_capture_idle_deg": 68.28824980054895,
+            "local_length_ratio": [
+              0.999999969,
+              1.000000029
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 11.441358414,
+            "max_step_frame": 68,
+            "max_rotation_from_capture_idle_deg": 68.28824963628271,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.7075472925031877e-06,
+            "frame": 67
+          }
+        },
+        "calf_l": {
+          "source": {
+            "max_step_deg": 24.98933684,
+            "max_step_frame": 57,
+            "max_rotation_from_capture_idle_deg": 62.56073367684501,
+            "local_length_ratio": [
+              0.999999979,
+              1.000000048
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 23.877043839,
+            "max_step_frame": 57,
+            "max_rotation_from_capture_idle_deg": 62.00382088119684,
+            "local_length_ratio": [
+              1.000000086,
+              1.000000115
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 3.474658386633041,
+            "frame": 65
+          }
+        },
+        "calf_r": {
+          "source": {
+            "max_step_deg": 11.293921328,
+            "max_step_frame": 58,
+            "max_rotation_from_capture_idle_deg": 64.60473660029076,
+            "local_length_ratio": [
+              0.999999975,
+              1.000000034
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 11.625363438,
+            "max_step_frame": 58,
+            "max_rotation_from_capture_idle_deg": 63.74050925867238,
+            "local_length_ratio": [
+              1.000000009,
+              1.00000001
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 3.378538823173424,
+            "frame": 60
+          }
+        },
+        "foot_l": {
+          "source": {
+            "max_step_deg": 20.292690814,
+            "max_step_frame": 63,
+            "max_rotation_from_capture_idle_deg": 61.3295947591458,
+            "local_length_ratio": [
+              0.99999998,
+              1.000000059
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 20.619234908,
+            "max_step_frame": 63,
+            "max_rotation_from_capture_idle_deg": 61.42874698550516,
+            "local_length_ratio": [
+              1.000000186,
+              1.000000217
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 2.122212860156097,
+            "frame": 67
+          }
+        },
+        "foot_r": {
+          "source": {
+            "max_step_deg": 15.820905511,
+            "max_step_frame": 64,
+            "max_rotation_from_capture_idle_deg": 54.569390784926995,
+            "local_length_ratio": [
+              0.999999978,
+              1.000000043
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 15.648292868,
+            "max_step_frame": 64,
+            "max_rotation_from_capture_idle_deg": 54.35919307977934,
+            "local_length_ratio": [
+              1.000000015,
+              1.00000002
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.4531891054067694,
+            "frame": 57
+          }
+        }
+      }
+    },
+    "3": {
+      "frames": [
+        139,
+        159
+      ],
+      "samples": 21,
+      "montages": [
+        "/Game/Rogue10m/Animation/Common/AM_Punch_02.AM_Punch_02"
+      ],
+      "bones": {
+        "root": {
+          "source": {
+            "max_step_deg": 0.0,
+            "max_step_frame": 139,
+            "max_rotation_from_capture_idle_deg": 0.0,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 0.0,
+            "max_step_frame": 139,
+            "max_rotation_from_capture_idle_deg": 0.0,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 159
+          }
+        },
+        "pelvis": {
+          "source": {
+            "max_step_deg": 31.229906572,
+            "max_step_frame": 149,
+            "max_rotation_from_capture_idle_deg": 116.34480010990049,
+            "local_length_ratio": [
+              0.800473487,
+              0.974772865
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 31.229906572,
+            "max_step_frame": 149,
+            "max_rotation_from_capture_idle_deg": 116.34480004541322,
+            "local_length_ratio": [
+              0.800569824,
+              0.974890179
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 159
+          }
+        },
+        "head": {
+          "source": {
+            "max_step_deg": 24.442884286,
+            "max_step_frame": 149,
+            "max_rotation_from_capture_idle_deg": 104.29957831341353,
+            "local_length_ratio": [
+              0.999999235,
+              1.0
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 24.442884286,
+            "max_step_frame": 149,
+            "max_rotation_from_capture_idle_deg": 104.29957836350377,
+            "local_length_ratio": [
+              0.999999406,
+              0.999999995
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 159
+          }
+        },
+        "hand_l": {
+          "source": {
+            "max_step_deg": 50.196349014,
+            "max_step_frame": 143,
+            "max_rotation_from_capture_idle_deg": 176.64784027967997,
+            "local_length_ratio": [
+              1.0,
+              1.000000573
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 50.196349014,
+            "max_step_frame": 143,
+            "max_rotation_from_capture_idle_deg": 176.6478402433735,
+            "local_length_ratio": [
+              0.999999907,
+              0.999999978
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 159
+          }
+        },
+        "hand_r": {
+          "source": {
+            "max_step_deg": 70.969363454,
+            "max_step_frame": 143,
+            "max_rotation_from_capture_idle_deg": 170.2826032781441,
+            "local_length_ratio": [
+              1.0,
+              1.000000376
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 70.969363454,
+            "max_step_frame": 143,
+            "max_rotation_from_capture_idle_deg": 170.28260323418112,
+            "local_length_ratio": [
+              0.999999711,
+              0.999999986
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 2.4148365394514667e-06,
+            "frame": 144
+          }
+        },
+        "thigh_l": {
+          "source": {
+            "max_step_deg": 23.700092966,
+            "max_step_frame": 148,
+            "max_rotation_from_capture_idle_deg": 68.34697022455197,
+            "local_length_ratio": [
+              0.999999771,
+              1.0
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 23.700092966,
+            "max_step_frame": 148,
+            "max_rotation_from_capture_idle_deg": 68.34697025930645,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.7075472925031877e-06,
+            "frame": 149
+          }
+        },
+        "thigh_r": {
+          "source": {
+            "max_step_deg": 36.421871255,
+            "max_step_frame": 150,
+            "max_rotation_from_capture_idle_deg": 92.79926662042583,
+            "local_length_ratio": [
+              0.999999912,
+              1.0
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 36.421871255,
+            "max_step_frame": 150,
+            "max_rotation_from_capture_idle_deg": 92.79926680095173,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 159
+          }
+        },
+        "calf_l": {
+          "source": {
+            "max_step_deg": 33.946218771,
+            "max_step_frame": 149,
+            "max_rotation_from_capture_idle_deg": 80.81788737710448,
+            "local_length_ratio": [
+              1.0,
+              1.000001397
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 33.206913965,
+            "max_step_frame": 149,
+            "max_rotation_from_capture_idle_deg": 80.38677548156923,
+            "local_length_ratio": [
+              1.000000113,
+              1.000000202
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 2.938395795161412,
+            "frame": 146
+          }
+        },
+        "calf_r": {
+          "source": {
+            "max_step_deg": 36.376447596,
+            "max_step_frame": 150,
+            "max_rotation_from_capture_idle_deg": 85.89951905184134,
+            "local_length_ratio": [
+              1.0,
+              1.00000032
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 35.444303165,
+            "max_step_frame": 150,
+            "max_rotation_from_capture_idle_deg": 84.37934190851999,
+            "local_length_ratio": [
+              1.000000005,
+              1.000000011
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 4.65331132199951,
+            "frame": 148
+          }
+        },
+        "foot_l": {
+          "source": {
+            "max_step_deg": 29.684070926,
+            "max_step_frame": 148,
+            "max_rotation_from_capture_idle_deg": 85.56257444577813,
+            "local_length_ratio": [
+              1.0,
+              1.000001693
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 29.647391449,
+            "max_step_frame": 148,
+            "max_rotation_from_capture_idle_deg": 85.23281535111853,
+            "local_length_ratio": [
+              1.000000093,
+              1.00000019
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.5801059913787079,
+            "frame": 146
+          }
+        },
+        "foot_r": {
+          "source": {
+            "max_step_deg": 27.246622801,
+            "max_step_frame": 149,
+            "max_rotation_from_capture_idle_deg": 80.55287142082871,
+            "local_length_ratio": [
+              1.0,
+              1.000001006
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 27.221658449,
+            "max_step_frame": 149,
+            "max_rotation_from_capture_idle_deg": 80.55288924408794,
+            "local_length_ratio": [
+              1.000000013,
+              1.000000049
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.8370928976116567,
+            "frame": 159
+          }
+        }
+      }
+    },
+    "4": {
+      "frames": [
+        247,
+        270
+      ],
+      "samples": 24,
+      "montages": [
+        "/Game/Rogue10m/Animation/Combat/Boxing/AM_BrawlerRightHook_Stable.AM_BrawlerRightHook_Stable"
+      ],
+      "bones": {
+        "root": {
+          "source": {
+            "max_step_deg": 0.0,
+            "max_step_frame": 247,
+            "max_rotation_from_capture_idle_deg": 0.0,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 0.0,
+            "max_step_frame": 247,
+            "max_rotation_from_capture_idle_deg": 0.0,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 270
+          }
+        },
+        "pelvis": {
+          "source": {
+            "max_step_deg": 40.396401882,
+            "max_step_frame": 252,
+            "max_rotation_from_capture_idle_deg": 176.29468382093071,
+            "local_length_ratio": [
+              0.825074762,
+              1.167653714
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 40.396401882,
+            "max_step_frame": 252,
+            "max_rotation_from_capture_idle_deg": 176.29468397240197,
+            "local_length_ratio": [
+              0.82517406,
+              1.167794242
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.7075472925031877e-06,
+            "frame": 250
+          }
+        },
+        "head": {
+          "source": {
+            "max_step_deg": 57.770748578,
+            "max_step_frame": 249,
+            "max_rotation_from_capture_idle_deg": 158.61549245281356,
+            "local_length_ratio": [
+              0.999999425,
+              1.0
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 57.770748578,
+            "max_step_frame": 249,
+            "max_rotation_from_capture_idle_deg": 158.61549247248686,
+            "local_length_ratio": [
+              0.999999453,
+              0.999999892
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 270
+          }
+        },
+        "hand_l": {
+          "source": {
+            "max_step_deg": 74.470619612,
+            "max_step_frame": 248,
+            "max_rotation_from_capture_idle_deg": 166.9787434062206,
+            "local_length_ratio": [
+              1.0,
+              1.000000467
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 74.470619612,
+            "max_step_frame": 248,
+            "max_rotation_from_capture_idle_deg": 166.97874345284947,
+            "local_length_ratio": [
+              0.999999909,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 270
+          }
+        },
+        "hand_r": {
+          "source": {
+            "max_step_deg": 130.522243362,
+            "max_step_frame": 252,
+            "max_rotation_from_capture_idle_deg": 172.49945996783623,
+            "local_length_ratio": [
+              1.0,
+              1.000000311
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 130.522243362,
+            "max_step_frame": 252,
+            "max_rotation_from_capture_idle_deg": 172.49945999279308,
+            "local_length_ratio": [
+              0.999999727,
+              0.999999988
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 2.4148365394514667e-06,
+            "frame": 263
+          }
+        },
+        "thigh_l": {
+          "source": {
+            "max_step_deg": 58.231086533,
+            "max_step_frame": 262,
+            "max_rotation_from_capture_idle_deg": 170.9665705342182,
+            "local_length_ratio": [
+              0.999999842,
+              1.0
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 58.231086533,
+            "max_step_frame": 262,
+            "max_rotation_from_capture_idle_deg": 170.9665705406694,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.7075472925031877e-06,
+            "frame": 255
+          }
+        },
+        "thigh_r": {
+          "source": {
+            "max_step_deg": 121.004518758,
+            "max_step_frame": 253,
+            "max_rotation_from_capture_idle_deg": 166.77485050973183,
+            "local_length_ratio": [
+              0.999999952,
+              1.0
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 121.004518758,
+            "max_step_frame": 253,
+            "max_rotation_from_capture_idle_deg": 166.77485037477248,
+            "local_length_ratio": [
+              1.0,
+              1.0
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.0,
+            "frame": 270
+          }
+        },
+        "calf_l": {
+          "source": {
+            "max_step_deg": 54.507613463,
+            "max_step_frame": 261,
+            "max_rotation_from_capture_idle_deg": 168.70187598474024,
+            "local_length_ratio": [
+              1.0,
+              1.000001107
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 53.214367867,
+            "max_step_frame": 261,
+            "max_rotation_from_capture_idle_deg": 169.95220642271443,
+            "local_length_ratio": [
+              1.000000118,
+              1.000000195
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 4.906627378955957,
+            "frame": 260
+          }
+        },
+        "calf_r": {
+          "source": {
+            "max_step_deg": 85.145210407,
+            "max_step_frame": 253,
+            "max_rotation_from_capture_idle_deg": 157.210969433495,
+            "local_length_ratio": [
+              1.0,
+              1.000000261
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 81.460644538,
+            "max_step_frame": 253,
+            "max_rotation_from_capture_idle_deg": 156.0568450902317,
+            "local_length_ratio": [
+              1.0,
+              1.000000012
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 6.032583171949979,
+            "frame": 257
+          }
+        },
+        "foot_l": {
+          "source": {
+            "max_step_deg": 40.918817361,
+            "max_step_frame": 262,
+            "max_rotation_from_capture_idle_deg": 179.12807649103843,
+            "local_length_ratio": [
+              1.0,
+              1.000001339
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 40.918817361,
+            "max_step_frame": 262,
+            "max_rotation_from_capture_idle_deg": 179.1303104976408,
+            "local_length_ratio": [
+              1.000000143,
+              1.0000002
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 0.15736477998023313,
+            "frame": 247
+          }
+        },
+        "foot_r": {
+          "source": {
+            "max_step_deg": 65.873641025,
+            "max_step_frame": 252,
+            "max_rotation_from_capture_idle_deg": 179.84415855138639,
+            "local_length_ratio": [
+              1.0,
+              1.000000803
+            ]
+          },
+          "appearance": {
+            "max_step_deg": 65.873641025,
+            "max_step_frame": 252,
+            "max_rotation_from_capture_idle_deg": 179.6146584981704,
+            "local_length_ratio": [
+              1.00000001,
+              1.000000063
+            ]
+          },
+          "max_reference_relative_stage_difference": {
+            "degrees": 1.106402191700352,
+            "frame": 258
+          }
+        }
+      }
+    }
+  },
+  "outlier_frames": {
+    "49": {
+      "state": {
+        "frame": "49",
+        "time_s": "1.633333333",
+        "world_s": "5.650109023",
+        "phase": "2",
+        "attack": "1",
+        "serial": "1",
+        "attack_elapsed": "0.133333206",
+        "charge": "0.000000000",
+        "third": "1",
+        "montage": "/Game/Rogue10m/Animation/Combat/Boxing/AM_BoxingLeftJab_Appearance.AM_BoxingLeftJab_Appearance",
+        "montage_s": "0.208000004",
+        "clip": "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingLeftJab_Appearance.A_BoxingLeftJab_Appearance",
+        "clip_s": "0.208000004",
+        "source_world_tx": "-20.000000000",
+        "source_world_ty": "0.000000000",
+        "source_world_tz": "212.275001152",
+        "source_world_qx": "0.000000000",
+        "source_world_qy": "0.000000000",
+        "source_world_qz": "-0.707106781",
+        "source_world_qw": "0.707106781",
+        "source_world_sx": "1.000000000",
+        "source_world_sy": "1.000000000",
+        "source_world_sz": "1.000000000",
+        "appearance_world_tx": "-20.000000000",
+        "appearance_world_ty": "0.000000000",
+        "appearance_world_tz": "212.275001152",
+        "appearance_world_qx": "0.000000000",
+        "appearance_world_qy": "0.000000000",
+        "appearance_world_qz": "-0.707106781",
+        "appearance_world_qw": "0.707106781",
+        "appearance_world_sx": "1.000000000",
+        "appearance_world_sy": "1.000000000",
+        "appearance_world_sz": "1.000000000",
+        "camera_tx": "8.975474129",
+        "camera_ty": "4.699463259",
+        "camera_tz": "365.783279905",
+        "camera_qx": "0.006649344",
+        "camera_qy": "0.421840807",
+        "camera_qz": "0.085360748",
+        "camera_qw": "0.902618226",
+        "camera_sx": "1.000000000",
+        "camera_sy": "1.000000000",
+        "camera_sz": "1.000000000",
+        "view_tx": "-281.907786236",
+        "view_ty": "0.000000000",
+        "view_tz": "410.881044149",
+        "view_qx": "-0.000000000",
+        "view_qy": "0.173648178",
+        "view_qz": "0.000000000",
+        "view_qw": "0.984807753",
+        "view_sx": "1.000000000",
+        "view_sy": "1.000000000",
+        "view_sz": "1.000000000",
+        "control_pitch": "-20.000000000",
+        "control_yaw": "0.000000000",
+        "control_roll": "0.000000000",
+        "capsule_x": "0.000000000",
+        "capsule_y": "0.000000000",
+        "capsule_z": "308.275001152",
+        "is_falling": "0"
+      },
+      "bones": {
+        "source": {
+          "root": {
+            "local_position": [
+              0.868029009,
+              12.204367223,
+              48.917831896
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 15.568575501,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              0.564854279,
+              -0.469325979,
+              36.692299109
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.995397776,
+            "length_ratio": 0.382591269
+          },
+          "head": {
+            "local_position": [
+              4.912969303,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 6.056982638,
+            "length_ratio": 0.999999651
+          },
+          "hand_l": {
+            "local_position": [
+              27.251081563,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 26.184430866,
+            "length_ratio": 1.000000284
+          },
+          "hand_r": {
+            "local_position": [
+              -27.251016045,
+              0.0,
+              -0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 28.67890352,
+            "length_ratio": 1.000000189
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.365710568,
+              0.110043965,
+              -9.969202137
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 13.079523901,
+            "length_ratio": 0.999999904
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.365724945,
+              0.119487581,
+              9.969091415
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 14.324757226,
+            "length_ratio": 0.999999971
+          },
+          "calf_l": {
+            "local_position": [
+              -43.341337648,
+              0.001882786,
+              -0.001274961
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 14.823818131,
+            "length_ratio": 1.000000672
+          },
+          "calf_r": {
+            "local_position": [
+              43.34126956,
+              0.001899776,
+              -0.00112911
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 12.051179597,
+            "length_ratio": 1.000000157
+          },
+          "foot_l": {
+            "local_position": [
+              -42.217948919,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.289707883,
+            "length_ratio": 1.000000813
+          },
+          "foot_r": {
+            "local_position": [
+              42.217969516,
+              0.0,
+              -0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.963350082,
+            "length_ratio": 1.000000488
+          }
+        },
+        "appearance": {
+          "root": {
+            "local_position": [
+              0.934126469,
+              13.133688325,
+              52.642758603
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 15.568575501,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              0.607865829,
+              -0.505063759,
+              39.486291109
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.995397776,
+            "length_ratio": 0.382637303
+          },
+          "head": {
+            "local_position": [
+              9.947605225,
+              -0.510021759,
+              -0.006381905
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 6.056982638,
+            "length_ratio": 0.99999953
+          },
+          "hand_l": {
+            "local_position": [
+              27.684522895,
+              -3.269125956,
+              -1.553589331
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 26.184430866,
+            "length_ratio": 0.999999941
+          },
+          "hand_r": {
+            "local_position": [
+              -27.618915881,
+              3.683675975,
+              1.777465972
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 28.67890352,
+            "length_ratio": 0.999999877
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.198886395,
+              -0.554049909,
+              -11.833477974
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 13.079523901,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.19762373,
+              -0.55394429,
+              11.83359623
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 14.324757226,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -47.787469978,
+              -3.000159476,
+              4.339220932
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 14.393396532,
+            "length_ratio": 1.000000126
+          },
+          "calf_r": {
+            "local_position": [
+              47.787819359,
+              3.000447215,
+              -4.341049452
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.50598598,
+            "length_ratio": 1.000000009
+          },
+          "foot_l": {
+            "local_position": [
+              -41.769062805,
+              5.64710803,
+              2.544775807
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.275391264,
+            "length_ratio": 1.000000198
+          },
+          "foot_r": {
+            "local_position": [
+              41.768746465,
+              -5.647566148,
+              -2.542829796
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.359613613,
+            "length_ratio": 1.000000024
+          }
+        }
+      }
+    },
+    "50": {
+      "state": {
+        "frame": "50",
+        "time_s": "1.666666667",
+        "world_s": "5.683442358",
+        "phase": "2",
+        "attack": "1",
+        "serial": "1",
+        "attack_elapsed": "0.166666985",
+        "charge": "0.000000000",
+        "third": "1",
+        "montage": "/Game/Rogue10m/Animation/Combat/Boxing/AM_BoxingLeftJab_Appearance.AM_BoxingLeftJab_Appearance",
+        "montage_s": "0.259999990",
+        "clip": "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingLeftJab_Appearance.A_BoxingLeftJab_Appearance",
+        "clip_s": "0.259999990",
+        "source_world_tx": "-20.000000000",
+        "source_world_ty": "0.000000000",
+        "source_world_tz": "212.275001152",
+        "source_world_qx": "0.000000000",
+        "source_world_qy": "0.000000000",
+        "source_world_qz": "-0.707106781",
+        "source_world_qw": "0.707106781",
+        "source_world_sx": "1.000000000",
+        "source_world_sy": "1.000000000",
+        "source_world_sz": "1.000000000",
+        "appearance_world_tx": "-20.000000000",
+        "appearance_world_ty": "0.000000000",
+        "appearance_world_tz": "212.275001152",
+        "appearance_world_qx": "0.000000000",
+        "appearance_world_qy": "0.000000000",
+        "appearance_world_qz": "-0.707106781",
+        "appearance_world_qw": "0.707106781",
+        "appearance_world_sx": "1.000000000",
+        "appearance_world_sy": "1.000000000",
+        "appearance_world_sz": "1.000000000",
+        "camera_tx": "24.736399187",
+        "camera_ty": "3.613993805",
+        "camera_tz": "361.139297036",
+        "camera_qx": "0.009385192",
+        "camera_qy": "0.452373656",
+        "camera_qz": "0.124128387",
+        "camera_qw": "0.883098034",
+        "camera_sx": "1.000000000",
+        "camera_sy": "1.000000000",
+        "camera_sz": "1.000000000",
+        "view_tx": "-281.907786236",
+        "view_ty": "0.000000000",
+        "view_tz": "410.881044149",
+        "view_qx": "-0.000000000",
+        "view_qy": "0.173648178",
+        "view_qz": "0.000000000",
+        "view_qw": "0.984807753",
+        "view_sx": "1.000000000",
+        "view_sy": "1.000000000",
+        "view_sz": "1.000000000",
+        "control_pitch": "-20.000000000",
+        "control_yaw": "0.000000000",
+        "control_roll": "0.000000000",
+        "capsule_x": "0.000000000",
+        "capsule_y": "0.000000000",
+        "capsule_z": "308.275001152",
+        "is_falling": "0"
+      },
+      "bones": {
+        "source": {
+          "root": {
+            "local_position": [
+              3.190262558,
+              22.147968077,
+              65.376137919
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 16.954089484,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              0.672895629,
+              0.006406009,
+              17.580037553
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 12.593102766,
+            "length_ratio": 0.18340488
+          },
+          "head": {
+            "local_position": [
+              4.912970031,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 6.089947982,
+            "length_ratio": 0.999999799
+          },
+          "hand_l": {
+            "local_position": [
+              27.251078288,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 28.122223126,
+            "length_ratio": 1.000000163
+          },
+          "hand_r": {
+            "local_position": [
+              -27.251013862,
+              0.0,
+              -0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 24.022260764,
+            "length_ratio": 1.000000109
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.365710841,
+              0.11004388,
+              -9.969202501
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.738548905,
+            "length_ratio": 0.999999945
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.365725491,
+              0.119487671,
+              9.969091415
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 13.645916444,
+            "length_ratio": 0.999999983
+          },
+          "calf_l": {
+            "local_position": [
+              -43.341325372,
+              0.000488376,
+              -0.000732765
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 19.908105772,
+            "length_ratio": 1.000000387
+          },
+          "calf_r": {
+            "local_position": [
+              43.341266755,
+              0.000628599,
+              -0.000104256
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 12.527108871,
+            "length_ratio": 1.000000091
+          },
+          "foot_l": {
+            "local_position": [
+              -42.217934361,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 15.603716785,
+            "length_ratio": 1.000000469
+          },
+          "foot_r": {
+            "local_position": [
+              42.217960782,
+              -0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 12.250653449,
+            "length_ratio": 1.000000281
+          }
+        },
+        "appearance": {
+          "root": {
+            "local_position": [
+              3.433190213,
+              23.834460601,
+              70.354308715
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 16.954089484,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              0.724133966,
+              0.006893605,
+              18.918695801
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 12.593102766,
+            "length_ratio": 0.183426939
+          },
+          "head": {
+            "local_position": [
+              9.947604822,
+              -0.51002194,
+              -0.006381747
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 6.089947982,
+            "length_ratio": 0.99999949
+          },
+          "hand_l": {
+            "local_position": [
+              27.684522706,
+              -3.269125993,
+              -1.553589471
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 28.122223126,
+            "length_ratio": 0.999999934
+          },
+          "hand_r": {
+            "local_position": [
+              -27.618916035,
+              3.683676289,
+              1.777466661
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 24.022260764,
+            "length_ratio": 0.999999885
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.198886395,
+              -0.554049909,
+              -11.833477974
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.738548905,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.19762373,
+              -0.55394429,
+              11.83359623
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 13.645916444,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -47.787469647,
+              -3.000159957,
+              4.339221094
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 19.4794294,
+            "length_ratio": 1.00000012
+          },
+          "calf_r": {
+            "local_position": [
+              47.787819389,
+              3.000447219,
+              -4.341049498
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 12.394455796,
+            "length_ratio": 1.00000001
+          },
+          "foot_l": {
+            "local_position": [
+              -41.769063156,
+              5.647106743,
+              2.544776397
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 15.694713787,
+            "length_ratio": 1.000000203
+          },
+          "foot_r": {
+            "local_position": [
+              41.768746375,
+              -5.647566133,
+              -2.542829925
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 12.938220458,
+            "length_ratio": 1.000000022
+          }
+        }
+      }
+    },
+    "51": {
+      "state": {
+        "frame": "51",
+        "time_s": "1.700000000",
+        "world_s": "5.716775693",
+        "phase": "2",
+        "attack": "1",
+        "serial": "1",
+        "attack_elapsed": "0.200000286",
+        "charge": "0.000000000",
+        "third": "1",
+        "montage": "/Game/Rogue10m/Animation/Combat/Boxing/AM_BoxingLeftJab_Appearance.AM_BoxingLeftJab_Appearance",
+        "montage_s": "0.311999977",
+        "clip": "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingLeftJab_Appearance.A_BoxingLeftJab_Appearance",
+        "clip_s": "0.311999977",
+        "source_world_tx": "-20.000000000",
+        "source_world_ty": "0.000000000",
+        "source_world_tz": "212.275001152",
+        "source_world_qx": "0.000000000",
+        "source_world_qy": "0.000000000",
+        "source_world_qz": "-0.707106781",
+        "source_world_qw": "0.707106781",
+        "source_world_sx": "1.000000000",
+        "source_world_sy": "1.000000000",
+        "source_world_sz": "1.000000000",
+        "appearance_world_tx": "-20.000000000",
+        "appearance_world_ty": "0.000000000",
+        "appearance_world_tz": "212.275001152",
+        "appearance_world_qx": "0.000000000",
+        "appearance_world_qy": "0.000000000",
+        "appearance_world_qz": "-0.707106781",
+        "appearance_world_qw": "0.707106781",
+        "appearance_world_sx": "1.000000000",
+        "appearance_world_sy": "1.000000000",
+        "appearance_world_sz": "1.000000000",
+        "camera_tx": "39.744454696",
+        "camera_ty": "2.863177822",
+        "camera_tz": "353.825692234",
+        "camera_qx": "-0.022935911",
+        "camera_qy": "0.486156596",
+        "camera_qz": "0.175048834",
+        "camera_qw": "0.855852566",
+        "camera_sx": "1.000000000",
+        "camera_sy": "1.000000000",
+        "camera_sz": "1.000000000",
+        "view_tx": "-281.907786236",
+        "view_ty": "0.000000000",
+        "view_tz": "410.881044149",
+        "view_qx": "-0.000000000",
+        "view_qy": "0.173648178",
+        "view_qz": "0.000000000",
+        "view_qw": "0.984807753",
+        "view_sx": "1.000000000",
+        "view_sy": "1.000000000",
+        "view_sz": "1.000000000",
+        "control_pitch": "-20.000000000",
+        "control_yaw": "0.000000000",
+        "control_roll": "0.000000000",
+        "capsule_x": "0.000000000",
+        "capsule_y": "0.000000000",
+        "capsule_z": "308.275001152",
+        "is_falling": "0"
+      },
+      "bones": {
+        "source": {
+          "root": {
+            "local_position": [
+              6.57950118,
+              34.774237401,
+              76.089291411
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.978094804,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              0.718844368,
+              0.307304787,
+              2.084970976
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.524307162,
+            "length_ratio": 0.02321339
+          },
+          "head": {
+            "local_position": [
+              4.912970623,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.516620422,
+            "length_ratio": 0.999999919
+          },
+          "hand_l": {
+            "local_position": [
+              27.251075623,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 25.044615232,
+            "length_ratio": 1.000000066
+          },
+          "hand_r": {
+            "local_position": [
+              -27.251012085,
+              0.0,
+              -0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 15.195499619,
+            "length_ratio": 1.000000044
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.365711063,
+              0.110043811,
+              -9.969202797
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.52946336,
+            "length_ratio": 0.999999978
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.365725935,
+              0.119487743,
+              9.969091415
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 12.291886722,
+            "length_ratio": 0.999999993
+          },
+          "calf_l": {
+            "local_position": [
+              -43.341315301,
+              0.000389908,
+              -0.000430899
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.31362864,
+            "length_ratio": 1.000000155
+          },
+          "calf_r": {
+            "local_position": [
+              43.341264388,
+              0.000284956,
+              -0.000257315
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.599465486,
+            "length_ratio": 1.000000036
+          },
+          "foot_l": {
+            "local_position": [
+              -42.217922516,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 23.569167697,
+            "length_ratio": 1.000000188
+          },
+          "foot_r": {
+            "local_position": [
+              42.217953674,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.67667338,
+            "length_ratio": 1.000000113
+          }
+        },
+        "appearance": {
+          "root": {
+            "local_position": [
+              7.080507841,
+              37.422177439,
+              81.883232449
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.978094804,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              0.773581297,
+              0.33070485,
+              2.243732613
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.524307162,
+            "length_ratio": 0.023216166
+          },
+          "head": {
+            "local_position": [
+              9.947604402,
+              -0.510022035,
+              -0.006381598
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.516620422,
+            "length_ratio": 0.999999449
+          },
+          "hand_l": {
+            "local_position": [
+              27.684523068,
+              -3.269126012,
+              -1.553589556
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 25.044615232,
+            "length_ratio": 0.999999947
+          },
+          "hand_r": {
+            "local_position": [
+              -27.618916443,
+              3.68367638,
+              1.77746705
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 15.195499619,
+            "length_ratio": 0.999999901
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.198886395,
+              -0.554049909,
+              -11.833477974
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.52946336,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.19762373,
+              -0.55394429,
+              11.83359623
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 12.291886722,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -47.787469252,
+              -3.000160282,
+              4.339221193
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 12.037185045,
+            "length_ratio": 1.000000112
+          },
+          "calf_r": {
+            "local_position": [
+              47.787819404,
+              3.000447233,
+              -4.341049545
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.572271222,
+            "length_ratio": 1.00000001
+          },
+          "foot_l": {
+            "local_position": [
+              -41.769063051,
+              5.647105975,
+              2.544776761
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 23.874931183,
+            "length_ratio": 1.000000199
+          },
+          "foot_r": {
+            "local_position": [
+              41.768746294,
+              -5.647566115,
+              -2.542830052
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.72833124,
+            "length_ratio": 1.00000002
+          }
+        }
+      }
+    },
+    "52": {
+      "state": {
+        "frame": "52",
+        "time_s": "1.733333333",
+        "world_s": "5.750109028",
+        "phase": "2",
+        "attack": "1",
+        "serial": "1",
+        "attack_elapsed": "0.233333588",
+        "charge": "0.000000000",
+        "third": "1",
+        "montage": "/Game/Rogue10m/Animation/Combat/Boxing/AM_BoxingLeftJab_Appearance.AM_BoxingLeftJab_Appearance",
+        "montage_s": "0.363999963",
+        "clip": "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingLeftJab_Appearance.A_BoxingLeftJab_Appearance",
+        "clip_s": "0.363999963",
+        "source_world_tx": "-20.000000000",
+        "source_world_ty": "0.000000000",
+        "source_world_tz": "212.275001152",
+        "source_world_qx": "0.000000000",
+        "source_world_qy": "0.000000000",
+        "source_world_qz": "-0.707106781",
+        "source_world_qw": "0.707106781",
+        "source_world_sx": "1.000000000",
+        "source_world_sy": "1.000000000",
+        "source_world_sz": "1.000000000",
+        "appearance_world_tx": "-20.000000000",
+        "appearance_world_ty": "0.000000000",
+        "appearance_world_tz": "212.275001152",
+        "appearance_world_qx": "0.000000000",
+        "appearance_world_qy": "0.000000000",
+        "appearance_world_qz": "-0.707106781",
+        "appearance_world_qw": "0.707106781",
+        "appearance_world_sx": "1.000000000",
+        "appearance_world_sy": "1.000000000",
+        "appearance_world_sz": "1.000000000",
+        "camera_tx": "53.215974013",
+        "camera_ty": "3.073958539",
+        "camera_tz": "345.629348793",
+        "camera_qx": "-0.040218731",
+        "camera_qy": "0.545949710",
+        "camera_qz": "0.195063788",
+        "camera_qw": "0.813800643",
+        "camera_sx": "1.000000000",
+        "camera_sy": "1.000000000",
+        "camera_sz": "1.000000000",
+        "view_tx": "-281.907786236",
+        "view_ty": "0.000000000",
+        "view_tz": "410.881044149",
+        "view_qx": "-0.000000000",
+        "view_qy": "0.173648178",
+        "view_qz": "0.000000000",
+        "view_qw": "0.984807753",
+        "view_sx": "1.000000000",
+        "view_sy": "1.000000000",
+        "view_sz": "1.000000000",
+        "control_pitch": "-20.000000000",
+        "control_yaw": "0.000000000",
+        "control_roll": "0.000000000",
+        "capsule_x": "0.000000000",
+        "capsule_y": "0.000000000",
+        "capsule_z": "308.275001152",
+        "is_falling": "0"
+      },
+      "bones": {
+        "source": {
+          "root": {
+            "local_position": [
+              9.809976996,
+              45.24136868,
+              81.383686119
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 6.760213395,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              0.570862578,
+              0.4514915,
+              -7.022601177
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 4.687165149,
+            "length_ratio": 0.073602264
+          },
+          "head": {
+            "local_position": [
+              4.912970971,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.910125921,
+            "length_ratio": 0.99999999
+          },
+          "hand_l": {
+            "local_position": [
+              27.251074056,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.574564932,
+            "length_ratio": 1.000000008
+          },
+          "hand_r": {
+            "local_position": [
+              -27.251011041,
+              0.0,
+              -0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.58138906,
+            "length_ratio": 1.000000005
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.365711194,
+              0.11004377,
+              -9.969202971
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.397606412,
+            "length_ratio": 0.999999997
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.365726196,
+              0.119487786,
+              9.969091415
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 6.18350578,
+            "length_ratio": 0.999999999
+          },
+          "calf_l": {
+            "local_position": [
+              -43.341309418,
+              4.5341e-05,
+              -1.9146e-05
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.871266054,
+            "length_ratio": 1.000000019
+          },
+          "calf_r": {
+            "local_position": [
+              43.341263012,
+              1.08e-06,
+              -6.504e-06
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.19248402,
+            "length_ratio": 1.000000004
+          },
+          "foot_l": {
+            "local_position": [
+              -42.217915553,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.979671094,
+            "length_ratio": 1.000000023
+          },
+          "foot_r": {
+            "local_position": [
+              42.217949497,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 17.383924552,
+            "length_ratio": 1.000000014
+          }
+        },
+        "appearance": {
+          "root": {
+            "local_position": [
+              10.556973416,
+              48.686345204,
+              87.580777326
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 6.760213395,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              0.614330949,
+              0.485870962,
+              -7.557350153
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 4.687165149,
+            "length_ratio": 0.07361114
+          },
+          "head": {
+            "local_position": [
+              9.947604081,
+              -0.510021789,
+              -0.006381799
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.910125921,
+            "length_ratio": 0.999999415
+          },
+          "hand_l": {
+            "local_position": [
+              27.684523044,
+              -3.269126014,
+              -1.553589445
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.574564932,
+            "length_ratio": 0.999999946
+          },
+          "hand_r": {
+            "local_position": [
+              -27.618916785,
+              3.68367608,
+              1.777467049
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.58138906,
+            "length_ratio": 0.999999912
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.198886395,
+              -0.554049909,
+              -11.833477974
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.397606412,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.19762373,
+              -0.55394429,
+              11.83359623
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 6.18350578,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -47.7874683,
+              -3.000160374,
+              4.339221114
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.175581265,
+            "length_ratio": 1.000000093
+          },
+          "calf_r": {
+            "local_position": [
+              47.787819391,
+              3.000447237,
+              -4.341049563
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 9.012291553,
+            "length_ratio": 1.00000001
+          },
+          "foot_l": {
+            "local_position": [
+              -41.769063509,
+              5.647106278,
+              2.544776982
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.836871728,
+            "length_ratio": 1.000000211
+          },
+          "foot_r": {
+            "local_position": [
+              41.76874626,
+              -5.64756613,
+              -2.542830151
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 17.182742313,
+            "length_ratio": 1.00000002
+          }
+        }
+      }
+    },
+    "60": {
+      "state": {
+        "frame": "60",
+        "time_s": "2.000000000",
+        "world_s": "6.016775709",
+        "phase": "2",
+        "attack": "4",
+        "serial": "2",
+        "attack_elapsed": "0.099999905",
+        "charge": "0.000000000",
+        "third": "1",
+        "montage": "/Game/Rogue10m/Animation/Combat/Boxing/AM_BoxingRightJab_Appearance.AM_BoxingRightJab_Appearance",
+        "montage_s": "0.156000003",
+        "clip": "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingRightJab_Appearance.A_BoxingRightJab_Appearance",
+        "clip_s": "0.156000003",
+        "source_world_tx": "-20.000000000",
+        "source_world_ty": "0.000000000",
+        "source_world_tz": "212.275001152",
+        "source_world_qx": "0.000000000",
+        "source_world_qy": "0.000000000",
+        "source_world_qz": "-0.707106781",
+        "source_world_qw": "0.707106781",
+        "source_world_sx": "1.000000000",
+        "source_world_sy": "1.000000000",
+        "source_world_sz": "1.000000000",
+        "appearance_world_tx": "-20.000000000",
+        "appearance_world_ty": "0.000000000",
+        "appearance_world_tz": "212.275001152",
+        "appearance_world_qx": "0.000000000",
+        "appearance_world_qy": "0.000000000",
+        "appearance_world_qz": "-0.707106781",
+        "appearance_world_qw": "0.707106781",
+        "appearance_world_sx": "1.000000000",
+        "appearance_world_sy": "1.000000000",
+        "appearance_world_sz": "1.000000000",
+        "camera_tx": "-0.432865254",
+        "camera_ty": "4.113858325",
+        "camera_tz": "357.809927966",
+        "camera_qx": "-0.016199221",
+        "camera_qy": "0.543433416",
+        "camera_qz": "0.087495095",
+        "camera_qw": "0.834722898",
+        "camera_sx": "1.000000000",
+        "camera_sy": "1.000000000",
+        "camera_sz": "1.000000000",
+        "view_tx": "-281.907786236",
+        "view_ty": "0.000000000",
+        "view_tz": "410.881044149",
+        "view_qx": "-0.000000000",
+        "view_qy": "0.173648178",
+        "view_qz": "0.000000000",
+        "view_qw": "0.984807753",
+        "view_sx": "1.000000000",
+        "view_sy": "1.000000000",
+        "view_sz": "1.000000000",
+        "control_pitch": "-20.000000000",
+        "control_yaw": "0.000000000",
+        "control_roll": "0.000000000",
+        "capsule_x": "0.000000000",
+        "capsule_y": "0.000000000",
+        "capsule_z": "308.275001152",
+        "is_falling": "0"
+      },
+      "bones": {
+        "source": {
+          "root": {
+            "local_position": [
+              -0.318977712,
+              7.836879735,
+              88.050617653
+            ],
+            "local_scale": [
+              0.99999997,
+              0.99999997,
+              0.99999997
+            ],
+            "step_deg": 3.202143988,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              -0.189645781,
+              -0.535862505,
+              -6.187412256
+            ],
+            "local_scale": [
+              0.99999997,
+              0.99999997,
+              0.99999997
+            ],
+            "step_deg": 3.042766232,
+            "length_ratio": 0.064774971
+          },
+          "head": {
+            "local_position": [
+              4.912970791,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              0.99999997,
+              0.99999997,
+              0.99999997
+            ],
+            "step_deg": 5.868516869,
+            "length_ratio": 0.999999953
+          },
+          "hand_l": {
+            "local_position": [
+              27.251073395,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              0.99999997,
+              0.99999997,
+              0.99999997
+            ],
+            "step_deg": 11.856856106,
+            "length_ratio": 0.999999984
+          },
+          "hand_r": {
+            "local_position": [
+              -27.25101033,
+              0.0,
+              -0.0
+            ],
+            "local_scale": [
+              0.99999997,
+              0.99999997,
+              0.99999997
+            ],
+            "step_deg": 8.257372781,
+            "length_ratio": 0.999999979
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.365711111,
+              0.11004377,
+              -9.969202657
+            ],
+            "local_scale": [
+              0.99999997,
+              0.99999997,
+              0.99999997
+            ],
+            "step_deg": 6.145474757,
+            "length_ratio": 0.999999966
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.3657261,
+              0.119487779,
+              9.969091118
+            ],
+            "local_scale": [
+              0.99999997,
+              0.99999997,
+              0.99999997
+            ],
+            "step_deg": 1.693601303,
+            "length_ratio": 0.999999969
+          },
+          "calf_l": {
+            "local_position": [
+              -43.341308699,
+              -1.1554e-05,
+              -6.3182e-05
+            ],
+            "local_scale": [
+              0.99999997,
+              0.99999997,
+              0.99999997
+            ],
+            "step_deg": 3.311138143,
+            "length_ratio": 1.000000002
+          },
+          "calf_r": {
+            "local_position": [
+              43.341261854,
+              2.3427e-05,
+              -1.361e-05
+            ],
+            "local_scale": [
+              0.99999997,
+              0.99999997,
+              0.99999997
+            ],
+            "step_deg": 0.43039886,
+            "length_ratio": 0.999999978
+          },
+          "foot_l": {
+            "local_position": [
+              -42.217914969,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              0.99999997,
+              0.99999997,
+              0.99999997
+            ],
+            "step_deg": 9.382574353,
+            "length_ratio": 1.000000009
+          },
+          "foot_r": {
+            "local_position": [
+              42.217948643,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              0.99999997,
+              0.99999997,
+              0.99999997
+            ],
+            "step_deg": 6.37382935,
+            "length_ratio": 0.999999994
+          }
+        },
+        "appearance": {
+          "root": {
+            "local_position": [
+              -0.343266781,
+              8.433631502,
+              94.755373046
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 3.202143988,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              -0.204086805,
+              -0.576666819,
+              -6.658564303
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 3.042766232,
+            "length_ratio": 0.064782784
+          },
+          "head": {
+            "local_position": [
+              9.947605285,
+              -0.510021304,
+              -0.006382164
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 5.868516869,
+            "length_ratio": 0.999999534
+          },
+          "hand_l": {
+            "local_position": [
+              27.684522221,
+              -3.269125554,
+              -1.553588812
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.856856106,
+            "length_ratio": 0.999999914
+          },
+          "hand_r": {
+            "local_position": [
+              -27.618915636,
+              3.683676129,
+              1.777467447
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.257372781,
+            "length_ratio": 0.999999872
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.198886395,
+              -0.554049909,
+              -11.833477974
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 6.145474757,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.19762373,
+              -0.55394429,
+              11.83359623
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 1.693601303,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -47.787469473,
+              -3.000159761,
+              4.339220712
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 3.161664768,
+            "length_ratio": 1.000000115
+          },
+          "calf_r": {
+            "local_position": [
+              47.787819359,
+              3.000447206,
+              -4.341049478
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 0.893778232,
+            "length_ratio": 1.000000009
+          },
+          "foot_l": {
+            "local_position": [
+              -41.769063194,
+              5.647107616,
+              2.544776103
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 9.720332731,
+            "length_ratio": 1.000000206
+          },
+          "foot_r": {
+            "local_position": [
+              41.768746131,
+              -5.647566107,
+              -2.542829957
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 6.403885963,
+            "length_ratio": 1.000000016
+          }
+        }
+      }
+    },
+    "61": {
+      "state": {
+        "frame": "61",
+        "time_s": "2.033333333",
+        "world_s": "6.050109044",
+        "phase": "2",
+        "attack": "4",
+        "serial": "2",
+        "attack_elapsed": "0.133333206",
+        "charge": "0.000000000",
+        "third": "1",
+        "montage": "/Game/Rogue10m/Animation/Combat/Boxing/AM_BoxingRightJab_Appearance.AM_BoxingRightJab_Appearance",
+        "montage_s": "0.208000004",
+        "clip": "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingRightJab_Appearance.A_BoxingRightJab_Appearance",
+        "clip_s": "0.208000004",
+        "source_world_tx": "-20.000000000",
+        "source_world_ty": "0.000000000",
+        "source_world_tz": "212.275001152",
+        "source_world_qx": "0.000000000",
+        "source_world_qy": "0.000000000",
+        "source_world_qz": "-0.707106781",
+        "source_world_qw": "0.707106781",
+        "source_world_sx": "1.000000000",
+        "source_world_sy": "1.000000000",
+        "source_world_sz": "1.000000000",
+        "appearance_world_tx": "-20.000000000",
+        "appearance_world_ty": "0.000000000",
+        "appearance_world_tz": "212.275001152",
+        "appearance_world_qx": "0.000000000",
+        "appearance_world_qy": "0.000000000",
+        "appearance_world_qz": "-0.707106781",
+        "appearance_world_qw": "0.707106781",
+        "appearance_world_sx": "1.000000000",
+        "appearance_world_sy": "1.000000000",
+        "appearance_world_sz": "1.000000000",
+        "camera_tx": "5.024744613",
+        "camera_ty": "4.931798817",
+        "camera_tz": "359.651641377",
+        "camera_qx": "-0.012190853",
+        "camera_qy": "0.490744976",
+        "camera_qz": "0.055173056",
+        "camera_qw": "0.869469197",
+        "camera_sx": "1.000000000",
+        "camera_sy": "1.000000000",
+        "camera_sz": "1.000000000",
+        "view_tx": "-281.907786236",
+        "view_ty": "0.000000000",
+        "view_tz": "410.881044149",
+        "view_qx": "-0.000000000",
+        "view_qy": "0.173648178",
+        "view_qz": "0.000000000",
+        "view_qw": "0.984807753",
+        "view_sx": "1.000000000",
+        "view_sy": "1.000000000",
+        "view_sz": "1.000000000",
+        "control_pitch": "-20.000000000",
+        "control_yaw": "0.000000000",
+        "control_roll": "0.000000000",
+        "capsule_x": "0.000000000",
+        "capsule_y": "0.000000000",
+        "capsule_z": "308.275001152",
+        "is_falling": "0"
+      },
+      "bones": {
+        "source": {
+          "root": {
+            "local_position": [
+              0.30775255,
+              12.190397276,
+              87.808359579
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 5.740681318,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              -0.22471264,
+              -0.174367664,
+              -5.418810401
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 5.930992412,
+            "length_ratio": 0.056568486
+          },
+          "head": {
+            "local_position": [
+              4.912970907,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.14026036,
+            "length_ratio": 0.999999977
+          },
+          "hand_l": {
+            "local_position": [
+              27.251074345,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 5.527725903,
+            "length_ratio": 1.000000019
+          },
+          "hand_r": {
+            "local_position": [
+              -27.251011233,
+              0.0,
+              -0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 14.13039431,
+            "length_ratio": 1.000000012
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.36571117,
+              0.110043777,
+              -9.969202939
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 5.200243413,
+            "length_ratio": 0.999999994
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.365726148,
+              0.119487778,
+              9.969091415
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 4.687464258,
+            "length_ratio": 0.999999998
+          },
+          "calf_l": {
+            "local_position": [
+              -43.341310505,
+              9.9968e-05,
+              -5.8905e-05
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 4.754350883,
+            "length_ratio": 1.000000044
+          },
+          "calf_r": {
+            "local_position": [
+              43.341263267,
+              4.7352e-05,
+              -4.2327e-05
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 5.789595096,
+            "length_ratio": 1.00000001
+          },
+          "foot_l": {
+            "local_position": [
+              -42.217916837,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.599827176,
+            "length_ratio": 1.000000053
+          },
+          "foot_r": {
+            "local_position": [
+              42.217950267,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.053704654,
+            "length_ratio": 1.000000032
+          }
+        },
+        "appearance": {
+          "root": {
+            "local_position": [
+              0.331186861,
+              13.118654613,
+              94.494667843
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 5.740681318,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              -0.241823999,
+              -0.187645352,
+              -5.831436243
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 5.930992412,
+            "length_ratio": 0.056575314
+          },
+          "head": {
+            "local_position": [
+              9.947605568,
+              -0.510021015,
+              -0.006382244
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.14026036,
+            "length_ratio": 0.999999561
+          },
+          "hand_l": {
+            "local_position": [
+              27.68452216,
+              -3.269125581,
+              -1.553588855
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 5.527725903,
+            "length_ratio": 0.999999912
+          },
+          "hand_r": {
+            "local_position": [
+              -27.618915558,
+              3.683676588,
+              1.777467349
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 14.13039431,
+            "length_ratio": 0.999999871
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.198886395,
+              -0.554049909,
+              -11.833477974
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 5.200243413,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.19762373,
+              -0.55394429,
+              11.83359623
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 4.687464258,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -47.787469285,
+              -3.000159991,
+              4.339220733
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 4.836632438,
+            "length_ratio": 1.000000112
+          },
+          "calf_r": {
+            "local_position": [
+              47.787819369,
+              3.00044721,
+              -4.341049494
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 4.901416221,
+            "length_ratio": 1.000000009
+          },
+          "foot_l": {
+            "local_position": [
+              -41.769063464,
+              5.647107454,
+              2.54477622
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.609041863,
+            "length_ratio": 1.000000212
+          },
+          "foot_r": {
+            "local_position": [
+              41.768746183,
+              -5.647566131,
+              -2.542829978
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.548810555,
+            "length_ratio": 1.000000018
+          }
+        }
+      }
+    },
+    "71": {
+      "state": {
+        "frame": "71",
+        "time_s": "2.366666667",
+        "world_s": "6.383442394",
+        "phase": "2",
+        "attack": "4",
+        "serial": "2",
+        "attack_elapsed": "0.466666698",
+        "charge": "0.000000000",
+        "third": "1",
+        "montage": "",
+        "montage_s": "-1.000000000",
+        "clip": "",
+        "clip_s": "-1.000000000",
+        "source_world_tx": "-20.000000000",
+        "source_world_ty": "0.000000000",
+        "source_world_tz": "212.275001152",
+        "source_world_qx": "0.000000000",
+        "source_world_qy": "0.000000000",
+        "source_world_qz": "-0.707106781",
+        "source_world_qw": "0.707106781",
+        "source_world_sx": "1.000000000",
+        "source_world_sy": "1.000000000",
+        "source_world_sz": "1.000000000",
+        "appearance_world_tx": "-20.000000000",
+        "appearance_world_ty": "0.000000000",
+        "appearance_world_tz": "212.275001152",
+        "appearance_world_qx": "0.000000000",
+        "appearance_world_qy": "0.000000000",
+        "appearance_world_qz": "-0.707106781",
+        "appearance_world_qw": "0.707106781",
+        "appearance_world_sx": "1.000000000",
+        "appearance_world_sy": "1.000000000",
+        "appearance_world_sz": "1.000000000",
+        "camera_tx": "1.454421924",
+        "camera_ty": "3.189253972",
+        "camera_tz": "363.640565811",
+        "camera_qx": "-0.019452959",
+        "camera_qy": "0.448773375",
+        "camera_qz": "0.005230898",
+        "camera_qw": "0.893418535",
+        "camera_sx": "1.000000000",
+        "camera_sy": "1.000000000",
+        "camera_sz": "1.000000000",
+        "view_tx": "-281.907786236",
+        "view_ty": "0.000000000",
+        "view_tz": "410.881044149",
+        "view_qx": "-0.000000000",
+        "view_qy": "0.173648178",
+        "view_qz": "0.000000000",
+        "view_qw": "0.984807753",
+        "view_sx": "1.000000000",
+        "view_sy": "1.000000000",
+        "view_sz": "1.000000000",
+        "control_pitch": "-20.000000000",
+        "control_yaw": "0.000000000",
+        "control_roll": "0.000000000",
+        "capsule_x": "0.000000000",
+        "capsule_y": "0.000000000",
+        "capsule_z": "308.275001152",
+        "is_falling": "0"
+      },
+      "bones": {
+        "source": {
+          "root": {
+            "local_position": [
+              1.289665682,
+              8.75535872,
+              74.782376435
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.861078075,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              0.382554788,
+              -0.559756577,
+              10.353106347
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.805820045,
+            "length_ratio": 0.108161597
+          },
+          "head": {
+            "local_position": [
+              4.912970306,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 6.403697911,
+            "length_ratio": 0.999999855
+          },
+          "hand_l": {
+            "local_position": [
+              27.251077051,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 14.664550387,
+            "length_ratio": 1.000000118
+          },
+          "hand_r": {
+            "local_position": [
+              -27.251013037,
+              0.0,
+              -0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 15.113679604,
+            "length_ratio": 1.000000079
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.365710944,
+              0.110043848,
+              -9.969202638
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.850447787,
+            "length_ratio": 0.99999996
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.365725697,
+              0.119487704,
+              9.969091415
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 13.503855654,
+            "length_ratio": 0.999999988
+          },
+          "calf_l": {
+            "local_position": [
+              -43.341320692,
+              0.000486954,
+              -0.000653442
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.162767364,
+            "length_ratio": 1.000000279
+          },
+          "calf_r": {
+            "local_position": [
+              43.341265666,
+              0.000163482,
+              -0.000302046
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 6.86202809,
+            "length_ratio": 1.000000066
+          },
+          "foot_l": {
+            "local_position": [
+              -42.217928863,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 5.893095272,
+            "length_ratio": 1.000000338
+          },
+          "foot_r": {
+            "local_position": [
+              42.217957483,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 14.87562303,
+            "length_ratio": 1.000000203
+          }
+        },
+        "appearance": {
+          "root": {
+            "local_position": [
+              1.387869343,
+              9.422049541,
+              80.476800337
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.861078075,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              0.411684915,
+              -0.602380309,
+              11.141458315
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.805820045,
+            "length_ratio": 0.108174598
+          },
+          "head": {
+            "local_position": [
+              9.947605493,
+              -0.510020984,
+              -0.006382224
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 6.403697911,
+            "length_ratio": 0.999999553
+          },
+          "hand_l": {
+            "local_position": [
+              27.684522162,
+              -3.26912566,
+              -1.553589003
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 14.664550387,
+            "length_ratio": 0.999999913
+          },
+          "hand_r": {
+            "local_position": [
+              -27.618916742,
+              3.683676101,
+              1.777466724
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 15.113679604,
+            "length_ratio": 0.99999991
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.198886395,
+              -0.554049909,
+              -11.833477974
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.850447787,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.19762373,
+              -0.55394429,
+              11.83359623
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 13.503855654,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -47.787469725,
+              -3.000159233,
+              4.339220981
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.690895144,
+            "length_ratio": 1.00000012
+          },
+          "calf_r": {
+            "local_position": [
+              47.787819358,
+              3.000447203,
+              -4.341049455
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.455910883,
+            "length_ratio": 1.000000009
+          },
+          "foot_l": {
+            "local_position": [
+              -41.769062729,
+              5.647107419,
+              2.544776106
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 5.481673276,
+            "length_ratio": 1.000000195
+          },
+          "foot_r": {
+            "local_position": [
+              41.768746231,
+              -5.647566124,
+              -2.542829887
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 14.629576707,
+            "length_ratio": 1.000000019
+          }
+        }
+      }
+    },
+    "72": {
+      "state": {
+        "frame": "72",
+        "time_s": "2.400000000",
+        "world_s": "6.416775730",
+        "phase": "2",
+        "attack": "4",
+        "serial": "2",
+        "attack_elapsed": "0.500000000",
+        "charge": "0.000000000",
+        "third": "1",
+        "montage": "",
+        "montage_s": "-1.000000000",
+        "clip": "",
+        "clip_s": "-1.000000000",
+        "source_world_tx": "-20.000000000",
+        "source_world_ty": "0.000000000",
+        "source_world_tz": "212.275001152",
+        "source_world_qx": "0.000000000",
+        "source_world_qy": "0.000000000",
+        "source_world_qz": "-0.707106781",
+        "source_world_qw": "0.707106781",
+        "source_world_sx": "1.000000000",
+        "source_world_sy": "1.000000000",
+        "source_world_sz": "1.000000000",
+        "appearance_world_tx": "-20.000000000",
+        "appearance_world_ty": "0.000000000",
+        "appearance_world_tz": "212.275001152",
+        "appearance_world_qx": "0.000000000",
+        "appearance_world_qy": "0.000000000",
+        "appearance_world_qz": "-0.707106781",
+        "appearance_world_qw": "0.707106781",
+        "appearance_world_sx": "1.000000000",
+        "appearance_world_sy": "1.000000000",
+        "appearance_world_sz": "1.000000000",
+        "camera_tx": "-6.847987044",
+        "camera_ty": "4.698805426",
+        "camera_tz": "365.893432424",
+        "camera_qx": "-0.034043212",
+        "camera_qy": "0.424980116",
+        "camera_qz": "0.064083258",
+        "camera_qw": "0.902289475",
+        "camera_sx": "1.000000000",
+        "camera_sy": "1.000000000",
+        "camera_sz": "1.000000000",
+        "view_tx": "-281.907786236",
+        "view_ty": "0.000000000",
+        "view_tz": "410.881044149",
+        "view_qx": "-0.000000000",
+        "view_qy": "0.173648178",
+        "view_qz": "0.000000000",
+        "view_qw": "0.984807753",
+        "view_sx": "1.000000000",
+        "view_sy": "1.000000000",
+        "view_sz": "1.000000000",
+        "control_pitch": "-20.000000000",
+        "control_yaw": "0.000000000",
+        "control_roll": "0.000000000",
+        "capsule_x": "0.000000000",
+        "capsule_y": "0.000000000",
+        "capsule_z": "308.275001152",
+        "is_falling": "0"
+      },
+      "bones": {
+        "source": {
+          "root": {
+            "local_position": [
+              -0.218340448,
+              2.537989298,
+              57.029348933
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 12.667537795,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              0.527621315,
+              -0.80388589,
+              28.975854474
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.643481166,
+            "length_ratio": 0.302237546
+          },
+          "head": {
+            "local_position": [
+              4.912969595,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.534205895,
+            "length_ratio": 0.99999971
+          },
+          "hand_l": {
+            "local_position": [
+              27.25108025,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 25.188485311,
+            "length_ratio": 1.000000235
+          },
+          "hand_r": {
+            "local_position": [
+              -27.25101517,
+              0.0,
+              -0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 22.303082936,
+            "length_ratio": 1.000000157
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.365710678,
+              0.110043931,
+              -9.969202283
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.340016866,
+            "length_ratio": 0.99999992
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.365725164,
+              0.119487617,
+              9.969091415
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.340926836,
+            "length_ratio": 0.999999976
+          },
+          "calf_l": {
+            "local_position": [
+              -43.341332782,
+              -0.000200075,
+              -0.001094095
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.624295247,
+            "length_ratio": 1.000000558
+          },
+          "calf_r": {
+            "local_position": [
+              43.341268511,
+              0.000405675,
+              -0.000235672
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 9.049903753,
+            "length_ratio": 1.000000131
+          },
+          "foot_l": {
+            "local_position": [
+              -42.217943083,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.013005375,
+            "length_ratio": 1.000000675
+          },
+          "foot_r": {
+            "local_position": [
+              42.217966014,
+              -0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.755265132,
+            "length_ratio": 1.000000405
+          }
+        },
+        "appearance": {
+          "root": {
+            "local_position": [
+              -0.234966331,
+              2.73124856,
+              61.371940105
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 12.667537795,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              0.567797852,
+              -0.86509915,
+              31.182265426
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.643481166,
+            "length_ratio": 0.302273909
+          },
+          "head": {
+            "local_position": [
+              9.947605358,
+              -0.510021372,
+              -0.006382082
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.534205895,
+            "length_ratio": 0.999999541
+          },
+          "hand_l": {
+            "local_position": [
+              27.6845223,
+              -3.269125857,
+              -1.553589266
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 25.188485311,
+            "length_ratio": 0.999999919
+          },
+          "hand_r": {
+            "local_position": [
+              -27.618917006,
+              3.683675437,
+              1.777466192
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 22.303082936,
+            "length_ratio": 0.999999915
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.198886395,
+              -0.554049909,
+              -11.833477974
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.340016866,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.19762373,
+              -0.55394429,
+              11.83359623
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.340926836,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -47.787470178,
+              -3.000158945,
+              4.339220942
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.175549271,
+            "length_ratio": 1.000000129
+          },
+          "calf_r": {
+            "local_position": [
+              47.787819342,
+              3.000447211,
+              -4.341049427
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 9.054169484,
+            "length_ratio": 1.000000008
+          },
+          "foot_l": {
+            "local_position": [
+              -41.769062298,
+              5.647107509,
+              2.54477585
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 7.044759573,
+            "length_ratio": 1.000000184
+          },
+          "foot_r": {
+            "local_position": [
+              41.768746314,
+              -5.647566131,
+              -2.542829796
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 10.511105175,
+            "length_ratio": 1.000000021
+          }
+        }
+      }
+    },
+    "251": {
+      "state": {
+        "frame": "251",
+        "time_s": "8.366666667",
+        "world_s": "12.383442707",
+        "phase": "2",
+        "attack": "5",
+        "serial": "4",
+        "attack_elapsed": "0.166666985",
+        "charge": "0.000000000",
+        "third": "1",
+        "montage": "/Game/Rogue10m/Animation/Combat/Boxing/AM_BrawlerRightHook_Stable.AM_BrawlerRightHook_Stable",
+        "montage_s": "0.259999990",
+        "clip": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_03.MM_Attack_03",
+        "clip_s": "0.259999990",
+        "source_world_tx": "-20.000000000",
+        "source_world_ty": "0.000000000",
+        "source_world_tz": "212.275001152",
+        "source_world_qx": "0.000000000",
+        "source_world_qy": "0.000000000",
+        "source_world_qz": "-0.707106781",
+        "source_world_qw": "0.707106781",
+        "source_world_sx": "1.000000000",
+        "source_world_sy": "1.000000000",
+        "source_world_sz": "1.000000000",
+        "appearance_world_tx": "-20.000000000",
+        "appearance_world_ty": "0.000000000",
+        "appearance_world_tz": "212.275001152",
+        "appearance_world_qx": "0.000000000",
+        "appearance_world_qy": "0.000000000",
+        "appearance_world_qz": "-0.707106781",
+        "appearance_world_qw": "0.707106781",
+        "appearance_world_sx": "1.000000000",
+        "appearance_world_sy": "1.000000000",
+        "appearance_world_sz": "1.000000000",
+        "camera_tx": "-7.869718483",
+        "camera_ty": "-18.424017477",
+        "camera_tz": "366.034533132",
+        "camera_qx": "0.596551758",
+        "camera_qy": "-0.129357841",
+        "camera_qz": "-0.741529575",
+        "camera_qw": "0.278435698",
+        "camera_sx": "1.000000000",
+        "camera_sy": "1.000000000",
+        "camera_sz": "1.000000000",
+        "view_tx": "-281.907786236",
+        "view_ty": "0.000000000",
+        "view_tz": "410.881044149",
+        "view_qx": "-0.000000000",
+        "view_qy": "0.173648178",
+        "view_qz": "0.000000000",
+        "view_qw": "0.984807753",
+        "view_sx": "1.000000000",
+        "view_sy": "1.000000000",
+        "view_sz": "1.000000000",
+        "control_pitch": "-20.000000000",
+        "control_yaw": "0.000000000",
+        "control_roll": "0.000000000",
+        "capsule_x": "0.000000000",
+        "capsule_y": "0.000000000",
+        "capsule_z": "308.275001152",
+        "is_falling": "0"
+      },
+      "bones": {
+        "source": {
+          "root": {
+            "local_position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 0.0,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              22.663286209,
+              39.043941498,
+              93.11579895
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 30.028000742,
+            "length_ratio": 1.078796746
+          },
+          "head": {
+            "local_position": [
+              4.91297102,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 52.957417615,
+            "length_ratio": 1.0
+          },
+          "hand_l": {
+            "local_position": [
+              27.251073837,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 49.872026445,
+            "length_ratio": 1.0
+          },
+          "hand_r": {
+            "local_position": [
+              -27.251010895,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 57.981059272,
+            "length_ratio": 1.0
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.365711212,
+              0.110043764,
+              -9.969202995
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 32.962952171,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.365726233,
+              0.119487792,
+              9.969091415
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 39.217905596,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -43.341308594,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 32.410308335,
+            "length_ratio": 1.0
+          },
+          "calf_r": {
+            "local_position": [
+              43.341262817,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 40.512440909,
+            "length_ratio": 1.0
+          },
+          "foot_l": {
+            "local_position": [
+              -42.217914581,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 32.24765211,
+            "length_ratio": 1.0
+          },
+          "foot_r": {
+            "local_position": [
+              42.217948914,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 41.39047566,
+            "length_ratio": 1.0
+          }
+        },
+        "appearance": {
+          "root": {
+            "local_position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 0.0,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              24.38901795,
+              42.017004121,
+              100.206248604
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 30.028000742,
+            "length_ratio": 1.07892658
+          },
+          "head": {
+            "local_position": [
+              9.947605799,
+              -0.510022608,
+              -0.006378781
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 52.957417615,
+            "length_ratio": 0.999999592
+          },
+          "hand_l": {
+            "local_position": [
+              27.684523626,
+              -3.26912692,
+              -1.553590224
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 49.872026445,
+            "length_ratio": 0.999999972
+          },
+          "hand_r": {
+            "local_position": [
+              -27.618918961,
+              3.683672651,
+              1.777468863
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 57.981059272,
+            "length_ratio": 0.999999977
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.198886395,
+              -0.554049909,
+              -11.833477974
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 32.962952171,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.19762373,
+              -0.55394429,
+              11.83359623
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 39.217905596,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -47.787470737,
+              -3.00015855,
+              4.339225083
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 32.271209938,
+            "length_ratio": 1.000000148
+          },
+          "calf_r": {
+            "local_position": [
+              47.787819226,
+              3.000447405,
+              -4.341049823
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 40.38835771,
+            "length_ratio": 1.000000007
+          },
+          "foot_l": {
+            "local_position": [
+              -41.769061951,
+              5.647107447,
+              2.544780007
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 32.24765211,
+            "length_ratio": 1.000000182
+          },
+          "foot_r": {
+            "local_position": [
+              41.768746627,
+              -5.647566731,
+              -2.54283121
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 41.39047566,
+            "length_ratio": 1.000000032
+          }
+        }
+      }
+    },
+    "252": {
+      "state": {
+        "frame": "252",
+        "time_s": "8.400000000",
+        "world_s": "12.416776042",
+        "phase": "2",
+        "attack": "5",
+        "serial": "4",
+        "attack_elapsed": "0.199999809",
+        "charge": "0.000000000",
+        "third": "1",
+        "montage": "/Game/Rogue10m/Animation/Combat/Boxing/AM_BrawlerRightHook_Stable.AM_BrawlerRightHook_Stable",
+        "montage_s": "0.311999977",
+        "clip": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_03.MM_Attack_03",
+        "clip_s": "0.311999977",
+        "source_world_tx": "-20.000000000",
+        "source_world_ty": "0.000000000",
+        "source_world_tz": "212.275001152",
+        "source_world_qx": "0.000000000",
+        "source_world_qy": "0.000000000",
+        "source_world_qz": "-0.707106781",
+        "source_world_qw": "0.707106781",
+        "source_world_sx": "1.000000000",
+        "source_world_sy": "1.000000000",
+        "source_world_sz": "1.000000000",
+        "appearance_world_tx": "-20.000000000",
+        "appearance_world_ty": "0.000000000",
+        "appearance_world_tz": "212.275001152",
+        "appearance_world_qx": "0.000000000",
+        "appearance_world_qy": "0.000000000",
+        "appearance_world_qz": "-0.707106781",
+        "appearance_world_qw": "0.707106781",
+        "appearance_world_sx": "1.000000000",
+        "appearance_world_sy": "1.000000000",
+        "appearance_world_sz": "1.000000000",
+        "camera_tx": "-9.782728109",
+        "camera_ty": "-16.571879226",
+        "camera_tz": "358.996677934",
+        "camera_qx": "0.557363127",
+        "camera_qy": "-0.118769871",
+        "camera_qz": "-0.465025711",
+        "camera_qw": "0.677488856",
+        "camera_sx": "1.000000000",
+        "camera_sy": "1.000000000",
+        "camera_sz": "1.000000000",
+        "view_tx": "-281.907786236",
+        "view_ty": "0.000000000",
+        "view_tz": "410.881044149",
+        "view_qx": "-0.000000000",
+        "view_qy": "0.173648178",
+        "view_qz": "0.000000000",
+        "view_qw": "0.984807753",
+        "view_sx": "1.000000000",
+        "view_sy": "1.000000000",
+        "view_sz": "1.000000000",
+        "control_pitch": "-20.000000000",
+        "control_yaw": "0.000000000",
+        "control_roll": "0.000000000",
+        "capsule_x": "0.000000000",
+        "capsule_y": "0.000000000",
+        "capsule_z": "308.275001152",
+        "is_falling": "0"
+      },
+      "bones": {
+        "source": {
+          "root": {
+            "local_position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 0.0,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              18.500120163,
+              49.080020905,
+              95.464164734
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 40.396401882,
+            "length_ratio": 1.135528546
+          },
+          "head": {
+            "local_position": [
+              4.91297102,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 56.394248725,
+            "length_ratio": 1.0
+          },
+          "hand_l": {
+            "local_position": [
+              27.251073837,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 65.510340431,
+            "length_ratio": 1.0
+          },
+          "hand_r": {
+            "local_position": [
+              -27.251010895,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 130.522243362,
+            "length_ratio": 1.0
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.365711212,
+              0.110043764,
+              -9.969202995
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 40.805655966,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.365726233,
+              0.119487792,
+              9.969091415
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 78.985050233,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -43.341308594,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 40.805655966,
+            "length_ratio": 1.0
+          },
+          "calf_r": {
+            "local_position": [
+              43.341262817,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 75.446555,
+            "length_ratio": 1.0
+          },
+          "foot_l": {
+            "local_position": [
+              -42.217914581,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 40.141161454,
+            "length_ratio": 1.0
+          },
+          "foot_r": {
+            "local_position": [
+              42.217948914,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 65.873641025,
+            "length_ratio": 1.0
+          }
+        },
+        "appearance": {
+          "root": {
+            "local_position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 0.0,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              19.908841047,
+              52.817296653,
+              102.733434411
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 40.396401882,
+            "length_ratio": 1.135665207
+          },
+          "head": {
+            "local_position": [
+              9.947607004,
+              -0.510021684,
+              -0.006381629
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 56.394248725,
+            "length_ratio": 0.999999708
+          },
+          "hand_l": {
+            "local_position": [
+              27.684524541,
+              -3.26912613,
+              -1.553589347
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 65.510340431,
+            "length_ratio": 1.0
+          },
+          "hand_r": {
+            "local_position": [
+              -27.618912079,
+              3.68367306,
+              1.777468782
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 130.522243362,
+            "length_ratio": 0.999999735
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.198886395,
+              -0.554049909,
+              -11.833477974
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 40.805655966,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.19762373,
+              -0.55394429,
+              11.83359623
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 78.985050233,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -47.787470787,
+              -3.000156987,
+              4.339225954
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 40.678888787,
+            "length_ratio": 1.000000149
+          },
+          "calf_r": {
+            "local_position": [
+              47.787818929,
+              3.000447291,
+              -4.341049682
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 74.664575616,
+            "length_ratio": 1.0
+          },
+          "foot_l": {
+            "local_position": [
+              -41.769061727,
+              5.647109236,
+              2.544780458
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 40.141161454,
+            "length_ratio": 1.000000183
+          },
+          "foot_r": {
+            "local_position": [
+              41.768747711,
+              -5.64756632,
+              -2.54283118
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 65.873641025,
+            "length_ratio": 1.000000056
+          }
+        }
+      }
+    },
+    "253": {
+      "state": {
+        "frame": "253",
+        "time_s": "8.433333333",
+        "world_s": "12.450109378",
+        "phase": "2",
+        "attack": "5",
+        "serial": "4",
+        "attack_elapsed": "0.233333588",
+        "charge": "0.000000000",
+        "third": "1",
+        "montage": "/Game/Rogue10m/Animation/Combat/Boxing/AM_BrawlerRightHook_Stable.AM_BrawlerRightHook_Stable",
+        "montage_s": "0.363999963",
+        "clip": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_03.MM_Attack_03",
+        "clip_s": "0.363999963",
+        "source_world_tx": "-20.000000000",
+        "source_world_ty": "0.000000000",
+        "source_world_tz": "212.275001152",
+        "source_world_qx": "0.000000000",
+        "source_world_qy": "0.000000000",
+        "source_world_qz": "-0.707106781",
+        "source_world_qw": "0.707106781",
+        "source_world_sx": "1.000000000",
+        "source_world_sy": "1.000000000",
+        "source_world_sz": "1.000000000",
+        "appearance_world_tx": "-20.000000000",
+        "appearance_world_ty": "0.000000000",
+        "appearance_world_tz": "212.275001152",
+        "appearance_world_qx": "0.000000000",
+        "appearance_world_qy": "0.000000000",
+        "appearance_world_qz": "-0.707106781",
+        "appearance_world_qw": "0.707106781",
+        "appearance_world_sx": "1.000000000",
+        "appearance_world_sy": "1.000000000",
+        "appearance_world_sz": "1.000000000",
+        "camera_tx": "-12.087312861",
+        "camera_ty": "-24.444983619",
+        "camera_tz": "350.973099027",
+        "camera_qx": "0.541844065",
+        "camera_qy": "-0.193315120",
+        "camera_qz": "-0.229119201",
+        "camera_qw": "0.785199761",
+        "camera_sx": "1.000000000",
+        "camera_sy": "1.000000000",
+        "camera_sz": "1.000000000",
+        "view_tx": "-281.907786236",
+        "view_ty": "0.000000000",
+        "view_tz": "410.881044149",
+        "view_qx": "-0.000000000",
+        "view_qy": "0.173648178",
+        "view_qz": "0.000000000",
+        "view_qw": "0.984807753",
+        "view_sx": "1.000000000",
+        "view_sy": "1.000000000",
+        "view_sz": "1.000000000",
+        "control_pitch": "-20.000000000",
+        "control_yaw": "0.000000000",
+        "control_roll": "0.000000000",
+        "capsule_x": "0.000000000",
+        "capsule_y": "0.000000000",
+        "capsule_z": "308.275001152",
+        "is_falling": "0"
+      },
+      "bones": {
+        "source": {
+          "root": {
+            "local_position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 0.0,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              15.132631302,
+              53.88237381,
+              96.911872864
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 25.337213891,
+            "length_ratio": 1.16667117
+          },
+          "head": {
+            "local_position": [
+              4.91297102,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 31.0668785,
+            "length_ratio": 1.0
+          },
+          "hand_l": {
+            "local_position": [
+              27.251073837,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 45.861749956,
+            "length_ratio": 1.0
+          },
+          "hand_r": {
+            "local_position": [
+              -27.251010895,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 63.008636679,
+            "length_ratio": 1.0
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.365711212,
+              0.110043764,
+              -9.969202995
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 25.167705918,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.365726233,
+              0.119487792,
+              9.969091415
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 121.004518758,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -43.341308594,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 25.167705918,
+            "length_ratio": 1.0
+          },
+          "calf_r": {
+            "local_position": [
+              43.341262817,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 85.145210407,
+            "length_ratio": 1.0
+          },
+          "foot_l": {
+            "local_position": [
+              -42.217914581,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 23.01551171,
+            "length_ratio": 1.0
+          },
+          "foot_r": {
+            "local_position": [
+              42.217948914,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 48.472618375,
+            "length_ratio": 1.0
+          }
+        },
+        "appearance": {
+          "root": {
+            "local_position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 0.0,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              16.284929425,
+              57.985332309,
+              104.291380565
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 25.337213891,
+            "length_ratio": 1.166811579
+          },
+          "head": {
+            "local_position": [
+              9.947608089,
+              -0.510023126,
+              -0.006382412
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 31.0668785,
+            "length_ratio": 0.999999824
+          },
+          "hand_l": {
+            "local_position": [
+              27.684524119,
+              -3.269125425,
+              -1.553588787
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 45.861749956,
+            "length_ratio": 0.999999981
+          },
+          "hand_r": {
+            "local_position": [
+              -27.618911558,
+              3.683675625,
+              1.777468114
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 63.008636679,
+            "length_ratio": 0.999999727
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.198886395,
+              -0.554049909,
+              -11.833477974
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 25.167705918,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.19762373,
+              -0.55394429,
+              11.83359623
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 121.004518758,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -47.787470973,
+              -3.00015586,
+              4.339225937
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 24.939171672,
+            "length_ratio": 1.000000151
+          },
+          "calf_r": {
+            "local_position": [
+              47.787819283,
+              3.000447324,
+              -4.341049755
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 81.460644538,
+            "length_ratio": 1.000000008
+          },
+          "foot_l": {
+            "local_position": [
+              -41.769061654,
+              5.647110353,
+              2.544780111
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 23.01551171,
+            "length_ratio": 1.000000184
+          },
+          "foot_r": {
+            "local_position": [
+              41.768747255,
+              -5.647566002,
+              -2.542831112
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 48.472618375,
+            "length_ratio": 1.000000044
+          }
+        }
+      }
+    },
+    "261": {
+      "state": {
+        "frame": "261",
+        "time_s": "8.700000000",
+        "world_s": "12.716776058",
+        "phase": "2",
+        "attack": "5",
+        "serial": "4",
+        "attack_elapsed": "0.500000000",
+        "charge": "0.000000000",
+        "third": "1",
+        "montage": "/Game/Rogue10m/Animation/Combat/Boxing/AM_BrawlerRightHook_Stable.AM_BrawlerRightHook_Stable",
+        "montage_s": "0.779999852",
+        "clip": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_03.MM_Attack_03",
+        "clip_s": "0.779999852",
+        "source_world_tx": "-20.000000000",
+        "source_world_ty": "0.000000000",
+        "source_world_tz": "212.275001152",
+        "source_world_qx": "0.000000000",
+        "source_world_qy": "0.000000000",
+        "source_world_qz": "-0.707106781",
+        "source_world_qw": "0.707106781",
+        "source_world_sx": "1.000000000",
+        "source_world_sy": "1.000000000",
+        "source_world_sz": "1.000000000",
+        "appearance_world_tx": "-20.000000000",
+        "appearance_world_ty": "0.000000000",
+        "appearance_world_tz": "212.275001152",
+        "appearance_world_qx": "0.000000000",
+        "appearance_world_qy": "0.000000000",
+        "appearance_world_qz": "-0.707106781",
+        "appearance_world_qw": "0.707106781",
+        "appearance_world_sx": "1.000000000",
+        "appearance_world_sy": "1.000000000",
+        "appearance_world_sz": "1.000000000",
+        "camera_tx": "68.749478324",
+        "camera_ty": "2.464010607",
+        "camera_tz": "338.761330165",
+        "camera_qx": "-0.055603799",
+        "camera_qy": "0.273643104",
+        "camera_qz": "0.154368788",
+        "camera_qw": "0.947733057",
+        "camera_sx": "1.000000000",
+        "camera_sy": "1.000000000",
+        "camera_sz": "1.000000000",
+        "view_tx": "-281.907786236",
+        "view_ty": "0.000000000",
+        "view_tz": "410.881044149",
+        "view_qx": "-0.000000000",
+        "view_qy": "0.173648178",
+        "view_qz": "0.000000000",
+        "view_qw": "0.984807753",
+        "view_sx": "1.000000000",
+        "view_sy": "1.000000000",
+        "view_sz": "1.000000000",
+        "control_pitch": "-20.000000000",
+        "control_yaw": "0.000000000",
+        "control_roll": "0.000000000",
+        "capsule_x": "0.000000000",
+        "capsule_y": "0.000000000",
+        "capsule_z": "308.275001152",
+        "is_falling": "0"
+      },
+      "bones": {
+        "source": {
+          "root": {
+            "local_position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 0.0,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              1.010642767,
+              58.302455902,
+              61.997901917
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 31.778457184,
+            "length_ratio": 0.887279628
+          },
+          "head": {
+            "local_position": [
+              4.91297102,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 13.86253427,
+            "length_ratio": 1.0
+          },
+          "hand_l": {
+            "local_position": [
+              27.251073837,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 23.090977819,
+            "length_ratio": 1.0
+          },
+          "hand_r": {
+            "local_position": [
+              -27.251010895,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 28.787690681,
+            "length_ratio": 1.0
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.365711212,
+              0.110043764,
+              -9.969202995
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 54.407641007,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.365726233,
+              0.119487792,
+              9.969091415
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 19.752469414,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -43.341308594,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 54.507613463,
+            "length_ratio": 1.0
+          },
+          "calf_r": {
+            "local_position": [
+              43.341262817,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 19.743123318,
+            "length_ratio": 1.0
+          },
+          "foot_l": {
+            "local_position": [
+              -42.217914581,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 36.770645413,
+            "length_ratio": 1.0
+          },
+          "foot_r": {
+            "local_position": [
+              42.217948914,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.221925972,
+            "length_ratio": 1.0
+          }
+        },
+        "appearance": {
+          "root": {
+            "local_position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 0.0,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              1.087599757,
+              62.741988537,
+              66.718830128
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 31.778457184,
+            "length_ratio": 0.887386412
+          },
+          "head": {
+            "local_position": [
+              9.947605354,
+              -0.510021291,
+              -0.006382446
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 13.86253427,
+            "length_ratio": 0.999999541
+          },
+          "hand_l": {
+            "local_position": [
+              27.684522603,
+              -3.269125861,
+              -1.553588995
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 23.090977819,
+            "length_ratio": 0.999999929
+          },
+          "hand_r": {
+            "local_position": [
+              -27.618916147,
+              3.683670663,
+              1.777466292
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 28.787690681,
+            "length_ratio": 0.999999862
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.198886395,
+              -0.554049909,
+              -11.833477974
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 54.407641007,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.19762373,
+              -0.55394429,
+              11.83359623
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 19.752469414,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -47.787472169,
+              -3.000152627,
+              4.339222011
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 53.214367867,
+            "length_ratio": 1.000000164
+          },
+          "calf_r": {
+            "local_position": [
+              47.787819379,
+              3.000447213,
+              -4.34104949
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 18.028499562,
+            "length_ratio": 1.000000009
+          },
+          "foot_l": {
+            "local_position": [
+              -41.76906115,
+              5.647113221,
+              2.544775551
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 36.770645413,
+            "length_ratio": 1.000000175
+          },
+          "foot_r": {
+            "local_position": [
+              41.768746894,
+              -5.647565789,
+              -2.54282959
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 11.221925972,
+            "length_ratio": 1.000000033
+          }
+        }
+      }
+    },
+    "262": {
+      "state": {
+        "frame": "262",
+        "time_s": "8.733333333",
+        "world_s": "12.750109393",
+        "phase": "2",
+        "attack": "5",
+        "serial": "4",
+        "attack_elapsed": "0.533333778",
+        "charge": "0.000000000",
+        "third": "1",
+        "montage": "/Game/Rogue10m/Animation/Combat/Boxing/AM_BrawlerRightHook_Stable.AM_BrawlerRightHook_Stable",
+        "montage_s": "0.831999838",
+        "clip": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_03.MM_Attack_03",
+        "clip_s": "0.831999838",
+        "source_world_tx": "-20.000000000",
+        "source_world_ty": "0.000000000",
+        "source_world_tz": "212.275001152",
+        "source_world_qx": "0.000000000",
+        "source_world_qy": "0.000000000",
+        "source_world_qz": "-0.707106781",
+        "source_world_qw": "0.707106781",
+        "source_world_sx": "1.000000000",
+        "source_world_sy": "1.000000000",
+        "source_world_sz": "1.000000000",
+        "appearance_world_tx": "-20.000000000",
+        "appearance_world_ty": "0.000000000",
+        "appearance_world_tz": "212.275001152",
+        "appearance_world_qx": "0.000000000",
+        "appearance_world_qy": "0.000000000",
+        "appearance_world_qz": "-0.707106781",
+        "appearance_world_qw": "0.707106781",
+        "appearance_world_sx": "1.000000000",
+        "appearance_world_sy": "1.000000000",
+        "appearance_world_sz": "1.000000000",
+        "camera_tx": "65.534298922",
+        "camera_ty": "9.204463789",
+        "camera_tz": "354.060166801",
+        "camera_qx": "-0.061169662",
+        "camera_qy": "0.305641999",
+        "camera_qz": "0.143987563",
+        "camera_qw": "0.939206486",
+        "camera_sx": "1.000000000",
+        "camera_sy": "1.000000000",
+        "camera_sz": "1.000000000",
+        "view_tx": "-281.907786236",
+        "view_ty": "0.000000000",
+        "view_tz": "410.881044149",
+        "view_qx": "-0.000000000",
+        "view_qy": "0.173648178",
+        "view_qz": "0.000000000",
+        "view_qw": "0.984807753",
+        "view_sx": "1.000000000",
+        "view_sy": "1.000000000",
+        "view_sz": "1.000000000",
+        "control_pitch": "-20.000000000",
+        "control_yaw": "0.000000000",
+        "control_roll": "0.000000000",
+        "capsule_x": "0.000000000",
+        "capsule_y": "0.000000000",
+        "capsule_z": "308.275001152",
+        "is_falling": "0"
+      },
+      "bones": {
+        "source": {
+          "root": {
+            "local_position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 0.0,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              -0.962447464,
+              56.972949982,
+              76.74823761
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 37.416029115,
+            "length_ratio": 0.99650203
+          },
+          "head": {
+            "local_position": [
+              4.91297102,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 4.02786895,
+            "length_ratio": 1.0
+          },
+          "hand_l": {
+            "local_position": [
+              27.251073837,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 24.159426043,
+            "length_ratio": 1.0
+          },
+          "hand_r": {
+            "local_position": [
+              -27.251010895,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 22.393029453,
+            "length_ratio": 1.0
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.365711212,
+              0.110043764,
+              -9.969202995
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 58.231086533,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.365726233,
+              0.119487792,
+              9.969091415
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 26.49943697,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -43.341308594,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 50.703344501,
+            "length_ratio": 1.0
+          },
+          "calf_r": {
+            "local_position": [
+              43.341262817,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.187159835,
+            "length_ratio": 1.0
+          },
+          "foot_l": {
+            "local_position": [
+              -42.217914581,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 40.918817361,
+            "length_ratio": 1.0
+          },
+          "foot_r": {
+            "local_position": [
+              42.217948914,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 9.447489365,
+            "length_ratio": 1.0
+          }
+        },
+        "appearance": {
+          "root": {
+            "local_position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 0.0,
+            "length_ratio": 1.0
+          },
+          "pelvis": {
+            "local_position": [
+              -1.035734548,
+              61.311245288,
+              82.592353441
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 37.416029115,
+            "length_ratio": 0.996621959
+          },
+          "head": {
+            "local_position": [
+              9.947605023,
+              -0.510020978,
+              -0.006382551
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 4.02786895,
+            "length_ratio": 0.999999506
+          },
+          "hand_l": {
+            "local_position": [
+              27.684522824,
+              -3.269125724,
+              -1.553588642
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 24.159426043,
+            "length_ratio": 0.999999936
+          },
+          "hand_r": {
+            "local_position": [
+              -27.618915154,
+              3.683671097,
+              1.777465865
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 22.393029453,
+            "length_ratio": 0.999999828
+          },
+          "thigh_l": {
+            "local_position": [
+              -2.198886395,
+              -0.554049909,
+              -11.833477974
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 58.231086533,
+            "length_ratio": 1.0
+          },
+          "thigh_r": {
+            "local_position": [
+              -2.19762373,
+              -0.55394429,
+              11.83359623
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 26.49943697,
+            "length_ratio": 1.0
+          },
+          "calf_l": {
+            "local_position": [
+              -47.787472646,
+              -3.000156321,
+              4.339221289
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 49.80638119,
+            "length_ratio": 1.000000177
+          },
+          "calf_r": {
+            "local_position": [
+              47.787819366,
+              3.000447223,
+              -4.34104942
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 8.002212814,
+            "length_ratio": 1.000000009
+          },
+          "foot_l": {
+            "local_position": [
+              -41.769060999,
+              5.647112087,
+              2.544773758
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 40.918817361,
+            "length_ratio": 1.000000166
+          },
+          "foot_r": {
+            "local_position": [
+              41.768746748,
+              -5.647565725,
+              -2.542829571
+            ],
+            "local_scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "step_deg": 9.447489365,
+            "length_ratio": 1.000000029
+          }
+        }
+      }
+    }
+  },
+  "scale_range": {
+    "source": {
+      "x": [
+        0.999999963,
+        1.000006788
+      ],
+      "y": [
+        0.999999963,
+        1.000006788
+      ],
+      "z": [
+        0.999999963,
+        1.000006788
+      ]
+    },
+    "appearance": {
+      "x": [
+        1.0,
+        1.0
+      ],
+      "y": [
+        1.0,
+        1.0
+      ],
+      "z": [
+        1.0,
+        1.0
+      ]
+    }
+  }
+}

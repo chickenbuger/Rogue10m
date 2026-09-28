@@ -87,6 +87,38 @@ void ARogue10mPlayerState::AddExperience(int32 ExperienceAmount)
 	AttributeSet->SetExperienceToNextLevel(RequiredExperience);
 }
 
+void ARogue10mPlayerState::RecordSkillUse(FName SkillId, int32 Count)
+{
+	if (!HasAuthority() || SkillId.IsNone() || Count <= 0)
+	{
+		return;
+	}
+
+	SkillUseCounts.FindOrAdd(SkillId) += Count;
+	OnMartialArtsProgressChanged.Broadcast();
+}
+
+void ARogue10mPlayerState::RecordMonsterDefeat(FName MonsterId, int32 Count)
+{
+	if (!HasAuthority() || MonsterId.IsNone() || Count <= 0)
+	{
+		return;
+	}
+
+	MonsterDefeatCounts.FindOrAdd(MonsterId) += Count;
+	OnMartialArtsProgressChanged.Broadcast();
+}
+
+int32 ARogue10mPlayerState::GetSkillUseCount(FName SkillId) const
+{
+	return SkillId.IsNone() ? 0 : SkillUseCounts.FindRef(SkillId);
+}
+
+int32 ARogue10mPlayerState::GetMonsterDefeatCount(FName MonsterId) const
+{
+	return MonsterId.IsNone() ? 0 : MonsterDefeatCounts.FindRef(MonsterId);
+}
+
 int32 ARogue10mPlayerState::GetWeaponMasteryLevel(ERogue10mWeaponType WeaponType) const
 {
 	return WeaponType == ERogue10mWeaponType::Knuckle || WeaponType == ERogue10mWeaponType::Unarmed ? 1 : 0;

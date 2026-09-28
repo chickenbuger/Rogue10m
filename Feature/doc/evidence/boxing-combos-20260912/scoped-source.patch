@@ -1,0 +1,724 @@
+--- before/Source\Rogue10m\Components\Rogue10mBasicBrawlerComponent.cpp
++++ Source\Rogue10m\Components\Rogue10mBasicBrawlerComponent.cpp
+@@ -53,11 +53,14 @@
+ 	Result.bActive = IsBasicBrawlerActive();
+ 	Result.AcceptedSerial = AcceptedSerial;
+ 	Result.ReleasedChargeAlpha = LastReleasedChargeAlpha;
++	Result.HitFraction = LastHitFraction;
++	Result.bComboBuffered = bBufferedPrimary && bNextRight;
++	Result.NextAttack = Result.bComboBuffered ? ERogue10mBasicBrawlerAttack::RightJab : ERogue10mBasicBrawlerAttack::None;
+ 	if (!Result.bActive || !CanUseInput()) { return Result; }
+ 	if (bCharging)
+ 	{
+ 		Result.Phase = ERogue10mBasicBrawlerPhase::Charging;
+-		Result.Attack = ERogue10mBasicBrawlerAttack::RightUppercut;
++		Result.Attack = ERogue10mBasicBrawlerAttack::RightHook;
+ 		Result.ChargeAlpha = ChargeAlpha();
+ 	}
+ 	else if (LastAcceptedAt >= 0.0f && Now() - LastAcceptedAt < LastAttackDuration)
+@@ -121,7 +124,8 @@
+ 	Combat->StopChargeEffect();
+ 	const bool bFullyCharged = RequestedChargeAlpha >= 1.0f - KINDA_SMALL_NUMBER;
+ 	TrySkill(Combat->GetEquippedSkill(bFullyCharged ? ERogue10mAttackInputSlot::ChargedSpecial
+-		: ERogue10mAttackInputSlot::Special), ERogue10mBasicBrawlerAttack::RightUppercut, false);
++		: ERogue10mAttackInputSlot::Special), bFullyCharged ? ERogue10mBasicBrawlerAttack::RightHook
++		: ERogue10mBasicBrawlerAttack::RightStraight, false);
+ }
+ 
+ bool URogue10mBasicBrawlerComponent::TryPrimary(bool bAllowBuffer)
+@@ -143,7 +147,7 @@
+ 			if (bAllowBuffer) { QueuePrimary(Open, FMath::Min(Close, Open + InputBufferSeconds)); }
+ 			return false;
+ 		}
+-		return TrySkill(Left->NextComboSkill, ERogue10mBasicBrawlerAttack::RightStraight, true);
++		return TrySkill(Left->NextComboSkill, ERogue10mBasicBrawlerAttack::RightJab, true);
+ 	}
+ 	if (Combat->IsComboSequenceActive(Now())) { return false; }
+ 	const float Cooldown = Combat->GetAttackCooldownRemaining();
+@@ -191,10 +195,14 @@
+ 	if (GetWorld()) { GetWorld()->GetTimerManager().ClearTimer(BufferTimer); }
+ 	LastAttack = Attack;
+ 	LastAcceptedAt = Now();
+-	LastReleasedChargeAlpha = Attack == ERogue10mBasicBrawlerAttack::RightUppercut ? RequestedChargeAlpha : 0.0f;
++	LastReleasedChargeAlpha = (Attack == ERogue10mBasicBrawlerAttack::RightStraight
++		|| Attack == ERogue10mBasicBrawlerAttack::RightHook || Attack == ERogue10mBasicBrawlerAttack::RightUppercut)
++		? RequestedChargeAlpha : 0.0f;
+ 	const float Rate = FMath::Max(0.01f, Combat->GetAttackSpeedMultiplier() * Skill.AnimationPlayRate);
+ 	LastAttackDuration = Skill.AttackMontage ? Skill.AttackMontage->GetPlayLength() / Rate
+ 		: FMath::Max(0.05f, Skill.AttackCooldown / Combat->GetAttackSpeedMultiplier());
++	LastHitFraction = LastAttackDuration > UE_SMALL_NUMBER
++		? FMath::Clamp(Skill.HitStartDelaySeconds / Rate / LastAttackDuration, 0.05f, 0.90f) : 0.34f;
+ 	OwnedMontage = Skill.AttackMontage;
+ 	OwnedAttackSkill = &Skill;
+ 	bNextRight = Attack == ERogue10mBasicBrawlerAttack::LeftJab;
+--- before/Source\Rogue10m\Components\Rogue10mBasicBrawlerComponent.h
++++ Source\Rogue10m\Components\Rogue10mBasicBrawlerComponent.h
+@@ -10,7 +10,7 @@
+ class UAnimMontage;
+ 
+ UENUM(BlueprintType)
+-enum class ERogue10mBasicBrawlerAttack : uint8 { None, LeftJab, RightStraight, RightUppercut };
++enum class ERogue10mBasicBrawlerAttack : uint8 { None = 0, LeftJab = 1, RightStraight = 2, RightUppercut = 3, RightJab = 4, RightHook = 5 };
+ 
+ UENUM(BlueprintType)
+ enum class ERogue10mBasicBrawlerPhase : uint8 { Idle, Charging, Attacking };
+@@ -26,6 +26,9 @@
+ 	UPROPERTY(BlueprintReadOnly) int32 AcceptedSerial = 0;
+ 	UPROPERTY(BlueprintReadOnly) float AttackElapsed = 0.0f;
+ 	UPROPERTY(BlueprintReadOnly) float AttackDuration = 0.0f;
++	UPROPERTY(BlueprintReadOnly) float HitFraction = 0.34f;
++	UPROPERTY(BlueprintReadOnly) bool bComboBuffered = false;
++	UPROPERTY(BlueprintReadOnly) ERogue10mBasicBrawlerAttack NextAttack = ERogue10mBasicBrawlerAttack::None;
+ 	UPROPERTY(BlueprintReadOnly) float ChargeAlpha = 0.0f;
+ 	UPROPERTY(BlueprintReadOnly) float ReleasedChargeAlpha = 0.0f;
+ };
+@@ -83,6 +86,7 @@
+ 	float LeftAcceptedAt = -1.0f;
+ 	float LastAcceptedAt = -1.0f;
+ 	float LastAttackDuration = 0.0f;
++	float LastHitFraction = 0.34f;
+ 	float LastReleasedChargeAlpha = 0.0f;
+ 	float RequestedChargeAlpha = 0.0f;
+ 	int32 AcceptedSerial = 0;
+--- before/Source\Rogue10m\Character\Rogue10mFistAnimInstance.cpp
++++ Source\Rogue10m\Character\Rogue10mFistAnimInstance.cpp
+@@ -297,6 +297,8 @@
+ 				LastBasicAttackSerial = 0;
+ 				bWasBasicCharging = false;
+ 				ChargePresentationAge = 0.0f;
++				ComboPrepareWeight = 0.0f;
++				CurrentHookElbowWeight = AttackStartHookElbowWeight = ChargeStartHookElbowWeight = 0.0f;
+ 				SmoothedBodyRotation = FRotator::ZeroRotator;
+ 				SmoothedHeadRotation = FRotator::ZeroRotator;
+ 				SmoothedBodyOffset = FVector::ZeroVector;
+@@ -313,6 +315,13 @@
+ 			}
+ 			JabTarget = Fist->BasicJabTarget;
+ 			StraightTarget = Fist->BasicStraightTarget;
++			StraightBodyAdvance = FMath::Clamp(Fist->BasicStraightBodyAdvance, 0.0f, 12.0f);
++			HookGuardOffset = Fist->BasicHookGuardOffset;
++			HookTarget = Fist->BasicHookTarget;
++			HookLoadedTarget = Fist->BasicHookLoadedTarget;
++			HookArcControl = Fist->BasicHookArcControl;
++			HookBodyYaw = FMath::Clamp(Fist->BasicHookBodyYaw, 0.0f, 35.0f);
++			HookThumbInward = FMath::Clamp(Fist->BasicHookThumbInwardDegrees, -30.0f, 60.0f);
+ 			UppercutTarget = Fist->BasicUppercutTarget;
+ 			ChargeHandOffset = Fist->BasicChargeHandOffset;
+ 			ChargeBodyYaw = FMath::Clamp(Fist->BasicChargeBodyYaw, 0.0f, 30.0f);
+@@ -569,12 +578,16 @@
+ 			const float Progress = bAttacking ? FMath::Clamp(BasicSnapshot.AttackElapsed / BasicSnapshot.AttackDuration, 0.0f, 1.0f) : 0.0f;
+ 			const float Charge = FMath::Clamp(bCharging ? BasicSnapshot.ChargeAlpha : BasicSnapshot.ReleasedChargeAlpha, 0.0f, 1.0f);
+ 			const bool bUppercut = bAttacking && BasicSnapshot.Attack == ERogue10mBasicBrawlerAttack::RightUppercut;
+-			// These peaks stay aligned with the existing attack data, including montage play-rate scaling.
+-			const float Peak = bUppercut ? 0.38f : 0.34f;
+-			const float LaunchStart = Peak - StrikeAcceleration;
+-			const float Extension = bAttacking ? StrikeDrive(Progress, Peak, StrikeAcceleration, RecoveryFraction) : 0.0f;
+-			const float BodyDrive = bAttacking ? StrikeDrive(Progress, Peak - BodyLead, StrikeAcceleration, RecoveryFraction) : 0.0f;
+-			const float HeadDrive = bAttacking ? StrikeDrive(Progress, Peak + HeadLag, StrikeAcceleration, RecoveryFraction) : 0.0f;
++			const bool bHook = bAttacking && BasicSnapshot.Attack == ERogue10mBasicBrawlerAttack::RightHook;
++			const bool bJab = bAttacking && (BasicSnapshot.Attack == ERogue10mBasicBrawlerAttack::LeftJab
++				|| BasicSnapshot.Attack == ERogue10mBasicBrawlerAttack::RightJab);
++			// Gameplay supplies the actual rate-adjusted hit time; animation reaches its apex on that frame.
++			const float Peak = FMath::Clamp(BasicSnapshot.HitFraction, 0.001f, 0.999f);
++			const float AttackAcceleration = FMath::Min(StrikeAcceleration, Peak * 0.95f);
++			const float LaunchStart = Peak - AttackAcceleration;
++			const float Extension = bAttacking ? StrikeDrive(Progress, Peak, AttackAcceleration, RecoveryFraction) : 0.0f;
++			const float BodyDrive = bAttacking ? StrikeDrive(Progress, FMath::Max(0.001f, Peak - BodyLead), AttackAcceleration, RecoveryFraction) : 0.0f;
++			const float HeadDrive = bAttacking ? StrikeDrive(Progress, Peak + HeadLag, AttackAcceleration, RecoveryFraction) : 0.0f;
+ 			const FVector GuardHands[2] = { GuardTarget + FVector(0.0f, 1.0f, 1.0f), GuardTarget + FVector(1.0f, -0.5f, 0.0f) };
+ 			FVector Targets[2] = { GuardHands[0], GuardHands[1] };
+ 			float HandExtension[2] = { 0.0f, 0.0f };
+@@ -586,17 +599,20 @@
+ 				for (int32 I = 0; I < 2; ++I)
+ 				{
+ 					Captured[I] = bBasicHandsInitialized ? CurrentBasicHandTargets[I] : GuardHands[I];
+-					Captured[I].X = FMath::Abs(Captured[I].X);
++					// Retain a hook that crossed the centreline when another input interrupts recovery.
++					if (bBasicHandsInitialized) { Captured[I].X *= BasicHandSides[I]; }
+ 				}
+ 			};
+ 			if (bCharging && !bWasBasicCharging)
+ 			{
+ 				CaptureHands(ChargeStartHandTargets);
++				ChargeStartHookElbowWeight = CurrentHookElbowWeight;
+ 				ChargePresentationAge = 0.0f;
+ 			}
+ 			if (bAttacking && LastBasicAttackSerial != BasicSnapshot.AcceptedSerial)
+ 			{
+ 				CaptureHands(AttackStartHandTargets);
++				AttackStartHookElbowWeight = CurrentHookElbowWeight;
+ 				LastBasicAttackSerial = BasicSnapshot.AcceptedSerial;
+ 			}
+ 			if (bCharging)
+@@ -604,9 +620,11 @@
+ 				ChargePresentationAge += EvaluationDeltaSeconds;
+ 				const float Enter = SmoothPhase(ChargePresentationAge / 0.16f);
+ 				const float Load = SmoothPhase(Charge);
+-				Targets[1] = FMath::Lerp(ChargeStartHandTargets[1], GuardHands[1] + ChargeHandOffset * (0.35f + 0.65f * Load), Enter);
++				// A short press barely loads the straight. Continued holding coils the right shoulder for a hook.
++				const FVector ChargeTarget = FMath::Lerp(GuardHands[1] + FVector(1.0f, -2.0f, 0.0f), HookLoadedTarget, Load);
++				Targets[1] = FMath::Lerp(ChargeStartHandTargets[1], ChargeTarget, Enter);
+ 				Targets[0] = FMath::Lerp(ChargeStartHandTargets[0], GuardHands[0] + FVector(-1.0f, -1.5f, 1.0f) * Load, Enter);
+-				DesiredBody = FRotator(-2.0f * Load, ChargeBodyYaw * (0.45f + 0.55f * Load), 1.0f * Load) * Enter;
++				DesiredBody = FRotator(-2.0f * Load, ChargeBodyYaw * (0.20f + 0.80f * Load), 1.0f * Load) * Enter;
+ 				DesiredHead = FRotator(-1.2f * Load, 3.0f * Load, 0.35f * Load) * Enter;
+ 				DesiredOffset = FVector(-0.6f * Load, 0.5f * Load, -1.2f * Load) * Enter;
+ 			}
+@@ -614,8 +632,13 @@
+ 			{
+ 				const int32 ActiveHand = BasicSnapshot.Attack == ERogue10mBasicBrawlerAttack::LeftJab ? 0 : 1;
+ 				const int32 GuardHand = 1 - ActiveHand;
+-				FVector Loaded = GuardHands[ActiveHand] + FVector(1.5f, ActiveHand == 0 ? -2.5f : -4.0f, -1.0f);
+-				FVector Apex = ActiveHand == 0 ? JabTarget : StraightTarget;
++				FVector Loaded = GuardHands[ActiveHand] + FVector(1.5f, bJab ? -2.5f : -5.0f, -1.0f);
++				FVector Apex = bJab ? JabTarget : StraightTarget;
++				if (bHook)
++				{
++					Loaded = FMath::Lerp(GuardHands[ActiveHand], HookLoadedTarget, 0.6f + 0.4f * Charge);
++					Apex = HookTarget;
++				}
+ 				if (bUppercut)
+ 				{
+ 					Loaded = GuardHands[ActiveHand] + ChargeHandOffset * (0.55f + 0.45f * Charge);
+@@ -628,34 +651,65 @@
+ 				else if (Progress <= Peak)
+ 				{
+ 					Targets[ActiveHand] = FMath::Lerp(Loaded, Apex, Extension);
++					if (bHook)
++					{
++						const float U = 1.0f - Extension;
++						Targets[ActiveHand] = Loaded * (U * U) + HookArcControl * (2.0f * U * Extension)
++							+ Apex * (Extension * Extension);
++					}
+ 					// The uppercut scoops inward and forward before rising; its apex remains bounded.
+ 					if (bUppercut)
+ 					{
+-						const float Scoop = FMath::Sin(PI * (Progress - LaunchStart) / StrikeAcceleration);
++						const float Scoop = FMath::Sin(PI * (Progress - LaunchStart) / AttackAcceleration);
+ 						Targets[ActiveHand] += FVector(-2.0f, 3.0f, -2.0f) * Scoop;
+ 					}
+ 				}
+ 				else
+ 				{
+-					Targets[ActiveHand] = RecoveryArc(Apex, GuardHands[ActiveHand], (Progress - Peak) / RecoveryFraction, HandRecoveryArc);
+-				}
+-				const FVector CounterGuard = GuardHands[GuardHand] + FVector(-1.0f, ActiveHand == 0 ? -2.0f : -3.0f, 1.5f) * BodyDrive;
++					if (bHook)
++					{
++						// Follow through across the centreline before folding back outside the outgoing sweep.
++						const float T = SmoothPhase((Progress - Peak) / RecoveryFraction);
++						const float U = 1.0f - T;
++						const FVector FollowThrough = Apex + FVector(-6.0f, -2.0f, 0.0f);
++						const FVector Fold = GuardHands[ActiveHand] + FVector(10.0f, -6.0f, 3.0f);
++						Targets[ActiveHand] = Apex * (U * U * U) + FollowThrough * (3.0f * U * U * T)
++							+ Fold * (3.0f * U * T * T) + GuardHands[ActiveHand] * (T * T * T);
++					}
++					else
++					{
++						Targets[ActiveHand] = RecoveryArc(Apex, GuardHands[ActiveHand], (Progress - Peak) / RecoveryFraction, HandRecoveryArc);
++					}
++				}
++				const FVector CounterGuardOffset = bHook ? HookGuardOffset
++					: FVector(-1.0f, ActiveHand == 0 ? -2.0f : -3.0f, 1.5f);
++				const FVector CounterGuard = GuardHands[GuardHand] + CounterGuardOffset * BodyDrive;
+ 				Targets[GuardHand] = FMath::Lerp(AttackStartHandTargets[GuardHand], CounterGuard, SmoothPhase(Progress / 0.14f));
+ 				HandExtension[ActiveHand] = Extension;
+ 				// Shoulder transfer leads the fist; the head follows later with a smaller rotation to preserve aim.
+ 				const float Prepare = Progress < LaunchStart ? FMath::Sin(PI * Progress / LaunchStart) : 0.0f;
+ 				const float BodyTransfer = BodyDrive - 0.16f * Prepare;
+-				if (ActiveHand == 0)
+-				{
+-					DesiredBody = FRotator(-1.0f, 8.0f, -1.0f) * BodyTransfer;
+-					DesiredHead = FRotator(-1.4f, 2.0f, -0.4f) * HeadDrive;
+-					DesiredOffset = FVector(0.8f, -0.6f, 0.1f) * BodyTransfer;
++				if (bJab)
++				{
++					const float JabSide = ActiveHand == 0 ? 1.0f : -1.0f;
++					DesiredBody = FRotator(-1.0f, 8.0f * JabSide, -1.0f * JabSide) * BodyTransfer;
++					DesiredHead = FRotator(-1.4f, 2.0f * JabSide, -0.4f * JabSide) * HeadDrive;
++					DesiredOffset = FVector(0.8f, -0.6f * JabSide, 0.1f) * BodyTransfer;
++				}
++				else if (bHook)
++				{
++					const float LoadedYaw = ChargeBodyYaw * (0.20f + 0.80f * Charge);
++					const float Unwind = Progress < Peak - BodyLead
++						? FMath::Lerp(LoadedYaw, -HookBodyYaw, BodyDrive) : -HookBodyYaw * BodyDrive;
++					DesiredBody = FRotator(-1.0f * BodyDrive, Unwind, 2.0f * BodyDrive);
++					DesiredHead = FRotator(-0.8f, -2.4f, 0.8f) * HeadDrive;
++					DesiredOffset = FVector(1.3f, 1.0f, -0.15f) * BodyDrive;
+ 				}
+ 				else if (!bUppercut)
+ 				{
+-					DesiredBody = FRotator(-1.8f, -12.0f, 1.5f) * BodyTransfer;
++					DesiredBody = FRotator(-1.8f, -16.0f, 1.5f) * BodyTransfer;
+ 					DesiredHead = FRotator(-1.2f, -1.8f, 0.5f) * HeadDrive;
+-					DesiredOffset = FVector(1.2f, 0.8f, -0.2f) * BodyTransfer;
++					DesiredOffset = FVector(StraightBodyAdvance, 0.8f, -0.2f) * BodyTransfer;
+ 				}
+ 				else
+ 				{
+@@ -667,6 +721,35 @@
+ 					DesiredHead = FRotator((2.0f + Charge) * HeadDrive, -2.0f * HeadDrive, -0.5f * HeadDrive);
+ 					DesiredOffset = FVector(1.0f, -0.6f, 1.6f) * BodyDrive;
+ 				}
++			}
++			// Only an accepted buffered input prepares the following jab; idle returns to the normal guard.
++			const bool bPreparingJab = bAttacking && BasicSnapshot.bComboBuffered
++				&& (BasicSnapshot.NextAttack == ERogue10mBasicBrawlerAttack::LeftJab
++					|| BasicSnapshot.NextAttack == ERogue10mBasicBrawlerAttack::RightJab);
++			const float PrepareAlpha = 1.0f - FMath::Exp(-24.0f * EvaluationDeltaSeconds);
++			ComboPrepareWeight = FMath::Lerp(ComboPrepareWeight, bPreparingJab ? 1.0f : 0.0f, PrepareAlpha);
++			if (bPreparingJab)
++			{
++				const int32 NextHand = BasicSnapshot.NextAttack == ERogue10mBasicBrawlerAttack::LeftJab ? 0 : 1;
++				const FVector NextLoaded = GuardHands[NextHand] + FVector(1.5f, -2.5f, -1.0f);
++				Targets[NextHand] = FMath::Lerp(Targets[NextHand], NextLoaded, ComboPrepareWeight);
++			}
++			// Capture the elbow pole as well as the fist. Releasing just below full charge must not
++			// drop a coiled elbow in one frame when the accepted attack is a straight.
++			if (bCharging)
++			{
++				CurrentHookElbowWeight = FMath::Lerp(ChargeStartHookElbowWeight, SmoothPhase(Charge) * 0.5f,
++					SmoothPhase(ChargePresentationAge / 0.16f));
++			}
++			else if (bAttacking)
++			{
++				const float AttackPole = bHook ? (Progress <= Peak ? FMath::Lerp(0.5f, 1.0f, Extension) : Extension) : 0.0f;
++				CurrentHookElbowWeight = FMath::Lerp(AttackStartHookElbowWeight, AttackPole,
++					SmoothPhase(Progress / FMath::Min(LaunchStart, 0.12f)));
++			}
++			else
++			{
++				CurrentHookElbowWeight *= FMath::Exp(-28.0f * EvaluationDeltaSeconds);
+ 			}
+ 			bWasBasicCharging = bCharging;
+ 
+@@ -725,6 +808,7 @@
+ 				const FCompactPoseBoneIndex HandIndex = FindBone(Output.Pose, bLeft ? TEXT("hand_l") : TEXT("hand_r"));
+ 				if (UpperIndex == INDEX_NONE || LowerIndex == INDEX_NONE || HandIndex == INDEX_NONE) { continue; }
+ 				const float Side = BaseCS.GetComponentSpaceTransform(HandIndex).GetLocation().X >= 0.0 ? 1.0f : -1.0f;
++				BasicHandSides[I] = Side;
+ 				Targets[I].X *= Side;
+ 				if (!bBasicHandsInitialized) { CurrentBasicHandTargets[I] = FVector(GuardHands[I].X * Side, GuardHands[I].Y, GuardHands[I].Z); }
+ 				// The authored path includes its own continuous anticipation/recovery. Filtering it again
+@@ -735,8 +819,12 @@
+ 				FTransform Hand = BodyCS.GetComponentSpaceTransform(HandIndex);
+ 				const bool bUppercutHand = !bLeft && bAttacking && BasicSnapshot.Attack == ERogue10mBasicBrawlerAttack::RightUppercut;
+ 				const float ElbowRise = bUppercutHand ? Extension : 0.0f;
+-				const FVector ElbowTarget = FMath::Lerp(FVector(Side * 55.0f, 12.0f, 113.0f),
++				FVector ElbowTarget = FMath::Lerp(FVector(Side * 55.0f, 12.0f, 113.0f),
+ 					FVector(Side * 43.0f, 20.0f, 125.0f), ElbowRise);
++				if (!bLeft)
++				{
++					ElbowTarget = FMath::Lerp(ElbowTarget, FVector(Side * 59.0f, 32.0f, 142.0f), CurrentHookElbowWeight);
++				}
+ 				// Keep a bend at full extension; a locked elbow magnifies the source skin's corrective-bone limits.
+ 				const double ReachLimit = ((Lower.GetLocation() - Upper.GetLocation()).Size()
+ 					+ (Hand.GetLocation() - Lower.GetLocation()).Size()) * 0.94;
+@@ -746,7 +834,7 @@
+ 				if (Output.Pose.GetParentBoneIndex(HandIndex) == LowerIndex)
+ 				{
+ 					OrientAnatomicalFist(Lower, Hand, WristLocalRotations[I], HandBases[I], Side,
+-						FMath::Lerp(GuardThumbInward, HitThumbInward, HandExtension[I]));
++						FMath::Lerp(GuardThumbInward, (!bLeft && bHook) ? HookThumbInward : HitThumbInward, HandExtension[I]));
+ 				}
+ 				Upper.NormalizeRotation(); Lower.NormalizeRotation(); Hand.NormalizeRotation();
+ 				Changes.Emplace(UpperIndex, Upper); Changes.Emplace(LowerIndex, Lower); Changes.Emplace(HandIndex, Hand);
+@@ -804,11 +892,23 @@
+ 		int32 LastBasicAttackSerial = 0;
+ 		bool bWasBasicCharging = false;
+ 		float ChargePresentationAge = 0.0f;
++		float ComboPrepareWeight = 0.0f;
++		float CurrentHookElbowWeight = 0.0f;
++		float AttackStartHookElbowWeight = 0.0f;
++		float ChargeStartHookElbowWeight = 0.0f;
+ 		FVector AttackStartHandTargets[2] = { FVector::ZeroVector, FVector::ZeroVector };
+ 		FVector ChargeStartHandTargets[2] = { FVector::ZeroVector, FVector::ZeroVector };
+ 		float EvaluationDeltaSeconds = 0.0f;
+ 		FVector JabTarget = FVector::ZeroVector;
+ 		FVector StraightTarget = FVector::ZeroVector;
++		float StraightBodyAdvance = 7.0f;
++		FVector HookGuardOffset = FVector::ZeroVector;
++		FVector HookTarget = FVector::ZeroVector;
++		FVector HookLoadedTarget = FVector::ZeroVector;
++		FVector HookArcControl = FVector::ZeroVector;
++		float HookBodyYaw = 24.0f;
++		float HookThumbInward = 12.0f;
++		float BasicHandSides[2] = { 1.0f, 1.0f };
+ 		FVector UppercutTarget = FVector::ZeroVector;
+ 		FVector ChargeHandOffset = FVector::ZeroVector;
+ 		FVector CurrentBasicHandTargets[2] = { FVector::ZeroVector, FVector::ZeroVector };
+--- before/Source\Rogue10m\Character\Rogue10mFistAnimInstance.h
++++ Source\Rogue10m\Character\Rogue10mFistAnimInstance.h
+@@ -67,10 +67,35 @@
+ 
+ 	/** Component-space fist endpoints for the default unarmed class (lateral, forward, height). */
+ 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler")
+-	FVector BasicJabTarget = FVector(6.0f, 68.0f, 154.0f);
++	FVector BasicJabTarget = FVector(7.0f, 64.0f, 153.0f);
+ 
+ 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler")
+-	FVector BasicStraightTarget = FVector(5.0f, 70.0f, 153.0f);
++	FVector BasicStraightTarget = FVector(3.0f, 70.0f, 154.0f);
++
++	/** Advance the shoulder with the torso rather than stretching the arm past its reach limit. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler", meta=(ClampMin="0", ClampMax="12", Units="cm"))
++	float BasicStraightBodyAdvance = 7.0f;
++
++	/** Withdraw the opposite guard outside the hook's screen-space follow-through. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler")
++	FVector BasicHookGuardOffset = FVector(6.0f, -7.0f, 1.5f);
++
++	/** Signed lateral coordinates: negative crosses the centreline for the right hook. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler")
++	FVector BasicHookTarget = FVector(-7.0f, 55.0f, 153.0f);
++
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler")
++	FVector BasicHookLoadedTarget = FVector(34.0f, 37.0f, 151.0f);
++
++	/** Outer control point of the horizontal sweep; the fist accelerates into the centreline. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler")
++	FVector BasicHookArcControl = FVector(44.0f, 68.0f, 154.0f);
++
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler", meta=(ClampMin="0", ClampMax="35", Units="deg"))
++	float BasicHookBodyYaw = 24.0f;
++
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler", meta=(ClampMin="-30", ClampMax="60", Units="deg"))
++	float BasicHookThumbInwardDegrees = 12.0f;
+ 
+ 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler")
+ 	FVector BasicUppercutTarget = FVector(14.0f, 57.0f, 164.0f);
+--- before/Source\Rogue10m\Components\Rogue10mFirstPersonPresentationComponent.cpp
++++ Source\Rogue10m\Components\Rogue10mFirstPersonPresentationComponent.cpp
+@@ -34,8 +34,24 @@
+ 	Super::EndPlay(EndPlayReason);
+ }
+ 
++void URogue10mFirstPersonPresentationComponent::NotifyConfirmedBrawlerHit(float Strength, float Side)
++{
++ ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner());
++ if (!bPresentationActive || !bEnableFistPresentation || !Character || Character->IsDead()
++  || !Character->IsLocallyControlled() || Character->GetEquippedWeaponType() != ERogue10mWeaponType::Unarmed
++  || !FMath::IsFinite(Strength) || !FMath::IsFinite(Side) || !FMath::IsFinite(HitFeedbackScale)
++  || !FMath::IsFinite(CameraMotionScale) || CameraMotionScale <= 0.0f || HitFeedbackScale <= 0.0f || Strength <= 0.0f)
++ { HitFeedbackAge = 0.16f; HitFeedbackStrength = HitFeedbackWeight = 0.0f; return; }
++ HitFeedbackStrength = FMath::Max(HitFeedbackWeight, FMath::Clamp(Strength, 0.0f, 1.0f));
++ HitFeedbackAge = 0.0f;
++ HitFeedbackSide = FMath::Clamp(Side, -1.0f, 1.0f);
++ ++ConfirmedHitFeedbackCount;
++}
++
+ void URogue10mFirstPersonPresentationComponent::ResetCameraMotion()
+ {
++	HitFeedbackAge = 0.16f;
++	HitFeedbackStrength = HitFeedbackWeight = 0.0f;
+ 	AppliedCameraMotionOffset = FVector::ZeroVector;
+ 	AppliedCameraMotionRotation = FRotator::ZeroRotator;
+ 	CameraMotionOffsetVelocity = FVector::ZeroVector;
+@@ -156,11 +172,24 @@
+ 			FMath::Lerp(AppliedCameraMotionRotation.Roll, TargetRotation.Roll, static_cast<double>(Alpha))));
+ 	}
+ 
++	// Keep the head-follow filter state separate from the short confirmed-hit pulse.
++	FVector FinalOffset = AppliedCameraMotionOffset;
++	FRotator FinalRotation = AppliedCameraMotionRotation;
++	if (bBasicMotion && FMath::IsFinite(HitFeedbackScale) && HitFeedbackScale > 0.0f)
++	{
++		HitFeedbackAge = FMath::Min(0.16f, HitFeedbackAge + FMath::Max(0.0f, DeltaTime));
++		HitFeedbackWeight = HitFeedbackStrength * FMath::Square(1.0f - HitFeedbackAge / 0.16f);
++		const float Weight = HitFeedbackWeight * FMath::Clamp(HitFeedbackScale, 0.0f, 1.0f) * Scale;
++		FinalOffset = (FinalOffset + FVector(-0.65f, 0.12f * HitFeedbackSide, 0.12f) * Weight).GetClampedToMaxSize(OffsetLimit);
++		FinalRotation = ClampRotation(FinalRotation + FRotator(-0.7f, 0.25f * HitFeedbackSide, 0.3f * HitFeedbackSide) * Weight);
++	}
++	else { HitFeedbackAge = 0.16f; HitFeedbackStrength = HitFeedbackWeight = 0.0f; }
++
+ 	// Compose in the final view's local space. Gameplay traces continue to use the untouched
+ 	// CameraComponent and ControlRotation, while FOV, projection and post processing remain intact.
+ 	const FQuat BaseRotation = InOutView.Rotation.Quaternion();
+-	InOutView.Location += BaseRotation.RotateVector(AppliedCameraMotionOffset);
+-	InOutView.Rotation = (BaseRotation * AppliedCameraMotionRotation.Quaternion()).Rotator();
++	InOutView.Location += BaseRotation.RotateVector(FinalOffset);
++	InOutView.Rotation = (BaseRotation * FinalRotation.Quaternion()).Rotator();
+ }
+ 
+ void URogue10mFirstPersonPresentationComponent::RefreshPresentation()
+--- before/Source\Rogue10m\Components\Rogue10mFirstPersonPresentationComponent.h
++++ Source\Rogue10m\Components\Rogue10mFirstPersonPresentationComponent.h
+@@ -32,6 +32,11 @@
+ 	/** Adds only to a final view result; never moves the gameplay camera component. */
+ 	void ApplyBodyMotionToView(float DeltaTime, FMinimalViewInfo& InOutView);
+ 	void ResetCameraMotion();
++	void NotifyConfirmedBrawlerHit(float Strength, float Side);
++	int32 GetConfirmedHitFeedbackCount() const { return ConfirmedHitFeedbackCount; }
++	float GetHitFeedbackWeight() const { return HitFeedbackWeight; }
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Hit Feedback", meta=(ClampMin="0", ClampMax="1"))
++	float HitFeedbackScale = 1.0f;
+ 
+ 	UFUNCTION(BlueprintPure, Category="Rogue10m|First Person|Camera Motion")
+ 	FVector GetAppliedCameraMotionOffset() const { return AppliedCameraMotionOffset; }
+@@ -136,6 +141,11 @@
+ 	bool bPreviousHidden = false;
+ 	bool bPresentationActive = false;
+ 	bool bActiveBasicPresentation = false;
++	float HitFeedbackAge = 0.16f;
++	float HitFeedbackStrength = 0.0f;
++	float HitFeedbackSide = 1.0f;
++	float HitFeedbackWeight = 0.0f;
++	int32 ConfirmedHitFeedbackCount = 0;
+ 	FVector AppliedCameraMotionOffset = FVector::ZeroVector;
+ 	FRotator AppliedCameraMotionRotation = FRotator::ZeroRotator;
+ 	FVector CameraMotionOffsetVelocity = FVector::ZeroVector;
+--- before/Source\Rogue10m\Components\Rogue10mCombatComponent.cpp
++++ Source\Rogue10m\Components\Rogue10mCombatComponent.cpp
+@@ -16,6 +16,8 @@
+ #include "Rogue10m.h"
+ #include "Rogue10mAttributeSet.h"
+ #include "Rogue10mBasicBrawlerComponent.h"
++#include "Rogue10mBasicMonster.h"
++#include "Rogue10mHitFeedbackComponent.h"
+ #include "Rogue10mAttackTargetInterface.h"
+ #include "Rogue10mCharacter.h"
+ #include "Rogue10mCharacterDataAsset.h"
+@@ -823,6 +825,10 @@
+ 	}
+ 	FRogue10mActiveAttackExecution& Execution = ActiveAttackExecutions.Add(ExecutionId);
+ 	Execution.SkillData = &SkillData;
++	const ARogue10mCharacter* Character = GetOwnerCharacter();
++	const URogue10mBasicBrawlerComponent* Brawler = Character ? Character->FindComponentByClass<URogue10mBasicBrawlerComponent>() : nullptr;
++	// Presentation belongs to the accepted attack, not to a weapon equipped between pulses.
++	Execution.bBrawlerPresentation = Brawler && Brawler->IsBasicBrawlerActive();
+ 	if (SkillData.HitStartDelaySeconds > 0.0f)
+ 	{
+ 		// Capture the same speed used by the accepted montage; later stat changes cannot move its first hit.
+@@ -1056,13 +1062,37 @@
+ 	const float RolledDamage = SkillData.RollDamage(GetOwnerAttributes(), bCriticalHit);
+ 	const float AppliedDamage = UGameplayStatics::ApplyDamage(
+ 		&TargetActor, RolledDamage, Character->GetController(), Character, UDamageType::StaticClass());
+-	if (AppliedDamage <= 0.0f)
++	if (!FMath::IsFinite(AppliedDamage) || AppliedDamage <= 0.0f)
+ 	{
+ 		return false;
+ 	}
+ 
+ 	Execution.TargetHitCounts.FindOrAdd(&TargetActor) += 1;
+-	SpawnImpactEffect(SkillData, TargetActor);
++	const URogue10mBasicBrawlerComponent* Brawler = Character->FindComponentByClass<URogue10mBasicBrawlerComponent>();
++	const bool bBrawlerPresentation = Execution.bBrawlerPresentation && Brawler && Brawler->IsBasicBrawlerActive();
++	SpawnImpactEffect(SkillData, TargetActor, bBrawlerPresentation);
++	if (bBrawlerPresentation)
++	{
++		const float Strength = SkillData.InputSlot == ERogue10mAttackInputSlot::ChargedSpecial ? 1.0f
++			: SkillData.InputSlot == ERogue10mAttackInputSlot::Special ? 0.7f : 0.45f;
++		if (ARogue10mBasicMonster* Monster = Cast<ARogue10mBasicMonster>(&TargetActor); Monster && !Monster->IsDead())
++		{
++			URogue10mHitFeedbackComponent* Feedback = Monster->FindComponentByClass<URogue10mHitFeedbackComponent>();
++			if (!Feedback)
++			{
++				Feedback = NewObject<URogue10mHitFeedbackComponent>(Monster);
++				Monster->AddInstanceComponent(Feedback);
++				Feedback->RegisterComponent();
++			}
++			Feedback->PlayHit(Strength, DamageDirection);
++		}
++		if (!Execution.bConfirmedCameraFeedbackSent)
++		{
++			Execution.bConfirmedCameraFeedbackSent = true;
++			if (URogue10mFirstPersonPresentationComponent* Presentation = Character->FindComponentByClass<URogue10mFirstPersonPresentationComponent>())
++			{ Presentation->NotifyConfirmedBrawlerHit(Strength, SkillData.EffectAttachSocket == TEXT("hand_l") ? -1.0f : 1.0f); }
++		}
++	}
+ 	if (ARogue10mPlayerController* PlayerController = Cast<ARogue10mPlayerController>(Character->GetController()))
+ 	{
+ 		PlayerController->AddFloatingDamageNumber(&TargetActor, AppliedDamage, bCriticalHit);
+@@ -1199,7 +1229,7 @@
+ }
+ 
+ void URogue10mCombatComponent::SpawnImpactEffect(
+-	const URogue10mAttackSkillData& SkillData, const AActor& TargetActor) const
++	const URogue10mAttackSkillData& SkillData, const AActor& TargetActor, bool bBrawlerPresentation) const
+ {
+ 	if (!SkillData.bEnableAttackEffects || !SkillData.ImpactEffect)
+ 	{
+@@ -1216,8 +1246,19 @@
+ 		* (bUseFirstPersonOverrides ? SkillData.FirstPersonImpactScaleMultiplier : 1.0f);
+ 	const float EmissionDuration = SkillData.ImpactEffectEmissionDuration
+ 		* (bUseFirstPersonOverrides ? SkillData.FirstPersonEmissionDurationMultiplier : 1.0f);
++	FVector EffectLocation = BoundsOrigin;
++	FRotator EffectRotation = TargetActor.GetActorRotation();
++	const ARogue10mCharacter* Character = GetOwnerCharacter();
++	if (bBrawlerPresentation && Character)
++	{
++		// Attack targeting is an overlap, so this is a conservative near-side bounds
++		// estimate, not an exact physics contact point. Keep it at torso height.
++		const FVector TowardAttacker = (Character->GetActorLocation() - BoundsOrigin).GetSafeNormal2D();
++		EffectLocation += TowardAttacker * FMath::Min(BoundsExtent.X, BoundsExtent.Y);
++		EffectRotation = (-TowardAttacker).Rotation();
++	}
+ 	UNiagaraComponent* SpawnedEffect = UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+-		this, SkillData.ImpactEffect, BoundsOrigin, TargetActor.GetActorRotation(),
++		this, SkillData.ImpactEffect, EffectLocation, EffectRotation,
+ 		FVector::OneVector,
+ 		true, true, ENCPoolMethod::None, true);
+ 	ConfigureTransientEffect(
+--- before/Source\Rogue10m\Components\Rogue10mCombatComponent.h
++++ Source\Rogue10m\Components\Rogue10mCombatComponent.h
+@@ -29,6 +29,8 @@
+ 	FTimerHandle TimerHandle;
+ 	float ProjectileTravelDistance = 0.0f;
+ 	int32 CompletedPulses = 0;
++	bool bConfirmedCameraFeedbackSent = false;
++	bool bBrawlerPresentation = false;
+ };
+ 
+ UCLASS(ClassGroup=(Rogue10m), meta=(BlueprintSpawnableComponent))
+@@ -158,7 +160,7 @@
+ 	void StartChargeEffect(const URogue10mAttackSkillData& SkillData);
+ 	void StopChargeEffect();
+ 	void SpawnCastEffect(const URogue10mAttackSkillData& SkillData) const;
+-	void SpawnImpactEffect(const URogue10mAttackSkillData& SkillData, const AActor& TargetActor) const;
++	void SpawnImpactEffect(const URogue10mAttackSkillData& SkillData, const AActor& TargetActor, bool bBrawlerPresentation) const;
+ 	void ConfigureTransientEffect(
+ 		UNiagaraComponent* EffectComponent, float UniformScale,
+ 		float EmissionDuration, float TimeDilation) const;
+--- before/Scripts\Editor\ConfigureBasicBrawler.py
++++ Scripts\Editor\ConfigureBasicBrawler.py
+@@ -1,7 +1,7 @@
+-"""Configure the default Unarmed left/right pair and tap/charged right uppercut in UE 5.8.
++"""Configure Unarmed left/right jabs, tap right straight and charged right hook in UE 5.8.
+ 
+ Only four dedicated BasicBrawler skill assets and the Unarmed profile are saved.
+-Existing Knuckle/StoneFist assets, original attack data, and shared montages are read-only.
++Existing uppercut, Knuckle/StoneFist assets, original attack data, and shared montages are read-only.
+ """
+ from __future__ import annotations
+ 
+@@ -14,10 +14,22 @@
+ MONTAGE_ROOT = "/Game/Rogue10m/Animation/Common"
+ DEFINITIONS = {
+     "LeftJab": ("DA_Attack_Unarmed_Primary", "AM_Punch_01", "왼손 잽", "PRIMARY"),
+-    "RightStraight": ("DA_Attack_Unarmed_Primary_Combo2", "AM_Punch_02", "오른손 스트레이트", "PRIMARY"),
+-    "RightUppercut": ("DA_Attack_Unarmed_Special", "AM_Punch_03", "오른손 어퍼컷", "SPECIAL"),
+-    "ChargedRightUppercut": ("DA_Attack_Unarmed_ChargedSpecial", "AM_Punch_03", "차지 오른손 어퍼컷", "CHARGED_SPECIAL"),
++    "RightJab": ("DA_Attack_Unarmed_Primary_Combo2", "AM_Punch_02", "오른손 잽", "PRIMARY"),
++    "RightStraight": ("DA_Attack_Unarmed_Special", "AM_Punch_02", "오른손 스트레이트", "SPECIAL"),
++    "RightHook": ("DA_Attack_Unarmed_ChargedSpecial", "AM_Punch_03", "차지 오른손 훅", "CHARGED_SPECIAL"),
+ }
++PLAY_RATES = {"LeftJab": 1.5, "RightJab": 1.5, "RightStraight": 1.0, "RightHook": 1.5}
++BALANCE_FIELDS = (
++    "damage", "attack_cooldown", "resource_costs", "attack_range",
++    "min_damage_ratio_multiplier", "max_damage_ratio_multiplier", "charge_seconds",
++    "critical_chance_bonus", "critical_damage_multiplier_bonus", "attack_shape", "hit_mode",
++    "hit_count", "hit_interval", "max_targets_per_hit", "max_hits_per_target",
++    "attack_trace_radius", "box_half_width", "box_half_height", "arc_angle_degrees", "circle_forward_offset",
++)
++
++
++def hit_fraction(name):
++    return 0.38 if name == "RightHook" else 0.34
+ 
+ 
+ def require(path):
+@@ -54,18 +66,19 @@
+     bindings = dict(profile.get_editor_property("default_skill_bindings"))
+     expected = {
+         slot("PRIMARY"): skills["LeftJab"],
+-        slot("SPECIAL"): skills["RightUppercut"],
+-        slot("CHARGED_SPECIAL"): skills["ChargedRightUppercut"],
++        slot("SPECIAL"): skills["RightStraight"],
++        slot("CHARGED_SPECIAL"): skills["RightHook"],
+     }
+     for key, value in expected.items():
+         if bindings.get(key) != value:
+             raise RuntimeError(f"Wrong BasicBrawler binding: {key}")
+     if slot("CHARGED_PRIMARY") in bindings:
+         raise RuntimeError("LMB must not expose the old hold/charged-primary binding.")
+-    if skills["LeftJab"].get_editor_property("next_combo_skill") != skills["RightStraight"]:
+-        raise RuntimeError("Left jab must lead only to right straight.")
+-    if skills["RightStraight"].get_editor_property("enable_combo") or skills["RightStraight"].get_editor_property("next_combo_skill"):
+-        raise RuntimeError("Right straight must finish the two-hit chain.")
++    if skills["LeftJab"].get_editor_property("next_combo_skill") != skills["RightJab"]:
++        raise RuntimeError("Left jab must lead only to right jab.")
++    for name in ("RightJab", "RightStraight", "RightHook"):
++        if skills[name].get_editor_property("enable_combo") or skills[name].get_editor_property("next_combo_skill"):
++            raise RuntimeError(f"Only the left jab may open a combo: {name}")
+     unlocked = list(profile.get_editor_property("initially_unlocked_skills"))
+     for skill in skills.values():
+         if skill not in unlocked:
+@@ -73,23 +86,22 @@
+     for name, (source_name, montage_name, _, _) in DEFINITIONS.items():
+         skill = skills[name]
+         source = require(f"{SOURCE_ROOT}/{source_name}")
+-        expected_rate = 1.5 if name in ("RightUppercut", "ChargedRightUppercut") else 1.0
++        expected_rate = PLAY_RATES[name]
+         if abs(skill.get_editor_property("animation_play_rate") - expected_rate) > 0.001:
+             raise RuntimeError(f"Wrong basic attack playback tempo: {name}")
+-        expected_delay = skill.get_editor_property("attack_montage").get_play_length() * (
+-            0.34 if name in ("LeftJab", "RightStraight") else 0.38)
++        expected_delay = skill.get_editor_property("attack_montage").get_play_length() * hit_fraction(name)
+         if abs(skill.get_editor_property("hit_start_delay_seconds") - expected_delay) > 0.001:
+             raise RuntimeError(f"Hit must match the basic fist pose peak: {name}")
+         if skill.get_editor_property("draw_debug_attack"):
+             raise RuntimeError(f"Basic attack debug shapes must be disabled: {name}")
+         if skill.get_editor_property("attack_montage") != require(f"{MONTAGE_ROOT}/{montage_name}"):
+             raise RuntimeError(f"Wrong existing montage: {name}")
+-        for field in ("damage", "attack_cooldown", "resource_costs", "attack_range", "min_damage_ratio_multiplier", "max_damage_ratio_multiplier"):
++        for field in BALANCE_FIELDS:
+             if skill.get_editor_property(field) != source.get_editor_property(field):
+                 raise RuntimeError(f"Existing balance must remain unchanged: {name}/{field}")
+-    if skills["ChargedRightUppercut"].get_editor_property("charge_seconds") <= 0.0:
++    if skills["RightHook"].get_editor_property("charge_seconds") <= 0.0:
+         raise RuntimeError("Charge duration must be positive.")
+-    unreal.log("RESULT=BASIC_BRAWLER_ASSETS_PASSED skills=4 chain=left_right rmb=tap_or_charge")
++    unreal.log("RESULT=BASIC_BRAWLER_ASSETS_PASSED skills=4 chain=left_jab_right_jab rmb=tap_straight_or_charged_hook")
+ 
+ 
+ def main():
+@@ -103,19 +115,24 @@
+             skill = unreal.EditorAssetLibrary.duplicate_asset(f"{SOURCE_ROOT}/{source_name}", target)
+         if not skill:
+             raise RuntimeError(f"Could not create {target}")
+-        # Balance values remain copied from their existing Unarmed variants.
++        # Refresh the dedicated skill from its matching source, including an older
++        # RightStraight asset that previously served as the LMB combo finisher.
++        source = require(f"{SOURCE_ROOT}/{source_name}")
++        skill.set_editor_properties({field: source.get_editor_property(field) for field in BALANCE_FIELDS})
+         skill.set_editor_properties({
+             "skill_name": label,
+-            "skill_description": "기본 직업 전용 왼손-오른손 2연타" if name in ("LeftJab", "RightStraight")
+-                else "우클릭을 누르면 준비하고 놓으면 오른손 어퍼컷. 완충하면 강화 공격.",
++            "icon_label": "잽" if name in ("LeftJab", "RightJab") else ("훅" if name == "RightHook" else "직"),
++            "effect_attach_socket": "hand_l" if name == "LeftJab" else "hand_r",
++            "skill_description": "기본 직업 전용 왼손-오른손 2연타" if name in ("LeftJab", "RightJab")
++                else "우클릭을 짧게 눌렀다 놓으면 오른손 스트레이트, 충분히 모았다 놓으면 오른손 훅.",
+             "input_slot": slot(input_name),
+             "attack_montage": require(f"{MONTAGE_ROOT}/{montage_name}"),
+-            "animation_play_rate": 1.5 if name in ("RightUppercut", "ChargedRightUppercut") else 1.0,
++            "animation_play_rate": PLAY_RATES[name],
+             "enable_combo": name == "LeftJab",
+             "draw_debug_attack": False,
+             # Match the native pose's normalized extension/apex to each existing montage.
+             "hit_start_delay_seconds": require(f"{MONTAGE_ROOT}/{montage_name}").get_play_length()
+-                * (0.34 if name in ("LeftJab", "RightStraight") else 0.38),
++                * hit_fraction(name),
+             "next_combo_skill": None,
+             "prerequisite_skills": [],
+             "unlock_conditions": [],
+@@ -123,15 +140,15 @@
+         })
+         skills[name] = skill
+     skills["LeftJab"].set_editor_properties({
+-        "next_combo_skill": skills["RightStraight"],
++        "next_combo_skill": skills["RightJab"],
+         "combo_window_open_seconds": 0.40,
+         "combo_window_close_seconds": 0.55,
+         "combo_input_slot": slot("PRIMARY"),
+     })
+     bindings = dict(profile.get_editor_property("default_skill_bindings"))
+     bindings[slot("PRIMARY")] = skills["LeftJab"]
+-    bindings[slot("SPECIAL")] = skills["RightUppercut"]
+-    bindings[slot("CHARGED_SPECIAL")] = skills["ChargedRightUppercut"]
++    bindings[slot("SPECIAL")] = skills["RightStraight"]
++    bindings[slot("CHARGED_SPECIAL")] = skills["RightHook"]
+     bindings.pop(slot("CHARGED_PRIMARY"), None)
+     profile.set_editor_property("default_skill_bindings", bindings)
+     profile.set_editor_property("initially_unlocked_skills", unique_assets(

@@ -1,0 +1,316 @@
+# 2026-08-12 개발 로그
+
+## Sprint#4-3 - Obsidian 아키텍처 결합도·응집도 연동
+
+### 작업 배경
+
+현재 Rogue10m 프로젝트의 C++ 파일 의존 관계를 문서와 분리된 일회성 표가 아니라, 기존 Obsidian Vault 안에서 반복 갱신하고 탐색할 수 있는 형태가 필요했다.
+
+### 주요 작업
+
+- `Source/Rogue10m`의 헤더와 cpp 파일에서 프로젝트 내부 `#include` 관계를 추출하는 PowerShell 분석기를 추가했다.
+- 파일별 유입 결합도(Ca), 유출 결합도(Ce), 총 결합도와 같은 폴더 의존 비율을 계산했다.
+- 폴더별 내부선, 유입선, 유출선, 응집도와 불안정도를 계산했다.
+- 원본 C++ 파일 97개에 대응하는 Obsidian 노트 97개를 생성하고 유입·유출 파일을 Wiki Link로 연결했다.
+- 폴더 의존 Mermaid 그래프와 Obsidian Canvas, 후속 분석용 `metrics.json`을 생성했다.
+- 프로젝트 문서 영역 `Docs/Obsidian/ArchitectureMetrics`에 대시보드 진입점을 구성했다.
+- 분석·검증 후 Obsidian 대시보드를 여는 PowerShell 스크립트와 더블클릭용 배치 파일을 추가했다.
+- Windows PowerShell 5.1에서 한국어가 손상되지 않도록 신규 PowerShell 스크립트를 UTF-8 BOM으로 저장했다.
+
+### 검증 결과
+
+- 분석 파일: 97개
+- 프로젝트 내부 include 관계: 197개
+- 분석 폴더: 10개
+- 생성 파일 노트: 97개
+- `Scripts/TestObsidianArchitectureMetrics.ps1` 통과
+- 생성 Wiki Link, Canvas JSON, 결합도·응집도 범위 검증 통과
+- Obsidian 실행 스크립트 PowerShell 구문 검증 통과
+- C++ 및 Unreal 바이너리 에셋 변경 없음
+
+### 해석 메모
+
+- 총 결합도 상위 파일은 `Rogue10mCharacter.h`(20), `Rogue10mPlayerController.cpp`(18), `Rogue10m.h`(15)였다.
+- 폴더 응집도 하위는 `Enemy`(8.3%), `UI`(20.0%), `Components`(24.1%)였다.
+- 현재 지표는 include 정적 관계만 반영하므로 Blueprint와 런타임 의존성을 합친 절대 품질 점수로 사용하지 않는다.
+
+## Notion 요약 후보
+
+> **Rogue10m Obsidian 아키텍처 지표 자동화**
+>
+> C++ 파일 97개의 내부 include 관계 197개를 분석해 파일 결합도와 폴더 응집도를 계산했다. 결과를 Obsidian 파일 노트, Wiki Link, Mermaid, Canvas로 자동 생성하고 검증기와 더블클릭 실행 진입점을 제공했다. 현재 총 결합도 상위는 `Rogue10mCharacter.h`, 유출 결합도 상위는 `Rogue10mPlayerController.cpp`이며, 이 수치는 리팩터링 후보 탐색에 사용하되 Blueprint·런타임 의존성은 별도 확인한다.
+## Obsidian 로컬 설치 및 실행 환경 확인
+
+- `winget`의 공식 `Obsidian.Obsidian` 패키지로 Obsidian 1.13.6을 설치했다.
+- 설치 관리자 SHA-256 검증과 패키지 설치가 성공했다.
+- 실행 파일 `C:\Users\PC\AppData\Local\Programs\Obsidian\Obsidian.exe`와 `obsidian://` 프로토콜 등록을 확인했다.
+- 대시보드 실행 URI를 검증된 `vault=Rogue10m&file=...` 방식으로 수정했다.
+- 전역 Vault 설정에 `D:\Project\Rogue10m`을 등록하고 프로젝트 `.obsidian` 설정 생성을 확인했다.
+- 초기 잘못된 URI가 만든 중첩 Vault는 삭제하지 않고 `%TEMP%\Rogue10m-Obsidian-Recovery\WrongVault-20260812-032224`로 이동했다.
+- 최종 실행 스크립트를 `vault=Rogue10m&file=...` 방식으로 수정하고 활성 파일이 `Dashboard.md`인지 확인했다.
+- 최종 창 제목 `Dashboard - Rogue10m - Obsidian 1.13.6`을 확인했다.
+## 범용 Obsidian Vault 자료 정리
+
+- Rogue10m 실행·개발에 필요하지 않은 `00 Inbox`~`99 Archive` 범용 학습·면접·개인지식 폴더 25개를 삭제했다.
+- 범용 프로젝트 템플릿 12개와 `30 Projects` 폴더를 삭제했다.
+- 범용 Vault 생성 스크립트 4개, 안내·보고서·Codex 실행 파일과 관련 2026-08-05 설계 문서를 삭제했다.
+- `DevLog/20260805.txt`에서는 범용 Vault 기록만 제거하고 고딕 HUD 개발 기록을 보존했다.
+- `Docs/SprintChangeLog.md`에서도 범용 Vault 작업 항목만 제거했다.
+- 결합도·응집도 결과 100개 파일은 `Docs/Obsidian/ArchitectureMetrics`로 이전했다.
+- 분석기·검증기·Obsidian 실행 스크립트의 출력 및 링크 경로를 새 위치로 변경했다.
+- 기존 Unreal 코드·에셋, 프로젝트 기획·기능 문서와 `.obsidian` 설정은 보존했다.
+- 삭제된 학습 노트를 복원하던 .obsidian/workspace.json만 초기화하고 새 대시보드가 활성 파일인지 확인했다.
+- Git 푸시 전 미추적 `.venv`를 삭제하고 `.venv/`, `.obsidian/`을 `.gitignore`에 추가해 로컬 환경·UI 상태가 저장소에 포함되지 않게 했다.
+
+
+## Sprint#4-4 - 전체 폭 경험치·레벨 바 이미지
+
+### 작업 배경
+
+전투 HUD 하단의 모든 가로 공간을 경험치 표시로 활용하고, 같은 이미지 안에서 레벨도 명확히 표시할 수 있는 전용 프레임이 필요했다.
+
+### 주요 작업
+
+- 기존 고딕 HUD의 흑철·청동·붉은 룬 스타일을 유지한 신규 이미지를 생성했다.
+- 왼쪽에는 동적 레벨 숫자를 올릴 빈 원형 메달을 배치했다.
+- 메달 오른쪽부터 화면 끝까지 하나의 긴 경험치 트랙이 이어지도록 구성했다.
+- 마젠타 크로마키를 제거하고 비율을 유지한 1920×353 RGBA PNG로 저장했다.
+
+### 검증 결과
+
+- 최종 이미지 네 모서리 알파 값 0 확인
+- 실제 장식 가시 영역 X=6~1914로 화면 폭 대부분 사용
+- Unreal Texture2D 1920×353 임포트 성공
+- UI LOD Group, NoMipmaps, NeverStream 설정 완료
+- UnrealEditor-Cmd 오류 0건, 경고 0건, 자동 검증 PASSED
+
+### UMG 적용 권장 구조
+
+1. 최하단 Image에 `T_HUD_GothicXPLevelBar`를 전체 폭으로 배치한다.
+2. 좌측 메달 중앙에 현재 레벨 TextBlock을 올린다.
+3. 검은 트랙 안쪽에 경험치 ProgressBar를 올린다.
+4. 필요한 경우 바 중앙에 현재/필요 경험치 TextBlock을 추가한다.
+
+## Notion 요약 후보
+
+> **Rogue10m 전체 폭 경험치·레벨 바 제작**
+
+
+## Sprint#4-5 - 고딕 몬스터 정보 프레임
+
+### 작업 배경
+
+카메라 중앙으로 몬스터를 조준했을 때 표시되는 이름·레벨·체력 정보를 기존 고딕 HUD와 같은 시각 언어로 꾸밀 전용 프레임이 필요했다.
+
+### 주요 작업
+
+- 기존 420×68 MonsterInfo 배치에 맞춘 840×136 투명 원본을 제작했다.
+- 상단에는 `LV N : 몬스터 이름`을 표시할 빈 명패를 구성했다.
+- 하단에는 체력 ProgressBar와 현재/최대 체력 수치를 올릴 빈 트랙을 구성했다.
+- 좌우에는 추후 속성·상태 아이콘을 표시할 수 있는 작은 마름모 홈을 배치했다.
+- 기존 고딕 HUD의 흑철·청동·붉은 룬 재질을 유지했다.
+- 고정 문자, 숫자, 아이콘, 몬스터 초상과 체력 채움색은 포함하지 않았다.
+
+### 검증 결과
+
+- 최종 이미지 840×136 RGBA 확인
+- 네 모서리 알파 값 0 확인
+- 가시 영역 `(10, 14)~(830, 121)` 확인
+- Unreal UI Texture2D 임포트 성공
+- UI LOD Group, NoMipmaps, NeverStream 설정 완료
+- UnrealEditor-Cmd 오류 0건, 경고 0건, 자동 검증 PASSED
+
+### UMG 적용 권장 구조
+
+1. 프레임을 `WBP_MonsterInfo` 최하단에 420×68로 배치한다.
+2. 기존 `UI_MonsterNameText`를 상단 명패 중앙에 둔다.
+3. 기존 `UI_MonsterHealthBar`를 하단 트랙 안쪽에 둔다.
+4. 기존 `UI_MonsterHealthText`를 ProgressBar 중앙에 겹친다.
+
+## Notion 요약 후보
+
+> **Rogue10m 고딕 몬스터 정보 프레임 제작**
+>
+> 몬스터 조준 시 표시되는 420×68 정보 영역을 위한 840×136 투명 고딕 프레임을 제작했다. 이름·레벨 명패, 체력 트랙, 속성·상태용 마름모 홈을 구성하고 Unreal UI Texture2D 임포트와 알파·크기·설정 자동 검증을 완료했다.
+
+## Sprint#4-6 - 공통 캐릭터 애니메이션·VFX
+
+### 작업 배경
+
+종족과 성별이 달라도 같은 공격 스킬은 동일한 원본 모션을 사용해야 하며, 이동과 공격 상태에 맞는 효과를 Data Asset 중심으로 확장할 기반이 필요했다.
+
+### Ultrawork Packet
+
+1. 공통 모션 소스와 종족 Retarget 경로 확정
+2. 이벤트 기반 이동·점프·구르기 런타임 구성
+3. 단일·차징·체인 주먹 공격과 Niagara 연동
+4. Unreal Editor 자산 생성과 종족·스킬 Data Asset 연결
+5. 빌드·자산·참조 검증 및 문서화
+
+### 주요 작업
+
+- 프로젝트 공통 `ABP_Common_Unarmed`와 걷기·뛰기·점프·낙하·착지 Locomotion을 구성했다.
+- Human·Dwarf·Orc 남녀 6종의 숨김 Manny Source Mesh가 같은 원본 모션을 재생하고 기존 종족별 Retarget AnimBP가 외형에 전달하도록 설정했다.
+- `URogue10mCharacterAnimationComponent`를 추가해 Tick 없이 이동 입력·Sprint·점프·착지·Dodge 이벤트와 타이머로 모션 효과를 제어했다.
+- 공통 구르기 Montage, 주먹 3연계 Montage, 차징 Montage를 만들고 공격 Data Asset에 연결했다.
+- 걷기·뛰기·점프·2단 점프·착지·구르기 Niagara 6종과 주먹 Swing·Charge·Release·Impact Niagara 6종을 구성했다.
+- 공격 Data Asset에 Cast/Charge/Impact Niagara와 부착 Socket을 추가했다.
+- Unarmed 프로필은 1단 점프, StoneFist 프로필은 2단 점프로 검증했다.
+- 캐릭터 자산 재생성·검증 스크립트도 새 공통 AnimBP를 기준으로 정리했다.
+
+### 검증 결과
+
+- UE 5.8 `Rogue10mEditor Win64 Development` 빌드 성공
+- Unreal Asset Validator 30개 자산 통과
+- 공통 자동 검증 `RESULT=PASSED`
+- Locomotion 5종, Montage 5개, Niagara 12개, 종족·성별 6종, 공격 Data Asset 8개, 점프 프로필 1/2 확인
+- `Scripts/CheckGeneratedChanges.ps1` 통과
+- `git diff --check` 통과
+
+### 참고 사항
+
+- StylizedCharacter 공급 Skeleton 6개에서 오래된 `/Engine/EngineMeshes/Humanoid` 누락 의존성 경고가 출력되지만, 이번 공통 애니메이션 참조 검증은 통과했다.
+- 다음 단계에서는 PIE로 종족별 손·발 미끄러짐, 구르기 충돌 이동, Niagara 부착 위치를 육안 확인한다.
+- 권사·검사·도적·마법사 확장은 동일한 공통 Source Montage와 공격 Data Asset 구조에 직업별 모션·효과 세트를 추가하는 방식으로 진행할 수 있다.
+
+## Notion 요약 후보
+
+> **Rogue10m 공통 캐릭터 애니메이션·VFX 기반 구축**
+>
+> Human·Dwarf·Orc 남녀 6종이 같은 스킬에서 동일한 Manny 원본 모션을 사용하도록 공통 AnimBP와 Retarget 경로를 구성했다. 걷기·뛰기·점프·구르기·주먹 공격을 구현하고 이동/공격 상태용 Niagara 12종을 연결했으며, 기본 스킬 프로필에 따른 1단·2단 점프와 단일·차징·3연계 주먹 공격을 Data Asset으로 설정했다. UE 5.8 빌드와 30개 자산 검증, 공통 구성 자동 검증을 모두 통과했다.
+
+### PIE 직접 테스트 추가
+
+- 메뉴에서 Human Male을 선택해 실제 게임 맵 PIE를 두 차례 실행했다.
+- `ShowDebug Animation`에서 `ABP_Common_Unarmed_C`와 Idle Locomotion이 활성화되는 것을 확인했다.
+- 좌클릭 기본 공격에서 `AM_Punch_01 / MM_Attack_01`, 우클릭 단일 공격에서 `AM_Punch_03 / MM_Attack_03` 재생을 확인했다.
+- Dodge 입력에서 `AM_Dodge_Roll / MM_Dash` 재생을 확인했다.
+- Jump 이벤트 호출 성공과 `NS_Motion_JumpBurst` 런타임 컴파일을 확인했다.
+- 공격·구르기 Niagara의 최초 런타임 컴파일과 정상 종료를 확인했다.
+- 테스트 자동화 제약으로 지속 입력이 필요한 뛰기·2단 점프·차징·체인 전체 동작은 Data Asset 및 참조 검증까지만 완료했으며, 수동 입력 QA가 남아 있다.
+
+## Sprint#4-8 - 묵직한 전리품 주머니 Actor 제작
+
+### 작업 배경
+
+인벤토리에서 월드로 버린 아이템과 사냥으로 생성되는 전리품을 작은 개별 메시 대신 한눈에 알아볼 수 있는 묵직한 주머니 형태로 표현할 공통 Actor 에셋이 필요했다.
+
+### 주요 작업
+
+- 기존 `ARogue10mDroppedItem`을 부모로 사용하는 `/Game/World/Loot/BP_HeavyLootBag` Blueprint를 Unreal Editor API로 생성했다.
+- 넓고 낮게 눌린 본체, 모아진 주머니 목, 매듭, 좌우로 처진 끈의 5개 StaticMeshComponent로 실루엣을 구성했다.
+- Stylized Village의 어두운 천 머티리얼과 따뜻한 목재 계열 머티리얼을 재사용했다.
+- 주머니 본체는 `OverlapAllDynamic` 충돌을 사용하고 장식 컴포넌트는 `NoCollision`로 설정했다.
+- 아이템 Data Asset의 개별 `DroppedWorldMesh`가 공통 주머니 외형을 덮어쓰지 않도록 상속된 `ItemMesh`는 숨겼다.
+- 상속된 `ItemNameText`는 금빛 색상과 World Size 15로 조정해 실제 아이템 이름 표시 기능을 유지했다.
+- Tick과 동적 조명은 추가하지 않았다.
+- 에셋을 반복 생성할 수 있는 `BuildHeavyLootBagActor.py`와 새 프로세스 재로드 검증용 `ValidateHeavyLootBagActor.py`를 추가했다.
+
+### 검증 결과
+
+- UnrealEditor-Cmd Blueprint 생성, 컴파일, 저장 성공
+- 새 UnrealEditor-Cmd 프로세스에서 부모 클래스와 5개 시각 컴포넌트 재로드 확인
+- 메시, 머티리얼, 충돌 프로필, 상속 메시 숨김, 이름 표시 크기 검증 `RESULT=PASSED`
+- 에셋 관련 오류 0건
+- 기존 Advanced Portals `SM_Plane` 충돌 경고만 확인
+- `Scripts/CheckGeneratedChanges.ps1` Harness path check 통과
+- `git diff --check` 및 신규 파일 줄 끝 공백 검사 통과
+- C++ 변경이 없어 전체 Editor 빌드는 생략
+
+### 사용 메모
+
+- 인벤토리 드롭에 사용하려면 캐릭터 또는 인벤토리 소유 Blueprint의 `DroppedItemClass`에 `BP_HeavyLootBag`를 지정한다.
+- 몬스터 전리품 로직에서는 이 클래스를 Spawn한 뒤 `InitializeDroppedItem()`을 호출한다.
+- 이번 작업은 요청한 Actor `.uasset` 제작까지이며 실제 스폰 클래스 연결은 후속 통합 범위다.
+
+## Notion 요약 후보
+
+> **Rogue10m 묵직한 전리품 주머니 Actor 제작**
+>
+> 인벤토리 월드 드롭과 몬스터 전리품이 공통으로 사용할 수 있는 `BP_HeavyLootBag` Actor Blueprint를 제작했다. 기존 `ARogue10mDroppedItem`의 아이템 스택·이름 표시 계약을 유지하면서 눌린 천 본체, 묶인 목, 매듭과 두 끈으로 묵직한 실루엣을 구성했다. 본체만 오버랩 충돌을 사용하고 장식은 무충돌이며 Tick과 동적 조명은 없다. 새 Unreal 프로세스에서 부모, 5개 컴포넌트, 메시·머티리얼·충돌·가시성 설정을 재검증해 `RESULT=PASSED`를 확인했다.
+
+## Sprint#4-7 - 고딕 UI 프로젝트 통합 적용
+
+### 작업 배경
+
+앞서 제작한 전투 HUD, 전체 폭 경험치 바, 인벤토리 외곽 프레임, 몬스터 정보 프레임을 참고 이미지 수준의 시안으로만 두지 않고 실제 프로젝트 Widget Blueprint에 연결해야 했다.
+
+### 주요 작업
+
+- `imagegen`으로 제작한 인벤토리 외곽 프레임의 마젠타 배경을 공식 크로마 제거 도구로 투명화했다.
+- 인벤토리 위젯 560×610에 맞춰 1120×1220의 2배 해상도 UI 텍스처를 준비했다.
+- 원본 1920×353 경험치 프레임에서 원형 레벨 배지와 가로 트랙을 분리해 비율 왜곡 없는 1920×112 실사용 프레임으로 재구성했다.
+- 인벤토리, 경험치/레벨, 몬스터 정보 Widget Blueprint에 텍스처를 연결하고 고딕 철제·황동·적색 포인트 색상을 적용했다.
+- `ProgressionWidget`을 화면 최하단 전체 폭으로 확장하고 기존 중복 경험치 장식을 제거했다.
+- 런타임 C++이 사용하는 모든 `BindWidget` 이름을 보존했다.
+- 실제 프로젝트 조합을 한 화면에서 확인할 수 있는 `WBP_GothicUIShowcase`를 추가했다.
+- Unreal Editor에서 Designer 렌더를 확인하고 동일한 적용 자산/좌표로 1920×1080 최종 프리뷰를 생성했다.
+
+### 검증 결과
+
+- Texture2D 3종 해상도 및 UI LOD Group, NeverStream 설정 통과
+- 관련 Widget Blueprint 컴파일 성공
+- 인벤토리, 경험치, 몬스터 정보 필수 바인딩 누락 0개
+- 하단 경험치 위젯 Offset `(0, -112, 0, 112)`, ZOrder 0 확인
+- `Saved/GothicIntegratedUIValidation.txt`: `RESULT=PASSED`
+- Unreal Editor `WBP_GothicUIShowcase` 시각 확인 완료
+
+### 결과물
+
+- `Saved/GothicUIAppliedPreview.png`
+- `Saved/GothicUIUnrealEditorApplied.png`
+- `Feature/architect/2026-08-12_gothic-ui-application.md`
+- `Feature/doc/2026-08-12_gothic-ui-application.md`
+
+## Notion 요약 후보
+
+> **Rogue10m 고딕 UI 실프로젝트 통합 적용**
+>
+> 참고 이미지와 같은 어두운 철제·황동·적색 룬 계열의 UI를 인벤토리, 전체 폭 경험치/레벨 바, 몬스터 정보 패널에 실제 적용했다. 기존 UMG 배치와 C++ 바인딩 이름은 보존했으며, 경험치 레벨 배지가 찌그러지지 않도록 실사용 1920×112 프레임으로 재구성했다. 세 Texture2D의 UI 설정, 필수 바인딩, 하단 전체 폭 배치, Widget Blueprint 컴파일을 자동 검증해 모두 통과했고 Unreal Editor Designer에서도 통합 화면을 확인했다.
+
+## Sprint#4-9 - 던전 보상 보물상자 Actor 제작
+
+### 작업 배경
+
+던전 클리어 후 보상을 명확하게 전달할 수 있도록 보상 지점에 배치하거나 스폰 가능한 보물상자 Actor가 필요했다. 기존 파괴형 Actor나 미믹용 스켈레탈 메시를 재사용하지 않고, 보상 컨테이너 역할에 맞는 독립 Blueprint Actor로 구성했다.
+
+### 주요 작업
+
+- `/Game/World/Rewards/BP_DungeonRewardChest` Blueprint Actor를 제작했다.
+- 목재 본체, 둥근 뚜껑, 금속 테두리와 띠, 전면 잠금장치를 11개의 메시 컴포넌트로 조립했다.
+- 후속 개방 애니메이션 연결을 위해 뚜껑 메시를 `LidPivot` 아래에 배치했다.
+- 플레이어 접근 감지를 위한 `RewardInteractionZone`과 가독성을 높이는 따뜻한 색상의 `RewardGlow`를 추가했다.
+- `DungeonRewardChest`, `RewardContainer` 태그를 적용하고 불필요한 Tick을 비활성화했다.
+- 같은 에셋을 재현하고 구조를 자동 검사할 수 있도록 Unreal Editor Python 생성·검증 스크립트를 추가했다.
+
+### 검증 결과
+
+- UnrealEditor-Cmd를 통한 Blueprint 생성, 컴파일, 저장 성공
+- 별도 에디터 프로세스에서 에셋 재로딩 성공
+- `AActor` 부모, 태그, Tick 비활성화, 메시 11개, 재질, 충돌, 상호작용 오버랩, 조명 설정 검사 통과
+- 검증 출력: `RESULT=PASSED`, 오류 0건
+- 로그의 물리 경고는 기존 `AdvancedPortalsSystemVFX/SM_Plane`에서 발생해 이번 에셋과 무관함을 확인했다.
+
+### 사용 및 후속 작업
+
+던전 완료 처리에서 `BP_DungeonRewardChest`를 보상 위치에 스폰하거나 레벨에 미리 배치할 수 있다. 실제 개봉 입력, 보상 테이블 조회, 지급 및 중복 수령 방지와 저장 데이터 연동은 후속 게임플레이 작업으로 연결한다.
+
+## Notion 요약 후보
+
+> **Rogue10m 던전 보상 보물상자 Actor 제작**
+>
+> 던전 클리어 보상용 `BP_DungeonRewardChest`를 독립 Blueprint Actor로 제작했다. 목재·금속 기반의 11개 메시 파트와 개방 확장용 `LidPivot`, 상호작용 오버랩 영역, 보상 강조 조명을 갖추고 Tick을 비활성화했다. 별도 Unreal Editor 프로세스에서 에셋을 다시 불러와 부모 클래스, 태그, 메시·재질·충돌·오버랩·조명 구성을 자동 검증했으며 `RESULT=PASSED`를 확인했다.
+
+## 고딕 전투 HUD 하단 배치 보정
+
+- 경험치 바를 1920x52 전체 폭으로 재구성해 화면 최하단에 밀착시키고 진행 색상을 초록색으로 변경했다.
+- 체력은 적색, 스태미나는 황금색으로 역할을 구분하고 중앙 메달리온 기준 좌우 배치를 대칭으로 정리했다.
+- 스킬 슬롯 왼쪽과 아이템 슬롯 오른쪽의 빈 공간을 채우는 고딕 룬 장식 날개 텍스처를 새로 제작했다.
+- 기존 스킬 5칸, 아이템 5칸의 기능 바인딩 이름과 개수는 유지했다.
+- Unreal Editor를 통해 Texture2D와 Widget Blueprint를 저장했고 자동 검증 결과 `RESULT=PASSED`를 확인했다.
+- Editor target build에 성공했고 `CheckGeneratedChanges.ps1` Harness 경로 검사를 통과했다.
+- 적용 미리보기: `Saved/GothicHUDLayoutRefinedPreview.png`
+
+### Notion 요약 후보
+
+Rogue10m 전투 HUD의 하단 레이아웃을 보정했다. 경험치 바는 화면 최하단 전체 폭의 초록색 바가 되었고, 체력/스태미나는 적색/황금색으로 분리했다. 기존 5칸 슬롯 기능을 보존하면서 스킬 왼쪽과 아이템 오른쪽에 전용 고딕 룬 장식 패널을 추가해 비어 보이던 영역을 채웠다. 자동 UMG 검증과 Editor target build를 통과했다.

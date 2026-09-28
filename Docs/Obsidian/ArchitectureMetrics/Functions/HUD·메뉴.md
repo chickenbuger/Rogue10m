@@ -1,0 +1,217 @@
+---
+generated: true
+generated_by: rogue10m-function-graph
+node_kind: function
+---
+# HUD·메뉴
+
+HUD 상태 표시, 공용 위젯과 메뉴·로비 화면
+
+> 기능 → 소스 연결은 Feature 본문에서 확인한 소스 언급입니다. 소스 → 소스 연결은 정적 include 의존성입니다.
+> 설계/과거 결과/제거 계획의 언급도 포함될 수 있으며, 현재 호출 관계나 구현 완료를 보증하지 않습니다.
+
+문서 주제 분류: Scripts/ObsidianFunctionGroups.json · 전체 행별 근거: functions.json
+
+## 관련 소스
+
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Ability/Rogue10mAttributeSet.cpp|Ability/Rogue10mAttributeSet.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-23_character-base-stats-equipment-window.md:29` — `URogue10mAttributeSet`
+  - 근거 (설계): `Feature/architect/2026-09-08_reference-metal-hud.md:150` — `AttributeSet`
+  - 근거 (설계): `Feature/architect/2026-07-23_character-base-stats-equipment-window.md:11` — `URogue10mAttributeSet`
+  - 추가 근거 9건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Ability/Rogue10mAttributeSet.h|Ability/Rogue10mAttributeSet.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-23_character-base-stats-equipment-window.md:29` — `URogue10mAttributeSet`
+  - 근거 (설계): `Feature/architect/2026-09-08_reference-metal-hud.md:150` — `AttributeSet`
+  - 근거 (설계): `Feature/architect/2026-07-23_character-base-stats-equipment-window.md:11` — `URogue10mAttributeSet`
+  - 추가 근거 9건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Ability/Rogue10mGameplayAbility_Attack.cpp|Ability/Rogue10mGameplayAbility_Attack.cpp]]
+  - 근거 (설계): `Feature/architect/2026-07-10_framework-consolidation.md:20` — `Rogue10mGameplayAbility_Attack`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Ability/Rogue10mGameplayAbility_Attack.h|Ability/Rogue10mGameplayAbility_Attack.h]]
+  - 근거 (설계): `Feature/architect/2026-07-10_framework-consolidation.md:20` — `Rogue10mGameplayAbility_Attack`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Character/Rogue10mCharacter.cpp|Character/Rogue10mCharacter.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-08-19_weapon-driven-skill-tree.md:5` — `ARogue10mCharacter`
+  - 근거 (결과 문서): `Feature/doc/2026-07-23_character-base-stats-equipment-window.md:28` — `ARogue10mCharacter`
+  - 근거 (결과 문서): `Feature/doc/2026-07-23_character-base-stats-equipment-window.md:65` — `Rogue10mCharacter`
+  - 추가 근거 5건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Character/Rogue10mCharacter.h|Character/Rogue10mCharacter.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-08-19_weapon-driven-skill-tree.md:5` — `ARogue10mCharacter`
+  - 근거 (결과 문서): `Feature/doc/2026-07-23_character-base-stats-equipment-window.md:28` — `ARogue10mCharacter`
+  - 근거 (결과 문서): `Feature/doc/2026-07-23_character-base-stats-equipment-window.md:65` — `Rogue10mCharacter`
+  - 추가 근거 5건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Components/Rogue10mCombatComponent.cpp|Components/Rogue10mCombatComponent.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-08-19-martial-artist-skill-tree.md:27` — `URogue10mCombatComponent`
+  - 근거 (결과 문서): `Feature/doc/2026-08-19_weapon-driven-skill-tree.md:5` — `URogue10mCombatComponent`
+  - 근거 (결과 문서): `Feature/doc/2026-07-13_skill-tree-drag-drop-loadout.md:5` — `CombatComponent`
+  - 추가 근거 16건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Components/Rogue10mCombatComponent.h|Components/Rogue10mCombatComponent.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-08-19-martial-artist-skill-tree.md:27` — `URogue10mCombatComponent`
+  - 근거 (결과 문서): `Feature/doc/2026-08-19_weapon-driven-skill-tree.md:5` — `URogue10mCombatComponent`
+  - 근거 (결과 문서): `Feature/doc/2026-07-13_skill-tree-drag-drop-loadout.md:5` — `CombatComponent`
+  - 추가 근거 16건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Components/Rogue10mInventoryComponent.cpp|Components/Rogue10mInventoryComponent.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-23_character-base-stats-equipment-window.md:27` — `URogue10mInventoryComponent`
+  - 근거 (결과 문서): `Feature/doc/2026-07-18_equipped-item-hover-unequip-menu.md:36` — `Rogue10mInventoryComponent`
+  - 근거 (결과 문서): `Feature/doc/2026-07-15_menu-designer-layout.md:47` — `URogue10mInventoryComponent`
+  - 추가 근거 7건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Components/Rogue10mInventoryComponent.h|Components/Rogue10mInventoryComponent.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-23_character-base-stats-equipment-window.md:27` — `URogue10mInventoryComponent`
+  - 근거 (결과 문서): `Feature/doc/2026-07-18_equipped-item-hover-unequip-menu.md:36` — `Rogue10mInventoryComponent`
+  - 근거 (결과 문서): `Feature/doc/2026-07-15_menu-designer-layout.md:47` — `URogue10mInventoryComponent`
+  - 추가 근거 7건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Components/Rogue10mVitalRegenerationComponent.cpp|Components/Rogue10mVitalRegenerationComponent.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-13_monster-data-regen-and-hud-cleanup.md:6` — `URogue10mVitalRegenerationComponent`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Components/Rogue10mVitalRegenerationComponent.h|Components/Rogue10mVitalRegenerationComponent.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-13_monster-data-regen-and-hud-cleanup.md:6` — `URogue10mVitalRegenerationComponent`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Core/Rogue10mCharacterProfileSubsystem.cpp|Core/Rogue10mCharacterProfileSubsystem.cpp]]
+  - 근거 (설계): `Feature/architect/2026-07-29_menu-map-flow.md:30` — `Rogue10mCharacterProfileSubsystem`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Core/Rogue10mCharacterProfileSubsystem.h|Core/Rogue10mCharacterProfileSubsystem.h]]
+  - 근거 (설계): `Feature/architect/2026-07-29_menu-map-flow.md:30` — `Rogue10mCharacterProfileSubsystem`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Core/Rogue10mGameMode.cpp|Core/Rogue10mGameMode.cpp]]
+  - 근거 (설계): `Feature/architect/2026-07-29_menu-map-flow.md:15` — `Rogue10mGameMode`
+  - 근거 (설계): `Feature/architect/2026-07-10_framework-consolidation.md:28` — `Rogue10mGameMode`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Core/Rogue10mGameMode.h|Core/Rogue10mGameMode.h]]
+  - 근거 (설계): `Feature/architect/2026-07-29_menu-map-flow.md:15` — `Rogue10mGameMode`
+  - 근거 (설계): `Feature/architect/2026-07-10_framework-consolidation.md:28` — `Rogue10mGameMode`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Core/Rogue10mMenuGameMode.cpp|Core/Rogue10mMenuGameMode.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-29_menu-map-flow.md:9` — `ARogue10mMenuGameMode`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Core/Rogue10mMenuGameMode.h|Core/Rogue10mMenuGameMode.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-29_menu-map-flow.md:9` — `ARogue10mMenuGameMode`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Core/Rogue10mMenuPlayerController.cpp|Core/Rogue10mMenuPlayerController.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-29_menu-map-flow.md:10` — `ARogue10mMenuPlayerController`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Core/Rogue10mMenuPlayerController.h|Core/Rogue10mMenuPlayerController.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-29_menu-map-flow.md:10` — `ARogue10mMenuPlayerController`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Core/Rogue10mPlayerController.cpp|Core/Rogue10mPlayerController.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-29_menu-map-flow.md:11` — `ARogue10mPlayerController`
+  - 근거 (결과 문서): `Feature/doc/2026-07-18_menu-window-z-order-stacking.md:14` — `ARogue10mPlayerController`
+  - 근거 (결과 문서): `Feature/doc/2026-07-18_menu-window-z-order-stacking.md:20` — `PlayerController`
+  - 추가 근거 33건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Core/Rogue10mPlayerController.h|Core/Rogue10mPlayerController.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-29_menu-map-flow.md:11` — `ARogue10mPlayerController`
+  - 근거 (결과 문서): `Feature/doc/2026-07-18_menu-window-z-order-stacking.md:14` — `ARogue10mPlayerController`
+  - 근거 (결과 문서): `Feature/doc/2026-07-18_menu-window-z-order-stacking.md:20` — `PlayerController`
+  - 추가 근거 33건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Core/Rogue10mPlayerState.cpp|Core/Rogue10mPlayerState.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-08-19-martial-artist-skill-tree.md:24` — `ARogue10mPlayerState`
+  - 근거 (결과 문서): `Feature/doc/2026-07-23_character-base-stats-equipment-window.md:29` — `PlayerState`
+  - 근거 (결과 문서): `Feature/doc/2026-07-13_monster-data-regen-and-hud-cleanup.md:8` — `PlayerState`
+  - 추가 근거 9건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Core/Rogue10mPlayerState.h|Core/Rogue10mPlayerState.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-08-19-martial-artist-skill-tree.md:24` — `ARogue10mPlayerState`
+  - 근거 (결과 문서): `Feature/doc/2026-07-23_character-base-stats-equipment-window.md:29` — `PlayerState`
+  - 근거 (결과 문서): `Feature/doc/2026-07-13_monster-data-regen-and-hud-cleanup.md:8` — `PlayerState`
+  - 추가 근거 9건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Data/Rogue10mAttackSkillData.cpp|Data/Rogue10mAttackSkillData.cpp]]
+  - 근거 (설계): `Feature/architect/2026-08-19-martial-artist-skill-tree.md:15` — `Rogue10mAttackSkillData`
+  - 근거 (설계): `Feature/architect/2026-08-19-martial-artist-skill-tree.md:62` — `AttackSkillData`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Data/Rogue10mAttackSkillData.h|Data/Rogue10mAttackSkillData.h]]
+  - 근거 (설계): `Feature/architect/2026-08-19-martial-artist-skill-tree.md:15` — `Rogue10mAttackSkillData`
+  - 근거 (설계): `Feature/architect/2026-08-19-martial-artist-skill-tree.md:62` — `AttackSkillData`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Data/Rogue10mCharacterDataAsset.cpp|Data/Rogue10mCharacterDataAsset.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-23_character-base-stats-equipment-window.md:26` — `URogue10mCharacterDataAsset`
+  - 근거 (설계): `Feature/architect/2026-07-23_character-base-stats-equipment-window.md:9` — `URogue10mCharacterDataAsset`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Data/Rogue10mCharacterDataAsset.h|Data/Rogue10mCharacterDataAsset.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-23_character-base-stats-equipment-window.md:26` — `URogue10mCharacterDataAsset`
+  - 근거 (설계): `Feature/architect/2026-07-23_character-base-stats-equipment-window.md:9` — `URogue10mCharacterDataAsset`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Data/Rogue10mItemDataAsset.cpp|Data/Rogue10mItemDataAsset.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-15_menu-designer-layout.md:46` — `URogue10mItemDataAsset`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Data/Rogue10mItemDataAsset.h|Data/Rogue10mItemDataAsset.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-15_menu-designer-layout.md:46` — `URogue10mItemDataAsset`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Data/Rogue10mMonsterDataAsset.cpp|Data/Rogue10mMonsterDataAsset.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-13_monster-data-regen-and-hud-cleanup.md:5` — `URogue10mMonsterDataAsset`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Data/Rogue10mMonsterDataAsset.h|Data/Rogue10mMonsterDataAsset.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-13_monster-data-regen-and-hud-cleanup.md:5` — `URogue10mMonsterDataAsset`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Data/Rogue10mSkillLoadoutDataAsset.cpp|Data/Rogue10mSkillLoadoutDataAsset.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-13_skill-tree-drag-drop-loadout.md:6` — `URogue10mWeaponSkillProfileDataAsset`
+  - 근거 (결과 문서): `Feature/doc/2026-07-13_skill-tree-drag-drop-loadout.md:7` — `URogue10mDodgeSkillDataAsset`
+  - 근거 (설계): `Feature/architect/2026-08-19_weapon-driven-skill-tree.md:5` — `URogue10mWeaponSkillProfileDataAsset`
+  - 추가 근거 3건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Data/Rogue10mSkillLoadoutDataAsset.h|Data/Rogue10mSkillLoadoutDataAsset.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-13_skill-tree-drag-drop-loadout.md:6` — `URogue10mWeaponSkillProfileDataAsset`
+  - 근거 (결과 문서): `Feature/doc/2026-07-13_skill-tree-drag-drop-loadout.md:7` — `URogue10mDodgeSkillDataAsset`
+  - 근거 (설계): `Feature/architect/2026-08-19_weapon-driven-skill-tree.md:5` — `URogue10mWeaponSkillProfileDataAsset`
+  - 추가 근거 3건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Enemy/Rogue10mBasicMonster.cpp|Enemy/Rogue10mBasicMonster.cpp]]
+  - 근거 (설계): `Feature/architect/2026-08-19-martial-artist-skill-tree.md:23` — `Rogue10mBasicMonster`
+  - 근거 (설계): `Feature/architect/2026-08-19-martial-artist-skill-tree.md:66` — `BasicMonster`
+  - 근거 (설계): `Feature/architect/2026-07-13_monster-data-regen-and-hud-cleanup.md:13` — `BasicMonster`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Enemy/Rogue10mBasicMonster.h|Enemy/Rogue10mBasicMonster.h]]
+  - 근거 (설계): `Feature/architect/2026-08-19-martial-artist-skill-tree.md:23` — `Rogue10mBasicMonster`
+  - 근거 (설계): `Feature/architect/2026-08-19-martial-artist-skill-tree.md:66` — `BasicMonster`
+  - 근거 (설계): `Feature/architect/2026-07-13_monster-data-regen-and-hud-cleanup.md:13` — `BasicMonster`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/Tests/Rogue10mResponsiveHUDRuntimeTest.cpp|Tests/Rogue10mResponsiveHUDRuntimeTest.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-09-09_reference-metal-hud.md:35` — `Rogue10mResponsiveHUDRuntimeTest.cpp`
+  - 근거 (결과 문서): `Feature/doc/2026-09-08_responsive-combat-hud.md:24` — `Rogue10mResponsiveHUDRuntimeTest.cpp`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Rogue10mHUD.cpp|UI/Rogue10mHUD.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-02_identity-ui.md:23` — `Rogue10mHUD.cpp`
+  - 근거 (설계): `Feature/architect/2026-07-10_framework-consolidation.md:27` — `ARogue10mHUD`
+  - 근거 (설계): `Feature/architect/2026-07-10_framework-consolidation.md:29` — `ARogue10mHUD`
+  - 추가 근거 1건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Rogue10mHUD.h|UI/Rogue10mHUD.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-02_identity-ui.md:22` — `Rogue10mHUD.h`
+  - 근거 (설계): `Feature/architect/2026-07-10_framework-consolidation.md:27` — `ARogue10mHUD`
+  - 근거 (설계): `Feature/architect/2026-07-10_framework-consolidation.md:29` — `ARogue10mHUD`
+  - 추가 근거 1건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Rogue10mRunHUD.cpp|UI/Rogue10mRunHUD.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-02_identity-ui.md:13` — `FRogue10mHudIdentityView`
+  - 근거 (결과 문서): `Feature/doc/2026-07-02_identity-ui.md:21` — `Rogue10mRunHUD.cpp`
+  - 근거 (설계): `Feature/architect/2026-09-08_lostark-hud-design-plan.md:25` — `Rogue10mRunHUD.cpp`
+  - 추가 근거 7건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Rogue10mRunHUD.h|UI/Rogue10mRunHUD.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-02_identity-ui.md:13` — `FRogue10mHudIdentityView`
+  - 근거 (결과 문서): `Feature/doc/2026-07-02_identity-ui.md:20` — `Rogue10mRunHUD.h`
+  - 근거 (설계): `Feature/architect/2026-07-10_framework-consolidation.md:12` — `Rogue10mRunHUD`
+  - 추가 근거 6건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Widgets/Rogue10mAtlasImage.cpp|UI/Widgets/Rogue10mAtlasImage.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-09-09_reference-metal-hud.md:25` — `URogue10mAtlasImage`
+  - 근거 (결과 문서): `Feature/doc/2026-09-09_reference-metal-hud.md:34` — `AtlasImage.h/.cpp`
+  - 근거 (설계): `Feature/architect/2026-09-08_reference-metal-hud.md:120` — `URogue10mAtlasImage`
+  - 추가 근거 1건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Widgets/Rogue10mAtlasImage.h|UI/Widgets/Rogue10mAtlasImage.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-09-09_reference-metal-hud.md:25` — `URogue10mAtlasImage`
+  - 근거 (결과 문서): `Feature/doc/2026-09-09_reference-metal-hud.md:34` — `AtlasImage.h/.cpp`
+  - 근거 (설계): `Feature/architect/2026-09-08_reference-metal-hud.md:120` — `URogue10mAtlasImage`
+  - 추가 근거 1건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Widgets/Rogue10mBottomHUDWidget.cpp|UI/Widgets/Rogue10mBottomHUDWidget.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-09-09_reference-metal-hud.md:34` — `BottomHUDWidget.h/.cpp`
+  - 근거 (결과 문서): `Feature/doc/2026-09-08_responsive-combat-hud.md:20` — `BottomHUDWidget`
+  - 근거 (결과 문서): `Feature/doc/2026-08-19_class-themed-bottom-hud.md:5` — `BottomHUDWidget`
+  - 추가 근거 15건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Widgets/Rogue10mBottomHUDWidget.h|UI/Widgets/Rogue10mBottomHUDWidget.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-09-09_reference-metal-hud.md:34` — `BottomHUDWidget.h/.cpp`
+  - 근거 (결과 문서): `Feature/doc/2026-09-08_responsive-combat-hud.md:20` — `BottomHUDWidget`
+  - 근거 (결과 문서): `Feature/doc/2026-08-19_class-themed-bottom-hud.md:5` — `BottomHUDWidget`
+  - 추가 근거 14건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Widgets/Rogue10mHudWidgetParts.cpp|UI/Widgets/Rogue10mHudWidgetParts.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-09-09_reference-metal-hud.md:34` — `HudWidgetParts.h/.cpp`
+  - 근거 (결과 문서): `Feature/doc/2026-09-08_responsive-combat-hud.md:20` — `HudWidgetParts`
+  - 근거 (결과 문서): `Feature/doc/2026-08-19_class-themed-bottom-hud.md:30` — `ProgressionWidget`
+  - 추가 근거 14건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Widgets/Rogue10mHudWidgetParts.h|UI/Widgets/Rogue10mHudWidgetParts.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-09-09_reference-metal-hud.md:34` — `HudWidgetParts.h/.cpp`
+  - 근거 (결과 문서): `Feature/doc/2026-09-08_responsive-combat-hud.md:20` — `HudWidgetParts`
+  - 근거 (결과 문서): `Feature/doc/2026-08-19_class-themed-bottom-hud.md:30` — `ProgressionWidget`
+  - 추가 근거 13건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Widgets/Rogue10mItemDragDropOperation.cpp|UI/Widgets/Rogue10mItemDragDropOperation.cpp]]
+  - 근거 (설계): `Feature/architect/2026-07-15_menu-designer-layout.md:67` — `Rogue10mItemDragDropOperation`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Widgets/Rogue10mItemDragDropOperation.h|UI/Widgets/Rogue10mItemDragDropOperation.h]]
+  - 근거 (설계): `Feature/architect/2026-07-15_menu-designer-layout.md:67` — `Rogue10mItemDragDropOperation`
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Widgets/Rogue10mMainHUDWidget.cpp|UI/Widgets/Rogue10mMainHUDWidget.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-09-08_responsive-combat-hud.md:20` — `MainHUDWidget`
+  - 근거 (결과 문서): `Feature/doc/2026-08-19_class-themed-bottom-hud.md:48` — `URogue10mMainHUDWidget`
+  - 근거 (설계): `Feature/architect/2026-08-19_class-themed-bottom-hud.md:82` — `URogue10mMainHUDWidget`
+  - 추가 근거 2건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Widgets/Rogue10mMainHUDWidget.h|UI/Widgets/Rogue10mMainHUDWidget.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-09-08_responsive-combat-hud.md:20` — `MainHUDWidget`
+  - 근거 (결과 문서): `Feature/doc/2026-08-19_class-themed-bottom-hud.md:48` — `URogue10mMainHUDWidget`
+  - 근거 (결과 문서): `Feature/doc/2026-07-02_identity-ui.md:26` — `Rogue10mMainHUDWidget.h`
+  - 추가 근거 3건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Widgets/Rogue10mMenuWindowWidgets.cpp|UI/Widgets/Rogue10mMenuWindowWidgets.cpp]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-23_character-base-stats-equipment-window.md:30` — `URogue10mEquipmentWindowWidget`
+  - 근거 (결과 문서): `Feature/doc/2026-07-22_equipment-context-menu-dismiss.md:16` — `Rogue10mMenuWindowWidgets.h/.cpp`
+  - 근거 (결과 문서): `Feature/doc/2026-07-18_menu-window-z-order-stacking.md:19` — `URogue10mMenuWindowWidget`
+  - 추가 근거 20건은 functions.json에 보관.
+- [[Docs/Obsidian/ArchitectureMetrics/Files/UI/Widgets/Rogue10mMenuWindowWidgets.h|UI/Widgets/Rogue10mMenuWindowWidgets.h]]
+  - 근거 (결과 문서): `Feature/doc/2026-07-23_character-base-stats-equipment-window.md:30` — `URogue10mEquipmentWindowWidget`
+  - 근거 (결과 문서): `Feature/doc/2026-07-22_equipment-context-menu-dismiss.md:16` — `Rogue10mMenuWindowWidgets.h/.cpp`
+  - 근거 (결과 문서): `Feature/doc/2026-07-18_menu-window-z-order-stacking.md:19` — `URogue10mMenuWindowWidget`
+  - 추가 근거 20건은 functions.json에 보관.

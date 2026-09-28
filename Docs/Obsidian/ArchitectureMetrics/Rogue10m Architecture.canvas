@@ -1,0 +1,554 @@
+{
+  "nodes": [
+    {
+      "id": "F0",
+      "type": "text",
+      "text": "# Ability\n파일 6개\n응집도 75.0%\nCa 18 · Ce 1",
+      "x": 0,
+      "y": 0,
+      "width": 360,
+      "height": 180
+    },
+    {
+      "id": "F1",
+      "type": "text",
+      "text": "# Character\n파일 10개\n응집도 33.3%\nCa 46 · Ce 16",
+      "x": 440,
+      "y": 0,
+      "width": 360,
+      "height": 180
+    },
+    {
+      "id": "F2",
+      "type": "text",
+      "text": "# Components\n파일 18개\n응집도 31.9%\nCa 40 · Ce 32",
+      "x": 880,
+      "y": 0,
+      "width": 360,
+      "height": 180
+    },
+    {
+      "id": "F3",
+      "type": "text",
+      "text": "# Core\n파일 21개\n응집도 53.3%\nCa 44 · Ce 21",
+      "x": 0,
+      "y": 260,
+      "width": 360,
+      "height": 180
+    },
+    {
+      "id": "F4",
+      "type": "text",
+      "text": "# Data\n파일 14개\n응집도 50.0%\nCa 28 · Ce 8",
+      "x": 440,
+      "y": 260,
+      "width": 360,
+      "height": 180
+    },
+    {
+      "id": "F5",
+      "type": "text",
+      "text": "# Editor\n파일 1개\n응집도 0.0%\nCa 0 · Ce 1",
+      "x": 880,
+      "y": 260,
+      "width": 360,
+      "height": 180
+    },
+    {
+      "id": "F6",
+      "type": "text",
+      "text": "# Enemy\n파일 2개\n응집도 8.3%\nCa 12 · Ce 11",
+      "x": 0,
+      "y": 520,
+      "width": 360,
+      "height": 180
+    },
+    {
+      "id": "F7",
+      "type": "text",
+      "text": "# Enemy/AI\n파일 4개\n응집도 57.1%\nCa 1 · Ce 3",
+      "x": 440,
+      "y": 520,
+      "width": 360,
+      "height": 180
+    },
+    {
+      "id": "F8",
+      "type": "text",
+      "text": "# Tests\n파일 7개\n응집도 0.0%\nCa 0 · Ce 62",
+      "x": 880,
+      "y": 520,
+      "width": 360,
+      "height": 180
+    },
+    {
+      "id": "F9",
+      "type": "text",
+      "text": "# UI\n파일 8개\n응집도 20.0%\nCa 6 · Ce 16",
+      "x": 0,
+      "y": 780,
+      "width": 360,
+      "height": 180
+    },
+    {
+      "id": "F10",
+      "type": "text",
+      "text": "# UI/Widgets\n파일 20개\n응집도 43.9%\nCa 6 · Ce 23",
+      "x": 440,
+      "y": 780,
+      "width": 360,
+      "height": 180
+    },
+    {
+      "id": "F11",
+      "type": "text",
+      "text": "# World\n파일 10개\n응집도 38.5%\nCa 1 · Ce 8",
+      "x": 880,
+      "y": 780,
+      "width": 360,
+      "height": 180
+    }
+  ],
+  "edges": [
+    {
+      "id": "E0",
+      "fromNode": "F0",
+      "fromSide": "right",
+      "toNode": "F1",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E1",
+      "fromNode": "F1",
+      "fromSide": "right",
+      "toNode": "F0",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E2",
+      "fromNode": "F1",
+      "fromSide": "right",
+      "toNode": "F2",
+      "toSide": "left",
+      "label": "8"
+    },
+    {
+      "id": "E3",
+      "fromNode": "F1",
+      "fromSide": "right",
+      "toNode": "F3",
+      "toSide": "left",
+      "label": "4"
+    },
+    {
+      "id": "E4",
+      "fromNode": "F1",
+      "fromSide": "right",
+      "toNode": "F4",
+      "toSide": "left",
+      "label": "3"
+    },
+    {
+      "id": "E5",
+      "fromNode": "F2",
+      "fromSide": "right",
+      "toNode": "F0",
+      "toSide": "left",
+      "label": "5"
+    },
+    {
+      "id": "E6",
+      "fromNode": "F2",
+      "fromSide": "right",
+      "toNode": "F1",
+      "toSide": "left",
+      "label": "11"
+    },
+    {
+      "id": "E7",
+      "fromNode": "F2",
+      "fromSide": "right",
+      "toNode": "F3",
+      "toSide": "left",
+      "label": "6"
+    },
+    {
+      "id": "E8",
+      "fromNode": "F2",
+      "fromSide": "right",
+      "toNode": "F4",
+      "toSide": "left",
+      "label": "6"
+    },
+    {
+      "id": "E9",
+      "fromNode": "F2",
+      "fromSide": "right",
+      "toNode": "F6",
+      "toSide": "left",
+      "label": "3"
+    },
+    {
+      "id": "E10",
+      "fromNode": "F2",
+      "fromSide": "right",
+      "toNode": "F11",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E11",
+      "fromNode": "F3",
+      "fromSide": "right",
+      "toNode": "F0",
+      "toSide": "left",
+      "label": "2"
+    },
+    {
+      "id": "E12",
+      "fromNode": "F3",
+      "fromSide": "right",
+      "toNode": "F1",
+      "toSide": "left",
+      "label": "7"
+    },
+    {
+      "id": "E13",
+      "fromNode": "F3",
+      "fromSide": "right",
+      "toNode": "F2",
+      "toSide": "left",
+      "label": "4"
+    },
+    {
+      "id": "E14",
+      "fromNode": "F3",
+      "fromSide": "right",
+      "toNode": "F4",
+      "toSide": "left",
+      "label": "2"
+    },
+    {
+      "id": "E15",
+      "fromNode": "F3",
+      "fromSide": "right",
+      "toNode": "F6",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E16",
+      "fromNode": "F3",
+      "fromSide": "right",
+      "toNode": "F9",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E17",
+      "fromNode": "F3",
+      "fromSide": "right",
+      "toNode": "F10",
+      "toSide": "left",
+      "label": "4"
+    },
+    {
+      "id": "E18",
+      "fromNode": "F4",
+      "fromSide": "right",
+      "toNode": "F0",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E19",
+      "fromNode": "F4",
+      "fromSide": "right",
+      "toNode": "F1",
+      "toSide": "left",
+      "label": "6"
+    },
+    {
+      "id": "E20",
+      "fromNode": "F4",
+      "fromSide": "right",
+      "toNode": "F2",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E21",
+      "fromNode": "F5",
+      "fromSide": "right",
+      "toNode": "F3",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E22",
+      "fromNode": "F6",
+      "fromSide": "right",
+      "toNode": "F0",
+      "toSide": "left",
+      "label": "2"
+    },
+    {
+      "id": "E23",
+      "fromNode": "F6",
+      "fromSide": "right",
+      "toNode": "F1",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E24",
+      "fromNode": "F6",
+      "fromSide": "right",
+      "toNode": "F2",
+      "toSide": "left",
+      "label": "2"
+    },
+    {
+      "id": "E25",
+      "fromNode": "F6",
+      "fromSide": "right",
+      "toNode": "F3",
+      "toSide": "left",
+      "label": "3"
+    },
+    {
+      "id": "E26",
+      "fromNode": "F6",
+      "fromSide": "right",
+      "toNode": "F4",
+      "toSide": "left",
+      "label": "2"
+    },
+    {
+      "id": "E27",
+      "fromNode": "F6",
+      "fromSide": "right",
+      "toNode": "F7",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E28",
+      "fromNode": "F7",
+      "fromSide": "right",
+      "toNode": "F1",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E29",
+      "fromNode": "F7",
+      "fromSide": "right",
+      "toNode": "F4",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E30",
+      "fromNode": "F7",
+      "fromSide": "right",
+      "toNode": "F6",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E31",
+      "fromNode": "F8",
+      "fromSide": "right",
+      "toNode": "F0",
+      "toSide": "left",
+      "label": "6"
+    },
+    {
+      "id": "E32",
+      "fromNode": "F8",
+      "fromSide": "right",
+      "toNode": "F1",
+      "toSide": "left",
+      "label": "10"
+    },
+    {
+      "id": "E33",
+      "fromNode": "F8",
+      "fromSide": "right",
+      "toNode": "F2",
+      "toSide": "left",
+      "label": "16"
+    },
+    {
+      "id": "E34",
+      "fromNode": "F8",
+      "fromSide": "right",
+      "toNode": "F3",
+      "toSide": "left",
+      "label": "17"
+    },
+    {
+      "id": "E35",
+      "fromNode": "F8",
+      "fromSide": "right",
+      "toNode": "F4",
+      "toSide": "left",
+      "label": "5"
+    },
+    {
+      "id": "E36",
+      "fromNode": "F8",
+      "fromSide": "right",
+      "toNode": "F6",
+      "toSide": "left",
+      "label": "5"
+    },
+    {
+      "id": "E37",
+      "fromNode": "F8",
+      "fromSide": "right",
+      "toNode": "F9",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E38",
+      "fromNode": "F8",
+      "fromSide": "right",
+      "toNode": "F10",
+      "toSide": "left",
+      "label": "2"
+    },
+    {
+      "id": "E39",
+      "fromNode": "F9",
+      "fromSide": "right",
+      "toNode": "F0",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E40",
+      "fromNode": "F9",
+      "fromSide": "right",
+      "toNode": "F1",
+      "toSide": "left",
+      "label": "5"
+    },
+    {
+      "id": "E41",
+      "fromNode": "F9",
+      "fromSide": "right",
+      "toNode": "F2",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E42",
+      "fromNode": "F9",
+      "fromSide": "right",
+      "toNode": "F3",
+      "toSide": "left",
+      "label": "4"
+    },
+    {
+      "id": "E43",
+      "fromNode": "F9",
+      "fromSide": "right",
+      "toNode": "F4",
+      "toSide": "left",
+      "label": "4"
+    },
+    {
+      "id": "E44",
+      "fromNode": "F9",
+      "fromSide": "right",
+      "toNode": "F6",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E45",
+      "fromNode": "F10",
+      "fromSide": "right",
+      "toNode": "F1",
+      "toSide": "left",
+      "label": "3"
+    },
+    {
+      "id": "E46",
+      "fromNode": "F10",
+      "fromSide": "right",
+      "toNode": "F2",
+      "toSide": "left",
+      "label": "6"
+    },
+    {
+      "id": "E47",
+      "fromNode": "F10",
+      "fromSide": "right",
+      "toNode": "F3",
+      "toSide": "left",
+      "label": "6"
+    },
+    {
+      "id": "E48",
+      "fromNode": "F10",
+      "fromSide": "right",
+      "toNode": "F4",
+      "toSide": "left",
+      "label": "4"
+    },
+    {
+      "id": "E49",
+      "fromNode": "F10",
+      "fromSide": "right",
+      "toNode": "F9",
+      "toSide": "left",
+      "label": "4"
+    },
+    {
+      "id": "E50",
+      "fromNode": "F11",
+      "fromSide": "right",
+      "toNode": "F1",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E51",
+      "fromNode": "F11",
+      "fromSide": "right",
+      "toNode": "F2",
+      "toSide": "left",
+      "label": "2"
+    },
+    {
+      "id": "E52",
+      "fromNode": "F11",
+      "fromSide": "right",
+      "toNode": "F3",
+      "toSide": "left",
+      "label": "3"
+    },
+    {
+      "id": "E53",
+      "fromNode": "F11",
+      "fromSide": "right",
+      "toNode": "F4",
+      "toSide": "left",
+      "label": "1"
+    },
+    {
+      "id": "E54",
+      "fromNode": "F11",
+      "fromSide": "right",
+      "toNode": "F6",
+      "toSide": "left",
+      "label": "1"
+    }
+  ]
+}

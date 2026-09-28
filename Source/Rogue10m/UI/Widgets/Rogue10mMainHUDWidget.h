@@ -7,6 +7,8 @@
 #include "Rogue10mHudWidgetParts.h"
 
 class UPanelWidget;
+class UTextBlock;
+class URogue10mBottomHUDWidget;
 
 #include "Rogue10mMainHUDWidget.generated.h"
 
@@ -17,6 +19,7 @@ class ROGUE10M_API URogue10mMainHUDWidget : public URogue10mRunHUD
 
 public:
 	virtual void NativeOnInitialized() override;
+	virtual void NativePreConstruct() override;
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
@@ -25,22 +28,10 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Bound Widgets")
-	TObjectPtr<URogue10mVitalBarWidget> HealthBarWidget;
+	TObjectPtr<UTextBlock> UI_RunTimerText;
 
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Bound Widgets")
-	TObjectPtr<URogue10mVitalBarWidget> StaminaBarWidget;
-
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Bound Widgets")
-	TObjectPtr<URogue10mVitalBarWidget> IdentityBarWidget;
-
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Bound Widgets")
-	TObjectPtr<URogue10mProgressionWidget> ProgressionWidget;
-
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Bound Widgets")
-	TObjectPtr<URogue10mSkillSlotPanelWidget> SkillSlotPanelWidget;
-
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Bound Widgets")
-	TObjectPtr<URogue10mIdentityWidget> IdentityWidget;
+	TObjectPtr<URogue10mBottomHUDWidget> BottomHUDWidget;
 
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Bound Widgets")
 	TObjectPtr<URogue10mMonsterInfoWidget> MonsterInfoWidget;
@@ -57,12 +48,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Bound Widgets")
 	TObjectPtr<URogue10mShortcutHintWidget> SettingsShortcutWidget;
 
-
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Bound Containers")
-	TObjectPtr<UPanelWidget> SkillSlotContainer;
-
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Bound Containers")
-	TObjectPtr<UPanelWidget> ItemSlotContainer;
 
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Bound Containers")
 	TObjectPtr<UPanelWidget> SystemLogContainer;
@@ -85,8 +70,7 @@ protected:
 private:
 	void AssignOwningMainHUDToBoundWidgets();
 	void EnsurePrototypeLayout();
-	void RefreshQuickSlotContainer(UPanelWidget* Container, const TArray<FRogue10mHudQuickSlotView>& Views);
-	void RefreshLogContainer(UPanelWidget* Container, const TArray<FRogue10mHudLogEntryView>& Views);
+	void RefreshLogContainer(UPanelWidget* Container, const TArray<FRogue10mHudLogEntryView>& Views, int32 MaxEntries);
 	void RefreshFrequentWidgetData();
 	void RefreshSlowWidgetData();
 

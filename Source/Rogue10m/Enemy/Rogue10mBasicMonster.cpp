@@ -270,7 +270,7 @@ void ARogue10mBasicMonster::Die()
 	}
 
 	bIsDead = true;
-	if (HasAuthority() && ExperienceReward > 0)
+	if (HasAuthority())
 	{
 		if (ARogue10mPlayerController* RewardController =
 			Cast<ARogue10mPlayerController>(LastDamageInstigator.Get()))
@@ -278,13 +278,20 @@ void ARogue10mBasicMonster::Die()
 			if (ARogue10mPlayerState* RewardState =
 				RewardController->GetPlayerState<ARogue10mPlayerState>())
 			{
-				RewardState->AddExperience(ExperienceReward);
-				RewardController->AddCombatLogMessage(
-					FString::Printf(TEXT("%s 泥섏튂: 寃쏀뿕移?+%d"),
-						*MonsterDisplayName.ToString(), ExperienceReward),
-					FLinearColor(0.42f, 0.9f, 0.58f, 1.0f));
-				UE_LOG(LogRogue10m, Log, TEXT("%s 泥섏튂 蹂댁긽: 寃쏀뿕移?+%d"),
-					*MonsterDisplayName.ToString(), ExperienceReward);
+				if (MonsterData && !MonsterData->MonsterId.IsNone())
+				{
+					RewardState->RecordMonsterDefeat(MonsterData->MonsterId);
+				}
+				if (ExperienceReward > 0)
+				{
+					RewardState->AddExperience(ExperienceReward);
+					RewardController->AddCombatLogMessage(
+						FString::Printf(TEXT("%s 처치: 경험치 +%d"),
+							*MonsterDisplayName.ToString(), ExperienceReward),
+						FLinearColor(0.42f, 0.9f, 0.58f, 1.0f));
+					UE_LOG(LogRogue10m, Log, TEXT("%s 처치 보상: 경험치 +%d"),
+						*MonsterDisplayName.ToString(), ExperienceReward);
+				}
 			}
 		}
 	}

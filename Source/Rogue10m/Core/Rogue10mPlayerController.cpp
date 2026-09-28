@@ -18,6 +18,8 @@
 #include "Rogue10mBasicMonster.h"
 #include "Rogue10mCameraManager.h"
 #include "Rogue10mCharacter.h"
+#include "Rogue10mAppearanceCameraComponent.h"
+#include "Rogue10mFirstPersonPresentationComponent.h"
 #include "Rogue10mCharacterProfileSubsystem.h"
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mGameMode.h"
@@ -77,6 +79,24 @@ ARogue10mPlayerController::ARogue10mPlayerController()
 		FSoftObjectPath(TEXT("/Game/FirstPerson/Lvl_FirstPerson.Lvl_FirstPerson")));
 }
 
+void ARogue10mPlayerController::UpdateRotation(float DeltaTime)
+{
+	// PossessedBy/PawnClientRestart precede GameMode's final spawn rotation. Waiting
+	// for this existing update avoids that overwrite without a new timer or tick.
+	if (IsLocalController())
+	{
+		if (ARogue10mCharacter* ControlledCharacter = Cast<ARogue10mCharacter>(GetPawn()))
+		{
+			if (URogue10mFirstPersonPresentationComponent* Presentation = ControlledCharacter->GetFirstPersonPresentationComponent())
+			{
+				Presentation->ApplyInitialFullBodyViewPitchOnce(*this);
+			}
+		}
+	}
+	// First-frame mouse input is applied after the initial baseline, just like later input.
+	Super::UpdateRotation(DeltaTime);
+}
+
 void ARogue10mPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -132,6 +152,7 @@ void ARogue10mPlayerController::SetupInputComponent()
 	InputComponent->BindKey(EKeys::Escape, IE_Pressed, this, &ARogue10mPlayerController::ToggleSettings);
 	InputComponent->BindKey(EKeys::F10, IE_Pressed, this, &ARogue10mPlayerController::ToggleSettings);
 	InputComponent->BindKey(EKeys::L, IE_Pressed, this, &ARogue10mPlayerController::HandleToggleCombatLog);
+	InputComponent->BindKey(EKeys::V, IE_Pressed, this, &ARogue10mPlayerController::ToggleInspectionCamera);
 
 	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
 	{
@@ -152,6 +173,31 @@ void ARogue10mPlayerController::SetupInputComponent()
 					Subsystem->AddMappingContext(Context, 0);
 				}
 			}
+		}
+	}
+}
+
+void ARogue10mPlayerController::ToggleInspectionCamera()
+{
+	// GameAndUI input can reach this binding when a focused widget does not handle V.
+	// Reject it explicitly, including programmatic calls while gameplay input is blocked.
+	if (!IsLocalPlayerController() || IsMenuWorld() || IsAnyBlockingWindowVisible()
+		|| bShowMouseCursor || IsLookInputIgnored() || IsMoveInputIgnored()
+		|| UGameplayStatics::IsGamePaused(this))
+	{
+		return;
+	}
+	ARogue10mCharacter* ControlledCharacter = Cast<ARogue10mCharacter>(GetPawn());
+	if (!IsValid(ControlledCharacter) || ControlledCharacter->IsDead()
+		|| ControlledCharacter->GetController() != this || GetViewTarget() != ControlledCharacter)
+	{
+		return;
+	}
+	if (URogue10mAppearanceCameraComponent* Camera = ControlledCharacter->GetAppearanceCameraComponent())
+	{
+		if (Camera->IsAppearanceCameraActive())
+		{
+			Camera->ToggleThirdPersonInspection();
 		}
 	}
 }

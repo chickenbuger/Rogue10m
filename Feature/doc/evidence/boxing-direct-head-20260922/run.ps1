@@ -1,0 +1,10 @@
+param([string]$Command='Rogue10m.PreviewMartelo',[string]$Label='preview',[string]$Marker='RESULT=MARTELO_PREVIEW_PASSED',[string[]]$ExtraArgs=@())
+$ErrorActionPreference='Stop'
+$runArgs=@('D:/Project/Rogue10m/Rogue10m.uproject','/Game/FirstPerson/Lvl_FirstPerson','-game','-windowed','-ForceRes','-ResX=1280','-ResY=720','-unattended','-nosplash','-nosound','-NoLiveCoding','-NoRemoteShaderCompile',('-ExecCmds="'+$Command+'"'),('-abslog=D:/Project/Rogue10m/tmp/boxing-direct/'+$Label+'.log'))
+$runArgs += $ExtraArgs
+$proc=Start-Process 'D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe' -ArgumentList $runArgs -WindowStyle Hidden -PassThru
+Write-Output ($Label+' pid='+$proc.Id)
+if(-not $proc.WaitForExit(180000)) { throw ('Runtime timeout pid='+$proc.Id) }
+$runLog=Get-Content ('tmp/boxing-direct/'+$Label+'.log') -Raw
+if($proc.ExitCode -ne 0 -or -not $runLog.Contains($Marker)) { throw ($Label+' verification failed') }
+Write-Output $Marker

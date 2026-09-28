@@ -114,7 +114,7 @@ URogue10mRunHUD와 URogue10mMainHUDWidget은 PlayerState, Character, CombatCompo
 
 `ARogue10mCharacter`는 이동·전투·인벤토리·프로필 정체성을 담당하고, `ARogue10mStylizedCharacter`는 외형 Mesh와 애니메이션 리타기팅을 담당한다.
 
-- `AnimationSourceMesh`: 숨김 Manny와 기존 `ABP_Unarmed`를 실행하는 포즈 소스
+- `AnimationSourceMesh`: 숨김 Manny와 프로젝트 공통 `ABP_Common_Unarmed`를 실행하는 포즈 소스
 - `Character Mesh`: 선택 종족 Skeleton과 종족별 Retarget AnimBP를 사용하는 실제 월드 외형
 - `AppearanceHairMesh`, `AppearanceFacialMesh`: 동일 종족 전신 Skeleton의 Leader Pose를 사용하는 외형 파츠
 - Character Customization Data Asset: 종족·성별별 자식 CharacterClass, IK Retargeter, Retarget AnimClass와 외형 옵션 소유

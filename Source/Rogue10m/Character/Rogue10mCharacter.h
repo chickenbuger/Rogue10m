@@ -15,7 +15,11 @@ class UCameraComponent;
 class UInputAction;
 class URogue10mAttackSkillData;
 class URogue10mAttributeSet;
+class URogue10mCharacterAnimationComponent;
 class URogue10mCombatComponent;
+class URogue10mBasicBrawlerComponent;
+class URogue10mFirstPersonPresentationComponent;
+class URogue10mAppearanceCameraComponent;
 class URogue10mInventoryComponent;
 class URogue10mPlayerFeedbackComponent;
 class URogue10mVitalRegenerationComponent;
@@ -30,9 +34,11 @@ class ROGUE10M_API ARogue10mCharacter : public ACharacter, public IAbilitySystem
 
 public:
 	ARogue10mCharacter();
+	virtual void CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult) override;
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	virtual void PossessedBy(AController* NewController) override;
+	virtual void UnPossessed() override;
 	virtual void OnRep_PlayerState() override;
 	virtual float TakeDamage(float DamageAmount, const FDamageEvent& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
@@ -76,11 +82,21 @@ public:
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Movement")
 	bool IsSprinting() const { return bIsSprinting; }
 
+	URogue10mAppearanceCameraComponent* GetAppearanceCameraComponent() const { return AppearanceCameraComponent; }
 	USkeletalMeshComponent* GetFirstPersonMesh() const { return FirstPersonMesh; }
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
+	URogue10mFirstPersonPresentationComponent* GetFirstPersonPresentationComponent() const { return FirstPersonPresentationComponent; }
 	URogue10mInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
 	URogue10mCombatComponent* GetCombatComponent() const { return CombatComponent; }
+	URogue10mBasicBrawlerComponent* GetBasicBrawlerComponent() const { return BasicBrawlerComponent; }
+	URogue10mCharacterAnimationComponent* GetCharacterAnimationComponent() const { return CharacterAnimationComponent; }
 	URogue10mPlayerFeedbackComponent* GetPlayerFeedbackComponent() const { return PlayerFeedbackComponent; }
+
+	/** 공통 Manny Skeleton 모션을 평가하는 Mesh입니다. 종족 캐릭터는 숨김 소스 Mesh를 반환합니다. */
+	virtual USkeletalMeshComponent* GetAnimationPlaybackMesh() const;
+
+	/** 공통 소스 Mesh에서 재생하며, 구형 1인칭 표현이 활성일 때만 복제 재생합니다. */
+	bool PlayCommonMontage(class UAnimMontage* Montage, float PlayRate = 1.0f);
 
 	const URogue10mAttackSkillData* GetDisplayedAttackSkillForHUD() const;
 	float GetAttackCooldownRemaining() const;
@@ -89,6 +105,8 @@ public:
 
 protected:
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
+	virtual void OnJumped_Implementation() override;
+	virtual void Landed(const FHitResult& Hit) override;
 
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoAim(float Yaw, float Pitch);
@@ -160,6 +178,9 @@ protected:
 	TObjectPtr<USkeletalMeshComponent> FirstPersonMesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
+	TObjectPtr<URogue10mAppearanceCameraComponent> AppearanceCameraComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UCameraComponent> FirstPersonCameraComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
@@ -167,6 +188,15 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<URogue10mCombatComponent> CombatComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
+	TObjectPtr<URogue10mBasicBrawlerComponent> BasicBrawlerComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
+	TObjectPtr<URogue10mCharacterAnimationComponent> CharacterAnimationComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
+	TObjectPtr<URogue10mFirstPersonPresentationComponent> FirstPersonPresentationComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<URogue10mPlayerFeedbackComponent> PlayerFeedbackComponent;

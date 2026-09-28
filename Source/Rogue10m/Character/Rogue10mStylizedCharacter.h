@@ -27,6 +27,10 @@ public:
 
 	virtual bool ApplyCharacterProfile(
 		const FRogue10mCharacterProfile& Profile) override;
+	virtual USkeletalMeshComponent* GetAnimationPlaybackMesh() const override
+	{
+		return AnimationSourceMesh;
+	}
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Character|Customization")
 	ERogue10mCharacterRace GetAppearanceRace() const { return AppearanceRace; }

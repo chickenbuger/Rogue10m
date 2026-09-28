@@ -1,0 +1,48 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mFistAnimInstance.cpp, Rogue10mStylizedCharacter.cpp, Rogue10mBasicBrawlerComponent.cpp, Rogue10mCharacterAnimationComponent.cpp, Rogue10mCombatComponent.cpp, Rogue10mFirstPersonPresentationComponent.cpp, Rogue10mCameraManager.cpp, Rogue10mPlayerState.cpp, Rogue10mAttackSkillData.cpp, Rogue10mCharacterMotionDataAsset.cpp, Rogue10mFirstPersonArmsAuthoring.cpp, Rogue10mBasicMonster.cpp, Rogue10mArmsOnlyRuntimeTest.cpp, Rogue10mBasicBrawlerRuntimeTest.cpp, Rogue10mClassCombatPresentationRuntimeTest.cpp, Rogue10mFirstPersonFistRuntimeTest.cpp, Rogue10mResponsiveHUDRuntimeTest.cpp, Rogue10mWeaponSkillTreeRuntimeTest.cpp, Rogue10mRunHUD.cpp, Rogue10mAtlasImage.cpp, Rogue10mBottomHUDWidget.cpp, Rogue10mHudWidgetParts.cpp, Rogue10mMainHUDWidget.cpp, Rogue10mMenuWindowWidgets.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+  Requested 1.5 GB memory per action, 8.62 GB available: limiting max parallel actions to 5
+Using XGE executor to run 6 action(s)
+Distributing 6 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {1E0D03E9-3C51-4DF4-BA3B-C00C90D5A5DF}
+ 
+--------------------Project: Default-------------------------------------------
+[1/6] Compile [x64] Rogue10mArmsOnlyRuntimeTest.cpp (0:08.95 at +0:00)
+[2/6] Compile [x64] Rogue10mFirstPersonFistRuntimeTest.cpp (0:10.71 at +0:00)
+[3/6] Compile [x64] Rogue10mBasicBrawlerRuntimeTest.cpp (0:11.31 at +0:00)
+[4/6] Link [x64] UnrealEditor-Rogue10m.lib (0:00.25 at +0:11)
+   D:/Project/Rogue10m/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.lib ���̺귯�� �� D:/Project/Rogue10m/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.exp ��ü�� �����ϰ� �ֽ��ϴ�.
+[5/6] Link [x64] UnrealEditor-Rogue10m.dll (0:02.01 at +0:11)
+[6/6] WriteMetadata Rogue10mEditor.target (0:00.90 at +0:13)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 1 succeeded, 0 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 17.51 seconds
+Output binary: D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe
+
+Result: Succeeded
+Total execution time: 20.00 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 2.6kb

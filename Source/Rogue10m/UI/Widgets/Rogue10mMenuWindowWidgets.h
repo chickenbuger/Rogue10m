@@ -24,6 +24,7 @@ class UCanvasPanel;
 class UBorder;
 class UButton;
 class UPanelWidget;
+class UProgressBar;
 class UWidget;
 class UTextBlock;
 class UUniformGridPanel;
@@ -481,6 +482,9 @@ private:
 	FLinearColor ActiveEquipmentDropOriginalColor = FLinearColor::Transparent;
 };
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
+	FRogue10mSkillTreeEntrySelected, URogue10mAttackSkillData*, SkillData);
+
 UCLASS(Abstract, Blueprintable)
 class ROGUE10M_API URogue10mSkillTreeEntryWidget : public UUserWidget
 {
@@ -488,30 +492,45 @@ class ROGUE10M_API URogue10mSkillTreeEntryWidget : public UUserWidget
 
 public:
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
-	void SetSkillData(URogue10mAttackSkillData* InSkillData, bool bInUnlocked);
+	void SetSkillData(
+		URogue10mAttackSkillData* InSkillData, bool bInUnlocked,
+		bool bInAvailable, float InUnlockProgress);
+
+	UPROPERTY(BlueprintAssignable, Category="Rogue10m|Skill Tree")
+	FRogue10mSkillTreeEntrySelected OnSkillSelected;
 
 protected:
 	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 	virtual void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent,
 		UDragDropOperation*& OutOperation) override;
 
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Skill Tree")
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
 	TObjectPtr<UTextBlock> UI_SkillNameText;
 
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Skill Tree")
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
 	TObjectPtr<UImage> UI_SkillIconImage;
 
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Skill Tree")
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
 	TObjectPtr<UTextBlock> UI_SkillDescriptionText;
 
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Skill Tree")
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
 	TObjectPtr<UTextBlock> UI_SkillLockText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_SkillTierText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_SkillProgressText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UProgressBar> UI_SkillProgressBar;
 
 private:
 	UPROPERTY(Transient)
 	TObjectPtr<URogue10mAttackSkillData> SkillData;
 
 	bool bUnlocked = false;
+	bool bCanDrag = false;
 };
 
 UCLASS(Abstract, Blueprintable)
@@ -522,17 +541,64 @@ class ROGUE10M_API URogue10mSkillTreeWindowWidget : public URogue10mMenuWindowWi
 public:
 	virtual void InitializeMenuWindow(URogue10mInventoryComponent* InInventoryComponent) override;
 	virtual void SetWindowOpen(bool bOpen) override;
+	virtual void NativeDestruct() override;
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
 	void RefreshSkillTree();
 
 protected:
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Skill Tree")
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
 	TObjectPtr<UPanelWidget> UI_SkillListContainer;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_SkillTreeTitleText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_ActiveWeaponText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_MartialArtStageText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_MasteryProgressText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UProgressBar> UI_MasteryProgressBar;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UImage> UI_SelectedSkillIcon;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_SelectedSkillNameText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_SelectedSkillTierText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_SelectedSkillDescriptionText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_SelectedSkillStatusText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_SelectedSkillConditionsText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_SelectedSkillRewardText;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Skill Tree")
 	TSubclassOf<URogue10mSkillTreeEntryWidget> SkillTreeEntryWidgetClass;
 
 private:
+	UFUNCTION()
+	void HandleSkillSelected(URogue10mAttackSkillData* SkillData);
+
+	UFUNCTION()
+	void HandleSkillTreeChanged();
+
+	void RefreshSelectedSkillDetails();
 	URogue10mCombatComponent* GetCombatComponent() const;
+
+	UPROPERTY(Transient)
+	TObjectPtr<URogue10mAttackSkillData> SelectedSkill;
 };

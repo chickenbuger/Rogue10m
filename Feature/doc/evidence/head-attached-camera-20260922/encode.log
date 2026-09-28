@@ -1,0 +1,40 @@
+ffmpeg version 6.0 Copyright (c) 2000-2023 the FFmpeg developers
+  built with gcc 10.3.0 (Rev8, Built by MSYS2 project)
+  configuration: --prefix=.. --disable-iconv --disable-opencl --disable-vulkan --disable-sdl2 --disable-bzlib --disable-lzma --disable-linux-perf --disable-xlib --enable-shared --enable-version3 --enable-runtime-cpudetect --enable-zlib --enable-libmp3lame --enable-libspeex --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libvo-amrwbenc --enable-openssl --enable-libopenh264 --enable-libvpx --enable-libfreetype --enable-libopus --enable-libxml2 --enable-libsrt --enable-libwebp --enable-libaom --enable-libsvtav1 --enable-cuda --enable-cuvid --enable-nvenc --enable-libmfx --enable-w32threads --enable-indev=dshow --target-os=mingw32 --cc='gcc -m64' --extra-cflags='-DLIBXML_STATIC -I../include/ -I../include/libxml2 -I../include/mfx/ -I../include/svt-av1' --extra-ldflags=-L../lib/ --extra-libs='-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lgcc_eh -lWs2_32 -lcrypt32 -lpthread -lz -lm -Wl,-Bdynamic -lole32 -luuid'
+  libavutil      58.  2.100 / 58.  2.100
+  libavcodec     60.  3.100 / 60.  3.100
+  libavformat    60.  3.100 / 60.  3.100
+  libavdevice    60.  1.100 / 60.  1.100
+  libavfilter     9.  3.100 /  9.  3.100
+  libswscale      7.  1.100 /  7.  1.100
+  libswresample   4. 10.100 /  4. 10.100
+Input #0, image2, from 'tmp/head-camera/labeled/frame_%04d.png':
+  Duration: 00:00:13.97, start: 0.000000, bitrate: N/A
+  Stream #0:0: Video: png, rgb24(pc), 1280x720, 30 fps, 30 tbr, 30 tbn
+Stream mapping:
+  Stream #0:0 -> #0:0 (png (native) -> h264 (libopenh264))
+Press [q] to stop, [?] for help
+[libopenh264 @ 0000018c20575d00] [OpenH264] this = 0x0000018c23d13ce0, Warning:layerId(0) doesn't support profile(578), change to UNSPECIFIC profile
+[libopenh264 @ 0000018c20575d00] [OpenH264] this = 0x0000018c23d13ce0, Warning:bEnableFrameSkip = 0,bitrate can't be controlled for RC_QUALITY_MODE,RC_BITRATE_MODE and RC_TIMESTAMP_MODE without enabling skip frame.
+Output #0, mp4, to 'Feature/doc/images/head-attached-camera-20260922/head-attached-camera.mp4':
+  Metadata:
+    encoder         : Lavf60.3.100
+  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(tv, progressive), 1280x720, q=2-31, 4000 kb/s, 30 fps, 15360 tbn
+    Metadata:
+      encoder         : Lavc60.3.100 libopenh264
+    Side data:
+      cpb: bitrate max/min/avg: 4000000/0/4000000 buffer size: 0 vbv_delay: N/A
+frame=    0 fps=0.0 q=-0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    
+frame=   44 fps=0.0 q=-0.0 size=     512kB time=00:00:01.46 bitrate=2860.0kbits/s speed=2.64x    
+frame=   82 fps= 77 q=-0.0 size=    1024kB time=00:00:02.73 bitrate=3069.1kbits/s speed=2.57x    
+frame=  115 fps= 73 q=-0.0 size=    1792kB time=00:00:03.83 bitrate=3829.7kbits/s speed=2.43x    
+frame=  150 fps= 72 q=-0.0 size=    2304kB time=00:00:05.00 bitrate=3775.0kbits/s speed=2.39x    
+frame=  187 fps= 72 q=-0.0 size=    2816kB time=00:00:06.23 bitrate=3700.9kbits/s speed= 2.4x    
+frame=  221 fps= 71 q=-0.0 size=    3328kB time=00:00:07.36 bitrate=3700.9kbits/s speed=2.37x    
+frame=  258 fps= 71 q=-0.0 size=    4096kB time=00:00:08.60 bitrate=3901.7kbits/s speed=2.38x    
+frame=  299 fps= 73 q=-0.0 size=    4608kB time=00:00:09.96 bitrate=3787.5kbits/s speed=2.42x    
+frame=  336 fps= 73 q=-0.0 size=    5120kB time=00:00:11.20 bitrate=3744.9kbits/s speed=2.42x    
+frame=  374 fps= 73 q=-0.0 size=    5888kB time=00:00:12.46 bitrate=3869.1kbits/s speed=2.43x    
+[mp4 @ 0000018c1dfcdd00] Starting second pass: moving the moov atom to the beginning of the file
+frame=  419 fps= 76 q=-0.0 Lsize=    6727kB time=00:00:13.93 bitrate=3955.0kbits/s speed=2.53x    
+video:6724kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.037033%

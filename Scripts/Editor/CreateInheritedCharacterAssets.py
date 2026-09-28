@@ -12,7 +12,7 @@ SOURCE_RIG_PATH = (
 )
 SOURCE_MESH_PATH = "/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple"
 SOURCE_ANIM_PATH = (
-    "/Game/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed"
+    "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed"
 )
 RETARGET_FOLDER = "/Game/Character/Customization/Retargeting"
 CHARACTER_FOLDER = "/Game/Character/Customization/Characters"
@@ -142,6 +142,57 @@ def create_or_load_target_rig(definition):
         raise RuntimeError(f"Target IK Rig 저장 실패: {asset_path}")
     return target_rig
 
+def configure_pose_preserving_retargeter(controller):
+    """Keep source body motion while preserving target limb proportions.
+
+    UE default setup may select the rig's pelvis as its Root Motion root.
+    The post-FK operation then overwrites the pelvis without moving retargeted children.
+    Live A/B also showed target FBIK adding foot rotation spikes; FK is the default
+    until a separately validated body-specific IK profile is introduced.
+    """
+    source_side = unreal.RetargetSourceOrTarget.SOURCE
+    target_side = unreal.RetargetSourceOrTarget.TARGET
+    rig_controllers = {
+        side: unreal.IKRigController.get_controller(controller.get_ik_rig(side))
+        for side in (source_side, target_side)
+    }
+    roots = {}
+    for side, rig in rig_controllers.items():
+        root_chains = [c.get_editor_property('chain_name') for c in rig.get_retarget_chains()
+                       if str(c.get_editor_property('chain_name')).lower() == 'root']
+        if len(root_chains) != 1:
+            raise RuntimeError('Expected one real root chain on each retarget rig')
+        roots[side] = rig.get_retarget_chain_start_bone(root_chains[0])
+        if str(roots[side]).lower() != 'root':
+            raise RuntimeError('Root Motion must target the actual root bone, not pelvis')
+    root_ops = []
+    ik_ops = []
+    for index in range(controller.get_num_retarget_ops()):
+        op = controller.get_op_controller(index)
+        if isinstance(op, unreal.IKRetargetRootMotionController): root_ops.append((index, op))
+        if isinstance(op, unreal.IKRetargetRunIKRigController): ik_ops.append(index)
+    if len(root_ops) != 1 or len(ik_ops) != 1:
+        raise RuntimeError('Expected one Root Motion and one Run IK Rig operation')
+    root_index, root = root_ops[0]
+    root.set_source_root_bone(roots[source_side])
+    root.set_target_root_bone(roots[target_side])
+    controller.set_retarget_op_enabled(root_index, True)
+    controller.set_retarget_op_enabled(ik_ops[0], False)
+    target_chains = {str(c.get_editor_property('chain_name'))
+                     for c in rig_controllers[target_side].get_retarget_chains()}
+    cleared = []
+    for chain in ('Tail', 'Cape', 'Tabard_Back', 'Tabard_Front'):
+        if chain in target_chains:
+            # There are no matching source accessory chains; fuzzy Spine/HandRootIK
+            # mappings drive cloth/tail bones with unrelated body animation.
+            controller.set_source_chain('None', chain)
+            cleared.append(chain)
+    return {'source_root':str(root.get_source_root_bone()),
+            'target_root':str(root.get_target_root_bone()),
+            'target_pelvis':str(root.get_settings().get_editor_property('target_pelvis').get_editor_property('bone_name')),
+            'run_ik_enabled':controller.get_retarget_op_enabled(ik_ops[0]),
+            'unmapped_accessories':cleared}
+
 def create_or_load_retargeter(definition):
     asset_name = f"IKR_Manny_To_{definition['code']}"
     asset_path = f"{RETARGET_FOLDER}/{asset_name}"
@@ -177,6 +228,7 @@ def create_or_load_retargeter(definition):
     controller.auto_map_chains(
         unreal.AutoMapChainType.FUZZY, False
     )
+    configure_pose_preserving_retargeter(controller)
     if not unreal.EditorAssetLibrary.save_loaded_asset(
         retargeter, only_if_is_dirty=False
     ):

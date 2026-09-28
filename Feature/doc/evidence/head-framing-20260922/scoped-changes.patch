@@ -1,0 +1,344 @@
+--- before/Source/Rogue10m/Core/Rogue10mPlayerController.h
++++ after/Source/Rogue10m/Core/Rogue10mPlayerController.h
+@@ -47,6 +47,7 @@
+ 
+ public:
+ 	ARogue10mPlayerController();
++	virtual void UpdateRotation(float DeltaTime) override;
+ 
+ 	UFUNCTION(BlueprintCallable, Category="Rogue10m|UI")
+ 	void ToggleInventory();
+--- before/Source/Rogue10m/Core/Rogue10mPlayerController.cpp
++++ after/Source/Rogue10m/Core/Rogue10mPlayerController.cpp
+@@ -18,6 +18,7 @@
+ #include "Rogue10mBasicMonster.h"
+ #include "Rogue10mCameraManager.h"
+ #include "Rogue10mCharacter.h"
++#include "Rogue10mFirstPersonPresentationComponent.h"
+ #include "Rogue10mCharacterProfileSubsystem.h"
+ #include "Rogue10mCombatComponent.h"
+ #include "Rogue10mGameMode.h"
+@@ -77,6 +78,24 @@
+ 		FSoftObjectPath(TEXT("/Game/FirstPerson/Lvl_FirstPerson.Lvl_FirstPerson")));
+ }
+ 
++void ARogue10mPlayerController::UpdateRotation(float DeltaTime)
++{
++	// PossessedBy/PawnClientRestart precede GameMode's final spawn rotation. Waiting
++	// for this existing update avoids that overwrite without a new timer or tick.
++	if (IsLocalController())
++	{
++		if (ARogue10mCharacter* ControlledCharacter = Cast<ARogue10mCharacter>(GetPawn()))
++		{
++			if (URogue10mFirstPersonPresentationComponent* Presentation = ControlledCharacter->GetFirstPersonPresentationComponent())
++			{
++				Presentation->ApplyInitialFullBodyViewPitchOnce(*this);
++			}
++		}
++	}
++	// First-frame mouse input is applied after the initial baseline, just like later input.
++	Super::UpdateRotation(DeltaTime);
++}
++
+ void ARogue10mPlayerController::BeginPlay()
+ {
+ 	Super::BeginPlay();
+--- before/Source/Rogue10m/Components/Rogue10mFirstPersonPresentationComponent.h
++++ after/Source/Rogue10m/Components/Rogue10mFirstPersonPresentationComponent.h
+@@ -7,6 +7,7 @@
+ #include "Rogue10mFirstPersonPresentationComponent.generated.h"
+ 
+ struct FMinimalViewInfo;
++class APlayerController;
+ class UAnimInstance;
+ class UAnimationAsset;
+ class UAnimSequence;
+@@ -32,6 +33,17 @@
+ 
+ 	UFUNCTION(BlueprintPure, Category="Rogue10m|First Person")
+ 	bool IsFullBodyPresentationActive() const { return bPresentationActive && bActiveFullBodyPresentation; }
++
++	/** Called before the owning controller's first rotation update, after GameMode spawn rotation settles. */
++	void ApplyInitialFullBodyViewPitchOnce(APlayerController& PlayerController);
++	bool HasHandledInitialFullBodyViewPitch() const { return bInitialLocalViewHandled; }
++
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Full Body|Initial View")
++	bool bEnableInitialFullBodyViewPitch = true;
++
++	/** Replaces only a neutral spawn pitch once; explicit spawn aim and later mouse input are preserved. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Full Body|Initial View", meta=(ClampMin="-60", ClampMax="0", Units="deg"))
++	float InitialFullBodyViewPitch = -30.0f;
+ 
+ 	/** Adds only to a final view result; never moves the gameplay camera component. */
+ 	void ApplyBodyMotionToView(float DeltaTime, FMinimalViewInfo& InOutView);
+@@ -159,6 +171,7 @@
+ 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+ 
+ private:
++	bool bInitialLocalViewHandled = false;
+ 	void RestorePresentation();
+ 	void ApplyHeadMotionToView(float DeltaTime, FMinimalViewInfo& InOutView);
+ 	bool ReadSingleNodeHeadMotion(USkeletalMeshComponent* Mesh, FVector& OutOffset, FRotator& OutRotation);
+--- before/Source/Rogue10m/Components/Rogue10mFirstPersonPresentationComponent.cpp
++++ after/Source/Rogue10m/Components/Rogue10mFirstPersonPresentationComponent.cpp
+@@ -15,6 +15,7 @@
+ #include "Camera/CameraTypes.h"
+ #include "Components/CapsuleComponent.h"
+ #include "Components/SkeletalMeshComponent.h"
++#include "GameFramework/PlayerController.h"
+ #include "Rogue10m.h"
+ #include "Rogue10mCharacter.h"
+ #include "Rogue10mFistAnimInstance.h"
+@@ -39,6 +40,23 @@
+ {
+ 	RestorePresentation();
+ 	Super::EndPlay(EndPlayReason);
++}
++
++void URogue10mFirstPersonPresentationComponent::ApplyInitialFullBodyViewPitchOnce(APlayerController& PlayerController)
++{
++	if (bInitialLocalViewHandled || !HasBegunPlay() || !PlayerController.IsLocalController()) { return; }
++	ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner());
++	if (!Character || PlayerController.GetPawn() != Character || !Character->IsLocallyControlled()) { return; }
++
++	// Consume this pawn's first local view opportunity even when disabled or starting in
++	// another presentation. A later equipment/UI/refresh event must never replace user aim.
++	bInitialLocalViewHandled = true;
++	if (!bEnableInitialFullBodyViewPitch || !IsFullBodyPresentationActive() || Character->IsDead()
++		|| !FMath::IsFinite(InitialFullBodyViewPitch)) { return; }
++	FRotator ViewRotation = PlayerController.GetControlRotation();
++	if (ViewRotation.ContainsNaN() || !FMath::IsNearlyZero(FRotator::NormalizeAxis(ViewRotation.Pitch), 0.01)) { return; }
++	ViewRotation.Pitch = FMath::Clamp(InitialFullBodyViewPitch, -60.0f, 0.0f);
++	PlayerController.SetControlRotation(ViewRotation);
+ }
+ 
+ void URogue10mFirstPersonPresentationComponent::NotifyConfirmedBrawlerHit(float Strength, float Side)
+--- before/Source/Rogue10m/Tests/Rogue10mBoxingDirectPreviewRuntimeTest.cpp
++++ after/Source/Rogue10m/Tests/Rogue10mBoxingDirectPreviewRuntimeTest.cpp
+@@ -113,7 +113,8 @@
+         Check(FMath::IsFinite(Duration) && FMath::Abs(Duration - 52.f / 30.f) < .02f, TEXT("active_fbx_stack_duration_incorrect"));
+         if (Failures) { Finish(); return; }
+         bLookDownPreview = FParse::Param(FCommandLine::Get(), TEXT("RogueBoxingLookDown"));
+-        ExpectedControl = FRotator(bLookDownPreview ? -40.f : 0.f, OriginalControl.Yaw, 0.f);
++        bForwardViewPreview = FParse::Param(FCommandLine::Get(), TEXT("RogueBoxingForwardView"));
++        ExpectedControl = FRotator(bForwardViewPreview ? -30.f : bLookDownPreview ? -40.f : 0.f, OriginalControl.Yaw, 0.f);
+         PC->SetControlRotation(ExpectedControl); PC->SetIgnoreLookInput(true); PC->SetIgnoreMoveInput(true);
+         bOwnInputIgnore = true; bPrepared = true;
+         OldHeadRotationScale = Presentation->HeadCameraRotationScale; OldHeadLimits = Presentation->MaxHeadCameraRotation;
+@@ -146,8 +147,8 @@
+         SlowStart = FastEnd + 30; SlowEnd = SlowStart + FMath::RoundToInt(Duration * 60.f) + 1;
+         NativeStart = SlowEnd + 30; TotalFrames = NativeStart + 30;
+         FApp::SetFixedDeltaTime(1.0 / 30.0); FApp::SetUseFixedTimeStep(true);
+-        OutputFolder = FPaths::Combine(FPaths::ProjectSavedDir(), bLookDownPreview
+-            ? TEXT("Screenshots/WindowsEditor/BoxingDirectPreviewLookDown40") : TEXT("Screenshots/WindowsEditor/BoxingDirectPreview"));
++        OutputFolder = FPaths::Combine(FPaths::ProjectSavedDir(), bForwardViewPreview ? TEXT("Screenshots/WindowsEditor/BoxingDirectPreviewForward30")
++            : bLookDownPreview ? TEXT("Screenshots/WindowsEditor/BoxingDirectPreviewLookDown40") : TEXT("Screenshots/WindowsEditor/BoxingDirectPreview"));
+         IFileManager::Get().MakeDirectory(*OutputFolder, true);
+         PC->ConsoleCommand(TEXT("r.SetRes 1280x720w"));
+         Mesh->PlayAnimation(Sequence.Get(), false); Mesh->SetPlayRate(0.f);
+@@ -166,7 +167,7 @@
+         PC->PlayerCameraManager->UpdateCamera(1.f / 30.f);
+         Check(Mesh->GetSingleNodeInstance() != nullptr, TEXT("single_node_missing"));
+         UE_LOG(LogRogue10m, Display, TEXT("BOXING_DIRECT ASSET sequence=%s duration=%.6f fast=[%d,%d) slow=[%d,%d) frames=%d view=%s camera=unfiltered_head_follow gain=1 translation=1 limits=85/180/60 offset_limit=80 end_hold=30 native_guard=30 transition=unblended source=retargeted_original"),
+-            *Sequence->GetPathName(), Duration, FastStart, FastEnd, SlowStart, SlowEnd, TotalFrames, bLookDownPreview ? TEXT("look_down_40_no_ui") : TEXT("forward"));
++            *Sequence->GetPathName(), Duration, FastStart, FastEnd, SlowStart, SlowEnd, TotalFrames, bForwardViewPreview ? TEXT("forward_30_no_ui") : bLookDownPreview ? TEXT("look_down_40_no_ui") : TEXT("forward"));
+         TickHandle = FWorldDelegates::OnWorldPostActorTick.AddLambda([Self = AsShared()](UWorld* W, ELevelTick, float)
+         { if (W == Self->World.Get()) { Self->Frame(); } });
+     }
+@@ -255,7 +256,7 @@
+         const FIntPoint Size = GEngine && GEngine->GameViewport && GEngine->GameViewport->Viewport
+             ? GEngine->GameViewport->Viewport->GetSizeXY() : FIntPoint::ZeroValue;
+         Check(Size == FIntPoint(1280, 720), TEXT("capture_resolution_invalid"));
+-        FScreenshotRequest::RequestScreenshot(FPaths::Combine(OutputFolder, FString::Printf(TEXT("frame_%04d.png"), FrameIndex)), !bLookDownPreview, false);
++        FScreenshotRequest::RequestScreenshot(FPaths::Combine(OutputFolder, FString::Printf(TEXT("frame_%04d.png"), FrameIndex)), !(bLookDownPreview || bForwardViewPreview), false);
+         ++FrameIndex;
+     }
+     void RestoreHeadCamera()
+@@ -337,7 +338,7 @@
+     int32 FrameIndex = 0, Failures = 0, InitialSerial = 0, FastStart = 0, FastEnd = 0, SlowStart = 0, SlowEnd = 0, NativeStart = 0, TotalFrames = 0, CameraLimitFrames = 0;
+     float Duration = 0.f, OriginalFOV = 90.f;
+     float OldHeadTranslationScale = 1.f, OldHeadSpeed = 24.f, OldHeadOffsetLimit = 65.f, OldMotionScale = 1.f;
+-    bool bOldHeadFollow = true, bHeadOverride = false, bLookDownPreview = false;
++    bool bOldHeadFollow = true, bHeadOverride = false, bLookDownPreview = false, bForwardViewPreview = false;
+     double OldDelta = 1.0 / 30.0, MaxLeftTravel = 0, MaxRightTravel = 0, MaxLeftFoot = 0, MaxRightFoot = 0;
+     double MaxLeftReach = 0, MaxRightReach = 0, MaxHeadOffset = 0, MaxHeadYaw = 0, MaxHeadPitch = 0, MaxHeadRoll = 0, MaxRenderedRotation = 0, MaxHeadOffsetError = 0, MaxHeadRotationError = 0;
+     bool OldFixed = false, bOldCanBeDamaged = true, bOwnInputIgnore = false, bPrepared = false, bSequenceActive = false, bFinished = false;
+--- before/Source/Rogue10m/Tests/Rogue10mInitialHeadFramingRuntimeTest.cpp
++++ after/Source/Rogue10m/Tests/Rogue10mInitialHeadFramingRuntimeTest.cpp
+@@ -0,0 +1,176 @@
++// Copyright Epic Games, Inc. All Rights Reserved.
++#if WITH_EDITOR
++#include "Camera/CameraComponent.h"
++#include "Camera/PlayerCameraManager.h"
++#include "Engine/Engine.h"
++#include "Engine/World.h"
++#include "GameFramework/CharacterMovementComponent.h"
++#include "GameFramework/PlayerController.h"
++#include "HAL/FileManager.h"
++#include "HAL/IConsoleManager.h"
++#include "HAL/PlatformMisc.h"
++#include "Misc/App.h"
++#include "Misc/Paths.h"
++#include "Rogue10m.h"
++#include "Rogue10mCharacter.h"
++#include "Rogue10mFirstPersonPresentationComponent.h"
++#include "TimerManager.h"
++#include "UnrealClient.h"
++
++namespace Rogue10mInitialHeadFramingTest
++{
++class FRun : public TSharedFromThis<FRun>
++{
++public:
++    void Start(UWorld* InWorld)
++    {
++        World=InWorld;
++        InWorld->GetTimerManager().SetTimer(PrepareTimer,FTimerDelegate::CreateLambda([Self=AsShared()]{ Self->Prepare(); }),4.f,false);
++        Cleanup=FWorldDelegates::OnWorldCleanup.AddLambda([Self=AsShared()](UWorld* W,bool,bool)
++        { if (Self->World.Get()==W) { Self->Finish(false); } });
++    }
++    bool IsFinished() const { return bFinished; }
++private:
++    void Check(bool bCondition,const TCHAR* Message)
++    {
++        if (!bCondition) { ++Failures; UE_LOG(LogRogue10m,Error,TEXT("INITIAL_HEAD_FRAMING FAIL frame=%d %s"),FrameIndex,Message); }
++    }
++    void Prepare()
++    {
++        PC=World.IsValid() ? World->GetFirstPlayerController() : nullptr;
++        Character=PC.IsValid() ? Cast<ARogue10mCharacter>(PC->GetPawn()) : nullptr;
++        if (!Character.IsValid() || !PC.IsValid()) { Check(false,TEXT("player_missing")); Finish(); return; }
++        auto* Presentation=Character->GetFirstPersonPresentationComponent();
++        auto* Camera=Character->GetFirstPersonCameraComponent();
++        if (!Presentation || !Camera) { Check(false,TEXT("presentation_or_camera_missing")); Finish(); return; }
++        // Observe the fresh spawn before the fixture writes any view angle.
++        OriginalControl=PC->GetControlRotation(); OriginalWeapon=Character->GetEquippedWeaponType();
++        OldCanDamage=Character->CanBeDamaged(); bPrepared=true;
++        Check(Presentation->bEnableInitialFullBodyViewPitch && FMath::IsNearlyEqual(Presentation->InitialFullBodyViewPitch,-30.f,.01f),TEXT("initial_view_defaults_incorrect"));
++        Check(Presentation->IsFullBodyPresentationActive() && Presentation->HasHandledInitialFullBodyViewPitch(),TEXT("fresh_initialization_not_handled"));
++        Check(FMath::Abs(FRotator::NormalizeAxis(OriginalControl.Pitch)+30.f)<.1f,TEXT("fresh_spawn_control_pitch_not_minus30"));
++        Check(FMath::Abs(FRotator::NormalizeAxis(Camera->GetComponentRotation().Pitch)+30.f)<.1f,TEXT("fresh_spawn_camera_pitch_not_minus30"));
++        ExpectedControl=OriginalControl;
++        UE_LOG(LogRogue10m,Display,TEXT("INITIAL_HEAD_FRAMING FRESH control=%s camera=%s rendered=%s"),
++            *OriginalControl.ToString(),*Camera->GetComponentRotation().ToString(),PC->PlayerCameraManager ? *PC->PlayerCameraManager->GetCameraRotation().ToString() : TEXT("missing"));
++        Character->SetCanBeDamaged(false); Character->GetCharacterMovement()->StopMovementImmediately();
++        PC->SetIgnoreLookInput(true); PC->SetIgnoreMoveInput(true); bOwnInputIgnore=true;
++        OldFixed=FApp::UseFixedTimeStep(); OldDelta=FApp::GetFixedDeltaTime(); bOwnFixed=true;
++        FApp::SetFixedDeltaTime(1.0/30.0); FApp::SetUseFixedTimeStep(true);
++        Output=FPaths::Combine(FPaths::ProjectSavedDir(),TEXT("Screenshots/WindowsEditor/InitialHeadFraming"));
++        IFileManager::Get().MakeDirectory(*Output,true);
++        Tick=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* W,ELevelTick,float)
++        { if (Self->World.Get()==W) { Self->Frame(); } });
++    }
++    void Frame()
++    {
++        if (!Character.IsValid() || !PC.IsValid()) { Check(false,TEXT("player_lost")); Finish(); return; }
++        auto* Presentation=Character->GetFirstPersonPresentationComponent();
++        if (!Presentation) { Check(false,TEXT("presentation_lost")); Finish(); return; }
++        if (FrameIndex==15)
++        {
++            // A deterministic explicit look result, equivalent to a mouse-authored
++            // control orientation. Physical mouse input remains isolated from QA.
++            ExpectedControl=FRotator(-12.f,FRotator::NormalizeAxis(OriginalControl.Yaw+17.f),0.f);
++            PC->SetControlRotation(ExpectedControl);
++            UE_LOG(LogRogue10m,Display,TEXT("INITIAL_HEAD_FRAMING EXPLICIT_LOOK expected=%s"),*ExpectedControl.ToString());
++        }
++        if (FrameIndex==20 || FrameIndex==60)
++        {
++            Presentation->ApplyInitialFullBodyViewPitchOnce(*PC.Get());
++            Check(PC->GetControlRotation().Equals(ExpectedControl,.01f),TEXT("reinitialize_overwrote_explicit_look"));
++        }
++        if (FrameIndex==25 || FrameIndex==65)
++        {
++            Presentation->RefreshPresentation();
++            Presentation->ApplyInitialFullBodyViewPitchOnce(*PC.Get());
++            Check(PC->GetControlRotation().Equals(ExpectedControl,.01f),TEXT("refresh_overwrote_explicit_look"));
++        }
++        if (FrameIndex==30)
++        {
++            BeforeInputControl=ExpectedControl;
++            PC->SetIgnoreLookInput(false);
++            Check(!PC->IsLookInputIgnored(),TEXT("look_input_fixture_still_blocked"));
++            PC->AddPitchInput(3.f); PC->AddYawInput(2.f);
++            // This callback runs after the controller tick. Consume the accumulated
++            // input through the actual virtual UpdateRotation now: restoring our
++            // ignore flag first would make next tick's PostProcessInput clear it.
++            PC->UpdateRotation(1.f/30.f);
++            ExpectedControl=PC->GetControlRotation();
++            Check(!ExpectedControl.ContainsNaN() && !ExpectedControl.Equals(BeforeInputControl,.01f),TEXT("real_rotation_input_did_not_change_view"));
++            PC->SetIgnoreLookInput(true);
++            UE_LOG(LogRogue10m,Display,TEXT("INITIAL_HEAD_FRAMING INPUT_CONSUMED phase=explicit_UpdateRotation_after_PostActorTick before=%s after=%s"),*BeforeInputControl.ToString(),*ExpectedControl.ToString());
++        }
++        if (FrameIndex==31)
++        {
++            const FRotator Actual=PC->GetControlRotation();
++            Check(!Actual.ContainsNaN() && Actual.Equals(ExpectedControl,.01f),TEXT("next_tick_did_not_preserve_consumed_input"));
++            UE_LOG(LogRogue10m,Display,TEXT("INITIAL_HEAD_FRAMING INPUT_NEXT_TICK expected=%s actual=%s"),*ExpectedControl.ToString(),*Actual.ToString());
++        }
++        if (FrameIndex==40) { Character->SetEquippedWeaponType(ERogue10mWeaponType::Staff); }
++        if (FrameIndex==43) { Character->SetEquippedWeaponType(ERogue10mWeaponType::Unarmed); }
++        Check(PC->GetControlRotation().Equals(ExpectedControl,.01f),TEXT("tick_or_weapon_reset_manual_view"));
++        if (FrameIndex==47)
++        {
++            Check(Presentation->IsFullBodyPresentationActive(),TEXT("weapon_return_lost_fullbody"));
++            Check(Presentation->HasHandledInitialFullBodyViewPitch(),TEXT("weapon_return_lost_initialization_guard"));
++            Check(FMath::Abs(FRotator::NormalizeAxis(Character->GetFirstPersonCameraComponent()->GetComponentRotation().Pitch-ExpectedControl.Pitch))<.1f,TEXT("camera_did_not_follow_explicit_pitch"));
++        }
++        if (FrameIndex==32 || FrameIndex==47 || FrameIndex==70)
++        {
++            const FVector CameraForward=Character->GetFirstPersonCameraComponent()->GetForwardVector();
++            Check(FVector::DotProduct(CameraForward,ExpectedControl.Vector())>.99999,TEXT("gameplay_camera_forward_detached_from_control"));
++        }
++        if (FrameIndex<15 || FrameIndex==30 || FrameIndex==70)
++        {
++            FScreenshotRequest::RequestScreenshot(FPaths::Combine(Output,FString::Printf(TEXT("frame_%04d.png"),FrameIndex)),true,false);
++        }
++        if (FrameIndex==90) { Finish(); return; }
++        ++FrameIndex;
++    }
++    void Finish(bool bExit=true)
++    {
++        if (bFinished) { return; } bFinished=true;
++        FWorldDelegates::OnWorldPostActorTick.Remove(Tick); FWorldDelegates::OnWorldCleanup.Remove(Cleanup);
++        if (World.IsValid()) { World->GetTimerManager().ClearTimer(PrepareTimer); }
++        if (bPrepared && Character.IsValid())
++        {
++            Character->SetEquippedWeaponType(OriginalWeapon); Character->SetCanBeDamaged(OldCanDamage);
++        }
++        if (bPrepared && PC.IsValid())
++        {
++            PC->SetControlRotation(OriginalControl);
++            if (bOwnInputIgnore) { PC->SetIgnoreLookInput(false); PC->SetIgnoreMoveInput(false); }
++        }
++        if (bOwnFixed) { FApp::SetUseFixedTimeStep(OldFixed); FApp::SetFixedDeltaTime(OldDelta); }
++        const bool bPassed=Failures==0 && FrameIndex==90;
++        UE_LOG(LogRogue10m,Display,TEXT("RESULT=INITIAL_HEAD_FRAMING_%s frames=%d failures=%d"),bPassed ? TEXT("PASSED") : TEXT("FAILED"),FrameIndex,Failures);
++        if (bExit) { FPlatformMisc::RequestExitWithStatus(false,bPassed ? 0 : 1); }
++    }
++    TWeakObjectPtr<UWorld> World;
++    TWeakObjectPtr<ARogue10mCharacter> Character;
++    TWeakObjectPtr<APlayerController> PC;
++    FTimerHandle PrepareTimer;
++    FDelegateHandle Tick,Cleanup;
++    FRotator OriginalControl,ExpectedControl,BeforeInputControl;
++    ERogue10mWeaponType OriginalWeapon=ERogue10mWeaponType::Unarmed;
++    FString Output;
++    double OldDelta=1.0/30.0;
++    int32 FrameIndex=0,Failures=0;
++    bool OldFixed=false,OldCanDamage=true,bOwnFixed=false,bPrepared=false,bOwnInputIgnore=false,bFinished=false;
++};
++static TSharedPtr<FRun> Active;
++static void Run()
++{
++    if (!GEngine || GIsEditor || (Active.IsValid() && !Active->IsFinished())) { return; }
++    for (const FWorldContext& Context:GEngine->GetWorldContexts())
++    {
++        if (UWorld* World=Context.World();World && World->WorldType==EWorldType::Game)
++        { Active=MakeShared<FRun>(); Active->Start(World); return; }
++    }
++}
++static FAutoConsoleCommand Command(TEXT("Rogue10m.TestInitialHeadFraming"),
++    TEXT("Verifies fresh -30-degree framing once, preserves explicit look through updates/refresh/weapon changes; standalone editor build, 90 frames then exits."),
++    FConsoleCommandDelegate::CreateStatic(&Run));
++}
++#endif

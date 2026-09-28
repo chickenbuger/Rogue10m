@@ -13,7 +13,7 @@ SOURCE_MESH_PATH = (
     "/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple"
 )
 SOURCE_ANIM_PATH = (
-    "/Game/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed"
+    "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed"
 )
 
 
@@ -57,7 +57,7 @@ def main():
     if SOURCE_ANIM_PATH not in path_of(
         parent_cdo.get_editor_property("animation_source_anim_class")
     ):
-        fail("AnimationSourceAnimClass 기본값이 ABP_Unarmed가 아닙니다.")
+        fail("AnimationSourceAnimClass 기본값이 ABP_Common_Unarmed가 아닙니다.")
     if CATALOG_PATH not in path_of(
         parent_cdo.get_editor_property("customization_catalog")
     ):

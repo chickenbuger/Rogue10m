@@ -9,10 +9,17 @@
 #include "Rogue10mCombatComponent.generated.h"
 
 class ARogue10mCharacter;
+class ARogue10mPlayerState;
+class UNiagaraComponent;
+class UNiagaraSystem;
 class URogue10mAttributeSet;
+class URogue10mBasicBrawlerComponent;
 class URogue10mCharacterDataAsset;
 class URogue10mDodgeSkillDataAsset;
 class URogue10mWeaponSkillProfileDataAsset;
+class USkeletalMeshComponent;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRogue10mSkillTreeChanged);
 
 struct FRogue10mActiveAttackExecution
 {
@@ -22,6 +29,8 @@ struct FRogue10mActiveAttackExecution
 	FTimerHandle TimerHandle;
 	float ProjectileTravelDistance = 0.0f;
 	int32 CompletedPulses = 0;
+	bool bConfirmedCameraFeedbackSent = false;
+	bool bBrawlerPresentation = false;
 };
 
 UCLASS(ClassGroup=(Rogue10m), meta=(BlueprintSpawnableComponent))
@@ -36,6 +45,7 @@ public:
 	void InitializeSpawnedLoadout();
 	void HandleAttackPressed(bool bPrimaryAttack);
 	void HandleAttackReleased(bool bPrimaryAttack);
+	void CancelCombatVisuals();
 	bool ExecutePendingAttackSkillFromAbility();
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Combat")
@@ -46,6 +56,9 @@ public:
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Skill Tree")
 	bool IsAttackSkillUnlocked(const URogue10mAttackSkillData* SkillData) const;
+
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Skill Tree")
+	bool IsSkillInActiveTree(const URogue10mAttackSkillData* SkillData) const;
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat")
 	TArray<URogue10mAttackSkillData*> GetUnlockedWeaponSkills() const;
@@ -61,6 +74,30 @@ public:
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Skill Tree")
 	TArray<URogue10mAttackSkillData*> GetActiveSkillTreeSkills() const;
+
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Skill Tree")
+	ERogue10mWeaponType GetActiveSkillTreeWeaponType() const;
+
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Skill Tree")
+	FText GetActiveSkillTreeDisplayName() const;
+
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Skill Tree")
+	bool IsSkillAvailableToUnlock(const URogue10mAttackSkillData* SkillData) const;
+
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Skill Tree")
+	float GetSkillUnlockProgress(const URogue10mAttackSkillData* SkillData) const;
+
+	int32 GetSkillUnlockConditionCurrent(const FRogue10mSkillUnlockCondition& Condition) const;
+	bool IsSkillUnlockConditionComplete(const FRogue10mSkillUnlockCondition& Condition) const;
+
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Skill Tree")
+	float GetUnlockedPassiveDamageReduction() const;
+
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Combat|Skill Tree")
+	void EvaluateActiveSkillUnlocks();
+
+	UPROPERTY(BlueprintAssignable, Category="Rogue10m|Combat|Skill Tree")
+	FRogue10mSkillTreeChanged OnSkillTreeChanged;
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Dodge")
 	const URogue10mDodgeSkillDataAsset* GetActiveDodgeSkill() const;
@@ -87,6 +124,7 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
+	friend class URogue10mBasicBrawlerComponent;
 	ARogue10mCharacter* GetOwnerCharacter() const;
 	URogue10mAttributeSet* GetOwnerAttributes() const;
 	float GetAttackSpeedMultiplier() const;
@@ -101,6 +139,7 @@ private:
 	bool ApplyAttackDamage(const URogue10mAttackSkillData& SkillData, FRogue10mActiveAttackExecution& Execution,
 		AActor& TargetActor, const FVector& DamageDirection, int32 PulseIndex);
 	void FinishAttackHitSequence(uint32 ExecutionId);
+	void CancelPendingAttackHits(const URogue10mAttackSkillData* SkillData = nullptr);
 	bool CanPayResourceCosts(const URogue10mAttackSkillData& SkillData) const;
 	void ConsumeResourceCosts(const URogue10mAttackSkillData& SkillData);
 	void StartSharedAttackCooldown(const URogue10mAttackSkillData& SkillData, bool bComboAttack);
@@ -112,6 +151,20 @@ private:
 	const URogue10mWeaponSkillProfileDataAsset* FindActiveWeaponProfile() const;
 	void ApplyCharacterData();
 	void ApplyActiveWeaponProfile();
+	void BindProgressionState();
+
+	UFUNCTION()
+	void HandleMartialArtsProgressChanged();
+
+	void CancelWeaponTransitionState();
+	void StartChargeEffect(const URogue10mAttackSkillData& SkillData);
+	void StopChargeEffect();
+	void SpawnCastEffect(const URogue10mAttackSkillData& SkillData) const;
+	void SpawnImpactEffect(const URogue10mAttackSkillData& SkillData, const AActor& TargetActor, bool bBrawlerPresentation) const;
+	void ConfigureTransientEffect(
+		UNiagaraComponent* EffectComponent, float UniformScale,
+		float EmissionDuration, float TimeDilation) const;
+	USkeletalMeshComponent* GetEffectAttachMesh(bool& bOutFirstPerson) const;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Combat|Skill Data", meta=(AllowPrivateAccess="true"))
 	TObjectPtr<URogue10mAttackSkillData> PrimaryAttackSkill;
@@ -157,6 +210,12 @@ private:
 	UPROPERTY(Transient)
 	TMap<ERogue10mAttackInputSlot, TObjectPtr<URogue10mAttackSkillData>> EquippedSkillBindings;
 
+	UPROPERTY(Transient)
+	TObjectPtr<UNiagaraComponent> ActiveChargeEffectComponent;
+
+	UPROPERTY(Transient)
+	TObjectPtr<UNiagaraComponent> ActiveOffHandChargeEffectComponent;
+
 	ERogue10mWeaponType AppliedProfileWeaponType = ERogue10mWeaponType::Unarmed;
 	float LeftAttackPressedTime = -1.0f;
 	float RightAttackPressedTime = -1.0f;
@@ -164,6 +223,7 @@ private:
 	TWeakObjectPtr<const URogue10mAttackSkillData> ActiveComboRootSkill;
 	TWeakObjectPtr<const URogue10mAttackSkillData> AttackCooldownSourceSkill;
 	TWeakObjectPtr<const URogue10mAttackSkillData> PendingAbilityAttackSkill;
+	TWeakObjectPtr<ARogue10mPlayerState> BoundProgressionState;
 	float ActiveComboWindowOpenTime = -1.0f;
 	float ActiveComboWindowCloseTime = -1.0f;
 	float AttackCooldownStartTime = -1.0f;

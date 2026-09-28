@@ -3,6 +3,8 @@
 #include "Rogue10mCharacter.h"
 
 #include "AbilitySystemComponent.h"
+#include "Animation/AnimInstance.h"
+#include "Animation/AnimMontage.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
@@ -12,8 +14,12 @@
 #include "InputCoreTypes.h"
 #include "Rogue10m.h"
 #include "Rogue10mAttributeSet.h"
+#include "Rogue10mCharacterAnimationComponent.h"
 #include "Rogue10mCombatComponent.h"
+#include "Rogue10mBasicBrawlerComponent.h"
 #include "Rogue10mCharacterDataAsset.h"
+#include "Rogue10mFirstPersonPresentationComponent.h"
+#include "Rogue10mAppearanceCameraComponent.h"
 #include "Rogue10mInventoryComponent.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerFeedbackComponent.h"
@@ -26,9 +32,15 @@ ARogue10mCharacter::ARogue10mCharacter()
 {
 	GetCapsuleComponent()->InitCapsuleSize(34.0f, 96.0f);
 
+	AppearanceCameraComponent = CreateDefaultSubobject<URogue10mAppearanceCameraComponent>(TEXT("Appearance Camera Component"));
 	FirstPersonMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("First Person Mesh"));
 	InventoryComponent = CreateDefaultSubobject<URogue10mInventoryComponent>(TEXT("Inventory Component"));
 	CombatComponent = CreateDefaultSubobject<URogue10mCombatComponent>(TEXT("Combat Component"));
+	BasicBrawlerComponent = CreateDefaultSubobject<URogue10mBasicBrawlerComponent>(TEXT("Basic Brawler Component"));
+	CharacterAnimationComponent = CreateDefaultSubobject<URogue10mCharacterAnimationComponent>(
+		TEXT("Character Animation Component"));
+
+	FirstPersonPresentationComponent = CreateDefaultSubobject<URogue10mFirstPersonPresentationComponent>(TEXT("First Person Presentation Component"));
 
 	FirstPersonMesh->SetupAttachment(GetMesh());
 	FirstPersonMesh->SetOnlyOwnerSee(true);
@@ -36,7 +48,7 @@ ARogue10mCharacter::ARogue10mCharacter()
 	FirstPersonMesh->SetCollisionProfileName(FName(TEXT("NoCollision")));
 
 	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("First Person Camera"));
-	FirstPersonCameraComponent->SetupAttachment(FirstPersonMesh, FName(TEXT("head")));
+	FirstPersonCameraComponent->SetupAttachment(GetMesh(), FName(TEXT("head")));
 	FirstPersonCameraComponent->SetRelativeLocationAndRotation(
 		FVector(-2.8f, 5.89f, 0.0f),
 		FRotator(0.0f, 90.0f, -90.0f));
@@ -56,6 +68,14 @@ ARogue10mCharacter::ARogue10mCharacter()
 	NormalWalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
 }
 
+void ARogue10mCharacter::CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult)
+{
+	if (AppearanceCameraComponent) { AppearanceCameraComponent->UpdateCameraFromAppearance(); }
+	Super::CalcCamera(DeltaTime, OutResult);
+	// Inspection only overrides the rendered POV; the head camera remains the combat origin.
+	if (AppearanceCameraComponent) { AppearanceCameraComponent->ApplyInspectionView(OutResult); }
+}
+
 UAbilitySystemComponent* ARogue10mCharacter::GetAbilitySystemComponent() const
 {
 	const ARogue10mPlayerState* State = GetPlayerState<ARogue10mPlayerState>();
@@ -66,6 +86,10 @@ void ARogue10mCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 	InitializeAbilityActorInfo();
+	if (FirstPersonPresentationComponent)
+	{
+		FirstPersonPresentationComponent->RefreshPresentation();
+	}
 	if (CombatComponent)
 	{
 		CombatComponent->InitializeSpawnedLoadout();
@@ -76,10 +100,20 @@ void ARogue10mCharacter::PossessedBy(AController* NewController)
 	}
 }
 
+void ARogue10mCharacter::UnPossessed()
+{
+	Super::UnPossessed();
+	if (AppearanceCameraComponent) { AppearanceCameraComponent->RefreshAppearanceCamera(); }
+}
+
 void ARogue10mCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
 	InitializeAbilityActorInfo();
+	if (FirstPersonPresentationComponent)
+	{
+		FirstPersonPresentationComponent->RefreshPresentation();
+	}
 	if (CombatComponent)
 	{
 		CombatComponent->InitializeSpawnedLoadout();
@@ -95,9 +129,14 @@ float ARogue10mCharacter::TakeDamage(
 	AController* EventInstigator, AActor* DamageCauser)
 {
 	URogue10mAttributeSet* Attributes = GetRogueAttributeSet();
-	const float MitigatedDamage = Attributes && DamageAmount > 0.0f
+	const float DefenseMitigatedDamage = Attributes && DamageAmount > 0.0f
 		? FMath::Max(1.0f, DamageAmount - Attributes->GetDefense())
 		: DamageAmount;
+	const float PassiveDamageReduction = CombatComponent
+		? CombatComponent->GetUnlockedPassiveDamageReduction() : 0.0f;
+	const float MitigatedDamage = DefenseMitigatedDamage > 0.0f
+		? DefenseMitigatedDamage * (1.0f - PassiveDamageReduction)
+		: DefenseMitigatedDamage;
 	const float AppliedDamage = Super::TakeDamage(
 		MitigatedDamage, DamageEvent, EventInstigator, DamageCauser);
 	if (IsDead() || !Attributes || AppliedDamage <= 0.0f)
@@ -165,6 +204,10 @@ void ARogue10mCharacter::MoveInput(const FInputActionValue& Value)
 	const FVector2D Movement = Value.Get<FVector2D>();
 	CachedMovementInput = Movement.GetClampedToMaxSize(1.0f);
 	DoMove(Movement.X, Movement.Y);
+	if (CharacterAnimationComponent)
+	{
+		CharacterAnimationComponent->SetMovementState(!CachedMovementInput.IsNearlyZero(), bIsSprinting);
+	}
 }
 
 void ARogue10mCharacter::LookInput(const FInputActionValue& Value)
@@ -208,6 +251,10 @@ void ARogue10mCharacter::DoMove(float Right, float Forward)
 
 void ARogue10mCharacter::DoJumpStart()
 {
+	if (BasicBrawlerComponent && BasicBrawlerComponent->IsBasicBrawlerActive())
+	{
+		BasicBrawlerComponent->CancelInput();
+	}
 	if (IsDead() || IsBlockingWindowVisible() || bIsDodging)
 	{
 		return;
@@ -221,6 +268,25 @@ void ARogue10mCharacter::DoJumpEnd()
 {
 	StopJumping();
 }
+
+void ARogue10mCharacter::OnJumped_Implementation()
+{
+	Super::OnJumped_Implementation();
+	if (CharacterAnimationComponent)
+	{
+		CharacterAnimationComponent->NotifyJump(JumpCurrentCount);
+	}
+}
+
+void ARogue10mCharacter::Landed(const FHitResult& Hit)
+{
+	Super::Landed(Hit);
+	if (CharacterAnimationComponent)
+	{
+		CharacterAnimationComponent->NotifyLanded();
+	}
+}
+
 void ARogue10mCharacter::DoDodge()
 {
 	UWorld* World = GetWorld();
@@ -260,6 +326,10 @@ void ARogue10mCharacter::DoDodge()
 	bIsDodging = true;
 	NextDodgeAllowedTime = World->GetTimeSeconds() + ActiveCooldown;
 	GetCharacterMovement()->Velocity = Direction * (ActiveDistance / FMath::Max(0.05f, ActiveDuration));
+	if (CharacterAnimationComponent)
+	{
+		CharacterAnimationComponent->NotifyDodge();
+	}
 	World->GetTimerManager().SetTimer(DodgeTimerHandle, this, &ARogue10mCharacter::FinishDodge, ActiveDuration, false);
 }
 
@@ -308,6 +378,10 @@ void ARogue10mCharacter::SetSprinting(bool bNewSprinting)
 	if (PlayerFeedbackComponent)
 	{
 		PlayerFeedbackComponent->SetSprinting(bIsSprinting);
+	}
+	if (CharacterAnimationComponent)
+	{
+		CharacterAnimationComponent->SetMovementState(!CachedMovementInput.IsNearlyZero(), bIsSprinting);
 	}
 
 	if (UWorld* World = GetWorld())
@@ -455,6 +529,14 @@ void ARogue10mCharacter::Die()
 	}
 
 	SetSprinting(false);
+	if (CharacterAnimationComponent)
+	{
+		CharacterAnimationComponent->StopMotionEffects();
+	}
+	if (CombatComponent)
+	{
+		CombatComponent->CancelCombatVisuals();
+	}
 
 	if (ARogue10mPlayerState* State = GetPlayerState<ARogue10mPlayerState>())
 	{
@@ -538,6 +620,7 @@ bool ARogue10mCharacter::ApplyCharacterProfile(const FRogue10mCharacterProfile& 
 	}
 
 	CharacterAppearance = Profile.Appearance;
+	if (FirstPersonPresentationComponent) { FirstPersonPresentationComponent->RefreshPresentation(); }
 	if (ARogue10mPlayerState* State = GetPlayerState<ARogue10mPlayerState>())
 	{
 		FText JobName = NSLOCTEXT("Rogue10mCharacter", "DefaultAdventurerJob", "모험가");
@@ -615,6 +698,46 @@ float ARogue10mCharacter::GetAttackCooldownDuration() const
 bool ARogue10mCharacter::ExecutePendingAttackSkillFromAbility()
 {
 	return CombatComponent && CombatComponent->ExecutePendingAttackSkillFromAbility();
+}
+
+USkeletalMeshComponent* ARogue10mCharacter::GetAnimationPlaybackMesh() const
+{
+	if (GetMesh() && GetMesh()->GetAnimInstance())
+	{
+		return GetMesh();
+	}
+	return FirstPersonMesh;
+}
+
+bool ARogue10mCharacter::PlayCommonMontage(UAnimMontage* Montage, float PlayRate)
+{
+	if (!Montage)
+	{
+		return false;
+	}
+
+	bool bPlayed = false;
+	auto TryPlay = [&bPlayed, Montage, PlayRate](USkeletalMeshComponent* MeshComponent)
+	{
+		if (UAnimInstance* AnimInstance = MeshComponent ? MeshComponent->GetAnimInstance() : nullptr)
+		{
+			bPlayed |= AnimInstance->Montage_Play(Montage, FMath::Max(0.01f, PlayRate)) > 0.0f;
+		}
+	};
+
+	USkeletalMeshComponent* PlaybackMesh = GetAnimationPlaybackMesh();
+	TryPlay(PlaybackMesh);
+	if (FirstPersonMesh != PlaybackMesh && !(AppearanceCameraComponent && AppearanceCameraComponent->IsAppearanceCameraActive()))
+	{
+		TryPlay(FirstPersonMesh);
+	}
+	if (!bPlayed)
+	{
+		UE_LOG(
+			LogRogue10m, Warning, TEXT("%s 공통 Montage 재생 실패: %s"),
+			*GetNameSafe(this), *GetNameSafe(Montage));
+	}
+	return bPlayed;
 }
 
 bool ARogue10mCharacter::IsBlockingWindowVisible() const

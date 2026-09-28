@@ -47,6 +47,11 @@ class ROGUE10M_API ARogue10mPlayerController : public APlayerController
 
 public:
 	ARogue10mPlayerController();
+	virtual void UpdateRotation(float DeltaTime) override;
+
+	/** Switches the local gameplay view without moving the head camera used by combat. */
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Camera")
+	void ToggleInspectionCamera();
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|UI")
 	void ToggleInventory();

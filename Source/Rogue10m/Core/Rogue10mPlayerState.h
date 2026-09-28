@@ -13,6 +13,8 @@ class UAbilitySystemComponent;
 class URogue10mAbilitySystemComponent;
 class URogue10mAttributeSet;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRogue10mMartialArtsProgressChanged);
+
 UCLASS()
 class ROGUE10M_API ARogue10mPlayerState : public APlayerState, public IAbilitySystemInterface
 {
@@ -65,6 +67,21 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Progression")
 	void AddExperience(int32 ExperienceAmount);
 
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Progression|Martial Arts")
+	void RecordSkillUse(FName SkillId, int32 Count = 1);
+
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Progression|Martial Arts")
+	void RecordMonsterDefeat(FName MonsterId, int32 Count = 1);
+
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Progression|Martial Arts")
+	int32 GetSkillUseCount(FName SkillId) const;
+
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Progression|Martial Arts")
+	int32 GetMonsterDefeatCount(FName MonsterId) const;
+
+	UPROPERTY(BlueprintAssignable, Category="Rogue10m|Progression|Martial Arts")
+	FRogue10mMartialArtsProgressChanged OnMartialArtsProgressChanged;
+
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Identity")
 	int32 GetWeaponMasteryLevel(ERogue10mWeaponType WeaponType) const;
 
@@ -113,6 +130,12 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(AllowPrivateAccess="true"))
 	ERogue10mIdentityType IdentityType = ERogue10mIdentityType::None;
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="Rogue10m|Progression|Martial Arts", meta=(AllowPrivateAccess="true"))
+	TMap<FName, int32> SkillUseCounts;
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="Rogue10m|Progression|Martial Arts", meta=(AllowPrivateAccess="true"))
+	TMap<FName, int32> MonsterDefeatCounts;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Vitals", meta=(AllowPrivateAccess="true"))
 	bool bManaEnabled = false;

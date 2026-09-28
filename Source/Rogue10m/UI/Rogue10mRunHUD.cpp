@@ -54,6 +54,11 @@ namespace
 		case ERogue10mWeaponType::Bow: return TEXT("활");
 		case ERogue10mWeaponType::Staff: return TEXT("지팡이");
 		case ERogue10mWeaponType::Knuckle: return TEXT("권");
+		case ERogue10mWeaponType::Shuriken: return TEXT("표창");
+		case ERogue10mWeaponType::DualDaggers: return TEXT("쌍단검");
+		case ERogue10mWeaponType::LongSword: return TEXT("장검");
+		case ERogue10mWeaponType::Shield: return TEXT("방패");
+		case ERogue10mWeaponType::SwordBuckler: return TEXT("한손검·작은방패");
 		default: return TEXT("무기");
 		}
 	}
@@ -87,7 +92,7 @@ FRogue10mHudVitalView URogue10mRunHUD::GetStaminaView() const
 	const ARogue10mPlayerState* State = GetOwningPlayer() ? GetOwningPlayer()->GetPlayerState<ARogue10mPlayerState>() : nullptr;
 	const URogue10mAttributeSet* Attributes = State ? State->GetRogueAttributeSet() : nullptr;
 	return Attributes
-		? MakeVitalView(Attributes->GetStamina(), Attributes->GetMaxStamina(), true, FLinearColor(1.0f, 0.82f, 0.08f, 1.0f))
+		? MakeVitalView(Attributes->GetStamina(), Attributes->GetMaxStamina(), true, FLinearColor(0.96f, 0.66f, 0.04f, 1.0f))
 		: FRogue10mHudVitalView();
 }
 

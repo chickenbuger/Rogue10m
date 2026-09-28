@@ -1,0 +1,15 @@
+{
+  "sessionId": "01a0e858-5f94-7341-a38c-ce2c23b00596",
+  "exitCode": 0,
+  "commands": [
+    {
+      "command": "\"C:\\\\Users\\\\PC\\\\.cache\\\\codex-runtimes\\\\codex-primary-runtime\\\\dependencies\\\\native\\\\powershell\\\\pwsh.exe\" -Command \"Get-Content -LiteralPath 'input.txt'\"",
+      "exitCode": -1,
+      "output": "Failed to create unified exec process: helper_unknown_error: apply deny-read ACLs"
+    }
+  ],
+  "error": "",
+  "stderr": "2026-09-28T14:08:21.183088Z  WARN codex_skills::interface: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/\n2026-09-28T14:08:21.183124Z  WARN codex_skills::interface: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/\n2026-09-28T14:08:21.201443Z  WARN codex_core::shell_snapshot: Failed to create shell snapshot for powershell: Shell snapshot not supported yet for PowerShell\n2026-09-28T14:08:33.265580Z ERROR codex_core::tools::router: error=exec_command failed: CreateProcess { message: \"Rejected(\\\"Failed to create unified exec process: helper_unknown_error: apply deny-read ACLs\\\")\" }\n2026-09-28T14:08:37.362178Z  WARN codex_core::tasks: failed to flush rollout after emitting terminal turn event: thread 01a0e858-5f94-7341-a38c-ce2c23b00596 not found\n",
+  "aborted": false,
+  "timedOut": false
+}

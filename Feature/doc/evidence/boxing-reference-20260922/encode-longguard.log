@@ -1,0 +1,34 @@
+ffmpeg version 6.0 Copyright (c) 2000-2023 the FFmpeg developers
+  built with gcc 10.3.0 (Rev8, Built by MSYS2 project)
+  configuration: --prefix=.. --disable-iconv --disable-opencl --disable-vulkan --disable-sdl2 --disable-bzlib --disable-lzma --disable-linux-perf --disable-xlib --enable-shared --enable-version3 --enable-runtime-cpudetect --enable-zlib --enable-libmp3lame --enable-libspeex --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libvo-amrwbenc --enable-openssl --enable-libopenh264 --enable-libvpx --enable-libfreetype --enable-libopus --enable-libxml2 --enable-libsrt --enable-libwebp --enable-libaom --enable-libsvtav1 --enable-cuda --enable-cuvid --enable-nvenc --enable-libmfx --enable-w32threads --enable-indev=dshow --target-os=mingw32 --cc='gcc -m64' --extra-cflags='-DLIBXML_STATIC -I../include/ -I../include/libxml2 -I../include/mfx/ -I../include/svt-av1' --extra-ldflags=-L../lib/ --extra-libs='-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lgcc_eh -lWs2_32 -lcrypt32 -lpthread -lz -lm -Wl,-Bdynamic -lole32 -luuid'
+  libavutil      58.  2.100 / 58.  2.100
+  libavcodec     60.  3.100 / 60.  3.100
+  libavformat    60.  3.100 / 60.  3.100
+  libavdevice    60.  1.100 / 60.  1.100
+  libavfilter     9.  3.100 /  9.  3.100
+  libswscale      7.  1.100 /  7.  1.100
+  libswresample   4. 10.100 /  4. 10.100
+Input #0, image2, from 'tmp/boxing-reference/labeled-longguard/frame_%04d.png':
+  Duration: 00:00:06.67, start: 0.000000, bitrate: N/A
+  Stream #0:0: Video: png, rgb24(pc), 1280x720, 30 fps, 30 tbr, 30 tbn
+Stream mapping:
+  Stream #0:0 -> #0:0 (png (native) -> h264 (libopenh264))
+Press [q] to stop, [?] for help
+[libopenh264 @ 00000195f776c500] [OpenH264] this = 0x00000195f94e3390, Warning:layerId(0) doesn't support profile(578), change to UNSPECIFIC profile
+[libopenh264 @ 00000195f776c500] [OpenH264] this = 0x00000195f94e3390, Warning:bEnableFrameSkip = 0,bitrate can't be controlled for RC_QUALITY_MODE,RC_BITRATE_MODE and RC_TIMESTAMP_MODE without enabling skip frame.
+Output #0, mp4, to 'Feature/doc/images/boxing-reference-20260922/longguard-gameplay.mp4':
+  Metadata:
+    encoder         : Lavf60.3.100
+  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(tv, progressive), 1280x720, q=2-31, 4000 kb/s, 30 fps, 15360 tbn
+    Metadata:
+      encoder         : Lavc60.3.100 libopenh264
+    Side data:
+      cpb: bitrate max/min/avg: 4000000/0/4000000 buffer size: 0 vbv_delay: N/A
+frame=    0 fps=0.0 q=-0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    
+frame=   38 fps=0.0 q=-0.0 size=     512kB time=00:00:01.26 bitrate=3311.6kbits/s speed=2.28x    
+frame=   86 fps= 81 q=-0.0 size=    1280kB time=00:00:02.86 bitrate=3658.0kbits/s speed= 2.7x    
+frame=  131 fps= 83 q=-0.0 size=    1792kB time=00:00:04.36 bitrate=3361.9kbits/s speed=2.78x    
+frame=  170 fps= 82 q=-0.0 size=    2560kB time=00:00:05.66 bitrate=3700.9kbits/s speed=2.73x    
+[mp4 @ 00000195f776b800] Starting second pass: moving the moov atom to the beginning of the file
+frame=  200 fps= 80 q=-0.0 Lsize=    3160kB time=00:00:06.63 bitrate=3902.6kbits/s speed=2.66x    
+video:3158kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.051759%

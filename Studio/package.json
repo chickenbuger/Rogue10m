@@ -1,0 +1,7 @@
+{
+  "name": "rogue10m-personal-studio",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node server.mjs", "test": "node --test tests/*.test.mjs", "check": "node --check server.mjs && node --check lib.mjs && node --check queue.mjs && node --check dispatcher.mjs && node --check agent-client.mjs && node --check public/app.js" },
+  "engines": { "node": ">=20" }
+}

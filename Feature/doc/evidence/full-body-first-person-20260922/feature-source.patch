@@ -1,0 +1,787 @@
+--- before/Source/Rogue10m/Components/Rogue10mFirstPersonPresentationComponent.h
++++ after/Source/Rogue10m/Components/Rogue10mFirstPersonPresentationComponent.h
+@@ -14,7 +14,7 @@
+ class USkeletalMeshComponent;
+ class USceneComponent;
+ 
+-/** Camera-relative fist presentation; combat montages and damage timing remain on their existing path. */
++/** Local first-person body presentation; combat montages and damage timing remain on their existing path. */
+ UCLASS(ClassGroup=(Rogue10m), meta=(BlueprintSpawnableComponent))
+ class ROGUE10M_API URogue10mFirstPersonPresentationComponent : public UActorComponent
+ {
+@@ -28,6 +28,9 @@
+ 
+ 	UFUNCTION(BlueprintPure, Category="Rogue10m|First Person")
+ 	bool IsFistPresentationActive() const { return bPresentationActive; }
++
++	UFUNCTION(BlueprintPure, Category="Rogue10m|First Person")
++	bool IsFullBodyPresentationActive() const { return bPresentationActive && bActiveFullBodyPresentation; }
+ 
+ 	/** Adds only to a final view result; never moves the gameplay camera component. */
+ 	void ApplyBodyMotionToView(float DeltaTime, FMinimalViewInfo& InOutView);
+@@ -65,6 +68,41 @@
+ 
+ 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person")
+ 	bool bEnableFistPresentation = true;
++
++	/** Show one complete owner-visible body; false retains the camera-relative arms option. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Full Body")
++	bool bShowFullBody = true;
++
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Full Body")
++	TSoftObjectPtr<USkeletalMesh> GuardFullBodyMesh;
++
++	/** Full-body eye position, moved above and ahead of the shoulder surface. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Full Body")
++	FVector FullBodyCameraOffset = FVector(20.0f, 0.0f, 76.0f);
++
++	/** Component-space fist/elbow adjustment, keeping reserve reach for punches. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Full Body")
++	FVector FullBodyHandTargetOffset = FVector(0.0f, 12.0f, 18.0f);
++
++	/** Retract only the basic unarmed guard; keep strike endpoints forward for visible extension. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Full Body", meta=(ClampMin="0", ClampMax="25", Units="cm"))
++	float FullBodyGuardPullback = 14.0f;
++
++	/** Bring the basic unarmed guard inward; equipped knuckles retain their original guard. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Full Body", meta=(ClampMin="0", ClampMax="15", Units="cm"))
++	float FullBodyGuardInward = 8.0f;
++
++	/** Capsule-relative mesh origin. Looking down rotates the view, never the legs. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Full Body")
++	FVector FullBodyMeshOffset = FVector(-5.0f, 0.0f, -94.0f);
++
++	/** Limit procedural upper-body aiming without tipping the pelvis or feet. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Full Body", meta=(ClampMin="0", ClampMax="85", Units="deg"))
++	float FullBodyAimPitchLimit = 75.0f;
++
++	/** The remaining pitch is applied at each shoulder after the existing fist IK. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Full Body", meta=(ClampMin="0", ClampMax="0.5"))
++	float FullBodySpinePitchShare = 0.0f;
+ 
+ 	/** Camera position relative to the capsule, independent of animated head motion. */
+ 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person")
+@@ -141,6 +179,7 @@
+ 	bool bPreviousHidden = false;
+ 	bool bPresentationActive = false;
+ 	bool bActiveBasicPresentation = false;
++	bool bActiveFullBodyPresentation = false;
+ 	float HitFeedbackAge = 0.16f;
+ 	float HitFeedbackStrength = 0.0f;
+ 	float HitFeedbackSide = 1.0f;
+--- before/Source/Rogue10m/Components/Rogue10mFirstPersonPresentationComponent.cpp
++++ after/Source/Rogue10m/Components/Rogue10mFirstPersonPresentationComponent.cpp
+@@ -18,6 +18,8 @@
+ {
+ 	PrimaryComponentTick.bCanEverTick = false;
+ 	GuardAnimationClass = URogue10mFistAnimInstance::StaticClass();
++	GuardFullBodyMesh = TSoftObjectPtr<USkeletalMesh>(FSoftObjectPath(
++		TEXT("/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple")));
+ 	GuardArmsMesh = TSoftObjectPtr<USkeletalMesh>(FSoftObjectPath(
+ 		TEXT("/Game/Rogue10m/Character/SK_FirstPersonArms.SK_FirstPersonArms")));
+ }
+@@ -211,7 +213,7 @@
+ 	const bool bBasicPresentation = Weapon == ERogue10mWeaponType::Unarmed;
+ 	if (bPresentationActive)
+ 	{
+-		if (bActiveBasicPresentation == bBasicPresentation) { return; }
++		if (bActiveBasicPresentation == bBasicPresentation && bActiveFullBodyPresentation == bShowFullBody) { return; }
+ 		RestorePresentation();
+ 	}
+ 	UCameraComponent* Camera = Character->GetFirstPersonCameraComponent();
+@@ -223,26 +225,26 @@
+ 		return;
+ 	}
+ 
+-	USkeletalMesh* ArmsOnlyMesh = GuardArmsMesh.LoadSynchronous();
++	USkeletalMesh* PresentationMesh = bShowFullBody ? GuardFullBodyMesh.LoadSynchronous() : GuardArmsMesh.LoadSynchronous();
+ 	USkeletalMesh* OriginalMesh = Arms->GetSkeletalMeshAsset();
+ 	// Matching skeleton assets alone are insufficient: presentation reads the original
+ 	// head/spine hierarchy and uses the reference pose to construct the arm IK chains.
+-	bool bCompatibleArmsMesh = ArmsOnlyMesh && ArmsOnlyMesh->GetSkeleton() == OriginalMesh->GetSkeleton();
+-	if (bCompatibleArmsMesh)
++	bool bCompatibleMesh = PresentationMesh && PresentationMesh->GetSkeleton() == OriginalMesh->GetSkeleton();
++	if (bCompatibleMesh)
+ 	{
+ 		const FReferenceSkeleton& SourceSkeleton = OriginalMesh->GetRefSkeleton();
+-		const FReferenceSkeleton& ArmsSkeleton = ArmsOnlyMesh->GetRefSkeleton();
+-		bCompatibleArmsMesh = SourceSkeleton.GetNum() == ArmsSkeleton.GetNum();
+-		for (int32 Index = 0; bCompatibleArmsMesh && Index < SourceSkeleton.GetNum(); ++Index)
+-		{
+-			bCompatibleArmsMesh = SourceSkeleton.GetBoneName(Index) == ArmsSkeleton.GetBoneName(Index)
++		const FReferenceSkeleton& ArmsSkeleton = PresentationMesh->GetRefSkeleton();
++		bCompatibleMesh = SourceSkeleton.GetNum() == ArmsSkeleton.GetNum();
++		for (int32 Index = 0; bCompatibleMesh && Index < SourceSkeleton.GetNum(); ++Index)
++		{
++			bCompatibleMesh = SourceSkeleton.GetBoneName(Index) == ArmsSkeleton.GetBoneName(Index)
+ 				&& SourceSkeleton.GetParentIndex(Index) == ArmsSkeleton.GetParentIndex(Index)
+ 				&& SourceSkeleton.GetRefBonePose()[Index].Equals(ArmsSkeleton.GetRefBonePose()[Index]);
+ 		}
+ 	}
+-	if (!bCompatibleArmsMesh)
+-	{
+-		UE_LOG(LogRogue10m, Warning, TEXT("Arms-only mesh is missing or incompatible with %s; retaining configured mesh"), *GetNameSafe(OriginalMesh));
++	if (!bCompatibleMesh)
++	{
++		UE_LOG(LogRogue10m, Warning, TEXT("First-person %s mesh is missing or incompatible with %s; retaining configured mesh"), bShowFullBody ? TEXT("full-body") : TEXT("arms-only"), *GetNameSafe(OriginalMesh));
+ 	}
+ 	PreviousMeshAsset = OriginalMesh;
+ 	PreviousMaterialOverrides = Arms->OverrideMaterials;
+@@ -268,7 +270,7 @@
+ 	bPreviousOnlyOwnerSee = Arms->bOnlyOwnerSee;
+ 	bPreviousOwnerNoSee = Arms->bOwnerNoSee;
+ 	PreviousBodyMesh = Character->GetMesh();
+-	if (PreviousBodyMesh.IsValid())
++	if (PreviousBodyMesh.IsValid() && PreviousBodyMesh.Get() != Arms)
+ 	{
+ 		bPreviousBodyOwnerNoSee = PreviousBodyMesh->bOwnerNoSee;
+ 		PreviousBodyMesh->SetOwnerNoSee(true);
+@@ -292,24 +294,30 @@
+ 
+ 	// Detach the camera first to avoid a cycle when the old camera is attached to the head.
+ 	Camera->AttachToComponent(Character->GetCapsuleComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+-	Camera->SetRelativeLocationAndRotation(GuardCameraOffset, FRotator::ZeroRotator);
++	Camera->SetRelativeLocationAndRotation(bShowFullBody ? FullBodyCameraOffset : GuardCameraOffset, FRotator::ZeroRotator);
+ 	Camera->SetFieldOfView(GuardWorldFieldOfView);
+-	Camera->bEnableFirstPersonFieldOfView = true;
+-	Camera->bEnableFirstPersonScale = true;
++	// Manny's first-person material branch fades nearby body surfaces and blends
++	// viewmodel scale by depth. A complete body must use world projection so its
++	// torso and legs stay continuous and its feet retain their real ground position.
++	Camera->bEnableFirstPersonFieldOfView = !bShowFullBody;
++	Camera->bEnableFirstPersonScale = !bShowFullBody;
+ 	Camera->FirstPersonFieldOfView = GuardArmsFieldOfView;
+ 	Camera->FirstPersonScale = GuardFirstPersonScale;
+ 
+-	Arms->AttachToComponent(Camera, FAttachmentTransformRules::KeepRelativeTransform);
+-	Arms->SetRelativeLocationAndRotation(GuardMeshOffset, GuardMeshRotation);
++	// A complete body follows capsule yaw, not camera pitch. Otherwise looking down
++	// rotates the feet away from the view and makes the body appear to float.
++	USceneComponent* MeshParent = bShowFullBody ? static_cast<USceneComponent*>(Character->GetCapsuleComponent()) : Camera;
++	Arms->AttachToComponent(MeshParent, FAttachmentTransformRules::KeepRelativeTransform);
++	Arms->SetRelativeLocationAndRotation(bShowFullBody ? FullBodyMeshOffset : GuardMeshOffset, GuardMeshRotation);
+ 	Arms->SetRelativeScale3D(FVector::OneVector);
+-	bMeshWasReplaced = bCompatibleArmsMesh && ArmsOnlyMesh != OriginalMesh;
++	bMeshWasReplaced = bCompatibleMesh && PresentationMesh != OriginalMesh;
+ 	if (bMeshWasReplaced)
+ 	{
+-		Arms->SetSkeletalMeshAsset(ArmsOnlyMesh);
++		Arms->SetSkeletalMeshAsset(PresentationMesh);
+ 	}
+ 	Arms->SetOnlyOwnerSee(true);
+ 	Arms->SetOwnerNoSee(false);
+-	Arms->SetFirstPersonPrimitiveType(EFirstPersonPrimitiveType::FirstPerson);
++	Arms->SetFirstPersonPrimitiveType(bShowFullBody ? EFirstPersonPrimitiveType::None : EFirstPersonPrimitiveType::FirstPerson);
+ 	Arms->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+ 	Arms->SetAnimInstanceClass(AnimationClass);
+ 	Arms->SetVisibility(true, false);
+@@ -317,8 +325,20 @@
+ 	// Hide the complete neck/head skin, keeping the proven first-person silhouette.
+ 	// The animation proxy measures its real head pose before renderer bone hiding is applied.
+ 	// Never hide pelvis/spine: those bones also parent the arms.
+-	const FName HiddenHeadBone(TEXT("neck_01"));
+-	for (const FName Bone : { HiddenHeadBone, FName(TEXT("thigh_l")), FName(TEXT("thigh_r")) })
++	if (bShowFullBody)
++	{
++		// A configured mesh can already carry explicit thigh/torso masks. Preserve them
++		// for deactivation, but reveal all geometry before hiding only the head.
++		const TArray<uint8> Visibility = Arms->GetBoneVisibilityStates();
++		for (int32 Index = 0; Index < Visibility.Num(); ++Index)
++		{
++			if (Visibility[Index] == BVS_ExplicitlyHidden) { Arms->UnHideBoneByName(Arms->GetBoneName(Index)); }
++		}
++	}
++	const TArray<FName> BonesToHide = bShowFullBody
++		? TArray<FName>{ TEXT("neck_01") }
++		: TArray<FName>{ TEXT("neck_01"), TEXT("thigh_l"), TEXT("thigh_r") };
++	for (const FName Bone : BonesToHide)
+ 	{
+ 		if (Arms->GetBoneIndex(Bone) != INDEX_NONE && !Arms->IsBoneHiddenByName(Bone))
+ 		{
+@@ -328,8 +348,10 @@
+ 	}
+ 	ResetCameraMotion();
+ 	bActiveBasicPresentation = bBasicPresentation;
++	bActiveFullBodyPresentation = bShowFullBody;
+ 	bPresentationActive = true;
+-	UE_LOG(LogRogue10m, Log, TEXT("First-person fist guard enabled: %s"), *GetNameSafe(Character));
++	UE_LOG(LogRogue10m, Log, TEXT("First-person fist guard enabled: %s mode=%s mesh=%s"), *GetNameSafe(Character),
++		bShowFullBody ? TEXT("full-body") : TEXT("arms-only"), *GetNameSafe(Arms->GetSkeletalMeshAsset()));
+ }
+ 
+ void URogue10mFirstPersonPresentationComponent::RestorePresentation()
+@@ -351,6 +373,8 @@
+ 		if (bMeshWasReplaced)
+ 		{
+ 			Arms->SetSkeletalMeshAsset(PreviousMeshAsset);
++		}
++		{
+ 			// Mesh initialization can rebuild bone visibility; restore only explicit masks,
+ 			// letting the engine reconstruct the inherited hidden-by-parent states.
+ 			const TArray<uint8> CurrentVisibility = Arms->GetBoneVisibilityStates();
+@@ -412,7 +436,7 @@
+ 		Camera->bEnableFirstPersonFieldOfView = bPreviousFirstPersonFOV;
+ 		Camera->bEnableFirstPersonScale = bPreviousFirstPersonScale;
+ 	}
+-	if (PreviousBodyMesh.IsValid())
++	if (PreviousBodyMesh.IsValid() && PreviousBodyMesh.Get() != Arms)
+ 	{
+ 		PreviousBodyMesh->SetOwnerNoSee(bPreviousBodyOwnerNoSee);
+ 	}
+@@ -425,4 +449,5 @@
+ 	NewlyHiddenBones.Reset();
+ 	PreviousAnimationClass = nullptr;
+ 	bPresentationActive = false;
+-}
++	bActiveFullBodyPresentation = false;
++}
+--- before/Source/Rogue10m/Character/Rogue10mFistAnimInstance.cpp
++++ after/Source/Rogue10m/Character/Rogue10mFistAnimInstance.cpp
+@@ -10,6 +10,7 @@
+ #include "GameFramework/CharacterMovementComponent.h"
+ #include "Rogue10mCharacter.h"
+ #include "Rogue10mBasicBrawlerComponent.h"
++#include "Rogue10mFirstPersonPresentationComponent.h"
+ 
+ namespace
+ {
+@@ -289,6 +290,36 @@
+ 			HitThumbInward = FMath::Clamp(Fist->HitThumbInwardDegrees, -60.0f, 90.0f);
+ 
+ 			const ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(Instance->TryGetPawnOwner());
++			// Cache owner state on the game thread; evaluation never reads UObjects.
++			FullBodyAimPitch = 0.0f;
++			FullBodySpineShare = 0.0f;
++			FullBodyTargetOffset = FVector::ZeroVector;
++			FullBodyGuardPullback = 0.0f;
++			FullBodyGuardInward = 0.0f;
++			const URogue10mFirstPersonPresentationComponent* Presentation = Character
++				? Character->GetFirstPersonPresentationComponent() : nullptr;
++			if (Presentation && Presentation->IsFullBodyPresentationActive()
++				&& Instance->GetSkelMeshComponent() == Character->GetFirstPersonMesh()
++				&& FMath::IsFinite(Presentation->FullBodyAimPitchLimit)
++				&& FMath::IsFinite(Presentation->FullBodySpinePitchShare))
++			{
++				const float Pitch = FRotator::NormalizeAxis(Character->GetBaseAimRotation().Pitch - Character->GetActorRotation().Pitch);
++				const float Limit = FMath::Clamp(Presentation->FullBodyAimPitchLimit, 0.0f, 85.0f);
++				if (FMath::IsFinite(Pitch)) { FullBodyAimPitch = FMath::Clamp(Pitch, -Limit, Limit); }
++				FullBodySpineShare = FMath::Clamp(Presentation->FullBodySpinePitchShare, 0.0f, 0.5f);
++				if (FMath::IsFinite(Presentation->FullBodyGuardPullback))
++				{
++					FullBodyGuardPullback = FMath::Clamp(Presentation->FullBodyGuardPullback, 0.0f, 25.0f);
++				}
++				if (FMath::IsFinite(Presentation->FullBodyGuardInward))
++				{
++					FullBodyGuardInward = FMath::Clamp(Presentation->FullBodyGuardInward, 0.0f, 15.0f);
++				}
++				if (!Presentation->FullBodyHandTargetOffset.ContainsNaN())
++				{
++					FullBodyTargetOffset = Presentation->FullBodyHandTargetOffset.GetClampedToMaxSize(40.0);
++				}
++			}
+ 			const bool bNextBasic = Character && !Character->IsDead()
+ 				&& Character->GetEquippedWeaponType() == ERogue10mWeaponType::Unarmed;
+ 			if (bNextBasic != bBasicPose)
+@@ -323,6 +354,27 @@
+ 			HookBodyYaw = FMath::Clamp(Fist->BasicHookBodyYaw, 0.0f, 35.0f);
+ 			HookThumbInward = FMath::Clamp(Fist->BasicHookThumbInwardDegrees, -30.0f, 60.0f);
+ 			UppercutTarget = Fist->BasicUppercutTarget;
++			// Keep the authored fist paths in the shifted full-body eye frame. Offset
++			// absolute endpoints/control points together; relative recovery offsets stay unchanged.
++			GuardTarget += FullBodyTargetOffset;
++			// The basic unarmed reach clamp needs a compact guard before a strike.
++			// Its load/recovery/combination paths share this endpoint; apex targets stay forward.
++			// Equipped knuckles use their authored montage guard without this retraction.
++			if (bBasicPose)
++			{
++				GuardTarget.Y -= FullBodyGuardPullback;
++				if (FullBodyGuardInward > 0.0f)
++				{
++					GuardTarget.X = FMath::Max(0.0, GuardTarget.X - FullBodyGuardInward);
++				}
++			}
++			ExtendedTarget += FullBodyTargetOffset;
++			JabTarget += FullBodyTargetOffset;
++			StraightTarget += FullBodyTargetOffset;
++			HookTarget += FullBodyTargetOffset;
++			HookLoadedTarget += FullBodyTargetOffset;
++			HookArcControl += FullBodyTargetOffset;
++			UppercutTarget += FullBodyTargetOffset;
+ 			ChargeHandOffset = Fist->BasicChargeHandOffset;
+ 			ChargeBodyYaw = FMath::Clamp(Fist->BasicChargeBodyYaw, 0.0f, 30.0f);
+ 			JumpStrength = FMath::Clamp(Fist->JumpPresentationStrength, 0.0f, 1.0f);
+@@ -445,6 +497,7 @@
+ 			if (bBasicPose)
+ 			{
+ 				EvaluateBasicPose(Output, OriginalIdleCS);
++				ApplyFullBodyAim(Output.Pose);
+ 				return true;
+ 			}
+ 
+@@ -544,7 +597,7 @@
+ 				Target.Y += FMath::Clamp(Motion.Y * 0.20, -7.0, 0.0) * BodyStrength;
+ 				Target.Y -= FMath::Max(0.0f, HandExtension[1 - SideIndex] - Extension) * 3.0f * BodyStrength;
+ 				// Elbows remain below and outside the hands, giving a raised boxing guard.
+-				const FVector ElbowTarget(Side * 55.0f, 12.0f, 113.0f);
++				const FVector ElbowTarget = FVector(Side * 55.0f, 12.0f, 113.0f) + FullBodyTargetOffset;
+ 				// Preserve the sampled wrist bend relative to the forearm, not its old world orientation.
+ 				AnimationCore::SolveTwoBoneIK(Upper, Lower, Hand, ElbowTarget, Target, false, 1.0, 1.0);
+ 				if (Output.Pose.GetParentBoneIndex(HandIndex) == LowerIndex)
+@@ -566,9 +619,38 @@
+ 			}
+ 			FCSPose<FCompactPose>::ConvertComponentPosesToLocalPosesSafe(IdleCS, Output.Pose);
+ 			Output.Pose.NormalizeRotations();
++			ApplyFullBodyAim(Output.Pose);
+ 			return true;
+ 		}
+ 
++
++		void ApplyFullBodyAim(FCompactPose& Pose) const
++		{
++			if (FMath::IsNearlyZero(FullBodyAimPitch)) { return; }
++			const FCompactPoseBoneIndex Spine = FindBone(Pose, TEXT("spine_01"));
++			const FCompactPoseBoneIndex LeftShoulder = FindBone(Pose, TEXT("clavicle_l"));
++			const FCompactPoseBoneIndex RightShoulder = FindBone(Pose, TEXT("clavicle_r"));
++			if (Spine == INDEX_NONE || LeftShoulder == INDEX_NONE || RightShoulder == INDEX_NONE) { return; }
++			TArray<FTransform, TInlineAllocator<256>> ComponentTransforms;
++			ComponentTransforms.SetNum(Pose.GetNumBones());
++			// Apply after fist IK and after recording animation-driven camera motion.
++			// Only spine/shoulder descendants follow aim; pelvis and legs keep their pose.
++			for (const FCompactPoseBoneIndex Bone : Pose.ForEachBoneIndex())
++			{
++				const FCompactPoseBoneIndex Parent = Pose.GetParentBoneIndex(Bone);
++				const FTransform ParentTransform = Parent != INDEX_NONE ? ComponentTransforms[Parent.GetInt()] : FTransform::Identity;
++				FTransform Component = Pose[Bone] * ParentTransform;
++				if (Bone == Spine || Bone == LeftShoulder || Bone == RightShoulder)
++				{
++					const float Share = Bone == Spine ? FullBodySpineShare : 1.0f - FullBodySpineShare;
++					const FQuat Delta = MeshToCamera.Inverse() * FRotator(FullBodyAimPitch * Share, 0.0f, 0.0f).Quaternion() * MeshToCamera;
++					Component.SetRotation((Delta * Component.GetRotation()).GetNormalized());
++					Pose[Bone] = Component.GetRelativeTransform(ParentTransform);
++					Pose[Bone].NormalizeRotation();
++				}
++				ComponentTransforms[Bone.GetInt()] = Component;
++			}
++		}
+ 
+ 		void EvaluateBasicPose(FPoseContext& Output, FCSPose<FCompactPose>& BaseCS)
+ 		{
+@@ -825,6 +907,7 @@
+ 				{
+ 					ElbowTarget = FMath::Lerp(ElbowTarget, FVector(Side * 59.0f, 32.0f, 142.0f), CurrentHookElbowWeight);
+ 				}
++				ElbowTarget += FullBodyTargetOffset;
+ 				// Keep a bend at full extension; a locked elbow magnifies the source skin's corrective-bone limits.
+ 				const double ReachLimit = ((Lower.GetLocation() - Upper.GetLocation()).Size()
+ 					+ (Hand.GetLocation() - Lower.GetLocation()).Size()) * 0.94;
+@@ -854,6 +937,11 @@
+ 		float PunchTravel = 32.0f;
+ 		float BodyStrength = 0.65f;
+ 		FQuat MeshToCamera = FQuat::Identity;
++		float FullBodyAimPitch = 0.0f;
++		float FullBodySpineShare = 0.25f;
++		FVector FullBodyTargetOffset = FVector::ZeroVector;
++		float FullBodyGuardPullback = 0.0f;
++		float FullBodyGuardInward = 0.0f;
+ 		FVector SnapshotOffset = FVector::ZeroVector;
+ 		FRotator SnapshotRotation = FRotator::ZeroRotator;
+ 		float SnapshotWeight = 0.0f;
+--- before/Source/Rogue10m/Core/Rogue10mCameraManager.h
++++ after/Source/Rogue10m/Core/Rogue10mCameraManager.h
+@@ -17,7 +17,12 @@
+ public:
+ 	ARogue10mCameraManager();
+ 
++	/** Full body can be inspected by looking almost straight down. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person", meta=(ClampMin="-89", ClampMax="-70", Units="deg"))
++	float FullBodyViewPitchMin = -85.0f;
++
+ protected:
++	virtual void LimitViewPitch(FRotator& ViewRotation, float InViewPitchMin, float InViewPitchMax) override;
+ 	virtual void ApplyCameraModifiers(float DeltaTime, FMinimalViewInfo& InOutPOV) override;
+ 
+ private:
+--- before/Source/Rogue10m/Core/Rogue10mCameraManager.cpp
++++ after/Source/Rogue10m/Core/Rogue10mCameraManager.cpp
+@@ -40,3 +40,19 @@
+ 	}
+ 	Presentation->ApplyBodyMotionToView(DeltaTime, InOutPOV);
+ }
++
++void ARogue10mCameraManager::LimitViewPitch(FRotator& ViewRotation, float InViewPitchMin, float InViewPitchMax)
++{
++	const ARogue10mCharacter* Character = PCOwner ? Cast<ARogue10mCharacter>(PCOwner->GetPawn()) : nullptr;
++	const URogue10mFirstPersonPresentationComponent* Presentation = Character
++		? Character->GetFirstPersonPresentationComponent() : nullptr;
++	static const FName DefaultStyle(TEXT("Default"));
++	static const FName FirstPersonStyle(TEXT("FirstPerson"));
++	const bool bFirstPersonStyle = CameraStyle.IsNone() || CameraStyle == DefaultStyle || CameraStyle == FirstPersonStyle;
++	if (Character && Character->IsLocallyControlled() && Presentation && Presentation->IsFullBodyPresentationActive()
++		&& ViewTarget.Target == Character && !PendingViewTarget.Target && bFirstPersonStyle && FMath::IsFinite(FullBodyViewPitchMin))
++	{
++		InViewPitchMin = FMath::Min(InViewPitchMin, FMath::Clamp(FullBodyViewPitchMin, -89.0f, -70.0f));
++	}
++	Super::LimitViewPitch(ViewRotation, InViewPitchMin, InViewPitchMax);
++}
+--- before/Source/Rogue10m/Tests/Rogue10mArmsOnlyRuntimeTest.cpp
++++ after/Source/Rogue10m/Tests/Rogue10mArmsOnlyRuntimeTest.cpp
+@@ -148,6 +148,8 @@
+         if (!Presentation || !Arms || !Character->GetBasicBrawlerComponent()) { Check(false, TEXT("required_component_missing")); Finish(); return; }
+         // Capture the real configured mesh through the same production restore path.
+         Presentation->bEnableFistPresentation = false; Presentation->RefreshPresentation();
++        // Explicit legacy opt-in; full body is now the production default.
++        Presentation->bShowFullBody = false;
+         OriginalMesh = Arms->GetSkeletalMeshAsset(); OriginalTransform = Arms->GetRelativeTransform();
+         OriginalAnimClass = Arms->GetAnimClass(); OriginalAnimationMode = static_cast<uint8>(Arms->GetAnimationMode());
+         OriginalPrimitiveType = static_cast<uint8>(Arms->FirstPersonPrimitiveType);
+--- before/Source/Rogue10m/Tests/Rogue10mMarteloPreviewRuntimeTest.cpp
++++ after/Source/Rogue10m/Tests/Rogue10mMarteloPreviewRuntimeTest.cpp
+@@ -4,6 +4,9 @@
+ #include "Animation/AnimSingleNodeInstance.h"
+ #include "Animation/Skeleton.h"
+ #include "Camera/CameraComponent.h"
++#include "Camera/CameraTypes.h"
++#include "Camera/PlayerCameraManager.h"
++#include "Components/CapsuleComponent.h"
+ #include "Components/SkeletalMeshComponent.h"
+ #include "Engine/Engine.h"
+ #include "Engine/GameViewportClient.h"
+@@ -16,6 +19,8 @@
+ #include "HAL/IConsoleManager.h"
+ #include "HAL/PlatformMisc.h"
+ #include "Misc/App.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
+ #include "Misc/Paths.h"
+ #include "Rogue10m.h"
+ #include "Rogue10mBasicBrawlerComponent.h"
+@@ -28,7 +33,7 @@
+ #include "UnrealClient.h"
+ 
+ // An editor-only visual fixture. No combat binding, cooldown, damage, or saved
+-// character configuration is changed. The sequence plays on the real arms mesh.
++// character configuration is changed. The sequence plays on the actual full-body first-person mesh.
+ namespace Rogue10mMarteloPreview
+ {
+ class FRun : public TSharedFromThis<FRun>
+@@ -68,10 +73,73 @@
+         Check(Character->GetEquippedWeaponType() == ERogue10mWeaponType::Unarmed, TEXT("fresh_spawn_not_unarmed"));
+         Check(Arms && Camera && Presentation && Presentation->IsFistPresentationActive() && Brawler, TEXT("first_person_components_missing"));
+         if (Failures) { Finish(); return; }
++        // Exercise the actual player-camera clamp before recording the fixture
++        // baseline; temporary mode changes must not become part of that baseline.
++        Check(PC->PlayerCameraManager != nullptr, TEXT("player_camera_manager_missing"));
++        if (Failures) { Finish(); return; }
++        const bool bOriginalFullBody = Presentation->bShowFullBody;
++        FRotator FullBodyView(-89.f, PC->GetControlRotation().Yaw, 0.f);
++        FRotator ViewDelta = FRotator::ZeroRotator;
++        PC->PlayerCameraManager->ProcessViewRotation(0.f, FullBodyView, ViewDelta);
++        Check(Presentation->IsFullBodyPresentationActive()
++            && FMath::IsNearlyEqual(FRotator::NormalizeAxis(FullBodyView.Pitch), -85.f, .001f), TEXT("full_body_pitch_limit_not_85_degrees"));
++        Presentation->bShowFullBody = false;
++        Presentation->RefreshPresentation();
++        FRotator ArmsOnlyView(-89.f, PC->GetControlRotation().Yaw, 0.f);
++        ViewDelta = FRotator::ZeroRotator;
++        PC->PlayerCameraManager->ProcessViewRotation(0.f, ArmsOnlyView, ViewDelta);
++        Check(!Presentation->IsFullBodyPresentationActive()
++            && FMath::IsNearlyEqual(FRotator::NormalizeAxis(ArmsOnlyView.Pitch), -70.f, .001f), TEXT("arms_only_pitch_limit_not_preserved"));
++        Presentation->bShowFullBody = bOriginalFullBody;
++        Presentation->RefreshPresentation();
++        FRotator RestoredBodyView(-89.f, PC->GetControlRotation().Yaw, 0.f);
++        ViewDelta = FRotator::ZeroRotator;
++        PC->PlayerCameraManager->ProcessViewRotation(0.f, RestoredBodyView, ViewDelta);
++        Check(Presentation->IsFullBodyPresentationActive()
++            && FMath::IsNearlyEqual(FRotator::NormalizeAxis(RestoredBodyView.Pitch), -85.f, .001f), TEXT("full_body_not_restored_after_pitch_limit_check"));
++        UE_LOG(LogRogue10m, Display, TEXT("MARTELO_PREVIEW PITCH_LIMIT full_body=%.3f arms_only=%.3f mode_restored=%d"),
++            FRotator::NormalizeAxis(FullBodyView.Pitch), FRotator::NormalizeAxis(ArmsOnlyView.Pitch), Presentation->IsFullBodyPresentationActive());
++        if (Failures) { Finish(); return; }
+         OriginalMesh = Arms->GetSkeletalMeshAsset();
+         OriginalAnimClass.Reset(Arms->GetAnimClass());
+         OriginalMode = Arms->GetAnimationMode();
+         OriginalArmsTransform = Arms->GetRelativeTransform();
++        RestoreCameraTransform = Camera->GetRelativeTransform();
++        FVector FixtureCameraLocation = RestoreCameraTransform.GetLocation();
++        float CameraX = 0.f, CameraZ = 0.f;
++        if (FParse::Value(FCommandLine::Get(), TEXT("FullBodyCameraX="), CameraX))
++        {
++            Check(FMath::IsFinite(CameraX) && FMath::Abs(CameraX) <= 40.f, TEXT("invalid_fixture_camera_x"));
++            FixtureCameraLocation.X = CameraX;
++            bFixtureCameraOverride = true;
++        }
++        if (FParse::Value(FCommandLine::Get(), TEXT("FullBodyCameraZ="), CameraZ))
++        {
++            Check(FMath::IsFinite(CameraZ) && CameraZ >= 40.f && CameraZ <= 100.f, TEXT("invalid_fixture_camera_z"));
++            FixtureCameraLocation.Z = CameraZ;
++            bFixtureCameraOverride = true;
++        }
++        if (Failures) { Finish(); return; }
++        if (bFixtureCameraOverride) { Camera->SetRelativeLocation(FixtureCameraLocation); }
++        float SpineShare = 0.f;
++        if (FParse::Value(FCommandLine::Get(), TEXT("FullBodySpineShare="), SpineShare))
++        {
++            Check(FMath::IsFinite(SpineShare) && SpineShare >= 0.f && SpineShare <= .5f, TEXT("invalid_fixture_spine_share"));
++            if (Failures) { Finish(); return; }
++            OriginalSpineShare = Presentation->FullBodySpinePitchShare;
++            Presentation->FullBodySpinePitchShare = SpineShare;
++            bFixtureSpineOverride = true;
++        }
++        float AimLimit = 0.f;
++        if (FParse::Value(FCommandLine::Get(), TEXT("FullBodyAimLimit="), AimLimit))
++        {
++            Check(FMath::IsFinite(AimLimit) && AimLimit >= 0.f && AimLimit <= 85.f, TEXT("invalid_fixture_aim_limit"));
++            if (Failures) { Finish(); return; }
++            OriginalAimLimit = Presentation->FullBodyAimPitchLimit;
++            Presentation->FullBodyAimPitchLimit = AimLimit;
++            bFixtureAimOverride = true;
++        }
++        bCaptureUI = !FParse::Param(FCommandLine::Get(), TEXT("MarteloNoUI"));
+         OriginalCameraTransform = Camera->GetRelativeTransform();
+         OriginalFOV = Camera->FieldOfView;
+         OriginalArmsFOV = Camera->FirstPersonFieldOfView; OriginalArmsScale = Camera->FirstPersonScale;
+@@ -79,16 +147,32 @@
+         OriginalControl = PC->GetControlRotation();
+         bOriginalCanBeDamaged = Character->CanBeDamaged();
+         InitialSerial = Brawler->GetSnapshot().AcceptedSerial;
+-        Check(OriginalMesh.IsValid() && OriginalMesh->GetPathName() == TEXT("/Game/Rogue10m/Character/SK_FirstPersonArms.SK_FirstPersonArms"), TEXT("expected_arms_only_mesh_missing"));
++        Check(OriginalMesh.IsValid() && OriginalMesh->GetPathName() == TEXT("/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple"), TEXT("expected_full_body_mesh_missing"));
++        Check(Presentation->IsFullBodyPresentationActive() && Arms->GetAttachParent() == Character->GetCapsuleComponent(), TEXT("full_body_capsule_attachment_missing"));
++        Check(Arms->FirstPersonPrimitiveType == EFirstPersonPrimitiveType::None
++            && !Camera->bEnableFirstPersonFieldOfView && !Camera->bEnableFirstPersonScale, TEXT("full_body_world_projection_not_enabled"));
++        Check(Arms->IsBoneHiddenByName(TEXT("neck_01")) && !Arms->IsBoneHiddenByName(TEXT("pelvis"))
++            && !Arms->IsBoneHiddenByName(TEXT("thigh_l")) && !Arms->IsBoneHiddenByName(TEXT("thigh_r"))
++            && !Arms->IsBoneHiddenByName(TEXT("foot_l")) && !Arms->IsBoneHiddenByName(TEXT("foot_r")), TEXT("full_body_bone_visibility_incorrect"));
+         Check(OriginalMode == EAnimationMode::AnimationBlueprint && Cast<URogue10mFistAnimInstance>(Arms->GetAnimInstance()), TEXT("expected_fist_animation_missing"));
+         Sequence.Reset(LoadObject<UAnimSequence>(nullptr, TEXT("/Game/Rogue10m/Animation/Preview/Martelo/A_Martelo2_Manny.A_Martelo2_Manny")));
+         Check(Sequence.IsValid(), TEXT("retarget_sequence_missing"));
+         if (Failures) { Finish(); return; }
+-        Check(Sequence->GetSkeleton() == OriginalMesh->GetSkeleton(), TEXT("sequence_skeleton_does_not_match_arms"));
++        Check(Sequence->GetSkeleton() == OriginalMesh->GetSkeleton(), TEXT("sequence_skeleton_does_not_match_full_body"));
+         Duration = Sequence->GetPlayLength();
+         Check(FMath::IsFinite(Duration) && Duration > .5f && Duration < 5.f, TEXT("invalid_sequence_duration"));
+         if (Failures) { Finish(); return; }
+ 
++        bDiagnosticWorldRender = FParse::Param(FCommandLine::Get(), TEXT("MarteloWorldRender"));
++        bDiagnosticShowHead = FParse::Param(FCommandLine::Get(), TEXT("MarteloShowHead"));
++        OriginalPrimitiveType = Arms->FirstPersonPrimitiveType;
++        if (bDiagnosticWorldRender)
++        {
++            Arms->SetFirstPersonPrimitiveType(EFirstPersonPrimitiveType::None);
++            Camera->bEnableFirstPersonFieldOfView = false;
++            Camera->bEnableFirstPersonScale = false;
++        }
++        if (bDiagnosticShowHead) { Arms->UnHideBoneByName(TEXT("neck_01")); }
+         LookController = PC;
+         PC->SetIgnoreLookInput(true);
+         PC->SetIgnoreMoveInput(true);
+@@ -107,26 +191,31 @@
+             if (!Target.IsValid())
+             {
+                 Target = *It;
+-                It->SetActorLocation(Character->GetActorLocation() + ExpectedControl.Vector() * 135.f, false, nullptr, ETeleportType::TeleportPhysics);
++                // Keep the stationary preview target beyond the kick arc so its head does not occlude the foot.
++                It->SetActorLocation(Character->GetActorLocation() + ExpectedControl.Vector() * 210.f, false, nullptr, ETeleportType::TeleportPhysics);
+                 It->SetActorRotation((Character->GetActorLocation() - It->GetActorLocation()).Rotation());
+             }
+         }
+         Check(Target.IsValid(), TEXT("preview_target_missing"));
+         FastFrames = FMath::Max(2, FMath::CeilToInt(Duration * 30.f) + 1);
+         SlowFrames = FMath::Max(2, FMath::CeilToInt(Duration * 60.f) + 1);
+-        FastStart = 30;
++        FastStart = 90;
+         FastEnd = FastStart + FastFrames;
+         SlowStart = FastEnd + 30;
+         SlowEnd = SlowStart + SlowFrames;
+         TotalFrames = SlowEnd + 30;
+         FApp::SetFixedDeltaTime(1.0 / 30.0);
+         FApp::SetUseFixedTimeStep(true);
+-        OutputFolder = FPaths::Combine(FPaths::ProjectSavedDir(), TEXT("Screenshots/WindowsEditor/MarteloPreview"));
++        OutputFolder = FPaths::Combine(FPaths::ProjectSavedDir(), TEXT("Screenshots/WindowsEditor/MarteloFullBodyPreview"));
+         IFileManager::Get().MakeDirectory(*OutputFolder, true);
+         PC->ConsoleCommand(TEXT("r.SetRes 1280x720w"));
+-        UE_LOG(LogRogue10m, Display, TEXT("MARTELO_PREVIEW ASSET sequence=%s skeleton=%s mesh=%s duration=%.6f fast=[%d,%d) slow=[%d,%d) frames=%d camera=fixed source_pose_transitions=unblended"),
++        UE_LOG(LogRogue10m, Display, TEXT("MARTELO_PREVIEW ASSET sequence=%s skeleton=%s mesh=%s duration=%.6f fast=[%d,%d) slow=[%d,%d) frames=%d camera=intentional_pitch_sweep look_down=[30,80) hold_pitch=-85 source_pose_transitions=unblended"),
+             *Sequence->GetPathName(), *GetPathNameSafe(Sequence->GetSkeleton()), *OriginalMesh->GetPathName(), Duration,
+             FastStart, FastEnd, SlowStart, SlowEnd, TotalFrames);
++        UE_LOG(LogRogue10m, Display, TEXT("MARTELO_PREVIEW FIXTURE camera_location=%s capture_ui=%d camera_override=%d"),
++            *Camera->GetRelativeLocation().ToCompactString(), bCaptureUI, bFixtureCameraOverride);
++        UE_LOG(LogRogue10m, Display, TEXT("MARTELO_PREVIEW DIAGNOSTIC world_render=%d show_head=%d aim_override=%d aim_limit=%.3f"),
++            bDiagnosticWorldRender, bDiagnosticShowHead, bFixtureAimOverride, Presentation->FullBodyAimPitchLimit);
+         TickHandle = FWorldDelegates::OnWorldPostActorTick.AddLambda([Self = AsShared()](UWorld* W, ELevelTick, float)
+         { if (W == Self->World.Get()) { Self->Frame(); } });
+     }
+@@ -160,6 +249,18 @@
+         auto* Arms = Character->GetFirstPersonMesh();
+         auto* Camera = Character->GetFirstPersonCameraComponent();
+         if (FrameIndex == TotalFrames) { Finish(); return; }
++        // Use the same control-rotation path as mouse look. Refreshing the camera
++        // through GetCameraView makes the deliberate pitch visible this frame.
++        float DesiredPitch = 0.f;
++        if (FrameIndex >= 30 && FrameIndex < 45) { DesiredPitch = FMath::Lerp(0.f, -85.f, (FrameIndex - 29) / 15.f); }
++        else if (FrameIndex >= 45 && FrameIndex < 65) { DesiredPitch = -85.f; }
++        else if (FrameIndex >= 65 && FrameIndex < 80) { DesiredPitch = FMath::Lerp(-85.f, 0.f, (FrameIndex - 64) / 15.f); }
++        ExpectedControl.Pitch = DesiredPitch;
++        LookController->SetControlRotation(ExpectedControl);
++        FMinimalViewInfo CameraView;
++        Camera->GetCameraView(0.f, CameraView);
++        if (FrameIndex == 0) { FixedBodyTransform = Arms->GetComponentTransform(); }
++        if (FrameIndex >= 45 && FrameIndex < 65) { ++LookDownFrames; }
+         if (FrameIndex == FastStart || FrameIndex == SlowStart) { BeginSequence(); }
+         if (FrameIndex == FastEnd || FrameIndex == SlowEnd) { RestoreAnimation(); }
+         float SampleTime = -1.f;
+@@ -174,10 +275,17 @@
+             Check(Arms->GetSingleNodeInstance() && FMath::IsNearlyEqual(Arms->GetPosition(), SampleTime, .001f), TEXT("sequence_time_not_applied"));
+         }
+         Check(Arms->GetSkeletalMeshAsset() == OriginalMesh.Get() && Arms->GetRelativeTransform().Equals(OriginalArmsTransform, .001f), TEXT("mesh_or_viewmodel_transform_changed"));
+-        Check(Arms->bOnlyOwnerSee && !Arms->bOwnerNoSee && Character->GetMesh()->bOwnerNoSee && Arms->FirstPersonPrimitiveType == EFirstPersonPrimitiveType::FirstPerson, TEXT("arms_only_visibility_changed"));
+-        Check(Camera->GetRelativeTransform().Equals(OriginalCameraTransform, .001f) && FMath::IsNearlyEqual(Camera->FieldOfView, OriginalFOV), TEXT("gameplay_camera_changed"));
++        Check(Arms->bOnlyOwnerSee && !Arms->bOwnerNoSee && Character->GetMesh()->bOwnerNoSee && Arms->FirstPersonPrimitiveType == (bDiagnosticWorldRender ? EFirstPersonPrimitiveType::None : OriginalPrimitiveType), TEXT("first_person_ownership_visibility_changed"));
++        Check(Arms->GetAttachParent() == Character->GetCapsuleComponent() && Arms->GetComponentTransform().Equals(FixedBodyTransform, .001f), TEXT("body_followed_camera_pitch_or_moved"));
++        Check(Arms->IsBoneHiddenByName(TEXT("neck_01")) == !bDiagnosticShowHead && !Arms->IsBoneHiddenByName(TEXT("pelvis"))
++            && !Arms->IsBoneHiddenByName(TEXT("foot_l")) && !Arms->IsBoneHiddenByName(TEXT("foot_r")), TEXT("head_or_legs_visibility_changed"));
++        Check(Camera->GetRelativeLocation().Equals(OriginalCameraTransform.GetLocation(), .001f)
++            && Camera->GetRelativeScale3D().Equals(OriginalCameraTransform.GetScale3D(), .001f)
++            && FMath::IsNearlyEqual(Camera->FieldOfView, OriginalFOV), TEXT("gameplay_camera_position_scale_or_fov_changed"));
++        Check(Camera->GetComponentRotation().Equals(ExpectedControl, .001f), TEXT("camera_did_not_follow_deliberate_look_pitch"));
+         Check(FMath::IsNearlyEqual(Camera->FirstPersonFieldOfView, OriginalArmsFOV) && FMath::IsNearlyEqual(Camera->FirstPersonScale, OriginalArmsScale)
+-            && Camera->bEnableFirstPersonFieldOfView == bOriginalFirstPersonFOV && Camera->bEnableFirstPersonScale == bOriginalFirstPersonScale, TEXT("first_person_fov_or_scale_changed"));
++            && Camera->bEnableFirstPersonFieldOfView == (bOriginalFirstPersonFOV && !bDiagnosticWorldRender)
++            && Camera->bEnableFirstPersonScale == (bOriginalFirstPersonScale && !bDiagnosticWorldRender), TEXT("first_person_fov_or_scale_changed"));
+         Check(LookController->GetControlRotation().Equals(ExpectedControl, .001f), TEXT("aim_changed"));
+         Check(Character->GetBasicBrawlerComponent()->GetSnapshot().AcceptedSerial == InitialSerial, TEXT("preview_executed_combat_attack"));
+         const FTransform CameraTransform = Camera->GetComponentTransform();
+@@ -187,16 +295,24 @@
+         {
+             Check(Arms->GetBoneIndex(Bone) != INDEX_NONE && !Arms->GetSocketTransform(Bone).ContainsNaN(), TEXT("invalid_bone_pose"));
+         }
+-        if (FrameIndex == FastStart) { StartLeft = Left; StartRight = Right; }
++        const FVector LeftFoot = Arms->GetSocketTransform(TEXT("foot_l"), RTS_Component).GetLocation();
++        const FVector RightFoot = Arms->GetSocketTransform(TEXT("foot_r"), RTS_Component).GetLocation();
++        if (FrameIndex == FastStart)
++        {
++            StartLeft = Left; StartRight = Right;
++            StartLeftFoot = LeftFoot; StartRightFoot = RightFoot;
++        }
+         if (bSequenceActive)
+         {
+             MaxLeftTravel = FMath::Max(MaxLeftTravel, FVector::Distance(Left, StartLeft));
+             MaxRightTravel = FMath::Max(MaxRightTravel, FVector::Distance(Right, StartRight));
++            MaxLeftFootTravel = FMath::Max(MaxLeftFootTravel, FVector::Distance(LeftFoot, StartLeftFoot));
++            MaxRightFootTravel = FMath::Max(MaxRightFootTravel, FVector::Distance(RightFoot, StartRightFoot));
+         }
+         if (FrameIndex % 10 == 0 || FrameIndex == FastEnd - 1 || FrameIndex == SlowEnd - 1)
+         {
+-            UE_LOG(LogRogue10m, Display, TEXT("MARTELO_PREVIEW POSE frame=%d time=%.5f hand_l=%s hand_r=%s head=%s foot_l=%s foot_r=%s"),
+-                FrameIndex, SampleTime, *Left.ToCompactString(), *Right.ToCompactString(),
++            UE_LOG(LogRogue10m, Display, TEXT("MARTELO_PREVIEW POSE frame=%d time=%.5f look_pitch=%.3f hand_l=%s hand_r=%s head=%s foot_l=%s foot_r=%s"),
++                FrameIndex, SampleTime, ExpectedControl.Pitch, *Left.ToCompactString(), *Right.ToCompactString(),
+                 *Arms->GetSocketTransform(TEXT("head"), RTS_Component).GetLocation().ToCompactString(),
+                 *Arms->GetSocketTransform(TEXT("foot_l"), RTS_Component).GetLocation().ToCompactString(),
+                 *Arms->GetSocketTransform(TEXT("foot_r"), RTS_Component).GetLocation().ToCompactString());
+@@ -204,7 +320,7 @@
+         const FIntPoint Size = GEngine && GEngine->GameViewport && GEngine->GameViewport->Viewport
+             ? GEngine->GameViewport->Viewport->GetSizeXY() : FIntPoint::ZeroValue;
+         Check(Size == FIntPoint(1280, 720), TEXT("capture_resolution_invalid"));
+-        FScreenshotRequest::RequestScreenshot(FPaths::Combine(OutputFolder, FString::Printf(TEXT("frame_%04d.png"), FrameIndex)), true, false);
++        FScreenshotRequest::RequestScreenshot(FPaths::Combine(OutputFolder, FString::Printf(TEXT("frame_%04d.png"), FrameIndex)), bCaptureUI, false);
+         ++FrameIndex;
+     }
+     void Finish(bool bRequestProcessExit = true)
+@@ -219,22 +335,62 @@
+             auto* Arms = Character->GetFirstPersonMesh();
+             auto* Camera = Character->GetFirstPersonCameraComponent();
+             Check(Arms->GetSkeletalMeshAsset() == OriginalMesh.Get() && Arms->GetRelativeTransform().Equals(OriginalArmsTransform, .001f), TEXT("final_mesh_configuration_changed"));
+-            Check(Camera->GetRelativeTransform().Equals(OriginalCameraTransform, .001f) && FMath::IsNearlyEqual(Camera->FieldOfView, OriginalFOV), TEXT("final_camera_configuration_changed"));
++            Check(Camera->GetRelativeLocation().Equals(OriginalCameraTransform.GetLocation(), .001f)
++                && Camera->GetRelativeScale3D().Equals(OriginalCameraTransform.GetScale3D(), .001f)
++                && FMath::IsNearlyEqual(Camera->FieldOfView, OriginalFOV), TEXT("final_camera_configuration_changed"));
+             Check(Arms->GetAnimClass() == OriginalAnimClass.Get() && Arms->GetAnimationMode() == OriginalMode, TEXT("final_animation_configuration_changed"));
+             Character->SetCanBeDamaged(bOriginalCanBeDamaged);
+             Check(MaxLeftTravel > 5.f && MaxRightTravel > 5.f, TEXT("retarget_did_not_move_both_hands"));
++            Check(MaxLeftFootTravel > 60.f && MaxLeftFootTravel > MaxRightFootTravel * 2.f, TEXT("left_kicking_leg_not_preserved"));
++            Check(LookDownFrames == 20, TEXT("look_down_body_preview_missing"));
+         }
+         if (bOwnInputIgnore && LookController.IsValid())
+         {
+             LookController->SetControlRotation(OriginalControl);
+             Check(LookController->GetControlRotation().Equals(OriginalControl, .001f), TEXT("original_aim_not_restored"));
++            if (Character.IsValid())
++            {
++                FMinimalViewInfo RestoredView;
++                Character->GetFirstPersonCameraComponent()->GetCameraView(0.f, RestoredView);
++                Check(Character->GetFirstPersonCameraComponent()->GetComponentRotation().Equals(OriginalControl, .001f), TEXT("original_camera_rotation_not_restored"));
++            }
+             LookController->SetIgnoreLookInput(false);
+             LookController->SetIgnoreMoveInput(false);
+         }
+         bOwnInputIgnore = false;
++        if (bFixtureCameraOverride && Character.IsValid())
++        {
++            auto* Camera = Character->GetFirstPersonCameraComponent();
++            Camera->SetRelativeTransform(RestoreCameraTransform);
++            Check(Camera->GetRelativeTransform().Equals(RestoreCameraTransform, .001f), TEXT("fixture_camera_override_not_restored"));
++        }
++        bFixtureCameraOverride = false;
++        if (bFixtureSpineOverride && Character.IsValid())
++        {
++            auto* Presentation = Character->GetFirstPersonPresentationComponent();
++            Presentation->FullBodySpinePitchShare = OriginalSpineShare;
++            Check(FMath::IsNearlyEqual(Presentation->FullBodySpinePitchShare, OriginalSpineShare), TEXT("fixture_spine_override_not_restored"));
++        }
++        bFixtureSpineOverride = false;
++        if (bFixtureAimOverride && Character.IsValid())
++        {
++            Character->GetFirstPersonPresentationComponent()->FullBodyAimPitchLimit = OriginalAimLimit;
++        }
++        bFixtureAimOverride = false;
++        if ((bDiagnosticWorldRender || bDiagnosticShowHead) && Character.IsValid())
++        {
++            auto* Arms = Character->GetFirstPersonMesh();
++            auto* Camera = Character->GetFirstPersonCameraComponent();
++            Arms->SetFirstPersonPrimitiveType(OriginalPrimitiveType);
++            Camera->bEnableFirstPersonFieldOfView = bOriginalFirstPersonFOV;
++            Camera->bEnableFirstPersonScale = bOriginalFirstPersonScale;
++            if (bDiagnosticShowHead) { Arms->HideBoneByName(TEXT("neck_01"), EPhysBodyOp::PBO_None); }
++            Check(Arms->FirstPersonPrimitiveType == OriginalPrimitiveType && Arms->IsBoneHiddenByName(TEXT("neck_01")), TEXT("diagnostic_render_or_head_state_not_restored"));
++        }
++        bDiagnosticWorldRender = false; bDiagnosticShowHead = false;
+         FApp::SetUseFixedTimeStep(OldFixed);
+         FApp::SetFixedDeltaTime(OldDelta);
+-        UE_LOG(LogRogue10m, Display, TEXT("MARTELO_PREVIEW METRICS hand_l_travel=%.3f hand_r_travel=%.3f duration=%.6f camera=fixed"), MaxLeftTravel, MaxRightTravel, Duration);
++        UE_LOG(LogRogue10m, Display, TEXT("MARTELO_PREVIEW METRICS hand_l_travel=%.3f hand_r_travel=%.3f foot_l_travel=%.3f foot_r_travel=%.3f duration=%.6f look_down_frames=%d body=capsule_stable"), MaxLeftTravel, MaxRightTravel, MaxLeftFootTravel, MaxRightFootTravel, Duration, LookDownFrames);
+         const bool bPassed = Failures == 0 && bPrepared && FrameIndex == TotalFrames;
+         UE_LOG(LogRogue10m, Display, TEXT("RESULT=MARTELO_PREVIEW_%s frames=%d failures=%d"), bPassed ? TEXT("PASSED") : TEXT("FAILED"), FrameIndex, Failures);
+         if (bRequestProcessExit) { FPlatformMisc::RequestExitWithStatus(false, bPassed ? 0 : 1); }
+@@ -248,16 +404,21 @@
+     TStrongObjectPtr<UClass> OriginalAnimClass;
+     TStrongObjectPtr<UAnimSequence> Sequence;
+     EAnimationMode::Type OriginalMode = EAnimationMode::AnimationBlueprint;
+-    FTransform OriginalArmsTransform, OriginalCameraTransform;
++    FTransform OriginalArmsTransform, OriginalCameraTransform, FixedBodyTransform, RestoreCameraTransform;
+     FRotator OriginalControl, ExpectedControl;
+     FVector StartLeft = FVector::ZeroVector, StartRight = FVector::ZeroVector;
++    FVector StartLeftFoot = FVector::ZeroVector, StartRightFoot = FVector::ZeroVector;
+     FString OutputFolder;
+     FDelegateHandle TickHandle, CleanupHandle;
+-    int32 FrameIndex = 0, Failures = 0, InitialSerial = 0, FastFrames = 0, SlowFrames = 0;
++    int32 FrameIndex = 0, Failures = 0, InitialSerial = 0, FastFrames = 0, SlowFrames = 0, LookDownFrames = 0;
+     int32 FastStart = 0, FastEnd = 0, SlowStart = 0, SlowEnd = 0, TotalFrames = 0;
+     float Duration = 0.f, OriginalFOV = 90.f, OriginalArmsFOV = 80.f, OriginalArmsScale = .6f;
+     bool bOriginalFirstPersonFOV = false, bOriginalFirstPersonScale = false;
+-    double OldDelta = 1.0 / 30.0, MaxLeftTravel = 0.0, MaxRightTravel = 0.0;
++    bool bFixtureCameraOverride = false, bFixtureSpineOverride = false, bCaptureUI = true;
++    float OriginalSpineShare = .25f, OriginalAimLimit = 75.f;
++    bool bFixtureAimOverride = false, bDiagnosticWorldRender = false, bDiagnosticShowHead = false;
++    EFirstPersonPrimitiveType OriginalPrimitiveType = EFirstPersonPrimitiveType::None;
++    double OldDelta = 1.0 / 30.0, MaxLeftTravel = 0.0, MaxRightTravel = 0.0, MaxLeftFootTravel = 0.0, MaxRightFootTravel = 0.0;
+     bool OldFixed = false, bOwnInputIgnore = false, bSequenceActive = false, bPrepared = false, bFinished = false, bOriginalCanBeDamaged = true;
+ };
+ static TSharedPtr<FRun> Active;
+@@ -280,7 +441,7 @@
+     }
+ }
+ static FAutoConsoleCommand Command(TEXT("Rogue10m.PreviewMartelo"),
+-    TEXT("Shows retargeted Martelo on the real first-person arms at 1x and 0.5x, captures frames and restores the animation, then exits. Editor only."),
++    TEXT("Shows the full first-person body while looking down, then Martelo at 1x and 0.5x; captures frames and restores animation and aim, then exits. Editor only."),
+     FConsoleCommandDelegate::CreateStatic(&Run));
+ }
+ #endif

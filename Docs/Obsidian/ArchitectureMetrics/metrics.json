@@ -1,0 +1,2336 @@
+{
+  "generatedAt": "2026-09-22 02:26:53 +09:00",
+  "projectRoot": "D:\\Project\\Rogue10m",
+  "sourceRoot": "D:\\Project\\Rogue10m\\Source\\Rogue10m",
+  "outputRoot": "D:\\Project\\Rogue10m\\Docs\\Obsidian\\ArchitectureMetrics",
+  "sourceFileCount": 121,
+  "dependencyEdgeCount": 292,
+  "folderCount": 12,
+  "files": [
+    {
+      "Path": "Ability/Rogue10mAbilitySystemComponent.cpp",
+      "Folder": "Ability",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAbilitySystemComponent.h"
+      ]
+    },
+    {
+      "Path": "Ability/Rogue10mAbilitySystemComponent.h",
+      "Folder": "Ability",
+      "Afferent": 3,
+      "Efferent": 0,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Ability/Rogue10mAbilitySystemComponent.cpp",
+        "Core/Rogue10mPlayerState.cpp",
+        "Enemy/Rogue10mBasicMonster.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Ability/Rogue10mAttributeSet.cpp",
+      "Folder": "Ability",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAttributeSet.h"
+      ]
+    },
+    {
+      "Path": "Ability/Rogue10mAttributeSet.h",
+      "Folder": "Ability",
+      "Afferent": 16,
+      "Efferent": 0,
+      "TotalCoupling": 16,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Ability/Rogue10mAttributeSet.cpp",
+        "Character/Rogue10mCharacter.cpp",
+        "Components/Rogue10mCombatComponent.cpp",
+        "Components/Rogue10mInventoryComponent.cpp",
+        "Components/Rogue10mPlayerFeedbackComponent.cpp",
+        "Components/Rogue10mVitalRegenerationComponent.cpp",
+        "Core/Rogue10mPlayerState.cpp",
+        "Data/Rogue10mAttackSkillData.cpp",
+        "Enemy/Rogue10mBasicMonster.cpp",
+        "Tests/Rogue10mArmsOnlyRuntimeTest.cpp",
+        "Tests/Rogue10mBasicBrawlerRuntimeTest.cpp",
+        "Tests/Rogue10mBoxingFeedbackRuntimeTest.cpp",
+        "Tests/Rogue10mClassCombatPresentationRuntimeTest.cpp",
+        "Tests/Rogue10mFirstPersonFistRuntimeTest.cpp",
+        "Tests/Rogue10mResponsiveHUDRuntimeTest.cpp",
+        "UI/Rogue10mRunHUD.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Ability/Rogue10mGameplayAbility_Attack.cpp",
+      "Folder": "Ability",
+      "Afferent": 0,
+      "Efferent": 2,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 0.5,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mGameplayAbility_Attack.h",
+        "Character/Rogue10mCharacter.h"
+      ]
+    },
+    {
+      "Path": "Ability/Rogue10mGameplayAbility_Attack.h",
+      "Folder": "Ability",
+      "Afferent": 2,
+      "Efferent": 0,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Ability/Rogue10mGameplayAbility_Attack.cpp",
+        "Components/Rogue10mCombatComponent.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Character/Rogue10mCharacter.cpp",
+      "Folder": "Character",
+      "Afferent": 0,
+      "Efferent": 14,
+      "TotalCoupling": 14,
+      "LocalDependencyRatio": 0.07142857142857142,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAttributeSet.h",
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mBasicBrawlerComponent.h",
+        "Components/Rogue10mCharacterAnimationComponent.h",
+        "Components/Rogue10mCombatComponent.h",
+        "Components/Rogue10mFirstPersonPresentationComponent.h",
+        "Components/Rogue10mInventoryComponent.h",
+        "Components/Rogue10mPlayerFeedbackComponent.h",
+        "Components/Rogue10mVitalRegenerationComponent.h",
+        "Core/Rogue10m.h",
+        "Core/Rogue10mPlayerController.h",
+        "Core/Rogue10mPlayerState.h",
+        "Data/Rogue10mCharacterDataAsset.h",
+        "Data/Rogue10mSkillLoadoutDataAsset.h"
+      ]
+    },
+    {
+      "Path": "Character/Rogue10mCharacter.h",
+      "Folder": "Character",
+      "Afferent": 29,
+      "Efferent": 3,
+      "TotalCoupling": 32,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [
+        "Ability/Rogue10mGameplayAbility_Attack.cpp",
+        "Character/Rogue10mCharacter.cpp",
+        "Character/Rogue10mFistAnimInstance.cpp",
+        "Character/Rogue10mStylizedCharacter.h",
+        "Components/Rogue10mBasicBrawlerComponent.cpp",
+        "Components/Rogue10mCharacterAnimationComponent.cpp",
+        "Components/Rogue10mCombatComponent.cpp",
+        "Components/Rogue10mFirstPersonPresentationComponent.cpp",
+        "Components/Rogue10mInventoryComponent.cpp",
+        "Components/Rogue10mPlayerFeedbackComponent.cpp",
+        "Components/Rogue10mVitalRegenerationComponent.cpp",
+        "Core/Rogue10mCameraManager.cpp",
+        "Core/Rogue10mGameMode.cpp",
+        "Core/Rogue10mPlayerController.cpp",
+        "Data/Rogue10mCharacterCustomizationDataAsset.cpp",
+        "Enemy/AI/Rogue10mMonsterAIController.cpp",
+        "Enemy/Rogue10mBasicMonster.cpp",
+        "Tests/Rogue10mArmsOnlyRuntimeTest.cpp",
+        "Tests/Rogue10mBasicBrawlerRuntimeTest.cpp",
+        "Tests/Rogue10mBoxingFeedbackRuntimeTest.cpp",
+        "Tests/Rogue10mClassCombatPresentationRuntimeTest.cpp",
+        "Tests/Rogue10mFirstPersonFistRuntimeTest.cpp",
+        "Tests/Rogue10mResponsiveHUDRuntimeTest.cpp",
+        "Tests/Rogue10mWeaponSkillTreeRuntimeTest.cpp",
+        "UI/Rogue10mEquipmentPreviewActor.cpp",
+        "UI/Rogue10mRunHUD.cpp",
+        "UI/Widgets/Rogue10mHudWidgetParts.cpp",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.cpp",
+        "World/Rogue10mRunPortal.cpp"
+      ],
+      "Outgoing": [
+        "Character/Rogue10mCharacterCustomizationTypes.h",
+        "Character/Rogue10mCharacterStats.h",
+        "Character/Rogue10mWeaponTypes.h"
+      ]
+    },
+    {
+      "Path": "Character/Rogue10mCharacterCustomizationTypes.h",
+      "Folder": "Character",
+      "Afferent": 6,
+      "Efferent": 0,
+      "TotalCoupling": 6,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Character/Rogue10mCharacter.h",
+        "Core/Rogue10mCharacterProfileSaveGame.h",
+        "Core/Rogue10mCharacterProfileSubsystem.h",
+        "Data/Rogue10mCharacterCustomizationDataAsset.h",
+        "UI/Rogue10mCharacterCustomizationPreviewActor.h",
+        "UI/Widgets/Rogue10mCharacterLobbyWidget.h"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Character/Rogue10mCharacterStats.h",
+      "Folder": "Character",
+      "Afferent": 4,
+      "Efferent": 0,
+      "TotalCoupling": 4,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mInventoryComponent.h",
+        "Data/Rogue10mCharacterDataAsset.h",
+        "Data/Rogue10mItemDataAsset.h"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Character/Rogue10mFistAnimInstance.cpp",
+      "Folder": "Character",
+      "Afferent": 0,
+      "Efferent": 3,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 0.6666666666666666,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h",
+        "Character/Rogue10mFistAnimInstance.h",
+        "Components/Rogue10mBasicBrawlerComponent.h"
+      ]
+    },
+    {
+      "Path": "Character/Rogue10mFistAnimInstance.h",
+      "Folder": "Character",
+      "Afferent": 5,
+      "Efferent": 0,
+      "TotalCoupling": 5,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Character/Rogue10mFistAnimInstance.cpp",
+        "Components/Rogue10mFirstPersonPresentationComponent.cpp",
+        "Tests/Rogue10mArmsOnlyRuntimeTest.cpp",
+        "Tests/Rogue10mBasicBrawlerRuntimeTest.cpp",
+        "Tests/Rogue10mFirstPersonFistRuntimeTest.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Character/Rogue10mIdentityTypes.h",
+      "Folder": "Character",
+      "Afferent": 2,
+      "Efferent": 0,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Core/Rogue10mPlayerState.h",
+        "UI/Rogue10mRunHUD.h"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Character/Rogue10mStylizedCharacter.cpp",
+      "Folder": "Character",
+      "Afferent": 0,
+      "Efferent": 3,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 0.3333333333333333,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mStylizedCharacter.h",
+        "Core/Rogue10m.h",
+        "Data/Rogue10mCharacterCustomizationDataAsset.h"
+      ]
+    },
+    {
+      "Path": "Character/Rogue10mStylizedCharacter.h",
+      "Folder": "Character",
+      "Afferent": 1,
+      "Efferent": 1,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [
+        "Character/Rogue10mStylizedCharacter.cpp"
+      ],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h"
+      ]
+    },
+    {
+      "Path": "Character/Rogue10mWeaponTypes.h",
+      "Folder": "Character",
+      "Afferent": 7,
+      "Efferent": 0,
+      "TotalCoupling": 7,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mCombatComponent.h",
+        "Components/Rogue10mInventoryComponent.h",
+        "Core/Rogue10mPlayerState.h",
+        "Data/Rogue10mCharacterDataAsset.h",
+        "Data/Rogue10mSkillLoadoutDataAsset.h",
+        "UI/Rogue10mRunHUD.h"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Components/Rogue10mAttackTargetInterface.cpp",
+      "Folder": "Components",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Components/Rogue10mAttackTargetInterface.h"
+      ]
+    },
+    {
+      "Path": "Components/Rogue10mAttackTargetInterface.h",
+      "Folder": "Components",
+      "Afferent": 5,
+      "Efferent": 0,
+      "TotalCoupling": 5,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Components/Rogue10mAttackTargetInterface.cpp",
+        "Components/Rogue10mCombatComponent.cpp",
+        "Core/Rogue10mPlayerController.cpp",
+        "Enemy/Rogue10mBasicMonster.h",
+        "World/Rogue10mBreakableActor.h"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Components/Rogue10mBasicBrawlerComponent.cpp",
+      "Folder": "Components",
+      "Afferent": 0,
+      "Efferent": 4,
+      "TotalCoupling": 4,
+      "LocalDependencyRatio": 0.5,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mBasicBrawlerComponent.h",
+        "Components/Rogue10mCombatComponent.h",
+        "Data/Rogue10mAttackSkillData.h"
+      ]
+    },
+    {
+      "Path": "Components/Rogue10mBasicBrawlerComponent.h",
+      "Folder": "Components",
+      "Afferent": 7,
+      "Efferent": 0,
+      "TotalCoupling": 7,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Character/Rogue10mCharacter.cpp",
+        "Character/Rogue10mFistAnimInstance.cpp",
+        "Components/Rogue10mBasicBrawlerComponent.cpp",
+        "Components/Rogue10mCombatComponent.cpp",
+        "Tests/Rogue10mArmsOnlyRuntimeTest.cpp",
+        "Tests/Rogue10mBasicBrawlerRuntimeTest.cpp",
+        "Tests/Rogue10mBoxingFeedbackRuntimeTest.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Components/Rogue10mCharacterAnimationComponent.cpp",
+      "Folder": "Components",
+      "Afferent": 0,
+      "Efferent": 3,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 0.3333333333333333,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mCharacterAnimationComponent.h",
+        "Data/Rogue10mCharacterMotionDataAsset.h"
+      ]
+    },
+    {
+      "Path": "Components/Rogue10mCharacterAnimationComponent.h",
+      "Folder": "Components",
+      "Afferent": 2,
+      "Efferent": 0,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Character/Rogue10mCharacter.cpp",
+        "Components/Rogue10mCharacterAnimationComponent.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Components/Rogue10mCombatComponent.cpp",
+      "Folder": "Components",
+      "Afferent": 0,
+      "Efferent": 15,
+      "TotalCoupling": 15,
+      "LocalDependencyRatio": 0.4,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAttributeSet.h",
+        "Ability/Rogue10mGameplayAbility_Attack.h",
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mAttackTargetInterface.h",
+        "Components/Rogue10mBasicBrawlerComponent.h",
+        "Components/Rogue10mCombatComponent.h",
+        "Components/Rogue10mFirstPersonPresentationComponent.h",
+        "Components/Rogue10mHitFeedbackComponent.h",
+        "Components/Rogue10mPlayerFeedbackComponent.h",
+        "Core/Rogue10m.h",
+        "Core/Rogue10mPlayerController.h",
+        "Core/Rogue10mPlayerState.h",
+        "Data/Rogue10mCharacterDataAsset.h",
+        "Data/Rogue10mSkillLoadoutDataAsset.h",
+        "Enemy/Rogue10mBasicMonster.h"
+      ]
+    },
+    {
+      "Path": "Components/Rogue10mCombatComponent.h",
+      "Folder": "Components",
+      "Afferent": 13,
+      "Efferent": 2,
+      "TotalCoupling": 15,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "Character/Rogue10mCharacter.cpp",
+        "Components/Rogue10mBasicBrawlerComponent.cpp",
+        "Components/Rogue10mCombatComponent.cpp",
+        "Core/Rogue10mPlayerController.cpp",
+        "Tests/Rogue10mArmsOnlyRuntimeTest.cpp",
+        "Tests/Rogue10mBasicBrawlerRuntimeTest.cpp",
+        "Tests/Rogue10mBoxingFeedbackRuntimeTest.cpp",
+        "Tests/Rogue10mClassCombatPresentationRuntimeTest.cpp",
+        "Tests/Rogue10mFirstPersonFistRuntimeTest.cpp",
+        "Tests/Rogue10mWeaponSkillTreeRuntimeTest.cpp",
+        "UI/Rogue10mRunHUD.cpp",
+        "UI/Widgets/Rogue10mHudWidgetParts.cpp",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.cpp"
+      ],
+      "Outgoing": [
+        "Character/Rogue10mWeaponTypes.h",
+        "Data/Rogue10mAttackSkillData.h"
+      ]
+    },
+    {
+      "Path": "Components/Rogue10mFirstPersonPresentationComponent.cpp",
+      "Folder": "Components",
+      "Afferent": 0,
+      "Efferent": 4,
+      "TotalCoupling": 4,
+      "LocalDependencyRatio": 0.25,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h",
+        "Character/Rogue10mFistAnimInstance.h",
+        "Components/Rogue10mFirstPersonPresentationComponent.h",
+        "Core/Rogue10m.h"
+      ]
+    },
+    {
+      "Path": "Components/Rogue10mFirstPersonPresentationComponent.h",
+      "Folder": "Components",
+      "Afferent": 8,
+      "Efferent": 0,
+      "TotalCoupling": 8,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Character/Rogue10mCharacter.cpp",
+        "Components/Rogue10mCombatComponent.cpp",
+        "Components/Rogue10mFirstPersonPresentationComponent.cpp",
+        "Core/Rogue10mCameraManager.cpp",
+        "Tests/Rogue10mArmsOnlyRuntimeTest.cpp",
+        "Tests/Rogue10mBasicBrawlerRuntimeTest.cpp",
+        "Tests/Rogue10mBoxingFeedbackRuntimeTest.cpp",
+        "Tests/Rogue10mFirstPersonFistRuntimeTest.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Components/Rogue10mHitFeedbackComponent.cpp",
+      "Folder": "Components",
+      "Afferent": 0,
+      "Efferent": 2,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 0.5,
+      "Incoming": [],
+      "Outgoing": [
+        "Components/Rogue10mHitFeedbackComponent.h",
+        "Enemy/Rogue10mBasicMonster.h"
+      ]
+    },
+    {
+      "Path": "Components/Rogue10mHitFeedbackComponent.h",
+      "Folder": "Components",
+      "Afferent": 3,
+      "Efferent": 0,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Components/Rogue10mCombatComponent.cpp",
+        "Components/Rogue10mHitFeedbackComponent.cpp",
+        "Tests/Rogue10mBoxingFeedbackRuntimeTest.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Components/Rogue10mInventoryComponent.cpp",
+      "Folder": "Components",
+      "Afferent": 0,
+      "Efferent": 7,
+      "TotalCoupling": 7,
+      "LocalDependencyRatio": 0.14285714285714285,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAttributeSet.h",
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mInventoryComponent.h",
+        "Core/Rogue10m.h",
+        "Core/Rogue10mPlayerController.h",
+        "Data/Rogue10mItemDataAsset.h",
+        "World/Rogue10mDroppedItem.h"
+      ]
+    },
+    {
+      "Path": "Components/Rogue10mInventoryComponent.h",
+      "Folder": "Components",
+      "Afferent": 9,
+      "Efferent": 2,
+      "TotalCoupling": 11,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "Character/Rogue10mCharacter.cpp",
+        "Components/Rogue10mInventoryComponent.cpp",
+        "Core/Rogue10mPlayerController.cpp",
+        "Data/Rogue10mItemDataAsset.h",
+        "UI/Widgets/Rogue10mItemDragDropOperation.cpp",
+        "UI/Widgets/Rogue10mItemDragDropOperation.h",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.cpp",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.h",
+        "World/Rogue10mDroppedItem.h"
+      ],
+      "Outgoing": [
+        "Character/Rogue10mCharacterStats.h",
+        "Character/Rogue10mWeaponTypes.h"
+      ]
+    },
+    {
+      "Path": "Components/Rogue10mPlayerFeedbackComponent.cpp",
+      "Folder": "Components",
+      "Afferent": 0,
+      "Efferent": 3,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 0.3333333333333333,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAttributeSet.h",
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mPlayerFeedbackComponent.h"
+      ]
+    },
+    {
+      "Path": "Components/Rogue10mPlayerFeedbackComponent.h",
+      "Folder": "Components",
+      "Afferent": 3,
+      "Efferent": 0,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Character/Rogue10mCharacter.cpp",
+        "Components/Rogue10mCombatComponent.cpp",
+        "Components/Rogue10mPlayerFeedbackComponent.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Components/Rogue10mVitalRegenerationComponent.cpp",
+      "Folder": "Components",
+      "Afferent": 0,
+      "Efferent": 4,
+      "TotalCoupling": 4,
+      "LocalDependencyRatio": 0.25,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAttributeSet.h",
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mVitalRegenerationComponent.h",
+        "Enemy/Rogue10mBasicMonster.h"
+      ]
+    },
+    {
+      "Path": "Components/Rogue10mVitalRegenerationComponent.h",
+      "Folder": "Components",
+      "Afferent": 5,
+      "Efferent": 0,
+      "TotalCoupling": 5,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Character/Rogue10mCharacter.cpp",
+        "Components/Rogue10mVitalRegenerationComponent.cpp",
+        "Enemy/Rogue10mBasicMonster.cpp",
+        "Tests/Rogue10mBasicBrawlerRuntimeTest.cpp",
+        "Tests/Rogue10mBoxingFeedbackRuntimeTest.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Core/Rogue10m.cpp",
+      "Folder": "Core",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Core/Rogue10m.h"
+      ]
+    },
+    {
+      "Path": "Core/Rogue10m.h",
+      "Folder": "Core",
+      "Afferent": 24,
+      "Efferent": 0,
+      "TotalCoupling": 24,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Character/Rogue10mCharacter.cpp",
+        "Character/Rogue10mStylizedCharacter.cpp",
+        "Components/Rogue10mCombatComponent.cpp",
+        "Components/Rogue10mFirstPersonPresentationComponent.cpp",
+        "Components/Rogue10mInventoryComponent.cpp",
+        "Core/Rogue10m.cpp",
+        "Core/Rogue10mCharacterProfileSubsystem.cpp",
+        "Core/Rogue10mGameMode.cpp",
+        "Core/Rogue10mPlayerController.cpp",
+        "Editor/Rogue10mFirstPersonArmsAuthoring.cpp",
+        "Enemy/Rogue10mBasicMonster.cpp",
+        "Tests/Rogue10mArmsOnlyRuntimeTest.cpp",
+        "Tests/Rogue10mBasicBrawlerRuntimeTest.cpp",
+        "Tests/Rogue10mBoxingFeedbackRuntimeTest.cpp",
+        "Tests/Rogue10mClassCombatPresentationRuntimeTest.cpp",
+        "Tests/Rogue10mFirstPersonFistRuntimeTest.cpp",
+        "Tests/Rogue10mResponsiveHUDRuntimeTest.cpp",
+        "Tests/Rogue10mWeaponSkillTreeRuntimeTest.cpp",
+        "UI/Rogue10mCharacterCustomizationPreviewActor.cpp",
+        "UI/Widgets/Rogue10mCharacterLobbyWidget.cpp",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.cpp",
+        "World/Rogue10mBreakableActor.cpp",
+        "World/Rogue10mMonsterSpawner.cpp",
+        "World/Rogue10mRunPortal.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Core/Rogue10mCameraManager.cpp",
+      "Folder": "Core",
+      "Afferent": 0,
+      "Efferent": 3,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 0.3333333333333333,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mFirstPersonPresentationComponent.h",
+        "Core/Rogue10mCameraManager.h"
+      ]
+    },
+    {
+      "Path": "Core/Rogue10mCameraManager.h",
+      "Folder": "Core",
+      "Afferent": 2,
+      "Efferent": 0,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Core/Rogue10mCameraManager.cpp",
+        "Core/Rogue10mPlayerController.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Core/Rogue10mCharacterProfileSaveGame.h",
+      "Folder": "Core",
+      "Afferent": 1,
+      "Efferent": 1,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "Core/Rogue10mCharacterProfileSubsystem.cpp"
+      ],
+      "Outgoing": [
+        "Character/Rogue10mCharacterCustomizationTypes.h"
+      ]
+    },
+    {
+      "Path": "Core/Rogue10mCharacterProfileSubsystem.cpp",
+      "Folder": "Core",
+      "Afferent": 0,
+      "Efferent": 3,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Core/Rogue10m.h",
+        "Core/Rogue10mCharacterProfileSaveGame.h",
+        "Core/Rogue10mCharacterProfileSubsystem.h"
+      ]
+    },
+    {
+      "Path": "Core/Rogue10mCharacterProfileSubsystem.h",
+      "Folder": "Core",
+      "Afferent": 4,
+      "Efferent": 1,
+      "TotalCoupling": 5,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "Core/Rogue10mCharacterProfileSubsystem.cpp",
+        "Core/Rogue10mGameMode.cpp",
+        "Core/Rogue10mPlayerController.cpp",
+        "UI/Widgets/Rogue10mCharacterLobbyWidget.cpp"
+      ],
+      "Outgoing": [
+        "Character/Rogue10mCharacterCustomizationTypes.h"
+      ]
+    },
+    {
+      "Path": "Core/Rogue10mGameMode.cpp",
+      "Folder": "Core",
+      "Afferent": 0,
+      "Efferent": 7,
+      "TotalCoupling": 7,
+      "LocalDependencyRatio": 0.7142857142857143,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h",
+        "Core/Rogue10m.h",
+        "Core/Rogue10mCharacterProfileSubsystem.h",
+        "Core/Rogue10mGameMode.h",
+        "Core/Rogue10mGameState.h",
+        "Core/Rogue10mPlayerState.h",
+        "Data/Rogue10mCharacterCustomizationDataAsset.h"
+      ]
+    },
+    {
+      "Path": "Core/Rogue10mGameMode.h",
+      "Folder": "Core",
+      "Afferent": 2,
+      "Efferent": 0,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Core/Rogue10mGameMode.cpp",
+        "Core/Rogue10mPlayerController.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Core/Rogue10mGameState.cpp",
+      "Folder": "Core",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Core/Rogue10mGameState.h"
+      ]
+    },
+    {
+      "Path": "Core/Rogue10mGameState.h",
+      "Folder": "Core",
+      "Afferent": 6,
+      "Efferent": 0,
+      "TotalCoupling": 6,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Core/Rogue10mGameMode.cpp",
+        "Core/Rogue10mGameState.cpp",
+        "Core/Rogue10mPlayerController.cpp",
+        "Tests/Rogue10mFirstPersonFistRuntimeTest.cpp",
+        "Tests/Rogue10mResponsiveHUDRuntimeTest.cpp",
+        "UI/Rogue10mRunHUD.h"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Core/Rogue10mMenuGameMode.cpp",
+      "Folder": "Core",
+      "Afferent": 0,
+      "Efferent": 2,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Core/Rogue10mMenuGameMode.h",
+        "Core/Rogue10mMenuPlayerController.h"
+      ]
+    },
+    {
+      "Path": "Core/Rogue10mMenuGameMode.h",
+      "Folder": "Core",
+      "Afferent": 2,
+      "Efferent": 0,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Core/Rogue10mMenuGameMode.cpp",
+        "Core/Rogue10mPlayerController.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Core/Rogue10mMenuPlayerController.cpp",
+      "Folder": "Core",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Core/Rogue10mMenuPlayerController.h"
+      ]
+    },
+    {
+      "Path": "Core/Rogue10mMenuPlayerController.h",
+      "Folder": "Core",
+      "Afferent": 2,
+      "Efferent": 1,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [
+        "Core/Rogue10mMenuGameMode.cpp",
+        "Core/Rogue10mMenuPlayerController.cpp"
+      ],
+      "Outgoing": [
+        "Core/Rogue10mPlayerController.h"
+      ]
+    },
+    {
+      "Path": "Core/Rogue10mPlatformMode.cpp",
+      "Folder": "Core",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Core/Rogue10mPlatformMode.h"
+      ]
+    },
+    {
+      "Path": "Core/Rogue10mPlatformMode.h",
+      "Folder": "Core",
+      "Afferent": 1,
+      "Efferent": 0,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Core/Rogue10mPlatformMode.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Core/Rogue10mPlayerController.cpp",
+      "Folder": "Core",
+      "Afferent": 0,
+      "Efferent": 18,
+      "TotalCoupling": 18,
+      "LocalDependencyRatio": 0.3888888888888889,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mAttackTargetInterface.h",
+        "Components/Rogue10mCombatComponent.h",
+        "Components/Rogue10mInventoryComponent.h",
+        "Core/Rogue10m.h",
+        "Core/Rogue10mCameraManager.h",
+        "Core/Rogue10mCharacterProfileSubsystem.h",
+        "Core/Rogue10mGameMode.h",
+        "Core/Rogue10mGameState.h",
+        "Core/Rogue10mMenuGameMode.h",
+        "Core/Rogue10mPlayerController.h",
+        "Data/Rogue10mItemDataAsset.h",
+        "Enemy/Rogue10mBasicMonster.h",
+        "UI/Rogue10mRunHUD.h",
+        "UI/Widgets/Rogue10mCharacterLobbyWidget.h",
+        "UI/Widgets/Rogue10mDamageIndicatorWidget.h",
+        "UI/Widgets/Rogue10mMainMenuWidget.h",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.h"
+      ]
+    },
+    {
+      "Path": "Core/Rogue10mPlayerController.h",
+      "Folder": "Core",
+      "Afferent": 14,
+      "Efferent": 0,
+      "TotalCoupling": 14,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Character/Rogue10mCharacter.cpp",
+        "Components/Rogue10mCombatComponent.cpp",
+        "Components/Rogue10mInventoryComponent.cpp",
+        "Core/Rogue10mMenuPlayerController.h",
+        "Core/Rogue10mPlayerController.cpp",
+        "Enemy/Rogue10mBasicMonster.cpp",
+        "Tests/Rogue10mBasicBrawlerRuntimeTest.cpp",
+        "Tests/Rogue10mFirstPersonFistRuntimeTest.cpp",
+        "Tests/Rogue10mResponsiveHUDRuntimeTest.cpp",
+        "Tests/Rogue10mWeaponSkillTreeRuntimeTest.cpp",
+        "UI/Rogue10mRunHUD.cpp",
+        "UI/Widgets/Rogue10mCharacterLobbyWidget.cpp",
+        "UI/Widgets/Rogue10mMainMenuWidget.cpp",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Core/Rogue10mPlayerState.cpp",
+      "Folder": "Core",
+      "Afferent": 0,
+      "Efferent": 3,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 0.3333333333333333,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAbilitySystemComponent.h",
+        "Ability/Rogue10mAttributeSet.h",
+        "Core/Rogue10mPlayerState.h"
+      ]
+    },
+    {
+      "Path": "Core/Rogue10mPlayerState.h",
+      "Folder": "Core",
+      "Afferent": 10,
+      "Efferent": 2,
+      "TotalCoupling": 12,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "Character/Rogue10mCharacter.cpp",
+        "Components/Rogue10mCombatComponent.cpp",
+        "Core/Rogue10mGameMode.cpp",
+        "Core/Rogue10mPlayerState.cpp",
+        "Enemy/Rogue10mBasicMonster.cpp",
+        "Tests/Rogue10mBasicBrawlerRuntimeTest.cpp",
+        "Tests/Rogue10mFirstPersonFistRuntimeTest.cpp",
+        "Tests/Rogue10mResponsiveHUDRuntimeTest.cpp",
+        "Tests/Rogue10mWeaponSkillTreeRuntimeTest.cpp",
+        "UI/Rogue10mRunHUD.cpp"
+      ],
+      "Outgoing": [
+        "Character/Rogue10mIdentityTypes.h",
+        "Character/Rogue10mWeaponTypes.h"
+      ]
+    },
+    {
+      "Path": "Data/Rogue10mAttackSkillData.cpp",
+      "Folder": "Data",
+      "Afferent": 0,
+      "Efferent": 2,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 0.5,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAttributeSet.h",
+        "Data/Rogue10mAttackSkillData.h"
+      ]
+    },
+    {
+      "Path": "Data/Rogue10mAttackSkillData.h",
+      "Folder": "Data",
+      "Afferent": 12,
+      "Efferent": 0,
+      "TotalCoupling": 12,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Components/Rogue10mBasicBrawlerComponent.cpp",
+        "Components/Rogue10mCombatComponent.h",
+        "Data/Rogue10mAttackSkillData.cpp",
+        "Data/Rogue10mSkillLoadoutDataAsset.h",
+        "Enemy/Rogue10mBasicMonster.cpp",
+        "Tests/Rogue10mBasicBrawlerRuntimeTest.cpp",
+        "Tests/Rogue10mBoxingFeedbackRuntimeTest.cpp",
+        "Tests/Rogue10mClassCombatPresentationRuntimeTest.cpp",
+        "Tests/Rogue10mWeaponSkillTreeRuntimeTest.cpp",
+        "UI/Rogue10mRunHUD.cpp",
+        "UI/Rogue10mRunHUD.h",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Data/Rogue10mCharacterCustomizationDataAsset.cpp",
+      "Folder": "Data",
+      "Afferent": 0,
+      "Efferent": 2,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 0.5,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h",
+        "Data/Rogue10mCharacterCustomizationDataAsset.h"
+      ]
+    },
+    {
+      "Path": "Data/Rogue10mCharacterCustomizationDataAsset.h",
+      "Folder": "Data",
+      "Afferent": 5,
+      "Efferent": 1,
+      "TotalCoupling": 6,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "Character/Rogue10mStylizedCharacter.cpp",
+        "Core/Rogue10mGameMode.cpp",
+        "Data/Rogue10mCharacterCustomizationDataAsset.cpp",
+        "UI/Rogue10mCharacterCustomizationPreviewActor.cpp",
+        "UI/Widgets/Rogue10mCharacterLobbyWidget.cpp"
+      ],
+      "Outgoing": [
+        "Character/Rogue10mCharacterCustomizationTypes.h"
+      ]
+    },
+    {
+      "Path": "Data/Rogue10mCharacterDataAsset.cpp",
+      "Folder": "Data",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Data/Rogue10mCharacterDataAsset.h"
+      ]
+    },
+    {
+      "Path": "Data/Rogue10mCharacterDataAsset.h",
+      "Folder": "Data",
+      "Afferent": 3,
+      "Efferent": 2,
+      "TotalCoupling": 5,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "Character/Rogue10mCharacter.cpp",
+        "Components/Rogue10mCombatComponent.cpp",
+        "Data/Rogue10mCharacterDataAsset.cpp"
+      ],
+      "Outgoing": [
+        "Character/Rogue10mCharacterStats.h",
+        "Character/Rogue10mWeaponTypes.h"
+      ]
+    },
+    {
+      "Path": "Data/Rogue10mCharacterMotionDataAsset.cpp",
+      "Folder": "Data",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Data/Rogue10mCharacterMotionDataAsset.h"
+      ]
+    },
+    {
+      "Path": "Data/Rogue10mCharacterMotionDataAsset.h",
+      "Folder": "Data",
+      "Afferent": 2,
+      "Efferent": 0,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Components/Rogue10mCharacterAnimationComponent.cpp",
+        "Data/Rogue10mCharacterMotionDataAsset.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Data/Rogue10mItemDataAsset.cpp",
+      "Folder": "Data",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Data/Rogue10mItemDataAsset.h"
+      ]
+    },
+    {
+      "Path": "Data/Rogue10mItemDataAsset.h",
+      "Folder": "Data",
+      "Afferent": 6,
+      "Efferent": 2,
+      "TotalCoupling": 8,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "Components/Rogue10mInventoryComponent.cpp",
+        "Core/Rogue10mPlayerController.cpp",
+        "Data/Rogue10mItemDataAsset.cpp",
+        "UI/Widgets/Rogue10mItemDragDropOperation.cpp",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.cpp",
+        "World/Rogue10mDroppedItem.cpp"
+      ],
+      "Outgoing": [
+        "Character/Rogue10mCharacterStats.h",
+        "Components/Rogue10mInventoryComponent.h"
+      ]
+    },
+    {
+      "Path": "Data/Rogue10mMonsterDataAsset.cpp",
+      "Folder": "Data",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Data/Rogue10mMonsterDataAsset.h"
+      ]
+    },
+    {
+      "Path": "Data/Rogue10mMonsterDataAsset.h",
+      "Folder": "Data",
+      "Afferent": 3,
+      "Efferent": 0,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Data/Rogue10mMonsterDataAsset.cpp",
+        "Enemy/AI/Rogue10mMonsterAIController.cpp",
+        "Enemy/Rogue10mBasicMonster.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Data/Rogue10mSkillLoadoutDataAsset.cpp",
+      "Folder": "Data",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Data/Rogue10mSkillLoadoutDataAsset.h"
+      ]
+    },
+    {
+      "Path": "Data/Rogue10mSkillLoadoutDataAsset.h",
+      "Folder": "Data",
+      "Afferent": 5,
+      "Efferent": 2,
+      "TotalCoupling": 7,
+      "LocalDependencyRatio": 0.5,
+      "Incoming": [
+        "Character/Rogue10mCharacter.cpp",
+        "Components/Rogue10mCombatComponent.cpp",
+        "Data/Rogue10mSkillLoadoutDataAsset.cpp",
+        "Tests/Rogue10mWeaponSkillTreeRuntimeTest.cpp",
+        "UI/Rogue10mRunHUD.cpp"
+      ],
+      "Outgoing": [
+        "Character/Rogue10mWeaponTypes.h",
+        "Data/Rogue10mAttackSkillData.h"
+      ]
+    },
+    {
+      "Path": "Editor/Rogue10mFirstPersonArmsAuthoring.cpp",
+      "Folder": "Editor",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Core/Rogue10m.h"
+      ]
+    },
+    {
+      "Path": "Enemy/AI/BTTask_Rogue10mMonsterDecision.cpp",
+      "Folder": "Enemy/AI",
+      "Afferent": 0,
+      "Efferent": 2,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Enemy/AI/BTTask_Rogue10mMonsterDecision.h",
+        "Enemy/AI/Rogue10mMonsterAIController.h"
+      ]
+    },
+    {
+      "Path": "Enemy/AI/BTTask_Rogue10mMonsterDecision.h",
+      "Folder": "Enemy/AI",
+      "Afferent": 2,
+      "Efferent": 0,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Enemy/AI/BTTask_Rogue10mMonsterDecision.cpp",
+        "Enemy/AI/Rogue10mMonsterAIController.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Enemy/AI/Rogue10mMonsterAIController.cpp",
+      "Folder": "Enemy/AI",
+      "Afferent": 0,
+      "Efferent": 5,
+      "TotalCoupling": 5,
+      "LocalDependencyRatio": 0.4,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h",
+        "Data/Rogue10mMonsterDataAsset.h",
+        "Enemy/AI/BTTask_Rogue10mMonsterDecision.h",
+        "Enemy/AI/Rogue10mMonsterAIController.h",
+        "Enemy/Rogue10mBasicMonster.h"
+      ]
+    },
+    {
+      "Path": "Enemy/AI/Rogue10mMonsterAIController.h",
+      "Folder": "Enemy/AI",
+      "Afferent": 3,
+      "Efferent": 0,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Enemy/AI/BTTask_Rogue10mMonsterDecision.cpp",
+        "Enemy/AI/Rogue10mMonsterAIController.cpp",
+        "Enemy/Rogue10mBasicMonster.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "Enemy/Rogue10mBasicMonster.cpp",
+      "Folder": "Enemy",
+      "Afferent": 0,
+      "Efferent": 11,
+      "TotalCoupling": 11,
+      "LocalDependencyRatio": 0.09090909090909091,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAbilitySystemComponent.h",
+        "Ability/Rogue10mAttributeSet.h",
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mVitalRegenerationComponent.h",
+        "Core/Rogue10m.h",
+        "Core/Rogue10mPlayerController.h",
+        "Core/Rogue10mPlayerState.h",
+        "Data/Rogue10mAttackSkillData.h",
+        "Data/Rogue10mMonsterDataAsset.h",
+        "Enemy/AI/Rogue10mMonsterAIController.h",
+        "Enemy/Rogue10mBasicMonster.h"
+      ]
+    },
+    {
+      "Path": "Enemy/Rogue10mBasicMonster.h",
+      "Folder": "Enemy",
+      "Afferent": 13,
+      "Efferent": 1,
+      "TotalCoupling": 14,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "Components/Rogue10mCombatComponent.cpp",
+        "Components/Rogue10mHitFeedbackComponent.cpp",
+        "Components/Rogue10mVitalRegenerationComponent.cpp",
+        "Core/Rogue10mPlayerController.cpp",
+        "Enemy/AI/Rogue10mMonsterAIController.cpp",
+        "Enemy/Rogue10mBasicMonster.cpp",
+        "Tests/Rogue10mArmsOnlyRuntimeTest.cpp",
+        "Tests/Rogue10mBasicBrawlerRuntimeTest.cpp",
+        "Tests/Rogue10mBoxingFeedbackRuntimeTest.cpp",
+        "Tests/Rogue10mFirstPersonFistRuntimeTest.cpp",
+        "Tests/Rogue10mResponsiveHUDRuntimeTest.cpp",
+        "UI/Rogue10mRunHUD.cpp",
+        "World/Rogue10mMonsterSpawner.cpp"
+      ],
+      "Outgoing": [
+        "Components/Rogue10mAttackTargetInterface.h"
+      ]
+    },
+    {
+      "Path": "Tests/Rogue10mArmsOnlyRuntimeTest.cpp",
+      "Folder": "Tests",
+      "Afferent": 0,
+      "Efferent": 8,
+      "TotalCoupling": 8,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAttributeSet.h",
+        "Character/Rogue10mCharacter.h",
+        "Character/Rogue10mFistAnimInstance.h",
+        "Components/Rogue10mBasicBrawlerComponent.h",
+        "Components/Rogue10mCombatComponent.h",
+        "Components/Rogue10mFirstPersonPresentationComponent.h",
+        "Core/Rogue10m.h",
+        "Enemy/Rogue10mBasicMonster.h"
+      ]
+    },
+    {
+      "Path": "Tests/Rogue10mBasicBrawlerRuntimeTest.cpp",
+      "Folder": "Tests",
+      "Afferent": 0,
+      "Efferent": 12,
+      "TotalCoupling": 12,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAttributeSet.h",
+        "Character/Rogue10mCharacter.h",
+        "Character/Rogue10mFistAnimInstance.h",
+        "Components/Rogue10mBasicBrawlerComponent.h",
+        "Components/Rogue10mCombatComponent.h",
+        "Components/Rogue10mFirstPersonPresentationComponent.h",
+        "Components/Rogue10mVitalRegenerationComponent.h",
+        "Core/Rogue10m.h",
+        "Core/Rogue10mPlayerController.h",
+        "Core/Rogue10mPlayerState.h",
+        "Data/Rogue10mAttackSkillData.h",
+        "Enemy/Rogue10mBasicMonster.h"
+      ]
+    },
+    {
+      "Path": "Tests/Rogue10mBoxingFeedbackRuntimeTest.cpp",
+      "Folder": "Tests",
+      "Afferent": 0,
+      "Efferent": 10,
+      "TotalCoupling": 10,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAttributeSet.h",
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mBasicBrawlerComponent.h",
+        "Components/Rogue10mCombatComponent.h",
+        "Components/Rogue10mFirstPersonPresentationComponent.h",
+        "Components/Rogue10mHitFeedbackComponent.h",
+        "Components/Rogue10mVitalRegenerationComponent.h",
+        "Core/Rogue10m.h",
+        "Data/Rogue10mAttackSkillData.h",
+        "Enemy/Rogue10mBasicMonster.h"
+      ]
+    },
+    {
+      "Path": "Tests/Rogue10mClassCombatPresentationRuntimeTest.cpp",
+      "Folder": "Tests",
+      "Afferent": 0,
+      "Efferent": 5,
+      "TotalCoupling": 5,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAttributeSet.h",
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mCombatComponent.h",
+        "Core/Rogue10m.h",
+        "Data/Rogue10mAttackSkillData.h"
+      ]
+    },
+    {
+      "Path": "Tests/Rogue10mFirstPersonFistRuntimeTest.cpp",
+      "Folder": "Tests",
+      "Afferent": 0,
+      "Efferent": 10,
+      "TotalCoupling": 10,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAttributeSet.h",
+        "Character/Rogue10mCharacter.h",
+        "Character/Rogue10mFistAnimInstance.h",
+        "Components/Rogue10mCombatComponent.h",
+        "Components/Rogue10mFirstPersonPresentationComponent.h",
+        "Core/Rogue10m.h",
+        "Core/Rogue10mGameState.h",
+        "Core/Rogue10mPlayerController.h",
+        "Core/Rogue10mPlayerState.h",
+        "Enemy/Rogue10mBasicMonster.h"
+      ]
+    },
+    {
+      "Path": "Tests/Rogue10mResponsiveHUDRuntimeTest.cpp",
+      "Folder": "Tests",
+      "Afferent": 0,
+      "Efferent": 9,
+      "TotalCoupling": 9,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAttributeSet.h",
+        "Character/Rogue10mCharacter.h",
+        "Core/Rogue10m.h",
+        "Core/Rogue10mGameState.h",
+        "Core/Rogue10mPlayerController.h",
+        "Core/Rogue10mPlayerState.h",
+        "Enemy/Rogue10mBasicMonster.h",
+        "UI/Widgets/Rogue10mBottomHUDWidget.h",
+        "UI/Widgets/Rogue10mMainHUDWidget.h"
+      ]
+    },
+    {
+      "Path": "Tests/Rogue10mWeaponSkillTreeRuntimeTest.cpp",
+      "Folder": "Tests",
+      "Afferent": 0,
+      "Efferent": 8,
+      "TotalCoupling": 8,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mCombatComponent.h",
+        "Core/Rogue10m.h",
+        "Core/Rogue10mPlayerController.h",
+        "Core/Rogue10mPlayerState.h",
+        "Data/Rogue10mAttackSkillData.h",
+        "Data/Rogue10mSkillLoadoutDataAsset.h",
+        "UI/Rogue10mRunHUD.h"
+      ]
+    },
+    {
+      "Path": "UI/Rogue10mCharacterCustomizationPreviewActor.cpp",
+      "Folder": "UI",
+      "Afferent": 0,
+      "Efferent": 3,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 0.3333333333333333,
+      "Incoming": [],
+      "Outgoing": [
+        "Core/Rogue10m.h",
+        "Data/Rogue10mCharacterCustomizationDataAsset.h",
+        "UI/Rogue10mCharacterCustomizationPreviewActor.h"
+      ]
+    },
+    {
+      "Path": "UI/Rogue10mCharacterCustomizationPreviewActor.h",
+      "Folder": "UI",
+      "Afferent": 2,
+      "Efferent": 1,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "UI/Rogue10mCharacterCustomizationPreviewActor.cpp",
+        "UI/Widgets/Rogue10mCharacterLobbyWidget.cpp"
+      ],
+      "Outgoing": [
+        "Character/Rogue10mCharacterCustomizationTypes.h"
+      ]
+    },
+    {
+      "Path": "UI/Rogue10mEquipmentPreviewActor.cpp",
+      "Folder": "UI",
+      "Afferent": 0,
+      "Efferent": 2,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 0.5,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h",
+        "UI/Rogue10mEquipmentPreviewActor.h"
+      ]
+    },
+    {
+      "Path": "UI/Rogue10mEquipmentPreviewActor.h",
+      "Folder": "UI",
+      "Afferent": 2,
+      "Efferent": 0,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "UI/Rogue10mEquipmentPreviewActor.cpp",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "UI/Rogue10mHUD.cpp",
+      "Folder": "UI",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "UI/Rogue10mHUD.h"
+      ]
+    },
+    {
+      "Path": "UI/Rogue10mHUD.h",
+      "Folder": "UI",
+      "Afferent": 1,
+      "Efferent": 0,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "UI/Rogue10mHUD.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "UI/Rogue10mRunHUD.cpp",
+      "Folder": "UI",
+      "Afferent": 0,
+      "Efferent": 9,
+      "TotalCoupling": 9,
+      "LocalDependencyRatio": 0.1111111111111111,
+      "Incoming": [],
+      "Outgoing": [
+        "Ability/Rogue10mAttributeSet.h",
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mCombatComponent.h",
+        "Core/Rogue10mPlayerController.h",
+        "Core/Rogue10mPlayerState.h",
+        "Data/Rogue10mAttackSkillData.h",
+        "Data/Rogue10mSkillLoadoutDataAsset.h",
+        "Enemy/Rogue10mBasicMonster.h",
+        "UI/Rogue10mRunHUD.h"
+      ]
+    },
+    {
+      "Path": "UI/Rogue10mRunHUD.h",
+      "Folder": "UI",
+      "Afferent": 5,
+      "Efferent": 4,
+      "TotalCoupling": 9,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "Core/Rogue10mPlayerController.cpp",
+        "Tests/Rogue10mWeaponSkillTreeRuntimeTest.cpp",
+        "UI/Rogue10mRunHUD.cpp",
+        "UI/Widgets/Rogue10mHudWidgetParts.h",
+        "UI/Widgets/Rogue10mMainHUDWidget.h"
+      ],
+      "Outgoing": [
+        "Character/Rogue10mIdentityTypes.h",
+        "Character/Rogue10mWeaponTypes.h",
+        "Core/Rogue10mGameState.h",
+        "Data/Rogue10mAttackSkillData.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mAtlasImage.cpp",
+      "Folder": "UI/Widgets",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "UI/Widgets/Rogue10mAtlasImage.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mAtlasImage.h",
+      "Folder": "UI/Widgets",
+      "Afferent": 1,
+      "Efferent": 0,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "UI/Widgets/Rogue10mAtlasImage.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mBottomHUDWidget.cpp",
+      "Folder": "UI/Widgets",
+      "Afferent": 0,
+      "Efferent": 2,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "UI/Widgets/Rogue10mBottomHUDWidget.h",
+        "UI/Widgets/Rogue10mMainHUDWidget.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mBottomHUDWidget.h",
+      "Folder": "UI/Widgets",
+      "Afferent": 3,
+      "Efferent": 1,
+      "TotalCoupling": 4,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [
+        "Tests/Rogue10mResponsiveHUDRuntimeTest.cpp",
+        "UI/Widgets/Rogue10mBottomHUDWidget.cpp",
+        "UI/Widgets/Rogue10mMainHUDWidget.cpp"
+      ],
+      "Outgoing": [
+        "UI/Widgets/Rogue10mHudWidgetParts.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mCharacterLobbyWidget.cpp",
+      "Folder": "UI/Widgets",
+      "Afferent": 0,
+      "Efferent": 6,
+      "TotalCoupling": 6,
+      "LocalDependencyRatio": 0.16666666666666666,
+      "Incoming": [],
+      "Outgoing": [
+        "Core/Rogue10m.h",
+        "Core/Rogue10mCharacterProfileSubsystem.h",
+        "Core/Rogue10mPlayerController.h",
+        "Data/Rogue10mCharacterCustomizationDataAsset.h",
+        "UI/Rogue10mCharacterCustomizationPreviewActor.h",
+        "UI/Widgets/Rogue10mCharacterLobbyWidget.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mCharacterLobbyWidget.h",
+      "Folder": "UI/Widgets",
+      "Afferent": 2,
+      "Efferent": 1,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "Core/Rogue10mPlayerController.cpp",
+        "UI/Widgets/Rogue10mCharacterLobbyWidget.cpp"
+      ],
+      "Outgoing": [
+        "Character/Rogue10mCharacterCustomizationTypes.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mDamageIndicatorWidget.cpp",
+      "Folder": "UI/Widgets",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "UI/Widgets/Rogue10mDamageIndicatorWidget.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mDamageIndicatorWidget.h",
+      "Folder": "UI/Widgets",
+      "Afferent": 2,
+      "Efferent": 0,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Core/Rogue10mPlayerController.cpp",
+        "UI/Widgets/Rogue10mDamageIndicatorWidget.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mHudWidgetParts.cpp",
+      "Folder": "UI/Widgets",
+      "Afferent": 0,
+      "Efferent": 4,
+      "TotalCoupling": 4,
+      "LocalDependencyRatio": 0.5,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mCombatComponent.h",
+        "UI/Widgets/Rogue10mHudWidgetParts.h",
+        "UI/Widgets/Rogue10mSkillDragDropOperation.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mHudWidgetParts.h",
+      "Folder": "UI/Widgets",
+      "Afferent": 3,
+      "Efferent": 1,
+      "TotalCoupling": 4,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "UI/Widgets/Rogue10mBottomHUDWidget.h",
+        "UI/Widgets/Rogue10mHudWidgetParts.cpp",
+        "UI/Widgets/Rogue10mMainHUDWidget.h"
+      ],
+      "Outgoing": [
+        "UI/Rogue10mRunHUD.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mItemDragDropOperation.cpp",
+      "Folder": "UI/Widgets",
+      "Afferent": 0,
+      "Efferent": 4,
+      "TotalCoupling": 4,
+      "LocalDependencyRatio": 0.5,
+      "Incoming": [],
+      "Outgoing": [
+        "Components/Rogue10mInventoryComponent.h",
+        "Data/Rogue10mItemDataAsset.h",
+        "UI/Widgets/Rogue10mItemDragDropOperation.h",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mItemDragDropOperation.h",
+      "Folder": "UI/Widgets",
+      "Afferent": 2,
+      "Efferent": 1,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "UI/Widgets/Rogue10mItemDragDropOperation.cpp",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.cpp"
+      ],
+      "Outgoing": [
+        "Components/Rogue10mInventoryComponent.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mMainHUDWidget.cpp",
+      "Folder": "UI/Widgets",
+      "Afferent": 0,
+      "Efferent": 2,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "UI/Widgets/Rogue10mBottomHUDWidget.h",
+        "UI/Widgets/Rogue10mMainHUDWidget.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mMainHUDWidget.h",
+      "Folder": "UI/Widgets",
+      "Afferent": 3,
+      "Efferent": 2,
+      "TotalCoupling": 5,
+      "LocalDependencyRatio": 0.5,
+      "Incoming": [
+        "Tests/Rogue10mResponsiveHUDRuntimeTest.cpp",
+        "UI/Widgets/Rogue10mBottomHUDWidget.cpp",
+        "UI/Widgets/Rogue10mMainHUDWidget.cpp"
+      ],
+      "Outgoing": [
+        "UI/Rogue10mRunHUD.h",
+        "UI/Widgets/Rogue10mHudWidgetParts.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mMainMenuWidget.cpp",
+      "Folder": "UI/Widgets",
+      "Afferent": 0,
+      "Efferent": 2,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 0.5,
+      "Incoming": [],
+      "Outgoing": [
+        "Core/Rogue10mPlayerController.h",
+        "UI/Widgets/Rogue10mMainMenuWidget.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mMainMenuWidget.h",
+      "Folder": "UI/Widgets",
+      "Afferent": 2,
+      "Efferent": 0,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "Core/Rogue10mPlayerController.cpp",
+        "UI/Widgets/Rogue10mMainMenuWidget.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mMenuWindowWidgets.cpp",
+      "Folder": "UI/Widgets",
+      "Afferent": 0,
+      "Efferent": 11,
+      "TotalCoupling": 11,
+      "LocalDependencyRatio": 0.2727272727272727,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h",
+        "Components/Rogue10mCombatComponent.h",
+        "Components/Rogue10mInventoryComponent.h",
+        "Core/Rogue10m.h",
+        "Core/Rogue10mPlayerController.h",
+        "Data/Rogue10mAttackSkillData.h",
+        "Data/Rogue10mItemDataAsset.h",
+        "UI/Rogue10mEquipmentPreviewActor.h",
+        "UI/Widgets/Rogue10mItemDragDropOperation.h",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.h",
+        "UI/Widgets/Rogue10mSkillDragDropOperation.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mMenuWindowWidgets.h",
+      "Folder": "UI/Widgets",
+      "Afferent": 3,
+      "Efferent": 1,
+      "TotalCoupling": 4,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "Core/Rogue10mPlayerController.cpp",
+        "UI/Widgets/Rogue10mItemDragDropOperation.cpp",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.cpp"
+      ],
+      "Outgoing": [
+        "Components/Rogue10mInventoryComponent.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mSkillDragDropOperation.cpp",
+      "Folder": "UI/Widgets",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "UI/Widgets/Rogue10mSkillDragDropOperation.h"
+      ]
+    },
+    {
+      "Path": "UI/Widgets/Rogue10mSkillDragDropOperation.h",
+      "Folder": "UI/Widgets",
+      "Afferent": 3,
+      "Efferent": 0,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "UI/Widgets/Rogue10mHudWidgetParts.cpp",
+        "UI/Widgets/Rogue10mMenuWindowWidgets.cpp",
+        "UI/Widgets/Rogue10mSkillDragDropOperation.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "World/Rogue10mBreakableActor.cpp",
+      "Folder": "World",
+      "Afferent": 0,
+      "Efferent": 2,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 0.5,
+      "Incoming": [],
+      "Outgoing": [
+        "Core/Rogue10m.h",
+        "World/Rogue10mBreakableActor.h"
+      ]
+    },
+    {
+      "Path": "World/Rogue10mBreakableActor.h",
+      "Folder": "World",
+      "Afferent": 1,
+      "Efferent": 1,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "World/Rogue10mBreakableActor.cpp"
+      ],
+      "Outgoing": [
+        "Components/Rogue10mAttackTargetInterface.h"
+      ]
+    },
+    {
+      "Path": "World/Rogue10mDroppedItem.cpp",
+      "Folder": "World",
+      "Afferent": 0,
+      "Efferent": 2,
+      "TotalCoupling": 2,
+      "LocalDependencyRatio": 0.5,
+      "Incoming": [],
+      "Outgoing": [
+        "Data/Rogue10mItemDataAsset.h",
+        "World/Rogue10mDroppedItem.h"
+      ]
+    },
+    {
+      "Path": "World/Rogue10mDroppedItem.h",
+      "Folder": "World",
+      "Afferent": 2,
+      "Efferent": 1,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 0.0,
+      "Incoming": [
+        "Components/Rogue10mInventoryComponent.cpp",
+        "World/Rogue10mDroppedItem.cpp"
+      ],
+      "Outgoing": [
+        "Components/Rogue10mInventoryComponent.h"
+      ]
+    },
+    {
+      "Path": "World/Rogue10mMapDataLibrary.cpp",
+      "Folder": "World",
+      "Afferent": 0,
+      "Efferent": 1,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": 1.0,
+      "Incoming": [],
+      "Outgoing": [
+        "World/Rogue10mMapDataLibrary.h"
+      ]
+    },
+    {
+      "Path": "World/Rogue10mMapDataLibrary.h",
+      "Folder": "World",
+      "Afferent": 1,
+      "Efferent": 0,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "World/Rogue10mMapDataLibrary.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "World/Rogue10mMonsterSpawner.cpp",
+      "Folder": "World",
+      "Afferent": 0,
+      "Efferent": 3,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 0.3333333333333333,
+      "Incoming": [],
+      "Outgoing": [
+        "Core/Rogue10m.h",
+        "Enemy/Rogue10mBasicMonster.h",
+        "World/Rogue10mMonsterSpawner.h"
+      ]
+    },
+    {
+      "Path": "World/Rogue10mMonsterSpawner.h",
+      "Folder": "World",
+      "Afferent": 1,
+      "Efferent": 0,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "World/Rogue10mMonsterSpawner.cpp"
+      ],
+      "Outgoing": []
+    },
+    {
+      "Path": "World/Rogue10mRunPortal.cpp",
+      "Folder": "World",
+      "Afferent": 0,
+      "Efferent": 3,
+      "TotalCoupling": 3,
+      "LocalDependencyRatio": 0.3333333333333333,
+      "Incoming": [],
+      "Outgoing": [
+        "Character/Rogue10mCharacter.h",
+        "Core/Rogue10m.h",
+        "World/Rogue10mRunPortal.h"
+      ]
+    },
+    {
+      "Path": "World/Rogue10mRunPortal.h",
+      "Folder": "World",
+      "Afferent": 1,
+      "Efferent": 0,
+      "TotalCoupling": 1,
+      "LocalDependencyRatio": null,
+      "Incoming": [
+        "World/Rogue10mRunPortal.cpp"
+      ],
+      "Outgoing": []
+    }
+  ],
+  "folders": [
+    {
+      "Folder": "Ability",
+      "Files": 6,
+      "InternalEdges": 3,
+      "IncomingEdges": 18,
+      "OutgoingEdges": 1,
+      "Cohesion": 0.75,
+      "Instability": 0.05263157894736842
+    },
+    {
+      "Folder": "Character",
+      "Files": 10,
+      "InternalEdges": 8,
+      "IncomingEdges": 46,
+      "OutgoingEdges": 16,
+      "Cohesion": 0.3333333333333333,
+      "Instability": 0.25806451612903225
+    },
+    {
+      "Folder": "Components",
+      "Files": 18,
+      "InternalEdges": 15,
+      "IncomingEdges": 40,
+      "OutgoingEdges": 32,
+      "Cohesion": 0.3191489361702128,
+      "Instability": 0.4444444444444444
+    },
+    {
+      "Folder": "Core",
+      "Files": 21,
+      "InternalEdges": 24,
+      "IncomingEdges": 44,
+      "OutgoingEdges": 21,
+      "Cohesion": 0.5333333333333333,
+      "Instability": 0.3230769230769231
+    },
+    {
+      "Folder": "Data",
+      "Files": 14,
+      "InternalEdges": 8,
+      "IncomingEdges": 28,
+      "OutgoingEdges": 8,
+      "Cohesion": 0.5,
+      "Instability": 0.2222222222222222
+    },
+    {
+      "Folder": "Editor",
+      "Files": 1,
+      "InternalEdges": 0,
+      "IncomingEdges": 0,
+      "OutgoingEdges": 1,
+      "Cohesion": 0.0,
+      "Instability": 1.0
+    },
+    {
+      "Folder": "Enemy",
+      "Files": 2,
+      "InternalEdges": 1,
+      "IncomingEdges": 12,
+      "OutgoingEdges": 11,
+      "Cohesion": 0.08333333333333333,
+      "Instability": 0.4782608695652174
+    },
+    {
+      "Folder": "Enemy/AI",
+      "Files": 4,
+      "InternalEdges": 4,
+      "IncomingEdges": 1,
+      "OutgoingEdges": 3,
+      "Cohesion": 0.5714285714285714,
+      "Instability": 0.75
+    },
+    {
+      "Folder": "Tests",
+      "Files": 7,
+      "InternalEdges": 0,
+      "IncomingEdges": 0,
+      "OutgoingEdges": 62,
+      "Cohesion": 0.0,
+      "Instability": 1.0
+    },
+    {
+      "Folder": "UI",
+      "Files": 8,
+      "InternalEdges": 4,
+      "IncomingEdges": 6,
+      "OutgoingEdges": 16,
+      "Cohesion": 0.2,
+      "Instability": 0.7272727272727273
+    },
+    {
+      "Folder": "UI/Widgets",
+      "Files": 20,
+      "InternalEdges": 18,
+      "IncomingEdges": 6,
+      "OutgoingEdges": 23,
+      "Cohesion": 0.43902439024390244,
+      "Instability": 0.7931034482758621
+    },
+    {
+      "Folder": "World",
+      "Files": 10,
+      "InternalEdges": 5,
+      "IncomingEdges": 1,
+      "OutgoingEdges": 8,
+      "Cohesion": 0.38461538461538464,
+      "Instability": 0.8888888888888888
+    }
+  ],
+  "folderEdges": [
+    {
+      "source": "Ability",
+      "target": "Character",
+      "count": 1
+    },
+    {
+      "source": "Character",
+      "target": "Ability",
+      "count": 1
+    },
+    {
+      "source": "Character",
+      "target": "Components",
+      "count": 8
+    },
+    {
+      "source": "Character",
+      "target": "Core",
+      "count": 4
+    },
+    {
+      "source": "Character",
+      "target": "Data",
+      "count": 3
+    },
+    {
+      "source": "Components",
+      "target": "Ability",
+      "count": 5
+    },
+    {
+      "source": "Components",
+      "target": "Character",
+      "count": 11
+    },
+    {
+      "source": "Components",
+      "target": "Core",
+      "count": 6
+    },
+    {
+      "source": "Components",
+      "target": "Data",
+      "count": 6
+    },
+    {
+      "source": "Components",
+      "target": "Enemy",
+      "count": 3
+    },
+    {
+      "source": "Components",
+      "target": "World",
+      "count": 1
+    },
+    {
+      "source": "Core",
+      "target": "Ability",
+      "count": 2
+    },
+    {
+      "source": "Core",
+      "target": "Character",
+      "count": 7
+    },
+    {
+      "source": "Core",
+      "target": "Components",
+      "count": 4
+    },
+    {
+      "source": "Core",
+      "target": "Data",
+      "count": 2
+    },
+    {
+      "source": "Core",
+      "target": "Enemy",
+      "count": 1
+    },
+    {
+      "source": "Core",
+      "target": "UI",
+      "count": 1
+    },
+    {
+      "source": "Core",
+      "target": "UI/Widgets",
+      "count": 4
+    },
+    {
+      "source": "Data",
+      "target": "Ability",
+      "count": 1
+    },
+    {
+      "source": "Data",
+      "target": "Character",
+      "count": 6
+    },
+    {
+      "source": "Data",
+      "target": "Components",
+      "count": 1
+    },
+    {
+      "source": "Editor",
+      "target": "Core",
+      "count": 1
+    },
+    {
+      "source": "Enemy",
+      "target": "Ability",
+      "count": 2
+    },
+    {
+      "source": "Enemy",
+      "target": "Character",
+      "count": 1
+    },
+    {
+      "source": "Enemy",
+      "target": "Components",
+      "count": 2
+    },
+    {
+      "source": "Enemy",
+      "target": "Core",
+      "count": 3
+    },
+    {
+      "source": "Enemy",
+      "target": "Data",
+      "count": 2
+    },
+    {
+      "source": "Enemy",
+      "target": "Enemy/AI",
+      "count": 1
+    },
+    {
+      "source": "Enemy/AI",
+      "target": "Character",
+      "count": 1
+    },
+    {
+      "source": "Enemy/AI",
+      "target": "Data",
+      "count": 1
+    },
+    {
+      "source": "Enemy/AI",
+      "target": "Enemy",
+      "count": 1
+    },
+    {
+      "source": "Tests",
+      "target": "Ability",
+      "count": 6
+    },
+    {
+      "source": "Tests",
+      "target": "Character",
+      "count": 10
+    },
+    {
+      "source": "Tests",
+      "target": "Components",
+      "count": 16
+    },
+    {
+      "source": "Tests",
+      "target": "Core",
+      "count": 17
+    },
+    {
+      "source": "Tests",
+      "target": "Data",
+      "count": 5
+    },
+    {
+      "source": "Tests",
+      "target": "Enemy",
+      "count": 5
+    },
+    {
+      "source": "Tests",
+      "target": "UI",
+      "count": 1
+    },
+    {
+      "source": "Tests",
+      "target": "UI/Widgets",
+      "count": 2
+    },
+    {
+      "source": "UI",
+      "target": "Ability",
+      "count": 1
+    },
+    {
+      "source": "UI",
+      "target": "Character",
+      "count": 5
+    },
+    {
+      "source": "UI",
+      "target": "Components",
+      "count": 1
+    },
+    {
+      "source": "UI",
+      "target": "Core",
+      "count": 4
+    },
+    {
+      "source": "UI",
+      "target": "Data",
+      "count": 4
+    },
+    {
+      "source": "UI",
+      "target": "Enemy",
+      "count": 1
+    },
+    {
+      "source": "UI/Widgets",
+      "target": "Character",
+      "count": 3
+    },
+    {
+      "source": "UI/Widgets",
+      "target": "Components",
+      "count": 6
+    },
+    {
+      "source": "UI/Widgets",
+      "target": "Core",
+      "count": 6
+    },
+    {
+      "source": "UI/Widgets",
+      "target": "Data",
+      "count": 4
+    },
+    {
+      "source": "UI/Widgets",
+      "target": "UI",
+      "count": 4
+    },
+    {
+      "source": "World",
+      "target": "Character",
+      "count": 1
+    },
+    {
+      "source": "World",
+      "target": "Components",
+      "count": 2
+    },
+    {
+      "source": "World",
+      "target": "Core",
+      "count": 3
+    },
+    {
+      "source": "World",
+      "target": "Data",
+      "count": 1
+    },
+    {
+      "source": "World",
+      "target": "Enemy",
+      "count": 1
+    }
+  ]
+}

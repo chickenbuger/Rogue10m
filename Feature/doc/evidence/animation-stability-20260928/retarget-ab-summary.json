@@ -1,0 +1,790 @@
+{
+  "production_preserved": true,
+  "variants": {
+    "current": {
+      "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingJab_Manny": {
+        "head": {
+          "max_ref_angle": 57.09591347348745,
+          "max_first_angle": 14.397213321998198,
+          "max_step_angle": 0.9292001873701373,
+          "first_position": [
+            -5.681907455798631,
+            5.357684021463418,
+            151.4861591553127
+          ],
+          "max_first_distance": 68.46998453679113
+        },
+        "feet": {
+          "foot_l": {
+            "max_ref_angle": 73.40277463762469,
+            "max_first_angle": 37.164141689821825,
+            "max_step_angle": 3.5358858271257234,
+            "first_position": [
+              23.328786357610348,
+              35.8198619124381,
+              12.586130640127081
+            ],
+            "max_first_distance": 65.95155355110367
+          },
+          "foot_r": {
+            "max_ref_angle": 92.29981093009005,
+            "max_first_angle": 39.35784603362411,
+            "max_step_angle": 2.9086408398141637,
+            "first_position": [
+              -10.745171177455624,
+              -34.16941622115297,
+              11.715908667614997
+            ],
+            "max_first_distance": 22.13923902677839
+          }
+        },
+        "pelvis_child_length_ratios": {
+          "pelvis->thigh_l": {
+            "min": 0.8157661916546873,
+            "max": 1.2541019691451325
+          },
+          "pelvis->thigh_r": {
+            "min": 0.8989786309422472,
+            "max": 1.2395727980652138
+          },
+          "pelvis->spine_01": {
+            "min": 1.216643587204825,
+            "max": 1.715636346960607
+          },
+          "root->pelvis": {
+            "min": 0.7520639877186864,
+            "max": 0.8733036321892663
+          }
+        }
+      },
+      "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingLeftJab_Appearance": {
+        "head": {
+          "max_ref_angle": 57.094042260962425,
+          "max_first_angle": 14.39663957693437,
+          "max_step_angle": 1.5177103852181124,
+          "first_position": [
+            -5.681904740675199,
+            5.3576942884556455,
+            151.48615976690158
+          ],
+          "max_first_distance": 68.46449227865253
+        },
+        "feet": {
+          "foot_l": {
+            "max_ref_angle": 73.82554153150494,
+            "max_first_angle": 36.84117864688177,
+            "max_step_angle": 11.598447365935723,
+            "first_position": [
+              23.328780732390587,
+              35.819855554798416,
+              12.586123563928396
+            ],
+            "max_first_distance": 65.9486053451157
+          },
+          "foot_r": {
+            "max_ref_angle": 92.27092482608649,
+            "max_first_angle": 39.29278676882968,
+            "max_step_angle": 7.691114800823346,
+            "first_position": [
+              -10.745154554226591,
+              -34.16944978771471,
+              11.715925675773974
+            ],
+            "max_first_distance": 22.135829227587518
+          }
+        },
+        "pelvis_child_length_ratios": {
+          "pelvis->thigh_l": {
+            "min": 0.8133870643771625,
+            "max": 1.2506950762972258
+          },
+          "pelvis->thigh_r": {
+            "min": 0.8857464959263273,
+            "max": 1.239503055931918
+          },
+          "pelvis->spine_01": {
+            "min": 1.205039907883396,
+            "max": 1.7155924005146785
+          },
+          "root->pelvis": {
+            "min": 0.7523017254953902,
+            "max": 0.8736605466793147
+          }
+        }
+      }
+    },
+    "root_bones": {
+      "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingJab_Manny": {
+        "head": {
+          "max_ref_angle": 57.095900078019305,
+          "max_first_angle": 14.397272322228705,
+          "max_step_angle": 0.929118072917367,
+          "first_position": [
+            -5.681923617240266,
+            5.357711364362309,
+            151.48616207642266
+          ],
+          "max_first_distance": 68.46992879432203
+        },
+        "feet": {
+          "foot_l": {
+            "max_ref_angle": 73.40277050665796,
+            "max_first_angle": 37.164092545371794,
+            "max_step_angle": 3.5358295225941445,
+            "first_position": [
+              23.328802039896523,
+              35.81983864692656,
+              12.586128757573917
+            ],
+            "max_first_distance": 65.95159333421427
+          },
+          "foot_r": {
+            "max_ref_angle": 92.2998019962974,
+            "max_first_angle": 39.35782826003641,
+            "max_step_angle": 2.9078754593210796,
+            "first_position": [
+              -10.74515526740107,
+              -34.16943898564455,
+              11.71592371064844
+            ],
+            "max_first_distance": 22.13926143019246
+          }
+        },
+        "pelvis_child_length_ratios": {
+          "pelvis->thigh_l": {
+            "min": 0.9999999951950466,
+            "max": 0.9999999951950479
+          },
+          "pelvis->thigh_r": {
+            "min": 0.9999999951966404,
+            "max": 0.9999999951966416
+          },
+          "pelvis->spine_01": {
+            "min": 0.9999999951900981,
+            "max": 0.9999999951901
+          },
+          "root->pelvis": {
+            "min": 0.06669253374020369,
+            "max": 0.14499077739592472
+          }
+        }
+      },
+      "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingLeftJab_Appearance": {
+        "head": {
+          "max_ref_angle": 57.09404453897798,
+          "max_first_angle": 14.396612228277673,
+          "max_step_angle": 1.5177517178656144,
+          "first_position": [
+            -5.681921190410646,
+            5.3577219449865385,
+            151.4861606962064
+          ],
+          "max_first_distance": 68.46443684835549
+        },
+        "feet": {
+          "foot_l": {
+            "max_ref_angle": 73.82548665637455,
+            "max_first_angle": 36.841191775090515,
+            "max_step_angle": 11.598499652373889,
+            "first_position": [
+              23.328796643014606,
+              35.819832178868836,
+              12.586120124374546
+            ],
+            "max_first_distance": 65.94866531800555
+          },
+          "foot_r": {
+            "max_ref_angle": 92.27093642721718,
+            "max_first_angle": 39.292784403169534,
+            "max_step_angle": 7.6912303242263205,
+            "first_position": [
+              -10.745139284040658,
+              -34.16947307066798,
+              11.71593983573274
+            ],
+            "max_first_distance": 22.135852894966142
+          }
+        },
+        "pelvis_child_length_ratios": {
+          "pelvis->thigh_l": {
+            "min": 0.9999999951950466,
+            "max": 0.9999999951950479
+          },
+          "pelvis->thigh_r": {
+            "min": 0.9999999951966401,
+            "max": 0.9999999951966417
+          },
+          "pelvis->spine_01": {
+            "min": 0.9999999951900981,
+            "max": 0.9999999951900997
+          },
+          "root->pelvis": {
+            "min": 0.06670047544533567,
+            "max": 0.14477444290411356
+          }
+        }
+      }
+    },
+    "no_root_op": {
+      "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingJab_Manny": {
+        "head": {
+          "max_ref_angle": 57.09591347348745,
+          "max_first_angle": 14.397213321998198,
+          "max_step_angle": 0.9292001873701373,
+          "first_position": [
+            -5.681911071676916,
+            5.357688886077554,
+            151.4861609446321
+          ],
+          "max_first_distance": 68.4699786842962
+        },
+        "feet": {
+          "foot_l": {
+            "max_ref_angle": 73.40277463762469,
+            "max_first_angle": 37.164141689821825,
+            "max_step_angle": 3.5358858271257234,
+            "first_position": [
+              23.32878236976945,
+              35.81986663748707,
+              12.58613196552048
+            ],
+            "max_first_distance": 65.95154673977602
+          },
+          "foot_r": {
+            "max_ref_angle": 92.29981093009005,
+            "max_first_angle": 39.35784603362411,
+            "max_step_angle": 2.9086408398141637,
+            "first_position": [
+              -10.745174290123494,
+              -34.16941109341706,
+              11.715909477618055
+            ],
+            "max_first_distance": 22.13923227557232
+          }
+        },
+        "pelvis_child_length_ratios": {
+          "pelvis->thigh_l": {
+            "min": 0.9999999951950466,
+            "max": 0.999999995195048
+          },
+          "pelvis->thigh_r": {
+            "min": 0.9999999951966401,
+            "max": 0.9999999951966418
+          },
+          "pelvis->spine_01": {
+            "min": 0.9999999951900981,
+            "max": 0.9999999951901
+          },
+          "root->pelvis": {
+            "min": 0.8381322527607569,
+            "max": 0.9351551575728453
+          }
+        }
+      },
+      "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingLeftJab_Appearance": {
+        "head": {
+          "max_ref_angle": 57.094042260962425,
+          "max_first_angle": 14.39663957693437,
+          "max_step_angle": 1.5177103852181124,
+          "first_position": [
+            -5.681908395569854,
+            5.357699175141575,
+            151.48615958395825
+          ],
+          "max_first_distance": 68.46448618617687
+        },
+        "feet": {
+          "foot_l": {
+            "max_ref_angle": 73.82554153150494,
+            "max_first_angle": 36.84117864688177,
+            "max_step_angle": 11.598447365935723,
+            "first_position": [
+              23.328776894999706,
+              35.81986035075375,
+              12.586123387235375
+            ],
+            "max_first_distance": 65.94859974436494
+          },
+          "foot_r": {
+            "max_ref_angle": 92.27092482608649,
+            "max_first_angle": 39.29278676882968,
+            "max_step_angle": 7.691114800823346,
+            "first_position": [
+              -10.745158391617473,
+              -34.16944499175938,
+              11.715925499080953
+            ],
+            "max_first_distance": 22.13582637523039
+          }
+        },
+        "pelvis_child_length_ratios": {
+          "pelvis->thigh_l": {
+            "min": 0.9999999951950467,
+            "max": 0.9999999951950477
+          },
+          "pelvis->thigh_r": {
+            "min": 0.9999999951966404,
+            "max": 0.9999999951966417
+          },
+          "pelvis->spine_01": {
+            "min": 0.9999999951900981,
+            "max": 0.9999999951900999
+          },
+          "root->pelvis": {
+            "min": 0.8381801817411171,
+            "max": 0.9349785284856804
+          }
+        }
+      }
+    },
+    "no_ik": {
+      "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingJab_Manny": {
+        "head": {
+          "max_ref_angle": 57.278900209507555,
+          "max_first_angle": 14.829973871933507,
+          "max_step_angle": 0.9196282584941672,
+          "first_position": [
+            -4.174191005529017,
+            4.096487957303751,
+            149.20866950935473
+          ],
+          "max_first_distance": 68.4309967656533
+        },
+        "feet": {
+          "foot_l": {
+            "max_ref_angle": 74.48199656707806,
+            "max_first_angle": 37.25211810807079,
+            "max_step_angle": 3.4013535154541947,
+            "first_position": [
+              27.425630490523737,
+              34.33872323865449,
+              11.302939206758126
+            ],
+            "max_first_distance": 68.50121754219151
+          },
+          "foot_r": {
+            "max_ref_angle": 92.59898297445798,
+            "max_first_angle": 39.39861761325101,
+            "max_step_angle": 2.1052089744785625,
+            "first_position": [
+              -9.303967555701014,
+              -36.71334917488475,
+              10.433003615103562
+            ],
+            "max_first_distance": 23.929087604594187
+          }
+        },
+        "pelvis_child_length_ratios": {
+          "pelvis->thigh_l": {
+            "min": 1.028083521386533,
+            "max": 1.105916571061044
+          },
+          "pelvis->thigh_r": {
+            "min": 1.0305328961825808,
+            "max": 1.1098649236213711
+          },
+          "pelvis->spine_01": {
+            "min": 1.544478668661296,
+            "max": 1.5497527536317266
+          },
+          "root->pelvis": {
+            "min": 0.7676177262778087,
+            "max": 0.8715890137907936
+          }
+        }
+      },
+      "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingLeftJab_Appearance": {
+        "head": {
+          "max_ref_angle": 57.27437895740163,
+          "max_first_angle": 14.829165668283576,
+          "max_step_angle": 1.519000849030538,
+          "first_position": [
+            -4.174192030172566,
+            4.096496268972068,
+            149.2086666876134
+          ],
+          "max_first_distance": 68.42539760016756
+        },
+        "feet": {
+          "foot_l": {
+            "max_ref_angle": 74.38648912179207,
+            "max_first_angle": 36.91741887982259,
+            "max_step_angle": 4.325204266008027,
+            "first_position": [
+              27.425627973197614,
+              34.33871039169866,
+              11.302929682465589
+            ],
+            "max_first_distance": 68.50017332340357
+          },
+          "foot_r": {
+            "max_ref_angle": 92.57601722741505,
+            "max_first_angle": 39.3047460917995,
+            "max_step_angle": 4.124830826607827,
+            "first_position": [
+              -9.303955022604196,
+              -36.71338157323883,
+              10.43301615078704
+            ],
+            "max_first_distance": 23.924220939465137
+          }
+        },
+        "pelvis_child_length_ratios": {
+          "pelvis->thigh_l": {
+            "min": 1.0280965065617134,
+            "max": 1.1057688953935585
+          },
+          "pelvis->thigh_r": {
+            "min": 1.0306218488016234,
+            "max": 1.1098360475678872
+          },
+          "pelvis->spine_01": {
+            "min": 1.5445381550277233,
+            "max": 1.5497902132719703
+          },
+          "root->pelvis": {
+            "min": 0.7676819883463728,
+            "max": 0.8715781542196784
+          }
+        }
+      }
+    },
+    "root_and_unmap_accessories": {
+      "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingJab_Manny": {
+        "head": {
+          "max_ref_angle": 57.095900078019305,
+          "max_first_angle": 14.397272322228705,
+          "max_step_angle": 0.929118072917367,
+          "first_position": [
+            -5.681923617240266,
+            5.357711364362309,
+            151.48616207642266
+          ],
+          "max_first_distance": 68.46992879432203
+        },
+        "feet": {
+          "foot_l": {
+            "max_ref_angle": 73.40277050665796,
+            "max_first_angle": 37.164092545371794,
+            "max_step_angle": 3.5358295225941445,
+            "first_position": [
+              23.328802039896523,
+              35.81983864692656,
+              12.586128757573917
+            ],
+            "max_first_distance": 65.95159333421427
+          },
+          "foot_r": {
+            "max_ref_angle": 92.2998019962974,
+            "max_first_angle": 39.35782826003641,
+            "max_step_angle": 2.9078754593210796,
+            "first_position": [
+              -10.74515526740107,
+              -34.16943898564455,
+              11.71592371064844
+            ],
+            "max_first_distance": 22.13926143019246
+          }
+        },
+        "pelvis_child_length_ratios": {
+          "pelvis->thigh_l": {
+            "min": 0.9999999951950466,
+            "max": 0.9999999951950479
+          },
+          "pelvis->thigh_r": {
+            "min": 0.9999999951966404,
+            "max": 0.9999999951966416
+          },
+          "pelvis->spine_01": {
+            "min": 0.9999999951900981,
+            "max": 0.9999999951901
+          },
+          "root->pelvis": {
+            "min": 0.06669253374020369,
+            "max": 0.14499077739592472
+          }
+        }
+      },
+      "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingLeftJab_Appearance": {
+        "head": {
+          "max_ref_angle": 57.09404453897798,
+          "max_first_angle": 14.396612228277673,
+          "max_step_angle": 1.5177517178656144,
+          "first_position": [
+            -5.681921190410646,
+            5.3577219449865385,
+            151.4861606962064
+          ],
+          "max_first_distance": 68.46443684835549
+        },
+        "feet": {
+          "foot_l": {
+            "max_ref_angle": 73.82548665637455,
+            "max_first_angle": 36.841191775090515,
+            "max_step_angle": 11.598499652373889,
+            "first_position": [
+              23.328796643014606,
+              35.819832178868836,
+              12.586120124374546
+            ],
+            "max_first_distance": 65.94866531800555
+          },
+          "foot_r": {
+            "max_ref_angle": 92.27093642721718,
+            "max_first_angle": 39.292784403169534,
+            "max_step_angle": 7.6912303242263205,
+            "first_position": [
+              -10.745139284040658,
+              -34.16947307066798,
+              11.71593983573274
+            ],
+            "max_first_distance": 22.135852894966142
+          }
+        },
+        "pelvis_child_length_ratios": {
+          "pelvis->thigh_l": {
+            "min": 0.9999999951950466,
+            "max": 0.9999999951950479
+          },
+          "pelvis->thigh_r": {
+            "min": 0.9999999951966401,
+            "max": 0.9999999951966417
+          },
+          "pelvis->spine_01": {
+            "min": 0.9999999951900981,
+            "max": 0.9999999951900997
+          },
+          "root->pelvis": {
+            "min": 0.06670047544533567,
+            "max": 0.14477444290411356
+          }
+        }
+      }
+    },
+    "only_align": {
+      "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingJab_Manny": {
+        "head": {
+          "max_ref_angle": 57.704390061933395,
+          "max_first_angle": 14.817829154900593,
+          "max_step_angle": 0.9197953685690459,
+          "first_position": [
+            -5.973806093717788,
+            4.55846881619768,
+            148.329607419213
+          ],
+          "max_first_distance": 67.99092557936441
+        },
+        "feet": {
+          "foot_l": {
+            "max_ref_angle": 77.68190247676048,
+            "max_first_angle": 40.848527371912,
+            "max_step_angle": 3.4841076405061973,
+            "first_position": [
+              24.86206421589887,
+              35.903792454753926,
+              10.11958387347208
+            ],
+            "max_first_distance": 66.83965364589356
+          },
+          "foot_r": {
+            "max_ref_angle": 87.67585782811389,
+            "max_first_angle": 35.71875108270616,
+            "max_step_angle": 1.9670391035745967,
+            "first_position": [
+              -12.20194094238175,
+              -33.66948016630376,
+              14.048017634472767
+            ],
+            "max_first_distance": 21.153191753763274
+          }
+        },
+        "pelvis_child_length_ratios": {
+          "pelvis->thigh_l": {
+            "min": 0.868730932439992,
+            "max": 1.1258298663505388
+          },
+          "pelvis->thigh_r": {
+            "min": 1.0132813741523399,
+            "max": 1.154319635626684
+          },
+          "pelvis->spine_01": {
+            "min": 1.3152536528465582,
+            "max": 1.6095198393606174
+          },
+          "root->pelvis": {
+            "min": 0.7928000250480979,
+            "max": 0.8694960709590869
+          }
+        }
+      },
+      "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingLeftJab_Appearance": {
+        "head": {
+          "max_ref_angle": 57.699957728409544,
+          "max_first_angle": 14.817079335582015,
+          "max_step_angle": 1.5233893823967724,
+          "first_position": [
+            -5.973803658952807,
+            4.558479191933823,
+            148.3296060087077
+          ],
+          "max_first_distance": 67.98462622042868
+        },
+        "feet": {
+          "foot_l": {
+            "max_ref_angle": 77.67745217055312,
+            "max_first_angle": 40.610855835252806,
+            "max_step_angle": 4.439080665146909,
+            "first_position": [
+              24.862053209725275,
+              35.90379072282799,
+              10.11957677807191
+            ],
+            "max_first_distance": 66.83797088589327
+          },
+          "foot_r": {
+            "max_ref_angle": 87.6492428031254,
+            "max_first_angle": 35.60446410385204,
+            "max_step_angle": 3.9298597509132716,
+            "first_position": [
+              -12.201926568230707,
+              -33.669516304632424,
+              14.048036341567084
+            ],
+            "max_first_distance": 21.146948494139867
+          }
+        },
+        "pelvis_child_length_ratios": {
+          "pelvis->thigh_l": {
+            "min": 0.8710862897344345,
+            "max": 1.1254030241628026
+          },
+          "pelvis->thigh_r": {
+            "min": 1.0135990232465546,
+            "max": 1.154275194646146
+          },
+          "pelvis->spine_01": {
+            "min": 1.3178036832888889,
+            "max": 1.612834284024532
+          },
+          "root->pelvis": {
+            "min": 0.7923270872800195,
+            "max": 0.8694815733100298
+          }
+        }
+      }
+    },
+    "root_and_align": {
+      "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingJab_Manny": {
+        "head": {
+          "max_ref_angle": 57.704373353663726,
+          "max_first_angle": 14.817872700736666,
+          "max_step_angle": 0.9197628209578903,
+          "first_position": [
+            -5.973763565038575,
+            4.558448271228338,
+            148.32961433670337
+          ],
+          "max_first_distance": 67.99093119939006
+        },
+        "feet": {
+          "foot_l": {
+            "max_ref_angle": 77.68189164444824,
+            "max_first_angle": 40.84852414367836,
+            "max_step_angle": 3.48414037121033,
+            "first_position": [
+              24.862054021818462,
+              35.903798162417694,
+              10.119585940211884
+            ],
+            "max_first_distance": 66.83965614740616
+          },
+          "foot_r": {
+            "max_ref_angle": 87.67587890537925,
+            "max_first_angle": 35.7187671511634,
+            "max_step_angle": 1.967125388737681,
+            "first_position": [
+              -12.202007156553442,
+              -33.66944493212496,
+              14.048014617253283
+            ],
+            "max_first_distance": 21.153184891578274
+          }
+        },
+        "pelvis_child_length_ratios": {
+          "pelvis->thigh_l": {
+            "min": 0.9999999951950463,
+            "max": 0.9999999951950479
+          },
+          "pelvis->thigh_r": {
+            "min": 0.9999999951966403,
+            "max": 0.9999999951966416
+          },
+          "pelvis->spine_01": {
+            "min": 0.9999999951900981,
+            "max": 0.9999999951901
+          },
+          "root->pelvis": {
+            "min": 0.07899309719869764,
+            "max": 0.11981238634438529
+          }
+        }
+      },
+      "/Game/Rogue10m/Animation/Combat/Boxing/A_BoxingLeftJab_Appearance": {
+        "head": {
+          "max_ref_angle": 57.699932403987944,
+          "max_first_angle": 14.817116621822386,
+          "max_step_angle": 1.523345981820376,
+          "first_position": [
+            -5.97376065254401,
+            4.558458810710804,
+            148.32961328442983
+          ],
+          "max_first_distance": 67.9846253491741
+        },
+        "feet": {
+          "foot_l": {
+            "max_ref_angle": 77.67744322058289,
+            "max_first_angle": 40.61091999712452,
+            "max_step_angle": 4.439161399960755,
+            "first_position": [
+              24.862045729177982,
+              35.90379492964053,
+              10.119577787786213
+            ],
+            "max_first_distance": 66.8379855481876
+          },
+          "foot_r": {
+            "max_ref_angle": 87.64926501533742,
+            "max_first_angle": 35.60449196839062,
+            "max_step_angle": 3.929909232927038,
+            "first_position": [
+              -12.201994722281611,
+              -33.66948007822244,
+              14.04803203100473
+            ],
+            "max_first_distance": 21.146941304434655
+          }
+        },
+        "pelvis_child_length_ratios": {
+          "pelvis->thigh_l": {
+            "min": 0.9999999951950466,
+            "max": 0.9999999951950477
+          },
+          "pelvis->thigh_r": {
+            "min": 0.9999999951966403,
+            "max": 0.9999999951966417
+          },
+          "pelvis->spine_01": {
+            "min": 0.999999995190098,
+            "max": 0.9999999951900999
+          },
+          "root->pelvis": {
+            "min": 0.0785377508091305,
+            "max": 0.11944241294240492
+          }
+        }
+      }
+    }
+  },
+  "conclusion": "Root correction removes measured pelvis-child translation distortion. It does not reduce offline head or foot angular motion; live validation is still required."
+}

@@ -10,25 +10,12 @@
 #include "Components/TextBlock.h"
 #include "Components/VerticalBox.h"
 #include "Components/VerticalBoxSlot.h"
+#include "Widgets/Rogue10mBottomHUDWidget.h"
 
 namespace
 {
 	const FLinearColor PrototypePanelColor(0.02f, 0.025f, 0.03f, 0.68f);
 	const FLinearColor PrototypeTextColor(0.92f, 0.90f, 0.84f, 1.0f);
-
-	FRogue10mHudVitalView MakeIdentityResourceVitalView(const FRogue10mHudIdentityView& IdentityView)
-	{
-		FRogue10mHudVitalView VitalView;
-		VitalView.Current = IdentityView.Current;
-		VitalView.Max = IdentityView.Max;
-		VitalView.Normalized = IdentityView.Normalized;
-		VitalView.Percent = IdentityView.Normalized * 100.0f;
-		VitalView.ValueText = FText::FromString(FString::Printf(TEXT("%.0f / %.0f"), IdentityView.Current, IdentityView.Max));
-		VitalView.PercentText = FText::FromString(FString::Printf(TEXT("%.0f%%"), VitalView.Percent));
-		VitalView.FillColor = FLinearColor(0.52f, 0.54f, 0.58f, 1.0f);
-		VitalView.bVisible = IdentityView.bHasIdentityResource;
-		return VitalView;
-	}
 
 	UTextBlock* CreatePrototypeText(UWidgetTree* WidgetTree, FName WidgetName, const FString& Text, float FontSize = 12.0f)
 	{
@@ -89,6 +76,45 @@ void URogue10mMainHUDWidget::NativeOnInitialized()
 	RefreshBoundWidgetData();
 }
 
+void URogue10mMainHUDWidget::NativePreConstruct()
+{
+	Super::NativePreConstruct();
+	if (BottomHUDWidget)
+	{
+		if (UCanvasPanelSlot* BottomSlot = Cast<UCanvasPanelSlot>(BottomHUDWidget->Slot))
+		{
+			BottomSlot->SetAutoSize(false);
+			BottomSlot->SetAnchors(FAnchors(0.0f, 1.0f, 1.0f, 1.0f));
+			BottomSlot->SetAlignment(FVector2D(0.0f, 1.0f));
+			BottomSlot->SetOffsets(FMargin(0.0f, 0.0f, 0.0f, BottomHUDWidget->GetResponsiveLayoutHeight()));
+		}
+	}
+
+	const auto AnchorPeripheralWidget = [](UWidget* Widget, const FVector2D& Anchor,
+		const FVector2D& Alignment, const FMargin& Offsets)
+	{
+		if (Widget)
+		{
+			if (UCanvasPanelSlot* CanvasSlot = Cast<UCanvasPanelSlot>(Widget->Slot))
+			{
+				CanvasSlot->SetAutoSize(false);
+				CanvasSlot->SetAnchors(FAnchors(Anchor.X, Anchor.Y));
+				CanvasSlot->SetAlignment(Alignment);
+				CanvasSlot->SetOffsets(Offsets);
+			}
+		}
+	};
+	AnchorPeripheralWidget(MonsterInfoWidget, FVector2D(0.5f, 0.0f), FVector2D(0.5f, 0.0f),
+		FMargin(0.0f, 24.0f, 560.0f, 68.0f));
+	AnchorPeripheralWidget(UI_RunTimerText, FVector2D(1.0f, 0.0f), FVector2D(1.0f, 0.0f),
+		FMargin(-24.0f, 24.0f, 140.0f, 32.0f));
+	const float LogBottomOffset = (BottomHUDWidget ? BottomHUDWidget->GetResponsiveLayoutHeight() : 184.0f) + 24.0f;
+	AnchorPeripheralWidget(SystemLogContainer, FVector2D(0.0f, 1.0f), FVector2D(0.0f, 1.0f),
+		FMargin(24.0f, -LogBottomOffset, 360.0f, 48.0f));
+	AnchorPeripheralWidget(ItemAcquisitionContainer, FVector2D(1.0f, 0.65f), FVector2D(1.0f, 0.0f),
+		FMargin(-24.0f, 0.0f, 260.0f, 72.0f));
+}
+
 void URogue10mMainHUDWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -133,40 +159,25 @@ void URogue10mMainHUDWidget::RefreshBoundWidgetData()
 
 void URogue10mMainHUDWidget::RefreshFrequentWidgetData()
 {
-	static const FText HealthLabel = NSLOCTEXT("Rogue10mHUD", "HealthLabel", "체력");
-	static const FText StaminaLabel = NSLOCTEXT("Rogue10mHUD", "StaminaLabel", "스테미나");
-	static const FText IdentityLabel = NSLOCTEXT("Rogue10mHUD", "IdentityLabel", "아이덴티티");
-
-	if (HealthBarWidget)
+	if (BottomHUDWidget)
 	{
-		HealthBarWidget->SetVitalView(HealthLabel, GetHealthView());
-	}
-	if (StaminaBarWidget)
-	{
-		StaminaBarWidget->SetVitalView(StaminaLabel, GetStaminaView());
-	}
-	if (IdentityBarWidget)
-	{
-		const FRogue10mHudIdentityView IdentityView = GetIdentityView();
-		const ESlateVisibility DesiredVisibility = IdentityView.bHasIdentityResource
-			? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed;
-		if (IdentityBarWidget->GetVisibility() != DesiredVisibility)
-		{
-			IdentityBarWidget->SetVisibility(DesiredVisibility);
-		}
-		IdentityBarWidget->SetVitalView(IdentityLabel, MakeIdentityResourceVitalView(IdentityView));
-	}
-	if (ProgressionWidget)
-	{
-		ProgressionWidget->SetProgressionView(GetProgressionView());
-	}
-	if (IdentityWidget)
-	{
-		IdentityWidget->SetIdentityView(GetIdentityView());
+		BottomHUDWidget->SetFrequentViews(
+			GetHealthView(),
+			GetStaminaView(),
+			GetManaView(),
+			GetProgressionView(),
+			GetIdentityView());
 	}
 	if (MonsterInfoWidget)
 	{
 		MonsterInfoWidget->SetMonsterInfoView(GetLookedAtMonsterInfoView());
+	}
+	if (UI_RunTimerText)
+	{
+		const FRogue10mHudRunTimerView TimerView = GetRunTimerView();
+		UI_RunTimerText->SetText(TimerView.RemainingText);
+		UI_RunTimerText->SetVisibility(TimerView.bVisible
+			? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
 	}
 	// MiniMap is intentionally disabled until its revised UI is ready.
 	BP_OnBoundWidgetDataRefreshed();
@@ -174,48 +185,21 @@ void URogue10mMainHUDWidget::RefreshFrequentWidgetData()
 
 void URogue10mMainHUDWidget::RefreshSlowWidgetData()
 {
-	if (SkillSlotPanelWidget)
+	if (BottomHUDWidget)
 	{
-		SkillSlotPanelWidget->SetSkillSlotViews(GetSkillQuickSlotViews(), QuickSlotWidgetClass);
+		BottomHUDWidget->SetSlowViews(
+			GetSkillQuickSlotViews(),
+			GetItemQuickSlotViews(),
+			QuickSlotWidgetClass);
 	}
-	else
-	{
-		RefreshQuickSlotContainer(SkillSlotContainer, GetSkillQuickSlotViews());
-	}
-	RefreshQuickSlotContainer(ItemSlotContainer, GetItemQuickSlotViews());
-	RefreshLogContainer(SystemLogContainer, GetSystemLogEntries());
-	RefreshLogContainer(ItemAcquisitionContainer, GetItemAcquisitionEntries());
+	RefreshLogContainer(SystemLogContainer, GetSystemLogEntries(), 2);
+	RefreshLogContainer(ItemAcquisitionContainer, GetItemAcquisitionEntries(), 3);
 }
 void URogue10mMainHUDWidget::AssignOwningMainHUDToBoundWidgets()
 {
-	if (HealthBarWidget)
+	if (BottomHUDWidget)
 	{
-		HealthBarWidget->SetOwningMainHUD(this);
-	}
-
-	if (StaminaBarWidget)
-	{
-		StaminaBarWidget->SetOwningMainHUD(this);
-	}
-
-	if (IdentityBarWidget)
-	{
-		IdentityBarWidget->SetOwningMainHUD(this);
-	}
-
-	if (ProgressionWidget)
-	{
-		ProgressionWidget->SetOwningMainHUD(this);
-	}
-
-	if (SkillSlotPanelWidget)
-	{
-		SkillSlotPanelWidget->SetOwningMainHUD(this);
-	}
-
-	if (IdentityWidget)
-	{
-		IdentityWidget->SetOwningMainHUD(this);
+		BottomHUDWidget->InitializeBottomHUD(this);
 	}
 
 	if (MonsterInfoWidget)
@@ -244,47 +228,23 @@ void URogue10mMainHUDWidget::AssignOwningMainHUDToBoundWidgets()
 	}
 }
 
-void URogue10mMainHUDWidget::RefreshQuickSlotContainer(UPanelWidget* Container, const TArray<FRogue10mHudQuickSlotView>& Views)
-{
-	if (!Container || !QuickSlotWidgetClass)
-	{
-		return;
-	}
-
-	while (Container->GetChildrenCount() > Views.Num())
-	{
-		Container->RemoveChildAt(Container->GetChildrenCount() - 1);
-	}
-	while (Container->GetChildrenCount() < Views.Num())
-	{
-		URogue10mQuickSlotWidget* SlotWidget = CreateWidget<URogue10mQuickSlotWidget>(GetOwningPlayer(), QuickSlotWidgetClass);
-		if (!SlotWidget)
-		{
-			break;
-		}
-		SlotWidget->SetOwningMainHUD(this);
-		Container->AddChild(SlotWidget);
-	}
-	for (int32 Index = 0; Index < Views.Num(); ++Index)
-	{
-		if (URogue10mQuickSlotWidget* SlotWidget = Cast<URogue10mQuickSlotWidget>(Container->GetChildAt(Index)))
-		{
-			SlotWidget->SetQuickSlotView(Views[Index]);
-		}
-	}
-}
-void URogue10mMainHUDWidget::RefreshLogContainer(UPanelWidget* Container, const TArray<FRogue10mHudLogEntryView>& Views)
+void URogue10mMainHUDWidget::RefreshLogContainer(UPanelWidget* Container,
+	const TArray<FRogue10mHudLogEntryView>& Views, int32 MaxEntries)
 {
 	if (!Container || !LogLineWidgetClass)
 	{
 		return;
 	}
 
-	while (Container->GetChildrenCount() > Views.Num())
+	// The controller stores newest entries first; retain that order within the HUD budget.
+	const int32 VisibleCount = FMath::Min(Views.Num(), FMath::Max(0, MaxEntries));
+	Container->SetVisibility(VisibleCount > 0
+		? ESlateVisibility::SelfHitTestInvisible : ESlateVisibility::Collapsed);
+	while (Container->GetChildrenCount() > VisibleCount)
 	{
 		Container->RemoveChildAt(Container->GetChildrenCount() - 1);
 	}
-	while (Container->GetChildrenCount() < Views.Num())
+	while (Container->GetChildrenCount() < VisibleCount)
 	{
 		URogue10mLogLineWidget* LogWidget = CreateWidget<URogue10mLogLineWidget>(GetOwningPlayer(), LogLineWidgetClass);
 		if (!LogWidget)
@@ -294,7 +254,7 @@ void URogue10mMainHUDWidget::RefreshLogContainer(UPanelWidget* Container, const 
 		LogWidget->SetOwningMainHUD(this);
 		Container->AddChild(LogWidget);
 	}
-	for (int32 Index = 0; Index < Views.Num(); ++Index)
+	for (int32 Index = 0; Index < FMath::Min(VisibleCount, Container->GetChildrenCount()); ++Index)
 	{
 		if (URogue10mLogLineWidget* LogWidget = Cast<URogue10mLogLineWidget>(Container->GetChildAt(Index)))
 		{
@@ -310,7 +270,7 @@ void URogue10mMainHUDWidget::EnsurePrototypeLayout()
 	}
 
 	// Blueprint에서 이미 UI를 직접 배치했다면 C++ 임시 골격은 만들지 않는다.
-	if (HealthBarWidget || StaminaBarWidget || MonsterInfoWidget || GetWidgetFromName(TEXT("BottomHUDPanel")))
+	if (BottomHUDWidget || MonsterInfoWidget || GetWidgetFromName(TEXT("BottomHUDPanel")))
 	{
 		return;
 	}
@@ -355,13 +315,13 @@ void URogue10mMainHUDWidget::EnsurePrototypeLayout()
 	{
 		BottomPanel->SetContent(BottomBox);
 
-		UTextBlock* HealthText = CreatePrototypeText(WidgetTree, TEXT("HealthBarWidget_PrototypeText"), TEXT("HealthBarWidget - 체력 100 / 100"), 12.0f);
-		UTextBlock* SkillText = CreatePrototypeText(WidgetTree, TEXT("Box_SkillSlots_PrototypeText"), TEXT("SkillSlot 영역 - 좌클릭 / 우클릭 / 점프공격 / 차징"), 12.0f);
-		UTextBlock* IdentityText = CreatePrototypeText(WidgetTree, TEXT("IdentityWidget_PrototypeText"), TEXT("IdentityWidget - 아이덴티티 / 무기 숙련도 / 기력"), 12.0f);
-		UTextBlock* StaminaText = CreatePrototypeText(WidgetTree, TEXT("StaminaBarWidget_PrototypeText"), TEXT("StaminaBarWidget - 스테미나 100 / 100"), 12.0f);
-		UTextBlock* ItemText = CreatePrototypeText(WidgetTree, TEXT("Box_ItemSlots_PrototypeText"), TEXT("ItemSlot 영역 - 사용 아이템 슬롯"), 12.0f);
+		UTextBlock* BottomHUDText = CreatePrototypeText(
+			WidgetTree,
+			TEXT("BottomHUDWidget_PrototypeText"),
+			TEXT("BottomHUDWidget - HP / MP·스테미나 / 아이덴티티 / 스킬 / 아이템 / 경험치"),
+			12.0f);
 
-		TArray<UWidget*> BottomChildren = { HealthText, SkillText, IdentityText, StaminaText, ItemText };
+		TArray<UWidget*> BottomChildren = { BottomHUDText };
 		for (UWidget* ChildWidget : BottomChildren)
 		{
 			if (ChildWidget)

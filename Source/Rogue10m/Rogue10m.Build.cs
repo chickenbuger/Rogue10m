@@ -22,8 +22,14 @@ public class Rogue10m : ModuleRules
 			"UMG",
 			"Slate",
 			"SlateCore",
-			"IKRig"
+			"IKRig",
+			"AnimationCore",
+			"Niagara"
 		});
+		if (Target.bBuildEditor)
+		{
+			PrivateDependencyModuleNames.AddRange(new string[] { "MeshDescription", "SkeletalMeshDescription", "UnrealEd" });
+		}
 		PublicIncludePaths.AddRange(new string[] {
 			"Rogue10m",
 			"Rogue10m/Ability",

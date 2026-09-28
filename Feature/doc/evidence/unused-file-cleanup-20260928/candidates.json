@@ -1,0 +1,1183 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-09-28T11:39:15.776882+00:00",
+  "project_root": "D:\\Project\\Rogue10m",
+  "mode": "audit_only_no_deletions",
+  "candidate_root": "tmp",
+  "retained_roots": [
+    "Feature/doc/evidence",
+    "ui-concepts",
+    "Scripts"
+  ],
+  "reference_scope": [
+    "Source",
+    "Scripts",
+    "Config",
+    "*.uproject",
+    "tmp scripts"
+  ],
+  "limitations": [
+    "Literal normalized absolute/relative path references only; dynamically constructed paths are not resolved.",
+    "Candidate status is not deletion authorization; revalidate paths and both hashes before deleting.",
+    "SourceArt, Content, user design documents and nonidentical files are never candidates."
+  ],
+  "summary": {
+    "eligible_tmp_files": 3714,
+    "hashed_files": 325,
+    "reference_files_scanned": 343,
+    "preserved": {
+      "backup or tool/runtime original": 99,
+      "tool/runtime binary": 3
+    },
+    "candidates": 137,
+    "candidate_bytes": 16470333,
+    "referenced_duplicates": 20,
+    "issues": 0
+  },
+  "candidates": [
+    {
+      "original": "tmp/boxing-reference/build.cmd",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/build-inspector.cmd",
+      "sha256": "01448a049e882c848e4554bab7bdb2ba6f69b4a6c4fd4c3163802c86617196a3",
+      "bytes": 364,
+      "references": []
+    },
+    {
+      "original": "tmp/head-framing/run.ps1",
+      "keep": "Feature/doc/evidence/head-framing-20260922/run.ps1",
+      "sha256": "296fd0eed0d2359f4e738d96ddcb552a3877ba7a793db9b5d2a01ed1bddff199",
+      "bytes": 967,
+      "references": []
+    },
+    {
+      "original": "tmp/relaxed-idle/run.ps1",
+      "keep": "Feature/doc/evidence/relaxed-idle-20260922/run.ps1",
+      "sha256": "25d0fa92f289edfc9ea8e6bf0e2b166a23d3dae399e9b2adc8843067f1b600bb",
+      "bytes": 967,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/run.ps1",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/run.ps1",
+      "sha256": "9ce33b477ce0f9a803be3f5d7aca9ad4b2de6984d4bef5c825e429a6daf3d17b",
+      "bytes": 969,
+      "references": []
+    },
+    {
+      "original": "tmp/appearance-head/run.ps1",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/run.ps1",
+      "sha256": "d2c4119e045fc4fcabec9d12bbb9d1466afc3e07c19efc22c47db0962d8a4f2d",
+      "bytes": 973,
+      "references": []
+    },
+    {
+      "original": "tmp/third-person-inspection/run.ps1",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/run.ps1",
+      "sha256": "a1951b2d1322ca1b05e396e041806ae11b42dc5818a7a2df34d65f2fd5e0eaab",
+      "bytes": 1008,
+      "references": []
+    },
+    {
+      "original": "tmp/appearance-head/encode.py",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/encode.py",
+      "sha256": "e228088949b831a11cfec1d5affe31eec5705a71afc7ac4baae959aece99bf7b",
+      "bytes": 1221,
+      "references": []
+    },
+    {
+      "original": "tmp/basic-brawler/reference-access.md",
+      "keep": "Feature/doc/evidence/basic-brawler-20260910/reference-access.md",
+      "sha256": "d1f845f0401ecc9af7e75f5fbe35dbdbc042555937494b219a2080633d9aafd1",
+      "bytes": 1465,
+      "references": []
+    },
+    {
+      "original": "tmp/head-framing/encode.ps1",
+      "keep": "Feature/doc/evidence/head-framing-20260922/encode.ps1",
+      "sha256": "611c7ccc26d401df96c554d30658657e46d1fcfbe48ec524803270715b8f7747",
+      "bytes": 1501,
+      "references": []
+    },
+    {
+      "original": "tmp/martelo-game/encode.log",
+      "keep": "Feature/doc/evidence/martelo-first-person-20260922/encode.log",
+      "sha256": "9ef48862ce0a9a1213ca5e3495e1e7c1377ad6c2c626a5965e898b939c2c171b",
+      "bytes": 1687,
+      "references": []
+    },
+    {
+      "original": "tmp/third-person-inspection/encode.py",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/encode.py",
+      "sha256": "305aafc055644e5802af65c5fded18ee0a01673eb09bb36a6d49ec8b15b76d89",
+      "bytes": 1713,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/make-preview.py",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/make-preview.py",
+      "sha256": "99381227336511576b564838275584a73c06a6542f420d9ad0de55380d5e060e",
+      "bytes": 1779,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/make-lookdown.py",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/make-lookdown.py",
+      "sha256": "cd2635758223decfbe3e282b0dca902f73983264525835494eb9f3558a2dae2e",
+      "bytes": 1846,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/make-lookdown40.py",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/make-lookdown40.py",
+      "sha256": "18dc7aa10d13fbb8f86d982dcdf6a5f56b4b2dcb1fad911a8b81461340a2f447",
+      "bytes": 1868,
+      "references": []
+    },
+    {
+      "original": "tmp/fullbody/encode.log",
+      "keep": "Feature/doc/evidence/full-body-first-person-20260922/encode.log",
+      "sha256": "74cc6d5ebc15faac4957f73889b18234ee3db972f95a9ebdc2656ac1c2019ecc",
+      "bytes": 1984,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-combos/encode.log",
+      "keep": "Feature/doc/evidence/boxing-combos-20260912/encode.log",
+      "sha256": "40bb1cc20f24a7aa7dc840de7f284eb4b2277ea80902cc60392634feae50cd3b",
+      "bytes": 1996,
+      "references": []
+    },
+    {
+      "original": "tmp/fullbody/guard-reach-analysis.json",
+      "keep": "Feature/doc/evidence/full-body-first-person-20260922/guard-reach-analysis.json",
+      "sha256": "b1fabac00288085c74ba20206a6788008eb2d648c25d57e38c4e01e391845c10",
+      "bytes": 2001,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/diff-warnings.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/diff-warnings.log",
+      "sha256": "22207008e5f4d5d6689a02c236d576e986b605433465c14bbb38d653fa00c356",
+      "bytes": 2227,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/diff-check.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/diff-warnings.log",
+      "sha256": "22207008e5f4d5d6689a02c236d576e986b605433465c14bbb38d653fa00c356",
+      "bytes": 2227,
+      "references": []
+    },
+    {
+      "original": "tmp/head-camera/diff-check.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/diff-warnings.log",
+      "sha256": "22207008e5f4d5d6689a02c236d576e986b605433465c14bbb38d653fa00c356",
+      "bytes": 2227,
+      "references": []
+    },
+    {
+      "original": "tmp/head-framing/diff-check.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/diff-warnings.log",
+      "sha256": "22207008e5f4d5d6689a02c236d576e986b605433465c14bbb38d653fa00c356",
+      "bytes": 2227,
+      "references": []
+    },
+    {
+      "original": "tmp/relaxed-idle/diff-check.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/diff-warnings.log",
+      "sha256": "22207008e5f4d5d6689a02c236d576e986b605433465c14bbb38d653fa00c356",
+      "bytes": 2227,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/inspect.cpp",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/inspect.cpp",
+      "sha256": "5c76b95dfdeffeccac7b3bcb1759af4368c90d37b0366ce7aa3217f8451ea665",
+      "bytes": 2380,
+      "references": []
+    },
+    {
+      "original": "tmp/relaxed-idle/make-preview.py",
+      "keep": "Feature/doc/evidence/relaxed-idle-20260922/make-preview.py",
+      "sha256": "77ba91850594fbbfe2f7acd8bf2ea5148bd5d6a629518044a2d3613c075d4412",
+      "bytes": 2457,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-combos/build-test-fix.log",
+      "keep": "Feature/doc/evidence/boxing-combos-20260912/build-test-fix.log",
+      "sha256": "668d59f48bd4a11ba74669ffb3074295dec5ecfebaba6cc237357e53b733a6b6",
+      "bytes": 3005,
+      "references": []
+    },
+    {
+      "original": "tmp/arms-only/build-final.log",
+      "keep": "Feature/doc/evidence/arms-only-20260912/build-final.log",
+      "sha256": "860b614af3200b4a1391bf82c2f57b60b1c09fcd455aa1f06791406fde3d28d5",
+      "bytes": 3020,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/build-final.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/build-final.log",
+      "sha256": "2b1694c16e1c0344884c25a0dc3c3778c5311a2c2469023b7881923a13fa5c63",
+      "bytes": 3128,
+      "references": []
+    },
+    {
+      "original": "tmp/arms-only/build-tests.log",
+      "keep": "Feature/doc/evidence/arms-only-20260912/build-tests.log",
+      "sha256": "b9bfcde5a4774baa2100915ffb96c4e0ef0315244ce95573b5ecd08bc6410dfa",
+      "bytes": 3170,
+      "references": []
+    },
+    {
+      "original": "tmp/relaxed-idle/build-final.log",
+      "keep": "Feature/doc/evidence/relaxed-idle-20260922/build-final.log",
+      "sha256": "6dfe43b053a3834273e8ff365fb0fc5c8bcc585186597f7eb98cd158b9cd7851",
+      "bytes": 3177,
+      "references": []
+    },
+    {
+      "original": "tmp/martelo-game/build.log",
+      "keep": "Feature/doc/evidence/martelo-first-person-20260922/build.log",
+      "sha256": "efb41be7e7e623db0b766d812fb5a5ac15c32373f58394546db442a877cb01f6",
+      "bytes": 3193,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/encode-boxing.log",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/encode-boxing.log",
+      "sha256": "ee4b4bab3fedfd2a68a2b26bda0b688d137da7ed71656192e222a17d3ee389b2",
+      "bytes": 3248,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/encode-rooted.log",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/encode-rooted.log",
+      "sha256": "182694417ab7f15a801257f491aaa4cff2bdf7e0260d3dfa6093bbd48cf2bf2f",
+      "bytes": 3248,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/encode-longguard.log",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/encode-longguard.log",
+      "sha256": "342e352335519731151ee6bb624a36447e1bdb982014459db71822b3c8c5c1d7",
+      "bytes": 3254,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/build.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/build.log",
+      "sha256": "6eb3f5b12d22a24b77aaa22d21ad3de8bb404306623d71b0ff27e271ec5a3f09",
+      "bytes": 3278,
+      "references": []
+    },
+    {
+      "original": "tmp/head-framing/build-retry.log",
+      "keep": "Feature/doc/evidence/head-framing-20260922/build-retry.log",
+      "sha256": "a166958fca4a1c4f604868f696cf18fb0d9a62e84e644f5c30032e8b3bc97618",
+      "bytes": 3329,
+      "references": []
+    },
+    {
+      "original": "tmp/head-framing/build-final.log",
+      "keep": "Feature/doc/evidence/head-framing-20260922/build-final.log",
+      "sha256": "7944d7ede6817b6688d841d68f120281b3d945264904985463b5da4f7145df2c",
+      "bytes": 3340,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/encode-lookdown.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/encode-lookdown.log",
+      "sha256": "6e4628742c4d302fdd2341157bf636f0c6ec30340b3d90ae0cb29707fa09d9dd",
+      "bytes": 3357,
+      "references": []
+    },
+    {
+      "original": "tmp/appearance-head/build-geometry.log",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/build-geometry.log",
+      "sha256": "577822e33790df8511a1a5d1fabf0d65037895285c27b4fb4d7cba8d5c62d7e1",
+      "bytes": 3405,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/encode.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/encode.log",
+      "sha256": "5be06568e0302fdff4c3679a7b7b8878892318c9eec5fa4d3873101bf284f87a",
+      "bytes": 3441,
+      "references": []
+    },
+    {
+      "original": "tmp/arms-only/build-input-isolation.log",
+      "keep": "Feature/doc/evidence/arms-only-20260912/build-input-isolation.log",
+      "sha256": "95c048e7d2865b6a20f451e748c22474bae3583a6726be0e620bce9715d35267",
+      "bytes": 3720,
+      "references": []
+    },
+    {
+      "original": "tmp/head-camera/encode.log",
+      "keep": "Feature/doc/evidence/head-attached-camera-20260922/encode.log",
+      "sha256": "5cd5a4cc81935447c8dd730f14defc2b3491b3585c54bd131b84e99adc361368",
+      "bytes": 3839,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-combos/build-pose-polish.log",
+      "keep": "Feature/doc/evidence/boxing-combos-20260912/build-pose-polish.log",
+      "sha256": "779caa0def591649bacb65f5430dbf4a2df7e169031901d82b3a2493c87c3b02",
+      "bytes": 3955,
+      "references": []
+    },
+    {
+      "original": "tmp/arms-only/harness-check.log",
+      "keep": "Feature/doc/evidence/arms-only-20260912/harness-check.log",
+      "sha256": "55f8b75d7b3d7493098c39d0372918f95a09f7b8e3698d4e6451f7141768e0d6",
+      "bytes": 4086,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-combos/generated-check.log",
+      "keep": "Feature/doc/evidence/arms-only-20260912/harness-check.log",
+      "sha256": "55f8b75d7b3d7493098c39d0372918f95a09f7b8e3698d4e6451f7141768e0d6",
+      "bytes": 4086,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/build.log",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/build.log",
+      "sha256": "c7b7db2a50465f0130fe64340f50465540d74b68228e176b54872477f38e7d8b",
+      "bytes": 4199,
+      "references": []
+    },
+    {
+      "original": "tmp/relaxed-idle/encode.log",
+      "keep": "Feature/doc/evidence/relaxed-idle-20260922/encode.log",
+      "sha256": "9317747ee469afdc780d69a015c5fa63332330583377d40c30a09b94a29c1779",
+      "bytes": 4326,
+      "references": []
+    },
+    {
+      "original": "tmp/fullbody/build-final.log",
+      "keep": "Feature/doc/evidence/full-body-first-person-20260922/build-final.log",
+      "sha256": "4d58be8525cf87f8b9566ee4ce049c0676b33e6b7555d0bcecceec80eb5c5702",
+      "bytes": 4367,
+      "references": []
+    },
+    {
+      "original": "tmp/head-camera/build-final.log",
+      "keep": "Feature/doc/evidence/head-attached-camera-20260922/build-final.log",
+      "sha256": "0e36439630d4b89e4fc6d18b8e53cb826052a09dc0b4f439e802631a9b0f8b95",
+      "bytes": 4478,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-combos/build-final.log",
+      "keep": "Feature/doc/evidence/boxing-combos-20260912/build-final.log",
+      "sha256": "f362a23a0830997f00d884c7d2eddacf6dc1e97c8ff450026f952fd78b24540b",
+      "bytes": 4534,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/path-check.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/path-check.log",
+      "sha256": "dd8ba43b61250e6d8ac25a94d31033dbcec9dbabb8c7b8886f5a031fc976efac",
+      "bytes": 4719,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/path-check.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/path-check.log",
+      "sha256": "dd8ba43b61250e6d8ac25a94d31033dbcec9dbabb8c7b8886f5a031fc976efac",
+      "bytes": 4719,
+      "references": []
+    },
+    {
+      "original": "tmp/head-camera/path-check.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/path-check.log",
+      "sha256": "dd8ba43b61250e6d8ac25a94d31033dbcec9dbabb8c7b8886f5a031fc976efac",
+      "bytes": 4719,
+      "references": []
+    },
+    {
+      "original": "tmp/head-framing/generated-check.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/path-check.log",
+      "sha256": "dd8ba43b61250e6d8ac25a94d31033dbcec9dbabb8c7b8886f5a031fc976efac",
+      "bytes": 4719,
+      "references": []
+    },
+    {
+      "original": "tmp/relaxed-idle/path-check.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/path-check.log",
+      "sha256": "dd8ba43b61250e6d8ac25a94d31033dbcec9dbabb8c7b8886f5a031fc976efac",
+      "bytes": 4719,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/encode-comparison.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/encode-comparison.log",
+      "sha256": "929677992a23b99cb00324b2b122f0e8f20e49dffa0d62071670571209ae4d37",
+      "bytes": 4765,
+      "references": []
+    },
+    {
+      "original": "tmp/third-person-inspection/path-check-final.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/path-check-final.log",
+      "sha256": "dbfe5370c0a512e5f5c8e77efb6b1a68ee64bb0de439ae21debad62d767dd390",
+      "bytes": 4976,
+      "references": []
+    },
+    {
+      "original": "tmp/third-person-inspection/path-check.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/path-check-final.log",
+      "sha256": "dbfe5370c0a512e5f5c8e77efb6b1a68ee64bb0de439ae21debad62d767dd390",
+      "bytes": 4976,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-combos/build.log",
+      "keep": "Feature/doc/evidence/boxing-combos-20260912/build.log",
+      "sha256": "e102bb2a215031b91b7fc89f343d2a7fc9aed8897aa5f1075079970817939dc6",
+      "bytes": 5040,
+      "references": []
+    },
+    {
+      "original": "tmp/head-camera/head-excursion-summary.json",
+      "keep": "Feature/doc/evidence/head-attached-camera-20260922/head-excursion-summary.json",
+      "sha256": "5035ba8cacd5022a989a910ce62456c1a94e1cf33df6e77e9dcfbcbf52fe1a58",
+      "bytes": 5091,
+      "references": []
+    },
+    {
+      "original": "tmp/arms-only/build.log",
+      "keep": "Feature/doc/evidence/arms-only-20260912/build.log",
+      "sha256": "f5a9d92bb5c7e492b437937546e5907dc6c6c75f040ab06a6973227a4d5371ec",
+      "bytes": 5698,
+      "references": []
+    },
+    {
+      "original": "tmp/head-framing/build.log",
+      "keep": "Feature/doc/evidence/head-framing-20260922/build.log",
+      "sha256": "448723a0d3bf888c409bfc39954cc7597c879e8c273d88a4748635e62eb34525",
+      "bytes": 5797,
+      "references": []
+    },
+    {
+      "original": "tmp/third-person-inspection/build-verified.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/build-verified.log",
+      "sha256": "707d10d8b613305db9b9b143eb612a0f95f08242b2696990223250e94f9491af",
+      "bytes": 11587,
+      "references": []
+    },
+    {
+      "original": "tmp/third-person-inspection/build-final.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/build-final.log",
+      "sha256": "6fe82982d90d902b911787f57821313e00a2869d571098ad43c00038a565eb2b",
+      "bytes": 12022,
+      "references": []
+    },
+    {
+      "original": "tmp/third-person-inspection/build.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/build.log",
+      "sha256": "2a1005e3f936cc2218daf2ec4b24de9d3871602ef65a936b19d791187bbf77d5",
+      "bytes": 14204,
+      "references": []
+    },
+    {
+      "original": "tmp/head-framing/initial-frame5.jpg",
+      "keep": "Feature/doc/evidence/head-framing-20260922/visual-initial-game.jpg",
+      "sha256": "d439a7f503d953d184329516f7cceaa1e5d80ba06c381837aad0d081eb597238",
+      "bytes": 30594,
+      "references": []
+    },
+    {
+      "original": "tmp/fullbody/balanced-lookdown.jpg",
+      "keep": "Feature/doc/evidence/full-body-first-person-20260922/diagnostic-fullbody-clean.jpg",
+      "sha256": "06f80ff03b040e8d364bb4dca843e4f7e81411a412daa5fe974fa871bd5aaa5d",
+      "bytes": 32644,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/visual-down40-0.jpg",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/visual-lookdown40-fast.jpg",
+      "sha256": "6e27ff1feba78a30cc6060b85a08ec2c68d5bc903baffa75401ba8a354a91de9",
+      "bytes": 36962,
+      "references": []
+    },
+    {
+      "original": "tmp/effect-animation-reference/overview_1.jpg",
+      "keep": "Feature/doc/evidence/impact-reference-20260912/overview_1.jpg",
+      "sha256": "cea0f2c06310e45cf2ad261fefe8112afaca111fc4776753af2137929ac0b91c",
+      "bytes": 40924,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/visual-down40-1.jpg",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/visual-lookdown40-return.jpg",
+      "sha256": "405be72c608752280ef99d9fcf2098d4da8f0103c7eeea80d09da3aa06d903b3",
+      "bytes": 41486,
+      "references": []
+    },
+    {
+      "original": "tmp/head-framing/view-comparison.jpg",
+      "keep": "Feature/doc/evidence/head-framing-20260922/visual-view-comparison.jpg",
+      "sha256": "defeab6c0529f8be6d9faa1b85c91b04e7403cd81df4026669d3e5e571349812",
+      "bytes": 51696,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/visual-down-0.jpg",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/visual-lookdown-fast.jpg",
+      "sha256": "3a43dc4c23f0846c447b2278abf6f84de3a3f5c110adf134d3d1eeadb43858b7",
+      "bytes": 53329,
+      "references": []
+    },
+    {
+      "original": "tmp/fullbody/lookdown-revised.jpg",
+      "keep": "Feature/doc/evidence/full-body-first-person-20260922/diagnostic-before-render-fix.jpg",
+      "sha256": "aec0365d465161265b2dcbe8cfc0466f802621c61b782162b7b1fb0123c40b4c",
+      "bytes": 54788,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/visual-page-0.jpg",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/visual-source-fast.jpg",
+      "sha256": "c395b63ed22d6b3c3e4263cf03ed2ac42c6a71ea17e8569f261c9d5e514ca4a6",
+      "bytes": 55640,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/visual-down-1.jpg",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/visual-lookdown-return.jpg",
+      "sha256": "f41d6e29b71dec41b71cedca9c868c031a8718af0b41788d084715a994c95aa5",
+      "bytes": 58121,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/visual-page-1.jpg",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/visual-source-return.jpg",
+      "sha256": "94e64d903a92a5ebcb31c22b0946e1400816d755ce651cb675337b7f3403d474",
+      "bytes": 58543,
+      "references": []
+    },
+    {
+      "original": "tmp/effect-animation-reference/overview_0.jpg",
+      "keep": "Feature/doc/evidence/impact-reference-20260912/overview_0.jpg",
+      "sha256": "a161093115a63ed0e9a144736ebda7a6d5d31955386287086d5cfd59ccf30eee",
+      "bytes": 64380,
+      "references": []
+    },
+    {
+      "original": "tmp/effect-animation-reference/frames/frame_09.jpg",
+      "keep": "Feature/doc/evidence/impact-reference-20260912/enemy-reaction.jpg",
+      "sha256": "2d56f15a6cdfc4c1f231f475d5b253ce3ccae4228122fd65e36d787786c84f24",
+      "bytes": 73511,
+      "references": []
+    },
+    {
+      "original": "tmp/recorded-reference/overview_sheet_0.jpg",
+      "keep": "Feature/doc/evidence/recorded-reference-20260912/overview_sheet_0.jpg",
+      "sha256": "60ac885f26ce4dd093ae8781cd7ebc210e9ba6449b539778e4fad22ac413c321",
+      "bytes": 75609,
+      "references": []
+    },
+    {
+      "original": "tmp/effect-animation-reference/frames/frame_16.jpg",
+      "keep": "Feature/doc/evidence/impact-reference-20260912/camera-change.jpg",
+      "sha256": "8796d8b9d9180dd0883e455a29e910de1cb2684061782d7e2fb21310679074c5",
+      "bytes": 77426,
+      "references": []
+    },
+    {
+      "original": "tmp/recorded-reference/overview_sheet_1.jpg",
+      "keep": "Feature/doc/evidence/recorded-reference-20260912/overview_sheet_1.jpg",
+      "sha256": "8bc6bf3a06a8cad4b71de2698d145b33e8096acae6e65c6ef82ce578bae51cb5",
+      "bytes": 77867,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/visual/boxing-final.jpg",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/visual-boxing.jpg",
+      "sha256": "d945717ed527161289dbb0cdb48fe317812e71b64398d996166c67c491cbb711",
+      "bytes": 86376,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/visual/longguard-final.jpg",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/visual-longguard.jpg",
+      "sha256": "bc667299f72f9bc9bc6492b657f690e63569766454b025afe807f65dcff9ad07",
+      "bytes": 86662,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/visual/rooted-final.jpg",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/visual-rooted.jpg",
+      "sha256": "95e9196e2504df5e74cd209a2f30a820739c3f77f2973ba9388bed55ad54d826",
+      "bytes": 86994,
+      "references": []
+    },
+    {
+      "original": "tmp/recorded-reference/attack_sheet.jpg",
+      "keep": "Feature/doc/evidence/recorded-reference-20260912/attack_sheet.jpg",
+      "sha256": "e4fd9607146712019181dbf5fc5604057e7706c9348246b100586050759b8bf2",
+      "bytes": 115527,
+      "references": []
+    },
+    {
+      "original": "tmp/recorded-reference/move_sheet.jpg",
+      "keep": "Feature/doc/evidence/recorded-reference-20260912/move_sheet.jpg",
+      "sha256": "1b7e062e16a983aae72478721e5c41f8f6faf8387afac94736a88c74fda03546",
+      "bytes": 115667,
+      "references": []
+    },
+    {
+      "original": "tmp/head-camera/gait-jump-review.jpg",
+      "keep": "Feature/doc/evidence/head-attached-camera-20260922/gait-jump-review.jpg",
+      "sha256": "2def5e294eabe4082dd2820f366128d264198885345fd2f95b0ea8b957efa52f",
+      "bytes": 122849,
+      "references": []
+    },
+    {
+      "original": "tmp/head-camera/head-final.log",
+      "keep": "Feature/doc/evidence/head-attached-camera-20260922/head-final.log",
+      "sha256": "e435bb37a6bc0b8e78120bfbc90a77e3db29af84a0dbb0de894d64c15d98855d",
+      "bytes": 219919,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-combos/feedback.log",
+      "keep": "Feature/doc/evidence/boxing-combos-20260912/feedback.log",
+      "sha256": "4aa2a0e5501dd749c1f61891197f013679faeba7a48ed9721bbb8df6f1dc83ec",
+      "bytes": 220312,
+      "references": []
+    },
+    {
+      "original": "tmp/head-framing/initial.log",
+      "keep": "Feature/doc/evidence/head-framing-20260922/initial.log",
+      "sha256": "7d38a2aa922ba92b82a8b228978a8867f71bc0f090784202385ea60f4a06efca",
+      "bytes": 222017,
+      "references": []
+    },
+    {
+      "original": "tmp/head-framing/initial-final.log",
+      "keep": "Feature/doc/evidence/head-framing-20260922/initial-final.log",
+      "sha256": "3cb59cb009ef2b613fe56cd71e360ddee37a12a8d21d8a522a4ddd07ad47a508",
+      "bytes": 222179,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-combos/runtime.log",
+      "keep": "Feature/doc/evidence/boxing-combos-20260912/runtime.log",
+      "sha256": "bedd63fe0ba605cd67b454da034cbb0061fba3c794275559d372905357cfb9c4",
+      "bytes": 224860,
+      "references": []
+    },
+    {
+      "original": "tmp/arms-only/runtime.log",
+      "keep": "Feature/doc/evidence/arms-only-20260912/runtime.log",
+      "sha256": "5809feac57533e612d497cd37f1febbe3230c3341a2e2de04c25a81ccaf23fef",
+      "bytes": 225066,
+      "references": []
+    },
+    {
+      "original": "tmp/head-camera/legacy.log",
+      "keep": "Feature/doc/evidence/head-attached-camera-20260922/legacy.log",
+      "sha256": "a64a89340334578aa1947b3ee20fcbe2286ee2c8d0f2515833728b2e4aa8a8c4",
+      "bytes": 225118,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/legacy.log",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/legacy.log",
+      "sha256": "9c058037d1a7475c5302b42b2e9c72a3427bd689ceeb125fa53b5388108ae39f",
+      "bytes": 225128,
+      "references": []
+    },
+    {
+      "original": "tmp/fullbody/legacy-final.log",
+      "keep": "Feature/doc/evidence/full-body-first-person-20260922/legacy-final.log",
+      "sha256": "6834e0cf5f7e2b0ee14c8637c577bceb4043a7b16b035cec7fa23ba1a0631216",
+      "bytes": 225318,
+      "references": []
+    },
+    {
+      "original": "tmp/relaxed-idle/arms-regression.log",
+      "keep": "Feature/doc/evidence/relaxed-idle-20260922/arms-regression.log",
+      "sha256": "91dc61e3bbec5372b15dc53c0972396d84b281ccbdff6770a9dfdab6e86f79ae",
+      "bytes": 226500,
+      "references": []
+    },
+    {
+      "original": "tmp/reference-metal-hud/runtime-polished.log",
+      "keep": "Feature/doc/evidence/reference-metal-hud-20260909/runtime-polished.log",
+      "sha256": "440ede9adfd5e5751f7bc53bb9a0e919c8200ae1b90063f915ae91620c3f3646",
+      "bytes": 232534,
+      "references": []
+    },
+    {
+      "original": "tmp/responsive-hud/runtime-verified.log",
+      "keep": "Feature/doc/evidence/responsive-hud-20260908/runtime-verified.log",
+      "sha256": "de0e810f0e5bdd07df4ef5326f520a8f1cd550261361ca50967cfd2255daa238",
+      "bytes": 233399,
+      "references": []
+    },
+    {
+      "original": "tmp/appearance-head/geometry-verified.log",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/geometry-verified.log",
+      "sha256": "c71ba7f239bd4d556ce364b3863332931a96db47250f73c927b7be576c7bc710",
+      "bytes": 237450,
+      "references": []
+    },
+    {
+      "original": "tmp/third-person-inspection/verified.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/verified.log",
+      "sha256": "8db537627b01c5058204d5dc7ca94c0487fb88b33639cd3db437c27aa28f214b",
+      "bytes": 254269,
+      "references": []
+    },
+    {
+      "original": "tmp/third-person-inspection/runtime.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/runtime.log",
+      "sha256": "3af3dc8c89e821add844c7ec486ddc88ce754e591eb4ecddd9383fa77c373f9a",
+      "bytes": 255611,
+      "references": []
+    },
+    {
+      "original": "tmp/head-camera/preview-final.log",
+      "keep": "Feature/doc/evidence/head-attached-camera-20260922/preview-final.log",
+      "sha256": "7bf38877d4793399b0c010a4f4293f2b9833d38b493e43574290d7a5da6f2a1b",
+      "bytes": 285789,
+      "references": []
+    },
+    {
+      "original": "tmp/basic-brawler/regression.log",
+      "keep": "Feature/doc/evidence/basic-brawler-20260910/regression.log",
+      "sha256": "61bca3e04336f87d07272cb825d5d265c04b6dd9df053f2c29bbeae945b3b075",
+      "bytes": 288177,
+      "references": []
+    },
+    {
+      "original": "tmp/natural-brawler/regression.log",
+      "keep": "Feature/doc/evidence/natural-brawler-20260910/regression.log",
+      "sha256": "4d0ddd75b223d342ed8a08ad65028b8ed008b363f64dae9364291f9e5fc51d88",
+      "bytes": 288179,
+      "references": []
+    },
+    {
+      "original": "tmp/arms-only/knuckle-regression.log",
+      "keep": "Feature/doc/evidence/arms-only-20260912/knuckle-regression.log",
+      "sha256": "3a62c5df33587a7b3d7a0b8059a173f2a37ffd7dd6240eb1349a20d5e19dffac",
+      "bytes": 288311,
+      "references": []
+    },
+    {
+      "original": "tmp/fullbody/fist-final.log",
+      "keep": "Feature/doc/evidence/full-body-first-person-20260922/fist-final.log",
+      "sha256": "6e9bccc2b5c823097bbbf0dddf44fabe8a65aba0df9bbdb97bbd228705621997",
+      "bytes": 288516,
+      "references": []
+    },
+    {
+      "original": "tmp/head-camera/fist.log",
+      "keep": "Feature/doc/evidence/head-attached-camera-20260922/fist.log",
+      "sha256": "0f2bea464802dd697b23fd9a2f9684c55c6b35dfae441b60cc3c4ceb6e697b67",
+      "bytes": 288570,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/fist.log",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/fist.log",
+      "sha256": "a4b03a302db4a772738dce610b701d2b563acbb60223c5908e85c04862f6e059",
+      "bytes": 288776,
+      "references": []
+    },
+    {
+      "original": "tmp/relaxed-idle/knuckle-regression.log",
+      "keep": "Feature/doc/evidence/relaxed-idle-20260922/knuckle-regression.log",
+      "sha256": "4ae4f938a7cedd7a2678d9ebb427d229aea9c5501acbbf48746db3bd0292e167",
+      "bytes": 289574,
+      "references": []
+    },
+    {
+      "original": "tmp/appearance-head/runtime.log",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/runtime.log",
+      "sha256": "bd5a6130507e3f859fcf94b3d52f7c231ba383dfd45447abceb628126c882aa1",
+      "bytes": 295299,
+      "references": []
+    },
+    {
+      "original": "tmp/basic-brawler/runtime.log",
+      "keep": "Feature/doc/evidence/basic-brawler-20260910/runtime.log",
+      "sha256": "35bd0fe9f01d3558bf3a7a3eaca68c2269ad7f54bbd71b6d4f41047bcc420e42",
+      "bytes": 298108,
+      "references": []
+    },
+    {
+      "original": "tmp/relaxed-idle/basic-regression.log",
+      "keep": "Feature/doc/evidence/relaxed-idle-20260922/basic-regression.log",
+      "sha256": "abd2c182b1b7d8a07f7b6a06c1354ec84edea664855313e6f56a91c995414969",
+      "bytes": 303085,
+      "references": []
+    },
+    {
+      "original": "tmp/natural-brawler/runtime.log",
+      "keep": "Feature/doc/evidence/natural-brawler-20260910/runtime.log",
+      "sha256": "ee082927056aa5f23f0a34d8d5be61254c2b837ff70d3197aa61b9798f42139e",
+      "bytes": 314731,
+      "references": []
+    },
+    {
+      "original": "tmp/arms-only/basic-regression.log",
+      "keep": "Feature/doc/evidence/arms-only-20260912/basic-regression.log",
+      "sha256": "28ae3c221eb5891d83e54bba4cad36f68c685d87f1e87b71a354ae2adf6a663d",
+      "bytes": 314866,
+      "references": []
+    },
+    {
+      "original": "tmp/third-person-inspection/final.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/final.log",
+      "sha256": "4b0333fc64a8530e3bcaf5aed22a51de773fc8aad55ffb935381990289c69ab5",
+      "bytes": 317100,
+      "references": []
+    },
+    {
+      "original": "tmp/fullbody/basic-final.log",
+      "keep": "Feature/doc/evidence/full-body-first-person-20260922/basic-final.log",
+      "sha256": "362e6fb2c39bce01031933b69befa0593f8ae4e79dff61d7c867a94d5a9c768e",
+      "bytes": 318123,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/rooted.log",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/rooted.log",
+      "sha256": "3e032d639a5cbea13fd3eea8ae99858f2a7d22f56b6652a485cf7e45f87a31a4",
+      "bytes": 318290,
+      "references": []
+    },
+    {
+      "original": "tmp/head-camera/basic.log",
+      "keep": "Feature/doc/evidence/head-attached-camera-20260922/basic.log",
+      "sha256": "be078b695b04d1de6359a2d080ec23960497500bfeb95d882833fbfe6ffe2190",
+      "bytes": 318308,
+      "references": []
+    },
+    {
+      "original": "tmp/martelo-game/cleanup.log",
+      "keep": "Feature/doc/evidence/martelo-first-person-20260922/cleanup.log",
+      "sha256": "174ac7604ceabd5f6ff75e5b01ec2618fd010b3e5f3a0904c258f05235f00602",
+      "bytes": 318344,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/boxing.log",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/boxing.log",
+      "sha256": "45960898343c579668003c93c19ff4e6030046427ab144214d334a8aa26a08c3",
+      "bytes": 318378,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/longguard.log",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/longguard.log",
+      "sha256": "438c08ca7c4ef14c47d71adcf4dd7d6cbcd1f22b79b04874966568a30d9d01a8",
+      "bytes": 318487,
+      "references": []
+    },
+    {
+      "original": "tmp/fullbody/mask.log",
+      "keep": "Feature/doc/evidence/full-body-first-person-20260922/mask.log",
+      "sha256": "79452fe005a2b2985c9b74a0a49066385cb1aeb76fd59dfcd5ccdcffe82335be",
+      "bytes": 318722,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-basic/asset.log",
+      "keep": "Feature/doc/evidence/boxing-basic-20260923/asset.log",
+      "sha256": "b29b83bff82464e56f9170e5f66253094aec22796683b12cc5cba2d7351805ab",
+      "bytes": 318954,
+      "references": []
+    },
+    {
+      "original": "tmp/fullbody/materials.log",
+      "keep": "Feature/doc/evidence/full-body-first-person-20260922/materials.log",
+      "sha256": "33f86e271ea758abefc7f626d1d5e6ad761294e1d7af5e20fafe7e4d14642945",
+      "bytes": 319522,
+      "references": []
+    },
+    {
+      "original": "tmp/arms-only/assets.log",
+      "keep": "Feature/doc/evidence/arms-only-20260912/assets.log",
+      "sha256": "4b8789c028b2b766d82548cd4eca0dbe935cf55b6e23420e75078cbb483d24fc",
+      "bytes": 320078,
+      "references": []
+    },
+    {
+      "original": "tmp/martelo-game/assets-repeat.log",
+      "keep": "Feature/doc/evidence/martelo-first-person-20260922/assets-repeat.log",
+      "sha256": "fe000381a1336694d2fd0d5e6389b75da23e0867eb0947091ebef1ded2d4d3a5",
+      "bytes": 321110,
+      "references": []
+    },
+    {
+      "original": "tmp/basic-brawler/assets.log",
+      "keep": "Feature/doc/evidence/basic-brawler-20260910/assets.log",
+      "sha256": "8d928d4791bb8c3eea593edbd4d984b5e0990a14bc174d212f54f9b5738e2068",
+      "bytes": 324168,
+      "references": []
+    },
+    {
+      "original": "tmp/natural-brawler/assets.log",
+      "keep": "Feature/doc/evidence/natural-brawler-20260910/assets.log",
+      "sha256": "dc34de831c4ca826f34dc608598cadc884f54429d6177cbd62f18b0e23c1377e",
+      "bytes": 324177,
+      "references": []
+    },
+    {
+      "original": "tmp/relaxed-idle/reentry-final.log",
+      "keep": "Feature/doc/evidence/relaxed-idle-20260922/reentry-final.log",
+      "sha256": "9076952a34916deb4fd595f74b57375f62e9292b3398df84049d16a095db051a",
+      "bytes": 324558,
+      "references": []
+    },
+    {
+      "original": "tmp/appearance-head/assets.log",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/assets.log",
+      "sha256": "8aeb67fa362a2e17c38b36b8261d059ab2ab80a9a403b1a71cd189120e5dc75b",
+      "bytes": 325957,
+      "references": []
+    },
+    {
+      "original": "tmp/responsive-hud/setup-editor-final.log",
+      "keep": "Feature/doc/evidence/responsive-hud-20260908/setup-editor-final.log",
+      "sha256": "fd17985b095264c23248aac449fee19ce8e3caea6f53b037754cc02b7eb0deaf",
+      "bytes": 326550,
+      "references": []
+    },
+    {
+      "original": "tmp/martelo-game/assets-reuse.log",
+      "keep": "Feature/doc/evidence/martelo-first-person-20260922/assets-reuse.log",
+      "sha256": "e356407ccaec0c7543bbaec8dac187f31a44cffcfcafb8134f918f1a09b54089",
+      "bytes": 327087,
+      "references": []
+    },
+    {
+      "original": "tmp/reference-metal-hud/setup-polished.log",
+      "keep": "Feature/doc/evidence/reference-metal-hud-20260909/setup-polished.log",
+      "sha256": "d6b68bdbce240efedd50faaf0f0a028d390c147ca3ceb1f8bbf28405caee8e6d",
+      "bytes": 328256,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-combos/assets.log",
+      "keep": "Feature/doc/evidence/boxing-combos-20260912/assets.log",
+      "sha256": "92413dc1e933dd72687db1981f2b7707685e16ffcf66000cde0574fd351dfe8d",
+      "bytes": 329605,
+      "references": []
+    },
+    {
+      "original": "tmp/martelo-game/assets.log",
+      "keep": "Feature/doc/evidence/martelo-first-person-20260922/assets.log",
+      "sha256": "7b7453b890d55da57edc9e854a46a41520ab35b7f662d3800b709716e5d85a7e",
+      "bytes": 333322,
+      "references": []
+    },
+    {
+      "original": "tmp/martelo-game/assets-persistent.log",
+      "keep": "Feature/doc/evidence/martelo-first-person-20260922/assets-persistent.log",
+      "sha256": "8f99226ab1b1a30eb26dc1fe99e9409abd6aebd48d66660b71fe198a20fe03bc",
+      "bytes": 340736,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/import.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/import.log",
+      "sha256": "82138229aa9269fdc2897e924e30941d129d8cddd89911f4c0cadd4d74216868",
+      "bytes": 353030,
+      "references": []
+    }
+  ],
+  "referenced_duplicates": [
+    {
+      "original": "tmp/arms-only/asset-result.txt",
+      "keep": "Feature/doc/evidence/arms-only-20260912/asset-result.txt",
+      "sha256": "53b943eeacbc19a93353be0a82e97eb395723206a278a58f39fc82c972056b30",
+      "bytes": 479,
+      "references": [
+        "Scripts/Editor/CreateFirstPersonArms.py",
+        "Source/Rogue10m/Editor/Rogue10mFirstPersonArmsAuthoring.cpp"
+      ]
+    },
+    {
+      "original": "tmp/head-framing/make-forward30.py",
+      "keep": "Feature/doc/evidence/head-framing-20260922/make-forward30.py",
+      "sha256": "4c6ba17a593d5cfc424037c817d6b49d74dccaa8719c2842139845299938d734",
+      "bytes": 1837,
+      "references": [
+        "tmp/head-framing/encode.ps1"
+      ]
+    },
+    {
+      "original": "tmp/appearance-head/build-verified.log",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/build-verified.log",
+      "sha256": "aca1ce4ff2d5c5fce7bfc4b3d7d99ac3de2e4461cc5edfc1976e305e44e15c7f",
+      "bytes": 3405,
+      "references": [
+        "tmp/appearance-head/finalize.py"
+      ]
+    },
+    {
+      "original": "tmp/quick-melee/source-finger-angles.json",
+      "keep": "Feature/doc/evidence/quick-melee-20260909/source-finger-angles.json",
+      "sha256": "1495de20930e68216b104109e4491f11c569d7295e01a449f96e23269bcd066d",
+      "bytes": 7609,
+      "references": [
+        "tmp/quick-melee/inspect-finger-source.py"
+      ]
+    },
+    {
+      "original": "tmp/head-camera/retarget-head-poses.json",
+      "keep": "Feature/doc/evidence/head-attached-camera-20260922/retarget-head-poses.json",
+      "sha256": "98d5b41e1e72404fafafe786515947f4848e61468f316427f92cf95cc03c0679",
+      "bytes": 66114,
+      "references": [
+        "tmp/head-camera/inspect-head.py"
+      ]
+    },
+    {
+      "original": "tmp/martelo-preview/motion.json",
+      "keep": "Feature/doc/evidence/martelo-preview-20260922/motion.json",
+      "sha256": "a35a953db629a9fcff882fd1fe931ccecd2268c6ecba3286374eb947db19204f",
+      "bytes": 73670,
+      "references": [
+        "tmp/martelo-preview/render.py"
+      ]
+    },
+    {
+      "original": "tmp/boxing-reference/actual-motion.json",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/boxing-source-motion.json",
+      "sha256": "a1b8a25f6eb675ba67ae5d893bac0253b83242fcfae71b89c34c2c1a29cf65e9",
+      "bytes": 96697,
+      "references": [
+        "Scripts/AnalyzeBoxingReference.py"
+      ]
+    },
+    {
+      "original": "tmp/appearance-head/review.jpg",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/review.jpg",
+      "sha256": "5ef86f0ca3e00205d78a135759b00993d8d4c99ce078d2705771e342c5655d5c",
+      "bytes": 139356,
+      "references": [
+        "tmp/appearance-head/review.py"
+      ]
+    },
+    {
+      "original": "tmp/head-framing/head-regression.log",
+      "keep": "Feature/doc/evidence/head-framing-20260922/head-regression.log",
+      "sha256": "85e3547682d29c3876a6f2bb7cd74867f31f039c1c5b95c70f0a3d560bb207ac",
+      "bytes": 219744,
+      "references": [
+        "tmp/head-framing/finalize.py"
+      ]
+    },
+    {
+      "original": "tmp/martelo-game/runtime.log",
+      "keep": "Feature/doc/evidence/martelo-first-person-20260922/runtime.log",
+      "sha256": "dfea1c415db186c0eb87684e95e14ed6891b66f90b25d5c5e4d7d1e748b465d1",
+      "bytes": 248771,
+      "references": [
+        "tmp/martelo-game/make-preview.py",
+        "tmp/martelo-game/run-preview.ps1"
+      ]
+    },
+    {
+      "original": "tmp/fullbody/preview.log",
+      "keep": "Feature/doc/evidence/full-body-first-person-20260922/preview.log",
+      "sha256": "7e79dcf7954d11f87e34c998a130133d8621f0c73e39e6bbb35beab79baf1dc8",
+      "bytes": 258155,
+      "references": [
+        "tmp/fullbody/make-preview.py"
+      ]
+    },
+    {
+      "original": "tmp/boxing-direct/preview.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/preview.log",
+      "sha256": "de3d9755736452fd55892e6d0cd97340d487ac88ceae233ffa5340c18af2885f",
+      "bytes": 259726,
+      "references": [
+        "tmp/boxing-direct/make-preview.py"
+      ]
+    },
+    {
+      "original": "tmp/boxing-direct/lookdown.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/lookdown.log",
+      "sha256": "a3b8f77fe06afe85ad712b9986d6d24a8a95eef644f5a59fcbff0d2eb7b88293",
+      "bytes": 259787,
+      "references": [
+        "tmp/boxing-direct/make-lookdown.py"
+      ]
+    },
+    {
+      "original": "tmp/head-framing/forward30.log",
+      "keep": "Feature/doc/evidence/head-framing-20260922/forward30.log",
+      "sha256": "7a6fb51444ba42e6e39c37647008970b60930b9bf2c4d3592857201117c2cd60",
+      "bytes": 259792,
+      "references": [
+        "tmp/head-framing/make-forward30.py"
+      ]
+    },
+    {
+      "original": "tmp/boxing-direct/lookdown40.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/lookdown40.log",
+      "sha256": "4cbd99045878831d3336674d11e48fcca6f4e5223bde1354664b57825ae4d985",
+      "bytes": 259992,
+      "references": [
+        "tmp/boxing-direct/make-lookdown40.py"
+      ]
+    },
+    {
+      "original": "tmp/head-camera/preview.log",
+      "keep": "Feature/doc/evidence/head-attached-camera-20260922/preview-final.log",
+      "sha256": "7bf38877d4793399b0c010a4f4293f2b9833d38b493e43574290d7a5da6f2a1b",
+      "bytes": 285789,
+      "references": [
+        "tmp/head-camera/make-preview.py"
+      ]
+    },
+    {
+      "original": "tmp/boxing-combos/knuckle-regression.log",
+      "keep": "Feature/doc/evidence/boxing-combos-20260912/knuckle-regression.log",
+      "sha256": "a3fc85d1099d2d97a2257962e50124a4c49cacd321c7d357adbf1c1353e2da1c",
+      "bytes": 288507,
+      "references": [
+        "tmp/boxing-combos/run-knuckle.ps1"
+      ]
+    },
+    {
+      "original": "tmp/appearance-head/final.log",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/final.log",
+      "sha256": "fc1c2737c10835c74269bc8a7e0a2343df473f0d4531a5ab660cc61a23a61a83",
+      "bytes": 299324,
+      "references": [
+        "tmp/appearance-head/finalize.py"
+      ]
+    },
+    {
+      "original": "tmp/boxing-combos/basic-regression.log",
+      "keep": "Feature/doc/evidence/boxing-combos-20260912/basic-regression.log",
+      "sha256": "f3eb75d41db7ae8b3997574843dd069ea3b9c8dac6b05c3f6f95d0fecceaef71",
+      "bytes": 318352,
+      "references": [
+        "tmp/boxing-combos/analyze-peaks.py"
+      ]
+    },
+    {
+      "original": "tmp/relaxed-idle/preview.log",
+      "keep": "Feature/doc/evidence/relaxed-idle-20260922/preview.log",
+      "sha256": "4b4aca7f8c1acd2fbf9cd618c027c460f248cd2434fbd130d9c51af376c3d654",
+      "bytes": 359605,
+      "references": [
+        "tmp/relaxed-idle/make-preview.py"
+      ]
+    }
+  ],
+  "issues": []
+}

@@ -1,0 +1,2831 @@
+{
+  "method": "Fixed action windows include entry and recovery, not only live montage frames. First 330 frames are common; later walking/jump frames are outside this comparison.",
+  "before": {
+    "capture": "before",
+    "total_frames": 331,
+    "windows": {
+      "idle": {
+        "frames": [
+          0,
+          44
+        ],
+        "samples": 45,
+        "bones": {
+          "head": {
+            "source": {
+              "max_step_deg": 0.147668654,
+              "max_step_frame": 5,
+              "max_step_cm": 0.081934115,
+              "max_position_step_frame": 42,
+              "local_length_ratio_min": 0.999999224,
+              "local_length_ratio_max": 0.999999224
+            },
+            "appearance": {
+              "max_step_deg": 0.146245585,
+              "max_step_frame": 5,
+              "max_step_cm": 0.067931851,
+              "max_position_step_frame": 42,
+              "local_length_ratio_min": 0.999999055,
+              "local_length_ratio_max": 0.999999073
+            }
+          },
+          "pelvis": {
+            "source": {
+              "max_step_deg": 0.115241051,
+              "max_step_frame": 5,
+              "max_step_cm": 0.053201718,
+              "max_position_step_frame": 43,
+              "local_length_ratio_min": 0.954230655,
+              "local_length_ratio_max": 0.957104452
+            },
+            "appearance": {
+              "max_step_deg": 0.115241051,
+              "max_step_frame": 5,
+              "max_step_cm": 0.057252848,
+              "max_position_step_frame": 43,
+              "local_length_ratio_min": 0.954408641,
+              "local_length_ratio_max": 0.95640811
+            }
+          },
+          "spine_01": {
+            "source": {
+              "max_step_deg": 0.104025508,
+              "max_step_frame": 6,
+              "max_step_cm": 0.053054915,
+              "max_position_step_frame": 43,
+              "local_length_ratio_min": 0.999999416,
+              "local_length_ratio_max": 0.999999416
+            },
+            "appearance": {
+              "max_step_deg": 0.104270959,
+              "max_step_frame": 6,
+              "max_step_cm": 0.057264421,
+              "max_position_step_frame": 44,
+              "local_length_ratio_min": 1.211643925,
+              "local_length_ratio_max": 1.254924681
+            }
+          },
+          "hand_l": {
+            "source": {
+              "max_step_deg": 0.235722753,
+              "max_step_frame": 22,
+              "max_step_cm": 0.152751289,
+              "max_position_step_frame": 11,
+              "local_length_ratio_min": 1.00000063,
+              "local_length_ratio_max": 1.00000063
+            },
+            "appearance": {
+              "max_step_deg": 0.235722753,
+              "max_step_frame": 22,
+              "max_step_cm": 0.181709756,
+              "max_position_step_frame": 6,
+              "local_length_ratio_min": 0.999999971,
+              "local_length_ratio_max": 0.999999972
+            }
+          },
+          "hand_r": {
+            "source": {
+              "max_step_deg": 0.207628236,
+              "max_step_frame": 6,
+              "max_step_cm": 0.174295304,
+              "max_position_step_frame": 2,
+              "local_length_ratio_min": 1.00000042,
+              "local_length_ratio_max": 1.00000042
+            },
+            "appearance": {
+              "max_step_deg": 0.207628236,
+              "max_step_frame": 6,
+              "max_step_cm": 0.197884664,
+              "max_position_step_frame": 5,
+              "local_length_ratio_min": 0.999999886,
+              "local_length_ratio_max": 0.999999893
+            }
+          },
+          "upperarm_l": {
+            "source": {
+              "max_step_deg": 0.153980449,
+              "max_step_frame": 6,
+              "max_step_cm": 0.071874743,
+              "max_position_step_frame": 42,
+              "local_length_ratio_min": 1.000000857,
+              "local_length_ratio_max": 1.000000857
+            },
+            "appearance": {
+              "max_step_deg": 0.166698708,
+              "max_step_frame": 6,
+              "max_step_cm": 0.072206655,
+              "max_position_step_frame": 6,
+              "local_length_ratio_min": 0.99999999,
+              "local_length_ratio_max": 0.999999991
+            }
+          },
+          "upperarm_r": {
+            "source": {
+              "max_step_deg": 0.192192079,
+              "max_step_frame": 30,
+              "max_step_cm": 0.080976117,
+              "max_position_step_frame": 3,
+              "local_length_ratio_min": 1.000000535,
+              "local_length_ratio_max": 1.000000535
+            },
+            "appearance": {
+              "max_step_deg": 0.199512553,
+              "max_step_frame": 30,
+              "max_step_cm": 0.067776074,
+              "max_position_step_frame": 3,
+              "local_length_ratio_min": 0.999999792,
+              "local_length_ratio_max": 0.999999795
+            }
+          },
+          "lowerarm_l": {
+            "source": {
+              "max_step_deg": 0.182557453,
+              "max_step_frame": 11,
+              "max_step_cm": 0.082393357,
+              "max_position_step_frame": 6,
+              "local_length_ratio_min": 0.999999863,
+              "local_length_ratio_max": 0.999999863
+            },
+            "appearance": {
+              "max_step_deg": 0.240255551,
+              "max_step_frame": 11,
+              "max_step_cm": 0.108475854,
+              "max_position_step_frame": 6,
+              "local_length_ratio_min": 0.999999651,
+              "local_length_ratio_max": 0.999999657
+            }
+          },
+          "lowerarm_r": {
+            "source": {
+              "max_step_deg": 0.213861629,
+              "max_step_frame": 5,
+              "max_step_cm": 0.1245916,
+              "max_position_step_frame": 1,
+              "local_length_ratio_min": 1.000000412,
+              "local_length_ratio_max": 1.000000412
+            },
+            "appearance": {
+              "max_step_deg": 0.263967784,
+              "max_step_frame": 5,
+              "max_step_cm": 0.126374439,
+              "max_position_step_frame": 1,
+              "local_length_ratio_min": 0.999999343,
+              "local_length_ratio_max": 0.999999382
+            }
+          },
+          "thigh_l": {
+            "source": {
+              "max_step_deg": 0.059107063,
+              "max_step_frame": 5,
+              "max_step_cm": 0.054602933,
+              "max_position_step_frame": 43,
+              "local_length_ratio_min": 0.999999787,
+              "local_length_ratio_max": 0.999999787
+            },
+            "appearance": {
+              "max_step_deg": 0.065657563,
+              "max_step_frame": 5,
+              "max_step_cm": 0.058431502,
+              "max_position_step_frame": 44,
+              "local_length_ratio_min": 1.2195126,
+              "local_length_ratio_max": 1.2220863
+            }
+          },
+          "thigh_r": {
+            "source": {
+              "max_step_deg": 0.074665952,
+              "max_step_frame": 2,
+              "max_step_cm": 0.052212728,
+              "max_position_step_frame": 44,
+              "local_length_ratio_min": 0.999999935,
+              "local_length_ratio_max": 0.999999935
+            },
+            "appearance": {
+              "max_step_deg": 0.087451608,
+              "max_step_frame": 7,
+              "max_step_cm": 0.0565694,
+              "max_position_step_frame": 44,
+              "local_length_ratio_min": 1.105008627,
+              "local_length_ratio_max": 1.115083058
+            }
+          },
+          "calf_l": {
+            "source": {
+              "max_step_deg": 0.079660832,
+              "max_step_frame": 42,
+              "max_step_cm": 0.041951777,
+              "max_position_step_frame": 42,
+              "local_length_ratio_min": 1.000001496,
+              "local_length_ratio_max": 1.000001496
+            },
+            "appearance": {
+              "max_step_deg": 0.07150086,
+              "max_step_frame": 43,
+              "max_step_cm": 0.051871662,
+              "max_position_step_frame": 43,
+              "local_length_ratio_min": 1.000000137,
+              "local_length_ratio_max": 1.000000138
+            }
+          },
+          "calf_r": {
+            "source": {
+              "max_step_deg": 0.069855279,
+              "max_step_frame": 27,
+              "max_step_cm": 0.03509945,
+              "max_position_step_frame": 43,
+              "local_length_ratio_min": 1.000000352,
+              "local_length_ratio_max": 1.000000352
+            },
+            "appearance": {
+              "max_step_deg": 0.086367977,
+              "max_step_frame": 27,
+              "max_step_cm": 0.060442611,
+              "max_position_step_frame": 27,
+              "local_length_ratio_min": 1.000000007,
+              "local_length_ratio_max": 1.000000007
+            }
+          },
+          "foot_l": {
+            "source": {
+              "max_step_deg": 0.02111298,
+              "max_step_frame": 31,
+              "max_step_cm": 0.006972108,
+              "max_position_step_frame": 44,
+              "local_length_ratio_min": 1.000001807,
+              "local_length_ratio_max": 1.000001807
+            },
+            "appearance": {
+              "max_step_deg": 0.023681934,
+              "max_step_frame": 43,
+              "max_step_cm": 0.012558924,
+              "max_position_step_frame": 44,
+              "local_length_ratio_min": 1.000000158,
+              "local_length_ratio_max": 1.000000158
+            }
+          },
+          "foot_r": {
+            "source": {
+              "max_step_deg": 0.025805858,
+              "max_step_frame": 12,
+              "max_step_cm": 0.010478813,
+              "max_position_step_frame": 9,
+              "local_length_ratio_min": 1.000001084,
+              "local_length_ratio_max": 1.000001084
+            },
+            "appearance": {
+              "max_step_deg": 0.051794294,
+              "max_step_frame": 27,
+              "max_step_cm": 0.010231817,
+              "max_position_step_frame": 44,
+              "local_length_ratio_min": 1.000000025,
+              "local_length_ratio_max": 1.000000026
+            }
+          }
+        },
+        "montages": []
+      },
+      "left_jab": {
+        "frames": [
+          45,
+          56
+        ],
+        "samples": 12,
+        "bones": {
+          "head": {
+            "source": {
+              "max_step_deg": 8.91106882,
+              "max_step_frame": 52,
+              "max_step_cm": 15.898369409,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.999999224,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 8.631812965,
+              "max_step_frame": 52,
+              "max_step_cm": 21.827814586,
+              "max_position_step_frame": 52,
+              "local_length_ratio_min": 0.99999868,
+              "local_length_ratio_max": 0.999999073
+            }
+          },
+          "pelvis": {
+            "source": {
+              "max_step_deg": 12.594245098,
+              "max_step_frame": 50,
+              "max_step_cm": 13.256932735,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.020279809,
+              "local_length_ratio_max": 0.957149452
+            },
+            "appearance": {
+              "max_step_deg": 12.594245098,
+              "max_step_frame": 50,
+              "max_step_cm": 14.266403124,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.743095318,
+              "local_length_ratio_max": 0.965187171
+            }
+          },
+          "spine_01": {
+            "source": {
+              "max_step_deg": 13.057302341,
+              "max_step_frame": 50,
+              "max_step_cm": 13.455869587,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.999999416,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 12.946829694,
+              "max_step_frame": 50,
+              "max_step_cm": 21.770254615,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 1.181300878,
+              "local_length_ratio_max": 2.191264145
+            }
+          },
+          "hand_l": {
+            "source": {
+              "max_step_deg": 31.524187126,
+              "max_step_frame": 53,
+              "max_step_cm": 32.893113546,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.00000063
+            },
+            "appearance": {
+              "max_step_deg": 31.524187126,
+              "max_step_frame": 53,
+              "max_step_cm": 31.822505212,
+              "max_position_step_frame": 50,
+              "local_length_ratio_min": 0.999999915,
+              "local_length_ratio_max": 0.999999971
+            }
+          },
+          "hand_r": {
+            "source": {
+              "max_step_deg": 28.678972841,
+              "max_step_frame": 49,
+              "max_step_cm": 16.143948157,
+              "max_position_step_frame": 49,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.00000042
+            },
+            "appearance": {
+              "max_step_deg": 28.678972841,
+              "max_step_frame": 49,
+              "max_step_cm": 17.247246763,
+              "max_position_step_frame": 49,
+              "local_length_ratio_min": 0.999999862,
+              "local_length_ratio_max": 0.999999912
+            }
+          },
+          "upperarm_l": {
+            "source": {
+              "max_step_deg": 36.946297081,
+              "max_step_frame": 51,
+              "max_step_cm": 19.93514899,
+              "max_position_step_frame": 50,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000857
+            },
+            "appearance": {
+              "max_step_deg": 46.118372165,
+              "max_step_frame": 51,
+              "max_step_cm": 22.759848886,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.99999989,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "upperarm_r": {
+            "source": {
+              "max_step_deg": 12.20019341,
+              "max_step_frame": 51,
+              "max_step_cm": 14.019353476,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000535
+            },
+            "appearance": {
+              "max_step_deg": 28.053924863,
+              "max_step_frame": 53,
+              "max_step_cm": 23.737285595,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.999999523,
+              "local_length_ratio_max": 0.999999811
+            }
+          },
+          "lowerarm_l": {
+            "source": {
+              "max_step_deg": 40.341219826,
+              "max_step_frame": 53,
+              "max_step_cm": 31.769979531,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.999999843,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 46.315196785,
+              "max_step_frame": 53,
+              "max_step_cm": 35.686618859,
+              "max_position_step_frame": 50,
+              "local_length_ratio_min": 0.999999354,
+              "local_length_ratio_max": 0.999999828
+            }
+          },
+          "lowerarm_r": {
+            "source": {
+              "max_step_deg": 23.488626704,
+              "max_step_frame": 49,
+              "max_step_cm": 12.460566251,
+              "max_position_step_frame": 52,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000412
+            },
+            "appearance": {
+              "max_step_deg": 67.214559284,
+              "max_step_frame": 51,
+              "max_step_cm": 25.73472575,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.99999931,
+              "local_length_ratio_max": 0.999999508
+            }
+          },
+          "thigh_l": {
+            "source": {
+              "max_step_deg": 22.316196156,
+              "max_step_frame": 50,
+              "max_step_cm": 13.701168488,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.999999771,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 69.950607376,
+              "max_step_frame": 52,
+              "max_step_cm": 20.940026979,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 1.155506212,
+              "local_length_ratio_max": 2.39521072
+            }
+          },
+          "thigh_r": {
+            "source": {
+              "max_step_deg": 20.94270966,
+              "max_step_frame": 51,
+              "max_step_cm": 12.675547095,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.999999912,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 67.031622652,
+              "max_step_frame": 50,
+              "max_step_cm": 21.693431822,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.856697217,
+              "local_length_ratio_max": 2.235662139
+            }
+          },
+          "calf_l": {
+            "source": {
+              "max_step_deg": 24.363231189,
+              "max_step_frame": 50,
+              "max_step_cm": 17.418749839,
+              "max_position_step_frame": 49,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001496
+            },
+            "appearance": {
+              "max_step_deg": 105.844810426,
+              "max_step_frame": 51,
+              "max_step_cm": 50.946873261,
+              "max_position_step_frame": 52,
+              "local_length_ratio_min": 1.000000022,
+              "local_length_ratio_max": 1.000000137
+            }
+          },
+          "calf_r": {
+            "source": {
+              "max_step_deg": 25.600617784,
+              "max_step_frame": 49,
+              "max_step_cm": 14.753007942,
+              "max_position_step_frame": 47,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000352
+            },
+            "appearance": {
+              "max_step_deg": 158.407042666,
+              "max_step_frame": 50,
+              "max_step_cm": 49.753402197,
+              "max_position_step_frame": 50,
+              "local_length_ratio_min": 1.000000007,
+              "local_length_ratio_max": 1.000000014
+            }
+          },
+          "foot_l": {
+            "source": {
+              "max_step_deg": 14.6619397,
+              "max_step_frame": 50,
+              "max_step_cm": 20.33647936,
+              "max_position_step_frame": 50,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001807
+            },
+            "appearance": {
+              "max_step_deg": 123.061073801,
+              "max_step_frame": 52,
+              "max_step_cm": 31.619318225,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 1.000000158,
+              "local_length_ratio_max": 1.000000261
+            }
+          },
+          "foot_r": {
+            "source": {
+              "max_step_deg": 10.260097644,
+              "max_step_frame": 56,
+              "max_step_cm": 21.472400813,
+              "max_position_step_frame": 50,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001084
+            },
+            "appearance": {
+              "max_step_deg": 150.812285443,
+              "max_step_frame": 50,
+              "max_step_cm": 33.641625361,
+              "max_position_step_frame": 50,
+              "local_length_ratio_min": 1.000000001,
+              "local_length_ratio_max": 1.000000026
+            }
+          }
+        },
+        "montages": [
+          "/Game/Rogue10m/Animation/Combat/Boxing/AM_BoxingLeftJab_Appearance.AM_BoxingLeftJab_Appearance"
+        ]
+      },
+      "right_jab_and_recovery": {
+        "frames": [
+          57,
+          134
+        ],
+        "samples": 78,
+        "bones": {
+          "head": {
+            "source": {
+              "max_step_deg": 11.154135755,
+              "max_step_frame": 72,
+              "max_step_cm": 16.125293712,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999224,
+              "local_length_ratio_max": 1.000000021
+            },
+            "appearance": {
+              "max_step_deg": 11.105279633,
+              "max_step_frame": 72,
+              "max_step_cm": 36.841971334,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999998803,
+              "local_length_ratio_max": 0.999999665
+            }
+          },
+          "pelvis": {
+            "source": {
+              "max_step_deg": 26.461547948,
+              "max_step_frame": 61,
+              "max_step_cm": 13.838066999,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.03177503,
+              "local_length_ratio_max": 0.956776348
+            },
+            "appearance": {
+              "max_step_deg": 26.461547948,
+              "max_step_frame": 61,
+              "max_step_cm": 14.891788788,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.749442812,
+              "local_length_ratio_max": 1.050364199
+            }
+          },
+          "spine_01": {
+            "source": {
+              "max_step_deg": 25.898533215,
+              "max_step_frame": 61,
+              "max_step_cm": 14.130042577,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999416,
+              "local_length_ratio_max": 1.000000023
+            },
+            "appearance": {
+              "max_step_deg": 26.134656622,
+              "max_step_frame": 61,
+              "max_step_cm": 35.854965415,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 1.163669778,
+              "local_length_ratio_max": 3.131389734
+            }
+          },
+          "hand_l": {
+            "source": {
+              "max_step_deg": 28.301194494,
+              "max_step_frame": 73,
+              "max_step_cm": 12.574118246,
+              "max_position_step_frame": 64,
+              "local_length_ratio_min": 0.999999976,
+              "local_length_ratio_max": 1.00000063
+            },
+            "appearance": {
+              "max_step_deg": 28.301194494,
+              "max_step_frame": 73,
+              "max_step_cm": 14.115345199,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999912,
+              "local_length_ratio_max": 0.999999971
+            }
+          },
+          "hand_r": {
+            "source": {
+              "max_step_deg": 37.048959895,
+              "max_step_frame": 63,
+              "max_step_cm": 41.319299949,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999975,
+              "local_length_ratio_max": 1.00000042
+            },
+            "appearance": {
+              "max_step_deg": 37.048959895,
+              "max_step_frame": 63,
+              "max_step_cm": 46.511694247,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999751,
+              "local_length_ratio_max": 0.999999896
+            }
+          },
+          "upperarm_l": {
+            "source": {
+              "max_step_deg": 16.114028321,
+              "max_step_frame": 63,
+              "max_step_cm": 13.406420843,
+              "max_position_step_frame": 64,
+              "local_length_ratio_min": 0.999999977,
+              "local_length_ratio_max": 1.000000857
+            },
+            "appearance": {
+              "max_step_deg": 40.393036615,
+              "max_step_frame": 63,
+              "max_step_cm": 32.835749296,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999729,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "upperarm_r": {
+            "source": {
+              "max_step_deg": 38.616176242,
+              "max_step_frame": 63,
+              "max_step_cm": 23.079855427,
+              "max_position_step_frame": 62,
+              "local_length_ratio_min": 0.999999976,
+              "local_length_ratio_max": 1.000000535
+            },
+            "appearance": {
+              "max_step_deg": 46.494232573,
+              "max_step_frame": 71,
+              "max_step_cm": 44.418721402,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999726,
+              "local_length_ratio_max": 0.999999954
+            }
+          },
+          "lowerarm_l": {
+            "source": {
+              "max_step_deg": 25.129047889,
+              "max_step_frame": 73,
+              "max_step_cm": 13.65898759,
+              "max_position_step_frame": 60,
+              "local_length_ratio_min": 0.999999863,
+              "local_length_ratio_max": 1.000000028
+            },
+            "appearance": {
+              "max_step_deg": 47.070459587,
+              "max_step_frame": 71,
+              "max_step_cm": 19.927039361,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999535,
+              "local_length_ratio_max": 0.999999689
+            }
+          },
+          "lowerarm_r": {
+            "source": {
+              "max_step_deg": 40.398134395,
+              "max_step_frame": 65,
+              "max_step_cm": 36.794509563,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999975,
+              "local_length_ratio_max": 1.000000412
+            },
+            "appearance": {
+              "max_step_deg": 68.019302536,
+              "max_step_frame": 62,
+              "max_step_cm": 44.811870838,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.99999911,
+              "local_length_ratio_max": 0.999999818
+            }
+          },
+          "thigh_l": {
+            "source": {
+              "max_step_deg": 26.603737009,
+              "max_step_frame": 61,
+              "max_step_cm": 12.499354688,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999787,
+              "local_length_ratio_max": 1.000000027
+            },
+            "appearance": {
+              "max_step_deg": 64.694381169,
+              "max_step_frame": 72,
+              "max_step_cm": 32.543480058,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.887140967,
+              "local_length_ratio_max": 3.546388893
+            }
+          },
+          "thigh_r": {
+            "source": {
+              "max_step_deg": 33.216327569,
+              "max_step_frame": 62,
+              "max_step_cm": 15.242337835,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999935,
+              "local_length_ratio_max": 1.000000029
+            },
+            "appearance": {
+              "max_step_deg": 52.792377685,
+              "max_step_frame": 64,
+              "max_step_cm": 37.717877306,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 1.103662708,
+              "local_length_ratio_max": 3.388431799
+            }
+          },
+          "calf_l": {
+            "source": {
+              "max_step_deg": 40.562616135,
+              "max_step_frame": 57,
+              "max_step_cm": 18.006952056,
+              "max_position_step_frame": 61,
+              "local_length_ratio_min": 0.999999979,
+              "local_length_ratio_max": 1.000001496
+            },
+            "appearance": {
+              "max_step_deg": 129.966731173,
+              "max_step_frame": 72,
+              "max_step_cm": 48.157661648,
+              "max_position_step_frame": 72,
+              "local_length_ratio_min": 1.000000045,
+              "local_length_ratio_max": 1.000000217
+            }
+          },
+          "calf_r": {
+            "source": {
+              "max_step_deg": 40.558433515,
+              "max_step_frame": 69,
+              "max_step_cm": 25.869294354,
+              "max_position_step_frame": 61,
+              "local_length_ratio_min": 0.999999975,
+              "local_length_ratio_max": 1.000000352
+            },
+            "appearance": {
+              "max_step_deg": 107.581347443,
+              "max_step_frame": 71,
+              "max_step_cm": 38.411322001,
+              "max_position_step_frame": 65,
+              "local_length_ratio_min": 1.000000001,
+              "local_length_ratio_max": 1.000000014
+            }
+          },
+          "foot_l": {
+            "source": {
+              "max_step_deg": 26.541983192,
+              "max_step_frame": 61,
+              "max_step_cm": 20.097013857,
+              "max_position_step_frame": 73,
+              "local_length_ratio_min": 0.99999998,
+              "local_length_ratio_max": 1.000001807
+            },
+            "appearance": {
+              "max_step_deg": 110.497329382,
+              "max_step_frame": 72,
+              "max_step_cm": 28.280124843,
+              "max_position_step_frame": 72,
+              "local_length_ratio_min": 1.000000008,
+              "local_length_ratio_max": 1.000000243
+            }
+          },
+          "foot_r": {
+            "source": {
+              "max_step_deg": 26.323535577,
+              "max_step_frame": 61,
+              "max_step_cm": 23.087124444,
+              "max_position_step_frame": 72,
+              "local_length_ratio_min": 0.999999978,
+              "local_length_ratio_max": 1.000001084
+            },
+            "appearance": {
+              "max_step_deg": 110.279182464,
+              "max_step_frame": 71,
+              "max_step_cm": 38.743288724,
+              "max_position_step_frame": 71,
+              "local_length_ratio_min": 1.000000003,
+              "local_length_ratio_max": 1.000000059
+            }
+          }
+        },
+        "montages": [
+          "/Game/Rogue10m/Animation/Combat/Boxing/AM_BoxingRightJab_Appearance.AM_BoxingRightJab_Appearance"
+        ]
+      },
+      "straight_and_recovery": {
+        "frames": [
+          135,
+          209
+        ],
+        "samples": 75,
+        "bones": {
+          "head": {
+            "source": {
+              "max_step_deg": 24.442884286,
+              "max_step_frame": 149,
+              "max_step_cm": 20.624440887,
+              "max_position_step_frame": 148,
+              "local_length_ratio_min": 0.999999224,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 24.500740703,
+              "max_step_frame": 149,
+              "max_step_cm": 20.377665002,
+              "max_position_step_frame": 149,
+              "local_length_ratio_min": 0.99999867,
+              "local_length_ratio_max": 0.999999989
+            }
+          },
+          "pelvis": {
+            "source": {
+              "max_step_deg": 31.229906572,
+              "max_step_frame": 149,
+              "max_step_cm": 11.332656535,
+              "max_position_step_frame": 151,
+              "local_length_ratio_min": 0.777648388,
+              "local_length_ratio_max": 0.956776348
+            },
+            "appearance": {
+              "max_step_deg": 31.229906572,
+              "max_step_frame": 149,
+              "max_step_cm": 12.195599829,
+              "max_position_step_frame": 151,
+              "local_length_ratio_min": 0.793651253,
+              "local_length_ratio_max": 0.956353499
+            }
+          },
+          "spine_01": {
+            "source": {
+              "max_step_deg": 30.801898781,
+              "max_step_frame": 149,
+              "max_step_cm": 11.274854494,
+              "max_position_step_frame": 151,
+              "local_length_ratio_min": 0.999999416,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 30.802588522,
+              "max_step_frame": 149,
+              "max_step_cm": 10.5016536,
+              "max_position_step_frame": 152,
+              "local_length_ratio_min": 0.824476037,
+              "local_length_ratio_max": 1.755683111
+            }
+          },
+          "hand_l": {
+            "source": {
+              "max_step_deg": 50.196348927,
+              "max_step_frame": 143,
+              "max_step_cm": 49.347873577,
+              "max_position_step_frame": 150,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.00000063
+            },
+            "appearance": {
+              "max_step_deg": 50.196348927,
+              "max_step_frame": 143,
+              "max_step_cm": 50.10488107,
+              "max_position_step_frame": 150,
+              "local_length_ratio_min": 0.999999907,
+              "local_length_ratio_max": 0.999999978
+            }
+          },
+          "hand_r": {
+            "source": {
+              "max_step_deg": 70.969363374,
+              "max_step_frame": 143,
+              "max_step_cm": 49.976263673,
+              "max_position_step_frame": 142,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.00000042
+            },
+            "appearance": {
+              "max_step_deg": 70.969363374,
+              "max_step_frame": 143,
+              "max_step_cm": 50.70294149,
+              "max_position_step_frame": 142,
+              "local_length_ratio_min": 0.999999711,
+              "local_length_ratio_max": 0.999999986
+            }
+          },
+          "upperarm_l": {
+            "source": {
+              "max_step_deg": 55.996131792,
+              "max_step_frame": 150,
+              "max_step_cm": 19.882816641,
+              "max_position_step_frame": 149,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000857
+            },
+            "appearance": {
+              "max_step_deg": 60.426939728,
+              "max_step_frame": 148,
+              "max_step_cm": 22.585055382,
+              "max_position_step_frame": 149,
+              "local_length_ratio_min": 0.999999562,
+              "local_length_ratio_max": 0.999999997
+            }
+          },
+          "upperarm_r": {
+            "source": {
+              "max_step_deg": 56.894222499,
+              "max_step_frame": 149,
+              "max_step_cm": 24.089498685,
+              "max_position_step_frame": 143,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000535
+            },
+            "appearance": {
+              "max_step_deg": 59.452779763,
+              "max_step_frame": 149,
+              "max_step_cm": 22.058000888,
+              "max_position_step_frame": 143,
+              "local_length_ratio_min": 0.999999241,
+              "local_length_ratio_max": 0.999999951
+            }
+          },
+          "lowerarm_l": {
+            "source": {
+              "max_step_deg": 51.390036222,
+              "max_step_frame": 143,
+              "max_step_cm": 42.131171314,
+              "max_position_step_frame": 150,
+              "local_length_ratio_min": 0.999999843,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 57.190387328,
+              "max_step_frame": 148,
+              "max_step_cm": 47.423880707,
+              "max_position_step_frame": 150,
+              "local_length_ratio_min": 0.999998868,
+              "local_length_ratio_max": 0.999999703
+            }
+          },
+          "lowerarm_r": {
+            "source": {
+              "max_step_deg": 64.356527887,
+              "max_step_frame": 143,
+              "max_step_cm": 42.326548219,
+              "max_position_step_frame": 143,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000412
+            },
+            "appearance": {
+              "max_step_deg": 65.9857764,
+              "max_step_frame": 143,
+              "max_step_cm": 42.967627891,
+              "max_position_step_frame": 143,
+              "local_length_ratio_min": 0.999998258,
+              "local_length_ratio_max": 0.999999885
+            }
+          },
+          "thigh_l": {
+            "source": {
+              "max_step_deg": 31.936896845,
+              "max_step_frame": 150,
+              "max_step_cm": 8.384593335,
+              "max_position_step_frame": 145,
+              "local_length_ratio_min": 0.999999771,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 33.037451104,
+              "max_step_frame": 150,
+              "max_step_cm": 14.582238619,
+              "max_position_step_frame": 149,
+              "local_length_ratio_min": 1.088479014,
+              "local_length_ratio_max": 1.523444306
+            }
+          },
+          "thigh_r": {
+            "source": {
+              "max_step_deg": 40.641620477,
+              "max_step_frame": 150,
+              "max_step_cm": 15.540291222,
+              "max_position_step_frame": 151,
+              "local_length_ratio_min": 0.999999912,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 42.233247731,
+              "max_step_frame": 150,
+              "max_step_cm": 14.886719053,
+              "max_position_step_frame": 151,
+              "local_length_ratio_min": 0.778701295,
+              "local_length_ratio_max": 1.139628512
+            }
+          },
+          "calf_l": {
+            "source": {
+              "max_step_deg": 20.831164632,
+              "max_step_frame": 148,
+              "max_step_cm": 7.68902849,
+              "max_position_step_frame": 149,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001496
+            },
+            "appearance": {
+              "max_step_deg": 25.959704458,
+              "max_step_frame": 148,
+              "max_step_cm": 14.001624365,
+              "max_position_step_frame": 148,
+              "local_length_ratio_min": 1.000000091,
+              "local_length_ratio_max": 1.000000199
+            }
+          },
+          "calf_r": {
+            "source": {
+              "max_step_deg": 36.481658101,
+              "max_step_frame": 151,
+              "max_step_cm": 11.188450841,
+              "max_position_step_frame": 152,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000352
+            },
+            "appearance": {
+              "max_step_deg": 34.135357806,
+              "max_step_frame": 150,
+              "max_step_cm": 18.359951478,
+              "max_position_step_frame": 143,
+              "local_length_ratio_min": 1.000000006,
+              "local_length_ratio_max": 1.000000011
+            }
+          },
+          "foot_l": {
+            "source": {
+              "max_step_deg": 2.602363773,
+              "max_step_frame": 164,
+              "max_step_cm": 2.972059501,
+              "max_position_step_frame": 164,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001807
+            },
+            "appearance": {
+              "max_step_deg": 30.809783876,
+              "max_step_frame": 148,
+              "max_step_cm": 7.471677731,
+              "max_position_step_frame": 148,
+              "local_length_ratio_min": 1.00000009,
+              "local_length_ratio_max": 1.000000157
+            }
+          },
+          "foot_r": {
+            "source": {
+              "max_step_deg": 8.767679958,
+              "max_step_frame": 164,
+              "max_step_cm": 4.243004114,
+              "max_position_step_frame": 164,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001084
+            },
+            "appearance": {
+              "max_step_deg": 14.880270191,
+              "max_step_frame": 143,
+              "max_step_cm": 7.18735452,
+              "max_position_step_frame": 143,
+              "local_length_ratio_min": 1.000000025,
+              "local_length_ratio_max": 1.00000004
+            }
+          }
+        },
+        "montages": [
+          "/Game/Rogue10m/Animation/Common/AM_Punch_02.AM_Punch_02"
+        ]
+      },
+      "hook_charge_attack_recovery": {
+        "frames": [
+          210,
+          329
+        ],
+        "samples": 120,
+        "bones": {
+          "head": {
+            "source": {
+              "max_step_deg": 82.840514646,
+              "max_step_frame": 252,
+              "max_step_cm": 23.084650502,
+              "max_position_step_frame": 253,
+              "local_length_ratio_min": 0.999999224,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 83.122810558,
+              "max_step_frame": 252,
+              "max_step_cm": 22.724742473,
+              "max_position_step_frame": 262,
+              "local_length_ratio_min": 0.999998802,
+              "local_length_ratio_max": 0.999999757
+            }
+          },
+          "pelvis": {
+            "source": {
+              "max_step_deg": 58.871224595,
+              "max_step_frame": 252,
+              "max_step_cm": 15.32382527,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.809177737,
+              "local_length_ratio_max": 1.147185676
+            },
+            "appearance": {
+              "max_step_deg": 58.871224595,
+              "max_step_frame": 252,
+              "max_step_cm": 16.490682504,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.751994566,
+              "local_length_ratio_max": 1.070926405
+            }
+          },
+          "spine_01": {
+            "source": {
+              "max_step_deg": 57.385947052,
+              "max_step_frame": 252,
+              "max_step_cm": 14.9562712,
+              "max_position_step_frame": 262,
+              "local_length_ratio_min": 0.999999416,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 57.489844585,
+              "max_step_frame": 252,
+              "max_step_cm": 21.912711277,
+              "max_position_step_frame": 262,
+              "local_length_ratio_min": 0.993228667,
+              "local_length_ratio_max": 1.778608086
+            }
+          },
+          "hand_l": {
+            "source": {
+              "max_step_deg": 89.35511477,
+              "max_step_frame": 252,
+              "max_step_cm": 41.45791048,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.00000063
+            },
+            "appearance": {
+              "max_step_deg": 89.35511477,
+              "max_step_frame": 252,
+              "max_step_cm": 49.04013151,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.999999913,
+              "local_length_ratio_max": 0.999999999
+            }
+          },
+          "hand_r": {
+            "source": {
+              "max_step_deg": 125.227885872,
+              "max_step_frame": 252,
+              "max_step_cm": 44.769127608,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.00000042
+            },
+            "appearance": {
+              "max_step_deg": 125.227885872,
+              "max_step_frame": 252,
+              "max_step_cm": 52.019409725,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.999999729,
+              "local_length_ratio_max": 0.999999969
+            }
+          },
+          "upperarm_l": {
+            "source": {
+              "max_step_deg": 77.831581998,
+              "max_step_frame": 252,
+              "max_step_cm": 32.093157505,
+              "max_position_step_frame": 253,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000857
+            },
+            "appearance": {
+              "max_step_deg": 76.311841839,
+              "max_step_frame": 252,
+              "max_step_cm": 30.668655127,
+              "max_position_step_frame": 253,
+              "local_length_ratio_min": 0.999999406,
+              "local_length_ratio_max": 0.999999999
+            }
+          },
+          "upperarm_r": {
+            "source": {
+              "max_step_deg": 132.512862648,
+              "max_step_frame": 252,
+              "max_step_cm": 23.50318197,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000535
+            },
+            "appearance": {
+              "max_step_deg": 124.30479722,
+              "max_step_frame": 252,
+              "max_step_cm": 20.543245104,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.999999188,
+              "local_length_ratio_max": 0.999999915
+            }
+          },
+          "lowerarm_l": {
+            "source": {
+              "max_step_deg": 94.585741789,
+              "max_step_frame": 252,
+              "max_step_cm": 41.362282292,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.999999843,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 87.342850008,
+              "max_step_frame": 252,
+              "max_step_cm": 36.132202284,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.99999917,
+              "local_length_ratio_max": 0.999999783
+            }
+          },
+          "lowerarm_r": {
+            "source": {
+              "max_step_deg": 119.485660007,
+              "max_step_frame": 252,
+              "max_step_cm": 57.10863918,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000412
+            },
+            "appearance": {
+              "max_step_deg": 124.628553025,
+              "max_step_frame": 252,
+              "max_step_cm": 54.465679143,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.999998831,
+              "local_length_ratio_max": 0.999999938
+            }
+          },
+          "thigh_l": {
+            "source": {
+              "max_step_deg": 58.971202138,
+              "max_step_frame": 262,
+              "max_step_cm": 14.275673688,
+              "max_position_step_frame": 262,
+              "local_length_ratio_min": 0.999999771,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 58.110573401,
+              "max_step_frame": 261,
+              "max_step_cm": 22.099043833,
+              "max_position_step_frame": 262,
+              "local_length_ratio_min": 0.644300667,
+              "local_length_ratio_max": 1.524733878
+            }
+          },
+          "thigh_r": {
+            "source": {
+              "max_step_deg": 164.34388071,
+              "max_step_frame": 259,
+              "max_step_cm": 24.717242446,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.999999912,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 166.388449737,
+              "max_step_frame": 259,
+              "max_step_cm": 26.132247964,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.795434593,
+              "local_length_ratio_max": 1.558315948
+            }
+          },
+          "calf_l": {
+            "source": {
+              "max_step_deg": 57.179503162,
+              "max_step_frame": 252,
+              "max_step_cm": 17.073538976,
+              "max_position_step_frame": 262,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001496
+            },
+            "appearance": {
+              "max_step_deg": 56.440669219,
+              "max_step_frame": 253,
+              "max_step_cm": 23.54001165,
+              "max_position_step_frame": 261,
+              "local_length_ratio_min": 1.000000116,
+              "local_length_ratio_max": 1.000000174
+            }
+          },
+          "calf_r": {
+            "source": {
+              "max_step_deg": 152.243681462,
+              "max_step_frame": 252,
+              "max_step_cm": 21.194934268,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000352
+            },
+            "appearance": {
+              "max_step_deg": 167.819178174,
+              "max_step_frame": 252,
+              "max_step_cm": 26.012955664,
+              "max_position_step_frame": 259,
+              "local_length_ratio_min": 1.000000007,
+              "local_length_ratio_max": 1.00000001
+            }
+          },
+          "foot_l": {
+            "source": {
+              "max_step_deg": 2.528868408,
+              "max_step_frame": 275,
+              "max_step_cm": 5.963531209,
+              "max_position_step_frame": 256,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001807
+            },
+            "appearance": {
+              "max_step_deg": 13.861414898,
+              "max_step_frame": 260,
+              "max_step_cm": 7.114015833,
+              "max_position_step_frame": 256,
+              "local_length_ratio_min": 1.000000097,
+              "local_length_ratio_max": 1.000000161
+            }
+          },
+          "foot_r": {
+            "source": {
+              "max_step_deg": 8.520455848,
+              "max_step_frame": 275,
+              "max_step_cm": 15.368597434,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001084
+            },
+            "appearance": {
+              "max_step_deg": 18.888948543,
+              "max_step_frame": 262,
+              "max_step_cm": 16.495769909,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 1.000000023,
+              "local_length_ratio_max": 1.00000004
+            }
+          }
+        },
+        "montages": [
+          "/Game/Rogue10m/Animation/Common/AM_Punch_03.AM_Punch_03"
+        ]
+      }
+    }
+  },
+  "after": {
+    "capture": "after",
+    "total_frames": 451,
+    "windows": {
+      "idle": {
+        "frames": [
+          0,
+          44
+        ],
+        "samples": 45,
+        "bones": {
+          "head": {
+            "source": {
+              "max_step_deg": 0.174608402,
+              "max_step_frame": 5,
+              "max_step_cm": 0.092426732,
+              "max_position_step_frame": 42,
+              "local_length_ratio_min": 0.999999224,
+              "local_length_ratio_max": 0.999999224
+            },
+            "appearance": {
+              "max_step_deg": 0.174608402,
+              "max_step_frame": 5,
+              "max_step_cm": 0.079860569,
+              "max_position_step_frame": 42,
+              "local_length_ratio_min": 0.999999578,
+              "local_length_ratio_max": 0.999999586
+            }
+          },
+          "pelvis": {
+            "source": {
+              "max_step_deg": 0.121513968,
+              "max_step_frame": 6,
+              "max_step_cm": 0.053538978,
+              "max_position_step_frame": 43,
+              "local_length_ratio_min": 0.954204276,
+              "local_length_ratio_max": 0.957093559
+            },
+            "appearance": {
+              "max_step_deg": 0.121513968,
+              "max_step_frame": 6,
+              "max_step_cm": 0.057615788,
+              "max_position_step_frame": 43,
+              "local_length_ratio_min": 0.954319115,
+              "local_length_ratio_max": 0.957208746
+            }
+          },
+          "spine_01": {
+            "source": {
+              "max_step_deg": 0.115508773,
+              "max_step_frame": 6,
+              "max_step_cm": 0.053394558,
+              "max_position_step_frame": 43,
+              "local_length_ratio_min": 0.999999416,
+              "local_length_ratio_max": 0.999999416
+            },
+            "appearance": {
+              "max_step_deg": 0.115508773,
+              "max_step_frame": 6,
+              "max_step_cm": 0.057213257,
+              "max_position_step_frame": 43,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "hand_l": {
+            "source": {
+              "max_step_deg": 0.237503505,
+              "max_step_frame": 22,
+              "max_step_cm": 0.156895994,
+              "max_position_step_frame": 11,
+              "local_length_ratio_min": 1.00000063,
+              "local_length_ratio_max": 1.00000063
+            },
+            "appearance": {
+              "max_step_deg": 0.237503505,
+              "max_step_frame": 22,
+              "max_step_cm": 0.179276969,
+              "max_position_step_frame": 11,
+              "local_length_ratio_min": 0.999999971,
+              "local_length_ratio_max": 0.999999972
+            }
+          },
+          "hand_r": {
+            "source": {
+              "max_step_deg": 0.209320128,
+              "max_step_frame": 7,
+              "max_step_cm": 0.178407741,
+              "max_position_step_frame": 5,
+              "local_length_ratio_min": 1.00000042,
+              "local_length_ratio_max": 1.00000042
+            },
+            "appearance": {
+              "max_step_deg": 0.209320128,
+              "max_step_frame": 7,
+              "max_step_cm": 0.203427774,
+              "max_position_step_frame": 5,
+              "local_length_ratio_min": 0.999999886,
+              "local_length_ratio_max": 0.999999893
+            }
+          },
+          "upperarm_l": {
+            "source": {
+              "max_step_deg": 0.157267105,
+              "max_step_frame": 6,
+              "max_step_cm": 0.079328216,
+              "max_position_step_frame": 42,
+              "local_length_ratio_min": 1.000000857,
+              "local_length_ratio_max": 1.000000857
+            },
+            "appearance": {
+              "max_step_deg": 0.157267105,
+              "max_step_frame": 6,
+              "max_step_cm": 0.078311133,
+              "max_position_step_frame": 42,
+              "local_length_ratio_min": 0.99999999,
+              "local_length_ratio_max": 0.999999991
+            }
+          },
+          "upperarm_r": {
+            "source": {
+              "max_step_deg": 0.193350539,
+              "max_step_frame": 30,
+              "max_step_cm": 0.0847503,
+              "max_position_step_frame": 42,
+              "local_length_ratio_min": 1.000000535,
+              "local_length_ratio_max": 1.000000535
+            },
+            "appearance": {
+              "max_step_deg": 0.193350539,
+              "max_step_frame": 30,
+              "max_step_cm": 0.068774295,
+              "max_position_step_frame": 42,
+              "local_length_ratio_min": 0.999999792,
+              "local_length_ratio_max": 0.999999795
+            }
+          },
+          "lowerarm_l": {
+            "source": {
+              "max_step_deg": 0.18758458,
+              "max_step_frame": 11,
+              "max_step_cm": 0.084930707,
+              "max_position_step_frame": 6,
+              "local_length_ratio_min": 0.999999863,
+              "local_length_ratio_max": 0.999999863
+            },
+            "appearance": {
+              "max_step_deg": 0.187639997,
+              "max_step_frame": 11,
+              "max_step_cm": 0.111314924,
+              "max_position_step_frame": 6,
+              "local_length_ratio_min": 0.999999651,
+              "local_length_ratio_max": 0.999999657
+            }
+          },
+          "lowerarm_r": {
+            "source": {
+              "max_step_deg": 0.216565991,
+              "max_step_frame": 5,
+              "max_step_cm": 0.124691889,
+              "max_position_step_frame": 1,
+              "local_length_ratio_min": 1.000000412,
+              "local_length_ratio_max": 1.000000412
+            },
+            "appearance": {
+              "max_step_deg": 0.21516718,
+              "max_step_frame": 5,
+              "max_step_cm": 0.126933731,
+              "max_position_step_frame": 1,
+              "local_length_ratio_min": 0.999999342,
+              "local_length_ratio_max": 0.999999382
+            }
+          },
+          "thigh_l": {
+            "source": {
+              "max_step_deg": 0.06334761,
+              "max_step_frame": 43,
+              "max_step_cm": 0.055060396,
+              "max_position_step_frame": 43,
+              "local_length_ratio_min": 0.999999787,
+              "local_length_ratio_max": 0.999999787
+            },
+            "appearance": {
+              "max_step_deg": 0.06334761,
+              "max_step_frame": 43,
+              "max_step_cm": 0.059329949,
+              "max_position_step_frame": 43,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "thigh_r": {
+            "source": {
+              "max_step_deg": 0.081356095,
+              "max_step_frame": 5,
+              "max_step_cm": 0.053382394,
+              "max_position_step_frame": 40,
+              "local_length_ratio_min": 0.999999935,
+              "local_length_ratio_max": 0.999999935
+            },
+            "appearance": {
+              "max_step_deg": 0.081356095,
+              "max_step_frame": 5,
+              "max_step_cm": 0.057965299,
+              "max_position_step_frame": 40,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "calf_l": {
+            "source": {
+              "max_step_deg": 0.082236863,
+              "max_step_frame": 43,
+              "max_step_cm": 0.042367163,
+              "max_position_step_frame": 42,
+              "local_length_ratio_min": 1.000001496,
+              "local_length_ratio_max": 1.000001496
+            },
+            "appearance": {
+              "max_step_deg": 0.075130853,
+              "max_step_frame": 43,
+              "max_step_cm": 0.047429228,
+              "max_position_step_frame": 42,
+              "local_length_ratio_min": 1.000000137,
+              "local_length_ratio_max": 1.000000138
+            }
+          },
+          "calf_r": {
+            "source": {
+              "max_step_deg": 0.076274319,
+              "max_step_frame": 27,
+              "max_step_cm": 0.035666215,
+              "max_position_step_frame": 43,
+              "local_length_ratio_min": 1.000000352,
+              "local_length_ratio_max": 1.000000352
+            },
+            "appearance": {
+              "max_step_deg": 0.069570212,
+              "max_step_frame": 27,
+              "max_step_cm": 0.037236286,
+              "max_position_step_frame": 42,
+              "local_length_ratio_min": 1.000000007,
+              "local_length_ratio_max": 1.000000007
+            }
+          },
+          "foot_l": {
+            "source": {
+              "max_step_deg": 0.025691527,
+              "max_step_frame": 31,
+              "max_step_cm": 0.008206477,
+              "max_position_step_frame": 44,
+              "local_length_ratio_min": 1.000001807,
+              "local_length_ratio_max": 1.000001807
+            },
+            "appearance": {
+              "max_step_deg": 0.025529476,
+              "max_step_frame": 31,
+              "max_step_cm": 0.012196289,
+              "max_position_step_frame": 44,
+              "local_length_ratio_min": 1.000000158,
+              "local_length_ratio_max": 1.000000158
+            }
+          },
+          "foot_r": {
+            "source": {
+              "max_step_deg": 0.030667153,
+              "max_step_frame": 12,
+              "max_step_cm": 0.012811587,
+              "max_position_step_frame": 9,
+              "local_length_ratio_min": 1.000001084,
+              "local_length_ratio_max": 1.000001084
+            },
+            "appearance": {
+              "max_step_deg": 0.03114476,
+              "max_step_frame": 12,
+              "max_step_cm": 0.013528125,
+              "max_position_step_frame": 44,
+              "local_length_ratio_min": 1.000000025,
+              "local_length_ratio_max": 1.000000026
+            }
+          }
+        },
+        "montages": []
+      },
+      "left_jab": {
+        "frames": [
+          45,
+          56
+        ],
+        "samples": 12,
+        "bones": {
+          "head": {
+            "source": {
+              "max_step_deg": 8.910125921,
+              "max_step_frame": 52,
+              "max_step_cm": 15.992587713,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.999999224,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 8.910125921,
+              "max_step_frame": 52,
+              "max_step_cm": 16.895614701,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.99999941,
+              "local_length_ratio_max": 0.999999586
+            }
+          },
+          "pelvis": {
+            "source": {
+              "max_step_deg": 12.593102766,
+              "max_step_frame": 50,
+              "max_step_cm": 13.343835741,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.02321339,
+              "local_length_ratio_max": 0.957149035
+            },
+            "appearance": {
+              "max_step_deg": 12.593102766,
+              "max_step_frame": 50,
+              "max_step_cm": 14.3599232,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.023216166,
+              "local_length_ratio_max": 0.957264228
+            }
+          },
+          "spine_01": {
+            "source": {
+              "max_step_deg": 13.056332458,
+              "max_step_frame": 50,
+              "max_step_cm": 13.541818797,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.999999416,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 13.056332458,
+              "max_step_frame": 50,
+              "max_step_cm": 14.913335231,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "hand_l": {
+            "source": {
+              "max_step_deg": 31.524507563,
+              "max_step_frame": 53,
+              "max_step_cm": 32.911473039,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.00000063
+            },
+            "appearance": {
+              "max_step_deg": 31.524507563,
+              "max_step_frame": 53,
+              "max_step_cm": 36.474274801,
+              "max_position_step_frame": 50,
+              "local_length_ratio_min": 0.999999915,
+              "local_length_ratio_max": 0.999999971
+            }
+          },
+          "hand_r": {
+            "source": {
+              "max_step_deg": 28.67890352,
+              "max_step_frame": 49,
+              "max_step_cm": 16.374517456,
+              "max_position_step_frame": 49,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.00000042
+            },
+            "appearance": {
+              "max_step_deg": 28.67890352,
+              "max_step_frame": 49,
+              "max_step_cm": 18.8351148,
+              "max_position_step_frame": 49,
+              "local_length_ratio_min": 0.999999862,
+              "local_length_ratio_max": 0.999999912
+            }
+          },
+          "upperarm_l": {
+            "source": {
+              "max_step_deg": 36.941997048,
+              "max_step_frame": 51,
+              "max_step_cm": 20.032033179,
+              "max_position_step_frame": 50,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000857
+            },
+            "appearance": {
+              "max_step_deg": 36.941997048,
+              "max_step_frame": 51,
+              "max_step_cm": 21.308253627,
+              "max_position_step_frame": 50,
+              "local_length_ratio_min": 0.99999989,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "upperarm_r": {
+            "source": {
+              "max_step_deg": 12.198196426,
+              "max_step_frame": 51,
+              "max_step_cm": 14.076382894,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000535
+            },
+            "appearance": {
+              "max_step_deg": 12.198196426,
+              "max_step_frame": 51,
+              "max_step_cm": 16.147102471,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.999999523,
+              "local_length_ratio_max": 0.999999811
+            }
+          },
+          "lowerarm_l": {
+            "source": {
+              "max_step_deg": 40.341582958,
+              "max_step_frame": 53,
+              "max_step_cm": 31.788551781,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.999999843,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 40.208016202,
+              "max_step_frame": 53,
+              "max_step_cm": 34.501419162,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.999999354,
+              "local_length_ratio_max": 0.999999828
+            }
+          },
+          "lowerarm_r": {
+            "source": {
+              "max_step_deg": 23.488189581,
+              "max_step_frame": 49,
+              "max_step_cm": 12.506781907,
+              "max_position_step_frame": 52,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000412
+            },
+            "appearance": {
+              "max_step_deg": 23.652075257,
+              "max_step_frame": 49,
+              "max_step_cm": 13.232844687,
+              "max_position_step_frame": 56,
+              "local_length_ratio_min": 0.99999931,
+              "local_length_ratio_max": 0.999999508
+            }
+          },
+          "thigh_l": {
+            "source": {
+              "max_step_deg": 13.079523901,
+              "max_step_frame": 49,
+              "max_step_cm": 13.793125977,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.999999771,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 13.079523901,
+              "max_step_frame": 49,
+              "max_step_cm": 15.034302599,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "thigh_r": {
+            "source": {
+              "max_step_deg": 14.324757226,
+              "max_step_frame": 49,
+              "max_step_cm": 12.757402968,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 0.999999912,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 14.324757226,
+              "max_step_frame": 49,
+              "max_step_cm": 13.818266538,
+              "max_position_step_frame": 51,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "calf_l": {
+            "source": {
+              "max_step_deg": 19.908105772,
+              "max_step_frame": 50,
+              "max_step_cm": 15.230643119,
+              "max_position_step_frame": 49,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001496
+            },
+            "appearance": {
+              "max_step_deg": 19.4794294,
+              "max_step_frame": 50,
+              "max_step_cm": 17.271674168,
+              "max_position_step_frame": 49,
+              "local_length_ratio_min": 1.000000086,
+              "local_length_ratio_max": 1.000000137
+            }
+          },
+          "calf_r": {
+            "source": {
+              "max_step_deg": 12.527108871,
+              "max_step_frame": 50,
+              "max_step_cm": 8.652356371,
+              "max_position_step_frame": 52,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000352
+            },
+            "appearance": {
+              "max_step_deg": 12.394455796,
+              "max_step_frame": 50,
+              "max_step_cm": 9.561378043,
+              "max_position_step_frame": 52,
+              "local_length_ratio_min": 1.000000007,
+              "local_length_ratio_max": 1.00000001
+            }
+          },
+          "foot_l": {
+            "source": {
+              "max_step_deg": 23.569167697,
+              "max_step_frame": 51,
+              "max_step_cm": 26.911278329,
+              "max_position_step_frame": 50,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001807
+            },
+            "appearance": {
+              "max_step_deg": 23.874931183,
+              "max_step_frame": 51,
+              "max_step_cm": 28.418950919,
+              "max_position_step_frame": 50,
+              "local_length_ratio_min": 1.000000158,
+              "local_length_ratio_max": 1.000000217
+            }
+          },
+          "foot_r": {
+            "source": {
+              "max_step_deg": 17.383924552,
+              "max_step_frame": 52,
+              "max_step_cm": 8.611413433,
+              "max_position_step_frame": 52,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001084
+            },
+            "appearance": {
+              "max_step_deg": 17.182742313,
+              "max_step_frame": 52,
+              "max_step_cm": 9.590990327,
+              "max_position_step_frame": 52,
+              "local_length_ratio_min": 1.000000017,
+              "local_length_ratio_max": 1.000000026
+            }
+          }
+        },
+        "montages": [
+          "/Game/Rogue10m/Animation/Combat/Boxing/AM_BoxingLeftJab_Appearance.AM_BoxingLeftJab_Appearance"
+        ]
+      },
+      "right_jab_and_recovery": {
+        "frames": [
+          57,
+          134
+        ],
+        "samples": 78,
+        "bones": {
+          "head": {
+            "source": {
+              "max_step_deg": 10.402854952,
+              "max_step_frame": 62,
+              "max_step_cm": 17.694399509,
+              "max_position_step_frame": 64,
+              "local_length_ratio_min": 0.999999224,
+              "local_length_ratio_max": 1.000000021
+            },
+            "appearance": {
+              "max_step_deg": 10.402854952,
+              "max_step_frame": 62,
+              "max_step_cm": 17.854109881,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.99999946,
+              "local_length_ratio_max": 0.999999609
+            }
+          },
+          "pelvis": {
+            "source": {
+              "max_step_deg": 10.259101529,
+              "max_step_frame": 68,
+              "max_step_cm": 14.002281693,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.033144308,
+              "local_length_ratio_max": 0.956776348
+            },
+            "appearance": {
+              "max_step_deg": 10.259101529,
+              "max_step_frame": 68,
+              "max_step_cm": 15.068507559,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.033148317,
+              "local_length_ratio_max": 0.956891497
+            }
+          },
+          "spine_01": {
+            "source": {
+              "max_step_deg": 12.698901213,
+              "max_step_frame": 62,
+              "max_step_cm": 14.231061492,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999416,
+              "local_length_ratio_max": 1.000000023
+            },
+            "appearance": {
+              "max_step_deg": 12.698901213,
+              "max_step_frame": 62,
+              "max_step_cm": 15.776989806,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "hand_l": {
+            "source": {
+              "max_step_deg": 30.064932093,
+              "max_step_frame": 73,
+              "max_step_cm": 14.442837134,
+              "max_position_step_frame": 64,
+              "local_length_ratio_min": 0.999999976,
+              "local_length_ratio_max": 1.00000063
+            },
+            "appearance": {
+              "max_step_deg": 30.064932093,
+              "max_step_frame": 73,
+              "max_step_cm": 13.986666045,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999908,
+              "local_length_ratio_max": 0.999999971
+            }
+          },
+          "hand_r": {
+            "source": {
+              "max_step_deg": 40.125966212,
+              "max_step_frame": 63,
+              "max_step_cm": 35.785094634,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999975,
+              "local_length_ratio_max": 1.00000042
+            },
+            "appearance": {
+              "max_step_deg": 40.125966212,
+              "max_step_frame": 63,
+              "max_step_cm": 32.183964257,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999864,
+              "local_length_ratio_max": 0.999999969
+            }
+          },
+          "upperarm_l": {
+            "source": {
+              "max_step_deg": 11.715657551,
+              "max_step_frame": 64,
+              "max_step_cm": 14.678069384,
+              "max_position_step_frame": 64,
+              "local_length_ratio_min": 0.999999977,
+              "local_length_ratio_max": 1.000000857
+            },
+            "appearance": {
+              "max_step_deg": 11.715657551,
+              "max_step_frame": 64,
+              "max_step_cm": 14.20244005,
+              "max_position_step_frame": 64,
+              "local_length_ratio_min": 0.999999906,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "upperarm_r": {
+            "source": {
+              "max_step_deg": 34.78057366,
+              "max_step_frame": 65,
+              "max_step_cm": 21.665957281,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999976,
+              "local_length_ratio_max": 1.000000535
+            },
+            "appearance": {
+              "max_step_deg": 34.78057366,
+              "max_step_frame": 65,
+              "max_step_cm": 22.782606617,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999712,
+              "local_length_ratio_max": 0.999999986
+            }
+          },
+          "lowerarm_l": {
+            "source": {
+              "max_step_deg": 26.656078097,
+              "max_step_frame": 73,
+              "max_step_cm": 10.339464414,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999863,
+              "local_length_ratio_max": 1.000000028
+            },
+            "appearance": {
+              "max_step_deg": 26.777345316,
+              "max_step_frame": 73,
+              "max_step_cm": 10.406323101,
+              "max_position_step_frame": 60,
+              "local_length_ratio_min": 0.999999557,
+              "local_length_ratio_max": 0.999999738
+            }
+          },
+          "lowerarm_r": {
+            "source": {
+              "max_step_deg": 44.263183764,
+              "max_step_frame": 63,
+              "max_step_cm": 34.328041956,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999975,
+              "local_length_ratio_max": 1.000000412
+            },
+            "appearance": {
+              "max_step_deg": 44.31968965,
+              "max_step_frame": 63,
+              "max_step_cm": 36.746787749,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999302,
+              "local_length_ratio_max": 0.999999903
+            }
+          },
+          "thigh_l": {
+            "source": {
+              "max_step_deg": 10.221174974,
+              "max_step_frame": 68,
+              "max_step_cm": 14.247128823,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999787,
+              "local_length_ratio_max": 1.000000027
+            },
+            "appearance": {
+              "max_step_deg": 10.221174974,
+              "max_step_frame": 68,
+              "max_step_cm": 15.476403684,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "thigh_r": {
+            "source": {
+              "max_step_deg": 13.503855654,
+              "max_step_frame": 71,
+              "max_step_cm": 13.533672749,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999935,
+              "local_length_ratio_max": 1.000000029
+            },
+            "appearance": {
+              "max_step_deg": 13.503855654,
+              "max_step_frame": 71,
+              "max_step_cm": 14.637077693,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "calf_l": {
+            "source": {
+              "max_step_deg": 24.990308526,
+              "max_step_frame": 69,
+              "max_step_cm": 13.92063444,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 0.999999979,
+              "local_length_ratio_max": 1.000001496
+            },
+            "appearance": {
+              "max_step_deg": 23.878016357,
+              "max_step_frame": 69,
+              "max_step_cm": 15.238802008,
+              "max_position_step_frame": 63,
+              "local_length_ratio_min": 1.000000086,
+              "local_length_ratio_max": 1.000000137
+            }
+          },
+          "calf_r": {
+            "source": {
+              "max_step_deg": 12.290581232,
+              "max_step_frame": 70,
+              "max_step_cm": 9.961969965,
+              "max_position_step_frame": 64,
+              "local_length_ratio_min": 0.999999975,
+              "local_length_ratio_max": 1.000000352
+            },
+            "appearance": {
+              "max_step_deg": 12.67666652,
+              "max_step_frame": 70,
+              "max_step_cm": 10.879549257,
+              "max_position_step_frame": 64,
+              "local_length_ratio_min": 1.000000007,
+              "local_length_ratio_max": 1.00000001
+            }
+          },
+          "foot_l": {
+            "source": {
+              "max_step_deg": 20.292690814,
+              "max_step_frame": 63,
+              "max_step_cm": 26.375514457,
+              "max_position_step_frame": 69,
+              "local_length_ratio_min": 0.99999998,
+              "local_length_ratio_max": 1.000001807
+            },
+            "appearance": {
+              "max_step_deg": 20.619234908,
+              "max_step_frame": 63,
+              "max_step_cm": 26.584621027,
+              "max_position_step_frame": 69,
+              "local_length_ratio_min": 1.000000156,
+              "local_length_ratio_max": 1.000000217
+            }
+          },
+          "foot_r": {
+            "source": {
+              "max_step_deg": 16.009414074,
+              "max_step_frame": 70,
+              "max_step_cm": 8.863182198,
+              "max_position_step_frame": 64,
+              "local_length_ratio_min": 0.999999978,
+              "local_length_ratio_max": 1.000001084
+            },
+            "appearance": {
+              "max_step_deg": 16.04904887,
+              "max_step_frame": 70,
+              "max_step_cm": 9.812541151,
+              "max_position_step_frame": 64,
+              "local_length_ratio_min": 1.000000015,
+              "local_length_ratio_max": 1.000000026
+            }
+          }
+        },
+        "montages": [
+          "/Game/Rogue10m/Animation/Combat/Boxing/AM_BoxingRightJab_Appearance.AM_BoxingRightJab_Appearance"
+        ]
+      },
+      "straight_and_recovery": {
+        "frames": [
+          135,
+          209
+        ],
+        "samples": 75,
+        "bones": {
+          "head": {
+            "source": {
+              "max_step_deg": 24.442884286,
+              "max_step_frame": 149,
+              "max_step_cm": 20.624440887,
+              "max_position_step_frame": 148,
+              "local_length_ratio_min": 0.999999224,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 24.442884286,
+              "max_step_frame": 149,
+              "max_step_cm": 17.69583472,
+              "max_position_step_frame": 148,
+              "local_length_ratio_min": 0.999999406,
+              "local_length_ratio_max": 0.999999995
+            }
+          },
+          "pelvis": {
+            "source": {
+              "max_step_deg": 31.229906572,
+              "max_step_frame": 149,
+              "max_step_cm": 11.332656535,
+              "max_position_step_frame": 151,
+              "local_length_ratio_min": 0.800473487,
+              "local_length_ratio_max": 0.974772865
+            },
+            "appearance": {
+              "max_step_deg": 31.229906572,
+              "max_step_frame": 149,
+              "max_step_cm": 12.195599575,
+              "max_position_step_frame": 151,
+              "local_length_ratio_min": 0.800569824,
+              "local_length_ratio_max": 0.974890179
+            }
+          },
+          "spine_01": {
+            "source": {
+              "max_step_deg": 30.801898781,
+              "max_step_frame": 149,
+              "max_step_cm": 11.274854494,
+              "max_position_step_frame": 151,
+              "local_length_ratio_min": 0.999999416,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 30.801898781,
+              "max_step_frame": 149,
+              "max_step_cm": 11.785716614,
+              "max_position_step_frame": 151,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "hand_l": {
+            "source": {
+              "max_step_deg": 50.196349014,
+              "max_step_frame": 143,
+              "max_step_cm": 49.347873577,
+              "max_position_step_frame": 150,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.00000063
+            },
+            "appearance": {
+              "max_step_deg": 50.196349014,
+              "max_step_frame": 143,
+              "max_step_cm": 45.872349337,
+              "max_position_step_frame": 150,
+              "local_length_ratio_min": 0.999999907,
+              "local_length_ratio_max": 0.999999978
+            }
+          },
+          "hand_r": {
+            "source": {
+              "max_step_deg": 70.969363454,
+              "max_step_frame": 143,
+              "max_step_cm": 50.056241092,
+              "max_position_step_frame": 142,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.00000042
+            },
+            "appearance": {
+              "max_step_deg": 70.969363454,
+              "max_step_frame": 143,
+              "max_step_cm": 58.228218808,
+              "max_position_step_frame": 142,
+              "local_length_ratio_min": 0.999999711,
+              "local_length_ratio_max": 0.999999986
+            }
+          },
+          "upperarm_l": {
+            "source": {
+              "max_step_deg": 55.996131792,
+              "max_step_frame": 150,
+              "max_step_cm": 19.882816641,
+              "max_position_step_frame": 149,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000857
+            },
+            "appearance": {
+              "max_step_deg": 55.996131792,
+              "max_step_frame": 150,
+              "max_step_cm": 18.298072443,
+              "max_position_step_frame": 149,
+              "local_length_ratio_min": 0.999999562,
+              "local_length_ratio_max": 0.999999997
+            }
+          },
+          "upperarm_r": {
+            "source": {
+              "max_step_deg": 56.894222499,
+              "max_step_frame": 149,
+              "max_step_cm": 23.961723966,
+              "max_position_step_frame": 143,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000535
+            },
+            "appearance": {
+              "max_step_deg": 56.894222499,
+              "max_step_frame": 149,
+              "max_step_cm": 22.78733085,
+              "max_position_step_frame": 143,
+              "local_length_ratio_min": 0.999999241,
+              "local_length_ratio_max": 0.999999951
+            }
+          },
+          "lowerarm_l": {
+            "source": {
+              "max_step_deg": 51.390036311,
+              "max_step_frame": 143,
+              "max_step_cm": 42.131171314,
+              "max_position_step_frame": 150,
+              "local_length_ratio_min": 0.999999843,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 51.273651963,
+              "max_step_frame": 143,
+              "max_step_cm": 43.429297297,
+              "max_position_step_frame": 150,
+              "local_length_ratio_min": 0.999998868,
+              "local_length_ratio_max": 0.999999703
+            }
+          },
+          "lowerarm_r": {
+            "source": {
+              "max_step_deg": 64.356527968,
+              "max_step_frame": 143,
+              "max_step_cm": 42.289312227,
+              "max_position_step_frame": 148,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000412
+            },
+            "appearance": {
+              "max_step_deg": 64.506714307,
+              "max_step_frame": 143,
+              "max_step_cm": 43.435241868,
+              "max_position_step_frame": 143,
+              "local_length_ratio_min": 0.999998258,
+              "local_length_ratio_max": 0.999999885
+            }
+          },
+          "thigh_l": {
+            "source": {
+              "max_step_deg": 23.700092966,
+              "max_step_frame": 148,
+              "max_step_cm": 8.290672632,
+              "max_position_step_frame": 145,
+              "local_length_ratio_min": 0.999999771,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 23.700092966,
+              "max_step_frame": 148,
+              "max_step_cm": 9.124220901,
+              "max_position_step_frame": 149,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "thigh_r": {
+            "source": {
+              "max_step_deg": 36.421871255,
+              "max_step_frame": 150,
+              "max_step_cm": 15.540291222,
+              "max_position_step_frame": 151,
+              "local_length_ratio_min": 0.999999912,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 36.421871255,
+              "max_step_frame": 150,
+              "max_step_cm": 17.339928335,
+              "max_position_step_frame": 151,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "calf_l": {
+            "source": {
+              "max_step_deg": 33.946218771,
+              "max_step_frame": 149,
+              "max_step_cm": 23.665009451,
+              "max_position_step_frame": 148,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001496
+            },
+            "appearance": {
+              "max_step_deg": 33.206913965,
+              "max_step_frame": 149,
+              "max_step_cm": 26.100495092,
+              "max_position_step_frame": 148,
+              "local_length_ratio_min": 1.000000113,
+              "local_length_ratio_max": 1.000000202
+            }
+          },
+          "calf_r": {
+            "source": {
+              "max_step_deg": 36.376447596,
+              "max_step_frame": 150,
+              "max_step_cm": 17.317990087,
+              "max_position_step_frame": 151,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000352
+            },
+            "appearance": {
+              "max_step_deg": 35.444303165,
+              "max_step_frame": 150,
+              "max_step_cm": 19.906928916,
+              "max_position_step_frame": 151,
+              "local_length_ratio_min": 1.000000005,
+              "local_length_ratio_max": 1.000000011
+            }
+          },
+          "foot_l": {
+            "source": {
+              "max_step_deg": 29.684070926,
+              "max_step_frame": 148,
+              "max_step_cm": 30.070424792,
+              "max_position_step_frame": 149,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001807
+            },
+            "appearance": {
+              "max_step_deg": 29.647391449,
+              "max_step_frame": 148,
+              "max_step_cm": 31.47309959,
+              "max_position_step_frame": 149,
+              "local_length_ratio_min": 1.000000093,
+              "local_length_ratio_max": 1.00000019
+            }
+          },
+          "foot_r": {
+            "source": {
+              "max_step_deg": 27.246622801,
+              "max_step_frame": 149,
+              "max_step_cm": 17.362805314,
+              "max_position_step_frame": 143,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001084
+            },
+            "appearance": {
+              "max_step_deg": 27.221658449,
+              "max_step_frame": 149,
+              "max_step_cm": 19.703472076,
+              "max_position_step_frame": 143,
+              "local_length_ratio_min": 1.000000013,
+              "local_length_ratio_max": 1.000000049
+            }
+          }
+        },
+        "montages": [
+          "/Game/Rogue10m/Animation/Common/AM_Punch_02.AM_Punch_02"
+        ]
+      },
+      "hook_charge_attack_recovery": {
+        "frames": [
+          210,
+          329
+        ],
+        "samples": 120,
+        "bones": {
+          "head": {
+            "source": {
+              "max_step_deg": 57.770748578,
+              "max_step_frame": 249,
+              "max_step_cm": 22.566689503,
+              "max_position_step_frame": 259,
+              "local_length_ratio_min": 0.999999224,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 57.770748578,
+              "max_step_frame": 249,
+              "max_step_cm": 21.236997917,
+              "max_position_step_frame": 259,
+              "local_length_ratio_min": 0.999999453,
+              "local_length_ratio_max": 0.999999892
+            }
+          },
+          "pelvis": {
+            "source": {
+              "max_step_deg": 40.396401882,
+              "max_step_frame": 252,
+              "max_step_cm": 15.492588305,
+              "max_position_step_frame": 248,
+              "local_length_ratio_min": 0.825074762,
+              "local_length_ratio_max": 1.167653714
+            },
+            "appearance": {
+              "max_step_deg": 40.396401882,
+              "max_step_frame": 252,
+              "max_step_cm": 16.672295923,
+              "max_position_step_frame": 248,
+              "local_length_ratio_min": 0.82517406,
+              "local_length_ratio_max": 1.167794242
+            }
+          },
+          "spine_01": {
+            "source": {
+              "max_step_deg": 39.389094412,
+              "max_step_frame": 252,
+              "max_step_cm": 15.292289176,
+              "max_position_step_frame": 248,
+              "local_length_ratio_min": 0.999999416,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 39.389094412,
+              "max_step_frame": 252,
+              "max_step_cm": 16.106533894,
+              "max_position_step_frame": 262,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "hand_l": {
+            "source": {
+              "max_step_deg": 74.470619612,
+              "max_step_frame": 248,
+              "max_step_cm": 54.796059892,
+              "max_position_step_frame": 248,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.00000063
+            },
+            "appearance": {
+              "max_step_deg": 74.470619612,
+              "max_step_frame": 248,
+              "max_step_cm": 60.415240509,
+              "max_position_step_frame": 248,
+              "local_length_ratio_min": 0.999999909,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "hand_r": {
+            "source": {
+              "max_step_deg": 130.522243362,
+              "max_step_frame": 252,
+              "max_step_cm": 33.497497764,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.00000042
+            },
+            "appearance": {
+              "max_step_deg": 130.522243362,
+              "max_step_frame": 252,
+              "max_step_cm": 56.318883057,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.999999727,
+              "local_length_ratio_max": 0.999999988
+            }
+          },
+          "upperarm_l": {
+            "source": {
+              "max_step_deg": 69.657756696,
+              "max_step_frame": 252,
+              "max_step_cm": 32.661403171,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000857
+            },
+            "appearance": {
+              "max_step_deg": 69.657756696,
+              "max_step_frame": 252,
+              "max_step_cm": 26.784602569,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.999999388,
+              "local_length_ratio_max": 0.999999998
+            }
+          },
+          "upperarm_r": {
+            "source": {
+              "max_step_deg": 132.292962631,
+              "max_step_frame": 252,
+              "max_step_cm": 25.172329705,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000535
+            },
+            "appearance": {
+              "max_step_deg": 132.292962631,
+              "max_step_frame": 252,
+              "max_step_cm": 25.461265114,
+              "max_position_step_frame": 248,
+              "local_length_ratio_min": 0.999999188,
+              "local_length_ratio_max": 0.999999915
+            }
+          },
+          "lowerarm_l": {
+            "source": {
+              "max_step_deg": 71.634343341,
+              "max_step_frame": 252,
+              "max_step_cm": 39.779916642,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.999999863,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 71.568940924,
+              "max_step_frame": 252,
+              "max_step_cm": 41.783522987,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.999998997,
+              "local_length_ratio_max": 0.999999783
+            }
+          },
+          "lowerarm_r": {
+            "source": {
+              "max_step_deg": 122.225623813,
+              "max_step_frame": 252,
+              "max_step_cm": 53.633847441,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000412
+            },
+            "appearance": {
+              "max_step_deg": 122.22754969,
+              "max_step_frame": 252,
+              "max_step_cm": 61.88902692,
+              "max_position_step_frame": 252,
+              "local_length_ratio_min": 0.999998907,
+              "local_length_ratio_max": 0.999999938
+            }
+          },
+          "thigh_l": {
+            "source": {
+              "max_step_deg": 58.231086533,
+              "max_step_frame": 262,
+              "max_step_cm": 15.511339359,
+              "max_position_step_frame": 248,
+              "local_length_ratio_min": 0.999999787,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 58.231086533,
+              "max_step_frame": 262,
+              "max_step_cm": 17.26091927,
+              "max_position_step_frame": 248,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "thigh_r": {
+            "source": {
+              "max_step_deg": 121.004518758,
+              "max_step_frame": 253,
+              "max_step_cm": 17.993733389,
+              "max_position_step_frame": 262,
+              "local_length_ratio_min": 0.999999935,
+              "local_length_ratio_max": 1.0
+            },
+            "appearance": {
+              "max_step_deg": 121.004518758,
+              "max_step_frame": 253,
+              "max_step_cm": 19.829383123,
+              "max_position_step_frame": 262,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.0
+            }
+          },
+          "calf_l": {
+            "source": {
+              "max_step_deg": 54.507613463,
+              "max_step_frame": 261,
+              "max_step_cm": 30.052062182,
+              "max_position_step_frame": 262,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001496
+            },
+            "appearance": {
+              "max_step_deg": 53.214367867,
+              "max_step_frame": 261,
+              "max_step_cm": 34.514141898,
+              "max_position_step_frame": 262,
+              "local_length_ratio_min": 1.000000118,
+              "local_length_ratio_max": 1.000000195
+            }
+          },
+          "calf_r": {
+            "source": {
+              "max_step_deg": 85.145210407,
+              "max_step_frame": 253,
+              "max_step_cm": 84.59425658,
+              "max_position_step_frame": 253,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000352
+            },
+            "appearance": {
+              "max_step_deg": 81.460644538,
+              "max_step_frame": 253,
+              "max_step_cm": 93.45321431,
+              "max_position_step_frame": 253,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000000012
+            }
+          },
+          "foot_l": {
+            "source": {
+              "max_step_deg": 40.918817361,
+              "max_step_frame": 262,
+              "max_step_cm": 29.298663484,
+              "max_position_step_frame": 263,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001807
+            },
+            "appearance": {
+              "max_step_deg": 40.918817361,
+              "max_step_frame": 262,
+              "max_step_cm": 31.820410795,
+              "max_position_step_frame": 263,
+              "local_length_ratio_min": 1.000000143,
+              "local_length_ratio_max": 1.0000002
+            }
+          },
+          "foot_r": {
+            "source": {
+              "max_step_deg": 65.873641025,
+              "max_step_frame": 252,
+              "max_step_cm": 93.285837022,
+              "max_position_step_frame": 253,
+              "local_length_ratio_min": 1.0,
+              "local_length_ratio_max": 1.000001084
+            },
+            "appearance": {
+              "max_step_deg": 65.873641025,
+              "max_step_frame": 252,
+              "max_step_cm": 99.094152035,
+              "max_position_step_frame": 253,
+              "local_length_ratio_min": 1.00000001,
+              "local_length_ratio_max": 1.000000063
+            }
+          }
+        },
+        "montages": [
+          "/Game/Rogue10m/Animation/Combat/Boxing/AM_BrawlerRightHook_Stable.AM_BrawlerRightHook_Stable"
+        ]
+      }
+    }
+  }
+}

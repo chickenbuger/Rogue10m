@@ -29,5 +29,20 @@ enum class ERogue10mWeaponType : uint8
 	Staff,
 
 	// 주먹 기반 전투를 강화하는 권 계열입니다.
-	Knuckle
+	Knuckle,
+
+	// 손목 투척과 원거리 연계를 사용하는 표창입니다.
+	Shuriken,
+
+	// 쌍검보다 짧고 빠른 교차 연계를 위한 쌍단검입니다.
+	DualDaggers,
+
+	// 정석 베기와 찌르기 연계를 사용하는 장검입니다.
+	LongSword,
+
+	// 방패 밀치기와 방어 반격을 위한 대형 방패입니다.
+	Shield,
+
+	// 한손검과 작은 방패를 함께 사용하는 균형형 장비입니다.
+	SwordBuckler
 };

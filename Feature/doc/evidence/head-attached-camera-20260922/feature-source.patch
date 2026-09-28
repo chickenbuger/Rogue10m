@@ -1,0 +1,865 @@
+--- a/Source/Rogue10m/Tests/Rogue10mBasicBrawlerRuntimeTest.cpp
++++ b/Source/Rogue10m/Tests/Rogue10mBasicBrawlerRuntimeTest.cpp
+@@ -294,7 +294,7 @@
+                 Presentation->CameraMotionScale=OriginalScale; View=BaseView;
+                 Presentation->ApplyBodyMotionToView(1.0f,View);
+                 Check(!View.Location.ContainsNaN() && !View.Rotation.ContainsNaN()
+-                    && FVector::Distance(View.Location,BaseView.Location)<=3.01,TEXT("camera_hitch_unbounded"));
++                    && FVector::Distance(View.Location,BaseView.Location) <= (Presentation->IsFullBodyPresentationActive() ? Presentation->MaxHeadCameraOffset + .01f : 3.01f),TEXT("camera_hitch_unbounded"));
+                 View=BaseView;
+                 Presentation->ApplyBodyMotionToView(std::numeric_limits<float>::quiet_NaN(),View);
+                 Check(View.Location.Equals(BaseView.Location,0.001) && View.Rotation.Equals(BaseView.Rotation,0.001)
+--- a/Source/Rogue10m/Tests/Rogue10mFirstPersonFistRuntimeTest.cpp
++++ b/Source/Rogue10m/Tests/Rogue10mFirstPersonFistRuntimeTest.cpp
+@@ -528,7 +528,15 @@
+                 const float RotationMagnitude=FMath::Max3(FMath::Abs(AppliedRotation.Pitch),
+                     FMath::Abs(AppliedRotation.Yaw),FMath::Abs(AppliedRotation.Roll));
+                 Check(!AppliedOffset.ContainsNaN() && !AppliedRotation.ContainsNaN(),TEXT("body_camera_non_finite"));
+-                Check(AppliedOffset.Size()<=2.01f && RotationMagnitude<=2.01f,TEXT("body_camera_exceeded_envelope"));
++                if (Presentation->IsFullBodyPresentationActive())
++                {
++                    const auto Limit = Presentation->MaxHeadCameraRotation;
++                    Check(AppliedOffset.Size() <= Presentation->MaxHeadCameraOffset + .01f
++                        && FMath::Abs(AppliedRotation.Pitch) <= Limit.Pitch + .01f
++                        && FMath::Abs(AppliedRotation.Yaw) <= Limit.Yaw + .01f
++                        && FMath::Abs(AppliedRotation.Roll) <= Limit.Roll + .01f, TEXT("head_camera_exceeded_envelope"));
++                }
++                else { Check(AppliedOffset.Size()<=2.01f && RotationMagnitude<=2.01f,TEXT("body_camera_exceeded_envelope")); }
+                 const FRotator ViewDelta=(PC->PlayerCameraManager->GetCameraRotation()-Camera->GetComponentRotation()).GetNormalized();
+                 const float ActualViewAngle=FMath::Max3(FMath::Abs(ViewDelta.Pitch),FMath::Abs(ViewDelta.Yaw),FMath::Abs(ViewDelta.Roll));
+                 MaxCameraMotion=FMath::Max(MaxCameraMotion,RotationMagnitude);
+--- a/Source/Rogue10m/Components/Rogue10mFirstPersonPresentationComponent.cpp
++++ b/Source/Rogue10m/Components/Rogue10mFirstPersonPresentationComponent.cpp
+@@ -4,6 +4,11 @@
+ 
+ #include "Animation/AnimInstance.h"
+ #include "Animation/AnimSingleNodeInstance.h"
++#include "Animation/AnimSequence.h"
++#include "Animation/AnimationPoseData.h"
++#include "Animation/AttributesRuntime.h"
++#include "BonePose.h"
++#include "Misc/MemStack.h"
+ #include "Engine/SkeletalMesh.h"
+ #include "Materials/MaterialInterface.h"
+ #include "Camera/CameraComponent.h"
+@@ -54,14 +59,214 @@
+ {
+ 	HitFeedbackAge = 0.16f;
+ 	HitFeedbackStrength = HitFeedbackWeight = 0.0f;
++	HeadReferenceSequence.Reset();
++	HeadReferenceMesh.Reset();
++	SequenceReferenceHead = FTransform::Identity;
++	SmoothedHeadCameraRotation = FQuat::Identity;
++	HeadYawSource.Reset();
++	PreviousHeadSourceYaw = UnwrappedHeadSourceYaw = 0.0;
++	PreviousHeadSourceTime = -1.0f;
++	bHasHeadSourceYaw = false;
+ 	AppliedCameraMotionOffset = FVector::ZeroVector;
+ 	AppliedCameraMotionRotation = FRotator::ZeroRotator;
+ 	CameraMotionOffsetVelocity = FVector::ZeroVector;
+ 	CameraMotionRotationVelocity = FVector::ZeroVector;
+ }
+ 
++namespace
++{
++	bool EvaluateSequenceHead(const UAnimSequence& Sequence, const FBoneContainer& Bones, float Time, FTransform& OutHead)
++	{
++		if (!Bones.IsValid() || !FMath::IsFinite(Time) || Sequence.IsValidAdditive()) { return false; }
++		const int32 MeshHead = Bones.GetReferenceSkeleton().FindBoneIndex(TEXT("head"));
++		if (MeshHead == INDEX_NONE) { return false; }
++		const FCompactPoseBoneIndex Head = Bones.MakeCompactPoseIndex(FMeshPoseBoneIndex(MeshHead));
++		if (Head == INDEX_NONE) { return false; }
++
++		// Evaluate the same compressed, retargeted local pose as the mesh, before
++		// rendering collapses the hidden neck. Socket transforms are unsuitable here.
++		FMemMark Mark(FMemStack::Get());
++		FCompactPose Pose;
++		Pose.SetBoneContainer(&Bones);
++		Pose.ResetToRefPose();
++		FBlendedCurve Curve;
++		Curve.InitFrom(Bones);
++		UE::Anim::FStackAttributeContainer Attributes;
++		FAnimationPoseData Data(Pose, Curve, Attributes);
++		Sequence.GetAnimationPose(Data, FAnimExtractContext(FMath::Clamp(Time, 0.0f, Sequence.GetPlayLength()), false));
++		FCSPose<FCompactPose> ComponentPose;
++		ComponentPose.InitPose(Pose);
++		OutHead = ComponentPose.GetComponentSpaceTransform(Head);
++		return !OutHead.ContainsNaN() && OutHead.GetRotation().IsNormalized();
++	}
++}
++
++bool URogue10mFirstPersonPresentationComponent::ReadSingleNodeHeadMotion(
++	USkeletalMeshComponent* Mesh, FVector& OutOffset, FRotator& OutRotation)
++{
++	UAnimSingleNodeInstance* SingleNode = Mesh ? Mesh->GetSingleNodeInstance() : nullptr;
++	UAnimSequence* Sequence = SingleNode ? Cast<UAnimSequence>(SingleNode->GetCurrentAsset()) : nullptr;
++	USkeletalMesh* MeshAsset = Mesh ? Mesh->GetSkeletalMeshAsset() : nullptr;
++	if (!Sequence || !MeshAsset || Sequence->GetSkeleton() != MeshAsset->GetSkeleton()) { return false; }
++	const FBoneContainer& Bones = SingleNode->GetRequiredBones();
++	if (HeadReferenceSequence.Get() != Sequence || HeadReferenceMesh.Get() != MeshAsset)
++	{
++		if (!EvaluateSequenceHead(*Sequence, Bones, 0.0f, SequenceReferenceHead)) { return false; }
++		HeadReferenceSequence = Sequence;
++		HeadReferenceMesh = MeshAsset;
++	}
++	FTransform CurrentHead;
++	if (!EvaluateSequenceHead(*Sequence, Bones, SingleNode->GetCurrentTime(), CurrentHead)) { return false; }
++	const FQuat MeshToBody = Mesh->GetRelativeRotation().Quaternion();
++	OutOffset = MeshToBody.RotateVector(CurrentHead.GetLocation() - SequenceReferenceHead.GetLocation());
++	const FQuat HeadDelta = CurrentHead.GetRotation() * SequenceReferenceHead.GetRotation().Inverse();
++	OutRotation = (MeshToBody * HeadDelta * MeshToBody.Inverse()).Rotator().GetNormalized();
++	return !OutOffset.ContainsNaN() && !OutRotation.ContainsNaN();
++}
++
++void URogue10mFirstPersonPresentationComponent::ApplyHeadMotionToView(float DeltaTime, FMinimalViewInfo& InOutView)
++{
++	ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner());
++	const ERogue10mWeaponType Weapon = Character ? Character->GetEquippedWeaponType() : ERogue10mWeaponType::Unarmed;
++	if (!bEnableFistPresentation || !Character || Character->IsDead() || !Character->IsLocallyControlled()
++		|| (Weapon != ERogue10mWeaponType::Unarmed && Weapon != ERogue10mWeaponType::Knuckle)
++		|| !FMath::IsFinite(DeltaTime) || !FMath::IsFinite(CameraMotionScale) || CameraMotionScale <= 0.0f
++		|| !FMath::IsFinite(HeadCameraTranslationScale) || !FMath::IsFinite(MaxHeadCameraOffset)
++		|| !FMath::IsFinite(HeadCameraFollowSpeed) || HeadCameraRotationScale.ContainsNaN()
++		|| MaxHeadCameraRotation.ContainsNaN() || SmoothedHeadCameraRotation.ContainsNaN()
++		|| AppliedCameraMotionOffset.ContainsNaN() || InOutView.Location.ContainsNaN() || InOutView.Rotation.ContainsNaN())
++	{
++		ResetCameraMotion();
++		return;
++	}
++
++	USkeletalMeshComponent* Mesh = Character->GetFirstPersonMesh();
++	const URogue10mFistAnimInstance* Fist = Mesh ? Cast<URogue10mFistAnimInstance>(Mesh->GetAnimInstance()) : nullptr;
++	FVector SourceOffset = FVector::ZeroVector;
++	FRotator SourceRotation = FRotator::ZeroRotator;
++	FVector ReferenceHeadCS = FVector::ZeroVector;
++	bool bHasReferenceHead = false;
++	const UObject* SourceIdentity = Fist;
++	float SourceTime = -1.0f;
++	if (Fist)
++	{
++		// Raw pose includes gait/jump and body rotation even while montage weight is zero.
++		SourceOffset = Fist->GetHeadPoseDeltaOffset();
++		SourceRotation = Fist->GetHeadPoseDeltaRotation();
++		ReferenceHeadCS = Fist->GetHeadPoseReferenceLocation();
++		bHasReferenceHead = !ReferenceHeadCS.ContainsNaN() && !ReferenceHeadCS.IsNearlyZero();
++		HeadReferenceSequence.Reset();
++		HeadReferenceMesh.Reset();
++	}
++	else
++	{
++		bHasReferenceHead = ReadSingleNodeHeadMotion(Mesh, SourceOffset, SourceRotation);
++		ReferenceHeadCS = SequenceReferenceHead.GetLocation();
++		if (bHasReferenceHead)
++		{
++			SourceIdentity = HeadReferenceSequence.Get();
++			SourceTime = Mesh->GetSingleNodeInstance()->GetCurrentTime();
++		}
++	}
++	if (SourceOffset.ContainsNaN() || SourceRotation.ContainsNaN()) { ResetCameraMotion(); return; }
++
++	const float Scale = FMath::Clamp(CameraMotionScale, 0.0f, 1.0f);
++	const float OffsetLimit = FMath::Clamp(MaxHeadCameraOffset, 0.0f, 80.0f) * Scale;
++	const FRotator Limits(
++		FMath::Clamp(FMath::Abs(MaxHeadCameraRotation.Pitch), 0.0, 85.0) * Scale,
++		FMath::Clamp(FMath::Abs(MaxHeadCameraRotation.Yaw), 0.0, 180.0) * Scale,
++		FMath::Clamp(FMath::Abs(MaxHeadCameraRotation.Roll), 0.0, 60.0) * Scale);
++	// Unwrap before applying an intensity or a limit. Scaling normalized Euler
++	// yaw would turn +179/-179 into +89.5/-89.5 at half strength and whip the view.
++	// A new sequence/native source or a backward seek starts a new reference turn,
++	// but leaves the filtered orientation intact so recovery is still smooth.
++	const double SourceYaw = FRotator::NormalizeAxis(SourceRotation.Yaw);
++	const bool bSourceRewound = SourceTime >= 0.0f && PreviousHeadSourceTime >= 0.0f
++		&& SourceTime + KINDA_SMALL_NUMBER < PreviousHeadSourceTime;
++	if (!bHasHeadSourceYaw || HeadYawSource.Get() != SourceIdentity || bSourceRewound)
++	{
++		UnwrappedHeadSourceYaw = SourceYaw;
++		bHasHeadSourceYaw = true;
++		HeadYawSource = SourceIdentity;
++	}
++	else
++	{
++		UnwrappedHeadSourceYaw += FMath::FindDeltaAngleDegrees(PreviousHeadSourceYaw, SourceYaw);
++	}
++	PreviousHeadSourceYaw = SourceYaw;
++	PreviousHeadSourceTime = SourceTime;
++	const double ScaledYaw = UnwrappedHeadSourceYaw * FMath::Clamp(HeadCameraRotationScale.Yaw, 0.0, 1.0) * Scale;
++	// 180 denotes an unrestricted orientation, allowing a full 360-degree turn.
++	// A smaller comfort limit holds the accumulated turn on that side rather than
++	// jumping to the opposite side of the interval at the Euler wrap boundary.
++	const double TargetYaw = Limits.Yaw >= 180.0 - KINDA_SMALL_NUMBER
++		? ScaledYaw : FMath::Clamp(ScaledYaw, -Limits.Yaw, Limits.Yaw);
++	const FRotator TargetRotation(
++		FMath::Clamp(FRotator::NormalizeAxis(SourceRotation.Pitch)
++			* FMath::Clamp(HeadCameraRotationScale.Pitch, 0.0, 1.0) * Scale, -Limits.Pitch, Limits.Pitch),
++		TargetYaw,
++		FMath::Clamp(FRotator::NormalizeAxis(SourceRotation.Roll)
++			* FMath::Clamp(HeadCameraRotationScale.Roll, 0.0, 1.0) * Scale, -Limits.Roll, Limits.Roll));
++	FVector EyePivotOffset = FVector::ZeroVector;
++	if (bHasReferenceHead && Mesh)
++	{
++		const UCameraComponent* Camera = Character->GetFirstPersonCameraComponent();
++		if (Camera)
++		{
++			// Keep the calibrated eye-to-head distance when turning. Without this
++			// lever correction a 180-degree head turn would leave the eye in front
++			// of the chest, looking into the inside of the body.
++			const FVector ReferenceHeadBody = Mesh->GetRelativeTransform().TransformPosition(ReferenceHeadCS);
++			const FVector EyeLever = (Camera->GetRelativeLocation() - ReferenceHeadBody).GetClampedToMaxSize(50.0);
++			EyePivotOffset = TargetRotation.Quaternion().RotateVector(EyeLever) - EyeLever;
++		}
++	}
++	const FVector TargetOffset = ((SourceOffset * Scale + EyePivotOffset)
++		* FMath::Clamp(HeadCameraTranslationScale, 0.0f, 1.0f)).GetClampedToMaxSize(OffsetLimit);
++	const float FrameTime = FMath::Clamp(DeltaTime, 0.0f, 0.1f);
++	const float Speed = FMath::Clamp(HeadCameraFollowSpeed, 0.0f, 60.0f);
++	const float Alpha = FrameTime <= 0.0f ? 0.0f : (Speed > KINDA_SMALL_NUMBER ? 1.0f - FMath::Exp(-Speed * FrameTime) : 1.0f);
++	AppliedCameraMotionOffset = FMath::Lerp(AppliedCameraMotionOffset, TargetOffset, Alpha).GetClampedToMaxSize(OffsetLimit);
++	// Quaternion interpolation stays continuous across +180/-180 during a turn.
++	SmoothedHeadCameraRotation = FQuat::Slerp(SmoothedHeadCameraRotation, TargetRotation.Quaternion(), Alpha).GetNormalized();
++	AppliedCameraMotionRotation = SmoothedHeadCameraRotation.Rotator().GetNormalized();
++	CameraMotionOffsetVelocity = CameraMotionRotationVelocity = FVector::ZeroVector;
++
++	FVector FinalOffset = AppliedCameraMotionOffset;
++	FQuat FinalRotation = SmoothedHeadCameraRotation;
++	if (Weapon == ERogue10mWeaponType::Unarmed && FMath::IsFinite(HitFeedbackScale) && HitFeedbackScale > 0.0f)
++	{
++		HitFeedbackAge = FMath::Min(0.16f, HitFeedbackAge + FMath::Max(0.0f, DeltaTime));
++		HitFeedbackWeight = HitFeedbackStrength * FMath::Square(1.0f - HitFeedbackAge / 0.16f);
++		const float Weight = HitFeedbackWeight * FMath::Clamp(HitFeedbackScale, 0.0f, 1.0f) * Scale;
++		FinalOffset = (FinalOffset + FVector(-0.65f, 0.12f * HitFeedbackSide, 0.12f) * Weight).GetClampedToMaxSize(OffsetLimit);
++		FinalRotation = FinalRotation * (FRotator(-0.7f, 0.25f * HitFeedbackSide, 0.3f * HitFeedbackSide) * Weight).Quaternion();
++	}
++	else { HitFeedbackAge = 0.16f; HitFeedbackStrength = HitFeedbackWeight = 0.0f; }
++
++	// Head displacement is body-local, not view-local: looking down cannot rotate a
++	// vertical step into a forward lunge. Actor movement already supplies jump height.
++	// Rotate the view in that same body frame, keeping user look and gameplay aim intact.
++	const FQuat BodyRotation = Character->GetActorQuat();
++	InOutView.Location += BodyRotation.RotateVector(FinalOffset);
++	InOutView.Rotation = (BodyRotation * FinalRotation * BodyRotation.Inverse()
++		* InOutView.Rotation.Quaternion()).Rotator();
++}
++
+ void URogue10mFirstPersonPresentationComponent::ApplyBodyMotionToView(float DeltaTime, FMinimalViewInfo& InOutView)
+ {
++	const bool bUseHeadCamera = IsFullBodyPresentationActive() && bEnableHeadCameraFollow;
++	if (bUseHeadCamera != bUsingHeadCameraFollow)
++	{
++		ResetCameraMotion();
++		bUsingHeadCameraFollow = bUseHeadCamera;
++	}
++	if (bUseHeadCamera)
++	{
++		ApplyHeadMotionToView(DeltaTime, InOutView);
++		return;
++	}
++
+ 	ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner());
+ 	const ERogue10mWeaponType Weapon = Character ? Character->GetEquippedWeaponType() : ERogue10mWeaponType::Unarmed;
+ 	if (!FMath::IsFinite(CameraMotionScale) || !FMath::IsFinite(MaxCameraMotionOffset)
+--- a/Source/Rogue10m/Components/Rogue10mFirstPersonPresentationComponent.h
++++ b/Source/Rogue10m/Components/Rogue10mFirstPersonPresentationComponent.h
+@@ -9,6 +9,7 @@
+ struct FMinimalViewInfo;
+ class UAnimInstance;
+ class UAnimationAsset;
++class UAnimSequence;
+ class UMaterialInterface;
+ class USkeletalMesh;
+ class USkeletalMeshComponent;
+@@ -62,6 +63,27 @@
+ 	float CameraMotionInterpolationSpeed = 18.0f;
+ 
+ 
++	/** Full-body view follows animation before hidden-neck rendering and mouse aim are applied. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Head Camera")
++	bool bEnableHeadCameraFollow = true;
++
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Head Camera", meta=(ClampMin="0", ClampMax="1"))
++	float HeadCameraTranslationScale = 1.0f;
++
++	/** Yaw remains complete so a rear-facing animated head can look behind the player. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Head Camera")
++	FRotator HeadCameraRotationScale = FRotator(0.75f, 1.0f, 0.5f);
++
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Head Camera", meta=(ClampMin="0", ClampMax="80", Units="cm"))
++	float MaxHeadCameraOffset = 65.0f;
++
++	/** Comfort limits for tilt. Yaw 180 permits complete turns; lower values limit accumulated turning until the source changes. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Head Camera")
++	FRotator MaxHeadCameraRotation = FRotator(55.0f, 180.0f, 25.0f);
++
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Head Camera", meta=(ClampMin="0", ClampMax="60"))
++	float HeadCameraFollowSpeed = 24.0f;
++
+ 	/** Natural frequency of the basic brawler's critically damped head-follow response. */
+ 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|First Person|Camera Motion", meta=(ClampMin="1", ClampMax="60"))
+ 	float BasicCameraMotionResponse = 32.0f;
+@@ -138,6 +160,19 @@
+ 
+ private:
+ 	void RestorePresentation();
++	void ApplyHeadMotionToView(float DeltaTime, FMinimalViewInfo& InOutView);
++	bool ReadSingleNodeHeadMotion(USkeletalMeshComponent* Mesh, FVector& OutOffset, FRotator& OutRotation);
++
++	TWeakObjectPtr<UAnimSequence> HeadReferenceSequence;
++	TWeakObjectPtr<USkeletalMesh> HeadReferenceMesh;
++	FTransform SequenceReferenceHead = FTransform::Identity;
++	FQuat SmoothedHeadCameraRotation = FQuat::Identity;
++	TWeakObjectPtr<const UObject> HeadYawSource;
++	double PreviousHeadSourceYaw = 0.0;
++	double UnwrappedHeadSourceYaw = 0.0;
++	float PreviousHeadSourceTime = -1.0f;
++	bool bHasHeadSourceYaw = false;
++	bool bUsingHeadCameraFollow = false;
+ 
+ 	UPROPERTY(Transient)
+ 	TSubclassOf<UAnimInstance> PreviousAnimationClass;
+--- a/Source/Rogue10m/Character/Rogue10mFistAnimInstance.cpp
++++ b/Source/Rogue10m/Character/Rogue10mFistAnimInstance.cpp
+@@ -320,6 +320,27 @@
+ 					FullBodyTargetOffset = Presentation->FullBodyHandTargetOffset.GetClampedToMaxSize(40.0);
+ 				}
+ 			}
++			const bool bFullBodyOwner = Presentation && Presentation->IsFullBodyPresentationActive()
++				&& Instance->GetSkelMeshComponent() == Character->GetFirstPersonMesh() && !Character->IsDead();
++			GroundSpeed = 0.0f;
++			GaitStrength = FMath::IsFinite(Fist->LocomotionMotionStrength)
++				? FMath::Clamp(Fist->LocomotionMotionStrength, 0.0f, 1.0f) : 0.0f;
++			GaitReferenceSpeed = FMath::IsFinite(Fist->LocomotionReferenceSpeed)
++				? FMath::Clamp(Fist->LocomotionReferenceSpeed, 100.0f, 1200.0f) : 600.0f;
++			GaitStrideLength = FMath::IsFinite(Fist->LocomotionStrideLength)
++				? FMath::Clamp(Fist->LocomotionStrideLength, 150.0f, 600.0f) : 340.0f;
++			GaitVerticalAmplitude = FMath::IsFinite(Fist->LocomotionVerticalAmplitude)
++				? FMath::Clamp(Fist->LocomotionVerticalAmplitude, 0.0f, 4.0f) : 0.0f;
++			if (bFullBodyOwner && Character->GetCharacterMovement())
++			{
++				const UCharacterMovementComponent* Movement = Character->GetCharacterMovement();
++				if (Movement->IsMovingOnGround() && !Movement->Velocity.ContainsNaN())
++				{
++					GroundSpeed = FMath::Clamp(static_cast<float>(Movement->Velocity.Size2D()), 0.0f, 1800.0f);
++				}
++			}
++			// Deactivation must not carry a residual full-body gait into the legacy arms mesh.
++			if (!bFullBodyOwner) { GaitWeight = 0.0f; GaitPhase = 0.0f; }
+ 			const bool bNextBasic = Character && !Character->IsDead()
+ 				&& Character->GetEquippedWeaponType() == ERogue10mWeaponType::Unarmed;
+ 			if (bNextBasic != bBasicPose)
+@@ -405,8 +426,17 @@
+ 		{
+ 			GetSlotWeight(FistSlot, SlotWeight, SourceWeight, TotalWeight);
+ 			UpdateSlotNodeWeight(FistSlot, SlotWeight, 1.0f);
+-			IdleTime += DeltaSeconds;
+-			EvaluationDeltaSeconds = FMath::Max(0.0f, DeltaSeconds);
++			EvaluationDeltaSeconds = FMath::IsFinite(DeltaSeconds) ? FMath::Max(0.0f, DeltaSeconds) : 0.0f;
++			IdleTime += EvaluationDeltaSeconds;
++			const float GaitDeltaSeconds = FMath::Min(EvaluationDeltaSeconds, 0.1f);
++			const float GaitTarget = GroundSpeed > 5.0f
++				? FMath::Clamp(GroundSpeed / GaitReferenceSpeed, 0.0f, 1.0f) * GaitStrength : 0.0f;
++			GaitWeight = FMath::Lerp(GaitWeight, GaitTarget, 1.0f - FMath::Exp(-12.0f * GaitDeltaSeconds));
++			if (GaitWeight < 0.0001f && GaitTarget == 0.0f) { GaitWeight = 0.0f; }
++			if (GroundSpeed > 5.0f)
++			{
++				GaitPhase = FMath::Fmod(GaitPhase + GroundSpeed / GaitStrideLength * (2.0f * PI) * GaitDeltaSeconds, 2.0f * PI);
++			}
+ 			TakeoffAge += EvaluationDeltaSeconds;
+ 			LandingAge += EvaluationDeltaSeconds;
+ 			const float AirTarget = bBasicPose && bFalling ? FMath::Clamp(-VerticalSpeed / 400.0f, -1.0f, 1.0f) : 0.0f;
+@@ -497,6 +527,8 @@
+ 			if (bBasicPose)
+ 			{
+ 				EvaluateBasicPose(Output, OriginalIdleCS);
++				ApplyLocomotionPose(Output.Pose);
++				CaptureHeadDelta(Output.Pose, OriginalIdleCS);
+ 				ApplyFullBodyAim(Output.Pose);
+ 				return true;
+ 			}
+@@ -619,10 +651,56 @@
+ 			}
+ 			FCSPose<FCompactPose>::ConvertComponentPosesToLocalPosesSafe(IdleCS, Output.Pose);
+ 			Output.Pose.NormalizeRotations();
++			ApplyLocomotionPose(Output.Pose);
++			CaptureHeadDelta(Output.Pose, OriginalIdleCS);
+ 			ApplyFullBodyAim(Output.Pose);
+ 			return true;
+ 		}
+ 
++
++		/** Pose-space gait keeps the head, shoulders and guard in the same moving frame.
++		 * Actor/capsule motion already supplies travel and jump height; only a small torso
++		 * compression/sway is added here. Feet remain in their existing authored pose. */
++		void ApplyLocomotionPose(FCompactPose& Pose) const
++		{
++			if (GaitWeight <= KINDA_SMALL_NUMBER) { return; }
++			const FCompactPoseBoneIndex Spine = FindBone(Pose, TEXT("spine_01"));
++			if (Spine == INDEX_NONE) { return; }
++			FCSPose<FCompactPose> CurrentCS;
++			CurrentCS.InitPose(Pose);
++			const FCompactPoseBoneIndex Parent = Pose.GetParentBoneIndex(Spine);
++			const FTransform ParentCS = Parent != INDEX_NONE ? CurrentCS.GetComponentSpaceTransform(Parent) : FTransform::Identity;
++			FTransform SpineCS = CurrentCS.GetComponentSpaceTransform(Spine);
++			const float Sway = FMath::Sin(GaitPhase);
++			const float Step = FMath::Sin(GaitPhase * 2.0f);
++			const FVector Offset = FVector(0.25f * Step, 0.65f * Sway,
++				-GaitVerticalAmplitude * FMath::Cos(GaitPhase * 2.0f)) * GaitWeight;
++			const FRotator Rotation(0.35f * Step * GaitWeight, 0.0f, 0.55f * Sway * GaitWeight);
++			SpineCS.AddToTranslation(MeshToCamera.Inverse().RotateVector(Offset));
++			SpineCS.SetRotation((MeshToCamera.Inverse() * Rotation.Quaternion() * MeshToCamera) * SpineCS.GetRotation());
++			Pose[Spine] = SpineCS.GetRelativeTransform(ParentCS);
++			Pose[Spine].NormalizeRotation();
++		}
++
++		/** Snapshot before mouse aim and before the renderer hides neck/head bones. */
++		void CaptureHeadDelta(FCompactPose& Pose, FCSPose<FCompactPose>& BaseCS)
++		{
++			const FCompactPoseBoneIndex Head = FindBone(Pose, TEXT("head"));
++			if (Head == INDEX_NONE) { return; }
++			FCSPose<FCompactPose> EvaluatedCS;
++			EvaluatedCS.InitPose(Pose);
++			const FTransform Base = BaseCS.GetComponentSpaceTransform(Head);
++			const FTransform Evaluated = EvaluatedCS.GetComponentSpaceTransform(Head);
++			SnapshotHeadReferenceLocation = Base.GetLocation();
++			SnapshotHeadOffset = MeshToCamera.RotateVector(Evaluated.GetLocation() - Base.GetLocation());
++			const FQuat Delta = Evaluated.GetRotation() * Base.GetRotation().Inverse();
++			SnapshotHeadRotation = (MeshToCamera * Delta * MeshToCamera.Inverse()).Rotator().GetNormalized();
++			if (SnapshotHeadOffset.ContainsNaN() || SnapshotHeadRotation.ContainsNaN())
++			{
++				SnapshotHeadOffset = FVector::ZeroVector;
++				SnapshotHeadRotation = FRotator::ZeroRotator;
++			}
++		}
+ 
+ 		void ApplyFullBodyAim(FCompactPose& Pose) const
+ 		{
+@@ -937,6 +1015,13 @@
+ 		float PunchTravel = 32.0f;
+ 		float BodyStrength = 0.65f;
+ 		FQuat MeshToCamera = FQuat::Identity;
++		float GroundSpeed = 0.0f;
++		float GaitStrength = 1.0f;
++		float GaitReferenceSpeed = 600.0f;
++		float GaitStrideLength = 340.0f;
++		float GaitVerticalAmplitude = 1.8f;
++		float GaitWeight = 0.0f;
++		float GaitPhase = 0.0f;
+ 		float FullBodyAimPitch = 0.0f;
+ 		float FullBodySpineShare = 0.25f;
+ 		FVector FullBodyTargetOffset = FVector::ZeroVector;
+@@ -1005,6 +1090,7 @@
+ 		FVector SmoothedBodyOffset = FVector::ZeroVector;
+ 		FRotator SnapshotHeadRotation = FRotator::ZeroRotator;
+ 		FVector SnapshotHeadOffset = FVector::ZeroVector;
++		FVector SnapshotHeadReferenceLocation = FVector::ZeroVector;
+ 		float SnapshotJumpWeight = 0.0f;
+ 
+ 	};
+@@ -1025,8 +1111,10 @@
+ 	BodyMotionRotation = FRotator::ZeroRotator;
+ 	BodyMotionWeight = 0.0f;
+ 	HeadPoseDeltaOffset = FVector::ZeroVector;
++	HeadPoseReferenceLocation = FVector::ZeroVector;
+ 	HeadPoseDeltaRotation = FRotator::ZeroRotator;
+ 	JumpPresentationWeight = 0.0f;
++	LocomotionPresentationWeight = 0.0f;
+ 	LoadedIdleAnimation = IdleAnimation.LoadSynchronous();
+ 	LoadedFistAnimation = FistAnimation.LoadSynchronous();
+ }
+@@ -1041,8 +1129,10 @@
+ 	BodyMotionRotation = Proxy.SnapshotRotation;
+ 	BodyMotionWeight = Proxy.SnapshotWeight;
+ 	HeadPoseDeltaOffset = Proxy.SnapshotHeadOffset;
++	HeadPoseReferenceLocation = Proxy.SnapshotHeadReferenceLocation;
+ 	HeadPoseDeltaRotation = Proxy.SnapshotHeadRotation;
+ 	JumpPresentationWeight = Proxy.SnapshotJumpWeight;
++	LocomotionPresentationWeight = Proxy.GaitWeight;
+ }
+ 
+ FAnimInstanceProxy* URogue10mFistAnimInstance::CreateAnimInstanceProxy()
+--- a/Source/Rogue10m/Character/Rogue10mFistAnimInstance.h
++++ b/Source/Rogue10m/Character/Rogue10mFistAnimInstance.h
+@@ -126,6 +126,23 @@
+ 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler", meta=(ClampMin="0", ClampMax="1"))
+ 	float JumpPresentationStrength = 1.0f;
+ 
++	/** Grounded travel drives the same upper-body gait used by the full-body head camera. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Locomotion", meta=(ClampMin="0", ClampMax="1"))
++	float LocomotionMotionStrength = 1.0f;
++
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Locomotion", meta=(ClampMin="100", ClampMax="1200", Units="cm/s"))
++	float LocomotionReferenceSpeed = 600.0f;
++
++	/** Distance of a complete left/right gait cycle; phase follows distance, not elapsed idle time. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Locomotion", meta=(ClampMin="150", ClampMax="600", Units="cm"))
++	float LocomotionStrideLength = 340.0f;
++
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Locomotion", meta=(ClampMin="0", ClampMax="4", Units="cm"))
++	float LocomotionVerticalAmplitude = 1.8f;
++
++	UFUNCTION(BlueprintPure, Category="Rogue10m|Fist Pose|Locomotion")
++	float GetLocomotionPresentationWeight() const { return LocomotionPresentationWeight; }
++
+ 	/** Measured evaluated head delta before the bounded camera gain, in camera-local coordinates. */
+ 	UFUNCTION(BlueprintPure, Category="Rogue10m|Fist Pose|Body")
+ 	FRotator GetHeadPoseDeltaRotation() const { return HeadPoseDeltaRotation; }
+@@ -135,6 +152,9 @@
+ 
+ 	UFUNCTION(BlueprintPure, Category="Rogue10m|Fist Pose|Body")
+ 	float GetJumpPresentationWeight() const { return JumpPresentationWeight; }
++
++	/** Unhidden reference head origin in mesh component space for the calibrated eye pivot. */
++	FVector GetHeadPoseReferenceLocation() const { return HeadPoseReferenceLocation; }
+ 
+ 	// Strong references keep the immutable sequence data alive while the proxy evaluates it.
+ 	UPROPERTY(Transient)
+@@ -149,5 +169,7 @@
+ 	float BodyMotionWeight = 0.0f;
+ 	FRotator HeadPoseDeltaRotation = FRotator::ZeroRotator;
+ 	FVector HeadPoseDeltaOffset = FVector::ZeroVector;
++	FVector HeadPoseReferenceLocation = FVector::ZeroVector;
+ 	float JumpPresentationWeight = 0.0f;
++	float LocomotionPresentationWeight = 0.0f;
+ };
+--- a/Source/Rogue10m/Tests/Rogue10mMarteloPreviewRuntimeTest.cpp
++++ b/Source/Rogue10m/Tests/Rogue10mMarteloPreviewRuntimeTest.cpp
+@@ -139,6 +139,7 @@
+             Presentation->FullBodyAimPitchLimit = AimLimit;
+             bFixtureAimOverride = true;
+         }
++        bHeadCameraCapture = FParse::Param(FCommandLine::Get(), TEXT("HeadCameraCapture"));
+         bCaptureUI = !FParse::Param(FCommandLine::Get(), TEXT("MarteloNoUI"));
+         OriginalCameraTransform = Camera->GetRelativeTransform();
+         OriginalFOV = Camera->FieldOfView;
+@@ -203,10 +204,10 @@
+         FastEnd = FastStart + FastFrames;
+         SlowStart = FastEnd + 30;
+         SlowEnd = SlowStart + SlowFrames;
+-        TotalFrames = SlowEnd + 30;
++        TotalFrames = SlowEnd + (bHeadCameraCapture ? 180 : 30);
+         FApp::SetFixedDeltaTime(1.0 / 30.0);
+         FApp::SetUseFixedTimeStep(true);
+-        OutputFolder = FPaths::Combine(FPaths::ProjectSavedDir(), TEXT("Screenshots/WindowsEditor/MarteloFullBodyPreview"));
++        OutputFolder = FPaths::Combine(FPaths::ProjectSavedDir(), bHeadCameraCapture ? TEXT("Screenshots/WindowsEditor/HeadCameraPreview") : TEXT("Screenshots/WindowsEditor/MarteloFullBodyPreview"));
+         IFileManager::Get().MakeDirectory(*OutputFolder, true);
+         PC->ConsoleCommand(TEXT("r.SetRes 1280x720w"));
+         UE_LOG(LogRogue10m, Display, TEXT("MARTELO_PREVIEW ASSET sequence=%s skeleton=%s mesh=%s duration=%.6f fast=[%d,%d) slow=[%d,%d) frames=%d camera=intentional_pitch_sweep look_down=[30,80) hold_pitch=-85 source_pose_transitions=unblended"),
+@@ -259,6 +260,19 @@
+         LookController->SetControlRotation(ExpectedControl);
+         FMinimalViewInfo CameraView;
+         Camera->GetCameraView(0.f, CameraView);
++        if (bHeadCameraCapture && FrameIndex >= SlowEnd + 30)
++        {
++            const int32 MoveFrame = FrameIndex - SlowEnd - 30;
++            if (MoveFrame == 90) { Character->Jump(); }
++            if (MoveFrame == 91) { Character->StopJumping(); }
++            if (MoveFrame < 105)
++            {
++                // Actual movement input drives CharacterMovement and the animation's gait.
++                const float Direction = (MoveFrame / 35) % 2 == 0 ? 1.f : -1.f;
++                Character->AddMovementInput(ExpectedControl.RotateVector(FVector::RightVector), Direction, true);
++            }
++            else { Character->GetCharacterMovement()->StopMovementImmediately(); }
++        }
+         if (FrameIndex == 0) { FixedBodyTransform = Arms->GetComponentTransform(); }
+         if (FrameIndex >= 45 && FrameIndex < 65) { ++LookDownFrames; }
+         if (FrameIndex == FastStart || FrameIndex == SlowStart) { BeginSequence(); }
+@@ -276,7 +290,7 @@
+         }
+         Check(Arms->GetSkeletalMeshAsset() == OriginalMesh.Get() && Arms->GetRelativeTransform().Equals(OriginalArmsTransform, .001f), TEXT("mesh_or_viewmodel_transform_changed"));
+         Check(Arms->bOnlyOwnerSee && !Arms->bOwnerNoSee && Character->GetMesh()->bOwnerNoSee && Arms->FirstPersonPrimitiveType == (bDiagnosticWorldRender ? EFirstPersonPrimitiveType::None : OriginalPrimitiveType), TEXT("first_person_ownership_visibility_changed"));
+-        Check(Arms->GetAttachParent() == Character->GetCapsuleComponent() && Arms->GetComponentTransform().Equals(FixedBodyTransform, .001f), TEXT("body_followed_camera_pitch_or_moved"));
++        Check(Arms->GetAttachParent() == Character->GetCapsuleComponent() && (bHeadCameraCapture && FrameIndex >= SlowEnd + 30 || Arms->GetComponentTransform().Equals(FixedBodyTransform, .001f)), TEXT("body_followed_camera_pitch_or_moved"));
+         Check(Arms->IsBoneHiddenByName(TEXT("neck_01")) == !bDiagnosticShowHead && !Arms->IsBoneHiddenByName(TEXT("pelvis"))
+             && !Arms->IsBoneHiddenByName(TEXT("foot_l")) && !Arms->IsBoneHiddenByName(TEXT("foot_r")), TEXT("head_or_legs_visibility_changed"));
+         Check(Camera->GetRelativeLocation().Equals(OriginalCameraTransform.GetLocation(), .001f)
+@@ -317,6 +331,32 @@
+                 *Arms->GetSocketTransform(TEXT("foot_l"), RTS_Component).GetLocation().ToCompactString(),
+                 *Arms->GetSocketTransform(TEXT("foot_r"), RTS_Component).GetLocation().ToCompactString());
+         }
++        auto* Presentation = Character->GetFirstPersonPresentationComponent();
++        const FVector CameraOffset = Presentation->GetAppliedCameraMotionOffset();
++        const FRotator CameraRotation = Presentation->GetAppliedCameraMotionRotation();
++        Check(!CameraOffset.ContainsNaN() && !CameraRotation.ContainsNaN(), TEXT("head_camera_nonfinite"));
++        if (bSequenceActive)
++        {
++            MaxHeadOffset = FMath::Max(MaxHeadOffset, CameraOffset.Size());
++            MaxHeadYaw = FMath::Max(MaxHeadYaw, FMath::Abs(CameraRotation.Yaw));
++            const APlayerCameraManager* Manager = LookController->PlayerCameraManager;
++            const auto Delta = (Manager->GetCameraRotation() - Camera->GetComponentRotation()).GetNormalized();
++            MaxRenderedHeadTurn = FMath::Max(MaxRenderedHeadTurn, FMath::Abs(Delta.Yaw));
++        }
++        if (bHeadCameraCapture && FrameIndex >= SlowEnd + 40 && FrameIndex < SlowEnd + 135)
++        {
++            if (const auto* Fist = Cast<URogue10mFistAnimInstance>(Arms->GetAnimInstance()))
++            {
++                if (Fist->GetLocomotionPresentationWeight() > .1f) { ++GaitFrames; }
++                MinGaitZ = FMath::Min(MinGaitZ, CameraOffset.Z);
++                MaxGaitZ = FMath::Max(MaxGaitZ, CameraOffset.Z);
++            }
++        }
++        if (FrameIndex % 10 == 0)
++        {
++            UE_LOG(LogRogue10m, Display, TEXT("MARTELO_PREVIEW HEAD_CAMERA frame=%d offset=%s rotation=%s speed=%.3f"),
++                FrameIndex, *CameraOffset.ToCompactString(), *CameraRotation.ToCompactString(), Character->GetVelocity().Size2D());
++        }
+         const FIntPoint Size = GEngine && GEngine->GameViewport && GEngine->GameViewport->Viewport
+             ? GEngine->GameViewport->Viewport->GetSizeXY() : FIntPoint::ZeroValue;
+         Check(Size == FIntPoint(1280, 720), TEXT("capture_resolution_invalid"));
+@@ -343,6 +383,14 @@
+             Check(MaxLeftTravel > 5.f && MaxRightTravel > 5.f, TEXT("retarget_did_not_move_both_hands"));
+             Check(MaxLeftFootTravel > 60.f && MaxLeftFootTravel > MaxRightFootTravel * 2.f, TEXT("left_kicking_leg_not_preserved"));
+             Check(LookDownFrames == 20, TEXT("look_down_body_preview_missing"));
++            Check(MaxHeadOffset > 2.f && MaxHeadYaw > 5.f && MaxRenderedHeadTurn > 5.f, TEXT("sequence_head_camera_not_following"));
++            if (bHeadCameraCapture)
++            {
++                Check(GaitFrames > 30 && MaxGaitZ - MinGaitZ > .5, TEXT("moving_body_and_camera_gait_missing"));
++                Check(Character->GetFirstPersonPresentationComponent()->GetAppliedCameraMotionOffset().Size() < .25,
++                    TEXT("head_camera_did_not_settle_after_stop"));
++            }
++            Character->GetCharacterMovement()->StopMovementImmediately();
+         }
+         if (bOwnInputIgnore && LookController.IsValid())
+         {
+@@ -391,6 +439,8 @@
+         FApp::SetUseFixedTimeStep(OldFixed);
+         FApp::SetFixedDeltaTime(OldDelta);
+         UE_LOG(LogRogue10m, Display, TEXT("MARTELO_PREVIEW METRICS hand_l_travel=%.3f hand_r_travel=%.3f foot_l_travel=%.3f foot_r_travel=%.3f duration=%.6f look_down_frames=%d body=capsule_stable"), MaxLeftTravel, MaxRightTravel, MaxLeftFootTravel, MaxRightFootTravel, Duration, LookDownFrames);
++        UE_LOG(LogRogue10m, Display, TEXT("MARTELO_PREVIEW HEAD_METRICS max_offset=%.3f max_yaw=%.3f rendered_yaw=%.3f gait_frames=%d gait_z_range=%.3f"),
++            MaxHeadOffset, MaxHeadYaw, MaxRenderedHeadTurn, GaitFrames, MaxGaitZ - MinGaitZ);
+         const bool bPassed = Failures == 0 && bPrepared && FrameIndex == TotalFrames;
+         UE_LOG(LogRogue10m, Display, TEXT("RESULT=MARTELO_PREVIEW_%s frames=%d failures=%d"), bPassed ? TEXT("PASSED") : TEXT("FAILED"), FrameIndex, Failures);
+         if (bRequestProcessExit) { FPlatformMisc::RequestExitWithStatus(false, bPassed ? 0 : 1); }
+@@ -413,6 +463,9 @@
+     int32 FrameIndex = 0, Failures = 0, InitialSerial = 0, FastFrames = 0, SlowFrames = 0, LookDownFrames = 0;
+     int32 FastStart = 0, FastEnd = 0, SlowStart = 0, SlowEnd = 0, TotalFrames = 0;
+     float Duration = 0.f, OriginalFOV = 90.f, OriginalArmsFOV = 80.f, OriginalArmsScale = .6f;
++    bool bHeadCameraCapture = false;
++    double MaxHeadOffset = 0, MaxHeadYaw = 0, MaxRenderedHeadTurn = 0, MinGaitZ = 1.e6, MaxGaitZ = -1.e6;
++    int32 GaitFrames = 0;
+     bool bOriginalFirstPersonFOV = false, bOriginalFirstPersonScale = false;
+     bool bFixtureCameraOverride = false, bFixtureSpineOverride = false, bCaptureUI = true;
+     float OriginalSpineShare = .25f, OriginalAimLimit = 75.f;
+--- /dev/null
++++ b/Source/Rogue10m/Tests/Rogue10mHeadCameraRuntimeTest.cpp
+@@ -0,0 +1,222 @@
++// Copyright Epic Games, Inc. All Rights Reserved.
++#if WITH_EDITOR
++#include "Animation/AnimData/IAnimationDataController.h"
++#include "Animation/AnimSequence.h"
++#include "Animation/AnimSingleNodeInstance.h"
++#include "Animation/Skeleton.h"
++#include "Camera/CameraComponent.h"
++#include "Camera/CameraTypes.h"
++#include "Camera/PlayerCameraManager.h"
++#include "Components/SkeletalMeshComponent.h"
++#include "Engine/Engine.h"
++#include "Engine/SkeletalMesh.h"
++#include "Engine/World.h"
++#include "GameFramework/PlayerController.h"
++#include "HAL/IConsoleManager.h"
++#include "HAL/PlatformMisc.h"
++#include "Rogue10m.h"
++#include "Rogue10mCharacter.h"
++#include "Rogue10mFirstPersonPresentationComponent.h"
++#include "TimerManager.h"
++#include "UObject/StrongObjectPtr.h"
++
++// A synthetic head-turn fixture, explicitly separate from the original Martelo clip.
++// Only transient animation data is generated; no package or original asset is saved.
++namespace Rogue10mHeadCameraTest
++{
++static void Execute(TWeakObjectPtr<UWorld> WeakWorld)
++{
++    UWorld* World = WeakWorld.Get();
++    APlayerController* PC = World ? World->GetFirstPlayerController() : nullptr;
++    ARogue10mCharacter* Character = PC ? Cast<ARogue10mCharacter>(PC->GetPawn()) : nullptr;
++    auto* Arms = Character ? Character->GetFirstPersonMesh() : nullptr;
++    auto* Camera = Character ? Character->GetFirstPersonCameraComponent() : nullptr;
++    auto* Presentation = Character ? Character->GetFirstPersonPresentationComponent() : nullptr;
++    int32 Failures = 0;
++    const auto Check = [&](bool bOK, const TCHAR* Reason)
++    {
++        if (!bOK) { ++Failures; UE_LOG(LogRogue10m, Error, TEXT("HEAD_CAMERA FAIL %s"), Reason); }
++    };
++    Check(PC && PC->PlayerCameraManager && Arms && Camera && Presentation
++        && Presentation->IsFullBodyPresentationActive() && Arms->GetSkeletalMeshAsset(), TEXT("full_body_player_required"));
++    if (Failures) { FPlatformMisc::RequestExitWithStatus(false, 1); return; }
++
++    const FRotator OriginalControl = PC->GetControlRotation();
++    const float OriginalMotionScale = Presentation->CameraMotionScale;
++    const FRotator OriginalHeadGain = Presentation->HeadCameraRotationScale;
++    const FRotator OriginalHeadLimit = Presentation->MaxHeadCameraRotation;
++    const FVector OriginalCameraLocation = Camera->GetRelativeLocation();
++    const EAnimationMode::Type OriginalMode = Arms->GetAnimationMode();
++    TStrongObjectPtr<UClass> OriginalClass(Arms->GetAnimClass());
++    TStrongObjectPtr<UAnimSequence> Sequence(NewObject<UAnimSequence>(GetTransientPackage(), NAME_None, RF_Transient));
++    Sequence->SetSkeleton(Arms->GetSkeletalMeshAsset()->GetSkeleton());
++    auto& Controller = Sequence->GetController();
++    Controller.InitializeModel();
++    Check(Sequence->CreateAnimation(Arms->GetSkeletalMeshAsset()), TEXT("transient_reference_pose_failed"));
++    Controller.OpenBracket(FText::FromString(TEXT("Synthetic head-camera yaw wrap fixture")), false);
++    Controller.SetFrameRate(FFrameRate(60, 1), false);
++    Controller.SetNumberOfFrames(FFrameNumber(240), false);
++    TArray<FVector3f> Positions, Scales;
++    TArray<FQuat4f> Rotations;
++    const FTransform Root = Arms->GetSkeletalMeshAsset()->GetRefSkeleton().GetRefBonePose()[0];
++    for (int32 Key = 0; Key <= 240; ++Key)
++    {
++        // Include a rear-facing dwell and cross +180/-180 without reversing direction.
++        const float Yaw = Key < 30 ? 0.f : Key < 90 ? (Key - 30) * 3.f
++            : Key < 120 ? 180.f : Key < 150 ? 180.f + (Key - 120) * (20.f / 30.f)
++            : Key < 210 ? 200.f + (Key - 150) * (160.f / 60.f) : 360.f;
++        Positions.Add(FVector3f(Root.GetLocation()));
++        Scales.Add(FVector3f(Root.GetScale3D()));
++        Rotations.Add(FQuat4f(FQuat(FVector::UpVector, FMath::DegreesToRadians(Yaw)) * Root.GetRotation()));
++    }
++    Check(Controller.SetBoneTrackKeys(Arms->GetBoneName(0), Positions, Rotations, Scales, false), TEXT("transient_root_track_failed"));
++    Controller.NotifyPopulated();
++    Controller.CloseBracket(false);
++    Sequence->bEnableRootMotion = false;
++    Sequence->bForceRootLock = false;
++    Arms->PlayAnimation(Sequence.Get(), false);
++    Arms->SetPlayRate(0.f);
++    if (auto* Single = Arms->GetSingleNodeInstance()) { Single->SetPlaying(false); }
++    Check(Arms->GetSingleNodeInstance() != nullptr, TEXT("single_node_required"));
++
++    double MaxStep = 0.0, MinRearDot = 1.0;
++    int32 Samples = 0;
++    if (!Failures)
++    {
++        for (const float Pitch : { 0.f, -70.f, 35.f })
++        {
++            const FRotator Input(Pitch, OriginalControl.Yaw, 0.f);
++            PC->SetControlRotation(Input);
++            Presentation->ResetCameraMotion();
++            FQuat Previous = FQuat::Identity;
++            double CaseRearDot = 1.0;
++            double SignedTurn = 0.0;
++            double PreviousYaw = 0.0;
++            for (int32 Frame = 0; Frame <= 240; ++Frame)
++            {
++                Arms->SetPosition(Frame / 60.f, false);
++                Arms->TickAnimation(0.f, false);
++                Arms->RefreshBoneTransforms();
++                PC->PlayerCameraManager->UpdateCamera(1.f / 60.f);
++                const FRotator View = PC->PlayerCameraManager->GetCameraRotation();
++                const FQuat Q = View.Quaternion();
++                Check(!View.ContainsNaN() && !PC->PlayerCameraManager->GetCameraLocation().ContainsNaN(), TEXT("nonfinite_final_pov"));
++                Check(PC->GetControlRotation().Equals(Input, .001f), TEXT("head_follow_changed_control_rotation"));
++                Check(Camera->GetRelativeLocation().Equals(OriginalCameraLocation, .001f), TEXT("head_follow_moved_camera_component"));
++                Check(Arms->IsBoneHiddenByName(TEXT("neck_01")), TEXT("head_visibility_changed"));
++                const FVector FlatView = FVector(View.Vector().X, View.Vector().Y, 0).GetSafeNormal();
++                const FVector FlatInput = FVector(Input.Vector().X, Input.Vector().Y, 0).GetSafeNormal();
++                const double Dot = FVector::DotProduct(FlatView, FlatInput);
++                if (Frame >= 105 && Frame <= 119) { CaseRearDot = FMath::Min(CaseRearDot, Dot); }
++                const double Yaw = FRotator::NormalizeAxis(View.Yaw - Input.Yaw);
++                if (Frame > 0)
++                {
++                    MaxStep = FMath::Max(MaxStep, FMath::RadiansToDegrees(Previous.AngularDistance(Q)));
++                    SignedTurn += FMath::FindDeltaAngleDegrees(PreviousYaw, Yaw);
++                }
++                Previous = Q;
++                PreviousYaw = Yaw;
++                ++Samples;
++            }
++            MinRearDot = FMath::Min(MinRearDot, CaseRearDot);
++            Check(CaseRearDot < -.98, TEXT("head_turn_did_not_face_rear"));
++            Check(SignedTurn > 350.0 && SignedTurn < 370.0, TEXT("yaw_wrap_reversed_or_lost_full_turn"));
++            Check(FMath::Abs(FRotator::NormalizeAxis(PC->PlayerCameraManager->GetCameraRotation().Yaw - Input.Yaw)) < 1.0,
++                TEXT("full_turn_did_not_return_to_forward"));
++            UE_LOG(LogRogue10m, Display, TEXT("HEAD_CAMERA CASE pitch=%.1f rear_dot=%.6f continuous_yaw=%.3f"), Pitch, CaseRearDot, SignedTurn);
++        }
++        Check(MaxStep < 9.0, TEXT("yaw_wrap_caused_camera_snap"));
++        struct FBoundedCase { float Strength; float YawGain; float YawLimit; };
++        const FBoundedCase BoundedCases[] = { { .5f, 1.f, 180.f }, { 1.f, .5f, 180.f }, { 1.f, 1.f, 90.f } };
++        for (const FBoundedCase& Case : BoundedCases)
++        {
++            Presentation->CameraMotionScale = Case.Strength;
++            Presentation->HeadCameraRotationScale.Yaw = Case.YawGain;
++            Presentation->MaxHeadCameraRotation.Yaw = Case.YawLimit;
++            PC->SetControlRotation(FRotator(0.f, OriginalControl.Yaw, 0.f));
++            Presentation->ResetCameraMotion();
++            Arms->PlayAnimation(Sequence.Get(), false);
++            Arms->SetPlayRate(0.f);
++            if (auto* Single = Arms->GetSingleNodeInstance()) { Single->SetPlaying(false); }
++            FQuat Previous = FQuat::Identity;
++            double CaseStep = 0.0;
++            double PreviousYaw = 0.0;
++            double MinimumYawStep = 0.0;
++            for (int32 Frame = 0; Frame <= 240; ++Frame)
++            {
++                Arms->SetPosition(Frame / 60.f, false);
++                Arms->TickAnimation(0.f, false);
++                Arms->RefreshBoneTransforms();
++                PC->PlayerCameraManager->UpdateCamera(1.f / 60.f);
++                const FRotator View = PC->PlayerCameraManager->GetCameraRotation();
++                const double Yaw = FRotator::NormalizeAxis(View.Yaw - OriginalControl.Yaw);
++                if (Frame > 0)
++                {
++                    CaseStep = FMath::Max(CaseStep, FMath::RadiansToDegrees(Previous.AngularDistance(View.Quaternion())));
++                    MinimumYawStep = FMath::Min(MinimumYawStep, FMath::FindDeltaAngleDegrees(PreviousYaw, Yaw));
++                }
++                Check(FMath::Abs(Yaw) <= Case.YawLimit * Case.Strength + .1, TEXT("reduced_head_rotation_exceeded_limit"));
++                Previous = View.Quaternion();
++                PreviousYaw = Yaw;
++                ++Samples;
++            }
++            Check(CaseStep < 9.0, TEXT("reduced_gain_yaw_wrap_caused_camera_snap"));
++            Check(MinimumYawStep > -.1, TEXT("reduced_gain_yaw_wrap_reversed_direction"));
++            // A changed source must settle to the actual native guard; no explicit reset is used.
++            Arms->SetAnimInstanceClass(OriginalClass.Get());
++            Arms->SetAnimationMode(OriginalMode);
++            for (int32 Frame = 0; Frame < 90; ++Frame)
++            {
++                Arms->TickAnimation(1.f / 60.f, false);
++                Arms->RefreshBoneTransforms();
++                PC->PlayerCameraManager->UpdateCamera(1.f / 60.f);
++            }
++            Check(Presentation->GetAppliedCameraMotionRotation().IsNearlyZero(.1f)
++                && Presentation->GetAppliedCameraMotionOffset().IsNearlyZero(.1f), TEXT("source_change_did_not_settle_to_guard"));
++            UE_LOG(LogRogue10m, Display, TEXT("HEAD_CAMERA BOUNDED strength=%.2f yaw_gain=%.2f yaw_limit=%.1f max_step=%.3f min_yaw_step=%.4f"),
++                Case.Strength, Case.YawGain, Case.YawLimit, CaseStep, MinimumYawStep);
++        }
++        Presentation->HeadCameraRotationScale = OriginalHeadGain;
++        Presentation->MaxHeadCameraRotation = OriginalHeadLimit;
++        Arms->PlayAnimation(Sequence.Get(), false);
++        Arms->SetPlayRate(0.f);
++        if (auto* Single = Arms->GetSingleNodeInstance()) { Single->SetPlaying(false); }
++        Presentation->CameraMotionScale = 0.f;
++        Arms->SetPosition(1.8f, false);
++        Arms->TickAnimation(0.f, false);
++        Arms->RefreshBoneTransforms();
++        PC->PlayerCameraManager->UpdateCamera(1.f / 60.f);
++        Check(PC->PlayerCameraManager->GetCameraRotation().Equals(PC->GetControlRotation(), .01f), TEXT("zero_strength_did_not_disable_head_follow"));
++        Presentation->CameraMotionScale = OriginalMotionScale;
++    }
++    Arms->SetAnimInstanceClass(OriginalClass.Get());
++    Arms->SetAnimationMode(OriginalMode);
++    Arms->TickAnimation(0.f, false);
++    Arms->RefreshBoneTransforms();
++    Presentation->ResetCameraMotion();
++    PC->SetControlRotation(OriginalControl);
++    FMinimalViewInfo RestoredView;
++    Camera->GetCameraView(0.f, RestoredView);
++    Check(Arms->GetAnimClass() == OriginalClass.Get() && Arms->GetAnimationMode() == OriginalMode, TEXT("animation_mode_not_restored"));
++    UE_LOG(LogRogue10m, Display, TEXT("HEAD_CAMERA METRICS synthetic_only=1 samples=%d max_angular_step=%.3f min_rear_dot=%.6f"), Samples, MaxStep, MinRearDot);
++    UE_LOG(LogRogue10m, Display, TEXT("RESULT=HEAD_CAMERA_%s failures=%d"), Failures ? TEXT("FAILED") : TEXT("PASSED"), Failures);
++    FPlatformMisc::RequestExitWithStatus(false, Failures ? 1 : 0);
++}
++static void Run()
++{
++    if (GIsEditor || !GEngine) { UE_LOG(LogRogue10m, Warning, TEXT("HEAD_CAMERA requires standalone -game, not PIE/editor.")); return; }
++    for (const FWorldContext& Context : GEngine->GetWorldContexts())
++    {
++        if (UWorld* World = Context.World(); World && World->WorldType == EWorldType::Game)
++        {
++            FTimerHandle Timer;
++            World->GetTimerManager().SetTimer(Timer, FTimerDelegate::CreateLambda([WeakWorld = TWeakObjectPtr<UWorld>(World)] { Execute(WeakWorld); }), 4.f, false);
++            return;
++        }
++    }
++}
++static FAutoConsoleCommand Command(TEXT("Rogue10m.TestHeadCamera"),
++    TEXT("Validates head camera rear view and yaw wrap using a transient synthetic turn sequence; standalone editor build only."),
++    FConsoleCommandDelegate::CreateStatic(&Run));
++}
++#endif

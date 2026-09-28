@@ -70,6 +70,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Vitals")
 	TObjectPtr<UTextBlock> UI_ValueText;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Vitals")
+	bool bShowVitalLabel = false;
+
 	virtual FText GetPrototypeDesignDescription() const override;
 	virtual FVector2D GetPrototypeDesignSize() const override;
 
@@ -137,6 +140,32 @@ protected:
 	virtual FText GetPrototypeDesignDescription() const override;
 	virtual FVector2D GetPrototypeDesignSize() const override;
 
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Identity")
+	TObjectPtr<UImage> UI_IdentityIcon;
+
+	/** Decorative emblem while a configured gameplay icon is missing or still streaming. */
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Identity")
+	TObjectPtr<UImage> UI_IdentityFallbackIcon;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Identity")
+	TObjectPtr<UTextBlock> UI_MasteryText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Identity")
+	TObjectPtr<UTextBlock> UI_IdentityPercentText;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Identity")
+	bool bUseCircularResourceGauge = false;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Identity", meta=(ClampMin="1.0", ClampMax="20.0"))
+	float CircularGaugeThickness = 6.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Identity")
+	FLinearColor CircularGaugeColor = FLinearColor(0.14f, 0.76f, 0.48f, 1.0f);
+
+	virtual int32 NativePaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry,
+		const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements,
+		int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const override;
+
 	UFUNCTION(BlueprintImplementableEvent, Category="Rogue10m|HUD|Identity", meta=(DisplayName="Identity View Changed"))
 	void BP_OnIdentityViewChanged();
 
@@ -199,11 +228,21 @@ protected:
 	virtual FText GetPrototypeDesignDescription() const override;
 	virtual FVector2D GetPrototypeDesignSize() const override;
 
+	/** Compact combat layouts can shorten the known mouse input labels. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Quick Slot")
+	bool bUseCompactInputLabels = false;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Quick Slot")
+	TObjectPtr<UTextBlock> UI_LockedText;
+
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Quick Slot")
 	TObjectPtr<UTextBlock> UI_KeyText;
 
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Quick Slot")
 	TObjectPtr<UTextBlock> UI_CooldownText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Quick Slot")
+	TObjectPtr<UImage> UI_CooldownShade;
 
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Quick Slot")
 	TObjectPtr<UImage> UI_IconImage;
@@ -263,6 +302,9 @@ protected:
 	virtual FText GetPrototypeDesignTitle() const override;
 	virtual FText GetPrototypeDesignDescription() const override;
 	virtual FVector2D GetPrototypeDesignSize() const override;
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Log")
+	TObjectPtr<UTextBlock> UI_MessageText;
+
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Log")
 	TObjectPtr<UImage> UI_ItemIconImage;
 

@@ -11,6 +11,8 @@
 #include "Components/TextBlock.h"
 #include "Components/VerticalBox.h"
 #include "Components/VerticalBoxSlot.h"
+#include "Rendering/DrawElementTypes.h"
+#include "Widgets/SWidget.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCombatComponent.h"
 #include "Widgets/Rogue10mSkillDragDropOperation.h"
@@ -156,8 +158,11 @@ void URogue10mVitalBarWidget::SetVitalView(FText InLabel, const FRogue10mHudVita
 	}
 	if (UI_ValueText)
 	{
-		UI_ValueText->SetText(FText::FromString(FString::Printf(
-			TEXT("%d / %d"), FMath::RoundToInt(VitalView.Current), FMath::RoundToInt(VitalView.Max))));
+		const FText ValueText = FText::FromString(FString::Printf(
+			TEXT("%d / %d"), FMath::RoundToInt(VitalView.Current), FMath::RoundToInt(VitalView.Max)));
+		UI_ValueText->SetText(bShowVitalLabel
+			? FText::Format(NSLOCTEXT("Rogue10mHUD", "LabeledVitalValue", "{0}  {1}"), VitalLabel, ValueText)
+			: ValueText);
 	}
 	BP_OnVitalViewChanged();
 }
@@ -237,8 +242,100 @@ FVector2D URogue10mProgressionWidget::GetPrototypeDesignSize() const
 
 void URogue10mIdentityWidget::SetIdentityView(const FRogue10mHudIdentityView& InIdentityView)
 {
+	const bool bGaugeChanged = !FMath::IsNearlyEqual(IdentityView.Normalized, InIdentityView.Normalized)
+		|| IdentityView.bHasIdentityResource != InIdentityView.bHasIdentityResource;
+	const bool bIconChanged = IdentityView.IconTexture != InIdentityView.IconTexture;
 	IdentityView = InIdentityView;
+	if (UI_IdentityIcon)
+	{
+		if (bIconChanged)
+		{
+			// Clear and cancel any prior request before the engine streams the new icon.
+			UI_IdentityIcon->SetBrushFromTexture(nullptr);
+			if (!IdentityView.IconTexture.IsNull())
+			{
+				UI_IdentityIcon->SetBrushFromSoftTexture(IdentityView.IconTexture);
+			}
+		}
+		UI_IdentityIcon->SetVisibility(IdentityView.IconTexture.IsValid()
+			? ESlateVisibility::HitTestInvisible : ESlateVisibility::Hidden);
+	}
+	if (UI_IdentityFallbackIcon)
+	{
+		UI_IdentityFallbackIcon->SetVisibility(IdentityView.IconTexture.IsValid()
+			? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible);
+	}
+	if (UI_MasteryText)
+	{
+		UI_MasteryText->SetText(FText::Format(NSLOCTEXT("Rogue10mHUD", "IdentityMastery", "숙련 {0}"),
+			FText::AsNumber(FMath::Max(0, IdentityView.MasteryLevel))));
+		UI_MasteryText->SetColorAndOpacity(FSlateColor(IdentityView.OutlineColor));
+	}
+	if (UI_IdentityPercentText)
+	{
+		UI_IdentityPercentText->SetText(IdentityView.bHasIdentityResource
+			? FText::FromString(FString::Printf(TEXT("%.0f%%"), FMath::Clamp(IdentityView.Normalized, 0.0f, 1.0f) * 100.0f))
+			: FText::FromString(TEXT("--")));
+	}
+	if (bUseCircularResourceGauge && bGaugeChanged)
+	{
+		if (const TSharedPtr<SWidget> SlateWidget = GetCachedWidget())
+		{
+			SlateWidget->Invalidate(EInvalidateWidgetReason::Paint);
+		}
+	}
+	SetToolTipText(IdentityView.Label);
 	BP_OnIdentityViewChanged();
+}
+
+int32 URogue10mIdentityWidget::NativePaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry,
+	const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements,
+	int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const
+{
+	int32 LastLayer = Super::NativePaint(Args, AllottedGeometry, MyCullingRect,
+		OutDrawElements, LayerId, InWidgetStyle, bParentEnabled);
+	if (!bUseCircularResourceGauge)
+	{
+		return LastLayer;
+	}
+
+	const FVector2D Size = AllottedGeometry.GetLocalSize();
+	const float Diameter = static_cast<float>(FMath::Min(Size.X, Size.Y));
+	const float Thickness = FMath::Clamp(CircularGaugeThickness, 1.0f, 20.0f);
+	const float Radius = Diameter * 0.5f - Thickness * 0.5f - 3.0f;
+	if (Radius <= 0.0f)
+	{
+		return LastLayer;
+	}
+
+	const FVector2f Center(static_cast<float>(Size.X * 0.5), static_cast<float>(Size.Y * 0.5));
+	const ESlateDrawEffect DrawEffect = (bParentEnabled && GetIsEnabled())
+		? ESlateDrawEffect::None : ESlateDrawEffect::DisabledEffect;
+	const FLinearColor StyleTint = InWidgetStyle.GetColorAndOpacityTint();
+	const auto DrawArc = [&](float Fraction, const FLinearColor& Color)
+	{
+		const int32 SegmentCount = FMath::Max(1, FMath::CeilToInt(128.0f * Fraction));
+		TArray<FVector2f> Points;
+		Points.Reserve(SegmentCount + 1);
+		for (int32 PointIndex = 0; PointIndex <= SegmentCount; ++PointIndex)
+		{
+			// Start at twelve o'clock and fill clockwise in screen coordinates.
+			const float Angle = -UE_HALF_PI + UE_TWO_PI * Fraction
+				* static_cast<float>(PointIndex) / static_cast<float>(SegmentCount);
+			Points.Add(Center + FVector2f(FMath::Cos(Angle), FMath::Sin(Angle)) * Radius);
+		}
+		FSlateDrawElement::MakeLines(OutDrawElements, ++LastLayer, AllottedGeometry.ToPaintGeometry(),
+			MoveTemp(Points), DrawEffect, Color * StyleTint, true, Thickness);
+	};
+
+	DrawArc(1.0f, FLinearColor(0.085f, 0.10f, 0.09f, 1.0f));
+	const float ResourceFraction = IdentityView.bHasIdentityResource
+		? FMath::Clamp(IdentityView.Normalized, 0.0f, 1.0f) : 0.0f;
+	if (ResourceFraction > 0.0f)
+	{
+		DrawArc(ResourceFraction, CircularGaugeColor);
+	}
+	return LastLayer;
 }
 
 FText URogue10mIdentityWidget::GetPrototypeDesignTitle() const
@@ -299,7 +396,35 @@ void URogue10mQuickSlotWidget::SetQuickSlotView(const FRogue10mHudQuickSlotView&
 
 	if (UI_KeyText)
 	{
-		UI_KeyText->SetText(QuickSlotView.InputText);
+		FText KeyText = QuickSlotView.InputText;
+		if (bUseCompactInputLabels)
+		{
+			// Leave other labels intact, including empty item slots and the dodge key.
+			const FString InputLabel = KeyText.ToString();
+			if (InputLabel == TEXT("좌클릭"))
+			{
+				KeyText = FText::FromString(TEXT("LMB"));
+			}
+			else if (InputLabel == TEXT("우클릭"))
+			{
+				KeyText = FText::FromString(TEXT("RMB"));
+			}
+			else if (InputLabel == TEXT("좌클릭 차징"))
+			{
+				KeyText = FText::FromString(TEXT("HOLD LMB"));
+			}
+			else if (InputLabel == TEXT("우클릭 차징"))
+			{
+				KeyText = FText::FromString(TEXT("HOLD RMB"));
+			}
+		}
+		UI_KeyText->SetText(KeyText);
+	}
+	if (UI_LockedText)
+	{
+		UI_LockedText->SetText(NSLOCTEXT("Rogue10mHUD", "QuickSlotLocked", "잠금"));
+		UI_LockedText->SetVisibility(QuickSlotView.bUnlocked
+			? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible);
 	}
 
 	if (UI_CooldownText)
@@ -309,16 +434,27 @@ void URogue10mQuickSlotWidget::SetQuickSlotView(const FRogue10mHudQuickSlotView&
 			: FText::GetEmpty());
 	}
 
+	if (UI_CooldownShade)
+	{
+		UI_CooldownShade->SetVisibility(QuickSlotView.CooldownRemaining > 0.0f
+			? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
+	}
+
 	if (UI_IconImage)
 	{
 		UI_IconImage->SetBrushFromTexture(QuickSlotView.SkillIcon);
 		UI_IconImage->SetColorAndOpacity(QuickSlotView.IconColor);
+		UI_IconImage->SetVisibility(QuickSlotView.SkillIcon
+			? ESlateVisibility::HitTestInvisible : ESlateVisibility::Hidden);
 	}
 
 	const FText SlotToolTipText = QuickSlotView.bUnlocked
 		? QuickSlotView.DisplayName
 		: FText::FromString(FString::Printf(TEXT("%s: 해금되지 않음"), *QuickSlotView.InputText.ToString()));
-	SetToolTipText(SlotToolTipText);
+	SetToolTipText(bUseCompactInputLabels && QuickSlotView.bUnlocked && !QuickSlotView.InputText.IsEmpty()
+		? FText::Format(NSLOCTEXT("Rogue10mHUD", "CompactSlotToolTip", "{0}: {1}"),
+			QuickSlotView.InputText, SlotToolTipText)
+		: SlotToolTipText);
 
 	if (UI_SlotFrame)
 	{
@@ -373,6 +509,16 @@ FVector2D URogue10mQuickSlotWidget::GetPrototypeDesignSize() const
 void URogue10mLogLineWidget::SetLogEntryView(const FRogue10mHudLogEntryView& InLogEntryView)
 {
 	LogEntryView = InLogEntryView;
+	const FText MessageText = LogEntryView.bItemAcquisition
+		? FText::Format(NSLOCTEXT("Rogue10mHUD", "ItemAcquisitionMessage", "{0} ×{1}"),
+			LogEntryView.Message, FText::AsNumber(FMath::Max(0, LogEntryView.Quantity)))
+		: LogEntryView.Message;
+	if (UI_MessageText)
+	{
+		UI_MessageText->SetText(MessageText);
+		UI_MessageText->SetColorAndOpacity(FSlateColor(LogEntryView.Color));
+	}
+	SetToolTipText(MessageText);
 	if (LogEntryView.bItemAcquisition)
 	{
 		if (UI_ItemIconImage)
@@ -388,7 +534,6 @@ void URogue10mLogLineWidget::SetLogEntryView(const FRogue10mHudLogEntryView& InL
 		{
 			UI_ItemNameText->SetVisibility(ESlateVisibility::Collapsed);
 		}
-		SetToolTipText(LogEntryView.Message);
 	}
 	BP_OnLogEntryViewChanged();
 }

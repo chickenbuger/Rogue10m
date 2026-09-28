@@ -18,6 +18,7 @@
 #include "Components/CanvasPanelSlot.h"
 #include "Components/Image.h"
 #include "Components/PanelWidget.h"
+#include "Components/ProgressBar.h"
 #include "Components/ScaleBox.h"
 #include "Components/SizeBox.h"
 #include "Engine/Texture2D.h"
@@ -1871,12 +1872,31 @@ void URogue10mEquipmentWindowWidget::DestroyCharacterPreview()
 		UI_CharacterPreviewImage->SetVisibility(ESlateVisibility::Collapsed);
 	}
 }
-void URogue10mSkillTreeEntryWidget::SetSkillData(URogue10mAttackSkillData* InSkillData, bool bInUnlocked)
+namespace
+{
+FText GetMartialArtsTierText(int32 Tier)
+{
+	switch (Tier)
+	{
+	case 1: return FText::FromString(TEXT("입문"));
+	case 2: return FText::FromString(TEXT("초식"));
+	case 3: return FText::FromString(TEXT("절기"));
+	case 4: return FText::FromString(TEXT("심법"));
+	default: return FText::FromString(TEXT("무공"));
+	}
+}
+}
+
+void URogue10mSkillTreeEntryWidget::SetSkillData(
+	URogue10mAttackSkillData* InSkillData, bool bInUnlocked,
+	bool bInAvailable, float InUnlockProgress)
 {
 	SkillData = InSkillData;
 	bUnlocked = bInUnlocked;
-	SetIsEnabled(bUnlocked);
-	SetRenderOpacity(bUnlocked ? 1.0f : 0.35f);
+	bCanDrag = bUnlocked && SkillData
+		&& SkillData->SkillTreeNodeType == ERogue10mSkillTreeNodeType::ActiveTechnique;
+	SetIsEnabled(true);
+	SetRenderOpacity(bUnlocked ? 1.0f : (bInAvailable ? 0.78f : 0.42f));
 	SetToolTipText(SkillData ? SkillData->SkillDescription : FText::GetEmpty());
 
 	if (UI_SkillNameText)
@@ -1889,7 +1909,25 @@ void URogue10mSkillTreeEntryWidget::SetSkillData(URogue10mAttackSkillData* InSki
 	}
 	if (UI_SkillLockText)
 	{
-		UI_SkillLockText->SetVisibility(bUnlocked ? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible);
+		const FText StatusText = bUnlocked
+			? (bCanDrag ? FText::FromString(TEXT("해금 · 장착 가능")) : FText::FromString(TEXT("해금 · 상시 발동")))
+			: (bInAvailable ? FText::FromString(TEXT("수련 완료 · 해금 대기")) : FText::FromString(TEXT("잠김")));
+		UI_SkillLockText->SetText(StatusText);
+	}
+	if (UI_SkillTierText)
+	{
+		UI_SkillTierText->SetText(SkillData ? GetMartialArtsTierText(SkillData->SkillTreeTier) : FText::GetEmpty());
+	}
+	if (UI_SkillProgressText)
+	{
+		UI_SkillProgressText->SetText(FText::FromString(FString::Printf(
+			TEXT("수련 %d%%"), FMath::RoundToInt(FMath::Clamp(InUnlockProgress, 0.0f, 1.0f) * 100.0f))));
+	}
+	if (UI_SkillProgressBar)
+	{
+		UI_SkillProgressBar->SetPercent(FMath::Clamp(InUnlockProgress, 0.0f, 1.0f));
+		UI_SkillProgressBar->SetFillColorAndOpacity(
+			bUnlocked ? FLinearColor(0.30f, 0.92f, 0.56f, 1.0f) : FLinearColor(0.66f, 0.48f, 0.20f, 1.0f));
 	}
 	if (UI_SkillIconImage)
 	{
@@ -1901,10 +1939,15 @@ void URogue10mSkillTreeEntryWidget::SetSkillData(URogue10mAttackSkillData* InSki
 FReply URogue10mSkillTreeEntryWidget::NativeOnMouseButtonDown(
 	const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-	if (bUnlocked && SkillData && InMouseEvent.GetEffectingButton() == EKeys::LeftMouseButton)
+	if (SkillData && InMouseEvent.GetEffectingButton() == EKeys::LeftMouseButton)
 	{
-		return UWidgetBlueprintLibrary::DetectDragIfPressed(
-			InMouseEvent, this, EKeys::LeftMouseButton).NativeReply;
+		OnSkillSelected.Broadcast(SkillData);
+		if (bCanDrag)
+		{
+			return UWidgetBlueprintLibrary::DetectDragIfPressed(
+				InMouseEvent, this, EKeys::LeftMouseButton).NativeReply;
+		}
+		return FReply::Handled();
 	}
 	return Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 }
@@ -1914,7 +1957,7 @@ void URogue10mSkillTreeEntryWidget::NativeOnDragDetected(
 	const FPointerEvent& InMouseEvent,
 	UDragDropOperation*& OutOperation)
 {
-	if (!bUnlocked || !SkillData)
+	if (!bCanDrag || !SkillData)
 	{
 		return;
 	}
@@ -1930,7 +1973,22 @@ void URogue10mSkillTreeWindowWidget::InitializeMenuWindow(
 	URogue10mInventoryComponent* InInventoryComponent)
 {
 	Super::InitializeMenuWindow(InInventoryComponent);
+	if (URogue10mCombatComponent* Combat = GetCombatComponent())
+	{
+		Combat->OnSkillTreeChanged.AddUniqueDynamic(
+			this, &URogue10mSkillTreeWindowWidget::HandleSkillTreeChanged);
+	}
 	RefreshSkillTree();
+}
+
+void URogue10mSkillTreeWindowWidget::NativeDestruct()
+{
+	if (URogue10mCombatComponent* Combat = GetCombatComponent())
+	{
+		Combat->OnSkillTreeChanged.RemoveDynamic(
+			this, &URogue10mSkillTreeWindowWidget::HandleSkillTreeChanged);
+	}
+	Super::NativeDestruct();
 }
 
 void URogue10mSkillTreeWindowWidget::SetWindowOpen(bool bOpen)
@@ -1945,22 +2003,208 @@ void URogue10mSkillTreeWindowWidget::SetWindowOpen(bool bOpen)
 void URogue10mSkillTreeWindowWidget::RefreshSkillTree()
 {
 	URogue10mCombatComponent* Combat = GetCombatComponent();
-	if (!UI_SkillListContainer || !SkillTreeEntryWidgetClass || !Combat)
+	UCanvasPanel* SkillCanvas = Cast<UCanvasPanel>(UI_SkillListContainer);
+	if (!SkillCanvas || !SkillTreeEntryWidgetClass || !Combat)
 	{
 		return;
 	}
 
-	UI_SkillListContainer->ClearChildren();
-	for (URogue10mAttackSkillData* Skill : Combat->GetActiveSkillTreeSkills())
+	const TArray<URogue10mAttackSkillData*> Skills = Combat->GetActiveSkillTreeSkills();
+	SkillCanvas->ClearChildren();
+	if (UI_SkillTreeTitleText)
 	{
+		UI_SkillTreeTitleText->SetText(FText::Format(
+			FText::FromString(TEXT("{0} 무공 수련")), Combat->GetActiveSkillTreeDisplayName()));
+	}
+	if (UI_ActiveWeaponText)
+	{
+		UI_ActiveWeaponText->SetText(FText::FromString(FString::Printf(
+			TEXT("활성 무기 · %s"), *UEnum::GetDisplayValueAsText(Combat->GetActiveSkillTreeWeaponType()).ToString())));
+	}
+
+	int32 UnlockedCount = 0;
+	int32 HighestTier = 1;
+	for (URogue10mAttackSkillData* Skill : Skills)
+	{
+		if (Skill && Combat->IsAttackSkillUnlocked(Skill))
+		{
+			++UnlockedCount;
+			HighestTier = FMath::Max(HighestTier, Skill->SkillTreeTier);
+		}
+	}
+	if (UI_MartialArtStageText)
+	{
+		UI_MartialArtStageText->SetText(FText::Format(
+			FText::FromString(TEXT("현재 경지 · {0}")), GetMartialArtsTierText(HighestTier)));
+	}
+	if (UI_MasteryProgressText)
+	{
+		UI_MasteryProgressText->SetText(FText::FromString(FString::Printf(
+			TEXT("해금 무공 %d / %d"), UnlockedCount, Skills.Num())));
+	}
+	if (UI_MasteryProgressBar)
+	{
+		UI_MasteryProgressBar->SetPercent(
+			Skills.IsEmpty() ? 0.0f : static_cast<float>(UnlockedCount) / static_cast<float>(Skills.Num()));
+	}
+
+	for (URogue10mAttackSkillData* Skill : Skills)
+	{
+		if (!Skill)
+		{
+			continue;
+		}
+		for (URogue10mAttackSkillData* Prerequisite : Skill->PrerequisiteSkills)
+		{
+			if (!Prerequisite || !Skills.Contains(Prerequisite))
+			{
+				continue;
+			}
+			const FVector2D Delta = Skill->SkillTreePosition - Prerequisite->SkillTreePosition;
+			const float Length = Delta.Size();
+			UBorder* Connection = NewObject<UBorder>(SkillCanvas);
+			Connection->SetBrushColor(
+				Combat->IsAttackSkillUnlocked(Prerequisite) && Combat->IsAttackSkillUnlocked(Skill)
+					? FLinearColor(0.18f, 0.74f, 0.44f, 0.82f)
+					: FLinearColor(0.28f, 0.22f, 0.14f, 0.72f));
+			Connection->SetRenderTransformAngle(FMath::RadiansToDegrees(FMath::Atan2(Delta.Y, Delta.X)));
+			if (UCanvasPanelSlot* ConnectionSlot = SkillCanvas->AddChildToCanvas(Connection))
+			{
+				ConnectionSlot->SetPosition((Skill->SkillTreePosition + Prerequisite->SkillTreePosition) * 0.5f);
+				ConnectionSlot->SetSize(FVector2D(Length, 4.0f));
+				ConnectionSlot->SetAlignment(FVector2D(0.5f, 0.5f));
+				ConnectionSlot->SetZOrder(0);
+			}
+		}
+	}
+
+	for (URogue10mAttackSkillData* Skill : Skills)
+	{
+		if (!Skill)
+		{
+			continue;
+		}
 		URogue10mSkillTreeEntryWidget* Entry = CreateWidget<URogue10mSkillTreeEntryWidget>(
 			GetOwningPlayer(), SkillTreeEntryWidgetClass);
 		if (!Entry)
 		{
 			continue;
 		}
-		Entry->SetSkillData(Skill, Combat->IsAttackSkillUnlocked(Skill));
-		UI_SkillListContainer->AddChild(Entry);
+		Entry->SetSkillData(
+			Skill, Combat->IsAttackSkillUnlocked(Skill), Combat->IsSkillAvailableToUnlock(Skill),
+			Combat->GetSkillUnlockProgress(Skill));
+		Entry->OnSkillSelected.AddUniqueDynamic(
+			this, &URogue10mSkillTreeWindowWidget::HandleSkillSelected);
+		if (UCanvasPanelSlot* EntrySlot = SkillCanvas->AddChildToCanvas(Entry))
+		{
+			EntrySlot->SetPosition(Skill->SkillTreePosition);
+			EntrySlot->SetSize(FVector2D(156.0f, 118.0f));
+			EntrySlot->SetAlignment(FVector2D(0.5f, 0.5f));
+			EntrySlot->SetZOrder(2);
+		}
+	}
+
+	if (!SelectedSkill || !Skills.Contains(SelectedSkill))
+	{
+		SelectedSkill = Skills.IsEmpty() ? nullptr : Skills[0];
+	}
+	RefreshSelectedSkillDetails();
+}
+
+void URogue10mSkillTreeWindowWidget::HandleSkillSelected(URogue10mAttackSkillData* SkillData)
+{
+	SelectedSkill = SkillData;
+	RefreshSelectedSkillDetails();
+}
+
+void URogue10mSkillTreeWindowWidget::HandleSkillTreeChanged()
+{
+	RefreshSkillTree();
+}
+
+void URogue10mSkillTreeWindowWidget::RefreshSelectedSkillDetails()
+{
+	URogue10mCombatComponent* Combat = GetCombatComponent();
+	if (!Combat || !SelectedSkill)
+	{
+		return;
+	}
+	if (UI_SelectedSkillIcon)
+	{
+		UI_SelectedSkillIcon->SetBrushFromTexture(SelectedSkill->SkillIcon);
+		UI_SelectedSkillIcon->SetColorAndOpacity(SelectedSkill->IconTint);
+	}
+	if (UI_SelectedSkillNameText)
+	{
+		UI_SelectedSkillNameText->SetText(SelectedSkill->SkillName);
+	}
+	if (UI_SelectedSkillTierText)
+	{
+		UI_SelectedSkillTierText->SetText(FText::Format(
+			FText::FromString(TEXT("{0} · {1}")), GetMartialArtsTierText(SelectedSkill->SkillTreeTier),
+			SelectedSkill->SkillTreeNodeType == ERogue10mSkillTreeNodeType::PassiveTechnique
+				? FText::FromString(TEXT("상시 심법")) : FText::FromString(TEXT("공격 무공"))));
+	}
+	if (UI_SelectedSkillDescriptionText)
+	{
+		UI_SelectedSkillDescriptionText->SetText(SelectedSkill->SkillDescription);
+	}
+	if (UI_SelectedSkillStatusText)
+	{
+		const bool bUnlocked = Combat->IsAttackSkillUnlocked(SelectedSkill);
+		UI_SelectedSkillStatusText->SetText(bUnlocked
+			? FText::FromString(TEXT("● 해금 완료"))
+			: FText::FromString(FString::Printf(TEXT("◆ 수련 진행 %d%%"),
+				FMath::RoundToInt(Combat->GetSkillUnlockProgress(SelectedSkill) * 100.0f))));
+		UI_SelectedSkillStatusText->SetColorAndOpacity(bUnlocked
+			? FSlateColor(FLinearColor(0.32f, 0.95f, 0.58f, 1.0f))
+			: FSlateColor(FLinearColor(0.86f, 0.67f, 0.31f, 1.0f)));
+	}
+
+	FString Conditions;
+	for (const URogue10mAttackSkillData* Prerequisite : SelectedSkill->PrerequisiteSkills)
+	{
+		if (Prerequisite)
+		{
+			Conditions += FString::Printf(TEXT("%s 선행 · %s\n"),
+				Combat->IsAttackSkillUnlocked(Prerequisite) ? TEXT("✓") : TEXT("○"),
+				*Prerequisite->SkillName.ToString());
+		}
+	}
+	for (const FRogue10mSkillUnlockCondition& Condition : SelectedSkill->UnlockConditions)
+	{
+		const int32 Current = Combat->GetSkillUnlockConditionCurrent(Condition);
+		const int32 Required = FMath::Max(1, Condition.RequiredCount);
+		FText TargetName = Condition.TargetDisplayName;
+		if (TargetName.IsEmpty())
+		{
+			TargetName = Condition.RequiredSkill
+				? Condition.RequiredSkill->SkillName : FText::FromName(Condition.RequiredMonsterId);
+		}
+		const TCHAR* TypeText = Condition.ConditionType == ERogue10mSkillUnlockConditionType::SkillUseCount
+			? TEXT("수련") : TEXT("토벌");
+		Conditions += FString::Printf(TEXT("%s %s · %s  %d / %d\n"),
+			Current >= Required ? TEXT("✓") : TEXT("○"), TypeText,
+			*TargetName.ToString(), FMath::Min(Current, Required), Required);
+	}
+	if (Conditions.IsEmpty())
+	{
+		Conditions = TEXT("문파 입문 시 기본 전수");
+	}
+	if (UI_SelectedSkillConditionsText)
+	{
+		UI_SelectedSkillConditionsText->SetText(FText::FromString(Conditions));
+	}
+	if (UI_SelectedSkillRewardText)
+	{
+		FText Reward = SelectedSkill->UnlockRewardText;
+		if (Reward.IsEmpty())
+		{
+			Reward = SelectedSkill->SkillTreeNodeType == ERogue10mSkillTreeNodeType::PassiveTechnique
+				? FText::FromString(TEXT("해금 즉시 상시 적용"))
+				: FText::FromString(TEXT("해금 후 하단 HUD 스킬 슬롯에 장착 가능"));
+		}
+		UI_SelectedSkillRewardText->SetText(Reward);
 	}
 }
 

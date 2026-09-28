@@ -1,0 +1,319 @@
+{
+  "asset": "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed",
+  "apply": true,
+  "before_edges": [
+    [
+      [
+        "AnimGraphNode_ControlRig_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ],
+      [
+        "AnimGraphNode_Root_0",
+        "Result",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_ControlRig_0",
+        "ShouldDoIKTrace",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "K2Node_CallFunction_0",
+        "ReturnValue",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_ControlRig_0",
+        "Source",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "AnimGraphNode_Slot_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_SaveCachedPose_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "AnimGraphNode_StateMachine_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_Slot_0",
+        "Source",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "AnimGraphNode_StateMachine_1",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "K2Node_CallFunction_0",
+        "A",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "K2Node_VariableGet_0",
+        "IsFalling",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ]
+  ],
+  "expected_edges": [
+    [
+      [
+        "AnimGraphNode_ControlRig_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ],
+      [
+        "AnimGraphNode_Slot_0",
+        "Source",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_ControlRig_0",
+        "ShouldDoIKTrace",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "K2Node_CallFunction_0",
+        "ReturnValue",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_ControlRig_0",
+        "Source",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "AnimGraphNode_StateMachine_1",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_Root_0",
+        "Result",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "AnimGraphNode_Slot_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_SaveCachedPose_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "AnimGraphNode_StateMachine_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "K2Node_CallFunction_0",
+        "A",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "K2Node_VariableGet_0",
+        "IsFalling",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ]
+  ],
+  "nodes_before": [
+    "AnimGraphNode_ControlRig_0",
+    "AnimGraphNode_Root_0",
+    "AnimGraphNode_SaveCachedPose_0",
+    "AnimGraphNode_Slot_0",
+    "AnimGraphNode_StateMachine_0",
+    "AnimGraphNode_StateMachine_1",
+    "K2Node_CallFunction_0",
+    "K2Node_VariableGet_0"
+  ],
+  "removed_edges": [
+    [
+      [
+        "AnimGraphNode_Slot_0",
+        "Source",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "AnimGraphNode_StateMachine_1",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_ControlRig_0",
+        "Source",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "AnimGraphNode_Slot_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_ControlRig_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ],
+      [
+        "AnimGraphNode_Root_0",
+        "Result",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ]
+    ]
+  ],
+  "added_edges": [
+    [
+      [
+        "AnimGraphNode_ControlRig_0",
+        "Source",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "AnimGraphNode_StateMachine_1",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_ControlRig_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ],
+      [
+        "AnimGraphNode_Slot_0",
+        "Source",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_Root_0",
+        "Result",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "AnimGraphNode_Slot_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ]
+  ],
+  "compile_pass": true,
+  "saved": true,
+  "backup": "..\\..\\..\\..\\..\\Project\\Rogue10m\\tmp\\animation-stability\\source-abp-before\\ABP_Common_Unarmed.uasset",
+  "before_sha256": "d61708798d9e5fa9c49713e59b9cd8304000e431529f821749f8c69ae242694b",
+  "error_nodes": [],
+  "warning_nodes": [],
+  "after_edges": [
+    [
+      [
+        "AnimGraphNode_ControlRig_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ],
+      [
+        "AnimGraphNode_Slot_0",
+        "Source",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_ControlRig_0",
+        "ShouldDoIKTrace",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "K2Node_CallFunction_0",
+        "ReturnValue",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_ControlRig_0",
+        "Source",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "AnimGraphNode_StateMachine_1",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_Root_0",
+        "Result",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "AnimGraphNode_Slot_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "AnimGraphNode_SaveCachedPose_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "AnimGraphNode_StateMachine_0",
+        "Pose",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ],
+    [
+      [
+        "K2Node_CallFunction_0",
+        "A",
+        "<EdGraphPinDirection.EGPD_INPUT: 0>"
+      ],
+      [
+        "K2Node_VariableGet_0",
+        "IsFalling",
+        "<EdGraphPinDirection.EGPD_OUTPUT: 1>"
+      ]
+    ]
+  ],
+  "after_sha256": "b10d5de40bb5055b18604db892707cd7c739f8b80cf8fb205b91b364cd9fa033"
+}

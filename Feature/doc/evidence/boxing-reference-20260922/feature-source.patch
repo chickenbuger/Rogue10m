@@ -1,0 +1,563 @@
+--- a/Source/Rogue10m/Tests/Rogue10mBasicBrawlerRuntimeTest.cpp
++++ b/Source/Rogue10m/Tests/Rogue10mBasicBrawlerRuntimeTest.cpp
+@@ -43,9 +43,14 @@
+ class FRun : public TSharedFromThis<FRun>
+ {
+ public:
+-    void Start(UWorld* InWorld, bool bSmoothCapture)
++    void Start(UWorld* InWorld, bool bSmoothCapture, FString InStance)
+     {
+         World=InWorld; CaptureStride=bSmoothCapture ? 1 : 2;
++        StanceLabel = MoveTemp(InStance);
++        Stance = StanceLabel == TEXT("longguard") ? ERogue10mBrawlerStance::LongGuard
++            : StanceLabel == TEXT("rooted") ? ERogue10mBrawlerStance::RootedMartial : ERogue10mBrawlerStance::CompactBoxing;
++        CaptureFolder = StanceLabel.IsEmpty() ? TEXT("Screenshots/WindowsEditor/BasicBrawlerPreview")
++            : FString(TEXT("Screenshots/WindowsEditor/BoxingStances/")) + StanceLabel;
+         FTimerHandle Handle;
+         InWorld->GetTimerManager().SetTimer(Handle,FTimerDelegate::CreateLambda([Self=AsShared()]{Self->Prepare();}),4.0f,false);
+     }
+@@ -128,7 +133,7 @@
+         Check(Monster.IsValid(),TEXT("target_missing"));
+         OldFixed=FApp::UseFixedTimeStep(); OldDelta=FApp::GetFixedDeltaTime();
+         FApp::SetFixedDeltaTime(1.0/30.0); FApp::SetUseFixedTimeStep(true);
+-        IFileManager::Get().MakeDirectory(*FPaths::Combine(FPaths::ProjectSavedDir(),TEXT("Screenshots/WindowsEditor/BasicBrawlerPreview")),true);
++        IFileManager::Get().MakeDirectory(*FPaths::Combine(FPaths::ProjectSavedDir(),CaptureFolder),true);
+         TickHandle=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* W,ELevelTick,float)
+         { if (W==Self->World.Get()) {Self->Frame();} });
+     }
+@@ -139,6 +144,7 @@
+         auto* Camera=Character->GetFirstPersonCameraComponent();
+         auto* Arms=Character->GetFirstPersonMesh();
+         auto* PC=Cast<APlayerController>(Character->GetController());
++        if (auto* Fist = Cast<URogue10mFistAnimInstance>(Arms->GetAnimInstance())) { Fist->BasicCombatStance = Stance; }
+         if (FrameIndex==12)
+         {
+             LeftGuard=Hand(TEXT("hand_l")); RightGuard=Hand(TEXT("hand_r"));
+@@ -146,6 +152,28 @@
+             GuardHead=Arms->GetSocketQuaternion(TEXT("head")); GuardSpine=Arms->GetSocketQuaternion(TEXT("spine_03"));
+             GroundZ=Character->GetActorLocation().Z; InitialHealth=Health(); PreviousHealth=InitialHealth;
+             LogArmChains(TEXT("guard"),0);
++            for (int32 I=0; I<2; ++I)
++            {
++                const FName Thigh = I==0 ? TEXT("thigh_l") : TEXT("thigh_r");
++                const FName Calf = I==0 ? TEXT("calf_l") : TEXT("calf_r");
++                const FName Foot = I==0 ? TEXT("foot_l") : TEXT("foot_r");
++                LegUpper[I] = FVector::Distance(Arms->GetSocketLocation(Thigh),Arms->GetSocketLocation(Calf));
++                LegLower[I] = FVector::Distance(Arms->GetSocketLocation(Calf),Arms->GetSocketLocation(Foot));
++            }
++            UE_LOG(LogRogue10m,Display,TEXT("BASIC_BRAWLER STANCE name=%s left=%s right=%s"),
++                *StanceLabel, *LeftGuard.ToCompactString(), *RightGuard.ToCompactString());
++        }
++        if (FrameIndex > 12 && FrameIndex < 200)
++        {
++            for (int32 I=0; I<2; ++I)
++            {
++                const FName Thigh = I==0 ? TEXT("thigh_l") : TEXT("thigh_r");
++                const FName Calf = I==0 ? TEXT("calf_l") : TEXT("calf_r");
++                const FName Foot = I==0 ? TEXT("foot_l") : TEXT("foot_r");
++                const double Upper = FVector::Distance(Arms->GetSocketLocation(Thigh),Arms->GetSocketLocation(Calf));
++                const double Lower = FVector::Distance(Arms->GetSocketLocation(Calf),Arms->GetSocketLocation(Foot));
++                Check(FMath::Abs(Upper-LegUpper[I])<.1 && FMath::Abs(Lower-LegLower[I])<.1, TEXT("stance_stretched_leg_bones"));
++            }
+         }
+         if (FrameIndex==20)
+         {
+@@ -397,7 +425,7 @@
+         }
+         if (FrameIndex<300 && FrameIndex%CaptureStride==0)
+         {
+-            FScreenshotRequest::RequestScreenshot(FPaths::Combine(FPaths::ProjectSavedDir(),TEXT("Screenshots/WindowsEditor/BasicBrawlerPreview"),
++            FScreenshotRequest::RequestScreenshot(FPaths::Combine(FPaths::ProjectSavedDir(),CaptureFolder,
+                 FString::Printf(TEXT("frame_%04d.png"),FrameIndex/CaptureStride)),true,false);
+         }
+         if (FrameIndex==480)
+@@ -479,6 +507,9 @@
+     FRotator GuardControl;
+     FQuat GuardHead,GuardSpine;
+     int32 CaptureStride=2;
++    FString StanceLabel, CaptureFolder;
++    ERogue10mBrawlerStance Stance = ERogue10mBrawlerStance::CompactBoxing;
++    double LegUpper[2] = {}, LegLower[2] = {};
+     int32 FrameIndex=0,Failures=0,ChargeStartSerial=0,BeforeCancelSerial=0;
+     bool OldFixed=false,bSawJump=false,bWasFalling=false;
+     int32 LandingCount=0;
+@@ -491,8 +522,9 @@
+ {
+     if (!GEngine) { return; }
+     for (const FWorldContext& C:GEngine->GetWorldContexts())
+-    { if (UWorld* W=C.World();W && W->IsGameWorld()) { Active=MakeShared<FRun>(); Active->Start(W,Args.Contains(TEXT("smooth"))); return; } }
++    { if (UWorld* W=C.World();W && W->IsGameWorld()) { Active=MakeShared<FRun>(); Active->Start(W,Args.Contains(TEXT("smooth")), Args.Contains(TEXT("longguard")) ? TEXT("longguard")
++        : Args.Contains(TEXT("rooted")) ? TEXT("rooted") : Args.Contains(TEXT("boxing")) ? TEXT("boxing") : TEXT("")); return; } }
+ }
+-static FAutoConsoleCommand Command(TEXT("Rogue10m.TestBasicBrawler"),TEXT("Verifies fresh basic class left/right jabs, tap right straight, charged right hook, head camera, jump and interruption; records 150 frames (smooth: 300 at 30fps) then exits."),FConsoleCommandWithArgsDelegate::CreateStatic(&Run));
++static FAutoConsoleCommand Command(TEXT("Rogue10m.TestBasicBrawler"),TEXT("Verifies fresh basic class left/right jabs, tap right straight, charged right hook, head camera, jump and interruption; records 150 frames (smooth: 300 at 30fps); optional boxing/longguard/rooted stance, then exits."),FConsoleCommandWithArgsDelegate::CreateStatic(&Run));
+ }
+ #endif
+--- a/Source/Rogue10m/Character/Rogue10mFistAnimInstance.cpp
++++ b/Source/Rogue10m/Character/Rogue10mFistAnimInstance.cpp
+@@ -15,6 +15,55 @@
+ namespace
+ {
+ 	const FName FistSlot(TEXT("DefaultSlot"));
++
++	float FiniteClamp(float Value, float Min, float Max, float Fallback)
++	{
++		return FMath::IsFinite(Value) ? FMath::Clamp(Value, Min, Max) : Fallback;
++	}
++
++	/** Small first-person adaptations, not claimed measurements of the source FBX. */
++	struct FBrawlerStanceTuning
++	{
++		FVector LeadGuard = FVector::ZeroVector;
++		FVector RearGuard = FVector::ZeroVector;
++		float ElbowTuck = 8.0f;
++		float PelvisYawShare = 0.40f;
++		float FootHalfDepth = 4.0f;
++		float HipCompression = 0.7f;
++		float TorsoTurnScale = 1.0f;
++		float PivotScale = 1.0f;
++	};
++
++	FBrawlerStanceTuning MakeStanceTuning(ERogue10mBrawlerStance Style)
++	{
++		FBrawlerStanceTuning Result;
++		switch (Style)
++		{
++		case ERogue10mBrawlerStance::LongGuard:
++			Result.LeadGuard = FVector(0.0f, 3.0f, 1.0f);
++			Result.RearGuard = FVector(0.0f, -1.0f, 2.0f);
++			Result.ElbowTuck = 5.0f;
++			Result.PelvisYawShare = 0.28f;
++			Result.FootHalfDepth = 3.0f;
++			Result.HipCompression = 0.3f;
++			Result.TorsoTurnScale = 0.85f;
++			Result.PivotScale = 0.75f;
++			break;
++		case ERogue10mBrawlerStance::RootedMartial:
++			Result.LeadGuard = FVector(1.0f, -1.0f, -1.0f);
++			Result.RearGuard = FVector(1.0f, -1.0f, 0.0f);
++			Result.ElbowTuck = 9.0f;
++			Result.PelvisYawShare = 0.52f;
++			Result.FootHalfDepth = 6.0f;
++			Result.HipCompression = 1.1f;
++			Result.TorsoTurnScale = 1.15f;
++			Result.PivotScale = 1.2f;
++			break;
++		default:
++			break;
++		}
++		return Result;
++	}
+ 
+ 	FCompactPoseBoneIndex FindBone(const FCompactPose& Pose, FName Name)
+ 	{
+@@ -205,7 +254,7 @@
+ 	/** Apply absolute anatomical body orientations while preserving each local bone translation. */
+ 	FTransform ApplyBasicBodyPose(FCompactPose& Pose, FCSPose<FCompactPose>& BasePose,
+ 		const FQuat& MeshToCamera, const FRotator& BodyRotation, const FRotator& HeadRotation,
+-		const FVector& BodyOffset)
++		const FVector& BodyOffset, float PelvisYawShare = 0.08f)
+ 	{
+ 		const FName BodyNames[] = { TEXT("pelvis"), TEXT("spine_01"), TEXT("spine_02"), TEXT("spine_03"),
+ 			TEXT("spine_04"), TEXT("spine_05"), TEXT("neck_01"), TEXT("neck_02"), TEXT("head") };
+@@ -224,7 +273,8 @@
+ 			for (int32 I = 0; I < UE_ARRAY_COUNT(BodyNames); ++I)
+ 			{
+ 				if (Indices[I] == INDEX_NONE || Bone != Indices[I]) { continue; }
+-				const FRotator CameraRotation = (I >= 6 ? HeadRotation : BodyRotation) * Weights[I];
++				FRotator CameraRotation = (I >= 6 ? HeadRotation : BodyRotation) * Weights[I];
++				if (I == 0) { CameraRotation.Yaw = BodyRotation.Yaw * PelvisYawShare; }
+ 				const FQuat Delta = MeshToCamera.Inverse() * CameraRotation.Quaternion() * MeshToCamera;
+ 				Component.SetRotation(Delta * BasePose.GetComponentSpaceTransform(Bone).GetRotation());
+ 				if (I == 0) { Component.AddToTranslation(MeshToCamera.Inverse().RotateVector(BodyOffset)); }
+@@ -277,7 +327,7 @@
+ 			FAnimInstanceProxy::PreUpdate(Instance, DeltaSeconds);
+ 			const URogue10mFistAnimInstance* Fist = CastChecked<URogue10mFistAnimInstance>(Instance);
+ 			Idle = Fist->LoadedIdleAnimation;
+-			BodyStrength = FMath::Clamp(Fist->BodyMotionStrength, 0.0f, 1.0f);
++			BodyStrength = FiniteClamp(Fist->BodyMotionStrength, 0.0f, 1.0f, 0.0f);
+ 			MeshToCamera = GetComponentRelativeTransform().GetRotation();
+ 			if (FistPose != Fist->LoadedFistAnimation) { bFingerCacheValid = false; }
+ 			FistPose = Fist->LoadedFistAnimation;
+@@ -360,6 +410,12 @@
+ 				PreviousVerticalSpeed = 0.0f;
+ 			}
+ 			bBasicPose = bNextBasic;
++			StanceTuning = MakeStanceTuning(Fist->BasicCombatStance);
++			StanceWeight = bFullBodyOwner && bBasicPose && BodyStrength > KINDA_SMALL_NUMBER
++				? FiniteClamp(Fist->BasicStanceStrength, 0.0f, 1.0f, 0.0f) : 0.0f;
++			LeadFootStep = FiniteClamp(Fist->BasicLeadFootStep, 0.0f, 10.0f, 0.0f);
++			SupportFootPivot = FiniteClamp(Fist->BasicSupportFootPivot, 0.0f, 20.0f, 0.0f);
++			SupportHeelLift = FiniteClamp(Fist->BasicSupportHeelLift, 0.0f, 3.0f, 0.0f);
+ 			BasicSnapshot = FRogue10mBasicBrawlerSnapshot();
+ 			if (bBasicPose && Character->GetBasicBrawlerComponent())
+ 			{
+@@ -428,6 +484,9 @@
+ 			UpdateSlotNodeWeight(FistSlot, SlotWeight, 1.0f);
+ 			EvaluationDeltaSeconds = FMath::IsFinite(DeltaSeconds) ? FMath::Max(0.0f, DeltaSeconds) : 0.0f;
+ 			IdleTime += EvaluationDeltaSeconds;
++			const float SupportTarget = !bFalling ? 1.0f - FMath::Clamp((GroundSpeed - 5.0f) / 60.0f, 0.0f, 1.0f) : 0.0f;
++			SupportingFeetWeight = StanceWeight > KINDA_SMALL_NUMBER
++				? FMath::Lerp(SupportingFeetWeight, SupportTarget, 1.0f - FMath::Exp(-18.0f * FMath::Min(EvaluationDeltaSeconds, 0.1f))) : 0.0f;
+ 			const float GaitDeltaSeconds = FMath::Min(EvaluationDeltaSeconds, 0.1f);
+ 			const float GaitTarget = GroundSpeed > 5.0f
+ 				? FMath::Clamp(GroundSpeed / GaitReferenceSpeed, 0.0f, 1.0f) * GaitStrength : 0.0f;
+@@ -730,6 +789,48 @@
+ 			}
+ 		}
+ 
++		/** Transfer the hips over supported legs instead of translating both feet with the pelvis.
++		 * This is bounded pose-space footwork, not terrain IK or root motion. */
++		void ApplySupportingFeet(FCompactPose& Pose, FCSPose<FCompactPose>& BaseCS,
++			bool bAttacking, bool bJab, float Drive) const
++		{
++			if (StanceWeight <= KINDA_SMALL_NUMBER || SupportingFeetWeight <= KINDA_SMALL_NUMBER) { return; }
++			FCSPose<FCompactPose> CurrentCS;
++			CurrentCS.InitPose(Pose);
++			TArray<FBoneTransform, TInlineAllocator<6>> Changes;
++			const float Weight = StanceWeight * BodyStrength;
++			const bool bLeadJab = bAttacking && bJab && BasicSnapshot.Attack == ERogue10mBasicBrawlerAttack::LeftJab;
++			const float Transfer = bAttacking ? Drive * Weight : 0.0f;
++			for (bool bLeft : { true, false })
++			{
++				const FCompactPoseBoneIndex UpperIndex = FindBone(Pose, bLeft ? TEXT("thigh_l") : TEXT("thigh_r"));
++				const FCompactPoseBoneIndex LowerIndex = FindBone(Pose, bLeft ? TEXT("calf_l") : TEXT("calf_r"));
++				const FCompactPoseBoneIndex FootIndex = FindBone(Pose, bLeft ? TEXT("foot_l") : TEXT("foot_r"));
++				if (UpperIndex == INDEX_NONE || LowerIndex == INDEX_NONE || FootIndex == INDEX_NONE) { continue; }
++				FTransform Upper = CurrentCS.GetComponentSpaceTransform(UpperIndex);
++				FTransform Lower = CurrentCS.GetComponentSpaceTransform(LowerIndex);
++				FTransform Foot = CurrentCS.GetComponentSpaceTransform(FootIndex);
++				const FTransform BaseFoot = BaseCS.GetComponentSpaceTransform(FootIndex);
++				const float Step = bLeft && bLeadJab ? LeadFootStep * Transfer : 0.0f;
++				const FVector FootOffset((bLeft ? 1.0f : -1.0f) * StanceTuning.FootHalfDepth * Weight + Step,
++					0.0f, bLeft ? 0.0f : SupportHeelLift * StanceTuning.PivotScale * Transfer);
++				const FVector Target = BaseFoot.GetLocation() + MeshToCamera.Inverse().RotateVector(FootOffset);
++				const FVector KneePole = BaseCS.GetComponentSpaceTransform(LowerIndex).GetLocation()
++					+ MeshToCamera.Inverse().RotateVector(FVector(25.0f, 0.0f, 0.0f));
++				// No stretching: preserve the source skeleton's limb lengths.
++				AnimationCore::SolveTwoBoneIK(Upper, Lower, Foot, KneePole, Target, false, 1.0, 1.0);
++				const float Pivot = bLeft ? 0.0f : -SupportFootPivot * StanceTuning.PivotScale * Transfer;
++				const FQuat FootRotation = MeshToCamera.Inverse() * FRotator(0.0f, Pivot, 0.0f).Quaternion() * MeshToCamera;
++				Foot.SetRotation((FootRotation * BaseFoot.GetRotation()).GetNormalized());
++				Upper.NormalizeRotation(); Lower.NormalizeRotation(); Foot.NormalizeRotation();
++				Changes.Emplace(UpperIndex, Upper); Changes.Emplace(LowerIndex, Lower); Changes.Emplace(FootIndex, Foot);
++			}
++			Changes.Sort([](const FBoneTransform& A, const FBoneTransform& B) { return A.BoneIndex < B.BoneIndex; });
++			if (!Changes.IsEmpty()) { CurrentCS.LocalBlendCSBoneTransforms(Changes, SupportingFeetWeight * StanceWeight); }
++			FCSPose<FCompactPose>::ConvertComponentPosesToLocalPosesSafe(CurrentCS, Pose);
++			Pose.NormalizeRotations();
++		}
++
+ 		void EvaluateBasicPose(FPoseContext& Output, FCSPose<FCompactPose>& BaseCS)
+ 		{
+ 			const bool bCharging = BasicSnapshot.bActive && BasicSnapshot.Phase == ERogue10mBasicBrawlerPhase::Charging;
+@@ -748,7 +849,9 @@
+ 			const float Extension = bAttacking ? StrikeDrive(Progress, Peak, AttackAcceleration, RecoveryFraction) : 0.0f;
+ 			const float BodyDrive = bAttacking ? StrikeDrive(Progress, FMath::Max(0.001f, Peak - BodyLead), AttackAcceleration, RecoveryFraction) : 0.0f;
+ 			const float HeadDrive = bAttacking ? StrikeDrive(Progress, Peak + HeadLag, AttackAcceleration, RecoveryFraction) : 0.0f;
+-			const FVector GuardHands[2] = { GuardTarget + FVector(0.0f, 1.0f, 1.0f), GuardTarget + FVector(1.0f, -0.5f, 0.0f) };
++			const FVector GuardHands[2] = {
++				GuardTarget + FVector(0.0f, 1.0f, 1.0f) + StanceTuning.LeadGuard * StanceWeight,
++				GuardTarget + FVector(1.0f, -0.5f, 0.0f) + StanceTuning.RearGuard * StanceWeight };
+ 			FVector Targets[2] = { GuardHands[0], GuardHands[1] };
+ 			float HandExtension[2] = { 0.0f, 0.0f };
+ 			FRotator DesiredBody = FRotator::ZeroRotator;
+@@ -841,8 +944,9 @@
+ 						Targets[ActiveHand] = RecoveryArc(Apex, GuardHands[ActiveHand], (Progress - Peak) / RecoveryFraction, HandRecoveryArc);
+ 					}
+ 				}
+-				const FVector CounterGuardOffset = bHook ? HookGuardOffset
+-					: FVector(-1.0f, ActiveHand == 0 ? -2.0f : -3.0f, 1.5f);
++				const FVector CounterGuardOffset = (bHook ? HookGuardOffset
++					: FVector(-1.0f, ActiveHand == 0 ? -2.0f : -3.0f, 1.5f))
++					+ FVector(0.0f, -1.0f, 1.0f) * StanceWeight;
+ 				const FVector CounterGuard = GuardHands[GuardHand] + CounterGuardOffset * BodyDrive;
+ 				Targets[GuardHand] = FMath::Lerp(AttackStartHandTargets[GuardHand], CounterGuard, SmoothPhase(Progress / 0.14f));
+ 				HandExtension[ActiveHand] = Extension;
+@@ -854,7 +958,10 @@
+ 					const float JabSide = ActiveHand == 0 ? 1.0f : -1.0f;
+ 					DesiredBody = FRotator(-1.0f, 8.0f * JabSide, -1.0f * JabSide) * BodyTransfer;
+ 					DesiredHead = FRotator(-1.4f, 2.0f * JabSide, -0.4f * JabSide) * HeadDrive;
+-					DesiredOffset = FVector(0.8f, -0.6f * JabSide, 0.1f) * BodyTransfer;
++					// The source's step-in left straight transfers the centre before the fist.
++					// Keep that intent bounded in pose space; gameplay/capsule displacement is unchanged.
++					DesiredOffset = FVector(0.8f + (ActiveHand == 0 ? 2.0f : 1.0f) * StanceWeight,
++						-0.6f * JabSide, 0.1f) * BodyTransfer;
+ 				}
+ 				else if (bHook)
+ 				{
+@@ -926,6 +1033,11 @@
+ 			DesiredBody.Pitch += (-1.0f * Takeoff - 3.0f * Landing) * JumpStrength;
+ 			SnapshotJumpWeight = FMath::Clamp(Takeoff + Landing + FMath::Abs(AirInertia), 0.0f, 1.0f) * JumpStrength;
+ 
++			DesiredBody.Yaw *= FMath::Lerp(1.0f, StanceTuning.TorsoTurnScale, StanceWeight);
++			if (!bFalling)
++			{
++				DesiredOffset.Z -= StanceTuning.HipCompression * StanceWeight * BodyDrive;
++			}
+ 			const float BodyAlpha = 1.0f - FMath::Exp(-22.0f * EvaluationDeltaSeconds);
+ 			SmoothedBodyRotation = FMath::Lerp(SmoothedBodyRotation, DesiredBody * BodyStrength, BodyAlpha);
+ 			SmoothedHeadRotation = FMath::Lerp(SmoothedHeadRotation, DesiredHead * BodyStrength, BodyAlpha);
+@@ -940,7 +1052,9 @@
+ 			if (SmoothedHeadRotation.IsNearlyZero(0.001)) { SmoothedHeadRotation = FRotator::ZeroRotator; }
+ 			if (SmoothedBodyOffset.IsNearlyZero(0.001)) { SmoothedBodyOffset = FVector::ZeroVector; }
+ 			const FTransform EvaluatedHead = ApplyBasicBodyPose(Output.Pose, BaseCS, MeshToCamera,
+-				SmoothedBodyRotation, SmoothedHeadRotation, SmoothedBodyOffset);
++				SmoothedBodyRotation, SmoothedHeadRotation, SmoothedBodyOffset,
++				FMath::Lerp(0.08f, StanceTuning.PelvisYawShare, StanceWeight));
++			ApplySupportingFeet(Output.Pose, BaseCS, bAttacking, bJab, BodyDrive);
+ 			const FCompactPoseBoneIndex HeadIndex = FindBone(Output.Pose, TEXT("head"));
+ 			if (HeadIndex != INDEX_NONE && BodyStrength > KINDA_SMALL_NUMBER)
+ 			{
+@@ -985,6 +1099,10 @@
+ 				{
+ 					ElbowTarget = FMath::Lerp(ElbowTarget, FVector(Side * 59.0f, 32.0f, 142.0f), CurrentHookElbowWeight);
+ 				}
++				// Compact elbows protect the ribs; the punching elbow opens with extension.
++				// The hook keeps its horizontal pole rather than becoming a downward hammer.
++				const float GuardTuck = StanceTuning.ElbowTuck * StanceWeight * (1.0f - HandExtension[I]);
++				ElbowTarget.X -= Side * GuardTuck * (bLeft ? 1.0f : 1.0f - CurrentHookElbowWeight);
+ 				ElbowTarget += FullBodyTargetOffset;
+ 				// Keep a bend at full extension; a locked elbow magnifies the source skin's corrective-bone limits.
+ 				const double ReachLimit = ((Lower.GetLocation() - Upper.GetLocation()).Size()
+@@ -1044,6 +1162,12 @@
+ 		uint16 CachedBoneSerial = 0;
+ 		bool bFingerCacheValid = false;
+ 
++		FBrawlerStanceTuning StanceTuning;
++		float StanceWeight = 0.0f;
++		float SupportingFeetWeight = 0.0f;
++		float LeadFootStep = 6.0f;
++		float SupportFootPivot = 12.0f;
++		float SupportHeelLift = 2.0f;
+ 		FRogue10mBasicBrawlerSnapshot BasicSnapshot;
+ 		bool bBasicPose = false;
+ 		bool bBasicHandsInitialized = false;
+--- a/Source/Rogue10m/Character/Rogue10mFistAnimInstance.h
++++ b/Source/Rogue10m/Character/Rogue10mFistAnimInstance.h
+@@ -7,6 +7,15 @@
+ #include "Rogue10mFistAnimInstance.generated.h"
+ 
+ class UAnimSequence;
++
++/** Fighting styles share the same input, damage window and bounded arm reach. */
++UENUM(BlueprintType)
++enum class ERogue10mBrawlerStance : uint8
++{
++	CompactBoxing,
++	LongGuard,
++	RootedMartial
++};
+ 
+ /** First-person spatial adaptation of the existing Manny punch montages. */
+ UCLASS(Transient, Blueprintable)
+@@ -64,6 +73,24 @@
+ 	UFUNCTION(BlueprintPure, Category="Rogue10m|Fist Pose|Body")
+ 	float GetBodyMotionWeight() const { return BodyMotionWeight; }
+ 
++
++	/** Boxing.fbx supplies a stepping left straight reference; other styles are authored adaptations. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler|Stance")
++	ERogue10mBrawlerStance BasicCombatStance = ERogue10mBrawlerStance::CompactBoxing;
++
++	/** Full-body unarmed only; zero preserves the prior pose and all legacy arms/knuckle paths. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler|Stance", meta=(ClampMin="0", ClampMax="1"))
++	float BasicStanceStrength = 1.0f;
++
++	/** Bounded pose-space lead-foot step, independent of capsule movement and attack reach. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler|Stance", meta=(ClampMin="0", ClampMax="10", Units="cm"))
++	float BasicLeadFootStep = 6.0f;
++
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler|Stance", meta=(ClampMin="0", ClampMax="20", Units="deg"))
++	float BasicSupportFootPivot = 12.0f;
++
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler|Stance", meta=(ClampMin="0", ClampMax="3", Units="cm"))
++	float BasicSupportHeelLift = 2.0f;
+ 
+ 	/** Component-space fist endpoints for the default unarmed class (lateral, forward, height). */
+ 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Fist Pose|Basic Brawler")
+--- /dev/null
++++ b/Scripts/AnalyzeBoxingReference.py
+@@ -0,0 +1,182 @@
++"""Measure and render SDK-evaluated Boxing.fbx motion without modifying the FBX.
++Requires numpy and Pillow; JSON comes from the read-only FBX SDK inspector.
++Outputs describe skeleton positions, not contact forces or a game retarget.
++"""
++import argparse
++import hashlib
++import json
++import math
++import subprocess
++from pathlib import Path
++
++import numpy as np
++from PIL import Image, ImageDraw, ImageFont
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--input', type=Path, default=Path('tmp/boxing-reference/actual-motion.json'))
++    parser.add_argument('--source', type=Path, default=Path('C:/Users/PC/Downloads/Boxing.fbx'))
++    parser.add_argument('--output', type=Path, default=Path('Feature/doc/images/boxing-reference-20260922'))
++    parser.add_argument('--evidence', type=Path, default=Path('Feature/doc/evidence/boxing-reference-20260922'))
++    parser.add_argument('--frames', type=Path, default=Path('tmp/boxing-reference/frames'))
++    parser.add_argument('--ffmpeg', type=Path, default=Path('tmp/recorded-reference/decoder/ffmpeg.exe'))
++    args = parser.parse_args()
++    d = json.loads(args.input.read_text(encoding='utf-8-sig'))
++    a = np.asarray([f['positions'] for f in d['frames']], dtype=float)
++    t = np.asarray([f['time'] for f in d['frames']], dtype=float)
++    names = [b['name'].split(':')[-1] for b in d['bones']]
++    idx = {n: i for i, n in enumerate(names)}
++    assert d['axis'] == 'MayaYUp' and d['unit_cm'] == 1, 'Unsupported input coordinates'
++    assert np.isfinite(a).all() and np.ptp(a, axis=0).max() > 0.01, 'Selected stack is static'
++    assert len(t) > 2 and np.all(np.diff(t) > 0)
++    p = lambda name: a[:, idx[name]]
++    unit = lambda v: v / np.linalg.norm(v, axis=-1, keepdims=True)
++    # Mixamo left/right names establish anatomical sides. Y up is declared by SDK.
++    # Initial shoulder line fixes lateral basis; toe direction only disambiguates forward sign.
++    # Foot splay is deliberately not treated as the attack heading.
++    up = np.array([0., 1., 0.])
++    forward = ((p('LeftToeBase')[0] - p('LeftFoot')[0]) +
++               (p('RightToeBase')[0] - p('RightFoot')[0])) / 2
++    forward[1] = 0
++    toe_forward = unit(forward)
++    left = p("LeftArm")[0] - p("RightArm")[0]
++    left[1] = 0
++    left = unit(left)
++    forward = unit(np.cross(left, up))
++    assert float(np.dot(forward, toe_forward)) > 0
++    basis = np.stack([left, up, forward], axis=1)
++    hips = p('Hips')
++    shoulders = (p('LeftArm') + p('RightArm')) * 0.5
++    sh_left = p('LeftArm') - p('RightArm')
++    sh_left[:, 1] = 0
++    sh_left = unit(sh_left)
++    sh_forward = unit(np.cross(sh_left, np.broadcast_to(up, sh_left.shape)))
++    assert float(np.dot(sh_forward[0], forward)) > 0
++    shoulder_width = float(np.linalg.norm(p('LeftArm')[0] - p('RightArm')[0]))
++    hip_left = p('LeftUpLeg') - p('RightUpLeg')
++    hip_left[:, 1] = 0
++    hip_left = unit(hip_left)
++    def yaw_of(v):
++        return np.degrees(np.unwrap(np.arctan2(v @ left, v @ forward)))
++    shoulder_yaw = yaw_of(sh_forward)
++    pelvis_yaw = yaw_of(np.cross(hip_left, np.broadcast_to(up, hip_left.shape)))
++    arms = {}
++    for side in ['Left', 'Right']:
++        delta = p(side + 'Hand') - p(side + 'Arm')
++        world = delta @ basis
++        dynamic = np.stack([np.sum(delta * sh_left, axis=1), delta[:, 1],
++                            np.sum(delta * sh_forward, axis=1)], axis=1)
++        velocity = np.gradient(p(side + 'Hand') - hips, t, axis=0)
++        extension = np.linalg.norm(delta, axis=1)
++        peak = int(np.argmax(world[:, 2]))
++        upper = p(side + 'Arm') - p(side + 'ForeArm')
++        lower = p(side + 'Hand') - p(side + 'ForeArm')
++        elbow_angle = np.degrees(np.arccos(np.clip(np.sum(unit(upper) * unit(lower), axis=1), -1, 1)))
++        arms[side.lower()] = dict(
++            peak_frame=peak, peak_time_s=float(t[peak]),
++            forward_start_cm=float(world[0, 2]), forward_peak_cm=float(world[peak, 2]),
++            forward_excursion_cm=float(world[:, 2].max() - world[:, 2].min()),
++            start_elbow_angle_deg=float(elbow_angle[0]), peak_elbow_angle_deg=float(elbow_angle[peak]),
++            max_shoulder_hand_distance_cm=float(extension.max()),
++            start_hand_pelvis_cm=((p(side + 'Hand')[0] - hips[0]) @ basis).tolist(),
++            start_elbow_pelvis_cm=((p(side + 'ForeArm')[0] - hips[0]) @ basis).tolist(),
++            start_hand_head_cm=((p(side + 'Hand')[0] - p('Head')[0]) @ basis).tolist(),
++            peak_hand_head_cm=((p(side + 'Hand')[peak] - p('Head')[peak]) @ basis).tolist(),
++            peak_pelvis_relative_speed_cm_s=float(np.linalg.norm(velocity, axis=1).max()),
++            shoulder_fixed_coordinates_cm=world.tolist(),
++            shoulder_rotating_coordinates_cm=dynamic.tolist(),
++            shoulder_width_normalized= (dynamic / shoulder_width).tolist(),
++            elbow_angles_deg=elbow_angle.tolist())
++    foot_mid = (p('LeftFoot') + p('RightFoot')) * 0.5
++    hip_from_support = (hips - foot_mid) @ basis
++    hip_travel = (hips - hips[0]) @ basis
++    metrics = dict(
++        input=str(args.input), source=str(args.source), source_sha256=hashlib.sha256(args.source.read_bytes()).hexdigest(),
++        stack=d['stack'], frame_count=len(t), sample_fps=30, duration_s=float(t[-1]-t[0]), mesh_count=d['mesh_count'],
++        coordinate_order=['anatomical_left', 'up', 'forward'], fixed_basis_columns=basis.tolist(),
++        basis_evidence='MayaYUp Y-up; anatomical sides from Mixamo bone names; fixed forward perpendicular to initial shoulder line, with foot-to-toe direction validating its sign. Rotating coordinates track shoulders per frame.',
++        shoulder_width_cm=shoulder_width, arms=arms,
++        pelvis_yaw_deg=pelvis_yaw.tolist(), shoulder_yaw_deg=shoulder_yaw.tolist(),
++        pelvis_yaw_excursion_deg=float(np.ptp(pelvis_yaw)), shoulder_yaw_excursion_deg=float(np.ptp(shoulder_yaw)),
++        pelvis_translation_range_cm=np.ptp(hip_travel, axis=0).tolist(),
++        head_translation_range_cm=np.ptp((p('Head')-p('Head')[0]) @ basis, axis=0).tolist(),
++        pelvis_vs_foot_midpoint_cm=hip_from_support.tolist(),
++        initial_left_minus_right_foot_cm=((p('LeftFoot')[0]-p('RightFoot')[0])@basis).tolist(),
++        left_foot_travel_range_cm=np.ptp((p('LeftFoot')-p('LeftFoot')[0])@basis, axis=0).tolist(),
++        right_foot_travel_range_cm=np.ptp((p('RightFoot')-p('RightFoot')[0])@basis, axis=0).tolist(),
++        caveats=['Pelvis over foot midpoint is a weight-shift proxy, not measured center of mass or contact force.',
++                 'Clip contains one stepping left straight punch; the right hand remains guarding. No right cross/hook exemplar is claimed.',
++                 'Rendered lines are source skeleton positions, not the source meshes or a game animation.'])
++    for path in [args.output, args.evidence, args.frames]:
++        path.mkdir(parents=True, exist_ok=True)
++    (args.evidence/'boxing-motion-analysis.json').write_text(json.dumps(metrics, indent=2), encoding='utf-8')
++    (args.evidence/'boxing-source-motion.json').write_bytes(args.input.read_bytes())
++    colors = {'Left': (66, 224, 201), 'Right': (255, 190, 80)}
++    font = ImageFont.truetype('C:/Windows/Fonts/malgun.ttf', 23)
++    small = ImageFont.truetype('C:/Windows/Fonts/malgun.ttf', 16)
++    valid = {'Hips','Spine','Spine1','Spine2','Neck','Head','HeadTop_End','LeftShoulder','LeftArm',
++             'LeftForeArm','LeftHand','RightShoulder','RightArm','RightForeArm','RightHand',
++             'LeftUpLeg','LeftLeg','LeftFoot','LeftToeBase','RightUpLeg','RightLeg','RightFoot','RightToeBase'}
++    view_angles = [25, 90]
++    camera = {}
++    # Fixed framing preserves the source's actual forward stepping rather than root-locking it.
++    for yaw in view_angles:
++        rad = math.radians(yaw)
++        pts = a[:, [idx[n] for n in valid]].reshape(-1, 3)
++        u = pts[:, 0]*math.cos(rad)+pts[:, 2]*math.sin(rad)
++        depth = -pts[:, 0]*math.sin(rad)+pts[:, 2]*math.cos(rad)
++        v = pts[:, 1]-depth*.17
++        scale = min(430/(np.ptp(u)+10), 340/(v.max()-min(0,v.min())+10))
++        camera[yaw] = (scale,(u.min()+u.max())*.5,v.max())
++    def project(pos, yaw, cx):
++        x,y,z=pos;rad=math.radians(yaw)
++        u=x*math.cos(rad)+z*math.sin(rad);depth=-x*math.sin(rad)+z*math.cos(rad)
++        scale,mid,top=camera[yaw]
++        return (cx+(u-mid)*scale,104+(top-y+depth*.17)*scale),depth
++    frames=[]
++    for k in range(len(t)):
++        im=Image.new('RGB',(1040,600),(15,21,31));draw=ImageDraw.Draw(im)
++        draw.text((24,14),'Boxing.fbx · 실제 골격 모션 분석',font=font,fill=(238,242,248))
++        draw.text((24,48),'mixamo.com / 왼손 전진 타격 · 청록: 왼쪽 · 금색: 오른쪽 / 게임 적용 전',font=small,fill=(173,189,209))
++        for yaw,cx,label in [(25,260,'사선 시점'),(90,780,'측면 시점')]:
++            for grid in range(-75,151,25):
++                for ends in [((grid,0,-60),(grid,0,150)),((-75,0,grid),(100,0,grid))]:
++                    draw.line([project(v,yaw,cx)[0] for v in ends],fill=(32,42,57),width=1)
++            for side,color in colors.items():
++                points=[project(a[q,idx[side+'Hand']],yaw,cx)[0] for q in range(max(0,k-10),k+1)]
++                if len(points)>1:draw.line(points,fill=tuple(int(x*.52) for x in color),width=2)
++            segments=[]
++            for i,b in enumerate(d['bones']):
++                parent=b['parent'];name=names[i]
++                if parent<0 or name not in valid or names[parent] not in valid:continue
++                point1,dep1=project(a[k,parent],yaw,cx);point2,dep2=project(a[k,i],yaw,cx)
++                color=colors['Left'] if name.startswith('Left') else colors['Right'] if name.startswith('Right') else (207,217,235)
++                segments.append(((dep1+dep2)*.5,point1,point2,color,name))
++            for _,p1,p2,color,name in sorted(segments,reverse=True):
++                draw.line((p1,p2),fill=color,width=8 if 'Leg' in name or 'Spine' in name else 6)
++                for x,y in [p1,p2]:draw.ellipse((x-3,y-3,x+3,y+3),fill=color)
++            head,_=project(p('Head')[k],yaw,cx)
++            draw.ellipse((head[0]-10,head[1]-16,head[0]+10,head[1]+3),outline=(235,239,247),width=3)
++            draw.text((cx-45,472),label,font=small,fill=(202,212,229))
++        draw.text((24,508),f'{t[k]:.2f} / {t[-1]:.2f}초    왼손 어깨기준 전방 {arms["left"]["shoulder_fixed_coordinates_cm"][k][2]:.1f}cm',font=small,fill=(221,231,244))
++        draw.text((24,538),'발 이동 + 골반 하강 + 어깨 회전 + 타격 후 가드 복귀',font=small,fill=(171,188,208))
++        draw.rectangle((24,579,1016,583),fill=(46,58,76));draw.rectangle((24,579,24+992*k/(len(t)-1),583),fill=(66,224,201))
++        im.save(args.frames/f'frame_{k:04d}.png');frames.append(im)
++    picks=sorted(set([0,5,10,arms['left']['peak_frame'],20,30,40,len(t)-1]))
++    sheet=Image.new('RGB',(1040,300*math.ceil(len(picks)/2)),(15,21,31))
++    for j,k in enumerate(picks):sheet.paste(frames[k].resize((520,300)),((j%2)*520,(j//2)*300))
++    sheet.save(args.output/'boxing-motion-sheet.jpg',quality=88)
++    sheet.resize((650,round(sheet.height*650/sheet.width))).save(args.output/'boxing-motion-review.jpg',quality=73)
++    if args.ffmpeg.exists():
++        command=[str(args.ffmpeg.resolve()),'-hide_banner','-y','-framerate','30','-i',str(args.frames/'frame_%04d.png'),
++                 '-c:v','libopenh264','-b:v','3M','-pix_fmt','yuv420p','-movflags','+faststart',str(args.output/'boxing-original-motion.mp4')]
++        result=subprocess.run(command,capture_output=True,text=True)
++        (args.evidence/'encode.log').write_text(result.stdout+result.stderr,encoding='utf-8')
++        result.check_returncode()
++    print(json.dumps({k:v for k,v in metrics.items() if k not in ['arms','pelvis_vs_foot_midpoint_cm','shoulder_yaw_deg','pelvis_yaw_deg']},indent=2))
++    for side, values in arms.items():print(side,json.dumps({k:v for k,v in values.items() if not isinstance(v,list) or len(v)==3}))
++
++
++if __name__=='__main__':
++    main()

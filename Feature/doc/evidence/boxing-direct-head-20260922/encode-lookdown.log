@@ -1,0 +1,35 @@
+ffmpeg version 6.0 Copyright (c) 2000-2023 the FFmpeg developers
+  built with gcc 10.3.0 (Rev8, Built by MSYS2 project)
+  configuration: --prefix=.. --disable-iconv --disable-opencl --disable-vulkan --disable-sdl2 --disable-bzlib --disable-lzma --disable-linux-perf --disable-xlib --enable-shared --enable-version3 --enable-runtime-cpudetect --enable-zlib --enable-libmp3lame --enable-libspeex --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libvo-amrwbenc --enable-openssl --enable-libopenh264 --enable-libvpx --enable-libfreetype --enable-libopus --enable-libxml2 --enable-libsrt --enable-libwebp --enable-libaom --enable-libsvtav1 --enable-cuda --enable-cuvid --enable-nvenc --enable-libmfx --enable-w32threads --enable-indev=dshow --target-os=mingw32 --cc='gcc -m64' --extra-cflags='-DLIBXML_STATIC -I../include/ -I../include/libxml2 -I../include/mfx/ -I../include/svt-av1' --extra-ldflags=-L../lib/ --extra-libs='-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lgcc_eh -lWs2_32 -lcrypt32 -lpthread -lz -lm -Wl,-Bdynamic -lole32 -luuid'
+  libavutil      58.  2.100 / 58.  2.100
+  libavcodec     60.  3.100 / 60.  3.100
+  libavformat    60.  3.100 / 60.  3.100
+  libavdevice    60.  1.100 / 60.  1.100
+  libavfilter     9.  3.100 /  9.  3.100
+  libswscale      7.  1.100 /  7.  1.100
+  libswresample   4. 10.100 /  4. 10.100
+Input #0, image2, from 'tmp/boxing-direct/labeled-lookdown40/frame_%04d.png':
+  Duration: 00:00:09.27, start: 0.000000, bitrate: N/A
+  Stream #0:0: Video: png, rgb24(pc), 1280x720, 30 fps, 30 tbr, 30 tbn
+Stream mapping:
+  Stream #0:0 -> #0:0 (png (native) -> h264 (libopenh264))
+Press [q] to stop, [?] for help
+[libopenh264 @ 00000285dd6e87c0] [OpenH264] this = 0x00000285df119340, Warning:layerId(0) doesn't support profile(578), change to UNSPECIFIC profile
+[libopenh264 @ 00000285dd6e87c0] [OpenH264] this = 0x00000285df119340, Warning:bEnableFrameSkip = 0,bitrate can't be controlled for RC_QUALITY_MODE,RC_BITRATE_MODE and RC_TIMESTAMP_MODE without enabling skip frame.
+Output #0, mp4, to 'Feature/doc/images/boxing-direct-head-20260922/boxing-direct-lookdown.mp4':
+  Metadata:
+    encoder         : Lavf60.3.100
+  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p(tv, progressive), 1280x720, q=2-31, 4000 kb/s, 30 fps, 15360 tbn
+    Metadata:
+      encoder         : Lavc60.3.100 libopenh264
+    Side data:
+      cpb: bitrate max/min/avg: 4000000/0/4000000 buffer size: 0 vbv_delay: N/A
+frame=    0 fps=0.0 q=-0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    
+frame=   33 fps=0.0 q=-0.0 size=     512kB time=00:00:01.10 bitrate=3813.4kbits/s speed=1.99x    
+frame=   74 fps= 70 q=-0.0 size=    1024kB time=00:00:02.46 bitrate=3400.9kbits/s speed=2.34x    
+frame=  132 fps= 85 q=-0.0 size=    1536kB time=00:00:04.40 bitrate=2859.8kbits/s speed=2.83x    
+frame=  172 fps= 84 q=-0.0 size=    2304kB time=00:00:05.73 bitrate=3292.1kbits/s speed=2.79x    
+frame=  218 fps= 85 q=-0.0 size=    3072kB time=00:00:07.26 bitrate=3463.2kbits/s speed=2.84x    
+[mp4 @ 00000285db4dea00] Starting second pass: moving the moov atom to the beginning of the file
+frame=  278 fps= 94 q=-0.0 Lsize=    3672kB time=00:00:09.23 bitrate=3258.3kbits/s speed=3.12x    
+video:3671kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.052839%

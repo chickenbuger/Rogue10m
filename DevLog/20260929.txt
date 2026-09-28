@@ -1,0 +1,36 @@
+
+## 2026-09-29 — Codex 샌드박스 권한 상태 복구
+
+### 원인과 복구
+스튜디오의 읽기 전용 조사도 실행되지 않는 원인을 샌드박스 로그로 확인했다. deny_read_acl_state.json이 22바이트 전체 NUL로 손상되어 JSON 해석 단계에서 실패했다. 사용자의 명시적 복구 승인에 따라 해당 파일 하나를 같은 폴더의 deny_read_acl_state.json.corrupt-20260929-021953.bak으로 보존 이동하고 SHA256 일치를 확인했다. 정상 샌드박스 초기화가 권한 상태 파일을 재생성했고 NUL 0개와 유효한 JSON을 확인했다. ACL을 직접 편집하거나 권한 정책을 확대하지 않았다.
+
+### 검증과 결과
+일반 샌드박스에서 Studio/package.json 읽기에 성공했다. 실제 Studio/agent-client.mjs로 read-only·approval_policy=never를 유지한 에이전트를 호출했고 패키지명 rogue10m-personal-studio, read=true, 명령 종료 코드0을 확인했다. 실행 세션은 01a0e909-6d61-7593-a190-e2d10e6e37d8이다. 샌드박스 내부에서 다시 실행기를 띄운 별도 진단은 실제 서버와 실행 환경이 달라 기준 검증으로 사용하지 않았다.
+
+### 유지한 경계
+기존 완료·확인 필요 기록과 일시정지를 보존했다. 엔진 안내만 복구 완료로 갱신했다. 등록된 개발 작업을 자동 재시작하거나 완료로 변경하지 않았다. 승인 정책 never와 오류 시 중지는 유지한다. Git 조회는 샌드박스 계정 차이로 소유권 확인이 필요하여 확인된 프로젝트에 한해 명령별 safe.directory를 사용했다. 전역 Git 신뢰 설정은 변경하지 않았다. 게임 코드·에셋 변경, 커밋·푸시는 없다.
+
+### 관련 자료
+Studio/data/sandbox-recovery-20260929/studio-readonly-recovery.evidence.json
+Feature/doc/2026-09-28_studio-agent-workflow.md
+
+추가 진단 정리: 샌드박스 안에 중첩 실행한 진단은 시간 한도를 넘겨 이번에 생성한 프로세스의 명령줄과 PID를 확인한 뒤 종료했다. 정상 Studio 부모 환경에서 실행한 별도 read-only 진단의 성공 결과를 복구 판정 근거로 사용했다. 라이브 API에서도 engine=ready, paused=true, 활성 작업 없음 상태를 확인했다.
+
+
+## 2026-09-29 | Sprint4 누적 작업 main 저장 준비
+
+### 요청과 범위
+사용자의 main 저장 요청에 따라 현재 누적 게임 코드·설정·에셋·HUD·애니메이션·카메라·그림자와 개인 스튜디오 소스, 제작 도구 및 개발 기록을 저장 대상으로 확정했다. 기존 작업 파일을 삭제하지 않고 임시 출력·캐시·스튜디오 로컬 실행 데이터는 제외했다. 재생성 도구가 사용하는 tmp 원본5개는 예외로 보존한다.
+
+### 검증
+UE5.8 Editor 빌드는 최신 상태로 성공했다. Studio 구문 검사와 프로젝트 루트에서 실행한19개 테스트가 모두 통과했다. Studio 하위 디렉터리에서 실행하면 기존 테스트1개의 상대 경로 가정으로 실패하므로 재현 명령은 node --test Studio/tests/*.test.mjs다. 저장 작업에서 제품 기능은 변경하지 않았다.
+
+### 반영 절차
+작업 브랜치의 검토된 파일을 커밋한 뒤 develop, test, main 순서로 fast-forward하고 원격에 함께 반영한다. main 병합 성공 후 Sprint4를 닫으며 다음 신규 작업은 Sprint5-1부터 시작한다. 강제 push와 기존 작업 삭제는 수행하지 않는다.
+
+### 관련 자료
+Feature/architect/2026-09-29_sprint4-main-save.md
+Feature/doc/2026-09-29_sprint4-main-save.md
+Feature/doc/evidence/main-save-20260929/changed-files.tsv
+
+추가 저장 점검: 9월8일부터 남아 있던 빈 index.lock은 실제 Git 프로세스 부재를 확인하고 tmp에 백업했다. 문서·스크립트의 행 끝 공백만 정리했으며 원본 검증 로그·패치는 내용을 보존하도록 Git 속성을 지정했다. 개별 파일 목록은 changed-files.tsv에 기록했다.

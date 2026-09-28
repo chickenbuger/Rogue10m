@@ -1,0 +1,39 @@
+# 2026-08-15 개발 로그
+
+## 애니메이션 단독 표시와 파티클 분리
+
+### 작업 배경
+
+기본 캐릭터 모션의 자세와 타이밍을 파티클 간섭 없이 확인할 수 있도록, 현재 플레이 프리뷰를 애니메이션 전용 상태로 전환했다. 기존 Niagara 자산과 튜닝값은 삭제하지 않고 별도 관리한다.
+
+### 주요 변경
+
+- 작업 브랜치를 `Sprint#4-13-animation-only-presentation`으로 전환했다.
+- 공통 이동 데이터에 `bEnableMotionEffects`를 추가하고 기본값을 `false`로 설정했다.
+- 공격 스킬 데이터에 `bEnableAttackEffects`를 추가하고 기본값을 `false`로 설정했다.
+- 이동 파티클이 꺼져 있으면 발걸음 Timer를 생성하지 않도록 했다.
+- 점프·착지·구르기 및 공격 시전·차징·타격 Niagara 생성 전에 표시 스위치를 검사한다.
+- 구르기와 공격 몽타주는 파티클 표시 여부와 관계없이 계속 재생한다.
+- 애니메이션은 `/Game/Rogue10m/Animation/Common`, 파티클은 `/Game/Rogue10m/VFX/Character` 아래에서 독립 관리한다.
+
+### 자산 정리 결과
+
+- 공통 Animation Blueprint와 몽타주: 6개
+- 이동 Niagara: 6개
+- 맨손 공격 Niagara: 6개
+- 변환 원본 VFX: 2개
+- 이동 Data Asset 1개와 공격 Data Asset 8개에 VFX OFF 상태 저장
+
+### 검증
+
+- UE 5.8 Editor target 빌드 성공
+- 구성 스크립트 `RESULT=COMMON_CHARACTER_ANIMATION_CONFIGURED`
+- 자동 검증 `RESULT=PASSED`
+- `presentation=animation_only motion_vfx=off attack_vfx=off` 확인
+- 기존 외부 플러그인 메시의 convex collision 경고 외 오류 없음
+- Windows 화면 자동 캡처는 로컬 ACL 오류로 사용할 수 없어 UE Editor API 검증으로 대체
+- 파티클 OFF 상태로 `Lvl_FirstPerson` 게임 창 실행 및 정상 응답 확인
+
+## Notion 요약 후보
+
+> 플레이어 캐릭터 프리뷰를 애니메이션 전용 모드로 전환했다. 이동과 공격 Data Asset에 독립 VFX 표시 스위치를 추가해 현재는 모든 캐릭터 파티클이 생성되지 않으며, 구르기·점프·공격 몽타주와 전투 판정은 그대로 유지된다. 애니메이션과 Niagara 자산은 별도 경로에 보존되어 추후 파티클 검토 시 스위치만 다시 켜면 된다. UE 5.8 빌드와 자산 자동 검증이 모두 통과했다.

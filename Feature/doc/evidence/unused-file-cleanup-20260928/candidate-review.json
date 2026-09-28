@@ -1,0 +1,324 @@
+{
+  "scope": "Independent review of 137 exact-duplicate candidates; no deletion",
+  "candidate_count": 137,
+  "preserve_count": 34,
+  "preserve_bytes": 2366438.0,
+  "preserve_candidates": [
+    {
+      "original": "tmp/boxing-reference/build.cmd",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/build-inspector.cmd",
+      "sha256": "01448a049e882c848e4554bab7bdb2ba6f69b4a6c4fd4c3163802c86617196a3",
+      "bytes": 364,
+      "reasons": [
+        "Executable/source compatibility entry point; preserve even with duplicate copy"
+      ]
+    },
+    {
+      "original": "tmp/head-framing/run.ps1",
+      "keep": "Feature/doc/evidence/head-framing-20260922/run.ps1",
+      "sha256": "296fd0eed0d2359f4e738d96ddcb552a3877ba7a793db9b5d2a01ed1bddff199",
+      "bytes": 967,
+      "reasons": [
+        "Executable/source compatibility entry point; preserve even with duplicate copy",
+        "tmp/head-framing/finalize-prep.py:4-5; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/relaxed-idle/run.ps1",
+      "keep": "Feature/doc/evidence/relaxed-idle-20260922/run.ps1",
+      "sha256": "25d0fa92f289edfc9ea8e6bf0e2b166a23d3dae399e9b2adc8843067f1b600bb",
+      "bytes": 967,
+      "reasons": [
+        "Executable/source compatibility entry point; preserve even with duplicate copy"
+      ]
+    },
+    {
+      "original": "tmp/boxing-direct/run.ps1",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/run.ps1",
+      "sha256": "9ce33b477ce0f9a803be3f5d7aca9ad4b2de6984d4bef5c825e429a6daf3d17b",
+      "bytes": 969,
+      "reasons": [
+        "Executable/source compatibility entry point; preserve even with duplicate copy"
+      ]
+    },
+    {
+      "original": "tmp/appearance-head/run.ps1",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/run.ps1",
+      "sha256": "d2c4119e045fc4fcabec9d12bbb9d1466afc3e07c19efc22c47db0962d8a4f2d",
+      "bytes": 973,
+      "reasons": [
+        "Executable/source compatibility entry point; preserve even with duplicate copy",
+        "tmp/appearance-head/finalize.py:27-28; basename joined to directory and shutil.copy2 input"
+      ]
+    },
+    {
+      "original": "tmp/third-person-inspection/run.ps1",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/run.ps1",
+      "sha256": "a1951b2d1322ca1b05e396e041806ae11b42dc5818a7a2df34d65f2fd5e0eaab",
+      "bytes": 1008,
+      "reasons": [
+        "Executable/source compatibility entry point; preserve even with duplicate copy",
+        "tmp/third-person-inspection/finalize.py:32; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/appearance-head/encode.py",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/encode.py",
+      "sha256": "e228088949b831a11cfec1d5affe31eec5705a71afc7ac4baae959aece99bf7b",
+      "bytes": 1221,
+      "reasons": [
+        "Executable/source compatibility entry point; preserve even with duplicate copy",
+        "tmp/appearance-head/finalize.py:27-28; basename joined to directory and shutil.copy2 input"
+      ]
+    },
+    {
+      "original": "tmp/head-framing/encode.ps1",
+      "keep": "Feature/doc/evidence/head-framing-20260922/encode.ps1",
+      "sha256": "611c7ccc26d401df96c554d30658657e46d1fcfbe48ec524803270715b8f7747",
+      "bytes": 1501,
+      "reasons": [
+        "Executable/source compatibility entry point; preserve even with duplicate copy",
+        "tmp/head-framing/finalize-prep.py:4-5; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/third-person-inspection/encode.py",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/encode.py",
+      "sha256": "305aafc055644e5802af65c5fded18ee0a01673eb09bb36a6d49ec8b15b76d89",
+      "bytes": 1713,
+      "reasons": [
+        "Executable/source compatibility entry point; preserve even with duplicate copy",
+        "tmp/third-person-inspection/finalize.py:32; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/boxing-direct/make-preview.py",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/make-preview.py",
+      "sha256": "99381227336511576b564838275584a73c06a6542f420d9ad0de55380d5e060e",
+      "bytes": 1779,
+      "reasons": [
+        "Executable/source compatibility entry point; preserve even with duplicate copy"
+      ]
+    },
+    {
+      "original": "tmp/boxing-direct/make-lookdown.py",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/make-lookdown.py",
+      "sha256": "cd2635758223decfbe3e282b0dca902f73983264525835494eb9f3558a2dae2e",
+      "bytes": 1846,
+      "reasons": [
+        "Executable/source compatibility entry point; preserve even with duplicate copy"
+      ]
+    },
+    {
+      "original": "tmp/boxing-direct/make-lookdown40.py",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/make-lookdown40.py",
+      "sha256": "18dc7aa10d13fbb8f86d982dcdf6a5f56b4b2dcb1fad911a8b81461340a2f447",
+      "bytes": 1868,
+      "reasons": [
+        "Executable/source compatibility entry point; preserve even with duplicate copy"
+      ]
+    },
+    {
+      "original": "tmp/head-framing/diff-check.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/diff-warnings.log",
+      "sha256": "22207008e5f4d5d6689a02c236d576e986b605433465c14bbb38d653fa00c356",
+      "bytes": 2227,
+      "reasons": [
+        "tmp/head-framing/finalize-prep.py:4-5; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/boxing-reference/inspect.cpp",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/inspect.cpp",
+      "sha256": "5c76b95dfdeffeccac7b3bcb1759af4368c90d37b0366ce7aa3217f8451ea665",
+      "bytes": 2380,
+      "reasons": [
+        "Executable/source compatibility entry point; preserve even with duplicate copy"
+      ]
+    },
+    {
+      "original": "tmp/relaxed-idle/make-preview.py",
+      "keep": "Feature/doc/evidence/relaxed-idle-20260922/make-preview.py",
+      "sha256": "77ba91850594fbbfe2f7acd8bf2ea5148bd5d6a629518044a2d3613c075d4412",
+      "bytes": 2457,
+      "reasons": [
+        "Executable/source compatibility entry point; preserve even with duplicate copy"
+      ]
+    },
+    {
+      "original": "tmp/head-framing/build-retry.log",
+      "keep": "Feature/doc/evidence/head-framing-20260922/build-retry.log",
+      "sha256": "a166958fca4a1c4f604868f696cf18fb0d9a62e84e644f5c30032e8b3bc97618",
+      "bytes": 3329,
+      "reasons": [
+        "tmp/head-framing/finalize-prep.py:4-5; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/head-framing/build-final.log",
+      "keep": "Feature/doc/evidence/head-framing-20260922/build-final.log",
+      "sha256": "7944d7ede6817b6688d841d68f120281b3d945264904985463b5da4f7145df2c",
+      "bytes": 3340,
+      "reasons": [
+        "tmp/head-framing/finalize-prep.py:4-5; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/appearance-head/build-geometry.log",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/build-geometry.log",
+      "sha256": "577822e33790df8511a1a5d1fabf0d65037895285c27b4fb4d7cba8d5c62d7e1",
+      "bytes": 3405,
+      "reasons": [
+        "tmp/appearance-head/finalize.py:27-28; basename joined to directory and shutil.copy2 input"
+      ]
+    },
+    {
+      "original": "tmp/head-framing/generated-check.log",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/path-check.log",
+      "sha256": "dd8ba43b61250e6d8ac25a94d31033dbcec9dbabb8c7b8886f5a031fc976efac",
+      "bytes": 4719,
+      "reasons": [
+        "tmp/head-framing/finalize-prep.py:4-5; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/third-person-inspection/path-check.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/path-check-final.log",
+      "sha256": "dbfe5370c0a512e5f5c8e77efb6b1a68ee64bb0de439ae21debad62d767dd390",
+      "bytes": 4976,
+      "reasons": [
+        "tmp/third-person-inspection/finalize.py:32; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/head-framing/build.log",
+      "keep": "Feature/doc/evidence/head-framing-20260922/build.log",
+      "sha256": "448723a0d3bf888c409bfc39954cc7597c879e8c273d88a4748635e62eb34525",
+      "bytes": 5797,
+      "reasons": [
+        "tmp/head-framing/finalize-prep.py:4-5; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/third-person-inspection/build-verified.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/build-verified.log",
+      "sha256": "707d10d8b613305db9b9b143eb612a0f95f08242b2696990223250e94f9491af",
+      "bytes": 11587,
+      "reasons": [
+        "tmp/third-person-inspection/finalize.py:32; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/third-person-inspection/build-final.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/build-final.log",
+      "sha256": "6fe82982d90d902b911787f57821313e00a2869d571098ad43c00038a565eb2b",
+      "bytes": 12022,
+      "reasons": [
+        "tmp/third-person-inspection/finalize.py:32; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/third-person-inspection/build.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/build.log",
+      "sha256": "2a1005e3f936cc2218daf2ec4b24de9d3871602ef65a936b19d791187bbf77d5",
+      "bytes": 14204,
+      "reasons": [
+        "tmp/third-person-inspection/finalize.py:32; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/effect-animation-reference/frames/frame_09.jpg",
+      "keep": "Feature/doc/evidence/impact-reference-20260912/enemy-reaction.jpg",
+      "sha256": "2d56f15a6cdfc4c1f231f475d5b253ce3ccae4228122fd65e36d787786c84f24",
+      "bytes": 73511,
+      "reasons": [
+        "tmp/effect-animation-reference/contact.py:4; frames.glob(frame_*.jpg) image input"
+      ]
+    },
+    {
+      "original": "tmp/effect-animation-reference/frames/frame_16.jpg",
+      "keep": "Feature/doc/evidence/impact-reference-20260912/camera-change.jpg",
+      "sha256": "8796d8b9d9180dd0883e455a29e910de1cb2684061782d7e2fb21310679074c5",
+      "bytes": 77426,
+      "reasons": [
+        "tmp/effect-animation-reference/contact.py:4; frames.glob(frame_*.jpg) image input"
+      ]
+    },
+    {
+      "original": "tmp/head-framing/initial.log",
+      "keep": "Feature/doc/evidence/head-framing-20260922/initial.log",
+      "sha256": "7d38a2aa922ba92b82a8b228978a8867f71bc0f090784202385ea60f4a06efca",
+      "bytes": 222017,
+      "reasons": [
+        "tmp/head-framing/finalize-prep.py:4-5; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/head-framing/initial-final.log",
+      "keep": "Feature/doc/evidence/head-framing-20260922/initial-final.log",
+      "sha256": "3cb59cb009ef2b613fe56cd71e360ddee37a12a8d21d8a522a4ddd07ad47a508",
+      "bytes": 222179,
+      "reasons": [
+        "tmp/head-framing/finalize-prep.py:4-5; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/appearance-head/geometry-verified.log",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/geometry-verified.log",
+      "sha256": "c71ba7f239bd4d556ce364b3863332931a96db47250f73c927b7be576c7bc710",
+      "bytes": 237450,
+      "reasons": [
+        "tmp/appearance-head/finalize.py:27-28; basename joined to directory and shutil.copy2 input"
+      ]
+    },
+    {
+      "original": "tmp/third-person-inspection/verified.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/verified.log",
+      "sha256": "8db537627b01c5058204d5dc7ca94c0487fb88b33639cd3db437c27aa28f214b",
+      "bytes": 254269,
+      "reasons": [
+        "tmp/third-person-inspection/finalize.py:32; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/third-person-inspection/runtime.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/runtime.log",
+      "sha256": "3af3dc8c89e821add844c7ec486ddc88ce754e591eb4ecddd9383fa77c373f9a",
+      "bytes": 255611,
+      "reasons": [
+        "tmp/third-person-inspection/finalize.py:32; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/appearance-head/runtime.log",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/runtime.log",
+      "sha256": "bd5a6130507e3f859fcf94b3d52f7c231ba383dfd45447abceb628126c882aa1",
+      "bytes": 295299,
+      "reasons": [
+        "tmp/appearance-head/finalize.py:27-28; basename joined to directory and shutil.copy2 input"
+      ]
+    },
+    {
+      "original": "tmp/third-person-inspection/final.log",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/final.log",
+      "sha256": "4b0333fc64a8530e3bcaf5aed22a51de773fc8aad55ffb935381990289c69ab5",
+      "bytes": 317100,
+      "reasons": [
+        "tmp/third-person-inspection/finalize.py:32; basename list copy input"
+      ]
+    },
+    {
+      "original": "tmp/appearance-head/assets.log",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/assets.log",
+      "sha256": "8aeb67fa362a2e17c38b36b8261d059ab2ab80a9a403b1a71cd189120e5dc75b",
+      "bytes": 325957,
+      "reasons": [
+        "tmp/appearance-head/finalize.py:27-28; basename joined to directory and shutil.copy2 input"
+      ]
+    }
+  ],
+  "remaining_count": 103,
+  "remaining_status": "No confirmed dynamic-read concern in this narrow review; root must still hash/path/active-use validate before deletion",
+  "referenced_duplicates_count": 20,
+  "referenced_duplicates_policy": "Preserve all 20 already referenced entries; separate from 137 candidate set"
+}

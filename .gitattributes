@@ -1,2 +1,7 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Preserve raw validation transcripts and archived patches without whitespace rewriting
+Feature/doc/evidence/**/*.log -text -whitespace
+Feature/doc/evidence/**/*.txt -text -whitespace
+Feature/doc/evidence/**/*.patch -text -whitespace
