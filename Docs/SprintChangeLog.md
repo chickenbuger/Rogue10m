@@ -1827,3 +1827,12 @@
 - 검증: 일반 샌드박스 파일 읽기 및 실제 Studio 실행기 read-only 에이전트 성공, 종료 코드0. 유효한 상태 JSON과 백업 해시 일치 확인.
 - 상태: 샌드박스 복구 완료. 기존 작업의 확인 필요 기록·전체 일시정지는 유지하며 실제 개발 작업 재실행 및 전체 완료 검증은 이번 범위에 포함하지 않았다.
 - 관련 문서: `DevLog/20260929.txt`, `Feature/doc/2026-09-28_studio-agent-workflow.md`.
+
+
+## Sprint4 종료 — 로컬 main 반영 (2026-09-29)
+
+- 사용자 main 저장 요청에 따라 누적 작업1,332개 파일을 `8c9bb8a`로 저장했다.
+- 목표: UI·전투·애니메이션·Appearance 카메라·그림자·Studio 및 개발 증거를 복구 가능한 상태로 보존한다.
+- 검증: UE5.8 Editor 빌드 성공, Studio 루트 실행19개 테스트와 구문 검사 통과, staged diff와 Harness 경로 검사 통과. 개별 기능의 QA 한계는 기존 항목을 유지한다.
+- 상태: 작업 브랜치 → develop → test → main 로컬 fast-forward 반영 완료. 원격 push는 전송 대상과 범위에 대한 자동 승인 검토 거절로 미실행이며 사용자 명시 승인 대기. 다음 신규 작업은 main 병합 완료에 따라 `Sprint#5-1-<작업명>`부터 시작한다.
+- 관련: `Feature/doc/2026-09-29_sprint4-main-save.md`, `Feature/doc/evidence/main-save-20260929/changed-files.tsv`, `DevLog/20260929.txt`.

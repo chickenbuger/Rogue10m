@@ -34,3 +34,7 @@ Feature/doc/2026-09-29_sprint4-main-save.md
 Feature/doc/evidence/main-save-20260929/changed-files.tsv
 
 추가 저장 점검: 9월8일부터 남아 있던 빈 index.lock은 실제 Git 프로세스 부재를 확인하고 tmp에 백업했다. 문서·스크립트의 행 끝 공백만 정리했으며 원본 검증 로그·패치는 내용을 보존하도록 Git 속성을 지정했다. 개별 파일 목록은 changed-files.tsv에 기록했다.
+
+
+### 로컬 main 반영 결과와 원격 대기
+누적 작업1,332개 파일을8c9bb8a 커밋으로 저장하고 develop → test → main 순서의 로컬 fast-forward 병합을 완료했다. Sprint4를 종료하며 다음 신규 개발은 Sprint5-1부터 시작한다. 종료 기록은 별도 문서 커밋으로 같은 경로에 반영한다. 원격 GitHub 푸시는 소스·에셋·검증 로그의 특정 저장소 전송에 대한 명시 승인이 필요하다는 자동 승인 검토 사유로 미실행이다. 로컬 작업은 보존됐으며 원격 완료로 보고하지 않는다.

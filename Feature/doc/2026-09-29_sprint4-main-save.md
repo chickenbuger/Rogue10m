@@ -10,4 +10,10 @@
 
 현재 게임·Studio 검증 범위는 각 Feature 문서의 한계를 따른다. 이번 저장은 모든 기능의 신규 전체 QA를 의미하지 않는다. Studio 테스트에는 cwd 의존이 있어 프로젝트 루트에서 `node --test Studio/tests/*.test.mjs`를 사용했다. 외부 Downloads의 FBX 입력은 기존 로컬 의존이며 저장소에 포함하지 않는다.
 
-Git 승격 및 원격 결과는 완료 후 기록한다.
+## Git 승격 결과
+
+누적 작업 커밋은 `8c9bb8a`(1,332개 파일)이며 develop → test → main의 로컬 fast-forward 병합을 완료했다. 종료 기록은 후속 문서 커밋에 담는다. Sprint4 종료로 다음 신규 개발 번호는 Sprint5-1이다.
+
+원격 `https://github.com/chickenbuger/Rogue10m.git` 푸시는 자동 승인 검토에서 특정 목적지와 1,332개 파일의 전송 승인이 필요하다는 사유로 거절되었다. 푸시는 실행하지 않았으며 별도 사용자 승인을 요청한다. Studio/data와 캐시·임시 출력은 커밋에 포함하지 않았다.
+
+추가 변경 파일: `Docs/SprintChangeLog.md`는 Sprint 종료, `DevLog/20260929.txt`는 당일 반영 결과, 이 문서는 저장 결과를 기록한다.
