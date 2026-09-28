@@ -1834,5 +1834,5 @@
 - 사용자 main 저장 요청에 따라 누적 작업1,332개 파일을 `8c9bb8a`로 저장했다.
 - 목표: UI·전투·애니메이션·Appearance 카메라·그림자·Studio 및 개발 증거를 복구 가능한 상태로 보존한다.
 - 검증: UE5.8 Editor 빌드 성공, Studio 루트 실행19개 테스트와 구문 검사 통과, staged diff와 Harness 경로 검사 통과. 개별 기능의 QA 한계는 기존 항목을 유지한다.
-- 상태: 작업 브랜치 → develop → test → main 로컬 fast-forward 반영 완료. 원격 push는 전송 대상과 범위에 대한 자동 승인 검토 거절로 미실행이며 사용자 명시 승인 대기. 다음 신규 작업은 main 병합 완료에 따라 `Sprint#5-1-<작업명>`부터 시작한다.
+- 상태: 작업 브랜치 → develop → test → main 로컬 fast-forward 반영 완료. 후속 사용자 명시 승인으로 GitHub origin의 develop/test/main atomic push 성공(aa941d4), 원격 대기 해소. 다음 신규 작업은 main 병합 완료에 따라 `Sprint#5-1-<작업명>`부터 시작한다.
 - 관련: `Feature/doc/2026-09-29_sprint4-main-save.md`, `Feature/doc/evidence/main-save-20260929/changed-files.tsv`, `DevLog/20260929.txt`.
