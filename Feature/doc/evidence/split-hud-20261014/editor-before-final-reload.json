@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "command": "import json\nfrom pathlib import Path\nimport unreal\nassert Path(unreal.Paths.project_dir()).resolve().as_posix().casefold() == 'd:/project/rogue10m'\ndirty = list(unreal.EditorLoadingAndSavingUtils.get_dirty_content_packages()) + list(unreal.EditorLoadingAndSavingUtils.get_dirty_map_packages())\nprint(json.dumps({'dirty': [p.get_name() for p in dirty]}, ensure_ascii=False))\nassert not dirty, 'Preserve unsaved packages'\nunreal.SystemLibrary.quit_editor()\n",
+  "result": "None",
+  "output": [
+    {
+      "type": "Info",
+      "output": "{\"dirty\": []}\r\n"
+    }
+  ]
+}

@@ -75,11 +75,120 @@ void URogue10mBottomHUDWidget::NativePreConstruct()
 
 float URogue10mBottomHUDWidget::GetResponsiveLayoutHeight() const
 {
-	return FMath::Max(1.0, CombatDesignSize.Y) + FMath::Max(4.0f, CombatBottomMargin);
+	const double DesignHeight = bUseSplitCombatLayout
+		? FMath::Max(FMath::Max(1.0, LeftCombatDesignSize.Y), FMath::Max(1.0, RightCombatDesignSize.Y))
+		: FMath::Max(1.0, CombatDesignSize.Y);
+	return static_cast<float>(DesignHeight) + FMath::Max(4.0f, CombatBottomMargin);
+}
+
+FBox2D URogue10mBottomHUDWidget::GetResponsiveCombatBounds(const FVector2D& ViewportSize) const
+{
+	if (bUseSplitCombatLayout)
+	{
+		const FBox2D LeftBounds = GetResponsiveLeftCombatBounds(ViewportSize);
+		const FBox2D RightBounds = GetResponsiveRightCombatBounds(ViewportSize);
+		return FBox2D(FVector2D(LeftBounds.Min.X, FMath::Min(LeftBounds.Min.Y, RightBounds.Min.Y)),
+			FVector2D(RightBounds.Max.X, FMath::Max(LeftBounds.Max.Y, RightBounds.Max.Y)));
+	}
+	const FVector2D DesignSize(FMath::Max(1.0, CombatDesignSize.X), FMath::Max(1.0, CombatDesignSize.Y));
+	const double AvailableWidth = FMath::Max(0.0, ViewportSize.X - 2.0 * FMath::Max(0.0f, CombatSideMargin));
+	const double Scale = FMath::Min(1.0, AvailableWidth / DesignSize.X);
+	const FVector2D CoreSize = DesignSize * Scale;
+	const FVector2D CoreMin((ViewportSize.X - CoreSize.X) * 0.5,
+		ViewportSize.Y - FMath::Max(4.0f, CombatBottomMargin) - CoreSize.Y);
+	return FBox2D(CoreMin, CoreMin + CoreSize);
+}
+
+double URogue10mBottomHUDWidget::GetSplitLayoutScale(const FVector2D& ViewportSize) const
+{
+	if (ViewportSize.X <= 0.0 || ViewportSize.Y <= 0.0)
+	{
+		return 1.0;
+	}
+	const double AvailableWidth = FMath::Max(0.0, ViewportSize.X
+		- 2.0 * FMath::Max(0.0f, CombatSideMargin) - FMath::Max(0.0f, SplitMinimumCenterGap));
+	const double AvailableHeight = FMath::Max(0.0, ViewportSize.Y - 2.0 * FMath::Max(4.0f, CombatBottomMargin));
+	const double DesignWidth = FMath::Max(1.0, LeftCombatDesignSize.X) + FMath::Max(1.0, RightCombatDesignSize.X);
+	const double DesignHeight = FMath::Max(FMath::Max(1.0, LeftCombatDesignSize.Y), FMath::Max(1.0, RightCombatDesignSize.Y));
+	return FMath::Min(1.0, FMath::Min(AvailableWidth / DesignWidth, AvailableHeight / DesignHeight));
+}
+
+FBox2D URogue10mBottomHUDWidget::GetResponsiveLeftCombatBounds(const FVector2D& ViewportSize) const
+{
+	if (!bUseSplitCombatLayout)
+	{
+		return GetResponsiveCombatBounds(ViewportSize);
+	}
+	const FVector2D PanelSize = FVector2D(FMath::Max(1.0, LeftCombatDesignSize.X),
+		FMath::Max(1.0, LeftCombatDesignSize.Y)) * GetSplitLayoutScale(ViewportSize);
+	const FVector2D PanelMin(FMath::Max(0.0f, CombatSideMargin),
+		ViewportSize.Y - FMath::Max(4.0f, CombatBottomMargin) - PanelSize.Y);
+	return FBox2D(PanelMin, PanelMin + PanelSize);
+}
+
+FBox2D URogue10mBottomHUDWidget::GetResponsiveRightCombatBounds(const FVector2D& ViewportSize) const
+{
+	if (!bUseSplitCombatLayout)
+	{
+		return GetResponsiveCombatBounds(ViewportSize);
+	}
+	const FVector2D PanelSize = FVector2D(FMath::Max(1.0, RightCombatDesignSize.X),
+		FMath::Max(1.0, RightCombatDesignSize.Y)) * GetSplitLayoutScale(ViewportSize);
+	const FVector2D PanelMax(ViewportSize.X - FMath::Max(0.0f, CombatSideMargin),
+		ViewportSize.Y - FMath::Max(4.0f, CombatBottomMargin));
+	return FBox2D(PanelMax - PanelSize, PanelMax);
+}
+
+void URogue10mBottomHUDWidget::UpdateResponsiveLayout(const FVector2D& ViewportSize)
+{
+	CachedResponsiveViewportSize = ViewportSize;
+	ApplyResponsiveLayout();
 }
 
 void URogue10mBottomHUDWidget::ApplyResponsiveLayout()
 {
+	if (UI_CombatScaleBox)
+	{
+		UI_CombatScaleBox->SetVisibility(bUseSplitCombatLayout
+			? ESlateVisibility::Collapsed : ESlateVisibility::SelfHitTestInvisible);
+	}
+	const double SplitScale = GetSplitLayoutScale(CachedResponsiveViewportSize);
+	const auto ConfigureSplitPanel = [this, SplitScale](UScaleBox* PanelScaleBox, USizeBox* PanelDesignSize,
+		const FVector2D& InDesignSize, bool bRightPanel)
+	{
+		if (!PanelScaleBox || !PanelDesignSize)
+		{
+			return;
+		}
+		PanelScaleBox->SetVisibility(bUseSplitCombatLayout
+			? ESlateVisibility::SelfHitTestInvisible : ESlateVisibility::Collapsed);
+		if (!bUseSplitCombatLayout)
+		{
+			return;
+		}
+		const FVector2D PanelSize(FMath::Max(1.0, InDesignSize.X), FMath::Max(1.0, InDesignSize.Y));
+		PanelDesignSize->SetWidthOverride(PanelSize.X);
+		PanelDesignSize->SetHeightOverride(PanelSize.Y);
+		if (UScaleBoxSlot* PanelContentSlot = Cast<UScaleBoxSlot>(PanelDesignSize->Slot))
+		{
+			PanelContentSlot->SetHorizontalAlignment(bRightPanel ? HAlign_Right : HAlign_Left);
+			PanelContentSlot->SetVerticalAlignment(VAlign_Bottom);
+		}
+		PanelScaleBox->SetStretch(EStretch::ScaleToFit);
+		PanelScaleBox->SetStretchDirection(EStretchDirection::DownOnly);
+		PanelScaleBox->SetIgnoreInheritedScale(false);
+		if (UCanvasPanelSlot* PanelCanvasSlot = Cast<UCanvasPanelSlot>(PanelScaleBox->Slot))
+		{
+			PanelCanvasSlot->SetAutoSize(false);
+			PanelCanvasSlot->SetAnchors(FAnchors(bRightPanel ? 1.0f : 0.0f, 1.0f));
+			PanelCanvasSlot->SetAlignment(FVector2D(bRightPanel ? 1.0f : 0.0f, 1.0f));
+			const float HorizontalOffset = FMath::Max(0.0f, CombatSideMargin) * (bRightPanel ? -1.0f : 1.0f);
+			PanelCanvasSlot->SetOffsets(FMargin(HorizontalOffset, -FMath::Max(4.0f, CombatBottomMargin),
+				PanelSize.X * SplitScale, PanelSize.Y * SplitScale));
+		}
+	};
+	ConfigureSplitPanel(UI_LeftCombatScaleBox, UI_LeftCombatDesignSize, LeftCombatDesignSize, false);
+	ConfigureSplitPanel(UI_RightCombatScaleBox, UI_RightCombatDesignSize, RightCombatDesignSize, true);
 	const FVector2D DesignSize(FMath::Max(1.0, CombatDesignSize.X), FMath::Max(1.0, CombatDesignSize.Y));
 	if (UI_CombatDesignSize)
 	{
@@ -147,13 +256,18 @@ void URogue10mBottomHUDWidget::SetFrequentViews(
 	RefreshResolvedTheme();
 
 	static const FText HealthLabel = NSLOCTEXT("Rogue10mHUD", "HealthLabel", "체력");
-	static const FText StaminaLabel = NSLOCTEXT("Rogue10mHUD", "StaminaLabel", "스테미나");
+	static const FText StaminaLabel = NSLOCTEXT("Rogue10mHUD", "StaminaLabel", "스태미나");
 	static const FText ManaLabel = NSLOCTEXT("Rogue10mHUD", "ManaLabel", "마력");
 	static const FText IdentityLabel = NSLOCTEXT("Rogue10mHUD", "IdentityLabel", "아이덴티티");
 
 	if (HealthBarWidget)
 	{
-		HealthBarWidget->SetVitalView(HealthLabel, HealthView);
+		FRogue10mHudVitalView PresentedHealthView = HealthView;
+		if (bUseSplitCombatLayout)
+		{
+			PresentedHealthView.FillColor = SplitHealthFillColor;
+		}
+		HealthBarWidget->SetVitalView(HealthLabel, PresentedHealthView);
 	}
 
 	const bool bUseMana = ResolvedTheme == ERogue10mBottomHUDTheme::Wizard && ManaView.bVisible;
@@ -227,7 +341,7 @@ FText URogue10mBottomHUDWidget::GetPrototypeDesignTitle() const
 
 FText URogue10mBottomHUDWidget::GetPrototypeDesignDescription() const
 {
-	return FText::FromString(TEXT("HP, MP/스테미나, 아이덴티티, 스킬, 아이템, 경험치를 한 Widget에서 조립합니다."));
+	return FText::FromString(TEXT("HP, MP/스태미나, 아이덴티티, 스킬, 아이템, 경험치를 한 Widget에서 조립합니다."));
 }
 
 FVector2D URogue10mBottomHUDWidget::GetPrototypeDesignSize() const

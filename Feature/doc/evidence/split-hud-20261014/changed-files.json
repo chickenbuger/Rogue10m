@@ -1,0 +1,62 @@
+{
+  "branch": "Sprint#5-32-split-combat-hud",
+  "changed_text_files": [
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mBottomHUDWidget.h",
+      "sha256": "26ad1f3fb55b5f6db6749b7013ebf7744d4028bdb1a751f46dad344692314552",
+      "before_sha256": "1ad26a7db236fa7590aeaee6b737aad6202b8717880b6949e095f3b8f3de0346"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mBottomHUDWidget.cpp",
+      "sha256": "c02bfd4ec8f27a18db4b421704274ba6e23b08133c3a078f7b855b2bbd9ab1ff",
+      "before_sha256": "83bfa7d0f74f686322f49f326f04ace21576c97ab3395012e59ff3f69b83e0b7"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mMainHUDWidget.cpp",
+      "sha256": "7951d8218abc4f912f970837d210bed3b4d91c56379550c8e24316fbff3a4410",
+      "before_sha256": "a6293c9cab94505f8714d0a508685681030c248db5733dfe6830b40c3d37ab68"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mHudWidgetParts.h",
+      "sha256": "cf303a0b130e5de8103a90ec0da6fa6091a5e7d9507b9611826bd2628e6f4f47",
+      "before_sha256": "48638c3dc269300e34cc87e5b8b3c136e73c01da6f87755c872e6a27441d787d"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mHudWidgetParts.cpp",
+      "sha256": "737f65ba45c719d34b99940d048b6af9c30046ff74b48393612a7714f93e99f3",
+      "before_sha256": "800a02228f9ce360f1a28d46e4ade7e46c7478bfe32b597d366901841c8a4685"
+    },
+    {
+      "path": "Source/Rogue10m/Tests/Rogue10mSplitHUDRuntimeTest.cpp",
+      "sha256": "d370f733ebf7f63ed2fb1aa80f6fde899d48c10eb958f9dd912b2754f6ae48af",
+      "before_sha256": null
+    },
+    {
+      "path": "Scripts/Editor/ApplyCompactCombatHUD.py",
+      "sha256": "70e5c8a120e49134f3580dface20a9d2cab5a8611a5f3d788eb49ba3af66bb11",
+      "before_sha256": "4ba1f67f13d6e57d9c78e2262a39304d765171d70c1ca96995e2d20af86b9c98"
+    },
+    {
+      "path": "Scripts/Editor/ApplySplitCombatHUD.py",
+      "sha256": "563efe2ad0b82da5e785c0938e750dcb3e619692d1525e630083212a969e2381",
+      "before_sha256": null
+    },
+    {
+      "path": "Scripts/Editor/ValidateSplitCombatHUD.py",
+      "sha256": "139f1bf26b3426b8be4f654272f599dec744997005cd9e0612b3a323e543a82c",
+      "before_sha256": null
+    },
+    {
+      "path": "Scripts/VerifySplitCombatHUD.ps1",
+      "sha256": "a977c0341d819eacc2a164a9f669691c49030693cb9ebcd48d920de976cf62df",
+      "before_sha256": null
+    }
+  ],
+  "trailing_whitespace": [],
+  "final_runtime": {
+    "cases": 7,
+    "assertions": 1334,
+    "failures": 0,
+    "pre_existing_saves_preserved": 67
+  }
+}

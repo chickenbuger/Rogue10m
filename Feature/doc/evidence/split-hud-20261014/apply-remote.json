@@ -1,0 +1,11 @@
+{
+  "success": false,
+  "command": "from pathlib import Path\npath = Path(r'D:\\Project\\Rogue10m\\Scripts\\Editor\\ApplySplitCombatHUD.py')\nexec(compile(path.read_text(encoding='utf-8'), str(path), 'exec'), {'__name__': '__main__', '__file__': str(path)})\n",
+  "result": "Traceback (most recent call last):\n\n  File \"<string>\", line 3, in <module>\n\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ApplySplitCombatHUD.py\", line 271, in <module>\n    main()\n\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ApplySplitCombatHUD.py\", line 252, in main\n    import_identity_textures()\n\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ApplySplitCombatHUD.py\", line 82, in import_identity_textures\n    compact.checked_set_property(asset, field, value)\n\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ApplyCompactCombatHUD.py\", line 73, in checked_set_property\n    raise RuntimeError(\"Exact property discovery failed: \" + instance.get_path_name()\n\nRuntimeError: Exact property discovery failed: /Game/UI/HUD/Split/T_Identity_Unarmed.T_Identity_Unarmed.lod_group matches=[]\n",
+  "output": [
+    {
+      "type": "Info",
+      "output": "[\"/Script/Engine.Texture2D'/Game/UI/HUD/Split/T_Identity_Unarmed.T_Identity_Unarmed'\"]"
+    }
+  ]
+}

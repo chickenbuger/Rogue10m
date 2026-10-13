@@ -1,0 +1,6 @@
+{
+  "success": false,
+  "command": "from pathlib import Path\npath = Path(r'D:\\Project\\Rogue10m\\Scripts\\Editor\\ValidateSplitCombatHUD.py')\nexec(compile(path.read_text(encoding='utf-8'),str(path),'exec'), {'__name__':'__main__','__file__':str(path)})\n",
+  "result": "Traceback (most recent call last):\n\n  File \"<string>\", line 3, in <module>\n\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ValidateSplitCombatHUD.py\", line 67, in <module>\n    main()\n\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ValidateSplitCombatHUD.py\", line 23, in main\n    assert not asset.get_outermost().is_dirty(), 'Unsaved package: ' + path\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\nAttributeError: 'Package' object has no attribute 'is_dirty'\n",
+  "output": []
+}

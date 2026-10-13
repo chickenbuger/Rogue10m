@@ -12,6 +12,15 @@ class UBorder;
 class UImage;
 class UProgressBar;
 class UTextBlock;
+class UWidget;
+
+UENUM(BlueprintType)
+enum class ERogue10mHudFrameShape : uint8
+{
+	BeveledBar,
+	ClippedSquare,
+	Diamond
+};
 
 UCLASS(Abstract, Blueprintable)
 class ROGUE10M_API URogue10mHudPartWidget : public UUserWidget
@@ -44,6 +53,24 @@ private:
 
 	UPROPERTY(Transient)
 	TObjectPtr<URogue10mMainHUDWidget> OwningMainHUD;
+};
+
+/** Resolution-independent ornamental frame; gameplay content remains separate. */
+UCLASS(Abstract, Blueprintable)
+class ROGUE10M_API URogue10mBeveledFrameWidget : public URogue10mHudPartWidget
+{
+	GENERATED_BODY()
+
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Frame")
+	ERogue10mHudFrameShape FrameShape = ERogue10mHudFrameShape::BeveledBar;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Frame", meta=(ClampMin="1.0", ClampMax="60.0"))
+	float CornerCut = 12.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Frame")
+	FLinearColor FrameColor = FLinearColor(0.55f, 0.40f, 0.22f, 1.0f);
+	virtual int32 NativePaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry,
+		const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements,
+		int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const override;
 };
 
 UCLASS(Abstract, Blueprintable)
@@ -134,6 +161,8 @@ public:
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Identity")
 	FRogue10mHudIdentityView GetIdentityView() const { return IdentityView; }
+	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Identity")
+	TSoftObjectPtr<UTexture2D> GetDisplayedIconTexture() const { return DisplayedIconTexture; }
 
 protected:
 	virtual FText GetPrototypeDesignTitle() const override;
@@ -147,11 +176,18 @@ protected:
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Identity")
 	TObjectPtr<UImage> UI_IdentityFallbackIcon;
 
+	/** Optional presentation overrides; identity type, resource and gameplay are unchanged. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Identity")
+	TMap<ERogue10mWeaponType, TSoftObjectPtr<UTexture2D>> WeaponIconOverrides;
+
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Identity")
 	TObjectPtr<UTextBlock> UI_MasteryText;
 
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Identity")
 	TObjectPtr<UTextBlock> UI_IdentityPercentText;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Identity")
+	TObjectPtr<UTextBlock> UI_WeaponNameText;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Identity")
 	bool bUseCircularResourceGauge = false;
@@ -172,6 +208,8 @@ protected:
 private:
 	UPROPERTY(Transient, BlueprintReadOnly, Category="Rogue10m|HUD|Identity", meta=(AllowPrivateAccess="true"))
 	FRogue10mHudIdentityView IdentityView;
+	UPROPERTY(Transient)
+	TSoftObjectPtr<UTexture2D> DisplayedIconTexture;
 };
 
 UCLASS(Abstract, Blueprintable)
@@ -232,8 +270,19 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Quick Slot")
 	bool bUseCompactInputLabels = false;
 
+	/** Place the HOLD prefix above the mouse button in compact HUDs. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Quick Slot")
+	bool bUseTwoLineInputLabels = false;
+
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Quick Slot")
 	TObjectPtr<UTextBlock> UI_LockedText;
+
+	/** A designer-built lock symbol can replace the text without a font dependency. */
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Quick Slot")
+	TObjectPtr<UWidget> UI_LockGlyph;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Quick Slot")
+	TObjectPtr<UImage> UI_ReadyHighlight;
 
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Quick Slot")
 	TObjectPtr<UTextBlock> UI_KeyText;

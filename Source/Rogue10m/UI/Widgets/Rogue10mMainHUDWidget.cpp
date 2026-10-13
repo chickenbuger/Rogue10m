@@ -111,13 +111,14 @@ void URogue10mMainHUDWidget::NativePreConstruct()
 	const float LogBottomOffset = (BottomHUDWidget ? BottomHUDWidget->GetResponsiveLayoutHeight() : 184.0f) + 24.0f;
 	AnchorPeripheralWidget(SystemLogContainer, FVector2D(0.0f, 1.0f), FVector2D(0.0f, 1.0f),
 		FMargin(24.0f, -LogBottomOffset, 360.0f, 48.0f));
-	AnchorPeripheralWidget(ItemAcquisitionContainer, FVector2D(1.0f, 0.65f), FVector2D(1.0f, 0.0f),
-		FMargin(-24.0f, 0.0f, 260.0f, 72.0f));
+	AnchorPeripheralWidget(ItemAcquisitionContainer, FVector2D(1.0f, 1.0f), FVector2D(1.0f, 1.0f),
+		FMargin(-24.0f, -64.0f, 320.0f, 144.0f));
 }
 
 void URogue10mMainHUDWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
+	CachedResponsiveViewportSize = FVector2D::ZeroVector;
 	EnsurePrototypeLayout();
 
 	const TArray<URogue10mShortcutHintWidget*> HiddenShortcuts =
@@ -136,6 +137,16 @@ void URogue10mMainHUDWidget::NativeConstruct()
 void URogue10mMainHUDWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
+	const FVector2D ViewportSize = MyGeometry.GetLocalSize();
+	if (!ViewportSize.Equals(CachedResponsiveViewportSize, 0.5))
+	{
+		if (BottomHUDWidget)
+		{
+			BottomHUDWidget->UpdateResponsiveLayout(ViewportSize);
+		}
+		ApplyResponsiveAcquisitionLayout(ViewportSize);
+		CachedResponsiveViewportSize = ViewportSize;
+	}
 
 	FrequentRefreshElapsed += InDeltaTime;
 	SlowRefreshElapsed += InDeltaTime;
@@ -148,6 +159,28 @@ void URogue10mMainHUDWidget::NativeTick(const FGeometry& MyGeometry, float InDel
 	{
 		SlowRefreshElapsed = FMath::Fmod(SlowRefreshElapsed, SlowRefreshInterval);
 		RefreshSlowWidgetData();
+	}
+}
+
+void URogue10mMainHUDWidget::ApplyResponsiveAcquisitionLayout(const FVector2D& ViewportSize)
+{
+	if (!BottomHUDWidget || !ItemAcquisitionContainer || ViewportSize.X <= 0.0 || ViewportSize.Y <= 0.0)
+	{
+		return;
+	}
+	if (UCanvasPanelSlot* CanvasSlot = Cast<UCanvasPanelSlot>(ItemAcquisitionContainer->Slot))
+	{
+		constexpr float SideMargin = 24.0f;
+		constexpr float CardWidth = 320.0f;
+		constexpr float CardHeight = 144.0f;
+		constexpr float HUDGap = 12.0f;
+		const FBox2D CombatBounds = BottomHUDWidget->GetResponsiveCombatBounds(ViewportSize);
+		const double CardLeft = ViewportSize.X - SideMargin - CardWidth;
+		const bool bHasRoomBesideCombat = CardLeft >= CombatBounds.Max.X + HUDGap;
+		const float BottomOffset = BottomHUDWidget->IsSplitCombatLayout()
+			? static_cast<float>(ViewportSize.Y - BottomHUDWidget->GetResponsiveRightCombatBounds(ViewportSize).Min.Y) + 24.0f
+			: bHasRoomBesideCombat ? 64.0f : static_cast<float>(ViewportSize.Y - CombatBounds.Min.Y) + HUDGap;
+		CanvasSlot->SetOffsets(FMargin(-SideMargin, -BottomOffset, CardWidth, CardHeight));
 	}
 }
 
@@ -192,8 +225,9 @@ void URogue10mMainHUDWidget::RefreshSlowWidgetData()
 			GetItemQuickSlotViews(),
 			QuickSlotWidgetClass);
 	}
-	RefreshLogContainer(SystemLogContainer, GetSystemLogEntries(), 2);
-	RefreshLogContainer(ItemAcquisitionContainer, GetItemAcquisitionEntries(), 3);
+	RefreshLogContainer(SystemLogContainer, GetSystemLogEntries(), 2, LogLineWidgetClass);
+	RefreshLogContainer(ItemAcquisitionContainer, GetItemAcquisitionEntries(), 3,
+		ItemAcquisitionLineWidgetClass ? ItemAcquisitionLineWidgetClass : LogLineWidgetClass);
 }
 void URogue10mMainHUDWidget::AssignOwningMainHUDToBoundWidgets()
 {
@@ -229,9 +263,10 @@ void URogue10mMainHUDWidget::AssignOwningMainHUDToBoundWidgets()
 }
 
 void URogue10mMainHUDWidget::RefreshLogContainer(UPanelWidget* Container,
-	const TArray<FRogue10mHudLogEntryView>& Views, int32 MaxEntries)
+	const TArray<FRogue10mHudLogEntryView>& Views, int32 MaxEntries,
+	TSubclassOf<URogue10mLogLineWidget> InLogLineWidgetClass)
 {
-	if (!Container || !LogLineWidgetClass)
+	if (!Container || !InLogLineWidgetClass)
 	{
 		return;
 	}
@@ -246,7 +281,7 @@ void URogue10mMainHUDWidget::RefreshLogContainer(UPanelWidget* Container,
 	}
 	while (Container->GetChildrenCount() < VisibleCount)
 	{
-		URogue10mLogLineWidget* LogWidget = CreateWidget<URogue10mLogLineWidget>(GetOwningPlayer(), LogLineWidgetClass);
+		URogue10mLogLineWidget* LogWidget = CreateWidget<URogue10mLogLineWidget>(GetOwningPlayer(), InLogLineWidgetClass);
 		if (!LogWidget)
 		{
 			break;
@@ -318,7 +353,7 @@ void URogue10mMainHUDWidget::EnsurePrototypeLayout()
 		UTextBlock* BottomHUDText = CreatePrototypeText(
 			WidgetTree,
 			TEXT("BottomHUDWidget_PrototypeText"),
-			TEXT("BottomHUDWidget - HP / MP·스테미나 / 아이덴티티 / 스킬 / 아이템 / 경험치"),
+			TEXT("BottomHUDWidget - HP / MP·스태미나 / 아이덴티티 / 스킬 / 아이템 / 경험치"),
 			12.0f);
 
 		TArray<UWidget*> BottomChildren = { BottomHUDText };

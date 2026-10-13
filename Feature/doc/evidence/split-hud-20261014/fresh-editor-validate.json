@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "command": "from pathlib import Path\npath = Path(r'D:\\Project\\Rogue10m\\Scripts\\Editor\\ValidateSplitCombatHUD.py')\nexec(compile(path.read_text(encoding='utf-8'),str(path),'exec'), {'__name__':'__main__','__file__':str(path)})\n",
+  "result": "None",
+  "output": [
+    {
+      "type": "Info",
+      "output": "{\"result\": \"SPLIT_HUD_SAVED_CONTRACT_PASSED\", \"saved_assets\": [\"/Game/UI/HUD/Split/T_Identity_Unarmed\", \"/Game/UI/HUD/Split/T_Identity_GreatSword\", \"/Game/Widget/Parts/Split/WBP_SplitBeveledFrame\", \"/Game/Widget/Parts/Split/WBP_SplitVitalBar\", \"/Game/Widget/Parts/Split/WBP_SplitExperienceLine\", \"/Game/Widget/Parts/Split/WBP_SplitQuickSlot\", \"/Game/Widget/Parts/Split/WBP_SplitIdentity\", \"/Game/Widget/Parts/Split/WBP_SplitAcquisitionLine\", \"/Game/Widget/Parts/WBP_BottomHUD\", \"/Game/Widget/WBP_Rogue10mMainHUD\"], \"required_bindings\": [\"HealthBarWidget\", \"IdentityWidget\", \"ItemSlotContainer\", \"ManaBarWidget\", \"ProgressionWidget\", \"SkillSlotContainer\", \"StaminaBarWidget\", \"UI_LeftCombatDesignSize\", \"UI_LeftCombatScaleBox\", \"UI_LevelText\", \"UI_RightCombatDesignSize\", \"UI_RightCombatScaleBox\"], \"skills\": 5, \"items\": 4, \"identity_percent_bottom\": 141, \"dirty_packages\": []}\r\n"
+    }
+  ]
+}

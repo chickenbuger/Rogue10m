@@ -1836,3 +1836,21 @@
 - 검증: UE5.8 Editor 빌드 성공, Studio 루트 실행19개 테스트와 구문 검사 통과, staged diff와 Harness 경로 검사 통과. 개별 기능의 QA 한계는 기존 항목을 유지한다.
 - 상태: 작업 브랜치 → develop → test → main 로컬 fast-forward 반영 완료. 후속 사용자 명시 승인으로 GitHub origin의 develop/test/main atomic push 성공(aa941d4), 원격 대기 해소. 다음 신규 작업은 main 병합 완료에 따라 `Sprint#5-1-<작업명>`부터 시작한다.
 - 관련: `Feature/doc/2026-09-29_sprint4-main-save.md`, `Feature/doc/evidence/main-save-20260929/changed-files.tsv`, `DevLog/20260929.txt`.
+
+## Sprint#5-32 — 좌우 하단 전투 HUD 적용 (2026-10-14)
+
+- 브랜치: Sprint#5-32-split-combat-hud. 기존 Sprint#5-31 원본과 미커밋 작업 보존.
+- 목표: 승인한 몬스터헌터 참고 imagegen 시안대로 좌 생존/LV/EXP·우스킬/아이덴티티/잠금4를 실제 게임에 적용하고 중앙 시야를 확보한다.
+- 주요 변경: native 반응형 두코어·고정gap96·초록HP 표시·마력교체보존·획득피드위배치, beveled native frame, 최신맨손/대검2Texture 표시override, 신규Split6파트/기존MainBottom2연결, 기존Compact모드복구flag.
+- 검증: 최초 Editor 빌드45.12초·프레임수정후최종링크3.88초성공. 최종7조건·1,334확인·실패0, PNG7장·기존.sav67개byte보존. UI80기존중78개동일/2변경/8신규/삭제0, rawPNG2동일, 저장계약·새Editor재로드·dirty0·PIE종료, 독립정적/3해상도시각리뷰·생성경로·공백/문법검사통과.
+- 상태: 구현·저장·검증·재로드·문서 완료. 발견한frame배열assert/비율glyph테두리겹침과검증API문제수정, 실패증거보존. 인벤토리·스킬·성장·특성관리/저장스키마·밸런스·맵보존. Shipping/네트워크/장기GPU·아주작은글자별도. 커밋·푸시없음.
+- 관련: Feature/architect/2026-10-14_split-combat-hud.md, Feature/doc/2026-10-14_split-combat-hud.md, Docs/SplitCombatHUDGuide.md, Feature/doc/evidence/split-hud-20261014/, DevLog/20261014.txt.
+
+
+### 사용자 승인 커밋·푸시 준비 (2026-10-14)
+
+- 범위: HUD 네이티브6개·전용10에셋·원본PNG2개·공통 작성도우미와 검증/문서/증거. 그 외 기존 미커밋 기능은 제외한다.
+- 보완: 통합 QA의 별도 진행 저장 의존성을 조건부 컴파일·실행 전 검사로 명시한다. 에디터는 종료하지 않고 임시 standalone에서만 오류 종료한다.
+- 추가 검증: HEAD 추적 파일+스테이징 HUD 소스7개만 있는 독립 Editor 빌드와 최종 QA 파일 재컴파일·링크 성공. 독립 범위/종료 보호 검토 미해결0.
+- 상태: 사용자 승인에 따라 이 작업 브랜치의 커밋과 일반 원격 푸시를 진행한다. Sprint는 main 병합 전이므로5를 유지한다.
+- 파일 목록/검증: Feature/doc/evidence/split-hud-20261014/commit-files.txt, commit-clean-build.log, commit-clean-build-final.log.

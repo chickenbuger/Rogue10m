@@ -57,6 +57,17 @@ public:
 	/** Height reserved by Main HUD in Slate units; viewport DPI is applied by UMG. */
 	float GetResponsiveLayoutHeight() const;
 
+	/** Expected core bounds in the owning full-viewport HUD's logical coordinate space. */
+	FBox2D GetResponsiveCombatBounds(const FVector2D& ViewportSize) const;
+
+	/** Split panels use the same scale and keep a clear interval between them. */
+	FBox2D GetResponsiveLeftCombatBounds(const FVector2D& ViewportSize) const;
+	FBox2D GetResponsiveRightCombatBounds(const FVector2D& ViewportSize) const;
+	void UpdateResponsiveLayout(const FVector2D& ViewportSize);
+
+	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Layout")
+	bool IsSplitCombatLayout() const { return bUseSplitCombatLayout; }
+
 protected:
 	virtual FText GetPrototypeDesignTitle() const override;
 	virtual FText GetPrototypeDesignDescription() const override;
@@ -68,18 +79,45 @@ protected:
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Layout")
 	TObjectPtr<USizeBox> UI_CombatDesignSize;
 
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Layout")
+	TObjectPtr<UScaleBox> UI_LeftCombatScaleBox;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Layout")
+	TObjectPtr<USizeBox> UI_LeftCombatDesignSize;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Layout")
+	TObjectPtr<UScaleBox> UI_RightCombatScaleBox;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Layout")
+	TObjectPtr<USizeBox> UI_RightCombatDesignSize;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Layout")
+	bool bUseSplitCombatLayout = false;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Layout", meta=(ClampMin="1.0"))
+	FVector2D LeftCombatDesignSize = FVector2D(560.0f, 180.0f);
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Layout", meta=(ClampMin="1.0"))
+	FVector2D RightCombatDesignSize = FVector2D(600.0f, 270.0f);
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Layout", meta=(ClampMin="0.0"))
+	float SplitMinimumCenterGap = 96.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Bottom")
+	FLinearColor SplitHealthFillColor = FLinearColor(0.18f, 0.72f, 0.16f, 1.0f);
+
 	/** Combat art and controls share one design space without horizontal distortion. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Layout", meta=(ClampMin="1.0"))
-	FVector2D CombatDesignSize = FVector2D(1200.0f, 208.0f);
+	FVector2D CombatDesignSize = FVector2D(1200.0f, 196.0f);
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Layout", meta=(ClampMin="0.0"))
 	float CombatSideMargin = 24.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Layout", meta=(ClampMin="4.0"))
-	float CombatBottomMargin = 56.0f;
+	float CombatBottomMargin = 20.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Layout", meta=(ClampMin="0.0"))
-	float QuickSlotSpacing = 10.0f;
+	float QuickSlotSpacing = 20.0f;
 
 	/** Empty keeps the slot class supplied by Main HUD. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Bottom")
@@ -139,6 +177,7 @@ protected:
 
 private:
 	void ApplyResponsiveLayout();
+	double GetSplitLayoutScale(const FVector2D& ViewportSize) const;
 	void ApplyQuickSlotLayout(UPanelWidget* Container);
 	ERogue10mBottomHUDTheme ResolveTheme(const FRogue10mHudIdentityView& IdentityView) const;
 	void RefreshResolvedTheme();
@@ -154,4 +193,6 @@ private:
 
 	UPROPERTY(Transient)
 	ERogue10mBottomHUDTheme ResolvedTheme = ERogue10mBottomHUDTheme::MartialArtist;
+
+	FVector2D CachedResponsiveViewportSize = FVector2D::ZeroVector;
 };

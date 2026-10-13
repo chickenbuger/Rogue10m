@@ -60,6 +60,11 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Widget Classes")
 	TSubclassOf<URogue10mLogLineWidget> LogLineWidgetClass;
+
+	/** Empty keeps the existing general log row for acquisition notifications. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|HUD|Widget Classes")
+	TSubclassOf<URogue10mLogLineWidget> ItemAcquisitionLineWidgetClass;
+
 	UFUNCTION(BlueprintImplementableEvent, Category="Rogue10m|HUD", meta=(DisplayName="Bound Widget Data Refreshed"))
 	void BP_OnBoundWidgetDataRefreshed();
 
@@ -70,9 +75,11 @@ protected:
 private:
 	void AssignOwningMainHUDToBoundWidgets();
 	void EnsurePrototypeLayout();
-	void RefreshLogContainer(UPanelWidget* Container, const TArray<FRogue10mHudLogEntryView>& Views, int32 MaxEntries);
+	void RefreshLogContainer(UPanelWidget* Container, const TArray<FRogue10mHudLogEntryView>& Views,
+		int32 MaxEntries, TSubclassOf<URogue10mLogLineWidget> InLogLineWidgetClass);
 	void RefreshFrequentWidgetData();
 	void RefreshSlowWidgetData();
+	void ApplyResponsiveAcquisitionLayout(const FVector2D& ViewportSize);
 
 	UPROPERTY(EditDefaultsOnly, Category="Rogue10m|HUD|Performance", meta=(ClampMin="0.02", Units="s"))
 	float FrequentRefreshInterval = 0.1f;
@@ -82,4 +89,5 @@ private:
 
 	float FrequentRefreshElapsed = 0.0f;
 	float SlowRefreshElapsed = 0.0f;
+	FVector2D CachedResponsiveViewportSize = FVector2D::ZeroVector;
 };

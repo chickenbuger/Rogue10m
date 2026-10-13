@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "command": "import hashlib\nimport json\nfrom pathlib import Path\nimport unreal\nroot = Path(unreal.Paths.project_dir()).resolve()\nassert root.as_posix().casefold() == 'd:/project/rogue10m'\npackage_name = '/Game/Widget/Debug/WBP_ClassBottomHUDShowcase'\nrelative = 'Content/Widget/Debug/WBP_ClassBottomHUDShowcase.uasset'\nmanifest = json.loads((root/'Feature/doc/evidence/split-hud-20261014/assets-before.json').read_text(encoding='utf-8'))\nbefore_hash = hashlib.sha256((root/relative).read_bytes()).hexdigest()\nassert before_hash == manifest[relative]['sha256']\ndirty = list(unreal.EditorLoadingAndSavingUtils.get_dirty_content_packages())\nassert not unreal.EditorLoadingAndSavingUtils.get_dirty_map_packages()\nassert {p.get_name() for p in dirty} == {package_name}, [p.get_name() for p in dirty]\n# Recompiling the owned Bottom BP marked this dependent preview dirty in this\n# fresh task-owned editor. Restore its unchanged disk version without saving it.\nresult = unreal.EditorLoadingAndSavingUtils.reload_packages(dirty,unreal.ReloadPackagesInteractionMode.ASSUME_POSITIVE)\nassert hashlib.sha256((root/relative).read_bytes()).hexdigest() == before_hash\nreport = {'package': package_name, 'reload_result': str(result), 'disk_sha256_preserved': before_hash,\n          'dirty_after': [p.get_name() for p in unreal.EditorLoadingAndSavingUtils.get_dirty_content_packages()]}\n(root/'Feature/doc/evidence/split-hud-20261014/dependent-preview-reload.json').write_text(\n    json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')\nprint(json.dumps(report,ensure_ascii=False))\n",
+  "result": "None",
+  "output": [
+    {
+      "type": "Info",
+      "output": "{\"package\": \"/Game/Widget/Debug/WBP_ClassBottomHUDShowcase\", \"reload_result\": \"(True, Text(\\\"\\\"))\", \"disk_sha256_preserved\": \"c8fe2a11ace5d976de70794908031e25801dd08bcfe8a094cbdc7a5db7ab4d01\", \"dirty_after\": []}\r\n"
+    }
+  ]
+}

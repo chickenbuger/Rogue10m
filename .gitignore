@@ -45,6 +45,10 @@
 SourceArt/**/*.png
 SourceArt/**/*.tga
 
+# Selected identity artwork sources (keep unrelated generated source art ignored)
+!SourceArt/UI/Identity/2026-10-14/T_Identity_GreatSword_v2.png
+!SourceArt/UI/Identity/2026-10-14/T_Identity_Unarmed_v2.png
+
 # Binary Files
 Binaries/*
 Plugins/**/Binaries/*

@@ -11,6 +11,7 @@
 #include "Components/TextBlock.h"
 #include "Components/VerticalBox.h"
 #include "Components/VerticalBoxSlot.h"
+#include "Components/Widget.h"
 #include "Rendering/DrawElementTypes.h"
 #include "Widgets/SWidget.h"
 #include "Rogue10mCharacter.h"
@@ -22,6 +23,26 @@ namespace
 	const FLinearColor PartPanelColor(0.015f, 0.018f, 0.022f, 0.7f);
 	const FLinearColor PartTitleColor(0.86f, 0.68f, 0.34f, 1.0f);
 	const FLinearColor PartTextColor(0.88f, 0.86f, 0.8f, 1.0f);
+
+	FText GetWeaponDisplayName(ERogue10mWeaponType WeaponType)
+	{
+		switch (WeaponType)
+		{
+		case ERogue10mWeaponType::Unarmed: return NSLOCTEXT("Rogue10mHUD", "WeaponUnarmed", "맨손");
+		case ERogue10mWeaponType::Dagger: return NSLOCTEXT("Rogue10mHUD", "WeaponDagger", "단검");
+		case ERogue10mWeaponType::GreatSword: return NSLOCTEXT("Rogue10mHUD", "WeaponGreatSword", "대검");
+		case ERogue10mWeaponType::DualBlades: return NSLOCTEXT("Rogue10mHUD", "WeaponDualBlades", "쌍검");
+		case ERogue10mWeaponType::Bow: return NSLOCTEXT("Rogue10mHUD", "WeaponBow", "활");
+		case ERogue10mWeaponType::Staff: return NSLOCTEXT("Rogue10mHUD", "WeaponStaff", "지팡이");
+		case ERogue10mWeaponType::Knuckle: return NSLOCTEXT("Rogue10mHUD", "WeaponKnuckle", "너클");
+		case ERogue10mWeaponType::Shuriken: return NSLOCTEXT("Rogue10mHUD", "WeaponShuriken", "표창");
+		case ERogue10mWeaponType::DualDaggers: return NSLOCTEXT("Rogue10mHUD", "WeaponDualDaggers", "쌍단검");
+		case ERogue10mWeaponType::LongSword: return NSLOCTEXT("Rogue10mHUD", "WeaponLongSword", "장검");
+		case ERogue10mWeaponType::Shield: return NSLOCTEXT("Rogue10mHUD", "WeaponShield", "방패");
+		case ERogue10mWeaponType::SwordBuckler: return NSLOCTEXT("Rogue10mHUD", "WeaponSwordBuckler", "한손검·방패");
+		default: return NSLOCTEXT("Rogue10mHUD", "WeaponUnknown", "무기");
+		}
+	}
 
 	UTextBlock* CreatePartText(UWidgetTree* WidgetTree, FName WidgetName, const FText& Text, int32 FontSize, const FLinearColor& Color)
 	{
@@ -47,6 +68,46 @@ void URogue10mHudPartWidget::NativePreConstruct()
 	Super::NativePreConstruct();
 
 	EnsurePrototypeDesignScaffold();
+}
+
+int32 URogue10mBeveledFrameWidget::NativePaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry,
+	const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements,
+	int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const
+{
+	int32 LastLayer = Super::NativePaint(Args, AllottedGeometry, MyCullingRect,
+		OutDrawElements, LayerId, InWidgetStyle, bParentEnabled);
+	const FVector2D Size = AllottedGeometry.GetLocalSize();
+	if (Size.X < 10.0 || Size.Y < 10.0) { return LastLayer; }
+	const ESlateDrawEffect Effect = bParentEnabled && GetIsEnabled()
+		? ESlateDrawEffect::None : ESlateDrawEffect::DisabledEffect;
+	const FLinearColor Tint = InWidgetStyle.GetColorAndOpacityTint();
+	const auto Outline = [&](float Inset, float Thickness, const FLinearColor& Color)
+	{
+		const float L = Inset, T = Inset;
+		const float R = static_cast<float>(Size.X) - Inset, B = static_cast<float>(Size.Y) - Inset;
+		const float C = FMath::Clamp(CornerCut, 1.0f, FMath::Min(R-L, B-T)*0.5f);
+		TArray<FVector2f> Points;
+		if (FrameShape == ERogue10mHudFrameShape::Diamond)
+		{
+			Points = {{(L+R)*0.5f,T},{R,(T+B)*0.5f},{(L+R)*0.5f,B},{L,(T+B)*0.5f}};
+		}
+		else if (FrameShape == ERogue10mHudFrameShape::ClippedSquare)
+		{
+			Points = {{L+C,T},{R-C,T},{R,T+C},{R,B-C},{R-C,B},{L+C,B},{L,B-C},{L,T+C}};
+		}
+		else
+		{
+			Points = {{L+C,T},{R-C,T},{R,(T+B)*0.5f},{R-C,B},{L+C,B},{L,(T+B)*0.5f}};
+		}
+		const FVector2f StartPoint = Points[0];
+		Points.Add(StartPoint);
+		FSlateDrawElement::MakeLines(OutDrawElements, ++LastLayer, AllottedGeometry.ToPaintGeometry(),
+			MoveTemp(Points), Effect, Color*Tint, true, Thickness);
+	};
+	Outline(4.0f, 7.0f, FLinearColor(0.018f,0.015f,0.012f,0.95f));
+	Outline(4.0f, 3.0f, FrameColor);
+	Outline(7.0f, 1.0f, FLinearColor(0.82f,0.74f,0.54f,0.88f));
+	return LastLayer;
 }
 
 void URogue10mHudPartWidget::SetOwningMainHUD(URogue10mMainHUDWidget* InOwningMainHUD)
@@ -244,25 +305,31 @@ void URogue10mIdentityWidget::SetIdentityView(const FRogue10mHudIdentityView& In
 {
 	const bool bGaugeChanged = !FMath::IsNearlyEqual(IdentityView.Normalized, InIdentityView.Normalized)
 		|| IdentityView.bHasIdentityResource != InIdentityView.bHasIdentityResource;
-	const bool bIconChanged = IdentityView.IconTexture != InIdentityView.IconTexture;
+	TSoftObjectPtr<UTexture2D> IconTexture = InIdentityView.IconTexture;
+	if (const TSoftObjectPtr<UTexture2D>* Override = WeaponIconOverrides.Find(InIdentityView.WeaponType))
+	{
+		if (!Override->IsNull()) { IconTexture = *Override; }
+	}
+	const bool bIconChanged = DisplayedIconTexture != IconTexture;
 	IdentityView = InIdentityView;
+	DisplayedIconTexture = IconTexture;
 	if (UI_IdentityIcon)
 	{
 		if (bIconChanged)
 		{
 			// Clear and cancel any prior request before the engine streams the new icon.
 			UI_IdentityIcon->SetBrushFromTexture(nullptr);
-			if (!IdentityView.IconTexture.IsNull())
+			if (!DisplayedIconTexture.IsNull())
 			{
-				UI_IdentityIcon->SetBrushFromSoftTexture(IdentityView.IconTexture);
+				UI_IdentityIcon->SetBrushFromSoftTexture(DisplayedIconTexture);
 			}
 		}
-		UI_IdentityIcon->SetVisibility(IdentityView.IconTexture.IsValid()
+		UI_IdentityIcon->SetVisibility(DisplayedIconTexture.IsValid()
 			? ESlateVisibility::HitTestInvisible : ESlateVisibility::Hidden);
 	}
 	if (UI_IdentityFallbackIcon)
 	{
-		UI_IdentityFallbackIcon->SetVisibility(IdentityView.IconTexture.IsValid()
+		UI_IdentityFallbackIcon->SetVisibility(DisplayedIconTexture.IsValid()
 			? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible);
 	}
 	if (UI_MasteryText)
@@ -276,6 +343,10 @@ void URogue10mIdentityWidget::SetIdentityView(const FRogue10mHudIdentityView& In
 		UI_IdentityPercentText->SetText(IdentityView.bHasIdentityResource
 			? FText::FromString(FString::Printf(TEXT("%.0f%%"), FMath::Clamp(IdentityView.Normalized, 0.0f, 1.0f) * 100.0f))
 			: FText::FromString(TEXT("--")));
+	}
+	if (UI_WeaponNameText)
+	{
+		UI_WeaponNameText->SetText(GetWeaponDisplayName(IdentityView.WeaponType));
 	}
 	if (bUseCircularResourceGauge && bGaugeChanged)
 	{
@@ -411,11 +482,11 @@ void URogue10mQuickSlotWidget::SetQuickSlotView(const FRogue10mHudQuickSlotView&
 			}
 			else if (InputLabel == TEXT("좌클릭 차징"))
 			{
-				KeyText = FText::FromString(TEXT("HOLD LMB"));
+				KeyText = FText::FromString(bUseTwoLineInputLabels ? TEXT("HOLD\nLMB") : TEXT("HOLD LMB"));
 			}
 			else if (InputLabel == TEXT("우클릭 차징"))
 			{
-				KeyText = FText::FromString(TEXT("HOLD RMB"));
+				KeyText = FText::FromString(bUseTwoLineInputLabels ? TEXT("HOLD\nRMB") : TEXT("HOLD RMB"));
 			}
 		}
 		UI_KeyText->SetText(KeyText);
@@ -423,8 +494,22 @@ void URogue10mQuickSlotWidget::SetQuickSlotView(const FRogue10mHudQuickSlotView&
 	if (UI_LockedText)
 	{
 		UI_LockedText->SetText(NSLOCTEXT("Rogue10mHUD", "QuickSlotLocked", "잠금"));
-		UI_LockedText->SetVisibility(QuickSlotView.bUnlocked
+		UI_LockedText->SetVisibility(QuickSlotView.bUnlocked || UI_LockGlyph
 			? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible);
+	}
+	if (UI_LockGlyph)
+	{
+		UI_LockGlyph->SetVisibility(QuickSlotView.bUnlocked
+			? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible);
+	}
+	if (UI_ReadyHighlight)
+	{
+		const bool bPrimaryReady = QuickSlotView.bUnlocked && !QuickSlotView.bDodgeSlot
+			&& QuickSlotView.SlotNumber == 1 && !QuickSlotView.InputText.IsEmpty()
+			&& QuickSlotView.InputSlot == ERogue10mAttackInputSlot::Primary
+			&& QuickSlotView.CooldownRemaining <= 0.0f;
+		UI_ReadyHighlight->SetVisibility(bPrimaryReady
+			? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
 	}
 
 	if (UI_CooldownText)
@@ -444,7 +529,7 @@ void URogue10mQuickSlotWidget::SetQuickSlotView(const FRogue10mHudQuickSlotView&
 	{
 		UI_IconImage->SetBrushFromTexture(QuickSlotView.SkillIcon);
 		UI_IconImage->SetColorAndOpacity(QuickSlotView.IconColor);
-		UI_IconImage->SetVisibility(QuickSlotView.SkillIcon
+		UI_IconImage->SetVisibility(QuickSlotView.SkillIcon && (QuickSlotView.bUnlocked || !UI_LockGlyph)
 			? ESlateVisibility::HitTestInvisible : ESlateVisibility::Hidden);
 	}
 
@@ -517,23 +602,32 @@ void URogue10mLogLineWidget::SetLogEntryView(const FRogue10mHudLogEntryView& InL
 	{
 		UI_MessageText->SetText(MessageText);
 		UI_MessageText->SetColorAndOpacity(FSlateColor(LogEntryView.Color));
+		const bool bHasSeparateItemText = LogEntryView.bItemAcquisition && UI_ItemNameText && UI_ItemCountText;
+		UI_MessageText->SetVisibility(bHasSeparateItemText
+			? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible);
 	}
 	SetToolTipText(MessageText);
-	if (LogEntryView.bItemAcquisition)
+	if (UI_ItemIconImage)
 	{
-		if (UI_ItemIconImage)
-		{
-			UI_ItemIconImage->SetBrushFromTexture(LogEntryView.ItemIcon);
-			UI_ItemIconImage->SetVisibility(LogEntryView.ItemIcon ? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
-		}
-		if (UI_ItemCountText)
-		{
-			UI_ItemCountText->SetText(FText::FromString(FString::Printf(TEXT("x%d"), FMath::Max(0, LogEntryView.Quantity))));
-		}
-		if (UI_ItemNameText)
-		{
-			UI_ItemNameText->SetVisibility(ESlateVisibility::Collapsed);
-		}
+		UI_ItemIconImage->SetBrushFromTexture(LogEntryView.bItemAcquisition ? LogEntryView.ItemIcon.Get() : nullptr);
+		UI_ItemIconImage->SetVisibility(LogEntryView.bItemAcquisition && LogEntryView.ItemIcon
+			? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
+	}
+	if (UI_ItemCountText)
+	{
+		UI_ItemCountText->SetText(LogEntryView.bItemAcquisition
+			? FText::Format(NSLOCTEXT("Rogue10mHUD", "ItemAcquisitionCount", "×{0}"),
+				FText::AsNumber(FMath::Max(0, LogEntryView.Quantity)))
+			: FText::GetEmpty());
+		UI_ItemCountText->SetVisibility(LogEntryView.bItemAcquisition
+			? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
+	}
+	if (UI_ItemNameText)
+	{
+		UI_ItemNameText->SetText(LogEntryView.bItemAcquisition ? LogEntryView.Message : FText::GetEmpty());
+		UI_ItemNameText->SetColorAndOpacity(FSlateColor(LogEntryView.Color));
+		UI_ItemNameText->SetVisibility(LogEntryView.bItemAcquisition
+			? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
 	}
 	BP_OnLogEntryViewChanged();
 }

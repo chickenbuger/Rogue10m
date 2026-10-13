@@ -1,0 +1,125 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\tmp\split-hud-commit-20261014\clean\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Creating makefile for Rogue10mEditor (no existing makefile)
+UHT compiled-in object format Default
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mAbilitySystemComponent.cpp, Rogue10mAttributeSet.cpp, Rogue10mGameplayAbility_Attack.cpp, Rogue10mCharacter.cpp, Rogue10mFistAnimInstance.cpp, Rogue10mStylizedCharacter.cpp, Rogue10mAppearanceCameraComponent.cpp, Rogue10mAppearanceShadowComponent.cpp, Rogue10mAttackTargetInterface.cpp, Rogue10mBasicBrawlerComponent.cpp, Rogue10mCharacterAnimationComponent.cpp, Rogue10mCombatComponent.cpp, Rogue10mFirstPersonPresentationComponent.cpp, Rogue10mHitFeedbackComponent.cpp, Rogue10mInventoryComponent.cpp, Rogue10mPlayerFeedbackComponent.cpp, Rogue10mVitalRegenerationComponent.cpp, Rogue10m.cpp, Rogue10mCameraManager.cpp, Rogue10mCharacterProfileSubsystem.cpp, Rogue10mGameMode.cpp, Rogue10mGameState.cpp, Rogue10mMenuGameMode.cpp, Rogue10mMenuPlayerController.cpp, Rogue10mPlatformMode.cpp, Rogue10mPlayerController.cpp, Rogue10mPlayerState.cpp, Rogue10mAttackSkillData.cpp, Rogue10mCharacterCustomizationDataAsset.cpp, Rogue10mCharacterDataAsset.cpp, Rogue10mCharacterMotionDataAsset.cpp, Rogue10mItemDataAsset.cpp, Rogue10mMonsterDataAsset.cpp, Rogue10mSkillLoadoutDataAsset.cpp, Rogue10mAppearanceBoxingAuthoring.cpp, Rogue10mFirstPersonArmsAuthoring.cpp, Rogue10mBasicMonster.cpp, BTTask_Rogue10mMonsterDecision.cpp, Rogue10mMonsterAIController.cpp, Rogue10mAnimationStabilityRuntimeTest.cpp, Rogue10mAppearanceCameraRuntimeTest.cpp, Rogue10mAppearanceShadowRuntimeTest.cpp, Rogue10mArmsOnlyRuntimeTest.cpp, Rogue10mBasicBrawlerRuntimeTest.cpp, Rogue10mBoxingBasicAttackRuntimeTest.cpp, Rogue10mBoxingDirectPreviewRuntimeTest.cpp, Rogue10mBoxingFeedbackRuntimeTest.cpp, Rogue10mBrawlerIdleTransitionRuntimeTest.cpp, Rogue10mClassCombatPresentationRuntimeTest.cpp, Rogue10mFirstPersonFistRuntimeTest.cpp, Rogue10mHeadCameraRuntimeTest.cpp, Rogue10mInitialHeadFramingRuntimeTest.cpp, Rogue10mMarteloPreviewRuntimeTest.cpp, Rogue10mResponsiveHUDRuntimeTest.cpp, Rogue10mSplitHUDRuntimeTest.cpp, Rogue10mThirdPersonInspectionRuntimeTest.cpp, Rogue10mWeaponSkillTreeRuntimeTest.cpp, Rogue10mCharacterCustomizationPreviewActor.cpp, Rogue10mEquipmentPreviewActor.cpp, Rogue10mHUD.cpp, Rogue10mRunHUD.cpp, Rogue10mAtlasImage.cpp, Rogue10mBottomHUDWidget.cpp, Rogue10mCharacterLobbyWidget.cpp, Rogue10mDamageIndicatorWidget.cpp, Rogue10mHudWidgetParts.cpp, Rogue10mItemDragDropOperation.cpp, Rogue10mMainHUDWidget.cpp, Rogue10mMainMenuWidget.cpp, Rogue10mMenuWindowWidgets.cpp, Rogue10mSkillDragDropOperation.cpp, Rogue10mBreakableActor.cpp, Rogue10mDroppedItem.cpp, Rogue10mMapDataLibrary.cpp, Rogue10mMonsterSpawner.cpp, Rogue10mRunPortal.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+  Requested 1.5 GB memory per action, 11.81 GB available: limiting max parallel actions to 7
+Using XGE executor to run 82 action(s)
+Distributing 82 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {0944228F-2E47-4283-A893-2384509191D5}
+ 
+--------------------Project: Default-------------------------------------------
+[1/82] Compile Resource [x64] Default.rc2 (0:00.15 at +0:00)
+[2/82] Compile [x64] SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.cpp (0:36.00 at +0:00)
+[3/82] Compile [x64] Rogue10m.cpp (0:04.28 at +0:36)
+[4/82] Compile [x64] Rogue10mAppearanceShadowComponent.cpp (0:04.89 at +0:36)
+[5/82] Compile [x64] Rogue10mAttackTargetInterface.cpp (0:04.90 at +0:37)
+[6/82] Compile [x64] BTTask_Rogue10mMonsterDecision.cpp (0:05.79 at +0:36)
+[7/82] Compile [x64] Rogue10mAppearanceCameraComponent.cpp (0:05.90 at +0:36)
+[8/82] Compile [x64] Rogue10mBasicBrawlerComponent.cpp (0:05.70 at +0:37)
+[9/82] Compile [x64] Rogue10mAtlasImage.cpp (0:06.81 at +0:36)
+[10/82] Compile [x64] Rogue10mAppearanceShadowRuntimeTest.cpp (0:07.86 at +0:36)
+[11/82] Compile [x64] Rogue10mAppearanceBoxingAuthoring.cpp (0:08.04 at +0:36)
+[12/82] Compile [x64] Rogue10mAnimationStabilityRuntimeTest.cpp (0:08.10 at +0:36)
+[13/82] Compile [x64] Rogue10mAbilitySystemComponent.cpp (0:08.20 at +0:36)
+[14/82] Compile [x64] Rogue10mAttributeSet.cpp (0:08.54 at +0:37)
+[15/82] Compile [x64] Rogue10mAttackSkillData.cpp (0:08.65 at +0:36)
+[16/82] Compile [x64] Rogue10mArmsOnlyRuntimeTest.cpp (0:11.18 at +0:36)
+[17/82] Compile [x64] Rogue10mAppearanceCameraRuntimeTest.cpp (0:13.01 at +0:36)
+[18/82] Compile [x64] Rogue10mBreakableActor.cpp (0:06.28 at +0:44)
+[19/82] Compile [x64] Rogue10mCameraManager.cpp (0:06.60 at +0:44)
+[20/82] Compile [x64] Rogue10mCharacterCustomizationDataAsset.cpp (0:06.42 at +0:45)
+[21/82] Compile [x64] Rogue10mBoxingDirectPreviewRuntimeTest.cpp (0:09.68 at +0:42)
+[22/82] Compile [x64] Rogue10mCharacterCustomizationPreviewActor.cpp (0:07.07 at +0:45)
+[23/82] Compile [x64] Rogue10mBottomHUDWidget.cpp (0:11.54 at +0:41)
+[24/82] Compile [x64] Rogue10mCharacterDataAsset.cpp (0:06.14 at +0:48)
+[25/82] Compile [x64] Rogue10mBasicMonster.cpp (0:13.09 at +0:41)
+[26/82] Compile [x64] Rogue10mBoxingBasicAttackRuntimeTest.cpp (0:12.68 at +0:42)
+[27/82] Compile [x64] Rogue10mBoxingFeedbackRuntimeTest.cpp (0:13.98 at +0:42)
+[28/82] Compile [x64] Rogue10mBasicBrawlerRuntimeTest.cpp (0:15.84 at +0:40)
+[29/82] Compile [x64] Rogue10mCharacterMotionDataAsset.cpp (0:05.90 at +0:51)
+[30/82] Compile [x64] Rogue10mBrawlerIdleTransitionRuntimeTest.cpp (0:13.56 at +0:43)
+[31/82] Compile [x64] Rogue10mCharacterProfileSubsystem.cpp (0:06.37 at +0:51)
+[32/82] Compile [x64] Rogue10mCharacter.cpp (0:13.57 at +0:44)
+[33/82] Compile [x64] Rogue10mDroppedItem.cpp (0:06.06 at +0:53)
+[34/82] Compile [x64] Rogue10mCharacterLobbyWidget.cpp (0:11.34 at +0:49)
+[35/82] Compile [x64] Rogue10mEquipmentPreviewActor.cpp (0:07.01 at +0:54)
+[36/82] Compile [x64] Rogue10mDamageIndicatorWidget.cpp (0:08.54 at +0:52)
+[37/82] Compile [x64] Module.Rogue10m.cpp (0:24.67 at +0:36)
+[38/82] Compile [x64] Rogue10mCharacterAnimationComponent.cpp (0:16.98 at +0:44)
+[39/82] Compile [x64] Rogue10mFirstPersonArmsAuthoring.cpp (0:08.31 at +0:54)
+[40/82] Compile [x64] Rogue10mGameState.cpp (0:05.98 at +0:57)
+[41/82] Compile [x64] Rogue10mGameMode.cpp (0:06.76 at +0:56)
+[42/82] Compile [x64] Rogue10mHUD.cpp (0:05.64 at +0:58)
+[43/82] Compile [x64] Rogue10mFirstPersonPresentationComponent.cpp (0:08.51 at +0:56)
+[44/82] Compile [x64] Rogue10mGameplayAbility_Attack.cpp (0:08.68 at +0:57)
+[45/82] Compile [x64] Rogue10mHeadCameraRuntimeTest.cpp (0:07.12 at +0:59)
+[46/82] Compile [x64] Rogue10mHitFeedbackComponent.cpp (0:06.17 at +1:01)
+[47/82] Compile [x64] Rogue10mItemDataAsset.cpp (0:06.01 at +1:01)
+[48/82] Compile [x64] Rogue10mFirstPersonFistRuntimeTest.cpp (0:13.48 at +0:55)
+[49/82] Compile [x64] Rogue10mFistAnimInstance.cpp (0:11.81 at +0:56)
+[50/82] Compile [x64] Rogue10mInitialHeadFramingRuntimeTest.cpp (0:07.54 at +1:01)
+[51/82] Compile [x64] Rogue10mMapDataLibrary.cpp (0:05.32 at +1:04)
+[52/82] Compile [x64] Rogue10mClassCombatPresentationRuntimeTest.cpp (0:18.87 at +0:52)
+[53/82] Compile [x64] Rogue10mItemDragDropOperation.cpp (0:08.57 at +1:03)
+[54/82] Compile [x64] Rogue10mMenuGameMode.cpp (0:05.67 at +1:06)
+[55/82] Compile [x64] Rogue10mMenuPlayerController.cpp (0:05.54 at +1:06)
+[56/82] Compile [x64] Rogue10mInventoryComponent.cpp (0:10.93 at +1:01)
+[57/82] Compile [x64] Rogue10mCombatComponent.cpp (0:20.15 at +0:52)
+[58/82] Compile [x64] Rogue10mMainMenuWidget.cpp (0:09.00 at +1:03)
+[59/82] Compile [x64] Rogue10mHudWidgetParts.cpp (0:11.71 at +1:01)
+[60/82] Compile [x64] Rogue10mMainHUDWidget.cpp (0:09.75 at +1:03)
+[61/82] Compile [x64] Rogue10mMonsterDataAsset.cpp (0:05.04 at +1:08)
+[62/82] Compile [x64] Rogue10mPlatformMode.cpp (0:05.00 at +1:08)
+[63/82] Compile [x64] Rogue10mMarteloPreviewRuntimeTest.cpp (0:09.17 at +1:05)
+[64/82] Compile [x64] Rogue10mMonsterSpawner.cpp (0:05.92 at +1:08)
+[65/82] Compile [x64] Rogue10mSkillDragDropOperation.cpp (0:04.65 at +1:12)
+[66/82] Compile [x64] Rogue10mSkillLoadoutDataAsset.cpp (0:04.64 at +1:12)
+[67/82] Compile [x64] Rogue10mRunPortal.cpp (0:05.26 at +1:12)
+[68/82] Compile [x64] Rogue10mSplitHUDRuntimeTest.cpp (0:04.84 at +1:12)
+[69/82] Compile [x64] Rogue10mMenuWindowWidgets.cpp (0:11.12 at +1:07)
+[70/82] Compile [x64] Rogue10mMonsterAIController.cpp (0:10.59 at +1:07)
+[71/82] Compile [x64] Rogue10mStylizedCharacter.cpp (0:05.51 at +1:13)
+[72/82] Compile [x64] Rogue10mPlayerFeedbackComponent.cpp (0:08.42 at +1:10)
+[73/82] Compile [x64] Rogue10mPlayerState.cpp (0:08.04 at +1:11)
+[74/82] Compile [x64] Rogue10mThirdPersonInspectionRuntimeTest.cpp (0:06.34 at +1:13)
+[75/82] Compile [x64] Rogue10mVitalRegenerationComponent.cpp (0:07.03 at +1:13)
+[76/82] Compile [x64] Rogue10mPlayerController.cpp (0:11.53 at +1:09)
+[77/82] Compile [x64] Rogue10mWeaponSkillTreeRuntimeTest.cpp (0:06.62 at +1:14)
+[78/82] Compile [x64] Rogue10mRunHUD.cpp (0:09.36 at +1:12)
+[79/82] Compile [x64] Rogue10mResponsiveHUDRuntimeTest.cpp (0:10.56 at +1:12)
+[80/82] Link [x64] UnrealEditor-Rogue10m.lib (0:00.25 at +1:22)
+   D:/Project/Rogue10m/tmp/split-hud-commit-20261014/clean/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.lib ���̺귯�� �� D:/Project/Rogue10m/tmp/split-hud-commit-20261014/clean/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.exp ��ü�� �����ϰ� �ֽ��ϴ�.
+[81/82] Link [x64] UnrealEditor-Rogue10m.dll (0:01.18 at +1:22)
+[82/82] WriteMetadata Rogue10mEditor.target (0:00.62 at +1:23)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 1 succeeded, 0 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 87.77 seconds
+Output binary: D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe
+
+Result: Succeeded
+Total execution time: 106.98 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 7.1kb

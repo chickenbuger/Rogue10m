@@ -1,0 +1,40 @@
+{
+  "branch": "Sprint#5-32-split-combat-hud",
+  "base": "b7ab6b60da413225edc733cb2dc5d5c398a4973c",
+  "builds": [
+    "commit-clean-build.log",
+    "commit-clean-build-final.log"
+  ],
+  "build_source_equals_staged_source": true,
+  "separate_progression_feature_in_clean_build": false,
+  "sources": [
+    {
+      "path": "Source/Rogue10m/Tests/Rogue10mSplitHUDRuntimeTest.cpp",
+      "staged_sha256": "bda19fba296f70c5bd681008a521942bf052fbce26e2d88f8a7e61699f4e664b"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mBottomHUDWidget.cpp",
+      "staged_sha256": "42bb74e345532fd8c96df5ca4f1195833d9cbf68e2a8dc2993037d18b4b38948"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mBottomHUDWidget.h",
+      "staged_sha256": "90e50337c07d50533725d5c01b14fc22db2e762bfcb912f634e927d3f779a261"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mHudWidgetParts.cpp",
+      "staged_sha256": "07166503ea1ccdbc809d61619ae48c19f2065729adf2ea9e88e97265dfc6693a"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mHudWidgetParts.h",
+      "staged_sha256": "8186fe1c52a221170f81161f2a29c7f552a9a57d82a648934df70bf20ea0143a"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mMainHUDWidget.cpp",
+      "staged_sha256": "c0829dff129da8b6dec4d47d3e28742b074cc2960652c078146645a7ad362d78"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mMainHUDWidget.h",
+      "staged_sha256": "dc443a1ee0743ede737ec685efb598804367b0a4bf4908aa03944e4c445ad12a"
+    }
+  ]
+}
