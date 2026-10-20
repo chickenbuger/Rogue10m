@@ -2292,3 +2292,11 @@
 - 검증: 최종 Editor 빌드 성공(83.55초), Automation3개 Success, 실제 게임50개/새 프로세스 저장 복원14개 확인에서 실패0·exit0. 원본 공격19개·초기 계약 보존, 1080p/720p 실제 화면 검토. 생성 경로·스테이징 목록/공백·스크립트 구문·문서 링크 검사 통과.
 - 상태: 구현·통합 QA·독립 리뷰·기록 완료. 기능 커밋 `a2a1db8b`와 로컬 develop→test→main fast-forward 승격 완료, 최종 통합 기록은 후속 문서 커밋으로 확정한다. 공개 푸시는 선행 체크포인트의 공개 자료 전송 승인 대기를 존중하며 우회하지 않는다. 전용 무기 애니메이션·무기별 archive·20분 전체 플레이·Shipping·멀티는 별도 범위다.
 - 관련: [계획](../Feature/architect/2026-10-20_hybrid-skill-tree-runtime.md), [결과](../Feature/doc/2026-10-20_hybrid-skill-tree-runtime.md), [설계](HybridSkillTreeDesign.md), [실제 격투가 화면](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/brawler-1080p.png), [실제 대검 화면](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/greatsword-720p.png), [검토](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/review.md).
+
+### 공개 GitHub 게시 승인과 통합 게시 재개 (2026-10-20)
+
+- 사용자가 현재 자료와 향후 완료 기능을 공개 chickenbuger/Rogue10m에 게시하도록 명시 승인했다. AGENTS·Git/Lazy 지침에 목적지와 계속되는 승인을 기록한다.
+- 범위: 최초 체크포인트207c595/05f74f1 + 보스c680f1ba/f49915b4 + 스킬트리a2a1db8b/77a52b6a. 분리 worktree의 미완성 무기/애니메이션 제외, 최초 Sprint#5-37 참조 보존.
+- 검증: 원격 main 대비7 ahead/0 behind, 추가139파일·151blob·크기/자격증명/생성경로 검사, 최종 Source/DataAsset tree 일치. 보스301검사·스킬트리자동화3/실행50/복원14 통과, 통합 Editor 빌드83.55초 성공 기록 확인.
+- 상태: 공개 승인 차단 사유 해소, 문서 한정 커밋·일반 atomic push 및 원격 SHA 검증을 진행한다. 실제 완료 결과는 뒤에 추가한다.
+- 관련: Feature/doc/2026-10-20_main-checkpoint.md, Feature/doc/2026-10-20_boss-run-completion.md, Feature/doc/2026-10-20_hybrid-skill-tree-runtime.md, DevLog/20261020.txt.

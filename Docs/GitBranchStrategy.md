@@ -32,6 +32,8 @@ Create short-lived branches from `develop` using `Sprint#<sprint>-<work>-<short-
 
 On 2026-10-20 the user authorized committing and pushing the current checkpoint and merging each completed future feature into `main`. Treat this as continuing commit, merge, and push approval for routine feature completion; do not request the same confirmation again.
 
+The user also explicitly approved publishing the current code, Unreal assets, source artwork, and validation evidence, plus future completed and validated features, to the public repository `https://github.com/chickenbuger/Rogue10m`. The earlier automatic-review block for public-destination approval is resolved by that user answer. Do not repeat that approval request for routine feature completion.
+
 Complete relevant build/QA, diff review, feature documents, Sprint changelog, and Korean daily DevLog before promotion. Fetch and inspect remote branches, commit scoped work on its work branch, then promote through `develop` -> `test` -> `main` and push the work and integration branches. Prefer fast-forward promotion when histories permit. Do not force-push, discard unrelated work, or call failed validation complete. Record integration blockers and resolve them within the authorized feature scope.
 
 ## Promotion Rules
