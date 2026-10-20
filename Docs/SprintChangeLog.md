@@ -2300,3 +2300,10 @@
 - 검증: 원격 main 대비7 ahead/0 behind, 추가139파일·151blob·크기/자격증명/생성경로 검사, 최종 Source/DataAsset tree 일치. 보스301검사·스킬트리자동화3/실행50/복원14 통과, 통합 Editor 빌드83.55초 성공 기록 확인.
 - 상태: 공개 승인 차단 사유 해소, 문서 한정 커밋·일반 atomic push 및 원격 SHA 검증을 진행한다. 실제 완료 결과는 뒤에 추가한다.
 - 관련: Feature/doc/2026-10-20_main-checkpoint.md, Feature/doc/2026-10-20_boss-run-completion.md, Feature/doc/2026-10-20_hybrid-skill-tree-runtime.md, DevLog/20261020.txt.
+
+### 공개 원격 게시 완료
+
+- 일반 atomic push 성공. 실제 원격 main/develop/test와 게시 작업 브랜치 b57985e1을 직접 확인했다.
+- 원격 작업 참조: Sprint#5-37=05f74f1, Sprint#5-38=77a52b6a, Sprint#5-39=f49915b4. 체크포인트·보스·스킬트리와 공개 게시 상시 승인 규칙이 모두 원격에 포함된다.
+- 진행 중인 무기/애니메이션·파일 최적화는 미포함, 강제 푸시·공유 체크아웃 변경 없음. 공개 승인 차단 해소.
+- 원문: Feature/doc/evidence/main-checkpoint-20261020/public-push.log. 직접 원격 해시 검증: public-push-result.json. 이 성공 기록만 후속 문서 커밋·푸시한다.

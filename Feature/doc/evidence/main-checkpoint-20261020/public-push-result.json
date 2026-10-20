@@ -1,0 +1,36 @@
+{
+  "verifiedAtKST": "2026-10-20T21:38:54.6059023+09:00",
+  "remote": "https://github.com/chickenbuger/Rogue10m.git",
+  "visibility": "public",
+  "authorization": "현재 상태와 향후 완료 기능의 공개 저장소 푸시 승인",
+  "pushExitCode": 0,
+  "atomic": true,
+  "force": false,
+  "refs": {
+    "refs/heads/main": "b57985e1cabfc1e61d94d19e7a5f65814f691e5e",
+    "refs/heads/develop": "b57985e1cabfc1e61d94d19e7a5f65814f691e5e",
+    "refs/heads/test": "b57985e1cabfc1e61d94d19e7a5f65814f691e5e",
+    "refs/heads/Sprint#5-37-main-checkpoint": "05f74f1bfca73fe1db831975c711370db64fd7df",
+    "refs/heads/Sprint#5-38-hybrid-skill-tree-runtime": "77a52b6a0276ae9fc471ee70fc85972df819f268",
+    "refs/heads/Sprint#5-39-boss-run-completion": "f49915b4029151d4fc96ea298f7c62546e13089f",
+    "refs/heads/Sprint#6-3-public-github-publish": "b57985e1cabfc1e61d94d19e7a5f65814f691e5e"
+  },
+  "includedFeatures": [
+    "checkpoint207c595/05f74f1",
+    "boss c680f1ba/f49915b4",
+    "hybrid a2a1db8b/77a52b6a",
+    "public approval b57985e1"
+  ],
+  "excludedWork": [
+    "Sprint#6-1-weapon-class-combat",
+    "Sprint#6-2-unused-file-optimization"
+  ],
+  "checks": [
+    "initial Editor build and TownRun Write/Read",
+    "boss200+trait101",
+    "hybrid Automation3+runtime50+read14",
+    "integrated Editor build83.55s",
+    "source/data-asset tree validation",
+    "file size/credential/generated-path/diff checks"
+  ]
+}

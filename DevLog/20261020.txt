@@ -147,3 +147,8 @@ Docs/SkillTreeLoadoutGuide.md
 
 [Notion 요약 후보]
 현재 게임 체크포인트와 완료된 보스 정산·격투가/대검술사 스킬트리의 공개 GitHub 게시 승인을 받았다. 앞으로도 기능을 완료·검증·리뷰·문서화한 뒤 main까지 병합하고 같은 공개 저장소에 커밋·푸시하는 절차로 진행한다.
+
+[공개 원격 게시 완료]
+사용자의 현재 상태·향후 완료 기능 공개 게시 승인에 따라 GitHub chickenbuger/Rogue10m에 일반 atomic push를 완료했다. 원격 main/develop/test와 게시 작업 브랜치가 b57985e1cabfc1e61d94d19e7a5f65814f691e5e임을 git ls-remote로 직접 대조했다. 최초 체크포인트 Sprint#5-37=05f74f1, 스킬트리 Sprint#5-38=77a52b6a, 보스 Sprint#5-39=f49915b4도 원격과 일치한다. 최초 체크포인트·보스 정산·스킬트리와 공개 승인 규칙이 모두 게시됐다. 강제 푸시를 사용하지 않았다.
+진행 중인 무기/애니메이션 Sprint#6-1과 파일 최적화 Sprint#6-2는 이번 게시에서 제외했다. 공유 체크아웃과 인덱스를 건드리지 않는 별도 게시 인덱스로 문서를 커밋했으며 작업 파일을 덮어쓰지 않았다. 공개 목적지 승인 차단은 사용자의 명시 답변과 실제 푸시 성공으로 해소됐다. 최초 성공 원문은 Feature/doc/evidence/main-checkpoint-20261020/public-push.log, 원격 해시 대조는 public-push-result.json에 보존했다.
+이 성공 기록과 결과 문서만 마지막 커밋으로 같은 작업→develop→test→main에 반영하고 원격 SHA를 다시 확인한다. 게임 소스·에셋 변경이 없으므로 기존 성공 빌드와 실행 검증을 반복하지 않는다.
