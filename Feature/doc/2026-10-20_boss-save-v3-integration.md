@@ -2,7 +2,7 @@
 
 2026-10-20. 작업 브랜치 `Sprint#7-2-boss-integration-validation`, 게임 검증 기준 `ddc79e5a`. 병행 감사 작업의 `Sprint#7-1` 번호를 보존하도록 이 보스 작업을7-2로 조정한다.
 
-상태: 초기 저장 누락의 실제 재현·수정·Editor 빌드·렌더된 여섯 프로세스 검증·특성 효과 회귀·독립 정적 검토를 완료했다. [설계](../architect/2026-10-20_boss-save-v3-integration.md)의 V1 재현, V2 수정, V3 검증·기록을 마쳤으며 최종 범위 검사·커밋·로컬 승격·공개 게시를 준비한다. 기존301검사는 스킬트리 병합 전 결과로 보존하고, 이번 최신 Save v3의386개 검사와 구분한다. 현재 작업의 커밋·main 반영·원격 게시 완료는 아직 기록하지 않는다.
+상태: 초기 저장 누락 재현·수정·Editor 빌드·최신 통합386검사·독립 검토·필수 경로/범위/공백 검사를 완료했다. 기능 커밋 `64935351`을 develop→test→main에 fast-forward하고 공개 원격 작업/통합4개 참조의 동일 SHA를 직접 확인했다. 게시 완료 기록도 별도 문서 커밋으로 같은 경로에 반영한다. 기존301개는 스킬트리 병합 전 결과로 구분해 보존한다.
 
 ## 문제와 수정
 
@@ -43,3 +43,9 @@ Editor 빌드180.25초 성공([원문](evidence/boss-save-v3-integration-2026102
 기존 통제 fixture처럼 순간이동·AI정지·준비 중 임시 무적·보스1HP 사전 피해·시간 단축을 사용했다. 실제 마지막 전투 타격과 포탈/UMG Enter/플랫폼 저장/마을 재로드를 검사했다. 전체20분 밸런스·Shipping·D3D12·네트워크·장시간 안정성 검증은 별도다. 이번 작업의 원본 Content/Config 변경은0이며 별도 무기 worktree를 보존했다. 콘텐츠/설정 tree와 수정 Source 세 파일·모듈 해시를 [검증 기준](evidence/boss-save-v3-integration-20261020/validation-scope.json)에 준비했으며 책임 작업자가 최종 범위·해시·생성 경로를 재대조한 뒤 커밋·develop→test→main 승격·공개 게시를 진행한다. 해당 결과는 실제 SHA와 원격 확인 뒤 추가하며 현재는 게시 준비 상태다.
 
 검증 중 병행 감사 작업이 공유 체크아웃과 main을 전진시킨 사실을 확인했다. 그 변경은 문서·감사 스크립트 범위이며 Source/Config/Content가 같아 이번 게임 검증 기준은 유지한다. 책임 작업자는 해당 작업의 종료 후 별도 게시 인덱스와 명시한40파일로 커밋을 구성하고 main 참조를 compare-and-set으로 승격할 예정이다. 공유 브랜치·인덱스와 감사 기록을 덮어쓰지 않는다. 이 절차의 실제 실행·성공 결과는 아직 기록하지 않는다.
+
+## 최종 통합·공개 게시 완료
+
+명시한40파일만 별도 게시 인덱스에 고정하고 필수 생성 경로·정확한 staging 범위·공백을 검사했다. 검증 중 추가된 감사 main `b11aefe0`의 Source/Config/Content가 검증 기준과 같음을 확인해 그 이력을 부모로 보존했다. 기능 커밋 `64935351a3478b5946917bcf16cbffd4d026d742` 생성과 참조 갱신 동안 기존 공유 브랜치/HEAD/인덱스 해시를 바꾸지 않았다. [로컬 통합](evidence/boss-save-v3-integration-20261020/local-integration.json).
+
+원격 fetch·조상·worktree 점유 검사를 거쳐 로컬 develop/test/main을 원자적 CAS fast-forward했다. 사용자 상시 공개 승인에 따라 일반 atomic push 후 네 원격 참조가 기능 커밋과 같은지 직접 재조회했다. 강제 푸시와 미완성 무기 작업 포함은 없다. [push 원문](evidence/boss-save-v3-integration-20261020/public-push.log), [원격 SHA 확인](evidence/boss-save-v3-integration-20261020/public-push-result.json). 위 게시 준비 문단은 이 완료 전 이력이며, 이 완료 기록만 후속 문서 커밋·같은 경로로 추가 전송한다.
