@@ -1,0 +1,2586 @@
+{
+  "result": "PASS",
+  "initial_review_coverage": 471,
+  "checkpoint_candidates_moved_to_protected_subtree": 242,
+  "final_candidates": 229,
+  "selected": 4,
+  "selected_bytes": 11947,
+  "preserved_final_candidates": 225,
+  "referenced_duplicates_preserved": 15,
+  "decisions": [
+    {
+      "original": "tmp/animation-stability/final-diff-warnings.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Empty state/failure/lock/dependency marker retains contextual or tool meaning and offers zero byte reduction."
+        }
+      ]
+    },
+    {
+      "original": "tmp/appearance-head/diff-warnings.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Empty state/failure/lock/dependency marker retains contextual or tool meaning and offers zero byte reduction."
+        }
+      ]
+    },
+    {
+      "original": "tmp/arin-v3-final-diff-warnings.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Tiny or empty request/diagnostic item; no material saving and no benefit in broadening deletion scope."
+        },
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Empty state/failure/lock/dependency marker retains contextual or tool meaning and offers zero byte reduction."
+        }
+      ]
+    },
+    {
+      "original": "tmp/main-save-diff-check-final.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Empty state/failure/lock/dependency marker retains contextual or tool meaning and offers zero byte reduction."
+        }
+      ]
+    },
+    {
+      "original": "tmp/main-save-stale-index.lock",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Empty state/failure/lock/dependency marker retains contextual or tool meaning and offers zero byte reduction."
+        }
+      ]
+    },
+    {
+      "original": "tmp/mouse-head-stable/stable_render02/failure-reasons.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Empty state/failure/lock/dependency marker retains contextual or tool meaning and offers zero byte reduction."
+        }
+      ]
+    },
+    {
+      "original": "tmp/mouse-head-stable/stable_runtime02/failure-reasons.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Empty state/failure/lock/dependency marker retains contextual or tool meaning and offers zero byte reduction."
+        }
+      ]
+    },
+    {
+      "original": "tmp/mouse-head-stable/stable_runtime03/failure-reasons.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Empty state/failure/lock/dependency marker retains contextual or tool meaning and offers zero byte reduction."
+        }
+      ]
+    },
+    {
+      "original": "tmp/mouse-head-stable/stable_runtime04/failure-reasons.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Empty state/failure/lock/dependency marker retains contextual or tool meaning and offers zero byte reduction."
+        }
+      ]
+    },
+    {
+      "original": "tmp/obsidian-feature-tests/31734288bec94becac11cc1eeb167c3d/Source/Rogue10m/A/Rogue10mDuplicateComponent.h",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Source/executable/tool entry point; byte-identical copy and no literal references do not justify removal."
+        }
+      ]
+    },
+    {
+      "original": "tmp/obsidian-feature-tests/31734288bec94becac11cc1eeb167c3d/Source/Rogue10m/B/Rogue10mDuplicateComponent.h",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Source/executable/tool entry point; byte-identical copy and no literal references do not justify removal."
+        }
+      ]
+    },
+    {
+      "original": "tmp/obsidian-feature-tests/31734288bec94becac11cc1eeb167c3d/Source/Rogue10m/Data/Rogue10mSkillLoadoutDataAsset.cpp",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Source/executable/tool entry point; byte-identical copy and no literal references do not justify removal."
+        }
+      ]
+    },
+    {
+      "original": "tmp/obsidian-feature-tests/31734288bec94becac11cc1eeb167c3d/Source/Rogue10m/UI/Rogue10mHudWidgetParts.cpp",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Source/executable/tool entry point; byte-identical copy and no literal references do not justify removal."
+        }
+      ]
+    },
+    {
+      "original": "tmp/unreal-skill-sync-20261019/validator-deps/pyyaml-6.0.3.dist-info/REQUESTED",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Empty state/failure/lock/dependency marker retains contextual or tool meaning and offers zero byte reduction."
+        }
+      ]
+    },
+    {
+      "original": "tmp/view-aligned-upper-body/aim-baseline03/failure-reasons.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Empty state/failure/lock/dependency marker retains contextual or tool meaning and offers zero byte reduction."
+        }
+      ]
+    },
+    {
+      "original": "tmp/view-aligned-upper-body/aim-render07/failure-reasons.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Empty state/failure/lock/dependency marker retains contextual or tool meaning and offers zero byte reduction."
+        }
+      ]
+    },
+    {
+      "original": "tmp/view-aligned-upper-body/aim-runtime05/failure-reasons.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Empty state/failure/lock/dependency marker retains contextual or tool meaning and offers zero byte reduction."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walking-palm-reference-20261009/diff-check-warnings.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Native audit/build/export records or scripts remain part of basename-based evidence packaging."
+        },
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Evidence packaging consumes basename-selected native-key/build/harness inputs; no removal from the source staging set."
+        }
+      ]
+    },
+    {
+      "original": "tmp/arin-v3-describe-editor.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Tiny or empty request/diagnostic item; no material saving and no benefit in broadening deletion scope."
+        },
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/town-play-is-running.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/town-play-load.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/town-play-start.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/split-hud-20261014/is-pie-result.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/town-play-current-level.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/view-aim/common-before.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/boxing-reference/build.cmd",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Existing 2026-09-28 preserve decision remains binding; no exception or new deletion proof."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/moving-upper-body-fist-regression/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/fighter-animations-20261002-null/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/fighter-final-regression/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/HumanMale-v2/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/StudioVerify-HumanMale-20260929/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/swing-before-20261005/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-OrcMale/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcMale/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-DwarfMale/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-HumanMale/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-OrcFemale/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfMale/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanMale/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcFemale/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v1/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v2/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-before-render-v1/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-DwarfFemale/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-HumanFemale/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfFemale/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanFemale/palm-signs.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fighter-combat-stance/moving-upper-body-stance-regression/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Metrics/CSV are dynamic Label-based regression or packaging inputs; preserve the temporary run dataset."
+        }
+      ]
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-final-render/camera-height.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Fixture CSV/metrics are inputs to basename-based final/regression evidence copying."
+        }
+      ]
+    },
+    {
+      "original": "tmp/camera-forward/walking-palm-camera-regression-v2/camera-height.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Fixture CSV/metrics are inputs to basename-based final/regression evidence copying."
+        }
+      ]
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-final-render/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Fixture CSV/metrics are inputs to basename-based final/regression evidence copying."
+        }
+      ]
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-render/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Fixture CSV/metrics are inputs to basename-based final/regression evidence copying."
+        }
+      ]
+    },
+    {
+      "original": "tmp/camera-forward/walking-palm-camera-regression-v2/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Fixture CSV/metrics are inputs to basename-based final/regression evidence copying."
+        }
+      ]
+    },
+    {
+      "original": "tmp/head-framing/run.ps1",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Existing 2026-09-28 preserve decision remains binding; no exception or new deletion proof."
+        }
+      ]
+    },
+    {
+      "original": "tmp/relaxed-idle/run.ps1",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Existing 2026-09-28 preserve decision remains binding; no exception or new deletion proof."
+        }
+      ]
+    },
+    {
+      "original": "tmp/boxing-direct/run.ps1",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Existing 2026-09-28 preserve decision remains binding; no exception or new deletion proof."
+        }
+      ]
+    },
+    {
+      "original": "tmp/appearance-head/run.ps1",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Existing 2026-09-28 preserve decision remains binding; no exception or new deletion proof."
+        }
+      ]
+    },
+    {
+      "original": "tmp/third-person-inspection/run.ps1",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Existing 2026-09-28 preserve decision remains binding; no exception or new deletion proof."
+        }
+      ]
+    },
+    {
+      "original": "tmp/appearance-head/assets-console.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Additional dynamic/contextual consumption not conclusively excluded; preserve rather than extrapolate from the duplicate match."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/qa/concept_image_v1.qa.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/qa/concept_image_v1.qa.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/moving-attack/lower-camera-regression/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Metrics/CSV are dynamic Label-based regression or packaging inputs; preserve the temporary run dataset."
+        }
+      ]
+    },
+    {
+      "original": "tmp/moving-attack/upper-body-fixed/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Metrics/CSV are dynamic Label-based regression or packaging inputs; preserve the temporary run dataset."
+        }
+      ]
+    },
+    {
+      "original": "tmp/moving-attack/upper-body-visual/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Metrics/CSV are dynamic Label-based regression or packaging inputs; preserve the temporary run dataset."
+        }
+      ]
+    },
+    {
+      "original": "tmp/moving-attack/viewaim-moving-20261013/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Metrics/CSV are dynamic Label-based regression or packaging inputs; preserve the temporary run dataset."
+        }
+      ]
+    },
+    {
+      "original": "tmp/moving-attack/walking-palm-moving-regression-v2/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Metrics/CSV are dynamic Label-based regression or packaging inputs; preserve the temporary run dataset."
+        }
+      ]
+    },
+    {
+      "original": "tmp/moving-attack/original-full-body-negative-control/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Metrics/CSV are dynamic Label-based regression or packaging inputs; preserve the temporary run dataset."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v1/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v2/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-before-render-v1/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-DwarfFemale/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-DwarfMale/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-HumanFemale/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-HumanMale/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-OrcFemale/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-OrcMale/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfFemale/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfMale/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanFemale/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanMale/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcFemale/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcMale/metrics.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/boxing-direct/make-preview.py",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Existing 2026-09-28 preserve decision remains binding; no exception or new deletion proof."
+        }
+      ]
+    },
+    {
+      "original": "tmp/boxing-direct/make-lookdown.py",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Existing 2026-09-28 preserve decision remains binding; no exception or new deletion proof."
+        }
+      ]
+    },
+    {
+      "original": "tmp/boxing-direct/make-lookdown40.py",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Existing 2026-09-28 preserve decision remains binding; no exception or new deletion proof."
+        }
+      ]
+    },
+    {
+      "original": "tmp/town-play-meta.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/view-aim/mcp-tools.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fullbody/guard-reach-analysis.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Existing 2026-09-28 preserve decision remains binding; no exception or new deletion proof."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/qa/mesh_raw_v1.qa.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/qa/mesh_raw_v1.qa.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/arin-motion-content-audit-response.json",
+      "decision": "delete_duplicate",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "recommend_delete_duplicate",
+          "reason": "Completed build/check or content-audit result output; identical retained Feature evidence exists. Bounded tmp producer/verifier review found no consumer of this temporary pathname or basename. Arin verification reads retained evidence paths."
+        },
+        {
+          "file": "candidate-review-other.json",
+          "decision": "recommend_duplicate_cleanup",
+          "reason": "Historical Arin walk/talk UBT stdout or Content audit response cache. Same-feature canonical evidence is tracked and used by the final feature document and integrity verifier; no temporary-path/basename/glob consumer was found in the reviewed scripts."
+        }
+      ]
+    },
+    {
+      "original": "tmp/arin-motion-content-final-response.json",
+      "decision": "delete_duplicate",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "recommend_delete_duplicate",
+          "reason": "Completed build/check or content-audit result output; identical retained Feature evidence exists. Bounded tmp producer/verifier review found no consumer of this temporary pathname or basename. Arin verification reads retained evidence paths."
+        },
+        {
+          "file": "candidate-review-other.json",
+          "decision": "recommend_duplicate_cleanup",
+          "reason": "Historical Arin walk/talk UBT stdout or Content audit response cache. Same-feature canonical evidence is tracked and used by the final feature document and integrity verifier; no temporary-path/basename/glob consumer was found in the reviewed scripts."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/path-check.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/boxing-reference/inspect.cpp",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Existing 2026-09-28 preserve decision remains binding; no exception or new deletion proof."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/build-final.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/DwarfFemale-final/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/DwarfFemale-v2/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/DwarfMale-final/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/DwarfMale-v2/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/fighter-animations-20261002-null/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/fighter-final-regression/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/HumanFemale-final/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/HumanFemale-v2/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/HumanMale-final/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/HumanMale-mixed/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/HumanMale-v2/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/moving-upper-body-fist-regression/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/OrcFemale-final/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/OrcFemale-v2/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/OrcMale-final/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/OrcMale-v2/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/stable_fist01/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/stable_fist02/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/stance-fist-regression/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/StudioVerify-HumanMale-20260929/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/swing-after-fp-20261005/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/swing-after-mixed-20261005/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/swing-after-render-20261005/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/swing-before-20261005/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/viewaim-combat-20261013/skills.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/moving-attack/walking-palm-moving-regression-v2/damage.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Metrics/CSV are dynamic Label-based regression or packaging inputs; preserve the temporary run dataset."
+        }
+      ]
+    },
+    {
+      "original": "tmp/arin-walk-talk-build-final.log",
+      "decision": "delete_duplicate",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "recommend_delete_duplicate",
+          "reason": "Completed build/check or content-audit result output; identical retained Feature evidence exists. Bounded tmp producer/verifier review found no consumer of this temporary pathname or basename. Arin verification reads retained evidence paths."
+        },
+        {
+          "file": "candidate-review-other.json",
+          "decision": "recommend_duplicate_cleanup",
+          "reason": "Historical Arin walk/talk UBT stdout or Content audit response cache. Same-feature canonical evidence is tracked and used by the final feature document and integrity verifier; no temporary-path/basename/glob consumer was found in the reviewed scripts."
+        }
+      ]
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-final-render/results.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Fixture CSV/metrics are inputs to basename-based final/regression evidence copying."
+        }
+      ]
+    },
+    {
+      "original": "tmp/camera-forward/walking-palm-camera-regression-v2/results.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Fixture CSV/metrics are inputs to basename-based final/regression evidence copying."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walking-palm-reference-20261009/build-editor-v2.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Native audit/build/export records or scripts remain part of basename-based evidence packaging."
+        },
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Evidence packaging consumes basename-selected native-key/build/harness inputs; no removal from the source staging set."
+        }
+      ]
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-final-render/cases.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Fixture CSV/metrics are inputs to basename-based final/regression evidence copying."
+        }
+      ]
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-render/cases.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Fixture CSV/metrics are inputs to basename-based final/regression evidence copying."
+        }
+      ]
+    },
+    {
+      "original": "tmp/camera-forward/viewaim-camera-20261013/cases.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Fixture CSV/metrics are inputs to basename-based final/regression evidence copying."
+        }
+      ]
+    },
+    {
+      "original": "tmp/camera-forward/walking-palm-camera-regression-v2/cases.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Fixture CSV/metrics are inputs to basename-based final/regression evidence copying."
+        }
+      ]
+    },
+    {
+      "original": "tmp/arin-walk-talk-build.log",
+      "decision": "delete_duplicate",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "recommend_delete_duplicate",
+          "reason": "Completed build/check or content-audit result output; identical retained Feature evidence exists. Bounded tmp producer/verifier review found no consumer of this temporary pathname or basename. Arin verification reads retained evidence paths."
+        },
+        {
+          "file": "candidate-review-other.json",
+          "decision": "recommend_duplicate_cleanup",
+          "reason": "Historical Arin walk/talk UBT stdout or Content audit response cache. Same-feature canonical evidence is tracked and used by the final feature document and integrity verifier; no temporary-path/basename/glob consumer was found in the reviewed scripts."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/artifacts/cd/cd5ae2ca1bc6f150ca8f636ba8fa90956041dd79e707b26418d73753c98110e1.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/manifest.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/head-camera/head-excursion-summary.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Existing 2026-09-28 preserve decision remains binding; no exception or new deletion proof."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/artifacts/b1/b10b438d0cf10b54b8827d288f8ed7f0980dfef190249d0b72b69e9fdd11379c.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/manifest.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/monster-effect-skills.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/arin-v3-final-harness-check.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "recommend_delete_duplicate",
+          "reason": "Completed build/check or content-audit result output; identical retained Feature evidence exists. Bounded tmp producer/verifier review found no consumer of this temporary pathname or basename. Arin verification reads retained evidence paths."
+        },
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Additional dynamic/contextual consumption not conclusively excluded; preserve rather than extrapolate from the duplicate match."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walking-palm-reference-20261009/harness-path-check.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Native audit/build/export records or scripts remain part of basename-based evidence packaging."
+        },
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Evidence packaging consumes basename-selected native-key/build/harness inputs; no removal from the source staging set."
+        }
+      ]
+    },
+    {
+      "original": "tmp/monster-effects-toolsets.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/town-play-toolsets.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/main-checkpoint-publish/push-approved.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Additional dynamic/contextual consumption not conclusively excluded; preserve rather than extrapolate from the duplicate match."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/previews/render-yaw-90.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/previews/render-yaw-90.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/previews/render-yaw-90.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/split-hud-20261014/editor-schema.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/town-play-editor-schema.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/town-play-scene-schema.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Inspection/schema/state or historical analysis context; literal-path absence alone is insufficient to exclude replay or dynamic consumers."
+        }
+      ]
+    },
+    {
+      "original": "tmp/main-checkpoint-whitespace.txt",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Additional dynamic/contextual consumption not conclusively excluded; preserve rather than extrapolate from the duplicate match."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/previews/render-yaw-180.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/previews/render-yaw--45.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/previews/render-yaw-0.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/previews/render-yaw-45.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/previews/thumbnail.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/previews/render-yaw-180.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/previews/render-yaw-180.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/previews/render-yaw-0.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/previews/render-yaw-0.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/previews/render-yaw--45.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/previews/render-yaw--45.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/previews/render-yaw-45.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/previews/render-yaw-45.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walking-palm-reference-20261009/native-key-audit.json",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Native audit/build/export records or scripts remain part of basename-based evidence packaging."
+        },
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Evidence packaging consumes basename-selected native-key/build/harness inputs; no removal from the source staging set."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/previews/contact-sheet.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/artifacts/00/0076e5cb44962e820095830e1f8df2f2e47f25edfa4e1dfcd975ff1012f0ca09.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/previews/thumbnail.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/previews/thumbnail.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/effect-animation-reference/frames/frame_09.jpg",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Existing 2026-09-28 preserve decision remains binding; no exception or new deletion proof."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/fighter-animations-20261002-null/camera.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/effect-animation-reference/frames/frame_16.jpg",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-other.json",
+          "decision": "preserve",
+          "reason": "Existing 2026-09-28 preserve decision remains binding; no exception or new deletion proof."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/previews/contact-sheet.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/previews/contact-sheet.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-before-render-v1/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/fighter-animations-20261002-null/damage.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v1/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v2/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-DwarfFemale/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-DwarfMale/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-HumanFemale/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-HumanMale/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-OrcFemale/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-OrcMale/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfFemale/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfMale/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanFemale/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanMale/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcFemale/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcMale/blendspaces.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/initial-framing-final.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/inspection-v2.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/StudioVerify-inspection-20260929.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/OrcMale-v2.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/DwarfFemale-v2.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/OrcFemale-v2.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/StudioVerify-HumanMale-20260929.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/HumanFemale-v2.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/DwarfMale-v2.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/appearance-v2.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/StudioVerify-camera-20260929.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcFemale/frames.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v2/frames.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-before-render-v1/frames.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanFemale/frames.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcMale/frames.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfMale/frames.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfFemale/frames.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanMale/frames.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/HumanMale-v2.log",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/artifacts/77/77aee1ac1a6827d5f91fa83b4249b6496f2e9917e6bc64fc73311e106b2715fb.glb",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/assets/model.glb",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-final-render/frames.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Fixture CSV/metrics are inputs to basename-based final/regression evidence copying."
+        }
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/fighter-animations-20261002-null/frames.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Preserve complete fixture bundles: CSV/metrics feed manual reviews; run.ps1 reads dynamically constructed Label.log files. Small build/path logs also remain with this manual-tool workflow."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/assets/model.fbx",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfFemale/palms.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-before-render-v1/palms.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcFemale/palms.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v2/palms.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanFemale/palms.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfMale/palms.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanMale/palms.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcMale/palms.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Runtime CSV/metrics are inputs to independent folder-based review and basename-based evidence packaging; literal full-path absence is insufficient."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/artifacts/f3/f308315dc179bb1cec27e255171e2f704728d1020aef5b5efb0ffe761940fab9.zip",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/artifacts/2f/2f3a5f504c26b27dcfca38a2fe8002a46a3d32ec5789ecd673b821ee945c1592.png",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/assets/model.fbx",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/artifacts/e8/e8dca2fb084363fe2b2c0687cda7b40c21f61788522ec5ccb0ef0aca792fb5be.glb",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/assets/model.glb",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/assets/model.glb",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/assets/model.obj",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/assets/model.obj",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Service artifact/export storage may be looked up through database identifiers or content hashes. No service/DB contract migration was validated."
+        }
+      ]
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-final-render/probes.csv",
+      "decision": "preserve",
+      "reviews": [
+        {
+          "file": "candidate-review-art.json",
+          "decision": "preserve",
+          "reason": "Fixture CSV/metrics are inputs to basename-based final/regression evidence copying."
+        }
+      ]
+    }
+  ]
+}

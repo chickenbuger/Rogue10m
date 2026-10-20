@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "ddc79e5a8270afb1b40660e969771ed920057816",
+  "files": [
+    {
+      "action": "duplicate",
+      "path": "tmp/arin-motion-content-audit-response.json",
+      "keep": "Feature/doc/evidence/arin-walk-talk-20261009/content-preservation.json",
+      "bytes": 2206,
+      "sha256": "436a800506954ad8bf6eb5e7ef8a4ed07c076221587f3cc434bd571a529fd0fa",
+      "reason": "Both independent reviewers confirmed completed diagnostic/build output; canonical committed evidence is used by current verifiers."
+    },
+    {
+      "action": "duplicate",
+      "path": "tmp/arin-motion-content-final-response.json",
+      "keep": "Feature/doc/evidence/arin-walk-talk-20261009/content-preservation.json",
+      "bytes": 2206,
+      "sha256": "436a800506954ad8bf6eb5e7ef8a4ed07c076221587f3cc434bd571a529fd0fa",
+      "reason": "Both independent reviewers confirmed completed diagnostic/build output; canonical committed evidence is used by current verifiers."
+    },
+    {
+      "action": "duplicate",
+      "path": "tmp/arin-walk-talk-build-final.log",
+      "keep": "Feature/doc/evidence/arin-walk-talk-20261009/build-final.log",
+      "bytes": 3386,
+      "sha256": "bbf33f21c6659526310eb96cd46c8385e1131d3dbaba8997fe07bf67e75152fa",
+      "reason": "Both independent reviewers confirmed completed diagnostic/build output; canonical committed evidence is used by current verifiers."
+    },
+    {
+      "action": "duplicate",
+      "path": "tmp/arin-walk-talk-build.log",
+      "keep": "Feature/doc/evidence/arin-walk-talk-20261009/build-attempt1.log",
+      "bytes": 4149,
+      "sha256": "be8bf3a5aae93a8f65aa2f15db63554344a7e80ea5f9ca98f781b40cfe5f5aa5",
+      "reason": "Both independent reviewers confirmed completed diagnostic/build output; canonical committed evidence is used by current verifiers."
+    }
+  ],
+  "original_audit_candidates": 471,
+  "final_audit_candidates": 229,
+  "policy": "Both independent recommendations required; any preserve decision wins; prior87 protection unchanged."
+}

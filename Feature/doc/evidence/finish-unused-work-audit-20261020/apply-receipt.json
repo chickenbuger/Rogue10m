@@ -1,0 +1,50 @@
+{
+  "mode": "apply",
+  "files": [
+    {
+      "path": "tmp/arin-motion-content-audit-response.json",
+      "action": "duplicate",
+      "original_bytes": 2206,
+      "sha256": "436a800506954ad8bf6eb5e7ef8a4ed07c076221587f3cc434bd571a529fd0fa",
+      "retained_path": "Feature/doc/evidence/arin-walk-talk-20261009/content-preservation.json",
+      "retained_bytes": 2206,
+      "retained_sha256": "436a800506954ad8bf6eb5e7ef8a4ed07c076221587f3cc434bd571a529fd0fa",
+      "original_present": false
+    },
+    {
+      "path": "tmp/arin-motion-content-final-response.json",
+      "action": "duplicate",
+      "original_bytes": 2206,
+      "sha256": "436a800506954ad8bf6eb5e7ef8a4ed07c076221587f3cc434bd571a529fd0fa",
+      "retained_path": "Feature/doc/evidence/arin-walk-talk-20261009/content-preservation.json",
+      "retained_bytes": 2206,
+      "retained_sha256": "436a800506954ad8bf6eb5e7ef8a4ed07c076221587f3cc434bd571a529fd0fa",
+      "original_present": false
+    },
+    {
+      "path": "tmp/arin-walk-talk-build-final.log",
+      "action": "duplicate",
+      "original_bytes": 3386,
+      "sha256": "bbf33f21c6659526310eb96cd46c8385e1131d3dbaba8997fe07bf67e75152fa",
+      "retained_path": "Feature/doc/evidence/arin-walk-talk-20261009/build-final.log",
+      "retained_bytes": 3386,
+      "retained_sha256": "bbf33f21c6659526310eb96cd46c8385e1131d3dbaba8997fe07bf67e75152fa",
+      "original_present": false
+    },
+    {
+      "path": "tmp/arin-walk-talk-build.log",
+      "action": "duplicate",
+      "original_bytes": 4149,
+      "sha256": "be8bf3a5aae93a8f65aa2f15db63554344a7e80ea5f9ca98f781b40cfe5f5aa5",
+      "retained_path": "Feature/doc/evidence/arin-walk-talk-20261009/build-attempt1.log",
+      "retained_bytes": 4149,
+      "retained_sha256": "be8bf3a5aae93a8f65aa2f15db63554344a7e80ea5f9ca98f781b40cfe5f5aa5",
+      "original_present": false
+    }
+  ],
+  "original_bytes": 11947,
+  "new_archive_bytes": 0,
+  "removed_bytes_net": 11947,
+  "baseline_commit": "ddc79e5a8270afb1b40660e969771ed920057816",
+  "result": "PASS"
+}

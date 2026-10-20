@@ -1,0 +1,2194 @@
+{
+  "schema_version": 2,
+  "created_utc": "2026-10-20T13:15:32.714854+00:00",
+  "project_root": "D:\\Project\\Rogue10m",
+  "mode": "audit_only_no_deletions",
+  "candidate_root": "tmp",
+  "retained_roots": [
+    "Feature/doc/evidence",
+    "ui-concepts",
+    "Scripts"
+  ],
+  "reference_scope": [
+    "Source",
+    "Scripts",
+    "Config",
+    "*.uproject",
+    "tmp scripts including backup/baseline/checkpoint scripts",
+    "nested project/worktree Source, Scripts, Config and *.uproject only"
+  ],
+  "limitations": [
+    "Literal normalized absolute/relative path references only; dynamically constructed paths are not resolved.",
+    "Candidate status is not deletion authorization; revalidate paths and both hashes before deleting.",
+    "SourceArt, Content, user design documents and nonidentical files are never candidates.",
+    "Tool/dependency/environment, vendor repository and generated/cache subtrees are excluded from tmp reference scans; see excluded_subtrees.",
+    "Excluded subtree counts describe directories only; descendants are not enumerated or counted."
+  ],
+  "summary": {
+    "eligible_tmp_files": 2659,
+    "hashed_files": 1060,
+    "reference_files_scanned": 2578,
+    "preserved": {
+      "backup or tool/runtime original": 42,
+      "tool/runtime binary": 4,
+      "git tracked": 5
+    },
+    "candidates": 229,
+    "candidate_bytes": 37543979,
+    "referenced_duplicates": 15,
+    "issues": 0,
+    "excluded_subtrees": 77,
+    "nested_projects": 6
+  },
+  "excluded_subtrees": [
+    {
+      "phase": "candidates",
+      "path": "tmp/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/animation-stability/before",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/animation-stability/before-jab-assets",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/apollo-source",
+      "reason": "nested repository/dependency source"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/apollo-tools",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/apollo-venv",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/appearance-head/before",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/appearance-retarget/before-ab",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/arin-animation-review/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/blender-mcp-user/scripts/addons/codex_blender_mcp_bridge/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/blender-mcp-venv",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/boss-primary-integration-backup",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/boss-run-completion-worktree",
+      "reason": "nested project/worktree; authored reference roots scanned separately"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/boxing-basic/before",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/boxing-combos/before",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/boxing-reference/before",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/camera-forward/lower-camera-final-runtime",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/camera-forward/lower-camera-runtime",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/codex-blender-mcp-source",
+      "reason": "nested repository/dependency source"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/first-person-fist/backup",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/fullbody-first-person/before",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/head-camera/before",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/head-framing/before-runtime",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/head-framing/before-tests",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/hybrid-tree-input-polish",
+      "reason": "nested project/worktree; authored reference roots scanned separately"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/inspection-view/before-input",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/legacy-character-vfx-backup-20260814",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/lower-camera-forward-attacks-20261009/baseline",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/npc-services-persistence-worktree",
+      "reason": "nested project/worktree; authored reference roots scanned separately"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/recorded-reference/decoder",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/reference-metal-hud/backup",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/relaxed-idle/before-runtime",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/relaxed-idle/before-tests",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/responsive-hud-backup-20260908",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/split-hud-20261014/before",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/split-hud-commit-20261014/clean",
+      "reason": "nested project/worktree; authored reference roots scanned separately"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/stable-head/checkpoint",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/unreal-plugin-setup-20261019",
+      "reason": "nested project/worktree; authored reference roots scanned separately"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/unreal-skill-sync-20261019/before",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/unreal-skill-sync-20261019/candidate/scripts/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/unreal-skill-sync-20261019/validator-deps/_yaml/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/unreal-skill-sync-20261019/validator-deps/yaml/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/view-aim/checkpoint",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/view-aim/save-checkpoint",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/village-progression-ui-worktree",
+      "reason": "nested project/worktree; authored reference roots scanned separately"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/walking-palm-reference-20261009/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "candidates",
+      "path": "tmp/walking-palm-reference-20261009/checkpoint",
+      "reason": "backup/baseline/checkpoint subtree; scripts still checked for references"
+    },
+    {
+      "phase": "nested_project_references",
+      "path": "tmp/boss-run-completion-worktree/Scripts/Blender/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "nested_project_references",
+      "path": "tmp/boss-run-completion-worktree/Scripts/Editor/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "nested_project_references",
+      "path": "tmp/boss-run-completion-worktree/Scripts/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "nested_project_references",
+      "path": "tmp/hybrid-tree-input-polish/Scripts/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "nested_project_references",
+      "path": "tmp/npc-services-persistence-worktree/Scripts/Blender/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "nested_project_references",
+      "path": "tmp/npc-services-persistence-worktree/Scripts/Editor/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "nested_project_references",
+      "path": "tmp/npc-services-persistence-worktree/Scripts/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/apollo-source",
+      "reason": "nested repository/dependency source"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/apollo-tools",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/apollo-venv",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/arin-animation-review/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/blender-mcp-user/scripts/addons/codex_blender_mcp_bridge/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/blender-mcp-venv",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/boss-run-completion-worktree",
+      "reason": "nested project/worktree; authored reference roots scanned separately"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/camera-forward/lower-camera-final-runtime",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/camera-forward/lower-camera-runtime",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/codex-blender-mcp-source",
+      "reason": "nested repository/dependency source"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/head-framing/before-runtime",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/hybrid-tree-input-polish",
+      "reason": "nested project/worktree; authored reference roots scanned separately"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/npc-services-persistence-worktree",
+      "reason": "nested project/worktree; authored reference roots scanned separately"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/recorded-reference/decoder",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/relaxed-idle/before-runtime",
+      "reason": "tool/dependency/environment root"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/split-hud-commit-20261014/clean",
+      "reason": "nested project/worktree; authored reference roots scanned separately"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/unreal-plugin-setup-20261019",
+      "reason": "nested project/worktree; authored reference roots scanned separately"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/unreal-skill-sync-20261019/candidate/scripts/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/unreal-skill-sync-20261019/validator-deps/_yaml/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/unreal-skill-sync-20261019/validator-deps/yaml/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/village-progression-ui-worktree",
+      "reason": "nested project/worktree; authored reference roots scanned separately"
+    },
+    {
+      "phase": "tmp_references",
+      "path": "tmp/walking-palm-reference-20261009/__pycache__",
+      "reason": "generated/cache/metadata directory"
+    }
+  ],
+  "nested_projects": [
+    "tmp/boss-run-completion-worktree",
+    "tmp/hybrid-tree-input-polish",
+    "tmp/npc-services-persistence-worktree",
+    "tmp/split-hud-commit-20261014/clean",
+    "tmp/unreal-plugin-setup-20261019",
+    "tmp/village-progression-ui-worktree"
+  ],
+  "candidates": [
+    {
+      "original": "tmp/animation-stability/final-diff-warnings.log",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/appearance-head/diff-warnings.log",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/arin-v3-final-diff-warnings.log",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/main-save-diff-check-final.txt",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/main-save-stale-index.lock",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/mouse-head-stable/stable_render02/failure-reasons.txt",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/mouse-head-stable/stable_runtime02/failure-reasons.txt",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/mouse-head-stable/stable_runtime03/failure-reasons.txt",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/mouse-head-stable/stable_runtime04/failure-reasons.txt",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/obsidian-feature-tests/31734288bec94becac11cc1eeb167c3d/Source/Rogue10m/A/Rogue10mDuplicateComponent.h",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/obsidian-feature-tests/31734288bec94becac11cc1eeb167c3d/Source/Rogue10m/B/Rogue10mDuplicateComponent.h",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/obsidian-feature-tests/31734288bec94becac11cc1eeb167c3d/Source/Rogue10m/Data/Rogue10mSkillLoadoutDataAsset.cpp",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/obsidian-feature-tests/31734288bec94becac11cc1eeb167c3d/Source/Rogue10m/UI/Rogue10mHudWidgetParts.cpp",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/unreal-skill-sync-20261019/validator-deps/pyyaml-6.0.3.dist-info/REQUESTED",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/view-aligned-upper-body/aim-baseline03/failure-reasons.txt",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/view-aligned-upper-body/aim-render07/failure-reasons.txt",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/view-aligned-upper-body/aim-runtime05/failure-reasons.txt",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/walking-palm-reference-20261009/diff-check-warnings.log",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/diff-check.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "references": []
+    },
+    {
+      "original": "tmp/arin-v3-describe-editor.json",
+      "keep": "Feature/doc/evidence/azathor-boss-patterns-20261011/editor-app-args.json",
+      "sha256": "582abc62835689144a211a5582de0057037697b4440ac12418980ab5a245ebb8",
+      "bytes": 51,
+      "references": []
+    },
+    {
+      "original": "tmp/town-play-is-running.json",
+      "keep": "Feature/doc/evidence/open-world-20261005/pcg/final-scoped-save.json",
+      "sha256": "bc3765a5848d85f41a34cbc4f0f025e990abc5b40398e7b5b2cce024e11639a2",
+      "bytes": 167,
+      "references": []
+    },
+    {
+      "original": "tmp/town-play-load.json",
+      "keep": "Feature/doc/evidence/arin-quality-20261007/unreal-captures/first-auto-reduction/lod-1/restored-camera-response.json",
+      "sha256": "5d5fa076d12fdf919b5d416ce476ab154c8f0aaac2c951257a3adbd58656af4c",
+      "bytes": 167,
+      "references": []
+    },
+    {
+      "original": "tmp/town-play-start.json",
+      "keep": "Feature/doc/evidence/arin-quality-20261007/unreal-captures/first-auto-reduction/lod-1/restored-camera-response.json",
+      "sha256": "5d5fa076d12fdf919b5d416ce476ab154c8f0aaac2c951257a3adbd58656af4c",
+      "bytes": 167,
+      "references": []
+    },
+    {
+      "original": "tmp/split-hud-20261014/is-pie-result.json",
+      "keep": "Feature/doc/evidence/open-world-20261005/pcg/final-dirty-0.json",
+      "sha256": "de61a343833d432c4fb1e842add505817031cef8b8b3588a910eed0dba46de46",
+      "bytes": 168,
+      "references": []
+    },
+    {
+      "original": "tmp/town-play-current-level.json",
+      "keep": "Feature/doc/evidence/open-world-monsters-20261005/before-level.json",
+      "sha256": "fd600e23d774f2bc2f4fe6b8a5e639403de65244f4906ba2e639fe4d1a42b6b0",
+      "bytes": 195,
+      "references": []
+    },
+    {
+      "original": "tmp/view-aim/common-before.json",
+      "keep": "Feature/doc/evidence/view-aligned-upper-body-20261011/common-before.json",
+      "sha256": "e95d39aa26c4a1b2823529e0582a1f6d5f7599c1687ab11fe454e9ef1be55c0e",
+      "bytes": 211,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/build.cmd",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/build-inspector.cmd",
+      "sha256": "01448a049e882c848e4554bab7bdb2ba6f69b4a6c4fd4c3163802c86617196a3",
+      "bytes": 364,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/moving-upper-body-fist-regression/metrics.txt",
+      "keep": "Feature/doc/evidence/moving-upper-body-attack-20261009/fist-regression-metrics.txt",
+      "sha256": "b87886f3717c33eaf53878dfdf3d2e3b90d698b00589901701a36e6a36397b11",
+      "bytes": 435,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/fighter-animations-20261002-null/metrics.txt",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-metrics.txt",
+      "sha256": "5f095b54b6aa91fb40ffe4f68b567eface9cfc6b9247e9431ce5cc9c29579aec",
+      "bytes": 436,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/fighter-final-regression/metrics.txt",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-metrics.txt",
+      "sha256": "5f095b54b6aa91fb40ffe4f68b567eface9cfc6b9247e9431ce5cc9c29579aec",
+      "bytes": 436,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/HumanMale-v2/metrics.txt",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-metrics.txt",
+      "sha256": "5f095b54b6aa91fb40ffe4f68b567eface9cfc6b9247e9431ce5cc9c29579aec",
+      "bytes": 436,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/StudioVerify-HumanMale-20260929/metrics.txt",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-metrics.txt",
+      "sha256": "5f095b54b6aa91fb40ffe4f68b567eface9cfc6b9247e9431ce5cc9c29579aec",
+      "bytes": 436,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/swing-before-20261005/metrics.txt",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-metrics.txt",
+      "sha256": "5f095b54b6aa91fb40ffe4f68b567eface9cfc6b9247e9431ce5cc9c29579aec",
+      "bytes": 436,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-OrcMale/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-OrcMale/palm-signs.csv",
+      "sha256": "3b0934aa94fa10560b8360927e1d2cbe0576afdc449dd53647ec8576dccd5b02",
+      "bytes": 536,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcMale/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-OrcMale/palm-signs.csv",
+      "sha256": "3b0934aa94fa10560b8360927e1d2cbe0576afdc449dd53647ec8576dccd5b02",
+      "bytes": 536,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-DwarfMale/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-DwarfMale/palm-signs.csv",
+      "sha256": "0b8c183945cf1ade94e25333164ef1f6bcf6d9df4ec477d2408690043110ca3f",
+      "bytes": 540,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-HumanMale/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-HumanMale/palm-signs.csv",
+      "sha256": "b0a08bf0f4b11cbb6c9f27a33842c4abc39b3d8930cbabe2550645b5c93c47c5",
+      "bytes": 540,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-OrcFemale/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-OrcFemale/palm-signs.csv",
+      "sha256": "1e7719230328ca4bb75684fa6daf89028382b1b833bac2c9945fe76aa2463db5",
+      "bytes": 540,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfMale/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-DwarfMale/palm-signs.csv",
+      "sha256": "0b8c183945cf1ade94e25333164ef1f6bcf6d9df4ec477d2408690043110ca3f",
+      "bytes": 540,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanMale/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-HumanMale/palm-signs.csv",
+      "sha256": "b0a08bf0f4b11cbb6c9f27a33842c4abc39b3d8930cbabe2550645b5c93c47c5",
+      "bytes": 540,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcFemale/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-OrcFemale/palm-signs.csv",
+      "sha256": "1e7719230328ca4bb75684fa6daf89028382b1b833bac2c9945fe76aa2463db5",
+      "bytes": 540,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v1/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/palm-signs.csv",
+      "sha256": "69d4b625a1c942f9424172229771b5e5a7a1b1820d4d3cc629efc38ecf43ffda",
+      "bytes": 544,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v2/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/palm-signs.csv",
+      "sha256": "69d4b625a1c942f9424172229771b5e5a7a1b1820d4d3cc629efc38ecf43ffda",
+      "bytes": 544,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-before-render-v1/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/palm-signs.csv",
+      "sha256": "69d4b625a1c942f9424172229771b5e5a7a1b1820d4d3cc629efc38ecf43ffda",
+      "bytes": 544,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-DwarfFemale/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-DwarfFemale/palm-signs.csv",
+      "sha256": "7a96db4a575d7cdb4012da08c5482bbd1ff89870d19b50bebf283321b1850b2d",
+      "bytes": 544,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-HumanFemale/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/palm-signs.csv",
+      "sha256": "69d4b625a1c942f9424172229771b5e5a7a1b1820d4d3cc629efc38ecf43ffda",
+      "bytes": 544,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfFemale/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-DwarfFemale/palm-signs.csv",
+      "sha256": "7a96db4a575d7cdb4012da08c5482bbd1ff89870d19b50bebf283321b1850b2d",
+      "bytes": 544,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanFemale/palm-signs.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/palm-signs.csv",
+      "sha256": "69d4b625a1c942f9424172229771b5e5a7a1b1820d4d3cc629efc38ecf43ffda",
+      "bytes": 544,
+      "references": []
+    },
+    {
+      "original": "tmp/fighter-combat-stance/moving-upper-body-stance-regression/metrics.txt",
+      "keep": "Feature/doc/evidence/moving-upper-body-attack-20261009/stance-regression-metrics.txt",
+      "sha256": "7648a2b1337db3aa69d32f1f0ccce98ccba83e9938a50259d3bb221d7c73c141",
+      "bytes": 812,
+      "references": []
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-final-render/camera-height.csv",
+      "keep": "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/camera-height.csv",
+      "sha256": "eabf6b48b6cff55e80d5499b38f8eebdb62732ccd2bc3b415804cbaefb5a2286",
+      "bytes": 853,
+      "references": []
+    },
+    {
+      "original": "tmp/camera-forward/walking-palm-camera-regression-v2/camera-height.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/regression/walking-palm-camera-regression-v2/camera-height.csv",
+      "sha256": "9fdd1a251390b3a1d94ac44ef8fe1a7e727282452db517d09bf4d7100221f18a",
+      "bytes": 853,
+      "references": []
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-final-render/metrics.txt",
+      "keep": "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/metrics.txt",
+      "sha256": "294ffb836b0dcf2dd22ae030c3ab3fe54de1b9096856c4d160433c725ad192c4",
+      "bytes": 859,
+      "references": []
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-render/metrics.txt",
+      "keep": "Feature/doc/evidence/camera-forward-attacks-20261009/final-runtime/metrics.txt",
+      "sha256": "94cc6a87d14bfb332a47d1e66aee1ee98a49558b744faad114f42d4a4feba40b",
+      "bytes": 859,
+      "references": []
+    },
+    {
+      "original": "tmp/camera-forward/walking-palm-camera-regression-v2/metrics.txt",
+      "keep": "Feature/doc/evidence/camera-forward-attacks-20261009/final-runtime/metrics.txt",
+      "sha256": "94cc6a87d14bfb332a47d1e66aee1ee98a49558b744faad114f42d4a4feba40b",
+      "bytes": 859,
+      "references": []
+    },
+    {
+      "original": "tmp/head-framing/run.ps1",
+      "keep": "Feature/doc/evidence/head-framing-20260922/run.ps1",
+      "sha256": "296fd0eed0d2359f4e738d96ddcb552a3877ba7a793db9b5d2a01ed1bddff199",
+      "bytes": 967,
+      "references": []
+    },
+    {
+      "original": "tmp/relaxed-idle/run.ps1",
+      "keep": "Feature/doc/evidence/relaxed-idle-20260922/run.ps1",
+      "sha256": "25d0fa92f289edfc9ea8e6bf0e2b166a23d3dae399e9b2adc8843067f1b600bb",
+      "bytes": 967,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/run.ps1",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/run.ps1",
+      "sha256": "9ce33b477ce0f9a803be3f5d7aca9ad4b2de6984d4bef5c825e429a6daf3d17b",
+      "bytes": 969,
+      "references": []
+    },
+    {
+      "original": "tmp/appearance-head/run.ps1",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/run.ps1",
+      "sha256": "d2c4119e045fc4fcabec9d12bbb9d1466afc3e07c19efc22c47db0962d8a4f2d",
+      "bytes": 973,
+      "references": []
+    },
+    {
+      "original": "tmp/third-person-inspection/run.ps1",
+      "keep": "Feature/doc/evidence/third-person-inspection-20260928/run.ps1",
+      "sha256": "a1951b2d1322ca1b05e396e041806ae11b42dc5818a7a2df34d65f2fd5e0eaab",
+      "bytes": 1008,
+      "references": []
+    },
+    {
+      "original": "tmp/appearance-head/assets-console.log",
+      "keep": "Feature/doc/evidence/mouse-head-stable-locomotion-20261013/contact-root-inspection-wrapper.log",
+      "sha256": "5146a8d51be912896739fff419d911c4a2ec214e2b48cbb502c00f4de196abab",
+      "bytes": 1045,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/qa/concept_image_v1.qa.json",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/qa/concept_image_v1.qa.json",
+      "sha256": "5399ef647d0bdbce37eb3f0559c9d6661107f186dea8a7947de93d91b30cf850",
+      "bytes": 1338,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/qa/concept_image_v1.qa.json",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/qa/concept_image_v1.qa.json",
+      "sha256": "5399ef647d0bdbce37eb3f0559c9d6661107f186dea8a7947de93d91b30cf850",
+      "bytes": 1338,
+      "references": []
+    },
+    {
+      "original": "tmp/moving-attack/lower-camera-regression/metrics.txt",
+      "keep": "Feature/doc/evidence/moving-upper-body-attack-20261009/render-metrics.txt",
+      "sha256": "64b2f76f44c455ce65e51d2d1587d851d18c1b31511b572e9a4b7998ebee964b",
+      "bytes": 1521,
+      "references": []
+    },
+    {
+      "original": "tmp/moving-attack/upper-body-fixed/metrics.txt",
+      "keep": "Feature/doc/evidence/moving-upper-body-attack-20261009/render-metrics.txt",
+      "sha256": "64b2f76f44c455ce65e51d2d1587d851d18c1b31511b572e9a4b7998ebee964b",
+      "bytes": 1521,
+      "references": []
+    },
+    {
+      "original": "tmp/moving-attack/upper-body-visual/metrics.txt",
+      "keep": "Feature/doc/evidence/moving-upper-body-attack-20261009/render-metrics.txt",
+      "sha256": "64b2f76f44c455ce65e51d2d1587d851d18c1b31511b572e9a4b7998ebee964b",
+      "bytes": 1521,
+      "references": []
+    },
+    {
+      "original": "tmp/moving-attack/viewaim-moving-20261013/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/regression/walking-palm-moving-regression-v2/metrics.txt",
+      "sha256": "8e5ae909610c20f96d458c0028abc569ee0a78a02a84b0a1b90ce348f972f119",
+      "bytes": 1521,
+      "references": []
+    },
+    {
+      "original": "tmp/moving-attack/walking-palm-moving-regression-v2/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/regression/walking-palm-moving-regression-v2/metrics.txt",
+      "sha256": "8e5ae909610c20f96d458c0028abc569ee0a78a02a84b0a1b90ce348f972f119",
+      "bytes": 1521,
+      "references": []
+    },
+    {
+      "original": "tmp/moving-attack/original-full-body-negative-control/metrics.txt",
+      "keep": "Feature/doc/evidence/moving-upper-body-attack-20261009/negative-control-metrics.txt",
+      "sha256": "d3fba441ff4629ef5ec25a9af04a9ff9cffd71595f7f99b3fe687037033b33da",
+      "bytes": 1526,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v1/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/metrics.txt",
+      "sha256": "76278b98b209524c2f3315faac54bb8eaa60bfc771d45e3d5ced6dc76583a45e",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v2/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/metrics.txt",
+      "sha256": "76278b98b209524c2f3315faac54bb8eaa60bfc771d45e3d5ced6dc76583a45e",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-before-render-v1/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-before-render-v1/metrics.txt",
+      "sha256": "313b9952d265c4d1169e4593c64a254e1f990a171cb5fad37dc1e90cca0f7da7",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-DwarfFemale/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-DwarfFemale/metrics.txt",
+      "sha256": "e765ca822b53938622f4b95efe8c6b48bab2e4ccbbe9759a6387c67d6cd18378",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-DwarfMale/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-DwarfMale/metrics.txt",
+      "sha256": "560ad323a185fa8e5cec54ab000e4eb5da48f76d2f1ed2bcb7e15fa9aff23bb5",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-HumanFemale/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-HumanFemale/metrics.txt",
+      "sha256": "aa3805beb9b7f0d9592d415a99786004c057925908f3258d75979849d9194bed",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-HumanMale/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-HumanMale/metrics.txt",
+      "sha256": "c1a99c8ef71fe5540e4fa6425a1d508e2f7d59951457274092feae3900bcee13",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-OrcFemale/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-OrcFemale/metrics.txt",
+      "sha256": "7ac41b7aa82519932d85558d7ae6e63fcbbea4991defb95fddf36532c7196a78",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-OrcMale/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-OrcMale/metrics.txt",
+      "sha256": "a46c7245306f6998f28a5c9a326169e82cd9945738c166c1a1d83ba1026ec7de",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfFemale/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-DwarfFemale/metrics.txt",
+      "sha256": "e765ca822b53938622f4b95efe8c6b48bab2e4ccbbe9759a6387c67d6cd18378",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfMale/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-DwarfMale/metrics.txt",
+      "sha256": "560ad323a185fa8e5cec54ab000e4eb5da48f76d2f1ed2bcb7e15fa9aff23bb5",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanFemale/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-HumanFemale/metrics.txt",
+      "sha256": "aa3805beb9b7f0d9592d415a99786004c057925908f3258d75979849d9194bed",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanMale/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-HumanMale/metrics.txt",
+      "sha256": "c1a99c8ef71fe5540e4fa6425a1d508e2f7d59951457274092feae3900bcee13",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcFemale/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-OrcFemale/metrics.txt",
+      "sha256": "7ac41b7aa82519932d85558d7ae6e63fcbbea4991defb95fddf36532c7196a78",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcMale/metrics.txt",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-OrcMale/metrics.txt",
+      "sha256": "a46c7245306f6998f28a5c9a326169e82cd9945738c166c1a1d83ba1026ec7de",
+      "bytes": 1578,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/make-preview.py",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/make-preview.py",
+      "sha256": "99381227336511576b564838275584a73c06a6542f420d9ad0de55380d5e060e",
+      "bytes": 1779,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/make-lookdown.py",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/make-lookdown.py",
+      "sha256": "cd2635758223decfbe3e282b0dca902f73983264525835494eb9f3558a2dae2e",
+      "bytes": 1846,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-direct/make-lookdown40.py",
+      "keep": "Feature/doc/evidence/boxing-direct-head-20260922/make-lookdown40.py",
+      "sha256": "18dc7aa10d13fbb8f86d982dcdf6a5f56b4b2dcb1fad911a8b81461340a2f447",
+      "bytes": 1868,
+      "references": []
+    },
+    {
+      "original": "tmp/town-play-meta.json",
+      "keep": "Feature/doc/evidence/start-village-20261005/mcp-tools.json",
+      "sha256": "fa87151ac557a6a142f9eae8098fbec9fcbfc6e9ae27fc3c4b669b8c80bd56fb",
+      "bytes": 1966,
+      "references": []
+    },
+    {
+      "original": "tmp/view-aim/mcp-tools.json",
+      "keep": "Feature/doc/evidence/start-village-20261005/mcp-tools.json",
+      "sha256": "fa87151ac557a6a142f9eae8098fbec9fcbfc6e9ae27fc3c4b669b8c80bd56fb",
+      "bytes": 1966,
+      "references": []
+    },
+    {
+      "original": "tmp/fullbody/guard-reach-analysis.json",
+      "keep": "Feature/doc/evidence/full-body-first-person-20260922/guard-reach-analysis.json",
+      "sha256": "b1fabac00288085c74ba20206a6788008eb2d648c25d57e38c4e01e391845c10",
+      "bytes": 2001,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/qa/mesh_raw_v1.qa.json",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/qa/mesh_raw_v1.qa.json",
+      "sha256": "a9eea58e8dab666f32df0e7930e2ed76f7e5ab1754b9bc4c067065a81ce29084",
+      "bytes": 2201,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/qa/mesh_raw_v1.qa.json",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/qa/mesh_raw_v1.qa.json",
+      "sha256": "a9eea58e8dab666f32df0e7930e2ed76f7e5ab1754b9bc4c067065a81ce29084",
+      "bytes": 2201,
+      "references": []
+    },
+    {
+      "original": "tmp/arin-motion-content-audit-response.json",
+      "keep": "Feature/doc/evidence/arin-walk-talk-20261009/content-preservation.json",
+      "sha256": "436a800506954ad8bf6eb5e7ef8a4ed07c076221587f3cc434bd571a529fd0fa",
+      "bytes": 2206,
+      "references": []
+    },
+    {
+      "original": "tmp/arin-motion-content-final-response.json",
+      "keep": "Feature/doc/evidence/arin-walk-talk-20261009/content-preservation.json",
+      "sha256": "436a800506954ad8bf6eb5e7ef8a4ed07c076221587f3cc434bd571a529fd0fa",
+      "bytes": 2206,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/path-check.log",
+      "keep": "Feature/doc/evidence/fist-combat-20260929/path-check.log",
+      "sha256": "3cf55d411ef37735b7435db7b7d650f6fe61abb858976d71550119c72fe1be35",
+      "bytes": 2346,
+      "references": []
+    },
+    {
+      "original": "tmp/boxing-reference/inspect.cpp",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/inspect.cpp",
+      "sha256": "5c76b95dfdeffeccac7b3bcb1759af4368c90d37b0366ce7aa3217f8451ea665",
+      "bytes": 2380,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/build-final.log",
+      "keep": "Feature/doc/evidence/fist-combat-20260929/build-final.log",
+      "sha256": "ec3307318f809e331c95f79567fe202e4b466044dc8607455974fd6fbce82472",
+      "bytes": 2396,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/DwarfFemale-final/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/DwarfFemale-v2/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/DwarfMale-final/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/DwarfMale-v2/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/fighter-animations-20261002-null/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/fighter-final-regression/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/HumanFemale-final/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/HumanFemale-v2/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/HumanMale-final/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/HumanMale-mixed/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/HumanMale-v2/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/moving-upper-body-fist-regression/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/OrcFemale-final/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/OrcFemale-v2/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/OrcMale-final/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/OrcMale-v2/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/stable_fist01/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/stable_fist02/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/stance-fist-regression/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/StudioVerify-HumanMale-20260929/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/swing-after-fp-20261005/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/swing-after-mixed-20261005/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/swing-after-render-20261005/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/swing-before-20261005/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/viewaim-combat-20261013/skills.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-skills.csv",
+      "sha256": "3652b25e9f81e963734b810dceb6a054ce9fd8c69ee30a0b120f047f651fcbf1",
+      "bytes": 2577,
+      "references": []
+    },
+    {
+      "original": "tmp/moving-attack/walking-palm-moving-regression-v2/damage.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/regression/walking-palm-moving-regression-v2/damage.csv",
+      "sha256": "f9277ed23835f1402f9f9cceb0b0ecad8f835b84c02fa559f2a7aac7c2ed4555",
+      "bytes": 2728,
+      "references": []
+    },
+    {
+      "original": "tmp/arin-walk-talk-build-final.log",
+      "keep": "Feature/doc/evidence/arin-walk-talk-20261009/build-final.log",
+      "sha256": "bbf33f21c6659526310eb96cd46c8385e1131d3dbaba8997fe07bf67e75152fa",
+      "bytes": 3386,
+      "references": []
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-final-render/results.csv",
+      "keep": "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/results.csv",
+      "sha256": "66bd06cb13feb32c27cb307db2b2b00d076c2cf85a60137ab475956061135d2a",
+      "bytes": 3523,
+      "references": []
+    },
+    {
+      "original": "tmp/camera-forward/walking-palm-camera-regression-v2/results.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/regression/walking-palm-camera-regression-v2/results.csv",
+      "sha256": "c0463485250f4de37254739a84cc71c5112f8573a9e0907628f9ef622fa1c30c",
+      "bytes": 3523,
+      "references": []
+    },
+    {
+      "original": "tmp/walking-palm-reference-20261009/build-editor-v2.log",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/build-editor-v2.log",
+      "sha256": "16674992a8e9eab7409575cbb3ddaf269c077f14547dbb4e94127d8e74197d20",
+      "bytes": 3553,
+      "references": []
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-final-render/cases.csv",
+      "keep": "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/cases.csv",
+      "sha256": "40b9f0545c29b79c572da3ac11d3e90496949fe0c435e52525f7e341e76c4e2c",
+      "bytes": 3787,
+      "references": []
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-render/cases.csv",
+      "keep": "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/cases.csv",
+      "sha256": "40b9f0545c29b79c572da3ac11d3e90496949fe0c435e52525f7e341e76c4e2c",
+      "bytes": 3787,
+      "references": []
+    },
+    {
+      "original": "tmp/camera-forward/viewaim-camera-20261013/cases.csv",
+      "keep": "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/cases.csv",
+      "sha256": "40b9f0545c29b79c572da3ac11d3e90496949fe0c435e52525f7e341e76c4e2c",
+      "bytes": 3787,
+      "references": []
+    },
+    {
+      "original": "tmp/camera-forward/walking-palm-camera-regression-v2/cases.csv",
+      "keep": "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/cases.csv",
+      "sha256": "40b9f0545c29b79c572da3ac11d3e90496949fe0c435e52525f7e341e76c4e2c",
+      "bytes": 3787,
+      "references": []
+    },
+    {
+      "original": "tmp/arin-walk-talk-build.log",
+      "keep": "Feature/doc/evidence/arin-walk-talk-20261009/build-attempt1.log",
+      "sha256": "be8bf3a5aae93a8f65aa2f15db63554344a7e80ea5f9ca98f781b40cfe5f5aa5",
+      "bytes": 4149,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/artifacts/cd/cd5ae2ca1bc6f150ca8f636ba8fa90956041dd79e707b26418d73753c98110e1.json",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/hull-export-pack/manifest.json",
+      "sha256": "cd5ae2ca1bc6f150ca8f636ba8fa90956041dd79e707b26418d73753c98110e1",
+      "bytes": 4653,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/manifest.json",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/hull-export-pack/manifest.json",
+      "sha256": "cd5ae2ca1bc6f150ca8f636ba8fa90956041dd79e707b26418d73753c98110e1",
+      "bytes": 4653,
+      "references": []
+    },
+    {
+      "original": "tmp/head-camera/head-excursion-summary.json",
+      "keep": "Feature/doc/evidence/head-attached-camera-20260922/head-excursion-summary.json",
+      "sha256": "5035ba8cacd5022a989a910ce62456c1a94e1cf33df6e77e9dcfbcbf52fe1a58",
+      "bytes": 5091,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/artifacts/b1/b10b438d0cf10b54b8827d288f8ed7f0980dfef190249d0b72b69e9fdd11379c.json",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/manifest.json",
+      "sha256": "b10b438d0cf10b54b8827d288f8ed7f0980dfef190249d0b72b69e9fdd11379c",
+      "bytes": 5703,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/manifest.json",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/manifest.json",
+      "sha256": "b10b438d0cf10b54b8827d288f8ed7f0980dfef190249d0b72b69e9fdd11379c",
+      "bytes": 5703,
+      "references": []
+    },
+    {
+      "original": "tmp/monster-effect-skills.json",
+      "keep": "Feature/doc/evidence/azathor-boss-patterns-20261011/list-skills.json",
+      "sha256": "781bc2eca54032795b5508aca94804af685720006d96021a289674973692c18a",
+      "bytes": 6511,
+      "references": []
+    },
+    {
+      "original": "tmp/arin-v3-final-harness-check.log",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/harness-check.txt",
+      "sha256": "fdd15f482c951b9206f922eab3275387f26817ec68ed65098c2461c03b3c3901",
+      "bytes": 8544,
+      "references": []
+    },
+    {
+      "original": "tmp/walking-palm-reference-20261009/harness-path-check.log",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/harness-check.txt",
+      "sha256": "fdd15f482c951b9206f922eab3275387f26817ec68ed65098c2461c03b3c3901",
+      "bytes": 8544,
+      "references": []
+    },
+    {
+      "original": "tmp/monster-effects-toolsets.json",
+      "keep": "Feature/doc/evidence/monster-test-ui-20261011/toolsets.json",
+      "sha256": "9959aab3e12c62e987e509c38ee7320c113db51abc498ed6c816c68095ee46fe",
+      "bytes": 15460,
+      "references": []
+    },
+    {
+      "original": "tmp/town-play-toolsets.json",
+      "keep": "Feature/doc/evidence/monster-test-ui-20261011/toolsets.json",
+      "sha256": "9959aab3e12c62e987e509c38ee7320c113db51abc498ed6c816c68095ee46fe",
+      "bytes": 15460,
+      "references": []
+    },
+    {
+      "original": "tmp/main-checkpoint-publish/push-approved.log",
+      "keep": "Feature/doc/evidence/main-checkpoint-20261020/public-push.log",
+      "sha256": "44c21c2b4d4b7d6596d25221129ca4721f0e9e0860f22019b34cd6d59c4833e1",
+      "bytes": 15596,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/previews/render-yaw-90.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/hull-export-pack/previews/render-yaw-90.png",
+      "sha256": "d46c51faef2f3e54d8d56176ae51d0d6b649109c75c924468d2322445520fb04",
+      "bytes": 16270,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/previews/render-yaw-90.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/render-yaw-90.png",
+      "sha256": "c7c20ffd13c3b0fe4e7827c8b6c1f9119c586a74e6da682589c4ed1084d6ecd2",
+      "bytes": 16842,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/previews/render-yaw-90.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/render-yaw-90.png",
+      "sha256": "c7c20ffd13c3b0fe4e7827c8b6c1f9119c586a74e6da682589c4ed1084d6ecd2",
+      "bytes": 16842,
+      "references": []
+    },
+    {
+      "original": "tmp/split-hud-20261014/editor-schema.json",
+      "keep": "Feature/doc/evidence/arin-reference-refinement-20261009/ue-editor-schema.json",
+      "sha256": "9572497aa920dd94dfeb64891fdc74e125593249c6ca1320920385b0e0b1d3f0",
+      "bytes": 26273,
+      "references": []
+    },
+    {
+      "original": "tmp/town-play-editor-schema.json",
+      "keep": "Feature/doc/evidence/arin-reference-refinement-20261009/ue-editor-schema.json",
+      "sha256": "9572497aa920dd94dfeb64891fdc74e125593249c6ca1320920385b0e0b1d3f0",
+      "bytes": 26273,
+      "references": []
+    },
+    {
+      "original": "tmp/town-play-scene-schema.json",
+      "keep": "Feature/doc/evidence/open-world-monsters-20261005/schema-scene.json",
+      "sha256": "d4e15ec11514e37d2304d57c981d43c58d6d3e3ec1616d18b54d9229cf147cd1",
+      "bytes": 28214,
+      "references": []
+    },
+    {
+      "original": "tmp/main-checkpoint-whitespace.txt",
+      "keep": "Feature/doc/evidence/main-checkpoint-20261020/archived-evidence-whitespace.txt",
+      "sha256": "976e302b428c3940ed02cd7f7a5f9464b85d467076de2d1f52e12de92e62cc9f",
+      "bytes": 28595,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/previews/render-yaw-180.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/hull-export-pack/previews/render-yaw-180.png",
+      "sha256": "d86ebf710fb748b36bcf78312ecada6f2b8ae350659606a37b0f1ddee8fb62b3",
+      "bytes": 30019,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/previews/render-yaw--45.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/hull-export-pack/previews/render-yaw--45.png",
+      "sha256": "d5fc4cecc020d3dae5c362fefb02ead4e3b18646c0253bb005ddd0e947c6c919",
+      "bytes": 30114,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/previews/render-yaw-0.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/hull-export-pack/previews/render-yaw-0.png",
+      "sha256": "2b111c40cc30c8f0fc960a86172b34b82e68822b8ffcd623c86d8bf43bb2816d",
+      "bytes": 30619,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/previews/render-yaw-45.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/hull-export-pack/previews/render-yaw-45.png",
+      "sha256": "7561016803142d49e097838924ba1a1aae7052857703f601576f9eee4665156e",
+      "bytes": 30676,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/previews/thumbnail.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/hull-export-pack/previews/thumbnail.png",
+      "sha256": "6a1b7d178ff29895cc744470a0af11b24aa5bd6ce7a3dc26a430c07a0275e4bc",
+      "bytes": 35737,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/previews/render-yaw-180.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/render-yaw-180.png",
+      "sha256": "f4249c6e80eb1169f4eaa4612c7f3dd1924028f899ac0d815e84ee4341211f58",
+      "bytes": 47249,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/previews/render-yaw-180.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/render-yaw-180.png",
+      "sha256": "f4249c6e80eb1169f4eaa4612c7f3dd1924028f899ac0d815e84ee4341211f58",
+      "bytes": 47249,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/previews/render-yaw-0.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/render-yaw-0.png",
+      "sha256": "b9cc3f9d2a0b0a91d52cb4107f53e0548d7c425a28f222bac6bf5859e1d03bb7",
+      "bytes": 51190,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/previews/render-yaw-0.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/render-yaw-0.png",
+      "sha256": "b9cc3f9d2a0b0a91d52cb4107f53e0548d7c425a28f222bac6bf5859e1d03bb7",
+      "bytes": 51190,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/previews/render-yaw--45.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/render-yaw--45.png",
+      "sha256": "717eb381bbb2f4e8fb7b497fc5f16e13281a56c544aa5407435a971925826dd3",
+      "bytes": 51430,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/previews/render-yaw--45.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/render-yaw--45.png",
+      "sha256": "717eb381bbb2f4e8fb7b497fc5f16e13281a56c544aa5407435a971925826dd3",
+      "bytes": 51430,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/previews/render-yaw-45.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/render-yaw-45.png",
+      "sha256": "c7822892af78e17bab2263020cc3577b3eb1966207a90452ebc92dd0595e075b",
+      "bytes": 52257,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/previews/render-yaw-45.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/render-yaw-45.png",
+      "sha256": "c7822892af78e17bab2263020cc3577b3eb1966207a90452ebc92dd0595e075b",
+      "bytes": 52257,
+      "references": []
+    },
+    {
+      "original": "tmp/walking-palm-reference-20261009/native-key-audit.json",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/native-key-audit.json",
+      "sha256": "207b91f94f680d4e3bd26e616227c96edecd92710a71f8de44088628d229911f",
+      "bytes": 59124,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/previews/contact-sheet.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/hull-export-pack/previews/contact-sheet.png",
+      "sha256": "6b98ae154a969700689fa9e822abab2912f2aaa04043b52f80479039c53fc029",
+      "bytes": 60102,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/artifacts/00/0076e5cb44962e820095830e1f8df2f2e47f25edfa4e1dfcd975ff1012f0ca09.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/thumbnail.png",
+      "sha256": "0076e5cb44962e820095830e1f8df2f2e47f25edfa4e1dfcd975ff1012f0ca09",
+      "bytes": 62442,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/previews/thumbnail.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/thumbnail.png",
+      "sha256": "0076e5cb44962e820095830e1f8df2f2e47f25edfa4e1dfcd975ff1012f0ca09",
+      "bytes": 62442,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/previews/thumbnail.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/thumbnail.png",
+      "sha256": "0076e5cb44962e820095830e1f8df2f2e47f25edfa4e1dfcd975ff1012f0ca09",
+      "bytes": 62442,
+      "references": []
+    },
+    {
+      "original": "tmp/effect-animation-reference/frames/frame_09.jpg",
+      "keep": "Feature/doc/evidence/impact-reference-20260912/enemy-reaction.jpg",
+      "sha256": "2d56f15a6cdfc4c1f231f475d5b253ce3ccae4228122fd65e36d787786c84f24",
+      "bytes": 73511,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/fighter-animations-20261002-null/camera.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-camera.csv",
+      "sha256": "0cd92082a0d236d0b957b12f12ddb0df8474b2ebeb1a9ea4af19c0e76c93bcea",
+      "bytes": 76486,
+      "references": []
+    },
+    {
+      "original": "tmp/effect-animation-reference/frames/frame_16.jpg",
+      "keep": "Feature/doc/evidence/impact-reference-20260912/camera-change.jpg",
+      "sha256": "8796d8b9d9180dd0883e455a29e910de1cb2684061782d7e2fb21310679074c5",
+      "bytes": 77426,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/previews/contact-sheet.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/contact-sheet.png",
+      "sha256": "e76de06ac60acd9822c08b90611d6a197c8cfd916da8da40eb12db1d37873991",
+      "bytes": 88691,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/previews/contact-sheet.png",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/previews/contact-sheet.png",
+      "sha256": "e76de06ac60acd9822c08b90611d6a197c8cfd916da8da40eb12db1d37873991",
+      "bytes": 88691,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-before-render-v1/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-before-render-v1/blendspaces.csv",
+      "sha256": "5ae90e31f56232a6ed2c478247f4ca30b3c5a1e45d5cc0c3d9a77969d3128159",
+      "bytes": 174400,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/fighter-animations-20261002-null/damage.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-damage.csv",
+      "sha256": "f0f4827bff02105b22af4c944ff73d4d7c7eb86f6983cac367fe1eeb94deecfc",
+      "bytes": 179497,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v1/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/blendspaces.csv",
+      "sha256": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "bytes": 190024,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v2/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/blendspaces.csv",
+      "sha256": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "bytes": 190024,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-DwarfFemale/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/blendspaces.csv",
+      "sha256": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "bytes": 190024,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-DwarfMale/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/blendspaces.csv",
+      "sha256": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "bytes": 190024,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-HumanFemale/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/blendspaces.csv",
+      "sha256": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "bytes": 190024,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-HumanMale/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/blendspaces.csv",
+      "sha256": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "bytes": 190024,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-OrcFemale/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/blendspaces.csv",
+      "sha256": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "bytes": 190024,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v1-OrcMale/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/blendspaces.csv",
+      "sha256": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "bytes": 190024,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfFemale/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/blendspaces.csv",
+      "sha256": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "bytes": 190024,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfMale/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/blendspaces.csv",
+      "sha256": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "bytes": 190024,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanFemale/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/blendspaces.csv",
+      "sha256": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "bytes": 190024,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanMale/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/blendspaces.csv",
+      "sha256": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "bytes": 190024,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcFemale/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/blendspaces.csv",
+      "sha256": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "bytes": 190024,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcMale/blendspaces.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/blendspaces.csv",
+      "sha256": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "bytes": 190024,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/initial-framing-final.log",
+      "keep": "Feature/doc/evidence/fist-combat-20260929/initial-framing-final.log",
+      "sha256": "2e5b22d5c41c97efeb0ce2270d7d9e5be78b7ff0f049dc37a688ad520de40cf8",
+      "bytes": 204837,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/inspection-v2.log",
+      "keep": "Feature/doc/evidence/fist-combat-20260929/inspection-v2.log",
+      "sha256": "2cdd82021f8dab5a9ff14edb210ee2abf79dde78e13cfb9af4ba26b1e16a0ad5",
+      "bytes": 227149,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/StudioVerify-inspection-20260929.log",
+      "keep": "Feature/doc/evidence/studio-fist-completion-20260929/inspection.log",
+      "sha256": "06b965e63b170899071c0d1e5d5557f2e6a22c53829d26ec3c922d8160571157",
+      "bytes": 227188,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/OrcMale-v2.log",
+      "keep": "Feature/doc/evidence/fist-combat-20260929/OrcMale-v2.log",
+      "sha256": "577bb53f0a152ee710e15853ef432f4d16e3eb58003f6dbfe77ead199d92dd10",
+      "bytes": 230431,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/DwarfFemale-v2.log",
+      "keep": "Feature/doc/evidence/fist-combat-20260929/DwarfFemale-v2.log",
+      "sha256": "2c8d5e0a6147ebd64a82604b9287442c4f5a5ba84be28d8c2b22507696fbc9d0",
+      "bytes": 233955,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/OrcFemale-v2.log",
+      "keep": "Feature/doc/evidence/fist-combat-20260929/OrcFemale-v2.log",
+      "sha256": "1b67033301887a0e53ce9ec0f387ae473f8b8e3395c0e0d4c6f801b7c03b4690",
+      "bytes": 234370,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/StudioVerify-HumanMale-20260929.log",
+      "keep": "Feature/doc/evidence/studio-fist-completion-20260929/fist-runtime.log",
+      "sha256": "7064292ab3d0778cbd748e914d46a7431aa785bac2c8715abb79f22c75b90fac",
+      "bytes": 234581,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/HumanFemale-v2.log",
+      "keep": "Feature/doc/evidence/fist-combat-20260929/HumanFemale-v2.log",
+      "sha256": "2a7dc073dcc257a01a7f19959ee08293647389555e70102be548113a666b2e36",
+      "bytes": 234729,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/DwarfMale-v2.log",
+      "keep": "Feature/doc/evidence/fist-combat-20260929/DwarfMale-v2.log",
+      "sha256": "81449b852af6467cc34f3003030fadb6d5be7761be438ac3cf0c5ca00250573f",
+      "bytes": 235221,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/appearance-v2.log",
+      "keep": "Feature/doc/evidence/fist-combat-20260929/appearance-v2.log",
+      "sha256": "ab531a6825e87b477cfd933a8b9a641147930506c474578f266c1da893161028",
+      "bytes": 238212,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/StudioVerify-camera-20260929.log",
+      "keep": "Feature/doc/evidence/studio-fist-completion-20260929/camera.log",
+      "sha256": "c505537cc594ee0f83e03f435035c98978395d858dfa4e34b367e1f59ee37b96",
+      "bytes": 238495,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcFemale/frames.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-OrcFemale/frames.csv",
+      "sha256": "02f31c5493bd73ad7d604226b1c54801affd170e6371b422545ed1deacbab155",
+      "bytes": 249553,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v2/frames.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/frames.csv",
+      "sha256": "b0ea08f2cbde782f6286935e540fd3db6b7851df5b3d1344e01496e4eb13a795",
+      "bytes": 249554,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-before-render-v1/frames.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-before-render-v1/frames.csv",
+      "sha256": "86549edb4508fca13b484d4a676f243823fb7e59d45e53a06f034627015ecb9f",
+      "bytes": 249554,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanFemale/frames.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-HumanFemale/frames.csv",
+      "sha256": "56056233ccfd15faacd1835c75d7f21b5d03ce41e9312696892b28454041bdae",
+      "bytes": 249554,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcMale/frames.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-OrcMale/frames.csv",
+      "sha256": "7e140823b7a076622c52172e1f062221b3e6457fd6b403b01b363412f5369c6c",
+      "bytes": 249566,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfMale/frames.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-DwarfMale/frames.csv",
+      "sha256": "5244dbea739d9d1fbcc7967ee4f1e41748a48204f5332b9840b42660833df329",
+      "bytes": 249576,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfFemale/frames.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-DwarfFemale/frames.csv",
+      "sha256": "7bdd0804a1721201282a90c1ad57e46d704414cf89bfd04bc6828c5050d67c83",
+      "bytes": 249580,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanMale/frames.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-HumanMale/frames.csv",
+      "sha256": "cdfbd63f397941271b52f001830e08eff343e27bff56e4cfd5d2b3d8df419bab",
+      "bytes": 249580,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/HumanMale-v2.log",
+      "keep": "Feature/doc/evidence/fist-combat-20260929/HumanMale-v2.log",
+      "sha256": "1fa4fa03f944663500d35d7e5335815d9c6dce82ac7583950c9862ebc668396f",
+      "bytes": 323470,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/artifacts/77/77aee1ac1a6827d5f91fa83b4249b6496f2e9917e6bc64fc73311e106b2715fb.glb",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/hull/arin-hull-normalized.glb",
+      "sha256": "77aee1ac1a6827d5f91fa83b4249b6496f2e9917e6bc64fc73311e106b2715fb",
+      "bytes": 448716,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/assets/model.glb",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/hull/arin-hull-normalized.glb",
+      "sha256": "77aee1ac1a6827d5f91fa83b4249b6496f2e9917e6bc64fc73311e106b2715fb",
+      "bytes": 448716,
+      "references": []
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-final-render/frames.csv",
+      "keep": "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/frames.csv",
+      "sha256": "520d22874c4438e8e402473331c4acee3fea8a5f74c0d1fdf34c6c4b1c8d0fab",
+      "bytes": 545035,
+      "references": []
+    },
+    {
+      "original": "tmp/fist-combat/fighter-animations-20261002-null/frames.csv",
+      "keep": "Feature/doc/evidence/fighter-animation-binding-20261002/combat-frames.csv",
+      "sha256": "fa4addbe2aa9873f0640ed8beafdfdb580389c17cb541edb77c25e0c334257eb",
+      "bytes": 624503,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45dqnzp00aartxyz6/mesh_raw_v1_unreal_ehwppc/assets/model.fbx",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/hull-export-pack/assets/model.fbx",
+      "sha256": "06c31ea29bb8dc643889f5c7eae4fed3053f2df59839b24e3bd342f8e8449aff",
+      "bytes": 659468,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfFemale/palms.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-DwarfFemale/palms.csv",
+      "sha256": "9852b554e4a5724e1ec03f9e94b93aeae5a41cfe3b1ad090ec70e045987972ad",
+      "bytes": 1034639,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-before-render-v1/palms.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-before-render-v1/palms.csv",
+      "sha256": "58bf4f11747180f9bf8412fd3fe409cee30d69c87f5130678f076867999b5ae3",
+      "bytes": 1036381,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcFemale/palms.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-OrcFemale/palms.csv",
+      "sha256": "45cb4668c5ee8bce2f8d4abd2425e7249f161da14c762d209e9545f11910d88f",
+      "bytes": 1036710,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-after-render-v2/palms.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-after-render-v2/palms.csv",
+      "sha256": "5b1e0a682f6699aa23dc3e1b4fe1ae61e57e8243b4055b9c46c411c548f1b53d",
+      "bytes": 1036771,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanFemale/palms.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-HumanFemale/palms.csv",
+      "sha256": "2846ebac07628a357803896cccb8da18e764d20fac990c34f90b2d832ed731e5",
+      "bytes": 1036772,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-DwarfMale/palms.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-DwarfMale/palms.csv",
+      "sha256": "0639affc9e360c2d16629ab87c55893cfe1ea5da14d17662c88b9138df9f1833",
+      "bytes": 1037156,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-HumanMale/palms.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-HumanMale/palms.csv",
+      "sha256": "c504bf4ecf58ae7fe762ec1f256f0cc6cc5b9d9fff214e31b41734b9caa01a48",
+      "bytes": 1037266,
+      "references": []
+    },
+    {
+      "original": "tmp/walk-palm/walking-palm-six-runtime-v2-OrcMale/palms.csv",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/runtime/walking-palm-six-runtime-v2-OrcMale/palms.csv",
+      "sha256": "6f8cc0760e31b21dccd74caad37238f3627292b7e5dfd08325782798582d5435",
+      "bytes": 1037299,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/artifacts/f3/f308315dc179bb1cec27e255171e2f704728d1020aef5b5efb0ffe761940fab9.zip",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/arin-apollo-native-export.zip",
+      "sha256": "f308315dc179bb1cec27e255171e2f704728d1020aef5b5efb0ffe761940fab9",
+      "bytes": 1049722,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/artifacts/2f/2f3a5f504c26b27dcfca38a2fe8002a46a3d32ec5789ecd673b821ee945c1592.png",
+      "keep": "Feature/doc/evidence/arin-npc-fbx-20261005/arin-tpose-reference-v1.png",
+      "sha256": "2f3a5f504c26b27dcfca38a2fe8002a46a3d32ec5789ecd673b821ee945c1592",
+      "bytes": 1208737,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/assets/model.fbx",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/assets/model.fbx",
+      "sha256": "9d9d7564a9aa592e87fa0a6d6250a603265d4831a0ef60859f9cbfb004268bfa",
+      "bytes": 1549148,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/artifacts/e8/e8dca2fb084363fe2b2c0687cda7b40c21f61788522ec5ccb0ef0aca792fb5be.glb",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/assets/model.glb",
+      "sha256": "e8dca2fb084363fe2b2c0687cda7b40c21f61788522ec5ccb0ef0aca792fb5be",
+      "bytes": 1636296,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/assets/model.glb",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/assets/model.glb",
+      "sha256": "e8dca2fb084363fe2b2c0687cda7b40c21f61788522ec5ccb0ef0aca792fb5be",
+      "bytes": 1636296,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/assets/model.glb",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/assets/model.glb",
+      "sha256": "e8dca2fb084363fe2b2c0687cda7b40c21f61788522ec5ccb0ef0aca792fb5be",
+      "bytes": 1636296,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_unreal_n2ghsq/assets/model.obj",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/assets/model.obj",
+      "sha256": "7d9bd4723a9cfd3bed5b23e248abd103f5bc34d00d408444f9d0998acf403409",
+      "bytes": 1944931,
+      "references": []
+    },
+    {
+      "original": "tmp/apollo-data/exports/ast_1m45c3php007vt0fzyt/mesh_raw_v1_web_nk622m/assets/model.obj",
+      "keep": "Feature/doc/evidence/arin-apollo-20261005/cutout-export-pack/assets/model.obj",
+      "sha256": "7d9bd4723a9cfd3bed5b23e248abd103f5bc34d00d408444f9d0998acf403409",
+      "bytes": 1944931,
+      "references": []
+    },
+    {
+      "original": "tmp/camera-forward/lower-camera-final-render/probes.csv",
+      "keep": "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/probes.csv",
+      "sha256": "c4d1d8ff73fa9648bc96ef72aeb0c8e231c9e32c67c9518e7cfee5aac8a10776",
+      "bytes": 4330278,
+      "references": []
+    }
+  ],
+  "referenced_duplicates": [
+    {
+      "original": "tmp/view-aim/editor-before.json",
+      "keep": "Feature/doc/evidence/view-aligned-upper-body-20261011/editor-before.json",
+      "sha256": "2f53d334a09cdeaae63f2d7801f15dc786ff0d63cce2854efb8d810192725cda",
+      "bytes": 105,
+      "references": [
+        "tmp/view-aim/ReadEditorState.py"
+      ]
+    },
+    {
+      "original": "tmp/appearance-shadow/result.txt",
+      "keep": "Feature/doc/evidence/full-body-shadow-20260928/result.txt",
+      "sha256": "61b8e1a29772127553d91c24d3aa1228b4760fdbf7e55e181cdea63dc9503f96",
+      "bytes": 214,
+      "references": [
+        "tmp/full-body-shadow/finalize.py"
+      ]
+    },
+    {
+      "original": "tmp/animation-stability/after/metrics.txt",
+      "keep": "Feature/doc/evidence/animation-stability-20260928/after-metrics.txt",
+      "sha256": "1e17d686ec5eab9f1ec4c735308fb54826f041cad24a95e08b487d63ad5187bf",
+      "bytes": 346,
+      "references": [
+        "tmp/animation-stability/package_evidence.py"
+      ]
+    },
+    {
+      "original": "tmp/arms-only/asset-result.txt",
+      "keep": "Feature/doc/evidence/arms-only-20260912/asset-result.txt",
+      "sha256": "53b943eeacbc19a93353be0a82e97eb395723206a278a58f39fc82c972056b30",
+      "bytes": 479,
+      "references": [
+        "Scripts/Editor/CreateFirstPersonArms.py",
+        "Source/Rogue10m/Editor/Rogue10mFirstPersonArmsAuthoring.cpp",
+        "tmp/boss-run-completion-worktree/Scripts/Editor/CreateFirstPersonArms.py",
+        "tmp/boss-run-completion-worktree/Source/Rogue10m/Editor/Rogue10mFirstPersonArmsAuthoring.cpp",
+        "tmp/hybrid-tree-input-polish/Scripts/Editor/CreateFirstPersonArms.py",
+        "tmp/hybrid-tree-input-polish/Source/Rogue10m/Editor/Rogue10mFirstPersonArmsAuthoring.cpp",
+        "tmp/npc-services-persistence-worktree/Scripts/Editor/CreateFirstPersonArms.py",
+        "tmp/npc-services-persistence-worktree/Source/Rogue10m/Editor/Rogue10mFirstPersonArmsAuthoring.cpp",
+        "tmp/split-hud-commit-20261014/clean/Source/Rogue10m/Editor/Rogue10mFirstPersonArmsAuthoring.cpp",
+        "tmp/stable-head/checkpoint/Scripts/Editor/CreateFirstPersonArms.py"
+      ]
+    },
+    {
+      "original": "tmp/head-framing/make-forward30.py",
+      "keep": "Feature/doc/evidence/head-framing-20260922/make-forward30.py",
+      "sha256": "4c6ba17a593d5cfc424037c817d6b49d74dccaa8719c2842139845299938d734",
+      "bytes": 1837,
+      "references": [
+        "tmp/head-framing/encode.ps1"
+      ]
+    },
+    {
+      "original": "tmp/appearance-retarget/final-policy/result.json",
+      "keep": "Feature/doc/evidence/animation-stability-20260928/retarget-policy.json",
+      "sha256": "63258f14eb5c715d5f88b6cf357262ebeef3165211b1f33d7e950fcf147d0255",
+      "bytes": 2968,
+      "references": [
+        "tmp/animation-stability/package_evidence.py"
+      ]
+    },
+    {
+      "original": "tmp/camera-forward/initial-editor-state.json",
+      "keep": "Feature/doc/evidence/camera-forward-attacks-20261009/before-player-camera.json",
+      "sha256": "178ab3feb1c57943bef4436772558e733858c9853754f6e5957bd0dd2ddd08b1",
+      "bytes": 3590,
+      "references": [
+        "tmp/inspect-camera-forward.py"
+      ]
+    },
+    {
+      "original": "tmp/quick-melee/source-finger-angles.json",
+      "keep": "Feature/doc/evidence/quick-melee-20260909/source-finger-angles.json",
+      "sha256": "1495de20930e68216b104109e4491f11c569d7295e01a449f96e23269bcd066d",
+      "bytes": 7609,
+      "references": [
+        "tmp/quick-melee/inspect-finger-source.py"
+      ]
+    },
+    {
+      "original": "tmp/head-camera/retarget-head-poses.json",
+      "keep": "Feature/doc/evidence/head-attached-camera-20260922/retarget-head-poses.json",
+      "sha256": "98d5b41e1e72404fafafe786515947f4848e61468f316427f92cf95cc03c0679",
+      "bytes": 66114,
+      "references": [
+        "tmp/head-camera/inspect-head.py"
+      ]
+    },
+    {
+      "original": "tmp/martelo-preview/motion.json",
+      "keep": "Feature/doc/evidence/martelo-preview-20260922/motion.json",
+      "sha256": "a35a953db629a9fcff882fd1fe931ccecd2268c6ecba3286374eb947db19204f",
+      "bytes": 73670,
+      "references": [
+        "tmp/martelo-preview/render.py"
+      ]
+    },
+    {
+      "original": "tmp/full-body-shadow/comparison.jpg",
+      "keep": "Feature/doc/evidence/full-body-shadow-20260928/before-after.jpg",
+      "sha256": "70255f3f71233e441c90fb6c4eae60ca931c6bfe527c3c756f487a990dbf7f0e",
+      "bytes": 93262,
+      "references": [
+        "tmp/full-body-shadow/finalize.py"
+      ]
+    },
+    {
+      "original": "tmp/boxing-reference/actual-motion.json",
+      "keep": "Feature/doc/evidence/boxing-reference-20260922/boxing-source-motion.json",
+      "sha256": "a1b8a25f6eb675ba67ae5d893bac0253b83242fcfae71b89c34c2c1a29cf65e9",
+      "bytes": 96697,
+      "references": [
+        "Scripts/AnalyzeBoxingReference.py",
+        "tmp/boss-run-completion-worktree/Scripts/AnalyzeBoxingReference.py",
+        "tmp/hybrid-tree-input-polish/Scripts/AnalyzeBoxingReference.py",
+        "tmp/npc-services-persistence-worktree/Scripts/AnalyzeBoxingReference.py",
+        "tmp/stable-head/checkpoint/Scripts/AnalyzeBoxingReference.py"
+      ]
+    },
+    {
+      "original": "tmp/appearance-head/review.jpg",
+      "keep": "Feature/doc/evidence/appearance-head-20260926/review.jpg",
+      "sha256": "5ef86f0ca3e00205d78a135759b00993d8d4c99ce078d2705771e342c5655d5c",
+      "bytes": 139356,
+      "references": [
+        "tmp/appearance-head/review.py"
+      ]
+    },
+    {
+      "original": "tmp/fist-combat/authoring-final.log",
+      "keep": "Feature/doc/evidence/fist-combat-20260929/authoring-final.log",
+      "sha256": "84f4509b42b140787a63c3d14ee6087ef63c5839e319b277cde6e303129fb117",
+      "bytes": 284683,
+      "references": [
+        "tmp/fist-combat/author.ps1"
+      ]
+    },
+    {
+      "original": "tmp/walking-palm-reference-20261009/source-keys.json",
+      "keep": "Feature/doc/evidence/walking-palm-reference-20261009/source-keys.json",
+      "sha256": "33cc41c3ffff1b92530c239990dacc97a667f70f6bd3deb77d04053a61f1ee47",
+      "bytes": 1263010,
+      "references": [
+        "tmp/compare-native-walk-keys.py"
+      ]
+    }
+  ],
+  "issues": []
+}

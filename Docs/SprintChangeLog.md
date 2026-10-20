@@ -2320,3 +2320,13 @@
 - Sprint#6-2 최종 파일 검사: 변경32개 명시 목록, Python6개·JSON8개·문서 링크10개·append-only DevLog/Sprint·Source/Config/Content 변경0 통과. 생성 경로 검사 통과, 스테이징/공백 및 커밋·승격 준비.
 
 - Sprint#6-2 완료: 기능 커밋 `a70c521649eca752ef2e3f0e17f9ae7f216b9050`, 변경32개 스테이징/필수 경로/공백 통과, 원격·조상·worktree 확인 후 develop→test→main CAS fast-forward와 일반 atomic push 완료. 원격4개 직접 SHA 일치 확인. [로컬 통합](../Feature/doc/evidence/unused-file-optimization-20261020/local-integration.json), [원격 검증](../Feature/doc/evidence/unused-file-optimization-20261020/public-push-result.json). 첫 줄바꿈 입력 오류는 무변경 거절 후 LF로 수정했다. 이번 완료 기록도 같은 순서로 문서 커밋·반영한다.
+
+
+## Sprint#7-1 — 미완료 tmp 감사와 후속 정리 (2026-10-20)
+
+- 목표: 앞선 정리에서 중단된 전체 tmp 감사를 완료하고 입증된 과거 출력만 후속 정리한다.
+- 변경: 후보/참조 단계별 보호 subtree·checkpoint 입구 제외, 중첩 프로젝트 저작 참조 유지, suffix 선별·진행/범위 기록, timestamp 새 출력·기존/동시 evidence 덮어쓰기 방지. 두 검토자 교집합인 Arin stdout2개/JSON2개만 정리(4개11947바이트).
+- 검증: 최종12회귀 PASS, 실제 감사79.828초exit0·issues0·후보탐색2659/해시1060/참조2578·제외77/프로젝트6. 초기471개 전량 검토→checkpoint242 보호→최종229 중225보존·15참조보존. 원본4개/추적 canonical3개 해시·실제 복구→재정리·독립 최종 검토 PASS.
+- 보존: 기존87개, 제작/glob/basename/CSV 입력, 고유 대형 출력·Fab/Content·현재 게임 소스. 수동 크기필터 오류는 삭제 전 수정·보고 재검증. 별도 보스 저장 작업의 Source3개·문서·공유 로그는 이번 커밋에서 제외하고 보존한다.
+- 상태: 남은 감사·정리·검증·복구·리뷰 완료. 별도 인덱스의 명시 범위 검사 후 커밋·develop→test→main·공개 원격 반영 진행.
+- 관련: [계획](../Feature/architect/2026-10-20_finish-unused-work-audit.md), [결과](../Feature/doc/2026-10-20_finish-unused-work-audit.md), [최종 감사](../Feature/doc/evidence/finish-unused-work-audit-20261020/tmp-audit-final.json), [복구](../Feature/doc/evidence/finish-unused-work-audit-20261020/RESTORE.md).

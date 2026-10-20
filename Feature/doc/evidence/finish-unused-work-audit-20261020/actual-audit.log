@@ -1,0 +1,28 @@
+Audit: read tracked files and registered worktrees
+Audit: enumerate tmp candidates with protected subtrees pruned
+Audit: enumerate retained copies: Feature/doc/evidence
+Audit: enumerate retained copies: ui-concepts
+Audit: enumerate retained copies: Scripts
+Audit: hash size-matched candidate/retained files
+Audit: hashed files=250
+Audit: hashed files=500
+Audit: hashed files=750
+Audit: hashed files=1000
+Audit: hashed files=1250
+Audit: hashed files=1500
+Audit: enumerate primary and tmp authored reference files
+Audit: enumerate nested project authored references: tmp/boss-run-completion-worktree
+Audit: enumerate nested project authored references: tmp/hybrid-tree-input-polish
+Audit: enumerate nested project authored references: tmp/npc-services-persistence-worktree
+Audit: enumerate nested project authored references: tmp/split-hud-commit-20261014/clean
+Audit: enumerate nested project authored references: tmp/unreal-plugin-setup-20261019
+Audit: enumerate nested project authored references: tmp/village-progression-ui-worktree
+Audit: scan literal references: files=2578 duplicates=486
+Audit: reference files scanned=500
+Audit: reference files scanned=1000
+Audit: reference files scanned=1500
+Audit: reference files scanned=2000
+Audit: reference files scanned=2500
+Audit: write new audit manifest: D:\Project\Rogue10m\Feature\doc\evidence\finish-unused-work-audit-20261020\tmp-audit.json
+{"eligible_tmp_files": 3258, "hashed_files": 1615, "reference_files_scanned": 2578, "preserved": {"backup or tool/runtime original": 42, "tool/runtime binary": 4, "git tracked": 5}, "candidates": 471, "candidate_bytes": 39585165, "referenced_duplicates": 15, "issues": 0, "excluded_subtrees": 73, "nested_projects": 6}
+Manifest: Feature\doc\evidence\finish-unused-work-audit-20261020\tmp-audit.json
