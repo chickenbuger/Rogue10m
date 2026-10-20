@@ -1,0 +1,12 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"returnValue\":{\"name\":\"Place_Assets_OnAGrid\",\"graphParamsSchema\":\"{\\\"assets\\\":{\\\"type\\\":\\\"array\\\",\\\"items\\\":{\\\"type\\\":\\\"object\\\",\\\"title\\\":\\\"/Script/CoreUObject.Object\\\",\\\"properties\\\":{\\\"refPath\\\":{\\\"type\\\":\\\"string\\\",\\\"description\\\":\\\"소프트 경로 스트링으로 저장된 레퍼런스입니다.\\\"}},\\\"required\\\":[\\\"refPath\\\"]},\\\"description\\\":\\\"List of assets to place on a grid \\\"},\\\"originPosition\\\":{\\\"title\\\":\\\"Vector\\\",\\\"description\\\":\\\"Origin position of the asset grid \\\",\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"x\\\":{\\\"type\\\":\\\"number\\\"},\\\"y\\\":{\\\"type\\\":\\\"number\\\"},\\\"z\\\":{\\\"type\\\":\\\"number\\\"}},\\\"required\\\":[\\\"x\\\",\\\"y\\\",\\\"z\\\"]},\\\"paddingRatio\\\":{\\\"type\\\":\\\"number\\\",\\\"description\\\":\\\"Amount of space in between assets measured with the ratio of the maximum size of the biggest asset of the provided list \\\"}}\",\"inputPins\":[],\"outputPins\":[{\"name\":\"Out\",\"type\":\"Any\",\"description\":\"\"}]}}"
+      }
+    ]
+  }
+}

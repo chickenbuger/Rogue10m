@@ -1,0 +1,492 @@
+{
+  "status": "failed",
+  "source_glb": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\hull\\arin-hull-normalized.glb",
+  "source_sha256": "77aee1ac1a6827d5f91fa83b4249b6496f2e9917e6bc64fc73311e106b2715fb",
+  "blender_version": "4.5.14 LTS",
+  "target_height_m": 1.7,
+  "known_limitations": [
+    "Silhouette-derived geometry and approximate planar color projection",
+    "Simple 20-bone rig; no facial or finger animation",
+    "Generated views are reference hints, not scans",
+    "Automatic deformation checks do not replace visual review"
+  ],
+  "game_integration": "not performed; actual renders and FBX re-import must be reviewed",
+  "normalization": {
+    "original_bounds": [
+      [
+        -0.8600515,
+        -0.2097061,
+        0.0
+      ],
+      [
+        0.8600515,
+        0.2097061,
+        1.7
+      ]
+    ],
+    "scale_to_170cm": 0.9999999719507562,
+    "normalized_bounds": [
+      [
+        -0.8600515,
+        -0.2097061,
+        0.0
+      ],
+      [
+        0.8600515,
+        0.2097061,
+        1.7
+      ]
+    ],
+    "dimensions_m": [
+      1.7201029,
+      0.4194121,
+      1.7
+    ],
+    "nonmanifold_edges": 0,
+    "edge_count": 37320,
+    "source_front": "+Z",
+    "blender_front": "-Y"
+  },
+  "texture_references": [
+    {
+      "label": "front",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\multiview\\arin-front-v1.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "crop_uv": [
+        0.023125996810207338,
+        0.9696969696969697,
+        0.0430622009569378,
+        0.9752791068580542
+      ]
+    },
+    {
+      "label": "side",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\multiview\\arin-side-v1.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "crop_uv": [
+        0.3668261562998405,
+        0.5861244019138756,
+        0.043859649122807015,
+        0.981658692185008
+      ]
+    },
+    {
+      "label": "back",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\multiview\\arin-back-v1.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "crop_uv": [
+        0.023125996810207338,
+        0.9696969696969697,
+        0.043859649122807015,
+        0.9744816586921851
+      ]
+    }
+  ],
+  "skeleton": {
+    "arm_height": 1.3115061521530151,
+    "shoulder_x": 0.1785,
+    "elbow_x": 0.47507572655677793,
+    "wrist_x": 0.7716514531135559,
+    "hand_tip_x": 0.8600514531135559,
+    "foot_x": 0.1284053474664688,
+    "bone_count": 20,
+    "definitions": [
+      [
+        "root",
+        null,
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0.136
+        ]
+      ],
+      [
+        "hips",
+        "root",
+        [
+          0,
+          0,
+          0.833
+        ],
+        [
+          0,
+          0,
+          0.935
+        ]
+      ],
+      [
+        "spine",
+        "hips",
+        [
+          0,
+          0,
+          0.935
+        ],
+        [
+          0,
+          0,
+          1.105
+        ]
+      ],
+      [
+        "chest",
+        "spine",
+        [
+          0,
+          0,
+          1.105
+        ],
+        [
+          0,
+          0,
+          1.3370061521530152
+        ]
+      ],
+      [
+        "neck",
+        "chest",
+        [
+          0,
+          0,
+          1.3370061521530152
+        ],
+        [
+          0,
+          0,
+          1.462
+        ]
+      ],
+      [
+        "head",
+        "neck",
+        [
+          0,
+          0,
+          1.462
+        ],
+        [
+          0,
+          0,
+          1.683
+        ]
+      ],
+      [
+        "clavicle_L",
+        "chest",
+        [
+          0,
+          0,
+          1.3115061521530151
+        ],
+        [
+          0.1785,
+          0,
+          1.3115061521530151
+        ]
+      ],
+      [
+        "upper_arm_L",
+        "clavicle_L",
+        [
+          0.1785,
+          0,
+          1.3115061521530151
+        ],
+        [
+          0.47507572655677793,
+          0,
+          1.3115061521530151
+        ]
+      ],
+      [
+        "lower_arm_L",
+        "upper_arm_L",
+        [
+          0.47507572655677793,
+          0,
+          1.3115061521530151
+        ],
+        [
+          0.7716514531135559,
+          0,
+          1.3115061521530151
+        ]
+      ],
+      [
+        "hand_L",
+        "lower_arm_L",
+        [
+          0.7716514531135559,
+          0,
+          1.3115061521530151
+        ],
+        [
+          0.8600514531135559,
+          0,
+          1.3115061521530151
+        ]
+      ],
+      [
+        "upper_leg_L",
+        "hips",
+        [
+          0.1284053474664688,
+          0,
+          0.833
+        ],
+        [
+          0.1284053474664688,
+          0,
+          0.425
+        ]
+      ],
+      [
+        "lower_leg_L",
+        "upper_leg_L",
+        [
+          0.1284053474664688,
+          0,
+          0.425
+        ],
+        [
+          0.1284053474664688,
+          0,
+          0.0935
+        ]
+      ],
+      [
+        "foot_L",
+        "lower_leg_L",
+        [
+          0.1284053474664688,
+          0,
+          0.0935
+        ],
+        [
+          0.1284053474664688,
+          -0.17,
+          0.0425
+        ]
+      ],
+      [
+        "clavicle_R",
+        "chest",
+        [
+          0,
+          0,
+          1.3115061521530151
+        ],
+        [
+          -0.1785,
+          0,
+          1.3115061521530151
+        ]
+      ],
+      [
+        "upper_arm_R",
+        "clavicle_R",
+        [
+          -0.1785,
+          0,
+          1.3115061521530151
+        ],
+        [
+          -0.47507572655677793,
+          0,
+          1.3115061521530151
+        ]
+      ],
+      [
+        "lower_arm_R",
+        "upper_arm_R",
+        [
+          -0.47507572655677793,
+          0,
+          1.3115061521530151
+        ],
+        [
+          -0.7716514531135559,
+          0,
+          1.3115061521530151
+        ]
+      ],
+      [
+        "hand_R",
+        "lower_arm_R",
+        [
+          -0.7716514531135559,
+          0,
+          1.3115061521530151
+        ],
+        [
+          -0.8600514531135559,
+          0,
+          1.3115061521530151
+        ]
+      ],
+      [
+        "upper_leg_R",
+        "hips",
+        [
+          -0.1284053474664688,
+          0,
+          0.833
+        ],
+        [
+          -0.1284053474664688,
+          0,
+          0.425
+        ]
+      ],
+      [
+        "lower_leg_R",
+        "upper_leg_R",
+        [
+          -0.1284053474664688,
+          0,
+          0.425
+        ],
+        [
+          -0.1284053474664688,
+          0,
+          0.0935
+        ]
+      ],
+      [
+        "foot_R",
+        "lower_leg_R",
+        [
+          -0.1284053474664688,
+          0,
+          0.0935
+        ],
+        [
+          -0.1284053474664688,
+          -0.17,
+          0.0425
+        ]
+      ]
+    ]
+  },
+  "weights": {
+    "method": "explicit anatomical regions and nearest semantic bone segments; no heat weights",
+    "vertices": 12442,
+    "weight_sum_min": 0.9999999999999999,
+    "weight_sum_max": 1.0000000000000002,
+    "vertices_per_group": {
+      "root": 0,
+      "hips": 2159,
+      "spine": 2338,
+      "chest": 1940,
+      "neck": 1531,
+      "head": 1278,
+      "clavicle_L": 571,
+      "upper_arm_L": 1489,
+      "lower_arm_L": 1678,
+      "hand_L": 760,
+      "upper_leg_L": 1271,
+      "lower_leg_L": 1574,
+      "foot_L": 737,
+      "clavicle_R": 530,
+      "upper_arm_R": 1468,
+      "lower_arm_R": 1698,
+      "hand_R": 760,
+      "upper_leg_R": 1206,
+      "lower_leg_R": 1481,
+      "foot_R": 700
+    }
+  },
+  "neutral_pose_attempts": [
+    {
+      "arm_lowering_degrees": 65.0,
+      "finite": true,
+      "edge_stretch_p99": 2.1306346933282465,
+      "edge_stretch_max": 7.376004934142939,
+      "collapsed_triangle_fraction": 0.0,
+      "posed_bounds": [
+        [
+          -0.4722976,
+          -0.2097061,
+          -0.0
+        ],
+        [
+          0.4722976,
+          0.2097061,
+          1.7
+        ]
+      ],
+      "limits": {
+        "edge_stretch_p99": 1.75,
+        "edge_stretch_max": 4.0,
+        "collapsed_triangle_fraction": 0.003
+      },
+      "self_intersections": "not automatically evaluated; inspect the actual front, side, and oblique renders",
+      "passed": false
+    },
+    {
+      "arm_lowering_degrees": 55.0,
+      "finite": true,
+      "edge_stretch_p99": 1.852407164013132,
+      "edge_stretch_max": 6.339425235668133,
+      "collapsed_triangle_fraction": 4.019292604501608e-05,
+      "posed_bounds": [
+        [
+          -0.5728374,
+          -0.2097061,
+          -0.0
+        ],
+        [
+          0.5728374,
+          0.2097061,
+          1.7
+        ]
+      ],
+      "limits": {
+        "edge_stretch_p99": 1.75,
+        "edge_stretch_max": 4.0,
+        "collapsed_triangle_fraction": 0.003
+      },
+      "self_intersections": "not automatically evaluated; inspect the actual front, side, and oblique renders",
+      "passed": false
+    }
+  ],
+  "failure_renders": [
+    {
+      "view": "front",
+      "camera_axis": "-Y",
+      "projection": "orthographic",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\rig\\idle-front.png",
+      "animation_frame": 1
+    },
+    {
+      "view": "side",
+      "camera_axis": "+X",
+      "projection": "orthographic",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\rig\\idle-side.png",
+      "animation_frame": 1
+    },
+    {
+      "view": "oblique",
+      "camera_axis": "oblique",
+      "projection": "orthographic",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\rig\\idle-oblique.png",
+      "animation_frame": 1
+    }
+  ],
+  "error": "No arm-down pose passed the deformation checks; no game FBX exported",
+  "traceback": "Traceback (most recent call last):\n  File \"D:\\Project\\Rogue10m\\Scripts\\RigApolloArin.py\", line 441, in main\n    raise ValueError(\"No arm-down pose passed the deformation checks; no game FBX exported\")\nValueError: No arm-down pose passed the deformation checks; no game FBX exported\n"
+}

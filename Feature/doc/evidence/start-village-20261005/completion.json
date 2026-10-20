@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "branch": "Sprint#5-10-start-village",
+  "python_ast_files": [
+    "Scripts/InvokeUnrealMCP.py",
+    "Scripts/Editor/CreateStartVillage.py",
+    "Scripts/Editor/InspectStartVillageInputs.py",
+    "Scripts/Editor/ValidateStartVillage.py",
+    "Scripts/Editor/ValidateMenuMapFlow.py",
+    "Scripts/Editor/ValidateMenuMapPIE.py"
+  ],
+  "runtime_checks": 50,
+  "menu_static_and_pie": "passed",
+  "mcp_restart_and_hub_reload": "passed",
+  "mcp_owned_asset_save": "passed",
+  "preservation": "passed",
+  "screenshots": [
+    "village-overview-clean.png",
+    "village-player-view.png"
+  ],
+  "editor_build_exit_code": 0,
+  "committed": false
+}

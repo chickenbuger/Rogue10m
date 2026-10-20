@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "status": "contract_proposal_not_a_measured_quality_pass",
+  "subject": "길잡이 아린: 시작 마을용 스타일화된 성인 여성 NPC",
+  "target_runtime": "Unreal Engine 5.8 skeletal mesh",
+  "source_stage": "editable Blender source; rig and Idle retained through targeted refinement",
+  "baseline": {
+    "measurement_source": "Feature/doc/evidence/arin-blender-20261007/roundtrip/validation.json",
+    "runtime_source": "Feature/doc/evidence/arin-blender-20261007/unreal-application.json",
+    "fresh_fbx_mesh_objects": 175,
+    "fresh_fbx_vertices": 21726,
+    "fresh_fbx_triangles": 42764,
+    "fresh_fbx_uv_bearing_meshes": 0,
+    "armatures": 1,
+    "bones": 23,
+    "idle_seconds": 2.0,
+    "unreal_palette_material_sections": 15,
+    "known_gaps": [
+      "UV 없는 단색 재질은 세부 표면과 Unreal 텍스처 전달을 제한한다.",
+      "V1의 175개 분리 메시와 15개 재질은 몸·얼굴·관절의 완성도를 보장하지 않는다.",
+      "기존 보고서는 수치와 Idle을 통과했지만 중립 및 큰 관절 변형의 표면 연속성을 입증하지 않는다."
+    ]
+  },
+  "chosen_method": {
+    "form": "기존 모델의 비례·얼굴·옷 맞음새를 원본 코드에서 개선하고 실제 Blender 렌더로 반복 확인한다.",
+    "topology": "관절과 연속 의복은 변형 방향의 quad loop를 우선한다. 얼굴·손은 밀도를 더 배정한다. 최종 FBX/GLB의 삼각형화는 허용한다.",
+    "retopo_scope": "몸과 관절의 필요한 부분을 수작업에 해당하는 목적 있는 로프트/루프 코드로 재구성한다. 자동 decimate를 얼굴·관절 품질 개선의 근거로 삼지 않는다.",
+    "shading": "Face, Hair, Cloth, Gear의 4개 실제 UV atlas에 BaseColor, Roughness, Metallic, tangent-space Normal을 출력한다.",
+    "rig": "기존 23본 휴머노이드 리그와 2초 Idle을 보존한다. 개별 손가락 및 립싱크 기능은 이번 범위에 포함하지 않는다.",
+    "runtime": "소유한 아린 SkeletalMesh/Idle과 재질만 업데이트하고 대화·보급·트리거·기존 감지 충돌을 유지한다."
+  },
+  "budgets": {
+    "lod0_max_evaluated_triangles": 55000,
+    "body_target_max_triangles": 30000,
+    "head_target_max_triangles": 23000,
+    "material_sections_target": 4,
+    "atlas_groups": [
+      {"name": "Face", "parts": ["face", "neck", "hands", "lips", "eyes"], "texture_resolution": 2048},
+      {"name": "Hair", "parts": ["scalp", "locks", "braid"], "texture_resolution": 2048},
+      {"name": "Cloth", "parts": ["blouse", "vest", "cape", "trousers"], "texture_resolution": 4096},
+      {"name": "Gear", "parts": ["boots", "satchel", "straps", "metal trim", "potion bottles"], "texture_resolution": 2048}
+    ],
+    "uv_policy": "하나의 atlas 그룹 안에서 모든 부위를 함께 포장한 고유 UV. 실측 없이 non-overlap을 주장하지 않는다. 0..1 영역과 섬 padding 및 샘플링을 확인한다.",
+    "maximum_bone_influences": 4,
+    "lod1_target_ratio": 0.5,
+    "lod2_target_ratio": 0.25,
+    "lod_scope": "모든 LOD는 동일한 Skeleton과 Idle을 유지하는 SkeletalMesh여야 한다. 정적 메시는 애니메이션 NPC LOD의 대체물이 아니다.",
+    "lod_implementation_options": [
+      "Unreal SkeletalMesh reduction 설정을 사용하고 실제 LOD 수·triangles·골격·재질과 화면 품질을 확인한다.",
+      "Blender의 별도 LOD export는 스킨 가중치·재질·UV·실루엣을 다시 검증하고 Unreal에서 실제 LOD로 가져온 경우에만 완료로 보고한다."
+    ],
+    "lod_honesty_gate": "구현/API/품질 검증이 불가능하면 미구현으로 명시한다. 이름에 LOD1/LOD2가 있다고 Unreal LOD가 적용된 것으로 보고하지 않는다.",
+    "collision": "기존 NPC 캡슐과 상호작용·감지 충돌을 유지한다. 이 외형에 UCX 또는 복잡한 메시 충돌은 필요하지 않다.",
+    "nanite": "이번 23본 스킨드 NPC에서 적용을 가정하지 않는다. 런타임 LOD/스킨/섹션 비용을 먼저 검증한다."
+  },
+  "inspector_contract": {
+    "max_triangles": 55000,
+    "max_materials": 4,
+    "expected_height_m": 1.7,
+    "height_tolerance_m": 0.01,
+    "require_uvs": true,
+    "min_uv_face_fraction": 0.995,
+    "require_skinning": true,
+    "maximum_bone_influences": 4,
+    "required_bones": [
+      "root", "pelvis", "spine_01", "spine_02", "spine_03", "neck", "head",
+      "clavicle_l", "upperarm_l", "lowerarm_l", "hand_l",
+      "clavicle_r", "upperarm_r", "lowerarm_r", "hand_r",
+      "thigh_l", "calf_l", "foot_l", "ball_l",
+      "thigh_r", "calf_r", "foot_r", "ball_r"
+    ],
+    "require_action_name_contains": "Idle",
+    "expected_idle_seconds": 2.0,
+    "require_stationary_root": true,
+    "require_loop": true,
+    "require_deformation": true,
+    "require_zero_degenerates": true,
+    "require_closed_meshes": [],
+    "require_baked_pbr": true,
+    "require_external_texture_files": true,
+    "required_texture_channels": ["Base Color", "Roughness", "Metallic", "Normal"]
+  },
+  "inspector_format_overrides": {
+    ".fbx": {
+      "required_texture_channels": ["Base Color", "Normal"]
+    },
+    ".glb": {
+      "require_external_texture_files": false
+    },
+    ".gltf": {
+      "require_external_texture_files": false
+    }
+  },
+  "fbx_pbr_semantics": "FBX는 Blender의 Roughness/Metallic 이미지 링크 왕복을 보장하지 않는다. FBX의 수치·UV·skin·Idle·BaseColor/Normal은 실제 import로 검사한다. 16개 외부 PBR PNG와 surface-manifest SHA-256을 전달하고, 최종 Blender/GLB 및 Unreal에서 재구성한 4개 재질의 모든 PBR 채널을 별도로 확인한다. 이는 사전에 정한 format 계약이며 실패 후 gate를 약화하는 조치가 아니다.",
+  "gates": {
+    "authored_source": [
+      "최종 원본 .blend를 새 Blender 프로세스에서 로드하여 검사한다.",
+      "비유한 좌표·변환·degenerate triangles와 zero-length edges가 없어야 한다.",
+      "모든 atlas 메시의 실제 UV와 스킨 가중치·재질·텍스처 파일을 검사한다.",
+      "연속 의복/관절의 원본 quad 흐름을 검토한다. 열려 있는 옷·눈꺼풀·별도 장신구에 모든 메시 watertight 규칙을 적용하지 않는다.",
+      "정확히 하나의 공유 리그, 23본 이름, 2초 Idle, 고정 root, 실제 평가 메시 변형과 loop endpoints를 검사한다."
+    ],
+    "fbx_fresh_import": [
+      "원본과 별도의 새 Blender 프로세스에 최종 FBX를 가져온다.",
+      "사용한 파일 SHA-256과 검사 프로세스 ID 및 Blender 버전을 기록한다.",
+      "170cm 높이, UV, 4개 사용 재질, 스킨, 뼈와 Idle을 원본 수치와 별도로 기록한다.",
+      "BaseColor, Roughness, Metallic, Normal의 외부 텍스처 파일 및 실제 Unreal PBR 연결을 확인한다.",
+      "최종 메시와 애니메이션이 같은 Skeleton을 참조해야 한다."
+    ],
+    "glb_fresh_import": [
+      "새 Blender 프로세스에서 최종 GLB를 가져오고 원본/FBX와 따로 검사한다.",
+      "glTF의 metallic-roughness/normal 이미지, UV, 리그, 동작 duration을 확인한다.",
+      "입력 format별 fps 차이를 허용하고 action 시간으로 비교한다. 프레임 61을 24fps GLB에 무조건 강요하지 않는다.",
+      "GLB packed images는 유효하다. Unreal FBX용 외부 PNG 전달은 별도의 gate로 유지한다."
+    ],
+    "unreal": [
+      "실제 가져온 SkeletalMesh 높이 170cm와 100cm 기준 치수를 측정한다.",
+      "아린의 메시와 Idle이 동일한 Skeleton을 사용하고 물약·대화 동작이 유지되는지 확인한다.",
+      "4개 재질 section과 색·roughness·metallic·Normal 텍스처, sRGB/non-color 및 normal Y 방향을 확인한다.",
+      "실제 적용된 LOD 수와 각 LOD의 triangle 수, 골격·재질·Idle 및 silhouette를 검사한다.",
+      "시작 마을의 실제 조명과 플레이 화면에서 최종 캐릭터를 렌더/캡처한다."
+    ]
+  },
+  "visual_evidence": {
+    "fixed_cameras": ["perspective", "front", "back", "left", "right", "top"],
+    "same_before_after": ["renderer version", "camera/framing", "neutral presentation", "pose/frame", "light/exposure"],
+    "detail_views": [
+      "얼굴 정면 및 좌우 3/4: 눈·코·귀·턱·목·손의 피부색 일관성",
+      "손과 엄지: 길이·간격·손목 접합 및 reach pose",
+      "어깨·겨드랑이: arm bend 및 reach에서 웹과 틈 확인",
+      "허리·가랑이·골반: 연속 바지의 좌석과 안쪽 봉제 관계",
+      "무릎·발목·부츠: knee bend에서 접합, heel/instep/toe taper"
+    ],
+    "deformation_poses": [
+      {"name": "neutral", "intent": "T/rest와 실제 Idle 시작 pose를 각각 확인한다.", "views": ["front", "side", "perspective"]},
+      {"name": "arm_bend", "shoulder_degrees": 120, "elbow_degrees": 60, "intent": "어깨·겨드랑이·팔꿈치의 표면 연속성 및 옷 clipping 확인", "views": ["front", "perspective", "shoulder_detail"]},
+      {"name": "reach", "intent": "한쪽 팔을 앞쪽으로 뻗어 손목·소매·흉곽·가방 strap과 어깨를 확인", "views": ["side", "perspective", "hand_detail"]},
+      {"name": "torso_twist", "torso_twist_degrees": 25, "intent": "조끼·허리띠·strap·cape의 평가 스킨을 확인", "views": ["front", "back", "perspective"]},
+      {"name": "knee_bend", "knee_degrees": 70, "intent": "무릎 volume과 가랑이·발목·부츠 접합 확인", "views": ["side", "perspective", "knee_detail"]}
+    ],
+    "qa_pose_storage": "QA pose는 별도 후보/비저장 상태에서 적용한다. 최종 NPC Idle action의 keyframes와 export를 오염시키지 않는다.",
+    "motion_preview": "실제 2초 Idle 영상 또는 이미지 sequence를 열어 땅 침투·발 미끄러짐·clipping·loop를 확인한다.",
+    "limitations": "이번 Idle-only NPC는 개별 손가락 grasp, 립싱크, 보행/달리기 품질을 보장하지 않는다."
+  },
+  "acceptance_reporting": {
+    "numerical": "passed_requires_visual_review 또는 failed",
+    "visual": "opened evidence file별 defect/no defect observed/unclear를 기록한다.",
+    "quality": "수치, export, normalized weights만으로 형태·연결·변형 품질 통과를 선언하지 않는다.",
+    "regressions": "비례·인접 면·UV stretch·재질 sampling·Idle 및 Unreal guide 기능을 다시 확인한다.",
+    "unimplemented": "실행하지 않은 LOD/runtime/render 검증을 분명히 구분한다."
+  },
+  "inspector_usage": {
+    "script": "Scripts/Blender/InspectArinQuality.py",
+    "fresh_process": "blender --background --factory-startup --python Scripts/Blender/InspectArinQuality.py -- --input FINAL_ASSET --output OUTPUT_JSON --objects-json EXACT_MESH_NAMES_JSON --frames auto --contract Feature/doc/evidence/arin-quality-20261007/quality-contract-proposal.json",
+    "live_read_only": "--current-scene 대신 --input을 사용하지 않는다. 현재 scene 검사에서는 객체나 파일을 지우거나 저장하지 않고 animation frame을 복원한다.",
+    "selection": "--objects-json은 정확한 mesh 이름 배열이다. 또는 --prefix를 제공한다. LOD0만 선택해서 합산하고 다른 LOD와 studio floor를 포함하지 않는다.",
+    "format_overrides": "이 문서를 contract로 전달하면 .fbx는 BaseColor/Normal 이미지 연결, .glb/.gltf는 packed 이미지 허용이 자동 적용된다. 전체 PBR 4채널과 16개 PNG는 Blender/GLB/Unreal 및 surface manifest로 별도 검증한다.",
+    "not_claimed": "이 inspector는 UV overlap, surface clipping, anatomical likeness, runtime LOD를 자동으로 입증하지 않는다. 별도 시각/Unreal gate가 필요하다."
+  }
+}

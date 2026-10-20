@@ -1,0 +1,38 @@
+{
+  "result": "PASSED",
+  "runtime_reviewer": "root independent of runtime implementer",
+  "asset_reviewer": "fighter_stance_runtime independent of asset implementer",
+  "motion_reviewer": "fighter_stance_verify_motion",
+  "runtime_checks": [
+    "event timestamps and indefinite charging separate from Niagara",
+    "accepted attack rate matches existing Montage_Play clamp",
+    "no new component Tick",
+    "GC-tracked loaded animation",
+    "normal locomotion yields during move/sprint/falling",
+    "smooth cancellation and immediate readiness reset",
+    "unpossessed reset before parent callback",
+    "DefaultSlot remains final",
+    "fixed sequence provenance is readonly"
+  ],
+  "asset_checks": {
+    "raw_samples": 241,
+    "legacy_nodes_preserved": 8,
+    "new_graph_nodes": 3,
+    "existing_protected_uassets": 4185,
+    "legacy_foot_ik_order_audit_passed": true
+  },
+  "media": {
+    "frames": 640,
+    "width": 1280,
+    "height": 720,
+    "fps": 30,
+    "duration_s": 21.333333333333332,
+    "full_decode_exit": 0
+  },
+  "scope_limits": [
+    "death and repossession runtime scenarios not exercised",
+    "moving guard layer not implemented",
+    "right fist/right foot partly hidden by HUD",
+    "initial Knuckle blend slightly faster; old large finger world rotation preserved"
+  ]
+}

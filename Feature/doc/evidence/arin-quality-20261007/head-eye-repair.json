@@ -1,0 +1,81 @@
+{
+  "schema": "arin_eye_source_repair/v1",
+  "candidate_source_sha256": "a7091805b3f94949753cd8886b03c4da56ad8af661f83766876dc49a1938d491",
+  "preserved_source": "Feature/doc/evidence/arin-quality-20261007/form-candidate-1/ArinHeadRefined.py",
+  "before_evidence": [
+    {
+      "path": "Feature/doc/evidence/arin-quality-20261007/head-eye-before/face.png",
+      "sha256": "1bcfb1555dfd447599d8a2a518dda5b273553412d142cdd1a92b3594424c755e",
+      "opened": true
+    },
+    {
+      "path": "Feature/doc/evidence/arin-quality-20261007/head-eye-before/profile.png",
+      "sha256": "f0993235c22e5c695993460deb2a9717c81e338979a98780c720f15164f33d4d",
+      "opened": true
+    },
+    {
+      "path": "Feature/doc/evidence/arin-quality-20261007/head-eye-before/front.png",
+      "sha256": "0f6f301cfbcbd6e836fed42a8c2857463eb4584d3993fae6b26fc0b53542b4ea",
+      "opened": true
+    }
+  ],
+  "before_ledger": [
+    {
+      "requirement": "Eyeballs are visible only through real eye apertures",
+      "status": "fail",
+      "evidence": "Feature/doc/evidence/arin-quality-20261007/head-eye-before/face.png",
+      "observation": "Both eye spheres break through the forehead surface above the lid openings as distinct white patches."
+    },
+    {
+      "requirement": "Existing soft smile and continuous mouth skin preserved",
+      "status": "pass",
+      "evidence": "Feature/doc/evidence/arin-quality-20261007/head-eye-before/face.png"
+    },
+    {
+      "requirement": "All head dimensions, material names and existing bone semantics preserved",
+      "status": "pass",
+      "evidence": "Current source and candidate1 snapshot"
+    }
+  ],
+  "cause": "Eye ellipsoids extend frontwards beyond the surrounding forehead at upper-sphere latitudes. Eye cavities and aperture topology are integrated, but ocular centre/extent is incompatible with the outer skin. A whole-sphere collider hidden behind skin was not previously clearance-tested.",
+  "selected_source_repair": "Move and resize the actual eye ellipsoids into the cranial volume, update their shared aperture/contact and iris/pupil projection parameters from one constant contract, and confirm front projection containment outside the eye apertures. No cosmetic skin cover solids.",
+  "invariants": [
+    "one continuous skin mesh",
+    "mouth/cheeks/hair unchanged",
+    "crown1.700m and body/neck contract",
+    "head budget<=23000",
+    "existing material keys and23bone semantic tags"
+  ],
+  "after_geometry_status": "passed",
+  "after_actual_blender_visual_status": "unclear_pending_root_render",
+  "decision": "repair_source_then_compare_actual_views",
+  "after_geometry_result": {
+    "ast": "pass",
+    "triangles": 21928,
+    "objects": 43,
+    "z_max": 1.7,
+    "degenerate_tris": 0,
+    "unpaired_edges": 0,
+    "duplicate_faces": 0,
+    "winding_errors": 0,
+    "loose_vertices": 0,
+    "ocular_containment": [
+      {
+        "side": -1,
+        "outside_aperture_samples": 2728,
+        "max_sphere_front_protrusion_m": -0.00019423256439893288,
+        "samples_over_0_1mm": 0,
+        "uncovered_samples": 0
+      },
+      {
+        "side": 1,
+        "outside_aperture_samples": 2728,
+        "max_sphere_front_protrusion_m": -0.0001926423056511778,
+        "samples_over_0_1mm": 0,
+        "uncovered_samples": 0
+      }
+    ],
+    "candidate_sha256": "92c87a750f7532bbfbec6df8cfbdfa5d0a349d2a5a2c734058806a6113804679"
+  },
+  "after_source_repair": "Eye ellipsoid centre Y -.0588, extents X.0184/Y.0142/Z.0162; aperture halfwidth.0160. Iris/pupil and lid contacts share these constants."
+}

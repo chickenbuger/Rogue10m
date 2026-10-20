@@ -1,0 +1,51 @@
+{
+  "count": 3,
+  "metrics": [
+    {
+      "index": 0,
+      "vertices": 40211,
+      "sections": 4,
+      "triangles": null,
+      "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+      "target_triangle_ratio": 1.0,
+      "reduction_base_lod": 0,
+      "lock_edges": false,
+      "volume_importance": 1.0,
+      "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+    },
+    {
+      "index": 1,
+      "vertices": 13555,
+      "sections": 4,
+      "triangles": null,
+      "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+      "target_triangle_ratio": 0.25,
+      "reduction_base_lod": 0,
+      "lock_edges": false,
+      "volume_importance": 1.0,
+      "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+    },
+    {
+      "index": 2,
+      "vertices": 7803,
+      "sections": 4,
+      "triangles": null,
+      "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+      "target_triangle_ratio": 0.125,
+      "reduction_base_lod": 0,
+      "lock_edges": false,
+      "volume_importance": 1.0,
+      "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+    }
+  ],
+  "generation": "SkeletalMeshEditorSubsystem.regenerate_lod; imported LOD0 preserved",
+  "lod0_regeneration": false,
+  "requested_ratios": [
+    1.0,
+    0.25,
+    0.125
+  ],
+  "same_skeleton_and_materials": true,
+  "visual_review_required": true,
+  "runtime_triangle_count_limitation": "Exact runtime triangles need a separate exposed render-data/export inspection; do not infer them from vertices or reduction targets."
+}

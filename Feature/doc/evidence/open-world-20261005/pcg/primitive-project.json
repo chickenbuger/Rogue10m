@@ -1,0 +1,12 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"returnValue\":{\"name\":\"Transform_Project\",\"graphParamsSchema\":\"{\\\"projectPositions\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"If true it will project Positions onto target. Otherwise source positions will be unchanged.\\\"},\\\"projectRotations\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"If true it will project Rotations onto target. Otherwise source rotations will be unchanged.\\\"},\\\"projectScales\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"If true it will project Scales onto target. Otherwise source scales will be unchanged.\\\"},\\\"useFalloff\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"Falloff will smoothly transition from original height to projected height using StartFalloffDDistance and EndFalloffDistance.\\\"},\\\"startFalloffDistance\\\":{\\\"type\\\":\\\"number\\\",\\\"description\\\":\\\"StartFalloffDistance is the distance of projected surface at which it will start to interpolate between heights.\\\"},\\\"endFalloffDistance\\\":{\\\"type\\\":\\\"number\\\",\\\"description\\\":\\\"EndFalloffDistance is the distance of projected surface at which it will end the interpolation between heights.\\\"},\\\"setFalloffAsDensity\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"Use this to visualize the falloff mask onto the density attribute. (only for points data type)\\\"},\\\"convertClosedSplineToPolygon2D\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"Closed splines in the 2nd input will be converted to polygon 2D for projection.\\\"},\\\"projectAttribute\\\":{\\\"type\\\":\\\"string\\\",\\\"description\\\":\\\"If an attribute is specified it will project that attribute value from the SecondaryInput to the PrimaryInput. If empty the primary input attribute value will be unchanged. The Attribute must exist on both primary and secondary inputs.\\\"}}\",\"inputPins\":[{\"name\":\"PrimaryInput\",\"type\":\"Any\",\"description\":\"디폴트 입력 핀\"},{\"name\":\"SecondaryInput\",\"type\":\"Any\",\"description\":\"\"}],\"outputPins\":[{\"name\":\"Out\",\"type\":\"Any\",\"description\":\"\"}]}}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "id": "qar_1m45c6xwe001fq6ft1c",
+  "asset_id": "ast_1m45c3php007vt0fzyt",
+  "node_id": "nod_1m45c6xwb00j0jwjr9p",
+  "stage": "image",
+  "status": "warn",
+  "score": 0.917,
+  "created_at": "2026-10-05T06:32:24.718962+00:00",
+  "checks": [
+    {
+      "name": "resolution",
+      "status": "pass",
+      "message": "1374x1145",
+      "metrics": {
+        "width": 1374,
+        "height": 1145
+      }
+    },
+    {
+      "name": "single_subject",
+      "status": "pass",
+      "message": "dominant component holds 100% of foreground",
+      "metrics": {
+        "dominant_share": 1.0
+      }
+    },
+    {
+      "name": "silhouette_clarity",
+      "status": "warn",
+      "message": "bbox fill 22%",
+      "metrics": {
+        "bbox_fill": 0.222
+      }
+    },
+    {
+      "name": "subject_framing",
+      "status": "pass",
+      "message": "subject covers 18% of frame",
+      "metrics": {
+        "frame_coverage": 0.18
+      }
+    },
+    {
+      "name": "background_clean",
+      "status": "pass",
+      "message": "border color std 0.6",
+      "metrics": {
+        "border_std": 0.6
+      }
+    },
+    {
+      "name": "no_watermark_heuristic",
+      "status": "pass",
+      "message": "corner/center detail ratio 0.09 (heuristic)",
+      "metrics": {
+        "corner_center_ratio": 0.09
+      }
+    }
+  ],
+  "repair_suggestions": []
+}

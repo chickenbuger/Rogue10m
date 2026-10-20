@@ -1,0 +1,189 @@
+{
+  "status": "failed",
+  "map": "/Game/Rogue10m/Maps/OpenRunMap",
+  "checks": [
+    {
+      "name": "no_existing_pie",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "exact_project_and_saved_idle_map",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "no_unsaved_editor_packages",
+      "passed": true,
+      "case": null,
+      "dirty": []
+    },
+    {
+      "name": "saved_owned_boss_profile_connected",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "saved_boss_patterns_opted_in",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "base_data_preserved",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_range"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_arc_degrees"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_half_height"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_windup_seconds"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_recovery_seconds"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_cooldown_seconds"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_damage_multiplier"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "idle_animation"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "movement_animation"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_animation"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "hit_animation"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "death_animation"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "VerdantSlime"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "Sporeling"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "CrimsonSlime"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "IronShell"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "ThornWarden"
+    },
+    {
+      "name": "saved_owned_blueprint_data",
+      "passed": true,
+      "case": null,
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_FinalBoss.BP_OW_FinalBoss"
+    },
+    {
+      "name": "occlusion_fixture_mesh_available",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "loaded_forest_ground_and_native_navigation_ready",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "native_owned_boss_spawned",
+      "passed": true,
+      "case": null,
+      "spawner": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_MonsterSpawner_C_UAID_244BFE8DA9DF360803_1249772802",
+      "monster": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0"
+    },
+    {
+      "name": "saved_profile_loaded_at_native_beginplay",
+      "passed": true,
+      "case": null,
+      "profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns"
+    },
+    {
+      "name": "production_runtime_base_stats_preserved",
+      "passed": true,
+      "case": null,
+      "health": 10000.0,
+      "damage": 70.0
+    }
+  ],
+  "cases": [],
+  "limitations": [
+    "Saved boss Blueprint and profile are exercised through a native forest spawner on loaded terrain; this is not a traversal of the northern ruins.",
+    "AI/input/regen suppression, fixed actor positions and increased player maximum health are disposable PIE setup. No assets are saved.",
+    "Basic/frontal hit and phase cases use the saved production profile itself; other cases use an identical transient copy. Timings and damage are never shortened or changed. Native ConfigureProfile resets selection/cooldowns between independent cases.",
+    "Selected-target death uses the real PlayerState dead flag, then restores it; the defeat UI is not exercised. Boss-only damage drives phase and monster death.",
+    "Shape evasion teleports the real player during windup. Physical dodge input, full balance, networking and packaged play require separate checks.",
+    "Decal component/material/visibility are checked here; root records viewport evidence separately."
+  ],
+  "phase": "cleanup",
+  "elapsed_wall_seconds": 14.217999999999847,
+  "exception": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateAzathorBossPatterns.py\", line 625, in tick\n    def tick(delta_seconds):\n            ^^^^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateAzathorBossPatterns.py\", line 612, in tick_impl\n    pawn.get_editor_property(\"character_movement\").disable_movement()\n    ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateAzathorBossPatterns.py\", line 265, in prepare_case\n    if not spawn_boss(game, pawn):\n           ^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateAzathorBossPatterns.py\", line 226, in spawn_boss\n    profile.set_editor_property(name, state[\"saved_profile\"].get_editor_property(name))\nException: Rogue10mMonsterAttackPatternProfile: Property 'AttackRange' for attribute 'attack_range' on 'Rogue10mMonsterAttackPatternProfile' cannot be edited on instances\n",
+  "message": "Rogue10mMonsterAttackPatternProfile: Property 'AttackRange' for attribute 'attack_range' on 'Rogue10mMonsterAttackPatternProfile' cannot be edited on instances",
+  "owned_pie_cleanup_confirmed": true
+}

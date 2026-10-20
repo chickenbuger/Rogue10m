@@ -1,0 +1,254 @@
+{
+  "input": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Arin.fbx",
+  "input_sha256": "45296f9fcbd0d182406c85d29f8627409e090dc0c97ec97815a8035221448f00",
+  "blender_version": "4.5.14 LTS",
+  "source_saved": false,
+  "geometry_modified": false,
+  "evidence": [],
+  "presentation": "BuildArin.studio Cycles32 AgX; donor-fitted cameras",
+  "native_import": {
+    "meshes": [
+      {
+        "name": "Arin_Adventurer",
+        "vertices": 45205,
+        "uv_layers": [
+          "Retopo_Untitled_NewUVMap"
+        ],
+        "material_names": [
+          "M_Arin_Adventurer"
+        ],
+        "armature_targets": [
+          "Arin_Rig"
+        ]
+      }
+    ],
+    "rig": "Arin_Rig",
+    "bone_count": 23,
+    "bones": [
+      "root",
+      "pelvis",
+      "spine_01",
+      "spine_02",
+      "spine_03",
+      "neck",
+      "head",
+      "clavicle_l",
+      "upperarm_l",
+      "lowerarm_l",
+      "hand_l",
+      "clavicle_r",
+      "upperarm_r",
+      "lowerarm_r",
+      "hand_r",
+      "thigh_l",
+      "calf_l",
+      "foot_l",
+      "ball_l",
+      "thigh_r",
+      "calf_r",
+      "foot_r",
+      "ball_r"
+    ],
+    "actions": [
+      {
+        "name": "Arin_Rig|Arin_Rig|Arin_Idle",
+        "frame_range": [
+          1.0,
+          61.0
+        ]
+      }
+    ],
+    "materials": [
+      {
+        "name": "M_Arin_Adventurer",
+        "nodes": [
+          {
+            "name": "Principled BSDF",
+            "type": "BSDF_PRINCIPLED",
+            "image": null
+          },
+          {
+            "name": "Material Output",
+            "type": "OUTPUT_MATERIAL",
+            "image": null
+          },
+          {
+            "name": "Normal Map",
+            "type": "NORMAL_MAP",
+            "image": null
+          },
+          {
+            "name": "Image Texture",
+            "type": "TEX_IMAGE",
+            "image": "T_Arin_Adventurer_BaseColor"
+          },
+          {
+            "name": "Image Texture.001",
+            "type": "TEX_IMAGE",
+            "image": "T_Arin_Adventurer_Normal"
+          },
+          {
+            "name": "Image Texture.002",
+            "type": "TEX_IMAGE",
+            "image": "T_Arin_Adventurer_Roughness"
+          },
+          {
+            "name": "Image Texture.003",
+            "type": "TEX_IMAGE",
+            "image": "T_Arin_Adventurer_Metallic"
+          }
+        ],
+        "links": [
+          {
+            "from": "Principled BSDF.BSDF",
+            "to": "Material Output.Surface"
+          },
+          {
+            "from": "Normal Map.Normal",
+            "to": "Principled BSDF.Normal"
+          },
+          {
+            "from": "Image Texture.Color",
+            "to": "Principled BSDF.Base Color"
+          },
+          {
+            "from": "Image Texture.001.Color",
+            "to": "Normal Map.Color"
+          },
+          {
+            "from": "Image Texture.002.Color",
+            "to": "Principled BSDF.Roughness"
+          },
+          {
+            "from": "Image Texture.003.Color",
+            "to": "Principled BSDF.Metallic"
+          }
+        ]
+      }
+    ],
+    "images": [
+      {
+        "name": "T_Arin_Adventurer_BaseColor",
+        "size": [
+          4096,
+          4096
+        ],
+        "packed": true,
+        "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Arin.fbm\\T_Arin_Adventurer_BaseColor.png",
+        "colorspace": "sRGB"
+      },
+      {
+        "name": "T_Arin_Adventurer_Metallic",
+        "size": [
+          4096,
+          4096
+        ],
+        "packed": true,
+        "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Arin.fbm\\T_Arin_Adventurer_Metallic.png",
+        "colorspace": "Non-Color"
+      },
+      {
+        "name": "T_Arin_Adventurer_Normal",
+        "size": [
+          4096,
+          4096
+        ],
+        "packed": true,
+        "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Arin.fbm\\T_Arin_Adventurer_Normal.png",
+        "colorspace": "Non-Color"
+      },
+      {
+        "name": "T_Arin_Adventurer_Roughness",
+        "size": [
+          4096,
+          4096
+        ],
+        "packed": true,
+        "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Arin.fbm\\T_Arin_Adventurer_Roughness.png",
+        "colorspace": "Non-Color"
+      }
+    ]
+  },
+  "qa_poses": {},
+  "builder_artifact_provenance": {
+    "model_build_json": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-reference-refinement-20261009\\model-build.json",
+    "model_build_sha256": "d9d0797b85e8df91a78b5df1bda82896b024f150423f1fe35daccb28162fef10",
+    "model_fbx_sha256": "45296f9fcbd0d182406c85d29f8627409e090dc0c97ec97815a8035221448f00",
+    "candidate_pngs": [
+      {
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-reference-refinement-20261009\\candidate\\idle-back.png",
+        "sha256": "38e85b855c79d9ffc4140ca86a693fb26e598177dd97e7cfd4095e1e499870ad",
+        "size": [
+          900,
+          1100
+        ]
+      },
+      {
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-reference-refinement-20261009\\candidate\\idle-face-profile.png",
+        "sha256": "2346a94c8d9bdf8a6e68cd3a177c138eb67db573e879538c362d9351130d9885",
+        "size": [
+          900,
+          1100
+        ]
+      },
+      {
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-reference-refinement-20261009\\candidate\\idle-face.png",
+        "sha256": "d93effdc0e5ee7cc5ec74c888f218e40dda3890ebb440082b2f7dc285507675b",
+        "size": [
+          900,
+          1100
+        ]
+      },
+      {
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-reference-refinement-20261009\\candidate\\idle-front.png",
+        "sha256": "9fb8deeaf8d05842df1a3e7388f224653bf7674f078ccd8b4f322d46335bf731",
+        "size": [
+          900,
+          1100
+        ]
+      },
+      {
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-reference-refinement-20261009\\candidate\\idle-oblique.png",
+        "sha256": "4f5fe780e181b63afdd940be83dd3fd67d9ff861f05fef79f6b74cc5dca0945c",
+        "size": [
+          900,
+          1100
+        ]
+      },
+      {
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-reference-refinement-20261009\\candidate\\neutral-front.png",
+        "sha256": "4efbcdc2126375e1c95b3148c2ff0854402ae798194183f2672663bb90e5c97a",
+        "size": [
+          900,
+          1100
+        ]
+      }
+    ]
+  },
+  "surface_manifest_sha256": "eb37013d9fd18113e1dffbe7668d1f66fb38da73f1269438b0f103c18d2d386f",
+  "transient_material_completion": [],
+  "native_pbr_verified": [
+    {
+      "material": "M_Arin_Adventurer",
+      "channel": "Roughness",
+      "native_image": "T_Arin_Adventurer_Roughness",
+      "sha256": "570bdd83a127d3a1887e429407231081822d35b6135337496e5a25b471fe081e",
+      "size": [
+        4096,
+        4096
+      ],
+      "colorspace": "Non-Color"
+    },
+    {
+      "material": "M_Arin_Adventurer",
+      "channel": "Metallic",
+      "native_image": "T_Arin_Adventurer_Metallic",
+      "sha256": "5a52539ae2774aa5276f42da671351e7788c7c913bff1da028e18cd8a356de04",
+      "size": [
+        4096,
+        4096
+      ],
+      "colorspace": "Non-Color"
+    }
+  ]
+}

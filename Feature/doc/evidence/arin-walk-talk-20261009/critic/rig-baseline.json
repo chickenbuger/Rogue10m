@@ -1,0 +1,469 @@
+{
+  "source": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Arin.blend",
+  "source_sha256": "56cc68fda9a32ec932a83d57a20dbb8897ef51933922c609027a542e2ad01f74",
+  "source_saved": false,
+  "blender_version": "4.5.14 LTS",
+  "bones": [
+    {
+      "name": "root",
+      "parent": null,
+      "head_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tail_m": [
+        0.0,
+        0.0,
+        0.11999999731779099
+      ],
+      "length_m": 0.11999999731779099,
+      "weighted_vertices": 0,
+      "summed_weights": 0.0,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "pelvis",
+      "parent": "root",
+      "head_m": [
+        0.0,
+        0.0,
+        0.9399999976158142
+      ],
+      "tail_m": [
+        0.0,
+        0.0,
+        1.0199999809265137
+      ],
+      "length_m": 0.07999998331069946,
+      "weighted_vertices": 16305,
+      "summed_weights": 8545.706258642786,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "spine_01",
+      "parent": "pelvis",
+      "head_m": [
+        0.0,
+        0.0,
+        1.0199999809265137
+      ],
+      "tail_m": [
+        0.0,
+        0.0,
+        1.1299999952316284
+      ],
+      "length_m": 0.11000001430511475,
+      "weighted_vertices": 3316,
+      "summed_weights": 1921.8159469311358,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "spine_02",
+      "parent": "spine_01",
+      "head_m": [
+        0.0,
+        0.0,
+        1.1299999952316284
+      ],
+      "tail_m": [
+        0.0,
+        0.0,
+        1.2400000095367432
+      ],
+      "length_m": 0.11000001430511475,
+      "weighted_vertices": 5223,
+      "summed_weights": 2522.3336400841617,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "spine_03",
+      "parent": "spine_02",
+      "head_m": [
+        0.0,
+        0.0,
+        1.2400000095367432
+      ],
+      "tail_m": [
+        0.0,
+        0.0,
+        1.3700000047683716
+      ],
+      "length_m": 0.12999999523162842,
+      "weighted_vertices": 6694,
+      "summed_weights": 4011.6013259075116,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "neck",
+      "parent": "spine_03",
+      "head_m": [
+        0.0,
+        0.0,
+        1.3700000047683716
+      ],
+      "tail_m": [
+        0.0,
+        0.0,
+        1.4450000524520874
+      ],
+      "length_m": 0.07500004768371582,
+      "weighted_vertices": 2048,
+      "summed_weights": 1279.2026596739888,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "head",
+      "parent": "neck",
+      "head_m": [
+        0.0,
+        0.0,
+        1.4450000524520874
+      ],
+      "tail_m": [
+        0.0,
+        0.0,
+        1.6799999475479126
+      ],
+      "length_m": 0.23499992489814758,
+      "weighted_vertices": 7226,
+      "summed_weights": 6499.885853648186,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "clavicle_l",
+      "parent": "spine_03",
+      "head_m": [
+        0.02500000037252903,
+        0.0,
+        1.315000057220459
+      ],
+      "tail_m": [
+        0.17000000178813934,
+        0.0,
+        1.315000057220459
+      ],
+      "length_m": 0.14499999582767487,
+      "weighted_vertices": 737,
+      "summed_weights": 76.13849126130935,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "upperarm_l",
+      "parent": "clavicle_l",
+      "head_m": [
+        0.17000000178813934,
+        0.0,
+        1.315000057220459
+      ],
+      "tail_m": [
+        0.4300000071525574,
+        0.0,
+        1.315000057220459
+      ],
+      "length_m": 0.2600000202655792,
+      "weighted_vertices": 2083,
+      "summed_weights": 1212.0511848510737,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "lowerarm_l",
+      "parent": "upperarm_l",
+      "head_m": [
+        0.4300000071525574,
+        0.0,
+        1.315000057220459
+      ],
+      "tail_m": [
+        0.6679999828338623,
+        0.0,
+        1.315000057220459
+      ],
+      "length_m": 0.23800000548362732,
+      "weighted_vertices": 1051,
+      "summed_weights": 754.7749145950656,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "hand_l",
+      "parent": "lowerarm_l",
+      "head_m": [
+        0.6679999828338623,
+        0.0,
+        1.315000057220459
+      ],
+      "tail_m": [
+        0.7900000214576721,
+        0.0,
+        1.315000057220459
+      ],
+      "length_m": 0.12200005352497101,
+      "weighted_vertices": 857,
+      "summed_weights": 792.4220871920697,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "clavicle_r",
+      "parent": "spine_03",
+      "head_m": [
+        -0.02500000037252903,
+        0.0,
+        1.315000057220459
+      ],
+      "tail_m": [
+        -0.17000000178813934,
+        0.0,
+        1.315000057220459
+      ],
+      "length_m": 0.14499999582767487,
+      "weighted_vertices": 677,
+      "summed_weights": 70.15988905607082,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "upperarm_r",
+      "parent": "clavicle_r",
+      "head_m": [
+        -0.17000000178813934,
+        0.0,
+        1.315000057220459
+      ],
+      "tail_m": [
+        -0.4300000071525574,
+        0.0,
+        1.315000057220459
+      ],
+      "length_m": 0.2600000202655792,
+      "weighted_vertices": 1991,
+      "summed_weights": 1191.249510861796,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "lowerarm_r",
+      "parent": "upperarm_r",
+      "head_m": [
+        -0.4300000071525574,
+        0.0,
+        1.315000057220459
+      ],
+      "tail_m": [
+        -0.6679999828338623,
+        0.0,
+        1.315000057220459
+      ],
+      "length_m": 0.23800000548362732,
+      "weighted_vertices": 1110,
+      "summed_weights": 778.0749472996686,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "hand_r",
+      "parent": "lowerarm_r",
+      "head_m": [
+        -0.6679999828338623,
+        0.0,
+        1.315000057220459
+      ],
+      "tail_m": [
+        -0.7900000214576721,
+        0.0,
+        1.315000057220459
+      ],
+      "length_m": 0.12200005352497101,
+      "weighted_vertices": 807,
+      "summed_weights": 748.7766374856583,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "thigh_l",
+      "parent": "pelvis",
+      "head_m": [
+        0.10999999940395355,
+        0.0,
+        0.9399999976158142
+      ],
+      "tail_m": [
+        0.15000000596046448,
+        0.019999999552965164,
+        0.5049999952316284
+      ],
+      "length_m": 0.43729281425476074,
+      "weighted_vertices": 9352,
+      "summed_weights": 4694.1747823154765,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "calf_l",
+      "parent": "thigh_l",
+      "head_m": [
+        0.15000000596046448,
+        0.019999999552965164,
+        0.5049999952316284
+      ],
+      "tail_m": [
+        0.17000000178813934,
+        0.03999999910593033,
+        0.10499999672174454
+      ],
+      "length_m": 0.40099868178367615,
+      "weighted_vertices": 2244,
+      "summed_weights": 1919.3478584045079,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "foot_l",
+      "parent": "calf_l",
+      "head_m": [
+        0.17000000178813934,
+        0.03999999910593033,
+        0.10499999672174454
+      ],
+      "tail_m": [
+        0.18000000715255737,
+        -0.06499999761581421,
+        0.05000000074505806
+      ],
+      "length_m": 0.11895301192998886,
+      "weighted_vertices": 1195,
+      "summed_weights": 1059.4902876967099,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "ball_l",
+      "parent": "foot_l",
+      "head_m": [
+        0.18000000715255737,
+        -0.06499999761581421,
+        0.05000000074505806
+      ],
+      "tail_m": [
+        0.1850000023841858,
+        -0.125,
+        0.03700000047683716
+      ],
+      "length_m": 0.061594925820827484,
+      "weighted_vertices": 0,
+      "summed_weights": 0.0,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "thigh_r",
+      "parent": "pelvis",
+      "head_m": [
+        -0.10999999940395355,
+        0.0,
+        0.9399999976158142
+      ],
+      "tail_m": [
+        -0.15000000596046448,
+        0.019999999552965164,
+        0.5049999952316284
+      ],
+      "length_m": 0.43729281425476074,
+      "weighted_vertices": 7310,
+      "summed_weights": 4122.082129415864,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "calf_r",
+      "parent": "thigh_r",
+      "head_m": [
+        -0.15000000596046448,
+        0.019999999552965164,
+        0.5049999952316284
+      ],
+      "tail_m": [
+        -0.17000000178813934,
+        0.03999999910593033,
+        0.10499999672174454
+      ],
+      "length_m": 0.40099868178367615,
+      "weighted_vertices": 2230,
+      "summed_weights": 1911.085523034446,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "foot_r",
+      "parent": "calf_r",
+      "head_m": [
+        -0.17000000178813934,
+        0.03999999910593033,
+        0.10499999672174454
+      ],
+      "tail_m": [
+        -0.18000000715255737,
+        -0.06499999761581421,
+        0.05000000074505806
+      ],
+      "length_m": 0.11895301192998886,
+      "weighted_vertices": 1212,
+      "summed_weights": 1094.626064511016,
+      "use_connect": false,
+      "use_deform": true
+    },
+    {
+      "name": "ball_r",
+      "parent": "foot_r",
+      "head_m": [
+        -0.18000000715255737,
+        -0.06499999761581421,
+        0.05000000074505806
+      ],
+      "tail_m": [
+        -0.1850000023841858,
+        -0.125,
+        0.03700000047683716
+      ],
+      "length_m": 0.061594925820827484,
+      "weighted_vertices": 0,
+      "summed_weights": 0.0,
+      "use_connect": false,
+      "use_deform": true
+    }
+  ],
+  "actions": [
+    {
+      "name": "Arin_Idle",
+      "frame_range": [
+        1.0,
+        61.0
+      ],
+      "fcurves": 161
+    }
+  ],
+  "fps": 30,
+  "meshes": [
+    {
+      "name": "Arin_Adventurer",
+      "vertices": 45205,
+      "modifiers": [
+        {
+          "name": "Arin V3 Linear Skin",
+          "type": "ARMATURE",
+          "preserve_volume": false
+        }
+      ]
+    }
+  ]
+}

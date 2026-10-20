@@ -1,0 +1,155 @@
+{
+  "fresh_process_id": 38236,
+  "runtime": "UnrealEditor-Cmd fresh process, NullRHI persistence only",
+  "rendering_test": false,
+  "asset_mutation_requested": false,
+  "status": "passed",
+  "core": {
+    "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin.SK_Arin",
+    "skeleton": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin_Skeleton.SK_Arin_Skeleton",
+    "idle": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle.ArinIdle",
+    "idle_seconds": 2.0,
+    "same_skeleton": true,
+    "bounds_size_cm": [
+      169.00768280029297,
+      38.55985069274902,
+      169.99999880090422
+    ],
+    "bounds_origin_cm": [
+      -0.022914886474609375,
+      -0.08381938934326172,
+      85.00000059954789
+    ],
+    "bone_names": [
+      "Arin_Rig",
+      "root",
+      "pelvis",
+      "spine_01",
+      "spine_02",
+      "spine_03",
+      "neck",
+      "head",
+      "clavicle_l",
+      "upperarm_l",
+      "lowerarm_l",
+      "hand_l",
+      "clavicle_r",
+      "upperarm_r",
+      "lowerarm_r",
+      "hand_r",
+      "thigh_l",
+      "calf_l",
+      "foot_l",
+      "ball_l",
+      "thigh_r",
+      "calf_r",
+      "foot_r",
+      "ball_r"
+    ],
+    "source_bone_contract": {
+      "bone_names": [
+        "root",
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03",
+        "neck",
+        "head",
+        "clavicle_l",
+        "upperarm_l",
+        "lowerarm_l",
+        "hand_l",
+        "clavicle_r",
+        "upperarm_r",
+        "lowerarm_r",
+        "hand_r",
+        "thigh_l",
+        "calf_l",
+        "foot_l",
+        "ball_l",
+        "thigh_r",
+        "calf_r",
+        "foot_r",
+        "ball_r"
+      ],
+      "bone_count": 23,
+      "head_joint_z_m": 1.4450000524520874,
+      "model_build_sha256": "d9d0797b85e8df91a78b5df1bda82896b024f150423f1fe35daccb28162fef10"
+    },
+    "known_dimension_test": {
+      "expected_height_cm": 170,
+      "observed_height_cm": 169.99999880090422
+    },
+    "normal_import_settings": {
+      "normal_import_method": "<FBXNormalImportMethod.FBXNIM_IMPORT_NORMALS: 1>",
+      "normal_generation_method": "<FBXNormalGenerationMethod.MIKK_T_SPACE: 1>",
+      "compute_weighted_normals": "False"
+    },
+    "mesh_collision_plan": "existing detection sphere and non-colliding guide mesh preserved; no mesh physics asset"
+  },
+  "texture_count": 4,
+  "material_count": 1,
+  "lods": {
+    "count": 3,
+    "metrics": [
+      {
+        "index": 0,
+        "vertices": 110688,
+        "sections": 1,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 1.0,
+        "reduction_base_lod": 0,
+        "lock_edges": false,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 1,
+        "vertices": 100176,
+        "sections": 1,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 0.8500000238418579,
+        "reduction_base_lod": 0,
+        "lock_edges": true,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 2,
+        "vertices": 81219,
+        "sections": 1,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 0.6499999761581421,
+        "reduction_base_lod": 0,
+        "lock_edges": true,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      }
+    ],
+    "generation": "SkeletalMeshEditorSubsystem.regenerate_lod; imported LOD0 preserved",
+    "lod0_regeneration": false,
+    "requested_ratios": [
+      1.0,
+      0.8500000238418579,
+      0.6499999761581421
+    ],
+    "same_skeleton_and_materials": true,
+    "visual_review_required": true,
+    "runtime_triangle_count_limitation": "Exact runtime triangles need a separate exposed render-data/export inspection; do not infer them from vertices or reduction targets."
+  },
+  "guide_preserved": true,
+  "dependencies": [
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/MI_Arin_Adventurer",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/M_Arin_PBR",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin_Skeleton",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_BaseColor",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Metallic",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Normal",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Roughness"
+  ]
+}

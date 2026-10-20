@@ -1,0 +1,38 @@
+{
+  "status": "sampled_views_reviewed",
+  "source_sha256": "379e07e07388f8095cfce59093deba2de4534bf028c706440674bcf55bae5528",
+  "render_script_sha256": "9e8199054e2de4a80d1e28b336f398bce46045ca2c2554f1c8e76796f0fffb29",
+  "render_process_exit_code": 0,
+  "gif_assembly_process_exit_code": 0,
+  "opened_images": [
+    "walk/frame-001.png",
+    "walk-contact-sheet.png",
+    "talk-contact-sheet.png",
+    "walk/frame-036.png",
+    "talk/frame-090.png"
+  ],
+  "observations": [
+    "Full body and both feet remain inside the fixed oblique camera crop in the viewed samples",
+    "Existing texture and studio presentation are readable in the sampled poses",
+    "Walking sampled poses show alternating stepping legs and modest opposite arm swing",
+    "Talking sampled poses show alternating explanatory forearm and hand gestures with feet planted",
+    "No large mesh spike, detached limb or major body discontinuity is visible in the opened samples"
+  ],
+  "measurement": {
+    "source_sha256_before_after_equal": true,
+    "walk_frames_in_gif": 18,
+    "walk_encoded_duration_ms": 1200,
+    "talk_frames_in_gif": 30,
+    "talk_encoded_duration_ms": 3000,
+    "walk_loop_endpoint_max_vertex_delta_m": 0.0,
+    "talk_loop_endpoint_max_vertex_delta_m": 0.0
+  },
+  "limits": [
+    "Visual inspection covered contact sheets and selected original PNGs; no claim that every frame was individually inspected",
+    "GIF encoding has 10 ms delay granularity; Walk uses cumulative-rounded 70/60/70 ms delays to retain the actual 1.2-second cycle",
+    "Talking is a body and head gesture animation; the source has no facial or finger animation rig",
+    "These previews show the Blender-authored actions; Unreal runtime application and transition behavior require separate validation"
+  ],
+  "unreal_calls_performed": false,
+  "source_saved_or_export_modified": false
+}

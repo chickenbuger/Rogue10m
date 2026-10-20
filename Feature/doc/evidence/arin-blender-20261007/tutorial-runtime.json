@@ -1,0 +1,301 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "name": "no_existing_pie",
+      "passed": true
+    },
+    {
+      "name": "current_editor_map_start_hub",
+      "passed": true
+    },
+    {
+      "name": "hub_waiting_before_dialogue",
+      "passed": true
+    },
+    {
+      "name": "exactly_one_authored_tutorial_guide",
+      "passed": true,
+      "count": 1
+    },
+    {
+      "name": "authored_tutorial_data_loaded",
+      "passed": true
+    },
+    {
+      "name": "real_starting_item_and_stack_valid",
+      "passed": true,
+      "item": "/Game/DataAsset/Item/Starter/DA_Item_HealthPotion.DA_Item_HealthPotion",
+      "quantity": 2
+    },
+    {
+      "name": "authored_reward_id_not_empty",
+      "passed": true
+    },
+    {
+      "name": "npc_is_not_damageable",
+      "passed": true
+    },
+    {
+      "name": "npc_tick_disabled",
+      "passed": true
+    },
+    {
+      "name": "guide_mesh_does_not_block_player",
+      "passed": true
+    },
+    {
+      "name": "npc_has_mesh_and_idle",
+      "passed": true,
+      "mesh": "/Game/Rogue10m/Characters/Arin/Blender/SK_Arin.SK_Arin",
+      "idle": "/Game/Rogue10m/Characters/Arin/Blender/ArinIdle.ArinIdle"
+    },
+    {
+      "name": "claim_requires_open_dialogue",
+      "passed": true
+    },
+    {
+      "name": "dialogue_denied_out_of_range",
+      "passed": true
+    },
+    {
+      "name": "authored_arin_mesh_in_real_pie",
+      "passed": true
+    },
+    {
+      "name": "authored_arin_idle_in_real_pie",
+      "passed": true
+    },
+    {
+      "name": "authored_mesh_idle_same_skeleton_in_pie",
+      "passed": true
+    },
+    {
+      "name": "authored_arin_idle_two_seconds_in_pie",
+      "passed": true
+    },
+    {
+      "name": "authored_arin_humanoid_and_fbx_root_in_pie",
+      "passed": true,
+      "count": 24
+    },
+    {
+      "name": "authored_idle_really_moves_head_in_pie",
+      "passed": true,
+      "head_rotation_delta_degrees": 0.08013916015625
+    },
+    {
+      "name": "authored_idle_keeps_actor_stationary_in_pie",
+      "passed": true
+    },
+    {
+      "name": "dialogue_denied_when_movement_input_blocked",
+      "passed": true
+    },
+    {
+      "name": "dialogue_opens_nearby",
+      "passed": true
+    },
+    {
+      "name": "dialogue_open_state",
+      "passed": true
+    },
+    {
+      "name": "native_dialogue_ui_created",
+      "passed": true
+    },
+    {
+      "name": "dialogue_text_visible",
+      "passed": true
+    },
+    {
+      "name": "dialogue_keeps_move_input",
+      "passed": true
+    },
+    {
+      "name": "dialogue_keeps_look_input",
+      "passed": true
+    },
+    {
+      "name": "dialogue_does_not_pause_game",
+      "passed": true
+    },
+    {
+      "name": "receipt_initially_unclaimed",
+      "passed": true
+    },
+    {
+      "name": "real_inventory_grant_succeeds",
+      "passed": true
+    },
+    {
+      "name": "exact_starting_quantity_added",
+      "passed": true,
+      "before": 0,
+      "after": 2,
+      "quantity": 2
+    },
+    {
+      "name": "playerstate_receipt_recorded",
+      "passed": true
+    },
+    {
+      "name": "grant_confirmation_message",
+      "passed": true,
+      "message": "회복 포션 × 2 수령"
+    },
+    {
+      "name": "repeat_grant_denied",
+      "passed": true
+    },
+    {
+      "name": "repeat_grant_keeps_inventory",
+      "passed": true
+    },
+    {
+      "name": "dialogue_closes",
+      "passed": true
+    },
+    {
+      "name": "return_visit_can_talk",
+      "passed": true
+    },
+    {
+      "name": "return_visit_still_cannot_repeat_grant",
+      "passed": true
+    },
+    {
+      "name": "authored_potion_is_one_cell",
+      "passed": true,
+      "footprint": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "native_api_fills_inventory",
+      "passed": true,
+      "filled_cells": 100,
+      "capacity": 100
+    },
+    {
+      "name": "full_inventory_grant_denied",
+      "passed": true
+    },
+    {
+      "name": "full_inventory_does_not_consume_receipt",
+      "passed": true
+    },
+    {
+      "name": "full_inventory_explained",
+      "passed": true,
+      "message": "가방에 빈 공간이 부족합니다. I로 정리한 뒤 다시 받아 주세요."
+    },
+    {
+      "name": "grant_retries_after_space_freed",
+      "passed": true
+    },
+    {
+      "name": "retry_adds_exact_quantity",
+      "passed": true
+    },
+    {
+      "name": "retry_records_receipt_once",
+      "passed": true
+    },
+    {
+      "name": "leaving_range_closes_dialogue",
+      "passed": true
+    },
+    {
+      "name": "out_of_range_cannot_claim",
+      "passed": true
+    },
+    {
+      "name": "hub_remains_waiting",
+      "passed": true
+    },
+    {
+      "name": "hub_timer_unchanged",
+      "passed": true,
+      "before": 1200.0,
+      "after": 1200.0
+    },
+    {
+      "name": "player_healthy_after_dialogue",
+      "passed": true
+    },
+    {
+      "name": "portal_test_has_two_potions",
+      "passed": true
+    },
+    {
+      "name": "potion_test_real_damage_applied",
+      "passed": true,
+      "damage": 1.0
+    },
+    {
+      "name": "granted_potion_stack_located",
+      "passed": true
+    },
+    {
+      "name": "one_granted_potion_really_consumed",
+      "passed": true
+    },
+    {
+      "name": "one_granted_potion_remaining",
+      "passed": true
+    },
+    {
+      "name": "real_start_hub_portal_found",
+      "passed": true
+    },
+    {
+      "name": "portal_targets_open_world",
+      "passed": true
+    },
+    {
+      "name": "real_portal_arrived_open_world",
+      "passed": true,
+      "world": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap"
+    },
+    {
+      "name": "remaining_supply_survives_hard_travel",
+      "passed": true,
+      "source_quantity": 1,
+      "destination_stack_quantities": [
+        5,
+        1
+      ],
+      "source_guid": "<Struct 'Guid' (0x0000023670884320) {}>"
+    },
+    {
+      "name": "consumed_potion_not_recreated",
+      "passed": true,
+      "destination_stack_quantities": [
+        5,
+        1
+      ]
+    },
+    {
+      "name": "run_starts_only_after_portal",
+      "passed": true
+    },
+    {
+      "name": "restored_supply_not_duplicated_by_inventory_events",
+      "passed": true
+    },
+    {
+      "name": "open_world_timer_counts_down",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "This fixture calls the real reflected dialogue and inventory APIs; physical F-key input and Korean text layout also require a visual check.",
+    "Receipts use PlayerState plus a GameInstance supply record across the real portal, not permanent character-profile saves. Network play is outside this single-player prototype check.",
+    "Runtime fixtures are disposable PIE data; a small damage stimulus verifies actual potion use before real portal travel. No assets or maps are saved."
+  ],
+  "phase": "observe_open_world",
+  "elapsed_seconds": 23.561999999999898,
+  "message": "Dialogue, exact one-time grant, full-bag retry, actual potion use and real portal carry verified."
+}

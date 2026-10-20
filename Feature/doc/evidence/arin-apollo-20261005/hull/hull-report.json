@@ -1,0 +1,617 @@
+{
+  "status": "passed",
+  "provider_id": "apollo_hull",
+  "lane": "local_draft",
+  "model": "apollo-hull-v1",
+  "execution": "direct unchanged ApolloHullAdapter.generate",
+  "mcp_or_api_job": false,
+  "spec": {
+    "height_m": 1.7,
+    "target_polycount": 30000,
+    "source_identity": "Arin tutorial guide"
+  },
+  "used_for_geometry": [
+    "front",
+    "side"
+  ],
+  "back_use": "reference QA and downstream texture only",
+  "pending_optional_back_reference": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\multiview\\arin-back-v1.png",
+  "rigged": false,
+  "animated": false,
+  "texture_baked": false,
+  "quality_claim": "silhouette-derived 3D humanoid prototype; not production reconstruction",
+  "known_limits": [
+    "Front/side silhouette intersection cannot reconstruct concavities or hidden detail.",
+    "Clothing, body, and carried items may be joined; neutral-pose deformation requires visual review.",
+    "Apollo keeps the largest mesh component; disconnected small features may be discarded.",
+    "AI-generated reference views are design hints, not scanned ground truth."
+  ],
+  "coordinates": {
+    "up": "+Y",
+    "front_image_right": "+X",
+    "side_image_right": "+Z",
+    "reference_profile_facing": "right",
+    "subject_forward": "+Z",
+    "back_texture_x": "mirror back image U to align with front geometry X",
+    "units": "meters"
+  },
+  "attempts": [
+    {
+      "resolution": 64,
+      "raw_glb": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\hull\\arin-hull-resolution-64.glb",
+      "sha256": "b43a3b97266ab90ac004de3533089f46d0a49198ed899ffc389464afcb012e44",
+      "provider_params": {
+        "resolution": 64,
+        "views_used": [
+          "front",
+          "side"
+        ],
+        "elapsed_s": 0.174,
+        "watertight": true
+      },
+      "vertices": 16538,
+      "faces": 33072,
+      "qa": {
+        "stage": "mesh",
+        "status": "warn",
+        "score": 0.818,
+        "checks": [
+          {
+            "name": "glb_parses",
+            "status": "pass",
+            "message": "1 mesh(es)",
+            "metrics": {}
+          },
+          {
+            "name": "geometry_present",
+            "status": "pass",
+            "message": "16538 vertices, 33072 faces",
+            "metrics": {
+              "vertices": 16538,
+              "faces": 33072
+            }
+          },
+          {
+            "name": "polycount_budget",
+            "status": "warn",
+            "message": "33072 faces vs budget 30000 (1.1x)",
+            "metrics": {
+              "faces": 33072,
+              "budget": 30000
+            }
+          },
+          {
+            "name": "bounding_box",
+            "status": "pass",
+            "message": "extents [1.6076, 1.6399, 0.3909]",
+            "metrics": {
+              "extents": [
+                1.6075743436813354,
+                1.6398751828819513,
+                0.3909155875444412
+              ]
+            }
+          },
+          {
+            "name": "floating_components",
+            "status": "pass",
+            "message": "single connected component",
+            "metrics": {
+              "components": 1
+            }
+          },
+          {
+            "name": "normals",
+            "status": "pass",
+            "message": "finite=True, winding_consistent=True",
+            "metrics": {
+              "winding_consistent": true
+            }
+          },
+          {
+            "name": "degenerate_faces",
+            "status": "pass",
+            "message": "0 degenerate faces",
+            "metrics": {
+              "degenerate": 0
+            }
+          },
+          {
+            "name": "watertight",
+            "status": "pass",
+            "message": "required for print target",
+            "metrics": {
+              "watertight": true
+            }
+          },
+          {
+            "name": "materials",
+            "status": "warn",
+            "message": "0 material(s)",
+            "metrics": {
+              "material_count": 0
+            }
+          },
+          {
+            "name": "uv_coordinates",
+            "status": "warn",
+            "message": "no TEXCOORD_0 — run UV unwrap before texturing",
+            "metrics": {
+              "has_uv": false
+            }
+          },
+          {
+            "name": "textures",
+            "status": "warn",
+            "message": "0 texture(s) embedded",
+            "metrics": {
+              "texture_count": 0
+            }
+          }
+        ],
+        "repair_suggestions": [
+          "simplify/remesh toward 30000 faces (Remesh lab → simplify)",
+          "run UV unwrap (xatlas) before PBR texturing"
+        ]
+      }
+    },
+    {
+      "resolution": 57,
+      "raw_glb": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\hull\\arin-hull-resolution-57.glb",
+      "sha256": "35c831645e06b603d9eb1dbca4e4db71c628c5cea294b9e5f123b1a21c9c0890",
+      "provider_params": {
+        "resolution": 57,
+        "views_used": [
+          "front",
+          "side"
+        ],
+        "elapsed_s": 0.134,
+        "watertight": true
+      },
+      "vertices": 12442,
+      "faces": 24880,
+      "qa": {
+        "stage": "mesh",
+        "status": "warn",
+        "score": 0.864,
+        "checks": [
+          {
+            "name": "glb_parses",
+            "status": "pass",
+            "message": "1 mesh(es)",
+            "metrics": {}
+          },
+          {
+            "name": "geometry_present",
+            "status": "pass",
+            "message": "12442 vertices, 24880 faces",
+            "metrics": {
+              "vertices": 12442,
+              "faces": 24880
+            }
+          },
+          {
+            "name": "polycount_budget",
+            "status": "pass",
+            "message": "24880 faces vs budget 30000 (0.8x)",
+            "metrics": {
+              "faces": 24880,
+              "budget": 30000
+            }
+          },
+          {
+            "name": "bounding_box",
+            "status": "pass",
+            "message": "extents [1.6545, 1.6352, 0.4034]",
+            "metrics": {
+              "extents": [
+                1.6544935703277588,
+                1.6351574752479792,
+                0.40341462194919586
+              ]
+            }
+          },
+          {
+            "name": "floating_components",
+            "status": "pass",
+            "message": "single connected component",
+            "metrics": {
+              "components": 1
+            }
+          },
+          {
+            "name": "normals",
+            "status": "pass",
+            "message": "finite=True, winding_consistent=True",
+            "metrics": {
+              "winding_consistent": true
+            }
+          },
+          {
+            "name": "degenerate_faces",
+            "status": "pass",
+            "message": "0 degenerate faces",
+            "metrics": {
+              "degenerate": 0
+            }
+          },
+          {
+            "name": "watertight",
+            "status": "pass",
+            "message": "required for print target",
+            "metrics": {
+              "watertight": true
+            }
+          },
+          {
+            "name": "materials",
+            "status": "warn",
+            "message": "0 material(s)",
+            "metrics": {
+              "material_count": 0
+            }
+          },
+          {
+            "name": "uv_coordinates",
+            "status": "warn",
+            "message": "no TEXCOORD_0 — run UV unwrap before texturing",
+            "metrics": {
+              "has_uv": false
+            }
+          },
+          {
+            "name": "textures",
+            "status": "warn",
+            "message": "0 texture(s) embedded",
+            "metrics": {
+              "texture_count": 0
+            }
+          }
+        ],
+        "repair_suggestions": [
+          "run UV unwrap (xatlas) before PBR texturing"
+        ]
+      }
+    }
+  ],
+  "vendor_sha256": {
+    "apollo/providers/threed.py": "70e2fffbfd0a59522b177e3d7de522759bfb6e753d325b51c3ed7d9c5e733b5b",
+    "apollo/procgen.py": "ec6610e719f82e719f87d0315b3824a11b3dbbf06e95f20e826d01c780486e28"
+  },
+  "references": {
+    "front": {
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\multiview\\arin-front-v1.png",
+      "sha256": "e19afeb8af1d281e2d12a37dcea5b143d77e11618a83b7b631621bd1dc544ace",
+      "size_px": [
+        1254,
+        1254
+      ],
+      "foreground_bbox_px": [
+        29,
+        31,
+        1216,
+        1200
+      ],
+      "foreground_aspect": 1.0153977758768178,
+      "geometry_mask": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\hull\\front-geometry-mask.png",
+      "normalized_mask_canvas_px": [
+        1024,
+        1024
+      ],
+      "normalized_subject_size_px": [
+        927,
+        913
+      ],
+      "normalized_subject_origin_px": [
+        48,
+        55
+      ]
+    },
+    "side": {
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\multiview\\arin-side-v1.png",
+      "sha256": "1129f1e47890369c58bf8f4d14f0b24407eadda1eb3203e0a53c4dff843322df",
+      "size_px": [
+        1254,
+        1254
+      ],
+      "foreground_bbox_px": [
+        460,
+        23,
+        735,
+        1199
+      ],
+      "foreground_aspect": 0.233843537414966,
+      "geometry_mask": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\hull\\side-geometry-mask.png",
+      "normalized_mask_canvas_px": [
+        1024,
+        1024
+      ],
+      "normalized_subject_size_px": [
+        213,
+        913
+      ],
+      "normalized_subject_origin_px": [
+        405,
+        55
+      ]
+    }
+  },
+  "source_multiview_qa": {
+    "stage": "multiview",
+    "status": "pass",
+    "score": 1.0,
+    "checks": [
+      {
+        "name": "required_views_present",
+        "status": "pass",
+        "message": "2 views present",
+        "metrics": {
+          "views": [
+            "front",
+            "side"
+          ]
+        }
+      },
+      {
+        "name": "subject_height_consistent",
+        "status": "pass",
+        "message": "height spread 0% across views",
+        "metrics": {
+          "heights_px": {
+            "front": 150,
+            "side": 150
+          }
+        }
+      },
+      {
+        "name": "side_narrower_than_front",
+        "status": "pass",
+        "message": "front aspect 1.01, side aspect 0.25",
+        "metrics": {
+          "front_aspect": 1.007,
+          "side_aspect": 0.25
+        }
+      },
+      {
+        "name": "palette_consistent",
+        "status": "pass",
+        "message": "minimum pairwise color similarity 1.00",
+        "metrics": {
+          "min_similarity": 0.999
+        }
+      }
+    ],
+    "repair_suggestions": []
+  },
+  "normalized_silhouette_multiview_qa": {
+    "stage": "multiview",
+    "status": "pass",
+    "score": 1.0,
+    "checks": [
+      {
+        "name": "required_views_present",
+        "status": "pass",
+        "message": "2 views present",
+        "metrics": {
+          "views": [
+            "front",
+            "side"
+          ]
+        }
+      },
+      {
+        "name": "subject_height_consistent",
+        "status": "pass",
+        "message": "height spread 0% across views",
+        "metrics": {
+          "heights_px": {
+            "front": 144,
+            "side": 144
+          }
+        }
+      },
+      {
+        "name": "side_narrower_than_front",
+        "status": "pass",
+        "message": "front aspect 1.01, side aspect 0.25",
+        "metrics": {
+          "front_aspect": 1.014,
+          "side_aspect": 0.247
+        }
+      },
+      {
+        "name": "palette_consistent",
+        "status": "pass",
+        "message": "minimum pairwise color similarity 1.00",
+        "metrics": {
+          "min_similarity": 0.997
+        }
+      }
+    ],
+    "repair_suggestions": []
+  },
+  "provider_info": {
+    "id": "apollo_hull",
+    "name": "Apollo Visual Hull (multi-view)",
+    "kind": "three_d",
+    "lane": "local_draft",
+    "description": "Shape-from-silhouette: carves a mesh from front+side view masks (marching cubes). Real multi-view→3D, CPU.",
+    "requires": [],
+    "local": true,
+    "docs_url": ""
+  },
+  "provider_health": {
+    "state": "ok",
+    "detail": "configured",
+    "latency_ms": null,
+    "meta": {},
+    "checked_at": 1791183023.72088
+  },
+  "selected_resolution": 57,
+  "normalization_transform": {
+    "order": "translation then uniform scale",
+    "translation_m": [
+      0.015474975109100342,
+      -0.017648329958319664,
+      0.004249967634677887
+    ],
+    "scale": 1.0396552171479307,
+    "raw_bounds_m": [
+      [
+        -0.8427217602729797,
+        0.017648329958319664,
+        -0.20595727860927582
+      ],
+      [
+        0.811771810054779,
+        1.6528058052062988,
+        0.19745734333992004
+      ]
+    ],
+    "raw_height_m": 1.6351574752479792
+  },
+  "outputs": {
+    "raw_glb": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\hull\\arin-hull-raw.glb",
+    "normalized_glb": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\hull\\arin-hull-normalized.glb",
+    "normalized_sha256": "77aee1ac1a6827d5f91fa83b4249b6496f2e9917e6bc64fc73311e106b2715fb"
+  },
+  "geometry": {
+    "vertices": 12442,
+    "faces": 24880,
+    "bounds_m": [
+      [
+        -0.8600514360644806,
+        0.0,
+        -0.2097060581916208
+      ],
+      [
+        0.8600514360644806,
+        1.7,
+        0.2097060581916208
+      ]
+    ],
+    "extents_m": [
+      1.7201028721289613,
+      1.7,
+      0.4194121163832416
+    ],
+    "volume_m3": 0.1981840130723138,
+    "component_count": 1
+  },
+  "checks": {
+    "geometry_present": true,
+    "closed_surface": true,
+    "consistent_winding": true,
+    "positive_enclosed_volume": true,
+    "single_connected_component": true,
+    "finite_vertices": true,
+    "finite_normals": true,
+    "face_budget": true,
+    "height_170cm": true,
+    "feet_at_zero": true,
+    "nonflat_humanoid_depth": true
+  },
+  "final_mesh_qa": {
+    "stage": "mesh",
+    "status": "warn",
+    "score": 0.864,
+    "checks": [
+      {
+        "name": "glb_parses",
+        "status": "pass",
+        "message": "1 mesh(es)",
+        "metrics": {}
+      },
+      {
+        "name": "geometry_present",
+        "status": "pass",
+        "message": "12442 vertices, 24880 faces",
+        "metrics": {
+          "vertices": 12442,
+          "faces": 24880
+        }
+      },
+      {
+        "name": "polycount_budget",
+        "status": "pass",
+        "message": "24880 faces vs budget 30000 (0.8x)",
+        "metrics": {
+          "faces": 24880,
+          "budget": 30000
+        }
+      },
+      {
+        "name": "bounding_box",
+        "status": "pass",
+        "message": "extents [1.7201, 1.7, 0.4194]",
+        "metrics": {
+          "extents": [
+            1.7201029062271118,
+            1.7000000476837158,
+            0.41941210627555847
+          ]
+        }
+      },
+      {
+        "name": "floating_components",
+        "status": "pass",
+        "message": "single connected component",
+        "metrics": {
+          "components": 1
+        }
+      },
+      {
+        "name": "normals",
+        "status": "pass",
+        "message": "finite=True, winding_consistent=True",
+        "metrics": {
+          "winding_consistent": true
+        }
+      },
+      {
+        "name": "degenerate_faces",
+        "status": "pass",
+        "message": "0 degenerate faces",
+        "metrics": {
+          "degenerate": 0
+        }
+      },
+      {
+        "name": "watertight",
+        "status": "pass",
+        "message": "required for print target",
+        "metrics": {
+          "watertight": true
+        }
+      },
+      {
+        "name": "materials",
+        "status": "warn",
+        "message": "0 material(s)",
+        "metrics": {
+          "material_count": 0
+        }
+      },
+      {
+        "name": "uv_coordinates",
+        "status": "warn",
+        "message": "no TEXCOORD_0 — run UV unwrap before texturing",
+        "metrics": {
+          "has_uv": false
+        }
+      },
+      {
+        "name": "textures",
+        "status": "warn",
+        "message": "0 texture(s) embedded",
+        "metrics": {
+          "texture_count": 0
+        }
+      }
+    ],
+    "repair_suggestions": [
+      "run UV unwrap (xatlas) before PBR texturing"
+    ]
+  },
+  "elapsed_seconds": 1.634
+}

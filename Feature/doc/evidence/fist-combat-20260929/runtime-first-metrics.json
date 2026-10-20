@@ -1,0 +1,1661 @@
+{
+  "frames": 841,
+  "pose_rows": 118581,
+  "camera_rows": 840,
+  "first_samples": 580,
+  "third_samples": 260,
+  "nonfinite_values": 0,
+  "accepted_skills": [
+    {
+      "frame": "46",
+      "time_s": "1.533333333",
+      "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab.DA_BasicBrawler_LeftJab",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_LeftJab.AM_Unarmed_LeftJab",
+      "rate": "1.559999943",
+      "expected_first_pulse_s": "0.217948735",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "57",
+      "time_s": "1.900000000",
+      "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightJab.DA_BasicBrawler_RightJab",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_RightJab.AM_Unarmed_RightJab",
+      "rate": "1.559999943",
+      "expected_first_pulse_s": "0.217948735",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "139",
+      "time_s": "4.633333333",
+      "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight.DA_BasicBrawler_RightStraight",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Straight.AM_Unarmed_Straight",
+      "rate": "1.039999962",
+      "expected_first_pulse_s": "0.326923102",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "247",
+      "time_s": "8.233333333",
+      "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightHook.DA_BasicBrawler_RightHook",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Hook.AM_Unarmed_Hook",
+      "rate": "1.559999943",
+      "expected_first_pulse_s": "0.405982912",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "333",
+      "time_s": "11.100000000",
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+      "rate": "1.393599987",
+      "expected_first_pulse_s": "0.107634909",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "398",
+      "time_s": "13.266666667",
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02.DA_Attack_Knuckle_Primary02",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_BodyStraight.AM_Knuckle_BodyStraight",
+      "rate": "1.455999970",
+      "expected_first_pulse_s": "0.109890111",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "458",
+      "time_s": "15.266666667",
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03.DA_Attack_Knuckle_Primary03",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_HookFlurry.AM_Knuckle_HookFlurry",
+      "rate": "1.289600015",
+      "expected_first_pulse_s": "0.139578164",
+      "hit_count": "6",
+      "hit_interval_s": "0.072115391",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "513",
+      "time_s": "17.100000000",
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Special.DA_Attack_Knuckle_Special",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Uppercut.AM_Knuckle_Uppercut",
+      "rate": "1.185599923",
+      "expected_first_pulse_s": "0.177125514",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "576",
+      "time_s": "19.200000000",
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.DA_Attack_Knuckle_Charged",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_ShortBlow.AM_Knuckle_ShortBlow",
+      "rate": "0.935999930",
+      "expected_first_pulse_s": "0.235042751",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    }
+  ],
+  "camera_max": {
+    "raw_head_degrees": 46.678530525,
+    "view_motion_degrees": 7.001779857,
+    "position_error_cm": 1.1241e-05,
+    "rotation_error_deg": 1.708e-06,
+    "shadow_position_error_cm": 0.0,
+    "shadow_rotation_error_deg": 2.415e-06
+  },
+  "camera_cap_samples": 0,
+  "fixed_ratios_min": 0.999999017,
+  "fixed_ratios_max": 1.001352635,
+  "max_raw_local_scale_error": 6.7880000000908325e-06,
+  "length_outliers_by_bone": {
+    "source/pelvis": 247,
+    "appearance/Pelvis": 247
+  },
+  "fast_rotation_by_bone": {
+    "source/hand_l": 17,
+    "source/index_metacarpal_l": 17,
+    "source/index_01_l": 20,
+    "source/index_02_l": 28,
+    "source/index_03_l": 36,
+    "source/middle_metacarpal_l": 17,
+    "source/middle_01_l": 19,
+    "source/middle_02_l": 28,
+    "source/middle_03_l": 34,
+    "source/thumb_01_l": 17,
+    "source/pinky_metacarpal_l": 17,
+    "source/pinky_01_l": 21,
+    "source/pinky_02_l": 28,
+    "source/pinky_03_l": 38,
+    "source/ring_metacarpal_l": 17,
+    "source/ring_01_l": 21,
+    "source/ring_02_l": 28,
+    "source/ring_03_l": 37,
+    "source/lowerarm_r": 12,
+    "source/lowerarm_twist_02_r": 12,
+    "source/lowerarm_twist_01_r": 12,
+    "source/hand_r": 28,
+    "source/pinky_metacarpal_r": 28,
+    "source/pinky_01_r": 28,
+    "source/pinky_02_r": 32,
+    "source/pinky_03_r": 37,
+    "source/ring_metacarpal_r": 28,
+    "source/ring_01_r": 29,
+    "source/ring_02_r": 36,
+    "source/ring_03_r": 36,
+    "source/middle_metacarpal_r": 28,
+    "source/middle_01_r": 28,
+    "source/middle_02_r": 35,
+    "source/middle_03_r": 36,
+    "source/index_metacarpal_r": 28,
+    "source/index_01_r": 28,
+    "source/index_02_r": 36,
+    "source/index_03_r": 37,
+    "source/thumb_01_r": 22,
+    "source/thumb_02_r": 21,
+    "appearance/hand_l": 17,
+    "appearance/thumb_01_l": 17,
+    "appearance/index_01_l": 20,
+    "appearance/index_02_l": 28,
+    "appearance/index_03_l": 36,
+    "appearance/middle_01_l": 19,
+    "appearance/middle_02_l": 28,
+    "appearance/middle_03_l": 34,
+    "appearance/ring_01_l": 21,
+    "appearance/ring_02_l": 28,
+    "appearance/ring_03_l": 37,
+    "appearance/pinky_01_l": 21,
+    "appearance/pinky_02_l": 27,
+    "appearance/pinky_03_l": 38,
+    "appearance/lowerarm_r": 13,
+    "appearance/hand_r": 28,
+    "appearance/thumb_01_r": 22,
+    "appearance/thumb_02_r": 21,
+    "appearance/index_01_r": 28,
+    "appearance/index_02_r": 36,
+    "appearance/index_03_r": 37,
+    "appearance/middle_01_r": 28,
+    "appearance/middle_02_r": 34,
+    "appearance/middle_03_r": 36,
+    "appearance/ring_01_r": 29,
+    "appearance/ring_02_r": 35,
+    "appearance/ring_03_r": 36,
+    "appearance/pinky_01_r": 28,
+    "appearance/pinky_02_r": 30,
+    "appearance/pinky_03_r": 37,
+    "appearance/lowerarm_twist_01_r": 13,
+    "source/lowerarm_l": 8,
+    "source/lowerarm_twist_02_l": 8,
+    "source/lowerarm_twist_01_l": 8,
+    "source/thumb_02_l": 10,
+    "source/thumb_03_l": 8,
+    "source/thumb_03_r": 8,
+    "appearance/lowerarm_l": 8,
+    "appearance/thumb_02_l": 12,
+    "appearance/thumb_03_l": 8,
+    "appearance/lowerarm_twist_01_l": 8,
+    "appearance/thumb_03_r": 8,
+    "source/upperarm_r": 1,
+    "source/upperarm_twist_01_r": 1,
+    "source/upperarm_twist_02_r": 1,
+    "appearance/upperarm_r": 1,
+    "appearance/upperarm_twist_01_r": 1
+  },
+  "bone_stats": {
+    "source/root": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.0,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 19.198323349,
+      "max_step_cm": 49.916320171,
+      "max_step_frame": 47
+    },
+    "source/pelvis": {
+      "ratio_min": 0.011107356,
+      "ratio_max": 1.200033763,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 13.606074721,
+      "max_step_cm": 14.49667214,
+      "max_step_frame": 759
+    },
+    "source/spine_01": {
+      "ratio_min": 0.999999092,
+      "ratio_max": 1.001348379,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 14.693781688,
+      "max_step_cm": 14.169726549,
+      "max_step_frame": 47
+    },
+    "source/spine_02": {
+      "ratio_min": 0.999998877,
+      "ratio_max": 1.00134932,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 12.394357833,
+      "max_step_cm": 14.44999803,
+      "max_step_frame": 783
+    },
+    "source/spine_03": {
+      "ratio_min": 0.999999868,
+      "ratio_max": 1.001348428,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 12.277272686,
+      "max_step_cm": 15.105787482,
+      "max_step_frame": 783
+    },
+    "source/spine_04": {
+      "ratio_min": 0.999999776,
+      "ratio_max": 1.001348187,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 11.953662093,
+      "max_step_cm": 15.966036848,
+      "max_step_frame": 783
+    },
+    "source/spine_05": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.001348782,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 10.806280313,
+      "max_step_cm": 18.083750554,
+      "max_step_frame": 783
+    },
+    "source/neck_01": {
+      "ratio_min": 0.99999387,
+      "ratio_max": 1.001349732,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 10.247816316,
+      "max_step_cm": 19.207230237,
+      "max_step_frame": 334
+    },
+    "source/neck_02": {
+      "ratio_min": 0.999997854,
+      "ratio_max": 1.001348602,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 10.826670499,
+      "max_step_cm": 19.673019229,
+      "max_step_frame": 334
+    },
+    "source/head": {
+      "ratio_min": 0.999998738,
+      "ratio_max": 1.001348286,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 20.281191544,
+      "max_step_cm": 19.941296614,
+      "max_step_frame": 577
+    },
+    "source/clavicle_l": {
+      "ratio_min": 0.999288158,
+      "ratio_max": 1.000144721,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 13.185999635,
+      "max_step_cm": 18.653436813,
+      "max_step_frame": 783
+    },
+    "source/upperarm_l": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.00134912,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 21.864259043,
+      "max_step_cm": 21.328518428,
+      "max_step_frame": 467
+    },
+    "source/lowerarm_l": {
+      "ratio_min": 0.999999863,
+      "ratio_max": 1.001348528,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 61.349735691,
+      "max_step_cm": 26.290595705,
+      "max_step_frame": 248
+    },
+    "source/lowerarm_twist_02_l": {
+      "ratio_min": 0.999999974,
+      "ratio_max": 1.001349587,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 61.349312538,
+      "max_step_cm": 27.607761536,
+      "max_step_frame": 248
+    },
+    "source/lowerarm_twist_01_l": {
+      "ratio_min": 0.999999974,
+      "ratio_max": 1.00134808,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 61.349312334,
+      "max_step_cm": 28.97293687,
+      "max_step_frame": 248
+    },
+    "source/hand_l": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.001348729,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 72.159945876,
+      "max_step_cm": 30.379688699,
+      "max_step_frame": 140
+    },
+    "source/index_metacarpal_l": {
+      "ratio_min": 0.998474067,
+      "ratio_max": 1.000000065,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 72.161549362,
+      "max_step_cm": 31.017270948,
+      "max_step_frame": 140
+    },
+    "source/index_01_l": {
+      "ratio_min": 0.999997086,
+      "ratio_max": 1.001173666,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 71.786177546,
+      "max_step_cm": 35.935204514,
+      "max_step_frame": 334
+    },
+    "source/index_02_l": {
+      "ratio_min": 0.999994624,
+      "ratio_max": 1.001347251,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 86.815441525,
+      "max_step_cm": 37.414593213,
+      "max_step_frame": 334
+    },
+    "source/index_03_l": {
+      "ratio_min": 0.999998162,
+      "ratio_max": 1.00134862,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 109.809126808,
+      "max_step_cm": 35.702172785,
+      "max_step_frame": 47
+    },
+    "source/middle_metacarpal_l": {
+      "ratio_min": 0.995554514,
+      "ratio_max": 1.00000003,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 72.159177217,
+      "max_step_cm": 30.317376357,
+      "max_step_frame": 140
+    },
+    "source/middle_01_l": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.001351462,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 72.380809332,
+      "max_step_cm": 36.66819192,
+      "max_step_frame": 334
+    },
+    "source/middle_02_l": {
+      "ratio_min": 0.999999723,
+      "ratio_max": 1.001346611,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 84.424798491,
+      "max_step_cm": 38.282628558,
+      "max_step_frame": 334
+    },
+    "source/middle_03_l": {
+      "ratio_min": 0.999999615,
+      "ratio_max": 1.001348481,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 99.298757495,
+      "max_step_cm": 36.350161708,
+      "max_step_frame": 47
+    },
+    "source/thumb_01_l": {
+      "ratio_min": 0.999935838,
+      "ratio_max": 1.000809211,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 70.320392815,
+      "max_step_cm": 31.347853987,
+      "max_step_frame": 140
+    },
+    "source/thumb_02_l": {
+      "ratio_min": 0.999997059,
+      "ratio_max": 1.00135003,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 68.317995173,
+      "max_step_cm": 32.781246252,
+      "max_step_frame": 140
+    },
+    "source/thumb_03_l": {
+      "ratio_min": 0.999997373,
+      "ratio_max": 1.001344594,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 49.896357194,
+      "max_step_cm": 33.604767744,
+      "max_step_frame": 514
+    },
+    "source/pinky_metacarpal_l": {
+      "ratio_min": 0.997982707,
+      "ratio_max": 1.000000058,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 72.157911533,
+      "max_step_cm": 30.376610738,
+      "max_step_frame": 140
+    },
+    "source/pinky_01_l": {
+      "ratio_min": 0.999999512,
+      "ratio_max": 1.001103442,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 74.027561561,
+      "max_step_cm": 35.939495375,
+      "max_step_frame": 334
+    },
+    "source/pinky_02_l": {
+      "ratio_min": 0.999996064,
+      "ratio_max": 1.001349345,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 80.859078317,
+      "max_step_cm": 37.136859667,
+      "max_step_frame": 334
+    },
+    "source/pinky_03_l": {
+      "ratio_min": 0.999986793,
+      "ratio_max": 1.001348911,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 100.792144627,
+      "max_step_cm": 35.306876684,
+      "max_step_frame": 47
+    },
+    "source/ring_metacarpal_l": {
+      "ratio_min": 0.996794306,
+      "ratio_max": 1.000000064,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 72.159746269,
+      "max_step_cm": 30.077504027,
+      "max_step_frame": 140
+    },
+    "source/ring_01_l": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.001342384,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 74.576862054,
+      "max_step_cm": 36.569788901,
+      "max_step_frame": 334
+    },
+    "source/ring_02_l": {
+      "ratio_min": 0.999998084,
+      "ratio_max": 1.001347493,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 85.535217836,
+      "max_step_cm": 38.088574063,
+      "max_step_frame": 334
+    },
+    "source/ring_03_l": {
+      "ratio_min": 0.999986948,
+      "ratio_max": 1.001349578,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 103.649975202,
+      "max_step_cm": 36.243698163,
+      "max_step_frame": 47
+    },
+    "source/upperarm_twist_01_l": {
+      "ratio_min": 0.999999974,
+      "ratio_max": 1.001347292,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 21.864259043,
+      "max_step_cm": 22.909563123,
+      "max_step_frame": 467
+    },
+    "source/upperarm_twist_02_l": {
+      "ratio_min": 0.999999974,
+      "ratio_max": 1.001348438,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 21.864259043,
+      "max_step_cm": 24.568489947,
+      "max_step_frame": 467
+    },
+    "source/clavicle_r": {
+      "ratio_min": 0.999288206,
+      "ratio_max": 1.000143339,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 21.315802024,
+      "max_step_cm": 18.364435022,
+      "max_step_frame": 783
+    },
+    "source/upperarm_r": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.001349312,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 46.939360675,
+      "max_step_cm": 20.59023716,
+      "max_step_frame": 334
+    },
+    "source/lowerarm_r": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.001349091,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 69.603817419,
+      "max_step_cm": 25.43424397,
+      "max_step_frame": 248
+    },
+    "source/lowerarm_twist_02_r": {
+      "ratio_min": 0.999999974,
+      "ratio_max": 1.001347853,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 69.60330749,
+      "max_step_cm": 27.56818507,
+      "max_step_frame": 248
+    },
+    "source/lowerarm_twist_01_r": {
+      "ratio_min": 0.999999974,
+      "ratio_max": 1.00134909,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 69.60330763,
+      "max_step_cm": 30.097373589,
+      "max_step_frame": 248
+    },
+    "source/hand_r": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.001348647,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 80.731935715,
+      "max_step_cm": 32.930893894,
+      "max_step_frame": 140
+    },
+    "source/pinky_metacarpal_r": {
+      "ratio_min": 0.997983825,
+      "ratio_max": 1.000000044,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 80.730244411,
+      "max_step_cm": 35.60637712,
+      "max_step_frame": 140
+    },
+    "source/pinky_01_r": {
+      "ratio_min": 0.999997525,
+      "ratio_max": 1.001104257,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 90.187337487,
+      "max_step_cm": 40.212645679,
+      "max_step_frame": 140
+    },
+    "source/pinky_02_r": {
+      "ratio_min": 0.999992378,
+      "ratio_max": 1.001350747,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 102.142641984,
+      "max_step_cm": 40.029814757,
+      "max_step_frame": 140
+    },
+    "source/pinky_03_r": {
+      "ratio_min": 0.999998714,
+      "ratio_max": 1.001355764,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 114.369341528,
+      "max_step_cm": 37.772617001,
+      "max_step_frame": 140
+    },
+    "source/ring_metacarpal_r": {
+      "ratio_min": 0.996789061,
+      "ratio_max": 1.000000048,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 80.730967523,
+      "max_step_cm": 34.988857571,
+      "max_step_frame": 140
+    },
+    "source/ring_01_r": {
+      "ratio_min": 0.999992731,
+      "ratio_max": 1.001341283,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 91.286201553,
+      "max_step_cm": 40.393341407,
+      "max_step_frame": 140
+    },
+    "source/ring_02_r": {
+      "ratio_min": 0.999990994,
+      "ratio_max": 1.001349823,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 109.094901069,
+      "max_step_cm": 40.123399199,
+      "max_step_frame": 140
+    },
+    "source/ring_03_r": {
+      "ratio_min": 0.99999821,
+      "ratio_max": 1.001352484,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 117.177116332,
+      "max_step_cm": 37.611486327,
+      "max_step_frame": 140
+    },
+    "source/middle_metacarpal_r": {
+      "ratio_min": 0.995549745,
+      "ratio_max": 1.000000043,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 80.730281385,
+      "max_step_cm": 34.373648701,
+      "max_step_frame": 140
+    },
+    "source/middle_01_r": {
+      "ratio_min": 0.999992728,
+      "ratio_max": 1.00134944,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 86.550747103,
+      "max_step_cm": 39.809721745,
+      "max_step_frame": 140
+    },
+    "source/middle_02_r": {
+      "ratio_min": 0.999999331,
+      "ratio_max": 1.001350213,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 106.680738831,
+      "max_step_cm": 39.509383641,
+      "max_step_frame": 140
+    },
+    "source/middle_03_r": {
+      "ratio_min": 0.999996241,
+      "ratio_max": 1.001348403,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 119.900939133,
+      "max_step_cm": 36.898245198,
+      "max_step_frame": 140
+    },
+    "source/index_metacarpal_r": {
+      "ratio_min": 0.998469693,
+      "ratio_max": 1.000000031,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 80.732924219,
+      "max_step_cm": 33.348697663,
+      "max_step_frame": 140
+    },
+    "source/index_01_r": {
+      "ratio_min": 0.999999364,
+      "ratio_max": 1.001175417,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 87.158361783,
+      "max_step_cm": 38.338097564,
+      "max_step_frame": 140
+    },
+    "source/index_02_r": {
+      "ratio_min": 0.999995442,
+      "ratio_max": 1.001349552,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 108.289276141,
+      "max_step_cm": 38.283527965,
+      "max_step_frame": 140
+    },
+    "source/index_03_r": {
+      "ratio_min": 0.999999449,
+      "ratio_max": 1.001351649,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 126.943938405,
+      "max_step_cm": 36.611753538,
+      "max_step_frame": 140
+    },
+    "source/thumb_01_r": {
+      "ratio_min": 0.999936442,
+      "ratio_max": 1.000812196,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 75.800047018,
+      "max_step_cm": 33.272328626,
+      "max_step_frame": 140
+    },
+    "source/thumb_02_r": {
+      "ratio_min": 0.999994118,
+      "ratio_max": 1.001346564,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 75.010979245,
+      "max_step_cm": 34.32819925,
+      "max_step_frame": 140
+    },
+    "source/thumb_03_r": {
+      "ratio_min": 0.999989029,
+      "ratio_max": 1.001346721,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 59.598990009,
+      "max_step_cm": 35.381172592,
+      "max_step_frame": 140
+    },
+    "source/upperarm_twist_01_r": {
+      "ratio_min": 0.999999974,
+      "ratio_max": 1.001347771,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 46.940665817,
+      "max_step_cm": 21.987871153,
+      "max_step_frame": 334
+    },
+    "source/upperarm_twist_02_r": {
+      "ratio_min": 0.999999974,
+      "ratio_max": 1.001348765,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 46.939360675,
+      "max_step_cm": 23.621524762,
+      "max_step_frame": 334
+    },
+    "source/thigh_r": {
+      "ratio_min": 0.999999935,
+      "ratio_max": 1.001106413,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 21.365346345,
+      "max_step_cm": 14.123466028,
+      "max_step_frame": 759
+    },
+    "source/calf_r": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.001350324,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 23.17147652,
+      "max_step_cm": 22.145380358,
+      "max_step_frame": 140
+    },
+    "source/foot_r": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.001349207,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 28.284311333,
+      "max_step_cm": 22.696326441,
+      "max_step_frame": 783
+    },
+    "source/ball_r": {
+      "ratio_min": 0.999999963,
+      "ratio_max": 1.000006788,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 30.865243178,
+      "max_step_cm": 20.900005851,
+      "max_step_frame": 783
+    },
+    "source/calf_twist_02_r": {
+      "ratio_min": 0.999999974,
+      "ratio_max": 1.001348245,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 23.166133142,
+      "max_step_cm": 22.219085534,
+      "max_step_frame": 140
+    },
+    "source/calf_twist_01_r": {
+      "ratio_min": 0.999999974,
+      "ratio_max": 1.001348245,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 23.166133142,
+      "max_step_cm": 22.403914525,
+      "max_step_frame": 140
+    },
+    "source/thigh_twist_01_r": {
+      "ratio_min": 0.999999981,
+      "ratio_max": 1.001348312,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 21.424246642,
+      "max_step_cm": 13.808298253,
+      "max_step_frame": 759
+    },
+    "source/thigh_twist_02_r": {
+      "ratio_min": 0.999999868,
+      "ratio_max": 1.001348312,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 21.424246642,
+      "max_step_cm": 17.228831932,
+      "max_step_frame": 759
+    },
+    "source/thigh_l": {
+      "ratio_min": 0.999999787,
+      "ratio_max": 1.001106307,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 16.015506977,
+      "max_step_cm": 15.369692036,
+      "max_step_frame": 726
+    },
+    "source/calf_l": {
+      "ratio_min": 0.999999902,
+      "ratio_max": 1.001349347,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 17.800513767,
+      "max_step_cm": 13.385767496,
+      "max_step_frame": 399
+    },
+    "source/foot_l": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.001352635,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 22.817863189,
+      "max_step_cm": 14.280688508,
+      "max_step_frame": 759
+    },
+    "source/ball_l": {
+      "ratio_min": 0.999999963,
+      "ratio_max": 1.000006788,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 25.09052703,
+      "max_step_cm": 17.602053805,
+      "max_step_frame": 759
+    },
+    "source/calf_twist_02_l": {
+      "ratio_min": 0.999999974,
+      "ratio_max": 1.001347101,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 17.804019048,
+      "max_step_cm": 12.641702287,
+      "max_step_frame": 399
+    },
+    "source/calf_twist_01_l": {
+      "ratio_min": 0.999999974,
+      "ratio_max": 1.001348267,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 17.804019048,
+      "max_step_cm": 12.723024436,
+      "max_step_frame": 399
+    },
+    "source/thigh_twist_01_l": {
+      "ratio_min": 0.999999802,
+      "ratio_max": 1.001348309,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 16.015506034,
+      "max_step_cm": 14.364732004,
+      "max_step_frame": 726
+    },
+    "source/thigh_twist_02_l": {
+      "ratio_min": 0.999999981,
+      "ratio_max": 1.001348309,
+      "scale_error": 6.7880000000908325e-06,
+      "max_step_deg": 16.015506034,
+      "max_step_cm": 13.495918533,
+      "max_step_frame": 726
+    },
+    "appearance/Root": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.0,
+      "scale_error": 0,
+      "max_step_deg": 19.198323349,
+      "max_step_cm": 53.717278367,
+      "max_step_frame": 47
+    },
+    "appearance/Pelvis": {
+      "ratio_min": 0.011108709,
+      "ratio_max": 1.200178188,
+      "scale_error": 0,
+      "max_step_deg": 13.606074721,
+      "max_step_cm": 15.600544148,
+      "max_step_frame": 759
+    },
+    "appearance/spine_01": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.0,
+      "scale_error": 0,
+      "max_step_deg": 14.693781688,
+      "max_step_cm": 14.788101372,
+      "max_step_frame": 47
+    },
+    "appearance/spine_02": {
+      "ratio_min": 1.000000015,
+      "ratio_max": 1.000000022,
+      "scale_error": 0,
+      "max_step_deg": 11.918538142,
+      "max_step_cm": 15.427625946,
+      "max_step_frame": 783
+    },
+    "appearance/spine_03": {
+      "ratio_min": 1.000000007,
+      "ratio_max": 1.000000009,
+      "scale_error": 0,
+      "max_step_deg": 10.806280313,
+      "max_step_cm": 16.907459927,
+      "max_step_frame": 783
+    },
+    "appearance/neck_01": {
+      "ratio_min": 0.999999891,
+      "ratio_max": 0.999999924,
+      "scale_error": 0,
+      "max_step_deg": 10.247816316,
+      "max_step_cm": 18.078205129,
+      "max_step_frame": 334
+    },
+    "appearance/head": {
+      "ratio_min": 0.999999506,
+      "ratio_max": 0.99999963,
+      "scale_error": 0,
+      "max_step_deg": 20.281191544,
+      "max_step_cm": 18.966987004,
+      "max_step_frame": 577
+    },
+    "appearance/clavicle_l": {
+      "ratio_min": 0.999999917,
+      "ratio_max": 0.999999947,
+      "scale_error": 0,
+      "max_step_deg": 13.185999635,
+      "max_step_cm": 18.718608938,
+      "max_step_frame": 783
+    },
+    "appearance/upperarm_l": {
+      "ratio_min": 0.999999936,
+      "ratio_max": 0.999999997,
+      "scale_error": 0,
+      "max_step_deg": 21.864259043,
+      "max_step_cm": 19.686648836,
+      "max_step_frame": 467
+    },
+    "appearance/upperarm_twist_01_l": {
+      "ratio_min": 0.99999953,
+      "ratio_max": 0.999999957,
+      "scale_error": 0,
+      "max_step_deg": 21.864259043,
+      "max_step_cm": 19.585195814,
+      "max_step_frame": 467
+    },
+    "appearance/lowerarm_l": {
+      "ratio_min": 0.999999457,
+      "ratio_max": 0.999999952,
+      "scale_error": 0,
+      "max_step_deg": 61.688271655,
+      "max_step_cm": 25.59353913,
+      "max_step_frame": 248
+    },
+    "appearance/hand_l": {
+      "ratio_min": 0.999999917,
+      "ratio_max": 0.999999982,
+      "scale_error": 0,
+      "max_step_deg": 72.159945876,
+      "max_step_cm": 29.442570494,
+      "max_step_frame": 140
+    },
+    "appearance/thumb_01_l": {
+      "ratio_min": 0.999998946,
+      "ratio_max": 0.999999632,
+      "scale_error": 0,
+      "max_step_deg": 70.320392815,
+      "max_step_cm": 31.307271128,
+      "max_step_frame": 140
+    },
+    "appearance/thumb_02_l": {
+      "ratio_min": 0.999998324,
+      "ratio_max": 0.999999051,
+      "scale_error": 0,
+      "max_step_deg": 68.778879034,
+      "max_step_cm": 33.79539947,
+      "max_step_frame": 140
+    },
+    "appearance/thumb_03_l": {
+      "ratio_min": 0.999999809,
+      "ratio_max": 0.999999888,
+      "scale_error": 0,
+      "max_step_deg": 49.896357194,
+      "max_step_cm": 37.386413315,
+      "max_step_frame": 514
+    },
+    "appearance/index_01_l": {
+      "ratio_min": 0.999998948,
+      "ratio_max": 0.99999986,
+      "scale_error": 0,
+      "max_step_deg": 71.785205845,
+      "max_step_cm": 41.483262639,
+      "max_step_frame": 334
+    },
+    "appearance/index_02_l": {
+      "ratio_min": 0.999998247,
+      "ratio_max": 0.999999232,
+      "scale_error": 0,
+      "max_step_deg": 86.015387683,
+      "max_step_cm": 44.196132523,
+      "max_step_frame": 334
+    },
+    "appearance/index_03_l": {
+      "ratio_min": 0.999999679,
+      "ratio_max": 0.999999893,
+      "scale_error": 0,
+      "max_step_deg": 109.810076963,
+      "max_step_cm": 42.0878496,
+      "max_step_frame": 47
+    },
+    "appearance/middle_01_l": {
+      "ratio_min": 0.999999051,
+      "ratio_max": 0.999999824,
+      "scale_error": 0,
+      "max_step_deg": 72.382459829,
+      "max_step_cm": 41.32000789,
+      "max_step_frame": 334
+    },
+    "appearance/middle_02_l": {
+      "ratio_min": 0.999998577,
+      "ratio_max": 0.99999931,
+      "scale_error": 0,
+      "max_step_deg": 82.196900206,
+      "max_step_cm": 44.588377141,
+      "max_step_frame": 334
+    },
+    "appearance/middle_03_l": {
+      "ratio_min": 0.999999777,
+      "ratio_max": 0.999999936,
+      "scale_error": 0,
+      "max_step_deg": 99.301662338,
+      "max_step_cm": 42.014031627,
+      "max_step_frame": 47
+    },
+    "appearance/ring_01_l": {
+      "ratio_min": 0.999999239,
+      "ratio_max": 0.999999734,
+      "scale_error": 0,
+      "max_step_deg": 74.57772919,
+      "max_step_cm": 40.627727142,
+      "max_step_frame": 334
+    },
+    "appearance/ring_02_l": {
+      "ratio_min": 0.999998305,
+      "ratio_max": 0.999999147,
+      "scale_error": 0,
+      "max_step_deg": 83.724133259,
+      "max_step_cm": 43.957261653,
+      "max_step_frame": 334
+    },
+    "appearance/ring_03_l": {
+      "ratio_min": 0.999999651,
+      "ratio_max": 0.999999974,
+      "scale_error": 0,
+      "max_step_deg": 103.652116548,
+      "max_step_cm": 41.312794112,
+      "max_step_frame": 47
+    },
+    "appearance/pinky_01_l": {
+      "ratio_min": 0.999999314,
+      "ratio_max": 0.9999998,
+      "scale_error": 0,
+      "max_step_deg": 74.029507089,
+      "max_step_cm": 40.66862731,
+      "max_step_frame": 334
+    },
+    "appearance/pinky_02_l": {
+      "ratio_min": 0.999998787,
+      "ratio_max": 0.999999494,
+      "scale_error": 0,
+      "max_step_deg": 79.908317919,
+      "max_step_cm": 42.429346833,
+      "max_step_frame": 334
+    },
+    "appearance/pinky_03_l": {
+      "ratio_min": 0.999999826,
+      "ratio_max": 0.999999973,
+      "scale_error": 0,
+      "max_step_deg": 100.792944459,
+      "max_step_cm": 40.182644275,
+      "max_step_frame": 47
+    },
+    "appearance/lowerarm_twist_01_l": {
+      "ratio_min": 0.999999917,
+      "ratio_max": 0.999999982,
+      "scale_error": 0,
+      "max_step_deg": 61.687849133,
+      "max_step_cm": 27.273121015,
+      "max_step_frame": 248
+    },
+    "appearance/clavicle_r": {
+      "ratio_min": 0.999999895,
+      "ratio_max": 0.999999921,
+      "scale_error": 0,
+      "max_step_deg": 21.315802024,
+      "max_step_cm": 16.481449531,
+      "max_step_frame": 783
+    },
+    "appearance/upperarm_r": {
+      "ratio_min": 0.999999706,
+      "ratio_max": 0.999999891,
+      "scale_error": 0,
+      "max_step_deg": 46.939360675,
+      "max_step_cm": 17.209583948,
+      "max_step_frame": 334
+    },
+    "appearance/upperarm_twist_01_r": {
+      "ratio_min": 0.999999038,
+      "ratio_max": 0.99999999,
+      "scale_error": 0,
+      "max_step_deg": 46.940665817,
+      "max_step_cm": 17.141284478,
+      "max_step_frame": 334
+    },
+    "appearance/lowerarm_r": {
+      "ratio_min": 0.999999017,
+      "ratio_max": 0.999999989,
+      "scale_error": 0,
+      "max_step_deg": 69.930499409,
+      "max_step_cm": 22.097288894,
+      "max_step_frame": 248
+    },
+    "appearance/hand_r": {
+      "ratio_min": 0.999999785,
+      "ratio_max": 0.999999958,
+      "scale_error": 0,
+      "max_step_deg": 80.731935715,
+      "max_step_cm": 36.725007383,
+      "max_step_frame": 140
+    },
+    "appearance/thumb_01_r": {
+      "ratio_min": 0.999998692,
+      "ratio_max": 0.999999453,
+      "scale_error": 0,
+      "max_step_deg": 75.800047018,
+      "max_step_cm": 36.44129104,
+      "max_step_frame": 140
+    },
+    "appearance/thumb_02_r": {
+      "ratio_min": 0.999996499,
+      "ratio_max": 0.999998387,
+      "scale_error": 0,
+      "max_step_deg": 75.199383815,
+      "max_step_cm": 37.954101837,
+      "max_step_frame": 140
+    },
+    "appearance/thumb_03_r": {
+      "ratio_min": 0.999999343,
+      "ratio_max": 0.99999968,
+      "scale_error": 0,
+      "max_step_deg": 59.598990009,
+      "max_step_cm": 39.881521435,
+      "max_step_frame": 140
+    },
+    "appearance/index_01_r": {
+      "ratio_min": 0.999998456,
+      "ratio_max": 0.999999318,
+      "scale_error": 0,
+      "max_step_deg": 87.157905742,
+      "max_step_cm": 45.49731564,
+      "max_step_frame": 140
+    },
+    "appearance/index_02_r": {
+      "ratio_min": 0.999996843,
+      "ratio_max": 0.999999366,
+      "scale_error": 0,
+      "max_step_deg": 107.408903177,
+      "max_step_cm": 46.371206483,
+      "max_step_frame": 140
+    },
+    "appearance/index_03_r": {
+      "ratio_min": 0.999999605,
+      "ratio_max": 0.999999904,
+      "scale_error": 0,
+      "max_step_deg": 126.944681832,
+      "max_step_cm": 43.392820463,
+      "max_step_frame": 140
+    },
+    "appearance/middle_01_r": {
+      "ratio_min": 0.99999856,
+      "ratio_max": 0.999999396,
+      "scale_error": 0,
+      "max_step_deg": 86.552966342,
+      "max_step_cm": 46.151264241,
+      "max_step_frame": 140
+    },
+    "appearance/middle_02_r": {
+      "ratio_min": 0.999997018,
+      "ratio_max": 0.999999677,
+      "scale_error": 0,
+      "max_step_deg": 104.027256617,
+      "max_step_cm": 47.429873907,
+      "max_step_frame": 140
+    },
+    "appearance/middle_03_r": {
+      "ratio_min": 0.999999207,
+      "ratio_max": 0.9999998,
+      "scale_error": 0,
+      "max_step_deg": 119.903819187,
+      "max_step_cm": 44.01226288,
+      "max_step_frame": 140
+    },
+    "appearance/ring_01_r": {
+      "ratio_min": 0.99999851,
+      "ratio_max": 0.99999963,
+      "scale_error": 0,
+      "max_step_deg": 91.287587979,
+      "max_step_cm": 46.434694922,
+      "max_step_frame": 140
+    },
+    "appearance/ring_02_r": {
+      "ratio_min": 0.999996769,
+      "ratio_max": 0.999999589,
+      "scale_error": 0,
+      "max_step_deg": 107.078681849,
+      "max_step_cm": 47.677090767,
+      "max_step_frame": 140
+    },
+    "appearance/ring_03_r": {
+      "ratio_min": 0.999999099,
+      "ratio_max": 0.999999829,
+      "scale_error": 0,
+      "max_step_deg": 117.179164027,
+      "max_step_cm": 44.344683872,
+      "max_step_frame": 140
+    },
+    "appearance/pinky_01_r": {
+      "ratio_min": 0.999998544,
+      "ratio_max": 0.999999874,
+      "scale_error": 0,
+      "max_step_deg": 90.188893908,
+      "max_step_cm": 47.063011288,
+      "max_step_frame": 140
+    },
+    "appearance/pinky_02_r": {
+      "ratio_min": 0.999996939,
+      "ratio_max": 0.999999605,
+      "scale_error": 0,
+      "max_step_deg": 100.888969061,
+      "max_step_cm": 47.084972441,
+      "max_step_frame": 140
+    },
+    "appearance/pinky_03_r": {
+      "ratio_min": 0.99999929,
+      "ratio_max": 0.999999798,
+      "scale_error": 0,
+      "max_step_deg": 114.370394783,
+      "max_step_cm": 44.40131165,
+      "max_step_frame": 140
+    },
+    "appearance/lowerarm_twist_01_r": {
+      "ratio_min": 0.999999787,
+      "ratio_max": 0.99999996,
+      "scale_error": 0,
+      "max_step_deg": 69.929986444,
+      "max_step_cm": 26.139652562,
+      "max_step_frame": 248
+    },
+    "appearance/thigh_l": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.0,
+      "scale_error": 0,
+      "max_step_deg": 16.015506977,
+      "max_step_cm": 16.439009136,
+      "max_step_frame": 726
+    },
+    "appearance/calf_l": {
+      "ratio_min": 1.000000122,
+      "ratio_max": 1.000000156,
+      "scale_error": 0,
+      "max_step_deg": 17.409627416,
+      "max_step_cm": 15.120349447,
+      "max_step_frame": 399
+    },
+    "appearance/foot_l": {
+      "ratio_min": 1.000000114,
+      "ratio_max": 1.000000199,
+      "scale_error": 0,
+      "max_step_deg": 23.206728828,
+      "max_step_cm": 16.045063293,
+      "max_step_frame": 759
+    },
+    "appearance/ball_l": {
+      "ratio_min": 1.000000007,
+      "ratio_max": 1.000000131,
+      "scale_error": 0,
+      "max_step_deg": 25.09052703,
+      "max_step_cm": 19.193766356,
+      "max_step_frame": 759
+    },
+    "appearance/calf_twist_01_l": {
+      "ratio_min": 1.000000114,
+      "ratio_max": 1.000000199,
+      "scale_error": 0,
+      "max_step_deg": 17.413409797,
+      "max_step_cm": 14.191589728,
+      "max_step_frame": 399
+    },
+    "appearance/thigh_twist_01_l": {
+      "ratio_min": 1.000000122,
+      "ratio_max": 1.000000156,
+      "scale_error": 0,
+      "max_step_deg": 16.015506034,
+      "max_step_cm": 15.014812274,
+      "max_step_frame": 726
+    },
+    "appearance/thigh_r": {
+      "ratio_min": 1.0,
+      "ratio_max": 1.0,
+      "scale_error": 0,
+      "max_step_deg": 21.365346345,
+      "max_step_cm": 14.958548843,
+      "max_step_frame": 759
+    },
+    "appearance/calf_r": {
+      "ratio_min": 1.000000007,
+      "ratio_max": 1.00000001,
+      "scale_error": 0,
+      "max_step_deg": 22.06720904,
+      "max_step_cm": 24.354724272,
+      "max_step_frame": 140
+    },
+    "appearance/foot_r": {
+      "ratio_min": 1.000000012,
+      "ratio_max": 1.000000027,
+      "scale_error": 0,
+      "max_step_deg": 28.89080452,
+      "max_step_cm": 25.524241586,
+      "max_step_frame": 783
+    },
+    "appearance/ball_r": {
+      "ratio_min": 1.000000035,
+      "ratio_max": 1.000000062,
+      "scale_error": 0,
+      "max_step_deg": 30.865243178,
+      "max_step_cm": 23.889980506,
+      "max_step_frame": 783
+    },
+    "appearance/calf_twist_01_r": {
+      "ratio_min": 1.000000013,
+      "ratio_max": 1.000000027,
+      "scale_error": 0,
+      "max_step_deg": 22.061729625,
+      "max_step_cm": 24.760472041,
+      "max_step_frame": 140
+    },
+    "appearance/thigh_twist_01_r": {
+      "ratio_min": 1.000000007,
+      "ratio_max": 1.00000001,
+      "scale_error": 0,
+      "max_step_deg": 21.424246642,
+      "max_step_cm": 14.874662256,
+      "max_step_frame": 759
+    }
+  },
+  "appearance_motion_by_skill": {
+    "idle_transition": {
+      "head": {
+        "max_step_deg": 12.501563878,
+        "max_step_cm": 4.72126542
+      },
+      "hand_l": {
+        "max_step_deg": 46.796801341,
+        "max_step_cm": 19.233901291
+      },
+      "hand_r": {
+        "max_step_deg": 52.486891217,
+        "max_step_cm": 20.650804292
+      },
+      "foot_l": {
+        "max_step_deg": 11.876774226,
+        "max_step_cm": 9.408548903
+      },
+      "foot_r": {
+        "max_step_deg": 10.020179476,
+        "max_step_cm": 5.332206387
+      }
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab.DA_BasicBrawler_LeftJab": {
+      "head": {
+        "max_step_deg": 19.185248443,
+        "max_step_cm": 7.34464596
+      },
+      "hand_l": {
+        "max_step_deg": 69.258404508,
+        "max_step_cm": 26.381747335
+      },
+      "hand_r": {
+        "max_step_deg": 78.469410445,
+        "max_step_cm": 26.472348331
+      },
+      "foot_l": {
+        "max_step_deg": 16.914341597,
+        "max_step_cm": 14.259996054
+      },
+      "foot_r": {
+        "max_step_deg": 15.197737351,
+        "max_step_cm": 6.676424651
+      }
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightJab.DA_BasicBrawler_RightJab": {
+      "head": {
+        "max_step_deg": 0.276368014,
+        "max_step_cm": 0.216049964
+      },
+      "hand_l": {
+        "max_step_deg": 5.025799112,
+        "max_step_cm": 3.884729725
+      },
+      "hand_r": {
+        "max_step_deg": 19.219517499,
+        "max_step_cm": 8.907579324
+      },
+      "foot_l": {
+        "max_step_deg": 0,
+        "max_step_cm": 2.375e-06
+      },
+      "foot_r": {
+        "max_step_deg": 0,
+        "max_step_cm": 2.375e-06
+      }
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight.DA_BasicBrawler_RightStraight": {
+      "head": {
+        "max_step_deg": 18.134078765,
+        "max_step_cm": 7.373811816
+      },
+      "hand_l": {
+        "max_step_deg": 72.159945876,
+        "max_step_cm": 28.242303928
+      },
+      "hand_r": {
+        "max_step_deg": 80.731935715,
+        "max_step_cm": 28.080968106
+      },
+      "foot_l": {
+        "max_step_deg": 16.922040031,
+        "max_step_cm": 14.342716298
+      },
+      "foot_r": {
+        "max_step_deg": 15.187933008,
+        "max_step_cm": 6.702800515
+      }
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightHook.DA_BasicBrawler_RightHook": {
+      "head": {
+        "max_step_deg": 18.0721153,
+        "max_step_cm": 7.139669133
+      },
+      "hand_l": {
+        "max_step_deg": 72.155383624,
+        "max_step_cm": 27.918040106
+      },
+      "hand_r": {
+        "max_step_deg": 79.19941542,
+        "max_step_cm": 26.843623983
+      },
+      "foot_l": {
+        "max_step_deg": 16.970193197,
+        "max_step_cm": 14.302556612
+      },
+      "foot_r": {
+        "max_step_deg": 15.171909456,
+        "max_step_cm": 6.775334495
+      }
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01": {
+      "head": {
+        "max_step_deg": 18.450934586,
+        "max_step_cm": 7.502067513
+      },
+      "hand_l": {
+        "max_step_deg": 71.657622143,
+        "max_step_cm": 28.878485565
+      },
+      "hand_r": {
+        "max_step_deg": 64.298228414,
+        "max_step_cm": 36.725007383
+      },
+      "foot_l": {
+        "max_step_deg": 16.912911709,
+        "max_step_cm": 14.34739103
+      },
+      "foot_r": {
+        "max_step_deg": 15.17921953,
+        "max_step_cm": 6.721237264
+      }
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02.DA_Attack_Knuckle_Primary02": {
+      "head": {
+        "max_step_deg": 19.396539995,
+        "max_step_cm": 7.424632347
+      },
+      "hand_l": {
+        "max_step_deg": 70.08863305,
+        "max_step_cm": 27.668801919
+      },
+      "hand_r": {
+        "max_step_deg": 53.718487048,
+        "max_step_cm": 28.069942996
+      },
+      "foot_l": {
+        "max_step_deg": 16.902550619,
+        "max_step_cm": 14.310450778
+      },
+      "foot_r": {
+        "max_step_deg": 15.153273948,
+        "max_step_cm": 6.721062355
+      }
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03.DA_Attack_Knuckle_Primary03": {
+      "head": {
+        "max_step_deg": 20.205561424,
+        "max_step_cm": 7.325505363
+      },
+      "hand_l": {
+        "max_step_deg": 69.054638973,
+        "max_step_cm": 26.030052877
+      },
+      "hand_r": {
+        "max_step_deg": 77.979921927,
+        "max_step_cm": 26.602358881
+      },
+      "foot_l": {
+        "max_step_deg": 16.888166611,
+        "max_step_cm": 14.275182256
+      },
+      "foot_r": {
+        "max_step_deg": 15.164807357,
+        "max_step_cm": 6.695835674
+      }
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Special.DA_Attack_Knuckle_Special": {
+      "head": {
+        "max_step_deg": 20.124965497,
+        "max_step_cm": 7.274951022
+      },
+      "hand_l": {
+        "max_step_deg": 69.101426724,
+        "max_step_cm": 25.970021434
+      },
+      "hand_r": {
+        "max_step_deg": 75.643734519,
+        "max_step_cm": 27.691238663
+      },
+      "foot_l": {
+        "max_step_deg": 16.966704271,
+        "max_step_cm": 14.218581594
+      },
+      "foot_r": {
+        "max_step_deg": 15.176265915,
+        "max_step_cm": 6.709288662
+      }
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.DA_Attack_Knuckle_Charged": {
+      "head": {
+        "max_step_deg": 20.281191544,
+        "max_step_cm": 7.299863949
+      },
+      "hand_l": {
+        "max_step_deg": 68.744013354,
+        "max_step_cm": 25.633333649
+      },
+      "hand_r": {
+        "max_step_deg": 77.885491458,
+        "max_step_cm": 28.449494262
+      },
+      "foot_l": {
+        "max_step_deg": 16.944040869,
+        "max_step_cm": 14.225528133
+      },
+      "foot_r": {
+        "max_step_deg": 15.175205278,
+        "max_step_cm": 6.698111998
+      }
+    },
+    "locomotion": {
+      "head": {
+        "max_step_deg": 6.12443207,
+        "max_step_cm": 18.966987004
+      },
+      "hand_l": {
+        "max_step_deg": 39.095957492,
+        "max_step_cm": 29.442570494
+      },
+      "hand_r": {
+        "max_step_deg": 30.720655034,
+        "max_step_cm": 31.044329844
+      },
+      "foot_l": {
+        "max_step_deg": 23.206728828,
+        "max_step_cm": 16.045063293
+      },
+      "foot_r": {
+        "max_step_deg": 28.89080452,
+        "max_step_cm": 25.524241586
+      }
+    }
+  },
+  "final_frame": {
+    "frame": "840",
+    "time_s": "28.000000000",
+    "world_s": "32.012424670",
+    "phase": "0",
+    "attack": "0",
+    "serial": "4",
+    "attack_elapsed": "0.000000000",
+    "charge": "0.000000000",
+    "third": "0",
+    "montage": "",
+    "montage_s": "-1.000000000",
+    "clip": "",
+    "clip_s": "-1.000000000",
+    "source_world_tx": "-207.740010653",
+    "source_world_ty": "0.000000000",
+    "source_world_tz": "212.149999146",
+    "source_world_qx": "0.000000000",
+    "source_world_qy": "0.000000000",
+    "source_world_qz": "-0.707106781",
+    "source_world_qw": "0.707106781",
+    "source_world_sx": "1.000000000",
+    "source_world_sy": "1.000000000",
+    "source_world_sz": "1.000000000",
+    "appearance_world_tx": "-207.740010653",
+    "appearance_world_ty": "0.000000000",
+    "appearance_world_tz": "212.149999146",
+    "appearance_world_qx": "0.000000000",
+    "appearance_world_qy": "0.000000000",
+    "appearance_world_qz": "-0.707106781",
+    "appearance_world_qw": "0.707106781",
+    "appearance_world_sx": "1.000000000",
+    "appearance_world_sy": "1.000000000",
+    "appearance_world_sz": "1.000000000",
+    "camera_tx": "-193.514792233",
+    "camera_ty": "0.928093121",
+    "camera_tz": "377.595507200",
+    "camera_qx": "-0.004633075",
+    "camera_qy": "0.185935992",
+    "camera_qz": "0.007513174",
+    "camera_qw": "0.982522210",
+    "camera_sx": "1.000000000",
+    "camera_sy": "1.000000000",
+    "camera_sz": "1.000000000",
+    "view_tx": "-193.514792233",
+    "view_ty": "0.928093121",
+    "view_tz": "377.595507200",
+    "view_qx": "-0.004633075",
+    "view_qy": "0.185935992",
+    "view_qz": "0.007513174",
+    "view_qw": "0.982522210",
+    "view_sx": "1.000000000",
+    "view_sy": "1.000000000",
+    "view_sz": "1.000000000",
+    "control_pitch": "-20.000000000",
+    "control_yaw": "0.000000000",
+    "control_roll": "0.000000000",
+    "capsule_x": "-187.740010653",
+    "capsule_y": "0.000000000",
+    "capsule_z": "308.149999146",
+    "is_falling": "0",
+    "weapon": "0",
+    "active_skill": ""
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "candidate": "form-candidate-1",
+  "decision": "repair_before_texture_bake",
+  "opened_images": ["face.png", "front.png"],
+  "ledger": [
+    {"requirement": "eye containment and readable sockets", "status": "fail", "evidence": "face.png", "observation": "Detached white ocular surface protrudes above both aperture upper lids."},
+    {"requirement": "mantle shoulder clearance", "status": "fail", "evidence": "front.png", "observation": "Large ivory blouse fragments protrude through green mantle on both front shoulders."},
+    {"requirement": "adult identity outfit and two potions", "status": "pass", "evidence": "front.png", "observation": "Chestnut braid, green/ivory travel layers, bag and exactly two red bottles remain readable."},
+    {"requirement": "large joint deformations", "status": "unclear", "evidence": null, "observation": "First assembled form preview has Idle frame 1 only; QA poses pending."},
+    {"requirement": "reference portrait likeness", "status": "unclear", "evidence": "face.png", "observation": "Warm stylized identity goal remains; photoreal likeness is not established."}
+  ],
+  "repair_sources": ["Scripts/Blender/ArinHeadRefined.py", "Scripts/Blender/ArinBodyRefined.py"],
+  "same_camera_recheck_required": true,
+  "bake_started": false
+}

@@ -1,0 +1,215 @@
+{
+  "status": "failed",
+  "checks": [
+    {
+      "name": "no_existing_pie",
+      "passed": true
+    },
+    {
+      "name": "current_editor_map_start_hub",
+      "passed": true
+    },
+    {
+      "name": "hub_waiting_before_dialogue",
+      "passed": true
+    },
+    {
+      "name": "exactly_one_authored_tutorial_guide",
+      "passed": true,
+      "count": 1
+    },
+    {
+      "name": "authored_tutorial_data_loaded",
+      "passed": true
+    },
+    {
+      "name": "real_starting_item_and_stack_valid",
+      "passed": true,
+      "item": "/Game/DataAsset/Item/Starter/DA_Item_HealthPotion.DA_Item_HealthPotion",
+      "quantity": 2
+    },
+    {
+      "name": "authored_reward_id_not_empty",
+      "passed": true
+    },
+    {
+      "name": "npc_is_not_damageable",
+      "passed": true
+    },
+    {
+      "name": "npc_tick_disabled",
+      "passed": true
+    },
+    {
+      "name": "guide_mesh_does_not_block_player",
+      "passed": true
+    },
+    {
+      "name": "npc_has_mesh_and_idle",
+      "passed": true,
+      "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin.SK_Arin",
+      "idle": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle.ArinIdle"
+    },
+    {
+      "name": "claim_requires_open_dialogue",
+      "passed": true
+    },
+    {
+      "name": "dialogue_denied_out_of_range",
+      "passed": true
+    },
+    {
+      "name": "reference_mesh_in_real_pie",
+      "passed": true
+    },
+    {
+      "name": "reference_idle_in_real_pie",
+      "passed": true
+    },
+    {
+      "name": "reference_same_skeleton_in_pie",
+      "passed": true
+    },
+    {
+      "name": "reference_two_second_idle_in_pie",
+      "passed": true
+    },
+    {
+      "name": "reference_exact_authored_bones_in_pie",
+      "passed": true,
+      "bone_names": [
+        "Arin_Rig",
+        "root",
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03",
+        "neck",
+        "head",
+        "clavicle_l",
+        "upperarm_l",
+        "lowerarm_l",
+        "hand_l",
+        "clavicle_r",
+        "upperarm_r",
+        "lowerarm_r",
+        "hand_r",
+        "thigh_l",
+        "calf_l",
+        "foot_l",
+        "ball_l",
+        "thigh_r",
+        "calf_r",
+        "foot_r",
+        "ball_r"
+      ],
+      "authored_bone_count": 23
+    },
+    {
+      "name": "reference_visible_physical_head_height_in_pie",
+      "passed": true,
+      "observed_cm": 144.4999315553427,
+      "expected_rest_cm": 144.50000524520874
+    },
+    {
+      "name": "reference_single_real_pbr_slot_in_pie",
+      "passed": true
+    },
+    {
+      "name": "reference_three_persisted_lods_in_pie",
+      "passed": true
+    },
+    {
+      "name": "animation_authored_clip_paths",
+      "passed": true,
+      "walk": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+      "talk": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Talk"
+    },
+    {
+      "name": "animation_clips_share_unchanged_v3_skeleton",
+      "passed": true
+    },
+    {
+      "name": "animation_authored_clip_durations",
+      "passed": true,
+      "walk_seconds": 1.2000000476837158,
+      "talk_seconds": 3.0
+    },
+    {
+      "name": "animation_walk_reference_speed_110",
+      "passed": true
+    },
+    {
+      "name": "animation_native_component_loaded",
+      "passed": true
+    },
+    {
+      "name": "animation_component_tick_disabled",
+      "passed": true
+    },
+    {
+      "name": "animation_wrong_skeleton_fixture_available",
+      "passed": true,
+      "clip": "/Game/Characters/Mannequins/Anims/Unarmed/MM_Idle"
+    },
+    {
+      "name": "initial_idle_native_state_and_clip",
+      "passed": false,
+      "observed": {
+        "world_seconds": 2.8489475697278976,
+        "state": "IDLE: 0>",
+        "requested_dialogue": false,
+        "dialogue_open": false,
+        "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+        "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+        "single_node": true,
+        "playing": true,
+        "position_seconds": 0.8489475250244141,
+        "play_rate": 1.0,
+        "measured_speed_cm_s": 0.0,
+        "actor_location": [
+          440.0,
+          -1610.0,
+          2.0
+        ],
+        "head_rotation": [
+          90.06130981445312,
+          0.00033619251917116344,
+          179.68582153320312
+        ],
+        "thigh_rotation": [
+          -86.90775299072266,
+          4.991848945617676,
+          -174.73040771484375
+        ],
+        "forearm_rotation": [
+          -75.36483764648438,
+          0.06131892651319504,
+          90.0
+        ]
+      },
+      "expected_state": "IDLE",
+      "expected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle"
+    }
+  ],
+  "limitations": [
+    "This fixture calls the real reflected dialogue and inventory APIs; physical F-key input and Korean text layout also require a visual check.",
+    "Receipts use PlayerState plus a GameInstance supply record across the real portal, not permanent character-profile saves. Network play is outside this single-player prototype check.",
+    "Runtime fixtures are disposable PIE data; a small damage stimulus verifies actual potion use before real portal travel. No assets or maps are saved.",
+    "Controlled actor displacement tests native clip selection, not autonomous NPC navigation or path following.",
+    "A temporary always-tick-pose setting is used only on the owned PIE mesh for reliable bone observations.",
+    "Talking is a body/head gesture loop; facial lip sync, individual fingers and recorded speech are outside this rig.",
+    "Numerical playback and bone changes require the separate Blender/engine visual review for deformation quality."
+  ],
+  "runtime": "Actual owned Unreal Editor StartHub PIE, followed by the real portal",
+  "asset_mutation_requested": false,
+  "fixture_movement_only": true,
+  "baseline_check_count": 67,
+  "baseline_report_sha256": "7a423f10cb93a680c5ea82e3e0da0d469eb981e18573622fd8a94581ebd6ecfb",
+  "validator_source_sha256": "1ae8ce9feecea79b56b64fa2b5ebda926f256d3a5f75561415e50d568726640a",
+  "animation_observations": [],
+  "phase": "animation_initial_idle",
+  "elapsed_seconds": 3.405999999999949,
+  "exception": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateArinWalkTalkPIE.py\", line 391, in tick\n    complete_phase(world, npc)\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateArinWalkTalkPIE.py\", line 237, in complete_phase\n    expect_snapshot(name, observed, spec[\"state\"], spec[\"clip\"], spec.get(\"request\"))\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateArinWalkTalkPIE.py\", line 110, in expect_snapshot\n    base.check(name + \"_native_state_and_clip\",\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ValidateTutorialNPC.py\", line 42, in check\n    raise RuntimeError(f\"{name}: {details}\")\nRuntimeError: initial_idle_native_state_and_clip: {'observed': {'world_seconds': 2.8489475697278976, 'state': 'IDLE: 0>', 'requested_dialogue': False, 'dialogue_open': False, 'selected_clip': '/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle', 'native_clip': '/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle', 'single_node': True, 'playing': True, 'position_seconds': 0.8489475250244141, 'play_rate': 1.0, 'measured_speed_cm_s': 0.0, 'actor_location': [440.0, -1610.0, 2.0], 'head_rotation': [90.06130981445312, 0.00033619251917116344, 179.68582153320312], 'thigh_rotation': [-86.90775299072266, 4.991848945617676, -174.73040771484375], 'forearm_rotation': [-75.36483764648438, 0.06131892651319504, 90.0]}, 'expected_state': 'IDLE', 'expected_clip': '/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle'}\n",
+  "message": "initial_idle_native_state_and_clip: {'observed': {'world_seconds': 2.8489475697278976, 'state': 'IDLE: 0>', 'requested_dialogue': False, 'dialogue_open': False, 'selected_clip': '/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle', 'native_clip': '/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle', 'single_node': True, 'playing': True, 'position_seconds': 0.8489475250244141, 'play_rate': 1.0, 'measured_speed_cm_s': 0.0, 'actor_location': [440.0, -1610.0, 2.0], 'head_rotation': [90.06130981445312, 0.00033619251917116344, 179.68582153320312], 'thigh_rotation': [-86.90775299072266, 4.991848945617676, -174.73040771484375], 'forearm_rotation': [-75.36483764648438, 0.06131892651319504, 90.0]}, 'expected_state': 'IDLE', 'expected_clip': '/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle'}"
+}

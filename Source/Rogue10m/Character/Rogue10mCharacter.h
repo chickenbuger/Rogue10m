@@ -23,6 +23,7 @@ class URogue10mAppearanceCameraComponent;
 class URogue10mInventoryComponent;
 class URogue10mPlayerFeedbackComponent;
 class URogue10mVitalRegenerationComponent;
+class URogue10mTraitRuntimeComponent;
 class USkeletalMeshComponent;
 struct FInputActionValue;
 
@@ -91,6 +92,7 @@ public:
 	URogue10mBasicBrawlerComponent* GetBasicBrawlerComponent() const { return BasicBrawlerComponent; }
 	URogue10mCharacterAnimationComponent* GetCharacterAnimationComponent() const { return CharacterAnimationComponent; }
 	URogue10mPlayerFeedbackComponent* GetPlayerFeedbackComponent() const { return PlayerFeedbackComponent; }
+	URogue10mTraitRuntimeComponent* GetTraitRuntimeComponent() const { return TraitRuntimeComponent; }
 
 	/** 공통 Manny Skeleton 모션을 평가하는 Mesh입니다. 종족 캐릭터는 숨김 소스 Mesh를 반환합니다. */
 	virtual USkeletalMeshComponent* GetAnimationPlaybackMesh() const;
@@ -104,6 +106,9 @@ public:
 	bool ExecutePendingAttackSkillFromAbility();
 
 protected:
+	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 	virtual void OnJumped_Implementation() override;
 	virtual void Landed(const FHitResult& Hit) override;
@@ -203,6 +208,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<URogue10mVitalRegenerationComponent> VitalRegenerationComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
+	TObjectPtr<URogue10mTraitRuntimeComponent> TraitRuntimeComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Input")
 	TObjectPtr<UInputAction> JumpAction;

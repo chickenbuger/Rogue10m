@@ -60,7 +60,39 @@ def main(apply=False):
     ri, ro = one_pin(rig, 'Source', input_dir), one_pin(rig, 'Pose', output_dir)
     end = one_pin(root, 'Result', input_dir)
     before = all_edges(nodes)
+    # The conditional moving-attack compositor keeps FootIK before the shared
+    # guard/locomotion cache, then preserves the same DefaultSlot internally.
+    if any(isinstance(n, unreal.AnimGraphNode_LayeredBoneBlend) for n in nodes):
+        import sys
+        sys.path.insert(0, str(PROJECT / 'Scripts/Editor'))
+        import ConfigureMovingAttackUpperBody as moving
+        moving.validate_graph()
+        guard = moving.alpha_blend(nodes, 'FighterCombatStanceAlpha')
+        if not PIN.is_same_native_pin(only_link(one_pin(guard, 'A', input_dir)), ro):
+            raise RuntimeError('Moving attack compositor has FootIK after its guard')
+        unreal.log('SOURCE_IK_ORDER_ALREADY_APPLIED_WITH_MOVING_ATTACK_UPPER_BODY')
+        return
     already = PIN.is_same_native_pin(only_link(si), ro) and PIN.is_same_native_pin(only_link(end), so)
+    # A standing fighter guard blends after locomotion IK and before the final
+    # attack slot. This still satisfies the original ordering contract.
+    upstream_node = PIN.get_owning_node(only_link(si))
+    if isinstance(upstream_node, unreal.AnimGraphNode_TwoWayBlend):
+        blend_a = one_pin(upstream_node, 'A', input_dir)
+        blend_b = one_pin(upstream_node, 'B', input_dir)
+        blend_alpha = one_pin(upstream_node, 'Alpha', input_dir)
+        player = PIN.get_owning_node(only_link(blend_b))
+        getter_pin = only_link(blend_alpha)
+        parent = unreal.BlueprintEditorLibrary.get_blueprint_parent_class(bp)
+        if (parent.get_path_name() == '/Script/Rogue10m.Rogue10mFighterCombatStanceAnimInstance'
+                and isinstance(player, unreal.AnimGraphNode_SequencePlayer)
+                and isinstance(PIN.get_owning_node(getter_pin), unreal.K2Node_VariableGet)
+                and str(PIN.get_pin_name(getter_pin)) == 'FighterCombatStanceAlpha'
+                and PIN.is_same_native_pin(only_link(blend_a), ro)
+                and PIN.is_same_native_pin(only_link(si), one_pin(upstream_node, 'Pose', output_dir))
+                and PIN.is_same_native_pin(only_link(end), so)):
+            sequence = player.get_editor_property('node').get_editor_property('sequence')
+            already = sequence is not None and sequence.get_path_name() == (
+                '/Game/Rogue10m/Animation/Combat/FighterStance/A_Fighter_CombatIdle.A_Fighter_CombatIdle')
     if already:
         unreal.log('SOURCE_IK_ORDER_ALREADY_APPLIED')
         return

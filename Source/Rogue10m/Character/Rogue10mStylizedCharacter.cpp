@@ -5,6 +5,7 @@
 #include "Animation/AnimInstance.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Rogue10m.h"
 #include "Rogue10mCharacterCustomizationDataAsset.h"
 
@@ -64,6 +65,12 @@ ARogue10mStylizedCharacter::ARogue10mStylizedCharacter()
 void ARogue10mStylizedCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+	if (UCharacterMovementComponent* Movement = GetCharacterMovement(); AnimationSourceMesh && Movement)
+	{
+		// The inherited movement prerequisite covers GetMesh(), not this hidden source.
+		// Evaluate current movement/landing before the source, then retarget the appearance.
+		AnimationSourceMesh->AddTickPrerequisiteComponent(Movement);
+	}
 	InitializeAnimationSource();
 	InitializeInheritedAppearance();
 }

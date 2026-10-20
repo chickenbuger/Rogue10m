@@ -1,0 +1,79 @@
+{
+  "ok": true,
+  "goal": "preview",
+  "asset_id": "ast_1m45dqnzp00aartxyz6",
+  "strategy": "uploaded_mesh_finalize",
+  "strategy_label": "Uploaded mesh finalize",
+  "status": "already_satisfied",
+  "quality_ceiling": "High when the uploaded mesh is already good; Apollo can UV, texture, repair, and export.",
+  "known_limits": [
+    "Cannot recover missing geometry detail that is not present in the uploaded mesh."
+  ],
+  "reasons": [
+    "a mesh already exists; compile should finalize, repair, and export it"
+  ],
+  "steps": [],
+  "notes": [
+    "local-first compile plan: no external GPU 3D provider selected",
+    "source state: mesh",
+    "selected strategy: uploaded_mesh_finalize"
+  ],
+  "executable": true,
+  "local_provider_health": {
+    "apollo_cutout": {
+      "state": "ok",
+      "detail": "configured",
+      "latency_ms": null,
+      "meta": {},
+      "checked_at": 1791183726.4903555
+    },
+    "apollo_hull": {
+      "state": "ok",
+      "detail": "configured",
+      "latency_ms": null,
+      "meta": {},
+      "checked_at": 1791183726.4903555
+    },
+    "apollo_primitive": {
+      "state": "ok",
+      "detail": "configured",
+      "latency_ms": null,
+      "meta": {},
+      "checked_at": 1791183726.4903555
+    },
+    "apollo_relief": {
+      "state": "ok",
+      "detail": "configured",
+      "latency_ms": null,
+      "meta": {},
+      "checked_at": 1791183726.4903555
+    },
+    "apollo_sketch": {
+      "state": "ok",
+      "detail": "configured",
+      "latency_ms": null,
+      "meta": {},
+      "checked_at": 1791183726.4903555
+    },
+    "trimesh_tools": {
+      "state": "ok",
+      "detail": "ready",
+      "latency_ms": null,
+      "meta": {
+        "trimesh": "5.1.1",
+        "quadric_simplify": "fast-simplification",
+        "boolean_engine": "manifold3d"
+      },
+      "checked_at": 1791183726.4903555
+    },
+    "xatlas_uv": {
+      "state": "ok",
+      "detail": "ready",
+      "latency_ms": null,
+      "meta": {
+        "xatlas": "0.0.11"
+      },
+      "checked_at": 1791183726.4903555
+    }
+  }
+}

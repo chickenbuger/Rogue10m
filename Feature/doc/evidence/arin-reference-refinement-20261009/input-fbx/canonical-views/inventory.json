@@ -1,0 +1,302 @@
+{
+  "source_file": "C:\\Users\\PC\\Downloads\\fantasy adventurer 3d model.fbx",
+  "source_size_bytes": 3162412,
+  "source_sha256": "9ec4b4fb034071c8b6c46d015991c636be4f11544f03f913d4697eed0b5ab6b9",
+  "blender_version": "4.5.14 LTS",
+  "source_saved": false,
+  "geometry_modified": false,
+  "units": {
+    "system": "METRIC",
+    "scale_length": 1.0
+  },
+  "bounds": {
+    "min": [
+      -0.11139039695262909,
+      -0.48624274134635925,
+      -0.4898163080215454
+    ],
+    "max": [
+      0.11042624711990356,
+      0.4859791100025177,
+      0.4881138205528259
+    ],
+    "dimensions": [
+      0.22181664407253265,
+      0.972221851348877,
+      0.9779301285743713
+    ]
+  },
+  "objects": [
+    {
+      "name": "tripo_node_9d8fe12d",
+      "type": "MESH",
+      "parent": null
+    }
+  ],
+  "meshes": [
+    {
+      "name": "tripo_node_9d8fe12d",
+      "data_name": "tripo_mesh_9d8fe12d",
+      "vertices": 45249,
+      "edges": 90460,
+      "polygons": 45150,
+      "triangles": 90186,
+      "smooth_polygons": 45150,
+      "n_gons": 13,
+      "quads": 45009,
+      "non_finite_vertices": 0,
+      "boundary_edges": 453,
+      "non_manifold_edges": 469,
+      "loose_vertices": 10,
+      "zero_length_edges": 0,
+      "degenerate_faces": 0,
+      "connected_components": 26,
+      "component_vertex_counts": [
+        44932,
+        55,
+        43,
+        27,
+        23,
+        23,
+        18,
+        16,
+        15,
+        15,
+        15,
+        15,
+        15,
+        14,
+        9,
+        4,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "uv_layers": [
+        {
+          "name": "Retopo_Untitled_NewUVMap",
+          "loop_count": 180486,
+          "bounds": [
+            0.0012763456907123327,
+            0.0012763020349666476,
+            0.9987237453460693,
+            0.9963335394859314
+          ]
+        }
+      ],
+      "materials": [
+        "tripo_mat_9d8fe12d"
+      ],
+      "material_polygon_counts": {
+        "0": 45150
+      },
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        -4.371138828673793e-08,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.22181664407253265,
+        0.972221851348877,
+        0.9779301285743713
+      ],
+      "matrix_world": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          4.371138828673793e-08,
+          0.0
+        ],
+        [
+          0.0,
+          -4.371138828673793e-08,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "parent": null,
+      "modifiers": [],
+      "vertex_groups": [],
+      "weighted_vertices": 0,
+      "max_vertex_influences": 0,
+      "shape_keys": []
+    }
+  ],
+  "armatures": [],
+  "actions": [],
+  "materials": [
+    {
+      "name": "tripo_mat_9d8fe12d",
+      "diffuse_color": [
+        0.800000011920929,
+        0.800000011920929,
+        0.800000011920929,
+        1.0
+      ],
+      "use_nodes": true,
+      "nodes": [
+        {
+          "name": "Principled BSDF",
+          "type": "BSDF_PRINCIPLED",
+          "label": "",
+          "inputs": {
+            "Metallic": 0.0,
+            "Roughness": 0.8999999761581421,
+            "IOR": 1.5,
+            "Alpha": 1.0,
+            "Weight": 0.0,
+            "Diffuse Roughness": 0.0,
+            "Subsurface Weight": 0.0,
+            "Subsurface Radius": [
+              1.0,
+              0.20000000298023224,
+              0.10000000149011612
+            ],
+            "Subsurface Scale": 0.05000000074505806,
+            "Subsurface IOR": 1.399999976158142,
+            "Subsurface Anisotropy": 0.0,
+            "Specular IOR Level": 0.5,
+            "Specular Tint": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Anisotropic": 0.0,
+            "Anisotropic Rotation": 0.0,
+            "Tangent": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "Transmission Weight": 0.0,
+            "Coat Weight": 0.0,
+            "Coat Roughness": 0.029999999329447746,
+            "Coat IOR": 1.5,
+            "Coat Tint": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Coat Normal": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "Sheen Weight": 0.0,
+            "Sheen Roughness": 0.5,
+            "Sheen Tint": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Emission Color": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "Emission Strength": 1.0,
+            "Thin Film Thickness": 0.0,
+            "Thin Film IOR": 1.3300000429153442
+          }
+        },
+        {
+          "name": "Material Output",
+          "type": "OUTPUT_MATERIAL",
+          "label": ""
+        },
+        {
+          "name": "Normal Map",
+          "type": "NORMAL_MAP",
+          "label": "Normal/Map"
+        },
+        {
+          "name": "Image Texture",
+          "type": "TEX_IMAGE",
+          "label": "",
+          "image": "tripo_image_9d8fe12d_0"
+        }
+      ],
+      "links": [
+        {
+          "from_node": "Principled BSDF",
+          "from_socket": "BSDF",
+          "to_node": "Material Output",
+          "to_socket": "Surface"
+        },
+        {
+          "from_node": "Normal Map",
+          "from_socket": "Normal",
+          "to_node": "Principled BSDF",
+          "to_socket": "Normal"
+        },
+        {
+          "from_node": "Image Texture",
+          "from_socket": "Color",
+          "to_node": "Principled BSDF",
+          "to_socket": "Base Color"
+        }
+      ]
+    }
+  ],
+  "images": [
+    {
+      "name": "tripo_image_9d8fe12d_0",
+      "filepath": "C:\\Users\\PC\\Downloads\\tripo_model_9d8fe12d-7c32-4332-90bd-40485c23b803.fbm\\Color.jpg",
+      "filepath_raw": "C:\\Users\\PC\\Downloads\\tripo_model_9d8fe12d-7c32-4332-90bd-40485c23b803.fbm\\Color.jpg",
+      "resolved_path": "C:\\Users\\PC\\Downloads\\tripo_model_9d8fe12d-7c32-4332-90bd-40485c23b803.fbm\\Color.jpg",
+      "size": [
+        2048,
+        2048
+      ],
+      "source": "FILE",
+      "packed": true,
+      "packed_bytes": 442737,
+      "colorspace": "sRGB",
+      "has_data": true,
+      "external_exists": false
+    }
+  ],
+  "totals": {
+    "vertices": 45249,
+    "edges": 90460,
+    "polygons": 45150,
+    "triangles": 90186,
+    "boundary_edges": 453,
+    "non_manifold_edges": 469,
+    "degenerate_faces": 0,
+    "weighted_vertices": 0
+  }
+}

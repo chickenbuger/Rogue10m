@@ -1,0 +1,38 @@
+{
+  "status": "static_review_passed_requires_live_unreal_validation",
+  "unreal_executed": false,
+  "blender_executed": false,
+  "asset_mutation_requested": false,
+  "expected_owned_asset_count": 9,
+  "atlas_groups": {
+    "Adventurer": 4096
+  },
+  "required_model_build_fields": [
+    "bone_names",
+    "bones",
+    "head_joint_z_m",
+    "files.Arin.fbx"
+  ],
+  "files": {
+    "Scripts/Editor/ApplyReferenceArin.py": {
+      "bytes": 43052,
+      "sha256": "b85efbc5b50c77431414a9505b463dc7aaff6701e25a4ad559d9f502127be973",
+      "syntax": "AST parsed"
+    },
+    "Scripts/Editor/ValidateReferenceArinFresh.py": {
+      "bytes": 1355,
+      "sha256": "8882250d307f3328730dfe4c1e3f26d24c3bb193fdd852a240bf50a5af06278e",
+      "syntax": "AST parsed"
+    },
+    "Scripts/Editor/ValidateReferenceArinPIE.py": {
+      "bytes": 3688,
+      "sha256": "e0b24843122c52d9002e7e0370c760bc53f52e7ff03e815e75df86dba04ce577",
+      "syntax": "AST parsed"
+    },
+    "Scripts/AuditReferenceArinContent.py": {
+      "bytes": 3277,
+      "sha256": "31961712625317ebf56c1209d8d31d3d1c3e4d6b65554f9f90dfac1addc3bb63",
+      "syntax": "AST parsed"
+    }
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "ok": true,
+  "asset_id": "ast_1m45c3php007vt0fzyt",
+  "source_node_id": "nod_1m45c6xwb00j0jwjr9p",
+  "source_label": "concept_image_v1",
+  "source_kind": "concept_image",
+  "verdict": "needs_reference_pack",
+  "score": 0.917,
+  "can_start_preview": true,
+  "source_ready_for_meshy_grade": false,
+  "can_start_meshy_grade": false,
+  "recommended_stage": "generate-multiview",
+  "reasons": [
+    "single image is usable for draft preview, but warnings make it risky",
+    "Meshy-grade conversion should first create identity-locked front/side/back views"
+  ],
+  "checks": [
+    {
+      "name": "resolution",
+      "status": "pass",
+      "message": "1374x1145",
+      "metrics": {
+        "width": 1374,
+        "height": 1145
+      }
+    },
+    {
+      "name": "single_subject",
+      "status": "pass",
+      "message": "dominant component holds 100% of foreground",
+      "metrics": {
+        "dominant_share": 1.0
+      }
+    },
+    {
+      "name": "silhouette_clarity",
+      "status": "warn",
+      "message": "bbox fill 22%",
+      "metrics": {
+        "bbox_fill": 0.222
+      }
+    },
+    {
+      "name": "subject_framing",
+      "status": "pass",
+      "message": "subject covers 18% of frame",
+      "metrics": {
+        "frame_coverage": 0.18
+      }
+    },
+    {
+      "name": "background_clean",
+      "status": "pass",
+      "message": "border color std 0.6",
+      "metrics": {
+        "border_std": 0.6
+      }
+    },
+    {
+      "name": "no_watermark_heuristic",
+      "status": "pass",
+      "message": "corner/center detail ratio 0.09 (heuristic)",
+      "metrics": {
+        "corner_center_ratio": 0.09
+      }
+    }
+  ],
+  "repair_suggestions": [],
+  "actions": [
+    {
+      "label": "run generate-multiview",
+      "stage": "generate-multiview",
+      "method": "POST",
+      "path": "/api/assets/ast_1m45c3php007vt0fzyt/generate-multiview",
+      "body": {
+        "source_node_id": "nod_1m45c6xwb00j0jwjr9p"
+      },
+      "blocked": false,
+      "reason": "recommended by source quality gate"
+    }
+  ],
+  "provider_readiness": {
+    "meshy_grade_ready": false,
+    "final_3d_ok": false,
+    "fast_3d_ok": false,
+    "production_3d_ok": false,
+    "final_3d": {
+      "ok": [],
+      "unavailable": {
+        "hunyuan3d": "unreachable",
+        "trellis": "unreachable",
+        "triposg": "missing_config"
+      },
+      "setup": [
+        {
+          "provider_id": "hunyuan3d",
+          "state": "unreachable",
+          "action": "start Hunyuan3D 2.1 server and verify URL",
+          "requires": [
+            "HUNYUAN3D_URL"
+          ],
+          "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+        },
+        {
+          "provider_id": "trellis",
+          "state": "unreachable",
+          "action": "start TRELLIS.2 server and verify URL",
+          "requires": [
+            "TRELLIS_URL"
+          ],
+          "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+        },
+        {
+          "provider_id": "triposg",
+          "state": "missing_config",
+          "action": "set TRIPOSG_URL and recheck health",
+          "requires": [
+            "TRIPOSG_URL"
+          ],
+          "detail": "missing config: TRIPOSG_URL"
+        }
+      ]
+    },
+    "fast_3d": {
+      "ok": [],
+      "unavailable": {
+        "sf3d": "unreachable"
+      },
+      "setup": [
+        {
+          "provider_id": "sf3d",
+          "state": "unreachable",
+          "action": "start Stable Fast 3D server and verify URL",
+          "requires": [
+            "SF3D_URL"
+          ],
+          "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+        }
+      ]
+    },
+    "production_3d": {
+      "ok": [],
+      "unavailable": {
+        "hunyuan3d": "unreachable",
+        "trellis": "unreachable",
+        "triposg": "missing_config",
+        "sf3d": "unreachable"
+      },
+      "setup": [
+        {
+          "provider_id": "hunyuan3d",
+          "state": "unreachable",
+          "action": "start Hunyuan3D 2.1 server and verify URL",
+          "requires": [
+            "HUNYUAN3D_URL"
+          ],
+          "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+        },
+        {
+          "provider_id": "trellis",
+          "state": "unreachable",
+          "action": "start TRELLIS.2 server and verify URL",
+          "requires": [
+            "TRELLIS_URL"
+          ],
+          "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+        },
+        {
+          "provider_id": "triposg",
+          "state": "missing_config",
+          "action": "set TRIPOSG_URL and recheck health",
+          "requires": [
+            "TRIPOSG_URL"
+          ],
+          "detail": "missing config: TRIPOSG_URL"
+        },
+        {
+          "provider_id": "sf3d",
+          "state": "unreachable",
+          "action": "start Stable Fast 3D server and verify URL",
+          "requires": [
+            "SF3D_URL"
+          ],
+          "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+        }
+      ]
+    },
+    "blender": {
+      "ok": [
+        "blender_cli"
+      ],
+      "unavailable": {},
+      "setup": []
+    }
+  },
+  "codex_notes": [
+    "Review warnings before final 3D; create a reference pack/multiview pass to reduce ambiguity."
+  ]
+}

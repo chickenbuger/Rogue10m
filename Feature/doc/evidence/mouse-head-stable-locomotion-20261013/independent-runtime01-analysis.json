@@ -1,0 +1,230 @@
+{
+  "reviewer": "stable_qa_review (verification role 1)",
+  "run": "stable_runtime01",
+  "verdict": "Original fixture reported FAILED (61); not reclassified as passed. Two oracle corrections plus production evaluated-state correction require a fresh positive run.",
+  "frames_csv_count": 1575,
+  "results_csv_count": 21,
+  "reported_failure_reasons": {
+    "accepted_montage_rate_not_attack_speed_snapshot": 37,
+    "appearance_head_exceeds_mouse_residual_quaternion_cap": 8,
+    "late_mouse_was_stale_or_applied_twice": 8,
+    "source_head_exceeds_mouse_residual_quaternion_cap": 8
+  },
+  "head_current_state_violation_rows": [
+    {
+      "frame": "577",
+      "case": "jab_rate_half",
+      "case_frame": "52",
+      "rotation_cap_deg": "2.000",
+      "source_head_mouse_residual_deg": "2.999999969",
+      "appearance_head_mouse_residual_deg": "2.999999969",
+      "camera_mouse_residual_deg": "1.999999985",
+      "late_mouse_oracle_error_deg": "0.999999984",
+      "previous_cap_deg": 3.0,
+      "next_source_head_deg": 2.0
+    },
+    {
+      "frame": "632",
+      "case": "jab_rate_one",
+      "case_frame": "32",
+      "rotation_cap_deg": "2.000",
+      "source_head_mouse_residual_deg": "2.999990391",
+      "appearance_head_mouse_residual_deg": "2.999990391",
+      "camera_mouse_residual_deg": "1.999999985",
+      "late_mouse_oracle_error_deg": "0.999990407",
+      "previous_cap_deg": 3.0,
+      "next_source_head_deg": 2.0
+    },
+    {
+      "frame": "697",
+      "case": "jab_rate_two",
+      "case_frame": "22",
+      "rotation_cap_deg": "2.000",
+      "source_head_mouse_residual_deg": "2.996163866",
+      "appearance_head_mouse_residual_deg": "2.996163866",
+      "camera_mouse_residual_deg": "1.999999985",
+      "late_mouse_oracle_error_deg": "0.996163882",
+      "previous_cap_deg": 3.0,
+      "next_source_head_deg": 2.0
+    },
+    {
+      "frame": "769",
+      "case": "jab_rate_three",
+      "case_frame": "19",
+      "rotation_cap_deg": "2.000",
+      "source_head_mouse_residual_deg": "2.976663381",
+      "appearance_head_mouse_residual_deg": "2.976663381",
+      "camera_mouse_residual_deg": "1.999999985",
+      "late_mouse_oracle_error_deg": "0.976663396",
+      "previous_cap_deg": 3.0,
+      "next_source_head_deg": 2.0
+    },
+    {
+      "frame": "945",
+      "case": "walk600_straight_down30",
+      "case_frame": "45",
+      "rotation_cap_deg": "2.000",
+      "source_head_mouse_residual_deg": "2.954263847",
+      "appearance_head_mouse_residual_deg": "2.954263847",
+      "camera_mouse_residual_deg": "1.999999985",
+      "late_mouse_oracle_error_deg": "0.954263863",
+      "previous_cap_deg": 3.0,
+      "next_source_head_deg": 2.0
+    },
+    {
+      "frame": "1085",
+      "case": "knuckle_primary_down30",
+      "case_frame": "35",
+      "rotation_cap_deg": "2.000",
+      "source_head_mouse_residual_deg": "2.999998647",
+      "appearance_head_mouse_residual_deg": "2.999998647",
+      "camera_mouse_residual_deg": "1.999999985",
+      "late_mouse_oracle_error_deg": "0.999998663",
+      "previous_cap_deg": 3.0,
+      "next_source_head_deg": 2.0
+    },
+    {
+      "frame": "1184",
+      "case": "knuckle_special_forward",
+      "case_frame": "59",
+      "rotation_cap_deg": "2.000",
+      "source_head_mouse_residual_deg": "2.999999984",
+      "appearance_head_mouse_residual_deg": "2.999999984",
+      "camera_mouse_residual_deg": "1.999999985",
+      "late_mouse_oracle_error_deg": "0.999999999",
+      "previous_cap_deg": 3.0,
+      "next_source_head_deg": 2.0
+    },
+    {
+      "frame": "1518",
+      "case": "safe_forward_dodge_head",
+      "case_frame": "18",
+      "rotation_cap_deg": "2.000",
+      "source_head_mouse_residual_deg": "2.401616260",
+      "appearance_head_mouse_residual_deg": "2.401616260",
+      "camera_mouse_residual_deg": "1.999999985",
+      "late_mouse_oracle_error_deg": "0.401616275",
+      "previous_cap_deg": 3.0,
+      "next_source_head_deg": 2.0
+    }
+  ],
+  "camera_current_rotation_cap_violation_frames": [],
+  "camera_current_position_cap_violation_frames": [],
+  "actual_active_montage_rates_and_damage": [
+    {
+      "case": "jab_rate_half",
+      "active_montage_samples": 35,
+      "observed_active_rates": [
+        0.75
+      ],
+      "damage_pulses": 1,
+      "first_damage_error_s": 0.013333353
+    },
+    {
+      "case": "jab_rate_one",
+      "active_montage_samples": 15,
+      "observed_active_rates": [
+        1.5
+      ],
+      "damage_pulses": 1,
+      "first_damage_error_s": 0.006666676
+    },
+    {
+      "case": "jab_rate_two",
+      "active_montage_samples": 5,
+      "observed_active_rates": [
+        3.0
+      ],
+      "damage_pulses": 1,
+      "first_damage_error_s": 0.020000006
+    },
+    {
+      "case": "jab_rate_three",
+      "active_montage_samples": 1,
+      "observed_active_rates": [
+        4.5
+      ],
+      "damage_pulses": 1,
+      "first_damage_error_s": 0.024444449
+    },
+    {
+      "case": "sprint900_jab_cap3",
+      "active_montage_samples": 15,
+      "observed_active_rates": [
+        1.5
+      ],
+      "damage_pulses": 0,
+      "first_damage_error_s": 0.0
+    },
+    {
+      "case": "walk600_straight_down30",
+      "active_montage_samples": 25,
+      "observed_active_rates": [
+        1.0
+      ],
+      "damage_pulses": 0,
+      "first_damage_error_s": 0.0
+    },
+    {
+      "case": "right_hook_up30",
+      "active_montage_samples": 28,
+      "observed_active_rates": [
+        1.5
+      ],
+      "damage_pulses": 1,
+      "first_damage_error_s": 0.011111139
+    },
+    {
+      "case": "knuckle_primary_down30",
+      "active_montage_samples": 17,
+      "observed_active_rates": [
+        1.34
+      ],
+      "damage_pulses": 1,
+      "first_damage_error_s": 0.02139304
+    },
+    {
+      "case": "knuckle_special_forward",
+      "active_montage_samples": 39,
+      "observed_active_rates": [
+        1.14
+      ],
+      "damage_pulses": 1,
+      "first_damage_error_s": 0.015789488
+    },
+    {
+      "case": "safe_forward_dodge_head",
+      "active_montage_samples": 3,
+      "observed_active_rates": [
+        1.0
+      ],
+      "damage_pulses": 0,
+      "first_damage_error_s": 0.0
+    }
+  ],
+  "reported_metrics": {
+    "frames": 1575.0,
+    "cases": 21.0,
+    "expected_cases": 21.0,
+    "assertions": 428429.0,
+    "failures": 61.0,
+    "negative_disabled_head": 0.0,
+    "max_late_mouse_oracle_error_deg": 0.999999999,
+    "max_same_frame_repeat_error_cm": 0.0,
+    "max_same_frame_repeat_error_deg": 2.958e-06,
+    "atomic_capsule_world_translation_error_cm": 0.0,
+    "late_component_basis_transport_error_deg": 0.0,
+    "max_paired_source_lowerbody_rotation_error_deg": 2.958e-06,
+    "max_source_render_local_translation_error_cm": 0.0,
+    "max_source_render_local_scale_error": 0.0,
+    "max_source_wrist_finger_local_rotation_error_deg": 3.818e-06,
+    "max_appearance_limb_length_change_percent": 5.157e-06,
+    "NOTE": "Actual selected production pawn, full Appearance retarget mesh, fixed-step ground physics and real attack/move/sprint/jump/dodge/V handlers. Source and visible head quaternions are composed from raw evaluated local bones against skeleton reference, independently of camera helper. Residual total quaternion caps are 2/4/3 degrees; body-local position caps are 1/2/1.5cm. Late input uses actual head delta minus independent control/actor aim plus new mouse, exactly once; same-pose actor yaw +80 and control pitch70 require exact conjugation into the current component basis. Source/baseline share movement prerequisite and unchanged AnimBP, with baseline aim and mouse-head disabled. Source render-bone local T/S, wrist/finger rotations and lower body must match same phase. Appearance checks finite normalized local poses and eight limb segment lengths against its same-phase retarget baseline, without claiming all target local T/S or finger preservation; camera reads and CalcCamera(0) must not advance filters. MoveSpeed and movement max speed are set to identical fixture tuning and actual movement input generates measured velocity. Native rate and actual compiled ground BlendSpace player rate plus visible foot travel are measured; attack speed changes through real attributes and accepted montage clock plus actual target damage are observed. Mesh surface quality requires complementary rendered review."
+  },
+  "diagnosis": {
+    "rate": "37 checks used UAnimInstance::Montage_GetPlayRate, which searches active instances only and returns zero while GetInstanceForMontage can still return contributing inactive blend-out. Fixture correction reads that actual instance GetPlayRate/GetPosition; active advancing-clock and snapshot comparisons remain.",
+    "late_camera": "8 errors occur with source/Appearance residual near 3 degrees and current state cap 2 degrees. Camera is already clamped to 2; independent late oracle omitted final current-state residual clamp.",
+    "source_cap": "8 source/Appearance rows exceed current cap at one-frame end-of-blend state changes, then obey cap on the next frame. No global tolerance or previous-cap exemption added; production PreEvaluate resnapshot is pending a new run.",
+    "bones": "Source paired lower/body local T/S/wrist/finger preservation and target limb lengths are reported metrics. Full target finger/T/S preservation or visual surface quality are not claimed."
+  }
+}

@@ -33,13 +33,13 @@ def main() -> None:
     profile = require_asset(PROFILE_PATH)
     skills = list(profile.get_editor_property("skill_tree_skills"))
     initial = list(profile.get_editor_property("initially_unlocked_skills"))
-    check(len(skills) == 10, f"Knuckle tree must contain 10 skills, got {len(skills)}")
+    check(len(skills) == 14, f"Fighter tree must contain 14 skills, got {len(skills)}")
     check(len(initial) == 1, f"Knuckle tree must start with one skill, got {len(initial)}")
     check(initial[0] == skills[0], "The initial skill must be the first skill-tree node")
     tiers = {skill.get_editor_property("skill_tree_tier") for skill in skills}
     check(tiers == {1, 2, 3, 4}, f"Expected four martial-arts tiers, got {tiers}")
     names = {str(skill.get_editor_property("skill_name")) for skill in skills}
-    for required_name in ("연환권", "철산고", "백열난무", "금강불괴", "무극패왕권"):
+    for required_name in ("연환권", "축경권", "백열난무", "금강불괴", "무극패왕권"):
         check(required_name in names, f"Missing martial art: {required_name}")
     passives = [
         skill for skill in skills
@@ -48,7 +48,7 @@ def main() -> None:
     check(len(passives) == 1, f"Expected one passive technique, got {len(passives)}")
     check(abs(passives[0].get_editor_property("passive_damage_reduction") - 0.15) < 0.001,
           "Golden Body must provide 15% damage reduction")
-    for skill in skills[1:]:
+    for skill in skills[1:10]:
         prerequisites = list(skill.get_editor_property("prerequisite_skills"))
         conditions = list(skill.get_editor_property("unlock_conditions"))
         check(prerequisites, f"{skill.get_name()} has no prerequisite")
@@ -64,8 +64,13 @@ def main() -> None:
     for name in {"UI_SkillIconImage", "UI_SkillTierText", "UI_SkillProgressBar"}:
         check(name in entry_names, f"Skill-tree entry is missing {name}")
 
+    unarmed = require_asset("/Game/DataAsset/SkillProfile/DA_SkillProfile_Unarmed")
+    check(list(unarmed.get_editor_property("skill_tree_skills")) == skills,
+          "Unarmed and Knuckle must expose the same fighter tree")
+    for name in {"UI_UnlockAllSkillsButton", "UI_SkillKeySelector", "UI_ClearSkillKeyButton", "UI_SkillKeyResultText"}:
+        check(name in window_names, f"Fighter controls missing {name}")
     unreal.log(
-        "RESULT=MARTIAL_ARTIST_SKILL_TREE_VALIDATED skills=10 tiers=4 initial=1 "
+        "RESULT=MARTIAL_ARTIST_SKILL_TREE_VALIDATED skills=14 tiers=4 profiles=2 initial=1 "
         "passive_damage_reduction=0.15 widgets=2"
     )
 

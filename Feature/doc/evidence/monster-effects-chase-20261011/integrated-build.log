@@ -1,0 +1,118 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Invalidating makefile for Rogue10mEditor (source file added)
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mFighterCombatStanceAnimInstance.cpp, Rogue10mAppearanceCameraComponent.cpp, Rogue10mCharacterAnimationComponent.cpp, Rogue10mCombatComponent.cpp, Rogue10mCombatTestComponent.cpp, Rogue10mFirstPersonPresentationComponent.cpp, Rogue10mInventoryComponent.cpp, Rogue10mInventoryPersistence.cpp, Rogue10mSkillBindingComponent.cpp, Rogue10mTownProgressionComponent.cpp, Rogue10mTraitRuntimeComponent.cpp, Rogue10mVitalRegenerationComponent.cpp, Rogue10mCharacterProfileSubsystem.cpp, Rogue10mGameMode.cpp, Rogue10mPlayerController.cpp, Rogue10mPlayerState.cpp, Rogue10mProgressionSubsystem.cpp, Rogue10mMonsterDataAsset.cpp, Rogue10mTownServiceDataAsset.cpp, Rogue10mTraitCatalogDataAsset.cpp, Rogue10mFistCombatAuthoring.cpp, Rogue10mMovingAttackAuthoring.cpp, Rogue10mOpenWorldAuthoring.cpp, Rogue10mWalkPalmAuthoring.cpp, Rogue10mBasicMonster.cpp, Rogue10mMonsterAttackPatternComponent.cpp, Rogue10mMonsterAIController.cpp, Rogue10mAppearanceCameraRuntimeTest.cpp, Rogue10mCameraForwardRuntimeTest.cpp, Rogue10mCombatTestUIRuntimeTest.cpp, Rogue10mFighterCombatStanceRuntimeTest.cpp, Rogue10mFighterSkillTreeRuntimeTest.cpp, Rogue10mFistCombatRuntimeTest.cpp, Rogue10mInitialHeadFramingRuntimeTest.cpp, Rogue10mMonsterChaseEffectsRuntimeTest.cpp, Rogue10mMovingAttackRuntimeTest.cpp, Rogue10mProgressionFailureRuntimeTest.cpp, Rogue10mResponsiveHUDRuntimeTest.cpp, Rogue10mStoneFistAnimationRuntimeTest.cpp, Rogue10mThirdPersonInspectionRuntimeTest.cpp, Rogue10mTownRunRuntimeTest.cpp, Rogue10mTownServicesRuntimeTest.cpp, Rogue10mTownVisualRuntimeTest.cpp, Rogue10mTraitEffectsRuntimeTest.cpp, Rogue10mTraitPersistenceRuntimeTest.cpp, Rogue10mTraitUIRuntimeTest.cpp, Rogue10mWalkPalmRuntimeTest.cpp, Rogue10mWeaponSkillTreeRuntimeTest.cpp, Rogue10mBottomHUDWidget.cpp, Rogue10mCombatTestWidget.cpp, Rogue10mHudWidgetParts.cpp, Rogue10mMainHUDWidget.cpp, Rogue10mMenuWindowWidgets.cpp, Rogue10mTraitWidget.cpp, Rogue10mTutorialWidget.cpp, Rogue10mDroppedItem.cpp, Rogue10mMonsterSpawner.cpp, Rogue10mOpenWorldBootstrap.cpp, Rogue10mRunPortal.cpp, Rogue10mTutorialAnimationComponent.cpp, Rogue10mTutorialNPC.cpp, Rogue10mTutorialRewardComponent.cpp, Rogue10mTutorialSupplySubsystem.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+Using XGE executor to run 10 action(s)
+Distributing 10 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {A654CC52-380D-4A5E-AAD8-EA2FF6262AEC}
+ 
+--------------------Project: Default-------------------------------------------
+[1/10] Compile [x64] Rogue10mCombatTestWidget.cpp (0:03.46 at +0:00)
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternProfile.h(31,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mMonsterAttackPatternProfile : public UDataAsset
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternProfile.h(30,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS(BlueprintType)
+^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternProfile.h(33,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[2/10] Compile [x64] Rogue10mMonsterAIController.cpp (0:04.81 at +0:00)
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternProfile.h(31,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mMonsterAttackPatternProfile : public UDataAsset
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternProfile.h(30,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS(BlueprintType)
+^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternProfile.h(33,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternComponent.h(24,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mMonsterAttackPatternComponent : public UActorComponent
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternComponent.h(23,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS(ClassGroup=(Rogue10m), meta=(BlueprintSpawnableComponent))
+^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternComponent.h(26,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[3/10] Compile [x64] Rogue10mCombatTestComponent.cpp (0:06.06 at +0:00)
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternProfile.h(31,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mMonsterAttackPatternProfile : public UDataAsset
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternProfile.h(30,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS(BlueprintType)
+^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternProfile.h(33,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternComponent.h(24,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mMonsterAttackPatternComponent : public UActorComponent
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternComponent.h(23,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS(ClassGroup=(Rogue10m), meta=(BlueprintSpawnableComponent))
+^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternComponent.h(26,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[4/10] Compile [x64] Rogue10mMonsterChaseEffectsRuntimeTest.cpp (0:06.21 at +0:00)
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternProfile.h(31,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mMonsterAttackPatternProfile : public UDataAsset
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternProfile.h(30,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS(BlueprintType)
+^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternProfile.h(33,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternComponent.h(24,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mMonsterAttackPatternComponent : public UActorComponent
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternComponent.h(23,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS(ClassGroup=(Rogue10m), meta=(BlueprintSpawnableComponent))
+^
+D:\Project\Rogue10m\Source\Rogue10m\Enemy\Rogue10mMonsterAttackPatternComponent.h(26,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[5/10] Compile [x64] Rogue10mTraitPersistenceRuntimeTest.cpp (0:07.51 at +0:00)
+[6/10] Compile [x64] Rogue10mTraitEffectsRuntimeTest.cpp (0:09.50 at +0:00)
+[7/10] Compile [x64] Rogue10mTraitUIRuntimeTest.cpp (0:11.43 at +0:00)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 0 succeeded, 1 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 14.78 seconds
+
+Result: Failed (OtherCompilationError)
+Total execution time: 18.62 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 2.5kb

@@ -1,0 +1,177 @@
+ M Config/DefaultEditorPerProjectUserSettings.ini
+ M Content/AI/Monster/BB_Monster.uasset
+ M Content/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab.uasset
+ M Content/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightHook.uasset
+ M Content/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightJab.uasset
+ M Content/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight.uasset
+ M Content/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.uasset
+ M Content/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.uasset
+ M Content/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02.uasset
+ M Content/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03.uasset
+ M Content/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Special.uasset
+ M Content/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_ChargedShockwave.uasset
+ M Content/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Jab.uasset
+ M Content/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Straight.uasset
+ M Content/DataAsset/SkillProfile/DA_SkillProfile_Combat_Knuckle.uasset
+ M Content/DataAsset/SkillProfile/DA_SkillProfile_Unarmed.uasset
+ M Content/Rogue10m/Animation/Common/ABP_Common_Unarmed.uasset
+ M Content/Widget/Component/SkillTree/WBP_SkillTreeEntry.uasset
+ M Content/Widget/Component/SkillTree/WBP_SkillTreeWindow.uasset
+ M DevLog/20260929.txt
+ M Docs/SkillTreeLoadoutGuide.md
+ M Docs/SprintChangeLog.md
+ M Docs/UE58MCPSetup.md
+ M Docs/WorldStructure.md
+ M Rogue10m.uproject
+ M Scripts/Editor/BuildMartialArtistSkillTreeWidgets.py
+ M Scripts/Editor/ConfigureBasicBrawler.py
+ M Scripts/Editor/ConfigureBrawlerSourceFootIKOrder.py
+ M Scripts/Editor/ConfigureClassCombatAnimationVFX.py
+ M Scripts/Editor/CreateMartialArtistSkillTreeAssets.py
+ M Scripts/Editor/PrepareAppearanceBoxing.py
+ M Scripts/Editor/ValidateMartialArtistSkillTree.py
+ M Scripts/Editor/ValidateMenuMapFlow.py
+ M Scripts/Editor/ValidateMenuMapPIE.py
+ M Source/Rogue10m/Character/Rogue10mCharacter.cpp
+ M Source/Rogue10m/Components/Rogue10mAppearanceCameraComponent.cpp
+ M Source/Rogue10m/Components/Rogue10mAppearanceCameraComponent.h
+ M Source/Rogue10m/Components/Rogue10mCharacterAnimationComponent.cpp
+ M Source/Rogue10m/Components/Rogue10mCharacterAnimationComponent.h
+ M Source/Rogue10m/Components/Rogue10mCombatComponent.cpp
+ M Source/Rogue10m/Components/Rogue10mCombatComponent.h
+ M Source/Rogue10m/Components/Rogue10mFirstPersonPresentationComponent.cpp
+ M Source/Rogue10m/Core/Rogue10mPlayerController.cpp
+ M Source/Rogue10m/Core/Rogue10mPlayerController.h
+ M Source/Rogue10m/Data/Rogue10mMonsterDataAsset.h
+ M Source/Rogue10m/Enemy/AI/Rogue10mMonsterAIController.cpp
+ M Source/Rogue10m/Enemy/Rogue10mBasicMonster.cpp
+ M Source/Rogue10m/Enemy/Rogue10mBasicMonster.h
+ M Source/Rogue10m/Rogue10m.Build.cs
+ M Source/Rogue10m/Tests/Rogue10mAppearanceCameraRuntimeTest.cpp
+ M Source/Rogue10m/Tests/Rogue10mInitialHeadFramingRuntimeTest.cpp
+ M Source/Rogue10m/Tests/Rogue10mThirdPersonInspectionRuntimeTest.cpp
+ M Source/Rogue10m/Tests/Rogue10mWeaponSkillTreeRuntimeTest.cpp
+ M Source/Rogue10m/UI/Widgets/Rogue10mMenuWindowWidgets.cpp
+ M Source/Rogue10m/UI/Widgets/Rogue10mMenuWindowWidgets.h
+ M Source/Rogue10m/World/Rogue10mMonsterSpawner.cpp
+ M Studio/EXECUTION.md
+ M Studio/dispatcher.mjs
+ M Studio/tests/dispatcher.test.mjs
+?? Content/CloseCombatAnimSet/
+?? Content/Rogue10m/Animation/Combat/FighterSkills/
+?? Content/Rogue10m/Animation/Combat/FighterStance/
+?? Content/Rogue10m/Animation/Combat/FistAuthored/
+?? Content/Rogue10m/Animation/Preview/CloseCombat/
+?? Content/Rogue10m/Maps/OpenRunMap.umap
+?? Content/Rogue10m/Maps/StartHub.umap
+?? Content/Rogue10m/World/
+?? Content/__ExternalActors__/Rogue10m/
+?? Content/__ExternalObjects__/Rogue10m/
+?? DevLog/20260930.txt
+?? DevLog/20261002.txt
+?? DevLog/20261005.txt
+?? Docs/OpenWorldMonsterDesign.md
+?? Feature/architect/2026-09-29_studio-fist-completion.md
+?? Feature/architect/2026-09-29_studio-review-diagnostics.md
+?? Feature/architect/2026-09-29_unarmed-knuckle-animation.md
+?? Feature/architect/2026-09-30_editor-ai-assistant-error.md
+?? Feature/architect/2026-09-30_fighter-skill-tree.md
+?? Feature/architect/2026-10-02_close-combat-animation-preparation.md
+?? Feature/architect/2026-10-02_fighter-skill-animation-binding.md
+?? Feature/architect/2026-10-05_compact-combat-hud.md
+?? Feature/architect/2026-10-05_fighter-arm-swing.md
+?? Feature/architect/2026-10-05_fighter-combat-stance.md
+?? Feature/architect/2026-10-05_open-world-map.md
+?? Feature/architect/2026-10-05_open-world-monsters.md
+?? Feature/architect/2026-10-05_open-world-playmap.md
+?? Feature/architect/2026-10-05_start-hub-tutorial-npc.md
+?? Feature/architect/2026-10-05_start-village-ground.md
+?? Feature/architect/2026-10-05_start-village.md
+?? Feature/doc/2026-09-29_studio-fist-completion.md
+?? Feature/doc/2026-09-29_studio-review-diagnostics.md
+?? Feature/doc/2026-09-29_unarmed-knuckle-animation.md
+?? Feature/doc/2026-09-30_editor-ai-assistant-error.md
+?? Feature/doc/2026-09-30_fighter-skill-tree.md
+?? Feature/doc/2026-10-02_close-combat-animation-preparation.md
+?? Feature/doc/2026-10-02_fighter-skill-animation-binding.md
+?? Feature/doc/2026-10-05_fighter-arm-swing.md
+?? Feature/doc/2026-10-05_fighter-combat-stance.md
+?? Feature/doc/2026-10-05_open-world-map.md
+?? Feature/doc/2026-10-05_open-world-playmap.md
+?? Feature/doc/2026-10-05_start-village-ground.md
+?? Feature/doc/2026-10-05_start-village.md
+?? Feature/doc/evidence/close-combat-preparation-20261002/
+?? Feature/doc/evidence/compact-hud-20261005/
+?? Feature/doc/evidence/editor-ai-assistant-20260930/
+?? Feature/doc/evidence/fighter-animation-binding-20261002/
+?? Feature/doc/evidence/fighter-arm-swing-20261005/
+?? Feature/doc/evidence/fighter-combat-stance-20261005/
+?? Feature/doc/evidence/fighter-skill-tree-20260930/
+?? Feature/doc/evidence/fist-combat-20260929/
+?? Feature/doc/evidence/open-world-20261005/
+?? Feature/doc/evidence/open-world-map-20261005/
+?? Feature/doc/evidence/open-world-monsters-20261005/
+?? Feature/doc/evidence/start-village-20261005/
+?? Feature/doc/evidence/studio-fist-completion-20260929/
+?? Feature/doc/evidence/village-ground-20261005/
+?? Scripts/AnalyzeCloseCombatPreview.py
+?? Scripts/AnalyzeFistCombat.py
+?? Scripts/AuditVillageGroundContent.py
+?? Scripts/BuildOpenWorldPCG.py
+?? Scripts/CaptureOpenWorld.py
+?? Scripts/CaptureVillageGround.py
+?? Scripts/Editor/ApplyFighterSkillTree.py
+?? Scripts/Editor/AuditCloseCombatReadiness.py
+?? Scripts/Editor/AuditFistCombatAssets.py
+?? Scripts/Editor/BindFighterSkillAnimations.py
+?? Scripts/Editor/ConfigureFighterSkillTree.py
+?? Scripts/Editor/CreateOpenWorld.py
+?? Scripts/Editor/CreateStartVillage.py
+?? Scripts/Editor/EnhanceFighterArmSwing.py
+?? Scripts/Editor/FinalizeOpenWorld.py
+?? Scripts/Editor/FinalizeOpenWorldVegetation.py
+?? Scripts/Editor/ImproveVillageGround.py
+?? Scripts/Editor/InspectOpenWorldInputs.py
+?? Scripts/Editor/InspectOpenWorldMonsters.py
+?? Scripts/Editor/InspectStartVillageInputs.py
+?? Scripts/Editor/InspectVillageGround.py
+?? Scripts/Editor/OpenWorldLayout.py
+?? Scripts/Editor/PolishOpenWorldWater.py
+?? Scripts/Editor/PrepareCloseCombatPreview.py
+?? Scripts/Editor/PrepareFighterCombatStance.py
+?? Scripts/Editor/PrepareFistCombatAnimations.py
+?? Scripts/Editor/ProtectOpenWorldBoss.py
+?? Scripts/Editor/ValidateOpenWorld.py
+?? Scripts/Editor/ValidateOpenWorldAIBoundary.py
+?? Scripts/Editor/ValidateStartVillage.py
+?? Scripts/Editor/ValidateVillageGround.py
+?? Scripts/InvokeUnrealMCP.py
+?? Scripts/OpenWorldMonsterMCP.py
+?? Scripts/OpenWorldWoodlandToolScript.py
+?? Scripts/RenderOpenWorldMap.py
+?? Scripts/VerifyFighterArmSwing.ps1
+?? Scripts/VerifyFighterCombatStance.ps1
+?? Scripts/VerifyFighterSkillAnimations.ps1
+?? Scripts/VerifyFighterSkillTree.ps1
+?? Scripts/VerifyOpenWorldContent.py
+?? Source/Rogue10m/Character/Rogue10mFighterCombatStanceAnimInstance.cpp
+?? Source/Rogue10m/Character/Rogue10mFighterCombatStanceAnimInstance.h
+?? Source/Rogue10m/Components/Rogue10mSkillBindingComponent.cpp
+?? Source/Rogue10m/Components/Rogue10mSkillBindingComponent.h
+?? Source/Rogue10m/Editor/Rogue10mFistCombatAuthoring.cpp
+?? Source/Rogue10m/Editor/Rogue10mOpenWorldAuthoring.cpp
+?? Source/Rogue10m/Editor/Rogue10mOpenWorldAuthoring.h
+?? Source/Rogue10m/Enemy/Rogue10mMonsterAttackPatternComponent.cpp
+?? Source/Rogue10m/Enemy/Rogue10mMonsterAttackPatternComponent.h
+?? Source/Rogue10m/Enemy/Rogue10mMonsterAttackPatternProfile.h
+?? Source/Rogue10m/Tests/Rogue10mFighterCombatStanceRuntimeTest.cpp
+?? Source/Rogue10m/Tests/Rogue10mFighterSkillTreeRuntimeTest.cpp
+?? Source/Rogue10m/Tests/Rogue10mFistCombatRuntimeTest.cpp
+?? Source/Rogue10m/Tests/Rogue10mStoneFistAnimationRuntimeTest.cpp
+?? Source/Rogue10m/UI/Widgets/Rogue10mTutorialWidget.cpp
+?? Source/Rogue10m/UI/Widgets/Rogue10mTutorialWidget.h
+?? Source/Rogue10m/World/Rogue10mOpenWorldBootstrap.cpp
+?? Source/Rogue10m/World/Rogue10mOpenWorldBootstrap.h
+?? Source/Rogue10m/World/Rogue10mTutorialDataAsset.h
+?? Source/Rogue10m/World/Rogue10mTutorialRewardComponent.cpp
+?? Source/Rogue10m/World/Rogue10mTutorialRewardComponent.h

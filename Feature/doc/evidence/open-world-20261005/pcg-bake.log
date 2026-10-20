@@ -1,0 +1,25 @@
+MCP tile-001-spawn completed
+MCP tile-001-execute completed
+Traceback (most recent call last):
+  File "D:\Project\Rogue10m\Scripts\BuildOpenWorldPCG.py", line 97, in <module>
+    bake()
+  File "D:\Project\Rogue10m\Scripts\BuildOpenWorldPCG.py", line 83, in bake
+    call('call_tool',{'toolset_name':'editor_toolset.toolsets.scene.SceneTools','tool_name':'save_actor',
+  File "D:\Project\Rogue10m\Scripts\BuildOpenWorldPCG.py", line 20, in call
+    raise RuntimeError(name+': '+run.stdout[-3000:]+run.stderr[-1000:])
+RuntimeError: tile-001-save: {
+  "server": {
+    "name": "",
+    "title": "",
+    "version": ""
+  },
+  "tool": "call_tool",
+  "isError": true,
+  "content": [
+    {
+      "type": "text",
+      "text": "Asset does not exist: /Game/__ExternalActors__/Rogue10m/Maps/OpenRunMap/5/F3/J2596W42GD5TUCP5FKDFWQ\nFailed to save 'OW_ForestTile_001'."
+    }
+  ]
+}
+

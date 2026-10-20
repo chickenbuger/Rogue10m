@@ -22,6 +22,7 @@
 #include "Misc/Paths.h"
 #include "Rogue10m.h"
 #include "Rogue10mAppearanceCameraComponent.h"
+#include "Rogue10mAttackSkillData.h"
 #include "Rogue10mBasicBrawlerComponent.h"
 #include "Rogue10mBasicMonster.h"
 #include "Rogue10mCharacter.h"
@@ -130,6 +131,16 @@ private:
         Check(Controller->GetControlRotation().Equals(BaseControl,.01f),TEXT("inspection_changed_control_aim"));
         FTransform Head; FQuat Motion;
         if (!Settings->ReadAnimatedHead(Head,Motion)) { Check(false,TEXT("raw_head_missing")); return; }
+        // Independent axis-angle expectation: do not validate composition by calling its helper.
+        if (Settings->IsBrawlerViewStabilized())
+        {
+            FQuat Canonical=Motion.GetNormalized();
+            if (Canonical.W<0.) { Canonical=Canonical*(-1.); }
+            FVector Axis; double Angle; Canonical.ToAxisAndAngle(Axis,Angle);
+            const double ExpectedAngle=FMath::Min(Angle*FMath::Clamp(Settings->BrawlerHeadRotationWeight,0.f,1.f),
+                FMath::DegreesToRadians(static_cast<double>(FMath::Clamp(Settings->BrawlerHeadMaxRotationDegrees,0.f,180.f))));
+            Motion=FQuat(Axis,ExpectedAngle).GetNormalized();
+        }
         const FVector HeadLocation=Head.GetLocation()+(Motion*Character->GetActorQuat()).RotateVector(Settings->EyeOffset);
         const FQuat HeadRotation=(Motion*Controller->GetControlRotation().Quaternion()).GetNormalized();
         const double PositionError=FVector::Distance(Camera->GetComponentLocation(),HeadLocation);
@@ -179,9 +190,9 @@ private:
             auto* Montage=Character->GetAnimationPlaybackMesh()->GetAnimInstance()->GetCurrentActiveMontage();
             if (!Montage) { ++RecoveryWithoutMontageSamples; }
             if (Montage && Snapshot.Attack==ERogue10mBasicBrawlerAttack::LeftJab)
-            { Check(Montage->GetName()==TEXT("AM_BoxingLeftJab_Appearance"),TEXT("inspection_left_jab_not_original_montage")); ++LeftMontageSamples; }
+            { const auto* Skill=Character->GetCombatComponent()->GetEquippedSkill(ERogue10mAttackInputSlot::Primary); Check(Skill && Montage==Skill->AttackMontage,TEXT("inspection_left_jab_not_active_montage")); ++LeftMontageSamples; }
             if (Montage && Snapshot.Attack==ERogue10mBasicBrawlerAttack::RightJab)
-            { Check(Montage->GetName()==TEXT("AM_BoxingRightJab_Appearance"),TEXT("inspection_right_jab_not_original_montage")); ++RightMontageSamples; }
+            { const auto* Skill=Character->GetCombatComponent()->GetEquippedSkill(ERogue10mAttackInputSlot::Primary); Check(Skill && Skill->NextComboSkill && Montage==Skill->NextComboSkill->AttackMontage,TEXT("inspection_right_jab_not_active_montage")); ++RightMontageSamples; }
         }
         if (FrameIndex==100) { SpawnCameraObstacle(); }
         if (FrameIndex==110 && Obstacle.IsValid()) { Obstacle->Destroy(); Obstacle.Reset(); }

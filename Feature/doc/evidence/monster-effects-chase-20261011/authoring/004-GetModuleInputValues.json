@@ -1,0 +1,12 @@
+{
+  "jsonrpc": "2.0",
+  "id": 4,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"returnValue\":{\"moduleName\":\"AddVelocityInCone\",\"inputs\":[{\"name\":\"Velocity Strength\",\"value\":{\"struct\":{\"refPath\":\"/Script/NiagaraEditor.NiagaraExt_StackInputData_DynamicInput\"},\"value\":{\"dynamicInputAsset\":{\"refPath\":\"/Niagara/DynamicInputs/UniformRange/V2/RandomRangeFloat.RandomRangeFloat\"}}}},{\"name\":\"Cone Angle\",\"value\":{\"struct\":{\"refPath\":\"/Script/Niagara.NiagaraFloat\"},\"value\":{\"value\":48}}},{\"name\":\"Cone Axis\",\"value\":{\"struct\":{\"refPath\":\"/Script/CoreUObject.Vector3f\"},\"value\":{\"x\":0.89999997615814209,\"y\":0,\"z\":0.40000000596046448}}},{\"name\":\"Cone Axis Coordinate Space\",\"value\":{\"struct\":{\"refPath\":\"/Script/NiagaraEditor.NiagaraExt_StackInputData_Enum\"},\"value\":{\"enum\":{\"refPath\":\"/Script/Niagara.ENiagaraCoordinateSpace\"},\"enumName\":\"ENiagaraCoordinateSpace::Local\",\"displayName\":\"Local\"}}},{\"name\":\"Velocity Distribution Along Cone Axis\",\"value\":{\"struct\":{\"refPath\":\"/Script/Niagara.NiagaraFloat\"},\"value\":{\"value\":0.75}}},{\"name\":\"Module.Use Velocity Falloff On Cone Axis\",\"value\":{\"struct\":{\"refPath\":\"/Script/Niagara.NiagaraBool\"},\"value\":{\"value\":-1}}},{\"name\":\"Velocity Falloff Away From Cone Axis\",\"value\":{\"struct\":{\"refPath\":\"/Script/Niagara.NiagaraFloat\"},\"value\":{\"value\":0.33300000429153442}}}]}}"
+      }
+    ]
+  }
+}

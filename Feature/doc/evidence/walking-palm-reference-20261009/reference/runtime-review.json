@@ -1,0 +1,3849 @@
+{
+  "schema": "rogue10m.walk-palm-runtime-review.v1",
+  "reviewer": "independent offline geometry/CSV audit",
+  "status": "REQUIRES_AUX_IK_REPAIR",
+  "status_scope": "independent geometry, actual movement/camera, protected lower/head world/local, visible wrist reach, reference direction improvement and auxiliary hand IK world position",
+  "reference_policy": {
+    "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\walking-palm-reference-20261009\\reference\\author-policy.json",
+    "sha256": "6519b637b6f311035c5fc2b0d91ff7f533f0f06ac7ed389f370c819c59382a3f",
+    "target_actor_mean_normals": {
+      "Left": [
+        -0.6039185512936499,
+        0.7546854216214364,
+        -0.25638310746898635
+      ],
+      "Right": [
+        -0.5061251845293041,
+        -0.7697237522948301,
+        -0.38905352168865526
+      ]
+    }
+  },
+  "before": {
+    "label": "walking-palm-before-render-v1",
+    "path": "D:\\Project\\Rogue10m\\tmp\\walk-palm\\walking-palm-before-render-v1",
+    "files": {
+      "frames.csv": "86549edb4508fca13b484d4a676f243823fb7e59d45e53a06f034627015ecb9f",
+      "palms.csv": "58bf4f11747180f9bf8412fd3fe409cee30d69c87f5130678f076867999b5ae3",
+      "poses.csv": "442e0871826712ba7e26b8da0ce6a81294cce549474dd6472ac221acbed62477",
+      "blendspaces.csv": "5ae90e31f56232a6ed2c478247f4ca30b3c5a1e45d5cc0c3d9a77969d3128159",
+      "palm-signs.csv": "69d4b625a1c942f9424172229771b5e5a7a1b1820d4d3cc629efc38ecf43ffda",
+      "metrics.txt": "313b9952d265c4d1169e4593c64a254e1f990a171cb5fad37dc1e90cca0f7da7"
+    },
+    "frames": 651,
+    "geometry_independent_errors": {
+      "normal_vector": 8.754875648078441e-10,
+      "actor_projection": 6.296539678540825e-10,
+      "palm_landmark_vs_pose_cm": 0.0,
+      "local_parent_recompose_cm": 3.607732474308385e-07,
+      "local_parent_recompose_degrees": 5.063633175962133e-07
+    },
+    "fixed_signs": {
+      "source_left": -1.0,
+      "source_right": 1.0,
+      "body_left": -1.0,
+      "body_right": 1.0
+    },
+    "movement": {
+      "walk110": {
+        "samples": 60,
+        "speed_min": 110.0,
+        "speed_max": 110.0,
+        "actual_distance_cm": 220.00002,
+        "grounded": true,
+        "active_blendspaces": [
+          "/Game/Characters/Mannequins/Anims/Unarmed/BS_Idle_Walk_Run.BS_Idle_Walk_Run"
+        ],
+        "input_y_min": 110.0,
+        "input_y_max": 110.0,
+        "input_x_abs_max": 0.0,
+        "active_node_weight_min": 1.0
+      },
+      "walk210": {
+        "samples": 60,
+        "speed_min": 210.0,
+        "speed_max": 210.0,
+        "actual_distance_cm": 420.0,
+        "grounded": true,
+        "active_blendspaces": [
+          "/Game/Characters/Mannequins/Anims/Unarmed/BS_Idle_Walk_Run.BS_Idle_Walk_Run"
+        ],
+        "input_y_min": 210.0,
+        "input_y_max": 210.0,
+        "input_x_abs_max": 0.0,
+        "active_node_weight_min": 1.0
+      },
+      "run600": {
+        "samples": 30,
+        "speed_min": 600.0,
+        "speed_max": 600.0,
+        "actual_distance_cm": 600.00003,
+        "grounded": true,
+        "active_blendspaces": [
+          "/Game/Characters/Mannequins/Anims/Unarmed/BS_Idle_Walk_Run.BS_Idle_Walk_Run"
+        ],
+        "input_y_min": 600.0,
+        "input_y_max": 600.0,
+        "input_x_abs_max": 0.0,
+        "active_node_weight_min": 1.0
+      },
+      "yaw90walk210": {
+        "samples": 70,
+        "speed_min": 210.0,
+        "speed_max": 210.0,
+        "actual_distance_cm": 490.0,
+        "grounded": true,
+        "active_blendspaces": [
+          "/Game/Characters/Mannequins/Anims/Unarmed/BS_Idle_Walk_Run.BS_Idle_Walk_Run"
+        ],
+        "input_y_min": 210.0,
+        "input_y_max": 210.0,
+        "input_x_abs_max": 0.0,
+        "active_node_weight_min": 1.0
+      }
+    },
+    "phases": {
+      "walk110": {
+        "source": {
+          "left": {
+            "samples": 60,
+            "normal_forward_mean": -0.39303146333333333,
+            "normal_forward_min": -0.464962084,
+            "normal_forward_max": -0.341848637,
+            "normal_right_mean": 0.8796997697333333,
+            "normal_right_min": 0.824270842,
+            "normal_right_max": 0.910393074,
+            "normal_up_mean": -0.26182409083333336,
+            "normal_up_min": -0.338376523,
+            "normal_up_max": -0.181249664,
+            "normal_outward_mean": -0.8796997697333333,
+            "normal_outward_min": -0.910393074,
+            "normal_outward_max": -0.824270842
+          },
+          "right": {
+            "samples": 60,
+            "normal_forward_mean": -0.025482609833333333,
+            "normal_forward_min": -0.081988724,
+            "normal_forward_max": 0.030696659,
+            "normal_right_mean": -0.9861852543833333,
+            "normal_right_min": -0.99502163,
+            "normal_right_max": -0.97787301,
+            "normal_up_mean": -0.1584640302833333,
+            "normal_up_min": -0.196617707,
+            "normal_up_max": -0.099522157,
+            "normal_outward_mean": -0.9861852543833333,
+            "normal_outward_min": -0.99502163,
+            "normal_outward_max": -0.97787301
+          }
+        },
+        "body": {
+          "left": {
+            "samples": 60,
+            "normal_forward_mean": -0.37419618656666664,
+            "normal_forward_min": -0.48888222,
+            "normal_forward_max": -0.277079374,
+            "normal_right_mean": 0.9158696879333333,
+            "normal_right_min": 0.853060753,
+            "normal_right_max": 0.949776808,
+            "normal_up_mean": -0.12630313415,
+            "normal_up_min": -0.204498263,
+            "normal_up_max": -0.039604111,
+            "normal_outward_mean": -0.9158696879333333,
+            "normal_outward_min": -0.949776808,
+            "normal_outward_max": -0.853060753
+          },
+          "right": {
+            "samples": 60,
+            "normal_forward_mean": 0.02656722573333333,
+            "normal_forward_min": -0.034649155,
+            "normal_forward_max": 0.081942563,
+            "normal_right_mean": -0.9980945693333333,
+            "normal_right_min": -0.99994235,
+            "normal_right_max": -0.994990519,
+            "normal_up_mean": -0.026296215316666666,
+            "normal_up_min": -0.073222555,
+            "normal_up_max": 0.037126387,
+            "normal_outward_mean": -0.9980945693333333,
+            "normal_outward_min": -0.99994235,
+            "normal_outward_max": -0.994990519
+          }
+        }
+      },
+      "walk210": {
+        "source": {
+          "left": {
+            "samples": 60,
+            "normal_forward_mean": -0.28184262305,
+            "normal_forward_min": -0.393015205,
+            "normal_forward_max": -0.180172792,
+            "normal_right_mean": 0.92679444955,
+            "normal_right_min": 0.850402682,
+            "normal_right_max": 0.969964378,
+            "normal_up_mean": -0.22370508378333334,
+            "normal_up_min": -0.363612416,
+            "normal_up_max": -0.06233954,
+            "normal_outward_mean": -0.92679444955,
+            "normal_outward_min": -0.969964378,
+            "normal_outward_max": -0.850402682
+          },
+          "right": {
+            "samples": 60,
+            "normal_forward_mean": -0.19292073236666668,
+            "normal_forward_min": -0.263336462,
+            "normal_forward_max": -0.121689777,
+            "normal_right_mean": -0.9682186172,
+            "normal_right_min": -0.989793089,
+            "normal_right_max": -0.936194476,
+            "normal_up_mean": -0.13531736793333332,
+            "normal_up_min": -0.266752828,
+            "normal_up_max": -0.042309195,
+            "normal_outward_mean": -0.9682186172,
+            "normal_outward_min": -0.989793089,
+            "normal_outward_max": -0.936194476
+          }
+        },
+        "body": {
+          "left": {
+            "samples": 60,
+            "normal_forward_mean": -0.2836660594666667,
+            "normal_forward_min": -0.460999437,
+            "normal_forward_max": -0.103097945,
+            "normal_right_mean": 0.9427492089666667,
+            "normal_right_min": 0.85526322,
+            "normal_right_max": 0.986672374,
+            "normal_up_mean": -0.10524549501666666,
+            "normal_up_min": -0.257817211,
+            "normal_up_max": 0.069672157,
+            "normal_outward_mean": -0.9427492089666667,
+            "normal_outward_min": -0.986672374,
+            "normal_outward_max": -0.85526322
+          },
+          "right": {
+            "samples": 60,
+            "normal_forward_mean": -0.16048912645,
+            "normal_forward_min": -0.283250243,
+            "normal_forward_max": -0.039542402,
+            "normal_right_mean": -0.9819971666333333,
+            "normal_right_min": -0.998799465,
+            "normal_right_max": -0.950939764,
+            "normal_up_mean": -0.018784546466666666,
+            "normal_up_min": -0.141534709,
+            "normal_up_max": 0.079758442,
+            "normal_outward_mean": -0.9819971666333333,
+            "normal_outward_min": -0.998799465,
+            "normal_outward_max": -0.950939764
+          }
+        }
+      },
+      "run600": {
+        "source": {
+          "left": {
+            "samples": 30,
+            "normal_forward_mean": -0.18559039496666668,
+            "normal_forward_min": -0.657668147,
+            "normal_forward_max": 0.201533933,
+            "normal_right_mean": 0.9379943488333333,
+            "normal_right_min": 0.752301878,
+            "normal_right_max": 0.998799015,
+            "normal_up_mean": -0.018953097166666665,
+            "normal_up_min": -0.189984502,
+            "normal_up_max": 0.210525623,
+            "normal_outward_mean": -0.9379943488333333,
+            "normal_outward_min": -0.998799015,
+            "normal_outward_max": -0.752301878
+          },
+          "right": {
+            "samples": 30,
+            "normal_forward_mean": -0.3536801314,
+            "normal_forward_min": -0.632589461,
+            "normal_forward_max": 0.117129005,
+            "normal_right_mean": -0.9005780407666666,
+            "normal_right_min": -0.994947777,
+            "normal_right_max": -0.766894657,
+            "normal_up_mean": -0.043559609066666664,
+            "normal_up_min": -0.205199671,
+            "normal_up_max": 0.112041786,
+            "normal_outward_mean": -0.9005780407666666,
+            "normal_outward_min": -0.994947777,
+            "normal_outward_max": -0.766894657
+          }
+        },
+        "body": {
+          "left": {
+            "samples": 30,
+            "normal_forward_mean": -0.2623562642333333,
+            "normal_forward_min": -0.745121751,
+            "normal_forward_max": 0.110408992,
+            "normal_right_mean": 0.9119331896333333,
+            "normal_right_min": 0.666076689,
+            "normal_right_max": 0.999972999,
+            "normal_up_mean": 0.03649223076666666,
+            "normal_up_min": -0.267509576,
+            "normal_up_max": 0.28824574,
+            "normal_outward_mean": -0.9119331896333333,
+            "normal_outward_min": -0.999972999,
+            "normal_outward_max": -0.666076689
+          },
+          "right": {
+            "samples": 30,
+            "normal_forward_mean": -0.43753380810000003,
+            "normal_forward_min": -0.717447605,
+            "normal_forward_max": 0.032913543,
+            "normal_right_mean": -0.8575367698333333,
+            "normal_right_min": -0.998635774,
+            "normal_right_max": -0.682905279,
+            "normal_up_mean": -0.03912425366666667,
+            "normal_up_min": -0.250615071,
+            "normal_up_max": 0.171315734,
+            "normal_outward_mean": -0.8575367698333333,
+            "normal_outward_min": -0.998635774,
+            "normal_outward_max": -0.682905279
+          }
+        }
+      },
+      "yaw90walk210": {
+        "source": {
+          "left": {
+            "samples": 70,
+            "normal_forward_mean": -0.27777232114285716,
+            "normal_forward_min": -0.393015205,
+            "normal_forward_max": -0.180172828,
+            "normal_right_mean": 0.9263389674999999,
+            "normal_right_min": 0.850402682,
+            "normal_right_max": 0.969964388,
+            "normal_up_mean": -0.2321565641,
+            "normal_up_min": -0.363612416,
+            "normal_up_max": -0.062339503,
+            "normal_outward_mean": -0.9263389674999999,
+            "normal_outward_min": -0.969964388,
+            "normal_outward_max": -0.850402682
+          },
+          "right": {
+            "samples": 70,
+            "normal_forward_mean": -0.19079485908571428,
+            "normal_forward_min": -0.263336422,
+            "normal_forward_max": -0.121689777,
+            "normal_right_mean": -0.9677011511857143,
+            "normal_right_min": -0.989793089,
+            "normal_right_max": -0.93619447,
+            "normal_up_mean": -0.14032257704285717,
+            "normal_up_min": -0.26675283,
+            "normal_up_max": -0.042309195,
+            "normal_outward_mean": -0.9677011511857143,
+            "normal_outward_min": -0.989793089,
+            "normal_outward_max": -0.93619447
+          }
+        },
+        "body": {
+          "left": {
+            "samples": 70,
+            "normal_forward_mean": -0.27303517717142856,
+            "normal_forward_min": -0.460999437,
+            "normal_forward_max": -0.103097945,
+            "normal_right_mean": 0.9451235534999999,
+            "normal_right_min": 0.85526322,
+            "normal_right_max": 0.986672382,
+            "normal_up_mean": -0.11440949191428572,
+            "normal_up_min": -0.257817211,
+            "normal_up_max": 0.069672191,
+            "normal_outward_mean": -0.9451235534999999,
+            "normal_outward_min": -0.986672382,
+            "normal_outward_max": -0.85526322
+          },
+          "right": {
+            "samples": 70,
+            "normal_forward_mean": -0.16503259378571428,
+            "normal_forward_min": -0.283250255,
+            "normal_forward_max": -0.039542402,
+            "normal_right_mean": -0.9809127137714286,
+            "normal_right_min": -0.998799465,
+            "normal_right_max": -0.95093976,
+            "normal_up_mean": -0.022258888485714286,
+            "normal_up_min": -0.141534711,
+            "normal_up_max": 0.079758442,
+            "normal_outward_mean": -0.9809127137714286,
+            "normal_outward_min": -0.998799465,
+            "normal_outward_max": -0.95093976
+          }
+        }
+      }
+    },
+    "camera": {
+      "eye_z": -3,
+      "control_pitch": -20,
+      "max_native_independent_error_cm": 0.0,
+      "capture_restore_frames": [
+        91,
+        181,
+        186,
+        191,
+        251,
+        361,
+        417
+      ],
+      "capture_restore_automatic_cache_omissions": 7
+    },
+    "native_metrics": {
+      "frames": "650",
+      "assertions": "95089",
+      "failures": "0",
+      "baseline_report_mode": "1",
+      "travel_cm": "3029.415571341",
+      "walk110_samples": "60",
+      "walk210_samples": "60",
+      "run600_samples": "30",
+      "yaw90_samples": "70",
+      "moving_jab_samples": "11",
+      "active_blendspace_samples": "220",
+      "max_camera_error_cm": "0.000000000",
+      "source_left_mean_forward": "-0.297746452",
+      "source_left_mean_outward": "-0.915332779",
+      "source_right_mean_forward": "-0.168501112",
+      "source_right_mean_outward": "-0.963730246",
+      "body_left_mean_forward": "-0.302067660",
+      "body_left_mean_outward": "-0.931971719",
+      "body_right_mean_forward": "-0.148698227",
+      "body_right_mean_outward": "-0.969070442"
+    },
+    "failures": []
+  },
+  "after": {
+    "label": "walking-palm-after-render-v1",
+    "path": "D:\\Project\\Rogue10m\\tmp\\walk-palm\\walking-palm-after-render-v1",
+    "files": {
+      "frames.csv": "d1ec65f9d7f8fd8ba49b9182a36a97d017e63749d2617da106473bc0c5475cdd",
+      "palms.csv": "87f1b6dd4e3dc4806840cbf57abda64507bd4fccabc3b9c270e761766bb33d38",
+      "poses.csv": "322201a761bf6eeff30f6350c9535935567d58dfd88bf81fc49eb12c71763ae4",
+      "blendspaces.csv": "c4e7e26e620975c91762739eb312a031dc149bc1293e7823f14510810d4aed46",
+      "palm-signs.csv": "69d4b625a1c942f9424172229771b5e5a7a1b1820d4d3cc629efc38ecf43ffda",
+      "metrics.txt": "76278b98b209524c2f3315faac54bb8eaa60bfc771d45e3d5ced6dc76583a45e"
+    },
+    "frames": 651,
+    "geometry_independent_errors": {
+      "normal_vector": 8.661902825603749e-10,
+      "actor_projection": 6.317344147799275e-10,
+      "palm_landmark_vs_pose_cm": 0.0,
+      "local_parent_recompose_cm": 3.6205432491227826e-07,
+      "local_parent_recompose_degrees": 4.94409295420631e-07
+    },
+    "fixed_signs": {
+      "source_left": -1.0,
+      "source_right": 1.0,
+      "body_left": -1.0,
+      "body_right": 1.0
+    },
+    "movement": {
+      "walk110": {
+        "samples": 60,
+        "speed_min": 110.0,
+        "speed_max": 110.0,
+        "actual_distance_cm": 220.00002,
+        "grounded": true,
+        "active_blendspaces": [
+          "/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference"
+        ],
+        "input_y_min": 110.0,
+        "input_y_max": 110.0,
+        "input_x_abs_max": 0.0,
+        "active_node_weight_min": 1.0
+      },
+      "walk210": {
+        "samples": 60,
+        "speed_min": 210.0,
+        "speed_max": 210.0,
+        "actual_distance_cm": 420.0,
+        "grounded": true,
+        "active_blendspaces": [
+          "/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference"
+        ],
+        "input_y_min": 210.0,
+        "input_y_max": 210.0,
+        "input_x_abs_max": 0.0,
+        "active_node_weight_min": 1.0
+      },
+      "run600": {
+        "samples": 30,
+        "speed_min": 600.0,
+        "speed_max": 600.0,
+        "actual_distance_cm": 600.00003,
+        "grounded": true,
+        "active_blendspaces": [
+          "/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference"
+        ],
+        "input_y_min": 600.0,
+        "input_y_max": 600.0,
+        "input_x_abs_max": 0.0,
+        "active_node_weight_min": 1.0
+      },
+      "yaw90walk210": {
+        "samples": 70,
+        "speed_min": 210.0,
+        "speed_max": 210.0,
+        "actual_distance_cm": 490.0,
+        "grounded": true,
+        "active_blendspaces": [
+          "/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference"
+        ],
+        "input_y_min": 210.0,
+        "input_y_max": 210.0,
+        "input_x_abs_max": 0.0,
+        "active_node_weight_min": 1.0
+      }
+    },
+    "phases": {
+      "walk110": {
+        "source": {
+          "left": {
+            "samples": 60,
+            "normal_forward_mean": -0.4705908473333333,
+            "normal_forward_min": -0.526540392,
+            "normal_forward_max": -0.418703023,
+            "normal_right_mean": 0.8334495317999999,
+            "normal_right_min": 0.766314547,
+            "normal_right_max": 0.866683905,
+            "normal_up_mean": -0.28384427685,
+            "normal_up_min": -0.389372537,
+            "normal_up_max": -0.201240863,
+            "normal_outward_mean": -0.8334495317999999,
+            "normal_outward_min": -0.866683905,
+            "normal_outward_max": -0.766314547
+          },
+          "right": {
+            "samples": 60,
+            "normal_forward_mean": -0.0865990214,
+            "normal_forward_min": -0.144592565,
+            "normal_forward_max": -0.029040158,
+            "normal_right_mean": -0.98174144885,
+            "normal_right_min": -0.992806072,
+            "normal_right_max": -0.970529766,
+            "normal_up_mean": -0.16379426688333334,
+            "normal_up_min": -0.220513232,
+            "normal_up_max": -0.105824027,
+            "normal_outward_mean": -0.98174144885,
+            "normal_outward_min": -0.992806072,
+            "normal_outward_max": -0.970529766
+          }
+        },
+        "body": {
+          "left": {
+            "samples": 60,
+            "normal_forward_mean": -0.45440908113333334,
+            "normal_forward_min": -0.553328609,
+            "normal_forward_max": -0.367239906,
+            "normal_right_mean": 0.8754061550000001,
+            "normal_right_min": 0.800787541,
+            "normal_right_max": 0.919033855,
+            "normal_up_mean": -0.14973186871666666,
+            "normal_up_min": -0.251921622,
+            "normal_up_max": -0.065835724,
+            "normal_outward_mean": -0.8754061550000001,
+            "normal_outward_min": -0.919033855,
+            "normal_outward_max": -0.800787541
+          },
+          "right": {
+            "samples": 60,
+            "normal_forward_mean": -0.03468154051666667,
+            "normal_forward_min": -0.092843206,
+            "normal_forward_max": 0.019504455,
+            "normal_right_mean": -0.9977672476833334,
+            "normal_right_min": -0.999978406,
+            "normal_right_max": -0.993552787,
+            "normal_up_mean": -0.03202198828333333,
+            "normal_up_min": -0.077260236,
+            "normal_up_max": 0.029144853,
+            "normal_outward_mean": -0.9977672476833334,
+            "normal_outward_min": -0.999978406,
+            "normal_outward_max": -0.993552787
+          }
+        }
+      },
+      "walk210": {
+        "source": {
+          "left": {
+            "samples": 60,
+            "normal_forward_mean": -0.4238185326166667,
+            "normal_forward_min": -0.52156884,
+            "normal_forward_max": -0.349745373,
+            "normal_right_mean": 0.8563572642333334,
+            "normal_right_min": 0.741471209,
+            "normal_right_max": 0.918943534,
+            "normal_up_mean": -0.2708724452666667,
+            "normal_up_min": -0.494807673,
+            "normal_up_max": -0.110791269,
+            "normal_outward_mean": -0.8563572642333334,
+            "normal_outward_min": -0.918943534,
+            "normal_outward_max": -0.741471209
+          },
+          "right": {
+            "samples": 60,
+            "normal_forward_mean": -0.30102188851666667,
+            "normal_forward_min": -0.379590129,
+            "normal_forward_max": -0.235496867,
+            "normal_right_mean": -0.9359170708833333,
+            "normal_right_min": -0.971366023,
+            "normal_right_max": -0.887335777,
+            "normal_up_mean": -0.13891836524999998,
+            "normal_up_min": -0.333678779,
+            "normal_up_max": -0.003184571,
+            "normal_outward_mean": -0.9359170708833333,
+            "normal_outward_min": -0.971366023,
+            "normal_outward_max": -0.887335777
+          }
+        },
+        "body": {
+          "left": {
+            "samples": 60,
+            "normal_forward_mean": -0.42780700995000004,
+            "normal_forward_min": -0.551317543,
+            "normal_forward_max": -0.272032888,
+            "normal_right_mean": 0.8799850549666667,
+            "normal_right_min": 0.753675133,
+            "normal_right_max": 0.95684043,
+            "normal_up_mean": -0.15404095868333334,
+            "normal_up_min": -0.391610086,
+            "normal_up_max": 0.018526437,
+            "normal_outward_mean": -0.8799850549666667,
+            "normal_outward_min": -0.95684043,
+            "normal_outward_max": -0.753675133
+          },
+          "right": {
+            "samples": 60,
+            "normal_forward_mean": -0.26939373443333336,
+            "normal_forward_min": -0.374237434,
+            "normal_forward_max": -0.153688389,
+            "normal_right_mean": -0.9549270573666667,
+            "normal_right_min": -0.985542195,
+            "normal_right_max": -0.907253451,
+            "normal_up_mean": -0.02296398393333333,
+            "normal_up_min": -0.21069568,
+            "normal_up_max": 0.086045885,
+            "normal_outward_mean": -0.9549270573666667,
+            "normal_outward_min": -0.985542195,
+            "normal_outward_max": -0.907253451
+          }
+        }
+      },
+      "run600": {
+        "source": {
+          "left": {
+            "samples": 30,
+            "normal_forward_mean": -0.2619513231,
+            "normal_forward_min": -0.611049603,
+            "normal_forward_max": 0.068120761,
+            "normal_right_mean": 0.9148485035333334,
+            "normal_right_min": 0.775610447,
+            "normal_right_max": 0.981614075,
+            "normal_up_mean": -0.21831554479999998,
+            "normal_up_min": -0.384628029,
+            "normal_up_max": -0.016707939,
+            "normal_outward_mean": -0.9148485035333334,
+            "normal_outward_min": -0.981614075,
+            "normal_outward_max": -0.775610447
+          },
+          "right": {
+            "samples": 30,
+            "normal_forward_mean": -0.2994296827,
+            "normal_forward_min": -0.523743323,
+            "normal_forward_max": -0.084821109,
+            "normal_right_mean": -0.8896014734000001,
+            "normal_right_min": -0.973942062,
+            "normal_right_max": -0.755436394,
+            "normal_up_mean": -0.3074939544,
+            "normal_up_min": -0.484760422,
+            "normal_up_max": -0.108554116,
+            "normal_outward_mean": -0.8896014734000001,
+            "normal_outward_min": -0.973942062,
+            "normal_outward_max": -0.755436394
+          }
+        },
+        "body": {
+          "left": {
+            "samples": 30,
+            "normal_forward_mean": -0.33962065496666666,
+            "normal_forward_min": -0.698778842,
+            "normal_forward_max": -0.021102585,
+            "normal_right_mean": 0.8950995943,
+            "normal_right_min": 0.694269419,
+            "normal_right_max": 0.984206864,
+            "normal_up_mean": -0.16214537306666665,
+            "normal_up_min": -0.41534063,
+            "normal_up_max": 0.063376063,
+            "normal_outward_mean": -0.8950995943,
+            "normal_outward_min": -0.984206864,
+            "normal_outward_max": -0.694269419
+          },
+          "right": {
+            "samples": 30,
+            "normal_forward_mean": -0.38659410136666666,
+            "normal_forward_min": -0.62341303,
+            "normal_forward_max": -0.167360338,
+            "normal_right_mean": -0.8545942659,
+            "normal_right_min": -0.967649448,
+            "normal_right_max": -0.69062233,
+            "normal_up_mean": -0.30261654839999996,
+            "normal_up_min": -0.518682245,
+            "normal_up_max": -0.157169322,
+            "normal_outward_mean": -0.8545942659,
+            "normal_outward_min": -0.967649448,
+            "normal_outward_max": -0.69062233
+          }
+        }
+      },
+      "yaw90walk210": {
+        "source": {
+          "left": {
+            "samples": 70,
+            "normal_forward_mean": -0.4230897218,
+            "normal_forward_min": -0.521568881,
+            "normal_forward_max": -0.349745409,
+            "normal_right_mean": 0.8578535093142857,
+            "normal_right_min": 0.741471209,
+            "normal_right_max": 0.918943542,
+            "normal_up_mean": -0.27001409474285715,
+            "normal_up_min": -0.494807673,
+            "normal_up_max": -0.110791075,
+            "normal_outward_mean": -0.8578535093142857,
+            "normal_outward_min": -0.918943542,
+            "normal_outward_max": -0.741471209
+          },
+          "right": {
+            "samples": 70,
+            "normal_forward_mean": -0.29806059212857144,
+            "normal_forward_min": -0.379590139,
+            "normal_forward_max": -0.235496867,
+            "normal_right_mean": -0.9347672300857143,
+            "normal_right_min": -0.971366023,
+            "normal_right_max": -0.887335768,
+            "normal_up_mean": -0.15033699511428572,
+            "normal_up_min": -0.333678779,
+            "normal_up_max": -0.003184594,
+            "normal_outward_mean": -0.9347672300857143,
+            "normal_outward_min": -0.971366023,
+            "normal_outward_max": -0.887335768
+          }
+        },
+        "body": {
+          "left": {
+            "samples": 70,
+            "normal_forward_mean": -0.42041796257142855,
+            "normal_forward_min": -0.551317543,
+            "normal_forward_max": -0.272032888,
+            "normal_right_mean": 0.8843159409,
+            "normal_right_min": 0.753675133,
+            "normal_right_max": 0.956840442,
+            "normal_up_mean": -0.15399267985714285,
+            "normal_up_min": -0.391610086,
+            "normal_up_max": 0.0185266,
+            "normal_outward_mean": -0.8843159409,
+            "normal_outward_min": -0.956840442,
+            "normal_outward_max": -0.753675133
+          },
+          "right": {
+            "samples": 70,
+            "normal_forward_mean": -0.27310774871428567,
+            "normal_forward_min": -0.37423744,
+            "normal_forward_max": -0.153688389,
+            "normal_right_mean": -0.953236578642857,
+            "normal_right_min": -0.985542195,
+            "normal_right_max": -0.907253445,
+            "normal_up_mean": -0.032866345414285715,
+            "normal_up_min": -0.21069568,
+            "normal_up_max": 0.086045885,
+            "normal_outward_mean": -0.953236578642857,
+            "normal_outward_min": -0.985542195,
+            "normal_outward_max": -0.907253445
+          }
+        }
+      }
+    },
+    "camera": {
+      "eye_z": -3,
+      "control_pitch": -20,
+      "max_native_independent_error_cm": 0.0,
+      "capture_restore_frames": [
+        91,
+        181,
+        186,
+        191,
+        251,
+        361,
+        417
+      ],
+      "capture_restore_automatic_cache_omissions": 7
+    },
+    "native_metrics": {
+      "frames": "650",
+      "assertions": "95969",
+      "failures": "0",
+      "baseline_report_mode": "0",
+      "travel_cm": "3029.415571341",
+      "walk110_samples": "60",
+      "walk210_samples": "60",
+      "run600_samples": "30",
+      "yaw90_samples": "70",
+      "moving_jab_samples": "11",
+      "active_blendspace_samples": "220",
+      "max_camera_error_cm": "0.000000000",
+      "source_left_mean_forward": "-0.414269923",
+      "source_left_mean_outward": "-0.858561857",
+      "source_right_mean_forward": "-0.241383575",
+      "source_right_mean_outward": "-0.941733007",
+      "body_left_mean_forward": "-0.420685648",
+      "body_left_mean_outward": "-0.882175347",
+      "body_right_mean_forward": "-0.222544918",
+      "body_right_mean_outward": "-0.952391122"
+    },
+    "failures": []
+  },
+  "comparison": {
+    "same_frame": {
+      "idle/body/derived_hand_ik": {
+        "samples": 120,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.2367802335085142,
+        "scale": 0.0
+      },
+      "idle/body/finger_locals": {
+        "samples": 720,
+        "translation_cm": 9.110433680978927e-09,
+        "rotation_degrees": 0.2959622166482928,
+        "scale": 0.0
+      },
+      "idle/body/other_upper_body": {
+        "samples": 300,
+        "translation_cm": 2.5019990733018685e-08,
+        "rotation_degrees": 0.13963604025586465,
+        "scale": 0.0
+      },
+      "idle/body/protected_lower_head": {
+        "samples": 630,
+        "translation_cm": 0.03755090992877503,
+        "rotation_degrees": 0.1646160572117363,
+        "scale": 0.0
+      },
+      "idle/body/wrists": {
+        "samples": 60,
+        "translation_cm": 9.165151566790449e-09,
+        "rotation_degrees": 0.12699719346038252,
+        "scale": 0.0
+      },
+      "idle/source/derived_hand_ik": {
+        "samples": 120,
+        "translation_cm": 0.2234546257215063,
+        "rotation_degrees": 0.23678012884794278,
+        "scale": 0.0
+      },
+      "idle/source/finger_locals": {
+        "samples": 900,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.29596212704006575,
+        "scale": 0.0
+      },
+      "idle/source/other_upper_body": {
+        "samples": 420,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.14998833040143092,
+        "scale": 0.0
+      },
+      "idle/source/protected_lower_head": {
+        "samples": 810,
+        "translation_cm": 0.03330754257609369,
+        "rotation_degrees": 0.13719967496547938,
+        "scale": 0.0
+      },
+      "idle/source/wrists": {
+        "samples": 60,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.127098838132953,
+        "scale": 0.0
+      },
+      "moving_jab/body/derived_hand_ik": {
+        "samples": 160,
+        "translation_cm": 0.0,
+        "rotation_degrees": 17.58404736771872,
+        "scale": 0.0
+      },
+      "moving_jab/body/finger_locals": {
+        "samples": 960,
+        "translation_cm": 3.590779861549586e-07,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "moving_jab/body/other_upper_body": {
+        "samples": 400,
+        "translation_cm": 3.162277711166399e-09,
+        "rotation_degrees": 0.037410394068376276,
+        "scale": 0.0
+      },
+      "moving_jab/body/protected_lower_head": {
+        "samples": 840,
+        "translation_cm": 4.300000000512227e-06,
+        "rotation_degrees": 1.29512032035536e-05,
+        "scale": 0.0
+      },
+      "moving_jab/body/wrists": {
+        "samples": 80,
+        "translation_cm": 1.7320509188300262e-09,
+        "rotation_degrees": 10.535401206793834,
+        "scale": 0.0
+      },
+      "moving_jab/source/derived_hand_ik": {
+        "samples": 160,
+        "translation_cm": 9.050040432586865,
+        "rotation_degrees": 17.5840474493942,
+        "scale": 0.0
+      },
+      "moving_jab/source/finger_locals": {
+        "samples": 1200,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "moving_jab/source/other_upper_body": {
+        "samples": 560,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.03741037397281122,
+        "scale": 0.0
+      },
+      "moving_jab/source/protected_lower_head": {
+        "samples": 1080,
+        "translation_cm": 3.814999999462998e-06,
+        "rotation_degrees": 1.2980155067831528e-05,
+        "scale": 0.0
+      },
+      "moving_jab/source/wrists": {
+        "samples": 80,
+        "translation_cm": 0.0,
+        "rotation_degrees": 10.535401271825041,
+        "scale": 0.0
+      },
+      "run600/body/derived_hand_ik": {
+        "samples": 240,
+        "translation_cm": 0.0,
+        "rotation_degrees": 34.38810137882816,
+        "scale": 0.0
+      },
+      "run600/body/finger_locals": {
+        "samples": 1440,
+        "translation_cm": 1.1518064078851043e-06,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "run600/body/other_upper_body": {
+        "samples": 600,
+        "translation_cm": 2.4494897754873747e-09,
+        "rotation_degrees": 0.025963742697304004,
+        "scale": 0.0
+      },
+      "run600/body/protected_lower_head": {
+        "samples": 1260,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "run600/body/wrists": {
+        "samples": 120,
+        "translation_cm": 1.41421367938565e-09,
+        "rotation_degrees": 20.00295416238949,
+        "scale": 0.0
+      },
+      "run600/source/derived_hand_ik": {
+        "samples": 240,
+        "translation_cm": 25.591597634430848,
+        "rotation_degrees": 34.38810128877242,
+        "scale": 0.0
+      },
+      "run600/source/finger_locals": {
+        "samples": 1800,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "run600/source/other_upper_body": {
+        "samples": 840,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.025963787886001205,
+        "scale": 0.0
+      },
+      "run600/source/protected_lower_head": {
+        "samples": 1620,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "run600/source/wrists": {
+        "samples": 120,
+        "translation_cm": 0.0,
+        "rotation_degrees": 20.00295427069994,
+        "scale": 0.0
+      },
+      "stop_idle/body/derived_hand_ik": {
+        "samples": 844,
+        "translation_cm": 0.0,
+        "rotation_degrees": 15.330751446084104,
+        "scale": 0.0
+      },
+      "stop_idle/body/finger_locals": {
+        "samples": 5064,
+        "translation_cm": 3.211666235273216e-07,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "stop_idle/body/other_upper_body": {
+        "samples": 2110,
+        "translation_cm": 4.690415934879863e-09,
+        "rotation_degrees": 0.05136674430430975,
+        "scale": 0.0
+      },
+      "stop_idle/body/protected_lower_head": {
+        "samples": 4431,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "stop_idle/body/wrists": {
+        "samples": 422,
+        "translation_cm": 2.2360680135608357e-09,
+        "rotation_degrees": 10.507430222904716,
+        "scale": 0.0
+      },
+      "stop_idle/source/derived_hand_ik": {
+        "samples": 844,
+        "translation_cm": 8.339603856015913,
+        "rotation_degrees": 15.330751415776417,
+        "scale": 0.0
+      },
+      "stop_idle/source/finger_locals": {
+        "samples": 6330,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "stop_idle/source/other_upper_body": {
+        "samples": 2954,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.051366653001492964,
+        "scale": 0.0
+      },
+      "stop_idle/source/protected_lower_head": {
+        "samples": 5697,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "stop_idle/source/wrists": {
+        "samples": 422,
+        "translation_cm": 0.0,
+        "rotation_degrees": 10.50743014503387,
+        "scale": 0.0
+      },
+      "stopped/body/derived_hand_ik": {
+        "samples": 120,
+        "translation_cm": 0.0,
+        "rotation_degrees": 27.54699951643305,
+        "scale": 0.0
+      },
+      "stopped/body/finger_locals": {
+        "samples": 720,
+        "translation_cm": 9.995684071049103e-07,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "stopped/body/other_upper_body": {
+        "samples": 300,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "stopped/body/protected_lower_head": {
+        "samples": 630,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "stopped/body/wrists": {
+        "samples": 60,
+        "translation_cm": 0.0,
+        "rotation_degrees": 19.9969225946633,
+        "scale": 0.0
+      },
+      "stopped/source/derived_hand_ik": {
+        "samples": 120,
+        "translation_cm": 19.50998681937124,
+        "rotation_degrees": 27.546999609216325,
+        "scale": 0.0
+      },
+      "stopped/source/finger_locals": {
+        "samples": 900,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "stopped/source/other_upper_body": {
+        "samples": 420,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "stopped/source/protected_lower_head": {
+        "samples": 810,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "stopped/source/wrists": {
+        "samples": 60,
+        "translation_cm": 0.0,
+        "rotation_degrees": 19.9969225835675,
+        "scale": 0.0
+      },
+      "walk110/body/derived_hand_ik": {
+        "samples": 360,
+        "translation_cm": 0.0,
+        "rotation_degrees": 9.109259088497977,
+        "scale": 0.0
+      },
+      "walk110/body/finger_locals": {
+        "samples": 2160,
+        "translation_cm": 1.7968027130993553e-07,
+        "rotation_degrees": 0.11128176081630632,
+        "scale": 0.0
+      },
+      "walk110/body/other_upper_body": {
+        "samples": 900,
+        "translation_cm": 2.3173261360181043e-08,
+        "rotation_degrees": 0.04350329762769009,
+        "scale": 0.0
+      },
+      "walk110/body/protected_lower_head": {
+        "samples": 1890,
+        "translation_cm": 0.029063033249757193,
+        "rotation_degrees": 0.0927622269249071,
+        "scale": 0.0
+      },
+      "walk110/body/wrists": {
+        "samples": 180,
+        "translation_cm": 6.708204197909672e-09,
+        "rotation_degrees": 5.508773792168361,
+        "scale": 0.0
+      },
+      "walk110/source/derived_hand_ik": {
+        "samples": 360,
+        "translation_cm": 4.94617920281675,
+        "rotation_degrees": 9.109259004715135,
+        "scale": 0.0
+      },
+      "walk110/source/finger_locals": {
+        "samples": 2700,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.11128180773041967,
+        "scale": 0.0
+      },
+      "walk110/source/other_upper_body": {
+        "samples": 1260,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.04350314387574681,
+        "scale": 0.0
+      },
+      "walk110/source/protected_lower_head": {
+        "samples": 2430,
+        "translation_cm": 0.02577882073340806,
+        "rotation_degrees": 0.05673157573513339,
+        "scale": 0.0
+      },
+      "walk110/source/wrists": {
+        "samples": 180,
+        "translation_cm": 0.0,
+        "rotation_degrees": 5.508773875007653,
+        "scale": 0.0
+      },
+      "walk210/body/derived_hand_ik": {
+        "samples": 360,
+        "translation_cm": 0.0,
+        "rotation_degrees": 17.584055721698768,
+        "scale": 0.0
+      },
+      "walk210/body/finger_locals": {
+        "samples": 2160,
+        "translation_cm": 3.625948151351624e-07,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "walk210/body/other_upper_body": {
+        "samples": 900,
+        "translation_cm": 4.690415934879863e-09,
+        "rotation_degrees": 0.05136674430430975,
+        "scale": 0.0
+      },
+      "walk210/body/protected_lower_head": {
+        "samples": 1890,
+        "translation_cm": 0.0,
+        "rotation_degrees": 1.3805763710937168e-05,
+        "scale": 0.0
+      },
+      "walk210/body/wrists": {
+        "samples": 180,
+        "translation_cm": 2.2360680135608357e-09,
+        "rotation_degrees": 10.535401206793834,
+        "scale": 0.0
+      },
+      "walk210/source/derived_hand_ik": {
+        "samples": 360,
+        "translation_cm": 9.442705384749186,
+        "rotation_degrees": 17.58405567855347,
+        "scale": 0.0
+      },
+      "walk210/source/finger_locals": {
+        "samples": 2700,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "walk210/source/other_upper_body": {
+        "samples": 1260,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.051366653001492964,
+        "scale": 0.0
+      },
+      "walk210/source/protected_lower_head": {
+        "samples": 2430,
+        "translation_cm": 3.8139999993802576e-06,
+        "rotation_degrees": 1.3956197840977875e-05,
+        "scale": 0.0
+      },
+      "walk210/source/wrists": {
+        "samples": 180,
+        "translation_cm": 0.0,
+        "rotation_degrees": 10.535401271825041,
+        "scale": 0.0
+      },
+      "yaw90walk210/body/derived_hand_ik": {
+        "samples": 400,
+        "translation_cm": 0.0,
+        "rotation_degrees": 17.58404736771872,
+        "scale": 0.0
+      },
+      "yaw90walk210/body/finger_locals": {
+        "samples": 2400,
+        "translation_cm": 3.625948151351624e-07,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "yaw90walk210/body/other_upper_body": {
+        "samples": 1000,
+        "translation_cm": 4.690415934879863e-09,
+        "rotation_degrees": 0.05136674430430975,
+        "scale": 0.0
+      },
+      "yaw90walk210/body/protected_lower_head": {
+        "samples": 2100,
+        "translation_cm": 4.3010000041476815e-06,
+        "rotation_degrees": 2.5914393715279555e-05,
+        "scale": 0.0
+      },
+      "yaw90walk210/body/wrists": {
+        "samples": 200,
+        "translation_cm": 2.2360680135608357e-09,
+        "rotation_degrees": 10.535401759970767,
+        "scale": 0.0
+      },
+      "yaw90walk210/source/derived_hand_ik": {
+        "samples": 400,
+        "translation_cm": 9.442705383778089,
+        "rotation_degrees": 17.5840474493942,
+        "scale": 0.0
+      },
+      "yaw90walk210/source/finger_locals": {
+        "samples": 3000,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "yaw90walk210/source/other_upper_body": {
+        "samples": 1400,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.051366653001492964,
+        "scale": 0.0
+      },
+      "yaw90walk210/source/protected_lower_head": {
+        "samples": 2700,
+        "translation_cm": 3.815000001239355e-06,
+        "rotation_degrees": 2.6312298948010096e-05,
+        "scale": 0.0
+      },
+      "yaw90walk210/source/wrists": {
+        "samples": 200,
+        "translation_cm": 0.0,
+        "rotation_degrees": 10.535401830308283,
+        "scale": 0.0
+      }
+    },
+    "stable_gait_same_frame": {
+      "run600/body/derived_hand_ik": {
+        "samples": 120,
+        "translation_cm": 0.0,
+        "rotation_degrees": 34.38810137882816,
+        "scale": 0.0
+      },
+      "run600/body/finger_locals": {
+        "samples": 720,
+        "translation_cm": 1.146745830626508e-06,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "run600/body/other_upper_body": {
+        "samples": 300,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "run600/body/protected_lower_head": {
+        "samples": 630,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "run600/body/wrists": {
+        "samples": 60,
+        "translation_cm": 0.0,
+        "rotation_degrees": 20.002366099785892,
+        "scale": 0.0
+      },
+      "run600/source/derived_hand_ik": {
+        "samples": 120,
+        "translation_cm": 22.646566705637927,
+        "rotation_degrees": 34.38810128877242,
+        "scale": 0.0
+      },
+      "run600/source/finger_locals": {
+        "samples": 900,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "run600/source/other_upper_body": {
+        "samples": 420,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "run600/source/protected_lower_head": {
+        "samples": 810,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "run600/source/wrists": {
+        "samples": 60,
+        "translation_cm": 0.0,
+        "rotation_degrees": 20.00236625881592,
+        "scale": 0.0
+      },
+      "walk110/body/derived_hand_ik": {
+        "samples": 240,
+        "translation_cm": 0.0,
+        "rotation_degrees": 9.109259088497977,
+        "scale": 0.0
+      },
+      "walk110/body/finger_locals": {
+        "samples": 1440,
+        "translation_cm": 1.7968027130993553e-07,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "walk110/body/other_upper_body": {
+        "samples": 600,
+        "translation_cm": 2.2360680135608357e-09,
+        "rotation_degrees": 0.026905316364245372,
+        "scale": 0.0
+      },
+      "walk110/body/protected_lower_head": {
+        "samples": 1260,
+        "translation_cm": 4.3010000041476815e-06,
+        "rotation_degrees": 1.350720572789997e-05,
+        "scale": 0.0
+      },
+      "walk110/body/wrists": {
+        "samples": 120,
+        "translation_cm": 1.000000082740371e-09,
+        "rotation_degrees": 5.508773792168361,
+        "scale": 0.0
+      },
+      "walk110/source/derived_hand_ik": {
+        "samples": 240,
+        "translation_cm": 4.94617920281675,
+        "rotation_degrees": 9.109259004715135,
+        "scale": 0.0
+      },
+      "walk110/source/finger_locals": {
+        "samples": 1800,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "walk110/source/other_upper_body": {
+        "samples": 840,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.026905270852847534,
+        "scale": 0.0
+      },
+      "walk110/source/protected_lower_head": {
+        "samples": 1620,
+        "translation_cm": 3.814999999462998e-06,
+        "rotation_degrees": 1.3770072322348004e-05,
+        "scale": 0.0
+      },
+      "walk110/source/wrists": {
+        "samples": 120,
+        "translation_cm": 0.0,
+        "rotation_degrees": 5.508773875007653,
+        "scale": 0.0
+      },
+      "walk210/body/derived_hand_ik": {
+        "samples": 240,
+        "translation_cm": 0.0,
+        "rotation_degrees": 17.584055721698768,
+        "scale": 0.0
+      },
+      "walk210/body/finger_locals": {
+        "samples": 1440,
+        "translation_cm": 3.625948151351624e-07,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "walk210/body/other_upper_body": {
+        "samples": 600,
+        "translation_cm": 4.690415934879863e-09,
+        "rotation_degrees": 0.05136674430430975,
+        "scale": 0.0
+      },
+      "walk210/body/protected_lower_head": {
+        "samples": 1260,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "walk210/body/wrists": {
+        "samples": 120,
+        "translation_cm": 2.2360680135608357e-09,
+        "rotation_degrees": 10.535401206793834,
+        "scale": 0.0
+      },
+      "walk210/source/derived_hand_ik": {
+        "samples": 240,
+        "translation_cm": 9.442705384749186,
+        "rotation_degrees": 17.58405567855347,
+        "scale": 0.0
+      },
+      "walk210/source/finger_locals": {
+        "samples": 1800,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "walk210/source/other_upper_body": {
+        "samples": 840,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.051366653001492964,
+        "scale": 0.0
+      },
+      "walk210/source/protected_lower_head": {
+        "samples": 1620,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "walk210/source/wrists": {
+        "samples": 120,
+        "translation_cm": 0.0,
+        "rotation_degrees": 10.535401271825041,
+        "scale": 0.0
+      },
+      "yaw90walk210/body/derived_hand_ik": {
+        "samples": 280,
+        "translation_cm": 0.0,
+        "rotation_degrees": 17.58404736771872,
+        "scale": 0.0
+      },
+      "yaw90walk210/body/finger_locals": {
+        "samples": 1680,
+        "translation_cm": 3.625948151351624e-07,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "yaw90walk210/body/other_upper_body": {
+        "samples": 700,
+        "translation_cm": 4.690415934879863e-09,
+        "rotation_degrees": 0.05136674430430975,
+        "scale": 0.0
+      },
+      "yaw90walk210/body/protected_lower_head": {
+        "samples": 1470,
+        "translation_cm": 4.3010000041476815e-06,
+        "rotation_degrees": 2.5914393715279555e-05,
+        "scale": 0.0
+      },
+      "yaw90walk210/body/wrists": {
+        "samples": 140,
+        "translation_cm": 2.2360680135608357e-09,
+        "rotation_degrees": 10.535401759970767,
+        "scale": 0.0
+      },
+      "yaw90walk210/source/derived_hand_ik": {
+        "samples": 280,
+        "translation_cm": 9.442705383778089,
+        "rotation_degrees": 17.5840474493942,
+        "scale": 0.0
+      },
+      "yaw90walk210/source/finger_locals": {
+        "samples": 2100,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.0,
+        "scale": 0.0
+      },
+      "yaw90walk210/source/other_upper_body": {
+        "samples": 980,
+        "translation_cm": 0.0,
+        "rotation_degrees": 0.051366653001492964,
+        "scale": 0.0
+      },
+      "yaw90walk210/source/protected_lower_head": {
+        "samples": 1890,
+        "translation_cm": 3.815000001239355e-06,
+        "rotation_degrees": 2.6312298948010096e-05,
+        "scale": 0.0
+      },
+      "yaw90walk210/source/wrists": {
+        "samples": 140,
+        "translation_cm": 0.0,
+        "rotation_degrees": 10.535401830308283,
+        "scale": 0.0
+      }
+    },
+    "normalized_phase_alignment": {
+      "walk110": {
+        "pairs": 83,
+        "max_normalized_phase_error": 0.0,
+        "exact_phase_pairs": 83,
+        "max_frame_shift": 0,
+        "protected": {
+          "source": {
+            "translation_cm": 3.814999999462998e-06,
+            "rotation_degrees": 1.3770072322348004e-05,
+            "scale": 0.0
+          },
+          "body": {
+            "translation_cm": 4.3010000041476815e-06,
+            "rotation_degrees": 1.350720572789997e-05,
+            "scale": 0.0
+          }
+        }
+      },
+      "walk210": {
+        "pairs": 90,
+        "max_normalized_phase_error": 0.0,
+        "exact_phase_pairs": 90,
+        "max_frame_shift": 0,
+        "protected": {
+          "source": {
+            "translation_cm": 3.8139999993802576e-06,
+            "rotation_degrees": 1.3956197840977875e-05,
+            "scale": 0.0
+          },
+          "body": {
+            "translation_cm": 0.0,
+            "rotation_degrees": 1.3805763710937168e-05,
+            "scale": 0.0
+          }
+        }
+      },
+      "run600": {
+        "pairs": 60,
+        "max_normalized_phase_error": 0.0,
+        "exact_phase_pairs": 60,
+        "max_frame_shift": 0,
+        "protected": {
+          "source": {
+            "translation_cm": 0.0,
+            "rotation_degrees": 0.0,
+            "scale": 0.0
+          },
+          "body": {
+            "translation_cm": 0.0,
+            "rotation_degrees": 0.0,
+            "scale": 0.0
+          }
+        }
+      },
+      "yaw90walk210": {
+        "pairs": 93,
+        "max_normalized_phase_error": 0.0,
+        "exact_phase_pairs": 93,
+        "max_frame_shift": 0,
+        "protected": {
+          "source": {
+            "translation_cm": 3.815000001239355e-06,
+            "rotation_degrees": 2.6312298948010096e-05,
+            "scale": 0.0
+          },
+          "body": {
+            "translation_cm": 4.3010000041476815e-06,
+            "rotation_degrees": 2.5914393715279555e-05,
+            "scale": 0.0
+          }
+        }
+      }
+    },
+    "direction_changes": {
+      "walk110": {
+        "source": {
+          "left": {
+            "mean_forward_before": -0.39303146333333333,
+            "mean_forward_after": -0.4705908473333333,
+            "mean_forward_delta": -0.07755938399999995,
+            "mean_outward_before": -0.8796997697333333,
+            "mean_outward_after": -0.8334495317999999,
+            "mean_outward_delta": 0.04625023793333338,
+            "reference_normal_angular_error_before_degrees": 14.096080658460119,
+            "reference_normal_angular_error_after_degrees": 9.027328554341024,
+            "reference_normal_angular_error_delta_degrees": -5.0687521041190955
+          },
+          "right": {
+            "mean_forward_before": -0.025482609833333333,
+            "mean_forward_after": -0.0865990214,
+            "mean_forward_delta": -0.06111641156666667,
+            "mean_outward_before": -0.9861852543833333,
+            "mean_outward_after": -0.98174144885,
+            "mean_outward_delta": 0.004443805533333234,
+            "reference_normal_angular_error_before_degrees": 33.452918848590514,
+            "reference_normal_angular_error_after_degrees": 30.22827213920064,
+            "reference_normal_angular_error_delta_degrees": -3.224646709389873
+          }
+        },
+        "body": {
+          "left": {
+            "mean_forward_before": -0.37419618656666664,
+            "mean_forward_after": -0.45440908113333334,
+            "mean_forward_delta": -0.08021289456666669,
+            "mean_outward_before": -0.9158696879333333,
+            "mean_outward_after": -0.8754061550000001,
+            "mean_outward_delta": 0.04046353293333327,
+            "reference_normal_angular_error_before_degrees": 17.81644760572615,
+            "reference_normal_angular_error_after_degrees": 12.632029121949236,
+            "reference_normal_angular_error_delta_degrees": -5.1844184837769145
+          },
+          "right": {
+            "mean_forward_before": 0.02656722573333333,
+            "mean_forward_after": -0.03468154051666667,
+            "mean_forward_delta": -0.06124876625,
+            "mean_outward_before": -0.9980945693333333,
+            "mean_outward_after": -0.9977672476833334,
+            "mean_outward_delta": 0.0003273216499999343,
+            "reference_normal_angular_error_before_degrees": 40.00708923142725,
+            "reference_normal_angular_error_after_degrees": 36.97397173916419,
+            "reference_normal_angular_error_delta_degrees": -3.0331174922630595
+          }
+        }
+      },
+      "walk210": {
+        "source": {
+          "left": {
+            "mean_forward_before": -0.28184262305,
+            "mean_forward_after": -0.4238185326166667,
+            "mean_forward_delta": -0.14197590956666667,
+            "mean_outward_before": -0.92679444955,
+            "mean_outward_after": -0.8563572642333334,
+            "mean_outward_delta": 0.07043718531666665,
+            "reference_normal_angular_error_before_degrees": 21.18578670042995,
+            "reference_normal_angular_error_after_degrees": 11.934736261620776,
+            "reference_normal_angular_error_delta_degrees": -9.251050438809175
+          },
+          "right": {
+            "mean_forward_before": -0.19292073236666668,
+            "mean_forward_after": -0.30102188851666667,
+            "mean_forward_delta": -0.10810115614999999,
+            "mean_outward_before": -0.9682186172,
+            "mean_outward_after": -0.9359170708833333,
+            "mean_outward_delta": 0.03230154631666671,
+            "reference_normal_angular_error_before_degrees": 26.010954302316577,
+            "reference_normal_angular_error_after_degrees": 21.024832501492988,
+            "reference_normal_angular_error_delta_degrees": -4.9861218008235895
+          }
+        },
+        "body": {
+          "left": {
+            "mean_forward_before": -0.2836660594666667,
+            "mean_forward_after": -0.42780700995000004,
+            "mean_forward_delta": -0.14414095048333336,
+            "mean_outward_before": -0.9427492089666667,
+            "mean_outward_after": -0.8799850549666667,
+            "mean_outward_delta": 0.06276415400000002,
+            "reference_normal_angular_error_before_degrees": 23.239959648094224,
+            "reference_normal_angular_error_after_degrees": 13.789731539953692,
+            "reference_normal_angular_error_delta_degrees": -9.450228108140532
+          },
+          "right": {
+            "mean_forward_before": -0.16048912645,
+            "mean_forward_after": -0.26939373443333336,
+            "mean_forward_delta": -0.10890460798333337,
+            "mean_outward_before": -0.9819971666333333,
+            "mean_outward_after": -0.9549270573666667,
+            "mean_outward_delta": 0.02707010926666653,
+            "reference_normal_angular_error_before_degrees": 31.954044434469516,
+            "reference_normal_angular_error_after_degrees": 27.50195730255767,
+            "reference_normal_angular_error_delta_degrees": -4.452087131911846
+          }
+        }
+      },
+      "run600": {
+        "source": {
+          "left": {
+            "mean_forward_before": -0.18559039496666668,
+            "mean_forward_after": -0.2619513231,
+            "mean_forward_delta": -0.07636092813333334,
+            "mean_outward_before": -0.9379943488333333,
+            "mean_outward_after": -0.9148485035333334,
+            "mean_outward_delta": 0.023145845299999968,
+            "reference_normal_angular_error_before_degrees": 30.405631434521037,
+            "reference_normal_angular_error_after_degrees": 22.10137826973714,
+            "reference_normal_angular_error_delta_degrees": -8.304253164783898
+          },
+          "right": {
+            "mean_forward_before": -0.3536801314,
+            "mean_forward_after": -0.2994296827,
+            "mean_forward_delta": 0.05425044870000001,
+            "mean_outward_before": -0.9005780407666666,
+            "mean_outward_after": -0.8896014734000001,
+            "mean_outward_delta": 0.010976567366666523,
+            "reference_normal_angular_error_before_degrees": 23.357135813508634,
+            "reference_normal_angular_error_after_degrees": 14.577666907772073,
+            "reference_normal_angular_error_delta_degrees": -8.779468905736561
+          }
+        },
+        "body": {
+          "left": {
+            "mean_forward_before": -0.2623562642333333,
+            "mean_forward_after": -0.33962065496666666,
+            "mean_forward_delta": -0.07726439073333335,
+            "mean_outward_before": -0.9119331896333333,
+            "mean_outward_after": -0.8950995943,
+            "mean_outward_delta": 0.016833595333333284,
+            "reference_normal_angular_error_before_degrees": 28.14861545278771,
+            "reference_normal_angular_error_after_degrees": 18.24293925953118,
+            "reference_normal_angular_error_delta_degrees": -9.905676193256529
+          },
+          "right": {
+            "mean_forward_before": -0.43753380810000003,
+            "mean_forward_after": -0.38659410136666666,
+            "mean_forward_delta": 0.05093970673333337,
+            "mean_outward_before": -0.8575367698333333,
+            "mean_outward_after": -0.8545942659,
+            "mean_outward_delta": 0.0029425039333332847,
+            "reference_normal_angular_error_before_degrees": 21.45522835739372,
+            "reference_normal_angular_error_after_degrees": 9.798417133095246,
+            "reference_normal_angular_error_delta_degrees": -11.656811224298476
+          }
+        }
+      },
+      "yaw90walk210": {
+        "source": {
+          "left": {
+            "mean_forward_before": -0.27777232114285716,
+            "mean_forward_after": -0.4230897218,
+            "mean_forward_delta": -0.14531740065714283,
+            "mean_outward_before": -0.9263389674999999,
+            "mean_outward_after": -0.8578535093142857,
+            "mean_outward_delta": 0.06848545818571417,
+            "reference_normal_angular_error_before_degrees": 21.341097712069843,
+            "reference_normal_angular_error_after_degrees": 12.007387749385101,
+            "reference_normal_angular_error_delta_degrees": -9.333709962684742
+          },
+          "right": {
+            "mean_forward_before": -0.19079485908571428,
+            "mean_forward_after": -0.29806059212857144,
+            "mean_forward_delta": -0.10726573304285716,
+            "mean_outward_before": -0.9677011511857143,
+            "mean_outward_after": -0.9347672300857143,
+            "mean_outward_delta": 0.03293392110000004,
+            "reference_normal_angular_error_before_degrees": 25.922885226819606,
+            "reference_normal_angular_error_after_degrees": 20.643250891363962,
+            "reference_normal_angular_error_delta_degrees": -5.279634335455643
+          }
+        },
+        "body": {
+          "left": {
+            "mean_forward_before": -0.27303517717142856,
+            "mean_forward_after": -0.42041796257142855,
+            "mean_forward_delta": -0.1473827854,
+            "mean_outward_before": -0.9451235534999999,
+            "mean_outward_after": -0.8843159409,
+            "mean_outward_delta": 0.060807612599999894,
+            "reference_normal_angular_error_before_degrees": 23.610533693150625,
+            "reference_normal_angular_error_after_degrees": 14.23663230517796,
+            "reference_normal_angular_error_delta_degrees": -9.373901387972666
+          },
+          "right": {
+            "mean_forward_before": -0.16503259378571428,
+            "mean_forward_after": -0.27310774871428567,
+            "mean_forward_delta": -0.10807515492857139,
+            "mean_outward_before": -0.9809127137714286,
+            "mean_outward_after": -0.953236578642857,
+            "mean_outward_delta": 0.02767613512857159,
+            "reference_normal_angular_error_before_degrees": 31.622512269565323,
+            "reference_normal_angular_error_after_degrees": 26.905041586276845,
+            "reference_normal_angular_error_delta_degrees": -4.717470683288479
+          }
+        }
+      }
+    },
+    "stable_same_frame_by_bone": {
+      "source/middle_metacarpal_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.10604906764138812,
+          "rotation_degrees": 15.003666553791426,
+          "scale": 0.0
+        }
+      },
+      "source/middle_02_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.5244568157652678,
+          "rotation_degrees": 15.003666626192611,
+          "scale": 0.0
+        }
+      },
+      "source/index_metacarpal_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.5550120066420368,
+          "rotation_degrees": 15.003666600384946,
+          "scale": 0.0
+        }
+      },
+      "source/ik_foot_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 3.814999999462998e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.81500012736069e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/upperarm_l": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.8139999105624156e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/spine_05": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.814000137936091e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/lowerarm_r": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.007374929809621727,
+          "rotation_degrees": 0.051366698182759955,
+          "scale": 0.0
+        }
+      },
+      "source/calf_twist_01_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.814999899987015e-06,
+          "rotation_degrees": 7.653630721061348e-06,
+          "scale": 0.0
+        }
+      },
+      "source/clavicle_r": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.051366653001492964,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.81500012736069e-06,
+          "rotation_degrees": 0.05136672074380446,
+          "scale": 0.0
+        }
+      },
+      "source/pinky_01_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.578860376337981,
+          "rotation_degrees": 20.002366200112185,
+          "scale": 0.0
+        }
+      },
+      "source/pelvis": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 3.814999999462998e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.81500012736069e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/middle_01_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.061308477623481024,
+          "rotation_degrees": 20.00236622045746,
+          "scale": 0.0
+        }
+      },
+      "source/upperarm_twist_01_l": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.81500012736069e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/pinky_03_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 2.65341034678762,
+          "rotation_degrees": 20.00236628212588,
+          "scale": 0.0
+        }
+      },
+      "source/thigh_twist_02_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 6.932857102654129e-06,
+          "rotation_degrees": 1.126599575395235e-05,
+          "scale": 0.0
+        }
+      },
+      "source/lowerarm_twist_02_r": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.007913916898264916,
+          "rotation_degrees": 0.05136674222866339,
+          "scale": 0.0
+        }
+      },
+      "source/middle_01_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.09400317652467766,
+          "rotation_degrees": 15.003666556190817,
+          "scale": 0.0
+        }
+      },
+      "source/index_03_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.3609581999043696,
+          "rotation_degrees": 20.002366195941892,
+          "scale": 0.0
+        }
+      },
+      "source/lowerarm_twist_01_r": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.012788152844932158,
+          "rotation_degrees": 0.05136674222866339,
+          "scale": 0.0
+        }
+      },
+      "source/pinky_02_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 2.272947760778045,
+          "rotation_degrees": 20.002366147669175,
+          "scale": 0.0
+        }
+      },
+      "source/middle_03_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.058114938323141,
+          "rotation_degrees": 15.003666601165188,
+          "scale": 0.0
+        }
+      },
+      "source/index_metacarpal_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.7383342336055491,
+          "rotation_degrees": 20.002366308330473,
+          "scale": 0.0
+        }
+      },
+      "source/calf_twist_02_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 6.195818339705551e-06,
+          "rotation_degrees": 1.503814691002321e-05,
+          "scale": 0.0
+        }
+      },
+      "source/middle_metacarpal_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.14094186155173213,
+          "rotation_degrees": 20.002366297523018,
+          "scale": 0.0
+        }
+      },
+      "source/lowerarm_twist_02_l": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.81500012736069e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/ik_hand_root": {
+        "category": "derived_hand_ik",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/ik_hand_r": {
+        "category": "derived_hand_ik",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 20.003762772056525,
+          "scale": 0.0
+        }
+      },
+      "source/index_01_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.6803269635258323,
+          "rotation_degrees": 15.003666579948693,
+          "scale": 0.0
+        }
+      },
+      "source/ball_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.814999899987015e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/calf_twist_01_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.814000137936091e-06,
+          "rotation_degrees": 1.503814691002321e-05,
+          "scale": 0.0
+        }
+      },
+      "source/spine_03": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.81500012736069e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/ik_foot_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 3.815000001239355e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.814999899987015e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/ik_hand_gun": {
+        "category": "derived_hand_ik",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 20.003762772056522,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 20.003762772056525,
+          "scale": 0.0
+        }
+      },
+      "source/foot_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 1.5066500501750556e-05,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.814999899987015e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/spine_04": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.814999899987015e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/upperarm_twist_02_r": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.007021145370579029,
+          "rotation_degrees": 0.05136675088170392,
+          "scale": 0.0
+        }
+      },
+      "source/index_02_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.607255156059977,
+          "rotation_degrees": 15.003666527002864,
+          "scale": 0.0
+        }
+      },
+      "source/pinky_03_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.964780189148217,
+          "rotation_degrees": 15.003666604004199,
+          "scale": 0.0
+        }
+      },
+      "source/thigh_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 7.131901959558221e-06,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.81500012736069e-06,
+          "rotation_degrees": 7.230967787381413e-06,
+          "scale": 0.0
+        }
+      },
+      "source/spine_02": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.81500012736069e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/thigh_twist_01_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.895920051033448e-06,
+          "rotation_degrees": 1.126599575395235e-05,
+          "scale": 0.0
+        }
+      },
+      "source/pinky_02_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.6820883354453648,
+          "rotation_degrees": 15.003666630301584,
+          "scale": 0.0
+        }
+      },
+      "source/index_03_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.8862305977894294,
+          "rotation_degrees": 15.003666541482765,
+          "scale": 0.0
+        }
+      },
+      "source/pinky_metacarpal_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.6167572620614137,
+          "rotation_degrees": 15.003666564965297,
+          "scale": 0.0
+        }
+      },
+      "source/spine_01": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.81500012736069e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/thumb_01_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.987316789786374,
+          "rotation_degrees": 20.002366179272407,
+          "scale": 0.0
+        }
+      },
+      "source/ball_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.814999899987015e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/middle_02_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.9636698119738719,
+          "rotation_degrees": 20.00236620456231,
+          "scale": 0.0
+        }
+      },
+      "source/middle_03_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.7237727014135291,
+          "rotation_degrees": 20.00236620114295,
+          "scale": 0.0
+        }
+      },
+      "source/head": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.814999899987015e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/hand_l": {
+        "category": "wrists",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 15.003666569728216,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.81500012736069e-06,
+          "rotation_degrees": 15.003666589962574,
+          "scale": 0.0
+        }
+      },
+      "source/thigh_twist_01_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.814000137936091e-06,
+          "rotation_degrees": 7.2098240079565276e-06,
+          "scale": 0.0
+        }
+      },
+      "source/thumb_03_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.7347758803237205,
+          "rotation_degrees": 15.003666614151971,
+          "scale": 0.0
+        }
+      },
+      "source/foot_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 7.588773908796231e-06,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.8139999105624156e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/ik_foot_root": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/index_02_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.9764209840993985,
+          "rotation_degrees": 20.00236619386661,
+          "scale": 0.0
+        }
+      },
+      "source/thigh_twist_02_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.932889760076357e-06,
+          "rotation_degrees": 7.2098240079565276e-06,
+          "scale": 0.0
+        }
+      },
+      "source/thumb_03_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 2.4070584584752703,
+          "rotation_degrees": 20.002366180061543,
+          "scale": 0.0
+        }
+      },
+      "source/thumb_01_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.7422124226753515,
+          "rotation_degrees": 15.003666538653121,
+          "scale": 0.0
+        }
+      },
+      "source/calf_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 2.6312298948010096e-05,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 9.701145658996355e-06,
+          "rotation_degrees": 1.5071292494119237e-05,
+          "scale": 0.0
+        }
+      },
+      "source/calf_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 1.3770072322348004e-05,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 5.12236424066651e-06,
+          "rotation_degrees": 7.684424368644454e-06,
+          "scale": 0.0
+        }
+      },
+      "source/upperarm_twist_01_r": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.008458390329458254,
+          "rotation_degrees": 0.05136675912472761,
+          "scale": 0.0
+        }
+      },
+      "source/calf_twist_02_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.81500012736069e-06,
+          "rotation_degrees": 7.653630721061348e-06,
+          "scale": 0.0
+        }
+      },
+      "source/thigh_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 1.1321945986025542e-05,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.81500012736069e-06,
+          "rotation_degrees": 1.1266134328390044e-05,
+          "scale": 0.0
+        }
+      },
+      "source/upperarm_twist_02_l": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.814999899987015e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/index_01_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.9051503811506855,
+          "rotation_degrees": 20.002366320401716,
+          "scale": 0.0
+        }
+      },
+      "source/pinky_metacarpal_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.8205274052109394,
+          "rotation_degrees": 20.002366184813198,
+          "scale": 0.0
+        }
+      },
+      "source/hand_r": {
+        "category": "wrists",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 20.00236625881592,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.01782750862863473,
+          "rotation_degrees": 20.002366241184525,
+          "scale": 0.0
+        }
+      },
+      "source/lowerarm_l": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.81500012736069e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/pinky_01_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.1869027775136196,
+          "rotation_degrees": 15.00366656413805,
+          "scale": 0.0
+        }
+      },
+      "source/ik_hand_l": {
+        "category": "derived_hand_ik",
+        "samples": 220,
+        "local": {
+          "translation_cm": 22.646566705637927,
+          "rotation_degrees": 34.38810128877242,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 2.4356945994330443,
+          "rotation_degrees": 15.003233917594281,
+          "scale": 0.0
+        }
+      },
+      "source/thumb_02_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.3709745917452676,
+          "rotation_degrees": 15.003666544040886,
+          "scale": 0.0
+        }
+      },
+      "source/upperarm_r": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.011006269531389872,
+          "rotation_degrees": 0.05136675088170392,
+          "scale": 0.0
+        }
+      },
+      "source/thumb_02_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.8996447403904009,
+          "rotation_degrees": 20.00236616937462,
+          "scale": 0.0
+        }
+      },
+      "source/clavicle_l": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.814999899987015e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/root": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "source/lowerarm_twist_01_l": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.81500012736069e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/thumb_01_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 3.726929030468034e-08,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.9929817324123558,
+          "rotation_degrees": 15.003666510906509,
+          "scale": 0.0
+        }
+      },
+      "body/ik_hand_root": {
+        "category": "derived_hand_ik",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/ik_hand_r": {
+        "category": "derived_hand_ik",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 20.00376284017072,
+          "scale": 0.0
+        }
+      },
+      "body/middle_02_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 7.032823051460163e-07,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.7691122735482157,
+          "rotation_degrees": 20.002366181171716,
+          "scale": 0.0
+        }
+      },
+      "body/middle_02_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 2.592161256619644e-07,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.2701632704361587,
+          "rotation_degrees": 15.003666581529094,
+          "scale": 0.0
+        }
+      },
+      "body/calf_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 2.5914393715279555e-05,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.0318651319344963e-05,
+          "rotation_degrees": 1.4616144156455728e-05,
+          "scale": 0.0
+        }
+      },
+      "body/ik_foot_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/calf_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 1.350720572789997e-05,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 5.398446623347558e-06,
+          "rotation_degrees": 7.453712069040223e-06,
+          "scale": 0.0
+        }
+      },
+      "body/upperarm_l": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.301000217310502e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/index_01_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 5.163332255620077e-08,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.4008282618818901,
+          "rotation_degrees": 15.003666480564739,
+          "scale": 0.0
+        }
+      },
+      "body/upperarm_twist_01_r": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.008907835614824746,
+          "rotation_degrees": 0.05136671240611524,
+          "scale": 0.0
+        }
+      },
+      "body/ball_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300999989936827e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/calf_twist_01_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 5.283079090177059e-06,
+          "rotation_degrees": 1.455536139042602e-05,
+          "scale": 0.0
+        }
+      },
+      "body/thigh_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 1.1307448069935705e-05,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300999989936827e-06,
+          "rotation_degrees": 1.1391345473782299e-05,
+          "scale": 0.0
+        }
+      },
+      "body/spine_03": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300999989936827e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/lowerarm_r": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 4.690415934879863e-09,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.012245944332298966,
+          "rotation_degrees": 0.05136666686901062,
+          "scale": 0.0
+        }
+      },
+      "body/middle_03_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 5.8549124412956914e-08,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 2.487370417153759,
+          "rotation_degrees": 20.002366268179774,
+          "scale": 0.0
+        }
+      },
+      "body/hand_l": {
+        "category": "wrists",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 15.003666513511618,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300999989936827e-06,
+          "rotation_degrees": 15.003666614145104,
+          "scale": 0.0
+        }
+      },
+      "body/index_01_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 1.0027985842477856e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.5334139928479795,
+          "rotation_degrees": 20.00236622144137,
+          "scale": 0.0
+        }
+      },
+      "body/clavicle_r": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.05136674430430975,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300999989936827e-06,
+          "rotation_degrees": 0.05136665752594161,
+          "scale": 0.0
+        }
+      },
+      "body/head": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300999989936827e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/calf_twist_01_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300999989936827e-06,
+          "rotation_degrees": 7.390042996910596e-06,
+          "scale": 0.0
+        }
+      },
+      "body/ik_foot_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/foot_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 1.4553050772393972e-05,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300999989936827e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/pinky_01_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 1.146745830626508e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 2.051931284392131,
+          "rotation_degrees": 20.00236614088767,
+          "scale": 0.0
+        }
+      },
+      "body/thigh_twist_01_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300000000512227e-06,
+          "rotation_degrees": 7.227293635127784e-06,
+          "scale": 0.0
+        }
+      },
+      "body/ik_hand_gun": {
+        "category": "derived_hand_ik",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 20.00376284017072,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 20.00376284017072,
+          "scale": 0.0
+        }
+      },
+      "body/pelvis": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 4.3010000041476815e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300000000512227e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/hand_r": {
+        "category": "wrists",
+        "samples": 220,
+        "local": {
+          "translation_cm": 2.2360680135608357e-09,
+          "rotation_degrees": 20.002366099785892,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.017399990528350815,
+          "rotation_degrees": 20.002366179375418,
+          "scale": 0.0
+        }
+      },
+      "body/middle_01_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 9.631988372108522e-07,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.8343114202954923,
+          "rotation_degrees": 20.002366217518706,
+          "scale": 0.0
+        }
+      },
+      "body/lowerarm_l": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300999989936827e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/thumb_03_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 6.417164499285522e-08,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.5437803576894615,
+          "rotation_degrees": 15.003666525770635,
+          "scale": 0.0
+        }
+      },
+      "body/index_02_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 9.714422237405905e-08,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.6209445134780611,
+          "rotation_degrees": 15.003666615658751,
+          "scale": 0.0
+        }
+      },
+      "body/upperarm_twist_01_l": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.301000217310502e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/pinky_03_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 2.3366642893050624e-08,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.520643243167906,
+          "rotation_degrees": 20.002366146061757,
+          "scale": 0.0
+        }
+      },
+      "body/pinky_01_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 6.783067175257853e-08,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.5425005655088,
+          "rotation_degrees": 15.003666552462333,
+          "scale": 0.0
+        }
+      },
+      "body/ik_hand_l": {
+        "category": "derived_hand_ik",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 34.38810137882816,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 33.249958428117786,
+          "rotation_degrees": 15.003233884174891,
+          "scale": 0.0
+        }
+      },
+      "body/foot_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 7.486223772963316e-06,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300000000512227e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/ik_foot_root": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/pinky_03_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 5.1701063844776985e-08,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 2.598314616141944,
+          "rotation_degrees": 15.00366663005984,
+          "scale": 0.0
+        }
+      },
+      "body/thigh_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 7.192278282426938e-06,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300999989936827e-06,
+          "rotation_degrees": 7.227293635127784e-06,
+          "scale": 0.0
+        }
+      },
+      "body/thumb_02_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 4.7339201487795454e-08,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.1979654999809641,
+          "rotation_degrees": 15.003666574609056,
+          "scale": 0.0
+        }
+      },
+      "body/upperarm_r": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 1.4142136303202612e-09,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.008907835614824746,
+          "rotation_degrees": 0.051366631981855135,
+          "scale": 0.0
+        }
+      },
+      "body/spine_02": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300999989936827e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/middle_01_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 5.2924474595471405e-08,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.6272025436674288,
+          "rotation_degrees": 15.003666549842386,
+          "scale": 0.0
+        }
+      },
+      "body/index_02_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 6.67686303650964e-07,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.8832710027752007,
+          "rotation_degrees": 20.002366248893974,
+          "scale": 0.0
+        }
+      },
+      "body/index_03_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 1.6756192900562478e-07,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.6539212923289286,
+          "rotation_degrees": 20.002366236666333,
+          "scale": 0.0
+        }
+      },
+      "body/thumb_02_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 5.231319145663635e-07,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.641647641402442,
+          "rotation_degrees": 20.002366226609364,
+          "scale": 0.0
+        }
+      },
+      "body/ball_l": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300000000512227e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/lowerarm_twist_01_r": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 1.414213620507184e-09,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.013347525565526087,
+          "rotation_degrees": 0.05136675953460354,
+          "scale": 0.0
+        }
+      },
+      "body/thigh_twist_01_r": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 6.0823978158562e-06,
+          "rotation_degrees": 1.1329437419336544e-05,
+          "scale": 0.0
+        }
+      },
+      "body/pinky_02_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 9.409038192854574e-08,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 2.250962410021094,
+          "rotation_degrees": 15.00366665665828,
+          "scale": 0.0
+        }
+      },
+      "body/pinky_02_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 8.698005515806928e-07,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 3.034011482015084,
+          "rotation_degrees": 20.002366119976898,
+          "scale": 0.0
+        }
+      },
+      "body/clavicle_l": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300999989936827e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/middle_03_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 1.3238579977346966e-07,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.7687409209811036,
+          "rotation_degrees": 15.003666545850773,
+          "scale": 0.0
+        }
+      },
+      "body/root": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/index_03_l": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 3.0000001094432374e-09,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.1584823257053238,
+          "rotation_degrees": 15.003666548638042,
+          "scale": 0.0
+        }
+      },
+      "body/thumb_03_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 1.7702824623883738e-07,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 2.1299119249459064,
+          "rotation_degrees": 20.00236622956958,
+          "scale": 0.0
+        }
+      },
+      "body/spine_01": {
+        "category": "protected_lower_head",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300999989936827e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/lowerarm_twist_01_l": {
+        "category": "other_upper_body",
+        "samples": 220,
+        "local": {
+          "translation_cm": 0.0,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 4.300999989936827e-06,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        }
+      },
+      "body/thumb_01_r": {
+        "category": "finger_locals",
+        "samples": 220,
+        "local": {
+          "translation_cm": 7.610006572023651e-07,
+          "rotation_degrees": 0.0,
+          "scale": 0.0
+        },
+        "world": {
+          "translation_cm": 1.3209412916242966,
+          "rotation_degrees": 20.002366323699757,
+          "scale": 0.0
+        }
+      }
+    },
+    "wrist_reach_and_distal_axis": {
+      "walk110/source/left": {
+        "samples": 60,
+        "wrist_world_delta_cm_max": 3.81500012736069e-06,
+        "distal_axis_angle_degrees_max": 0.5649010856861534
+      },
+      "walk110/source/right": {
+        "samples": 60,
+        "wrist_world_delta_cm_max": 0.007476913058817903,
+        "distal_axis_angle_degrees_max": 0.3369086345586598
+      },
+      "walk110/body/left": {
+        "samples": 60,
+        "wrist_world_delta_cm_max": 4.300000000512227e-06,
+        "distal_axis_angle_degrees_max": 1.7229880506201802
+      },
+      "walk110/body/right": {
+        "samples": 60,
+        "wrist_world_delta_cm_max": 0.004826267904989598,
+        "distal_axis_angle_degrees_max": 1.0337709308522232
+      },
+      "walk210/source/left": {
+        "samples": 60,
+        "wrist_world_delta_cm_max": 0.0,
+        "distal_axis_angle_degrees_max": 0.5078807581450634
+      },
+      "walk210/source/right": {
+        "samples": 60,
+        "wrist_world_delta_cm_max": 0.017827507881888225,
+        "distal_axis_angle_degrees_max": 0.3071987910314484
+      },
+      "walk210/body/left": {
+        "samples": 60,
+        "wrist_world_delta_cm_max": 0.0,
+        "distal_axis_angle_degrees_max": 2.9634666489740646
+      },
+      "walk210/body/right": {
+        "samples": 60,
+        "wrist_world_delta_cm_max": 0.017399990528350815,
+        "distal_axis_angle_degrees_max": 1.877379495449663
+      },
+      "run600/source/left": {
+        "samples": 30,
+        "wrist_world_delta_cm_max": 0.0,
+        "distal_axis_angle_degrees_max": 0.006323297725281724
+      },
+      "run600/source/right": {
+        "samples": 30,
+        "wrist_world_delta_cm_max": 0.0,
+        "distal_axis_angle_degrees_max": 0.008752293174256286
+      },
+      "run600/body/left": {
+        "samples": 30,
+        "wrist_world_delta_cm_max": 0.0,
+        "distal_axis_angle_degrees_max": 3.8247603286418252
+      },
+      "run600/body/right": {
+        "samples": 30,
+        "wrist_world_delta_cm_max": 0.0,
+        "distal_axis_angle_degrees_max": 5.088374256640113
+      },
+      "yaw90walk210/source/left": {
+        "samples": 70,
+        "wrist_world_delta_cm_max": 3.814999899987015e-06,
+        "distal_axis_angle_degrees_max": 0.5078804374907961
+      },
+      "yaw90walk210/source/right": {
+        "samples": 70,
+        "wrist_world_delta_cm_max": 0.01782750862863473,
+        "distal_axis_angle_degrees_max": 0.3071986962045267
+      },
+      "yaw90walk210/body/left": {
+        "samples": 70,
+        "wrist_world_delta_cm_max": 4.300999989936827e-06,
+        "distal_axis_angle_degrees_max": 2.9634666489740646
+      },
+      "yaw90walk210/body/right": {
+        "samples": 70,
+        "wrist_world_delta_cm_max": 0.017399990528328597,
+        "distal_axis_angle_degrees_max": 1.877379495449663
+      }
+    },
+    "failures": [
+      "Auxiliary hand IK world positions changed by more than .05cm; restore original IK tracks"
+    ],
+    "review_notes": [
+      {
+        "code": "AUXILIARY_HAND_IK_WORLD_MOVEMENT",
+        "actual_world_translation_cm": {
+          "source/ik_hand_l": 2.4356945994330443,
+          "body/ik_hand_l": 33.249958428117786
+        },
+        "meaning": "Actual auxiliary hand IK movement is not visible wrist movement; do not claim all IK world positions are preserved. Verify consumers separately."
+      }
+    ],
+    "stable_same_frame_camera_world": {
+      "translation_cm": 4.300999989936827e-06,
+      "rotation_degrees": 0.0
+    },
+    "same_frame_actor_motion": {
+      "translation_cm_max": 0.0,
+      "speed_difference_cm_s_max": 0.0
+    }
+  },
+  "appearances": [],
+  "failures": [
+    "Auxiliary hand IK world positions changed by more than .05cm; restore original IK tracks"
+  ],
+  "limits": [
+    "The baseline is already inward; the requested correction is a backward wrist roll toward the FBX reference.",
+    "Highest cached BlendSpace sample has a private engine API. This audit verifies actual active node, weight, speed and input, and identifies jog selection at input(0,600) only by correspondence with the authored sample inventory.",
+    "Protected evaluated source/body bones are root/pelvis/head/spines/legs/feet/foot IK. Other upper bones, wrists/finger locals and derived hand IK are reported separately. Per-bone clip modification and idle asset immutability require the separate native frozen source-key audit.",
+    "Exact same-frame pose errors are retained even if initial idle phase differs between processes. Normalized BS phase alignment is an explicitly reported diagnostic, not a replacement for frozen asset isolation.",
+    "Capture cameras only change render view/visibility. Seven subsequent frames omit automatic first-person cache comparison during restoration; native independently composed head-camera comparison remains active.",
+    "The sixteen angular comparisons use normalized per-phase means against the FBX reference mean, not a claim that every individual animation frame or scalar forward projection changes identically."
+  ]
+}

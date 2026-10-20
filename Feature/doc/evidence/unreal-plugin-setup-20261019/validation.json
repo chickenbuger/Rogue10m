@@ -1,0 +1,30 @@
+{
+  "success": true,
+  "project_plugin_addition": {
+    "Name": "LiveCodingToolset",
+    "Enabled": true,
+    "TargetAllowList": [
+      "Editor"
+    ]
+  },
+  "existing_project_values_preserved": true,
+  "mcp_settings_after_restart": {
+    "bAutoStartServer": true,
+    "ServerPortNumber": 8001,
+    "ServerUrlPath": "/mcp",
+    "bEnableToolSearch": true
+  },
+  "live_coding_enabled_after_restart": true,
+  "toolsets_count": 53,
+  "meta_tools_count": 3,
+  "compile_tool_schema_present": true,
+  "compile_executed": false,
+  "pie_running": false,
+  "current_level": "/Engine/Maps/Entry",
+  "endpoint": "http://127.0.0.1:8001/mcp",
+  "editor_pid": 42032,
+  "existing_status_entries_preserved": 6012,
+  "existing_daily_sprint_log_bytes_preserved": true,
+  "document_links_checked": 12,
+  "scope": "Plugin setup, official MCP live read calls and graceful restart persistence; no game build/PIE/compile/package test"
+}

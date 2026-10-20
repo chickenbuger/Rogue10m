@@ -13,6 +13,7 @@
 #include "Misc/Paths.h"
 #include "Rogue10m.h"
 #include "Rogue10mCharacter.h"
+#include "Rogue10mAppearanceCameraComponent.h"
 #include "Rogue10mFirstPersonPresentationComponent.h"
 #include "TimerManager.h"
 #include "UnrealClient.h"
@@ -46,10 +47,13 @@ private:
         // Observe the fresh spawn before the fixture writes any view angle.
         OriginalControl=PC->GetControlRotation(); OriginalWeapon=Character->GetEquippedWeaponType();
         OldCanDamage=Character->CanBeDamaged(); bPrepared=true;
-        Check(Presentation->bEnableInitialFullBodyViewPitch && FMath::IsNearlyEqual(Presentation->InitialFullBodyViewPitch,-30.f,.01f),TEXT("initial_view_defaults_incorrect"));
-        Check(Presentation->IsFullBodyPresentationActive() && Presentation->HasHandledInitialFullBodyViewPitch(),TEXT("fresh_initialization_not_handled"));
-        Check(FMath::Abs(FRotator::NormalizeAxis(OriginalControl.Pitch)+30.f)<.1f,TEXT("fresh_spawn_control_pitch_not_minus30"));
-        Check(FMath::Abs(FRotator::NormalizeAxis(Camera->GetComponentRotation().Pitch)+30.f)<.1f,TEXT("fresh_spawn_camera_pitch_not_minus30"));
+        auto* Appearance=Character->GetAppearanceCameraComponent();
+        const bool bAppearance=Appearance && Appearance->IsAppearanceCameraActive();
+        const float InitialPitch=bAppearance ? Appearance->InitialViewPitch : Presentation->InitialFullBodyViewPitch;
+        Check(Presentation->bEnableInitialFullBodyViewPitch && FMath::IsNearlyEqual(InitialPitch,bAppearance ? -20.f : -30.f,.01f),TEXT("initial_view_defaults_incorrect"));
+        Check((Presentation->IsFullBodyPresentationActive() || bAppearance) && Presentation->HasHandledInitialFullBodyViewPitch(),TEXT("fresh_initialization_not_handled"));
+        Check(FMath::Abs(FRotator::NormalizeAxis(OriginalControl.Pitch)-InitialPitch)<.1f,TEXT("fresh_spawn_control_pitch_incorrect"));
+        CheckCameraComposition();
         ExpectedControl=OriginalControl;
         UE_LOG(LogRogue10m,Display,TEXT("INITIAL_HEAD_FRAMING FRESH control=%s camera=%s rendered=%s"),
             *OriginalControl.ToString(),*Camera->GetComponentRotation().ToString(),PC->PlayerCameraManager ? *PC->PlayerCameraManager->GetCameraRotation().ToString() : TEXT("missing"));
@@ -61,6 +65,31 @@ private:
         IFileManager::Get().MakeDirectory(*Output,true);
         Tick=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* W,ELevelTick,float)
         { if (Self->World.Get()==W) { Self->Frame(); } });
+    }
+    void CheckCameraComposition()
+    {
+        auto* Settings=Character->GetAppearanceCameraComponent();
+        const auto* Camera=Character->GetFirstPersonCameraComponent();
+        if (!Settings || !Settings->IsAppearanceCameraActive())
+        {
+            Check(Camera->GetComponentRotation().Equals(PC->GetControlRotation(),.1f),TEXT("legacy_camera_detached_from_control"));
+            return;
+        }
+        FTransform Head; FQuat Motion;
+        if (!Settings->ReadAnimatedHead(Head,Motion)) { Check(false,TEXT("head_pose_missing")); return; }
+        if (Settings->IsBrawlerViewStabilized())
+        {
+            // Independent shortest axis-angle calculation, rather than the production helper.
+            FQuat Canonical=Motion.GetNormalized();
+            if (Canonical.W<0.) { Canonical=Canonical*(-1.); }
+            FVector Axis; double Angle; Canonical.ToAxisAndAngle(Axis,Angle);
+            Motion=FQuat(Axis,FMath::Min(Angle*FMath::Clamp(Settings->BrawlerHeadRotationWeight,0.f,1.f),
+                FMath::DegreesToRadians(static_cast<double>(FMath::Clamp(Settings->BrawlerHeadMaxRotationDegrees,0.f,180.f))))).GetNormalized();
+        }
+        const FQuat Expected=(Motion*PC->GetControlRotation().Quaternion()).GetNormalized();
+        Check(FMath::RadiansToDegrees(Expected.AngularDistance(Camera->GetComponentQuat()))<.1,TEXT("camera_not_composed_with_immediate_control"));
+        const FVector Position=Head.GetLocation()+(Motion*Character->GetActorQuat()).RotateVector(Settings->EyeOffset);
+        Check(FVector::Distance(Camera->GetComponentLocation(),Position)<.1,TEXT("camera_left_actual_head_anchor"));
     }
     void Frame()
     {
@@ -112,14 +141,13 @@ private:
         Check(PC->GetControlRotation().Equals(ExpectedControl,.01f),TEXT("tick_or_weapon_reset_manual_view"));
         if (FrameIndex==47)
         {
-            Check(Presentation->IsFullBodyPresentationActive(),TEXT("weapon_return_lost_fullbody"));
+            Check(Presentation->IsFullBodyPresentationActive() || (Character->GetAppearanceCameraComponent() && Character->GetAppearanceCameraComponent()->IsAppearanceCameraActive()),TEXT("weapon_return_lost_fullbody"));
             Check(Presentation->HasHandledInitialFullBodyViewPitch(),TEXT("weapon_return_lost_initialization_guard"));
-            Check(FMath::Abs(FRotator::NormalizeAxis(Character->GetFirstPersonCameraComponent()->GetComponentRotation().Pitch-ExpectedControl.Pitch))<.1f,TEXT("camera_did_not_follow_explicit_pitch"));
+            CheckCameraComposition();
         }
         if (FrameIndex==32 || FrameIndex==47 || FrameIndex==70)
         {
-            const FVector CameraForward=Character->GetFirstPersonCameraComponent()->GetForwardVector();
-            Check(FVector::DotProduct(CameraForward,ExpectedControl.Vector())>.99999,TEXT("gameplay_camera_forward_detached_from_control"));
+            CheckCameraComposition();
         }
         if (FrameIndex<15 || FrameIndex==30 || FrameIndex==70)
         {

@@ -1,0 +1,12 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"returnValue\":{\"moduleName\":\"SystemState\",\"inputs\":[{\"name\":\"Inactive Response\",\"value\":{\"struct\":{\"refPath\":\"/Script/NiagaraEditor.NiagaraExt_StackInputData_Enum\"},\"value\":{\"enum\":{\"refPath\":\"/Niagara/Enums/ENiagaraSystemInactiveMode.ENiagaraSystemInactiveMode\"},\"enumName\":\"ENiagaraSystemInactiveMode::NewEnumerator0\",\"displayName\":\"Complete (Let Emitters Finish then Kill The System)\"}}},{\"name\":\"Loop Behavior\",\"value\":{\"struct\":{\"refPath\":\"/Script/NiagaraEditor.NiagaraExt_StackInputData_Enum\"},\"value\":{\"enum\":{\"refPath\":\"/Niagara/Enums/ENiagara_EmitterStateOptions.ENiagara_EmitterStateOptions\"},\"enumName\":\"ENiagara_EmitterStateOptions::NewEnumerator1\",\"displayName\":\"Once\"}}},{\"name\":\"Loop Count\",\"value\":{\"struct\":{\"refPath\":\"/Script/NiagaraEditor.NiagaraExt_StackInputData_Unsupported\"},\"value\":{}}},{\"name\":\"Loop Duration\",\"value\":{\"struct\":{\"refPath\":\"/Script/Niagara.NiagaraFloat\"},\"value\":{\"value\":1}}},{\"name\":\"Recalculate Duration Each Loop\",\"value\":{\"struct\":{\"refPath\":\"/Script/NiagaraEditor.NiagaraExt_StackInputData_Unsupported\"},\"value\":{}}},{\"name\":\"UseLoopDelay\",\"value\":{\"struct\":{\"refPath\":\"/Script/Niagara.NiagaraBool\"},\"value\":{\"value\":0}}},{\"name\":\"Loop Delay\",\"value\":{\"struct\":{\"refPath\":\"/Script/Niagara.NiagaraFloat\"},\"value\":{\"value\":0}}},{\"name\":\"Delay First Loop Only\",\"value\":{\"struct\":{\"refPath\":\"/Script/NiagaraEditor.NiagaraExt_StackInputData_Unsupported\"},\"value\":{}}}]}}"
+      }
+    ]
+  }
+}

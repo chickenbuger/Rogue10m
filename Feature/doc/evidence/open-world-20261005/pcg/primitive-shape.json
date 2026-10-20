@@ -1,0 +1,12 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"returnValue\":{\"name\":\"Create_Spline_Shape\",\"graphParamsSchema\":\"{\\\"width\\\":{\\\"type\\\":\\\"number\\\",\\\"description\\\":\\\"Width of the created shape\\\"},\\\"length\\\":{\\\"type\\\":\\\"number\\\",\\\"description\\\":\\\"Length of the created shape\\\"},\\\"ngon\\\":{\\\"type\\\":\\\"integer\\\",\\\"description\\\":\\\"Number of sides of the created shape. Clamped between 3 and 256. \\\"},\\\"linear\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"If checked the created spline will use linear interpolation between its control points. This is usefull to create polygon style shape, like square, pentagon, heaxagon .... To create a circle or an oval, this should be left uncheked.\\\"},\\\"position\\\":{\\\"title\\\":\\\"Vector\\\",\\\"description\\\":\\\"Offset position in centimeters of the created shape\\\",\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"x\\\":{\\\"type\\\":\\\"number\\\"},\\\"y\\\":{\\\"type\\\":\\\"number\\\"},\\\"z\\\":{\\\"type\\\":\\\"number\\\"}},\\\"required\\\":[\\\"x\\\",\\\"y\\\",\\\"z\\\"]},\\\"rotation\\\":{\\\"title\\\":\\\"Rotator\\\",\\\"description\\\":\\\"offset rotation in degrees of the created shape\\\",\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"pitch\\\":{\\\"type\\\":\\\"number\\\",\\\"description\\\":\\\"Y 축을 중심으로 하는 피치입니다 (각도 단위).\\\"},\\\"yaw\\\":{\\\"type\\\":\\\"number\\\",\\\"description\\\":\\\"Z 축을 중심으로 하는 요입니다 (각도 단위).\\\"},\\\"roll\\\":{\\\"type\\\":\\\"number\\\",\\\"description\\\":\\\"X 축을 중심으로 하는 롤입니다 (각도 단위).\\\"}},\\\"required\\\":[\\\"pitch\\\",\\\"yaw\\\",\\\"roll\\\"]},\\\"atWorldOrigin\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"If checked the shape will be created in world space at the origin. If unchecked the shape will be created local to the parent actor.\\\"}}\",\"inputPins\":[{\"name\":\"PrimaryInput\",\"type\":\"Any\",\"description\":\"디폴트 입력 핀\"}],\"outputPins\":[{\"name\":\"Out\",\"type\":\"Any\",\"description\":\"\"}]}}"
+      }
+    ]
+  }
+}

@@ -21,6 +21,8 @@ IRON = unreal.LinearColor(0.018, 0.022, 0.021, 0.95)
 IRON_RAISED = unreal.LinearColor(0.045, 0.052, 0.046, 0.94)
 BRASS = unreal.LinearColor(0.42, 0.30, 0.13, 0.90)
 JADE = unreal.LinearColor(0.20, 0.68, 0.42, 1.0)
+ENTRY_SIZE = (144.0, 118.0)  # Match the runtime canvas slot in MenuWindowWidgets.cpp.
+PANEL_TEXT_WIDTH = 212.0
 
 
 def set_font_size(text, size: int) -> None:
@@ -31,6 +33,18 @@ def set_font_size(text, size: int) -> None:
 
 def set_text_color(text, color) -> None:
     text.set_editor_property("color_and_opacity", unreal.SlateColor(specified_color=color))
+
+
+def finish_panel_layout(column) -> None:
+    # Fixed wrapping gives VerticalBox the full multi-line desired height on prepass.
+    # Auto wrapping discovers its width after layout and can overlap the next row.
+    for child in column.get_all_children():
+        slot = child.get_editor_property("slot")
+        if slot:
+            slot.set_padding(unreal.Margin(0.0, 3.0, 0.0, 3.0))
+        if isinstance(child, unreal.TextBlock):
+            child.set_auto_wrap_text(False)
+            child.set_editor_property("wrap_text_at", PANEL_TEXT_WIDTH)
 
 
 def add_canvas_text(widget, name, label, parent, position, size, font_size=16,
@@ -47,10 +61,10 @@ def add_canvas_text(widget, name, label, parent, position, size, font_size=16,
 def build_entry(widget) -> None:
     base.clear_tree(widget)
     size_box, _ = base.add(widget, unreal.SizeBox, "UI_SkillTreeEntrySize")
-    size_box.set_width_override(156.0)
-    size_box.set_height_override(118.0)
+    size_box.set_width_override(ENTRY_SIZE[0])
+    size_box.set_height_override(ENTRY_SIZE[1])
     outer, _ = base.make_border(widget, "UI_SkillTreeEntryOuter", size_box, BRASS, 2.0)
-    frame, _ = base.make_border(widget, "UI_SkillTreeEntryFrame", outer, IRON_RAISED, 5.0)
+    frame, _ = base.make_border(widget, "UI_SkillTreeEntryFrame", outer, IRON_RAISED, 3.0)
     column, _ = base.add(widget, unreal.VerticalBox, "UI_SkillTreeEntryRoot", frame)
 
     tier, tier_slot = base.make_text(
@@ -59,20 +73,23 @@ def build_entry(widget) -> None:
     set_text_color(tier, unreal.LinearColor(0.72, 0.58, 0.28, 1.0))
     tier.set_editor_property("justification", unreal.TextJustify.CENTER)
     base.set_fill_alignment(tier_slot)
+    base.set_padding(tier_slot, 1.0)
 
     icon, icon_slot = base.add(
         widget, unreal.Image, "UI_SkillIconImage", column, variable=True
     )
-    icon.set_desired_size_override(unreal.Vector2D(46.0, 46.0))
+    icon.set_desired_size_override(unreal.Vector2D(32.0, 32.0))
+    icon_slot.set_padding(unreal.Margin(0.0, 2.0, 0.0, 2.0))
     if hasattr(icon_slot, "set_horizontal_alignment"):
         icon_slot.set_horizontal_alignment(unreal.HorizontalAlignment.H_ALIGN_CENTER)
 
     name, name_slot = base.make_text(
-        widget, "UI_SkillNameText", "연환권", column, variable=True, font_size=14
+        widget, "UI_SkillNameText", "연환권", column, variable=True, font_size=12
     )
     name.set_editor_property("justification", unreal.TextJustify.CENTER)
     set_text_color(name, unreal.LinearColor(0.94, 0.91, 0.80, 1.0))
     base.set_fill_alignment(name_slot)
+    base.set_padding(name_slot, 1.0)
 
     description, _ = base.make_text(
         widget, "UI_SkillDescriptionText", "무공 설명", column,
@@ -80,30 +97,47 @@ def build_entry(widget) -> None:
     )
     description.set_visibility(unreal.SlateVisibility.COLLAPSED)
 
-    progress, progress_slot = base.add(
-        widget, unreal.ProgressBar, "UI_SkillProgressBar", column, variable=True
+    progress_size, progress_size_slot = base.add(
+        widget, unreal.SizeBox, "UI_SkillProgressSize", column
+    )
+    progress_size.set_height_override(4.0)
+    progress_size_slot.set_padding(unreal.Margin(1.0, 3.0, 1.0, 3.0))
+    progress, _ = base.add(
+        widget, unreal.ProgressBar, "UI_SkillProgressBar", progress_size, variable=True
     )
     progress.set_percent(0.35)
     progress.set_fill_color_and_opacity(JADE)
-    base.set_padding(progress_slot, 2.0)
-
     status_row, _ = base.add(widget, unreal.HorizontalBox, "UI_SkillStatusRow", column)
-    status, _ = base.make_text(
-        widget, "UI_SkillLockText", "잠김", status_row, variable=True, font_size=9
+    status, status_slot = base.make_text(
+        widget, "UI_SkillLockText", "잠김", status_row, variable=True, font_size=8
     )
+    base.set_padding(status_slot, 1.0)
     set_text_color(status, unreal.LinearColor(0.72, 0.63, 0.44, 1.0))
-    progress_text, _ = base.make_text(
-        widget, "UI_SkillProgressText", "수련 35%", status_row, variable=True, font_size=9
+    progress_text, progress_text_slot = base.make_text(
+        widget, "UI_SkillProgressText", "수련 35%", status_row, variable=True, font_size=8
     )
+    base.set_padding(progress_text_slot, 1.0)
     set_text_color(progress_text, unreal.LinearColor(0.48, 0.78, 0.58, 1.0))
 
 
-def add_panel(widget, root, name, position, size):
+def add_panel(widget, root, name, position, size, scroll=False):
     outer, outer_slot = base.make_border(widget, f"{name}Outer", root, BRASS, 2.0)
     base.set_canvas_layout(outer_slot, position, size, z_order=2)
     inner, _ = base.make_border(widget, name, outer, IRON, 12.0)
-    column, _ = base.add(widget, unreal.VerticalBox, f"{name}Column", inner)
+    content = inner
+    if scroll:
+        content, _ = base.add(widget, unreal.ScrollBox, f"{name}Scroll", inner)
+    column, _ = base.add(widget, unreal.VerticalBox, f"{name}Column", content)
     return column
+
+
+def add_action_button(widget, parent, name, label):
+    button, slot = base.add(widget, unreal.Button, name, parent, variable=True)
+    base.set_padding(slot, 4.0)
+    button.set_background_color(unreal.LinearColor(0.15, 0.24, 0.18, 1.0))
+    text, _ = base.make_text(widget, name + "Label", label, button, font_size=12)
+    text.set_editor_property("justification", unreal.TextJustify.CENTER)
+    return button
 
 
 def build_window(widget) -> None:
@@ -134,7 +168,7 @@ def build_window(widget) -> None:
     )
     add_canvas_text(
         widget, "UI_SkillTreeGuideText",
-        "수련과 토벌로 경맥을 열고, 해금한 공격 무공을 하단 HUD 슬롯으로 끌어 장착하세요.",
+        "스킬을 선택해 키를 지정하세요. 수련·토벌로 해금하며, 공격 무공은 하단 HUD에도 장착할 수 있습니다.",
         window_root, (0, -342), (900, 28), font_size=13,
         color=unreal.LinearColor(0.64, 0.70, 0.62, 1.0), z=3
     )
@@ -156,12 +190,18 @@ def build_window(widget) -> None:
     mastery.set_percent(0.10)
     mastery.set_fill_color_and_opacity(JADE)
     mastery_text, _ = base.make_text(
-        widget, "UI_MasteryProgressText", "해금 무공 1 / 10", left, variable=True, font_size=12
+        widget, "UI_MasteryProgressText", "해금 무공 4 / 14", left, variable=True, font_size=12
     )
     set_text_color(mastery_text, unreal.LinearColor(0.62, 0.78, 0.66, 1.0))
+    add_action_button(widget, left, "UI_UnlockAllSkillsButton", "테스트 · 현재 트리 전체 해금")
+    test_hint, _ = base.make_text(
+        widget, "UI_TestUnlockHintText", "현재 세션의 해금만 변경합니다. 수련·토벌 기록은 유지됩니다.",
+        left, variable=True, wrap=True, font_size=11
+    )
+    set_text_color(test_hint, unreal.LinearColor(0.68, 0.73, 0.64, 1.0))
     for title, body in (
-        ("입문", "호흡과 연환의 기초"),
-        ("초식", "붕권 · 파진각 · 철산고"),
+        ("입문", "맨손 기본 4식과 연환의 기초"),
+        ("초식", "몸통 직선타 · 승룡권 · 축경권"),
         ("절기", "변화수와 연속 경력"),
         ("심법", "금강불괴와 문파 오의"),
     ):
@@ -181,17 +221,17 @@ def build_window(widget) -> None:
             color=unreal.LinearColor(0.46, 0.38, 0.23, 0.9), z=2
         )
 
-    right = add_panel(widget, window_root, "UI_DetailPanel", (610, 25), (250, 660))
+    right = add_panel(widget, window_root, "UI_DetailPanel", (610, 25), (250, 660), scroll=True)
     detail_heading, _ = base.make_text(widget, "UI_DetailHeading", "무공 비급", right, font_size=20)
     set_text_color(detail_heading, unreal.LinearColor(0.86, 0.72, 0.38, 1.0))
     selected_icon, selected_icon_slot = base.add(
         widget, unreal.Image, "UI_SelectedSkillIcon", right, variable=True
     )
-    selected_icon.set_desired_size_override(unreal.Vector2D(82.0, 82.0))
+    selected_icon.set_desired_size_override(unreal.Vector2D(58.0, 58.0))
     if hasattr(selected_icon_slot, "set_horizontal_alignment"):
         selected_icon_slot.set_horizontal_alignment(unreal.HorizontalAlignment.H_ALIGN_CENTER)
     selected_name, _ = base.make_text(
-        widget, "UI_SelectedSkillNameText", "연환권", right, variable=True, font_size=22
+        widget, "UI_SelectedSkillNameText", "연환권", right, variable=True, font_size=19
     )
     selected_name.set_editor_property("justification", unreal.TextJustify.CENTER)
     set_text_color(selected_name, unreal.LinearColor(0.94, 0.91, 0.80, 1.0))
@@ -204,6 +244,33 @@ def build_window(widget) -> None:
         widget, "UI_SelectedSkillStatusText", "● 해금 완료", right, variable=True, font_size=13
     )
     set_text_color(status, JADE)
+    current_key, _ = base.make_text(
+        widget, "UI_SelectedSkillKeyText", "현재 키 · 미지정", right, variable=True, font_size=13
+    )
+    set_text_color(current_key, unreal.LinearColor(0.86, 0.72, 0.38, 1.0))
+    selector, selector_slot = base.add(
+        widget, unreal.InputKeySelector, "UI_SkillKeySelector", right, variable=True
+    )
+    selector.set_allow_modifier_keys(False)
+    selector.set_allow_gamepad_keys(False)
+    selector.set_key_selection_text("키 입력 · Esc 취소")
+    selector.set_no_key_specified_text("키 지정")
+    text_style = selector.get_editor_property("text_style")
+    selector_font = text_style.get_editor_property("font")
+    selector_font.size = 12
+    text_style.set_editor_property("font", selector_font)
+    selector.set_editor_property("text_style", text_style)
+    base.set_padding(selector_slot, 4.0)
+    add_action_button(widget, right, "UI_ClearSkillKeyButton", "지정 키 해제")
+    key_hint, _ = base.make_text(
+        widget, "UI_SkillKeyHintText", "해금한 공격 스킬에 키 하나를 지정합니다. 차징 스킬은 누른 뒤 놓아 사용합니다.",
+        right, variable=True, wrap=True, font_size=11
+    )
+    set_text_color(key_hint, unreal.LinearColor(0.65, 0.77, 0.67, 1.0))
+    key_result, _ = base.make_text(
+        widget, "UI_SkillKeyResultText", "", right, variable=True, wrap=True, font_size=11
+    )
+    key_result.set_visibility(unreal.SlateVisibility.COLLAPSED)
     description, _ = base.make_text(
         widget, "UI_SelectedSkillDescriptionText",
         "호흡을 짧게 끊으며 좌우 권을 연달아 내지르는 권사의 입문 초식.",
@@ -224,6 +291,8 @@ def build_window(widget) -> None:
         right, variable=True, wrap=True, font_size=12
     )
     set_text_color(reward, unreal.LinearColor(0.76, 0.76, 0.68, 1.0))
+    finish_panel_layout(left)
+    finish_panel_layout(right)
 
 
 def validate(widget, required):
@@ -246,6 +315,8 @@ def main() -> None:
     validate(window, {
         "UI_WindowRoot", "UI_WindowDragHandle", "UI_SkillListContainer",
         "UI_SelectedSkillNameText", "UI_SelectedSkillConditionsText", "UI_MasteryProgressBar",
+        "UI_UnlockAllSkillsButton", "UI_TestUnlockHintText", "UI_SkillKeySelector",
+        "UI_ClearSkillKeyButton", "UI_SelectedSkillKeyText", "UI_SkillKeyHintText", "UI_SkillKeyResultText",
     })
     base.compile_and_save(entry, ENTRY_PATH)
     base.compile_and_save(window, WINDOW_PATH)

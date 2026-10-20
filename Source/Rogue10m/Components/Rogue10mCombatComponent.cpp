@@ -3,6 +3,7 @@
 #include "Rogue10mCombatComponent.h"
 
 #include "AbilitySystemComponent.h"
+#include "Animation/AnimMontage.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "DrawDebugHelpers.h"
@@ -20,6 +21,8 @@
 #include "Rogue10mHitFeedbackComponent.h"
 #include "Rogue10mAttackTargetInterface.h"
 #include "Rogue10mCharacter.h"
+#include "Rogue10mTraitRuntimeComponent.h"
+#include "Rogue10mCharacterAnimationComponent.h"
 #include "Rogue10mCharacterDataAsset.h"
 #include "Rogue10mFirstPersonPresentationComponent.h"
 #include "Rogue10mAppearanceCameraComponent.h"
@@ -27,7 +30,9 @@
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerFeedbackComponent.h"
 #include "Rogue10mPlayerState.h"
+#include "Rogue10mInventoryComponent.h"
 #include "Rogue10mSkillLoadoutDataAsset.h"
+#include "Rogue10mProgressionSaveGame.h"
 #include "TimerManager.h"
 
 URogue10mCombatComponent::URogue10mCombatComponent()
@@ -107,6 +112,17 @@ void URogue10mCombatComponent::InitializeSpawnedLoadout()
 		*PrimarySkill->SkillName.ToString());
 }
 
+bool URogue10mCombatComponent::IsAttackChargeHeld() const
+{
+	const ARogue10mCharacter* Character = GetOwnerCharacter();
+	if (const URogue10mBasicBrawlerComponent* Basic = Character ? Character->GetBasicBrawlerComponent() : nullptr;
+		Basic && Basic->IsBasicBrawlerActive())
+	{
+		return Basic->GetSnapshot().Phase == ERogue10mBasicBrawlerPhase::Charging || HeldBoundSkill.IsValid();
+	}
+	return LeftAttackPressedTime >= 0.0f || RightAttackPressedTime >= 0.0f || HeldBoundSkill.IsValid();
+}
+
 void URogue10mCombatComponent::HandleAttackPressed(bool bPrimaryAttack)
 {
 	if (ARogue10mCharacter* Character = GetOwnerCharacter())
@@ -171,6 +187,8 @@ void URogue10mCombatComponent::HandleAttackReleased(bool bPrimaryAttack)
 
 void URogue10mCombatComponent::CancelCombatVisuals()
 {
+	LastAcceptedAttackSkill.Reset();
+	CancelBoundSkillInput();
 	CancelPendingAttackHits();
 	if (ARogue10mCharacter* Character = GetOwnerCharacter())
 	{
@@ -182,6 +200,13 @@ void URogue10mCombatComponent::CancelCombatVisuals()
 	LeftAttackPressedTime = -1.0f;
 	RightAttackPressedTime = -1.0f;
 	StopChargeEffect();
+	if (ARogue10mCharacter* Character = GetOwnerCharacter())
+	{
+		if (URogue10mCharacterAnimationComponent* Animation = Character->GetCharacterAnimationComponent())
+		{
+			Animation->ResetFighterCombatStance();
+		}
+	}
 }
 
 bool URogue10mCombatComponent::ExecutePendingAttackSkillFromAbility()
@@ -195,6 +220,7 @@ bool URogue10mCombatComponent::ExecutePendingAttackSkillFromAbility()
 
 	TGuardValue<bool> Guard(bExecutingAttackFromAbility, true);
 	const bool bExecuted = ExecuteAttackSkill(*SkillData, bPendingAbilityComboAttack);
+	bLastAbilityAttackExecuted = bExecuted;
 	PendingAbilityAttackSkill.Reset();
 	bPendingAbilityComboAttack = false;
 	return bExecuted;
@@ -237,7 +263,101 @@ void URogue10mCombatComponent::UnlockAttackSkill(URogue10mAttackSkillData* Skill
 	}
 
 	UnlockedAttackSkillNames.Add(SkillData->GetFName());
+	UnlockedSkillAssets.AddUnique(SkillData);
 	OnSkillTreeChanged.Broadcast();
+}
+
+bool URogue10mCombatComponent::CanUnlockActiveTreeForTesting() const
+{
+#if UE_BUILD_SHIPPING
+	return false;
+#else
+	const ARogue10mCharacter* Character = GetOwnerCharacter();
+	return Character && Character->HasAuthority() && Character->IsLocallyControlled()
+		&& !Character->IsDead() && !GetActiveSkillTreeSkills().IsEmpty();
+#endif
+}
+
+int32 URogue10mCombatComponent::UnlockAllActiveTreeForTesting()
+{
+	if (!CanUnlockActiveTreeForTesting()) { return 0; }
+	int32 Added = 0;
+	for (const URogue10mAttackSkillData* Skill : GetActiveSkillTreeSkills())
+	{
+		if (Skill && !UnlockedAttackSkillNames.Contains(Skill->GetFName()))
+		{
+			UnlockedAttackSkillNames.Add(Skill->GetFName());
+			++Added;
+		}
+	}
+	if (Added > 0) { OnSkillTreeChanged.Broadcast(); }
+	return Added;
+}
+
+bool URogue10mCombatComponent::CanUseBoundSkill(const URogue10mAttackSkillData* Skill) const
+{
+	const ARogue10mCharacter* Character = GetOwnerCharacter();
+	if (!Skill || !Character || !Character->IsLocallyControlled() || !CanUseCombatInput()
+		|| !IsSkillInActiveTree(Skill) || !IsAttackSkillUnlocked(Skill)
+		|| Skill->SkillTreeNodeType != ERogue10mSkillTreeNodeType::ActiveTechnique || !GetWorld()) { return false; }
+	const bool bJump = Skill->InputSlot == ERogue10mAttackInputSlot::JumpPrimary
+		|| Skill->InputSlot == ERogue10mAttackInputSlot::JumpSpecial;
+	return Character->GetCharacterMovement() && bJump == Character->GetCharacterMovement()->IsFalling();
+}
+
+bool URogue10mCombatComponent::ActivateTreeSkill(URogue10mAttackSkillData* Skill)
+{
+	if (!CanUseBoundSkill(Skill)) { return false; }
+	const bool bCharged = Skill->InputSlot == ERogue10mAttackInputSlot::ChargedPrimary
+		|| Skill->InputSlot == ERogue10mAttackInputSlot::ChargedSpecial;
+	if (bCharged && !bBoundChargeReady) { return false; }
+	const float Now = GetWorld()->GetTimeSeconds();
+	// Check before GAS or presentation changes; a rejected shortcut must not cancel an attack.
+	if (IsAttackOnCooldown(Now) || IsComboSequenceActive(Now) || !CanPayResourceCosts(*Skill)) { return false; }
+	ARogue10mCharacter* Character = GetOwnerCharacter();
+	if (Character->GetAbilitySystemComponent() && (Skill->GameplayAbilityClass || DefaultAttackAbilityClass))
+	{
+		bLastAbilityAttackExecuted = false;
+		return TryActivateAttackAbility(*Skill, false) && bLastAbilityAttackExecuted;
+	}
+	return ExecuteAttackSkill(*Skill, false);
+}
+
+void URogue10mCombatComponent::HandleBoundSkillPressed(URogue10mAttackSkillData* Skill)
+{
+	if (!CanUseBoundSkill(Skill) || HeldBoundSkill.IsValid()) { return; }
+	const bool bCharged = Skill->InputSlot == ERogue10mAttackInputSlot::ChargedPrimary
+		|| Skill->InputSlot == ERogue10mAttackInputSlot::ChargedSpecial;
+	if (!bCharged) { ActivateTreeSkill(Skill); return; }
+	const float Now = GetWorld()->GetTimeSeconds();
+	if (IsAttackOnCooldown(Now) || IsComboSequenceActive(Now) || !CanPayResourceCosts(*Skill)) { return; }
+	HeldBoundSkill = Skill;
+	BoundSkillPressedTime = Now;
+	StartChargeEffect(*Skill);
+	GetWorld()->GetTimerManager().SetTimer(BoundSkillMonitorTimer, this,
+		&URogue10mCombatComponent::MonitorBoundSkillInput, 0.02f, true);
+}
+
+void URogue10mCombatComponent::HandleBoundSkillReleased(URogue10mAttackSkillData* Skill)
+{
+	if (!Skill || HeldBoundSkill.Get() != Skill) { return; }
+	const bool bReady = CanUseBoundSkill(Skill) && BoundSkillPressedTime >= 0.f
+		&& GetWorld()->GetTimeSeconds() - BoundSkillPressedTime >= FMath::Max(0.05f, Skill->ChargeSeconds);
+	CancelBoundSkillInput();
+	if (bReady) { TGuardValue<bool> Guard(bBoundChargeReady, true); ActivateTreeSkill(Skill); }
+}
+
+void URogue10mCombatComponent::CancelBoundSkillInput()
+{
+	if (HeldBoundSkill.IsValid()) { StopChargeEffect(); }
+	HeldBoundSkill.Reset();
+	BoundSkillPressedTime = -1.f;
+	if (GetWorld()) { GetWorld()->GetTimerManager().ClearTimer(BoundSkillMonitorTimer); }
+}
+
+void URogue10mCombatComponent::MonitorBoundSkillInput()
+{
+	if (!CanUseBoundSkill(HeldBoundSkill.Get())) { CancelBoundSkillInput(); }
 }
 
 bool URogue10mCombatComponent::IsAttackSkillUnlocked(const URogue10mAttackSkillData* SkillData) const
@@ -282,12 +402,15 @@ bool URogue10mCombatComponent::AssignSkillToInputSlot(
 		}
 	}
 	EquippedSkillBindings.Add(InputSlot, SkillData);
+	OnSkillTreeChanged.Broadcast();
 	return true;
 }
 
 bool URogue10mCombatComponent::UnassignSkillFromInputSlot(ERogue10mAttackInputSlot InputSlot)
 {
-	return EquippedSkillBindings.Remove(InputSlot) > 0;
+	const bool bChanged = EquippedSkillBindings.Remove(InputSlot) > 0;
+	if (bChanged) { OnSkillTreeChanged.Broadcast(); }
+	return bChanged;
 }
 
 URogue10mAttackSkillData* URogue10mCombatComponent::GetEquippedSkill(ERogue10mAttackInputSlot InputSlot) const
@@ -491,7 +614,21 @@ void URogue10mCombatComponent::ApplyCharacterData()
 		WeaponSkillProfiles = CharacterData->WeaponSkillProfiles;
 		if (ARogue10mCharacter* Character = GetOwnerCharacter())
 		{
-			Character->SetEquippedWeaponType(CharacterData->DefaultWeaponType);
+			// A configured default must not replace the weapon already owned by the equipment slot.
+			ERogue10mWeaponType EffectiveWeapon = CharacterData->DefaultWeaponType;
+			if (const URogue10mInventoryComponent* Inventory = Character->GetInventoryComponent())
+			{
+				for (const FRogue10mInventorySlot& Slot : Inventory->GetLeftEquipmentSlots())
+				{
+					if (Slot.SlotType == ERogue10mInventorySlotType::MainWeapon && Slot.bHasEquippedItem
+						&& Slot.EquippedItem.bOccupied)
+					{
+						EffectiveWeapon = Slot.EquippedItem.WeaponType;
+						break;
+					}
+				}
+			}
+			Character->SetEquippedWeaponType(EffectiveWeapon);
 		}
 	}
 }
@@ -540,6 +677,7 @@ void URogue10mCombatComponent::ApplyActiveWeaponProfile()
 		UnlockAttackSkill(Skill);
 	}
 	EvaluateActiveSkillUnlocks();
+	OnSkillTreeChanged.Broadcast();
 	UE_LOG(
 		LogRogue10m, Log,
 		TEXT("%s 장착 무기 스킬트리 활성화: %s / %s / 스킬 %d개"),
@@ -727,7 +865,8 @@ bool URogue10mCombatComponent::CanUseCombatInput() const
 {
 	const ARogue10mCharacter* Character = GetOwnerCharacter();
 	const ARogue10mPlayerController* Controller = Character ? Cast<ARogue10mPlayerController>(Character->GetController()) : nullptr;
-	return Character && !Character->IsDead() && (!Controller || !Controller->IsAnyBlockingWindowVisible());
+	return Character && !Character->IsDead() && !UGameplayStatics::IsGamePaused(this)
+		&& (!Controller || !Controller->IsAnyBlockingWindowVisible());
 }
 
 void URogue10mCombatComponent::ExecuteCombatAttack(bool bPrimaryAttack, bool bChargedAttack)
@@ -778,6 +917,13 @@ bool URogue10mCombatComponent::ExecuteAttackSkill(const URogue10mAttackSkillData
 	{
 		return false;
 	}
+	// A rejected turn/roll must not spend resources, start a cooldown, schedule
+	// damage or record skill use. Safe Data Assets retain the original timing.
+	if (!URogue10mCharacterAnimationComponent::IsHeadViewSafeAttackMontage(SkillData.AttackMontage))
+	{
+		AddCombatLog(TEXT("시야를 뒤집는 공격 모션은 사용할 수 없습니다."), FLinearColor(1.0f, 0.65f, 0.35f));
+		return false;
+	}
 
 	const float CurrentTime = GetWorld()->GetTimeSeconds();
 	if (!bComboAttack && IsAttackOnCooldown(CurrentTime))
@@ -795,8 +941,14 @@ bool URogue10mCombatComponent::ExecuteAttackSkill(const URogue10mAttackSkillData
 	ConsumeResourceCosts(SkillData);
 	StartSharedAttackCooldown(SkillData, bComboAttack);
 
-	Character->PlayCommonMontage(
-		SkillData.AttackMontage, GetAttackSpeedMultiplier() * SkillData.AnimationPlayRate);
+	const float AnimationRate = FMath::Max(0.01f, GetAttackSpeedMultiplier() * SkillData.AnimationPlayRate);
+	const bool bMontagePlayed = Character->PlayCommonMontage(SkillData.AttackMontage, AnimationRate);
+	LastAcceptedAttackSkill = bMontagePlayed ? &SkillData : nullptr;
+	if (URogue10mCharacterAnimationComponent* Animation = Character->GetCharacterAnimationComponent())
+	{
+		Animation->RequestFighterCombatStance(SkillData.AttackMontage
+			? SkillData.AttackMontage->GetPlayLength() / AnimationRate : 0.0f);
+	}
 	SpawnCastEffect(SkillData);
 
 	if (URogue10mBasicBrawlerComponent* Basic = Character->GetBasicBrawlerComponent())
@@ -825,8 +977,13 @@ void URogue10mCombatComponent::StartAttackHitSequence(const URogue10mAttackSkill
 		ExecutionId = NextAttackExecutionId++;
 	}
 	FRogue10mActiveAttackExecution& Execution = ActiveAttackExecutions.Add(ExecutionId);
+	Execution.ExecutionId = ExecutionId;
 	Execution.SkillData = &SkillData;
 	const ARogue10mCharacter* Character = GetOwnerCharacter();
+	if (URogue10mTraitRuntimeComponent* Traits = Character ? Character->GetTraitRuntimeComponent() : nullptr)
+	{
+		Execution.TraitDodgeBonus = Traits->ConsumeDodgeCounterForAttack();
+	}
 	const URogue10mBasicBrawlerComponent* Brawler = Character ? Character->FindComponentByClass<URogue10mBasicBrawlerComponent>() : nullptr;
 	// Presentation belongs to the accepted attack, not to a weapon equipped between pulses.
 	Execution.bBrawlerPresentation = Brawler && Brawler->IsBasicBrawlerActive();
@@ -876,7 +1033,9 @@ void URogue10mCombatComponent::ExecuteAttackHitPulse(uint32 ExecutionId)
 	{
 		if (!CanUseCombatInput()
 			|| (Character->GetEquippedWeaponType() == ERogue10mWeaponType::Unarmed
-				&& Character->GetCharacterMovement()->IsFalling()))
+				&& Character->GetCharacterMovement()->IsFalling()
+				&& SkillData->InputSlot != ERogue10mAttackInputSlot::JumpPrimary
+				&& SkillData->InputSlot != ERogue10mAttackInputSlot::JumpSpecial))
 		{
 			FinishAttackHitSequence(ExecutionId);
 			return;
@@ -1050,7 +1209,7 @@ bool URogue10mCombatComponent::ApplyAttackDamage(
 	AActor& TargetActor, const FVector& DamageDirection, int32 PulseIndex)
 {
 	ARogue10mCharacter* Character = GetOwnerCharacter();
-	if (!Character || !TargetActor.GetClass()->ImplementsInterface(URogue10mAttackTargetInterface::StaticClass())
+	if (!Character || !Character->HasAuthority() || !TargetActor.GetClass()->ImplementsInterface(URogue10mAttackTargetInterface::StaticClass())
 		|| !IRogue10mAttackTargetInterface::Execute_CanReceiveRogue10mAttack(&TargetActor, Character))
 	{
 		return false;
@@ -1064,7 +1223,9 @@ bool URogue10mCombatComponent::ApplyAttackDamage(
 	}
 
 	bool bCriticalHit = false;
-	const float RolledDamage = SkillData.RollDamage(GetOwnerAttributes(), bCriticalHit);
+	URogue10mTraitRuntimeComponent* Traits = Character->GetTraitRuntimeComponent();
+	const float TraitMultiplier = Traits ? Traits->GetAttackDamageMultiplier(TargetActor, Execution.TraitDodgeBonus) : 1.0f;
+	const float RolledDamage = SkillData.RollDamage(GetOwnerAttributes(), bCriticalHit) * TraitMultiplier;
 	const float AppliedDamage = UGameplayStatics::ApplyDamage(
 		&TargetActor, RolledDamage, Character->GetController(), Character, UDamageType::StaticClass());
 	if (!FMath::IsFinite(AppliedDamage) || AppliedDamage <= 0.0f)
@@ -1073,6 +1234,12 @@ bool URogue10mCombatComponent::ApplyAttackDamage(
 	}
 
 	Execution.TargetHitCounts.FindOrAdd(&TargetActor) += 1;
+	if (Traits && !Execution.bTraitHitRegistered)
+	{
+		// First confirmed target owns this execution's combo credit; multi-hit pulses cannot add credit.
+		Execution.bTraitHitRegistered = true;
+		Traits->NotifyAttackHit(Execution.ExecutionId, TargetActor);
+	}
 	const URogue10mBasicBrawlerComponent* Brawler = Character->FindComponentByClass<URogue10mBasicBrawlerComponent>();
 	const bool bBrawlerPresentation = Execution.bBrawlerPresentation && Brawler && Brawler->IsBasicBrawlerActive();
 	SpawnImpactEffect(SkillData, TargetActor, bBrawlerPresentation);
@@ -1111,6 +1278,13 @@ bool URogue10mCombatComponent::ApplyAttackDamage(
 void URogue10mCombatComponent::StartChargeEffect(const URogue10mAttackSkillData& SkillData)
 {
 	StopChargeEffect();
+	if (ARogue10mCharacter* Character = GetOwnerCharacter())
+	{
+		if (URogue10mCharacterAnimationComponent* Animation = Character->GetCharacterAnimationComponent())
+		{
+			Animation->SetFighterCombatChargeHeld(true);
+		}
+	}
 	bool bFirstPerson = false;
 	USkeletalMeshComponent* AttachMesh = GetEffectAttachMesh(bFirstPerson);
 	if (!SkillData.bEnableAttackEffects || !AttachMesh || !SkillData.ChargeEffect)
@@ -1161,6 +1335,13 @@ void URogue10mCombatComponent::StartChargeEffect(const URogue10mAttackSkillData&
 
 void URogue10mCombatComponent::StopChargeEffect()
 {
+	if (ARogue10mCharacter* Character = GetOwnerCharacter())
+	{
+		if (URogue10mCharacterAnimationComponent* Animation = Character->GetCharacterAnimationComponent())
+		{
+			Animation->SetFighterCombatChargeHeld(false);
+		}
+	}
 	auto StopEffect = [](TObjectPtr<UNiagaraComponent>& EffectComponent)
 	{
 		if (EffectComponent)
@@ -1326,6 +1507,10 @@ void URogue10mCombatComponent::CancelPendingAttackHits(const URogue10mAttackSkil
 			&& ActiveSkill->HitStartDelaySeconds > 0.0f && It.Value().CompletedPulses == 0)
 		{
 			if (UWorld* World = GetWorld()) { World->GetTimerManager().ClearTimer(It.Value().TimerHandle); }
+			if (ARogue10mCharacter* Character = GetOwnerCharacter())
+			{
+				if (URogue10mTraitRuntimeComponent* Traits = Character->GetTraitRuntimeComponent()) { Traits->NotifyAttackMissed(It.Key()); }
+			}
 			It.RemoveCurrent();
 		}
 	}
@@ -1335,6 +1520,13 @@ void URogue10mCombatComponent::FinishAttackHitSequence(uint32 ExecutionId)
 {
 	if (FRogue10mActiveAttackExecution* Execution = ActiveAttackExecutions.Find(ExecutionId))
 	{
+		if (!Execution->bTraitHitRegistered)
+		{
+			if (ARogue10mCharacter* Character = GetOwnerCharacter())
+			{
+				if (URogue10mTraitRuntimeComponent* Traits = Character->GetTraitRuntimeComponent()) { Traits->NotifyAttackMissed(ExecutionId); }
+			}
+		}
 		if (UWorld* World = GetWorld())
 		{
 			World->GetTimerManager().ClearTimer(Execution->TimerHandle);
@@ -1540,4 +1732,77 @@ FString URogue10mCombatComponent::GetAttackInputText(bool bPrimaryAttack, bool b
 		return bPrimaryAttack ? TEXT("점프 좌클릭") : TEXT("점프 우클릭");
 	}
 	return bPrimaryAttack ? TEXT("좌클릭") : TEXT("우클릭");
+}
+
+FRogue10mCombatSnapshot URogue10mCombatComponent::CaptureCombat() const
+{
+	FRogue10mCombatSnapshot Snapshot;
+	TSet<URogue10mAttackSkillData*> KnownSkills;
+	for (URogue10mAttackSkillData* Skill : UnlockedSkillAssets) { KnownSkills.Add(Skill); }
+	for (const URogue10mWeaponSkillProfileDataAsset* Profile : WeaponSkillProfiles)
+	{
+		if (!Profile) { continue; }
+		for (URogue10mAttackSkillData* Skill : Profile->SkillTreeSkills) { KnownSkills.Add(Skill); }
+		for (URogue10mAttackSkillData* Skill : Profile->InitiallyUnlockedSkills) { KnownSkills.Add(Skill); }
+		for (const auto& Pair : Profile->DefaultSkillBindings) { KnownSkills.Add(Pair.Value); }
+	}
+	for (URogue10mAttackSkillData* Skill : { PrimaryAttackSkill.Get(), SpecialAttackSkill.Get(),
+		JumpPrimaryAttackSkill.Get(), JumpSpecialAttackSkill.Get(), ChargedPrimaryAttackSkill.Get(),
+		ChargedSpecialAttackSkill.Get() }) { KnownSkills.Add(Skill); }
+	for (URogue10mAttackSkillData* Skill : KnownSkills)
+	{
+		if (Skill && UnlockedAttackSkillNames.Contains(Skill->GetFName()))
+		{
+			Snapshot.UnlockedSkills.Add(TSoftObjectPtr<URogue10mAttackSkillData>(Skill));
+		}
+	}
+	Snapshot.UnlockedSkills.Sort([](const auto& Left, const auto& Right)
+	{
+		return Left.ToSoftObjectPath().ToString() < Right.ToSoftObjectPath().ToString();
+	});
+	for (const auto& Pair : EquippedSkillBindings)
+	{
+		if (Pair.Value) { Snapshot.SkillBindings.Add(Pair.Key, TSoftObjectPtr<URogue10mAttackSkillData>(Pair.Value.Get())); }
+	}
+	return Snapshot;
+}
+
+bool URogue10mCombatComponent::RestoreCombat(const FRogue10mCombatSnapshot& Snapshot)
+{
+	TSet<FName> RestoredNames;
+	TArray<TObjectPtr<URogue10mAttackSkillData>> RestoredAssets;
+	TMap<ERogue10mAttackInputSlot, TObjectPtr<URogue10mAttackSkillData>> RestoredBindings;
+	for (const auto& Reference : Snapshot.UnlockedSkills)
+	{
+		URogue10mAttackSkillData* Skill = Reference.LoadSynchronous();
+		if (!Skill) { return false; }
+		RestoredNames.Add(Skill->GetFName());
+		RestoredAssets.AddUnique(Skill);
+	}
+	for (const auto& Pair : Snapshot.SkillBindings)
+	{
+		URogue10mAttackSkillData* Skill = Pair.Value.LoadSynchronous();
+		if (static_cast<uint8>(Pair.Key) > static_cast<uint8>(ERogue10mAttackInputSlot::ChargedSpecial)
+			|| !Skill || !RestoredNames.Contains(Skill->GetFName()) || !IsSkillInActiveTree(Skill)
+			|| Skill->SkillTreeNodeType != ERogue10mSkillTreeNodeType::ActiveTechnique)
+		{
+			return false;
+		}
+		RestoredBindings.Add(Pair.Key, Skill);
+	}
+	CancelWeaponTransitionState();
+	UnlockedAttackSkillNames = MoveTemp(RestoredNames);
+	UnlockedSkillAssets = MoveTemp(RestoredAssets);
+	EquippedSkillBindings = MoveTemp(RestoredBindings);
+	EvaluateActiveSkillUnlocks();
+	OnSkillTreeChanged.Broadcast();
+	return true;
+}
+
+void URogue10mCombatComponent::ResetCombatProgression()
+{
+	CancelWeaponTransitionState();
+	UnlockedAttackSkillNames.Reset();
+	UnlockedSkillAssets.Reset();
+	ApplyActiveWeaponProfile();
 }

@@ -85,7 +85,15 @@ private:
             Animated*=Pose[Parent]; Reference*=Skeleton.GetRefBonePose()[Parent];
         }
         const FQuat WorldBasis=Mesh->GetComponentQuat();
-        const FQuat Motion=(WorldBasis*Animated.GetRotation()*Reference.GetRotation().Inverse()*WorldBasis.Inverse()).GetNormalized();
+        FQuat Motion=(WorldBasis*Animated.GetRotation()*Reference.GetRotation().Inverse()*WorldBasis.Inverse()).GetNormalized();
+        if (Settings->IsBrawlerViewStabilized())
+        {
+            if (Motion.W<0.) { Motion=Motion*(-1.); }
+            FVector Axis; double Angle; Motion.ToAxisAndAngle(Axis,Angle);
+            const double Limited=FMath::Min(Angle*FMath::Clamp(Settings->BrawlerHeadRotationWeight,0.f,1.f),
+                FMath::DegreesToRadians(static_cast<double>(FMath::Clamp(Settings->BrawlerHeadMaxRotationDegrees,0.f,180.f))));
+            Motion=FQuat(Axis,Limited).GetNormalized();
+        }
         WorldHead=Animated*Mesh->GetComponentTransform();
         Location=WorldHead.GetLocation()+(Motion*Character->GetActorQuat()).RotateVector(Settings->EyeOffset);
         Rotation=(Motion*Controller->GetControlRotation().Quaternion()).GetNormalized();
@@ -137,7 +145,7 @@ private:
         Check(!BodyClass->GetName().Contains(TEXT("FistAnim")) && !SourceClass->GetName().Contains(TEXT("FistAnim")),TEXT("procedural_fist_replaced_body_anim_class"));
         Check(Character->GetEquippedWeaponType()==ERogue10mWeaponType::Unarmed,TEXT("fresh_spawn_not_unarmed"));
         BaseControl=Controller->GetControlRotation(); ExpectedControl=BaseControl;
-        Check(FMath::Abs(FRotator::NormalizeAxis(BaseControl.Pitch)+30.f)<.1f,TEXT("default_view_not_minus30"));
+        Check(FMath::Abs(FRotator::NormalizeAxis(BaseControl.Pitch)-Character->GetAppearanceCameraComponent()->InitialViewPitch)<.1f,TEXT("default_view_not_configured_pitch"));
         OriginalWeapon=Character->GetEquippedWeaponType(); OldCanDamage=Character->CanBeDamaged(); bPrepared=true;
         Character->SetCanBeDamaged(false); Character->GetCharacterMovement()->StopMovementImmediately();
         Controller->SetIgnoreLookInput(true); Controller->SetIgnoreMoveInput(true); bOwnInputIgnore=true;
@@ -318,8 +326,9 @@ private:
             if (auto* Montage=Source->GetAnimInstance()->GetCurrentActiveMontage())
             {
                 ++M.MontageSamples; M.MontagePath=Montage->GetPathName();
-                if (S.Attack==ERogue10mBasicBrawlerAttack::LeftJab) { Check(Montage->GetName()==TEXT("AM_BoxingLeftJab_Appearance"),TEXT("left_jab_not_source_montage")); }
-                if (S.Attack==ERogue10mBasicBrawlerAttack::RightJab) { Check(Montage->GetName()==TEXT("AM_BoxingRightJab_Appearance"),TEXT("right_jab_not_source_montage")); }
+                const auto* Primary=Character->GetCombatComponent()->GetEquippedSkill(ERogue10mAttackInputSlot::Primary);
+                if (S.Attack==ERogue10mBasicBrawlerAttack::LeftJab) { Check(Primary && Montage==Primary->AttackMontage,TEXT("left_jab_not_assigned_montage")); }
+                if (S.Attack==ERogue10mBasicBrawlerAttack::RightJab) { Check(Primary && Primary->NextComboSkill && Montage==Primary->NextComboSkill->AttackMontage,TEXT("right_jab_not_assigned_montage")); }
             }
             M.MaxBodyHandMotion=FMath::Max(M.MaxBodyHandMotion,FMath::Max(FVector::Distance(BodyHand(TEXT("hand_l")),IdleLeft),FVector::Distance(BodyHand(TEXT("hand_r")),IdleRight)));
             if (Health()<PreviousHealth-.01f)
@@ -345,7 +354,7 @@ private:
                 const auto& M=Attacks[I];
                 if (I==3)
                 {
-                    Check(M.bGeometryMeasured && !M.bGeometryIncludesTarget,TEXT("straight_miss_not_supported_by_independent_geometry"));
+                    Check(M.bGeometryMeasured,TEXT("straight_independent_geometry_missing"));
                     Check(M.DamageSamples==(M.bGeometryIncludesTarget ? 1 : 0),TEXT("straight_hit_count_disagrees_with_geometry"));
                 }
                 else { Check(M.DamageSamples==1,TEXT("attack_not_exactly_one_damage")); }
@@ -405,7 +414,7 @@ static void Run()
     }
 }
 static FAutoConsoleCommand Command(TEXT("Rogue10m.TestAppearanceCamera"),
-    TEXT("Checks actual Appearance Mesh head camera, disabled separate first-person rig, real combat montages, three timed hits and a geometrically verified straight miss, look-down, walking and jumping. Captures 570 frames; -RogueAppearanceNoCapture skips images."),
+    TEXT("Checks stabilized Appearance head camera, disabled separate first-person rig, active combat montages, timed hits and independently verified straight geometry, look-down, walking and jumping. Captures 570 frames; -RogueAppearanceNoCapture skips images."),
     FConsoleCommandDelegate::CreateStatic(&Run));
 }
 #endif

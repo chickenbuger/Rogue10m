@@ -1,0 +1,184 @@
+{
+  "reviewer": "stable_qa_review, verification role 1",
+  "run": "stable_render02",
+  "verdict": "PASS numeric integration and 1800-frame native screenshot completeness. Selected native PNGs visually support stable head/neck and connected limb shapes in V inspection. Full first-person finger/foot surface or all-skin ground contact certification is not claimed.",
+  "frames_csv_count": 1800,
+  "results_csv_count": 24,
+  "reported_assertions": 489428,
+  "reported_failures": 0,
+  "failure_reasons_empty": true,
+  "screenshot_count": 1800,
+  "screenshot_indices_continuous_0_1799": true,
+  "screenshot_dimensions": [
+    [
+      1280,
+      720
+    ]
+  ],
+  "invalid_png_headers": [],
+  "duration_at_fixed30fps_seconds": 60.0,
+  "csv_contract_violation_counts": {
+    "source_head": 0,
+    "appearance_head": 0,
+    "camera_head": 0,
+    "camera_position": 0
+  },
+  "case_frames": [
+    75
+  ],
+  "default_minus20_cases": [
+    {
+      "case": "default_idle_down20",
+      "frames": "75",
+      "paired_samples": "61",
+      "attack_samples": "0",
+      "accepted_uses": "0",
+      "requested_attack_speed": "1.000000",
+      "observed_montage_rate": "1.000000",
+      "first_damage_error_s": "0.000000000",
+      "damage_pulses": "0",
+      "speed_peak_cm_s": "0.000000",
+      "ground_rate_peak": "1.000000",
+      "foot_travel_cm": "0.386376",
+      "air_samples": "0",
+      "actor_jump_height_cm": "0.000000",
+      "max_source_head_deg": "1.999949692",
+      "max_appearance_head_deg": "1.999949692",
+      "max_camera_deg": "1.999949692",
+      "max_local_offset_cm": "0.999998845"
+    },
+    {
+      "case": "default_jab_down20",
+      "frames": "75",
+      "paired_samples": "47",
+      "attack_samples": "19",
+      "accepted_uses": "1",
+      "requested_attack_speed": "1.000000",
+      "observed_montage_rate": "1.500000",
+      "first_damage_error_s": "0.006666676",
+      "damage_pulses": "1",
+      "speed_peak_cm_s": "0.000000",
+      "ground_rate_peak": "1.000000",
+      "foot_travel_cm": "18.745944",
+      "air_samples": "0",
+      "actor_jump_height_cm": "0.000000",
+      "max_source_head_deg": "2.999982529",
+      "max_appearance_head_deg": "2.999982529",
+      "max_camera_deg": "2.999982529",
+      "max_local_offset_cm": "1.499984955"
+    },
+    {
+      "case": "inspection_jab_down20",
+      "frames": "75",
+      "paired_samples": "47",
+      "attack_samples": "19",
+      "accepted_uses": "1",
+      "requested_attack_speed": "1.000000",
+      "observed_montage_rate": "1.500000",
+      "first_damage_error_s": "0.006666676",
+      "damage_pulses": "1",
+      "speed_peak_cm_s": "0.000000",
+      "ground_rate_peak": "1.000000",
+      "foot_travel_cm": "18.745944",
+      "air_samples": "0",
+      "actor_jump_height_cm": "0.000000",
+      "max_source_head_deg": "2.999982529",
+      "max_appearance_head_deg": "2.999982529",
+      "max_camera_deg": "2.999982529",
+      "max_local_offset_cm": "1.499984956"
+    }
+  ],
+  "reported_metrics": {
+    "frames": 1800.0,
+    "cases": 24.0,
+    "expected_cases": 24.0,
+    "assertions": 489428.0,
+    "failures": 0.0,
+    "negative_disabled_head": 0.0,
+    "max_late_mouse_oracle_error_deg": 2.415e-06,
+    "max_same_frame_repeat_error_cm": 0.0,
+    "max_same_frame_repeat_error_deg": 2.958e-06,
+    "atomic_capsule_world_translation_error_cm": 0.0,
+    "late_component_basis_transport_error_deg": 0.0,
+    "max_paired_source_lowerbody_rotation_error_deg": 2.958e-06,
+    "max_source_render_local_translation_error_cm": 0.0,
+    "max_source_render_local_scale_error": 0.0,
+    "max_source_wrist_finger_local_rotation_error_deg": 3.818e-06,
+    "max_appearance_limb_length_change_percent": 5.157e-06,
+    "NOTE": "Actual selected production pawn, full Appearance retarget mesh, fixed-step ground physics and real attack/move/sprint/jump/dodge/V handlers. Source and visible head quaternions are composed from raw evaluated local bones against skeleton reference, independently of camera helper. Residual total quaternion caps are 2/4/3 degrees; body-local position caps are 1/2/1.5cm. Late input uses actual head delta minus independent control/actor aim plus new mouse, exactly once; same-pose actor yaw +80 and control pitch70 require exact conjugation into the current component basis. Source/baseline share movement prerequisite and unchanged AnimBP, with baseline aim and mouse-head disabled. Source render-bone local T/S, wrist/finger rotations and lower body must match same phase. Appearance checks finite normalized local poses and eight limb segment lengths against its same-phase retarget baseline, without claiming all target local T/S or finger preservation; camera reads and CalcCamera(0) must not advance filters. MoveSpeed and movement max speed are set to identical fixture tuning and actual movement input generates measured velocity. Native rate and actual compiled ground BlendSpace player rate plus visible foot travel are measured; attack speed changes through real attributes and accepted montage clock plus actual target damage are observed. Mesh surface quality requires complementary rendered review."
+  },
+  "native_png_visual_review": [
+    {
+      "frame": 255,
+      "path": "D:\\Project\\Rogue10m\\Saved\\Screenshots\\WindowsEditor\\MouseHeadStable\\stable_render02\\frame_0255.png",
+      "sha256": "1928B857DB7D92F82C4D610F1BC189F587857BF354F73CE93E0DAB167FC3B8F1",
+      "observation_ko": "걷기 실제 장면. 1인칭의 손·발은 화면 하단/HUD 때문에 표면 관찰 범위가 제한된다."
+    },
+    {
+      "frame": 1305,
+      "path": "D:\\Project\\Rogue10m\\Saved\\Screenshots\\WindowsEditor\\MouseHeadStable\\stable_render02\\frame_1305.png",
+      "sha256": "4262AFB70E92A5BFE27B1EA554801CD7BC4C04A6A15CFC68F0C7BF6F2A97B6EC",
+      "observation_ko": "V 걷기. 팔 swing과 다리 cycle, 머리·목의 연결이 보이며 선택 프레임에서 관절 길이 붕괴나 뒤돌기는 관찰되지 않는다."
+    },
+    {
+      "frame": 1595,
+      "path": "D:\\Project\\Rogue10m\\Saved\\Screenshots\\WindowsEditor\\MouseHeadStable\\stable_render02\\frame_1595.png",
+      "sha256": "55EA4A6B3D4462EA3C9CD62CB15C4AA7089D8CD6569840FA71FAEC2574F0BDB6",
+      "observation_ko": "현재 기본 -20도 idle. 정면은 확보되지만 내려 둔 팔은 대부분 시야 아래에 있다."
+    },
+    {
+      "frame": 1666,
+      "path": "D:\\Project\\Rogue10m\\Saved\\Screenshots\\WindowsEditor\\MouseHeadStable\\stable_render02\\frame_1666.png",
+      "sha256": "92AB3ADC1BB1F084964CEAA551101F48D5FFC878092CEE32612E425FD001376D",
+      "observation_ko": "현재 기본 -20도 잽 준비. 팔 일부가 아래에서 들어오며 HUD가 대부분을 가린다."
+    },
+    {
+      "frame": 1669,
+      "path": "D:\\Project\\Rogue10m\\Saved\\Screenshots\\WindowsEditor\\MouseHeadStable\\stable_render02\\frame_1669.png",
+      "sha256": "E3441A6EA72FE559DFD9CDCF26EBDB319ED11BE375DD6A3078A99988B4326809",
+      "observation_ko": "현재 기본 -20도 잽 실제 피해 표시. 공격 승인/피해는 CSV와 일치하나 1인칭 손가락 표면 전체는 HUD 가림으로 판정하지 않는다."
+    },
+    {
+      "frame": 1682,
+      "path": "D:\\Project\\Rogue10m\\Saved\\Screenshots\\WindowsEditor\\MouseHeadStable\\stable_render02\\frame_1682.png",
+      "sha256": "700E8D5DB08DB3CC53567AC4482180163F82132947EE4332AE34F0A6AD0C6AC9",
+      "observation_ko": "현재 기본 -20도 잽 회복. 시야가 크게 회전하지 않고 정면 구도를 유지한다."
+    },
+    {
+      "frame": 1734,
+      "path": "D:\\Project\\Rogue10m\\Saved\\Screenshots\\WindowsEditor\\MouseHeadStable\\stable_render02\\frame_1734.png",
+      "sha256": "22BF9851EDAE5C8A157A725E0C972F64BA57A470958DEA216E0918BA735E2DB8",
+      "observation_ko": "V 기본 -20도 대기. 머리·목, 어깨, 팔/다리 외형 연결이 보인다."
+    },
+    {
+      "frame": 1743,
+      "path": "D:\\Project\\Rogue10m\\Saved\\Screenshots\\WindowsEditor\\MouseHeadStable\\stable_render02\\frame_1743.png",
+      "sha256": "ECAE438020A00618E2A29DE127C1E791108082E92ED054990BD0FC2FB5040037",
+      "observation_ko": "V 잽. 머리 방향과 몸의 공격 제스처가 분리되어 있고 선택 프레임의 팔/다리 관절은 이어져 있다."
+    },
+    {
+      "frame": 1770,
+      "path": "D:\\Project\\Rogue10m\\Saved\\Screenshots\\WindowsEditor\\MouseHeadStable\\stable_render02\\frame_1770.png",
+      "sha256": "3B46344247E66B1674291800A85FDF302ECB101711703EC4A72BD2FF9363456D",
+      "observation_ko": "V 잽 이후 guard. 동일 머리 방향과 관절 연결을 확인했다."
+    }
+  ],
+  "capture_conditions": {
+    "motion_blur": "r.MotionBlurQuality=0 for this QA process only, before test console command; project rendering config unchanged.",
+    "temporal_controls": "Every render case keeps the same 75-frame timing and frame43 hook release as runtime; actual input counts, cooldown, snapshot rates and damage assertions remain.",
+    "floor": "Transient collision floor was placed 1000cm above the existing map. It has no visible floor mesh, so visible test-map floor/object distance cannot certify feet planting."
+  },
+  "observed_limits": [
+    "Default -20-degree full-body first-person hands/arms are largely below the playfield or obscured by the existing bottom HUD. Do not claim all first-person finger surface deformation was visually certified. This review does not change camera framing or HUD.",
+    "V views expose head/neck and limb silhouette, but rear views and HUD also limit distal finger/foot detail.",
+    "Numeric bone/length assertions and selected still review do not certify every animation frame, all appearance skins, every LOD or material weighting.",
+    "Controlled case transitions intentionally change mouse pitch/yaw, actor position and V mode. Such cuts in the QA movie are not authored head-spin animation."
+  ],
+  "provenance_sha256": {
+    "tmp/mouse-head-stable/stable_render02/frames.csv": "EB4BF4FD1181143042B8B91D9C37A55A0CFCF4654C0CD3A4C5BE8A1DD1AC3BBF",
+    "tmp/mouse-head-stable/stable_render02/results.csv": "6549002A39FFB29E7CAD9F3B4F9C68D261F92D4BC72FB6C40A4C578566E20CD3",
+    "tmp/mouse-head-stable/stable_render02/metrics.txt": "63C8CB0EFC5BF74F437A6309BF44DCDC0BE9090BF471722D38C506BD25A3230E",
+    "tmp/mouse-head-stable/stable_render02/failure-reasons.txt": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "Feature/doc/evidence/mouse-head-stable-locomotion-20261013/stable_render02.log": "D2B323CFA63D3146E50D156DBCEBE16D1CC129969FB0588B06D26F9EF9F86826"
+  }
+}

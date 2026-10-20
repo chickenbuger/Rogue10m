@@ -12,6 +12,12 @@
 #include "GameFramework/PlayerController.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mFirstPersonPresentationComponent.h"
+#include "Animation/AnimInstance.h"
+#include "Animation/AnimMontage.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Rogue10mAttackSkillData.h"
+#include "Rogue10mCombatComponent.h"
+#include "Rogue10mFighterCombatStanceAnimInstance.h"
 
 URogue10mAppearanceCameraComponent::URogue10mAppearanceCameraComponent()
 {
@@ -44,6 +50,10 @@ bool URogue10mAppearanceCameraComponent::CacheHeadReference(USkeletalMeshCompone
  FTransform Head = Pose[HeadIndex];
  for (int32 Parent = Skeleton.GetParentIndex(HeadIndex); Parent != INDEX_NONE; Parent = Skeleton.GetParentIndex(Parent)) { Head *= Pose[Parent]; }
  ReferenceHeadRotation = Head.GetRotation().GetNormalized();
+ ReferenceHeadLocation = Head.GetLocation();
+ SmoothedHeadPositionOffset = FVector::ZeroVector;
+ HeadPositionFrame = MAX_uint64; bHeadPositionInitialized = false;
+ bEvaluatedPoseMouseHead = false;
  return !Head.ContainsNaN();
 }
 void URogue10mAppearanceCameraComponent::RefreshAppearanceCamera()
@@ -81,6 +91,10 @@ void URogue10mAppearanceCameraComponent::RefreshAppearanceCamera()
    bSavedArmsTick = Arms->IsComponentTickEnabled(); bSavedArmsPause = Arms->bPauseAnims;
   }
   bApplied = true;
+  // Retargeted appearance can still hold the previous pose after its source updates.
+  // Pair its actual finalized pose with the source basis used by that evaluation.
+  HeadPoseFinalizedHandle = Mesh->RegisterOnBoneTransformsFinalizedDelegate(
+   FOnBoneTransformsFinalizedMultiCast::FDelegate::CreateUObject(this, &URogue10mAppearanceCameraComponent::CaptureEvaluatedHeadBasis));
  }
  Mesh->SetOwnerNoSee(false); Mesh->SetOnlyOwnerSee(false);
  Mesh->SetVisibility(true, false); Mesh->SetHiddenInGame(false, false);
@@ -140,22 +154,170 @@ bool URogue10mAppearanceCameraComponent::ReadAnimatedHead(FTransform& OutWorldHe
  OutWorldHead = Head * Mesh->GetComponentTransform();
  return !OutWorldMotion.ContainsNaN() && !OutWorldHead.ContainsNaN();
 }
+
+void URogue10mAppearanceCameraComponent::CaptureEvaluatedHeadBasis()
+{
+ // Bone finalization callbacks run on the game thread, after source PostEvaluate.
+ const auto* Character = Cast<ARogue10mCharacter>(GetOwner());
+ USkeletalMeshComponent* Source = Character ? Character->GetAnimationPlaybackMesh() : nullptr;
+ const auto* Animation = Source ? Cast<URogue10mFighterCombatStanceAnimInstance>(Source->GetAnimInstance()) : nullptr;
+ EvaluatedPoseSourceMesh = Source;
+ bEvaluatedPoseMouseHead = bApplied && Animation && Animation->bMouseDrivenHeadApplied;
+ EvaluatedPoseWorldAim = bEvaluatedPoseMouseHead ? Animation->MouseDrivenHeadWorldAim : FQuat::Identity;
+ EvaluatedPoseSourceRotation = bEvaluatedPoseMouseHead ? Animation->MouseDrivenHeadSourceRotation : FQuat::Identity;
+}
+bool URogue10mAppearanceCameraComponent::IsBrawlerViewStabilized() const
+{
+ const auto* Character = Cast<ARogue10mCharacter>(GetOwner());
+ if (!Character || !bStabilizeBrawlerHeadMotion) { return false; }
+ const ERogue10mWeaponType Weapon = Character->GetEquippedWeaponType();
+ return Weapon == ERogue10mWeaponType::Unarmed || Weapon == ERogue10mWeaponType::Knuckle;
+}
+
+FRogue10mHeadMotionSettings URogue10mAppearanceCameraComponent::GetHeadMotionSettings() const
+{
+ FRogue10mHeadMotionSettings Settings;
+ auto Safe = [](float Value, float Fallback, float Maximum)
+ {
+  return FMath::IsFinite(Value) ? FMath::Clamp(Value, 0.0f, Maximum) : Fallback;
+ };
+ Settings.RotationWeight = Safe(HeadAnimationRotationWeight, 0.15f, 1.0f);
+ Settings.InterpolationSpeed = Safe(HeadMotionInterpolationSpeed, 18.0f, 60.0f);
+ Settings.NeckAimWeight = Safe(MouseHeadNeckAimWeight, 0.35f, 1.0f);
+ const auto* Character = Cast<ARogue10mCharacter>(GetOwner());
+ const UCharacterMovementComponent* Movement = Character ? Character->GetCharacterMovement() : nullptr;
+ const URogue10mCombatComponent* Combat = Character ? Character->GetCombatComponent() : nullptr;
+ const URogue10mAttackSkillData* Skill = Combat ? Combat->GetLastAcceptedAttackSkill() : nullptr;
+ const UAnimMontage* Attack = Skill ? Skill->AttackMontage.Get() : nullptr;
+ const USkeletalMeshComponent* Source = Character ? Character->GetAnimationPlaybackMesh() : nullptr;
+ const UAnimInstance* Animation = Source ? Source->GetAnimInstance() : nullptr;
+ const FAnimMontageInstance* AttackInstance = Animation && Attack ? Animation->GetInstanceForMontage(Attack) : nullptr;
+ const bool bAttackContributes = Attack && Animation && (Animation->GetCurrentActiveMontage() == Attack
+  || (AttackInstance && AttackInstance->GetWeight() > UE_SMALL_NUMBER));
+ const bool bCharging = Combat && Combat->IsAttackChargeHeld();
+ const auto* NativeAnimation = Cast<URogue10mFighterCombatStanceAnimInstance>(Animation);
+ const bool bDodgeContributes = NativeAnimation && NativeAnimation->IsViewAimDodgeActive();
+ const bool bAirborne = Movement && Movement->IsFalling();
+ const bool bRunning = Character && Movement && Character->IsSprinting() && Movement->Velocity.Size2D() > 10.0f;
+ if (bAttackContributes || bCharging || bDodgeContributes || bAirborne)
+ {
+  Settings.MaxRotationDegrees = Safe(AttackingHeadMaxRotationDegrees, 3.0f, 3.0f);
+  Settings.MaxPositionOffsetCm = Safe(AttackingHeadMaxPositionOffset, 1.5f, 5.0f);
+ }
+ else if (bRunning)
+ {
+  Settings.MaxRotationDegrees = Safe(RunningHeadMaxRotationDegrees, 4.0f, 4.0f);
+  Settings.MaxPositionOffsetCm = Safe(RunningHeadMaxPositionOffset, 2.0f, 5.0f);
+ }
+ else
+ {
+  Settings.MaxRotationDegrees = Safe(WalkingHeadMaxRotationDegrees, 2.0f, 2.0f);
+  Settings.MaxPositionOffsetCm = Safe(WalkingHeadMaxPositionOffset, 1.0f, 5.0f);
+ }
+ return Settings;
+}
+
+bool URogue10mAppearanceCameraComponent::ComposeCameraTransform(const FTransform& AnimatedHead,
+ const FQuat& WorldHeadMotion, const FQuat& ActorRotation, const FQuat& ControlRotation,
+ const FVector& Offset, float MotionWeight, float MaxMotionDegrees, FTransform& OutCamera)
+{
+ if (AnimatedHead.ContainsNaN() || WorldHeadMotion.ContainsNaN() || ActorRotation.ContainsNaN()
+  || ControlRotation.ContainsNaN() || Offset.ContainsNaN() || !FMath::IsFinite(MotionWeight)
+  || !FMath::IsFinite(MaxMotionDegrees) || WorldHeadMotion.SizeSquared() < UE_SMALL_NUMBER
+  || ActorRotation.SizeSquared() < UE_SMALL_NUMBER || ControlRotation.SizeSquared() < UE_SMALL_NUMBER) { return false; }
+ const FQuat RawMotion = WorldHeadMotion.GetNormalized();
+ const double Angle = RawMotion.AngularDistance(FQuat::Identity);
+ const double Limit = FMath::DegreesToRadians(FMath::Clamp(MaxMotionDegrees, 0.0f, 180.0f));
+ const double Weight = Angle > UE_SMALL_NUMBER
+  ? FMath::Min(static_cast<double>(FMath::Clamp(MotionWeight, 0.0f, 1.0f)), Limit / Angle)
+  : 0.0;
+ const FQuat ViewMotion = FQuat::Slerp(FQuat::Identity, RawMotion, Weight).GetNormalized();
+ // Keep the actual animated head position. Only the eye's orientation and its small
+ // offset are stabilized; no body pose, root movement or mouse input is filtered.
+ const FQuat HeadForward = (ViewMotion * ActorRotation.GetNormalized()).GetNormalized();
+ OutCamera = FTransform((ViewMotion * ControlRotation.GetNormalized()).GetNormalized(),
+  AnimatedHead.GetLocation() + HeadForward.RotateVector(Offset));
+ return !OutCamera.ContainsNaN();
+}
+
+bool URogue10mAppearanceCameraComponent::ReadCameraTransform(FTransform& OutCamera) const
+{
+ const auto* Character = Cast<ARogue10mCharacter>(GetOwner());
+ FTransform Head;
+ FQuat Motion;
+ if (!bApplied || !Character || !ReadAnimatedHead(Head, Motion)) { return false; }
+ const USkeletalMeshComponent* Source = Character->GetAnimationPlaybackMesh();
+ const auto* SourceAnimation = Source ? Cast<URogue10mFighterCombatStanceAnimInstance>(Source->GetAnimInstance()) : nullptr;
+ // For a direct source body, ReadAnimatedHead has already waited for that very pose.
+ // A separate appearance uses only its finalized-pose cache, never a newer source pose.
+ const bool bDirectSourceBody = Source && Source == AppliedMesh.Get();
+ const USkeletalMeshComponent* PoseSource = bDirectSourceBody ? Source : EvaluatedPoseSourceMesh.Get();
+ const bool bPoseMouseHead = bDirectSourceBody
+  ? SourceAnimation && SourceAnimation->bMouseDrivenHeadApplied : bEvaluatedPoseMouseHead;
+ const FQuat PoseWorldAim = bDirectSourceBody && SourceAnimation ? SourceAnimation->MouseDrivenHeadWorldAim : EvaluatedPoseWorldAim;
+ const FQuat PoseSourceRotation = bDirectSourceBody && SourceAnimation ? SourceAnimation->MouseDrivenHeadSourceRotation : EvaluatedPoseSourceRotation;
+ const bool bMouseHead = PoseSource && bPoseMouseHead && !PoseWorldAim.ContainsNaN() && !PoseSourceRotation.ContainsNaN()
+  && PoseWorldAim.SizeSquared() > UE_SMALL_NUMBER && PoseSourceRotation.SizeSquared() > UE_SMALL_NUMBER;
+ if (bMouseHead)
+ {
+  // Local bone poses can remain unchanged while actor/component rotation changes.
+  // Transport the evaluated aim to that same current component space before removal.
+  const FQuat Transport = (PoseSource->GetComponentQuat() * PoseSourceRotation.Inverse()).GetNormalized();
+  const FQuat CurrentPoseAim = (Transport * PoseWorldAim * Transport.Inverse()).GetNormalized();
+  Motion = (Motion * CurrentPoseAim.Inverse()).GetNormalized();
+ }
+ if (bStabilizeAllHeadMotion)
+ {
+  const FRogue10mHeadMotionSettings Settings = GetHeadMotionSettings();
+  const USkeletalMeshComponent* Mesh = AppliedMesh.Get();
+  if (!Mesh) { return false; }
+  const FTransform MeshWorld = Mesh->GetComponentTransform();
+  const FVector RawOffset = MeshWorld.InverseTransformPosition(Head.GetLocation()) - ReferenceHeadLocation;
+  const FVector DesiredOffset = RawOffset.GetClampedToMaxSize(Settings.MaxPositionOffsetCm);
+  if (HeadPositionFrame != GFrameCounter)
+  {
+   const float Delta = GetWorld() ? GetWorld()->GetDeltaSeconds() : 0.0f;
+   const float Follow = Settings.InterpolationSpeed > 0.0f && FMath::IsFinite(Delta)
+    ? 1.0f - FMath::Exp(-Settings.InterpolationSpeed * FMath::Max(Delta, 0.0f)) : 1.0f;
+   SmoothedHeadPositionOffset = bHeadPositionInitialized
+    ? FMath::Lerp(SmoothedHeadPositionOffset, DesiredOffset, Follow) : DesiredOffset;
+   bHeadPositionInitialized = true; HeadPositionFrame = GFrameCounter;
+  }
+  SmoothedHeadPositionOffset = SmoothedHeadPositionOffset.GetClampedToMaxSize(Settings.MaxPositionOffsetCm);
+  // The mesh/capsule world travel is preserved, including jumps. Only local head motion
+  // is bounded around the neutral head anchor; skeletal translations remain untouched.
+  Head.SetLocation(MeshWorld.TransformPosition(ReferenceHeadLocation + SmoothedHeadPositionOffset));
+  if (!ComposeCameraTransform(Head, Motion, Character->GetActorQuat(),
+   Character->GetControlRotation().Quaternion(), EyeOffset,
+   bMouseHead ? 1.0f : Settings.RotationWeight, Settings.MaxRotationDegrees, OutCamera)) { return false; }
+  // The eye offset follows the mouse-driven head, too. Capsule travel and current
+  // mouse rotation are never interpolated by the local animation-position filter.
+  OutCamera.SetLocation(Head.GetLocation() + OutCamera.GetRotation().RotateVector(EyeOffset));
+  return !OutCamera.ContainsNaN();
+ }
+ const bool bStabilize = IsBrawlerViewStabilized();
+ return ComposeCameraTransform(Head, Motion, Character->GetActorQuat(),
+  Character->GetControlRotation().Quaternion(), EyeOffset,
+  bMouseHead ? 1.0f : (bStabilize ? BrawlerHeadRotationWeight : 1.0f),
+  bStabilize ? BrawlerHeadMaxRotationDegrees : 180.0f, OutCamera);
+}
+
 void URogue10mAppearanceCameraComponent::UpdateCameraFromAppearance()
 {
  RefreshAppearanceCamera();
  auto* Character = Cast<ARogue10mCharacter>(GetOwner());
- if (!bApplied || !Character || EyeOffset.ContainsNaN()) { return; }
- FTransform Head;
- FQuat Motion;
- if (!ReadAnimatedHead(Head, Motion)) { return; }
- const FQuat Control = Character->GetControlRotation().Quaternion();
- if (Control.ContainsNaN()) { return; }
- const FQuat HeadForward = (Motion * Character->GetActorQuat()).GetNormalized();
- Character->GetFirstPersonCameraComponent()->SetWorldLocationAndRotation(
-  Head.GetLocation() + HeadForward.RotateVector(EyeOffset), (Motion * Control).GetNormalized());
+ FTransform View;
+ if (!Character || !ReadCameraTransform(View)) { return; }
+ Character->GetFirstPersonCameraComponent()->SetWorldLocationAndRotation(View.GetLocation(), View.GetRotation());
 }
 void URogue10mAppearanceCameraComponent::Restore()
 {
+ if (USkeletalMeshComponent* Mesh = AppliedMesh.Get(); Mesh && HeadPoseFinalizedHandle.IsValid())
+ {
+  Mesh->UnregisterOnBoneTransformsFinalizedDelegate(HeadPoseFinalizedHandle);
+ }
+ HeadPoseFinalizedHandle.Reset(); EvaluatedPoseSourceMesh.Reset(); bEvaluatedPoseMouseHead = false;
+ EvaluatedPoseWorldAim = EvaluatedPoseSourceRotation = FQuat::Identity;
  if (ShadowComponent) { ShadowComponent->RestoreShadow(); }
  RestoreInspectionParts();
  bThirdPersonInspection = false;
@@ -188,6 +350,7 @@ void URogue10mAppearanceCameraComponent::Restore()
   }
  }
  AppliedMesh.Reset(); ReferenceMesh.Reset(); HeadIndex = INDEX_NONE; bApplied = false; bHidHead = false;
+ SmoothedHeadPositionOffset = FVector::ZeroVector; HeadPositionFrame = MAX_uint64; bHeadPositionInitialized = false;
 }
 
 void URogue10mAppearanceCameraComponent::ToggleThirdPersonInspection()

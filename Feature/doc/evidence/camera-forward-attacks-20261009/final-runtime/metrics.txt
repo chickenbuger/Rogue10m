@@ -1,0 +1,11 @@
+frames=1572
+assertions=4977
+failures=0
+unique_attack_skills=13
+completed_cases=15
+expected_cases=15
+actual_health_pulses=21
+atomic_camera_delta_cm=7.000000000
+atomic_camera_error_cm=0.000000000
+max_cached_camera_error_cm=0.000022562
+NOTE=Fresh first-person pitch is observed before writes. Idle old-eye4/current-eye-3 renders retain natural animation at different recorded frames; same-pose atomic CalcCamera comparison proves the 7cm delta. Source and visible retarget bones are independently composed through parent local transforms and component world transform. Core straight punches require forward extension; hooks/kicks/area styles report contact directions. Actual ground physics and bound combat handlers are used; no synthetic airborne mode, pose or animation clock reset. Circle damage is compared to geometry and may legally include rear targets.

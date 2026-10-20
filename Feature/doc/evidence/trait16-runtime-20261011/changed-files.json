@@ -1,0 +1,232 @@
+{
+  "branch": "Sprint#5-28-monster-effects-chase",
+  "scope_note": "Known trait files compared to pre-task baseline. Shared Character/Combat/Monster files may also contain concurrent work; no claim of exclusive ownership.",
+  "source_file_count": 28,
+  "source": [
+    {
+      "path": "Source/Rogue10m/Character/Rogue10mCharacter.cpp",
+      "baseline_sha256": "6593425710896009d80f261f0e298252938d789500c470f1cf9206d075a6c173",
+      "current_sha256": "913d0a8bc0c2ad1fb02f0cc4722d5b5b4a03b3b96cb5678ba53ffbb10e74271a",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Character/Rogue10mCharacter.h",
+      "baseline_sha256": "9939c2bf22acc45b7cd70217d4d0b23d77f7ea1213ce7d773666e37dd0c6008e",
+      "current_sha256": "7053280497a3799bd942f828a84c781835368520d0b42e9677899a84575b8f64",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Character/Rogue10mCharacterStats.h",
+      "baseline_sha256": "e190a7e2f5831b8887bd1a5eb546befc23bf0619c1b742c88ec3427bc9d9d567",
+      "current_sha256": "b79b624e0135e24627be9f358aab3df47ede3ff3865d535e8a7cb18b461621d0",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Components/Rogue10mCombatComponent.cpp",
+      "baseline_sha256": "6ab2da4121ada0d3a7266e1d4cb54e44ebcd6e613801cef14fedc6a00fa1b6d0",
+      "current_sha256": "09054612019a846d6055cee37cb5060d11705c8d1e9fb8d4536e5d0d178150f3",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Components/Rogue10mCombatComponent.h",
+      "baseline_sha256": "dc1ce4a0d4cea13bfac6b8d50729e5070c66fc60a7ddb482f8b1a24fba51e730",
+      "current_sha256": "0166bf39c5175cf544510dc664e38332b4ee478b6ae1744d098a76e80c8046d2",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Components/Rogue10mInventoryComponent.cpp",
+      "baseline_sha256": "c40d38bacb616ef87eac5e3353c9e2814cb184f4451226439a1178af74b641f4",
+      "current_sha256": "efd03c84b46ee2bac22c5f7ba805a46d65e116214e642e55f68d3321ee0f33e2",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Components/Rogue10mTownProgressionComponent.cpp",
+      "baseline_sha256": "71bde807bd636427c72dbe4f069842bce66e907dc4c3a7fb2722cdc12dcb4ae8",
+      "current_sha256": "0db72dd334ab4b142e5c91abf2b47b8ce5ac9b4418055c939165cb96d5515eb8",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Components/Rogue10mTownProgressionComponent.h",
+      "baseline_sha256": "10f91c213dc36cd93babd019d15c96d8657911fda4d0f354a564407c7633db9b",
+      "current_sha256": "705754252ed9ed56497c2eb44c754ad16a0c6ac6923831309e638075db9ad567",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Components/Rogue10mTraitRuntimeComponent.cpp",
+      "baseline_sha256": null,
+      "current_sha256": "8a3586f3cc22415015a9d406248219fca6df1610d4b59ea99df5dd280e9c9e8c",
+      "status": "added"
+    },
+    {
+      "path": "Source/Rogue10m/Components/Rogue10mTraitRuntimeComponent.h",
+      "baseline_sha256": null,
+      "current_sha256": "1b22410db9515bf0b95b9e073d2c745c5dc7568d710f977c63aab61dfc383314",
+      "status": "added"
+    },
+    {
+      "path": "Source/Rogue10m/Components/Rogue10mVitalRegenerationComponent.cpp",
+      "baseline_sha256": "24ed7ffc4f586fddd4235ec01d843b6ce4d3250ef8a447b1f572c1d5d7dce896",
+      "current_sha256": "3e3cf66d1ab613711513571b6aef67ae7158b59e18f117e7c6b13fcb05642dda",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Core/Rogue10mPlayerController.cpp",
+      "baseline_sha256": "b660d0d56c527d69d8991ec3f80830686d0a634b2bd2832934035f1b2e52e246",
+      "current_sha256": "d0ef8cc4fe7372932d0d814dbc62040b6b425226722d007d3f38cd32eaa0adc2",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Core/Rogue10mPlayerController.h",
+      "baseline_sha256": "e17e073d047c8ca7bc81bef614324917e974c2d2ee5a89872264189d7fb19ec7",
+      "current_sha256": "1b2f78b22ca12f71d4a41aced6be7c5d19ac7449d6c030e52fab7702cbd858f7",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Core/Rogue10mProgressionSaveGame.h",
+      "baseline_sha256": "6e89fa7c2d029694c0bbc24ccf8e9b88508e57a29b5de1de3bb03083d3740a40",
+      "current_sha256": "a71ab412700d114c2933a71f681d1fd622e1de7114b5a9823f8b13c1f940baf9",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Core/Rogue10mProgressionSubsystem.cpp",
+      "baseline_sha256": "8bb8948ee75981f0fe6f0aade7fe98556b94cca2e83ef513f52ee0ebea2ef922",
+      "current_sha256": "456ba6aa24dfa2023d8ec685a207e88fb2c12e89b8e760da70b55f774c2f0010",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Core/Rogue10mProgressionSubsystem.h",
+      "baseline_sha256": "377231eb8debab0345da420a9654d5abcf447361ade07d20872cfcece9d57d9c",
+      "current_sha256": "5413156d90f7e3210a21b4bf27bd1c73dc551332328e3366a310934de5385200",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Data/Rogue10mTownServiceDataAsset.h",
+      "baseline_sha256": "16a38a8f33de03f719de0c8b10ac935e4c8a2d99a2c8e1ba1411b514ddc176ee",
+      "current_sha256": "f3c9c2161a333741068c579ebc903732e11e9064672c79b6b2a8f8f22cecc188",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Data/Rogue10mTraitCatalogDataAsset.cpp",
+      "baseline_sha256": null,
+      "current_sha256": "3b79042e7dad805bc4872a94c3d5066bedae7ca4d8291e08248bf9da72c42c51",
+      "status": "added"
+    },
+    {
+      "path": "Source/Rogue10m/Data/Rogue10mTraitCatalogDataAsset.h",
+      "baseline_sha256": null,
+      "current_sha256": "033ac7704761a900c83cbdd3684254b517d52544d3e787d8abe7ca0ea44ac2b1",
+      "status": "added"
+    },
+    {
+      "path": "Source/Rogue10m/Enemy/Rogue10mBasicMonster.cpp",
+      "baseline_sha256": "8ec3438308d26a1dd1e36525708e64fd6583f3015d5bc3ebba53c61e91f0d18f",
+      "current_sha256": "e6f03ed231b8f4095c9c4d666c6eee40c8ac1d5041cea84828e767fa76904022",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/Enemy/Rogue10mBasicMonster.h",
+      "baseline_sha256": "d44a41dbc4a897170da86919feea8eacb5d455be23e659cc54840e8456e2288b",
+      "current_sha256": "eb2971c52a5dfb2bb8c859e98ddaed941d28f1cb0fa48fa17b48c80f9fe9d324",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/World/Rogue10mTutorialNPC.cpp",
+      "baseline_sha256": "e59096a7300fc326d72f40433bd77ff4517b5992e64e69ae915ee54bd0d288b4",
+      "current_sha256": "5c638c49bb9933efa83793a3b758e6828c68a37fc6ff7964ca7773c3de40929e",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/World/Rogue10mTutorialNPC.h",
+      "baseline_sha256": "37d1775061f567f18da843bc3a048d9b30ad3effa1db6bf9ef877a556cc672e0",
+      "current_sha256": "7f53f2ca8c8fa46e90324c4b00eb1ed5ae9fa365b9d8f044994be639a8ad2040",
+      "status": "modified"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mTraitWidget.cpp",
+      "baseline_sha256": null,
+      "current_sha256": "9aff4fd8a1133d5556edc984c244202d956bbfd901b63ec6a917f2857eb9f744",
+      "status": "added"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mTraitWidget.h",
+      "baseline_sha256": null,
+      "current_sha256": "1bb0b1a6b7e77475308424aa5c862f6f1f318f0a63ef44593fcb294b8922c6b1",
+      "status": "added"
+    },
+    {
+      "path": "Source/Rogue10m/Tests/Rogue10mTraitEffectsRuntimeTest.cpp",
+      "baseline_sha256": null,
+      "current_sha256": "6176bf365bd6816d9fedf4e9bd407fa16c9cb17af0ce69895875e7a77966ed0b",
+      "status": "added"
+    },
+    {
+      "path": "Source/Rogue10m/Tests/Rogue10mTraitPersistenceRuntimeTest.cpp",
+      "baseline_sha256": null,
+      "current_sha256": "7a1bbd6b16d4e07c5d82cdce9849a6fac3e88481b2806d44c7f2afbe5418e483",
+      "status": "added"
+    },
+    {
+      "path": "Source/Rogue10m/Tests/Rogue10mTraitUIRuntimeTest.cpp",
+      "baseline_sha256": null,
+      "current_sha256": "c2f51ffe350a58c25db00481fe15d2a437e4273977f5ad731020a63a0ccbcabb",
+      "status": "added"
+    }
+  ],
+  "scripts": [
+    {
+      "path": "Scripts/ValidateTraits.ps1",
+      "sha256": "6004ccc3571c43dac14cc7d49cfe783b1d5e8fd15b91adfd2358ef23d89ab195"
+    },
+    {
+      "path": "Scripts/ValidateTraitPersistence.ps1",
+      "sha256": "cf87617a401f66689611586b9fca3745cbfd153fac2bd904980a689312961142"
+    }
+  ],
+  "documents": [
+    {
+      "path": "Feature/architect/2026-10-11_trait16-runtime.md",
+      "sha256": "66af89ff59c0163e6723b28fc1e9bbe1d597bb630c74b116e9ca3e9e6e298c2e"
+    },
+    {
+      "path": "Feature/doc/2026-10-11_trait16-runtime.md",
+      "sha256": "1e3e700ff222564db55713f65f7ebede4a85edf3b753a65c0cbd7032aaa1c161"
+    },
+    {
+      "path": "Docs/TraitEnhancementGuide.md",
+      "sha256": "5effa9f7acafa1035dd9a7c7f51bcc45e6f9ce62203e9b850895a53a10db7d37"
+    },
+    {
+      "path": "Docs/TownServicesPersistenceGuide.md",
+      "sha256": "4e673dc6ba59090d465e352bdeb717d7a41e473b97750dedb18984000ac708df"
+    },
+    {
+      "path": "Docs/SprintChangeLog.md",
+      "sha256": "117e3af9d4bd46d4eadce711df941b9c773458efa040e878875cf6950f8c9c21"
+    },
+    {
+      "path": "DevLog/20261011.txt",
+      "sha256": "33009b45546b2c96d1ec5ffde39a9b68c39f5f6a1cac99916a84fdda44e470ce"
+    },
+    {
+      "path": "Feature/doc/evidence/trait16-runtime-20261011/review.md",
+      "sha256": "ba8da38bd296839391b0fc19be6bc7d539dbf13913a0a96ea0279fc5138f50f1"
+    },
+    {
+      "path": "Feature/doc/evidence/trait16-runtime-20261011/ui-review.md",
+      "sha256": "02884b02565962ebbeeacabf4584a581ef2fbd9639aee2304cfd5b4e7f140d0b"
+    }
+  ],
+  "assets": [
+    {
+      "path": "Art/UI/Traits/TraitCatalogAtlas.png",
+      "size": 1932968,
+      "sha256": "b422eefe313321d30e4a9238304c3287039fdd583664b04ed1f3e0cd59689329"
+    },
+    {
+      "path": "Content/UI/Traits/T_TraitCatalogAtlas.uasset",
+      "size": 2305336,
+      "sha256": "bb941796f50a363ffba748431df36cf0ac9785f69f4c8da1a3d2b9f608edfc6f"
+    }
+  ],
+  "trailing_whitespace": []
+}

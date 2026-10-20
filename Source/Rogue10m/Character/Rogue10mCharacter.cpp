@@ -24,6 +24,10 @@
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerFeedbackComponent.h"
 #include "Rogue10mPlayerState.h"
+#include "Rogue10mProgressionSubsystem.h"
+#include "Rogue10mTownProgressionComponent.h"
+#include "Rogue10mTraitRuntimeComponent.h"
+#include "Engine/GameInstance.h"
 #include "Rogue10mSkillLoadoutDataAsset.h"
 #include "Rogue10mVitalRegenerationComponent.h"
 #include "TimerManager.h"
@@ -60,6 +64,7 @@ ARogue10mCharacter::ARogue10mCharacter()
 
 	PlayerFeedbackComponent = CreateDefaultSubobject<URogue10mPlayerFeedbackComponent>(TEXT("Player Feedback Component"));
 	VitalRegenerationComponent = CreateDefaultSubobject<URogue10mVitalRegenerationComponent>(TEXT("Vital Regeneration Component"));
+	TraitRuntimeComponent = CreateDefaultSubobject<URogue10mTraitRuntimeComponent>(TEXT("Trait Runtime Component"));
 
 	GetMesh()->SetOwnerNoSee(true);
 	GetMesh()->FirstPersonPrimitiveType = EFirstPersonPrimitiveType::WorldSpaceRepresentation;
@@ -98,10 +103,37 @@ void ARogue10mCharacter::PossessedBy(AController* NewController)
 	{
 		PlayerFeedbackComponent->InitializeAbilitySystem();
 	}
+	if (HasActorBegunPlay() && GetGameInstance())
+	{
+		GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>()->AttachCharacter(*this);
+	}
+}
+
+void ARogue10mCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	if (GetGameInstance())
+	{
+		GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>()->AttachCharacter(*this);
+	}
+}
+
+void ARogue10mCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	if (GetGameInstance())
+	{
+		GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>()->DetachCharacter(*this);
+	}
+	Super::EndPlay(EndPlayReason);
 }
 
 void ARogue10mCharacter::UnPossessed()
 {
+	if (GetGameInstance())
+	{
+		GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>()->DetachCharacter(*this);
+	}
+	if (CharacterAnimationComponent) { CharacterAnimationComponent->ResetFighterCombatStance(); }
 	Super::UnPossessed();
 	if (AppearanceCameraComponent) { AppearanceCameraComponent->RefreshAppearanceCamera(); }
 }
@@ -128,6 +160,7 @@ float ARogue10mCharacter::TakeDamage(
 	float DamageAmount, const FDamageEvent& DamageEvent,
 	AController* EventInstigator, AActor* DamageCauser)
 {
+	if (!HasAuthority() || !FMath::IsFinite(DamageAmount)) { return 0.0f; }
 	URogue10mAttributeSet* Attributes = GetRogueAttributeSet();
 	const float DefenseMitigatedDamage = Attributes && DamageAmount > 0.0f
 		? FMath::Max(1.0f, DamageAmount - Attributes->GetDefense())
@@ -139,12 +172,15 @@ float ARogue10mCharacter::TakeDamage(
 		: DefenseMitigatedDamage;
 	const float AppliedDamage = Super::TakeDamage(
 		MitigatedDamage, DamageEvent, EventInstigator, DamageCauser);
-	if (IsDead() || !Attributes || AppliedDamage <= 0.0f)
+	if (IsDead() || !Attributes || !FMath::IsFinite(AppliedDamage) || AppliedDamage <= 0.0f)
 	{
 		return AppliedDamage;
 	}
 
-	Attributes->SetHealth(Attributes->GetHealth() - AppliedDamage);
+	if (!TraitRuntimeComponent || !TraitRuntimeComponent->TryPreventLethalDamage(AppliedDamage, DamageCauser))
+	{
+		Attributes->SetHealth(Attributes->GetHealth() - AppliedDamage);
+	}
 	if (PlayerFeedbackComponent)
 	{
 		PlayerFeedbackComponent->NotifyDamage(AppliedDamage);
@@ -303,13 +339,14 @@ void ARogue10mCharacter::DoDodge()
 	const float ActiveDistance = DodgeSkill ? DodgeSkill->Distance : DodgeDistance;
 	const float ActiveDuration = DodgeSkill ? DodgeSkill->Duration : DodgeDuration;
 	const float ActiveCooldown = DodgeSkill ? DodgeSkill->Cooldown : DodgeCooldown;
-	const float StaminaCost = DodgeSkill ? DodgeSkill->StaminaCost : 0.0f;
+	const float BaseStaminaCost = DodgeSkill ? DodgeSkill->StaminaCost : 0.0f;
+	const float StaminaCost = TraitRuntimeComponent ? TraitRuntimeComponent->GetDodgeStaminaCost(BaseStaminaCost) : BaseStaminaCost;
 	URogue10mAttributeSet* Attributes = GetRogueAttributeSet();
 	if (StaminaCost > 0.0f && (!Attributes || Attributes->GetStamina() < StaminaCost))
 	{
 		return;
 	}
-	if (Attributes && StaminaCost > 0.0f)
+	if (HasAuthority() && Attributes && StaminaCost > 0.0f)
 	{
 		Attributes->SetStamina(Attributes->GetStamina() - StaminaCost);
 	}
@@ -324,6 +361,7 @@ void ARogue10mCharacter::DoDodge()
 	if (Direction.IsNearlyZero()) Direction = GetActorForwardVector();
 
 	bIsDodging = true;
+	if (TraitRuntimeComponent) { TraitRuntimeComponent->NotifyDodgeStarted(); }
 	NextDodgeAllowedTime = World->GetTimeSeconds() + ActiveCooldown;
 	GetCharacterMovement()->Velocity = Direction * (ActiveDistance / FMath::Max(0.05f, ActiveDuration));
 	if (CharacterAnimationComponent)
@@ -607,6 +645,18 @@ FRogue10mCharacterStatSnapshot ARogue10mCharacter::GetCharacterStatSnapshot() co
 	{
 		Snapshot.Equipment = InventoryComponent->GetEquipmentStatModifiers();
 	}
+	if (const ARogue10mPlayerState* State = GetPlayerState<ARogue10mPlayerState>())
+	{
+		if (const URogue10mTownProgressionComponent* Town = State->FindComponentByClass<URogue10mTownProgressionComponent>())
+		{
+			Snapshot.Equipment.Accumulate(Town->GetStatModifiers());
+			Snapshot.Equipment.DefenseBonus += Town->GetTraitBonus(ERogue10mTownTrait::Defense);
+			Snapshot.Equipment.CriticalChanceBonus += Town->GetTraitBonus(ERogue10mTownTrait::CriticalChance);
+			Snapshot.Equipment.CriticalDamageMultiplierBonus += Town->GetTraitBonus(ERogue10mTownTrait::CriticalDamage);
+			Snapshot.Equipment.MaxStaminaBonus += Town->GetTraitBonus(ERogue10mTownTrait::MaxStamina);
+			Snapshot.Equipment.MoveSpeedMultiplierBonus += Town->GetTraitBonus(ERogue10mTownTrait::MoveSpeed);
+		}
+	}
 	Snapshot.Recalculate();
 	return Snapshot;
 }
@@ -643,15 +693,12 @@ void ARogue10mCharacter::RefreshCharacterStats(bool bRestoreVitals)
 	URogue10mAttributeSet* Attributes = GetRogueAttributeSet();
 	if (Attributes && HasAuthority())
 	{
-		const float PreviousMaxHealth = FMath::Max(1.0f, Attributes->GetMaxHealth());
-		const float HealthRatio = FMath::Clamp(Attributes->GetHealth() / PreviousMaxHealth, 0.0f, 1.0f);
-		const float PreviousMaxStamina = FMath::Max(1.0f, Attributes->GetMaxStamina());
-		const float StaminaRatio = FMath::Clamp(Attributes->GetStamina() / PreviousMaxStamina, 0.0f, 1.0f);
-		const float PreviousMaxMana = FMath::Max(1.0f, Attributes->GetMaxMana());
-		const float ManaRatio = FMath::Clamp(Attributes->GetMana() / PreviousMaxMana, 0.0f, 1.0f);
+		const float PreviousHealth = Attributes->GetHealth();
+		const float PreviousStamina = Attributes->GetStamina();
+		const float PreviousMana = Attributes->GetMana();
 
 		Attributes->SetMaxHealth(Snapshot.MaxHealth);
-		Attributes->SetMaxStamina(Snapshot.Base.MaxStamina);
+		Attributes->SetMaxStamina(Snapshot.MaxStamina);
 		Attributes->SetMaxMana(Snapshot.Base.MaxMana);
 		Attributes->SetAttackPower(Snapshot.AttackPower);
 		Attributes->SetDefense(Snapshot.Defense);
@@ -666,9 +713,10 @@ void ARogue10mCharacter::RefreshCharacterStats(bool bRestoreVitals)
 		}
 		else
 		{
-			Attributes->SetHealth(Snapshot.MaxHealth * HealthRatio);
-			Attributes->SetStamina(Snapshot.Base.MaxStamina * StaminaRatio);
-			Attributes->SetMana(Snapshot.Base.MaxMana * ManaRatio);
+			// Reallocation, reinvestment and equipment changes never refill current resources.
+			Attributes->SetHealth(FMath::Clamp(PreviousHealth, 0.0f, Snapshot.MaxHealth));
+			Attributes->SetStamina(FMath::Clamp(PreviousStamina, 0.0f, Snapshot.MaxStamina));
+			Attributes->SetMana(FMath::Clamp(PreviousMana, 0.0f, Snapshot.Base.MaxMana));
 		}
 	}
 
@@ -713,6 +761,11 @@ bool ARogue10mCharacter::PlayCommonMontage(UAnimMontage* Montage, float PlayRate
 {
 	if (!Montage)
 	{
+		return false;
+	}
+	if (!URogue10mCharacterAnimationComponent::IsHeadViewSafeAttackMontage(Montage))
+	{
+		UE_LOG(LogRogue10m, Warning, TEXT("%s 회전/구르기 모션 재생 차단: %s"), *GetNameSafe(this), *GetNameSafe(Montage));
 		return false;
 	}
 

@@ -1,0 +1,98 @@
+{
+  "reviewed_utc": "2026-10-07T13:23:49.684446+00:00",
+  "reviewer": "/root/arin_quality_validation",
+  "scope": "Read-only UE5.8 primary local source and root actual owner-writeback result; no engine call by reviewer.",
+  "status": "source_supported_owner_array_element_writeback_actual_root_passed",
+  "failure_cause": "get_editor_property returns the array by reference, but array indexing returns source model copies. Changing a nested reduction on that copy alone does not update the owning mesh.",
+  "required_path": "Keep the original returned unreal.Array. Modify a retrieved model, set reduction back into model, assign model back into that same array element, then notify the owner and explicitly read back before regeneration.",
+  "preservation_reason": "SourceModel WithCopy=false falls back to reflected field-by-field CopyScriptStruct into the existing array element. Existing destination non-reflected raw/cache members are left intact. With the original owner reference, the final owner setter sees the same array and skips wholesale replacement.",
+  "limits": [
+    "This is not a safety claim for Python list conversion, array.copy, fresh SourceModel construction, or replacement of the whole source array. Full array copying empties/reinitializes destination entries and can lose non-reflected state.",
+    "The source rationale is corroborated by actual root regeneration/readback/persistence and LOD0/skeleton/guide guards, not a reviewer runtime execution."
+  ],
+  "primary_source": [
+    {
+      "file": "Engine/Plugins/Experimental/PythonScriptPlugin/Source/PythonScriptPlugin/Private/PyUtil.cpp",
+      "lines": [
+        906
+      ],
+      "fact": "Editor getter Pythonizes property by Reference."
+    },
+    {
+      "file": "Engine/Plugins/Experimental/PythonScriptPlugin/Source/PythonScriptPlugin/Private/PyWrapperArray.cpp",
+      "lines": [
+        426,
+        456
+      ],
+      "fact": "Indexed getter uses default conversion; setter writes into existing raw element pointer."
+    },
+    {
+      "file": "Engine/Plugins/Experimental/PythonScriptPlugin/Source/PythonScriptPlugin/Private/PyConversion.h",
+      "lines": [
+        226
+      ],
+      "fact": "Default PythonizeProperty conversion is Copy."
+    },
+    {
+      "file": "Engine/Plugins/Experimental/PythonScriptPlugin/Source/PythonScriptPlugin/Private/PyConversion.cpp",
+      "lines": [
+        923,
+        929,
+        987,
+        993,
+        1249,
+        1253,
+        1255
+      ],
+      "fact": "Struct copyback into destination and identical-value test before array replacement."
+    },
+    {
+      "file": "Engine/Source/Runtime/CoreUObject/Private/UObject/Class.cpp",
+      "lines": [
+        3706,
+        3723,
+        3727
+      ],
+      "fact": "Non-native struct copy falls back to reflected field copying."
+    },
+    {
+      "file": "Engine/Source/Runtime/CoreUObject/Private/UObject/PropertyArray.cpp",
+      "lines": [
+        1269
+      ],
+      "fact": "Actual full array copy empties/reinitializes non-POD elements."
+    },
+    {
+      "file": "Engine/Source/Runtime/Engine/Classes/Engine/SkeletalMeshSourceModel.h",
+      "lines": [
+        27,
+        28,
+        37,
+        38,
+        39,
+        236,
+        237,
+        239,
+        243,
+        253,
+        256
+      ],
+      "fact": "SourceModel inherits LODInfo, is noncopyable natively/WithCopy=false, has reflected bulkdata UObject and non-reflected caches."
+    }
+  ],
+  "actual_owner_result": {
+    "file": "D:/Project/Rogue10m/tmp/arin-lod-refinement-owner-write-result.json",
+    "sha256": "12e2c09dc678b2fb10da2d57e222cd7871ab8dd9406b774c36cce606532c3c24",
+    "modified_utc": "2026-10-07T13:14:46.907854+00:00"
+  },
+  "actual_regeneration": {
+    "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-lod-refinement.json",
+    "sha256": "c6ff56eec9c43415817b63790fc603dd58c001497dcf1f2b794e35a1c6229512",
+    "modified_utc": "2026-10-07T13:14:46.816576+00:00"
+  },
+  "application_source": {
+    "file": "D:/Project/Rogue10m/Scripts/Editor/ApplyRefinedArin.py",
+    "sha256": "8d0318d8d8138300461b3d229cd2814a9a87315da4cf2a3c4a076fb55a7be3a3",
+    "modified_utc": "2026-10-07T13:16:20.457275+00:00"
+  }
+}

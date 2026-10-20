@@ -1,0 +1,63 @@
+{
+  "status": "failed",
+  "checks": [
+    {
+      "name": "no_existing_pie",
+      "passed": true
+    },
+    {
+      "name": "current_editor_map_start_hub",
+      "passed": true
+    },
+    {
+      "name": "hub_waiting_before_dialogue",
+      "passed": true
+    },
+    {
+      "name": "exactly_one_authored_tutorial_guide",
+      "passed": true,
+      "count": 1
+    },
+    {
+      "name": "authored_tutorial_data_loaded",
+      "passed": true
+    },
+    {
+      "name": "real_starting_item_and_stack_valid",
+      "passed": true,
+      "item": "/Game/DataAsset/Item/Starter/DA_Item_HealthPotion.DA_Item_HealthPotion",
+      "quantity": 2
+    },
+    {
+      "name": "authored_reward_id_not_empty",
+      "passed": true
+    },
+    {
+      "name": "npc_is_not_damageable",
+      "passed": true
+    },
+    {
+      "name": "npc_tick_disabled",
+      "passed": true
+    },
+    {
+      "name": "guide_mesh_does_not_block_player",
+      "passed": true
+    },
+    {
+      "name": "npc_has_mesh_and_idle",
+      "passed": true,
+      "mesh": "/Game/Characters/Mannequins/Meshes/SKM_Quinn_Simple.SKM_Quinn_Simple",
+      "idle": "/Game/Characters/Mannequins/Anims/Unarmed/MM_Idle.MM_Idle"
+    }
+  ],
+  "limitations": [
+    "This fixture calls the real reflected dialogue and inventory APIs; physical F-key input and Korean text layout also require a visual check.",
+    "Rewards are session records on PlayerState, not permanent character-profile saves. Network play is outside this single-player prototype check.",
+    "Runtime fixtures are disposable PIE data; a small damage stimulus verifies actual potion use before real portal travel. No assets or maps are saved."
+  ],
+  "phase": "wait_pie",
+  "elapsed_seconds": 2.5,
+  "exception": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateTutorialNPC.py\", line 245, in tick\n    prepare_fixture(world, pawn, guides[0])\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateTutorialNPC.py\", line 93, in prepare_fixture\n    entry.set_editor_property(name, source_entry.get_editor_property(name))\nException: Rogue10mInventoryGridEntry: Property 'InstanceId' for attribute 'instance_id' on 'Rogue10mInventoryGridEntry' is read-only and cannot be set\n",
+  "message": "Rogue10mInventoryGridEntry: Property 'InstanceId' for attribute 'instance_id' on 'Rogue10mInventoryGridEntry' is read-only and cannot be set"
+}

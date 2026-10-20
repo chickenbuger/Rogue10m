@@ -1,0 +1,30 @@
+{
+  "status": "prepared_only_no_API_calls",
+  "calls": [
+    {"tool": "apollo_create_asset", "arguments_file": "create-hull-asset-args.json"},
+    {"tool": "apollo_upload_reference", "arguments_file": "upload-hull-reference-args.template.json", "substitute": "asset_id from create response"},
+    {"tool": "apollo_get_source_quality", "arguments": {"asset_id": "<created id>", "source_node_id": "<uploaded node id>"}},
+    {"tool": "apollo_get_compile_plan", "arguments": {"asset_id": "<created id>", "goal": "preview"}, "expected": "uploaded_mesh_finalize, already_satisfied, no stages"},
+    {"tool": "apollo_compile_asset", "arguments": {"asset_id": "<created id>", "goal": "preview", "wait": true}, "expected": "already_satisfied=true; existing geometry unchanged"},
+    {"tool": "apollo_get_compile_candidates", "arguments": {"asset_id": "<created id>"}, "interpretation": "Untextured hull has UV/material blockers. Any source score is readiness only, not fidelity or production grade."},
+    {"tool": "apollo_promote_candidate", "arguments": {"asset_id": "<created id>", "node_id": "<uploaded node id>"}},
+    {"tool": "apollo_export_pack", "arguments": {"asset_id": "<created id>", "preset": "unreal", "formats": ["glb", "fbx"], "wait": true}},
+    {"tool": "apollo_get_asset_state", "arguments": {"asset_id": "<created id>"}},
+    {"tool": "apollo_download_artifact", "arguments": {"artifact_id": "<export archive id>", "dest_path": "<task-owned output archive path>"}}
+  ],
+  "required_preservation_checks": [
+    "uploaded artifact bytes equal normalized source GLB SHA256",
+    "export assets/model.glb bytes equal uploaded source GLB SHA256",
+    "FBX export exists and passes independent Blender re-import inspection; Apollo's export QA does not roundtrip FBX",
+    "If later uploading a rigged/textured GLB, inspect joints, weights, skins, animations, and textures in both GLB and exported FBX",
+    "Keep the hull report with final evidence because upload nodes record provider_id=upload rather than the direct hull adapter run"
+  ],
+  "critical_limits": [
+    "Do not use compile goal auto/deliver/character on a rigged or reference-textured upload: unconditional xatlas UV and procedural texture stages strip appearance and skin/animation data through trimesh processing.",
+    "Do not run repair-until-quality or generic next action automatically on a rigged candidate: mesh repair/UV/texture functions are static-mesh operations.",
+    "preset unreal avoids the optional web optimizer and preserves original GLB bytes; FBX conversion imports the original GLB in Blender directly.",
+    "export_pack uses the newest succeeded mesh/texture/UV node, not the promoted node. Export from a fresh task asset with only the intended upload, or confirm the latest source before exporting.",
+    "Back references only support appearance and QA; the Apollo hull geometry used front and side.",
+    "Apollo upload readiness score 1.0 and export file checksum success do not establish visual fidelity or game-ready deformation."
+  ]
+}

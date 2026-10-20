@@ -1,0 +1,24 @@
+{
+  "status": "retained_for_final_bake",
+  "actual_blender": "4.5.14 LTS",
+  "total_triangles": 51634,
+  "head_source_sha256": "35df7d0a349c17ca87b7553483985379abf4720c2412cf7017ab2a5d0a6d0bf9",
+  "body_source_sha256": "41db5ab4737105f7f94f583d81028fa77f2bc246c55996bc58f7cb8a23ded30c",
+  "views": {
+    "back": "d5beb1297dee5a5aa10ec05d427694ec56bbc8bc0a4b44109af998cad9b0db1b",
+    "profile": "483de5fd19109eda42b605b0d57bfd25f3c615797e3c5539085c0ce280ba5f5b",
+    "hands": "70e704f66783b7b9b179efc9e708d9fa1ff6342a2fb2dd43070960d545bae28f",
+    "knee-bend-oblique": "61811d5a22632647c4efb9b089b700e3fb00fb32e92c3750c47e40550d1ecaa2",
+    "knee-bend-right": "21b3b7763661ccfa76fc8aee300e1705c9469d02f0d8dac7a7f9bd5bf0d2a4a8",
+    "front": "5f0530ffbe4c01d49f95149a37f48038a6b837341a5c073c1915b82cead5ac90",
+    "face": "53203a4324e7920c8c46bf2e517ff6d76842d832851e872c13c0acac77bf2049",
+    "body-oblique": "e439deeb07dc8464039983de7eb5d48ca671e9eeb91d8dfac9624309f713adfa"
+  },
+  "findings": {
+    "knee": "Large thigh-through-coat defect absent in actual two-view rerender after new garment weights.",
+    "back": "Brown trouser patches and two residual ivory shirt points absent after targeted rear-only rerender.",
+    "profile": "Lower scalp skin island absent; upper neck cap lip reduced; separate mesh shading transition remains.",
+    "hands": "Ring steps removed, rounded thin nails; whole-hand rig remains."
+  },
+  "limits": "Form preview has palette materials; final baked export and engine rendering still require validation."
+}

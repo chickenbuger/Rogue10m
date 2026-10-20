@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "command": "import unreal,json; print(json.dumps({'world':unreal.get_editor_subsystem(unreal.UnrealEditorSubsystem).get_editor_world().get_path_name(),'pie':unreal.get_editor_subsystem(unreal.LevelEditorSubsystem).is_in_play_in_editor(),'max_fps':unreal.SystemLibrary.get_console_variable_float_value('t.MaxFPS'),'dirty_content':[p.get_path_name() for p in unreal.EditorLoadingAndSavingUtils.get_dirty_content_packages()],'dirty_maps':[p.get_path_name() for p in unreal.EditorLoadingAndSavingUtils.get_dirty_map_packages()]}))",
+  "result": "None",
+  "output": [
+    {
+      "type": "Info",
+      "output": "{\"world\": \"/Game/Rogue10m/Maps/StartHub.StartHub\", \"pie\": false, \"max_fps\": 120.0, \"dirty_content\": [], \"dirty_maps\": []}\r\n"
+    }
+  ]
+}

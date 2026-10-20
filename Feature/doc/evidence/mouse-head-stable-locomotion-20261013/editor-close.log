@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "command": "import json\nfrom pathlib import Path\nimport unreal\n\nsubsystem = unreal.get_editor_subsystem(unreal.UnrealEditorSubsystem)\nworld = subsystem.get_editor_world()\nstate = {\n    'world': world.get_path_name() if world else None,\n    'game_world': str(subsystem.get_game_world()),\n    'dirty_content': [p.get_path_name() for p in unreal.EditorLoadingAndSavingUtils.get_dirty_content_packages()],\n    'dirty_maps': [p.get_path_name() for p in unreal.EditorLoadingAndSavingUtils.get_dirty_map_packages()],\n}\nassert not subsystem.get_game_world() and not state['dirty_content'] and not state['dirty_maps'], state\nPath('D:/Project/Rogue10m/Feature/doc/evidence/mouse-head-stable-locomotion-20261013/editor-before-build.json').write_text(json.dumps(state, indent=2), encoding='utf-8')\nprint('STABLE_HEAD_EDITOR_CLEAN', json.dumps(state))\nunreal.SystemLibrary.quit_editor()\n",
+  "result": "None",
+  "output": [
+    {
+      "type": "Info",
+      "output": "STABLE_HEAD_EDITOR_CLEAN {\"world\": \"/Game/Rogue10m/Maps/OpenRunMap.OpenRunMap\", \"game_world\": \"None\", \"dirty_content\": [], \"dirty_maps\": []}\r\n"
+    }
+  ]
+}

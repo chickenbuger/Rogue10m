@@ -1,0 +1,218 @@
+{
+  "ok": true,
+  "asset_id": "ast_1m45c3php007vt0fzyt",
+  "profile": "character_asset_v1",
+  "candidates": [
+    {
+      "node_id": "nod_1m45cpcht00yk1ns6kc",
+      "label": "mesh_raw_v1",
+      "kind": "mesh_raw",
+      "created_at": "2026-10-05T06:40:51.258675+00:00",
+      "provider_id": "apollo_cutout",
+      "local": true,
+      "selected": false,
+      "artifact_id": "art_1m45cpc3b00zsjaf01b",
+      "download": "/api/artifacts/art_1m45cpc3b00zsjaf01b/file?download=true",
+      "score": 0.7886,
+      "grade": "usable_draft",
+      "blockers": [
+        {
+          "code": "draft_lineage",
+          "message": "current best candidate uses Apollo draft providers; configure a production 3D provider for Meshy-grade output",
+          "stage": "provider-setup",
+          "source_node_id": null
+        }
+      ],
+      "warnings": [
+        {
+          "code": "source_alignment_unverified",
+          "message": "no render-vs-source alignment proof yet"
+        }
+      ],
+      "provider_tier": "draft",
+      "quality_report": {
+        "asset_id": "ast_1m45c3php007vt0fzyt",
+        "profile": "game_asset_v1",
+        "profile_label": "Game Asset",
+        "node_id": "nod_1m45cpcht00yk1ns6kc",
+        "node_label": "mesh_raw_v1",
+        "artifact_id": "art_1m45cpc3b00zsjaf01b",
+        "score": 0.7886,
+        "grade": "usable_draft",
+        "dimensions": {
+          "source_alignment": 0.48,
+          "geometry": 1.0,
+          "topology": 1.0,
+          "materials": 0.6,
+          "export": 1.0,
+          "provider": 0.45
+        },
+        "blockers": [
+          {
+            "code": "draft_lineage",
+            "message": "current best candidate uses Apollo draft providers; configure a production 3D provider for Meshy-grade output",
+            "stage": "provider-setup",
+            "source_node_id": null
+          }
+        ],
+        "warnings": [
+          {
+            "code": "source_alignment_unverified",
+            "message": "no render-vs-source alignment proof yet"
+          }
+        ],
+        "checks": {
+          "mesh": {
+            "vertices": 10204,
+            "faces": 20404,
+            "has_uv": true,
+            "has_normals": true,
+            "textures": 1,
+            "embedded_textures": 1,
+            "lineage_textures": 0,
+            "materials": 1
+          },
+          "providers": [
+            "upload",
+            "apollo_cutout"
+          ],
+          "provider_tier": "draft",
+          "qa_status": {
+            "image": "warn",
+            "mesh": "pass"
+          }
+        },
+        "qa": {
+          "latest": {
+            "image": "warn",
+            "mesh": "pass"
+          },
+          "hard_failures": []
+        },
+        "next_actions": [
+          {
+            "label": "configure production providers",
+            "stage": "provider-setup",
+            "method": "GET",
+            "path": "/api/assets/ast_1m45c3php007vt0fzyt/provider-setup-plan",
+            "body": {},
+            "blocked": false,
+            "reason": "current best candidate uses Apollo draft providers; configure a production 3D provider for Meshy-grade output"
+          }
+        ],
+        "provider_setup": {
+          "asset_id": "ast_1m45c3php007vt0fzyt",
+          "profile": "game_asset_v1",
+          "final_3d": {
+            "ok": [],
+            "unavailable": {
+              "hunyuan3d": "unreachable",
+              "trellis": "unreachable",
+              "triposg": "missing_config"
+            },
+            "setup": [
+              {
+                "provider_id": "hunyuan3d",
+                "state": "unreachable",
+                "action": "start Hunyuan3D 2.1 server and verify URL",
+                "requires": [
+                  "HUNYUAN3D_URL"
+                ],
+                "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+              },
+              {
+                "provider_id": "trellis",
+                "state": "unreachable",
+                "action": "start TRELLIS.2 server and verify URL",
+                "requires": [
+                  "TRELLIS_URL"
+                ],
+                "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+              },
+              {
+                "provider_id": "triposg",
+                "state": "missing_config",
+                "action": "set TRIPOSG_URL and recheck health",
+                "requires": [
+                  "TRIPOSG_URL"
+                ],
+                "detail": "missing config: TRIPOSG_URL"
+              }
+            ]
+          },
+          "fast_3d": {
+            "ok": [],
+            "unavailable": {
+              "sf3d": "unreachable"
+            },
+            "setup": [
+              {
+                "provider_id": "sf3d",
+                "state": "unreachable",
+                "action": "start Stable Fast 3D server and verify URL",
+                "requires": [
+                  "SF3D_URL"
+                ],
+                "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+              }
+            ]
+          },
+          "production_3d": {
+            "ok": [],
+            "unavailable": {
+              "hunyuan3d": "unreachable",
+              "trellis": "unreachable",
+              "triposg": "missing_config",
+              "sf3d": "unreachable"
+            },
+            "setup": [
+              {
+                "provider_id": "hunyuan3d",
+                "state": "unreachable",
+                "action": "start Hunyuan3D 2.1 server and verify URL",
+                "requires": [
+                  "HUNYUAN3D_URL"
+                ],
+                "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+              },
+              {
+                "provider_id": "trellis",
+                "state": "unreachable",
+                "action": "start TRELLIS.2 server and verify URL",
+                "requires": [
+                  "TRELLIS_URL"
+                ],
+                "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+              },
+              {
+                "provider_id": "triposg",
+                "state": "missing_config",
+                "action": "set TRIPOSG_URL and recheck health",
+                "requires": [
+                  "TRIPOSG_URL"
+                ],
+                "detail": "missing config: TRIPOSG_URL"
+              },
+              {
+                "provider_id": "sf3d",
+                "state": "unreachable",
+                "action": "start Stable Fast 3D server and verify URL",
+                "requires": [
+                  "SF3D_URL"
+                ],
+                "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+              }
+            ]
+          },
+          "blender": {
+            "ok": [
+              "blender_cli"
+            ],
+            "unavailable": {},
+            "setup": []
+          }
+        }
+      }
+    }
+  ]
+}

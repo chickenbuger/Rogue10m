@@ -1,0 +1,67 @@
+{
+  "recorded_at_utc": "2026-10-09T05:02:29Z",
+  "task": "Arin basic walking and talking animation reference acquisition",
+  "status": "official_previews_observed_download_requires_login",
+  "actual_downloaded_animation_files": [],
+  "actual_downloaded_animation_count": 0,
+  "browser": "Edge, official www.mixamo.com",
+  "account_state_observed": "Logged out due to inactivity for more than 24 hours",
+  "download_gate_observed": "Please sign in to download",
+  "account_or_character_upload_performed": false,
+  "purchase_performed": false,
+  "references": [
+    {
+      "title": "Walking",
+      "description_observed": "Feminine Walk Forward",
+      "url": "https://www.mixamo.com/#/?page=1&query=walking&type=Motion%2CMotionPack",
+      "trim_total_frames_observed": 30,
+      "controls_observed": ["Overdrive", "Character Arm-Space", "Trim", "Mirror", "In Place"],
+      "default_values_observed": {"Overdrive": 50, "Character Arm-Space": 50, "Mirror": false, "In Place": false},
+      "use": "Visual timing and pose reference only; no source motion data was downloaded",
+      "visual_observation": "Alternating foot contact with the opposite arm swinging forward; modest torso rotation"
+    },
+    {
+      "title": "Talking",
+      "description_observed": "General Conversation",
+      "url": "https://www.mixamo.com/#/?page=1&query=talking&type=Motion%2CMotionPack",
+      "trim_total_frames_observed": 309,
+      "controls_observed": ["Movement", "Lean", "Overdrive", "Character Arm-Space", "Trim", "Mirror"],
+      "default_values_observed": {"Movement": 50, "Lean": 50, "Overdrive": 50, "Character Arm-Space": 50, "Mirror": false},
+      "use": "Visual gesture reference only; no source motion data was downloaded",
+      "visual_observation": "Feet remain planted while one-handed explanatory gestures alternate with wider forearm gestures and small upper-body and head movement"
+    }
+  ],
+  "primary_documentation": [
+    {
+      "url": "https://helpx.adobe.com/creative-cloud/help/animate-characters-mixamo.html",
+      "title": "Animate 3D characters with Mixamo",
+      "supported_facts": ["Search the animation library by category or terms", "Preview an animation on a character", "Adjust animation speed and arm spacing", "Select Download after editing"]
+    },
+    {
+      "url": "https://helpx.adobe.com/creative-cloud/faq/mixamo-faq.html",
+      "title": "Mixamo Common questions",
+      "supported_facts": ["Available free with an Adobe ID without Creative Cloud subscription", "Royalty-free use in personal, commercial and non-profit projects including video games", "Auto-rigger and library support bipedal humanoids"]
+    },
+    {
+      "url": "https://wwwimages2.adobe.com/content/dam/cc/en/legal/servicetou/Mixamo-Addl-Terms-en_US-20210623.pdf",
+      "title": "Mixamo Additional Terms",
+      "effective_date": "2021-06-23",
+      "note": "Service-specific terms were checked; no account creation or terms acceptance was performed"
+    }
+  ],
+  "existing_project_walk_reference_candidates": [
+    "/Game/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Fwd",
+    "/Game/Polyart/SharedResources/Characters/AnimationStuff/Animations/Locomotion/Shared/MM_Walk_InPlace",
+    "/Game/Polyart/SharedResources/Characters/AnimationStuff/Animations/Locomotion/Shared/MM_Walk_Fwd"
+  ],
+  "existing_project_candidates_validation": "Presence verified by filesystem only; skeleton, duration and motion require Unreal Editor inspection",
+  "retargeting_note": "If official Mixamo clips are obtained later, retarget local rotations through rest-basis compensation onto the existing 23-bone Arin rig; do not copy pelvis translation in incompatible units or replace the current skeleton and skin weights",
+  "proposed_mixamo_to_arin_semantic_mapping": {
+    "Hips": "pelvis", "Spine": "spine_01", "Spine1": "spine_02", "Spine2": "spine_03", "Neck": "neck", "Head": "head",
+    "LeftShoulder": "clavicle_l", "LeftArm": "upperarm_l", "LeftForeArm": "lowerarm_l", "LeftHand": "hand_l",
+    "RightShoulder": "clavicle_r", "RightArm": "upperarm_r", "RightForeArm": "lowerarm_r", "RightHand": "hand_r",
+    "LeftUpLeg": "thigh_l", "LeftLeg": "calf_l", "LeftFoot": "foot_l", "LeftToeBase": "ball_l",
+    "RightUpLeg": "thigh_r", "RightLeg": "calf_r", "RightFoot": "foot_r", "RightToeBase": "ball_r"
+  },
+  "mapping_limitations": "Arin has no individual finger, jaw or facial bones. A Talking body-gesture clip alone cannot provide lipsync. Existing Arin root must remain stationary for in-place runtime movement. Mapping is a semantic proposal, not a verified retargeted clip."
+}

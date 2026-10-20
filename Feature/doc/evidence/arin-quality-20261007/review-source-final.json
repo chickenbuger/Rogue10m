@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-07",
+  "reviewer": "/root/arin_quality_validation",
+  "method": "Read-only Python source and actual local UE5.8 C++ API inspection; Python AST parse only. No Unreal calls, imports, saves or source edits by reviewer.",
+  "reviewed_scripts_sha256": {
+    "Scripts/Editor/ApplyRefinedArin.py": "f33745ade6e4cc651a0eee6e42731581953489cbcd698d37789289d4ccb6477b",
+    "Scripts/Editor/ValidateRefinedArinPIE.py": "aa5b070693aaab8583b3a0002d80c2b5418b502dd9dcb19592ea1cbfbcab2201",
+    "Scripts/Editor/ValidateRefinedArinFresh.py": "9c16afea0a21e3f045fcadf464d65f0cd189684e265504696df9b9026a9ef6e0"
+  },
+  "syntax": "all_three_scripts_ast_passed",
+  "conclusion": "No blocking missing UE API found for the planned saved idle-editor import and fresh-process persistence validation. Both previously reported guard weaknesses are now closed by root and independently source-rechecked. Actual import/runtime success remains unmeasured.",
+  "verified_against_local_primary_cpp": [
+    {
+      "check": "ImportNormals, MikkTSpace and weighted-normal option are reflected",
+      "source": "D:/Program Files/UE_5.8/Engine/Source/Editor/UnrealEd/Classes/Factories/FbxMeshImportData.h",
+      "lines": [
+        11,
+        20,
+        78,
+        82,
+        86
+      ],
+      "result": "Normal import/generation enums and the three editable UPROPERTY settings exist. Explicit settings avoid the constructor's ComputeNormals/weighted-normal defaults."
+    },
+    {
+      "check": "Normal import settings drive the actual skeletal build",
+      "source": "D:/Program Files/UE_5.8/Engine/Source/Editor/UnrealEd/Private/Fbx/FbxSkeletalMeshImport.cpp",
+      "lines": [
+        1930,
+        1931,
+        1932,
+        1933
+      ],
+      "result": "Authored normals are retained when present; ImportNormals recomputes tangents, MikkTSpace is selected, and weighted-normal setting is transferred. If FBX contains no normals, engine recomputes them despite the option; the readback is configuration evidence rather than a measured tangent-basis comparison."
+    },
+    {
+      "check": "Saved mesh import data is reflected",
+      "source": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Classes/Engine/SkeletalMesh.h",
+      "lines": [
+        1628,
+        1630,
+        1631
+      ],
+      "result": "AssetImportData is an instanced editor UPROPERTY; get_editor_property is appropriate for readback. Plain C++ accessor presence is not used as proof of a Python UFUNCTION."
+    },
+    {
+      "check": "PBR compression and sampler pairs match",
+      "source": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Public/Materials/MaterialExpressionUtils.cpp",
+      "lines": [
+        34,
+        35,
+        41,
+        42,
+        46,
+        66
+      ],
+      "result": "Non-virtual TC_Normalmap uses Normal, TC_Masks uses Masks, and sRGB default color uses Color. Normal/Masks require sRGB disabled. The reviewed four-channel parent uses these pairs."
+    },
+    {
+      "check": "MIC texture setter requires readback",
+      "source": "D:/Program Files/UE_5.8/Engine/Source/Editor/MaterialEditor/Private/MaterialEditingLibrary.cpp",
+      "lines": [
+        1497,
+        1507,
+        1509,
+        1512,
+        1515
+      ],
+      "result": "Getter reads the actual texture parameter. Setter leaves bResult false even after setting/updating the override; the script correctly checks the getter instead of relying on the setter bool."
+    },
+    {
+      "check": "LOD count can be queried during PIE",
+      "source": "D:/Program Files/UE_5.8/Engine/Source/Editor/SkeletalMeshEditor/Private/SkeletalMeshEditorSubsystem.cpp",
+      "lines": [
+        45,
+        49,
+        64,
+        68,
+        91,
+        95,
+        847,
+        855
+      ],
+      "result": "GetLODCount only checks null and returns GetLODNum, so the PIE count check is valid. RegenerateLOD/GetNumVerts/GetNumSections reject PIE and are confined to idle-editor validation/import."
+    }
+  ],
+  "implementation_review": {
+    "owned_scope": "Exactly 24 intended dependencies under RefinedV2: mesh/skeleton/Idle, one new parent, four MICs, 16 textures. Partial or changed-provenance scopes abort before guide replacement.",
+    "save_order": "Textures, parent, MICs, skeleton, animation and mesh are explicitly persisted before the existing guide appearance update. Existing dialogue, supplies, data references and transforms are compared against the recorded baseline.",
+    "fresh_process": "Fresh script loads StartHub and calls main(validate_only=True). This branch loads/checks assets and writes evidence JSON; it performs no explicit asset import, setting, LOD regeneration or asset save. NullRHI is correctly described as persistence verification only.",
+    "pie_hook_reload": "Reloading ValidateTutorialNPC before capturing original_prepare/original_dialogue clears completed prior v1 monkey-patched functions and resets report state. Reload must occur while no validator callback is active.",
+    "actual_execution": "not_run_by_reviewer"
+  },
+  "findings": [
+    {
+      "id": "SRC-01",
+      "severity": "P2_validation_guard",
+      "file": "Scripts/Editor/ApplyRefinedArin.py",
+      "line": 377,
+      "issue": "Substring FBXNIM_IMPORT_NORMALS also accepts FBXNIM_IMPORT_NORMALS_AND_TANGENTS, so the current normal mode readback is not strict.",
+      "recommended_root_fix": "Compare the reflected enum value directly with unreal.FBXNormalImportMethod.FBXNIM_IMPORT_NORMALS, and compare the generation enum directly with MIKK_T_SPACE. Keep string conversion for reporting only.",
+      "planned_import_blocker": false,
+      "status": "closed_by_root_source_revalidated"
+    },
+    {
+      "id": "SRC-02",
+      "severity": "P2_reentrant_validation_guard",
+      "file": "Scripts/Editor/ValidateRefinedArinPIE.py",
+      "line": 10,
+      "issue": "Reloading the module while an earlier validator is active resets its globals before main's duplicate guard. A previously registered callback still uses that same module globals dictionary.",
+      "recommended_root_fix": "Before importlib.reload, refuse an unfinished unreal._rogue10m_tutorial_npc_validator or existing PIE. Do not unregister or take over another active run automatically.",
+      "planned_import_blocker": false,
+      "precondition": "Root's planned invocation is an idle editor after the prior validator completed.",
+      "status": "closed_by_root_source_revalidated"
+    }
+  ],
+  "remaining_real_validation": [
+    "Actual fresh scope import, classes, 170cm bounds and 2-second same-skeleton Idle",
+    "Actual saved texture dimensions/color/compression/green-channel convention and four MIC parameter bindings",
+    "Actual generated LOD counts/decreasing render vertices/sections and visual LOD transitions",
+    "Map unload/reload and separate UnrealEditor-Cmd persistence check",
+    "Real PIE Idle motion, visible head height, tutorial dialogue/supplies and portal carry behavior",
+    "Actual rendered Unreal materials and source visual-review limitations"
+  ],
+  "post_fix_closure": {
+    "utc": "2026-10-07T12:32:48.979158+00:00",
+    "method": "Read-only revised source and AST inspection; no UE execution",
+    "reviewed_scripts_sha256": {
+      "Scripts/Editor/ApplyRefinedArin.py": "2d6e95ccbaf0ceba20a196739a5729ec0e82fe6dedb2fe0490b453a05e6edcff",
+      "Scripts/Editor/ValidateRefinedArinPIE.py": "1d88eee2d62205636128b46cb498e94b2c477a33ae145bfc171cf2909bc04f50",
+      "Scripts/Editor/ValidateRefinedArinFresh.py": "9c16afea0a21e3f045fcadf464d65f0cd189684e265504696df9b9026a9ef6e0"
+    },
+    "normal_readback": "Exact enum equality for import and generation; weighted normals False requirement retained",
+    "pie_reload_guard": "Unfinished validator and active PIE are rejected before importing/reloading ValidateTutorialNPC",
+    "syntax": "all_three_scripts_ast_passed",
+    "status": "both_reported_guard_findings_closed"
+  }
+}

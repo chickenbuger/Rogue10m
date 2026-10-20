@@ -9,6 +9,7 @@
 
 class UStaticMeshComponent;
 class UTextRenderComponent;
+class ARogue10mCharacter;
 
 UCLASS()
 class ROGUE10M_API ARogue10mDroppedItem : public AActor
@@ -23,8 +24,14 @@ public:
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Items")
 	const FRogue10mItemStack& GetItemStack() const { return ItemStack; }
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Items")
+	bool TryPickup(ARogue10mCharacter* Character);
 
 protected:
+	virtual void BeginPlay() override;
+	UFUNCTION()
+	void HandlePickupOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Items")
 	TObjectPtr<USceneComponent> SceneRoot;
 
@@ -36,4 +43,5 @@ protected:
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="Rogue10m|Items")
 	FRogue10mItemStack ItemStack;
+	bool bPickupInProgress = false;
 };

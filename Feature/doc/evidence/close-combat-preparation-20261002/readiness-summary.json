@@ -1,0 +1,1841 @@
+{
+  "native_camera_cdo": {
+    "stabilize_brawler_head_motion": true,
+    "brawler_head_rotation_weight": 0.15000000596046448,
+    "brawler_head_max_rotation_degrees": 8.0,
+    "initial_view_pitch": -20.0,
+    "eye_offset": "<Struct 'Vector' (0x0000017D9B721280) {x: 8.000000, y: 0.000000, z: 4.000000}>"
+  },
+  "references": {
+    "current_authored_hook": {
+      "asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Unarmed_Hook.A_Unarmed_Hook",
+      "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+      "duration": 1.6666666269302368,
+      "sample_hz": 60,
+      "root_motion_enabled": false,
+      "summary": {
+        "root": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 34.806839157859336,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "pelvis": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 35.68979253090561,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "head": {
+          "max_rotation_from_start_deg": 1.6989881043060962e-05,
+          "max_rotation_from_ref_deg": 46.64370881839643,
+          "max_step_rotation_deg_60hz": 1.8937615583927184e-05,
+          "max_displacement_from_start_cm": 1.2191970363323754,
+          "position_range_cm": [
+            0.958579871897947,
+            0.7533697913997797,
+            2.620336090330966e-07
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "hand_l": {
+          "max_rotation_from_start_deg": 8.000011746837282,
+          "max_rotation_from_ref_deg": 104.94068325167221,
+          "max_step_rotation_deg_60hz": 0.8904997891370708,
+          "max_displacement_from_start_cm": 4.198989281261172,
+          "position_range_cm": [
+            4.109708238928835,
+            0.8612834463906793,
+            4.031084131383977e-06
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "hand_r": {
+          "max_rotation_from_start_deg": 23.742258592543006,
+          "max_rotation_from_ref_deg": 116.99507091686526,
+          "max_step_rotation_deg_60hz": 3.6259307881940575,
+          "max_displacement_from_start_cm": 34.25802195983107,
+          "position_range_cm": [
+            22.94232368433607,
+            22.48737371291198,
+            14.398773437259635
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "foot_l": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 43.86246777824257,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "foot_r": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 65.75242033687763,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "upperarm_l": {
+          "max_rotation_from_start_deg": 8.000011746837282,
+          "max_rotation_from_ref_deg": 44.291591657483984,
+          "max_step_rotation_deg_60hz": 0.890499789138708,
+          "max_displacement_from_start_cm": 2.412379082161654,
+          "position_range_cm": [
+            0.3516191140516156,
+            2.3866161892278477,
+            3.2273971442009497e-06
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "lowerarm_l": {
+          "max_rotation_from_start_deg": 8.000011746837282,
+          "max_rotation_from_ref_deg": 105.82928417662791,
+          "max_step_rotation_deg_60hz": 0.8904997891370708,
+          "max_displacement_from_start_cm": 3.8381590107476113,
+          "position_range_cm": [
+            1.8876533663018868,
+            3.341890088029796,
+            5.523379499550174e-06
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "upperarm_r": {
+          "max_rotation_from_start_deg": 71.1821353548645,
+          "max_rotation_from_ref_deg": 89.02543197136697,
+          "max_step_rotation_deg_60hz": 6.648429483230882,
+          "max_displacement_from_start_cm": 2.7987661770816317,
+          "position_range_cm": [
+            0.7390410840446506,
+            2.6994277893786984,
+            3.896064569630653e-06
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "lowerarm_r": {
+          "max_rotation_from_start_deg": 23.742258592543067,
+          "max_rotation_from_ref_deg": 115.79748016047935,
+          "max_step_rotation_deg_60hz": 3.6259307881936556,
+          "max_displacement_from_start_cm": 33.60392087691008,
+          "position_range_cm": [
+            15.404524712724815,
+            23.18949371181997,
+            20.77502875199147
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "thigh_l": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 45.85824944132673,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "calf_l": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 35.886520216102994,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "thigh_r": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 53.064985774463835,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "calf_r": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 74.99238109782921,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "limb_length_ref_ratios": {
+        "upperarm_l->lowerarm_l": [
+          1.0000000000000002,
+          1.000000000000001
+        ],
+        "lowerarm_l->hand_l": [
+          1.0000000000000004,
+          1.0000000000000027
+        ],
+        "upperarm_r->lowerarm_r": [
+          1.0000000000000004,
+          1.0000000000000029
+        ],
+        "lowerarm_r->hand_r": [
+          1.0000000000000013,
+          1.000000000000004
+        ],
+        "thigh_l->calf_l": [
+          1.0000000000000009,
+          1.0000000000000009
+        ],
+        "calf_l->foot_l": [
+          1.0000000000000013,
+          1.0000000000000013
+        ],
+        "thigh_r->calf_r": [
+          1.0000000000000004,
+          1.0000000000000004
+        ],
+        "calf_r->foot_r": [
+          1.0000000000000002,
+          1.0000000000000002
+        ]
+      },
+      "contact_review_cue": null
+    },
+    "current_authored_uppercut": {
+      "asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Uppercut.A_Knuckle_Uppercut",
+      "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+      "duration": 1.6666666269302368,
+      "sample_hz": 60,
+      "root_motion_enabled": false,
+      "summary": {
+        "root": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 34.806839157859336,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "pelvis": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 35.68979253090561,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "head": {
+          "max_rotation_from_start_deg": 1.2074182697257337e-05,
+          "max_rotation_from_ref_deg": 46.643710291093406,
+          "max_step_rotation_deg_60hz": 1.5649929441225527e-05,
+          "max_displacement_from_start_cm": 0.6099332058348644,
+          "position_range_cm": [
+            0.4661069014720205,
+            0.3933991255457192,
+            3.365530005794426e-07
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "hand_l": {
+          "max_rotation_from_start_deg": 3.9997333642685233,
+          "max_rotation_from_ref_deg": 104.94068325167221,
+          "max_step_rotation_deg_60hz": 0.5915519957088369,
+          "max_displacement_from_start_cm": 2.1006327091566517,
+          "position_range_cm": [
+            2.0697539891690546,
+            0.3588540136216203,
+            4.802879516319081e-06
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "hand_r": {
+          "max_rotation_from_start_deg": 20.281458162374904,
+          "max_rotation_from_ref_deg": 116.72952025908494,
+          "max_step_rotation_deg_60hz": 4.8196414847374935,
+          "max_displacement_from_start_cm": 20.264662166721116,
+          "position_range_cm": [
+            7.58063071481855,
+            14.123812435987936,
+            15.339231699275189
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "foot_l": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 43.86246777824257,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "foot_r": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 65.75242033687763,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "upperarm_l": {
+          "max_rotation_from_start_deg": 3.999733364268159,
+          "max_rotation_from_ref_deg": 44.291591657483984,
+          "max_step_rotation_deg_60hz": 0.5915519957137658,
+          "max_displacement_from_start_cm": 1.2068412528817636,
+          "position_range_cm": [
+            0.2174713949824678,
+            1.1870855074587374,
+            3.8781548425959045e-06
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "lowerarm_l": {
+          "max_rotation_from_start_deg": 3.9997333642685233,
+          "max_rotation_from_ref_deg": 105.82928417662791,
+          "max_step_rotation_deg_60hz": 0.5915519957137658,
+          "max_displacement_from_start_cm": 1.9201184548831272,
+          "position_range_cm": [
+            1.0021136619625501,
+            1.6378715118352964,
+            6.613923417830847e-06
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "upperarm_r": {
+          "max_rotation_from_start_deg": 47.0375334719725,
+          "max_rotation_from_ref_deg": 58.91942340224489,
+          "max_step_rotation_deg_60hz": 5.751056939088847,
+          "max_displacement_from_start_cm": 1.400141577099579,
+          "position_range_cm": [
+            0.41662624975316476,
+            1.3367194933624047,
+            4.67053703800957e-06
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "lowerarm_r": {
+          "max_rotation_from_start_deg": 20.281458162374975,
+          "max_rotation_from_ref_deg": 115.32190863060528,
+          "max_step_rotation_deg_60hz": 4.819641484737796,
+          "max_displacement_from_start_cm": 23.183588456538523,
+          "position_range_cm": [
+            3.743073620674931,
+            19.145955229487093,
+            13.04481516302944
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "thigh_l": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 45.85824944132673,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "calf_l": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 35.886520216102994,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "thigh_r": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 53.064985774463835,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "calf_r": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 74.99238109782921,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 0.0,
+          "position_range_cm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "limb_length_ref_ratios": {
+        "upperarm_l->lowerarm_l": [
+          1.0000000000000002,
+          1.000000000000001
+        ],
+        "lowerarm_l->hand_l": [
+          1.0000000000000007,
+          1.000000000000003
+        ],
+        "upperarm_r->lowerarm_r": [
+          1.0000000000000004,
+          1.0000000000000016
+        ],
+        "lowerarm_r->hand_r": [
+          1.0000000000000013,
+          1.0000000000000036
+        ],
+        "thigh_l->calf_l": [
+          1.0000000000000009,
+          1.0000000000000009
+        ],
+        "calf_l->foot_l": [
+          1.0000000000000013,
+          1.0000000000000013
+        ],
+        "thigh_r->calf_r": [
+          1.0000000000000004,
+          1.0000000000000004
+        ],
+        "calf_r->foot_r": [
+          1.0000000000000002,
+          1.0000000000000002
+        ]
+      },
+      "contact_review_cue": null
+    },
+    "original_spinning_hook": {
+      "asset": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_03.MM_Attack_03",
+      "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+      "duration": 1.6666666269302368,
+      "sample_hz": 60,
+      "root_motion_enabled": true,
+      "summary": {
+        "root": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 0.0,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 216.0,
+          "position_range_cm": [
+            0.0,
+            216.0,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            216.0,
+            0.0
+          ]
+        },
+        "pelvis": {
+          "max_rotation_from_start_deg": 179.10220694053803,
+          "max_rotation_from_ref_deg": 176.7576474444742,
+          "max_step_rotation_deg_60hz": 13.703761939855521,
+          "max_displacement_from_start_cm": 199.6283127232521,
+          "position_range_cm": [
+            27.2386976480484,
+            197.92404329776764,
+            43.400108337402344
+          ],
+          "end_delta_cm": [
+            -23.701693296432495,
+            191.26493072509766,
+            3.6018753051757812
+          ]
+        },
+        "head": {
+          "max_rotation_from_start_deg": 174.8376333351679,
+          "max_rotation_from_ref_deg": 179.1947800584404,
+          "max_step_rotation_deg_60hz": 19.411900479105846,
+          "max_displacement_from_start_cm": 200.83747248980814,
+          "position_range_cm": [
+            42.25809064049179,
+            233.59155293365475,
+            40.5346046651961
+          ],
+          "end_delta_cm": [
+            -21.241427372744987,
+            186.74630248202192,
+            8.047522462999382
+          ]
+        },
+        "hand_l": {
+          "max_rotation_from_start_deg": 173.19371072428999,
+          "max_rotation_from_ref_deg": 175.68715290867405,
+          "max_step_rotation_deg_60hz": 22.676650588154626,
+          "max_displacement_from_start_cm": 171.27744154528153,
+          "position_range_cm": [
+            73.41736347990133,
+            249.20491577984018,
+            80.28873929514171
+          ],
+          "end_delta_cm": [
+            14.243396502068585,
+            155.33662600263253,
+            -13.855650392367835
+          ]
+        },
+        "hand_r": {
+          "max_rotation_from_start_deg": 170.99665682981103,
+          "max_rotation_from_ref_deg": 178.27579393207907,
+          "max_step_rotation_deg_60hz": 49.54980115264565,
+          "max_displacement_from_start_cm": 234.99439903205484,
+          "position_range_cm": [
+            71.68134937245537,
+            242.21177821115174,
+            71.91529923541331
+          ],
+          "end_delta_cm": [
+            -10.893930065782236,
+            228.63651941915177,
+            9.414753944424064
+          ]
+        },
+        "foot_l": {
+          "max_rotation_from_start_deg": 179.40670244996255,
+          "max_rotation_from_ref_deg": 178.547693664688,
+          "max_step_rotation_deg_60hz": 14.41381217080391,
+          "max_displacement_from_start_cm": 149.33553905769028,
+          "position_range_cm": [
+            9.312106148012006,
+            149.70765927600317,
+            14.591032725621417
+          ],
+          "end_delta_cm": [
+            -8.30897896326011,
+            149.05378962981646,
+            -1.5996086716540958e-05
+          ]
+        },
+        "foot_r": {
+          "max_rotation_from_start_deg": 176.76432839348348,
+          "max_rotation_from_ref_deg": 175.8352585333073,
+          "max_step_rotation_deg_60hz": 31.758033491035093,
+          "max_displacement_from_start_cm": 233.32184641163437,
+          "position_range_cm": [
+            66.15897492476431,
+            231.52396293728228,
+            144.3030508633154
+          ],
+          "end_delta_cm": [
+            -27.68264401249992,
+            231.5115224496165,
+            -8.371142900870353
+          ]
+        },
+        "upperarm_l": {
+          "max_rotation_from_start_deg": 176.95276413190123,
+          "max_rotation_from_ref_deg": 176.09218349769026,
+          "max_step_rotation_deg_60hz": 24.04212112250609,
+          "max_displacement_from_start_cm": 178.41167657425115,
+          "position_range_cm": [
+            48.10366719217009,
+            223.16568367732526,
+            50.85298231161191
+          ],
+          "end_delta_cm": [
+            -11.400951601106971,
+            163.73571729862934,
+            7.534278676945149
+          ]
+        },
+        "lowerarm_l": {
+          "max_rotation_from_start_deg": 178.47597581970314,
+          "max_rotation_from_ref_deg": 177.22085481388214,
+          "max_step_rotation_deg_60hz": 24.773802019591137,
+          "max_displacement_from_start_cm": 165.85040842608825,
+          "position_range_cm": [
+            67.93195004304235,
+            224.09253224462591,
+            60.547990281909705
+          ],
+          "end_delta_cm": [
+            11.976228194820084,
+            154.79226915132548,
+            -15.913395726986906
+          ]
+        },
+        "upperarm_r": {
+          "max_rotation_from_start_deg": 168.24310910766056,
+          "max_rotation_from_ref_deg": 160.7808023417891,
+          "max_step_rotation_deg_60hz": 49.34384566980585,
+          "max_displacement_from_start_cm": 212.02417403375682,
+          "position_range_cm": [
+            65.71815981606645,
+            219.82050962568883,
+            41.209889197448106
+          ],
+          "end_delta_cm": [
+            -50.00008086169523,
+            197.24242012103642,
+            -3.6531108644882693
+          ]
+        },
+        "lowerarm_r": {
+          "max_rotation_from_start_deg": 179.26314752646405,
+          "max_rotation_from_ref_deg": 172.56049207561549,
+          "max_step_rotation_deg_60hz": 46.374895212296856,
+          "max_displacement_from_start_cm": 244.4143224670863,
+          "position_range_cm": [
+            76.78726414617077,
+            248.1729830860549,
+            44.364699239740986
+          ],
+          "end_delta_cm": [
+            -44.106474685415236,
+            239.40147347865934,
+            -9.633318273609078
+          ]
+        },
+        "thigh_l": {
+          "max_rotation_from_start_deg": 179.37898489985383,
+          "max_rotation_from_ref_deg": 174.3922016264422,
+          "max_step_rotation_deg_60hz": 24.090717367339913,
+          "max_displacement_from_start_cm": 185.33134982821227,
+          "position_range_cm": [
+            28.42892250442847,
+            184.02891150977243,
+            37.79876933877541
+          ],
+          "end_delta_cm": [
+            -18.318480647929082,
+            180.98522066550996,
+            3.257792303948193
+          ]
+        },
+        "calf_l": {
+          "max_rotation_from_start_deg": 178.03426117755134,
+          "max_rotation_from_ref_deg": 174.56518082305556,
+          "max_step_rotation_deg_60hz": 24.18118707820097,
+          "max_displacement_from_start_cm": 166.52825791480677,
+          "position_range_cm": [
+            17.723910985501586,
+            177.4054159740924,
+            18.468152816140808
+          ],
+          "end_delta_cm": [
+            -0.6396633275909984,
+            158.42369415599836,
+            -1.066831942665793
+          ]
+        },
+        "thigh_r": {
+          "max_rotation_from_start_deg": 173.33359852509903,
+          "max_rotation_from_ref_deg": 178.71838593102092,
+          "max_step_rotation_deg_60hz": 62.14769747768783,
+          "max_displacement_from_start_cm": 212.99863122227546,
+          "position_range_cm": [
+            43.9514493337603,
+            211.52507136880678,
+            50.55089733834137
+          ],
+          "end_delta_cm": [
+            -28.541601384901618,
+            201.03821186505868,
+            3.9020863433167676
+          ]
+        },
+        "calf_r": {
+          "max_rotation_from_start_deg": 179.9982595593342,
+          "max_rotation_from_ref_deg": 179.77604193087097,
+          "max_step_rotation_deg_60hz": 50.74160007483213,
+          "max_displacement_from_start_cm": 231.86910064668044,
+          "position_range_cm": [
+            94.5062329624011,
+            252.7861539475999,
+            90.0957378157598
+          ],
+          "end_delta_cm": [
+            -8.60360629474436,
+            219.05347039578578,
+            -2.3309545389249138
+          ]
+        }
+      },
+      "limb_length_ref_ratios": {
+        "upperarm_l->lowerarm_l": [
+          0.9999999999999993,
+          1.0000000000000027
+        ],
+        "lowerarm_l->hand_l": [
+          0.9999999999999998,
+          1.0000000000000038
+        ],
+        "upperarm_r->lowerarm_r": [
+          0.9999999999999998,
+          1.0000000000000027
+        ],
+        "lowerarm_r->hand_r": [
+          1.0,
+          1.0000000000000047
+        ],
+        "thigh_l->calf_l": [
+          0.9999999999999996,
+          1.000000000000001
+        ],
+        "calf_l->foot_l": [
+          0.9999999999999993,
+          1.0000000000000013
+        ],
+        "thigh_r->calf_r": [
+          0.9999999999999993,
+          1.0000000000000013
+        ],
+        "calf_r->foot_r": [
+          0.9999999999999994,
+          1.0000000000000016
+        ]
+      },
+      "contact_review_cue": null
+    },
+    "boxing_preview": {
+      "asset": "/Game/Rogue10m/Animation/Preview/Boxing/A_Boxing_Manny.A_Boxing_Manny",
+      "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+      "duration": 1.7333333492279053,
+      "sample_hz": 60,
+      "root_motion_enabled": false,
+      "summary": {
+        "root": {
+          "max_rotation_from_start_deg": 36.117429221837476,
+          "max_rotation_from_ref_deg": 70.54071162252446,
+          "max_step_rotation_deg_60hz": 2.9532984163877867,
+          "max_displacement_from_start_cm": 49.883582133541246,
+          "position_range_cm": [
+            11.889196157455444,
+            50.78630018234253,
+            13.42694091796875
+          ],
+          "end_delta_cm": [
+            1.9073486328125e-06,
+            1.430511474609375e-06,
+            2.288818359375e-05
+          ]
+        },
+        "pelvis": {
+          "max_rotation_from_start_deg": 36.1158792889842,
+          "max_rotation_from_ref_deg": 70.42881954335188,
+          "max_step_rotation_deg_60hz": 2.9537370995471566,
+          "max_displacement_from_start_cm": 49.83840459556022,
+          "position_range_cm": [
+            11.837788120154713,
+            50.754853279096814,
+            13.359485424801719
+          ],
+          "end_delta_cm": [
+            1.8898914799780897e-06,
+            1.332461218472858e-06,
+            2.2828787876960632e-05
+          ]
+        },
+        "head": {
+          "max_rotation_from_start_deg": 14.829921141247262,
+          "max_rotation_from_ref_deg": 57.278931032753476,
+          "max_step_rotation_deg_60hz": 1.839019526221459,
+          "max_displacement_from_start_cm": 66.51683004131189,
+          "position_range_cm": [
+            4.371071274031134,
+            69.45226494535206,
+            18.116715914097114
+          ],
+          "end_delta_cm": [
+            1.1240783358346107e-05,
+            -3.304908500645354e-06,
+            2.4026549226618954e-05
+          ]
+        },
+        "hand_l": {
+          "max_rotation_from_start_deg": 81.05770401843036,
+          "max_rotation_from_ref_deg": 117.2394978732935,
+          "max_step_rotation_deg_60hz": 9.523411143725891,
+          "max_displacement_from_start_cm": 97.44935261344457,
+          "position_range_cm": [
+            18.702187299495186,
+            103.10418320702554,
+            30.779632446085145
+          ],
+          "end_delta_cm": [
+            1.905755703290879e-05,
+            -7.4780706320609625e-06,
+            1.4445155642306418e-05
+          ]
+        },
+        "hand_r": {
+          "max_rotation_from_start_deg": 38.349519849339366,
+          "max_rotation_from_ref_deg": 111.4828842847324,
+          "max_step_rotation_deg_60hz": 3.858794255459213,
+          "max_displacement_from_start_cm": 50.85395843501042,
+          "position_range_cm": [
+            6.942430317207339,
+            55.209732829402675,
+            17.788064338421478
+          ],
+          "end_delta_cm": [
+            1.1392651504849027e-05,
+            8.34003983740672e-06,
+            3.1317480420511856e-05
+          ]
+        },
+        "foot_l": {
+          "max_rotation_from_start_deg": 37.307293857074896,
+          "max_rotation_from_ref_deg": 74.44277063148041,
+          "max_step_rotation_deg_60hz": 6.414031423548382,
+          "max_displacement_from_start_cm": 62.65726391581498,
+          "position_range_cm": [
+            5.020659968825733,
+            62.66817916029912,
+            12.69100793459932
+          ],
+          "end_delta_cm": [
+            -2.3196572353612055e-05,
+            4.088664695700572e-05,
+            2.2564142028613787e-05
+          ]
+        },
+        "foot_r": {
+          "max_rotation_from_start_deg": 39.532191473186444,
+          "max_rotation_from_ref_deg": 92.84089670548785,
+          "max_step_rotation_deg_60hz": 4.004150221271429,
+          "max_displacement_from_start_cm": 21.4832998018092,
+          "position_range_cm": [
+            8.113240338133119,
+            22.071327657489242,
+            8.673548831737598
+          ],
+          "end_delta_cm": [
+            -5.0432068803729635e-05,
+            1.5006388487392996e-05,
+            7.787035389839048e-06
+          ]
+        },
+        "upperarm_l": {
+          "max_rotation_from_start_deg": 72.04283709791885,
+          "max_rotation_from_ref_deg": 103.7241681869328,
+          "max_step_rotation_deg_60hz": 9.236809918885111,
+          "max_displacement_from_start_cm": 76.29116048380276,
+          "position_range_cm": [
+            9.848323506637836,
+            79.29512284492145,
+            19.76541738435236
+          ],
+          "end_delta_cm": [
+            7.600391807471851e-06,
+            -1.1543133608959977e-05,
+            1.7980766955361105e-05
+          ]
+        },
+        "lowerarm_l": {
+          "max_rotation_from_start_deg": 82.0394028545513,
+          "max_rotation_from_ref_deg": 117.63274689943339,
+          "max_step_rotation_deg_60hz": 10.674589573946594,
+          "max_displacement_from_start_cm": 88.15054122482692,
+          "position_range_cm": [
+            32.31714152364637,
+            97.72048653443895,
+            22.31549415671813
+          ],
+          "end_delta_cm": [
+            1.3637855929005127e-06,
+            -2.5987357767931485e-05,
+            9.70057729432483e-06
+          ]
+        },
+        "upperarm_r": {
+          "max_rotation_from_start_deg": 33.55070851533994,
+          "max_rotation_from_ref_deg": 30.60887383432096,
+          "max_step_rotation_deg_60hz": 4.06035102415984,
+          "max_displacement_from_start_cm": 53.80401894766544,
+          "position_range_cm": [
+            19.217766830482695,
+            56.62080651271904,
+            11.072662223211893
+          ],
+          "end_delta_cm": [
+            2.3476493424823275e-06,
+            7.047712349717017e-06,
+            2.3592753578327574e-05
+          ]
+        },
+        "lowerarm_r": {
+          "max_rotation_from_start_deg": 39.0831040985914,
+          "max_rotation_from_ref_deg": 108.26404391606418,
+          "max_step_rotation_deg_60hz": 3.983791875802815,
+          "max_displacement_from_start_cm": 43.855816080915574,
+          "position_range_cm": [
+            19.821627859632027,
+            47.18289561194672,
+            11.979130624338225
+          ],
+          "end_delta_cm": [
+            8.72730263878907e-06,
+            1.740931341220886e-05,
+            2.44130454518654e-05
+          ]
+        },
+        "thigh_l": {
+          "max_rotation_from_start_deg": 35.94530766351697,
+          "max_rotation_from_ref_deg": 76.90693828449751,
+          "max_step_rotation_deg_60hz": 2.6359376729061896,
+          "max_displacement_from_start_cm": 52.11561731446277,
+          "position_range_cm": [
+            7.494325316775566,
+            53.54668821931409,
+            14.309703610957754
+          ],
+          "end_delta_cm": [
+            2.5374583092485636e-06,
+            5.409614587392753e-07,
+            2.2908820042744082e-05
+          ]
+        },
+        "calf_l": {
+          "max_rotation_from_start_deg": 33.41104324366137,
+          "max_rotation_from_ref_deg": 66.67899940384501,
+          "max_step_rotation_deg_60hz": 5.989450191787517,
+          "max_displacement_from_start_cm": 52.654830644500386,
+          "position_range_cm": [
+            9.98141512576062,
+            55.36980651733001,
+            11.015934595235791
+          ],
+          "end_delta_cm": [
+            -3.171981026284243e-06,
+            1.4410317994872912e-05,
+            3.453329163960461e-05
+          ]
+        },
+        "thigh_r": {
+          "max_rotation_from_start_deg": 40.1371210696258,
+          "max_rotation_from_ref_deg": 90.92395068975381,
+          "max_step_rotation_deg_60hz": 2.699136898238742,
+          "max_displacement_from_start_cm": 47.07135754242607,
+          "position_range_cm": [
+            16.12932672700986,
+            46.82976137099192,
+            12.526707720034736
+          ],
+          "end_delta_cm": [
+            1.0249876414292203e-06,
+            2.7227834720200406e-06,
+            2.2909929526804262e-05
+          ]
+        },
+        "calf_r": {
+          "max_rotation_from_start_deg": 34.20580828520817,
+          "max_rotation_from_ref_deg": 99.06494984925507,
+          "max_step_rotation_deg_60hz": 3.403101343418001,
+          "max_displacement_from_start_cm": 28.99360854825332,
+          "position_range_cm": [
+            13.297096272495464,
+            28.34570363868866,
+            9.178936175196917
+          ],
+          "end_delta_cm": [
+            -1.7926966521031318e-05,
+            1.1509262002107334e-05,
+            2.7683822551693993e-05
+          ]
+        }
+      },
+      "limb_length_ref_ratios": {
+        "upperarm_l->lowerarm_l": [
+          0.9999999999999997,
+          1.0000000000000022
+        ],
+        "lowerarm_l->hand_l": [
+          1.0,
+          1.0000000000000049
+        ],
+        "upperarm_r->lowerarm_r": [
+          0.9999999999999994,
+          1.0000000000000018
+        ],
+        "lowerarm_r->hand_r": [
+          0.9999999999999998,
+          1.0000000000000047
+        ],
+        "thigh_l->calf_l": [
+          0.9999999999999997,
+          1.0000000000000013
+        ],
+        "calf_l->foot_l": [
+          0.9999999999999994,
+          1.0000000000000018
+        ],
+        "thigh_r->calf_r": [
+          0.9999999999999993,
+          1.0000000000000013
+        ],
+        "calf_r->foot_r": [
+          0.9999999999999997,
+          1.000000000000001
+        ]
+      },
+      "contact_review_cue": null
+    },
+    "martelo_preview": {
+      "asset": "/Game/Rogue10m/Animation/Preview/Martelo/A_Martelo2_Manny.A_Martelo2_Manny",
+      "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+      "duration": 1.2999999523162842,
+      "sample_hz": 60,
+      "root_motion_enabled": false,
+      "summary": {
+        "root": {
+          "max_rotation_from_start_deg": 120.89986150458778,
+          "max_rotation_from_ref_deg": 116.94446061449345,
+          "max_step_rotation_deg_60hz": 8.562160458380461,
+          "max_displacement_from_start_cm": 64.33971216884902,
+          "position_range_cm": [
+            15.82164691388607,
+            59.21136784553528,
+            23.402687072753906
+          ],
+          "end_delta_cm": [
+            0.0025131553411483765,
+            -0.0027048587799072266,
+            -7.62939453125e-06
+          ]
+        },
+        "pelvis": {
+          "max_rotation_from_start_deg": 120.88353134128869,
+          "max_rotation_from_ref_deg": 118.44044500319995,
+          "max_step_rotation_deg_60hz": 8.559375905621692,
+          "max_displacement_from_start_cm": 64.58059794393307,
+          "position_range_cm": [
+            16.008867523407723,
+            59.442280838569815,
+            23.43753676740498
+          ],
+          "end_delta_cm": [
+            0.002513642974950714,
+            -0.002734889293467546,
+            -3.158934465830043e-05
+          ]
+        },
+        "head": {
+          "max_rotation_from_start_deg": 57.74674168979992,
+          "max_rotation_from_ref_deg": 52.996171698444726,
+          "max_step_rotation_deg_60hz": 4.97281365800649,
+          "max_displacement_from_start_cm": 29.024022343207942,
+          "position_range_cm": [
+            23.702977075724945,
+            25.807764905414743,
+            35.45837614458978
+          ],
+          "end_delta_cm": [
+            0.0006948148765424378,
+            -0.0036276344307530906,
+            -2.3058056228819623e-05
+          ]
+        },
+        "hand_l": {
+          "max_rotation_from_start_deg": 178.65677629029324,
+          "max_rotation_from_ref_deg": 179.7755283965551,
+          "max_step_rotation_deg_60hz": 17.11693297124562,
+          "max_displacement_from_start_cm": 77.25725037572863,
+          "position_range_cm": [
+            83.2238091910956,
+            64.61347188982366,
+            48.3547766138971
+          ],
+          "end_delta_cm": [
+            -0.000300177170686311,
+            -0.004333878131326685,
+            3.637564188352371e-05
+          ]
+        },
+        "hand_r": {
+          "max_rotation_from_start_deg": 179.00090194863046,
+          "max_rotation_from_ref_deg": 164.13122975208165,
+          "max_step_rotation_deg_60hz": 21.340818799932727,
+          "max_displacement_from_start_cm": 101.53853308311984,
+          "position_range_cm": [
+            68.68646001643586,
+            97.1471009798719,
+            62.848613567671265
+          ],
+          "end_delta_cm": [
+            0.004970360135658325,
+            -0.005261949988323522,
+            -1.8898519869026131e-06
+          ]
+        },
+        "foot_l": {
+          "max_rotation_from_start_deg": 173.032689771707,
+          "max_rotation_from_ref_deg": 129.7145783435201,
+          "max_step_rotation_deg_60hz": 27.092588296032236,
+          "max_displacement_from_start_cm": 227.1768276661993,
+          "position_range_cm": [
+            47.06936171415157,
+            181.68752135255767,
+            136.73078808640182
+          ],
+          "end_delta_cm": [
+            0.007746260179338549,
+            -0.004476768472976289,
+            4.1350732828959735e-05
+          ]
+        },
+        "foot_r": {
+          "max_rotation_from_start_deg": 94.78981198561226,
+          "max_rotation_from_ref_deg": 125.34438874567151,
+          "max_step_rotation_deg_60hz": 17.50542224397677,
+          "max_displacement_from_start_cm": 13.503201884004424,
+          "position_range_cm": [
+            4.431824862951929,
+            17.176390682451945,
+            7.228213804224779
+          ],
+          "end_delta_cm": [
+            -0.0006108668911437576,
+            -0.0027152910288634757,
+            5.926044932635932e-05
+          ]
+        },
+        "upperarm_l": {
+          "max_rotation_from_start_deg": 110.50527779537059,
+          "max_rotation_from_ref_deg": 126.07773837522831,
+          "max_step_rotation_deg_60hz": 8.701769285009629,
+          "max_displacement_from_start_cm": 25.85256301358547,
+          "position_range_cm": [
+            16.892026373920316,
+            21.812493885541862,
+            19.15304610806804
+          ],
+          "end_delta_cm": [
+            0.0009166524271435605,
+            -0.0021968452779503878,
+            -2.5469014687473646e-05
+          ]
+        },
+        "lowerarm_l": {
+          "max_rotation_from_start_deg": 179.2234139507458,
+          "max_rotation_from_ref_deg": 164.04628433454042,
+          "max_step_rotation_deg_60hz": 10.319265445001644,
+          "max_displacement_from_start_cm": 34.79585193289505,
+          "position_range_cm": [
+            30.13918100196142,
+            47.583273092871394,
+            35.82497019405541
+          ],
+          "end_delta_cm": [
+            -0.0008666113037634204,
+            -0.0025936719178005774,
+            1.5031779511787136e-05
+          ]
+        },
+        "upperarm_r": {
+          "max_rotation_from_start_deg": 148.24545240888878,
+          "max_rotation_from_ref_deg": 91.1285570349872,
+          "max_step_rotation_deg_60hz": 11.379907028312125,
+          "max_displacement_from_start_cm": 31.09588027407213,
+          "position_range_cm": [
+            18.36189661030661,
+            14.585206960547197,
+            37.22612814694753
+          ],
+          "end_delta_cm": [
+            0.0020978375801945504,
+            -0.004407216640649025,
+            -2.613998429978892e-05
+          ]
+        },
+        "lowerarm_r": {
+          "max_rotation_from_start_deg": 178.88661351307766,
+          "max_rotation_from_ref_deg": 128.13916636544434,
+          "max_step_rotation_deg_60hz": 15.922274639608274,
+          "max_displacement_from_start_cm": 66.23312958990606,
+          "position_range_cm": [
+            42.38267540933056,
+            64.63735474016396,
+            37.26239251439672
+          ],
+          "end_delta_cm": [
+            0.003726700193269039,
+            -0.004810570686297311,
+            9.346141823129983e-05
+          ]
+        },
+        "thigh_l": {
+          "max_rotation_from_start_deg": 174.3637718592381,
+          "max_rotation_from_ref_deg": 149.4650284140553,
+          "max_step_rotation_deg_60hz": 14.969909747515945,
+          "max_displacement_from_start_cm": 73.2263006546831,
+          "position_range_cm": [
+            8.845689595823721,
+            66.8653933552634,
+            31.48179513969447
+          ],
+          "end_delta_cm": [
+            0.0025887865047273806,
+            -0.002048179885160595,
+            -3.418439548852348e-05
+          ]
+        },
+        "calf_l": {
+          "max_rotation_from_start_deg": 178.98051697649686,
+          "max_rotation_from_ref_deg": 151.8981543995583,
+          "max_step_rotation_deg_60hz": 20.366658531888913,
+          "max_displacement_from_start_cm": 147.83374660889058,
+          "position_range_cm": [
+            32.10325212589965,
+            116.62520465884101,
+            94.23926519176925
+          ],
+          "end_delta_cm": [
+            0.0010492433143376445,
+            -0.0004026579638640726,
+            -0.0005780151729481986
+          ]
+        },
+        "thigh_r": {
+          "max_rotation_from_start_deg": 131.07298692347072,
+          "max_rotation_from_ref_deg": 131.87596647906358,
+          "max_step_rotation_deg_60hz": 10.25054162362452,
+          "max_displacement_from_start_cm": 64.81987276552775,
+          "position_range_cm": [
+            28.736064102822567,
+            56.93457210450928,
+            17.98158697767947
+          ],
+          "end_delta_cm": [
+            0.002462741136142199,
+            -0.003377445128848411,
+            -2.925254294439128e-05
+          ]
+        },
+        "calf_r": {
+          "max_rotation_from_start_deg": 130.6893261315618,
+          "max_rotation_from_ref_deg": 133.50774697481435,
+          "max_step_rotation_deg_60hz": 15.504536979884305,
+          "max_displacement_from_start_cm": 18.393744363169862,
+          "position_range_cm": [
+            18.505451081649753,
+            19.02942705167601,
+            5.553542350777846
+          ],
+          "end_delta_cm": [
+            -0.00015659589384853234,
+            -0.0030838262131638317,
+            5.4434337805275845e-05
+          ]
+        }
+      },
+      "limb_length_ref_ratios": {
+        "upperarm_l->lowerarm_l": [
+          0.9999999999999997,
+          1.0000000000000033
+        ],
+        "lowerarm_l->hand_l": [
+          0.9999999999999996,
+          1.0000000000000047
+        ],
+        "upperarm_r->lowerarm_r": [
+          0.9999999999999997,
+          1.0000000000000029
+        ],
+        "lowerarm_r->hand_r": [
+          0.9999999999999993,
+          1.000000000000003
+        ],
+        "thigh_l->calf_l": [
+          0.9999999999999997,
+          1.0000000000000009
+        ],
+        "calf_l->foot_l": [
+          0.9999999999999993,
+          1.000000000000002
+        ],
+        "thigh_r->calf_r": [
+          0.9999999999999993,
+          1.0000000000000013
+        ],
+        "calf_r->foot_r": [
+          0.9999999999999998,
+          1.0000000000000013
+        ]
+      },
+      "contact_review_cue": null
+    },
+    "dash_sequence": {
+      "asset": "/Game/Characters/Mannequins/Anims/Unarmed/Jump/MM_Dash.MM_Dash",
+      "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+      "duration": 0.9666666388511658,
+      "sample_hz": 60,
+      "root_motion_enabled": true,
+      "summary": {
+        "root": {
+          "max_rotation_from_start_deg": 0.0,
+          "max_rotation_from_ref_deg": 0.0,
+          "max_step_rotation_deg_60hz": 0.0,
+          "max_displacement_from_start_cm": 885.8078098297119,
+          "position_range_cm": [
+            0.0,
+            885.8078098297119,
+            0.0
+          ],
+          "end_delta_cm": [
+            0.0,
+            885.8078098297119,
+            0.0
+          ]
+        },
+        "pelvis": {
+          "max_rotation_from_start_deg": 135.0762697190215,
+          "max_rotation_from_ref_deg": 90.59390797629486,
+          "max_step_rotation_deg_60hz": 14.768334314375817,
+          "max_displacement_from_start_cm": 908.174143398093,
+          "position_range_cm": [
+            9.400602102279663,
+            908.1728322505951,
+            82.01876831054688
+          ],
+          "end_delta_cm": [
+            1.499786376953125,
+            908.1728322505951,
+            -0.3635101318359375
+          ]
+        },
+        "head": {
+          "max_rotation_from_start_deg": 73.98572064690859,
+          "max_rotation_from_ref_deg": 64.96483726614143,
+          "max_step_rotation_deg_60hz": 10.345852691554832,
+          "max_displacement_from_start_cm": 931.5627988804877,
+          "position_range_cm": [
+            67.39206578383993,
+            930.8255653021832,
+            111.52432662871145
+          ],
+          "end_delta_cm": [
+            -37.15070397654269,
+            929.3861585156376,
+            6.730283342491731
+          ]
+        },
+        "hand_l": {
+          "max_rotation_from_start_deg": 176.3321746011681,
+          "max_rotation_from_ref_deg": 160.5349534901532,
+          "max_step_rotation_deg_60hz": 20.194811088681732,
+          "max_displacement_from_start_cm": 984.2651162946133,
+          "position_range_cm": [
+            56.830978162501665,
+            983.5201924689514,
+            93.6142460563215
+          ],
+          "end_delta_cm": [
+            -33.23065553199591,
+            982.4266446946207,
+            20.15813440935139
+          ]
+        },
+        "hand_r": {
+          "max_rotation_from_start_deg": 146.1839950155834,
+          "max_rotation_from_ref_deg": 163.09519193675388,
+          "max_step_rotation_deg_60hz": 25.926430524841336,
+          "max_displacement_from_start_cm": 911.0418540823227,
+          "position_range_cm": [
+            86.36076916528785,
+            916.0447240639973,
+            128.29395045866065
+          ],
+          "end_delta_cm": [
+            -54.87038854396717,
+            907.2330985273005,
+            14.283011324680132
+          ]
+        },
+        "foot_l": {
+          "max_rotation_from_start_deg": 148.93047978726298,
+          "max_rotation_from_ref_deg": 131.44717521432327,
+          "max_step_rotation_deg_60hz": 24.415604340128457,
+          "max_displacement_from_start_cm": 1012.3154586126594,
+          "position_range_cm": [
+            31.33959011261543,
+            1013.1535255636787,
+            68.57699816066199
+          ],
+          "end_delta_cm": [
+            -0.00016360851445540447,
+            948.8162206681936,
+            0.00025278836763220625
+          ]
+        },
+        "foot_r": {
+          "max_rotation_from_start_deg": 118.8816759383008,
+          "max_rotation_from_ref_deg": 117.53928397715762,
+          "max_step_rotation_deg_60hz": 25.890195021840924,
+          "max_displacement_from_start_cm": 949.5294822826787,
+          "position_range_cm": [
+            28.9989352697425,
+            949.4168017121365,
+            79.5885872698444
+          ],
+          "end_delta_cm": [
+            -14.222453623747576,
+            875.0002367689133,
+            0.00014140399134987547
+          ]
+        },
+        "upperarm_l": {
+          "max_rotation_from_start_deg": 151.59712313076616,
+          "max_rotation_from_ref_deg": 89.75889971745019,
+          "max_step_rotation_deg_60hz": 15.568250142001038,
+          "max_displacement_from_start_cm": 948.6184486036904,
+          "position_range_cm": [
+            38.5978247902601,
+            948.6005189284649,
+            86.97034283527238
+          ],
+          "end_delta_cm": [
+            -0.5167098230759333,
+            948.4279890963935,
+            -0.21113478705493094
+          ]
+        },
+        "lowerarm_l": {
+          "max_rotation_from_start_deg": 147.29753701232963,
+          "max_rotation_from_ref_deg": 126.59813363251396,
+          "max_step_rotation_deg_60hz": 14.73357777949284,
+          "max_displacement_from_start_cm": 980.697870906222,
+          "position_range_cm": [
+            40.04972200272941,
+            980.6856326077476,
+            83.8711138760294
+          ],
+          "end_delta_cm": [
+            5.754492767613682,
+            979.3484968419912,
+            5.917444390256378
+          ]
+        },
+        "upperarm_r": {
+          "max_rotation_from_start_deg": 126.75457958810962,
+          "max_rotation_from_ref_deg": 148.86617043065397,
+          "max_step_rotation_deg_60hz": 25.861099507902033,
+          "max_displacement_from_start_cm": 900.7524579173491,
+          "position_range_cm": [
+            70.37784760194722,
+            899.3936743137721,
+            109.47270490743988
+          ],
+          "end_delta_cm": [
+            -47.671367769115314,
+            896.5752451783308,
+            5.849512782616813
+          ]
+        },
+        "lowerarm_r": {
+          "max_rotation_from_start_deg": 129.1728988265597,
+          "max_rotation_from_ref_deg": 151.82801854713384,
+          "max_step_rotation_deg_60hz": 26.073354393399622,
+          "max_displacement_from_start_cm": 882.2717006240212,
+          "position_range_cm": [
+            76.34222614691524,
+            880.5968440535248,
+            116.98384820001594
+          ],
+          "end_delta_cm": [
+            -46.91482394344832,
+            878.3070454985433,
+            -7.714622911721833
+          ]
+        },
+        "thigh_l": {
+          "max_rotation_from_start_deg": 100.3284158642243,
+          "max_rotation_from_ref_deg": 95.61634389908073,
+          "max_step_rotation_deg_60hz": 20.215838845060716,
+          "max_displacement_from_start_cm": 922.7413189213999,
+          "position_range_cm": [
+            14.673218285913519,
+            922.6899614833723,
+            76.31834755471422
+          ],
+          "end_delta_cm": [
+            9.724023989628636,
+            922.6899614833723,
+            -0.4690203264414379
+          ]
+        },
+        "calf_l": {
+          "max_rotation_from_start_deg": 110.01340589556459,
+          "max_rotation_from_ref_deg": 94.21140604345213,
+          "max_step_rotation_deg_60hz": 19.784736204097737,
+          "max_displacement_from_start_cm": 964.155192380428,
+          "position_range_cm": [
+            42.41299945048081,
+            963.9383732458305,
+            66.17519321158336
+          ],
+          "end_delta_cm": [
+            -15.68167242871639,
+            951.3719600667091,
+            -0.6626264481732704
+          ]
+        },
+        "thigh_r": {
+          "max_rotation_from_start_deg": 124.73220622060582,
+          "max_rotation_from_ref_deg": 94.96324679538357,
+          "max_step_rotation_deg_60hz": 24.593202568848707,
+          "max_displacement_from_start_cm": 895.5765399839129,
+          "position_range_cm": [
+            16.533966041677857,
+            895.1793152652468,
+            88.9329915556713
+          ],
+          "end_delta_cm": [
+            -7.779408792312772,
+            894.0069498843592,
+            -0.24691998476964727
+          ]
+        },
+        "calf_r": {
+          "max_rotation_from_start_deg": 103.80552811916466,
+          "max_rotation_from_ref_deg": 112.62606371221177,
+          "max_step_rotation_deg_60hz": 22.363751793611748,
+          "max_displacement_from_start_cm": 918.2861807656064,
+          "position_range_cm": [
+            60.34913855195883,
+            917.1469651752573,
+            101.14963228536743
+          ],
+          "end_delta_cm": [
+            -41.36018410359192,
+            888.1870652251426,
+            -5.1050552201908275
+          ]
+        }
+      },
+      "limb_length_ref_ratios": {
+        "upperarm_l->lowerarm_l": [
+          0.9999999999999987,
+          1.000000000000004
+        ],
+        "lowerarm_l->hand_l": [
+          0.9999998600166253,
+          0.9999998600166305
+        ],
+        "upperarm_r->lowerarm_r": [
+          1.0000160029209095,
+          1.000016002920912
+        ],
+        "lowerarm_r->hand_r": [
+          1.0000021697473107,
+          1.0000021697473158
+        ],
+        "thigh_l->calf_l": [
+          0.999999999999999,
+          1.0000000000000013
+        ],
+        "calf_l->foot_l": [
+          0.9999999096426874,
+          0.9999999096426898
+        ],
+        "thigh_r->calf_r": [
+          1.000001056184434,
+          1.0000010561844364
+        ],
+        "calf_r->foot_r": [
+          0.9999990964276173,
+          0.9999990964276196
+        ]
+      },
+      "contact_review_cue": null
+    }
+  },
+  "clip_camera_estimates": [
+    {
+      "label": "LeftHook",
+      "max_raw_head_rotation_from_ref_deg": 46.17962626474464,
+      "estimated_manny_clip_view_rotation_limit_deg": 6.926944214963718,
+      "contact_review_cue": {
+        "method": "maximum +Y effector reach relative to pelvis; manual review required",
+        "bone": "hand_l",
+        "candidate_sequence_seconds": 0.5166666666666667,
+        "candidate_frame_60hz": 31,
+        "forward_from_pelvis_cm": 69.91019089116548,
+        "effector_height_cm": 126.89930533929927,
+        "head_rotation_from_ref_deg": 44.500078502595876
+      },
+      "note": "Static Manny clip + compiled native CDO estimate. Not runtime appearance pose or target hit evidence."
+    },
+    {
+      "label": "RightUppercut",
+      "max_raw_head_rotation_from_ref_deg": 32.35903968139346,
+      "estimated_manny_clip_view_rotation_limit_deg": 4.853856145083926,
+      "contact_review_cue": {
+        "method": "maximum +Y effector reach relative to pelvis; manual review required",
+        "bone": "hand_r",
+        "candidate_sequence_seconds": 0.45,
+        "candidate_frame_60hz": 27,
+        "forward_from_pelvis_cm": 65.56237085369742,
+        "effector_height_cm": 116.6818111569865,
+        "head_rotation_from_ref_deg": 27.994937496743386
+      },
+      "note": "Static Manny clip + compiled native CDO estimate. Not runtime appearance pose or target hit evidence."
+    },
+    {
+      "label": "LowRightThaiKick",
+      "max_raw_head_rotation_from_ref_deg": 51.59516631634006,
+      "estimated_manny_clip_view_rotation_limit_deg": 7.739275254982165,
+      "contact_review_cue": {
+        "method": "maximum +Y effector reach relative to pelvis; manual review required",
+        "bone": "foot_r",
+        "candidate_sequence_seconds": 0.6666666666666666,
+        "candidate_frame_60hz": 40,
+        "forward_from_pelvis_cm": 75.86522229286592,
+        "effector_height_cm": 46.805477171955275,
+        "head_rotation_from_ref_deg": 35.335045266656714
+      },
+      "note": "Static Manny clip + compiled native CDO estimate. Not runtime appearance pose or target hit evidence."
+    },
+    {
+      "label": "StraightKick",
+      "max_raw_head_rotation_from_ref_deg": 179.16747578447513,
+      "estimated_manny_clip_view_rotation_limit_deg": 8.0,
+      "contact_review_cue": {
+        "method": "maximum +Y effector reach relative to pelvis; manual review required",
+        "bone": "foot_r",
+        "candidate_sequence_seconds": 0.6,
+        "candidate_frame_60hz": 36,
+        "forward_from_pelvis_cm": 92.83837232292365,
+        "effector_height_cm": 110.37655194126425,
+        "head_rotation_from_ref_deg": 56.83267712224209
+      },
+      "note": "Static Manny clip + compiled native CDO estimate. Not runtime appearance pose or target hit evidence."
+    },
+    {
+      "label": "BlockIntro",
+      "max_raw_head_rotation_from_ref_deg": 27.55979343745209,
+      "estimated_manny_clip_view_rotation_limit_deg": 4.133969179886983,
+      "contact_review_cue": null,
+      "note": "Static Manny clip + compiled native CDO estimate. Not runtime appearance pose or target hit evidence."
+    },
+    {
+      "label": "BlockLoop",
+      "max_raw_head_rotation_from_ref_deg": 32.119502177094944,
+      "estimated_manny_clip_view_rotation_limit_deg": 4.817925518011394,
+      "contact_review_cue": null,
+      "note": "Static Manny clip + compiled native CDO estimate. Not runtime appearance pose or target hit evidence."
+    },
+    {
+      "label": "BlockHit",
+      "max_raw_head_rotation_from_ref_deg": 37.1715765896409,
+      "estimated_manny_clip_view_rotation_limit_deg": 5.575736710005997,
+      "contact_review_cue": null,
+      "note": "Static Manny clip + compiled native CDO estimate. Not runtime appearance pose or target hit evidence."
+    },
+    {
+      "label": "FrontEvade",
+      "max_raw_head_rotation_from_ref_deg": 173.9777350627752,
+      "estimated_manny_clip_view_rotation_limit_deg": 8.0,
+      "contact_review_cue": null,
+      "note": "Static Manny clip + compiled native CDO estimate. Not runtime appearance pose or target hit evidence."
+    },
+    {
+      "label": "BackEvade",
+      "max_raw_head_rotation_from_ref_deg": 172.6329871578604,
+      "estimated_manny_clip_view_rotation_limit_deg": 8.0,
+      "contact_review_cue": null,
+      "note": "Static Manny clip + compiled native CDO estimate. Not runtime appearance pose or target hit evidence."
+    },
+    {
+      "label": "LeftEvade",
+      "max_raw_head_rotation_from_ref_deg": 52.01692714817059,
+      "estimated_manny_clip_view_rotation_limit_deg": 7.802539382270635,
+      "contact_review_cue": null,
+      "note": "Static Manny clip + compiled native CDO estimate. Not runtime appearance pose or target hit evidence."
+    },
+    {
+      "label": "RightEvade",
+      "max_raw_head_rotation_from_ref_deg": 32.136753398505796,
+      "estimated_manny_clip_view_rotation_limit_deg": 4.820513201325847,
+      "contact_review_cue": null,
+      "note": "Static Manny clip + compiled native CDO estimate. Not runtime appearance pose or target hit evidence."
+    }
+  ],
+  "existing_dodge_montage": {
+    "path": "/Game/Rogue10m/Animation/Common/AM_Dodge_Roll.AM_Dodge_Roll",
+    "tracks": [
+      {
+        "slot": "DefaultSlot",
+        "sequences": [
+          "/Game/Characters/Mannequins/Anims/Unarmed/Jump/MM_Dash.MM_Dash"
+        ]
+      }
+    ]
+  },
+  "limitations": [
+    "No gameplay DA or camera changes; no rendered preview, fixed mouse target or hit volume test.",
+    "Guard block-hit is not a verified parry and the 4 evades are not directional rolls."
+  ]
+}

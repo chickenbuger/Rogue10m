@@ -521,7 +521,20 @@ def register_profiles(profiles):
     unreal.EditorAssetLibrary.save_loaded_asset(character_data, only_if_is_dirty=False)
 
 
+def reject_authored_fist_overwrite(paths):
+    """Stop legacy regeneration before any writes once dedicated fist combat is installed."""
+    for path in paths:
+        skill = unreal.EditorAssetLibrary.load_asset(path)
+        montage = skill.get_editor_property("attack_montage") if skill else None
+        if montage and montage.get_path_name().startswith("/Game/Rogue10m/Animation/Combat/FistAuthored/"):
+            raise RuntimeError(
+                "Legacy generator would overwrite dedicated fist combat: " + path
+                + ". Use PrepareFistCombatAnimations.py for the authored animations; "
+                  "review any balance/progression regeneration separately.")
+
+
 def main():
+    reject_authored_fist_overwrite([ATTACK_ROOT + '/Knuckle/DA_Attack_Knuckle_' + variant[0] for variant in VARIANTS])
     for directory in (ANIMATION_ROOT, VFX_ROOT, ATTACK_ROOT, PROFILE_ROOT):
         unreal.EditorAssetLibrary.make_directory(directory)
     ensure_skeleton_compatibility()

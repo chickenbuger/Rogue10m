@@ -1,0 +1,365 @@
+# codex-3d-asset 스킬 등록
+
+## 요청
+anisayari/codex-3d-asset 저장소의 스킬만 개인 Codex 환경에 등록한다.
+
+## 적용
+공식 skill-installer 설치 도구로 skills/codex-3d-asset 경로를 내려받아 C:/Users/PC/.codex/skills/codex-3d-asset에 등록했다.
+설치된 SKILL.md의 이름이 codex-3d-asset인지 확인했다.
+이번 작업은 스킬 등록에 한정한다. 저장소 전체 플러그인·MCP 서버·Tripo API 설정과 생성 작업은 실행하지 않았다.
+원본 스킬은 저장소 외부 상대 경로의 data/viewer 등 플러그인 자료를 참조하므로 실제 생성 사용 시 해당 구성 확인이 필요하다.
+게임 기능·작업 브랜치·에셋 변경 및 커밋·푸시는 없다.
+
+## 사용
+다음 대화 턴부터 등록된 스킬을 사용할 수 있다.
+
+# Unreal Engine MCP Codex 스킬 설치 및 연결 등록
+
+## 요청
+WildCake/unreal-engine-mcp-codex를 개인 Codex 환경에 설치한다.
+
+## 적용
+공식 skill-installer로 저장소의 skills/unreal-engine-mcp-codex를 C:/Users/PC/.codex/skills/unreal-engine-mcp-codex에 설치했다.
+Codex 전역 설정에 unreal-mcp를 Streamable HTTP 방식으로 등록했다. 연결 주소는 http://127.0.0.1:8001/mcp이다.
+기본 포트 8000은 기존 Manager 프로세스가 사용하고 있어 8001을 선택했으며, 설치된 agents/openai.yaml의 연결 주소도 맞췄다.
+변경 전 설정을 C:/Users/PC/.codex/config.toml.before-unreal-mcp-20261005-021614.bak에 백업했다.
+CLI 등록 과정에서 생략된 기존 node_repl의 빈 args 배열을 복원했고, unreal-mcp 추가 외 기존 TOML 설정이 백업과 동일함을 확인했다.
+
+## 검증
+독립 검증 에이전트가 필수 스킬 파일 20개, Python 파일 7개의 AST 및 PowerShell 구문을 확인했다. 구문 오류는 없었다.
+Codex 조회 결과 unreal-mcp가 활성화되어 있고 연결 주소가 8001임을 확인했다.
+현재 Unreal Editor는 실행 중이지 않으며 8001 서버 연결은 확인되지 않았다. MCP 초기화 및 도구 실행 검증은 에디터 서버 기동 후 진행해야 한다.
+게임 소스, 에셋, Saved 설정을 변경하지 않았으므로 Unreal 빌드는 실행하지 않았다. 커밋과 푸시는 하지 않았다.
+
+## 사용
+스킬은 다음 대화 턴부터 사용할 수 있다.
+Unreal Editor에서 ModelContextProtocol.StartServer 8001을 실행하고 Codex의 MCP 연결을 다시 불러오면 실제 연결을 검증할 수 있다.
+
+# 격투가 팔 휘두르기 강화 — Sprint#5-8
+
+## 목표와 적용
+현재 격투가의 팔을 더 크게 휘두르도록 기본 맨손 4종, 너클 5종, 금강쇄를 조정했다.
+작업 브랜치 Sprint#5-8-fighter-arm-swing을 생성하고 기존 미커밋 작업을 보존했다. 기획 1명, 개발 2명, 검증 2명으로 조사·제작·스크립트·코드 리뷰·실제 게임 검증을 나눴다.
+잽과 직선 공격의 후방 준비·회수, 훅/연타 원호, 어퍼컷 낙폭을 늘렸다. 타격 순간 주변의 플랫폼 샘플 키 구간은 양팔에 공통 보호를 적용했다.
+금강쇄는 같은 두 권 시간 매핑으로 다시 만들고 FK에서 IK 5개를 재계산하여 기존 위치 오차도 줄였다.
+Unreal Editor API로 허용된 파생 시퀀스 10개만 저장했다. 전투·카메라 설정과 몽타주, Data Asset, 프로필은 동일하다.
+
+## 검증 결과
+UE5.8 Editor 최종 빌드 성공. 원시 120Hz 10개 클립의 저장 전/새 프로세스 재로드/기존 활성 경계 검사가 통과했다.
+원시 주먹 이동거리 4.76~24.30%, 최고 속도 10.15~56.05% 증가. 실제 Appearance 공격 손 경로는 1.03~9.62% 증가하고 동일 시간 손 위치 차이는 최대 9.53cm다. 원시 속도와 실제 게임 속도는 구분한다.
+수정 전후 실제 841프레임과 118,581포즈를 비교했으며 손발 길이·scale·타격 시각과 타수 보존을 확인했다. 실제 피해 14회 검증, V 전환 1인칭580/3인칭260샘플, 금강쇄 포함 StoneFist3종 1,234검사 모두 통과했다.
+카메라 최대 회전은 전후 약7.002도이며 기존8도 제한을 유지했다. 원시 금강쇄 IK 최대 오차는 기존 약0.097cm에서 약0.000030cm로 줄었다.
+최종 렌더840프레임/28초 촬영 완료. 변경 전후218프레임/7.27초 비교 영상도 저장했다. HUD와 모션 블러로 세밀한 손가락/발 전체의 육안 확인에는 한계가 있다.
+Content4,215개 중 허용된10개 시퀀스만 변경,4,205개 패키지 같은바이트 확인. diff/하네스 검사 통과. 커밋·푸시 없음.
+
+## 작업 중 확인한 문제와 처리
+검사 실행 인자의 PowerShell 결합 및 UE5.8 비공개 섹션 접근을 공개 API/해시 보호로 수정했다.
+금강쇄 접합과 어퍼컷 보간 접촉점이 기존 기준을 넘은 강화안은 저장 전에 중단했다. 기준을 완화하지 않고 연타 크기와 접촉 주변 보호 구간을 재설계했다. 기존 금강쇄 FK/IK 오차는 파생 베이크에서 다시 동기화했다.
+기본 MCP 도구는 현재 세션에 노출되지 않아 스킬의 명령줄 검증 경로를 사용했다. 최초 변경 전 렌더는 셰이더 준비로 제한시간에 도달했으며 확보한218프레임만 비교에 사용했다. 최종 렌더는 전체 완료했다.
+
+## 관련 자료
+Feature/architect/2026-10-05_fighter-arm-swing.md
+Feature/doc/2026-10-05_fighter-arm-swing.md
+Feature/doc/evidence/fighter-arm-swing-20261005/independent-runtime-review.json
+Feature/doc/evidence/fighter-arm-swing-20261005/before-after-first-person.mp4
+Feature/doc/evidence/fighter-arm-swing-20261005/fighter-arm-swing-first-person.mp4
+
+## Notion 요약 후보
+격투가의 기본/너클/금강쇄 10개 공격에 더 큰 준비·원호·회수 동작을 적용했다. 실제 손 경로1~10% 증가와 타격 시점·손발 구조·카메라 안정화 보존을 독립 검증했다. 기존 금강쇄 IK 위치 오차를 함께 개선하고 28초 실행 영상을 확보했다.
+
+# 2026-10-05 격투가 전투 대기 자세
+
+## 작업 배경
+일반 Idle과 별도로 주먹을 올린 격투가 전투 자세를 준비했다. Sprint#5-9-fighter-combat-stance 브랜치로 전환하고 기존 미커밋 작업의 현재 바이트를 체크포인트에 보존했다.
+기획 1명·개발 2명·검증 2명의 역할로 분담했다. 동시 슬롯 제한에 따라 기획·개발 이후 일부 담당을 독립 검증 역할로 재배치했다. 실제 에디터 호출은 직렬로 실행했다.
+
+## 구현 내용
+기존 공격의 시작 가드에서 2초 전투 대기 루프를 제작했다. 흉곽 호흡은0.3도로 작게 넣고 머리 방향·손목·손가락·다리 포즈를 유지했다. 최종 손발 위치에서 IK를 동기화했다.
+Manny 소스 AnimBP의 부모를 native 전투 자세 AnimInstance로 바꾸고 FootIK 뒤, DefaultSlot 앞에 가드 블렌드를 추가했다. 공격과 회피 몽타주가 최종 우선권을 갖는다. 별도 FirstPersonMesh를 켜지 않고 기존 Appearance Mesh와 머리 카메라를 사용한다.
+전투 활동 후3초 유지,0.20초 진입/0.45초 복귀, 차징 중 유지와 이동·질주·공중 우선을 구현했다. 메뉴·무기·사망·조종 해제 시 상태를 정리하며 캐릭터 컴포넌트에 Tick을 새로 추가하지 않았다.
+Unreal Editor API로 신규 자세1개와 기존 공통 AnimBP1개만 저장했다. 전체 기존4,186개 uasset 중 나머지4,185개는같은SHA256이다. 기존 공격10종·관련 DA/몽타주/프로필·일반 Idle·머리 카메라 설정을 보존했다.
+
+## 검증 결과
+UE5.8 Editor 빌드 및 재로드 원시120Hz241포즈 검사 통과. 머리 이동 최대0.25cm, IK위치오차 약0.000032cm, 루프 시작·끝 오차0이다.
+실제 플레이어640프레임·90,381포즈에서 일반 Idle·잽연계·스트레이트·4초차징·훅·걷기·점프·착지·너클·V·무기/메뉴 취소·회피 검증을 통과했다. 전투 입력은 기존 Combat 처리 경로로, V는 InputKey로 실행했다.
+외형 평균 손 높이24.90cm 상승, 발 높이 차이 최대2.9345cm, 정지 캐릭터/메시 월드변환 오차0, 카메라최대7.0144도로 기존8도 이내다. 안정된 가드205프레임에서는 손목·손가락 로컬회전과 발 위치가 유지됐다.
+기존 FistCombat9종·실제피해14회·V1인칭580/3인칭260샘플, StoneFist3종1,234검사 회귀 통과. 기존 FootIK 준비 스크립트의 새 그래프 인식도 별도 재로드 감사에서 확인했다.
+실제1280×720 렌더640프레임 검사 통과 및21.33초 H.264 무음 영상 저장·전체디코딩 검사 완료. 독립 선택 화면 검토와 원시/실제 포즈 수치 검증을 구분했다.
+
+## 확인한 문제와 범위
+최초 걷기 검사3건은0.45초 복귀 블렌드 완료보다 빨리 검사한 시간 오류였다. 임계값을 완화하지 않고15틱 뒤 구간으로 교정해 통과했다. 가져온 루트 본 높이는 자식골반이 상쇄하므로 모델부유 판단에 쓰지 않고, 실제 발과 캡슐/메시 월드변환으로 검사했다.
+전투 가드 자체는 안정적이지만 기존 너클 진입의 큰 세계 좌표 손가락 회전과 섞어 전체 공격을 흔들림 없다고 평가하지 않았다. 이전 기준선과 같은 몽타주 시각의1,551개 본포즈는 동일하다. 최초 블렌드는 일부 빨라진 범위가 있다.
+실제 머리 카메라의1인칭에서는 오른손이 현재HUD뒤에 가려지고,3인칭 오른발도 일부 가려져 세부 접촉의 전체 육안 검증은 제한된다. 이동가드 레이어·별도 사망/재빙의 실행·전체 체형/장비관통·온라인 검증은 범위 밖이다.
+Python문법·diff·하네스 경로 검사 통과. 커밋·푸시는 하지 않았다.
+
+## 관련 자료
+Feature/architect/2026-10-05_fighter-combat-stance.md
+Feature/doc/2026-10-05_fighter-combat-stance.md
+Feature/doc/evidence/fighter-combat-stance-20261005/independent-motion-review.json
+Feature/doc/evidence/fighter-combat-stance-20261005/fighter-combat-stance.mp4
+
+## Notion 요약 후보
+격투가의 일반 Idle과 전투 가드를 분리해 실제 Appearance Mesh에 연결했다. 공격·차징·회피 후3초 유지하고 이동·공중에서는 기존 모션을 우선한다. 머리 흔들림 상한과 기존 공격을 보존했으며640프레임 통합/렌더, 기존12개 공격 회귀, 독립 모션 검토를 통과했다.21.33초 실행 영상과 재현 스크립트를 준비했다.
+
+# 기본맵 기반 판타지 시작 마을 — Sprint#5-10
+
+## 목표와 제작
+unreal-engine-mcp-codex 스킬과 보유 Stylized Village 에셋을 사용해 시작 마을부터 제작했다. Sprint#5-10-start-village 브랜치에서 기존 미커밋 작업을 보존하고 기획·공간 제작·메뉴 연결·검증·기록 역할을 나눴다.
+기본 플레이맵 /Game/FirstPerson/Lvl_FirstPerson을 에디터 템플릿 API로 복제하여 /Game/Rogue10m/Maps/StartHub를 저장했다. 120m × 120m 지면에 집 외관10채, 우물 광장, 네 방향 길, Equipment·Traits·Difficulty·Story 준비 구역과 북쪽 포탈을 배치했다.
+신규 소유 액터 667개와 전용 머티리얼 12개(Instance 2개·Material 10개)를 만들었다. 남쪽 PlayerStart 1개와 외곽 숨김 BlockAll 경계 4개를 검증했다. NPC 자리는 공간·표지로 준비했으며 실제 서비스와 집 실내는 아직 없다.
+
+## 메뉴 연결과 환경 설정
+메뉴에서 캐릭터를 선택하면 StartHub로 이동한다. native PlayerController 목적지를 변경하고 메뉴 이동의 StartRun 옵션 자체를 제거했다. 마을에서는 WaitingToStart를 유지하고 기존 C++ 포탈 overlap에서 StartRun=1을 붙여 실제 기본 전투맵에 진입한다.
+공식 Epic MCP 서버에 initialize·toolset 스키마·읽기·맵 로드·캡처 경로로 연결했다. 네이티브 MCP 도구가 노출되지 않아 로컬 JSON-RPC 클라이언트를 사용했고, 대량 생성·저장과 PIE는 기존 Epic Python Remote Execution으로 직렬 실행했다.
+MCP 자동 시작과 8001 포트의 프로젝트 기본값을 기록하고 에디터 설정 readback을 확인했다. 미저장 패키지가 없는 상태에서 명시적 서버 시작 명령 없이 재기동하여 8001 자동 시작과 StartHub 재로드를 검증했다. 공식 MCP로 신규 맵·전용 재질13개 경로 저장 성공도 확인했다. 초기 XGE 셰이더 실패·로컬 재시도 로그를 근거로 -NoXGEShaderCompile 실행 옵션을 사용했다.
+
+## 검증 결과
+UE 5.8 Editor NoHotReload 빌드와 CheckGeneratedChanges 검사 통과. 메뉴 정적 검사와 실제 메뉴→캐릭터 선택→StartHub PIE 이동을 확인했다.
+최종 runtime.json의 50개 검사가 모두 통과했다. PlayerStart 실제 착지·XY 오차 0cm·접지 간격 약 2.15cm, 허브 2초 이상 1200초 고정·비활성, 실제 광장 보행 약 2.01초·11.50m와 지면 관통 없음이 확인됐다.
+포탈 collision 중심으로 이동하여 실제 native overlap을 발생시켰다. 기본 전투맵 도착 시 Running·활성·1200초, 약 2초 후 1198초로 감소했다. 검사 스크립트가 직접 OpenLevel이나 포탈 핸들러를 호출한 결과가 아니다.
+기존 Content 4,302개는 크기·UTC 수정 시각 동일, 선정 70개는 SHA256 동일이다. 신규 720개 Content 파일은 새 맵·전용 머티리얼·해당 외부 액터/객체 범위 안에 있다. 전체 4,302개를 모두 해시 검사한 것은 아니다.
+최종 전체 배치·플레이어 높이의 실제 화면을 캡처해 확인했고, 독립 배치 검토에서 치명적 비례·방향 문제 없음이 확인됐다. MCP 재기동·자동 시작도 통과했다. 성능·패키징·온라인·모든 집 충돌 검사는 이번 범위 밖이다. 커밋·푸시는 하지 않았다.
+
+## 확인한 문제와 수정
+Material Instance setter의 false 반환은 실제 적용값 readback으로 구분했다. Rotator는 pitch·yaw·roll 키워드로 방향을 바로잡았다.
+BlueprintGetter는 UFUNCTION이어도 Python에 노출되지 않는다는 규칙을 확인했다. 같은 getter 오류가 2회 반복된 뒤 Reviewer 검토로 Box·Capsule의 generate_overlap_events 속성 검사로 통일하고 Python의 CollisionResponseType.ECR_OVERLAP 노출 이름을 수정했다. 실패 JSON을 보존한 뒤 최종 50개 검사 PASS를 확인했다.
+
+## 관련 자료
+Feature/architect/2026-10-05_start-village.md
+Feature/doc/2026-10-05_start-village.md
+Feature/doc/evidence/start-village-20261005/runtime.json
+Feature/doc/evidence/start-village-20261005/preservation.json
+Feature/doc/evidence/start-village-20261005/menu-static-output.json
+Feature/doc/evidence/start-village-20261005/editor.log
+Scripts/Editor/CreateStartVillage.py
+Scripts/Editor/ValidateStartVillage.py
+Scripts/InvokeUnrealMCP.py
+
+## Notion 요약 후보
+기본 전투맵을 복제해 120m 판타지 시작 마을을 제작했다. 집 외관 10채·우물 광장·길·네 준비 구역·포탈을 저장하고 메뉴→마을 대기→실제 포탈→20분 런 흐름을 50항목과 실제 PIE로 검증했다. 기존 Content 4,302개의 크기·수정 시각 및 선정 70개 해시를 보존했다. 최종 화면·MCP 재기동·자동 연결·저장을 확인했다. NPC 서비스·실내는 후속 작업이다.
+
+# 오픈월드 플레이맵 제작 — Sprint#5-11
+
+## 목표와 제작 범위
+unreal-engine-mcp-codex 스킬로 시작 마을 다음의 실제 플레이맵을 제작했다. Sprint#5-11-open-world-playmap 브랜치에서 기존 전투·애니메이션·마을 미커밋 작업을 보존했다. Lazy Codex의4개 패킷으로 native 지형 지원, 공간/조우 제작, 스트리밍/포탈 연결, 검토/기록을 나눴다.
+기본 World Partition 맵을 템플릿으로 /Game/Rogue10m/Maps/OpenRunMap을 저장했다. 크기1800m × 1800m, 높이 약21~140m,1009²샘플과256지형/충돌 컴포넌트를16개 공간 프록시에 분할했다. 남쪽 야영지·서쪽 숲·강 교차로·동쪽 풍차·바위 고원·북쪽 보스 유적을 연결했다.
+약12m 폭 길711패치와 폭60m 강, 폭18m·길이120m 교량3개 및 진입 경사를 배치했다. 야영지 집 외관3채와 보급 소품, 유적의 열린 진입부와55m 탑을 만들었다. 중앙 직행길1357.2m·최대 경사8.13°이며600cm/s 기준226.2초는 수학적 예상이다.
+
+## 식생과 월드 설정
+보유 나무3종을 Epic PCG 단일 그래프로183개 적법한 영역에 생성했다. 실제 ISM/HISM548컴포넌트·나무2806개이며 길·강·공터 침범0개, 최대 지면 투영 차이10.391cm·평균0.329cm다. 모든183회 실행 메시지는 빈 배열이었다.
+맵 전용 NavigationSystem과 Tick 없는 bootstrap에서 빙의 Pawn의 invoker를 타이머로 갱신한다. 주변60m에서 동적 경로를 만들고80m 밖에서 제거한다. 월드 파티션은256m 셀·700m 로드 범위다.
+지역 스포너5개와 기존 데이터를 참조하는 몬스터 자식 Blueprint6종, 북쪽 고정 보스를 배치했다. 먼 지형이 미로드될 때 보스가 낙하하지 않도록 같은 높이의 숨김 충돌 바닥을 상시 로드했다. 시작마을 기존 포탈의 목적지를 새 맵으로 바꾸고 StartRun=1 옵션으로1200초 런을 시작한다.
+
+## 실제 검사에서 발견한 문제와 수정
+지면 스폰이 캡슐 중심을 바닥에 놓아 실패하던 공용 문제에 반높이+2cm를 적용하고 소유 스트리밍 레벨을 명시했다. 근접 AI가 공격 범위 밖에 멈추던 문제는 독립 검토로 이동자와 목표 양쪽 반경이 도달 검사에 더해지는 것을 확인했다. FAIMoveRequest에서 두 반경 가산을 끄고 중심 거리를 공격 범위의80% 안으로 제한했다. 피해량과 원본 몬스터 데이터는 유지했다.
+강 전체가 흰색으로 보이는 재질은 원본 MI_Water를 부모로 하는 맵 전용 인스턴스로 보정했다. 재시작에서 외부 액터의 재질 연결이 원복된 것을 확인한 뒤 actor/component modify로 OFPA 패키지를 변경 표시하고 저장했다. 맵 해제·재로드 후17개 강 패널 모두 새 재질을 참조함을 확인했다.
+비공개 WorldPartition 속성 접근은 native 검사로 전환했다. 새 PCG 외부 패키지의 개별 MCP 저장 오류는 실행 결과를 확인하고 현재 레벨 저장 체크포인트로 처리했다. 모호한 생성 요청을 중복 실행하지 않았다. 추가 경계 검사에서 Unreal Array/list 결합 오류는 명시적인 list 변환으로 수정했고 초기 실패 자료도 보존했다.
+
+## 최종 검증 결과
+최종 UE5.8 Editor NoHotReload 빌드14.59초 성공, 프로젝트 파일 생성과 저장/재로드 검사 통과. Landscape256컴포넌트·16공간 프록시, 식생183타일·2806개 인스턴스 재로드를 확인했다.
+실제 PIE 통합99개 검사가 모두 통과했다. 시작마을 실제 포탈 overlap→새 맵→활성1200초 런, 시작점 착지·6지역/교량3개의 보행·지역 경로 생성, 북쪽 이동 시 야영지 해제와 복귀 시 재로드를 확인했다. 고정 보스 접지와 실제 몬스터 추적150.87cm·플레이어135→134HP 피해, 런1200→1154초 감소를 기록했다.
+별도 근접 경계 PIE30항목도 통과했다. Sporeling은155→119.14cm, VerdantSlime은125→95.72cm 접근하여 각각 native 공격 피해1을 줬다. 두 검사 모두 플레이어 이동0cm다. 검사에서 몬스터에게1피해 감지 자극을 주었지만 플레이어 직접 피해·AI 이동 명령은 호출하지 않았다. 이동 중 피해 면역·다른 AI 격리·재생 억제는 검사 소유 PIE에서만 적용하고 세션 종료 시 정리했다.
+공식 MCP JSON-RPC로 도구 스키마·에디터 스킬·PCG·맵·캡처·저장을 직렬 처리했다. 대량 배치/native helper/PIE callback은 Epic Python Remote Execution으로 보완했다. 전체·야영지·강/교량·유적의 실제 PNG4개를 캡처해 확인했다. 명시적 신규9패키지 저장과 StartHub 포함10패키지 미저장 상태false를 확인했다.
+기존 Content5022개 전체 크기·SHA256 검사에서 시작마을 맵과 포탈 외부 액터2개만 허용 변경, 나머지5020개는 같은 바이트다. 새1268개는 신규 맵·전용 콘텐츠·해당 외부 액터/객체 경로 안에 있다. 구매 에셋과 기본맵을 보존했으며 바이너리는 에디터로만 저장했다. Python13개 문법·프로젝트 JSON·diff·하네스 경로 검사를 통과했다. 커밋·푸시는 하지 않았다.
+
+## 현재 결과와 후속 범위
+탐험과 지역 전투가 가능한 초기 오픈월드 플레이맵이다. 보스 처치 후 승리 런 종료 연결과 전용 패턴, NPC 서비스·실내·상세 미술은 후속 작업이다. 강 수면은 시각 표현이며 새 수영 시스템은 없다.
+전 구간 연속 횡단·전체20분 타임아웃·모든 몬스터·기존 다른 맵의 공용 AI/스폰 회귀·패키징/성능/온라인 검사는 이번에 수행하지 않았다. 항공 화면은 먼 나무의450~650m culling이 적용되므로 지상 화면과 실제 재로드 수로 식생을 구분해 확인했다.
+
+## 관련 자료
+Feature/architect/2026-10-05_open-world-playmap.md
+Feature/doc/2026-10-05_open-world-playmap.md
+Feature/doc/evidence/open-world-20261005/runtime.json
+Feature/doc/evidence/open-world-20261005/ai-boundary.json
+Feature/doc/evidence/open-world-20261005/reload.json
+Feature/doc/evidence/open-world-20261005/preservation.json
+Feature/doc/evidence/open-world-20261005/view-river.png
+Docs/WorldStructure.md
+Scripts/Editor/ValidateOpenWorld.py
+Scripts/Editor/ValidateOpenWorldAIBoundary.py
+Scripts/VerifyOpenWorldContent.py
+
+## Notion 요약 후보
+보유 지형·마을 에셋과 공식 Unreal MCP로1.8km 오픈월드 플레이맵을 제작했다.6개 지역·교량3개·나무2806개와 지역 조우를 연결하고 시작마을 포탈에서20분 런을 시작한다. 지형/식생 재로드와 실제 PIE99항목, 짧은 사거리2종 추가30항목을 통과했다. 원본 Content5022개 전체 해시를 검사해 포탈 관련2개 외5020개를 보존했다. 보스 승리 연결과 상세 미술·패키지 성능은 다음 작업이다.
+
+# 시작마을 바닥 텍스처 개선 — Sprint#5-12
+
+## 요청과 원인
+시작마을 바닥이 뭉개져 보이는 문제를 Sprint#5-12-start-village-ground 브랜치에서 수정했다. unreal-engine-mcp-codex 스킬의 공식 MCP와 Epic Python Remote Execution으로 실제 재질을 조사·편집·저장했다. 기존 미커밋 작업은 유지했다.
+생성기가 요청한 잔디65회·흙길6회 반복은 부모 재질에 지원 파라미터가 없어 적용되지 않았다. 120m 바닥과 비균일하게 확대한 길의 메시 UV가 원본 텍스처를 늘리는 것이 원인이었다.
+
+## 적용 내용
+마을 전용 World XY 좌표 재질을 만들고 기존 잔디·흙길 인스턴스를 연결했다. 최종 반복 크기는 잔디180cm·흙길90cm·돌120cm다. 색상과 노멀 텍스처에 같은 좌표를 공급하고 완만한 색상 변화를 더했다.
+중앙 광장·준비 구역4곳·포탈 패드의 바닥6개에 새 돌 인스턴스를 적용했다. 외부 액터와 컴포넌트를 변경 표시한 뒤 현재 레벨에서 저장했다. 원본 구매/StarterContent 에셋과 그래픽 전역 설정은 수정하지 않았다.
+생성기는 전용 재질과 튜닝을 재사용하도록 보강했다. 잘못된 재질 때문에 기존 마을을 지운 상태로 저장하지 않도록 읽기 전용 사전 검사를 정리 작업 앞에 배치했다. 전체 마을 생성기는 실행하지 않았다.
+
+## 검증 결과
+native 재질 컴파일 오류 없음, 공식 MCP 컴파일·배선·명시5패키지 저장 성공과 dirty=false 확인. 기본맵으로 이동한 뒤 마을을 재로드하여43개 검사를 모두 통과했다. 677개 액터의 배치·메시·충돌·포탈 목적지와 OpenRunMap 런 시작 설정을 보존했다.
+Content6290개 전체 크기·SHA256 검사에서 StartHub·기존 인스턴스2개·바닥 외부 액터6개만 변경됐고6281개는 같은 바이트다. 새 master·돌 인스턴스2개 외 신규 Content는 없다. OpenRunMap과 포탈 패키지도 동일하다.
+최종 텍스처 조회 크기는 잔디/자갈2048², 돌1024²이며 LOD bias0을 유지했다. 최초 돌32² 조회는 준비 중 임시 값으로 보이므로 원본 해상도로 판단하지 않았다.
+실제 잔디·흙길·광장 전후와 동서 길·마을 화면을 검토해 큰 얼룩과 방향성 늘어짐이 사라짐을 확인했다. 화면 하단 가까운 부분은 일부 부드럽게 남아 있다. 전후 이미지 높이가 달라 픽셀 단위 비교로 주장하지 않는다. 생성기 읽기 전용 사전 검사도 실제 재질로 통과했다.
+독립 검토·Python AST·diff·하네스 경로 검사 수행. 이번 변경은 재질과 도구에 한정해 C++ 빌드·PIE 전투 재검사·패키징/성능 측정은 하지 않았다. 에디터는 개선된 StartHub 화면으로 열어 두었다. 커밋·푸시는 하지 않았다.
+
+## 관련 자료
+Feature/architect/2026-10-05_start-village-ground.md
+Feature/doc/2026-10-05_start-village-ground.md
+Feature/doc/evidence/village-ground-20261005/reload-validation.json
+Feature/doc/evidence/village-ground-20261005/preservation.json
+Feature/doc/evidence/village-ground-20261005/after-village-ground.png
+Scripts/Editor/ImproveVillageGround.py
+Scripts/Editor/ValidateVillageGround.py
+
+## Notion 요약 후보
+시작마을 잔디·흙길의 메시 UV 늘어짐을 전용 World XY 재질로 수정하고 광장·준비 구역·포탈 바닥에 돌 질감을 적용했다. 잔디180cm·길90cm·돌120cm 반복을 저장하고 재로드43항목을 통과했다. 677개 액터 배치·충돌·포탈과 원본 에셋을 보존했으며 Content6290개 전체 해시에서 허용9개 외6281개가 동일했다. 생성기 튜닝 재사용과 사전 검사도 보강했다.
+
+# 제작된 오픈월드 탐험 지도 — Sprint#5-13
+
+## 목표와 결과
+완성된 오픈월드의 지도를 요청받아 Sprint#5-13-open-world-map 브랜치에서 실제 제작 좌표와 저장된 지형 데이터로 한국어 탐험 지도를 만들었다. 2200×2550PNG에 남쪽 야영지·서쪽 숲·중앙 강 교차로·동쪽 폐풍차·바위 고원·북쪽 보스 유적을 표시했다.
+실제1800m 정사각형·북쪽+Y 방향을 유지하고1009²R16 지형의 음영과10m등고선을 넣었다. 세 갈래 길과 유한60m폭 강,18m×120m 교량3개를 같은 축척으로 표현했다. 전투 구역5곳·실제 고정 보스·야영지80m 안전 반경과 방위·500m 축척도 포함했다.
+시작마을은 별도 맵이므로 지도 밖 포탈→입장 야영지 연결로 나타냈다. 수목은 실제183개PCG 타일의 분포를 기호화했으며 개별 나무 좌표를 그대로 캡처한 결과는 아니다. 건물도 지도 기호로 표현했다.
+
+## 검증과 보존
+독립 검토로 지역·보스·풍차·도로·교량 실제 좌표와 별도 시작마을 연결을 확인했다. 제작POI와 교량 정의 일치,183PCG타일 완료·실행 메시지 없음, R16모서리4곳/중심의 양자화 오차1cm이내를 검사했다. 입력3개 SHA256을 좌표JSON에 기록했다.
+모든 라벨의 지도 범위·비중첩과 한국어 글꼴을 검사하고 PNG를 직접 열어 지역명·강·교량·길·범례·축척 가독성을 확인했다. Python AST·PNG무결성·diff 검사를 수행했다.
+이번 작업은 지도 산출물과 도구·문서만 추가했으며 Unreal 에셋·C++·설정은 수정하지 않았다. 에디터 재실행·빌드·PIE는 필요하지 않아 생략했다. 기존 미커밋 작업을 보존했고 커밋·푸시는 하지 않았다.
+
+## 관련 자료
+Feature/architect/2026-10-05_open-world-map.md
+Feature/doc/2026-10-05_open-world-map.md
+Feature/doc/evidence/open-world-map-20261005/OpenRunMap_Map.png
+Feature/doc/evidence/open-world-map-20261005/map-data.json
+Scripts/RenderOpenWorldMap.py
+
+## Notion 요약 후보
+완성된1.8km OpenRunMap의 실제 지형·좌표로 한국어 탐험 지도를 제작했다.6지역·3길·교량3개·전투 구역·보스·입장과 별도 시작마을 포탈 연결을 표시하고 방위·축척을 넣었다. 저장된R16지형과183개PCG타일 분포를 반영했으며 좌표 일치·라벨·PNG를 검증했다. Unreal 콘텐츠는 변경하지 않았다.
+
+# 기본 몬스터와 시작마을 안내 NPC — Sprint#5-14
+
+## 목표와 제작 범위
+사용자 최종 요청에 맞춰 몬스터는 Idle·이동·기본 공격, NPC는 간단한 대화와 기본 아이템 지급으로 범위를 확정했다. Sprint#5-14-open-world-monsters 브랜치에서 기존 맵·전투·HUD 미커밋 작업을 보존했다. Lazy Codex 패킷 M1 재료 조사, M2 기본 공격, M3 기존 6종 연결, M4 NPC 보급, M5 통합 검증·기록으로 나누고 설계·구현·빌드·독립 검토·문서를 역할별로 진행했다.
+오픈월드의 초록 점액체·포자 버섯·붉은 점액체·철갑 등껍질·가시 수문장·아자토르에 보유 모델과 호환되는 Idle·이동·공격·피격·사망 클립을 연결했다. 기존 체력·피해·경험치·속도·사거리와 지역 스포너 정책을 유지했다. 구매 모델과 원본 25종 데이터를 보존하고 새 전용 DataAsset 6개와 기본 공격 Profile 6개를 만들었다.
+
+## C++와 실제 맵 적용
+Tick 없는 기본 공격 컴포넌트가 준비→타격→회복을 처리한다. 타격 시 대상 캡슐·거리·방향·높이·벽 차단을 확인해 한 번만 피해를 주고, 사망 시 공격과 AI를 정리한다. 실제 속도에 따라 Idle과 이동 클립을 선택한다. 공격 중 AI Focus가 잠근 방향을 바꾸지 않도록 검토 결과를 반영했다.
+StartHub 남쪽 시작점 근처에 길잡이 아린을 저장했다. 보유 Quinn 모델과 MM_Idle을 사용하며 F로 대화 열기→회복 포션 2개 수령→닫기를 진행한다. 가방이 꽉 차면 수령 기록을 남기지 않고 공간 확보 후 재시도한다. PlayerState와 GameInstance 세션 기록으로 중복 수령을 막는다.
+기존 포탈의 OpenLevel은 Pawn을 다시 만들기 때문에 지급한 보급품의 GUID와 실제 남은 수량만 추적하는 Subsystem을 추가했다. 물약을 사용하거나 버렸다면 해당 수량을 다시 만들지 않고 다음 맵에 남은 스택만 전달한다. Inventory와 RunPortal에 한정된 연결부를 추가했다. 영구 프로필 저장과 특성 강화는 이번 기능 범위에 포함하지 않았다.
+실제 화면에서 대화 카드가 보이지 않던 문제를 발견했다. NativeConstruct 이후 트리를 생성하던 방식을 RebuildWidget 이전 생성으로 수정하고 빌드·재시작 후 한글 대화와 수령 문구를 확인했다.
+
+## 최종 검증과 보존
+UE 5.8 Editor NoHotReload 첫 빌드 111.69초, 대화 표시 보완 빌드 70.11초 성공. 저장 후 에디터 재시작의 에셋·클립 호환·마을 기존 677개 액터 보존 검사 100항목을 통과했다.
+최종 몬스터 PIE 219항목 모두 통과했다. 6종의 Idle·이동 클립 시간 진행, native AI 추적·실제 플레이어 피해, 1회 타격·범위 이탈 회피·사망 취소를 확인했다. 미로드 지역 종은 현재 로드된 지형의 실제 native 스포너를 검사 세션 안에서 사용했다. 플레이어에게 검사 코드로 직접 피해를 주지 않았다.
+최종 NPC PIE 57항목 모두 통과했다. 실제 지급·중복 방지·만석 재시도·대화 거리 종료·마을 대기 유지·물약 한 개 사용·실제 포탈 overlap·잔여 한 개 전달·1200초 런 시작과 카운트다운을 확인했다. 실제 F 입력으로 열기·2개 수령·닫기도 통과했고 실제 한글 카드 화면 2개를 저장해 직접 검토했다.
+Content 6,292개 전체 SHA256 기준선에서 6,282개 동일, 허용된 기존 10개 변경·신규 15개만 확인했다. 원본 구매 에셋과 마을 배치를 보존했다. 모든 에셋 편집·저장은 에디터로 수행했다. 독립 Unreal 코드 검토와 Python 문법·프로젝트 JSON·diff·하네스 경로 검사를 수행했다.
+검사 소유 PIE 종료와 StartHub 미저장 맵·이번 소유 콘텐츠 없음 확인. 전체 20분 플레이·네트워크·패키징·출시 성능 검사는 이번 집중 검사 범위 밖이다. 커밋·푸시는 하지 않았다.
+
+## 관련 자료
+Feature/architect/2026-10-05_open-world-monsters.md
+Feature/architect/2026-10-05_start-hub-tutorial-npc.md
+Feature/doc/2026-10-05_open-world-monsters.md
+Feature/doc/2026-10-05_start-hub-tutorial-npc.md
+Docs/OpenWorldMonsterDesign.md
+Feature/doc/evidence/open-world-monsters-20261005/runtime-validation.json
+Feature/doc/evidence/open-world-monsters-20261005/tutorial-runtime.json
+Feature/doc/evidence/open-world-monsters-20261005/guide-dialogue-play.png
+Feature/doc/evidence/open-world-monsters-20261005/guide-reward-play.png
+Feature/doc/evidence/open-world-monsters-20261005/preservation.json
+
+## Notion 요약 후보
+보유 모델과 클립으로 오픈월드 6종에 Idle·이동·기본 공격을 연결하고 시작마을에 F 대화와 회복 포션 2개를 지급하는 길잡이 아린을 배치했다. 중복 수령·가방 공간 부족을 처리하고 물약 사용 후 남은 수량만 실제 포탈 너머로 전달한다. 최종 빌드, 몬스터 219항목·NPC 57항목·저장 재로드 100항목과 실제 대화 화면을 통과했다. 기준선 Content 6,292개 중 허용된 10개 외 6,282개 해시를 보존했다. 커밋·푸시는 하지 않았다.
+
+# 길잡이 아린 NPC 이미지 제작 — Sprint#5-14 추가
+
+## 요청과 결과
+NPC에 어울리는 이미지 요청에 따라 imagegen 내장 도구로 길잡이 아린의 전신 콘셉트를 제작했다. 친근한 성인 안내인 표정, 초록 여행복과 망토, 가죽 보급 가방, 회복 물약 두 병으로 대화·출발 보급 역할을 표현했다. 기존 밝은 시작마을에 맞춰 목조 주택·푸른 기와·돌 우물·풀밭을 배경으로 사용했다.
+결과는 1024×1536 PNG이며 전용 증거 폴더에 원본 사본과 실제 생성 프롬프트를 저장했다. 얼굴·손·물약·부츠가 모두 읽히는 전신 구도를 직접 검토하고 PNG 형식·크기·원본과 사본 해시 일치를 확인했다. Sprint#5-14-open-world-monsters 브랜치에서 진행했고 기존 미커밋 작업을 보존했다.
+이번 변경은 시각 콘셉트와 설계·결과·개발 기록이다. 새 3D 모델 제작·Unreal 외형 교체·C++·설정 변경은 없으며 빌드와 PIE는 다시 실행하지 않았다. 커밋·푸시는 하지 않았다.
+
+## 관련 자료
+Feature/doc/evidence/start-hub-tutorial-npc-image-20261005/arin-concept-v1.png
+Feature/doc/evidence/start-hub-tutorial-npc-image-20261005/prompt.txt
+Feature/architect/2026-10-05_start-hub-tutorial-npc.md
+Feature/doc/2026-10-05_start-hub-tutorial-npc.md
+
+## Notion 요약 후보
+길잡이 아린의 전신 콘셉트 이미지를 제작했다. 친근한 안내인 표정, 초록 여행복, 회복 물약 두 병과 보급 가방으로 대화·출발 보급 역할을 표현했다. 이미지와 생성 프롬프트를 프로젝트에 저장하고 구도·PNG·사본 무결성을 검토했다.
+
+# 하단 전투 HUD 시안 적용 — Sprint#5-15
+
+## 목표와 적용 결과
+승인한 imagegen 시안을 실제 UMG HUD에 적용했다. 검정·청동 패널을 화면 하단 20 논리 단위 기준으로 내리고 체력·직업 자원·중앙 무기 문장·스킬 5칸·아이템 4칸·레벨·경험치를 하나의 1200×196 디자인 공간에 정리했다. 경험치 바는 패널 내부로 옮겼다.
+Compact 전용 파트 5개를 만들고 기존 Main/Bottom에 연결했다. 실제 무기명·자원·스킬·쿨다운·아이템 획득 데이터를 계속 사용한다. 잠금 기호와 첫 기본 공격 준비 강조, HOLD 두 줄 입력을 연결했다. 획득 카드는 실제 아이콘·이름·수량을 표시하며 공간이 좁으면 패널 위로 이동한다.
+
+## 구현과 검증
+HUD C++ 6파일과 Editor 적용·검증 스크립트, 기존 프레이밍 보호 조건, 별도 게임 QA를 보강했다. 위젯 바이너리는 Unreal Editor에서만 수정·컴파일·명시 저장했다. 공식 MCP로 7개 패키지 dirty=false를 확인했다.
+UI 전체 Editor 빌드는 28.42초에 성공했다. 다른 채팅의 에디터가 고정 DLL을 사용 중이어서 최종 검증 모듈은 UBT ModuleWithSuffix로 별도 빌드했고 25.40초에 성공했다. 실행 중인 에디터를 강제 종료하거나 다른 채팅에 메시지를 보내지 않았다.
+실제 StartHub 게임에서 1280×720·1920×1080·2560×1440·1920×800·800×600·1920×1080의 6단계를 실행했다. 작은 화면에는 ApplicationScale 1.25배도 적용했다. 922개 assertion, 실패 0이며 새 PNG 6개의 생성 시각·크기를 확인했다. 자원 바·실제 무기명·원형 게이지·잠금·실제 공격 쿨다운·경험치·획득 데이터·알림 만료·일반 View 재사용을 검사했다.
+첫 화면의 HOLD 둘째 줄 잘림은 입력 영역 42·슬롯 108로 늘려 해결했다. 콤보 공격의 쿨다운 검사는 실제 콤보 종료 직후로 옮겼으며 전투 데이터나 전투 로직은 수정하지 않았다. 일반 획득/경험치의 수량 0 로그 필터는 기존 규칙을 유지한다.
+1920×1080과 800×600 실제 캡처를 검토했다. 기존 UI 112개 중 Main/Bottom 두 개만 바뀌고 나머지 110개는 SHA256이 동일했다. 신규 에셋은 Compact 5개다. 독립 C++·UMG API 리뷰, Python AST·PowerShell parse·diff·CheckGeneratedChanges·Harness 경로 검사도 통과했다.
+
+## 작업 범위와 기록
+작업 시작 전 Sprint#5-15-compact-combat-hud 브랜치를 만들고 전환했다. 공유 체크아웃에서 다른 채팅이 이후 Sprint#5-14-open-world-monsters로 전환했으므로 동시 작업을 방해하지 않도록 다시 전환하지 않았다. 기존 전투·애니메이션·맵 미커밋 변경을 보존했다. 커밋·푸시는 하지 않았다.
+패키징·온라인·장시간 성능 검사는 이번 범위 밖이다. 래스터 시안을 네이티브 UMG로 옮겨 장식 질감과 그라데이션에는 차이가 있다.
+
+## 관련 자료
+Feature/architect/2026-10-05_compact-combat-hud.md
+Feature/doc/2026-10-05_compact-combat-hud.md
+Docs/CompactCombatHUDGuide.md
+Feature/doc/evidence/compact-hud-20261005/setup-validation.json
+Feature/doc/evidence/compact-hud-20261005/runtime-contract.txt
+Feature/doc/evidence/compact-hud-20261005/preservation.json
+Feature/doc/evidence/compact-hud-20261005/CompactCombatHUD_05_1920x1080.png
+
+## Notion 요약 후보
+승인한 하단 HUD 시안을 실제 UMG에 적용했다. 하단 여백 20과 통합 경험치·레벨, 실제 무기명·자원·스킬·쿨다운·획득 카드 데이터 연결을 유지했다. 좁은 화면의 카드 비중첩과 HOLD 두 줄을 수정했고 실제 게임 6단계 922검사 모두 통과했다. 기존 UI 112개 중 Main/Bottom만 바뀌고 110개 해시는 동일했다. Compact 전용 5파트, 재현 도구와 증거를 남겼으며 커밋·푸시는 하지 않았다.
+
+# 길잡이 아린 FBX 제작·적용 준비 — Sprint#5-14 후속
+
+## 요청과 준비한 내용
+사용자가 아린 콘셉트를 실제 FBX로 제작해 시작마을 NPC에 적용하도록 요청했다. Sprint#5-14-open-world-monsters에서 기존 미커밋 작업을 유지하고 A1 참조·A2 생성/리깅/FBX·A3 Unreal 연결·A4 검토/기록 패킷으로 나눴다.
+imagegen 내장 도구로 동일한 얼굴·초록 여행복·땋은 머리·가죽 가방·물약 두 병을 유지한 정면 전신 T포즈를 제작했다. 흰 배경과 그림자 없는 구도로 정리하고, 손의 물약을 허리/가방으로 옮겨 리깅용 손을 비웠다. 참조와 실제 프롬프트를 프로젝트에 저장했다.
+읽기 전용 조사로 NPC의 메시와 Idle이 같은 Skeleton 객체여야 함을 확인했다. 기존 FBX 임포트와 IK Rig/Batch Retarget 스크립트를 재사용해 새 Skeleton의 Idle을 연결하는 경로를 정리했다. 기존 Quinn/Manny Skeleton과 공유 MM_Idle은 보존한다.
+
+## 연결 확인과 진행 상태
+TRIPO_API_KEY의 Process/User/Machine 환경변수와 관련 MCP 설정을 값 노출 없이 확인했으나 키가 없다. 사용 가능한 3D 생성 MCP도 없어 실제 모델 생성 단계에는 Tripo API 연결이 필요하다. 공식 최신 인증·휴머노이드 리깅·FBX 변환 명세를 확인하고 사용자에게 로컬 키 설정을 요청했다.
+현재 완료된 것은 모델링 참조·아키텍처·적용 경로 준비다. 유료 태스크를 생성하지 않았으며 지갑 잔액·실제 FBX·새 SkeletalMesh·게임 외형 적용을 완료했다고 기록하지 않는다. PNG·원본 사본 일치·육안·diff/하네스 검사를 수행했다. 실제 새 에셋 적용 전이므로 빌드/PIE는 실행하지 않았다. 커밋·푸시는 하지 않았다.
+
+## 관련 자료
+Feature/architect/2026-10-05_arin-npc-fbx.md
+Feature/doc/2026-10-05_arin-npc-fbx.md
+Feature/doc/evidence/arin-npc-fbx-20261005/arin-tpose-reference-v1.png
+Feature/doc/evidence/arin-npc-fbx-20261005/reference-prompt.txt
+
+## Notion 요약 후보
+길잡이 아린을 FBX로 제작·적용하기 위한 정면 전신 T포즈 참조와 새 Skeleton용 Idle 연결 경로를 준비했다. Tripo API 키가 설정되지 않아 실제 3D 생성·리깅·FBX·게임 적용은 연결을 기다린다. 기존 NPC 기능과 엔진 콘텐츠는 유지했다.
+
+# Apollo 스킬로 아린 3D·FBX 제작 시도 — Sprint#5-14 후속
+
+## 요청과 실제 제작 범위
+사용자가 지정한 Merchantlee99/apollo 소스의 실제 apollo-asset-factory 스킬을 읽고 로컬 실행했다. Sprint#5-14-open-world-monsters에서 A2b 입체 초안·A2c 간단 리깅·A3b 검증 후 적용 패킷을 추가하고 기존 미커밋 작업을 보존했다.
+전용 Python 환경과 공식 stdio MCP·loopback API, 공식 체크섬과 일치하는 portable Blender4.5.14를 준비했다. MCP2.x의 FastMCP 모듈 불일치는1.30.0으로 맞췄다. Apollo 설정 POST의 Lock 교착은 작업 소유 API 재시작과 BLENDER_PATH 프로세스 환경으로 우회했다. vendor 소스·사용자 전역 환경 설정은 변경하지 않았다.
+단일 이미지 compile 계획의 textured_cutout을 실제 실행해2.5D FBX·GLB·OBJ를 생성했다. 이어 imagegen 내장 도구로 같은 아린의 정사각 정면·정측면·뒷면 T포즈 참조를 만들고 원본 PNG·프롬프트·해시를 보존했다.
+외부 뷰를 묶는 public MCP 입력이 없어 실제 변경하지 않은 ApolloHullAdapter를 프로젝트 스크립트에서 직접 호출했다. 정면·측면 실루엣으로 높이1.7m의 입체 GLB를 생성했다. 뒷면은 외형 검토 자료이며 형상 생성에는 쓰지 않았다. 실제 GLB를 새 Apollo asset에 공식 MCP 업로드한 뒤 preview compile·후보 선택·Unreal export·download로 입체 FBX와 GLB를 저장했다.
+
+## 검증과 실패 판단
+최종 입체 형상은12,442정점·24,880삼각형이다. 닫힌 표면·양의 체적·단일 연결 등11검사를 통과했다. 실제 FBX 재수입에서 높이1.7m·삼각형24,880개·뼈0·Action0을 확인했다. 원본 GLB와 export GLB의 SHA256 일치, native manifest 파일 체크섬과 ZIP CRC를 검사했다. 회색 프리뷰는 실제 무재질 FBX의 검사 표시이고 모델에 텍스처를 추가한 결과가 아니다.
+실제 hull에20본과 의미 영역 가중치를 지정하고 세 면 색상을 투영했으나 팔65°·55° 내리기 모두 변형 기준에 실패했다. 최대 변 늘어남7.38배·6.34배이며 상한4배를 유지했다. 실제 사선 화면에서 얼굴 중복·흰 경계·망토와 몸통 텍스처 늘어짐도 확인했다.
+두 실패 후 Reviewer로 돌아갔다. 가중치 보정만으로 얼굴 중복과 표면 UV 문제를 해결할 수 없다고 판정해 추가 반복·기준 완화를 하지 않았다. 게임용 리깅 FBX와 Idle은 출력하지 않았다. 기존 NPC의 같은 Skeleton 메시·Idle 계약을 만족하지 못해 Unreal 임포트와 외형 교체를 실행하지 않았다. StartHub의 Quinn NPC와 대화·물약 지급 기능은 유지했다.
+Apollo upload 점수1.0·export ready는 파일 처리 상태이다. 직접 생성한 CPU local_draft 출처와 리깅 실패를 별도 보고서·패키지에 동봉했다. Hunyuan3D·TRELLIS·SF3D·TripoSG 생성 서버는 연결되지 않았고 외부 API 키나 유료 태스크는 사용하지 않았다. 최종 전달물은 정적 무리깅·무애니메이션·무완성텍스처 3D 초안이다.
+Python6스크립트 AST·하네스 경로·독립 provider/FBX 검토를 수행했다. C++·엔진 콘텐츠를 변경하지 않아 빌드와 PIE는 재실행하지 않았다. 커밋·푸시는 하지 않았다.
+
+## 전달 파일과 관련 자료
+Feature/doc/evidence/arin-apollo-20261005/hull-export-pack/assets/model.fbx
+Feature/doc/evidence/arin-apollo-20261005/arin-apollo-static-draft.zip
+Feature/doc/evidence/arin-apollo-20261005/delivery-status.json
+Feature/doc/evidence/arin-apollo-20261005/hull/hull-report.json
+Feature/doc/evidence/arin-apollo-20261005/rig/arin-rig-report.json
+Feature/doc/evidence/arin-apollo-20261005/rig/idle-oblique.png
+Feature/architect/2026-10-05_arin-npc-fbx.md
+Feature/doc/2026-10-05_arin-npc-fbx.md
+
+## Notion 요약 후보
+사용자가 지정한 Apollo 스킬로 아린 참조를 실제 모델화해 정적 입체 FBX·GLB를 출력했다. 높이1.7m·24,880삼각형, 형상11검사와 실제 FBX 재수입·단위·체크섬 검증을 통과했다. 리깅 시도는 두 자세의 과도한 늘어남과 얼굴 중복·의상 투영 문제로 실패해 기존 안내 NPC를 교체하지 않았다. 실제 파일·실패 화면·출처·한국어 설명을 패키지로 보존했다. 게임용 리깅·Idle·맵 적용은 미완료이며 커밋·푸시는 하지 않았다.
+
+## 작업 정리
+파일 다운로드와 최종 검사를 마친 뒤 PID와 명령줄이 일치하는 작업 소유 Apollo 서버2프로세스만 종료했다. Unreal Editor와 다른 작업 프로세스는 유지했다. 전용 소스·Python 환경·portable Blender·Apollo 데이터는 프로젝트 tmp에 남겼으며 전역 스킬 설치나 자동 시작 설정은 변경하지 않았다.

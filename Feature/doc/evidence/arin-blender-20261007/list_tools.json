@@ -1,0 +1,274 @@
+{
+  "meta": null,
+  "nextCursor": null,
+  "tools": [
+    {
+      "name": "blender_ping",
+      "title": null,
+      "description": "",
+      "inputSchema": {
+        "properties": {},
+        "title": "blender_pingArguments",
+        "type": "object"
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "blender_version",
+      "title": null,
+      "description": "",
+      "inputSchema": {
+        "properties": {},
+        "title": "blender_versionArguments",
+        "type": "object"
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "blender_exec_python",
+      "title": null,
+      "description": "",
+      "inputSchema": {
+        "properties": {
+          "python_code": {
+            "title": "Python Code",
+            "type": "string"
+          },
+          "blend_file": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Blend File"
+          },
+          "timeout_seconds": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Timeout Seconds"
+          }
+        },
+        "required": [
+          "python_code"
+        ],
+        "title": "blender_exec_pythonArguments",
+        "type": "object"
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "blender_scene_info",
+      "title": null,
+      "description": "",
+      "inputSchema": {
+        "properties": {
+          "blend_file": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Blend File"
+          }
+        },
+        "title": "blender_scene_infoArguments",
+        "type": "object"
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "blender_add_primitive",
+      "title": null,
+      "description": "",
+      "inputSchema": {
+        "properties": {
+          "primitive": {
+            "default": "cube",
+            "title": "Primitive",
+            "type": "string"
+          },
+          "size": {
+            "default": 2.0,
+            "title": "Size",
+            "type": "number"
+          },
+          "location_x": {
+            "default": 0.0,
+            "title": "Location X",
+            "type": "number"
+          },
+          "location_y": {
+            "default": 0.0,
+            "title": "Location Y",
+            "type": "number"
+          },
+          "location_z": {
+            "default": 0.0,
+            "title": "Location Z",
+            "type": "number"
+          },
+          "object_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Object Name"
+          },
+          "blend_file": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Blend File"
+          },
+          "save_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Save Path"
+          }
+        },
+        "title": "blender_add_primitiveArguments",
+        "type": "object"
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "blender_open_file",
+      "title": null,
+      "description": "",
+      "inputSchema": {
+        "properties": {
+          "blend_file": {
+            "title": "Blend File",
+            "type": "string"
+          }
+        },
+        "required": [
+          "blend_file"
+        ],
+        "title": "blender_open_fileArguments",
+        "type": "object"
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "blender_save_file",
+      "title": null,
+      "description": "",
+      "inputSchema": {
+        "properties": {
+          "save_path": {
+            "title": "Save Path",
+            "type": "string"
+          },
+          "blend_file": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Blend File"
+          }
+        },
+        "required": [
+          "save_path"
+        ],
+        "title": "blender_save_fileArguments",
+        "type": "object"
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "blender_capture_viewport",
+      "title": null,
+      "description": "",
+      "inputSchema": {
+        "properties": {
+          "save_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Save Path"
+          }
+        },
+        "title": "blender_capture_viewportArguments",
+        "type": "object"
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    }
+  ]
+}

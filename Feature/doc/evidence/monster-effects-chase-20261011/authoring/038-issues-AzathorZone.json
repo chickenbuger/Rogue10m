@@ -1,0 +1,12 @@
+{
+  "jsonrpc": "2.0",
+  "id": 38,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"returnValue\":{\"numErrors\":0,\"numWarnings\":0,\"numInfos\":2,\"issues\":[{\"issueId\":\"2f0631c6be82604b892f3986b77b4e83\",\"severity\":\"Info\",\"shortDescription\":\"버전 업그레이드 노트\",\"longDescription\":\"이 스크립트의 버전이 최근에 업그레이드되었습니다. 변경 사항 목록은 다음과 같습니다.\\n1.1: \\r\\n\\r\\nBurst Count defaults to 1 so particles are seen when the module is first placed\\r\\n\\r\\nOptimized out a few comparison operations and selects\\r\\n\\r\\nAdded a loop count limit to constrain bursting to only a limited number of loops\\n\",\"bCanBeDismissed\":true,\"bIsDismissed\":false,\"location\":{\"system\":{\"refPath\":\"/Game/Rogue10m/VFX/Monsters/NS_Monster_AzathorZone.NS_Monster_AzathorZone\"},\"emitterName\":\"DirectionalBurst\",\"scriptName\":\"ENiagaraScriptUsage::EmitterUpdateScript\",\"moduleName\":\"SpawnBurst_Instantaneous\",\"rendererIndex\":-1,\"inputNameStack\":[]},\"stackDisplayPath\":\"/이미터 업데이트/Spawn Burst Instantaneous\",\"fixes\":[]},{\"issueId\":\"0d85c4bac7cc9de9a8e8d0ecd36020fc\",\"severity\":\"Info\",\"shortDescription\":\"버전 업그레이드 노트\",\"longDescription\":\"이 스크립트의 버전이 최근에 업그레이드되었습니다. 변경 사항 목록은 다음과 같습니다.\\n1.2: FirstFrame should now be more stable and don't produce double FirstFrames\\n\",\"bCanBeDismissed\":true,\"bIsDismissed\":false,\"location\":{\"system\":{\"refPath\":\"/Game/Rogue10m/VFX/Monsters/NS_Monster_AzathorZone.NS_Monster_AzathorZone\"},\"emitterName\":\"DirectionalBurst\",\"scriptName\":\"ENiagaraScriptUsage::ParticleUpdateScript\",\"moduleName\":\"ParticleState\",\"rendererIndex\":-1,\"inputNameStack\":[]},\"stackDisplayPath\":\"/파티클 업데이트/Particle State\",\"fixes\":[]}]}}"
+      }
+    ]
+  }
+}

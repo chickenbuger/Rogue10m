@@ -1,0 +1,835 @@
+{
+  "profiles": [
+    "/Game/DataAsset/SkillProfile/DA_SkillProfile_Unarmed",
+    "/Game/DataAsset/SkillProfile/DA_SkillProfile_Combat_Knuckle"
+  ],
+  "nodes": 14,
+  "active": 13,
+  "passive": 1,
+  "combat_before": {
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 9.600000381469727,
+      "attack_cooldown": 0.3199999928474426,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.15000000596046448,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+      "animation_play_rate": 1.340000033378601,
+      "prerequisite_skills": [],
+      "unlock_conditions": [],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02.DA_Attack_Knuckle_Primary02": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 11.399999618530273,
+      "attack_cooldown": 0.3199999928474426,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.1599999964237213,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_BodyStraight.AM_Knuckle_BodyStraight",
+      "animation_play_rate": 1.399999976158142,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.SKILL_USE_COUNT: 0>",
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+          "monster": "None",
+          "name": "연환권",
+          "count": 20
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Special.DA_Attack_Knuckle_Special": {
+      "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+      "damage": 17.399999618530273,
+      "attack_cooldown": 0.7799999713897705,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 7.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.20999999344348907,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Uppercut.AM_Knuckle_Uppercut",
+      "animation_play_rate": 1.1399999856948853,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.MONSTER_DEFEAT_COUNT: 1>",
+          "skill": null,
+          "monster": "DuneShell",
+          "name": "철갑사",
+          "count": 5
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.DA_Attack_Knuckle_Charged": {
+      "input_slot": "<Rogue10mAttackInputSlot.CHARGED_PRIMARY: 4>",
+      "damage": 25.200000762939453,
+      "attack_cooldown": 1.0499999523162842,
+      "charge_seconds": 0.7200000286102295,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 12.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.2199999988079071,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_ShortBlow.AM_Knuckle_ShortBlow",
+      "animation_play_rate": 0.8999999761581421,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.SKILL_USE_COUNT: 0>",
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+          "monster": "None",
+          "name": "연환권",
+          "count": 50
+        },
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.MONSTER_DEFEAT_COUNT: 1>",
+          "skill": null,
+          "monster": "IronShell",
+          "name": "철갑대장",
+          "count": 1
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Jab.DA_Attack_StoneFist_Jab": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 8.0,
+      "attack_cooldown": 0.2199999988079071,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.0,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/Knuckle/AM_Knuckle_Primary01.AM_Knuckle_Primary01",
+      "animation_play_rate": 1.0,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02.DA_Attack_Knuckle_Primary02"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.SKILL_USE_COUNT: 0>",
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02.DA_Attack_Knuckle_Primary02",
+          "monster": "None",
+          "name": "붕권",
+          "count": 30
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Straight.DA_Attack_StoneFist_Straight": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 14.0,
+      "attack_cooldown": 0.3799999952316284,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.0,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/Knuckle/AM_Knuckle_Primary03.AM_Knuckle_Primary03",
+      "animation_play_rate": 1.0,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Special.DA_Attack_Knuckle_Special"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.MONSTER_DEFEAT_COUNT: 1>",
+          "skill": null,
+          "monster": "CactusRaider",
+          "name": "사막마적",
+          "count": 8
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03.DA_Attack_Knuckle_Primary03": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 13.800000190734863,
+      "attack_cooldown": 0.47999998927116394,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [],
+      "hit_mode": "<Rogue10mAttackHitMode.CONTINUOUS: 1>",
+      "hit_count": 6,
+      "hit_interval": 0.07500000298023224,
+      "max_hits_per_target": 6,
+      "hit_start_delay_seconds": 0.18000000715255737,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_HookFlurry.AM_Knuckle_HookFlurry",
+      "animation_play_rate": 1.2400000095367432,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.DA_Attack_Knuckle_Charged"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.SKILL_USE_COUNT: 0>",
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.DA_Attack_Knuckle_Charged",
+          "monster": "None",
+          "name": "철산고",
+          "count": 40
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/MartialArts/DA_MartialArt_GoldenBody.DA_MartialArt_GoldenBody": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 5.0,
+      "attack_cooldown": 0.550000011920929,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.HEALTH: 0>",
+          "cost": 0.0
+        },
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 0.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.0,
+      "attack_montage": null,
+      "animation_play_rate": 1.0,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Jab.DA_Attack_StoneFist_Jab",
+        "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Straight.DA_Attack_StoneFist_Straight"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.MONSTER_DEFEAT_COUNT: 1>",
+          "skill": null,
+          "monster": "ThornWarden",
+          "name": "가시문주",
+          "count": 1
+        }
+      ],
+      "passive_damage_reduction": 0.15000000596046448
+    },
+    "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_JumpSlam.DA_Attack_StoneFist_JumpSlam": {
+      "input_slot": "<Rogue10mAttackInputSlot.JUMP_PRIMARY: 2>",
+      "damage": 24.0,
+      "attack_cooldown": 1.2000000476837158,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 8.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.0,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/Knuckle/AM_Knuckle_Special.AM_Knuckle_Special",
+      "animation_play_rate": 1.0,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Straight.DA_Attack_StoneFist_Straight"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.MONSTER_DEFEAT_COUNT: 1>",
+          "skill": null,
+          "monster": "SporeMatriarch",
+          "name": "독무노파",
+          "count": 1
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_ChargedShockwave.DA_Attack_StoneFist_ChargedShockwave": {
+      "input_slot": "<Rogue10mAttackInputSlot.CHARGED_SPECIAL: 5>",
+      "damage": 30.0,
+      "attack_cooldown": 4.0,
+      "charge_seconds": 0.800000011920929,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 12.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.0,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/Knuckle/AM_Knuckle_Charged.AM_Knuckle_Charged",
+      "animation_play_rate": 1.0,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03.DA_Attack_Knuckle_Primary03",
+        "/Game/DataAsset/AttackSkill/MartialArts/DA_MartialArt_GoldenBody.DA_MartialArt_GoldenBody",
+        "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_JumpSlam.DA_Attack_StoneFist_JumpSlam"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.SKILL_USE_COUNT: 0>",
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03.DA_Attack_Knuckle_Primary03",
+          "monster": "None",
+          "name": "백열난무",
+          "count": 100
+        },
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.MONSTER_DEFEAT_COUNT: 1>",
+          "skill": null,
+          "monster": "AbyssOverlordAzathor",
+          "name": "심연마군",
+          "count": 1
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab.DA_BasicBrawler_LeftJab": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 5.0,
+      "attack_cooldown": 0.550000011920929,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.HEALTH: 0>",
+          "cost": 0.0
+        },
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 0.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.3400000035762787,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_LeftJab.AM_Unarmed_LeftJab",
+      "animation_play_rate": 1.5,
+      "prerequisite_skills": [],
+      "unlock_conditions": [],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightJab.DA_BasicBrawler_RightJab": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 6.25,
+      "attack_cooldown": 0.4099999964237213,
+      "charge_seconds": 0.0,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.HEALTH: 0>",
+          "cost": 0.0
+        },
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 0.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.3400000035762787,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_RightJab.AM_Unarmed_RightJab",
+      "animation_play_rate": 1.5,
+      "prerequisite_skills": [],
+      "unlock_conditions": [],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight.DA_BasicBrawler_RightStraight": {
+      "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+      "damage": 6.75,
+      "attack_cooldown": 0.6899999976158142,
+      "charge_seconds": 0.0,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.HEALTH: 0>",
+          "cost": 0.0
+        },
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 0.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.3400000035762787,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Straight.AM_Unarmed_Straight",
+      "animation_play_rate": 1.0,
+      "prerequisite_skills": [],
+      "unlock_conditions": [],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightHook.DA_BasicBrawler_RightHook": {
+      "input_slot": "<Rogue10mAttackInputSlot.CHARGED_SPECIAL: 5>",
+      "damage": 11.25,
+      "attack_cooldown": 1.100000023841858,
+      "charge_seconds": 0.8500000238418579,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.HEALTH: 0>",
+          "cost": 0.0
+        },
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 0.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.6333333253860474,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Hook.AM_Unarmed_Hook",
+      "animation_play_rate": 1.5,
+      "prerequisite_skills": [],
+      "unlock_conditions": [],
+      "passive_damage_reduction": 0.0
+    }
+  },
+  "combat_after": {
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 9.600000381469727,
+      "attack_cooldown": 0.3199999928474426,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.15000000596046448,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+      "animation_play_rate": 1.340000033378601,
+      "prerequisite_skills": [],
+      "unlock_conditions": [],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02.DA_Attack_Knuckle_Primary02": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 11.399999618530273,
+      "attack_cooldown": 0.3199999928474426,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.1599999964237213,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_BodyStraight.AM_Knuckle_BodyStraight",
+      "animation_play_rate": 1.399999976158142,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.SKILL_USE_COUNT: 0>",
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+          "monster": "None",
+          "name": "연환권",
+          "count": 20
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Special.DA_Attack_Knuckle_Special": {
+      "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+      "damage": 17.399999618530273,
+      "attack_cooldown": 0.7799999713897705,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 7.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.20999999344348907,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Uppercut.AM_Knuckle_Uppercut",
+      "animation_play_rate": 1.1399999856948853,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.MONSTER_DEFEAT_COUNT: 1>",
+          "skill": null,
+          "monster": "DuneShell",
+          "name": "철갑사",
+          "count": 5
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.DA_Attack_Knuckle_Charged": {
+      "input_slot": "<Rogue10mAttackInputSlot.CHARGED_PRIMARY: 4>",
+      "damage": 25.200000762939453,
+      "attack_cooldown": 1.0499999523162842,
+      "charge_seconds": 0.7200000286102295,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 12.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.2199999988079071,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_ShortBlow.AM_Knuckle_ShortBlow",
+      "animation_play_rate": 0.8999999761581421,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.SKILL_USE_COUNT: 0>",
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+          "monster": "None",
+          "name": "연환권",
+          "count": 50
+        },
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.MONSTER_DEFEAT_COUNT: 1>",
+          "skill": null,
+          "monster": "IronShell",
+          "name": "철갑대장",
+          "count": 1
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Jab.DA_Attack_StoneFist_Jab": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 8.0,
+      "attack_cooldown": 0.2199999988079071,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.0,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/Knuckle/AM_Knuckle_Primary01.AM_Knuckle_Primary01",
+      "animation_play_rate": 1.0,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02.DA_Attack_Knuckle_Primary02"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.SKILL_USE_COUNT: 0>",
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02.DA_Attack_Knuckle_Primary02",
+          "monster": "None",
+          "name": "붕권",
+          "count": 30
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Straight.DA_Attack_StoneFist_Straight": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 14.0,
+      "attack_cooldown": 0.3799999952316284,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.0,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/Knuckle/AM_Knuckle_Primary03.AM_Knuckle_Primary03",
+      "animation_play_rate": 1.0,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Special.DA_Attack_Knuckle_Special"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.MONSTER_DEFEAT_COUNT: 1>",
+          "skill": null,
+          "monster": "CactusRaider",
+          "name": "사막마적",
+          "count": 8
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03.DA_Attack_Knuckle_Primary03": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 13.800000190734863,
+      "attack_cooldown": 0.47999998927116394,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [],
+      "hit_mode": "<Rogue10mAttackHitMode.CONTINUOUS: 1>",
+      "hit_count": 6,
+      "hit_interval": 0.07500000298023224,
+      "max_hits_per_target": 6,
+      "hit_start_delay_seconds": 0.18000000715255737,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_HookFlurry.AM_Knuckle_HookFlurry",
+      "animation_play_rate": 1.2400000095367432,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.DA_Attack_Knuckle_Charged"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.SKILL_USE_COUNT: 0>",
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.DA_Attack_Knuckle_Charged",
+          "monster": "None",
+          "name": "철산고",
+          "count": 40
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/MartialArts/DA_MartialArt_GoldenBody.DA_MartialArt_GoldenBody": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 5.0,
+      "attack_cooldown": 0.550000011920929,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.HEALTH: 0>",
+          "cost": 0.0
+        },
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 0.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.0,
+      "attack_montage": null,
+      "animation_play_rate": 1.0,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Jab.DA_Attack_StoneFist_Jab",
+        "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Straight.DA_Attack_StoneFist_Straight"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.MONSTER_DEFEAT_COUNT: 1>",
+          "skill": null,
+          "monster": "ThornWarden",
+          "name": "가시문주",
+          "count": 1
+        }
+      ],
+      "passive_damage_reduction": 0.15000000596046448
+    },
+    "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_JumpSlam.DA_Attack_StoneFist_JumpSlam": {
+      "input_slot": "<Rogue10mAttackInputSlot.JUMP_PRIMARY: 2>",
+      "damage": 24.0,
+      "attack_cooldown": 1.2000000476837158,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 8.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.0,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/Knuckle/AM_Knuckle_Special.AM_Knuckle_Special",
+      "animation_play_rate": 1.0,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Straight.DA_Attack_StoneFist_Straight"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.MONSTER_DEFEAT_COUNT: 1>",
+          "skill": null,
+          "monster": "SporeMatriarch",
+          "name": "독무노파",
+          "count": 1
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_ChargedShockwave.DA_Attack_StoneFist_ChargedShockwave": {
+      "input_slot": "<Rogue10mAttackInputSlot.CHARGED_SPECIAL: 5>",
+      "damage": 30.0,
+      "attack_cooldown": 4.0,
+      "charge_seconds": 0.800000011920929,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 12.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.0,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/Knuckle/AM_Knuckle_Charged.AM_Knuckle_Charged",
+      "animation_play_rate": 1.0,
+      "prerequisite_skills": [
+        "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03.DA_Attack_Knuckle_Primary03",
+        "/Game/DataAsset/AttackSkill/MartialArts/DA_MartialArt_GoldenBody.DA_MartialArt_GoldenBody",
+        "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_JumpSlam.DA_Attack_StoneFist_JumpSlam"
+      ],
+      "unlock_conditions": [
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.SKILL_USE_COUNT: 0>",
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03.DA_Attack_Knuckle_Primary03",
+          "monster": "None",
+          "name": "백열난무",
+          "count": 100
+        },
+        {
+          "type": "<Rogue10mSkillUnlockConditionType.MONSTER_DEFEAT_COUNT: 1>",
+          "skill": null,
+          "monster": "AbyssOverlordAzathor",
+          "name": "심연마군",
+          "count": 1
+        }
+      ],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab.DA_BasicBrawler_LeftJab": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 5.0,
+      "attack_cooldown": 0.550000011920929,
+      "charge_seconds": 0.6499999761581421,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.HEALTH: 0>",
+          "cost": 0.0
+        },
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 0.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.3400000035762787,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_LeftJab.AM_Unarmed_LeftJab",
+      "animation_play_rate": 1.5,
+      "prerequisite_skills": [],
+      "unlock_conditions": [],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightJab.DA_BasicBrawler_RightJab": {
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "damage": 6.25,
+      "attack_cooldown": 0.4099999964237213,
+      "charge_seconds": 0.0,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.HEALTH: 0>",
+          "cost": 0.0
+        },
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 0.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.3400000035762787,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_RightJab.AM_Unarmed_RightJab",
+      "animation_play_rate": 1.5,
+      "prerequisite_skills": [],
+      "unlock_conditions": [],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight.DA_BasicBrawler_RightStraight": {
+      "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+      "damage": 6.75,
+      "attack_cooldown": 0.6899999976158142,
+      "charge_seconds": 0.0,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.HEALTH: 0>",
+          "cost": 0.0
+        },
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 0.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.3400000035762787,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Straight.AM_Unarmed_Straight",
+      "animation_play_rate": 1.0,
+      "prerequisite_skills": [],
+      "unlock_conditions": [],
+      "passive_damage_reduction": 0.0
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightHook.DA_BasicBrawler_RightHook": {
+      "input_slot": "<Rogue10mAttackInputSlot.CHARGED_SPECIAL: 5>",
+      "damage": 11.25,
+      "attack_cooldown": 1.100000023841858,
+      "charge_seconds": 0.8500000238418579,
+      "resource_costs": [
+        {
+          "type": "<Rogue10mAttackResourceType.HEALTH: 0>",
+          "cost": 0.0
+        },
+        {
+          "type": "<Rogue10mAttackResourceType.STAMINA: 1>",
+          "cost": 0.0
+        }
+      ],
+      "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+      "hit_count": 1,
+      "hit_interval": 0.07999999821186066,
+      "max_hits_per_target": 1,
+      "hit_start_delay_seconds": 0.6333333253860474,
+      "attack_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Hook.AM_Unarmed_Hook",
+      "animation_play_rate": 1.5,
+      "prerequisite_skills": [],
+      "unlock_conditions": [],
+      "passive_damage_reduction": 0.0
+    }
+  },
+  "explicit_initial_unlocks_preserved": true,
+  "default_bindings_preserved": true
+}

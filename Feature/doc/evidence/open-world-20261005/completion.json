@@ -1,0 +1,25 @@
+{
+  "status": "complete",
+  "scope": "Playable local open-world prototype and specified QA",
+  "completed_utc": "2026-10-05T03:18:26.898624+00:00",
+  "map": "/Game/Rogue10m/Maps/OpenRunMap",
+  "branch": "Sprint#5-11-open-world-playmap",
+  "integrated_checks": 99,
+  "melee_boundary_checks": 30,
+  "evidence": [
+    "runtime.json",
+    "ai-boundary.json",
+    "preservation.json",
+    "final-save.json",
+    "vegetation.json",
+    "water.json",
+    "reload.json",
+    "independent-review.json"
+  ],
+  "known_remaining_work": [
+    "Boss-death victory flow and dedicated patterns",
+    "Detailed environment art, NPC services and interiors",
+    "Full 20-minute timeout, full traversal, other-map AI/spawn regression, cook/package, performance and online QA"
+  ],
+  "commit_or_push": false
+}

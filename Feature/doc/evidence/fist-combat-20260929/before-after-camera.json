@@ -1,0 +1,55 @@
+{
+  "note": "Same HumanMale, locked control -20deg, 30fps, frames45:300 Unarmed four attacks including idle transitions. Head-camera component transform, not third-person rendered POV; baseline switches V. Body raw position retained. Before is project baseline, after is final v2. Not a real-time performance benchmark.",
+  "before": {
+    "camera_max_rotation_step_deg": 57.770748594175906,
+    "camera_max_translation_step_cm": 23.855291832747806,
+    "bones": {
+      "head": {
+        "max_rotation_step_deg": 57.770748578,
+        "max_translation_step_cm": 21.236997917
+      },
+      "hand_l": {
+        "max_rotation_step_deg": 74.470619612,
+        "max_translation_step_cm": 60.415240509
+      },
+      "hand_r": {
+        "max_rotation_step_deg": 130.522243362,
+        "max_translation_step_cm": 58.228218808
+      },
+      "foot_l": {
+        "max_rotation_step_deg": 40.918817361,
+        "max_translation_step_cm": 31.820410795
+      },
+      "foot_r": {
+        "max_rotation_step_deg": 65.873641025,
+        "max_translation_step_cm": 99.094152035
+      }
+    }
+  },
+  "after": {
+    "camera_max_rotation_step_deg": 1.877300763617113,
+    "camera_max_translation_step_cm": 4.977427039332534,
+    "bones": {
+      "head": {
+        "max_rotation_step_deg": 12.501563879,
+        "max_translation_step_cm": 4.721265414
+      },
+      "hand_l": {
+        "max_rotation_step_deg": 46.796801322,
+        "max_translation_step_cm": 19.23390123
+      },
+      "hand_r": {
+        "max_rotation_step_deg": 52.486886901,
+        "max_translation_step_cm": 20.650802322
+      },
+      "foot_l": {
+        "max_rotation_step_deg": 11.876774226,
+        "max_translation_step_cm": 9.408548903
+      },
+      "foot_r": {
+        "max_rotation_step_deg": 10.020179476,
+        "max_translation_step_cm": 5.332206387
+      }
+    }
+  }
+}

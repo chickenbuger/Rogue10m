@@ -1,0 +1,142 @@
+{
+  "ok": true,
+  "goal": "character",
+  "asset_id": "ast_1m45c3php007vt0fzyt",
+  "strategy": "textured_cutout",
+  "strategy_label": "Textured image cutout",
+  "status": "ready",
+  "quality_ceiling": "Best no-GPU path for flat source images: preserves the front image as texture on a real silhouette mesh.",
+  "known_limits": [
+    "Produces a textured 2.5D figurine, not hidden back/side geometry reconstruction."
+  ],
+  "reasons": [
+    "single image exists; textured cutout preserves front identity better than procedural side-view hull"
+  ],
+  "steps": [
+    {
+      "id": "generate-3d",
+      "kind": "advance",
+      "label": "compile source-textured cutout mesh",
+      "reason": "best local no-GPU path for front-facing mascots and icons",
+      "stage": "generate-3d",
+      "method": "POST",
+      "path": "/api/assets/ast_1m45c3php007vt0fzyt/generate-3d",
+      "body": {
+        "parameters": {
+          "provider_params": {
+            "resolution": 112,
+            "depth_m": 0.12
+          }
+        },
+        "source_node_id": "nod_1m45c6xwb00j0jwjr9p",
+        "provider_id": "apollo_cutout"
+      },
+      "provider_id": "apollo_cutout",
+      "source_node_id": "nod_1m45c6xwb00j0jwjr9p",
+      "parameters": {
+        "provider_params": {
+          "resolution": 112,
+          "depth_m": 0.12
+        }
+      },
+      "draft": true,
+      "blocked": false,
+      "requires": [],
+      "ensure_kind": null
+    },
+    {
+      "id": "export",
+      "kind": "advance",
+      "label": "build downloadable asset pack",
+      "reason": "compile result should end in files the user can inspect and download",
+      "stage": "export",
+      "method": "POST",
+      "path": "/api/assets/ast_1m45c3php007vt0fzyt/export",
+      "body": {
+        "parameters": {
+          "preset": "web",
+          "formats": [
+            "glb",
+            "obj"
+          ]
+        }
+      },
+      "provider_id": null,
+      "source_node_id": null,
+      "parameters": {
+        "preset": "web",
+        "formats": [
+          "glb",
+          "obj"
+        ]
+      },
+      "draft": false,
+      "blocked": false,
+      "requires": [],
+      "ensure_kind": null
+    }
+  ],
+  "notes": [
+    "local-first compile plan: no external GPU 3D provider selected",
+    "source state: single_image",
+    "selected strategy: textured_cutout"
+  ],
+  "executable": true,
+  "local_provider_health": {
+    "apollo_cutout": {
+      "state": "ok",
+      "detail": "configured",
+      "latency_ms": null,
+      "meta": {},
+      "checked_at": 1791182061.3766875
+    },
+    "apollo_hull": {
+      "state": "ok",
+      "detail": "configured",
+      "latency_ms": null,
+      "meta": {},
+      "checked_at": 1791182061.3766875
+    },
+    "apollo_primitive": {
+      "state": "ok",
+      "detail": "configured",
+      "latency_ms": null,
+      "meta": {},
+      "checked_at": 1791182061.3766875
+    },
+    "apollo_relief": {
+      "state": "ok",
+      "detail": "configured",
+      "latency_ms": null,
+      "meta": {},
+      "checked_at": 1791182061.3766875
+    },
+    "apollo_sketch": {
+      "state": "ok",
+      "detail": "configured",
+      "latency_ms": null,
+      "meta": {},
+      "checked_at": 1791182061.3766875
+    },
+    "trimesh_tools": {
+      "state": "ok",
+      "detail": "ready",
+      "latency_ms": null,
+      "meta": {
+        "trimesh": "5.1.1",
+        "quadric_simplify": "fast-simplification",
+        "boolean_engine": "manifold3d"
+      },
+      "checked_at": 1791182061.3766875
+    },
+    "xatlas_uv": {
+      "state": "ok",
+      "detail": "ready",
+      "latency_ms": null,
+      "meta": {
+        "xatlas": "0.0.11"
+      },
+      "checked_at": 1791182061.3766875
+    }
+  }
+}

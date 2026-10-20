@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-09",
+  "reviewer": "/root/arin_reference_art_critic",
+  "method": "Directly opened 13 actual fresh-FBX views and two clay views from a clean import. Reviewer did not modify/run Blender or Unreal. Inspector supplied numerical topology/weight evidence separately.",
+  "source_fbx_sha256": "58bef503994ed65a5c34781b700b96f9a1e1bebcc1d9c1d4b0fa89a272bf4abc",
+  "pose_root": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/input-fbx/final-export-poses",
+  "pose_manifest": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/input-fbx/final-export-poses/render-manifest.json",
+  "native_import_report": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/input-fbx/final-export-poses/native-import.json",
+  "clay_root": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/input-fbx/final-export-clay-first",
+  "material_evidence_limit": "The inspector records native FBX BaseColor/Normal support and separately completes actual Roughness/Metallic PNG inputs only in the unsaved render scene. Those additional channels are not claimed as natively roundtripped FBX shader inputs. Geometry is unchanged for the rendered evidence.",
+  "material_evidence_followup_correction": "After this review, inspector and direct native-import.json readback confirmed the first FBX actually imported all four packed 4096x4096 maps with BaseColor/Normal/Roughness/Metallic links. The conservative transient Roughness/Metallic rebinding reused those same images. The preceding limit was intentionally cautious but must not be read as a finding that those native channels were absent.",
+  "reviewed_pose_views": [
+    "arm-bend-oblique",
+    "arm-bend-right",
+    "reach-oblique",
+    "reach-right",
+    "knee-bend-oblique",
+    "knee-bend-right",
+    "right-knee-bend-oblique",
+    "right-knee-bend-right",
+    "torso-twist-oblique",
+    "torso-twist-right",
+    "neutral-hand",
+    "idle-right",
+    "neutral-right"
+  ],
+  "reviewed_clay_views": ["clay-face","clay-face-profile"],
+  "ledger": [
+    {
+      "id":"FX1-01",
+      "status":"pass",
+      "requirement":"Sampled upper-arm bend and reach close prior bilateral spike failure",
+      "views":["arm-bend-oblique","arm-bend-right","reach-oblique","reach-right"],
+      "observation":"Raised/bent arm and forward reach retain recognizable sleeve, bracer, wrist and hand with no prior giant triangular spike, major joint tear or limb detachment. The mantle remains structured and moves with the upper arm, but no catastrophic cape penetration is visible in these samples.",
+      "projection_limit":"End-on hand/forearm overlapping the face in the exact side arm-bend view is clarified by the oblique view; projection alone is not a hand-face collision."
+    },
+    {
+      "id":"FX1-02",
+      "status":"fail",
+      "priority":0,
+      "requirement":"Left-leg knee bend preserves central apron/coat surface",
+      "views":["knee-bend-oblique","knee-bend-right"],
+      "observation":"The oblique knee image shows a black torn-looking triangular region in the ivory apron above the moving thigh, and sharply split/stretched hem panels below it. The pants, knee and boot remain connected, but the apron/coat is visibly damaged by the pose.",
+      "approximate_pixels_in_knee_bend_oblique_900x1100":{
+        "central_ivory_black_triangle":[429,584,449,628],
+        "torn_angular_bottom_hem":[405,625,475,646]
+      },
+      "limit":"The exact side view partly occludes the apron with the bag/arm and cannot negate the oblique defect.",
+      "repair":"Smooth or redesign the semantic coat/apron-to-pelvis/thigh transition based on source weights and topology. Rerender identical left and right knee test cameras; do not address only one side or hide with expanded cloth."
+    },
+    {
+      "id":"FX1-03",
+      "status":"fail",
+      "priority":0,
+      "requirement":"Opposite-leg knee bend preserves coat hem",
+      "views":["right-knee-bend-oblique","right-knee-bend-right"],
+      "observation":"The opposite knee oblique image shows a thin irregular dark/green flap or tear-like shard along the viewer-left coat edge over the moving thigh. This is not the clean shaped donor coat hem seen in neutral/Idle.",
+      "approximate_pixels_in_right_knee_bend_oblique_900x1100":{
+        "left_coat_fragment":[308,575,337,631]
+      },
+      "repair":"Recheck bilateral source weight continuity and adjacent garment components together. The generic edge-ratio Idle probe did not include these extreme knee poses and cannot close this failure."
+    },
+    {
+      "id":"FX1-04",
+      "status":"pass",
+      "requirement":"Sampled torso twist retains coherent waist and accessories",
+      "views":["torso-twist-oblique","torso-twist-right"],
+      "observation":"The shown twist preserves torso, belt, braid, shoulder strap, satchel and coat shape with no catastrophic waist split or exploding accessory. Cloth/braid remain largely structured rather than physically dynamic.",
+      "limit":"This one twist angle does not establish all torso poses or cloth simulation."
+    },
+    {
+      "id":"FX1-05",
+      "status":"unclear",
+      "priority":1,
+      "requirement":"Skin closeups free of polygonal color/normal patches",
+      "views":["neutral-hand","clay-face-profile","candidate/idle-face-profile"],
+      "observation":"Neutral hand has several broad polygonal pale patches across the palm/fingers. Textured source face-profile has new angular bright temple and neck patches; corresponding clay profile is mostly smooth and does not contain similarly contrasted RGB patches. This makes a material/normal/bake/UV cause more likely than gross missing geometry for the bright patches, while minor source facets remain.",
+      "source_cause_status":"Not established. Source procedural surface uses hard corner-region decisions from sampled source RGB, which may be worth inspecting together with UV/fill sampling and normal response; this is a hypothesis, not a proof.",
+      "repair":"Compare BaseColor-only, SourceShader and baked PBR at identical cameras before editing. Preserve coherent face/ear/neck/hand skin colors and reduce only confirmed seams/facets/normal artifacts."
+    },
+    {
+      "id":"FX1-06",
+      "status":"fail",
+      "priority":1,
+      "requirement":"Front crown black wedge absent in geometry as well as textured view",
+      "views":["clay-face","clay-face-profile","candidate/idle-face"],
+      "observation":"The front clay face still shows a small deep angular notch/wedge under the swept lock near the part. It is therefore not purely painted black albedo. The new local fill may have left a neighboring gap, steep crease, overlap or mismatched patch orientation; exact geometry source remains root/inspector work.",
+      "repair":"Project the new local surfaces and adjacent small hair component into the same clay/textured closeup and repair the confirmed source cause. Do not blindly close all intentional hair-lock gaps."
+    },
+    {
+      "id":"FX1-07",
+      "status":"pass",
+      "requirement":"Donor geometry and texture roles are stated honestly",
+      "views":["clay-face","clay-face-profile","candidate/idle-face"],
+      "observation":"The clay face has softly shaped nose/cheek/jaw/ear but nearly flat eye/lip regions. The attractive rendered expression relies heavily on original 2K eye/lip/skin texture. This is acceptable for the selected stationary stylized NPC scope if reported; it is not new fully sculpted facial anatomy, moving eyelids or a facial rig."
+    },
+    {
+      "id":"FX1-08",
+      "status":"unclear",
+      "requirement":"Final revision, all animation frames, LOD and Unreal pass",
+      "views":[],
+      "observation":"This report refers only to the first FBX hash above. Root repairs are pending. No later revision or target-engine result is accepted by this report."
+    }
+  ],
+  "numerical_corrobation_from_inspector":{
+    "report":"D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/input-fbx/final-export-poses/pose-edge-diagnosis.json",
+    "left_knee_edge_ratio_over3":167,
+    "left_knee_max_edge_ratio":25.536295876955702,
+    "meaning":"Independent source numerical finding supports the visible knee garment stretch, but is not itself a visual acceptance rule."
+  },
+  "decision":"reject_first_fbx_for_delivery_repair_bilateral_knee_garment_and_local_crown_then_recheck",
+  "improvement_retained_as_evidence":"Primary reference likeness and solved large arm spikes are genuine visible improvements; do not revert those while repairing the remaining regions."
+}

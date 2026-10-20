@@ -1,0 +1,3403 @@
+{
+  "result": "PASSED",
+  "audit_completed": true,
+  "read_only": true,
+  "direction_result": "SOURCE_MEASUREMENTS_COMPLETED",
+  "mesh": "/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple",
+  "source_forward_axis": "+Y",
+  "sample_hz": 120,
+  "profile_scope": [
+    "/Game/DataAsset/SkillProfile/DA_SkillProfile_Combat_Knuckle",
+    "/Game/DataAsset/SkillProfile/DA_SkillProfile_Unarmed"
+  ],
+  "selected_skill_count": 24,
+  "selected_active_skill_count": 23,
+  "disk_attack_skill_count": 74,
+  "disk_profile_count": 13,
+  "unique_sampled_sequences": 16,
+  "direction_findings_count": 0,
+  "protected_package_count": 207,
+  "protected_packages_unchanged": true,
+  "data_profile_timing_contract_unchanged": true,
+  "camera": {
+    "loaded_native_cdo_eye_offset": "(X=8.000000,Y=0.000000,Z=-3.000000)",
+    "live_actor_eye_offset_and_component_transform": "requires separate root runtime capture"
+  },
+  "checks": [
+    {
+      "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_ChargedRightUppercut",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "legacy_unclassified",
+      "classification": "legacy_unclassified",
+      "strict_known_fist_gate": false,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.CHARGED_SPECIAL: 5>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.6333333253860474,
+          "sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_03.MM_Attack_03",
+          "sequence_seconds": 0.6333333253860474,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                20.847180168170894,
+                40.737901748051776,
+                -13.56887091816273
+              ],
+              "forward_reach_cm": 40.737901748051776,
+              "shoulder_side_yaw_degrees": 27.100604797912307,
+              "forearm_side_yaw_degrees": 8.309601811284265,
+              "contact_forward_of_head_cm": 25.037724067209,
+              "contact_height_from_head_cm": -33.821487635418805,
+              "approach_window_displacement_cm": [
+                -0.9457171350590201,
+                28.348598024085646,
+                -6.572341034388316
+              ],
+              "approach_forward_cm": 28.348598024085646,
+              "approach_rise_cm": -6.572341034388316,
+              "wrist_to_middle_mcp_axis": [
+                1.1834199421315574,
+                8.779308046544585,
+                3.494989212297483
+              ],
+              "wrist_long_axis_forward_cosine": 0.9218845977823527,
+              "wrist_long_axis_side_yaw_degrees": 7.676996112065092
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -28.96823875447005,
+                19.160585717225374,
+                -30.81037787213957
+              ],
+              "forward_reach_cm": 19.160585717225374,
+              "shoulder_side_yaw_degrees": -56.51798404625506,
+              "forearm_side_yaw_degrees": -13.1717806360173,
+              "contact_forward_of_head_cm": 28.54608241574786,
+              "contact_height_from_head_cm": -36.48785864221536,
+              "approach_window_displacement_cm": [
+                -16.132431428765248,
+                8.874878052939678,
+                -13.639051880683738
+              ],
+              "approach_forward_cm": 8.874878052939678,
+              "approach_rise_cm": -13.639051880683738,
+              "wrist_to_middle_mcp_axis": [
+                -1.5536897290756002,
+                9.122630323812785,
+                -2.249087401769714
+              ],
+              "wrist_long_axis_forward_cosine": 0.9579195798953795,
+              "wrist_long_axis_side_yaw_degrees": -9.665396088012457
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 0.7916666666666666,
+              "forward_reach_cm": 44.64213577506294
+            },
+            "hand_r": {
+              "time": 1.0333333333333332,
+              "forward_reach_cm": 40.07055782181351
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                20.847180168170894,
+                40.737901748051776,
+                -13.56887091816273
+              ],
+              "forward_reach_cm": 40.737901748051776,
+              "shoulder_side_yaw_degrees": 27.100604797912307,
+              "forearm_side_yaw_degrees": 8.309601811284265,
+              "contact_forward_of_head_cm": 25.037724067209,
+              "contact_height_from_head_cm": -33.821487635418805,
+              "approach_window_displacement_cm": [
+                -0.9457171350590201,
+                28.348598024085646,
+                -6.572341034388316
+              ],
+              "approach_forward_cm": 28.348598024085646,
+              "approach_rise_cm": -6.572341034388316,
+              "wrist_to_middle_mcp_axis": [
+                1.1834199421315574,
+                8.779308046544585,
+                3.494989212297483
+              ],
+              "wrist_long_axis_forward_cosine": 0.9218845977823527,
+              "wrist_long_axis_side_yaw_degrees": 7.676996112065092
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -28.96823875447005,
+                19.160585717225374,
+                -30.81037787213957
+              ],
+              "forward_reach_cm": 19.160585717225374,
+              "shoulder_side_yaw_degrees": -56.51798404625506,
+              "forearm_side_yaw_degrees": -13.1717806360173,
+              "contact_forward_of_head_cm": 28.54608241574786,
+              "contact_height_from_head_cm": -36.48785864221536,
+              "approach_window_displacement_cm": [
+                -16.132431428765248,
+                8.874878052939678,
+                -13.639051880683738
+              ],
+              "approach_forward_cm": 8.874878052939678,
+              "approach_rise_cm": -13.639051880683738,
+              "wrist_to_middle_mcp_axis": [
+                -1.5536897290756002,
+                9.122630323812785,
+                -2.249087401769714
+              ],
+              "wrist_long_axis_forward_cosine": 0.9579195798953795,
+              "wrist_long_axis_side_yaw_degrees": -9.665396088012457
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "left_jab",
+      "classification": "left_jab",
+      "strict_known_fist_gate": true,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.3400000035762787,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Unarmed_LeftJab.A_Unarmed_LeftJab",
+          "sequence_seconds": 0.3400000035762787,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -11.741868441059768,
+                49.902521384682586,
+                -6.849569475606145
+              ],
+              "forward_reach_cm": 49.902521384682586,
+              "shoulder_side_yaw_degrees": -13.24062729693101,
+              "forearm_side_yaw_degrees": -25.204591950684936,
+              "contact_forward_of_head_cm": 45.55200460556995,
+              "contact_height_from_head_cm": -22.613829782189626,
+              "approach_window_displacement_cm": [
+                -0.27578973785804095,
+                0.2196654932615587,
+                0.1660097771434863
+              ],
+              "approach_forward_cm": 0.2196654932615587,
+              "approach_rise_cm": 0.1660097771434863,
+              "wrist_to_middle_mcp_axis": [
+                -1.8427256597266446,
+                8.678334628418497,
+                3.4615823476858196
+              ],
+              "wrist_long_axis_forward_cosine": 0.911281730396636,
+              "wrist_long_axis_side_yaw_degrees": -11.98792615527754
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 0.30833333333333335,
+              "forward_reach_cm": 49.913494400347254
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -11.741868441059768,
+                49.902521384682586,
+                -6.849569475606145
+              ],
+              "forward_reach_cm": 49.902521384682586,
+              "shoulder_side_yaw_degrees": -13.24062729693101,
+              "forearm_side_yaw_degrees": -25.204591950684936,
+              "contact_forward_of_head_cm": 45.55200460556995,
+              "contact_height_from_head_cm": -22.613829782189626,
+              "approach_window_displacement_cm": [
+                -0.27578973785804095,
+                0.2196654932615587,
+                0.1660097771434863
+              ],
+              "approach_forward_cm": 0.2196654932615587,
+              "approach_rise_cm": 0.1660097771434863,
+              "wrist_to_middle_mcp_axis": [
+                -1.8427256597266446,
+                8.678334628418497,
+                3.4615823476858196
+              ],
+              "wrist_long_axis_forward_cosine": 0.911281730396636,
+              "wrist_long_axis_side_yaw_degrees": -11.98792615527754
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                4.6141519533091895,
+                22.946068481511652,
+                -7.3987796086483115
+              ],
+              "forward_reach_cm": 22.946068481511652,
+              "shoulder_side_yaw_degrees": 11.369795158203505,
+              "forearm_side_yaw_degrees": 32.687075814336396,
+              "contact_forward_of_head_cm": 10.777865942574852,
+              "contact_height_from_head_cm": -27.067697490882523,
+              "approach_window_displacement_cm": [
+                0.03249423037551935,
+                0.02717969447891022,
+                2.1072486333650886e-07
+              ],
+              "approach_forward_cm": 0.02717969447891022,
+              "approach_rise_cm": 2.1072486333650886e-07,
+              "wrist_to_middle_mcp_axis": [
+                1.1842223272246581,
+                5.526223320968889,
+                7.665063810984549
+              ],
+              "wrist_long_axis_forward_cosine": 0.5802797366689836,
+              "wrist_long_axis_side_yaw_degrees": 12.095070475698813
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightHook",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "hook",
+      "classification": "hook",
+      "strict_known_fist_gate": true,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.CHARGED_SPECIAL: 5>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.6333333253860474,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Unarmed_Hook.A_Unarmed_Hook",
+          "sequence_seconds": 0.6333333253860474,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                23.000032163432785,
+                42.99998061026636,
+                6.999994140872246
+              ],
+              "forward_reach_cm": 42.99998061026636,
+              "shoulder_side_yaw_degrees": 28.141645300174634,
+              "forearm_side_yaw_degrees": 45.90145543513768,
+              "contact_forward_of_head_cm": 31.8344758227424,
+              "contact_height_from_head_cm": -12.66892430030282,
+              "approach_window_displacement_cm": [
+                5.425162295508034,
+                1.0085418071046988,
+                0.3748857289303942
+              ],
+              "approach_forward_cm": 1.0085418071046988,
+              "approach_rise_cm": 0.3748857289303942,
+              "wrist_to_middle_mcp_axis": [
+                3.7784517412976513,
+                6.17004613190533,
+                6.192621666857065
+              ],
+              "wrist_long_axis_forward_cosine": 0.6478841944501401,
+              "wrist_long_axis_side_yaw_degrees": 31.48273195592532
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_r": {
+              "time": 0.6333333333333333,
+              "forward_reach_cm": 42.99998061026636
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -9.027576827619864,
+                27.63421809750616,
+                -11.413390235842613
+              ],
+              "forward_reach_cm": 27.63421809750616,
+              "shoulder_side_yaw_degrees": -18.091236712660518,
+              "forearm_side_yaw_degrees": -44.14694465105537,
+              "contact_forward_of_head_cm": 21.724262845525207,
+              "contact_height_from_head_cm": -27.177650232644467,
+              "approach_window_displacement_cm": [
+                0.10531316945664315,
+                -0.029665369474912495,
+                -1.02296618820219e-06
+              ],
+              "approach_forward_cm": -0.029665369474912495,
+              "approach_rise_cm": -1.02296618820219e-06,
+              "wrist_to_middle_mcp_axis": [
+                -3.4868783152513956,
+                6.076605404774391,
+                6.450444054398815
+              ],
+              "wrist_long_axis_forward_cosine": 0.6380831951405733,
+              "wrist_long_axis_side_yaw_degrees": -29.848070226903342
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                23.000032163432785,
+                42.99998061026636,
+                6.999994140872246
+              ],
+              "forward_reach_cm": 42.99998061026636,
+              "shoulder_side_yaw_degrees": 28.141645300174634,
+              "forearm_side_yaw_degrees": 45.90145543513768,
+              "contact_forward_of_head_cm": 31.8344758227424,
+              "contact_height_from_head_cm": -12.66892430030282,
+              "approach_window_displacement_cm": [
+                5.425162295508034,
+                1.0085418071046988,
+                0.3748857289303942
+              ],
+              "approach_forward_cm": 1.0085418071046988,
+              "approach_rise_cm": 0.3748857289303942,
+              "wrist_to_middle_mcp_axis": [
+                3.7784517412976513,
+                6.17004613190533,
+                6.192621666857065
+              ],
+              "wrist_long_axis_forward_cosine": 0.6478841944501401,
+              "wrist_long_axis_side_yaw_degrees": 31.48273195592532
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightJab",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "right_jab",
+      "classification": "right_jab",
+      "strict_known_fist_gate": true,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.3400000035762787,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Unarmed_RightJab.A_Unarmed_RightJab",
+          "sequence_seconds": 0.3400000035762787,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                11.769120668820271,
+                50.01863444270273,
+                5.884254228703583
+              ],
+              "forward_reach_cm": 50.01863444270273,
+              "shoulder_side_yaw_degrees": 13.240552706900456,
+              "forearm_side_yaw_degrees": 26.014067885496914,
+              "contact_forward_of_head_cm": 38.8530741842134,
+              "contact_height_from_head_cm": -13.784664501938948,
+              "approach_window_displacement_cm": [
+                0.42227081976522385,
+                0.5524842333165267,
+                0.1347969886018916
+              ],
+              "approach_forward_cm": 0.5524842333165267,
+              "approach_rise_cm": 0.1347969886018916,
+              "wrist_to_middle_mcp_axis": [
+                1.4819748334388816,
+                7.978711775234444,
+                4.983837772316832
+              ],
+              "wrist_long_axis_forward_cosine": 0.837802690731474,
+              "wrist_long_axis_side_yaw_degrees": 10.522270344885069
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_r": {
+              "time": 0.30833333333333335,
+              "forward_reach_cm": 50.05508389224571
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -9.027680637774594,
+                27.63418417571516,
+                -11.413390257051049
+              ],
+              "forward_reach_cm": 27.63418417571516,
+              "shoulder_side_yaw_degrees": -18.09145195434064,
+              "forearm_side_yaw_degrees": -44.14716073628391,
+              "contact_forward_of_head_cm": 21.724312345533686,
+              "contact_height_from_head_cm": -27.177649922038256,
+              "approach_window_displacement_cm": [
+                0.10675449364113021,
+                -0.03006966003320599,
+                1.2495093386633016e-06
+              ],
+              "approach_forward_cm": -0.03006966003320599,
+              "approach_rise_cm": 1.2495093386633016e-06,
+              "wrist_to_middle_mcp_axis": [
+                -3.486901287540433,
+                6.076592253511798,
+                6.450444025425071
+              ],
+              "wrist_long_axis_forward_cosine": 0.6380818141722373,
+              "wrist_long_axis_side_yaw_degrees": -29.848286705649627
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                11.769120668820271,
+                50.01863444270273,
+                5.884254228703583
+              ],
+              "forward_reach_cm": 50.01863444270273,
+              "shoulder_side_yaw_degrees": 13.240552706900456,
+              "forearm_side_yaw_degrees": 26.014067885496914,
+              "contact_forward_of_head_cm": 38.8530741842134,
+              "contact_height_from_head_cm": -13.784664501938948,
+              "approach_window_displacement_cm": [
+                0.42227081976522385,
+                0.5524842333165267,
+                0.1347969886018916
+              ],
+              "approach_forward_cm": 0.5524842333165267,
+              "approach_rise_cm": 0.1347969886018916,
+              "wrist_to_middle_mcp_axis": [
+                1.4819748334388816,
+                7.978711775234444,
+                4.983837772316832
+              ],
+              "wrist_long_axis_forward_cosine": 0.837802690731474,
+              "wrist_long_axis_side_yaw_degrees": 10.522270344885069
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "straight",
+      "classification": "straight",
+      "strict_known_fist_gate": true,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.3400000035762787,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Unarmed_Straight.A_Unarmed_Straight",
+          "sequence_seconds": 0.3400000035762787,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                7.499396348022042,
+                50.621331522780935,
+                7.499350004050584
+              ],
+              "forward_reach_cm": 50.621331522780935,
+              "shoulder_side_yaw_degrees": 8.426902376361008,
+              "forearm_side_yaw_degrees": 21.295729434611637,
+              "contact_forward_of_head_cm": 40.512837427768176,
+              "contact_height_from_head_cm": -12.16956927895447,
+              "approach_window_displacement_cm": [
+                0.17206446191482527,
+                0.05461676109683111,
+                -0.0351287622599159
+              ],
+              "approach_forward_cm": 0.05461676109683111,
+              "approach_rise_cm": -0.0351287622599159,
+              "wrist_to_middle_mcp_axis": [
+                0.6647408308177489,
+                8.049235825801823,
+                5.046053129769348
+              ],
+              "wrist_long_axis_forward_cosine": 0.8452080515204217,
+              "wrist_long_axis_side_yaw_degrees": 4.7210208781876215
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_r": {
+              "time": 0.2833333333333333,
+              "forward_reach_cm": 50.6711219757228
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -7.078021389751235,
+                28.196609276897565,
+                -11.413389873606434
+              ],
+              "forward_reach_cm": 28.196609276897565,
+              "shoulder_side_yaw_degrees": -14.091441661241237,
+              "forearm_side_yaw_degrees": -40.14715199955607,
+              "contact_forward_of_head_cm": 20.75613215100588,
+              "contact_height_from_head_cm": -27.17764918417066,
+              "approach_window_displacement_cm": [
+                0.10827932725502265,
+                -0.03882767218954086,
+                1.7305618769114517e-06
+              ],
+              "approach_forward_cm": -0.03882767218954086,
+              "approach_rise_cm": 1.7305618769114517e-06,
+              "wrist_to_middle_mcp_axis": [
+                -3.0545248057781826,
+                6.305024309693465,
+                6.450444077324676
+              ],
+              "wrist_long_axis_forward_cosine": 0.6620686697555215,
+              "wrist_long_axis_side_yaw_degrees": -25.848278557434917
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                7.499396348022042,
+                50.621331522780935,
+                7.499350004050584
+              ],
+              "forward_reach_cm": 50.621331522780935,
+              "shoulder_side_yaw_degrees": 8.426902376361008,
+              "forearm_side_yaw_degrees": 21.295729434611637,
+              "contact_forward_of_head_cm": 40.512837427768176,
+              "contact_height_from_head_cm": -12.16956927895447,
+              "approach_window_displacement_cm": [
+                0.17206446191482527,
+                0.05461676109683111,
+                -0.0351287622599159
+              ],
+              "approach_forward_cm": 0.05461676109683111,
+              "approach_rise_cm": -0.0351287622599159,
+              "wrist_to_middle_mcp_axis": [
+                0.6647408308177489,
+                8.049235825801823,
+                5.046053129769348
+              ],
+              "wrist_long_axis_forward_cosine": 0.8452080515204217,
+              "wrist_long_axis_side_yaw_degrees": 4.7210208781876215
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightUppercut",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "legacy_unclassified",
+      "classification": "legacy_unclassified",
+      "strict_known_fist_gate": false,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.6333333253860474,
+          "sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_03.MM_Attack_03",
+          "sequence_seconds": 0.6333333253860474,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                20.847180168170894,
+                40.737901748051776,
+                -13.56887091816273
+              ],
+              "forward_reach_cm": 40.737901748051776,
+              "shoulder_side_yaw_degrees": 27.100604797912307,
+              "forearm_side_yaw_degrees": 8.309601811284265,
+              "contact_forward_of_head_cm": 25.037724067209,
+              "contact_height_from_head_cm": -33.821487635418805,
+              "approach_window_displacement_cm": [
+                -0.9457171350590201,
+                28.348598024085646,
+                -6.572341034388316
+              ],
+              "approach_forward_cm": 28.348598024085646,
+              "approach_rise_cm": -6.572341034388316,
+              "wrist_to_middle_mcp_axis": [
+                1.1834199421315574,
+                8.779308046544585,
+                3.494989212297483
+              ],
+              "wrist_long_axis_forward_cosine": 0.9218845977823527,
+              "wrist_long_axis_side_yaw_degrees": 7.676996112065092
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -28.96823875447005,
+                19.160585717225374,
+                -30.81037787213957
+              ],
+              "forward_reach_cm": 19.160585717225374,
+              "shoulder_side_yaw_degrees": -56.51798404625506,
+              "forearm_side_yaw_degrees": -13.1717806360173,
+              "contact_forward_of_head_cm": 28.54608241574786,
+              "contact_height_from_head_cm": -36.48785864221536,
+              "approach_window_displacement_cm": [
+                -16.132431428765248,
+                8.874878052939678,
+                -13.639051880683738
+              ],
+              "approach_forward_cm": 8.874878052939678,
+              "approach_rise_cm": -13.639051880683738,
+              "wrist_to_middle_mcp_axis": [
+                -1.5536897290756002,
+                9.122630323812785,
+                -2.249087401769714
+              ],
+              "wrist_long_axis_forward_cosine": 0.9579195798953795,
+              "wrist_long_axis_side_yaw_degrees": -9.665396088012457
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 0.7916666666666666,
+              "forward_reach_cm": 44.64213577506294
+            },
+            "hand_r": {
+              "time": 1.0333333333333332,
+              "forward_reach_cm": 40.07055782181351
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                20.847180168170894,
+                40.737901748051776,
+                -13.56887091816273
+              ],
+              "forward_reach_cm": 40.737901748051776,
+              "shoulder_side_yaw_degrees": 27.100604797912307,
+              "forearm_side_yaw_degrees": 8.309601811284265,
+              "contact_forward_of_head_cm": 25.037724067209,
+              "contact_height_from_head_cm": -33.821487635418805,
+              "approach_window_displacement_cm": [
+                -0.9457171350590201,
+                28.348598024085646,
+                -6.572341034388316
+              ],
+              "approach_forward_cm": 28.348598024085646,
+              "approach_rise_cm": -6.572341034388316,
+              "wrist_to_middle_mcp_axis": [
+                1.1834199421315574,
+                8.779308046544585,
+                3.494989212297483
+              ],
+              "wrist_long_axis_forward_cosine": 0.9218845977823527,
+              "wrist_long_axis_side_yaw_degrees": 7.676996112065092
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -28.96823875447005,
+                19.160585717225374,
+                -30.81037787213957
+              ],
+              "forward_reach_cm": 19.160585717225374,
+              "shoulder_side_yaw_degrees": -56.51798404625506,
+              "forearm_side_yaw_degrees": -13.1717806360173,
+              "contact_forward_of_head_cm": 28.54608241574786,
+              "contact_height_from_head_cm": -36.48785864221536,
+              "approach_window_displacement_cm": [
+                -16.132431428765248,
+                8.874878052939678,
+                -13.639051880683738
+              ],
+              "approach_forward_cm": 8.874878052939678,
+              "approach_rise_cm": -13.639051880683738,
+              "wrist_to_middle_mcp_axis": [
+                -1.5536897290756002,
+                9.122630323812785,
+                -2.249087401769714
+              ],
+              "wrist_long_axis_forward_cosine": 0.9579195798953795,
+              "wrist_long_axis_side_yaw_degrees": -9.665396088012457
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "heavy",
+      "classification": "heavy",
+      "strict_known_fist_gate": true,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.CHARGED_PRIMARY: 4>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.2199999988079071,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_ShortBlow.A_Knuckle_ShortBlow",
+          "sequence_seconds": 0.2199999988079071,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                9.999888670832217,
+                40.99941930014069,
+                1.9996627406237053
+              ],
+              "forward_reach_cm": 40.99941930014069,
+              "shoulder_side_yaw_degrees": 13.707000976655745,
+              "forearm_side_yaw_degrees": 41.131034982604824,
+              "contact_forward_of_head_cm": 29.833847771239334,
+              "contact_height_from_head_cm": -17.66925437980518,
+              "approach_window_displacement_cm": [
+                1.5270534565179759,
+                2.424770669320381,
+                0.2882570909822846
+              ],
+              "approach_forward_cm": 2.424770669320381,
+              "approach_rise_cm": 0.2882570909822846,
+              "wrist_to_middle_mcp_axis": [
+                2.854869933091403,
+                6.150970509715613,
+                6.686554373795417
+              ],
+              "wrist_long_axis_forward_cosine": 0.6458811633784403,
+              "wrist_long_axis_side_yaw_degrees": 24.89758194591107
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_r": {
+              "time": 0.2833333333333333,
+              "forward_reach_cm": 41.03190656150831
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -9.027700827547925,
+                27.634177313141937,
+                -11.413390903183284
+              ],
+              "forward_reach_cm": 27.634177313141937,
+              "shoulder_side_yaw_degrees": -18.091493978463006,
+              "forearm_side_yaw_degrees": -44.14719816407487,
+              "contact_forward_of_head_cm": 21.72432024851932,
+              "contact_height_from_head_cm": -27.17765191150565,
+              "approach_window_displacement_cm": [
+                0.20659054093464846,
+                -0.05780355058005071,
+                -2.2666677068627905e-06
+              ],
+              "approach_forward_cm": -0.05780355058005071,
+              "approach_rise_cm": -2.2666677068627905e-06,
+              "wrist_to_middle_mcp_axis": [
+                -3.486905070567558,
+                6.076590116719277,
+                6.450443993390891
+              ],
+              "wrist_long_axis_forward_cosine": 0.6380815897950877,
+              "wrist_long_axis_side_yaw_degrees": -29.848322237153116
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                9.999888670832217,
+                40.99941930014069,
+                1.9996627406237053
+              ],
+              "forward_reach_cm": 40.99941930014069,
+              "shoulder_side_yaw_degrees": 13.707000976655745,
+              "forearm_side_yaw_degrees": 41.131034982604824,
+              "contact_forward_of_head_cm": 29.833847771239334,
+              "contact_height_from_head_cm": -17.66925437980518,
+              "approach_window_displacement_cm": [
+                1.5270534565179759,
+                2.424770669320381,
+                0.2882570909822846
+              ],
+              "approach_forward_cm": 2.424770669320381,
+              "approach_rise_cm": 0.2882570909822846,
+              "wrist_to_middle_mcp_axis": [
+                2.854869933091403,
+                6.150970509715613,
+                6.686554373795417
+              ],
+              "wrist_long_axis_forward_cosine": 0.6458811633784403,
+              "wrist_long_axis_side_yaw_degrees": 24.89758194591107
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "right_jab",
+      "classification": "right_jab",
+      "strict_known_fist_gate": true,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.15000000596046448,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+          "sequence_seconds": 0.15000000596046448,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                11.769090817646365,
+                50.01861221582483,
+                5.884505215294013
+              ],
+              "forward_reach_cm": 50.01861221582483,
+              "shoulder_side_yaw_degrees": 13.240525982988672,
+              "forearm_side_yaw_degrees": 26.01415339617848,
+              "contact_forward_of_head_cm": 38.853107428300866,
+              "contact_height_from_head_cm": -13.784413225881053,
+              "approach_window_displacement_cm": [
+                2.8660138930183123,
+                6.478930222009836,
+                1.2257555116407275
+              ],
+              "approach_forward_cm": 6.478930222009836,
+              "approach_rise_cm": 1.2257555116407275,
+              "wrist_to_middle_mcp_axis": [
+                1.481977342220464,
+                7.978695575906485,
+                4.983862960007883
+              ],
+              "wrist_long_axis_forward_cosine": 0.8378009897249784,
+              "wrist_long_axis_side_yaw_degrees": 10.522308646355533
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_r": {
+              "time": 0.13333333333333333,
+              "forward_reach_cm": 50.041149718938435
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -9.027576827619864,
+                27.63421809750616,
+                -11.413390235842613
+              ],
+              "forward_reach_cm": 27.63421809750616,
+              "shoulder_side_yaw_degrees": -18.091236712660518,
+              "forearm_side_yaw_degrees": -44.14694465105537,
+              "contact_forward_of_head_cm": 21.724262845525207,
+              "contact_height_from_head_cm": -27.177650232644467,
+              "approach_window_displacement_cm": [
+                0.5470214817411936,
+                -0.14961310064021305,
+                6.589256287270473e-07
+              ],
+              "approach_forward_cm": -0.14961310064021305,
+              "approach_rise_cm": 6.589256287270473e-07,
+              "wrist_to_middle_mcp_axis": [
+                -3.4868783152513956,
+                6.076605404774391,
+                6.450444054398815
+              ],
+              "wrist_long_axis_forward_cosine": 0.6380831951405733,
+              "wrist_long_axis_side_yaw_degrees": -29.848070226903342
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                11.769090817646365,
+                50.01861221582483,
+                5.884505215294013
+              ],
+              "forward_reach_cm": 50.01861221582483,
+              "shoulder_side_yaw_degrees": 13.240525982988672,
+              "forearm_side_yaw_degrees": 26.01415339617848,
+              "contact_forward_of_head_cm": 38.853107428300866,
+              "contact_height_from_head_cm": -13.784413225881053,
+              "approach_window_displacement_cm": [
+                2.8660138930183123,
+                6.478930222009836,
+                1.2257555116407275
+              ],
+              "approach_forward_cm": 6.478930222009836,
+              "approach_rise_cm": 1.2257555116407275,
+              "wrist_to_middle_mcp_axis": [
+                1.481977342220464,
+                7.978695575906485,
+                4.983862960007883
+              ],
+              "wrist_long_axis_forward_cosine": 0.8378009897249784,
+              "wrist_long_axis_side_yaw_degrees": 10.522308646355533
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "body",
+      "classification": "body",
+      "strict_known_fist_gate": true,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.1599999964237213,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_BodyStraight.A_Knuckle_BodyStraight",
+          "sequence_seconds": 0.1599999964237213,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                11.276990340508558,
+                44.16827674870447,
+                -24.43344235468875
+              ],
+              "forward_reach_cm": 44.16827674870447,
+              "shoulder_side_yaw_degrees": 14.322699897498813,
+              "forearm_side_yaw_degrees": 27.3242828734628,
+              "contact_forward_of_head_cm": 32.00007858707169,
+              "contact_height_from_head_cm": -44.1023601601256,
+              "approach_window_displacement_cm": [
+                2.155018236232287,
+                2.915431001750207,
+                -1.3836067313927458
+              ],
+              "approach_forward_cm": 2.915431001750207,
+              "approach_rise_cm": -1.3836067313927458,
+              "wrist_to_middle_mcp_axis": [
+                2.4564117639135876,
+                9.199311038985691,
+                -0.1828868340971752
+              ],
+              "wrist_long_axis_forward_cosine": 0.96597141975485,
+              "wrist_long_axis_side_yaw_degrees": 14.950384186883614
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_r": {
+              "time": 0.26666666666666666,
+              "forward_reach_cm": 44.25605284173194
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -10.933298492265685,
+                26.937151420334473,
+                -11.413390703543698
+              ],
+              "forward_reach_cm": 26.937151420334473,
+              "shoulder_side_yaw_degrees": -22.091336359057262,
+              "forearm_side_yaw_degrees": -48.14704250947199,
+              "contact_forward_of_head_cm": 22.586627492983272,
+              "contact_height_from_head_cm": -27.177651090921458,
+              "approach_window_displacement_cm": [
+                0.23875905522402263,
+                -0.04902891700204037,
+                4.0794721201109496e-07
+              ],
+              "approach_forward_cm": -0.04902891700204037,
+              "approach_rise_cm": 4.0794721201109496e-07,
+              "wrist_to_middle_mcp_axis": [
+                -3.902276924421458,
+                5.818564195099338,
+                6.450443987995612
+              ],
+              "wrist_long_axis_forward_cosine": 0.6109871853489827,
+              "wrist_long_axis_side_yaw_degrees": -33.84816741807978
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                11.276990340508558,
+                44.16827674870447,
+                -24.43344235468875
+              ],
+              "forward_reach_cm": 44.16827674870447,
+              "shoulder_side_yaw_degrees": 14.322699897498813,
+              "forearm_side_yaw_degrees": 27.3242828734628,
+              "contact_forward_of_head_cm": 32.00007858707169,
+              "contact_height_from_head_cm": -44.1023601601256,
+              "approach_window_displacement_cm": [
+                2.155018236232287,
+                2.915431001750207,
+                -1.3836067313927458
+              ],
+              "approach_forward_cm": 2.915431001750207,
+              "approach_rise_cm": -1.3836067313927458,
+              "wrist_to_middle_mcp_axis": [
+                2.4564117639135876,
+                9.199311038985691,
+                -0.1828868340971752
+              ],
+              "wrist_long_axis_forward_cosine": 0.96597141975485,
+              "wrist_long_axis_side_yaw_degrees": 14.950384186883614
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "flurry",
+      "classification": "flurry",
+      "strict_known_fist_gate": true,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.18000000715255737,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_HookFlurry.A_Knuckle_HookFlurry",
+          "sequence_seconds": 0.18000000715255737,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -15.96905042674098,
+                37.987772424345145,
+                5.972406916499239
+              ],
+              "forward_reach_cm": 37.987772424345145,
+              "shoulder_side_yaw_degrees": -22.800591265909603,
+              "forearm_side_yaw_degrees": -53.33153317523743,
+              "contact_forward_of_head_cm": 36.809687386327795,
+              "contact_height_from_head_cm": -9.791853144457548,
+              "approach_window_displacement_cm": [
+                -7.273244711021061,
+                9.650293990122158,
+                10.178664147204032
+              ],
+              "approach_forward_cm": 9.650293990122158,
+              "approach_rise_cm": 10.178664147204032,
+              "wrist_to_middle_mcp_axis": [
+                -3.380458849786793,
+                4.75501083264858,
+                7.52688860525555
+              ],
+              "wrist_long_axis_forward_cosine": 0.4993071464934274,
+              "wrist_long_axis_side_yaw_degrees": -35.40999474626065
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 0.36666666666666664,
+              "forward_reach_cm": 37.99993825702412
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -15.96905042674098,
+                37.987772424345145,
+                5.972406916499239
+              ],
+              "forward_reach_cm": 37.987772424345145,
+              "shoulder_side_yaw_degrees": -22.800591265909603,
+              "forearm_side_yaw_degrees": -53.33153317523743,
+              "contact_forward_of_head_cm": 36.809687386327795,
+              "contact_height_from_head_cm": -9.791853144457548,
+              "approach_window_displacement_cm": [
+                -7.273244711021061,
+                9.650293990122158,
+                10.178664147204032
+              ],
+              "approach_forward_cm": 9.650293990122158,
+              "approach_rise_cm": 10.178664147204032,
+              "wrist_to_middle_mcp_axis": [
+                -3.380458849786793,
+                4.75501083264858,
+                7.52688860525555
+              ],
+              "wrist_long_axis_forward_cosine": 0.4993071464934274,
+              "wrist_long_axis_side_yaw_degrees": -35.40999474626065
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                1.3780593258208889,
+                23.364790155182902,
+                -7.398778967004404
+              ],
+              "forward_reach_cm": 23.364790155182902,
+              "shoulder_side_yaw_degrees": 3.375404552518907,
+              "forearm_side_yaw_degrees": 24.6926850280018,
+              "contact_forward_of_head_cm": 9.374883320312126,
+              "contact_height_from_head_cm": -27.067697370175154,
+              "approach_window_displacement_cm": [
+                -0.6416718207080621,
+                -0.6806144222130257,
+                2.841154298494075e-07
+              ],
+              "approach_forward_cm": -0.6806144222130257,
+              "approach_rise_cm": 2.841154298494075e-07,
+              "wrist_to_middle_mcp_axis": [
+                0.40414770804231637,
+                5.6372146452887115,
+                7.665063966661307
+              ],
+              "wrist_long_axis_forward_cosine": 0.591934353702729,
+              "wrist_long_axis_side_yaw_degrees": 4.100678889995926
+            }
+          ]
+        },
+        {
+          "pulse": 2,
+          "montage_seconds": 0.2730000115633011,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_HookFlurry.A_Knuckle_HookFlurry",
+          "sequence_seconds": 0.2730000115633011,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                15.963975640098312,
+                37.98484869984545,
+                5.979019787149554
+              ],
+              "forward_reach_cm": 37.98484869984545,
+              "shoulder_side_yaw_degrees": 22.79566139063087,
+              "forearm_side_yaw_degrees": 53.33541814364541,
+              "contact_forward_of_head_cm": 25.815397609919774,
+              "contact_height_from_head_cm": -13.68989812941254,
+              "approach_window_displacement_cm": [
+                12.8241815432273,
+                11.667818574741396,
+                7.8480047627861325
+              ],
+              "approach_forward_cm": 11.667818574741396,
+              "approach_rise_cm": 7.8480047627861325,
+              "wrist_to_middle_mcp_axis": [
+                3.642513099759624,
+                4.572663785455816,
+                7.51781711424556
+              ],
+              "wrist_long_axis_forward_cosine": 0.48015144940521187,
+              "wrist_long_axis_side_yaw_degrees": 38.54028387463326
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_r": {
+              "time": 0.4583333333333333,
+              "forward_reach_cm": 37.99990834180522
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -10.935718166054833,
+                26.936169202439984,
+                -11.413390679586996
+              ],
+              "forward_reach_cm": 26.936169202439984,
+              "shoulder_side_yaw_degrees": -22.096483132693354,
+              "forearm_side_yaw_degrees": -48.15218960290747,
+              "contact_forward_of_head_cm": 22.587667133357314,
+              "contact_height_from_head_cm": -27.177650960689164,
+              "approach_window_displacement_cm": [
+                7.475670443186882,
+                -5.522050143140202,
+                -5.940664723641547
+              ],
+              "approach_forward_cm": -5.522050143140202,
+              "approach_rise_cm": -5.940664723641547,
+              "wrist_to_middle_mcp_axis": [
+                -3.9027996276185,
+                5.818213608386554,
+                6.4504439849888655
+              ],
+              "wrist_long_axis_forward_cosine": 0.6109503714578445,
+              "wrist_long_axis_side_yaw_degrees": -33.8533146502882
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                15.963975640098312,
+                37.98484869984545,
+                5.979019787149554
+              ],
+              "forward_reach_cm": 37.98484869984545,
+              "shoulder_side_yaw_degrees": 22.79566139063087,
+              "forearm_side_yaw_degrees": 53.33541814364541,
+              "contact_forward_of_head_cm": 25.815397609919774,
+              "contact_height_from_head_cm": -13.68989812941254,
+              "approach_window_displacement_cm": [
+                12.8241815432273,
+                11.667818574741396,
+                7.8480047627861325
+              ],
+              "approach_forward_cm": 11.667818574741396,
+              "approach_rise_cm": 7.8480047627861325,
+              "wrist_to_middle_mcp_axis": [
+                3.642513099759624,
+                4.572663785455816,
+                7.51781711424556
+              ],
+              "wrist_long_axis_forward_cosine": 0.48015144940521187,
+              "wrist_long_axis_side_yaw_degrees": 38.54028387463326
+            }
+          ]
+        },
+        {
+          "pulse": 3,
+          "montage_seconds": 0.36600001597404486,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_HookFlurry.A_Knuckle_HookFlurry",
+          "sequence_seconds": 0.36600001597404486,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -15.990836840237527,
+                37.992900919475666,
+                5.986617173444074
+              ],
+              "forward_reach_cm": 37.992900919475666,
+              "shoulder_side_yaw_degrees": -22.825744924983336,
+              "forearm_side_yaw_degrees": -53.34537876670063,
+              "contact_forward_of_head_cm": 36.81589727455457,
+              "contact_height_from_head_cm": -9.777641632963622,
+              "approach_window_displacement_cm": [
+                -7.774913634960633,
+                9.950688241640364,
+                10.188451664187653
+              ],
+              "approach_forward_cm": 9.950688241640364,
+              "approach_rise_cm": 10.188451664187653,
+              "wrist_to_middle_mcp_axis": [
+                -3.3823829501350993,
+                4.754322260776917,
+                7.526459164105603
+              ],
+              "wrist_long_axis_forward_cosine": 0.4992348419564889,
+              "wrist_long_axis_side_yaw_degrees": -35.42931190120253
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 0.36666666666666664,
+              "forward_reach_cm": 37.99993825702412
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -15.990836840237527,
+                37.992900919475666,
+                5.986617173444074
+              ],
+              "forward_reach_cm": 37.992900919475666,
+              "shoulder_side_yaw_degrees": -22.825744924983336,
+              "forearm_side_yaw_degrees": -53.34537876670063,
+              "contact_forward_of_head_cm": 36.81589727455457,
+              "contact_height_from_head_cm": -9.777641632963622,
+              "approach_window_displacement_cm": [
+                -7.774913634960633,
+                9.950688241640364,
+                10.188451664187653
+              ],
+              "approach_forward_cm": 9.950688241640364,
+              "approach_rise_cm": 10.188451664187653,
+              "wrist_to_middle_mcp_axis": [
+                -3.3823829501350993,
+                4.754322260776917,
+                7.526459164105603
+              ],
+              "wrist_long_axis_forward_cosine": 0.4992348419564889,
+              "wrist_long_axis_side_yaw_degrees": -35.42931190120253
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                1.3769566132487832,
+                23.364855442440028,
+                -7.398778097963941
+              ],
+              "forward_reach_cm": 23.364855442440028,
+              "shoulder_side_yaw_degrees": 3.3727004146232016,
+              "forearm_side_yaw_degrees": 24.689977841279667,
+              "contact_forward_of_head_cm": 9.374377015000778,
+              "contact_height_from_head_cm": -27.067697660183597,
+              "approach_window_displacement_cm": [
+                -9.569434425646989,
+                -7.062858561158642,
+                -4.757795712630397
+              ],
+              "approach_forward_cm": -7.062858561158642,
+              "approach_rise_cm": -4.757795712630397,
+              "wrist_to_middle_mcp_axis": [
+                0.40388112256703224,
+                5.6372334606058025,
+                7.665064180386437
+              ],
+              "wrist_long_axis_forward_cosine": 0.5919363294005274,
+              "wrist_long_axis_side_yaw_degrees": 4.097969571502309
+            }
+          ]
+        },
+        {
+          "pulse": 4,
+          "montage_seconds": 0.4590000203847886,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_HookFlurry.A_Knuckle_HookFlurry",
+          "sequence_seconds": 0.4590000203847886,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                15.984097337099428,
+                37.993092801373585,
+                5.991698819570871
+              ],
+              "forward_reach_cm": 37.993092801373585,
+              "shoulder_side_yaw_degrees": 22.817006849118332,
+              "forearm_side_yaw_degrees": 53.342661626946054,
+              "contact_forward_of_head_cm": 25.824391091555,
+              "contact_height_from_head_cm": -13.677219314451719,
+              "approach_window_displacement_cm": [
+                12.885213118519708,
+                11.753016717412155,
+                7.867400655604342
+              ],
+              "approach_forward_cm": 11.753016717412155,
+              "approach_rise_cm": 7.867400655604342,
+              "wrist_to_middle_mcp_axis": [
+                3.644408185410217,
+                4.573023255340644,
+                7.516679933601779
+              ],
+              "wrist_long_axis_forward_cosine": 0.48018919545309907,
+              "wrist_long_axis_side_yaw_degrees": 38.55261300875464
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_r": {
+              "time": 0.4583333333333333,
+              "forward_reach_cm": 37.99990834180522
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -10.934271106905872,
+                26.93675667186935,
+                -11.413390612606335
+              ],
+              "forward_reach_cm": 26.93675667186935,
+              "shoulder_side_yaw_degrees": -22.093405113547266,
+              "forearm_side_yaw_degrees": -48.149112207048546,
+              "contact_forward_of_head_cm": 22.58704569586014,
+              "contact_height_from_head_cm": -27.177650698954963,
+              "approach_window_displacement_cm": [
+                7.548849283037132,
+                -5.495486368916929,
+                -5.963754338567824
+              ],
+              "approach_forward_cm": -5.495486368916929,
+              "approach_rise_cm": -5.963754338567824,
+              "wrist_to_middle_mcp_axis": [
+                -3.902487148927648,
+                5.81842320469638,
+                6.450443984187288
+              ],
+              "wrist_long_axis_forward_cosine": 0.6109723804372257,
+              "wrist_long_axis_side_yaw_degrees": -33.85023751829344
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                15.984097337099428,
+                37.993092801373585,
+                5.991698819570871
+              ],
+              "forward_reach_cm": 37.993092801373585,
+              "shoulder_side_yaw_degrees": 22.817006849118332,
+              "forearm_side_yaw_degrees": 53.342661626946054,
+              "contact_forward_of_head_cm": 25.824391091555,
+              "contact_height_from_head_cm": -13.677219314451719,
+              "approach_window_displacement_cm": [
+                12.885213118519708,
+                11.753016717412155,
+                7.867400655604342
+              ],
+              "approach_forward_cm": 11.753016717412155,
+              "approach_rise_cm": 7.867400655604342,
+              "wrist_to_middle_mcp_axis": [
+                3.644408185410217,
+                4.573023255340644,
+                7.516679933601779
+              ],
+              "wrist_long_axis_forward_cosine": 0.48018919545309907,
+              "wrist_long_axis_side_yaw_degrees": 38.55261300875464
+            }
+          ]
+        },
+        {
+          "pulse": 5,
+          "montage_seconds": 0.5520000247955323,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_HookFlurry.A_Knuckle_HookFlurry",
+          "sequence_seconds": 0.5520000247955323,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -15.974996062564772,
+                37.990115356565624,
+                5.9790280260458815
+              ],
+              "forward_reach_cm": 37.990115356565624,
+              "shoulder_side_yaw_degrees": -22.806949059687945,
+              "forearm_side_yaw_degrees": -53.33583780410884,
+              "contact_forward_of_head_cm": 36.812539721376986,
+              "contact_height_from_head_cm": -9.785232750608088,
+              "approach_window_displacement_cm": [
+                -7.714341961309952,
+                9.877476031713762,
+                10.209371428953233
+              ],
+              "approach_forward_cm": 9.877476031713762,
+              "approach_rise_cm": 10.209371428953233,
+              "wrist_to_middle_mcp_axis": [
+                -3.3809958324517417,
+                4.754742194292049,
+                7.526817121226998
+              ],
+              "wrist_long_axis_forward_cosine": 0.49927893771410814,
+              "wrist_long_axis_side_yaw_degrees": -35.415821386355965
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 0.36666666666666664,
+              "forward_reach_cm": 37.99993825702412
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -15.974996062564772,
+                37.990115356565624,
+                5.9790280260458815
+              ],
+              "forward_reach_cm": 37.990115356565624,
+              "shoulder_side_yaw_degrees": -22.806949059687945,
+              "forearm_side_yaw_degrees": -53.33583780410884,
+              "contact_forward_of_head_cm": 36.812539721376986,
+              "contact_height_from_head_cm": -9.785232750608088,
+              "approach_window_displacement_cm": [
+                -7.714341961309952,
+                9.877476031713762,
+                10.209371428953233
+              ],
+              "approach_forward_cm": 9.877476031713762,
+              "approach_rise_cm": 10.209371428953233,
+              "wrist_to_middle_mcp_axis": [
+                -3.3809958324517417,
+                4.754742194292049,
+                7.526817121226998
+              ],
+              "wrist_long_axis_forward_cosine": 0.49927893771410814,
+              "wrist_long_axis_side_yaw_degrees": -35.415821386355965
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                1.37753866965625,
+                23.36482060728381,
+                -7.398779757963339
+              ],
+              "forward_reach_cm": 23.36482060728381,
+              "shoulder_side_yaw_degrees": 3.374127822111493,
+              "forearm_side_yaw_degrees": 24.69140977627732,
+              "contact_forward_of_head_cm": 9.374643172091897,
+              "contact_height_from_head_cm": -27.067697315849713,
+              "approach_window_displacement_cm": [
+                -9.56975049837337,
+                -7.142544899980482,
+                -4.74306336834897
+              ],
+              "approach_forward_cm": -7.142544899980482,
+              "approach_rise_cm": -4.74306336834897,
+              "wrist_to_middle_mcp_axis": [
+                0.40402240044523907,
+                5.637223890229766,
+                7.66506377346883
+              ],
+              "wrist_long_axis_forward_cosine": 0.5919353244655174,
+              "wrist_long_axis_side_yaw_degrees": 4.099405093559608
+            }
+          ]
+        },
+        {
+          "pulse": 6,
+          "montage_seconds": 0.6450000292062761,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_HookFlurry.A_Knuckle_HookFlurry",
+          "sequence_seconds": 0.6450000292062761,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                15.955855161080862,
+                37.98607849587094,
+                5.979365904331402
+              ],
+              "forward_reach_cm": 37.98607849587094,
+              "shoulder_side_yaw_degrees": 22.78458818378462,
+              "forearm_side_yaw_degrees": 53.32831128325667,
+              "contact_forward_of_head_cm": 25.81668916146442,
+              "contact_height_from_head_cm": -13.689553907234483,
+              "approach_window_displacement_cm": [
+                12.7930497870139,
+                11.632763724769859,
+                7.875691045154639
+              ],
+              "approach_forward_cm": 11.632763724769859,
+              "approach_rise_cm": 7.875691045154639,
+              "wrist_to_middle_mcp_axis": [
+                3.6416524754402153,
+                4.573135202813688,
+                7.517947299954244
+              ],
+              "wrist_long_axis_forward_cosine": 0.48020095047029737,
+              "wrist_long_axis_side_yaw_degrees": 38.53080757198552
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_r": {
+              "time": 0.4583333333333333,
+              "forward_reach_cm": 37.99990834180522
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -10.935600058426076,
+                26.93621739502964,
+                -11.41339010656337
+              ],
+              "forward_reach_cm": 26.93621739502964,
+              "shoulder_side_yaw_degrees": -22.096231726815383,
+              "forearm_side_yaw_degrees": -48.15194362984621,
+              "contact_forward_of_head_cm": 22.58761835433332,
+              "contact_height_from_head_cm": -27.177648683524737,
+              "approach_window_displacement_cm": [
+                7.474694256658065,
+                -5.561639132628464,
+                -5.948147060981682
+              ],
+              "approach_forward_cm": -5.561639132628464,
+              "approach_rise_cm": -5.948147060981682,
+              "wrist_to_middle_mcp_axis": [
+                -3.9027748886355624,
+                5.818230213706258,
+                6.450443975307763
+              ],
+              "wrist_long_axis_forward_cosine": 0.6109521151247015,
+              "wrist_long_axis_side_yaw_degrees": -33.85307098068766
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                15.955855161080862,
+                37.98607849587094,
+                5.979365904331402
+              ],
+              "forward_reach_cm": 37.98607849587094,
+              "shoulder_side_yaw_degrees": 22.78458818378462,
+              "forearm_side_yaw_degrees": 53.32831128325667,
+              "contact_forward_of_head_cm": 25.81668916146442,
+              "contact_height_from_head_cm": -13.689553907234483,
+              "approach_window_displacement_cm": [
+                12.7930497870139,
+                11.632763724769859,
+                7.875691045154639
+              ],
+              "approach_forward_cm": 11.632763724769859,
+              "approach_rise_cm": 7.875691045154639,
+              "wrist_to_middle_mcp_axis": [
+                3.6416524754402153,
+                4.573135202813688,
+                7.517947299954244
+              ],
+              "wrist_long_axis_forward_cosine": 0.48020095047029737,
+              "wrist_long_axis_side_yaw_degrees": 38.53080757198552
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Special",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "uppercut",
+      "classification": "uppercut",
+      "strict_known_fist_gate": true,
+      "attack_shape": "<Rogue10mAttackShape.ARC: 2>",
+      "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.20999999344348907,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Uppercut.A_Knuckle_Uppercut",
+          "sequence_seconds": 0.20999999344348907,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                10.999881943906416,
+                35.99994687793023,
+                4.771182709661417
+              ],
+              "forward_reach_cm": 35.99994687793023,
+              "shoulder_side_yaw_degrees": 16.990675071609125,
+              "forearm_side_yaw_degrees": 52.81532404291377,
+              "contact_forward_of_head_cm": 23.831753508458544,
+              "contact_height_from_head_cm": -14.897735003083994,
+              "approach_window_displacement_cm": [
+                1.2160039994366159,
+                1.6792526424608027,
+                9.3585356016075
+              ],
+              "approach_forward_cm": 1.6792526424608027,
+              "approach_rise_cm": 9.3585356016075,
+              "wrist_to_middle_mcp_axis": [
+                3.3089773710945174,
+                4.384467354371111,
+                7.779578697848706
+              ],
+              "wrist_long_axis_forward_cosine": 0.46038992890033165,
+              "wrist_long_axis_side_yaw_degrees": 37.04202023667524
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_r": {
+              "time": 0.20833333333333334,
+              "forward_reach_cm": 35.99993632815287
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -10.933289103597133,
+                26.937155194034393,
+                -11.413390790839301
+              ],
+              "forward_reach_cm": 26.937155194034393,
+              "shoulder_side_yaw_degrees": -22.091316416616387,
+              "forearm_side_yaw_degrees": -48.14702230874296,
+              "contact_forward_of_head_cm": 22.586623326170194,
+              "contact_height_from_head_cm": -27.177651222601483,
+              "approach_window_displacement_cm": [
+                0.11811823277537314,
+                -0.024506272297287524,
+                -1.3900831277169345e-06
+              ],
+              "approach_forward_cm": -0.024506272297287524,
+              "approach_rise_cm": -1.3900831277169345e-06,
+              "wrist_to_middle_mcp_axis": [
+                -3.902274871280466,
+                5.8185655881460505,
+                6.4504439734834165
+              ],
+              "wrist_long_axis_forward_cosine": 0.6109873316279721,
+              "wrist_long_axis_side_yaw_degrees": -33.84814712738499
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                10.999881943906416,
+                35.99994687793023,
+                4.771182709661417
+              ],
+              "forward_reach_cm": 35.99994687793023,
+              "shoulder_side_yaw_degrees": 16.990675071609125,
+              "forearm_side_yaw_degrees": 52.81532404291377,
+              "contact_forward_of_head_cm": 23.831753508458544,
+              "contact_height_from_head_cm": -14.897735003083994,
+              "approach_window_displacement_cm": [
+                1.2160039994366159,
+                1.6792526424608027,
+                9.3585356016075
+              ],
+              "approach_forward_cm": 1.6792526424608027,
+              "approach_rise_cm": 9.3585356016075,
+              "wrist_to_middle_mcp_axis": [
+                3.3089773710945174,
+                4.384467354371111,
+                7.779578697848706
+              ],
+              "wrist_long_axis_forward_cosine": 0.46038992890033165,
+              "wrist_long_axis_side_yaw_degrees": 37.04202023667524
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/MartialArts/DA_MartialArt_GoldenBody",
+      "status": "PASSIVE",
+      "contacts": []
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_ChargedShockwave",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "power_punch",
+      "classification": "power_punch",
+      "strict_known_fist_gate": true,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.CHARGED_SPECIAL: 5>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.28333333134651184,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FighterSkills/A_Fighter_Overlord_PowerPunch.A_Fighter_Overlord_PowerPunch",
+          "sequence_seconds": 0.28333333134651184,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                9.988891000078855,
+                51.13276358643479,
+                -10.144137102955256
+              ],
+              "forward_reach_cm": 51.13276358643479,
+              "shoulder_side_yaw_degrees": 11.053640667665634,
+              "forearm_side_yaw_degrees": 26.7691124355094,
+              "contact_forward_of_head_cm": 65.05043550943661,
+              "contact_height_from_head_cm": -25.592757512895588,
+              "approach_window_displacement_cm": [
+                60.5720486413158,
+                37.75791364925665,
+                -18.621631001540976
+              ],
+              "approach_forward_cm": 37.75791364925665,
+              "approach_rise_cm": -18.621631001540976,
+              "wrist_to_middle_mcp_axis": [
+                6.2905675851814635,
+                7.0595785595162255,
+                -1.133948834059936
+              ],
+              "wrist_long_axis_forward_cosine": 0.7412893308104405,
+              "wrist_long_axis_side_yaw_degrees": 41.70322361135902
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_r": {
+              "time": 0.275,
+              "forward_reach_cm": 51.56887663966067
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                28.759823287773887,
+                -0.03220173315256858,
+                -20.01931549640888
+              ],
+              "forward_reach_cm": -0.03220173315256858,
+              "shoulder_side_yaw_degrees": 90.06415278053575,
+              "forearm_side_yaw_degrees": 35.071928883271795,
+              "contact_forward_of_head_cm": -23.822396385664025,
+              "contact_height_from_head_cm": -29.07142607636193,
+              "approach_window_displacement_cm": [
+                1.8934306146092865,
+                -15.946925135889831,
+                -8.974258257842848
+              ],
+              "approach_forward_cm": -15.946925135889831,
+              "approach_rise_cm": -8.974258257842848,
+              "wrist_to_middle_mcp_axis": [
+                5.748088002971393,
+                7.59226427990993,
+                0.09321772220485514
+              ],
+              "wrist_long_axis_forward_cosine": 0.797237261163979,
+              "wrist_long_axis_side_yaw_degrees": 37.129290314267465
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                9.988891000078855,
+                51.13276358643479,
+                -10.144137102955256
+              ],
+              "forward_reach_cm": 51.13276358643479,
+              "shoulder_side_yaw_degrees": 11.053640667665634,
+              "forearm_side_yaw_degrees": 26.7691124355094,
+              "contact_forward_of_head_cm": 65.05043550943661,
+              "contact_height_from_head_cm": -25.592757512895588,
+              "approach_window_displacement_cm": [
+                60.5720486413158,
+                37.75791364925665,
+                -18.621631001540976
+              ],
+              "approach_forward_cm": 37.75791364925665,
+              "approach_rise_cm": -18.621631001540976,
+              "wrist_to_middle_mcp_axis": [
+                6.2905675851814635,
+                7.0595785595162255,
+                -1.133948834059936
+              ],
+              "wrist_long_axis_forward_cosine": 0.7412893308104405,
+              "wrist_long_axis_side_yaw_degrees": 41.70322361135902
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Jab",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "left_counter",
+      "classification": "left_counter",
+      "strict_known_fist_gate": true,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.05000000074505806,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FighterSkills/A_Fighter_FlowingCloud_LeftCounter.A_Fighter_FlowingCloud_LeftCounter",
+          "sequence_seconds": 0.05000000074505806,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -3.423467439686063,
+                43.719863832387546,
+                -8.9047093180165
+              ],
+              "forward_reach_cm": 43.719863832387546,
+              "shoulder_side_yaw_degrees": -4.477388104337913,
+              "forearm_side_yaw_degrees": -41.2634980911021,
+              "contact_forward_of_head_cm": 60.58685374228398,
+              "contact_height_from_head_cm": -20.04174029588853,
+              "approach_window_displacement_cm": [
+                -34.40137146949376,
+                13.800140767844354,
+                -12.00438053660767
+              ],
+              "approach_forward_cm": 13.800140767844354,
+              "approach_rise_cm": -12.00438053660767,
+              "wrist_to_middle_mcp_axis": [
+                -8.849200802124564,
+                3.5185382798270126,
+                0.04135342402305753
+              ],
+              "wrist_long_axis_forward_cosine": 0.36947253177913725,
+              "wrist_long_axis_side_yaw_degrees": -68.31669457367764
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 0.44166666666666665,
+              "forward_reach_cm": 49.2323709170486
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -3.423467439686063,
+                43.719863832387546,
+                -8.9047093180165
+              ],
+              "forward_reach_cm": 43.719863832387546,
+              "shoulder_side_yaw_degrees": -4.477388104337913,
+              "forearm_side_yaw_degrees": -41.2634980911021,
+              "contact_forward_of_head_cm": 60.58685374228398,
+              "contact_height_from_head_cm": -20.04174029588853,
+              "approach_window_displacement_cm": [
+                -34.40137146949376,
+                13.800140767844354,
+                -12.00438053660767
+              ],
+              "approach_forward_cm": 13.800140767844354,
+              "approach_rise_cm": -12.00438053660767,
+              "wrist_to_middle_mcp_axis": [
+                -8.849200802124564,
+                3.5185382798270126,
+                0.04135342402305753
+              ],
+              "wrist_long_axis_forward_cosine": 0.36947253177913725,
+              "wrist_long_axis_side_yaw_degrees": -68.31669457367764
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -34.59748164262833,
+                3.967830302079552,
+                -7.571512569722827
+              ],
+              "forward_reach_cm": 3.967830302079552,
+              "shoulder_side_yaw_degrees": -83.45758721642596,
+              "forearm_side_yaw_degrees": -37.17912177910809,
+              "contact_forward_of_head_cm": -16.910416800475613,
+              "contact_height_from_head_cm": -22.41277976191155,
+              "approach_window_displacement_cm": [
+                0.2622799305056134,
+                1.11929800315718,
+                -1.6766605587541505
+              ],
+              "approach_forward_cm": 1.11929800315718,
+              "approach_rise_cm": -1.6766605587541505,
+              "wrist_to_middle_mcp_axis": [
+                -4.908791456400429,
+                6.852879013118088,
+                4.431192456292237
+              ],
+              "wrist_long_axis_forward_cosine": 0.7195891757841018,
+              "wrist_long_axis_side_yaw_degrees": -35.61443530228007
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_JumpSlam",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "legacy_unclassified",
+      "classification": "area_or_jump_intent_requires_runtime_geometry_review",
+      "strict_known_fist_gate": false,
+      "attack_shape": "<Rogue10mAttackShape.CIRCLE: 3>",
+      "input_slot": "<Rogue10mAttackInputSlot.JUMP_PRIMARY: 2>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.0,
+          "sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_03.MM_Attack_03",
+          "sequence_seconds": 0.0,
+          "approach_window_seconds": 0.0,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -30.178826538880514,
+                39.37113110384365,
+                17.769472190501517
+              ],
+              "forward_reach_cm": 39.37113110384365,
+              "shoulder_side_yaw_degrees": -37.470948176343974,
+              "forearm_side_yaw_degrees": -51.53967658432031,
+              "contact_forward_of_head_cm": 56.01958604681519,
+              "contact_height_from_head_cm": 5.050395842689369,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.246469813394537,
+                2.967743198616418,
+                7.990724407751031
+              ],
+              "wrist_long_axis_forward_cosine": 0.3116323895314991,
+              "wrist_long_axis_side_yaw_degrees": -55.05133898100595
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -31.93812435775936,
+                -1.7956180799985546,
+                -9.094512366238092
+              ],
+              "forward_reach_cm": -1.7956180799985546,
+              "shoulder_side_yaw_degrees": -93.21788289035679,
+              "forearm_side_yaw_degrees": -43.11549375462872,
+              "contact_forward_of_head_cm": -20.9887218049183,
+              "contact_height_from_head_cm": -12.696230265614275,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.197506172464976,
+                7.851318963770668,
+                3.381192452558139
+              ],
+              "wrist_long_axis_forward_cosine": 0.8244258395265626,
+              "wrist_long_axis_side_yaw_degrees": -28.130044300823197
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 0.7916666666666666,
+              "forward_reach_cm": 44.64213577506294
+            },
+            "hand_r": {
+              "time": 1.0333333333333332,
+              "forward_reach_cm": 40.07055782181351
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -30.178826538880514,
+                39.37113110384365,
+                17.769472190501517
+              ],
+              "forward_reach_cm": 39.37113110384365,
+              "shoulder_side_yaw_degrees": -37.470948176343974,
+              "forearm_side_yaw_degrees": -51.53967658432031,
+              "contact_forward_of_head_cm": 56.01958604681519,
+              "contact_height_from_head_cm": 5.050395842689369,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.246469813394537,
+                2.967743198616418,
+                7.990724407751031
+              ],
+              "wrist_long_axis_forward_cosine": 0.3116323895314991,
+              "wrist_long_axis_side_yaw_degrees": -55.05133898100595
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -31.93812435775936,
+                -1.7956180799985546,
+                -9.094512366238092
+              ],
+              "forward_reach_cm": -1.7956180799985546,
+              "shoulder_side_yaw_degrees": -93.21788289035679,
+              "forearm_side_yaw_degrees": -43.11549375462872,
+              "contact_forward_of_head_cm": -20.9887218049183,
+              "contact_height_from_head_cm": -12.696230265614275,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.197506172464976,
+                7.851318963770668,
+                3.381192452558139
+              ],
+              "wrist_long_axis_forward_cosine": 0.8244258395265626,
+              "wrist_long_axis_side_yaw_degrees": -28.130044300823197
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Straight",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "two_punch",
+      "classification": "two_punch",
+      "strict_known_fist_gate": true,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.27300000190734863,
+          "sequence": "/Game/Rogue10m/Animation/Combat/FighterSkills/A_Fighter_IronChain_TwoPunch.A_Fighter_IronChain_TwoPunch",
+          "sequence_seconds": 0.27300000190734863,
+          "approach_window_seconds": 0.041666666666666664,
+          "hands": [
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                15.93797711967057,
+                37.972165803548364,
+                5.962104480181814
+              ],
+              "forward_reach_cm": 37.972165803548364,
+              "shoulder_side_yaw_degrees": 22.769151619699226,
+              "forearm_side_yaw_degrees": 53.33053534242239,
+              "contact_forward_of_head_cm": 25.801676191327804,
+              "contact_height_from_head_cm": -13.706816359344373,
+              "approach_window_displacement_cm": [
+                12.798578777601438,
+                11.653709782486523,
+                7.831092231716966
+              ],
+              "approach_forward_cm": 11.653709782486523,
+              "approach_rise_cm": 7.831092231716966,
+              "wrist_to_middle_mcp_axis": [
+                3.6403377924829274,
+                4.571656613154829,
+                7.519483127715702
+              ],
+              "wrist_long_axis_forward_cosine": 0.48004569152254045,
+              "wrist_long_axis_side_yaw_degrees": 38.52975483554068
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_r": {
+              "time": 0.275,
+              "forward_reach_cm": 37.98168553600935
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -10.937709861867972,
+                26.93536340150137,
+                -11.41338386813484
+              ],
+              "forward_reach_cm": 26.93536340150137,
+              "shoulder_side_yaw_degrees": -22.10071758148725,
+              "forearm_side_yaw_degrees": -48.15643687821254,
+              "contact_forward_of_head_cm": 22.588529452062446,
+              "contact_height_from_head_cm": -27.1776378275168,
+              "approach_window_displacement_cm": [
+                7.473498722225447,
+                -5.521589603040329,
+                -5.940666191967107
+              ],
+              "approach_forward_cm": -5.521589603040329,
+              "approach_rise_cm": -5.940666191967107,
+              "wrist_to_middle_mcp_axis": [
+                -3.903230664700927,
+                5.817922900579635,
+                6.450445382350136
+              ],
+              "wrist_long_axis_forward_cosine": 0.6109198452423116,
+              "wrist_long_axis_side_yaw_degrees": -33.85756652065145
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                15.93797711967057,
+                37.972165803548364,
+                5.962104480181814
+              ],
+              "forward_reach_cm": 37.972165803548364,
+              "shoulder_side_yaw_degrees": 22.769151619699226,
+              "forearm_side_yaw_degrees": 53.33053534242239,
+              "contact_forward_of_head_cm": 25.801676191327804,
+              "contact_height_from_head_cm": -13.706816359344373,
+              "approach_window_displacement_cm": [
+                12.798578777601438,
+                11.653709782486523,
+                7.831092231716966
+              ],
+              "approach_forward_cm": 11.653709782486523,
+              "approach_rise_cm": 7.831092231716966,
+              "wrist_to_middle_mcp_axis": [
+                3.6403377924829274,
+                4.571656613154829,
+                7.519483127715702
+              ],
+              "wrist_long_axis_forward_cosine": 0.48004569152254045,
+              "wrist_long_axis_side_yaw_degrees": 38.52975483554068
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/Unarmed/DA_Attack_Unarmed_ChargedPrimary",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "legacy_unclassified",
+      "classification": "legacy_unclassified",
+      "strict_known_fist_gate": false,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.CHARGED_PRIMARY: 4>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.0,
+          "sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.MM_ChargedAttack",
+          "sequence_seconds": 0.0,
+          "approach_window_seconds": 0.0,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -4.770831205315268,
+                30.400735597489135,
+                -5.986989749179543
+              ],
+              "forward_reach_cm": 30.400735597489135,
+              "shoulder_side_yaw_degrees": -8.91876830669142,
+              "forearm_side_yaw_degrees": -47.30683825690935,
+              "contact_forward_of_head_cm": 26.26759138775579,
+              "contact_height_from_head_cm": -22.96084464191796,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.409406103716869,
+                4.16098314323915,
+                7.344047877282463
+              ],
+              "wrist_long_axis_forward_cosine": 0.4369303652460341,
+              "wrist_long_axis_side_yaw_degrees": -46.6603216513711
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -15.847959181589026,
+                13.621665980298967,
+                -12.589094471560202
+              ],
+              "forward_reach_cm": 13.621665980298967,
+              "shoulder_side_yaw_degrees": -49.320223642895655,
+              "forearm_side_yaw_degrees": -1.7932574990579555,
+              "contact_forward_of_head_cm": 3.627843501794489,
+              "contact_height_from_head_cm": -30.87248181726497,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                0.21777267215701102,
+                9.192729335733832,
+                2.478110643854123
+              ],
+              "wrist_long_axis_forward_cosine": 0.9652803096045739,
+              "wrist_long_axis_side_yaw_degrees": 1.3570639601329728
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 1.8333333333333333,
+              "forward_reach_cm": 38.404876352034336
+            },
+            "hand_r": {
+              "time": 1.125,
+              "forward_reach_cm": 51.568877988928605
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -4.770831205315268,
+                30.400735597489135,
+                -5.986989749179543
+              ],
+              "forward_reach_cm": 30.400735597489135,
+              "shoulder_side_yaw_degrees": -8.91876830669142,
+              "forearm_side_yaw_degrees": -47.30683825690935,
+              "contact_forward_of_head_cm": 26.26759138775579,
+              "contact_height_from_head_cm": -22.96084464191796,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.409406103716869,
+                4.16098314323915,
+                7.344047877282463
+              ],
+              "wrist_long_axis_forward_cosine": 0.4369303652460341,
+              "wrist_long_axis_side_yaw_degrees": -46.6603216513711
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -15.847959181589026,
+                13.621665980298967,
+                -12.589094471560202
+              ],
+              "forward_reach_cm": 13.621665980298967,
+              "shoulder_side_yaw_degrees": -49.320223642895655,
+              "forearm_side_yaw_degrees": -1.7932574990579555,
+              "contact_forward_of_head_cm": 3.627843501794489,
+              "contact_height_from_head_cm": -30.87248181726497,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                0.21777267215701102,
+                9.192729335733832,
+                2.478110643854123
+              ],
+              "wrist_long_axis_forward_cosine": 0.9652803096045739,
+              "wrist_long_axis_side_yaw_degrees": 1.3570639601329728
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/Unarmed/DA_Attack_Unarmed_ChargedSpecial",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "legacy_unclassified",
+      "classification": "legacy_unclassified",
+      "strict_known_fist_gate": false,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.CHARGED_SPECIAL: 5>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.0,
+          "sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.MM_ChargedAttack",
+          "sequence_seconds": 0.0,
+          "approach_window_seconds": 0.0,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -4.770831205315268,
+                30.400735597489135,
+                -5.986989749179543
+              ],
+              "forward_reach_cm": 30.400735597489135,
+              "shoulder_side_yaw_degrees": -8.91876830669142,
+              "forearm_side_yaw_degrees": -47.30683825690935,
+              "contact_forward_of_head_cm": 26.26759138775579,
+              "contact_height_from_head_cm": -22.96084464191796,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.409406103716869,
+                4.16098314323915,
+                7.344047877282463
+              ],
+              "wrist_long_axis_forward_cosine": 0.4369303652460341,
+              "wrist_long_axis_side_yaw_degrees": -46.6603216513711
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -15.847959181589026,
+                13.621665980298967,
+                -12.589094471560202
+              ],
+              "forward_reach_cm": 13.621665980298967,
+              "shoulder_side_yaw_degrees": -49.320223642895655,
+              "forearm_side_yaw_degrees": -1.7932574990579555,
+              "contact_forward_of_head_cm": 3.627843501794489,
+              "contact_height_from_head_cm": -30.87248181726497,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                0.21777267215701102,
+                9.192729335733832,
+                2.478110643854123
+              ],
+              "wrist_long_axis_forward_cosine": 0.9652803096045739,
+              "wrist_long_axis_side_yaw_degrees": 1.3570639601329728
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 1.8333333333333333,
+              "forward_reach_cm": 38.404876352034336
+            },
+            "hand_r": {
+              "time": 1.125,
+              "forward_reach_cm": 51.568877988928605
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -4.770831205315268,
+                30.400735597489135,
+                -5.986989749179543
+              ],
+              "forward_reach_cm": 30.400735597489135,
+              "shoulder_side_yaw_degrees": -8.91876830669142,
+              "forearm_side_yaw_degrees": -47.30683825690935,
+              "contact_forward_of_head_cm": 26.26759138775579,
+              "contact_height_from_head_cm": -22.96084464191796,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.409406103716869,
+                4.16098314323915,
+                7.344047877282463
+              ],
+              "wrist_long_axis_forward_cosine": 0.4369303652460341,
+              "wrist_long_axis_side_yaw_degrees": -46.6603216513711
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -15.847959181589026,
+                13.621665980298967,
+                -12.589094471560202
+              ],
+              "forward_reach_cm": 13.621665980298967,
+              "shoulder_side_yaw_degrees": -49.320223642895655,
+              "forearm_side_yaw_degrees": -1.7932574990579555,
+              "contact_forward_of_head_cm": 3.627843501794489,
+              "contact_height_from_head_cm": -30.87248181726497,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                0.21777267215701102,
+                9.192729335733832,
+                2.478110643854123
+              ],
+              "wrist_long_axis_forward_cosine": 0.9652803096045739,
+              "wrist_long_axis_side_yaw_degrees": 1.3570639601329728
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/Unarmed/DA_Attack_Unarmed_JumpPrimary",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "legacy_unclassified",
+      "classification": "area_or_jump_intent_requires_runtime_geometry_review",
+      "strict_known_fist_gate": false,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.JUMP_PRIMARY: 2>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.0,
+          "sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_02.MM_Attack_02",
+          "sequence_seconds": 0.0,
+          "approach_window_seconds": 0.0,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                20.005329519950955,
+                4.1255969545347,
+                -14.359476216073432
+              ],
+              "forward_reach_cm": 4.1255969545347,
+              "shoulder_side_yaw_degrees": 78.34753920873925,
+              "forearm_side_yaw_degrees": 49.49555117242334,
+              "contact_forward_of_head_cm": -15.011187095343722,
+              "contact_height_from_head_cm": -18.344416282982024,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                7.282939683232229,
+                3.1205463742387174,
+                5.2832435138141705
+              ],
+              "wrist_long_axis_forward_cosine": 0.32767771945404117,
+              "wrist_long_axis_side_yaw_degrees": 66.80615176755337
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                46.98081392445778,
+                25.3574561768923,
+                -3.4607847116333232
+              ],
+              "forward_reach_cm": 25.3574561768923,
+              "shoulder_side_yaw_degrees": 61.64245873232445,
+              "forearm_side_yaw_degrees": 75.07802545152067,
+              "contact_forward_of_head_cm": 39.606722380219054,
+              "contact_height_from_head_cm": -20.46600352548208,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                9.45242523925944,
+                -1.147140229045604,
+                0.17451742348396238
+              ],
+              "wrist_long_axis_forward_cosine": -0.12045518093833955,
+              "wrist_long_axis_side_yaw_degrees": 96.9195406919535
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 0.4583333333333333,
+              "forward_reach_cm": 49.12992264314937
+            },
+            "hand_r": {
+              "time": 0.8333333333333334,
+              "forward_reach_cm": 32.57806075460326
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                20.005329519950955,
+                4.1255969545347,
+                -14.359476216073432
+              ],
+              "forward_reach_cm": 4.1255969545347,
+              "shoulder_side_yaw_degrees": 78.34753920873925,
+              "forearm_side_yaw_degrees": 49.49555117242334,
+              "contact_forward_of_head_cm": -15.011187095343722,
+              "contact_height_from_head_cm": -18.344416282982024,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                7.282939683232229,
+                3.1205463742387174,
+                5.2832435138141705
+              ],
+              "wrist_long_axis_forward_cosine": 0.32767771945404117,
+              "wrist_long_axis_side_yaw_degrees": 66.80615176755337
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                46.98081392445778,
+                25.3574561768923,
+                -3.4607847116333232
+              ],
+              "forward_reach_cm": 25.3574561768923,
+              "shoulder_side_yaw_degrees": 61.64245873232445,
+              "forearm_side_yaw_degrees": 75.07802545152067,
+              "contact_forward_of_head_cm": 39.606722380219054,
+              "contact_height_from_head_cm": -20.46600352548208,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                9.45242523925944,
+                -1.147140229045604,
+                0.17451742348396238
+              ],
+              "wrist_long_axis_forward_cosine": -0.12045518093833955,
+              "wrist_long_axis_side_yaw_degrees": 96.9195406919535
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/Unarmed/DA_Attack_Unarmed_JumpSpecial",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "legacy_unclassified",
+      "classification": "area_or_jump_intent_requires_runtime_geometry_review",
+      "strict_known_fist_gate": false,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.JUMP_SPECIAL: 3>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.0,
+          "sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.MM_ChargedAttack",
+          "sequence_seconds": 0.0,
+          "approach_window_seconds": 0.0,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -4.770831205315268,
+                30.400735597489135,
+                -5.986989749179543
+              ],
+              "forward_reach_cm": 30.400735597489135,
+              "shoulder_side_yaw_degrees": -8.91876830669142,
+              "forearm_side_yaw_degrees": -47.30683825690935,
+              "contact_forward_of_head_cm": 26.26759138775579,
+              "contact_height_from_head_cm": -22.96084464191796,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.409406103716869,
+                4.16098314323915,
+                7.344047877282463
+              ],
+              "wrist_long_axis_forward_cosine": 0.4369303652460341,
+              "wrist_long_axis_side_yaw_degrees": -46.6603216513711
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -15.847959181589026,
+                13.621665980298967,
+                -12.589094471560202
+              ],
+              "forward_reach_cm": 13.621665980298967,
+              "shoulder_side_yaw_degrees": -49.320223642895655,
+              "forearm_side_yaw_degrees": -1.7932574990579555,
+              "contact_forward_of_head_cm": 3.627843501794489,
+              "contact_height_from_head_cm": -30.87248181726497,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                0.21777267215701102,
+                9.192729335733832,
+                2.478110643854123
+              ],
+              "wrist_long_axis_forward_cosine": 0.9652803096045739,
+              "wrist_long_axis_side_yaw_degrees": 1.3570639601329728
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 1.8333333333333333,
+              "forward_reach_cm": 38.404876352034336
+            },
+            "hand_r": {
+              "time": 1.125,
+              "forward_reach_cm": 51.568877988928605
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -4.770831205315268,
+                30.400735597489135,
+                -5.986989749179543
+              ],
+              "forward_reach_cm": 30.400735597489135,
+              "shoulder_side_yaw_degrees": -8.91876830669142,
+              "forearm_side_yaw_degrees": -47.30683825690935,
+              "contact_forward_of_head_cm": 26.26759138775579,
+              "contact_height_from_head_cm": -22.96084464191796,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.409406103716869,
+                4.16098314323915,
+                7.344047877282463
+              ],
+              "wrist_long_axis_forward_cosine": 0.4369303652460341,
+              "wrist_long_axis_side_yaw_degrees": -46.6603216513711
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -15.847959181589026,
+                13.621665980298967,
+                -12.589094471560202
+              ],
+              "forward_reach_cm": 13.621665980298967,
+              "shoulder_side_yaw_degrees": -49.320223642895655,
+              "forearm_side_yaw_degrees": -1.7932574990579555,
+              "contact_forward_of_head_cm": 3.627843501794489,
+              "contact_height_from_head_cm": -30.87248181726497,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                0.21777267215701102,
+                9.192729335733832,
+                2.478110643854123
+              ],
+              "wrist_long_axis_forward_cosine": 0.9652803096045739,
+              "wrist_long_axis_side_yaw_degrees": 1.3570639601329728
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/Unarmed/DA_Attack_Unarmed_Primary",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "legacy_unclassified",
+      "classification": "legacy_unclassified",
+      "strict_known_fist_gate": false,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.0,
+          "sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_01.MM_Attack_01",
+          "sequence_seconds": 0.0,
+          "approach_window_seconds": 0.0,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -4.770802033048316,
+                30.4007320023473,
+                -5.987000740115292
+              ],
+              "forward_reach_cm": 30.4007320023473,
+              "shoulder_side_yaw_degrees": -8.918715685423335,
+              "forearm_side_yaw_degrees": -47.306831784315385,
+              "contact_forward_of_head_cm": 26.26758724089955,
+              "contact_height_from_head_cm": -22.960830054759867,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.409414272653105,
+                4.1609908437024,
+                7.344038609673902
+              ],
+              "wrist_long_axis_forward_cosine": 0.4369311738448925,
+              "wrist_long_axis_side_yaw_degrees": -46.66032170801158
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -15.847929460370896,
+                13.621673293362253,
+                -12.589125295103628
+              ],
+              "forward_reach_cm": 13.621673293362253,
+              "shoulder_side_yaw_degrees": -49.32015532079181,
+              "forearm_side_yaw_degrees": -1.7932474933828066,
+              "contact_forward_of_head_cm": 3.6278533199699066,
+              "contact_height_from_head_cm": -30.872535931337865,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                0.2177749246784657,
+                9.19273007379195,
+                2.4781077080234297
+              ],
+              "wrist_long_axis_forward_cosine": 0.9652803871041875,
+              "wrist_long_axis_side_yaw_degrees": 1.3570778826962884
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 0.0,
+              "forward_reach_cm": 30.4007320023473
+            },
+            "hand_r": {
+              "time": 0.4,
+              "forward_reach_cm": 52.857772873214586
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -4.770802033048316,
+                30.4007320023473,
+                -5.987000740115292
+              ],
+              "forward_reach_cm": 30.4007320023473,
+              "shoulder_side_yaw_degrees": -8.918715685423335,
+              "forearm_side_yaw_degrees": -47.306831784315385,
+              "contact_forward_of_head_cm": 26.26758724089955,
+              "contact_height_from_head_cm": -22.960830054759867,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.409414272653105,
+                4.1609908437024,
+                7.344038609673902
+              ],
+              "wrist_long_axis_forward_cosine": 0.4369311738448925,
+              "wrist_long_axis_side_yaw_degrees": -46.66032170801158
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -15.847929460370896,
+                13.621673293362253,
+                -12.589125295103628
+              ],
+              "forward_reach_cm": 13.621673293362253,
+              "shoulder_side_yaw_degrees": -49.32015532079181,
+              "forearm_side_yaw_degrees": -1.7932474933828066,
+              "contact_forward_of_head_cm": 3.6278533199699066,
+              "contact_height_from_head_cm": -30.872535931337865,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                0.2177749246784657,
+                9.19273007379195,
+                2.4781077080234297
+              ],
+              "wrist_long_axis_forward_cosine": 0.9652803871041875,
+              "wrist_long_axis_side_yaw_degrees": 1.3570778826962884
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/Unarmed/DA_Attack_Unarmed_Primary_Combo2",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "legacy_unclassified",
+      "classification": "legacy_unclassified",
+      "strict_known_fist_gate": false,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.0,
+          "sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_02.MM_Attack_02",
+          "sequence_seconds": 0.0,
+          "approach_window_seconds": 0.0,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                20.005329519950955,
+                4.1255969545347,
+                -14.359476216073432
+              ],
+              "forward_reach_cm": 4.1255969545347,
+              "shoulder_side_yaw_degrees": 78.34753920873925,
+              "forearm_side_yaw_degrees": 49.49555117242334,
+              "contact_forward_of_head_cm": -15.011187095343722,
+              "contact_height_from_head_cm": -18.344416282982024,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                7.282939683232229,
+                3.1205463742387174,
+                5.2832435138141705
+              ],
+              "wrist_long_axis_forward_cosine": 0.32767771945404117,
+              "wrist_long_axis_side_yaw_degrees": 66.80615176755337
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                46.98081392445778,
+                25.3574561768923,
+                -3.4607847116333232
+              ],
+              "forward_reach_cm": 25.3574561768923,
+              "shoulder_side_yaw_degrees": 61.64245873232445,
+              "forearm_side_yaw_degrees": 75.07802545152067,
+              "contact_forward_of_head_cm": 39.606722380219054,
+              "contact_height_from_head_cm": -20.46600352548208,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                9.45242523925944,
+                -1.147140229045604,
+                0.17451742348396238
+              ],
+              "wrist_long_axis_forward_cosine": -0.12045518093833955,
+              "wrist_long_axis_side_yaw_degrees": 96.9195406919535
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 0.4583333333333333,
+              "forward_reach_cm": 49.12992264314937
+            },
+            "hand_r": {
+              "time": 0.8333333333333334,
+              "forward_reach_cm": 32.57806075460326
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                20.005329519950955,
+                4.1255969545347,
+                -14.359476216073432
+              ],
+              "forward_reach_cm": 4.1255969545347,
+              "shoulder_side_yaw_degrees": 78.34753920873925,
+              "forearm_side_yaw_degrees": 49.49555117242334,
+              "contact_forward_of_head_cm": -15.011187095343722,
+              "contact_height_from_head_cm": -18.344416282982024,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                7.282939683232229,
+                3.1205463742387174,
+                5.2832435138141705
+              ],
+              "wrist_long_axis_forward_cosine": 0.32767771945404117,
+              "wrist_long_axis_side_yaw_degrees": 66.80615176755337
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                46.98081392445778,
+                25.3574561768923,
+                -3.4607847116333232
+              ],
+              "forward_reach_cm": 25.3574561768923,
+              "shoulder_side_yaw_degrees": 61.64245873232445,
+              "forearm_side_yaw_degrees": 75.07802545152067,
+              "contact_forward_of_head_cm": 39.606722380219054,
+              "contact_height_from_head_cm": -20.46600352548208,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                9.45242523925944,
+                -1.147140229045604,
+                0.17451742348396238
+              ],
+              "wrist_long_axis_forward_cosine": -0.12045518093833955,
+              "wrist_long_axis_side_yaw_degrees": 96.9195406919535
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/Unarmed/DA_Attack_Unarmed_Primary_Combo3",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "legacy_unclassified",
+      "classification": "legacy_unclassified",
+      "strict_known_fist_gate": false,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.0,
+          "sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_03.MM_Attack_03",
+          "sequence_seconds": 0.0,
+          "approach_window_seconds": 0.0,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -30.178826538880514,
+                39.37113110384365,
+                17.769472190501517
+              ],
+              "forward_reach_cm": 39.37113110384365,
+              "shoulder_side_yaw_degrees": -37.470948176343974,
+              "forearm_side_yaw_degrees": -51.53967658432031,
+              "contact_forward_of_head_cm": 56.01958604681519,
+              "contact_height_from_head_cm": 5.050395842689369,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.246469813394537,
+                2.967743198616418,
+                7.990724407751031
+              ],
+              "wrist_long_axis_forward_cosine": 0.3116323895314991,
+              "wrist_long_axis_side_yaw_degrees": -55.05133898100595
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -31.93812435775936,
+                -1.7956180799985546,
+                -9.094512366238092
+              ],
+              "forward_reach_cm": -1.7956180799985546,
+              "shoulder_side_yaw_degrees": -93.21788289035679,
+              "forearm_side_yaw_degrees": -43.11549375462872,
+              "contact_forward_of_head_cm": -20.9887218049183,
+              "contact_height_from_head_cm": -12.696230265614275,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.197506172464976,
+                7.851318963770668,
+                3.381192452558139
+              ],
+              "wrist_long_axis_forward_cosine": 0.8244258395265626,
+              "wrist_long_axis_side_yaw_degrees": -28.130044300823197
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 0.7916666666666666,
+              "forward_reach_cm": 44.64213577506294
+            },
+            "hand_r": {
+              "time": 1.0333333333333332,
+              "forward_reach_cm": 40.07055782181351
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -30.178826538880514,
+                39.37113110384365,
+                17.769472190501517
+              ],
+              "forward_reach_cm": 39.37113110384365,
+              "shoulder_side_yaw_degrees": -37.470948176343974,
+              "forearm_side_yaw_degrees": -51.53967658432031,
+              "contact_forward_of_head_cm": 56.01958604681519,
+              "contact_height_from_head_cm": 5.050395842689369,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.246469813394537,
+                2.967743198616418,
+                7.990724407751031
+              ],
+              "wrist_long_axis_forward_cosine": 0.3116323895314991,
+              "wrist_long_axis_side_yaw_degrees": -55.05133898100595
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -31.93812435775936,
+                -1.7956180799985546,
+                -9.094512366238092
+              ],
+              "forward_reach_cm": -1.7956180799985546,
+              "shoulder_side_yaw_degrees": -93.21788289035679,
+              "forearm_side_yaw_degrees": -43.11549375462872,
+              "contact_forward_of_head_cm": -20.9887218049183,
+              "contact_height_from_head_cm": -12.696230265614275,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.197506172464976,
+                7.851318963770668,
+                3.381192452558139
+              ],
+              "wrist_long_axis_forward_cosine": 0.8244258395265626,
+              "wrist_long_axis_side_yaw_degrees": -28.130044300823197
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "skill": "/Game/DataAsset/AttackSkill/Unarmed/DA_Attack_Unarmed_Special",
+      "status": "SOURCE_POSES_MEASURED",
+      "style": "legacy_unclassified",
+      "classification": "legacy_unclassified",
+      "strict_known_fist_gate": false,
+      "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+      "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+      "issues": [],
+      "contacts": [
+        {
+          "pulse": 1,
+          "montage_seconds": 0.0,
+          "sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_03.MM_Attack_03",
+          "sequence_seconds": 0.0,
+          "approach_window_seconds": 0.0,
+          "hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -30.178826538880514,
+                39.37113110384365,
+                17.769472190501517
+              ],
+              "forward_reach_cm": 39.37113110384365,
+              "shoulder_side_yaw_degrees": -37.470948176343974,
+              "forearm_side_yaw_degrees": -51.53967658432031,
+              "contact_forward_of_head_cm": 56.01958604681519,
+              "contact_height_from_head_cm": 5.050395842689369,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.246469813394537,
+                2.967743198616418,
+                7.990724407751031
+              ],
+              "wrist_long_axis_forward_cosine": 0.3116323895314991,
+              "wrist_long_axis_side_yaw_degrees": -55.05133898100595
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -31.93812435775936,
+                -1.7956180799985546,
+                -9.094512366238092
+              ],
+              "forward_reach_cm": -1.7956180799985546,
+              "shoulder_side_yaw_degrees": -93.21788289035679,
+              "forearm_side_yaw_degrees": -43.11549375462872,
+              "contact_forward_of_head_cm": -20.9887218049183,
+              "contact_height_from_head_cm": -12.696230265614275,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.197506172464976,
+                7.851318963770668,
+                3.381192452558139
+              ],
+              "wrist_long_axis_forward_cosine": 0.8244258395265626,
+              "wrist_long_axis_side_yaw_degrees": -28.130044300823197
+            }
+          ],
+          "sequence_peak_reach": {
+            "hand_l": {
+              "time": 0.7916666666666666,
+              "forward_reach_cm": 44.64213577506294
+            },
+            "hand_r": {
+              "time": 1.0333333333333332,
+              "forward_reach_cm": 40.07055782181351
+            }
+          },
+          "all_hands": [
+            {
+              "hand": "hand_l",
+              "shoulder_to_wrist_cm": [
+                -30.178826538880514,
+                39.37113110384365,
+                17.769472190501517
+              ],
+              "forward_reach_cm": 39.37113110384365,
+              "shoulder_side_yaw_degrees": -37.470948176343974,
+              "forearm_side_yaw_degrees": -51.53967658432031,
+              "contact_forward_of_head_cm": 56.01958604681519,
+              "contact_height_from_head_cm": 5.050395842689369,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.246469813394537,
+                2.967743198616418,
+                7.990724407751031
+              ],
+              "wrist_long_axis_forward_cosine": 0.3116323895314991,
+              "wrist_long_axis_side_yaw_degrees": -55.05133898100595
+            },
+            {
+              "hand": "hand_r",
+              "shoulder_to_wrist_cm": [
+                -31.93812435775936,
+                -1.7956180799985546,
+                -9.094512366238092
+              ],
+              "forward_reach_cm": -1.7956180799985546,
+              "shoulder_side_yaw_degrees": -93.21788289035679,
+              "forearm_side_yaw_degrees": -43.11549375462872,
+              "contact_forward_of_head_cm": -20.9887218049183,
+              "contact_height_from_head_cm": -12.696230265614275,
+              "approach_window_displacement_cm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "approach_forward_cm": 0.0,
+              "approach_rise_cm": 0.0,
+              "wrist_to_middle_mcp_axis": [
+                -4.197506172464976,
+                7.851318963770668,
+                3.381192452558139
+              ],
+              "wrist_long_axis_forward_cosine": 0.8244258395265626,
+              "wrist_long_axis_side_yaw_degrees": -28.130044300823197
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Source-pose WORLD is skeletal component space; +Y must be transformed by the actual mesh component.",
+    "Actual hit queries use head camera forward/rotation, including control pitch and stabilized head motion.",
+    "Other weapon profiles receive reference/timing inventory, not source-direction certification.",
+    "Hook/uppercut/area/jump intent cannot use a universal straight-punch velocity gate.",
+    "Wrist-to-middle-MCP is an anatomical long-axis estimate, not a measured knuckle contact-surface normal.",
+    "Montage blends, moving upper-body graph, retargeted skin, aim pitch, target overlaps and visual captures require runtime QA.",
+    "Single damage pulses and locked MultiHit targets are unchanged; a second visual fist is not another damage pulse."
+  ]
+}

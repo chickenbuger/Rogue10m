@@ -1,0 +1,46 @@
+{
+  "result": "PASS",
+  "errors": [],
+  "nodes": 14,
+  "profile_contract_unchanged": true,
+  "changed_skills": [
+    {
+      "skill": "유운수",
+      "path": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Jab.DA_Attack_StoneFist_Jab",
+      "changed_fields": [
+        "hit_start_delay_seconds",
+        "attack_montage"
+      ],
+      "before_montage": "/Game/Rogue10m/Animation/Combat/Knuckle/AM_Knuckle_Primary01.AM_Knuckle_Primary01",
+      "after_montage": "/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_FlowingCloud_LeftCounter.AM_Fighter_FlowingCloud_LeftCounter",
+      "before_contact": 0.0,
+      "after_contact": 0.05000000074505806
+    },
+    {
+      "skill": "금강쇄",
+      "path": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Straight.DA_Attack_StoneFist_Straight",
+      "changed_fields": [
+        "hit_start_delay_seconds",
+        "attack_montage"
+      ],
+      "before_montage": "/Game/Rogue10m/Animation/Combat/Knuckle/AM_Knuckle_Primary03.AM_Knuckle_Primary03",
+      "after_montage": "/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_IronChain_TwoPunch.AM_Fighter_IronChain_TwoPunch",
+      "before_contact": 0.0,
+      "after_contact": 0.27300000190734863
+    },
+    {
+      "skill": "무극패왕권",
+      "path": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_ChargedShockwave.DA_Attack_StoneFist_ChargedShockwave",
+      "changed_fields": [
+        "hit_start_delay_seconds",
+        "attack_montage"
+      ],
+      "before_montage": "/Game/Rogue10m/Animation/Combat/Knuckle/AM_Knuckle_Charged.AM_Knuckle_Charged",
+      "after_montage": "/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_Overlord_PowerPunch.AM_Fighter_Overlord_PowerPunch",
+      "before_contact": 0.0,
+      "after_contact": 0.28333333134651184
+    }
+  ],
+  "protected_fields": "Every exposed DA field except the three AttackMontage/HitStartDelaySeconds pairs; all other nodes and profile fields identical.",
+  "limits": "Structural/timing audit. Render, camera and actual target damage require separate runtime evidence. JumpSlam source remains unavailable; passive GoldenBody has no attack montage."
+}

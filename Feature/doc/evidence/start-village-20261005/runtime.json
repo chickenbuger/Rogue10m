@@ -1,0 +1,564 @@
+{
+  "status": "passed",
+  "hub_map": "/Game/Rogue10m/Maps/StartHub",
+  "combat_map": "/Game/FirstPerson/Lvl_FirstPerson",
+  "checks": [
+    {
+      "name": "no_existing_pie_session",
+      "passed": true
+    },
+    {
+      "name": "hub_map_exists",
+      "passed": true
+    },
+    {
+      "name": "combat_map_exists",
+      "passed": true
+    },
+    {
+      "name": "load_hub_only",
+      "passed": true
+    },
+    {
+      "name": "editor_world_is_hub",
+      "passed": true
+    },
+    {
+      "name": "village_tagged_actors",
+      "passed": true,
+      "count": 667
+    },
+    {
+      "name": "single_tagged_player_start",
+      "passed": true,
+      "count": 1
+    },
+    {
+      "name": "single_player_start_in_entire_hub",
+      "passed": true,
+      "count": 1,
+      "labels": [
+        "SV_PlayerStart_SouthApproach"
+      ]
+    },
+    {
+      "name": "single_tagged_run_portal",
+      "passed": true,
+      "count": 1
+    },
+    {
+      "name": "spawn_south_portal_north",
+      "passed": true,
+      "player_start": [
+        0.0,
+        -2240.0,
+        112.0
+      ],
+      "portal": [
+        0.0,
+        4270.0,
+        200.0
+      ]
+    },
+    {
+      "name": "portal_targets_combat_map",
+      "passed": true,
+      "target": "/Game/FirstPerson/Lvl_FirstPerson"
+    },
+    {
+      "name": "portal_starts_run",
+      "passed": true
+    },
+    {
+      "name": "four_outer_boundary_blockers",
+      "passed": true,
+      "labels": [
+        "SV_BoundaryBlocking_East",
+        "SV_BoundaryBlocking_South",
+        "SV_BoundaryBlocking_West",
+        "SV_BoundaryBlocking_North"
+      ]
+    },
+    {
+      "name": "boundary_mesh_component",
+      "passed": true,
+      "label": "SV_BoundaryBlocking_East"
+    },
+    {
+      "name": "boundary_hidden_and_block_all",
+      "passed": true,
+      "label": "SV_BoundaryBlocking_East",
+      "actor_hidden": true,
+      "component_visible": false,
+      "collision_profile": "BlockAll",
+      "collision_enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>"
+    },
+    {
+      "name": "boundary_mesh_component",
+      "passed": true,
+      "label": "SV_BoundaryBlocking_South"
+    },
+    {
+      "name": "boundary_hidden_and_block_all",
+      "passed": true,
+      "label": "SV_BoundaryBlocking_South",
+      "actor_hidden": true,
+      "component_visible": false,
+      "collision_profile": "BlockAll",
+      "collision_enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>"
+    },
+    {
+      "name": "boundary_mesh_component",
+      "passed": true,
+      "label": "SV_BoundaryBlocking_West"
+    },
+    {
+      "name": "boundary_hidden_and_block_all",
+      "passed": true,
+      "label": "SV_BoundaryBlocking_West",
+      "actor_hidden": true,
+      "component_visible": false,
+      "collision_profile": "BlockAll",
+      "collision_enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>"
+    },
+    {
+      "name": "boundary_mesh_component",
+      "passed": true,
+      "label": "SV_BoundaryBlocking_North"
+    },
+    {
+      "name": "boundary_hidden_and_block_all",
+      "passed": true,
+      "label": "SV_BoundaryBlocking_North",
+      "actor_hidden": true,
+      "component_visible": false,
+      "collision_profile": "BlockAll",
+      "collision_enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>"
+    },
+    {
+      "name": "creation_manifest_exists",
+      "passed": true,
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\start-village-20261005\\creation.json"
+    },
+    {
+      "name": "creation_manifest_matches_saved_hub",
+      "passed": true,
+      "status": "created",
+      "map": "/Game/Rogue10m/Maps/StartHub"
+    },
+    {
+      "name": "four_role_markers_in_manifest",
+      "passed": true,
+      "count": 4
+    },
+    {
+      "name": "expected_preparation_roles",
+      "passed": true,
+      "roles": [
+        "Equipment",
+        "Traits",
+        "Difficulty",
+        "Story"
+      ]
+    },
+    {
+      "name": "role_marker_identity",
+      "passed": true,
+      "marker": {
+        "role": "Equipment",
+        "location": [
+          -1420,
+          -790,
+          32
+        ],
+        "status": "reserved scenery; NPC/service functionality not implemented"
+      }
+    },
+    {
+      "name": "role_marker_in_creation_manifest",
+      "passed": true,
+      "label": "SV_Equipment_RoleSign"
+    },
+    {
+      "name": "role_marker_present",
+      "passed": true,
+      "role": "Equipment",
+      "expected_label": "SV_Equipment_RoleSign",
+      "expected_tags": [],
+      "matches": [
+        "SV_Equipment_RoleSign"
+      ]
+    },
+    {
+      "name": "role_marker_identity",
+      "passed": true,
+      "marker": {
+        "role": "Traits",
+        "location": [
+          1420,
+          -790,
+          32
+        ],
+        "status": "reserved scenery; NPC/service functionality not implemented"
+      }
+    },
+    {
+      "name": "role_marker_in_creation_manifest",
+      "passed": true,
+      "label": "SV_Traits_RoleSign"
+    },
+    {
+      "name": "role_marker_present",
+      "passed": true,
+      "role": "Traits",
+      "expected_label": "SV_Traits_RoleSign",
+      "expected_tags": [],
+      "matches": [
+        "SV_Traits_RoleSign"
+      ]
+    },
+    {
+      "name": "role_marker_identity",
+      "passed": true,
+      "marker": {
+        "role": "Difficulty",
+        "location": [
+          -1420,
+          1150,
+          32
+        ],
+        "status": "reserved scenery; NPC/service functionality not implemented"
+      }
+    },
+    {
+      "name": "role_marker_in_creation_manifest",
+      "passed": true,
+      "label": "SV_Difficulty_RoleSign"
+    },
+    {
+      "name": "role_marker_present",
+      "passed": true,
+      "role": "Difficulty",
+      "expected_label": "SV_Difficulty_RoleSign",
+      "expected_tags": [],
+      "matches": [
+        "SV_Difficulty_RoleSign"
+      ]
+    },
+    {
+      "name": "role_marker_identity",
+      "passed": true,
+      "marker": {
+        "role": "Story",
+        "location": [
+          1420,
+          1150,
+          32
+        ],
+        "status": "reserved scenery; NPC/service functionality not implemented"
+      }
+    },
+    {
+      "name": "role_marker_in_creation_manifest",
+      "passed": true,
+      "label": "SV_Story_RoleSign"
+    },
+    {
+      "name": "role_marker_present",
+      "passed": true,
+      "role": "Story",
+      "expected_label": "SV_Story_RoleSign",
+      "expected_tags": [],
+      "matches": [
+        "SV_Story_RoleSign"
+      ]
+    },
+    {
+      "name": "hub_game_mode_configured",
+      "passed": true,
+      "game_mode": "<Object '/Game/FirstPerson/Blueprints/BP_FirstPersonGameMode.BP_FirstPersonGameMode_C' (0x0000019782FA9A00) Class 'BlueprintGeneratedClass'>"
+    },
+    {
+      "name": "hub_rogue_game_mode",
+      "passed": true
+    },
+    {
+      "name": "hub_auto_run_disabled",
+      "passed": true
+    },
+    {
+      "name": "hub_prototype_duration_disabled",
+      "passed": true
+    },
+    {
+      "name": "hub_possession_and_input",
+      "passed": true,
+      "world": "/Game/Rogue10m/Maps/UEDPIE_0_StartHub.StartHub",
+      "pawn_class": "/Game/Character/Customization/Characters/BP_Rogue10m_HumanMaleCharacter.BP_Rogue10m_HumanMaleCharacter_C",
+      "controller_class": "/Game/FirstPerson/Blueprints/BP_FirstPersonPlayerController.BP_FirstPersonPlayerController_C",
+      "paused": false,
+      "move_ignored": false,
+      "look_ignored": false
+    },
+    {
+      "name": "player_start_actual_landing_before_teleport",
+      "passed": true,
+      "elapsed_seconds": 0.4000000059604645,
+      "location": [
+        0.0,
+        -2240.0,
+        104.14999723434448
+      ],
+      "expected_player_start": [
+        0.0,
+        -2240.0,
+        112.0
+      ],
+      "horizontal_spawn_displacement_cm": 0.0,
+      "ground_z": 6.0,
+      "capsule_bottom_clearance_cm": 2.1499972343444824,
+      "moving_on_ground": true
+    },
+    {
+      "name": "hub_timer_unchanged_for_two_seconds",
+      "passed": true,
+      "elapsed_seconds": 2.0057482980191708,
+      "remaining_seconds": 1200.0,
+      "run_phase": "<Rogue10mRunPhase.WAITING_TO_START: 0>",
+      "timer_active": false
+    },
+    {
+      "name": "plaza_walk_start_position",
+      "passed": true,
+      "location": [
+        350.0,
+        0.0,
+        110.0
+      ],
+      "ground_z": 12.0,
+      "capsule_half_height": 96.0
+    },
+    {
+      "name": "plaza_actual_walking",
+      "passed": true,
+      "elapsed_seconds": 2.011836301535368,
+      "horizontal_displacement_cm": 1149.646390855042,
+      "start": [
+        350.0,
+        0.0,
+        110.0
+      ],
+      "end": [
+        1499.646390855042,
+        0.0,
+        104.149997909381
+      ],
+      "used_add_movement_input": true,
+      "moving_on_ground": true
+    },
+    {
+      "name": "runtime_portal_exists",
+      "passed": true,
+      "count": 1
+    },
+    {
+      "name": "portal_overlap_target",
+      "passed": true,
+      "collision_center": [
+        0.0,
+        4270.0,
+        200.0
+      ],
+      "collision_enabled": "<CollisionEnabled.QUERY_ONLY: 1>",
+      "pawn_overlap_response": "<CollisionResponseType.ECR_OVERLAP: 1>",
+      "portal_generates_overlap_events": true,
+      "pawn_generates_overlap_events": true
+    },
+    {
+      "name": "portal_arrival_starts_combat_run",
+      "passed": true,
+      "accepted_arrival_remaining_seconds": [
+        1195.0,
+        1200.0
+      ],
+      "world": "/Game/FirstPerson/UEDPIE_0_Lvl_FirstPerson.Lvl_FirstPerson",
+      "world_seconds": 0.018718399107456207,
+      "phase": "<Rogue10mRunPhase.RUNNING: 1>",
+      "active": true,
+      "remaining_seconds": 1200.0,
+      "duration_seconds": 1200.0
+    },
+    {
+      "name": "combat_timer_decreased_after_two_seconds",
+      "passed": true,
+      "elapsed_seconds": 2.000313799828291,
+      "countdown_decrease_seconds": 2.0,
+      "remaining_seconds": 1198.0
+    }
+  ],
+  "spawn_samples": [
+    {
+      "elapsed_seconds": 0.4000000059604645,
+      "location": [
+        0.0,
+        -2240.0,
+        104.14999723434448
+      ],
+      "expected_player_start": [
+        0.0,
+        -2240.0,
+        112.0
+      ],
+      "horizontal_spawn_displacement_cm": 0.0,
+      "ground_z": 6.0,
+      "capsule_bottom_clearance_cm": 2.1499972343444824,
+      "moving_on_ground": true
+    },
+    {
+      "elapsed_seconds": 0.4000000059604645,
+      "location": [
+        0.0,
+        -2240.0,
+        104.14999723434448
+      ],
+      "expected_player_start": [
+        0.0,
+        -2240.0,
+        112.0
+      ],
+      "horizontal_spawn_displacement_cm": 0.0,
+      "ground_z": 6.0,
+      "capsule_bottom_clearance_cm": 2.1499972343444824,
+      "moving_on_ground": true
+    }
+  ],
+  "hub_samples": [
+    {
+      "world": "/Game/Rogue10m/Maps/UEDPIE_0_StartHub.StartHub",
+      "world_seconds": 0.4000000059604645,
+      "phase": "<Rogue10mRunPhase.WAITING_TO_START: 0>",
+      "active": false,
+      "remaining_seconds": 1200.0,
+      "duration_seconds": 1200.0
+    },
+    {
+      "world": "/Game/Rogue10m/Maps/UEDPIE_0_StartHub.StartHub",
+      "world_seconds": 2.8057483099400997,
+      "phase": "<Rogue10mRunPhase.WAITING_TO_START: 0>",
+      "active": false,
+      "remaining_seconds": 1200.0,
+      "duration_seconds": 1200.0
+    }
+  ],
+  "walking_samples": [
+    {
+      "elapsed_seconds": 0.01253880187869072,
+      "location": [
+        350.0,
+        0.0,
+        110.0
+      ],
+      "ground_z": 12.0,
+      "capsule_bottom_clearance_cm": 2.0
+    },
+    {
+      "elapsed_seconds": 0.26881949976086617,
+      "location": [
+        420.62635756988726,
+        0.0,
+        110.0
+      ],
+      "ground_z": 12.0,
+      "capsule_bottom_clearance_cm": 2.0
+    },
+    {
+      "elapsed_seconds": 0.5252682007849216,
+      "location": [
+        577.9741681788896,
+        0.0,
+        110.0
+      ],
+      "ground_z": 12.0,
+      "capsule_bottom_clearance_cm": 2.0
+    },
+    {
+      "elapsed_seconds": 0.7826399020850658,
+      "location": [
+        737.544622984979,
+        0.0,
+        110.0
+      ],
+      "ground_z": 12.0,
+      "capsule_bottom_clearance_cm": 2.0
+    },
+    {
+      "elapsed_seconds": 1.0411467999219894,
+      "location": [
+        897.8188996438716,
+        0.0,
+        110.0
+      ],
+      "ground_z": 12.0,
+      "capsule_bottom_clearance_cm": 2.0
+    },
+    {
+      "elapsed_seconds": 1.2938404008746147,
+      "location": [
+        1054.4889322344993,
+        0.0,
+        110.0
+      ],
+      "ground_z": 12.0,
+      "capsule_bottom_clearance_cm": 2.0
+    },
+    {
+      "elapsed_seconds": 1.5542269013822079,
+      "location": [
+        1215.9285627600827,
+        0.0,
+        117.46604105329561
+      ],
+      "ground_z": 12.0,
+      "capsule_bottom_clearance_cm": 9.466041053295612
+    },
+    {
+      "elapsed_seconds": 1.8087345026433468,
+      "location": [
+        1373.7232755419889,
+        0.0,
+        104.149997909381
+      ],
+      "ground_z": 6.0,
+      "capsule_bottom_clearance_cm": 2.1499979093809998
+    }
+  ],
+  "combat_samples": [
+    {
+      "world": "/Game/FirstPerson/UEDPIE_0_Lvl_FirstPerson.Lvl_FirstPerson",
+      "world_seconds": 0.018718399107456207,
+      "phase": "<Rogue10mRunPhase.RUNNING: 1>",
+      "active": true,
+      "remaining_seconds": 1200.0,
+      "duration_seconds": 1200.0
+    },
+    {
+      "world": "/Game/FirstPerson/UEDPIE_0_Lvl_FirstPerson.Lvl_FirstPerson",
+      "world_seconds": 2.019032198935747,
+      "phase": "<Rogue10mRunPhase.RUNNING: 1>",
+      "active": true,
+      "remaining_seconds": 1198.0,
+      "duration_seconds": 1200.0
+    }
+  ],
+  "portal_trigger": {
+    "method": "set_actor_location_into_collision_center",
+    "target": [
+      0.0,
+      4270.0,
+      200.0
+    ]
+  },
+  "message": "Static hub, 2s waiting, ground walking, real portal overlap, and combat timer verified.",
+  "final_phase": "observe_combat",
+  "elapsed_wall_seconds": 7.1560000000026776
+}

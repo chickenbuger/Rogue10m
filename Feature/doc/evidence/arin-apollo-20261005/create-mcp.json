@@ -1,0 +1,13 @@
+{
+  "meta": null,
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"ok\": true,\n  \"asset_id\": \"ast_1m45c3php007vt0fzyt\",\n  \"name\": \"Arin starting-village guide\",\n  \"type\": \"character\",\n  \"spec\": {\n    \"id\": \"spc_1m45c3pgz005fqavrda\",\n    \"intent\": \"character\",\n    \"subject\": \"Use supplied front T-pose reference adult female fantasy village guide Arin chestnut braid, green cape and travel tunic,\",\n    \"style\": \"stylized\",\n    \"description\": \"Use the supplied front T-pose reference for an adult female fantasy village guide Arin with chestnut braid, green cape and travel tunic, ivory shirt, leather satchel and two attached red healing potions. Preserve the original face and clothing appearance. Create an honest local static draft for geometry and FBX inspection first. The eventual game NPC needs a complete 3D body, humanoid rig and Idle; do not claim the local cutout already satisfies that. Keep generated output within this asset and preserve the source reference.\",\n    \"constraints\": {\n      \"target_engine\": \"web\",\n      \"target_polycount\": 30000,\n      \"texture_resolution\": \"1k\",\n      \"formats\": [\n        \"fbx\",\n        \"glb\"\n      ],\n      \"pose\": \"t-pose\"\n    },\n    \"references\": {\n      \"images\": [],\n      \"moodboard\": [],\n      \"negative\": [\n        \"watermark\",\n        \"text labels\",\n        \"logo\",\n        \"merged limbs\",\n        \"dramatic pose\",\n        \"cropped body\"\n      ]\n    },\n    \"character\": {\n      \"character_type\": \"humanoid\",\n      \"clear_limb_separation\": true\n    }\n  },\n  \"verdict\": \"in_progress\",\n  \"recommended_next_action\": {\n    \"id\": \"generate-concepts\",\n    \"kind\": \"advance\",\n    \"label\": \"generate concept candidates [draft lane]\",\n    \"reason\": \"next missing pipeline stage\",\n    \"stage\": \"generate-concepts\",\n    \"method\": \"POST\",\n    \"path\": \"/api/assets/ast_1m45c3php007vt0fzyt/generate-concepts\",\n    \"body\": {\n      \"count\": 4,\n      \"provider_id\": \"apollo_sketch\"\n    },\n    \"provider_id\": \"apollo_sketch\",\n    \"source_node_id\": null,\n    \"parameters\": {},\n    \"draft\": true,\n    \"blocked\": false,\n    \"requires\": [],\n    \"ensure_kind\": \"concept_image\"\n  }\n}",
+      "annotations": null,
+      "meta": null
+    }
+  ],
+  "structuredContent": null,
+  "isError": false
+}

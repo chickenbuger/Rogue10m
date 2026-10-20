@@ -1,0 +1,113 @@
+{
+  "reviewer": "stable_qa_review, verification role 1",
+  "negative01": {
+    "label": "stable_negative01",
+    "reported_metrics": {
+      "frames": 1575.0,
+      "cases": 21.0,
+      "expected_cases": 21.0,
+      "assertions": 426855.0,
+      "failures": 3151.0,
+      "negative_disabled_head": 1.0,
+      "max_late_mouse_oracle_error_deg": 7.588483323,
+      "max_same_frame_repeat_error_cm": 0.0,
+      "max_same_frame_repeat_error_deg": 3.415e-06,
+      "atomic_capsule_world_translation_error_cm": 0.0,
+      "late_component_basis_transport_error_deg": 78.305372493,
+      "max_paired_source_lowerbody_rotation_error_deg": 2.958e-06,
+      "max_source_render_local_translation_error_cm": 0.0,
+      "max_source_render_local_scale_error": 0.0,
+      "max_source_wrist_finger_local_rotation_error_deg": 3.818e-06,
+      "max_appearance_limb_length_change_percent": 5.157e-06,
+      "NOTE": "Actual selected production pawn, full Appearance retarget mesh, fixed-step ground physics and real attack/move/sprint/jump/dodge/V handlers. Source and visible head quaternions are composed from raw evaluated local bones against skeleton reference, independently of camera helper. Residual total quaternion caps are 2/4/3 degrees; body-local position caps are 1/2/1.5cm. Late input uses actual head delta minus independent control/actor aim plus new mouse, exactly once; same-pose actor yaw +80 and control pitch70 require exact conjugation into the current component basis. Source/baseline share movement prerequisite and unchanged AnimBP, with baseline aim and mouse-head disabled. Source render-bone local T/S, wrist/finger rotations and lower body must match same phase. Appearance checks finite normalized local poses and eight limb segment lengths against its same-phase retarget baseline, without claiming all target local T/S or finger preservation; camera reads and CalcCamera(0) must not advance filters. MoveSpeed and movement max speed are set to identical fixture tuning and actual movement input generates measured velocity. Native rate and actual compiled ground BlendSpace player rate plus visible foot travel are measured; attack speed changes through real attributes and accepted montage clock plus actual target damage are observed. Mesh surface quality requires complementary rendered review."
+    },
+    "frames_csv_count": 1575,
+    "cases_csv_count": 21,
+    "reported_failure_reasons": {
+      "appearance_head_exceeds_mouse_residual_quaternion_cap": 1575,
+      "late_component_rotation_did_not_transport_evaluated_mouse_basis": 1,
+      "source_head_exceeds_mouse_residual_quaternion_cap": 1575
+    },
+    "cap_violation_counts": {
+      "source_head": 1575,
+      "appearance_head": 1575,
+      "camera_head": 0,
+      "camera_position": 0
+    },
+    "native_mouse_head_applied_values": [
+      0
+    ],
+    "provenance_sha256": {
+      "tmp/mouse-head-stable/stable_negative01/frames.csv": "7AB29D32255A106F202D019D345D50207A37FB643F395563152FB9F363550BB7",
+      "tmp/mouse-head-stable/stable_negative01/results.csv": "A86DD64AA928A7225E4FF224B5A76B7B643DD6688474E053BFE49EC36023A043",
+      "tmp/mouse-head-stable/stable_negative01/metrics.txt": "C719487F136C5BB3045A4F1985D9FB16FF87F4EB97CC5AE046B51451F95CFCE6",
+      "tmp/mouse-head-stable/stable_negative01/failure-reasons.txt": "09ED0BD0B54325CAF3B9D2133F046AB51EA8D03B8284B7258E751300FCC33E52",
+      "Feature/doc/evidence/mouse-head-stable-locomotion-20261013/stable_negative01.log": "5D38B3CC448BF5995F99F05636D0F8AD54D9163212F66DC5B18009CEA0778912"
+    },
+    "verdict": "EXPECTED NEGATIVE FAILURE: head separation disabled for all 1575 frames; Source and Appearance cap checks each fail exactly 1575 times. This is validation sensitivity evidence, not a passed gameplay configuration.",
+    "classification": {
+      "head_cap_3150": "Actual source and visible head retain authored rotations instead of mouse-driven bounded orientation, so both independent head cap checks reject every frame. Camera fallback remains bounded; camera and position cap violations stay zero.",
+      "transport_1": "The one transport metamorphic assertion assumes a published evaluated mouse basis. With native mouse-head application disabled, the camera uses capped authored fallback and no basis is published; its expected failure is 78.305372493 degrees. It is not an additional production defect in positive mode.",
+      "late_mouse_diagnostic": "Late input assertion is deliberately skipped in negative mode. The reported 7.588483323-degree max is an incompatible positive-mode oracle diagnostic, not a further counted failure.",
+      "unchanged_paths": "No failures were reported for approved inputs, montage rates/time, actual damage, raw source bone preservation, target limb lengths or production tick prerequisite."
+    },
+    "failure_distribution_matches_expected": true
+  },
+  "render01": {
+    "label": "stable_render01",
+    "reported_metrics": {
+      "frames": 756.0,
+      "cases": 21.0,
+      "expected_cases": 21.0,
+      "assertions": 204767.0,
+      "failures": 5.0,
+      "negative_disabled_head": 0.0,
+      "max_late_mouse_oracle_error_deg": 2.415e-06,
+      "max_same_frame_repeat_error_cm": 0.0,
+      "max_same_frame_repeat_error_deg": 2.958e-06,
+      "atomic_capsule_world_translation_error_cm": 0.0,
+      "late_component_basis_transport_error_deg": 0.0,
+      "max_paired_source_lowerbody_rotation_error_deg": 2.958e-06,
+      "max_source_render_local_translation_error_cm": 0.0,
+      "max_source_render_local_scale_error": 0.0,
+      "max_source_wrist_finger_local_rotation_error_deg": 3.818e-06,
+      "max_appearance_limb_length_change_percent": 5.157e-06,
+      "NOTE": "Actual selected production pawn, full Appearance retarget mesh, fixed-step ground physics and real attack/move/sprint/jump/dodge/V handlers. Source and visible head quaternions are composed from raw evaluated local bones against skeleton reference, independently of camera helper. Residual total quaternion caps are 2/4/3 degrees; body-local position caps are 1/2/1.5cm. Late input uses actual head delta minus independent control/actor aim plus new mouse, exactly once; same-pose actor yaw +80 and control pitch70 require exact conjugation into the current component basis. Source/baseline share movement prerequisite and unchanged AnimBP, with baseline aim and mouse-head disabled. Source render-bone local T/S, wrist/finger rotations and lower body must match same phase. Appearance checks finite normalized local poses and eight limb segment lengths against its same-phase retarget baseline, without claiming all target local T/S or finger preservation; camera reads and CalcCamera(0) must not advance filters. MoveSpeed and movement max speed are set to identical fixture tuning and actual movement input generates measured velocity. Native rate and actual compiled ground BlendSpace player rate plus visible foot travel are measured; attack speed changes through real attributes and accepted montage clock plus actual target damage are observed. Mesh surface quality requires complementary rendered review."
+    },
+    "frames_csv_count": 756,
+    "cases_csv_count": 21,
+    "reported_failure_reasons": {
+      "accepted_attack_not_visibly_playing": 2,
+      "expected_input_attack_not_accepted_exactly_once": 3
+    },
+    "cap_violation_counts": {
+      "source_head": 0,
+      "appearance_head": 0,
+      "camera_head": 0,
+      "camera_position": 0
+    },
+    "native_mouse_head_applied_values": [
+      1
+    ],
+    "provenance_sha256": {
+      "tmp/mouse-head-stable/stable_render01/frames.csv": "C4C7F36CA0F1A9558F2DAF885369523EB7B0E68F8C7144D30367079B28381BB1",
+      "tmp/mouse-head-stable/stable_render01/results.csv": "765C64A893792EA84C5BA20FD81D4B4FA6E589C7A4DB86759BA4514B6F901D19",
+      "tmp/mouse-head-stable/stable_render01/metrics.txt": "3AE56D170E4B05C9D07BD1E719B8444CDBF51A37934AC268E12C5F7775C70A13",
+      "tmp/mouse-head-stable/stable_render01/failure-reasons.txt": "FC14EE6889D599A2104DB313C1081A7C0C91766E777551BFF1ECBF4D7BDE8000",
+      "Feature/doc/evidence/mouse-head-stable-locomotion-20261013/stable_render01.log": "303760516AF72A626C3DFD7F76A170FDE60435859F6CAF48926D9855C87D164C"
+    },
+    "verdict": "FAILED RENDER FIXTURE RUN: preserve as diagnostic; do not deliver as passed animation proof. The 36-frame movie optimization shortened real input/cooldown/charge contracts.",
+    "classification": {
+      "case8_jab_rate_one": "Previous half-speed accepted jab still occupies its actual cooldown/busy time when the next shortened case requests input; requested jab is not accepted.",
+      "case13_right_hook": "Movie hold release at frame32 changes the real charge duration; the expected hook use is absent at the shortened case completion. A contributing motion has only three samples.",
+      "case14_knuckle_primary": "The shortened hook case leaves real input/busy/cooldown effects carried to the next case; expected primary is rejected.",
+      "core_pose_contract": "All 756 Source/Appearance/camera/position cap rows satisfy the bounds; no bone or late-input failures are reported. This does not erase input-acceptance failures.",
+      "fix": "Restore 75 frames and frame43 hook release in every mode; Movie affects continuous capture only. Keep counts/rates/caps/damage checks and genuine cooldown values. Append three default -20-degree presentation cases. Rendering CVar r.MotionBlurQuality=0 only in the temporary QA process."
+    },
+    "screenshot_count": 756
+  },
+  "pending": [
+    "Final runtime04 on build6:24 cases/1800 frames",
+    "Final render02 with unchanged timing plus default -20-degree cases and motion blur disabled for structural review"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "script": "Scripts/AuditArinWalkTalkContent.py",
+  "script_sha256": "defeb8763df7602a48f10d8d64e25d9a257bd75a418fbfce042486c2845608d7",
+  "validation": {
+    "ast_parse": "passed",
+    "diff_check": "passed",
+    "fixture_process_exit_code": 0,
+    "fixture_checks": [
+      "Immutable checkpoint cannot be replaced",
+      "Exactly two expected animation additions and an allowed Guide change pass",
+      "Changes to any of the existing nine RefinedV3 dependencies fail",
+      "Unexpected Content addition fails",
+      "Missing expected animation sequence fails",
+      "Existing source art change fails",
+      "Content deletion fails"
+    ],
+    "fixture_scope": "Temporary fixtures in tmp/arin-mixamo-reference; absolute workspace containment verified before cleanup",
+    "real_content_baseline_executed_by_this_agent": false,
+    "unreal_editor_or_asset_mutations_by_this_agent": false
+  }
+}

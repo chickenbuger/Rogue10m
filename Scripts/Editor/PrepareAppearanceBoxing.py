@@ -84,7 +84,20 @@ def validate_right_stance(options, hit_time):
             'right_forward_peak':peak,'right_forward_at_hit':at_hit,'samples':samples}
 
 
+def reject_authored_fist_overwrite(paths):
+    """Stop legacy regeneration before any writes once dedicated fist combat is installed."""
+    for path in paths:
+        skill = unreal.EditorAssetLibrary.load_asset(path)
+        montage = skill.get_editor_property("attack_montage") if skill else None
+        if montage and montage.get_path_name().startswith("/Game/Rogue10m/Animation/Combat/FistAuthored/"):
+            raise RuntimeError(
+                "Legacy generator would overwrite dedicated fist combat: " + path
+                + ". Use PrepareFistCombatAnimations.py for the authored animations; "
+                  "review any balance/progression regeneration separately.")
+
+
 def main():
+    reject_authored_fist_overwrite([DATA + side + 'Jab' for side in ('Left', 'Right')])
     source = require(SOURCE)
     skills = {}
     previous = {}

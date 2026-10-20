@@ -1,0 +1,267 @@
+{
+  "status": "prepared_only_guide_unchanged",
+  "source_hashes": {
+    "Arin.RefinedFBXSHA256": "45296f9fcbd0d182406c85d29f8627409e090dc0c97ec97815a8035221448f00",
+    "Arin.SurfaceManifestSHA256": "eb37013d9fd18113e1dffbe7668d1f66fb38da73f1269438b0f103c18d2d386f",
+    "Arin.TextureBundleSHA256": "49520bb03ebc3068fe6b9ed57c56eb86885b3ed17a65ea225746b2589fe1df7c"
+  },
+  "first_interruption_archive": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-reference-refinement-20261009\\unreal-reference-import-interruption-45296f9fcbd0-20261009T044302Z-9be60db5.json",
+  "recovery": {
+    "reused_imported_assets": 7,
+    "new_material_assets": 2,
+    "reimport_or_overwrite": false,
+    "assets_deleted": false,
+    "before_resource_sizes": {
+      "T_Arin_Adventurer_BaseColor": [
+        4096,
+        4096
+      ],
+      "T_Arin_Adventurer_Roughness": [
+        32,
+        32
+      ],
+      "T_Arin_Adventurer_Metallic": [
+        32,
+        32
+      ],
+      "T_Arin_Adventurer_Normal": [
+        4096,
+        4096
+      ]
+    },
+    "solution": "finish pending work; one set_editor_properties per exact owned texture; official texture finish; actual 4K resource gate before material creation"
+  },
+  "core": {
+    "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin.SK_Arin",
+    "skeleton": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin_Skeleton.SK_Arin_Skeleton",
+    "idle": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle.ArinIdle",
+    "idle_seconds": 2.0,
+    "same_skeleton": true,
+    "bounds_size_cm": [
+      169.00768280029297,
+      38.55985069274902,
+      169.99999880090422
+    ],
+    "bounds_origin_cm": [
+      -0.022914886474609375,
+      -0.08381938934326172,
+      85.00000059954789
+    ],
+    "bone_names": [
+      "Arin_Rig",
+      "root",
+      "pelvis",
+      "spine_01",
+      "spine_02",
+      "spine_03",
+      "neck",
+      "head",
+      "clavicle_l",
+      "upperarm_l",
+      "lowerarm_l",
+      "hand_l",
+      "clavicle_r",
+      "upperarm_r",
+      "lowerarm_r",
+      "hand_r",
+      "thigh_l",
+      "calf_l",
+      "foot_l",
+      "ball_l",
+      "thigh_r",
+      "calf_r",
+      "foot_r",
+      "ball_r"
+    ],
+    "source_bone_contract": {
+      "bone_names": [
+        "root",
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03",
+        "neck",
+        "head",
+        "clavicle_l",
+        "upperarm_l",
+        "lowerarm_l",
+        "hand_l",
+        "clavicle_r",
+        "upperarm_r",
+        "lowerarm_r",
+        "hand_r",
+        "thigh_l",
+        "calf_l",
+        "foot_l",
+        "ball_l",
+        "thigh_r",
+        "calf_r",
+        "foot_r",
+        "ball_r"
+      ],
+      "bone_count": 23,
+      "head_joint_z_m": 1.4450000524520874,
+      "model_build_sha256": "d9d0797b85e8df91a78b5df1bda82896b024f150423f1fe35daccb28162fef10"
+    },
+    "known_dimension_test": {
+      "expected_height_cm": 170,
+      "observed_height_cm": 169.99999880090422
+    },
+    "normal_import_settings": {
+      "normal_import_method": "<FBXNormalImportMethod.FBXNIM_IMPORT_NORMALS: 1>",
+      "normal_generation_method": "<FBXNormalGenerationMethod.MIKK_T_SPACE: 1>",
+      "compute_weighted_normals": "False"
+    },
+    "mesh_collision_plan": "existing detection sphere and non-colliding guide mesh preserved; no mesh physics asset"
+  },
+  "textures": [
+    {
+      "group": "Adventurer",
+      "channel": "BaseColor",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_BaseColor.T_Arin_Adventurer_BaseColor",
+      "size": [
+        4096,
+        4096
+      ],
+      "srgb": true,
+      "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+      "flip_green_channel": false,
+      "source_sha256": "56b55f9e7a70f7ffc468626adef708b99792434e2cac02d46c890fc5710e5534"
+    },
+    {
+      "group": "Adventurer",
+      "channel": "Roughness",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Roughness.T_Arin_Adventurer_Roughness",
+      "size": [
+        4096,
+        4096
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "flip_green_channel": false,
+      "source_sha256": "570bdd83a127d3a1887e429407231081822d35b6135337496e5a25b471fe081e"
+    },
+    {
+      "group": "Adventurer",
+      "channel": "Metallic",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Metallic.T_Arin_Adventurer_Metallic",
+      "size": [
+        4096,
+        4096
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "flip_green_channel": false,
+      "source_sha256": "5a52539ae2774aa5276f42da671351e7788c7c913bff1da028e18cd8a356de04"
+    },
+    {
+      "group": "Adventurer",
+      "channel": "Normal",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Normal.T_Arin_Adventurer_Normal",
+      "size": [
+        4096,
+        4096
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+      "flip_green_channel": true,
+      "source_sha256": "b2af4078d12399ec981fc0d8362f194203ed1db93c91271c1193e713f6408b27"
+    }
+  ],
+  "materials": [
+    {
+      "group": "Adventurer",
+      "material": "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/MI_Arin_Adventurer.MI_Arin_Adventurer",
+      "parent": "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/M_Arin_PBR.M_Arin_PBR",
+      "textures": {
+        "BaseColor": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_BaseColor.T_Arin_Adventurer_BaseColor",
+        "Roughness": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Roughness.T_Arin_Adventurer_Roughness",
+        "Metallic": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Metallic.T_Arin_Adventurer_Metallic",
+        "Normal": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Normal.T_Arin_Adventurer_Normal"
+      }
+    }
+  ],
+  "slots": [
+    {
+      "index": 0,
+      "group": "Adventurer",
+      "material": "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/MI_Arin_Adventurer.MI_Arin_Adventurer"
+    }
+  ],
+  "lods": {
+    "count": 3,
+    "metrics": [
+      {
+        "index": 0,
+        "vertices": 110688,
+        "sections": 1,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 1.0,
+        "reduction_base_lod": 0,
+        "lock_edges": false,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 1,
+        "vertices": 100176,
+        "sections": 1,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 0.8500000238418579,
+        "reduction_base_lod": 0,
+        "lock_edges": true,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 2,
+        "vertices": 81219,
+        "sections": 1,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 0.6499999761581421,
+        "reduction_base_lod": 0,
+        "lock_edges": true,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      }
+    ],
+    "generation": "SkeletalMeshEditorSubsystem.regenerate_lod; imported LOD0 preserved",
+    "lod0_regeneration": false,
+    "requested_ratios": [
+      1.0,
+      0.8500000238418579,
+      0.6499999761581421
+    ],
+    "same_skeleton_and_materials": true,
+    "visual_review_required": true,
+    "runtime_triangle_count_limitation": "Exact runtime triangles need a separate exposed render-data/export inspection; do not infer them from vertices or reduction targets."
+  },
+  "saved_assets": [
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_BaseColor",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Roughness",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Metallic",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Normal",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/M_Arin_PBR",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/MI_Arin_Adventurer",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin_Skeleton",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin"
+  ],
+  "package_files_verified": [
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/MI_Arin_Adventurer",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/M_Arin_PBR",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin_Skeleton",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_BaseColor",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Metallic",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Normal",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Roughness"
+  ],
+  "guide_unchanged": true,
+  "guide_application_performed": false,
+  "runtime_visual_review_required": true
+}

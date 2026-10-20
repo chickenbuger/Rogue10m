@@ -1,0 +1,221 @@
+--- checkpoint/Scripts\Editor\ConfigureBrawlerSourceFootIKOrder.py
++++ Scripts\Editor\ConfigureBrawlerSourceFootIKOrder.py
+@@ -61,6 +61,26 @@
+     end = one_pin(root, 'Result', input_dir)
+     before = all_edges(nodes)
+     already = PIN.is_same_native_pin(only_link(si), ro) and PIN.is_same_native_pin(only_link(end), so)
++    # A standing fighter guard blends after locomotion IK and before the final
++    # attack slot. This still satisfies the original ordering contract.
++    upstream_node = PIN.get_owning_node(only_link(si))
++    if isinstance(upstream_node, unreal.AnimGraphNode_TwoWayBlend):
++        blend_a = one_pin(upstream_node, 'A', input_dir)
++        blend_b = one_pin(upstream_node, 'B', input_dir)
++        blend_alpha = one_pin(upstream_node, 'Alpha', input_dir)
++        player = PIN.get_owning_node(only_link(blend_b))
++        getter_pin = only_link(blend_alpha)
++        parent = unreal.BlueprintEditorLibrary.get_blueprint_parent_class(bp)
++        if (parent.get_path_name() == '/Script/Rogue10m.Rogue10mFighterCombatStanceAnimInstance'
++                and isinstance(player, unreal.AnimGraphNode_SequencePlayer)
++                and isinstance(PIN.get_owning_node(getter_pin), unreal.K2Node_VariableGet)
++                and str(PIN.get_pin_name(getter_pin)) == 'FighterCombatStanceAlpha'
++                and PIN.is_same_native_pin(only_link(blend_a), ro)
++                and PIN.is_same_native_pin(only_link(si), one_pin(upstream_node, 'Pose', output_dir))
++                and PIN.is_same_native_pin(only_link(end), so)):
++            sequence = player.get_editor_property('node').get_editor_property('sequence')
++            already = sequence is not None and sequence.get_path_name() == (
++                '/Game/Rogue10m/Animation/Combat/FighterStance/A_Fighter_CombatIdle.A_Fighter_CombatIdle')
+     if already:
+         unreal.log('SOURCE_IK_ORDER_ALREADY_APPLIED')
+         return
+--- checkpoint/Source\Rogue10m\Character\Rogue10mCharacter.cpp
++++ Source\Rogue10m\Character\Rogue10mCharacter.cpp
+@@ -102,6 +102,7 @@
+ 
+ void ARogue10mCharacter::UnPossessed()
+ {
++	if (CharacterAnimationComponent) { CharacterAnimationComponent->ResetFighterCombatStance(); }
+ 	Super::UnPossessed();
+ 	if (AppearanceCameraComponent) { AppearanceCameraComponent->RefreshAppearanceCamera(); }
+ }
+--- checkpoint/Source\Rogue10m\Components\Rogue10mCharacterAnimationComponent.cpp
++++ Source\Rogue10m\Components\Rogue10mCharacterAnimationComponent.cpp
+@@ -2,6 +2,7 @@
+ 
+ #include "Rogue10mCharacterAnimationComponent.h"
+ 
++#include "Animation/AnimMontage.h"
+ #include "Components/CapsuleComponent.h"
+ #include "GameFramework/CharacterMovementComponent.h"
+ #include "NiagaraComponent.h"
+@@ -62,8 +63,13 @@
+ 
+ void URogue10mCharacterAnimationComponent::NotifyDodge()
+ {
++	RequestFighterCombatStance();
+ 	if (const URogue10mCharacterMotionDataAsset* Data = GetMotionData())
+ 	{
++		if (Data->DodgeMontage)
++		{
++			RequestFighterCombatStance(Data->DodgeMontage->GetPlayLength());
++		}
+ 		if (ARogue10mCharacter* Character = GetOwnerCharacter())
+ 		{
+ 			Character->PlayCommonMontage(Data->DodgeMontage, 1.0f);
+@@ -75,6 +81,7 @@
+ 
+ void URogue10mCharacterAnimationComponent::StopMotionEffects()
+ {
++	ResetFighterCombatStance();
+ 	bMovementInputActive = false;
+ 	bSprintActive = false;
+ 	bNextFootstepRight = false;
+@@ -82,6 +89,45 @@
+ 	{
+ 		World->GetTimerManager().ClearTimer(FootstepTimerHandle);
+ 	}
++}
++
++void URogue10mCharacterAnimationComponent::RequestFighterCombatStance(float BusySeconds)
++{
++	const ARogue10mCharacter* Character = GetOwnerCharacter();
++	UWorld* World = GetWorld();
++	if (!Character || !World || Character->IsDead())
++	{
++		return;
++	}
++	const ERogue10mWeaponType Weapon = Character->GetEquippedWeaponType();
++	if (Weapon != ERogue10mWeaponType::Unarmed && Weapon != ERogue10mWeaponType::Knuckle)
++	{
++		return;
++	}
++	FighterCombatReadyUntil = FMath::Max(FighterCombatReadyUntil,
++		World->GetTimeSeconds() + FMath::Max(0.0f, BusySeconds) + FMath::Max(0.0f, FighterCombatHoldSeconds));
++}
++
++void URogue10mCharacterAnimationComponent::SetFighterCombatChargeHeld(bool bHeld)
++{
++	if (bFighterCombatChargeHeld == bHeld)
++	{
++		return;
++	}
++	bFighterCombatChargeHeld = bHeld;
++	RequestFighterCombatStance();
++}
++
++void URogue10mCharacterAnimationComponent::ResetFighterCombatStance()
++{
++	bFighterCombatChargeHeld = false;
++	FighterCombatReadyUntil = -1.0f;
++}
++
++bool URogue10mCharacterAnimationComponent::IsFighterCombatStanceRequested() const
++{
++	const UWorld* World = GetWorld();
++	return World && (bFighterCombatChargeHeld || World->GetTimeSeconds() < FighterCombatReadyUntil);
+ }
+ 
+ const URogue10mCharacterMotionDataAsset* URogue10mCharacterAnimationComponent::GetMotionData() const
+--- checkpoint/Source\Rogue10m\Components\Rogue10mCharacterAnimationComponent.h
++++ Source\Rogue10m\Components\Rogue10mCharacterAnimationComponent.h
+@@ -24,6 +24,18 @@
+ 	void NotifyLanded();
+ 	void NotifyDodge();
+ 	void StopMotionEffects();
++	/** Accepted attacks, charging and dodges keep the fighter's guard ready briefly. */
++	void RequestFighterCombatStance(float BusySeconds = 0.0f);
++	void SetFighterCombatChargeHeld(bool bHeld);
++	void ResetFighterCombatStance();
++
++	UFUNCTION(BlueprintPure, Category="Rogue10m|Animation|Fighter Stance")
++	bool IsFighterCombatStanceRequested() const;
++
++	bool HasMovementInput() const { return bMovementInputActive; }
++
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Fighter Stance", meta=(ClampMin="0.0", Units="s"))
++	float FighterCombatHoldSeconds = 3.0f;
+ 
+ 	UFUNCTION(BlueprintPure, Category="Rogue10m|Animation")
+ 	const URogue10mCharacterMotionDataAsset* GetMotionData() const;
+@@ -46,4 +58,6 @@
+ 	bool bMovementInputActive = false;
+ 	bool bSprintActive = false;
+ 	bool bNextFootstepRight = false;
++	bool bFighterCombatChargeHeld = false;
++	float FighterCombatReadyUntil = -1.0f;
+ };
+--- checkpoint/Source\Rogue10m\Components\Rogue10mCombatComponent.cpp
++++ Source\Rogue10m\Components\Rogue10mCombatComponent.cpp
+@@ -3,6 +3,7 @@
+ #include "Rogue10mCombatComponent.h"
+ 
+ #include "AbilitySystemComponent.h"
++#include "Animation/AnimMontage.h"
+ #include "Camera/CameraComponent.h"
+ #include "Components/SkeletalMeshComponent.h"
+ #include "DrawDebugHelpers.h"
+@@ -20,6 +21,7 @@
+ #include "Rogue10mHitFeedbackComponent.h"
+ #include "Rogue10mAttackTargetInterface.h"
+ #include "Rogue10mCharacter.h"
++#include "Rogue10mCharacterAnimationComponent.h"
+ #include "Rogue10mCharacterDataAsset.h"
+ #include "Rogue10mFirstPersonPresentationComponent.h"
+ #include "Rogue10mAppearanceCameraComponent.h"
+@@ -183,6 +185,13 @@
+ 	LeftAttackPressedTime = -1.0f;
+ 	RightAttackPressedTime = -1.0f;
+ 	StopChargeEffect();
++	if (ARogue10mCharacter* Character = GetOwnerCharacter())
++	{
++		if (URogue10mCharacterAnimationComponent* Animation = Character->GetCharacterAnimationComponent())
++		{
++			Animation->ResetFighterCombatStance();
++		}
++	}
+ }
+ 
+ bool URogue10mCombatComponent::ExecutePendingAttackSkillFromAbility()
+@@ -892,8 +901,13 @@
+ 	ConsumeResourceCosts(SkillData);
+ 	StartSharedAttackCooldown(SkillData, bComboAttack);
+ 
+-	Character->PlayCommonMontage(
+-		SkillData.AttackMontage, GetAttackSpeedMultiplier() * SkillData.AnimationPlayRate);
++	const float AnimationRate = FMath::Max(0.01f, GetAttackSpeedMultiplier() * SkillData.AnimationPlayRate);
++	Character->PlayCommonMontage(SkillData.AttackMontage, AnimationRate);
++	if (URogue10mCharacterAnimationComponent* Animation = Character->GetCharacterAnimationComponent())
++	{
++		Animation->RequestFighterCombatStance(SkillData.AttackMontage
++			? SkillData.AttackMontage->GetPlayLength() / AnimationRate : 0.0f);
++	}
+ 	SpawnCastEffect(SkillData);
+ 
+ 	if (URogue10mBasicBrawlerComponent* Basic = Character->GetBasicBrawlerComponent())
+@@ -1210,6 +1224,13 @@
+ void URogue10mCombatComponent::StartChargeEffect(const URogue10mAttackSkillData& SkillData)
+ {
+ 	StopChargeEffect();
++	if (ARogue10mCharacter* Character = GetOwnerCharacter())
++	{
++		if (URogue10mCharacterAnimationComponent* Animation = Character->GetCharacterAnimationComponent())
++		{
++			Animation->SetFighterCombatChargeHeld(true);
++		}
++	}
+ 	bool bFirstPerson = false;
+ 	USkeletalMeshComponent* AttachMesh = GetEffectAttachMesh(bFirstPerson);
+ 	if (!SkillData.bEnableAttackEffects || !AttachMesh || !SkillData.ChargeEffect)
+@@ -1260,6 +1281,13 @@
+ 
+ void URogue10mCombatComponent::StopChargeEffect()
+ {
++	if (ARogue10mCharacter* Character = GetOwnerCharacter())
++	{
++		if (URogue10mCharacterAnimationComponent* Animation = Character->GetCharacterAnimationComponent())
++		{
++			Animation->SetFighterCombatChargeHeld(false);
++		}
++	}
+ 	auto StopEffect = [](TObjectPtr<UNiagaraComponent>& EffectComponent)
+ 	{
+ 		if (EffectComponent)

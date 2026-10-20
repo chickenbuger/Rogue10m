@@ -1,0 +1,1033 @@
+{
+  "status": "failed",
+  "map": "/Game/Rogue10m/Maps/OpenRunMap",
+  "checks": [
+    {
+      "name": "no_existing_pie",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "exact_project_and_saved_idle_map",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "no_unsaved_editor_packages",
+      "passed": true,
+      "case": null,
+      "dirty": []
+    },
+    {
+      "name": "saved_owned_boss_profile_connected",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "saved_boss_patterns_opted_in",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "base_data_preserved",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_range"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_arc_degrees"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_half_height"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_windup_seconds"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_recovery_seconds"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_cooldown_seconds"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_damage_multiplier"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "idle_animation"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "movement_animation"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_animation"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "hit_animation"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "death_animation"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "VerdantSlime"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "Sporeling"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "CrimsonSlime"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "IronShell"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "ThornWarden"
+    },
+    {
+      "name": "saved_owned_blueprint_data",
+      "passed": true,
+      "case": null,
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_FinalBoss.BP_OW_FinalBoss"
+    },
+    {
+      "name": "occlusion_fixture_mesh_available",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "editor_background_cpu_throttle_temporarily_disabled",
+      "passed": true,
+      "case": null,
+      "original": true,
+      "config_saved": false,
+      "property_notification": "Never"
+    },
+    {
+      "name": "loaded_forest_ground_and_native_navigation_ready",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "native_owned_boss_spawned",
+      "passed": true,
+      "case": null,
+      "spawner": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_MonsterSpawner_C_UAID_244BFE8DA9DF360803_1249772802",
+      "monster": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0"
+    },
+    {
+      "name": "saved_profile_loaded_at_native_beginplay",
+      "passed": true,
+      "case": null,
+      "profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns"
+    },
+    {
+      "name": "production_runtime_base_stats_preserved",
+      "passed": true,
+      "case": null,
+      "health": 10000.0,
+      "damage": 70.0
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "basic_hit",
+      "actor": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0",
+      "position": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "fixture_start_is_inside_basic_range",
+      "passed": true,
+      "case": "basic_hit",
+      "separation": 225.0
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "basic_hit",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49475.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "normal_phase_after_fixture_reset",
+      "passed": true,
+      "case": "basic_hit"
+    },
+    {
+      "name": "requested_native_attack_started",
+      "passed": true,
+      "case": "basic_hit",
+      "requested": "BASIC"
+    },
+    {
+      "name": "requested_native_type_selected",
+      "passed": true,
+      "case": "basic_hit",
+      "actual": "<Rogue10mMonsterAttackType.BASIC: 0>"
+    },
+    {
+      "name": "native_windup_delays_health_damage",
+      "passed": true,
+      "case": "basic_hit"
+    },
+    {
+      "name": "native_reentry_rejected_during_windup",
+      "passed": true,
+      "case": "basic_hit"
+    },
+    {
+      "name": "native_visible_telegraph_for_special_only",
+      "passed": true,
+      "case": "basic_hit",
+      "special": false,
+      "visible": false
+    },
+    {
+      "name": "native_reentry_rejected_during_recovery",
+      "passed": true,
+      "case": "basic_hit"
+    },
+    {
+      "name": "telegraph_removed_on_native_execution",
+      "passed": true,
+      "case": "basic_hit"
+    },
+    {
+      "name": "native_single_hit_changes_real_player_health",
+      "passed": true,
+      "case": "basic_hit",
+      "damage": 50.0,
+      "hit_delta": 1,
+      "direct_player_damage": false
+    },
+    {
+      "name": "native_hit_observed_after_configured_windup",
+      "passed": true,
+      "case": "basic_hit",
+      "actual": 0.31751830130815506,
+      "expected": 0.30799999833106995
+    },
+    {
+      "name": "native_recovery_completes_after_configured_duration",
+      "passed": true,
+      "case": "basic_hit",
+      "actual": 0.7445290014147758
+    },
+    {
+      "name": "case_ends_without_pending_attack_or_decal",
+      "passed": true,
+      "case": "basic_hit"
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_hit",
+      "actor": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0",
+      "position": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "fixture_start_is_inside_basic_range",
+      "passed": true,
+      "case": "frontal_hit",
+      "separation": 225.0
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_hit",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49475.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "normal_phase_after_fixture_reset",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "native_selection_warmup_started",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "native_selection_warmup_type",
+      "passed": true,
+      "case": "frontal_hit",
+      "expected": "BASIC",
+      "actual": "<Rogue10mMonsterAttackType.BASIC: 0>"
+    },
+    {
+      "name": "canceled_warmup_has_no_decal",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "requested_native_attack_started",
+      "passed": true,
+      "case": "frontal_hit",
+      "requested": "FRONTAL_WAVE"
+    },
+    {
+      "name": "requested_native_type_selected",
+      "passed": true,
+      "case": "frontal_hit",
+      "actual": "<Rogue10mMonsterAttackType.FRONTAL_WAVE: 1>"
+    },
+    {
+      "name": "native_windup_delays_health_damage",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "native_reentry_rejected_during_windup",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "native_visible_telegraph_for_special_only",
+      "passed": true,
+      "case": "frontal_hit",
+      "special": true,
+      "visible": true
+    },
+    {
+      "name": "registered_runtime_decal_exists",
+      "passed": true,
+      "case": "frontal_hit",
+      "decals": [
+        "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0.DecalComponent_0"
+      ]
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_hit",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49250.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "native_reentry_rejected_during_recovery",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "telegraph_removed_on_native_execution",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "phase_timing_sampling_is_fine_enough",
+      "passed": false,
+      "case": "frontal_hit",
+      "maximum_sample_gap_seconds": 0.3723171055316925,
+      "required_maximum_seconds": 0.08
+    }
+  ],
+  "cases": [
+    {
+      "name": "basic_hit",
+      "kind": "BASIC",
+      "action": "hit",
+      "status": "passed",
+      "samples": [
+        {
+          "elapsed_seconds": 0.08008810132741928,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.1010638028383255,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.12733110040426254,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.1490752026438713,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.17154830321669579,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.1969452016055584,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.21915360167622566,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.24247970059514046,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.2652060016989708,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.28983839973807335,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.31751830130815506,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.345701701939106,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.3707648031413555,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.3971023000776768,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.4202711023390293,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.4448487013578415,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.47136590257287025,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.4997776001691818,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.5280923023819923,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.5529883019626141,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.5770140998065472,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.6020518019795418,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.6229768022894859,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.6428546011447906,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.6660532020032406,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.6916059032082558,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.7188217006623745,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.7445290014147758,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.7657242007553577,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.7919604033231735,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.8151761032640934,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.8411892019212246,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.8663184009492397,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.8909125998616219,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.9166365005075932,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.9398562014102936,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.9671930000185966,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.9927236996591091,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.0166209004819393,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.0393705032765865,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.0636547021567822,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.0902717001736164,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        }
+      ],
+      "runtime_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns",
+      "health_before": 2000.0,
+      "expected_windup_seconds": 0.30799999833106995,
+      "expected_recovery_seconds": 0.4253333508968353,
+      "enraged": false,
+      "locked_location": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ],
+      "locked_forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "health_after": 1950.0,
+      "native_player_damage": 50.0,
+      "hit_delta": 1,
+      "first_hit_seconds": 0.31751830130815506,
+      "first_recovery_seconds": 0.31751830130815506,
+      "first_idle_seconds": 0.7445290014147758
+    },
+    {
+      "name": "frontal_hit",
+      "kind": "FRONTAL_WAVE",
+      "action": "hit",
+      "status": "failed",
+      "samples": [
+        {
+          "elapsed_seconds": 0.13716550171375275,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.16748330369591713,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.19233910366892815,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.21685290336608887,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.5891700088977814,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.6189854107797146,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.6518074087798595,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.6797875091433525,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.7111031115055084,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.7431313097476959,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.7791942097246647,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.806286908686161,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.8411065116524696,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.8726841099560261,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.9061270095407963,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.9512009099125862,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.9925372116267681,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 1.026964109390974,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 1.0608917102217674,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 1.0874467119574547,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 1.1164110116660595,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.1650400087237358,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.1936806105077267,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.219506911933422,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.250884510576725,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.2791132107377052,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.3044057115912437,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.3333107121288776,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.3661766089498997,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.3949501104652882,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.426131211221218,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.4663583114743233,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.5106927119195461,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.5503314100205898,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.5830967091023922,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.6089134104549885,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.6449093110859394,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.6835825107991695,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.7125156112015247,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.7379043102264404,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.7656379118561745,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.802813109010458,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.8362932093441486,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.868310909718275,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.9067239090800285,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.9414733089506626,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.970466312021017,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 2.0049818120896816,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 2.0394826121628284,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 2.0722006112337112,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 2.106216710060835,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        }
+      ],
+      "runtime_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns",
+      "health_before": 2000.0,
+      "expected_windup_seconds": 1.100000023841858,
+      "expected_recovery_seconds": 0.6499999761581421,
+      "enraged": false,
+      "locked_location": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ],
+      "locked_forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "maximum_timing_sample_gap_seconds": 0.3723171055316925
+    }
+  ],
+  "limitations": [
+    "Saved boss Blueprint and profile are exercised through a native forest spawner on loaded terrain; this is not a traversal of the northern ruins.",
+    "AI/input/regen suppression, fixed actor positions and increased player maximum health are disposable PIE setup. No assets are saved.",
+    "Every case uses the saved production profile without writing its properties. Timings and damage are never shortened or changed. Native ConfigureProfile resets only the PIE component's selection/cooldowns between independent cases.",
+    "Selected-target death uses the real PlayerState dead flag, then restores it; the defeat UI is not exercised. Boss-only damage drives phase and monster death.",
+    "Shape evasion teleports the real player during windup. Physical dodge input, full balance, networking and packaged play require separate checks.",
+    "Occlusion temporarily reuses a distant small StaticMeshActor in the PIE world; mesh, mobility, collision profile/enabled state and transform are restored after each case. No Editor-world actor is created or modified.",
+    "Decal component/material/visibility are checked here; root records viewport evidence separately.",
+    "Background CPU throttling is temporarily disabled in the Editor settings CDO with change notification suppressed, then restored on all exits without saving config. Phase timing claims require game-time sampling gaps no larger than 0.08 seconds."
+  ],
+  "phase": "cleanup",
+  "elapsed_wall_seconds": 8.202999999999975,
+  "fixtures": [
+    {
+      "boss": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0",
+      "spawner": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_MonsterSpawner_C_UAID_244BFE8DA9DF360803_1249772802",
+      "profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns",
+      "timing_overrides": {}
+    }
+  ],
+  "exception": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateAzathorBossPatterns.py\", line 682, in tick\n    tick_impl(delta_seconds)\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateAzathorBossPatterns.py\", line 673, in tick_impl\n    observe_case(game, pawn)\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateAzathorBossPatterns.py\", line 478, in observe_case\n    check(\"phase_timing_sampling_is_fine_enough\", max_gap <= MAX_TIMING_SAMPLE_GAP,\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateAzathorBossPatterns.py\", line 129, in check\n    raise RuntimeError(f\"{name}: {details}\")\nRuntimeError: phase_timing_sampling_is_fine_enough: {'maximum_sample_gap_seconds': 0.3723171055316925, 'required_maximum_seconds': 0.08}\n",
+  "editor_background_throttle_restored": true,
+  "message": "phase_timing_sampling_is_fine_enough: {'maximum_sample_gap_seconds': 0.3723171055316925, 'required_maximum_seconds': 0.08}",
+  "owned_pie_cleanup_confirmed": true
+}

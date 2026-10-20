@@ -1,0 +1,1438 @@
+{
+  "status": "failed",
+  "map": "/Game/Rogue10m/Maps/OpenRunMap",
+  "checks": [
+    {
+      "name": "no_existing_pie",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "exact_project_and_saved_idle_map",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "no_unsaved_editor_packages",
+      "passed": true,
+      "case": null,
+      "dirty": []
+    },
+    {
+      "name": "saved_owned_boss_profile_connected",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "saved_boss_patterns_opted_in",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "base_data_preserved",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_range"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_arc_degrees"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_half_height"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_windup_seconds"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_recovery_seconds"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_cooldown_seconds"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_damage_multiplier"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "idle_animation"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "movement_animation"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "attack_animation"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "hit_animation"
+    },
+    {
+      "name": "basic_profile_field_preserved",
+      "passed": true,
+      "case": null,
+      "property": "death_animation"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "VerdantSlime"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "Sporeling"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "CrimsonSlime"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "IronShell"
+    },
+    {
+      "name": "other_species_basic_profile_preserved",
+      "passed": true,
+      "case": null,
+      "kind": "ThornWarden"
+    },
+    {
+      "name": "saved_owned_blueprint_data",
+      "passed": true,
+      "case": null,
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_FinalBoss.BP_OW_FinalBoss"
+    },
+    {
+      "name": "occlusion_fixture_mesh_available",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "loaded_forest_ground_and_native_navigation_ready",
+      "passed": true,
+      "case": null
+    },
+    {
+      "name": "native_owned_boss_spawned",
+      "passed": true,
+      "case": null,
+      "spawner": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_MonsterSpawner_C_UAID_244BFE8DA9DF360803_1249772802",
+      "monster": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0"
+    },
+    {
+      "name": "saved_profile_loaded_at_native_beginplay",
+      "passed": true,
+      "case": null,
+      "profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns"
+    },
+    {
+      "name": "production_runtime_base_stats_preserved",
+      "passed": true,
+      "case": null,
+      "health": 10000.0,
+      "damage": 70.0
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "basic_hit",
+      "actor": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0",
+      "position": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "fixture_start_is_inside_basic_range",
+      "passed": true,
+      "case": "basic_hit",
+      "separation": 225.0
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "basic_hit",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49475.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "normal_phase_after_fixture_reset",
+      "passed": true,
+      "case": "basic_hit"
+    },
+    {
+      "name": "requested_native_attack_started",
+      "passed": true,
+      "case": "basic_hit",
+      "requested": "BASIC"
+    },
+    {
+      "name": "requested_native_type_selected",
+      "passed": true,
+      "case": "basic_hit",
+      "actual": "<Rogue10mMonsterAttackType.BASIC: 0>"
+    },
+    {
+      "name": "native_windup_delays_health_damage",
+      "passed": true,
+      "case": "basic_hit"
+    },
+    {
+      "name": "native_reentry_rejected_during_windup",
+      "passed": true,
+      "case": "basic_hit"
+    },
+    {
+      "name": "native_visible_telegraph_for_special_only",
+      "passed": true,
+      "case": "basic_hit",
+      "special": false,
+      "visible": false
+    },
+    {
+      "name": "native_reentry_rejected_during_recovery",
+      "passed": true,
+      "case": "basic_hit"
+    },
+    {
+      "name": "telegraph_removed_on_native_execution",
+      "passed": true,
+      "case": "basic_hit"
+    },
+    {
+      "name": "native_single_hit_changes_real_player_health",
+      "passed": true,
+      "case": "basic_hit",
+      "damage": 50.0,
+      "hit_delta": 1,
+      "direct_player_damage": false
+    },
+    {
+      "name": "native_hit_observed_after_configured_windup",
+      "passed": true,
+      "case": "basic_hit",
+      "actual": 0.33333349227905273,
+      "expected": 0.30799999833106995
+    },
+    {
+      "name": "native_recovery_completes_after_configured_duration",
+      "passed": true,
+      "case": "basic_hit",
+      "actual": 1.000000387430191
+    },
+    {
+      "name": "case_ends_without_pending_attack_or_decal",
+      "passed": true,
+      "case": "basic_hit"
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_hit",
+      "actor": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0",
+      "position": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "fixture_start_is_inside_basic_range",
+      "passed": true,
+      "case": "frontal_hit",
+      "separation": 225.0
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_hit",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49475.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "normal_phase_after_fixture_reset",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "native_selection_warmup_started",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "native_selection_warmup_type",
+      "passed": true,
+      "case": "frontal_hit",
+      "expected": "BASIC",
+      "actual": "<Rogue10mMonsterAttackType.BASIC: 0>"
+    },
+    {
+      "name": "canceled_warmup_has_no_decal",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "requested_native_attack_started",
+      "passed": true,
+      "case": "frontal_hit",
+      "requested": "FRONTAL_WAVE"
+    },
+    {
+      "name": "requested_native_type_selected",
+      "passed": true,
+      "case": "frontal_hit",
+      "actual": "<Rogue10mMonsterAttackType.FRONTAL_WAVE: 1>"
+    },
+    {
+      "name": "native_windup_delays_health_damage",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "native_reentry_rejected_during_windup",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "native_visible_telegraph_for_special_only",
+      "passed": true,
+      "case": "frontal_hit",
+      "special": true,
+      "visible": true
+    },
+    {
+      "name": "registered_runtime_decal_exists",
+      "passed": true,
+      "case": "frontal_hit",
+      "decals": [
+        "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0.DecalComponent_0"
+      ]
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_hit",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49250.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "native_reentry_rejected_during_recovery",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "telegraph_removed_on_native_execution",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "native_single_hit_changes_real_player_health",
+      "passed": true,
+      "case": "frontal_hit",
+      "damage": 81.5,
+      "hit_delta": 1,
+      "direct_player_damage": false
+    },
+    {
+      "name": "native_hit_observed_after_configured_windup",
+      "passed": true,
+      "case": "frontal_hit",
+      "actual": 1.3333337008953094,
+      "expected": 1.100000023841858
+    },
+    {
+      "name": "native_recovery_completes_after_configured_duration",
+      "passed": true,
+      "case": "frontal_hit",
+      "actual": 2.0000007152557373
+    },
+    {
+      "name": "case_ends_without_pending_attack_or_decal",
+      "passed": true,
+      "case": "frontal_hit"
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_sidestep",
+      "actor": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0",
+      "position": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "fixture_start_is_inside_basic_range",
+      "passed": true,
+      "case": "frontal_sidestep",
+      "separation": 225.0
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_sidestep",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49475.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "normal_phase_after_fixture_reset",
+      "passed": true,
+      "case": "frontal_sidestep"
+    },
+    {
+      "name": "native_selection_warmup_started",
+      "passed": true,
+      "case": "frontal_sidestep"
+    },
+    {
+      "name": "native_selection_warmup_type",
+      "passed": true,
+      "case": "frontal_sidestep",
+      "expected": "BASIC",
+      "actual": "<Rogue10mMonsterAttackType.BASIC: 0>"
+    },
+    {
+      "name": "canceled_warmup_has_no_decal",
+      "passed": true,
+      "case": "frontal_sidestep"
+    },
+    {
+      "name": "requested_native_attack_started",
+      "passed": true,
+      "case": "frontal_sidestep",
+      "requested": "FRONTAL_WAVE"
+    },
+    {
+      "name": "requested_native_type_selected",
+      "passed": true,
+      "case": "frontal_sidestep",
+      "actual": "<Rogue10mMonsterAttackType.FRONTAL_WAVE: 1>"
+    },
+    {
+      "name": "native_windup_delays_health_damage",
+      "passed": true,
+      "case": "frontal_sidestep"
+    },
+    {
+      "name": "native_reentry_rejected_during_windup",
+      "passed": true,
+      "case": "frontal_sidestep"
+    },
+    {
+      "name": "native_visible_telegraph_for_special_only",
+      "passed": true,
+      "case": "frontal_sidestep",
+      "special": true,
+      "visible": true
+    },
+    {
+      "name": "registered_runtime_decal_exists",
+      "passed": true,
+      "case": "frontal_sidestep",
+      "decals": [
+        "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0.DecalComponent_1"
+      ]
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_sidestep",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49475.0,
+        -23686.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "native_reentry_rejected_during_recovery",
+      "passed": true,
+      "case": "frontal_sidestep"
+    },
+    {
+      "name": "telegraph_removed_on_native_execution",
+      "passed": true,
+      "case": "frontal_sidestep"
+    },
+    {
+      "name": "native_miss_or_cleanup_prevents_late_player_damage",
+      "passed": true,
+      "case": "frontal_sidestep",
+      "damage": 0.0,
+      "hit_delta": 0
+    },
+    {
+      "name": "case_ends_without_pending_attack_or_decal",
+      "passed": true,
+      "case": "frontal_sidestep"
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_out_of_range",
+      "actor": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0",
+      "position": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "fixture_start_is_inside_basic_range",
+      "passed": true,
+      "case": "frontal_out_of_range",
+      "separation": 225.0
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_out_of_range",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49475.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "normal_phase_after_fixture_reset",
+      "passed": true,
+      "case": "frontal_out_of_range"
+    },
+    {
+      "name": "native_selection_warmup_started",
+      "passed": true,
+      "case": "frontal_out_of_range"
+    },
+    {
+      "name": "native_selection_warmup_type",
+      "passed": true,
+      "case": "frontal_out_of_range",
+      "expected": "BASIC",
+      "actual": "<Rogue10mMonsterAttackType.BASIC: 0>"
+    },
+    {
+      "name": "canceled_warmup_has_no_decal",
+      "passed": true,
+      "case": "frontal_out_of_range"
+    },
+    {
+      "name": "requested_native_attack_started",
+      "passed": true,
+      "case": "frontal_out_of_range",
+      "requested": "FRONTAL_WAVE"
+    },
+    {
+      "name": "requested_native_type_selected",
+      "passed": true,
+      "case": "frontal_out_of_range",
+      "actual": "<Rogue10mMonsterAttackType.FRONTAL_WAVE: 1>"
+    },
+    {
+      "name": "native_windup_delays_health_damage",
+      "passed": true,
+      "case": "frontal_out_of_range"
+    },
+    {
+      "name": "native_reentry_rejected_during_windup",
+      "passed": true,
+      "case": "frontal_out_of_range"
+    },
+    {
+      "name": "native_visible_telegraph_for_special_only",
+      "passed": true,
+      "case": "frontal_out_of_range",
+      "special": true,
+      "visible": true
+    },
+    {
+      "name": "registered_runtime_decal_exists",
+      "passed": true,
+      "case": "frontal_out_of_range",
+      "decals": [
+        "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0.DecalComponent_2"
+      ]
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_out_of_range",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -48450.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "native_reentry_rejected_during_recovery",
+      "passed": true,
+      "case": "frontal_out_of_range"
+    },
+    {
+      "name": "telegraph_removed_on_native_execution",
+      "passed": true,
+      "case": "frontal_out_of_range"
+    },
+    {
+      "name": "native_miss_or_cleanup_prevents_late_player_damage",
+      "passed": true,
+      "case": "frontal_out_of_range",
+      "damage": 0.0,
+      "hit_delta": 0
+    },
+    {
+      "name": "case_ends_without_pending_attack_or_decal",
+      "passed": true,
+      "case": "frontal_out_of_range"
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_rear",
+      "actor": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0",
+      "position": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "fixture_start_is_inside_basic_range",
+      "passed": true,
+      "case": "frontal_rear",
+      "separation": 225.0
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_rear",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49475.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "normal_phase_after_fixture_reset",
+      "passed": true,
+      "case": "frontal_rear"
+    },
+    {
+      "name": "native_selection_warmup_started",
+      "passed": true,
+      "case": "frontal_rear"
+    },
+    {
+      "name": "native_selection_warmup_type",
+      "passed": true,
+      "case": "frontal_rear",
+      "expected": "BASIC",
+      "actual": "<Rogue10mMonsterAttackType.BASIC: 0>"
+    },
+    {
+      "name": "canceled_warmup_has_no_decal",
+      "passed": true,
+      "case": "frontal_rear"
+    },
+    {
+      "name": "requested_native_attack_started",
+      "passed": true,
+      "case": "frontal_rear",
+      "requested": "FRONTAL_WAVE"
+    },
+    {
+      "name": "requested_native_type_selected",
+      "passed": true,
+      "case": "frontal_rear",
+      "actual": "<Rogue10mMonsterAttackType.FRONTAL_WAVE: 1>"
+    },
+    {
+      "name": "native_windup_delays_health_damage",
+      "passed": true,
+      "case": "frontal_rear"
+    },
+    {
+      "name": "native_reentry_rejected_during_windup",
+      "passed": true,
+      "case": "frontal_rear"
+    },
+    {
+      "name": "native_visible_telegraph_for_special_only",
+      "passed": true,
+      "case": "frontal_rear",
+      "special": true,
+      "visible": true
+    },
+    {
+      "name": "registered_runtime_decal_exists",
+      "passed": true,
+      "case": "frontal_rear",
+      "decals": [
+        "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0.DecalComponent_3"
+      ]
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_rear",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49984.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "native_reentry_rejected_during_recovery",
+      "passed": true,
+      "case": "frontal_rear"
+    },
+    {
+      "name": "telegraph_removed_on_native_execution",
+      "passed": true,
+      "case": "frontal_rear"
+    },
+    {
+      "name": "native_miss_or_cleanup_prevents_late_player_damage",
+      "passed": true,
+      "case": "frontal_rear",
+      "damage": 0.0,
+      "hit_delta": 0
+    },
+    {
+      "name": "case_ends_without_pending_attack_or_decal",
+      "passed": true,
+      "case": "frontal_rear"
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_height",
+      "actor": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0",
+      "position": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "fixture_start_is_inside_basic_range",
+      "passed": true,
+      "case": "frontal_height",
+      "separation": 225.0
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_height",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49475.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "normal_phase_after_fixture_reset",
+      "passed": true,
+      "case": "frontal_height"
+    },
+    {
+      "name": "native_selection_warmup_started",
+      "passed": true,
+      "case": "frontal_height"
+    },
+    {
+      "name": "native_selection_warmup_type",
+      "passed": true,
+      "case": "frontal_height",
+      "expected": "BASIC",
+      "actual": "<Rogue10mMonsterAttackType.BASIC: 0>"
+    },
+    {
+      "name": "canceled_warmup_has_no_decal",
+      "passed": true,
+      "case": "frontal_height"
+    },
+    {
+      "name": "requested_native_attack_started",
+      "passed": true,
+      "case": "frontal_height",
+      "requested": "FRONTAL_WAVE"
+    },
+    {
+      "name": "requested_native_type_selected",
+      "passed": true,
+      "case": "frontal_height",
+      "actual": "<Rogue10mMonsterAttackType.FRONTAL_WAVE: 1>"
+    },
+    {
+      "name": "native_windup_delays_health_damage",
+      "passed": true,
+      "case": "frontal_height"
+    },
+    {
+      "name": "native_reentry_rejected_during_windup",
+      "passed": true,
+      "case": "frontal_height"
+    },
+    {
+      "name": "native_visible_telegraph_for_special_only",
+      "passed": true,
+      "case": "frontal_height",
+      "special": true,
+      "visible": true
+    },
+    {
+      "name": "registered_runtime_decal_exists",
+      "passed": true,
+      "case": "frontal_height",
+      "decals": [
+        "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0.DecalComponent_4"
+      ]
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_height",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49475.0,
+        -24100.0,
+        4370.476509956512
+      ]
+    },
+    {
+      "name": "native_reentry_rejected_during_recovery",
+      "passed": true,
+      "case": "frontal_height"
+    },
+    {
+      "name": "telegraph_removed_on_native_execution",
+      "passed": true,
+      "case": "frontal_height"
+    },
+    {
+      "name": "native_miss_or_cleanup_prevents_late_player_damage",
+      "passed": true,
+      "case": "frontal_height",
+      "damage": 0.0,
+      "hit_delta": 0
+    },
+    {
+      "name": "case_ends_without_pending_attack_or_decal",
+      "passed": true,
+      "case": "frontal_height"
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_occlusion",
+      "actor": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0",
+      "position": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "fixture_start_is_inside_basic_range",
+      "passed": true,
+      "case": "frontal_occlusion",
+      "separation": 225.0
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_occlusion",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49475.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    },
+    {
+      "name": "normal_phase_after_fixture_reset",
+      "passed": true,
+      "case": "frontal_occlusion"
+    },
+    {
+      "name": "native_selection_warmup_started",
+      "passed": true,
+      "case": "frontal_occlusion"
+    },
+    {
+      "name": "native_selection_warmup_type",
+      "passed": true,
+      "case": "frontal_occlusion",
+      "expected": "BASIC",
+      "actual": "<Rogue10mMonsterAttackType.BASIC: 0>"
+    },
+    {
+      "name": "canceled_warmup_has_no_decal",
+      "passed": true,
+      "case": "frontal_occlusion"
+    },
+    {
+      "name": "requested_native_attack_started",
+      "passed": true,
+      "case": "frontal_occlusion",
+      "requested": "FRONTAL_WAVE"
+    },
+    {
+      "name": "requested_native_type_selected",
+      "passed": true,
+      "case": "frontal_occlusion",
+      "actual": "<Rogue10mMonsterAttackType.FRONTAL_WAVE: 1>"
+    },
+    {
+      "name": "native_windup_delays_health_damage",
+      "passed": true,
+      "case": "frontal_occlusion"
+    },
+    {
+      "name": "native_reentry_rejected_during_windup",
+      "passed": true,
+      "case": "frontal_occlusion"
+    },
+    {
+      "name": "native_visible_telegraph_for_special_only",
+      "passed": true,
+      "case": "frontal_occlusion",
+      "special": true,
+      "visible": true
+    },
+    {
+      "name": "registered_runtime_decal_exists",
+      "passed": true,
+      "case": "frontal_occlusion",
+      "decals": [
+        "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0.DecalComponent_5"
+      ]
+    },
+    {
+      "name": "runtime_fixture_placement",
+      "passed": true,
+      "case": "frontal_occlusion",
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "position": [
+        -49250.0,
+        -24100.0,
+        3864.476509956512
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "name": "basic_hit",
+      "kind": "BASIC",
+      "action": "hit",
+      "status": "passed",
+      "samples": [
+        {
+          "elapsed_seconds": 0.33333349227905273,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 0.6666668951511383,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.000000387430191,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.333345890045166,
+          "health": 1950.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        }
+      ],
+      "runtime_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns",
+      "health_before": 2000.0,
+      "expected_windup_seconds": 0.30799999833106995,
+      "expected_recovery_seconds": 0.4253333508968353,
+      "enraged": false,
+      "locked_location": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ],
+      "locked_forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "health_after": 1950.0,
+      "native_player_damage": 50.0,
+      "hit_delta": 1,
+      "first_hit_seconds": 0.33333349227905273,
+      "first_recovery_seconds": 0.33333349227905273,
+      "first_idle_seconds": 1.000000387430191
+    },
+    {
+      "name": "frontal_hit",
+      "kind": "FRONTAL_WAVE",
+      "action": "hit",
+      "status": "passed",
+      "samples": [
+        {
+          "elapsed_seconds": 0.33333340287208557,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.6666668951511383,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 1.0000002980232239,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 1.3333337008953094,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.666667103767395,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 2.0000007152557373,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 2.33333420753479,
+          "health": 1918.5,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        }
+      ],
+      "runtime_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns",
+      "health_before": 2000.0,
+      "expected_windup_seconds": 1.100000023841858,
+      "expected_recovery_seconds": 0.6499999761581421,
+      "enraged": false,
+      "locked_location": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ],
+      "locked_forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "health_after": 1918.5,
+      "native_player_damage": 81.5,
+      "hit_delta": 1,
+      "first_hit_seconds": 1.3333337008953094,
+      "first_recovery_seconds": 1.3333337008953094,
+      "first_idle_seconds": 2.0000007152557373
+    },
+    {
+      "name": "frontal_sidestep",
+      "kind": "FRONTAL_WAVE",
+      "action": "side",
+      "status": "passed",
+      "samples": [
+        {
+          "elapsed_seconds": 0.3333336114883423,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.666667103767395,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 1.0000005066394806,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 1.3333339095115662,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.666667401790619,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 2.0000008940696716,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 2.333334505558014,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        }
+      ],
+      "runtime_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns",
+      "health_before": 2000.0,
+      "expected_windup_seconds": 1.100000023841858,
+      "expected_recovery_seconds": 0.6499999761581421,
+      "enraged": false,
+      "locked_location": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ],
+      "locked_forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "health_after": 2000.0,
+      "native_player_damage": 0.0,
+      "hit_delta": 0,
+      "first_hit_seconds": null,
+      "first_recovery_seconds": 1.3333339095115662,
+      "first_idle_seconds": 2.0000008940696716
+    },
+    {
+      "name": "frontal_out_of_range",
+      "kind": "FRONTAL_WAVE",
+      "action": "far",
+      "status": "passed",
+      "samples": [
+        {
+          "elapsed_seconds": 0.33333349227905273,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.666667103767395,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 1.0000008046627045,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 1.3333344161510468,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.6666678190231323,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 2.000001221895218,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 2.3333346247673035,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        }
+      ],
+      "runtime_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns",
+      "health_before": 2000.0,
+      "expected_windup_seconds": 1.100000023841858,
+      "expected_recovery_seconds": 0.6499999761581421,
+      "enraged": false,
+      "locked_location": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ],
+      "locked_forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "health_after": 2000.0,
+      "native_player_damage": 0.0,
+      "hit_delta": 0,
+      "first_hit_seconds": null,
+      "first_recovery_seconds": 1.3333344161510468,
+      "first_idle_seconds": 2.000001221895218
+    },
+    {
+      "name": "frontal_rear",
+      "kind": "FRONTAL_WAVE",
+      "action": "rear",
+      "status": "passed",
+      "samples": [
+        {
+          "elapsed_seconds": 0.33333349227905273,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.6666668951511383,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 1.0000005066394806,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 1.3333339095115662,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.6666675209999084,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 2.000001013278961,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 2.333334505558014,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        }
+      ],
+      "runtime_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns",
+      "health_before": 2000.0,
+      "expected_windup_seconds": 1.100000023841858,
+      "expected_recovery_seconds": 0.6499999761581421,
+      "enraged": false,
+      "locked_location": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ],
+      "locked_forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "health_after": 2000.0,
+      "native_player_damage": 0.0,
+      "hit_delta": 0,
+      "first_hit_seconds": null,
+      "first_recovery_seconds": 1.3333339095115662,
+      "first_idle_seconds": 2.000001013278961
+    },
+    {
+      "name": "frontal_height",
+      "kind": "FRONTAL_WAVE",
+      "action": "height",
+      "status": "passed",
+      "samples": [
+        {
+          "elapsed_seconds": 0.33333349227905273,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 0.6666668951511383,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 1.0000005066394806,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "visible": true
+        },
+        {
+          "elapsed_seconds": 1.3333341181278229,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 1.6666677296161652,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.RECOVERY: 2>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 2.0000013411045074,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        },
+        {
+          "elapsed_seconds": 2.3333349525928497,
+          "health": 2000.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "visible": false
+        }
+      ],
+      "runtime_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns",
+      "health_before": 2000.0,
+      "expected_windup_seconds": 1.100000023841858,
+      "expected_recovery_seconds": 0.6499999761581421,
+      "enraged": false,
+      "locked_location": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ],
+      "locked_forward": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "health_after": 2000.0,
+      "native_player_damage": 0.0,
+      "hit_delta": 0,
+      "first_hit_seconds": null,
+      "first_recovery_seconds": 1.3333341181278229,
+      "first_idle_seconds": 2.0000013411045074
+    },
+    {
+      "name": "frontal_occlusion",
+      "kind": "FRONTAL_WAVE",
+      "action": "wall",
+      "status": "failed",
+      "samples": [],
+      "runtime_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns",
+      "health_before": 2000.0,
+      "expected_windup_seconds": 1.100000023841858,
+      "expected_recovery_seconds": 0.6499999761581421,
+      "enraged": false,
+      "locked_location": [
+        -49700.0,
+        -24100.0,
+        3864.476509956512
+      ],
+      "locked_forward": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "limitations": [
+    "Saved boss Blueprint and profile are exercised through a native forest spawner on loaded terrain; this is not a traversal of the northern ruins.",
+    "AI/input/regen suppression, fixed actor positions and increased player maximum health are disposable PIE setup. No assets are saved.",
+    "Every case uses the saved production profile without writing its properties. Timings and damage are never shortened or changed. Native ConfigureProfile resets only the PIE component's selection/cooldowns between independent cases.",
+    "Selected-target death uses the real PlayerState dead flag, then restores it; the defeat UI is not exercised. Boss-only damage drives phase and monster death.",
+    "Shape evasion teleports the real player during windup. Physical dodge input, full balance, networking and packaged play require separate checks.",
+    "Decal component/material/visibility are checked here; root records viewport evidence separately."
+  ],
+  "phase": "cleanup",
+  "elapsed_wall_seconds": 22.467999999999847,
+  "fixtures": [
+    {
+      "boss": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_FinalBoss_C_0",
+      "spawner": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_MonsterSpawner_C_UAID_244BFE8DA9DF360803_1249772802",
+      "profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns",
+      "timing_overrides": {}
+    }
+  ],
+  "exception": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateAzathorBossPatterns.py\", line 626, in tick\n    tick_impl(delta_seconds)\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateAzathorBossPatterns.py\", line 615, in tick_impl\n    start_case(game, pawn)\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateAzathorBossPatterns.py\", line 380, in start_case\n    spawn_wall(game, pawn)\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateAzathorBossPatterns.py\", line 236, in spawn_wall\n    wall = unreal.GameplayStatics.begin_deferred_actor_spawn_from_class(game, unreal.StaticMeshActor, transform,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: type object 'GameplayStatics' has no attribute 'begin_deferred_actor_spawn_from_class'\n",
+  "message": "type object 'GameplayStatics' has no attribute 'begin_deferred_actor_spawn_from_class'",
+  "owned_pie_cleanup_confirmed": true
+}

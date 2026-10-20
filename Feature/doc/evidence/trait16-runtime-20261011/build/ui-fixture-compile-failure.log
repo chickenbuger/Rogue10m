@@ -1,0 +1,214 @@
+Log started at 10/11/2026 19:37:38 (2026-10-11T10:37:38Z)
+Resolved project argument D:\Project\Rogue10m\Rogue10m.uproject to D:\Project\Rogue10m\Rogue10m.uproject
+No config file at C:\ProgramData\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\PC\AppData\Local\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\PC\Documents\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Configuration will be read from:
+  C:\Users\PC\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\Intermediate\Build\XmlConfigCache.bin): C:\Users\PC\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\Intermediate\Build\XmlConfigCache.bin): D:\Project\Rogue10m\Saved\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\Intermediate\Build\XmlConfigCache.bin): C:\Users\PC\AppData\Local\UnrealEngine\Intermediate\Build\UnrealBuildTool.Env.BuildConfiguration.xml
+Setting temp directory to 'C:\Users\PC\AppData\Local\Temp\UnrealBuildTool\e98283ba'
+    Registering build platform: UnrealBuildTool.AndroidPlatformFactory
+Unable to find valid SDK(s) for Android:
+  Found Sdk Version=r25b, MinRequired=r27c, MaxRequired=r29.
+  Found AutoSdk Version, Required=r27c.
+        Registering build platform: Android - buildable: False
+    Registering build platform: UnrealBuildTool.IOSPlatformFactory
+    Registering build platform: UnrealBuildTool.LinuxPlatformFactory
+    Registering build platform: UnrealBuildTool.MacPlatformFactory
+    Registering build platform: UnrealBuildTool.TVOSPlatformFactory
+    Registering build platform: UnrealBuildTool.WindowsPlatformFactory
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (1)
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (2)
+Found Universal CRT version 10.0.10240.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.17763.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.17763.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.19041.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.19041.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.22621.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.22621.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.26100.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.26100.0 at C:\Program Files (x86)\Windows Kits\10
+Win64 Installed SDK(s): MinVersion_Sdk=10.0.19041.0, MaxVersion_Sdk=10.9.99999.0, CurrentVersion_Sdk=10.0.22621.0, Version_AutoSdk=10.0.22621.0, CurrentVersion_AutoSdk=
+        Registering build platform: Win64 - buildable: True
+    Registering build platform: UnrealBuildTool.VisionOSPlatformFactory
+Command line: "D:\Program Files\UE_5.8\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Deleting old log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log-backup-2026.10.11-09.26.00.txt
+Deleting old log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log-backup-2026.10.11-09.26.00.json
+
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Skipping D:\Program Files\UE_5.8\Engine\Intermediate\Build\BuildRules\UE5Rules.dll: File is installed
+Skipping D:\Program Files\UE_5.8\Engine\Intermediate\Build\BuildRules\UE5ProgramRules.dll: File is installed
+Building UnrealEditor - Rogue10mEditor - Win64 - Development
+UnrealHeaderTool needs to run because SavedTimestamp is older than HeaderFileTimestamp (D:\Project\Rogue10m\Source\Rogue10m\Core\Rogue10mProgressionSubsystem.h) for module Rogue10m
+Parsing headers for Rogue10mEditor
+  Running Internal UnrealHeaderTool D:\Project\Rogue10m\Rogue10m.uproject D:\Project\Rogue10m\Intermediate\Build\Win64\Rogue10mEditor\Rogue10mEditor.uhtmanifest -WarningsAsErrors -installed
+UHT compiled-in object format Default
+Step - Parse Headers
+Reading engine version from file: D:\Program Files\UE_5.8\Engine\Source\Runtime\Launch\Resources\Version.h
+Got engine version 5.8.3
+Step - Populate symbol table
+Step - Exports
+       Exporter Stats skipped
+       Exporter Json skipped
+       Running exporter CodeGen
+UHT processed Rogue10mEditor in 2.2873061 seconds (3 generated files written)
+Checking for live coding mutex: Global\LiveCoding_D++Program Files+UE_5.8+Engine+Binaries+Win64+UnrealEditor.exe
+Deleting outdated item: D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\UnrealEditor-Rogue10m.lib
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mFighterCombatStanceAnimInstance.cpp, Rogue10mAppearanceCameraComponent.cpp, Rogue10mCharacterAnimationComponent.cpp, Rogue10mCombatComponent.cpp, Rogue10mCombatTestComponent.cpp, Rogue10mFirstPersonPresentationComponent.cpp, Rogue10mInventoryComponent.cpp, Rogue10mInventoryPersistence.cpp, Rogue10mSkillBindingComponent.cpp, Rogue10mTownProgressionComponent.cpp, Rogue10mTraitRuntimeComponent.cpp, Rogue10mVitalRegenerationComponent.cpp, Rogue10mCharacterProfileSubsystem.cpp, Rogue10mGameMode.cpp, Rogue10mPlayerController.cpp, Rogue10mPlayerState.cpp, Rogue10mProgressionSubsystem.cpp, Rogue10mMonsterDataAsset.cpp, Rogue10mTownServiceDataAsset.cpp, Rogue10mTraitCatalogDataAsset.cpp, Rogue10mFistCombatAuthoring.cpp, Rogue10mMovingAttackAuthoring.cpp, Rogue10mOpenWorldAuthoring.cpp, Rogue10mWalkPalmAuthoring.cpp, Rogue10mBasicMonster.cpp, Rogue10mMonsterAttackPatternComponent.cpp, Rogue10mMonsterAIController.cpp, Rogue10mAppearanceCameraRuntimeTest.cpp, Rogue10mCameraForwardRuntimeTest.cpp, Rogue10mCombatTestUIRuntimeTest.cpp, Rogue10mFighterCombatStanceRuntimeTest.cpp, Rogue10mFighterSkillTreeRuntimeTest.cpp, Rogue10mFistCombatRuntimeTest.cpp, Rogue10mInitialHeadFramingRuntimeTest.cpp, Rogue10mMovingAttackRuntimeTest.cpp, Rogue10mProgressionFailureRuntimeTest.cpp, Rogue10mResponsiveHUDRuntimeTest.cpp, Rogue10mStoneFistAnimationRuntimeTest.cpp, Rogue10mThirdPersonInspectionRuntimeTest.cpp, Rogue10mTownRunRuntimeTest.cpp, Rogue10mTownServicesRuntimeTest.cpp, Rogue10mTownVisualRuntimeTest.cpp, Rogue10mTraitEffectsRuntimeTest.cpp, Rogue10mTraitPersistenceRuntimeTest.cpp, Rogue10mTraitUIRuntimeTest.cpp, Rogue10mWalkPalmRuntimeTest.cpp, Rogue10mWeaponSkillTreeRuntimeTest.cpp, Rogue10mBottomHUDWidget.cpp, Rogue10mCombatTestWidget.cpp, Rogue10mHudWidgetParts.cpp, Rogue10mMainHUDWidget.cpp, Rogue10mMenuWindowWidgets.cpp, Rogue10mTraitWidget.cpp, Rogue10mTutorialWidget.cpp, Rogue10mDroppedItem.cpp, Rogue10mMonsterSpawner.cpp, Rogue10mOpenWorldBootstrap.cpp, Rogue10mRunPortal.cpp, Rogue10mTutorialAnimationComponent.cpp, Rogue10mTutorialNPC.cpp, Rogue10mTutorialRewardComponent.cpp, Rogue10mTutorialSupplySubsystem.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+Using XGE executor to run 19 action(s)
+Distributing 19 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {6E11CF89-0909-4A1B-916A-A56D3A833127}
+ 
+--------------------Project: Default-------------------------------------------
+[1/19] Compile [x64] Rogue10mTutorialSupplySubsystem.cpp (0:05.56 at +0:00)
+[2/19] Compile [x64] Rogue10mGameMode.cpp (0:06.07 at +0:00)
+[3/19] Compile [x64] Rogue10mTownProgressionComponent.cpp (0:05.98 at +0:00)
+[4/19] Compile [x64] Rogue10mRunPortal.cpp (0:06.10 at +0:00)
+[5/19] Compile [x64] Rogue10mProgressionSubsystem.cpp (0:06.71 at +0:00)
+[6/19] Compile [x64] Rogue10mTraitUIRuntimeTest.cpp (0:07.39 at +0:00)
+D:\Project\Rogue10m\Source\Rogue10m\Tests\Rogue10mTraitUIRuntimeTest.cpp(148,11): error C2248: 'ARogue10mCharacter::DoPrimaryAttackPressed': protected ���('ARogue10mCharacter' Ŭ�������� ����)�� �׼����� �� �����ϴ�.
+		Player->DoPrimaryAttackPressed(); Player->DoPrimaryAttackReleased(); Player->DoDodge(); Player->DoMove(1,1);
+		        ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mCharacter.h(138,15): note: 'ARogue10mCharacter::DoPrimaryAttackPressed' ������ �����Ͻʽÿ�.
+	virtual void DoPrimaryAttackPressed();
+	             ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mCharacter.h(32,20): note: 'ARogue10mCharacter' ������ �����Ͻʽÿ�.
+class ROGUE10M_API ARogue10mCharacter : public ACharacter, public IAbilitySystemInterface
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\Tests\Rogue10mTraitUIRuntimeTest.cpp(148,45): error C2248: 'ARogue10mCharacter::DoPrimaryAttackReleased': protected ���('ARogue10mCharacter' Ŭ�������� ����)�� �׼����� �� �����ϴ�.
+		Player->DoPrimaryAttackPressed(); Player->DoPrimaryAttackReleased(); Player->DoDodge(); Player->DoMove(1,1);
+		                                          ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mCharacter.h(141,15): note: 'ARogue10mCharacter::DoPrimaryAttackReleased' ������ �����Ͻʽÿ�.
+	virtual void DoPrimaryAttackReleased();
+	             ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mCharacter.h(32,20): note: 'ARogue10mCharacter' ������ �����Ͻʽÿ�.
+class ROGUE10M_API ARogue10mCharacter : public ACharacter, public IAbilitySystemInterface
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\Tests\Rogue10mTraitUIRuntimeTest.cpp(148,80): error C2248: 'ARogue10mCharacter::DoDodge': protected ���('ARogue10mCharacter' Ŭ�������� ����)�� �׼����� �� �����ϴ�.
+		Player->DoPrimaryAttackPressed(); Player->DoPrimaryAttackReleased(); Player->DoDodge(); Player->DoMove(1,1);
+		                                                                             ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mCharacter.h(129,15): note: 'ARogue10mCharacter::DoDodge' ������ �����Ͻʽÿ�.
+	virtual void DoDodge();
+	             ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mCharacter.h(32,20): note: 'ARogue10mCharacter' ������ �����Ͻʽÿ�.
+class ROGUE10M_API ARogue10mCharacter : public ACharacter, public IAbilitySystemInterface
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\Tests\Rogue10mTraitUIRuntimeTest.cpp(148,99): error C2248: 'ARogue10mCharacter::DoMove': protected ���('ARogue10mCharacter' Ŭ�������� ����)�� �׼����� �� �����ϴ�.
+		Player->DoPrimaryAttackPressed(); Player->DoPrimaryAttackReleased(); Player->DoDodge(); Player->DoMove(1,1);
+		                                                                                                ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mCharacter.h(120,15): note: 'ARogue10mCharacter::DoMove' ������ �����Ͻʽÿ�.
+	virtual void DoMove(float Right, float Forward);
+	             ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mCharacter.h(32,20): note: 'ARogue10mCharacter' ������ �����Ͻʽÿ�.
+class ROGUE10M_API ARogue10mCharacter : public ACharacter, public IAbilitySystemInterface
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\Tests\Rogue10mTraitUIRuntimeTest.cpp(211,88): error C2039: 'SetReadOnly': 'IFileManager'�� ����� �ƴմϴ�.
+		Check(FFileHelper::LoadFileToArray(BeforeSaveBytes,*SaveFile) && IFileManager::Get().SetReadOnly(*SaveFile,true),
+		                                                                                     ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\HAL\FileManager.h(56,7): note: 'IFileManager' ������ �����Ͻʽÿ�.
+class IFileManager
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\Tests\Rogue10mTraitUIRuntimeTest.cpp(233,24): error C2039: 'SetReadOnly': 'IFileManager'�� ����� �ƴմϴ�.
+			IFileManager::Get().SetReadOnly(*SaveFile,false); bSaveReadOnly=false;
+			                    ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\HAL\FileManager.h(56,7): note: 'IFileManager' ������ �����Ͻʽÿ�.
+class IFileManager
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\Tests\Rogue10mTraitUIRuntimeTest.cpp(275,67): error C2039: 'SetReadOnly': 'IFileManager'�� ����� �ƴմϴ�.
+		if (bSaveReadOnly && !SaveFile.IsEmpty()) { IFileManager::Get().SetReadOnly(*SaveFile,false); bSaveReadOnly=false; }
+		                                                                ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\HAL\FileManager.h(56,7): note: 'IFileManager' ������ �����Ͻʽÿ�.
+class IFileManager
+      ^
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[7/19] Compile [x64] Rogue10mProgressionFailureRuntimeTest.cpp (0:07.95 at +0:00)
+[8/19] Compile [x64] Rogue10mTraitPersistenceRuntimeTest.cpp (0:08.14 at +0:00)
+[9/19] Compile [x64] Rogue10mTutorialNPC.cpp (0:10.34 at +0:00)
+[10/19] Compile [x64] Rogue10mCharacter.cpp (0:10.95 at +0:00)
+[11/19] Compile [x64] Rogue10mBasicMonster.cpp (0:11.73 at +0:00)
+[12/19] Compile [x64] Rogue10mTownRunRuntimeTest.cpp (0:11.92 at +0:00)
+[13/19] Compile [x64] Rogue10mPlayerController.cpp (0:13.04 at +0:00)
+[14/19] Compile [x64] Rogue10mTraitWidget.cpp (0:13.54 at +0:00)
+[15/19] Compile [x64] Rogue10mTownServicesRuntimeTest.cpp (0:13.73 at +0:00)
+[16/19] Compile [x64] Module.Rogue10m.1.cpp (0:22.20 at +0:00)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 0 succeeded, 1 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 25.28 seconds
+CompilationResultException: OtherCompilationError
+   at UnrealBuildTool.ActionGraph.InternalExecuteActions(ActionExecutor Executor, List`1 ActionsToExecute, ILogger Logger) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Actions\ActionGraph.cs:line 442
+   at UnrealBuildTool.ActionGraph.ExecuteActionsAsync(BuildConfiguration BuildConfiguration, List`1 ActionsToExecute, List`1 TargetDescriptors, ILogger Logger, ActionExecutor executor) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Actions\ActionGraph.cs:line 413
+   at UnrealBuildTool.BuildMode.BuildAsync(List`1 Targets, BuildConfiguration BuildConfiguration, BuildOptions Options, FileReference WriteOutdatedActionsFile, CppDependencyCache cppDependencyCache, ILogger Logger, String ActionTypeFilter, ActionExecutor executor) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Modes\BuildMode.cs:line 812
+   at UnrealBuildTool.BuildMode.ExecuteAsync(CommandLineArguments Arguments, ILogger Logger) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Modes\BuildMode.cs:line 282
+   at UnrealBuildTool.BuildMode.ExecuteAsync(CommandLineArguments Arguments, ILogger Logger) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Modes\BuildMode.cs:line 303
+   at UnrealBuildTool.UnrealBuildTool.Main(String[] ArgumentsArray) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\UnrealBuildTool.cs:line 483
+WriteFileIfChanged() wrote 0 changed files of 1 requested writes.
+
+Timeline:
+[  0.000]  +0.311 Main
+   0.016          [  0.015]  +0.090 Apply XmlConfig
+   0.108          [  0.108]  +0.060 AddTelemetry
+   0.186          [  0.186]  +0.125 RegisterPlatforms
+[  0.371]  +0.031 ParseCommandLine
+[  0.403]  +0.358 <unknown>
+[  0.761]  +0.215 LoadMakefile
+   0.867          [  0.105]  +0.064 EngineRulesPlugins
+   0.934          [  0.173]  +0.018 EngineRulesFetchDirs
+   0.961          [  0.199]  +0.008 EngineRulesAssembly
+   0.969          [  0.208]  +0.001 ProgramRulesAssembly
+   0.970          [  0.209]  +0.004 ProjectRulesAssembly
+   0.974          [  0.213]  +0.247 CreateTargetRules
+   0.984             0.222          [  0.009]  +0.000 FindPlugins
+   0.990             0.229          [  0.015]  +0.063 MakefileValid
+[  0.977]  +0.305 <unknown>
+[  1.283]  +0.005 CppDependencyCache
+[  1.298]  +0.078 Rogue10mEditor Win64 Development
+[  1.378]  +2.451 UHTWait
+   1.379          [  0.000]  +0.153 UHTManifest
+   1.532          [  0.153]  +2.291 UHT
+   3.827          [  2.448]  +0.022 UHTTimestamps
+[  3.859]  +0.004 CppDependencyCache
+[  3.864]  +0.072 Preparing ActionGraph
+   3.878          [  0.014]  +0.007 LinkActions
+   3.885             0.021          [  0.006]  +0.000 DetectActionGraphCycles
+   3.886          [  0.022]  +0.000 GatherPrerequisiteActions
+   3.887          [  0.023]  +0.000 CppDependencyCacheWait
+   3.888          [  0.024]  +0.036 GatherOutdatedActions
+   3.928          [  0.064]  +0.003 LinkActions
+   3.928             0.064          [  0.000]  +0.000 DetectActionGraphCycles
+   3.933          [  0.069]  +0.001 DeleteOutdatedProducedItems
+   3.935          [  0.070]  +0.000 SaveActionHistory
+   3.936          [  0.072]  +0.000 CreateDirectoriesForProducedItems
+[  3.964]  +0.330 GarbageCollect
+[  4.294] +24.953 <unknown>
+[ 29.248]  +0.135 Saving caches
+[ 29.399]  +0.003 TelemetryService.FlushEvents
+[ 29.403]
+
+Result: Failed (OtherCompilationError)
+Total execution time: 29.40 seconds

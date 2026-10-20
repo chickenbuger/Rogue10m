@@ -3,6 +3,7 @@
 #include "Rogue10mMonsterSpawner.h"
 
 #include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Engine/World.h"
 #include "Rogue10m.h"
 #include "Rogue10mBasicMonster.h"
@@ -110,6 +111,8 @@ ARogue10mBasicMonster* ARogue10mMonsterSpawner::SpawnOneMonster()
 
 	FActorSpawnParameters SpawnParameters;
 	SpawnParameters.Owner = this;
+	// Keep spawned characters in the spawner's streaming level when its cell unloads.
+	SpawnParameters.OverrideLevel = GetLevel();
 	SpawnParameters.SpawnCollisionHandlingOverride = MonsterSpawnCollisionHandlingMethod;
 
 	ARogue10mBasicMonster* SpawnedMonster =
@@ -226,6 +229,15 @@ bool ARogue10mMonsterSpawner::FindSpawnTransform(FTransform& OutSpawnTransform) 
 			return false;
 		}
 		SpawnLocation = GroundHit.ImpactPoint;
+		// Character locations are capsule centers, while a ground trace returns the floor.
+		// Starting the capsule inside Landscape can make AdjustIfPossible reject every spawn.
+		if (const ARogue10mBasicMonster* MonsterTemplate = MonsterClass.GetDefaultObject())
+		{
+			if (const UCapsuleComponent* Capsule = MonsterTemplate->GetCapsuleComponent())
+			{
+				SpawnLocation.Z += Capsule->GetScaledCapsuleHalfHeight() + 2.0f;
+			}
+		}
 	}
 
 	const FRotator SpawnRotation(0.0f, FMath::FRandRange(-180.0f, 180.0f), 0.0f);

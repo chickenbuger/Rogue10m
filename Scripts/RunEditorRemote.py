@@ -19,6 +19,7 @@ def main() -> int:
     group.add_argument("--file", type=Path)
     group.add_argument("--command")
     parser.add_argument("--timeout", type=float, default=8.0)
+    parser.add_argument("--project-root", type=Path, default=Path(__file__).resolve().parents[1])
     args = parser.parse_args()
 
     sys.path.insert(0, str(REMOTE_EXECUTION_DIR))
@@ -33,12 +34,17 @@ def main() -> int:
     session.start()
     try:
         deadline = time.monotonic() + args.timeout
-        while not session.remote_nodes and time.monotonic() < deadline:
+        expected_root = args.project_root.resolve().as_posix().rstrip('/').casefold()
+        def matching_nodes():
+            return [node for node in session.remote_nodes
+                    if str(node.get('project_root', '')).replace('\\', '/').rstrip('/').casefold() == expected_root]
+        while not matching_nodes() and time.monotonic() < deadline:
             time.sleep(0.1)
-        if not session.remote_nodes:
-            print("Unreal Editor Remote Execution node was not discovered.", file=sys.stderr)
+        nodes = matching_nodes()
+        if len(nodes) != 1:
+            print(f"Expected exactly one Unreal Remote Execution node for {expected_root}; found {len(nodes)}.", file=sys.stderr)
             return 2
-        node = session.remote_nodes[0]
+        node = nodes[0]
         session.open_command_connection(node["node_id"])
         result = session.run_command(
             command_text,

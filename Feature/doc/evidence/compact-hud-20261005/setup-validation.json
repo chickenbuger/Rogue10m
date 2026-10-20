@@ -1,0 +1,109 @@
+{
+  "result": "COMPACT_HUD_SETUP_PASSED",
+  "assets": [
+    "/Game/Widget/Parts/Compact/WBP_CompactVitalBar",
+    "/Game/Widget/Parts/Compact/WBP_CompactExperienceLine",
+    "/Game/Widget/Parts/Compact/WBP_CompactQuickSlot",
+    "/Game/Widget/Parts/Compact/WBP_CompactIdentity",
+    "/Game/Widget/Parts/Compact/WBP_CompactAcquisitionLine",
+    "/Game/Widget/Parts/WBP_BottomHUD",
+    "/Game/Widget/WBP_Rogue10mMainHUD"
+  ],
+  "design_size": [
+    1200,
+    196
+  ],
+  "side_margin": 24,
+  "bottom_margin": 20,
+  "slot_spacing": 20,
+  "xp_parent": "UI_CombatCanvas",
+  "slot_counts": {
+    "skills": 5,
+    "items": 4
+  },
+  "preserved_main_widgets": [
+    "CanvasPanel_34",
+    "SystemLogContainer",
+    "UI_RunTimerText",
+    "MonsterInfoWidget"
+  ],
+  "widget_counts": {
+    "/Game/Widget/Parts/Compact/WBP_CompactVitalBar": 5,
+    "/Game/Widget/Parts/Compact/WBP_CompactExperienceLine": 3,
+    "/Game/Widget/Parts/Compact/WBP_CompactQuickSlot": 13,
+    "/Game/Widget/Parts/Compact/WBP_CompactIdentity": 8,
+    "/Game/Widget/Parts/Compact/WBP_CompactAcquisitionLine": 9,
+    "/Game/Widget/Parts/WBP_BottomHUD": 29,
+    "/Game/Widget/WBP_Rogue10mMainHUD": 6
+  },
+  "raster_frames_used": false,
+  "native_bindings_verified": true,
+  "property_inspection_sequence": "ObjectTools.list_properties -> ObjectTools.get_properties -> native setter",
+  "property_inspections": [
+    {
+      "object": "/Game/Widget/Parts/Compact/WBP_CompactQuickSlot.WBP_CompactQuickSlot:WidgetTree.UI_KeyText",
+      "schema_name": "justification",
+      "python_name": "justification"
+    },
+    {
+      "object": "/Game/Widget/Parts/Compact/WBP_CompactQuickSlot.WBP_CompactQuickSlot:WidgetTree.UI_KeyText",
+      "schema_name": "lineHeightPercentage",
+      "python_name": "line_height_percentage"
+    },
+    {
+      "object": "/Game/Widget/Parts/Compact/WBP_CompactQuickSlot.WBP_CompactQuickSlot:WidgetTree.UI_KeyText",
+      "schema_name": "applyLineHeightToBottomLine",
+      "python_name": "apply_line_height_to_bottom_line"
+    },
+    {
+      "object": "/Game/Widget/Parts/Compact/WBP_CompactQuickSlot.WBP_CompactQuickSlot:WidgetTree.UI_CooldownText",
+      "schema_name": "justification",
+      "python_name": "justification"
+    },
+    {
+      "object": "/Game/Widget/Parts/Compact/WBP_CompactQuickSlot.Default__WBP_CompactQuickSlot_C",
+      "schema_name": "bUseCompactInputLabels",
+      "python_name": "use_compact_input_labels"
+    },
+    {
+      "object": "/Game/Widget/Parts/Compact/WBP_CompactQuickSlot.Default__WBP_CompactQuickSlot_C",
+      "schema_name": "bUseTwoLineInputLabels",
+      "python_name": "use_two_line_input_labels"
+    },
+    {
+      "object": "/Game/Widget/Parts/WBP_BottomHUD.WBP_BottomHUD:WidgetTree.UI_LevelText",
+      "schema_name": "justification",
+      "python_name": "justification"
+    },
+    {
+      "object": "/Game/Widget/Parts/WBP_BottomHUD.Default__WBP_BottomHUD_C",
+      "schema_name": "bottomQuickSlotWidgetClass",
+      "python_name": "bottom_quick_slot_widget_class"
+    },
+    {
+      "object": "/Game/Widget/Parts/WBP_BottomHUD.Default__WBP_BottomHUD_C",
+      "schema_name": "combatDesignSize",
+      "python_name": "combat_design_size"
+    },
+    {
+      "object": "/Game/Widget/Parts/WBP_BottomHUD.Default__WBP_BottomHUD_C",
+      "schema_name": "combatSideMargin",
+      "python_name": "combat_side_margin"
+    },
+    {
+      "object": "/Game/Widget/Parts/WBP_BottomHUD.Default__WBP_BottomHUD_C",
+      "schema_name": "combatBottomMargin",
+      "python_name": "combat_bottom_margin"
+    },
+    {
+      "object": "/Game/Widget/Parts/WBP_BottomHUD.Default__WBP_BottomHUD_C",
+      "schema_name": "quickSlotSpacing",
+      "python_name": "quick_slot_spacing"
+    },
+    {
+      "object": "/Game/Widget/Parts/WBP_BottomHUD.Default__WBP_BottomHUD_C",
+      "schema_name": "defaultSkillIcons",
+      "python_name": "default_skill_icons"
+    }
+  ]
+}

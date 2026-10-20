@@ -1,0 +1,396 @@
+{
+  "capture": "fighter-animations-20261002-null",
+  "frames": 841,
+  "pose_rows": 118581,
+  "nonfinite_values": 0,
+  "structural_pass": true,
+  "first_person_samples": 840,
+  "third_person_samples": 0,
+  "camera_maxima": {
+    "raw_head_degrees": 46.680579936,
+    "view_motion_degrees": 7.002087269,
+    "expected_motion_degrees": 7.002087269,
+    "position_error_cm": 4.9277e-05,
+    "rotation_error_deg": 1.3004e-05,
+    "shadow_position_error_cm": 0.0,
+    "shadow_rotation_error_deg": 2.415e-06
+  },
+  "bones": {
+    "source/spine_01": {
+      "min_length_ratio": 0.999999092,
+      "max_length_ratio": 1.001348379,
+      "max_scale_error": 6.7880000000908325e-06,
+      "max_rotation_step_deg": 12.811770338,
+      "max_step_frame": 334
+    },
+    "source/head": {
+      "min_length_ratio": 0.999998738,
+      "max_length_ratio": 1.001348286,
+      "max_scale_error": 6.7880000000908325e-06,
+      "max_rotation_step_deg": 16.822050794,
+      "max_step_frame": 399
+    },
+    "source/lowerarm_l": {
+      "min_length_ratio": 0.999999863,
+      "max_length_ratio": 1.001348528,
+      "max_scale_error": 6.7880000000908325e-06,
+      "max_rotation_step_deg": 52.399751093,
+      "max_step_frame": 334
+    },
+    "source/hand_l": {
+      "min_length_ratio": 1.0,
+      "max_length_ratio": 1.001348729,
+      "max_scale_error": 6.7880000000908325e-06,
+      "max_rotation_step_deg": 61.690505185,
+      "max_step_frame": 334
+    },
+    "source/lowerarm_r": {
+      "min_length_ratio": 1.0,
+      "max_length_ratio": 1.001349091,
+      "max_scale_error": 6.7880000000908325e-06,
+      "max_rotation_step_deg": 54.401136355,
+      "max_step_frame": 334
+    },
+    "source/hand_r": {
+      "min_length_ratio": 1.0,
+      "max_length_ratio": 1.001348647,
+      "max_scale_error": 6.7880000000908325e-06,
+      "max_rotation_step_deg": 63.605619592,
+      "max_step_frame": 334
+    },
+    "source/thigh_r": {
+      "min_length_ratio": 0.999999932,
+      "max_length_ratio": 1.001106413,
+      "max_scale_error": 6.7880000000908325e-06,
+      "max_rotation_step_deg": 21.365346345,
+      "max_step_frame": 759
+    },
+    "source/calf_r": {
+      "min_length_ratio": 1.0,
+      "max_length_ratio": 1.001350324,
+      "max_scale_error": 6.7880000000908325e-06,
+      "max_rotation_step_deg": 20.084145604,
+      "max_step_frame": 334
+    },
+    "source/foot_r": {
+      "min_length_ratio": 1.0,
+      "max_length_ratio": 1.001349207,
+      "max_scale_error": 6.7880000000908325e-06,
+      "max_rotation_step_deg": 28.284311333,
+      "max_step_frame": 783
+    },
+    "source/thigh_l": {
+      "min_length_ratio": 0.999999787,
+      "max_length_ratio": 1.001106307,
+      "max_scale_error": 6.7880000000908325e-06,
+      "max_rotation_step_deg": 16.015506977,
+      "max_step_frame": 726
+    },
+    "source/calf_l": {
+      "min_length_ratio": 0.999999902,
+      "max_length_ratio": 1.001349347,
+      "max_scale_error": 6.7880000000908325e-06,
+      "max_rotation_step_deg": 16.055394895,
+      "max_step_frame": 399
+    },
+    "source/foot_l": {
+      "min_length_ratio": 1.0,
+      "max_length_ratio": 1.001352635,
+      "max_scale_error": 6.7880000000908325e-06,
+      "max_rotation_step_deg": 22.817863189,
+      "max_step_frame": 759
+    },
+    "appearance/spine_01": {
+      "min_length_ratio": 1.0,
+      "max_length_ratio": 1.0,
+      "max_scale_error": 0.0,
+      "max_rotation_step_deg": 12.811770338,
+      "max_step_frame": 334
+    },
+    "appearance/head": {
+      "min_length_ratio": 0.999999517,
+      "max_length_ratio": 1.0,
+      "max_scale_error": 0.0,
+      "max_rotation_step_deg": 16.822050794,
+      "max_step_frame": 399
+    },
+    "appearance/lowerarm_l": {
+      "min_length_ratio": 0.999999448,
+      "max_length_ratio": 1.0,
+      "max_scale_error": 0.0,
+      "max_rotation_step_deg": 52.6814597,
+      "max_step_frame": 334
+    },
+    "appearance/hand_l": {
+      "min_length_ratio": 0.99999992,
+      "max_length_ratio": 1.0,
+      "max_scale_error": 0.0,
+      "max_rotation_step_deg": 61.690505185,
+      "max_step_frame": 334
+    },
+    "appearance/lowerarm_r": {
+      "min_length_ratio": 0.999998996,
+      "max_length_ratio": 1.0,
+      "max_scale_error": 0.0,
+      "max_rotation_step_deg": 54.707706774,
+      "max_step_frame": 334
+    },
+    "appearance/hand_r": {
+      "min_length_ratio": 0.999999788,
+      "max_length_ratio": 1.0,
+      "max_scale_error": 0.0,
+      "max_rotation_step_deg": 63.605619592,
+      "max_step_frame": 334
+    },
+    "appearance/thigh_l": {
+      "min_length_ratio": 1.0,
+      "max_length_ratio": 1.0,
+      "max_scale_error": 0.0,
+      "max_rotation_step_deg": 16.015506977,
+      "max_step_frame": 726
+    },
+    "appearance/calf_l": {
+      "min_length_ratio": 1.0,
+      "max_length_ratio": 1.000000156,
+      "max_scale_error": 0.0,
+      "max_rotation_step_deg": 15.748536555,
+      "max_step_frame": 399
+    },
+    "appearance/foot_l": {
+      "min_length_ratio": 1.0,
+      "max_length_ratio": 1.000000199,
+      "max_scale_error": 0.0,
+      "max_rotation_step_deg": 23.206728828,
+      "max_step_frame": 759
+    },
+    "appearance/thigh_r": {
+      "min_length_ratio": 1.0,
+      "max_length_ratio": 1.0,
+      "max_scale_error": 0.0,
+      "max_rotation_step_deg": 21.365346345,
+      "max_step_frame": 759
+    },
+    "appearance/calf_r": {
+      "min_length_ratio": 1.0,
+      "max_length_ratio": 1.00000001,
+      "max_scale_error": 0.0,
+      "max_rotation_step_deg": 19.077208081,
+      "max_step_frame": 334
+    },
+    "appearance/foot_r": {
+      "min_length_ratio": 1.0,
+      "max_length_ratio": 1.000000027,
+      "max_scale_error": 0.0,
+      "max_rotation_step_deg": 28.89080452,
+      "max_step_frame": 783
+    }
+  },
+  "first_person_attack_camera_steps": {
+    "AM_Unarmed_LeftJab": {
+      "samples": 11,
+      "max_camera_rotation_step_deg": 1.5938812574193748,
+      "max_camera_translation_step_cm": 4.204375151265465
+    },
+    "AM_Unarmed_RightJab": {
+      "samples": 15,
+      "max_camera_rotation_step_deg": 0.016529331222745802,
+      "max_camera_translation_step_cm": 0.4721827868673324
+    },
+    "AM_Unarmed_Straight": {
+      "samples": 24,
+      "max_camera_rotation_step_deg": 1.5106669888963178,
+      "max_camera_translation_step_cm": 4.1970053068307775
+    },
+    "AM_Unarmed_Hook": {
+      "samples": 27,
+      "max_camera_rotation_step_deg": 1.5019847172682674,
+      "max_camera_translation_step_cm": 4.109556316986648
+    },
+    "AM_Knuckle_Jab": {
+      "samples": 16,
+      "max_camera_rotation_step_deg": 2.3974904803745396,
+      "max_camera_translation_step_cm": 6.453934085901808
+    },
+    "AM_Knuckle_BodyStraight": {
+      "samples": 15,
+      "max_camera_rotation_step_deg": 2.524703503307426,
+      "max_camera_translation_step_cm": 6.487607608927344
+    },
+    "AM_Knuckle_HookFlurry": {
+      "samples": 33,
+      "max_camera_rotation_step_deg": 2.1643418407430883,
+      "max_camera_translation_step_cm": 5.275135642930096
+    },
+    "AM_Knuckle_Uppercut": {
+      "samples": 37,
+      "max_camera_rotation_step_deg": 2.118372775935525,
+      "max_camera_translation_step_cm": 5.1846018888794605
+    },
+    "AM_Knuckle_ShortBlow": {
+      "samples": 53,
+      "max_camera_rotation_step_deg": 2.137933987809656,
+      "max_camera_translation_step_cm": 5.208928571587331
+    }
+  },
+  "skills": [
+    {
+      "frame": "46",
+      "time_s": "1.533333333",
+      "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab.DA_BasicBrawler_LeftJab",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_LeftJab.AM_Unarmed_LeftJab",
+      "rate": "1.559999943",
+      "expected_first_pulse_s": "0.217948735",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "57",
+      "time_s": "1.900000000",
+      "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightJab.DA_BasicBrawler_RightJab",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_RightJab.AM_Unarmed_RightJab",
+      "rate": "1.559999943",
+      "expected_first_pulse_s": "0.217948735",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "139",
+      "time_s": "4.633333333",
+      "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight.DA_BasicBrawler_RightStraight",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Straight.AM_Unarmed_Straight",
+      "rate": "1.039999962",
+      "expected_first_pulse_s": "0.326923102",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "247",
+      "time_s": "8.233333333",
+      "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightHook.DA_BasicBrawler_RightHook",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Hook.AM_Unarmed_Hook",
+      "rate": "1.559999943",
+      "expected_first_pulse_s": "0.405982912",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "333",
+      "time_s": "11.100000000",
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+      "rate": "1.393599987",
+      "expected_first_pulse_s": "0.107634909",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "398",
+      "time_s": "13.266666667",
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02.DA_Attack_Knuckle_Primary02",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_BodyStraight.AM_Knuckle_BodyStraight",
+      "rate": "1.455999970",
+      "expected_first_pulse_s": "0.109890111",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "458",
+      "time_s": "15.266666667",
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03.DA_Attack_Knuckle_Primary03",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_HookFlurry.AM_Knuckle_HookFlurry",
+      "rate": "1.289600015",
+      "expected_first_pulse_s": "0.139578164",
+      "hit_count": "6",
+      "hit_interval_s": "0.072115391",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "513",
+      "time_s": "17.100000000",
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Special.DA_Attack_Knuckle_Special",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Uppercut.AM_Knuckle_Uppercut",
+      "rate": "1.185599923",
+      "expected_first_pulse_s": "0.177125514",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    },
+    {
+      "frame": "576",
+      "time_s": "19.200000000",
+      "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.DA_Attack_Knuckle_Charged",
+      "use_count_delta": "1",
+      "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_ShortBlow.AM_Knuckle_ShortBlow",
+      "rate": "0.935999930",
+      "expected_first_pulse_s": "0.235042751",
+      "hit_count": "1",
+      "hit_interval_s": "0.076923080",
+      "note": "expected_schedule_not_actual_damage"
+    }
+  ],
+  "actual_target_damage": {
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab.DA_BasicBrawler_LeftJab": {
+      "pulses": 1,
+      "health_drop": 28.311523,
+      "max_first_delay_error_s": 0.017948724
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightJab.DA_BasicBrawler_RightJab": {
+      "pulses": 1,
+      "health_drop": 32.794922,
+      "max_first_delay_error_s": 0.015384611
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight.DA_BasicBrawler_RightStraight": {
+      "pulses": 1,
+      "health_drop": 32.244141,
+      "max_first_delay_error_s": 0.026923086
+    },
+    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightHook.DA_BasicBrawler_RightHook": {
+      "pulses": 1,
+      "health_drop": 38.257812,
+      "max_first_delay_error_s": 0.005982891
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01": {
+      "pulses": 1,
+      "health_drop": 32.948242,
+      "max_first_delay_error_s": 0.007634904
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02.DA_Attack_Knuckle_Primary02": {
+      "pulses": 1,
+      "health_drop": 37.501953,
+      "max_first_delay_error_s": 0.009890106
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03.DA_Attack_Knuckle_Primary03": {
+      "pulses": 6,
+      "health_drop": 244.668944,
+      "max_first_delay_error_s": 0.006244823
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Special.DA_Attack_Knuckle_Special": {
+      "pulses": 1,
+      "health_drop": 39.701172,
+      "max_first_delay_error_s": 0.010458838
+    },
+    "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.DA_Attack_Knuckle_Charged": {
+      "pulses": 1,
+      "health_drop": 54.012695,
+      "max_first_delay_error_s": 0.001709405
+    }
+  },
+  "rendered": false,
+  "limits": "NullRHI: real game actors, input, skeletal evaluation, camera cache and target health; no pixel/render or visual naturalness verification. This regression fixture exercises the nine preserved attacks, not all three new StoneFist target contacts.",
+  "timeline_frames": 840,
+  "csv_frame_rows": 841
+}

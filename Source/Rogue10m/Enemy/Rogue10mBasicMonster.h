@@ -15,7 +15,12 @@ class URogue10mAbilitySystemComponent;
 class URogue10mAttributeSet;
 class URogue10mAttackSkillData;
 class URogue10mMonsterDataAsset;
+class URogue10mMonsterAttackPatternComponent;
+class URogue10mMonsterAttackPatternProfile;
 class URogue10mVitalRegenerationComponent;
+class ARogue10mBasicMonster;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FRogue10mMonsterDied, ARogue10mBasicMonster*, Monster);
 
 UCLASS(Blueprintable)
 class ROGUE10M_API ARogue10mBasicMonster : public ACharacter, public IAbilitySystemInterface, public IRogue10mAttackTargetInterface
@@ -47,6 +52,22 @@ public:
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Monster")
 	bool IsDead() const { return bIsDead; }
+	/** Set before FinishSpawning; development fixtures never grant progression rewards. */
+	void MarkCombatTestInstance();
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat Test")
+	bool IsCombatTestInstance() const { return bCombatTestInstance; }
+
+	UPROPERTY(BlueprintAssignable, Category="Rogue10m|Monster")
+	FRogue10mMonsterDied OnMonsterDied;
+
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Monster|Pattern")
+	URogue10mMonsterAttackPatternComponent* GetAttackPatternComponent() const { return AttackPatternComponent; }
+
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Monster|Pattern")
+	void ConfigureAttackPatternProfile(URogue10mMonsterAttackPatternProfile* Profile);
+
+	bool IsPatternAttackActive() const;
+	float GetPatternBaseDamage() const { return FMath::Max(0.0f, AttackDamage); }
 
 	float GetDetectionRange() const { return DetectionRange; }
 	float GetLoseSightRange() const { return LoseSightRange; }
@@ -72,6 +93,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Monster")
 	TObjectPtr<URogue10mVitalRegenerationComponent> VitalRegenerationComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Monster|Pattern")
+	TObjectPtr<URogue10mMonsterAttackPatternComponent> AttackPatternComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Monster|Data")
 	TObjectPtr<URogue10mMonsterDataAsset> MonsterData;
@@ -128,6 +152,7 @@ protected:
 	bool bDestroyOnDeath = true;
 
 private:
+	float DifficultyDamageMultiplier = 1.0f;
 	void TryAttackTarget(float DistanceToTarget);
 	void StartMonsterAttackSequence();
 	void ExecuteMonsterAttackPulse();
@@ -136,10 +161,12 @@ private:
 
 	TWeakObjectPtr<ARogue10mCharacter> TargetCharacter;
 	TWeakObjectPtr<AController> LastDamageInstigator;
+	TWeakObjectPtr<ARogue10mCharacter> LastDirectDamageCharacter;
 	int32 ExperienceReward = 10;
 	float LastAttackTime = -1000.0f;
 	FTimerHandle AttackSequenceTimer;
 	TWeakObjectPtr<ARogue10mCharacter> LockedAttackTarget;
 	int32 CompletedAttackPulses = 0;
 	bool bIsDead = false;
+	bool bCombatTestInstance = false;
 };

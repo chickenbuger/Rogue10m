@@ -1,4 +1,4 @@
-"""Run an asynchronous PIE smoke test for Menu -> Lobby -> Gameplay travel."""
+"""Run an asynchronous PIE smoke test for Menu -> Lobby -> StartHub travel."""
 
 import time
 import unreal
@@ -46,10 +46,10 @@ def tick_impl(_delta_seconds):
             finish("Character Lobby did not open.", failed=True)
             return
         controller.enter_selected_character()
-        state["phase"] = "wait_gameplay"
+        state["phase"] = "wait_hub"
         return
 
-    if state["phase"] == "wait_gameplay" and "Lvl_FirstPerson" in world_path:
+    if state["phase"] == "wait_hub" and "StartHub" in world_path:
         pawn = unreal.GameplayStatics.get_player_pawn(world, 0)
         paused = unreal.GameplayStatics.is_game_paused(world)
         move_ignored = controller.is_move_input_ignored()
@@ -65,9 +65,29 @@ def tick_impl(_delta_seconds):
                 failed=True,
             )
             return
+        game_state = unreal.GameplayStatics.get_game_state(world)
+        if not game_state or not isinstance(game_state, unreal.Rogue10mGameState):
+            finish("Starting hub has no Rogue10mGameState.", failed=True)
+            return
+        if (
+            game_state.get_run_phase() != unreal.Rogue10mRunPhase.WAITING_TO_START
+            or game_state.is_run_active()
+            or abs(
+                game_state.get_remaining_run_seconds()
+                - game_state.get_run_duration_seconds()
+            ) > 0.01
+        ):
+            finish(
+                "Starting hub unexpectedly started the combat run: "
+                f"Phase={game_state.get_run_phase()} "
+                f"Remaining={game_state.get_remaining_run_seconds()}",
+                failed=True,
+            )
+            return
         finish(
             f"World={world_path} Pawn={pawn.get_class().get_name()} "
-            "MoveIgnored=False LookIgnored=False Paused=False"
+            "MoveIgnored=False LookIgnored=False Paused=False "
+            "RunPhase=WaitingToStart TimerStarted=False"
         )
 
 

@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "command": "import json\nfrom pathlib import Path\nimport unreal\n\nsubsystem = unreal.get_editor_subsystem(unreal.UnrealEditorSubsystem)\nworld = subsystem.get_editor_world()\ngame_world = subsystem.get_game_world()\nanim_class = unreal.load_class(None, '/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed.ABP_Common_Unarmed_C')\ndefaults = unreal.get_default_object(anim_class) if anim_class else None\nstate = {\n    'world': world.get_path_name() if world else None,\n    'game_world': game_world.get_path_name() if game_world else None,\n    'dirty_content': [p.get_path_name() for p in unreal.EditorLoadingAndSavingUtils.get_dirty_content_packages()],\n    'dirty_maps': [p.get_path_name() for p in unreal.EditorLoadingAndSavingUtils.get_dirty_map_packages()],\n    'common_anim_class': anim_class.get_path_name() if anim_class else None,\n    'native_aim_settings': {\n        name: defaults.get_editor_property(name) for name in (\n            'enable_view_aligned_upper_body', 'upper_body_aim_max_pitch',\n            'upper_body_aim_max_yaw', 'upper_body_aim_torso_weight',\n            'upper_body_aim_interpolation_speed'\n        )\n    } if defaults else None,\n}\nassert state['world'] == '/Game/Rogue10m/Maps/OpenRunMap.OpenRunMap', state\nassert not state['game_world'] and not state['dirty_content'] and not state['dirty_maps'], state\nassert state['native_aim_settings']['enable_view_aligned_upper_body'], state\noutput = Path('D:/Project/Rogue10m/Feature/doc/evidence/view-aligned-upper-body-20261011/editor-restored-state.json')\noutput.write_text(json.dumps(state, indent=2, ensure_ascii=False), encoding='utf-8')\nprint('RESULT=VIEW_AIM_EDITOR_RESTORE_PASSED', json.dumps(state, ensure_ascii=False))\n",
+  "result": "None",
+  "output": [
+    {
+      "type": "Info",
+      "output": "RESULT=VIEW_AIM_EDITOR_RESTORE_PASSED {\"world\": \"/Game/Rogue10m/Maps/OpenRunMap.OpenRunMap\", \"game_world\": null, \"dirty_content\": [], \"dirty_maps\": [], \"common_anim_class\": \"/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed.ABP_Common_Unarmed_C\", \"native_aim_settings\": {\"enable_view_aligned_upper_body\": true, \"upper_body_aim_max_pitch\": 75.0, \"upper_body_aim_max_yaw\": 45.0, \"upper_body_aim_torso_weight\": 0.25, \"upper_body_aim_interpolation_speed\": 18.0}}\r\n"
+    }
+  ]
+}

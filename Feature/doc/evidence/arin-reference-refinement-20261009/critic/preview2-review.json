@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-09",
+  "reviewer": "/root/arin_reference_art_critic",
+  "method": "Direct visual inspection of actual preview2 neutral-front, five Idle render PNGs, and preserved preview-attempt1 idle-back. No model-source edits, Blender/Unreal execution or generated replacement image by reviewer.",
+  "scope": "Source preview after donor binding and regional material tone changes; not fresh FBX or Unreal acceptance.",
+  "candidate": {
+    "source_blend": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/preview/preview.blend",
+    "source_blend_sha256": "8bbb8bf123638438e8fa2ba6cd6c5d5ecbd2d6e29b1d6a06c328e8b6a9ecf52e",
+    "image_dimensions": [900, 1100],
+    "images": [
+      {"view": "idle-front", "sha256": "b8c146a8f406301facbd85833fccc71584f872b0df68c21be43fbe7037e1bf3f"},
+      {"view": "idle-oblique", "sha256": "1fc43c406e1ee70f4a60059d7b745cb38a8f8bb255d0f23221ea4f3ff2692760"},
+      {"view": "idle-back", "sha256": "4b9869c6e27d361301f5a5efdc0cbdb5d178f75bbf93c1de4c64a9e359881b51"},
+      {"view": "idle-face", "sha256": "1c47607c9764731618453bf43c3ac6d3c68e1b9f9ca43eab0d3559054503cee6"},
+      {"view": "idle-face-profile", "sha256": "7efd1bdde6147ee334a159baaee15a187502cdd9f6b78909da904442f049669a"},
+      {"view": "neutral-front", "sha256": "725ece4a1ae22c4c58d7a4834331d3f2ed73eed5167bd7606e24656000b5ffae"}
+    ],
+    "view_root": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/preview"
+  },
+  "prior_candidate": {
+    "evidence": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/preview-attempt1/idle-back.png",
+    "sha256": "fac480bdfed879bfa30a619c0065cb789b04fa065c8e3d018d78577e4a53915f",
+    "observed_defect": "Thin diagonal cape/arm shards project well beyond both upper arms; accordion/triangular folds around the cape's lateral back."
+  },
+  "ledger": [
+    {
+      "id": "P2-01",
+      "requirement": "Preserve donor neutral silhouette and reference identity",
+      "status": "pass",
+      "views": ["neutral-front"],
+      "observation": "The T-pose retains donor face/hair, hood/cape silhouette, blouse, embroidered layered coat, pants, boots, bag and potions. No large arm spikes appear in this neutral pose. This does not establish motion acceptance."
+    },
+    {
+      "id": "P2-02",
+      "requirement": "Idle arms-down sleeves/bracers retain fitted non-exploding surfaces",
+      "status": "fail",
+      "priority": 0,
+      "views": ["idle-front", "idle-oblique", "idle-back"],
+      "observation": "Both upper sleeves produce broad white shards pointing diagonally up/out. Both brown bracers are stretched into large triangular wings pointing toward the upper-arm/shoulder region. Hands remain at the ends of the lowered arms, while only part of the garment is stretched. This is a severe visible deformation failure and a delivery blocker.",
+      "approximate_pixel_bounds_in_idle_front": {
+        "viewer_left_white_sleeve_spike": [217, 323, 292, 476],
+        "viewer_right_white_sleeve_spike": [607, 326, 687, 480],
+        "viewer_left_brown_bracer_wing": [214, 412, 299, 592],
+        "viewer_right_brown_bracer_wing": [602, 411, 686, 588]
+      },
+      "approximate_pixel_bounds_in_idle_back": {
+        "viewer_left_white_sleeve_spike": [214, 327, 293, 474],
+        "viewer_right_white_sleeve_spike": [606, 327, 686, 474],
+        "viewer_left_brown_bracer_wing": [228, 409, 315, 593],
+        "viewer_right_brown_bracer_wing": [580, 407, 674, 591]
+      },
+      "source_cause_status": "Not directly inspected. The contrast between clean T-pose and failed arms-down indicates a skin/pose-related issue. Suspect an incorrect or discontinuous weight mask on some sleeve/bracer vertices, including garment vertices left on torso/cape influence, but do not treat this hypothesis as established.",
+      "repair": "Inspect affected source vertex weights and bone transforms at the stated regions. Rebind/resmooth only the failed semantic regions while preserving donor UV/forms. Recheck identical neutral and all three Idle views, then elbow/reach/twist poses on both sides."
+    },
+    {
+      "id": "P2-03",
+      "requirement": "Cape main rear body avoids attempt1 accordion/shards",
+      "status": "pass",
+      "views": ["idle-back", "preview-attempt1/idle-back"],
+      "observation": "The broad central rear cape and hood now retain a smoother continuous curved silhouette. The earlier folded small lateral back triangles are much reduced. This localized improvement does not close P2-02; the adjacent sleeve/bracer deformation is larger and still fails.",
+      "limit": "Front cape wing folds remain mechanically compressed around the shoulders in the arms-down pose. Dynamic or alternate pose acceptance is not established."
+    },
+    {
+      "id": "P2-04",
+      "requirement": "Face/hair reference identity improves without severe face deformation",
+      "status": "pass",
+      "views": ["idle-face", "idle-face-profile", "idle-front"],
+      "observation": "Face shape, eye expression, shaped ear/nose/cheek, side braid and hair-lock silhouette are far closer to the supplied PNG than procedural v2. No large face, neck or eye loss/collapse is observed in these views.",
+      "limit": "Eyes/lips remain texture dependent and the skin/eye detail is soft at this closeup. This is not a facial-rig or moving-eyelid pass."
+    },
+    {
+      "id": "P2-05",
+      "requirement": "Hair palette resembles the chestnut reference without bright painted crown wash",
+      "status": "fail",
+      "priority": 2,
+      "views": ["idle-face", "idle-face-profile", "idle-front"],
+      "observation": "The darker front/left locks and warm skin are improved compared with the first pale donor renders. A broad near-white patch and pale stripe remain across the crown and viewer-right hair; the profile retains conspicuously light streaks. The reference uses finer chestnut variation, rather than this broad white-looking crown.",
+      "approximate_pixel_bounds": {
+        "idle_face_crown_white_region": [348, 71, 758, 345],
+        "idle_face_profile_pale_streak_zone": [316, 206, 789, 619]
+      },
+      "repair": "After arm repair, diagnose whether these bright regions are fixed atlas highlights, normal/specular response, or unclassified color-mask regions. Use the neutral albedo/unchanged lighting comparison; adjust only confirmed hair highlight regions without losing skin or ivory cloth."
+    },
+    {
+      "id": "P2-06",
+      "requirement": "Confirmed crown local gap is no longer visibly black in repaired preview",
+      "status": "fail",
+      "priority": 1,
+      "views": ["idle-face"],
+      "observation": "A small black wedge remains under the upper swept lock near the crown/part at approximately x=393..413,y=306..340 in the 900x1100 face image. A source inspector previously confirmed a crown boundary hole in this region. The new camera/framing differs from the original 800x900 camera; exact geometric correspondence must be checked, but the visible mark is not resolved in this preview.",
+      "repair": "Check the repaired boundary loop and the nearby overlapping small hair component/patch at this location. Fill/rejoin only confirmed unwanted missing surface and preserve intended curl gaps. Reopen the same face closeup after the final source/export revision."
+    },
+    {
+      "id": "P2-07",
+      "requirement": "Lower body/accessories retain coherent Idle silhouette",
+      "status": "pass",
+      "views": ["idle-front", "idle-oblique", "idle-back"],
+      "observation": "Torso, belt, satchel, potions, coat/apron, trousers and boots remain visibly coherent in these sampled stationary poses. No catastrophic pelvis, knee or ankle collapse is observed.",
+      "limit": "No knee/hip pose, full Idle timeline, continuous gait or collision proof is supplied by this limited sample."
+    },
+    {
+      "id": "P2-08",
+      "requirement": "Fresh exported deformation and Unreal behavior remain valid",
+      "status": "unclear",
+      "priority": "hard_gate",
+      "views": [],
+      "observation": "These are source preview renders. Reviewer has not received fresh FBX, lower LOD, engine material/animation or tutorial runtime evidence for this revision."
+    }
+  ],
+  "decision": "reject_preview2_for_delivery_repair_bilateral_arm_deformation_first",
+  "positive_changes": [
+    "Donor primary face/hair/clothing identity preserved",
+    "Main back cape improved relative to attempt1",
+    "Darker warm front locks and skin improve palette",
+    "Lower body and equipment coherent in sampled Idle views"
+  ],
+  "blocking_remaining_defects": [
+    "Severe bilateral sleeve/bracer triangle stretching in arms-down Idle",
+    "Visible local black crown/part wedge persists"
+  ],
+  "critical_next_evidence": [
+    "Same six cameras from repaired durable source",
+    "Both elbow/reach poses and arms-down Idle",
+    "Local crown repaired closeup",
+    "Fresh export materials/weights and actual Unreal validation"
+  ]
+}

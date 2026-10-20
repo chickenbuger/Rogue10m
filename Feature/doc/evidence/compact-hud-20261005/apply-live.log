@@ -1,0 +1,35 @@
+{
+  "success": false,
+  "command": "import sys, importlib; sys.path.insert(0,'D:/Project/Rogue10m/Scripts/Editor'); import ApplyCompactCombatHUD; importlib.reload(ApplyCompactCombatHUD); ApplyCompactCombatHUD.main()",
+  "result": "Traceback (most recent call last):\n\n  File \"<string>\", line 1, in <module>\n\n  File \"D:\\Project/Rogue10m/Scripts/Editor\\ApplyCompactCombatHUD.py\", line 424, in main\n    validate(preserved)\n\n  File \"D:\\Project/Rogue10m/Scripts/Editor\\ValidateCompactCombatHUD.py\", line 96, in main\n    require(asset.get_editor_property(\"parent_class\") == unreal.load_class(None, \"/Script/Rogue10m.\" + native),\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\nException: WidgetBlueprint: Failed to find property 'parent_class' for attribute 'parent_class' on 'WidgetBlueprint'\n",
+  "output": [
+    {
+      "type": "Info",
+      "output": "[Rogue10mClassBottomHUD] Compiled and saved: /Game/Widget/Parts/Compact/WBP_CompactVitalBar"
+    },
+    {
+      "type": "Info",
+      "output": "[Rogue10mClassBottomHUD] Compiled and saved: /Game/Widget/Parts/Compact/WBP_CompactExperienceLine"
+    },
+    {
+      "type": "Info",
+      "output": "[Rogue10mClassBottomHUD] Compiled and saved: /Game/Widget/Parts/Compact/WBP_CompactQuickSlot"
+    },
+    {
+      "type": "Info",
+      "output": "[Rogue10mClassBottomHUD] Compiled and saved: /Game/Widget/Parts/Compact/WBP_CompactIdentity"
+    },
+    {
+      "type": "Info",
+      "output": "[Rogue10mClassBottomHUD] Compiled and saved: /Game/Widget/Parts/Compact/WBP_CompactAcquisitionLine"
+    },
+    {
+      "type": "Info",
+      "output": "[Rogue10mClassBottomHUD] Compiled and saved: /Game/Widget/Parts/WBP_BottomHUD"
+    },
+    {
+      "type": "Info",
+      "output": "[Rogue10mClassBottomHUD] Compiled and saved: /Game/Widget/WBP_Rogue10mMainHUD"
+    }
+  ]
+}

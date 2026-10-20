@@ -1,0 +1,130 @@
+{
+  "status": "PASSED",
+  "branch": "Sprint#5-22-walking-palm-reference",
+  "scope": "Player Unarmed/Knuckle locomotion wrist rotations only",
+  "static_reviewer": "arin_animation_critic",
+  "geometry_visual_reviewer": "arin_mixamo_reference",
+  "source_analysis_reviewer": "walking_fbx_reference",
+  "editor_state": {
+    "status": "PASSED",
+    "read_only": true,
+    "map": "/Game/Rogue10m/Maps/StartHub.StartHub",
+    "PIE": false,
+    "dirty_content": 0,
+    "dirty_maps": 0,
+    "max_fps": 120.0,
+    "cameras": [
+      {
+        "appearance": "HumanFemale",
+        "eye_offset_cm": [
+          8.0,
+          0.0,
+          -3.0
+        ],
+        "initial_pitch": -20.0
+      },
+      {
+        "appearance": "HumanMale",
+        "eye_offset_cm": [
+          8.0,
+          0.0,
+          -3.0
+        ],
+        "initial_pitch": -20.0
+      },
+      {
+        "appearance": "DwarfFemale",
+        "eye_offset_cm": [
+          8.0,
+          0.0,
+          -3.0
+        ],
+        "initial_pitch": -20.0
+      },
+      {
+        "appearance": "DwarfMale",
+        "eye_offset_cm": [
+          8.0,
+          0.0,
+          -3.0
+        ],
+        "initial_pitch": -20.0
+      },
+      {
+        "appearance": "OrcFemale",
+        "eye_offset_cm": [
+          8.0,
+          0.0,
+          -3.0
+        ],
+        "initial_pitch": -20.0
+      },
+      {
+        "appearance": "OrcMale",
+        "eye_offset_cm": [
+          8.0,
+          0.0,
+          -3.0
+        ],
+        "initial_pitch": -20.0
+      }
+    ],
+    "content": {
+      "original_file_count": 6366,
+      "added": [
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Jog_Bwd_Left_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Jog_Bwd_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Jog_Bwd_Right_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Jog_Fwd_Left_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Jog_Fwd_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Jog_Fwd_Right_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Jog_Left_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Jog_Right_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Walk_Bwd_Left_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Walk_Bwd_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Walk_Bwd_Right_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Walk_Fwd_Left_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Walk_Fwd_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Walk_Fwd_Right_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Walk_Left_PalmReference.uasset",
+        "Content/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Walk_Right_PalmReference.uasset"
+      ],
+      "protected_changed": [],
+      "permitted_existing": "Content/Rogue10m/Animation/Common/ABP_Common_Unarmed.uasset"
+    }
+  },
+  "independent_runtime_report_sha256": "6d4d18a5686f38f6b7152f7fbcb0ec299eca7d35cef07b6b1c30c88b9ed707e3",
+  "files": {
+    "Scripts/Blender/InspectWalkingPalmReference.py": "da9c6a5a0f5f8e23d483234c2b8c99eb99c1852988bbf69de1dc8ed995eca928",
+    "Scripts/Editor/ApplyWalkingPalmReference.py": "892713de15fb4c0ed39ecd91e0efc907dab1a7bc133cd60d697f32cfae5f6fee",
+    "Scripts/AuditWalkPalmRuntime.py": "91c036af2f74c81eacfa8e13eac1274f38d9edeed39e65a5a41ab1c7385ee45e",
+    "Scripts/VerifyWalkPalm.ps1": "55c408956754271cec0c202eacc1a608df82892e449286ecf75a261cb5f32e12",
+    "Source/Rogue10m/Editor/Rogue10mWalkPalmAuthoring.cpp": "b51f5c468b9f0cc865e331c71bdf37eea47c55c3f378a9e10eb15e7944763a63",
+    "Source/Rogue10m/Tests/Rogue10mWalkPalmRuntimeTest.cpp": "a766e1b5a12dc27d17480a0bae846e4211da1fa3aa9c1380aa3c044742a13f26",
+    "Feature/architect/2026-10-09_walking-palm-reference.md": "a05b12f5cc028aa8d7df8b226d1b939dae1ad312b82657291431f9d06d5fe347",
+    "Feature/doc/2026-10-09_walking-palm-reference.md": "61215864023f5d018b34657e535cd2fd78b842f1383da90a3dd9ef29438059fa",
+    "Docs/SprintChangeLog.md": "2c09f27e42a3e5462e9965da83079b43a09516feac0acaf269a094f70d0ecdef",
+    "DevLog/20261009.txt": "916607b7704c50ffb5a5b18220677ee5822910b115b825036518b85d6891fcff"
+  },
+  "checks": [
+    "UE5.8 editor build",
+    "Strict native every-key and metadata audit",
+    "Source FBX geometry and fixed palm signs",
+    "Actual movement and render",
+    "Six appearances independent geometry",
+    "Moving-attack regression",
+    "Camera/forward-attack regression",
+    "Saved-asset fresh editor reload",
+    "Python / PowerShell syntax",
+    "git diff --check / CheckGeneratedChanges"
+  ],
+  "limits": [
+    "The FBX has no mesh; full gait and root motion were not transplanted.",
+    "Cycle mean improves; not every frame matches the reference.",
+    "Render covers HumanFemale; all six appearances have numeric runtime QA.",
+    "Existing hand material and wrist seam remain."
+  ],
+  "committed": false,
+  "pushed": false
+}

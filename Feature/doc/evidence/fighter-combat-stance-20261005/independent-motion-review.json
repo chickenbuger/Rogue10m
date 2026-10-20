@@ -1,0 +1,546 @@
+{
+  "review": "independent_motion_and_runtime_pose_review",
+  "final_runtime": "D:\\Project\\Rogue10m\\tmp\\fighter-combat-stance\\stance-runtime-final",
+  "baseline_runtime": "D:\\Project\\Rogue10m\\tmp\\fist-combat\\swing-after-fp-20261005",
+  "observations": {
+    "rows": 90381,
+    "frames": 641,
+    "nonfinite_numeric_fields": 0,
+    "maximum_limb_segment_length_fraction_error": 0.0009664229999999385
+  },
+  "limits": [
+    "Runtime pose data is structurally evaluated before hidden-head rendering scales; fine skin deformation requires rendered visual review.",
+    "GetCurrentActiveMontage can be null during residual montage blend-out. Stable guard analysis excludes 15 prior frames with any current montage and requires 5 prior stationary, grounded guard frames.",
+    "Combat HandleAttackPressed/Released reaches production gameplay policy; these are not simulated physical mouse events. V is injected through PlayerController InputKey.",
+    "Step measurements are per recorded 30Hz frame in component space, not an authored raw-clip peak speed measurement."
+  ],
+  "steady_guard": {
+    "source": {
+      "all_render_bones": {
+        "rows": 16195,
+        "frames": 205,
+        "component_space_translation_step": {
+          "frame": 324,
+          "bone": "head",
+          "stage": "source",
+          "cm": 0.025614635
+        },
+        "component_space_rotation_step": {
+          "frame": 144,
+          "bone": "head",
+          "stage": "source",
+          "degrees": 0.109125594
+        },
+        "maximum_local_rotation_step_degrees": 0.13619084124440461
+      },
+      "wrists": {
+        "rows": 410,
+        "frames": 205,
+        "component_space_translation_step": {
+          "frame": 324,
+          "bone": "hand_l",
+          "stage": "source",
+          "cm": 0.019299444
+        },
+        "component_space_rotation_step": {
+          "frame": 324,
+          "bone": "hand_l",
+          "stage": "source",
+          "degrees": 0.030740457
+        },
+        "maximum_local_rotation_step_degrees": 0.0
+      },
+      "fingers": {
+        "rows": 7790,
+        "frames": 205,
+        "component_space_translation_step": {
+          "frame": 324,
+          "bone": "ring_01_l",
+          "stage": "source",
+          "cm": 0.023922027
+        },
+        "component_space_rotation_step": {
+          "frame": 324,
+          "bone": "index_metacarpal_l",
+          "stage": "source",
+          "degrees": 0.030740457
+        },
+        "maximum_local_rotation_step_degrees": 0.0
+      },
+      "feet": {
+        "rows": 820,
+        "frames": 205,
+        "component_space_translation_step": {
+          "frame": 77,
+          "bone": "foot_r",
+          "stage": "source",
+          "cm": 0.0
+        },
+        "component_space_rotation_step": {
+          "frame": 77,
+          "bone": "foot_l",
+          "stage": "source",
+          "degrees": 2.415e-06
+        },
+        "maximum_local_rotation_step_degrees": 0.0
+      },
+      "head": {
+        "rows": 205,
+        "frames": 205,
+        "component_space_translation_step": {
+          "frame": 324,
+          "bone": "head",
+          "stage": "source",
+          "cm": 0.025614635
+        },
+        "component_space_rotation_step": {
+          "frame": 144,
+          "bone": "head",
+          "stage": "source",
+          "degrees": 0.109125594
+        },
+        "maximum_local_rotation_step_degrees": 0.13619084124440461
+      }
+    },
+    "appearance": {
+      "all_render_bones": {
+        "rows": 12505,
+        "frames": 205,
+        "component_space_translation_step": {
+          "frame": 324,
+          "bone": "pinky_02_l",
+          "stage": "appearance",
+          "cm": 0.026848655
+        },
+        "component_space_rotation_step": {
+          "frame": 144,
+          "bone": "head",
+          "stage": "appearance",
+          "degrees": 0.109125593
+        },
+        "maximum_local_rotation_step_degrees": 0.1361907637114571
+      },
+      "wrists": {
+        "rows": 410,
+        "frames": 205,
+        "component_space_translation_step": {
+          "frame": 324,
+          "bone": "hand_l",
+          "stage": "appearance",
+          "cm": 0.021143766
+        },
+        "component_space_rotation_step": {
+          "frame": 324,
+          "bone": "hand_l",
+          "stage": "appearance",
+          "degrees": 0.030740457
+        },
+        "maximum_local_rotation_step_degrees": 0.0
+      },
+      "fingers": {
+        "rows": 6150,
+        "frames": 205,
+        "component_space_translation_step": {
+          "frame": 324,
+          "bone": "pinky_02_l",
+          "stage": "appearance",
+          "cm": 0.026848655
+        },
+        "component_space_rotation_step": {
+          "frame": 324,
+          "bone": "middle_01_l",
+          "stage": "appearance",
+          "degrees": 0.030740457
+        },
+        "maximum_local_rotation_step_degrees": 0.0
+      },
+      "feet": {
+        "rows": 820,
+        "frames": 205,
+        "component_space_translation_step": {
+          "frame": 77,
+          "bone": "foot_l",
+          "stage": "appearance",
+          "cm": 0.0
+        },
+        "component_space_rotation_step": {
+          "frame": 77,
+          "bone": "foot_l",
+          "stage": "appearance",
+          "degrees": 0.0
+        },
+        "maximum_local_rotation_step_degrees": 0.0
+      },
+      "head": {
+        "rows": 205,
+        "frames": 205,
+        "component_space_translation_step": {
+          "frame": 324,
+          "bone": "head",
+          "stage": "appearance",
+          "cm": 0.017913344
+        },
+        "component_space_rotation_step": {
+          "frame": 144,
+          "bone": "head",
+          "stage": "appearance",
+          "degrees": 0.109125593
+        },
+        "maximum_local_rotation_step_degrees": 0.1361907637114571
+      }
+    }
+  },
+  "normal_to_guard_foot_world_height": {
+    "source/foot_l": {
+      "normal": 218.53645147205262,
+      "guard": 221.25126253784,
+      "delta_cm": 2.714811065787387
+    },
+    "source/foot_r": {
+      "normal": 218.19989061005262,
+      "guard": 221.13437479459998,
+      "delta_cm": 2.934484184547358
+    },
+    "appearance/foot_l": {
+      "normal": 221.5447446331579,
+      "guard": 223.57791456812,
+      "delta_cm": 2.0331699349621033
+    },
+    "appearance/foot_r": {
+      "normal": 221.32345399115786,
+      "guard": 222.70809809771998,
+      "delta_cm": 1.3846441065621207
+    }
+  },
+  "transitions": {
+    "raise_from_relaxed": {
+      "appearance_head_component_space_step": {
+        "rows": 8,
+        "frames": 8,
+        "component_space_translation_step": {
+          "frame": 540,
+          "bone": "head",
+          "stage": "appearance",
+          "cm": 3.214942821
+        },
+        "component_space_rotation_step": {
+          "frame": 540,
+          "bone": "head",
+          "stage": "appearance",
+          "degrees": 8.869477756
+        },
+        "maximum_local_rotation_step_degrees": 5.182906757215649
+      },
+      "head_camera_world_translation_step_max_cm": 3.3966943746568585
+    },
+    "lower_for_menu": {
+      "appearance_head_component_space_step": {
+        "rows": 19,
+        "frames": 19,
+        "component_space_translation_step": {
+          "frame": 557,
+          "bone": "head",
+          "stage": "appearance",
+          "cm": 1.426625138
+        },
+        "component_space_rotation_step": {
+          "frame": 557,
+          "bone": "head",
+          "stage": "appearance",
+          "degrees": 3.915743942
+        },
+        "maximum_local_rotation_step_degrees": 2.3109249684837856
+      },
+      "head_camera_world_translation_step_max_cm": 1.5046575722507896
+    },
+    "lower_at_hold_expiry": {
+      "appearance_head_component_space_step": {
+        "rows": 30,
+        "frames": 30,
+        "component_space_translation_step": {
+          "frame": 405,
+          "bone": "head",
+          "stage": "appearance",
+          "cm": 1.42804863
+        },
+        "component_space_rotation_step": {
+          "frame": 405,
+          "bone": "head",
+          "stage": "appearance",
+          "degrees": 3.927831755
+        },
+        "maximum_local_rotation_step_degrees": 2.3107539028376824
+      },
+      "head_camera_world_translation_step_max_cm": 1.506536246472201
+    }
+  },
+  "knuckle_jab_comparison": {
+    "pairing": "old frame330+offset -> new frame455+offset; same montage playback times",
+    "baseline_peak": {
+      "source": {
+        "component_space_translation_step": {
+          "frame": 334,
+          "bone": "ring_02_r",
+          "stage": "source",
+          "cm": 46.286348829
+        },
+        "component_space_rotation_step": {
+          "frame": 334,
+          "bone": "index_03_r",
+          "stage": "source",
+          "degrees": 110.12099858
+        }
+      },
+      "appearance": {
+        "component_space_translation_step": {
+          "frame": 334,
+          "bone": "middle_02_r",
+          "stage": "appearance",
+          "cm": 54.406069806
+        },
+        "component_space_rotation_step": {
+          "frame": 334,
+          "bone": "index_03_r",
+          "stage": "appearance",
+          "degrees": 110.121633503
+        }
+      }
+    },
+    "current_peak": {
+      "source": {
+        "component_space_translation_step": {
+          "frame": 459,
+          "bone": "ring_02_r",
+          "stage": "source",
+          "cm": 45.045047931
+        },
+        "component_space_rotation_step": {
+          "frame": 459,
+          "bone": "index_03_r",
+          "stage": "source",
+          "degrees": 110.884234256
+        }
+      },
+      "appearance": {
+        "component_space_translation_step": {
+          "frame": 459,
+          "bone": "middle_02_r",
+          "stage": "appearance",
+          "cm": 53.266645068
+        },
+        "component_space_rotation_step": {
+          "frame": 459,
+          "bone": "index_03_r",
+          "stage": "appearance",
+          "degrees": 110.884834803
+        }
+      }
+    },
+    "early_blend_frames": [
+      {
+        "baseline_frame": 333,
+        "current_frame": 458,
+        "baseline_montage_s": 0.046453334,
+        "current_montage_s": 0.046453334,
+        "stance_alpha": 0.074074082,
+        "appearance_bones": {
+          "hand_r": {
+            "old_cs_step_cm": 17.176363202,
+            "new_cs_step_cm": 20.160610908,
+            "old_cs_step_degrees": 36.218406296,
+            "new_cs_step_degrees": 43.574684334,
+            "old_local_rotation_step_degrees": 10.517923153443967,
+            "new_local_rotation_step_degrees": 12.735853858619707
+          },
+          "middle_02_r": {
+            "old_cs_step_cm": 26.169296523,
+            "new_cs_step_cm": 30.851156007,
+            "old_cs_step_degrees": 49.606890304,
+            "new_cs_step_degrees": 59.468274079,
+            "old_local_rotation_step_degrees": 17.255154908079803,
+            "new_local_rotation_step_degrees": 20.910015311500807
+          },
+          "index_03_r": {
+            "old_cs_step_cm": 27.05762027,
+            "new_cs_step_cm": 31.734370763,
+            "old_cs_step_degrees": 61.663732912,
+            "new_cs_step_degrees": 73.881536692,
+            "old_local_rotation_step_degrees": 13.828915202206131,
+            "new_local_rotation_step_degrees": 16.72628744869914
+          },
+          "head": {
+            "old_cs_step_cm": 3.20499169,
+            "new_cs_step_cm": 3.931492074,
+            "old_cs_step_degrees": 8.658326028,
+            "new_cs_step_degrees": 10.428148048,
+            "old_local_rotation_step_degrees": 5.323081708951992,
+            "new_local_rotation_step_degrees": 6.389096555406169
+          }
+        }
+      },
+      {
+        "baseline_frame": 334,
+        "current_frame": 459,
+        "baseline_montage_s": 0.092906669,
+        "current_montage_s": 0.092906669,
+        "stance_alpha": 0.259259284,
+        "appearance_bones": {
+          "hand_r": {
+            "old_cs_step_cm": 40.493183903,
+            "new_cs_step_cm": 39.556225602,
+            "old_cs_step_degrees": 69.688403271,
+            "new_cs_step_degrees": 71.047261435,
+            "old_local_rotation_step_degrees": 19.809027595646175,
+            "new_local_rotation_step_degrees": 20.253781573982856
+          },
+          "middle_02_r": {
+            "old_cs_step_cm": 54.406069806,
+            "new_cs_step_cm": 53.266645068,
+            "old_cs_step_degrees": 90.104669587,
+            "new_cs_step_degrees": 90.751890502,
+            "old_local_rotation_step_degrees": 34.48325058835694,
+            "new_local_rotation_step_degrees": 35.11798896783236
+          },
+          "index_03_r": {
+            "old_cs_step_cm": 51.701182198,
+            "new_cs_step_cm": 50.13582574,
+            "old_cs_step_degrees": 110.121633503,
+            "new_cs_step_degrees": 110.884834803,
+            "old_local_rotation_step_degrees": 26.315405792985786,
+            "new_local_rotation_step_degrees": 26.91977555524763
+          },
+          "head": {
+            "old_cs_step_cm": 6.126436551,
+            "new_cs_step_cm": 6.425773809,
+            "old_cs_step_degrees": 15.978677624,
+            "new_cs_step_degrees": 16.389913119,
+            "old_local_rotation_step_degrees": 9.970500625079357,
+            "new_local_rotation_step_degrees": 10.184990253301379
+          }
+        }
+      }
+    ],
+    "full_montage_pose_match": {
+      "source": {
+        "paired_pose_rows": 880,
+        "maximum_component_position_delta_cm": 0.0,
+        "maximum_local_rotation_delta_degrees": 0.0
+      },
+      "appearance": {
+        "paired_pose_rows": 671,
+        "maximum_component_position_delta_cm": 0.0,
+        "maximum_local_rotation_delta_degrees": 0.0
+      }
+    }
+  },
+  "conclusions": [
+    "Final 640-frame integrated runtime reported zero failures after correcting walking checks to observe the configured 0.45-second lower duration. The alpha<.01 threshold was unchanged.",
+    "Steady combat guard wrists/fingers have zero local rotation changes and feet have zero component position steps; the tiny remaining motion comes from the authored thoracic breath and retargeted head compensation.",
+    "The overall 53cm/110degree finger component-space step occurs in the early Knuckle Jab montage blend. The baseline already had a 54cm/110degree step at identical montage time; the new stance changes only the early blend, with a slightly faster initial raise and then identical full montage pose samples.",
+    "Root helper world height differs between imported boxing and standard idle representations; the pelvis compensates that offset. Actual foot world height differences remain below3cm and source/appearance component and capsule transformations reported zero displacement. Root helper height is diagnostic, not a floating-body failure.",
+    "These results do not claim that all combat transitions are jitter free. They confirm stable sustained combat stance and existing bounded head-camera behavior while isolating inherited early attack/montage blend motion."
+  ],
+  "visual_review": {
+    "method": "Direct local view_image inspection of five rendered1280x720 frames; no screenshot editing or generated replacement images.",
+    "render_csv": "D:\\Project\\Rogue10m\\tmp\\fighter-combat-stance\\stance-render-final\\frames.csv",
+    "frames": [
+      {
+        "frame": 20,
+        "image": "D:\\Project\\Rogue10m\\Saved\\Screenshots\\WindowsEditor\\FighterCombatStance\\stance-render-final\\frame_0020.png",
+        "runtime": {
+          "alpha": "0.000000000",
+          "requested": "0",
+          "phase": "0",
+          "attack": "0",
+          "charge": "0.000000000",
+          "third": "0",
+          "montage": "",
+          "montage_s": "-1.000000000"
+        },
+        "observations": [
+          "Normal first-person view has no owner fists in the visible playfield; the forward mannequin is the scene NPC, not the owner character. Runtime alpha0/request0 separately establishes the normal idle state.",
+          "The forward playfield and HUD are unobstructed by owner arms in this frame."
+        ]
+      },
+      {
+        "frame": 80,
+        "image": "D:\\Project\\Rogue10m\\Saved\\Screenshots\\WindowsEditor\\FighterCombatStance\\stance-render-final\\frame_0080.png",
+        "runtime": {
+          "alpha": "1.000000000",
+          "requested": "1",
+          "phase": "0",
+          "attack": "0",
+          "charge": "0.000000000",
+          "third": "0",
+          "montage": "",
+          "montage_s": "-1.000000000"
+        },
+        "observations": [
+          "The raised left fist and forearm are visible at the lower left. The left wrist silhouette is continuous and no obvious stretched joint or disconnected hand is visible.",
+          "The HUD covers the lower portion of the left forearm/hand and the right rear hand is not clearly visible above the HUD. This does not show a balanced two-fist first-person composition.",
+          "The center and upper playfield remain open; the sustained guard can be distinguished from the normal first-person frame."
+        ]
+      },
+      {
+        "frame": 123,
+        "image": "D:\\Project\\Rogue10m\\Saved\\Screenshots\\WindowsEditor\\FighterCombatStance\\stance-render-final\\frame_0123.png",
+        "runtime": {
+          "alpha": "1.000000000",
+          "requested": "1",
+          "phase": "2",
+          "attack": "2",
+          "charge": "0.000000000",
+          "third": "1",
+          "montage": "",
+          "montage_s": "-1.000000000"
+        },
+        "observations": [
+          "Third-person view shows the actual owner head, torso, both bent arms and legs. The body is turned slightly into a compact boxing guard with knees flexed and a staggered stance.",
+          "No obvious limb elongation, detached wrist, or impossible knee flip is visible in the exposed silhouette. The near left foot is visible over the platform and the feet shadow is close to the surface.",
+          "The right foot and parts of the front-facing fists are covered by HUD/body occlusion; this image alone cannot certify both foot soles or finger deformation.",
+          "Runtime alpha1 and no current montage match the guard view; the basic-brawler attack state still reports straight-attack recovery, rather than Idle."
+        ]
+      },
+      {
+        "frame": 129,
+        "image": "D:\\Project\\Rogue10m\\Saved\\Screenshots\\WindowsEditor\\FighterCombatStance\\stance-render-final\\frame_0129.png",
+        "runtime": {
+          "alpha": "1.000000000",
+          "requested": "1",
+          "phase": "0",
+          "attack": "0",
+          "charge": "0.000000000",
+          "third": "1",
+          "montage": "",
+          "montage_s": "-1.000000000"
+        },
+        "observations": [
+          "The third-person silhouette remains effectively unchanged from frame123 six frames later, supporting sustained guard rather than a fleeting strike apex."
+        ]
+      },
+      {
+        "frame": 264,
+        "image": "D:\\Project\\Rogue10m\\Saved\\Screenshots\\WindowsEditor\\FighterCombatStance\\stance-render-final\\frame_0264.png",
+        "runtime": {
+          "alpha": "1.000000000",
+          "requested": "1",
+          "phase": "1",
+          "attack": "5",
+          "charge": "1.000000000",
+          "third": "0",
+          "montage": "",
+          "montage_s": "-1.000000000"
+        },
+        "observations": [
+          "A fully charged right-mouse hold still shows the same left-fist guard silhouette at the lower left. Runtime charge1/Charging and alpha1 agree with the sustained combat pose.",
+          "The right rear hand remains obscured by the lower HUD/frame composition. No separate first-person mesh was introduced to move it into view."
+        ]
+      }
+    ],
+    "conclusion": [
+      "Normal idle and combat guard visibly differ, and V exposes a compact boxing full-body stance. No obvious new arm/wrist/leg silhouette deformation appears in the exposed regions of these selected frames.",
+      "First-person framing currently presents the left fist prominently and hides the right rear hand below/behind the HUD. This is a concrete visibility limitation of the current appearance-head-camera composition.",
+      "These screenshots support pose and visibility checks, not a guarantee that the entire animation feels natural or that every finger/foot vertex is deformation free. Numeric pose evidence and selected-frame visual evidence are reported separately."
+    ]
+  }
+}

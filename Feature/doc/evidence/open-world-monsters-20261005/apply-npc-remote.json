@@ -1,0 +1,15 @@
+{
+  "success": true,
+  "command": "import runpy; runpy.run_path('D:/Project/Rogue10m/Scripts/Editor/ApplyStartHubGuide.py',run_name='__main__')",
+  "result": "None",
+  "output": [
+    {
+      "type": "Warning",
+      "output": "D:/Project/Rogue10m/Scripts/Editor/ApplyStartHubGuide.py:66: DeprecationWarning: TraceTypeQuery: Enum entry 'TraceTypeQuery.TRACE_TYPE_QUERY1' is deprecated: Use 'TraceTypeQuery.ECC_VISIBILITY'\n  unreal.Vector(440,-1610,-500), unreal.TraceTypeQuery.TRACE_TYPE_QUERY1,\n"
+    },
+    {
+      "type": "Info",
+      "output": "[StartHubGuide] Saved Arin and two health-potion supply configuration"
+    }
+  ]
+}

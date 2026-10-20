@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "baseline_files": 6364,
+  "baseline_sha256": "8eaa43052f5253b9978ed653074a3c6a6e7a2ba4a2958d4ef4ae1439ac694dd9",
+  "unchanged_sha256": 6363,
+  "changed": [
+    "Content/Rogue10m/World/StartVillage/Tutorial/DA_StartVillageGuide.uasset"
+  ],
+  "deleted": [],
+  "added": [
+    "Content/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Talk.uasset",
+    "Content/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk.uasset"
+  ],
+  "unexpected_changes": [],
+  "unexpected_added": [],
+  "expected_owned_packages": [
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Talk",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk"
+  ],
+  "expected_added": [
+    "Content/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Talk.uasset",
+    "Content/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk.uasset"
+  ],
+  "missing_owned_dependencies": [],
+  "frozen_v3_content_files": [
+    "Content/Rogue10m/Characters/Arin/RefinedV3/ArinIdle.uasset",
+    "Content/Rogue10m/Characters/Arin/RefinedV3/Materials/MI_Arin_Adventurer.uasset",
+    "Content/Rogue10m/Characters/Arin/RefinedV3/Materials/M_Arin_PBR.uasset",
+    "Content/Rogue10m/Characters/Arin/RefinedV3/SK_Arin.uasset",
+    "Content/Rogue10m/Characters/Arin/RefinedV3/SK_Arin_Skeleton.uasset",
+    "Content/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_BaseColor.uasset",
+    "Content/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Metallic.uasset",
+    "Content/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Normal.uasset",
+    "Content/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Roughness.uasset"
+  ],
+  "frozen_v3_violations": [],
+  "existing_arin_art_files": 59,
+  "existing_arin_art_changes": {
+    "changed": [],
+    "deleted": [],
+    "added": []
+  },
+  "prior_art_sha256_violations": [],
+  "prior_integrity": {
+    "available": true,
+    "path": "Feature/doc/evidence/arin-reference-refinement-20261009/final-deliverable-integrity.json",
+    "report_sha256": "d03f23c831b5902c7889ed62b661244a4065469a04d80dc446a85860ed02e9a2",
+    "verified_art_hashes": 18
+  }
+}

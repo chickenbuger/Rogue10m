@@ -1,0 +1,208 @@
+{
+  "date": "2026-10-14",
+  "review_role": "independent file QA",
+  "scope": "Final v2 PNG metadata, actual alpha pixels, framing bounds, prompt existence, and Git ignore retention. Read only for image files; no image edits, Unreal import, source edits, or branch mutation.",
+  "final_files": [
+    {
+      "path": "D:\\Project\\Rogue10m\\SourceArt\\UI\\Identity\\2026-10-14\\T_Identity_GreatSword_v2.png",
+      "bytes": 370948,
+      "format": "PNG",
+      "mode": "RGBA",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "transparent_fraction": 0.9217845796163601,
+      "opaque_fraction": 0.0004031755479753465,
+      "partial_alpha_fraction": 0.07781224483566462,
+      "alpha_ge_16_fraction": 0.07383645063070901,
+      "alpha_ge_128_fraction": 0.07249592372986984,
+      "alpha_ge_250_fraction": 0.06942568469891562,
+      "edges_alpha_minmax": {
+        "top": [
+          0,
+          0
+        ],
+        "bottom": [
+          0,
+          0
+        ],
+        "left": [
+          0,
+          0
+        ],
+        "right": [
+          0,
+          0
+        ]
+      },
+      "threshold_bounding_boxes": {
+        "1": {
+          "bbox": [
+            67,
+            52,
+            1184,
+            1198
+          ],
+          "width_fraction": 0.8907496012759171,
+          "height_fraction": 0.9138755980861244,
+          "area_fraction": 0.8140343246110056,
+          "margin_pixels": {
+            "left": 67,
+            "top": 52,
+            "right": 70,
+            "bottom": 56
+          }
+        },
+        "16": {
+          "bbox": [
+            469,
+            144,
+            787,
+            1096
+          ],
+          "width_fraction": 0.2535885167464115,
+          "height_fraction": 0.759170653907496,
+          "area_fraction": 0.19251696008180522,
+          "margin_pixels": {
+            "left": 469,
+            "top": 144,
+            "right": 467,
+            "bottom": 158
+          }
+        },
+        "128": {
+          "bbox": [
+            470,
+            145,
+            786,
+            1095
+          ],
+          "width_fraction": 0.25199362041467305,
+          "height_fraction": 0.7575757575757576,
+          "area_fraction": 0.1909042578899038,
+          "margin_pixels": {
+            "left": 470,
+            "top": 145,
+            "right": 468,
+            "bottom": 159
+          }
+        }
+      },
+      "sha256": "c4ec52066143a16c033416a1c2b17fdbe03ce5ca45e5b4cc4dbd83da14182267",
+      "git_ignored": false,
+      "prompt_path": "D:\\Project\\Rogue10m\\SourceArt\\UI\\Identity\\2026-10-14\\T_Identity_GreatSword_v2.prompt.txt",
+      "prompt_bytes": 1337,
+      "prompt_sha256": "29510c09201731424795a132196de222f273fac74a5316db7c6184e30a5983c7",
+      "technical_pass": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\SourceArt\\UI\\Identity\\2026-10-14\\T_Identity_Unarmed_v2.png",
+      "bytes": 1251480,
+      "format": "PNG",
+      "mode": "RGBA",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "transparent_fraction": 0.697897509468902,
+      "opaque_fraction": 0.00010937885528668706,
+      "partial_alpha_fraction": 0.3019931116758112,
+      "alpha_ge_16_fraction": 0.29505963691307435,
+      "alpha_ge_128_fraction": 0.29214710692927764,
+      "alpha_ge_250_fraction": 0.28381396437301754,
+      "edges_alpha_minmax": {
+        "top": [
+          0,
+          0
+        ],
+        "bottom": [
+          0,
+          0
+        ],
+        "left": [
+          0,
+          1
+        ],
+        "right": [
+          0,
+          0
+        ]
+      },
+      "threshold_bounding_boxes": {
+        "1": {
+          "bbox": [
+            0,
+            51,
+            1182,
+            1230
+          ],
+          "width_fraction": 0.9425837320574163,
+          "height_fraction": 0.9401913875598086,
+          "area_fraction": 0.886209106934365,
+          "margin_pixels": {
+            "left": 0,
+            "top": 51,
+            "right": 72,
+            "bottom": 24
+          }
+        },
+        "16": {
+          "bbox": [
+            262,
+            184,
+            1032,
+            1095
+          ],
+          "width_fraction": 0.6140350877192983,
+          "height_fraction": 0.726475279106858,
+          "area_fraction": 0.44608131173228127,
+          "margin_pixels": {
+            "left": 262,
+            "top": 184,
+            "right": 222,
+            "bottom": 159
+          }
+        },
+        "128": {
+          "bbox": [
+            265,
+            188,
+            1030,
+            1094
+          ],
+          "width_fraction": 0.6100478468899522,
+          "height_fraction": 0.722488038277512,
+          "area_fraction": 0.4407522721549415,
+          "margin_pixels": {
+            "left": 265,
+            "top": 188,
+            "right": 224,
+            "bottom": 160
+          }
+        }
+      },
+      "sha256": "52498f4bb5d9da2437015d7a719b1fb8ab41ea9b78e2d66dfbf35042c82d0656",
+      "git_ignored": false,
+      "prompt_path": "D:\\Project\\Rogue10m\\SourceArt\\UI\\Identity\\2026-10-14\\T_Identity_Unarmed_v2.prompt.txt",
+      "prompt_bytes": 1182,
+      "prompt_sha256": "f78cf1cae995a20c9c95822cc06484cde5a59338c66ef60bdde174fe25c055aa",
+      "technical_pass": true
+    }
+  ],
+  "all_technical_pass": true,
+  "draft_v1_policy": "Retained drafts; final delivery is v2 only.",
+  "limitations": [
+    "No before hash was available for the existing StoneFist asset; unchanged-file claims are not made.",
+    "Alpha >0 bounding boxes may include nearly invisible alpha-1 pixels; use alpha >=16 and >=128 framing bounds.",
+    "No claim of Unreal import or HUD binding is made."
+  ]
+}

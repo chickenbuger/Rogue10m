@@ -1,0 +1,39 @@
+{
+  "tool": "blender_exec_python",
+  "payload": {
+    "ok": true,
+    "result": {
+      "status": "passed_roundtrip",
+      "report": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-blender-20261007\\roundtrip\\validation.json",
+      "height_m": 1.6999998092651367,
+      "mesh_count": 175,
+      "triangles": 42764,
+      "armature_count": 1,
+      "active_armature_action": "Arin_Rig|Arin_Rig|Arin_Idle",
+      "failed_checks": [],
+      "renders": [
+        {
+          "view": "front",
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-blender-20261007\\roundtrip\\fbx-front.png",
+          "frame": 1,
+          "projection": "orthographic",
+          "material_override": false
+        },
+        {
+          "view": "side",
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-blender-20261007\\roundtrip\\fbx-side.png",
+          "frame": 1,
+          "projection": "orthographic",
+          "material_override": false
+        },
+        {
+          "view": "oblique",
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-blender-20261007\\roundtrip\\fbx-oblique.png",
+          "frame": 1,
+          "projection": "orthographic",
+          "material_override": false
+        }
+      ]
+    }
+  }
+}

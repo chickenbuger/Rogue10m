@@ -1,0 +1,688 @@
+{
+  "result": "CAPTURED",
+  "sample_hz": 120,
+  "data_asset_count": 22,
+  "profile_count": 2,
+  "clips": {
+    "Unarmed_LeftJab": {
+      "metadata": {
+        "sequence": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "enable_root_motion": false,
+          "force_root_lock": false,
+          "root_motion_root_lock": "<RootMotionRootLock.REF_POSE: 0>",
+          "platform_target_frame_rate": "(Default=(Numerator=120,Denominator=1),PerPlatform=())"
+        },
+        "sequence_duration": 1.0,
+        "sequence_notify_events": [],
+        "montage": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "blend_in": "(CustomCurve=None,BlendTime=0.160000,BlendOption=HermiteCubic)",
+          "blend_out": "(CustomCurve=None,BlendTime=0.160000,BlendOption=HermiteCubic)",
+          "blend_out_trigger_time": -1.0,
+          "enable_auto_blend_out": true
+        },
+        "montage_duration": 1.0,
+        "montage_sections": {
+          "count": 1,
+          "names": [
+            "Default"
+          ]
+        },
+        "montage_package_sha256": "53ef4e1938e5da94b2d0a056a22a4eeee925d8fa967d18a2fc89835bff7510dd",
+        "tracks": [
+          {
+            "slot": "DefaultSlot",
+            "segments": [
+              {
+                "anim_reference": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Unarmed_LeftJab.A_Unarmed_LeftJab",
+                "start_pos": 0.0,
+                "anim_start_time": 0.0,
+                "anim_end_time": 1.0,
+                "anim_play_rate": 1.0,
+                "looping_count": 1
+              }
+            ]
+          }
+        ],
+        "montage_notify_events": []
+      },
+      "hands": {
+        "hand_l": {
+          "path_travel_cm": 46.75326847136748,
+          "peak_speed_cm_s": 161.46314074405737,
+          "max_excursion_cm": 23.097101702628468,
+          "axis_range_cm": [
+            1.2613857962355368,
+            22.606521841122444,
+            4.564009550983869
+          ]
+        },
+        "hand_r": {
+          "path_travel_cm": 3.210162939737958,
+          "peak_speed_cm_s": 10.722958575119192,
+          "max_excursion_cm": 1.6047560679626334,
+          "axis_range_cm": [
+            1.195222917619823,
+            1.070833420686533,
+            1.1294766153469027e-06
+          ]
+        }
+      }
+    },
+    "Unarmed_RightJab": {
+      "metadata": {
+        "sequence": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "enable_root_motion": false,
+          "force_root_lock": false,
+          "root_motion_root_lock": "<RootMotionRootLock.REF_POSE: 0>",
+          "platform_target_frame_rate": "(Default=(Numerator=120,Denominator=1),PerPlatform=())"
+        },
+        "sequence_duration": 1.0,
+        "sequence_notify_events": [],
+        "montage": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "blend_in": "(CustomCurve=None,BlendTime=0.160000,BlendOption=HermiteCubic)",
+          "blend_out": "(CustomCurve=None,BlendTime=0.160000,BlendOption=HermiteCubic)",
+          "blend_out_trigger_time": -1.0,
+          "enable_auto_blend_out": true
+        },
+        "montage_duration": 1.0,
+        "montage_sections": {
+          "count": 1,
+          "names": [
+            "Default"
+          ]
+        },
+        "montage_package_sha256": "7b83f55b43b7e39b1e6838bd0c40f60bbdd1ebd1217d9a1a932139f7a8a514f0",
+        "tracks": [
+          {
+            "slot": "DefaultSlot",
+            "segments": [
+              {
+                "anim_reference": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Unarmed_RightJab.A_Unarmed_RightJab",
+                "start_pos": 0.0,
+                "anim_start_time": 0.0,
+                "anim_end_time": 1.0,
+                "anim_play_rate": 1.0,
+                "looping_count": 1
+              }
+            ]
+          }
+        ],
+        "montage_notify_events": []
+      },
+      "hands": {
+        "hand_l": {
+          "path_travel_cm": 8.404783941365634,
+          "peak_speed_cm_s": 28.074733330622312,
+          "max_excursion_cm": 4.198984675886342,
+          "axis_range_cm": [
+            4.109703809969439,
+            0.8612821272097193,
+            4.7045627269426404e-06
+          ]
+        },
+        "hand_r": {
+          "path_travel_cm": 67.03652090475236,
+          "peak_speed_cm_s": 228.96516665298572,
+          "max_excursion_cm": 33.33908154826506,
+          "axis_range_cm": [
+            8.06772299882136,
+            29.50600151389662,
+            13.283286641610133
+          ]
+        }
+      }
+    },
+    "Unarmed_Straight": {
+      "metadata": {
+        "sequence": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "enable_root_motion": false,
+          "force_root_lock": false,
+          "root_motion_root_lock": "<RootMotionRootLock.REF_POSE: 0>",
+          "platform_target_frame_rate": "(Default=(Numerator=120,Denominator=1),PerPlatform=())"
+        },
+        "sequence_duration": 1.0,
+        "sequence_notify_events": [],
+        "montage": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "blend_in": "(CustomCurve=None,BlendTime=0.160000,BlendOption=HermiteCubic)",
+          "blend_out": "(CustomCurve=None,BlendTime=0.160000,BlendOption=HermiteCubic)",
+          "blend_out_trigger_time": -1.0,
+          "enable_auto_blend_out": true
+        },
+        "montage_duration": 1.0,
+        "montage_sections": {
+          "count": 1,
+          "names": [
+            "Default"
+          ]
+        },
+        "montage_package_sha256": "1a30a9bfebd9d554944d83f4bbf701afbf431ae44730ec948f140f3359e39ea1",
+        "tracks": [
+          {
+            "slot": "DefaultSlot",
+            "segments": [
+              {
+                "anim_reference": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Unarmed_Straight.A_Unarmed_Straight",
+                "start_pos": 0.0,
+                "anim_start_time": 0.0,
+                "anim_end_time": 1.0,
+                "anim_play_rate": 1.0,
+                "looping_count": 1
+              }
+            ]
+          }
+        ],
+        "montage_notify_events": []
+      },
+      "hands": {
+        "hand_l": {
+          "path_travel_cm": 12.60717516593383,
+          "peak_speed_cm_s": 36.916244933077984,
+          "max_excursion_cm": 6.292085643691868,
+          "axis_range_cm": [
+            6.109506643374829,
+            1.504749255560732,
+            5.998912484983521e-06
+          ]
+        },
+        "hand_r": {
+          "path_travel_cm": 71.43744555203014,
+          "peak_speed_cm_s": 243.87416932797342,
+          "max_excursion_cm": 35.01540878283344,
+          "axis_range_cm": [
+            4.428255364560908,
+            31.490490010709657,
+            14.898187112380825
+          ]
+        }
+      }
+    },
+    "Unarmed_Hook": {
+      "metadata": {
+        "sequence": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "enable_root_motion": false,
+          "force_root_lock": false,
+          "root_motion_root_lock": "<RootMotionRootLock.REF_POSE: 0>",
+          "platform_target_frame_rate": "(Default=(Numerator=120,Denominator=1),PerPlatform=())"
+        },
+        "sequence_duration": 1.6666666269302368,
+        "sequence_notify_events": [],
+        "montage": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "blend_in": "(CustomCurve=None,BlendTime=0.160000,BlendOption=HermiteCubic)",
+          "blend_out": "(CustomCurve=None,BlendTime=0.160000,BlendOption=HermiteCubic)",
+          "blend_out_trigger_time": -1.0,
+          "enable_auto_blend_out": true
+        },
+        "montage_duration": 1.6666666269302368,
+        "montage_sections": {
+          "count": 1,
+          "names": [
+            "Default"
+          ]
+        },
+        "montage_package_sha256": "fa2b63194c2a1849391cb03b14ac96e194ed2c610fee04de3467c2d01309b109",
+        "tracks": [
+          {
+            "slot": "DefaultSlot",
+            "segments": [
+              {
+                "anim_reference": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Unarmed_Hook.A_Unarmed_Hook",
+                "start_pos": 0.0,
+                "anim_start_time": 0.0,
+                "anim_end_time": 1.6666666269302368,
+                "anim_play_rate": 1.0,
+                "looping_count": 1
+              }
+            ]
+          }
+        ],
+        "montage_notify_events": []
+      },
+      "hands": {
+        "hand_l": {
+          "path_travel_cm": 8.404793135688278,
+          "peak_speed_cm_s": 28.10629334375427,
+          "max_excursion_cm": 4.198989281261172,
+          "axis_range_cm": [
+            4.109708238928835,
+            0.8612834463906793,
+            4.4119895079575144e-06
+          ]
+        },
+        "hand_r": {
+          "path_travel_cm": 74.39309173443316,
+          "peak_speed_cm_s": 203.19209946326157,
+          "max_excursion_cm": 34.25802195983107,
+          "axis_range_cm": [
+            22.94232368433607,
+            22.48737371291198,
+            14.398773437259635
+          ]
+        }
+      }
+    },
+    "Knuckle_Jab": {
+      "metadata": {
+        "sequence": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "enable_root_motion": false,
+          "force_root_lock": false,
+          "root_motion_root_lock": "<RootMotionRootLock.REF_POSE: 0>",
+          "platform_target_frame_rate": "(Default=(Numerator=120,Denominator=1),PerPlatform=())"
+        },
+        "sequence_duration": 1.0,
+        "sequence_notify_events": [],
+        "montage": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "blend_in": "(CustomCurve=None,BlendTime=0.100000,BlendOption=HermiteCubic)",
+          "blend_out": "(CustomCurve=None,BlendTime=0.160000,BlendOption=HermiteCubic)",
+          "blend_out_trigger_time": -1.0,
+          "enable_auto_blend_out": true
+        },
+        "montage_duration": 1.0,
+        "montage_sections": {
+          "count": 1,
+          "names": [
+            "Default"
+          ]
+        },
+        "montage_package_sha256": "08fd208dc9a1c90f4e314b1fa07db19291ed7eed5e1109c032c57718324659d1",
+        "tracks": [
+          {
+            "slot": "DefaultSlot",
+            "segments": [
+              {
+                "anim_reference": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+                "start_pos": 0.0,
+                "anim_start_time": 0.0,
+                "anim_end_time": 1.0,
+                "anim_play_rate": 1.0,
+                "looping_count": 1
+              }
+            ]
+          }
+        ],
+        "montage_notify_events": []
+      },
+      "hands": {
+        "hand_l": {
+          "path_travel_cm": 8.404776373167234,
+          "peak_speed_cm_s": 52.09881816075498,
+          "max_excursion_cm": 4.198989281261172,
+          "axis_range_cm": [
+            4.109708238928835,
+            0.8612834463906793,
+            4.746799319832462e-06
+          ]
+        },
+        "hand_r": {
+          "path_travel_cm": 67.0514323914447,
+          "peak_speed_cm_s": 425.056481921887,
+          "max_excursion_cm": 33.339083215052085,
+          "axis_range_cm": [
+            8.068673460242884,
+            29.50600531847045,
+            13.283284511681401
+          ]
+        }
+      }
+    },
+    "Knuckle_BodyStraight": {
+      "metadata": {
+        "sequence": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "enable_root_motion": false,
+          "force_root_lock": false,
+          "root_motion_root_lock": "<RootMotionRootLock.REF_POSE: 0>",
+          "platform_target_frame_rate": "(Default=(Numerator=120,Denominator=1),PerPlatform=())"
+        },
+        "sequence_duration": 1.0,
+        "sequence_notify_events": [],
+        "montage": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "blend_in": "(CustomCurve=None,BlendTime=0.100000,BlendOption=HermiteCubic)",
+          "blend_out": "(CustomCurve=None,BlendTime=0.160000,BlendOption=HermiteCubic)",
+          "blend_out_trigger_time": -1.0,
+          "enable_auto_blend_out": true
+        },
+        "montage_duration": 1.0,
+        "montage_sections": {
+          "count": 1,
+          "names": [
+            "Default"
+          ]
+        },
+        "montage_package_sha256": "4b9652315a0152b54742e21cd997410c5a343403ff2149c3c017e9241b3135ec",
+        "tracks": [
+          {
+            "slot": "DefaultSlot",
+            "segments": [
+              {
+                "anim_reference": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_BodyStraight.A_Knuckle_BodyStraight",
+                "start_pos": 0.0,
+                "anim_start_time": 0.0,
+                "anim_end_time": 1.0,
+                "anim_play_rate": 1.0,
+                "looping_count": 1
+              }
+            ]
+          }
+        ],
+        "montage_notify_events": []
+      },
+      "hands": {
+        "hand_l": {
+          "path_travel_cm": 4.2023491366636145,
+          "peak_speed_cm_s": 24.57346428285302,
+          "max_excursion_cm": 2.1007494611022604,
+          "axis_range_cm": [
+            2.069868168911178,
+            0.358878895518977,
+            4.805081090353269e-06
+          ]
+        },
+        "hand_r": {
+          "path_travel_cm": 58.71494656012585,
+          "peak_speed_cm_s": 379.04338038264603,
+          "max_excursion_cm": 29.136028356508515,
+          "axis_range_cm": [
+            7.858033035815097,
+            22.380317567995952,
+            17.034702312531238
+          ]
+        }
+      }
+    },
+    "Knuckle_HookFlurry": {
+      "metadata": {
+        "sequence": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "enable_root_motion": false,
+          "force_root_lock": false,
+          "root_motion_root_lock": "<RootMotionRootLock.REF_POSE: 0>",
+          "platform_target_frame_rate": "(Default=(Numerator=120,Denominator=1),PerPlatform=())"
+        },
+        "sequence_duration": 1.6666666269302368,
+        "sequence_notify_events": [],
+        "montage": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "blend_in": "(CustomCurve=None,BlendTime=0.120000,BlendOption=HermiteCubic)",
+          "blend_out": "(CustomCurve=None,BlendTime=0.160000,BlendOption=HermiteCubic)",
+          "blend_out_trigger_time": -1.0,
+          "enable_auto_blend_out": true
+        },
+        "montage_duration": 1.6666666269302368,
+        "montage_sections": {
+          "count": 1,
+          "names": [
+            "Default"
+          ]
+        },
+        "montage_package_sha256": "c09d63b3ec085a3b168c71253fc8a8d69575b24c1bb83a3c83adbf9d17a689eb",
+        "tracks": [
+          {
+            "slot": "DefaultSlot",
+            "segments": [
+              {
+                "anim_reference": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_HookFlurry.A_Knuckle_HookFlurry",
+                "start_pos": 0.0,
+                "anim_start_time": 0.0,
+                "anim_end_time": 1.6666666269302368,
+                "anim_play_rate": 1.0,
+                "looping_count": 1
+              }
+            ]
+          }
+        ],
+        "montage_notify_events": []
+      },
+      "hands": {
+        "hand_l": {
+          "path_travel_cm": 152.55957251081585,
+          "peak_speed_cm_s": 537.6457097883547,
+          "max_excursion_cm": 22.14021959994241,
+          "axis_range_cm": [
+            8.541872193760293,
+            13.41903033483769,
+            17.413304817629722
+          ]
+        },
+        "hand_r": {
+          "path_travel_cm": 166.80486863274822,
+          "peak_speed_cm_s": 616.7581605798146,
+          "max_excursion_cm": 24.931789812328592,
+          "axis_range_cm": [
+            15.515415795004671,
+            17.276271153459376,
+            13.398665748784225
+          ]
+        }
+      }
+    },
+    "Knuckle_Uppercut": {
+      "metadata": {
+        "sequence": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "enable_root_motion": false,
+          "force_root_lock": false,
+          "root_motion_root_lock": "<RootMotionRootLock.REF_POSE: 0>",
+          "platform_target_frame_rate": "(Default=(Numerator=120,Denominator=1),PerPlatform=())"
+        },
+        "sequence_duration": 1.6666666269302368,
+        "sequence_notify_events": [],
+        "montage": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "blend_in": "(CustomCurve=None,BlendTime=0.120000,BlendOption=HermiteCubic)",
+          "blend_out": "(CustomCurve=None,BlendTime=0.160000,BlendOption=HermiteCubic)",
+          "blend_out_trigger_time": -1.0,
+          "enable_auto_blend_out": true
+        },
+        "montage_duration": 1.6666666269302368,
+        "montage_sections": {
+          "count": 1,
+          "names": [
+            "Default"
+          ]
+        },
+        "montage_package_sha256": "32041761428ffcc30116e42d4917176660503d8ecf1b0d6dd78ac220522197f6",
+        "tracks": [
+          {
+            "slot": "DefaultSlot",
+            "segments": [
+              {
+                "anim_reference": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Uppercut.A_Knuckle_Uppercut",
+                "start_pos": 0.0,
+                "anim_start_time": 0.0,
+                "anim_end_time": 1.6666666269302368,
+                "anim_play_rate": 1.0,
+                "looping_count": 1
+              }
+            ]
+          }
+        ],
+        "montage_notify_events": []
+      },
+      "hands": {
+        "hand_l": {
+          "path_travel_cm": 4.2023763856104335,
+          "peak_speed_cm_s": 18.73860205546831,
+          "max_excursion_cm": 2.100762533546705,
+          "axis_range_cm": [
+            2.069880992430946,
+            0.358881456090284,
+            5.233107643221047e-06
+          ]
+        },
+        "hand_r": {
+          "path_travel_cm": 47.77478440198065,
+          "peak_speed_cm_s": 188.9986629093249,
+          "max_excursion_cm": 20.264662166721116,
+          "axis_range_cm": [
+            7.5810034641603,
+            14.12470442729624,
+            15.41253451789106
+          ]
+        }
+      }
+    },
+    "Knuckle_ShortBlow": {
+      "metadata": {
+        "sequence": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "enable_root_motion": false,
+          "force_root_lock": false,
+          "root_motion_root_lock": "<RootMotionRootLock.REF_POSE: 0>",
+          "platform_target_frame_rate": "(Default=(Numerator=120,Denominator=1),PerPlatform=())"
+        },
+        "sequence_duration": 1.8333333730697632,
+        "sequence_notify_events": [],
+        "montage": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "blend_in": "(CustomCurve=None,BlendTime=0.120000,BlendOption=HermiteCubic)",
+          "blend_out": "(CustomCurve=None,BlendTime=0.160000,BlendOption=HermiteCubic)",
+          "blend_out_trigger_time": -1.0,
+          "enable_auto_blend_out": true
+        },
+        "montage_duration": 1.8333333730697632,
+        "montage_sections": {
+          "count": 1,
+          "names": [
+            "Default"
+          ]
+        },
+        "montage_package_sha256": "b6e21486a614cd18e853e0168862bccc1651f788a6aa54b56384fc94a12f3369",
+        "tracks": [
+          {
+            "slot": "DefaultSlot",
+            "segments": [
+              {
+                "anim_reference": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_ShortBlow.A_Knuckle_ShortBlow",
+                "start_pos": 0.0,
+                "anim_start_time": 0.0,
+                "anim_end_time": 1.8333333730697632,
+                "anim_play_rate": 1.0,
+                "looping_count": 1
+              }
+            ]
+          }
+        ],
+        "montage_notify_events": []
+      },
+      "hands": {
+        "hand_l": {
+          "path_travel_cm": 8.404550158114825,
+          "peak_speed_cm_s": 35.74452827535267,
+          "max_excursion_cm": 4.198870267687504,
+          "axis_range_cm": [
+            4.10959371610663,
+            0.8612496812206629,
+            5.867079835297773e-06
+          ]
+        },
+        "hand_r": {
+          "path_travel_cm": 46.91895939706432,
+          "peak_speed_cm_s": 198.44940054689522,
+          "max_excursion_cm": 23.392513089323923,
+          "axis_range_cm": [
+            6.258553382858022,
+            20.486799420357563,
+            9.398469433803811
+          ]
+        }
+      }
+    },
+    "IronChain_TwoPunch": {
+      "metadata": {
+        "sequence": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "enable_root_motion": false,
+          "force_root_lock": true,
+          "root_motion_root_lock": "<RootMotionRootLock.ANIM_FIRST_FRAME: 1>",
+          "platform_target_frame_rate": "(Default=(Numerator=120,Denominator=1),PerPlatform=())"
+        },
+        "sequence_duration": 0.699999988079071,
+        "sequence_notify_events": [],
+        "montage": {
+          "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+          "rate_scale": 1.0,
+          "blend_in": "(CustomCurve=None,BlendTime=0.100000,BlendOption=HermiteCubic)",
+          "blend_out": "(CustomCurve=None,BlendTime=0.120000,BlendOption=HermiteCubic)",
+          "blend_out_trigger_time": -1.0,
+          "enable_auto_blend_out": true
+        },
+        "montage_duration": 0.699999988079071,
+        "montage_sections": {
+          "count": 1,
+          "names": [
+            "Default"
+          ]
+        },
+        "montage_package_sha256": "2dbc097cebe20aea4bf3089c8780f2bea095319a10c5339cc84bd226a835d39c",
+        "tracks": [
+          {
+            "slot": "DefaultSlot",
+            "segments": [
+              {
+                "anim_reference": "/Game/Rogue10m/Animation/Combat/FighterSkills/A_Fighter_IronChain_TwoPunch.A_Fighter_IronChain_TwoPunch",
+                "start_pos": 0.0,
+                "anim_start_time": 0.0,
+                "anim_end_time": 0.699999988079071,
+                "anim_play_rate": 1.0,
+                "looping_count": 1
+              }
+            ]
+          }
+        ],
+        "montage_notify_events": []
+      },
+      "hands": {
+        "hand_l": {
+          "path_travel_cm": 52.01924000577477,
+          "peak_speed_cm_s": 523.2495945387126,
+          "max_excursion_cm": 22.12379416761066,
+          "axis_range_cm": [
+            8.538744740320915,
+            13.41012122967193,
+            17.40303723436336
+          ]
+        },
+        "hand_r": {
+          "path_travel_cm": 55.460707711315656,
+          "peak_speed_cm_s": 583.0929103602209,
+          "max_excursion_cm": 24.797058099562822,
+          "axis_range_cm": [
+            15.395485356491424,
+            17.255286350792787,
+            13.374545453631043
+          ]
+        }
+      }
+    }
+  }
+}

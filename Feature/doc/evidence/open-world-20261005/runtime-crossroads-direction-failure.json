@@ -1,0 +1,691 @@
+{
+  "status": "failed",
+  "hub_map": "/Game/Rogue10m/Maps/StartHub",
+  "run_map": "/Game/Rogue10m/Maps/OpenRunMap",
+  "checks": [
+    {
+      "name": "no_existing_pie",
+      "passed": true
+    },
+    {
+      "name": "correct_project",
+      "passed": true
+    },
+    {
+      "name": "run_map_exists",
+      "passed": true
+    },
+    {
+      "name": "hub_map_exists",
+      "passed": true
+    },
+    {
+      "name": "load_editor_map",
+      "passed": true,
+      "map": "/Game/Rogue10m/Maps/OpenRunMap"
+    },
+    {
+      "name": "exact_editor_map",
+      "passed": true,
+      "map": "/Game/Rogue10m/Maps/OpenRunMap"
+    },
+    {
+      "name": "map_owned_navigation_config",
+      "passed": true,
+      "navigation_system_class": "/Script/Rogue10m.Rogue10mOpenWorldNavigationSystem"
+    },
+    {
+      "name": "world_partition_streaming_enabled",
+      "passed": true
+    },
+    {
+      "name": "single_run_player_start",
+      "passed": true,
+      "labels": [
+        "OW_PlayerStart"
+      ]
+    },
+    {
+      "name": "single_always_loaded_bootstrap",
+      "passed": true,
+      "count": 1
+    },
+    {
+      "name": "run_game_mode",
+      "passed": true
+    },
+    {
+      "name": "prototype_run_duration_disabled",
+      "passed": true
+    },
+    {
+      "name": "load_editor_map",
+      "passed": true,
+      "map": "/Game/Rogue10m/Maps/StartHub"
+    },
+    {
+      "name": "exact_editor_map",
+      "passed": true,
+      "map": "/Game/Rogue10m/Maps/StartHub"
+    },
+    {
+      "name": "single_hub_portal",
+      "passed": true,
+      "count": 1
+    },
+    {
+      "name": "hub_portal_targets_open_run",
+      "passed": true,
+      "target": "/Game/Rogue10m/Maps/OpenRunMap"
+    },
+    {
+      "name": "hub_run_waiting",
+      "passed": true
+    },
+    {
+      "name": "runtime_hub_portal",
+      "passed": true
+    },
+    {
+      "name": "portal_overlap_events_enabled",
+      "passed": true
+    },
+    {
+      "name": "portal_starts_1200_second_open_world_run",
+      "passed": true,
+      "duration": 1200.0,
+      "arrival_remaining": 1200.0
+    },
+    {
+      "name": "actual_player_start_landing_before_teleport",
+      "passed": true,
+      "location": [
+        0.0,
+        -65000.0,
+        2898.154277437246
+      ],
+      "ground_z": 2800.0,
+      "capsule_bottom_clearance_cm": 2.154277437246037,
+      "moving_on_ground": true
+    },
+    {
+      "name": "runtime_invoker_navigation_mode",
+      "passed": true
+    },
+    {
+      "name": "initial_camp_sentinel_loaded",
+      "passed": true,
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 0,
+        "boss": 0
+      }
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        350.0,
+        -65000.0,
+        3248.3151750972766
+      ],
+      "actual": [
+        350.0,
+        -65000.0,
+        3248.3151750972766
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "poi_camp",
+      "ground_z": 2801.9998168917373,
+      "expected_walkable_z": 2802.3151750972766
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "poi_camp",
+      "start": [
+        350.0,
+        -65000.0,
+        2813.7651821862346
+      ],
+      "end": [
+        950.0,
+        -65000.0,
+        2814.2105263157896
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          350.0,
+          -65000.0,
+          2813.7651821862346
+        ],
+        [
+          950.0,
+          -65000.0,
+          2814.2105263157896
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "poi_camp",
+      "forward_displacement_cm": 837.4724224500978,
+      "elapsed_game_seconds": 1.5167489983141422,
+      "elapsed_wall_seconds": 1.514999999999418,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        -49650.0,
+        -25000.0,
+        4241.7317073170725
+      ],
+      "actual": [
+        -49650.0,
+        -25000.0,
+        4241.7317073170725
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "poi_forest",
+      "ground_z": 3796.0753429465176,
+      "expected_walkable_z": 3795.731707317073
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "poi_forest",
+      "start": [
+        -49650.0,
+        -25000.0,
+        3810.0
+      ],
+      "end": [
+        -49050.0,
+        -25000.0,
+        3795.015883836245
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -49650.0,
+          -25000.0,
+          3810.0
+        ],
+        [
+          -49050.0,
+          -25000.0,
+          3795.015883836245
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "poi_forest",
+      "forward_displacement_cm": 830.378332488719,
+      "elapsed_game_seconds": 1.515318300575018,
+      "elapsed_wall_seconds": 1.5,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        350.0,
+        5000.0,
+        3746.0
+      ],
+      "actual": [
+        350.0,
+        5000.0,
+        3746.0
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "poi_crossroads",
+      "ground_z": 3300.0,
+      "expected_walkable_z": 3300.0
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "poi_crossroads",
+      "start": [
+        350.0,
+        5000.0,
+        3310.0
+      ],
+      "end": [
+        855.0,
+        5000.0,
+        3310.0
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          350.0,
+          5000.0,
+          3310.0
+        ],
+        [
+          855.0,
+          5000.0,
+          3310.0
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    }
+  ],
+  "timer_samples": [
+    {
+      "id": "initial",
+      "remaining": 1199.0
+    }
+  ],
+  "ground_samples": [
+    {
+      "id": "player_start",
+      "location": [
+        0.0,
+        -65000.0,
+        2898.154277437246
+      ],
+      "ground_z": 2800.0,
+      "capsule_bottom_clearance_cm": 2.154277437246037,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_camp",
+      "location": [
+        350.0,
+        -65000.0,
+        2900.1519345243214
+      ],
+      "ground_z": 2801.9998168917373,
+      "capsule_bottom_clearance_cm": 2.1521176325841225,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_camp_walk",
+      "location": [
+        350.0,
+        -65000.0,
+        2900.1519345243214
+      ],
+      "ground_z": 2801.9998168917373,
+      "capsule_bottom_clearance_cm": 2.1521176325841225,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_camp_walk",
+      "location": [
+        423.93718007661465,
+        -65000.0,
+        2900.735700507903
+      ],
+      "ground_z": 2802.747742080301,
+      "capsule_bottom_clearance_cm": 1.987958427601825,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_camp_walk",
+      "location": [
+        589.6773509227359,
+        -65000.0,
+        2902.0872734983204
+      ],
+      "ground_z": 2803.9993591210805,
+      "capsule_bottom_clearance_cm": 2.0879143772399402,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_camp_walk",
+      "location": [
+        747.0689390890919,
+        -65000.0,
+        2902.3463367421864
+      ],
+      "ground_z": 2804.3664471985676,
+      "capsule_bottom_clearance_cm": 1.9798895436188104,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_camp_walk",
+      "location": [
+        901.3817307644211,
+        -65000.0,
+        2904.0820292432545
+      ],
+      "ground_z": 2806.0943548820705,
+      "capsule_bottom_clearance_cm": 1.987674361183963,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_camp_walk",
+      "location": [
+        1055.8162287168825,
+        -65000.0,
+        2905.8163222272633
+      ],
+      "ground_z": 2807.8236253638806,
+      "capsule_bottom_clearance_cm": 1.9926968633826618,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_forest",
+      "location": [
+        -49650.0,
+        -25000.0,
+        3894.227536537915
+      ],
+      "ground_z": 3796.0753429465176,
+      "capsule_bottom_clearance_cm": 2.152193591397463,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_forest_walk",
+      "location": [
+        -49650.0,
+        -25000.0,
+        3894.227536537915
+      ],
+      "ground_z": 3796.0753429465176,
+      "capsule_bottom_clearance_cm": 2.152193591397463,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_forest_walk",
+      "location": [
+        -49586.41781577071,
+        -25000.0,
+        3893.515579075075
+      ],
+      "ground_z": 3795.363385477075,
+      "capsule_bottom_clearance_cm": 2.15219359799994,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_forest_walk",
+      "location": [
+        -49427.11205037635,
+        -25000.0,
+        3891.7317628833493
+      ],
+      "ground_z": 3793.5795692874854,
+      "capsule_bottom_clearance_cm": 2.1521935958639915,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_forest_walk",
+      "location": [
+        -49262.16811815601,
+        -25000.0,
+        3890.012987245234
+      ],
+      "ground_z": 3791.732620082974,
+      "capsule_bottom_clearance_cm": 2.280367162260063,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_forest_walk",
+      "location": [
+        -49108.14517746073,
+        -25000.0,
+        3888.160273183497
+      ],
+      "ground_z": 3790.00795798741,
+      "capsule_bottom_clearance_cm": 2.1523151960868745,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_forest_walk",
+      "location": [
+        -48950.6011919896,
+        -25000.0,
+        3884.651847230316
+      ],
+      "ground_z": 3786.4910038639073,
+      "capsule_bottom_clearance_cm": 2.160843366408699,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_crossroads",
+      "location": [
+        350.0,
+        5000.0,
+        3398.1499986034387
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499986034386893,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_crossroads_walk",
+      "location": [
+        350.0,
+        5000.0,
+        3398.1499986034387
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499986034386893,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_crossroads_walk",
+      "location": [
+        422.67320992547815,
+        5000.0,
+        3398.1499986034387
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499986034386893,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_crossroads_walk",
+      "location": [
+        576.7869925909653,
+        5000.0,
+        3398.1499986034387
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499986034386893,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_crossroads_walk",
+      "location": [
+        738.2620857321634,
+        5000.0,
+        3398.1499986034387
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499986034386893,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_crossroads_walk",
+      "location": [
+        892.4936598204985,
+        5000.0,
+        3398.1499986034387
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499986034386893,
+      "moving_on_ground": true
+    }
+  ],
+  "navigation_samples": [
+    {
+      "id": "poi_camp",
+      "start": [
+        350.0,
+        -65000.0,
+        2813.7651821862346
+      ],
+      "end": [
+        950.0,
+        -65000.0,
+        2814.2105263157896
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          350.0,
+          -65000.0,
+          2813.7651821862346
+        ],
+        [
+          950.0,
+          -65000.0,
+          2814.2105263157896
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "poi_forest",
+      "start": [
+        -49650.0,
+        -25000.0,
+        3810.0
+      ],
+      "end": [
+        -49050.0,
+        -25000.0,
+        3795.015883836245
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -49650.0,
+          -25000.0,
+          3810.0
+        ],
+        [
+          -49050.0,
+          -25000.0,
+          3795.015883836245
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "poi_crossroads",
+      "start": [
+        350.0,
+        5000.0,
+        3310.0
+      ],
+      "end": [
+        855.0,
+        5000.0,
+        3310.0
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          350.0,
+          5000.0,
+          3310.0
+        ],
+        [
+          855.0,
+          5000.0,
+          3310.0
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    }
+  ],
+  "streaming_samples": [
+    {
+      "id": "initial_camp",
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 0,
+        "boss": 0
+      }
+    },
+    {
+      "id": "poi_camp",
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 0,
+        "boss": 0
+      }
+    },
+    {
+      "id": "poi_forest",
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 0,
+        "highlands": 1,
+        "boss": 0
+      }
+    },
+    {
+      "id": "poi_crossroads",
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 1,
+        "boss": 1
+      }
+    }
+  ],
+  "combat_samples": [],
+  "limitations": [
+    "Ground and walking coverage consists of six POIs and three samples on each of three bridges; it is not a full terrain traversal.",
+    "Streaming unload/reentry is required for the camp sentinel on a camp-to-boss-to-camp round trip; every POI sentinel must load on arrival.",
+    "Navigation paths are local to the player invoker. One authored normal monster is checked for real AI pursuit and player damage.",
+    "Pawn damage immunity during traversal, isolated AI logic, and a one-point monster damage stimulus are PIE-only test adjustments.",
+    "Final-boss victory, a full 20-minute timeout, all monsters, network play and packaged performance are not checked."
+  ],
+  "phase": "cleanup",
+  "elapsed_wall_seconds": 19.546000000002095,
+  "portal_entry": {
+    "method": "real_native_overlap",
+    "destination": [
+      0.0,
+      4270.0,
+      200.0
+    ]
+  },
+  "exception": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateOpenWorld.py\", line 505, in tick\n    tick_impl(delta_seconds)\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateOpenWorld.py\", line 459, in tick_impl\n    raise RuntimeError(f\"Lost physical ground while walking {point['id']}: {sample}.\")\nRuntimeError: Lost physical ground while walking poi_crossroads: {'location': [1044.5601907038108, 5000.0, 3367.0693711779786], 'ground_z': 2300.0, 'capsule_bottom_clearance_cm': 971.0693711779786, 'moving_on_ground': False}.\n",
+  "message": "Lost physical ground while walking poi_crossroads: {'location': [1044.5601907038108, 5000.0, 3367.0693711779786], 'ground_z': 2300.0, 'capsule_bottom_clearance_cm': 971.0693711779786, 'moving_on_ground': False}.",
+  "owned_pie_cleanup_confirmed": true
+}

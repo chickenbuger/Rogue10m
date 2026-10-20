@@ -1,0 +1,83 @@
+{
+  "result": "PASS_WITH_VISUAL_LIMITS",
+  "reviewer_role": "기능 검증 2",
+  "method": "baseline.json와 reload-poses.json 직접 재계산; 실제 FP before/after CSV 동일 frame/serial/clip/montage 시간 비교; 피해 CSV와 mixed/stone/render 로그 독립 확인",
+  "raw_clip_audit": {
+    "clips": 10,
+    "sample_hz": 120,
+    "sample_frames": 1514,
+    "finite_failures": 0,
+    "metadata_or_time_mismatches": 0,
+    "local_position_delta_cm": 0,
+    "local_scale_delta": 0,
+    "wrist_and_finger_local_rotation_delta_deg": 0,
+    "stance_position_and_rotation_delta": 0,
+    "max_limb_length_delta_cm": 5.684341886080802e-14,
+    "max_contact_position_delta_cm": 0.000005131734665,
+    "max_contact_rotation_delta_deg": 0.000010799477314,
+    "max_head_travel_cm": 1.826934534,
+    "max_head_rotation_deg": 0.000026890481653,
+    "max_elbow_step_cm": 6.265722475,
+    "max_arm_rotation_step_deg": 12.330299913,
+    "source_clip_hand_path_gain_pct_range": [4.75966, 24.30385],
+    "source_clip_peak_speed_gain_pct_range": [10.15209, 56.04951],
+    "note": "원시 클립 120Hz 결과다. 아래 실제 블렌딩/리타깃 결과의 증가율과 구분한다."
+  },
+  "actual_fp_comparison": {
+    "before_label": "swing-before-20261005",
+    "after_label": "swing-after-fp-20261005",
+    "frame_samples": 841,
+    "checked_runtime_frames": 840,
+    "world_delta_s_range": [0.033333335, 0.033333336],
+    "pose_rows_each": 118581,
+    "pose_key_mismatches": 0,
+    "serial_clip_montage_time_control_capsule_skill_mismatches": 0,
+    "max_attack_elapsed_numeric_delta_s": 0.000000954,
+    "max_charge_numeric_delta": 0.000001133,
+    "after_finite_failures": 0,
+    "after_fixed_limb_local_length_ratio_range": [0.99999887, 1.001352635],
+    "max_local_scale_delta": 0,
+    "after_unit_scale_error": 0.000006788,
+    "max_appearance_foot_position_delta_cm": 0.001419183,
+    "max_appearance_head_position_delta_cm": 0.009328098,
+    "max_appearance_head_rotation_delta_deg": 0.018337658,
+    "hand_table_columns": ["attack", "hand", "source_path_gain_pct", "appearance_path_before_cm", "appearance_path_after_cm", "appearance_path_gain_pct", "appearance_max_point_difference_cm"],
+    "hand_motion": [
+      ["LeftJab", "L", 5.75905, 69.96948, 72.52575, 3.65340, 7.35594],
+      ["RightJab", "R", 4.70415, 68.79262, 72.17233, 4.91291, 7.90849],
+      ["Straight", "R", 4.93773, 116.65420, 121.71198, 4.33571, 5.20193],
+      ["Hook", "R", 10.01040, 128.91763, 141.00000, 9.37216, 7.57199],
+      ["KnuckleJab", "R", 0.94544, 99.64687, 100.67177, 1.02853, 5.29186],
+      ["BodyStraight", "R", 3.63642, 68.64929, 71.06293, 3.51590, 5.33720],
+      ["HookFlurry", "L", 6.04988, 198.89616, 208.83148, 4.99523, 3.67954],
+      ["HookFlurry", "R", 3.85518, 225.57215, 233.56475, 3.54326, 3.88380],
+      ["Uppercut", "R", 4.03979, 89.44950, 93.13110, 4.11584, 9.05462],
+      ["ShortBlow", "R", 12.53574, 90.76139, 99.49496, 9.62257, 9.53156]
+    ],
+    "path_method": "Appearance rendered_cs translation, 같은 active montage 및 serial의 연속 frame 구간 이동거리 합. idle에서 guard로 전환하는 큰 step이 포함되어 실제 peak 속도가 모두 증가하지는 않는다."
+  },
+  "camera_and_damage": {
+    "fp_view_motion_max_deg_before_after": [7.002087269, 7.002087269],
+    "view_motion_frame_delta_max_deg": 0.001858567,
+    "after_camera_composition_error_cm": 0.000022591,
+    "after_camera_composition_error_deg": 0.000001708,
+    "after_shadow_pose_error_cm": 0,
+    "camera_cap_deg": 8,
+    "actual_damage_pulses_before_after": [14, 14],
+    "per_skill_hit_counts_before_after_identical": true,
+    "first_damage_timing_error_max_s": 0.026923086,
+    "health_drop_sum_before_after": [540.879882, 528.577150],
+    "health_drop_note": "RollDamage의 FRandRange 및 치명타 FRand로 총 피해 수치는 재실행마다 달라진다. 판정 시점과 타수는 보존되었다."
+  },
+  "integrated_results": {
+    "mixed_view_runtime": {"result": "PASS", "frames": 840, "first_person_samples": 580, "third_person_samples": 260, "actual_damage_pulses": 14},
+    "stone_runtime": {"result": "PASS", "cases": 3, "assertions": 1234, "failures": 0, "camera_max_deg": 7.002834825, "max_first_damage_error_s": 0.027564110, "csv_finite_failures": 0},
+    "render_runtime": {"result": "PASS", "frames": 840, "failures": 0, "first_person_samples": 840, "actual_damage_pulses": 14, "camera_max_deg": 7.002087269}
+  },
+  "visual_spot_check": {
+    "before_and_after_frames": [68, 145],
+    "after_only_frames": [262, 345, 474, 522],
+    "finding": "선택한 실제 1인칭 이미지에서 정면 타깃 시야가 유지되고 새로운 뚜렷한 손목 반전이나 팔 늘어남이 보이지 않았다.",
+    "limits": "motion blur와 HUD가 손 일부를 가린다. 정지 이미지로 전체 시간의 자연스러움, 손가락 세부 형태 또는 플레이어 발을 완전히 육안 검증했다고 해석하지 않는다. 3인칭은 수치 검증 결과다."
+  }
+}

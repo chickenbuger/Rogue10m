@@ -151,7 +151,20 @@ def configure_skill(skill, *, name, description, tier, position, prerequisites=(
     unreal.EditorAssetLibrary.save_loaded_asset(skill, only_if_is_dirty=False)
 
 
+def reject_authored_fist_overwrite(paths):
+    """Stop legacy regeneration before any writes once dedicated fist combat is installed."""
+    for path in paths:
+        skill = unreal.EditorAssetLibrary.load_asset(path)
+        montage = skill.get_editor_property("attack_montage") if skill else None
+        if montage and montage.get_path_name().startswith("/Game/Rogue10m/Animation/Combat/FistAuthored/"):
+            raise RuntimeError(
+                "Legacy generator would overwrite dedicated fist combat: " + path
+                + ". Use PrepareFistCombatAnimations.py for the authored animations; "
+                  "review any balance/progression regeneration separately.")
+
+
 def main() -> None:
+    reject_authored_fist_overwrite(list(SKILL_PATHS.values()))
     import_frame_texture()
     skills = {key: require_asset(path) for key, path in SKILL_PATHS.items()}
     icons = {key: require_asset(path) for key, path in ICON_PATHS.items()}

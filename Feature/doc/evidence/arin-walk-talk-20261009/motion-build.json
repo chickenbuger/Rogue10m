@@ -1,0 +1,68 @@
+{
+  "status": "exported_requires_independent_review",
+  "source": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Arin.blend",
+  "source_sha256": "56cc68fda9a32ec932a83d57a20dbb8897ef51933922c609027a542e2ad01f74",
+  "source_preserved": true,
+  "source_script_sha256": "022bbdf2919e7b3410f22d38054196adbc801c437d408a63000d732f1437a6ed",
+  "blender_version": "4.5.14 LTS",
+  "mesh_or_material_edit": false,
+  "bones": [
+    "root",
+    "pelvis",
+    "spine_01",
+    "spine_02",
+    "spine_03",
+    "neck",
+    "head",
+    "clavicle_l",
+    "upperarm_l",
+    "lowerarm_l",
+    "hand_l",
+    "clavicle_r",
+    "upperarm_r",
+    "lowerarm_r",
+    "hand_r",
+    "thigh_l",
+    "calf_l",
+    "foot_l",
+    "ball_l",
+    "thigh_r",
+    "calf_r",
+    "foot_r",
+    "ball_r"
+  ],
+  "walk": {
+    "action": "Arin_Walk",
+    "frames": [
+      1,
+      37
+    ],
+    "seconds": 1.2,
+    "reference_speed_cm_s": 110,
+    "in_place": true
+  },
+  "talk": {
+    "action": "Arin_Talk",
+    "frames": [
+      1,
+      91
+    ],
+    "seconds": 3,
+    "scope": "body/head conversation gestures, no lip sync"
+  },
+  "reference": "Mixamo public Walking/Feminine Walk Forward and Talking/General Conversation previews; own baked keyframes, no downloaded mocap",
+  "files": {
+    "A_Arin_Walk.fbx": {
+      "bytes": 211420,
+      "sha256": "cfb6f7d3dda9c3f3fe39da05f529da91d7f243bd78b9f3c92a9573d9af54c2b3"
+    },
+    "A_Arin_Talk.fbx": {
+      "bytes": 277948,
+      "sha256": "172601a141d9e41983ac949e2e00db1de9adf539f81466fc5b2f7ff0fa76a82e"
+    },
+    "Arin_Motions.blend": {
+      "bytes": 60822253,
+      "sha256": "379e07e07388f8095cfce59093deba2de4534bf028c706440674bcf55bae5528"
+    }
+  }
+}

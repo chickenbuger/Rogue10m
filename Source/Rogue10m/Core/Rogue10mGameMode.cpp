@@ -12,6 +12,7 @@
 #include "Rogue10mCharacterProfileSubsystem.h"
 #include "Rogue10mGameState.h"
 #include "Rogue10mPlayerState.h"
+#include "Rogue10mProgressionSubsystem.h"
 #include "UObject/ConstructorHelpers.h"
 
 ARogue10mGameMode::ARogue10mGameMode()
@@ -84,9 +85,34 @@ ARogue10mCharacter* ARogue10mGameMode::SpawnSelectedCharacterForController(
 		Cast<ARogue10mCharacter>(Controller->GetPawn());
 	if (PreviousCharacter && PreviousCharacter->IsA(SelectedClass))
 	{
-		return PreviousCharacter;
+		const UGameInstance* Instance = GetGameInstance();
+		const URogue10mCharacterProfileSubsystem* SelectedProfiles = Instance
+			? Instance->GetSubsystem<URogue10mCharacterProfileSubsystem>() : nullptr;
+		const FRogue10mCharacterProfile* Selected = SelectedProfiles ? SelectedProfiles->GetSelectedProfile() : nullptr;
+		const URogue10mProgressionSubsystem* Progression = Instance
+			? Instance->GetSubsystem<URogue10mProgressionSubsystem>() : nullptr;
+		if (Selected && Progression && Progression->IsAttachedTo(*PreviousCharacter)
+			&& Progression->GetAttachedProfileId() == Selected->ProfileId)
+		{
+			return PreviousCharacter;
+		}
 	}
 
+	if (PreviousCharacter && GetGameInstance())
+	{
+		URogue10mProgressionSubsystem* Progression = GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>();
+		if (Progression && Progression->IsAttachedTo(*PreviousCharacter))
+		{
+			if (!Progression->SaveNow())
+			{
+				UE_LOG(LogRogue10m, Error, TEXT("Character switch stopped: the previous profile could not be saved."));
+				return nullptr;
+			}
+			// Spawning the replacement may update the controller's shared PlayerState.
+			// Snapshot and unbind the old avatar before constructing the new one.
+			Progression->DetachCharacter(*PreviousCharacter, false);
+		}
+	}
 	const FTransform SpawnTransform = PreviousCharacter
 		? PreviousCharacter->GetActorTransform()
 		: FTransform::Identity;

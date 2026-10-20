@@ -5,11 +5,15 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/CanvasPanelSlot.h"
+#include "InputCoreTypes.h"
+#include "Framework/Commands/InputChord.h"
 #include "Rogue10mInventoryComponent.h"
 #include "Rogue10mMenuWindowWidgets.generated.h"
 
 class URogue10mAttackSkillData;
 class URogue10mCombatComponent;
+class URogue10mSkillBindingComponent;
+class UInputKeySelector;
 class URogue10mInventoryComponent;
 class URogue10mItemDataAsset;
 class URogue10mItemDragDropOperation;
@@ -546,6 +550,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
 	void RefreshSkillTree();
 
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
+	void SelectSkill(URogue10mAttackSkillData* SkillData);
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
+	int32 UnlockAllSkillsForTesting();
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
+	bool SetSelectedSkillKey(FKey Key);
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
+	bool ClearSelectedSkillKey();
+
 protected:
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
 	TObjectPtr<UPanelWidget> UI_SkillListContainer;
@@ -589,15 +602,44 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Skill Tree")
 	TSubclassOf<URogue10mSkillTreeEntryWidget> SkillTreeEntryWidgetClass;
 
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UButton> UI_UnlockAllSkillsButton;
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_TestUnlockHintText;
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UInputKeySelector> UI_SkillKeySelector;
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UButton> UI_ClearSkillKeyButton;
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_SelectedSkillKeyText;
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_SkillKeyHintText;
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
+	TObjectPtr<UTextBlock> UI_SkillKeyResultText;
+
 private:
 	UFUNCTION()
 	void HandleSkillSelected(URogue10mAttackSkillData* SkillData);
 
 	UFUNCTION()
 	void HandleSkillTreeChanged();
+	UFUNCTION()
+	void HandleSkillBindingsChanged();
+	UFUNCTION()
+	void HandleKeySelected(FInputChord SelectedKey);
+	UFUNCTION()
+	void HandleUnlockAllClicked();
+	UFUNCTION()
+	void HandleClearKeyClicked();
 
 	void RefreshSelectedSkillDetails();
+	void RefreshKeyControls();
+	void CancelKeySelection();
+	void ShowKeyResult(const FText& Message, bool bError);
 	URogue10mCombatComponent* GetCombatComponent() const;
+	URogue10mSkillBindingComponent* GetSkillBindingComponent() const;
+	bool bUpdatingKeyControls = false;
+	bool bApplyingSkillAction = false;
 
 	UPROPERTY(Transient)
 	TObjectPtr<URogue10mAttackSkillData> SelectedSkill;

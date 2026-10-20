@@ -1,0 +1,57 @@
+{
+  "status": "saved",
+  "saved_assets": [
+    "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/M_Azathor_Telegraph.M_Azathor_Telegraph",
+    "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/MI_Azathor_FrontalWarning.MI_Azathor_FrontalWarning",
+    "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/MI_Azathor_ZoneWarning.MI_Azathor_ZoneWarning",
+    "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns",
+    "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_AbyssOverlordAzathor.DA_OW_AbyssOverlordAzathor"
+  ],
+  "profile_values": {
+    "enable_boss_patterns": true,
+    "frontal_wave_range": 850.0,
+    "frontal_wave_half_width": 180.0,
+    "frontal_wave_half_height": 160.0,
+    "frontal_wave_windup_seconds": 1.1,
+    "frontal_wave_recovery_seconds": 0.65,
+    "frontal_wave_cooldown_seconds": 6.0,
+    "frontal_wave_damage_multiplier": 1.45,
+    "abyss_zone_cast_range": 1000.0,
+    "abyss_zone_radius": 260.0,
+    "abyss_zone_half_height": 160.0,
+    "abyss_zone_windup_seconds": 1.4,
+    "abyss_zone_recovery_seconds": 0.8,
+    "abyss_zone_cooldown_seconds": 8.0,
+    "abyss_zone_damage_multiplier": 1.6,
+    "enrage_health_threshold": 0.5,
+    "enrage_windup_multiplier": 0.75,
+    "enrage_recovery_multiplier": 0.8,
+    "enrage_cooldown_multiplier": 0.75,
+    "enrage_damage_multiplier": 1.25,
+    "frontal_wave_telegraph_material": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/MI_Azathor_FrontalWarning.MI_Azathor_FrontalWarning",
+    "abyss_zone_telegraph_material": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/MI_Azathor_ZoneWarning.MI_Azathor_ZoneWarning",
+    "frontal_wave_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Attack03_ANIM.Beholder_Attack03_ANIM",
+    "abyss_zone_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Attack02ST_ANIM.Beholder_Attack02ST_ANIM",
+    "telegraph_depth": 180.0,
+    "telegraph_ground_offset": 2.0
+  },
+  "boss_data": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_AbyssOverlordAzathor.DA_OW_AbyssOverlordAzathor",
+  "base_profile_unchanged": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_AbyssOverlordAzathor",
+  "preserved_basic": {
+    "attack_range": 300.0,
+    "attack_arc_degrees": 100.0,
+    "attack_half_height": 160.0,
+    "attack_windup_seconds": 0.30799999833106995,
+    "attack_recovery_seconds": 0.4253333508968353,
+    "attack_cooldown_seconds": 0.20000000298023224,
+    "attack_damage_multiplier": 1.0
+  },
+  "preserved_animations": {
+    "idle_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_IdleNormal_ANIM.Beholder_IdleNormal_ANIM",
+    "movement_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_WalkFWD_ANIM.Beholder_WalkFWD_ANIM",
+    "attack_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Attack01_ANIM.Beholder_Attack01_ANIM",
+    "hit_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_GetHit_ANIM.Beholder_GetHit_ANIM",
+    "death_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Die_ANIM.Beholder_Die_ANIM"
+  },
+  "material_source_decision": "Existing village decals use textured albedo/normal PBR, portal rings are surface materials; new emissive telegraph uses existing engine BoxMask-2D and RadialGradientExponential functions."
+}

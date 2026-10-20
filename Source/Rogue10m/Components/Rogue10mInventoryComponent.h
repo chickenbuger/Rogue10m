@@ -10,9 +10,11 @@
 
 class ARogue10mDroppedItem;
 class URogue10mItemDataAsset;
+struct FRogue10mInventorySnapshot;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRogue10mInventoryGridChanged);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRogue10mEquipmentChanged);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRogue10mInventoryChanged);
 
 UENUM(BlueprintType)
 enum class ERogue10mInventorySlotType : uint8
@@ -50,6 +52,15 @@ USTRUCT(BlueprintType)
 struct FRogue10mItemStack
 {
 	GENERATED_BODY()
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Items")
+	FGuid InstanceId;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Items|Enhancement")
+	int32 EnhancementLevel = 0;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Items|Enhancement")
+	float EnhancementAttackBonus = 0.0f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Items|Enhancement")
+	float EnhancementDefenseBonus = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Items")
 	TObjectPtr<const URogue10mItemDataAsset> ItemData;
@@ -123,6 +134,13 @@ struct FRogue10mInventoryGridEntry
 {
 	GENERATED_BODY()
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Inventory|Enhancement")
+	int32 EnhancementLevel = 0;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Inventory|Enhancement")
+	float EnhancementAttackBonus = 0.0f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Inventory|Enhancement")
+	float EnhancementDefenseBonus = 0.0f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Inventory|Grid")
 	FGuid InstanceId;
 
@@ -172,6 +190,24 @@ public:
 	FRogue10mInventoryGridChanged OnInventoryGridChanged;
 	UPROPERTY(BlueprintAssignable, Category="Rogue10m|Inventory|Equipment")
 	FRogue10mEquipmentChanged OnEquipmentChanged;
+	UPROPERTY(BlueprintAssignable, Category="Rogue10m|Inventory")
+	FRogue10mInventoryChanged OnInventoryChanged;
+
+	FRogue10mInventorySnapshot CaptureInventory() const;
+	bool RestoreInventory(const FRogue10mInventorySnapshot& Snapshot);
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Inventory|Currency")
+	void AddGold(int32 Amount);
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Inventory|Currency")
+	bool TrySpendGold(int32 Amount);
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Inventory|Enhancement")
+	int32 GetEquippedItemEnhancementLevel(ERogue10mInventorySlotType SlotType) const;
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Inventory|Enhancement")
+	bool TryEnhanceEquippedItem(ERogue10mInventorySlotType SlotType, int32 Cost, int32 MaxLevel,
+		float AttackPerLevel, float DefensePerLevel);
+	/** Re-acquires a dropped instance without discarding its enhancement state. */
+	bool TryAddItemStack(const FRogue10mItemStack& Stack, int32& OutContainerIndex, FGuid& OutInstanceId);
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Inventory|Currency")
+	bool TryPurchaseGridItem(const URogue10mItemDataAsset* ItemData, int32 Quantity, int32 GoldCost);
 
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Inventory")
@@ -354,6 +390,7 @@ private:
 	// 좌/우 장비 슬롯 배열에서 목표 슬롯 타입을 찾습니다.
 	FRogue10mInventorySlot* FindEquipmentSlot(ERogue10mInventorySlotType SlotType);
 	void NotifyEquipmentChanged();
+	void NotifyGridChanged();
 	int32 FindFirstEmptyItemSlot() const;
 	void ClearQuickSlotAssignmentsForItemSlot(int32 ItemSlotIndex);
 	void ResetEquipmentSlotDisplay(FRogue10mInventorySlot& EquipmentSlot, ERogue10mInventorySlotType TargetSlotType);

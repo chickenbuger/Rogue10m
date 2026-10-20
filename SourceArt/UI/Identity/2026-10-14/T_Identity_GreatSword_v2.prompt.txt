@@ -1,0 +1,7 @@
+Use case: precise-object-edit
+Asset type: Rogue10m greatsword identity emblem, transparent square HUD icon.
+Input images: The supplied greatsword image is the edit target, with weapon design, materials, colors, and details locked.
+Primary request: Change ONLY the framing. Uniformly shrink the complete exact same sword so its whole silhouette, including the blade tip, crossguard, full leather grip, bottom pommel, and all restrained glow, fits within 72 to 76 percent of the square canvas height, centered both horizontally and vertically. Leave equal 12 to 14 percent fully transparent margins at the top and bottom. The entire sword must remain visible and uncropped.
+Invariants: Preserve this exact heavy greatsword silhouette, broad thick blackened steel blade, bright silver bevels, orange-red fissures, brass crossguard and pommel, leather grip, all original details, proportions, colors, and upright orientation. No redesign. No stretching, no blade shortening, no wider crossguard.
+Background: Genuinely transparent RGBA alpha, including the reserved perimeter. Eliminate faint stray alpha outside the reserved perimeter.
+Constraints: No extra objects, circle, frame, plaque, letters, numbers, runes, watermark, person, environment, floor shadow, or checkerboard baked into pixels. Preserve transparency. ONLY framing changes.

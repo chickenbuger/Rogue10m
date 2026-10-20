@@ -1,0 +1,132 @@
+{
+  "status": "source_ready_requires_actual_imported_pose_review",
+  "evidence": [
+    "imported-pose-views/knee-bend-oblique.png",
+    "imported-pose-views/knee-bend-right.png",
+    "imported-pose-views/idle-back.png",
+    "imported-pose-views/idle-hands.png",
+    "candidate/arin-face-profile.png"
+  ],
+  "before_visual_ledger": [
+    {
+      "requirement": "Raised thigh remains covered by split coat",
+      "status": "fail",
+      "view": "knee-bend-oblique/right",
+      "finding": "Large brown thigh silhouette penetrates the rigid green tail."
+    },
+    {
+      "requirement": "Back coat outer surface remains uninterrupted",
+      "status": "fail",
+      "view": "idle-back",
+      "finding": "Brown trouser patches penetrate both back panels; a white shirt band protrudes through the rear slit."
+    },
+    {
+      "requirement": "Fingers and nails read as continuous anatomy",
+      "status": "fail",
+      "view": "idle-hands",
+      "finding": "Unevenly spaced rings create segment kinks and thick rectangular nails stand proud of fingertips."
+    },
+    {
+      "requirement": "Head/neck join has no exposed cap lip",
+      "status": "fail",
+      "view": "arin-face-profile",
+      "finding": "The independent neck top volume protrudes along a hard diagonal join."
+    }
+  ],
+  "repair": [
+    "Six side-tail/trim meshes follow their authored side thigh and pelvis through .87/1.00m Z blend.",
+    "Ten continuous central apron/decoration meshes use a smooth X bilateral thigh blend and the same Z pelvis blend; <=3 influences.",
+    "Concealed trouser waist tapers inside split coat; shirt lower rear hem tucks inside trousers.",
+    "Fingers use one smooth continuous 16-ring taper with a stable Y reference frame; thumbs use a smooth opposed Bezier path.",
+    "Thin rounded nail shells follow the digit surface and bury their lower face, without new materials.",
+    "Only concealed upper neck rings tuck within the unchanged head lower profile; max neck/body height1.455m retained."
+  ],
+  "coat_skin_mock": {
+    "objects": [
+      "Arin_GreenSplitCoatTail_L",
+      "Arin_TailFrontBorder_L",
+      "Arin_TailHem_L",
+      "Arin_GreenSplitCoatTail_R",
+      "Arin_TailFrontBorder_R",
+      "Arin_TailHem_R",
+      "Arin_IvoryFrontApron",
+      "Arin_ApronEmbroideredHem",
+      "Arin_ApronVine_-1",
+      "Arin_ApronLeaf_-1_0",
+      "Arin_ApronLeaf_-1_1",
+      "Arin_ApronLeaf_-1_2",
+      "Arin_ApronVine_1",
+      "Arin_ApronLeaf_1_0",
+      "Arin_ApronLeaf_1_1",
+      "Arin_ApronLeaf_1_2"
+    ],
+    "vertices": 1272,
+    "side_counts": {
+      "l": 3,
+      "r": 3,
+      "centre": 10
+    },
+    "weight_stops_metres": [
+      [
+        0.765,
+        "thigh_side"
+      ],
+      [
+        0.87,
+        "thigh_side"
+      ],
+      [
+        1.0,
+        "pelvis"
+      ]
+    ],
+    "part_side_used_at_centre": true,
+    "central_blend_half_width_metres": 0.045,
+    "maximum_influences": 3
+  },
+  "normalization": true,
+  "noncoat_vertices_unchanged": true,
+  "actual_max_influences": 3,
+  "numeric_knee_source_LBS_crossings": {
+    "Arin_GreenSplitCoatTail_L": {
+      "before_pelvis_only": 198,
+      "after_coat_weights": 0,
+      "after_hit_bounds": null
+    },
+    "Arin_GreenSplitCoatTail_R": {
+      "before_pelvis_only": 0,
+      "after_coat_weights": 0,
+      "after_hit_bounds": null
+    },
+    "Arin_IvoryFrontApron": {
+      "before_pelvis_only": 90,
+      "after_coat_weights": 0,
+      "after_hit_bounds": null
+    }
+  },
+  "numeric_rest_trouser_tail_crossings": {
+    "Arin_GreenSplitCoatTail_L": 0,
+    "Arin_GreenSplitCoatTail_R": 0
+  },
+  "numeric_visible_outer_cloth_crossings": {
+    "Arin_GreenSplitCoatTail_L": {
+      "rest_outer_crossings": 0,
+      "knee_outer_crossings": 0,
+      "rest_bounds": null
+    },
+    "Arin_GreenSplitCoatTail_R": {
+      "rest_outer_crossings": 0,
+      "knee_outer_crossings": 0,
+      "rest_bounds": null
+    }
+  },
+  "body_triangles": 29706,
+  "body_vertices": 15137,
+  "closed": true,
+  "degenerate_triangles": 0,
+  "actual_Blender_executed": false,
+  "source_sha256": "96986010056c562355518dd339bab34f16aa94b3e111d04bcc6ed0fbfed93312",
+  "coat_skin_sha256": "179a774bcfabbdfdf9362356b38de0857fdb6ac7fd1d6d0df4c2d7a8b1880d61",
+  "limits": "Numeric edge crossings ignore coplanar cases and do not prove rendered clearance; actual fresh FBX knee25/calf70 and back/hand/profile evidence must establish acceptance.",
+  "decision": "source_ready_not_visually_accepted"
+}

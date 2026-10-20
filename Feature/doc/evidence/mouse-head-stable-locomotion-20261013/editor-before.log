@@ -1,0 +1,11 @@
+{
+  "success": true,
+  "command": "import json, unreal; w=unreal.get_editor_subsystem(unreal.UnrealEditorSubsystem).get_editor_world(); print(json.dumps({'world': w.get_path_name() if w else None, 'dirty_content': [p.get_path_name() for p in unreal.EditorLoadingAndSavingUtils.get_dirty_content_packages()], 'dirty_maps': [p.get_path_name() for p in unreal.EditorLoadingAndSavingUtils.get_dirty_map_packages()]}))",
+  "result": "None",
+  "output": [
+    {
+      "type": "Info",
+      "output": "{\"world\": \"/Game/Rogue10m/Maps/OpenRunMap.OpenRunMap\", \"dirty_content\": [], \"dirty_maps\": []}\r\n"
+    }
+  ]
+}

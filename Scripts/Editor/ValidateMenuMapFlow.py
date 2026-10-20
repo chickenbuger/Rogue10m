@@ -4,7 +4,7 @@ import unreal
 
 
 MENU_MAP_PACKAGE = "/Game/Rogue10m/Maps/L_Menu"
-GAMEPLAY_MAP_PACKAGE = "/Game/FirstPerson/Lvl_FirstPerson"
+GAMEPLAY_MAP_PACKAGE = "/Game/Rogue10m/Maps/StartHub"
 MAIN_MENU_PATH = "/Game/Widget/Menu/WBP_MainMenu"
 LOBBY_PATH = "/Game/Widget/Lobby/WBP_CharacterLobby"
 
@@ -93,7 +93,7 @@ def main():
 
     unreal.log(
         "[Rogue10mMenuMapValidation] PASSED: "
-        "Menu Map + gameplay travel target + full-screen UI"
+        "Menu Map + starting hub travel target + full-screen UI"
     )
 
 

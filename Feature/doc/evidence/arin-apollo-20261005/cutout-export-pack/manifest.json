@@ -1,0 +1,174 @@
+{
+  "manifest_version": "1.0",
+  "asset": {
+    "id": "ast_1m45c3php007vt0fzyt",
+    "name": "Arin starting-village guide",
+    "type": "character",
+    "node_id": "nod_1m45cpcht00yk1ns6kc",
+    "spec": {
+      "id": "spc_1m45c3pgz005fqavrda",
+      "intent": "character",
+      "subject": "Use supplied front T-pose reference adult female fantasy village guide Arin chestnut braid, green cape and travel tunic,",
+      "style": "stylized",
+      "description": "Use the supplied front T-pose reference for an adult female fantasy village guide Arin with chestnut braid, green cape and travel tunic, ivory shirt, leather satchel and two attached red healing potions. Preserve the original face and clothing appearance. Create an honest local static draft for geometry and FBX inspection first. The eventual game NPC needs a complete 3D body, humanoid rig and Idle; do not claim the local cutout already satisfies that. Keep generated output within this asset and preserve the source reference.",
+      "constraints": {
+        "target_engine": "web",
+        "target_polycount": 30000,
+        "texture_resolution": "1k",
+        "formats": [
+          "fbx",
+          "glb"
+        ],
+        "pose": "t-pose"
+      },
+      "references": {
+        "images": [],
+        "moodboard": [],
+        "negative": [
+          "watermark",
+          "text labels",
+          "logo",
+          "merged limbs",
+          "dramatic pose",
+          "cropped body"
+        ]
+      },
+      "character": {
+        "character_type": "humanoid",
+        "clear_limb_separation": true
+      }
+    }
+  },
+  "pack": {
+    "preset": "unreal",
+    "target": "web",
+    "created_at": "2026-10-05T06:43:37.155617+00:00"
+  },
+  "files": [
+    {
+      "path": "assets/model.glb",
+      "role": "model",
+      "format": "glb",
+      "sha256": "e8dca2fb084363fe2b2c0687cda7b40c21f61788522ec5ccb0ef0aca792fb5be",
+      "size_bytes": 1636296,
+      "artifact_id": "art_1m45cpc3b00zsjaf01b"
+    },
+    {
+      "path": "assets/model.fbx",
+      "role": "model",
+      "format": "fbx",
+      "sha256": "9d9d7564a9aa592e87fa0a6d6250a603265d4831a0ef60859f9cbfb004268bfa",
+      "size_bytes": 1549148
+    },
+    {
+      "path": "assets/model.obj",
+      "role": "model",
+      "format": "obj",
+      "sha256": "7d9bd4723a9cfd3bed5b23e248abd103f5bc34d00d408444f9d0998acf403409",
+      "size_bytes": 1944931
+    },
+    {
+      "path": "previews/thumbnail.png",
+      "role": "thumbnail",
+      "format": "png",
+      "sha256": "0076e5cb44962e820095830e1f8df2f2e47f25edfa4e1dfcd975ff1012f0ca09",
+      "size_bytes": 62442
+    },
+    {
+      "path": "previews/render-yaw--45.png",
+      "role": "preview_render",
+      "format": "png",
+      "sha256": "717eb381bbb2f4e8fb7b497fc5f16e13281a56c544aa5407435a971925826dd3",
+      "size_bytes": 51430
+    },
+    {
+      "path": "previews/render-yaw-0.png",
+      "role": "preview_render",
+      "format": "png",
+      "sha256": "b9cc3f9d2a0b0a91d52cb4107f53e0548d7c425a28f222bac6bf5859e1d03bb7",
+      "size_bytes": 51190
+    },
+    {
+      "path": "previews/render-yaw-45.png",
+      "role": "preview_render",
+      "format": "png",
+      "sha256": "c7822892af78e17bab2263020cc3577b3eb1966207a90452ebc92dd0595e075b",
+      "size_bytes": 52257
+    },
+    {
+      "path": "previews/render-yaw-90.png",
+      "role": "preview_render",
+      "format": "png",
+      "sha256": "c7c20ffd13c3b0fe4e7827c8b6c1f9119c586a74e6da682589c4ed1084d6ecd2",
+      "size_bytes": 16842
+    },
+    {
+      "path": "previews/render-yaw-180.png",
+      "role": "preview_render",
+      "format": "png",
+      "sha256": "f4249c6e80eb1169f4eaa4612c7f3dd1924028f899ac0d815e84ee4341211f58",
+      "size_bytes": 47249
+    },
+    {
+      "path": "previews/contact-sheet.png",
+      "role": "preview_contact_sheet",
+      "format": "png",
+      "sha256": "e76de06ac60acd9822c08b90611d6a197c8cfd916da8da40eb12db1d37873991",
+      "size_bytes": 88691
+    },
+    {
+      "path": "qa/concept_image_v1.qa.json",
+      "role": "qa_report",
+      "format": "json",
+      "sha256": "5399ef647d0bdbce37eb3f0559c9d6661107f186dea8a7947de93d91b30cf850",
+      "size_bytes": 1338
+    },
+    {
+      "path": "qa/mesh_raw_v1.qa.json",
+      "role": "qa_report",
+      "format": "json",
+      "sha256": "a9eea58e8dab666f32df0e7930e2ed76f7e5ab1754b9bc4c067065a81ce29084",
+      "size_bytes": 2201
+    }
+  ],
+  "provenance": {
+    "source_prompt": "Use the supplied front T-pose reference for an adult female fantasy village guide Arin with chestnut braid, green cape and travel tunic, ivory shirt, leather satchel and two attached red healing potions. Preserve the original face and clothing appearance. Create an honest local static draft for geometry and FBX inspection first. The eventual game NPC needs a complete 3D body, humanoid rig and Idle; do not claim the local cutout already satisfies that. Keep generated output within this asset and preserve the source reference.",
+    "pipeline_nodes": [
+      "concept_image_v1",
+      "mesh_raw_v1"
+    ],
+    "model_runs": [
+      {
+        "provider_id": "apollo_cutout",
+        "model": "Apollo Textured Cutout",
+        "status": "succeeded",
+        "latency_ms": 453.8,
+        "seed": "0"
+      }
+    ],
+    "tool_versions": {
+      "trimesh": "5.1.1",
+      "numpy": "2.5.3",
+      "pillow": "12.3.0",
+      "scikit-image": "0.26.0",
+      "manifold3d": "installed"
+    },
+    "app_version": "0.1.0"
+  },
+  "qa": {
+    "reports": [
+      {
+        "stage": "image",
+        "status": "warn",
+        "score": 0.917
+      },
+      {
+        "stage": "mesh",
+        "status": "pass",
+        "score": 1.0
+      }
+    ],
+    "summary_status": "warn"
+  },
+  "known_limitations": []
+}

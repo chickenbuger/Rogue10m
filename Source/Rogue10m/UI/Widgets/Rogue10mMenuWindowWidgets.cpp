@@ -9,6 +9,7 @@
 #include "Rogue10mEquipmentPreviewActor.h"
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mCombatComponent.h"
+#include "Rogue10mSkillBindingComponent.h"
 #include "Rogue10mItemDataAsset.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
@@ -17,6 +18,7 @@
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
 #include "Components/Image.h"
+#include "Components/InputKeySelector.h"
 #include "Components/PanelWidget.h"
 #include "Components/ProgressBar.h"
 #include "Components/ScaleBox.h"
@@ -1973,6 +1975,27 @@ void URogue10mSkillTreeWindowWidget::InitializeMenuWindow(
 	URogue10mInventoryComponent* InInventoryComponent)
 {
 	Super::InitializeMenuWindow(InInventoryComponent);
+	if (UI_UnlockAllSkillsButton)
+	{
+		UI_UnlockAllSkillsButton->OnClicked.AddUniqueDynamic(this, &ThisClass::HandleUnlockAllClicked);
+	}
+	if (UI_ClearSkillKeyButton)
+	{
+		UI_ClearSkillKeyButton->OnClicked.AddUniqueDynamic(this, &ThisClass::HandleClearKeyClicked);
+	}
+	if (UI_SkillKeySelector)
+	{
+		UI_SkillKeySelector->SetAllowModifierKeys(false);
+		UI_SkillKeySelector->SetAllowGamepadKeys(false);
+		UI_SkillKeySelector->SetEscapeKeys({EKeys::Escape});
+		UI_SkillKeySelector->SetKeySelectionText(FText::FromString(TEXT("키 입력 · Esc 취소")));
+		UI_SkillKeySelector->SetNoKeySpecifiedText(FText::FromString(TEXT("키 지정")));
+		UI_SkillKeySelector->OnKeySelected.AddUniqueDynamic(this, &ThisClass::HandleKeySelected);
+	}
+	if (auto* Bindings = GetSkillBindingComponent())
+	{
+		Bindings->OnSkillBindingsChanged.AddUniqueDynamic(this, &ThisClass::HandleSkillBindingsChanged);
+	}
 	if (URogue10mCombatComponent* Combat = GetCombatComponent())
 	{
 		Combat->OnSkillTreeChanged.AddUniqueDynamic(
@@ -1983,6 +2006,11 @@ void URogue10mSkillTreeWindowWidget::InitializeMenuWindow(
 
 void URogue10mSkillTreeWindowWidget::NativeDestruct()
 {
+	CancelKeySelection();
+	if (auto* Bindings = GetSkillBindingComponent())
+	{
+		Bindings->OnSkillBindingsChanged.RemoveDynamic(this, &ThisClass::HandleSkillBindingsChanged);
+	}
 	if (URogue10mCombatComponent* Combat = GetCombatComponent())
 	{
 		Combat->OnSkillTreeChanged.RemoveDynamic(
@@ -1993,6 +2021,8 @@ void URogue10mSkillTreeWindowWidget::NativeDestruct()
 
 void URogue10mSkillTreeWindowWidget::SetWindowOpen(bool bOpen)
 {
+	CancelKeySelection();
+	ShowKeyResult(FText::GetEmpty(), false);
 	Super::SetWindowOpen(bOpen);
 	if (bOpen)
 	{
@@ -2003,9 +2033,23 @@ void URogue10mSkillTreeWindowWidget::SetWindowOpen(bool bOpen)
 void URogue10mSkillTreeWindowWidget::RefreshSkillTree()
 {
 	URogue10mCombatComponent* Combat = GetCombatComponent();
+	bool bShowTestUnlock = false;
+#if !UE_BUILD_SHIPPING
+	bShowTestUnlock = Combat && Combat->CanUnlockActiveTreeForTesting();
+#endif
+	if (UI_UnlockAllSkillsButton)
+	{
+		UI_UnlockAllSkillsButton->SetVisibility(bShowTestUnlock ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
+	}
+	if (UI_TestUnlockHintText)
+	{
+		UI_TestUnlockHintText->SetVisibility(bShowTestUnlock ? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
+	}
 	UCanvasPanel* SkillCanvas = Cast<UCanvasPanel>(UI_SkillListContainer);
 	if (!SkillCanvas || !SkillTreeEntryWidgetClass || !Combat)
 	{
+		SelectedSkill = nullptr;
+		RefreshSelectedSkillDetails();
 		return;
 	}
 
@@ -2098,7 +2142,7 @@ void URogue10mSkillTreeWindowWidget::RefreshSkillTree()
 		if (UCanvasPanelSlot* EntrySlot = SkillCanvas->AddChildToCanvas(Entry))
 		{
 			EntrySlot->SetPosition(Skill->SkillTreePosition);
-			EntrySlot->SetSize(FVector2D(156.0f, 118.0f));
+			EntrySlot->SetSize(FVector2D(144.0f, 118.0f));
 			EntrySlot->SetAlignment(FVector2D(0.5f, 0.5f));
 			EntrySlot->SetZOrder(2);
 		}
@@ -2113,20 +2157,29 @@ void URogue10mSkillTreeWindowWidget::RefreshSkillTree()
 
 void URogue10mSkillTreeWindowWidget::HandleSkillSelected(URogue10mAttackSkillData* SkillData)
 {
-	SelectedSkill = SkillData;
-	RefreshSelectedSkillDetails();
+	SelectSkill(SkillData);
 }
 
 void URogue10mSkillTreeWindowWidget::HandleSkillTreeChanged()
 {
+	if (bApplyingSkillAction) { return; }
+	CancelKeySelection();
 	RefreshSkillTree();
 }
 
 void URogue10mSkillTreeWindowWidget::RefreshSelectedSkillDetails()
 {
+	RefreshKeyControls();
 	URogue10mCombatComponent* Combat = GetCombatComponent();
 	if (!Combat || !SelectedSkill)
 	{
+		for (UTextBlock* Text : {UI_SelectedSkillNameText.Get(), UI_SelectedSkillTierText.Get(),
+			UI_SelectedSkillDescriptionText.Get(), UI_SelectedSkillStatusText.Get(),
+			UI_SelectedSkillConditionsText.Get(), UI_SelectedSkillRewardText.Get()})
+		{
+			if (Text) { Text->SetText(FText::GetEmpty()); }
+		}
+		if (UI_SelectedSkillIcon) { UI_SelectedSkillIcon->SetBrushFromTexture(nullptr); }
 		return;
 	}
 	if (UI_SelectedSkillIcon)
@@ -2212,4 +2265,155 @@ URogue10mCombatComponent* URogue10mSkillTreeWindowWidget::GetCombatComponent() c
 {
 	const ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwningPlayerPawn());
 	return Character ? Character->GetCombatComponent() : nullptr;
+}
+
+URogue10mSkillBindingComponent* URogue10mSkillTreeWindowWidget::GetSkillBindingComponent() const
+{
+	const auto* Controller = Cast<ARogue10mPlayerController>(GetOwningPlayer());
+	return Controller ? Controller->GetSkillBindingComponent() : nullptr;
+}
+
+void URogue10mSkillTreeWindowWidget::SelectSkill(URogue10mAttackSkillData* SkillData)
+{
+	CancelKeySelection();
+	const auto* Combat = GetCombatComponent();
+	SelectedSkill = Combat && Combat->GetActiveSkillTreeSkills().Contains(SkillData) ? SkillData : nullptr;
+	ShowKeyResult(FText::GetEmpty(), false);
+	RefreshSelectedSkillDetails();
+}
+
+void URogue10mSkillTreeWindowWidget::CancelKeySelection()
+{
+	if (UI_SkillKeySelector && UI_SkillKeySelector->GetIsSelectingKey() && FSlateApplication::IsInitialized())
+	{
+		// SInputKeySelector::OnFocusLost cancels capture; SetSelectedKey alone does not.
+		FSlateApplication::Get().ClearKeyboardFocus(EFocusCause::Cleared);
+	}
+	RefreshKeyControls();
+}
+
+void URogue10mSkillTreeWindowWidget::ShowKeyResult(const FText& Message, bool bError)
+{
+	if (UI_SkillKeyResultText)
+	{
+		UI_SkillKeyResultText->SetText(Message);
+		UI_SkillKeyResultText->SetColorAndOpacity(FSlateColor(bError
+			? FLinearColor(1.0f, 0.48f, 0.34f) : FLinearColor(0.48f, 0.85f, 0.60f)));
+		UI_SkillKeyResultText->SetVisibility(Message.IsEmpty() ? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible);
+	}
+}
+
+void URogue10mSkillTreeWindowWidget::RefreshKeyControls()
+{
+	TGuardValue<bool> Guard(bUpdatingKeyControls, true);
+	const auto* Combat = GetCombatComponent();
+	const auto* Bindings = GetSkillBindingComponent();
+	const bool bActive = Combat && SelectedSkill && Combat->GetActiveSkillTreeSkills().Contains(SelectedSkill);
+	const bool bUnlocked = bActive && Combat->IsAttackSkillUnlocked(SelectedSkill);
+	const bool bAttack = SelectedSkill && SelectedSkill->SkillTreeNodeType == ERogue10mSkillTreeNodeType::ActiveTechnique;
+	const bool bCanBind = bUnlocked && bAttack && Bindings;
+	const FKey Key = Bindings && SelectedSkill ? Bindings->GetSkillKey(SelectedSkill) : EKeys::Invalid;
+	if (UI_SkillKeySelector)
+	{
+		UI_SkillKeySelector->SetIsEnabled(bCanBind);
+		UI_SkillKeySelector->SetSelectedKey(FInputChord(Key));
+	}
+	if (UI_ClearSkillKeyButton) { UI_ClearSkillKeyButton->SetIsEnabled(bCanBind && Key.IsValid()); }
+	if (UI_SelectedSkillKeyText)
+	{
+		UI_SelectedSkillKeyText->SetText(FText::Format(FText::FromString(TEXT("현재 키 · {0}")),
+			Key.IsValid() ? Key.GetDisplayName() : FText::FromString(TEXT("미지정"))));
+	}
+	if (UI_SkillKeyHintText)
+	{
+		FString Hint;
+		if (!bActive) { Hint = TEXT("현재 무기의 스킬을 선택하세요."); }
+		else if (!bAttack) { Hint = TEXT("패시브 심법은 해금 후 상시 적용됩니다. 실행 키를 지정하지 않습니다."); }
+		else if (!bUnlocked) { Hint = TEXT("스킬을 해금한 뒤 키를 지정할 수 있습니다."); }
+		else if (!Bindings) { Hint = TEXT("스킬 입력을 준비 중입니다. 창을 다시 열어 주세요."); }
+		else if (SelectedSkill->InputSlot == ERogue10mAttackInputSlot::ChargedPrimary || SelectedSkill->InputSlot == ERogue10mAttackInputSlot::ChargedSpecial)
+		{
+			Hint = FString::Printf(TEXT("키를 %.2f초 이상 누른 뒤 놓아 사용합니다. 단일 키만 지정 · Esc로 선택 취소."), SelectedSkill->ChargeSeconds);
+		}
+		else if (SelectedSkill->InputSlot == ERogue10mAttackInputSlot::JumpPrimary || SelectedSkill->InputSlot == ERogue10mAttackInputSlot::JumpSpecial)
+		{
+			Hint = TEXT("공중에서 지정한 키로 사용합니다. 단일 키만 지정 · Esc로 선택 취소.");
+		}
+		else { Hint = TEXT("단일 키를 지정해 사용합니다. 이동·메뉴 키와 중복할 수 없습니다. Esc로 선택 취소."); }
+		UI_SkillKeyHintText->SetText(FText::FromString(Hint));
+	}
+}
+
+void URogue10mSkillTreeWindowWidget::HandleSkillBindingsChanged()
+{
+	if (!bApplyingSkillAction && !bUpdatingKeyControls) { RefreshKeyControls(); }
+}
+
+void URogue10mSkillTreeWindowWidget::HandleKeySelected(FInputChord SelectedKey)
+{
+	if (bUpdatingKeyControls) { return; }
+	const FModifierKeysState Modifiers = FSlateApplication::IsInitialized()
+		? FSlateApplication::Get().GetModifierKeys() : FModifierKeysState();
+	if (SelectedKey.bShift || SelectedKey.bCtrl || SelectedKey.bAlt || SelectedKey.bCmd
+		|| Modifiers.IsShiftDown() || Modifiers.IsControlDown() || Modifiers.IsAltDown() || Modifiers.IsCommandDown())
+	{
+		ShowKeyResult(FText::FromString(TEXT("조합 키는 사용할 수 없습니다. 키 하나만 지정하세요.")), true);
+		RefreshKeyControls();
+		return;
+	}
+	SetSelectedSkillKey(SelectedKey.Key);
+}
+
+bool URogue10mSkillTreeWindowWidget::SetSelectedSkillKey(FKey Key)
+{
+	FText Error;
+	bool bSuccess = false;
+	{
+		TGuardValue<bool> Guard(bApplyingSkillAction, true);
+		if (auto* Bindings = GetSkillBindingComponent()) { bSuccess = Bindings->SetSkillKey(SelectedSkill, Key, Error); }
+		else { Error = FText::FromString(TEXT("스킬 입력을 준비하지 못했습니다.")); }
+	}
+	RefreshKeyControls();
+	ShowKeyResult(bSuccess ? FText::FromString(TEXT("키 설정을 저장했습니다.")) : Error, !bSuccess);
+	return bSuccess;
+}
+
+bool URogue10mSkillTreeWindowWidget::ClearSelectedSkillKey()
+{
+	FText Error;
+	bool bSuccess = false;
+	{
+		TGuardValue<bool> Guard(bApplyingSkillAction, true);
+		if (auto* Bindings = GetSkillBindingComponent()) { bSuccess = Bindings->ClearSkillKey(SelectedSkill, Error); }
+		else { Error = FText::FromString(TEXT("스킬 입력을 준비하지 못했습니다.")); }
+	}
+	RefreshKeyControls();
+	ShowKeyResult(bSuccess ? FText::FromString(TEXT("지정 키를 해제했습니다.")) : Error, !bSuccess);
+	return bSuccess;
+}
+
+int32 URogue10mSkillTreeWindowWidget::UnlockAllSkillsForTesting()
+{
+	int32 Count = 0;
+#if !UE_BUILD_SHIPPING
+	if (auto* Combat = GetCombatComponent(); Combat && Combat->CanUnlockActiveTreeForTesting())
+	{
+		TGuardValue<bool> Guard(bApplyingSkillAction, true);
+		Count = Combat->UnlockAllActiveTreeForTesting();
+	}
+#endif
+	RefreshSkillTree();
+	return Count;
+}
+
+void URogue10mSkillTreeWindowWidget::HandleUnlockAllClicked()
+{
+	const int32 Count = UnlockAllSkillsForTesting();
+	ShowKeyResult(FText::FromString(FString::Printf(TEXT("테스트 해금 %d개 · 수련/토벌 기록은 유지됩니다."), Count)), false);
+}
+
+void URogue10mSkillTreeWindowWidget::HandleClearKeyClicked()
+{
+	CancelKeySelection();
+	ClearSelectedSkillKey();
 }

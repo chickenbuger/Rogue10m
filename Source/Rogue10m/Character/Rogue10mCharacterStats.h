@@ -20,6 +20,15 @@ struct FRogue10mEquipmentStatModifiers
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Items|Equipment")
 	float MaxHealthBonus = 0.0f;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Items|Equipment")
+	float MaxStaminaBonus = 0.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Items|Equipment")
+	float CriticalDamageMultiplierBonus = 0.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Items|Equipment")
+	float MoveSpeedMultiplierBonus = 0.0f;
+
 	/** 0.05는 치명타 확률 5%p 증가를 의미합니다. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Items|Equipment")
 	float CriticalChanceBonus = 0.0f;
@@ -36,6 +45,9 @@ struct FRogue10mEquipmentStatModifiers
 		AttackPowerBonus += Other.AttackPowerBonus;
 		DefenseBonus += Other.DefenseBonus;
 		MaxHealthBonus += Other.MaxHealthBonus;
+		MaxStaminaBonus += Other.MaxStaminaBonus;
+		CriticalDamageMultiplierBonus += Other.CriticalDamageMultiplierBonus;
+		MoveSpeedMultiplierBonus += Other.MoveSpeedMultiplierBonus;
 		CriticalChanceBonus += Other.CriticalChanceBonus;
 		AttackSpeedBonus += Other.AttackSpeedBonus;
 		MoveSpeedBonus += Other.MoveSpeedBonus;
@@ -92,6 +104,9 @@ struct FRogue10mCharacterStatSnapshot
 	FRogue10mEquipmentStatModifiers Equipment;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Character|Stats")
+	float MaxStamina = 100.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Character|Stats")
 	float MaxHealth = 100.0f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Character|Stats")
@@ -118,13 +133,15 @@ struct FRogue10mCharacterStatSnapshot
 	void Recalculate()
 	{
 		MaxHealth = FMath::Max(1.0f, Base.MaxHealth + Equipment.MaxHealthBonus);
+		MaxStamina = FMath::Max(0.0f, Base.MaxStamina + Equipment.MaxStaminaBonus);
 		AttackPower = FMath::Max(0.0f, Base.AttackPower + Equipment.AttackPowerBonus);
 		Defense = FMath::Max(0.0f, Base.Defense + Equipment.DefenseBonus);
 		CriticalChance = FMath::Clamp(Base.CriticalChance + Equipment.CriticalChanceBonus, 0.0f, 1.0f);
-		CriticalDamageMultiplier = FMath::Max(1.0f, Base.CriticalDamageMultiplier);
+		CriticalDamageMultiplier = FMath::Max(1.0f, Base.CriticalDamageMultiplier + Equipment.CriticalDamageMultiplierBonus);
 		AttackSpeedMultiplier = FMath::Clamp(
 			Base.AttackSpeedMultiplier + Equipment.AttackSpeedBonus, 0.1f, 5.0f);
-		MoveSpeed = FMath::Max(0.0f, Base.MoveSpeed + Equipment.MoveSpeedBonus);
-		SprintSpeed = FMath::Max(0.0f, Base.SprintSpeed + Equipment.MoveSpeedBonus);
+		const float MovementMultiplier = FMath::Max(0.0f, 1.0f + Equipment.MoveSpeedMultiplierBonus);
+		MoveSpeed = FMath::Max(0.0f, Base.MoveSpeed + Equipment.MoveSpeedBonus) * MovementMultiplier;
+		SprintSpeed = FMath::Max(0.0f, Base.SprintSpeed + Equipment.MoveSpeedBonus) * MovementMultiplier;
 	}
 };

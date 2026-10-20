@@ -1,0 +1,12 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Invalidating makefile for Rogue10mEditor (source file added)
+UHT compiled-in object format Default
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mFighterCombatStanceAnimInstance.h(47): Error: Unrecognized units '1/s' specified for 'FloatProperty /Script/Rogue10m.Rogue10mFighterCombatStanceAnimInstance:UpperBodyAimInterpolationSpeed'
+Unhandled 1 aggregate exceptions
+
+Result: Failed (OtherCompilationError)
+Total execution time: 12.12 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 1.6kb

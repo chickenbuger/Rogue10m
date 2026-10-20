@@ -1,0 +1,42 @@
+{
+  "map": "/Game/Rogue10m/Maps/StartHub",
+  "master": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail",
+  "profiles": {
+    "grass": {
+      "instance": "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Grass.MI_StartVillage_Grass",
+      "tile_size_cm": 180.0,
+      "base_color": "/Game/StarterContent/Textures/T_Ground_Grass_D.T_Ground_Grass_D",
+      "normal": "/Game/StarterContent/Textures/T_Ground_Grass_N.T_Ground_Grass_N"
+    },
+    "dirt": {
+      "instance": "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_EarthPath.MI_StartVillage_EarthPath",
+      "tile_size_cm": 90.0,
+      "base_color": "/Game/StarterContent/Textures/T_Ground_Gravel_D.T_Ground_Gravel_D",
+      "normal": "/Game/StarterContent/Textures/T_Ground_Gravel_N.T_Ground_Gravel_N"
+    },
+    "stone": {
+      "instance": "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Cobblestone.MI_StartVillage_Cobblestone",
+      "tile_size_cm": 120.0,
+      "base_color": "/Game/StarterContent/Textures/T_CobbleStone_Rough_D.T_CobbleStone_Rough_D",
+      "normal": "/Game/StarterContent/Textures/T_CobbleStone_Rough_N.T_CobbleStone_Rough_N"
+    }
+  },
+  "actor_packages": [
+    "/Game/__ExternalActors__/Rogue10m/Maps/StartHub/0/4J/G5A6OPUPDGK9X050T9SHV3",
+    "/Game/__ExternalActors__/Rogue10m/Maps/StartHub/4/7L/YIQ184NSISRJ43YBURCGL5",
+    "/Game/__ExternalActors__/Rogue10m/Maps/StartHub/5/54/NL5U9SKUGIXK5K9RW4A5RQ",
+    "/Game/__ExternalActors__/Rogue10m/Maps/StartHub/8/BW/2WNO1N2X3ACJZINX3EKCJ2",
+    "/Game/__ExternalActors__/Rogue10m/Maps/StartHub/D/HI/5H3YYU4UJ3A7G1RWBQ0HKB",
+    "/Game/__ExternalActors__/Rogue10m/Maps/StartHub/D/NI/0RJ52MLJV8UBN91MXPPGYQ"
+  ],
+  "stone_actors": [
+    "SV_Equipment_ReservedNPCPad",
+    "SV_Story_ReservedNPCPad",
+    "SV_Traits_ReservedNPCPad",
+    "SV_PortalStonePad",
+    "SV_CentralStoneSquare",
+    "SV_Difficulty_ReservedNPCPad"
+  ],
+  "status": "saved",
+  "density_refinement": "dirt 120->90cm; stone 160->120cm after eye-height screenshot review"
+}

@@ -1,0 +1,165 @@
+{
+  "ok": true,
+  "node_id": "nod_1m45dstsp00zgfa862e",
+  "kind": "mesh_raw",
+  "label": "mesh_raw_v1",
+  "artifact_id": "art_1m45dstsn00ar7y4zdp",
+  "source_quality": {
+    "asset_id": "ast_1m45dqnzp00aartxyz6",
+    "source_node_id": "nod_1m45dstsp00zgfa862e",
+    "source_label": "mesh_raw_v1",
+    "source_kind": "mesh_raw",
+    "verdict": "mesh_source_uploaded",
+    "score": 1.0,
+    "can_start_preview": true,
+    "can_start_meshy_grade": false,
+    "recommended_stage": "quality-report",
+    "reasons": [
+      "source is already a mesh; image structural QA does not apply"
+    ],
+    "checks": [],
+    "repair_suggestions": [],
+    "actions": [
+      {
+        "label": "inspect final quality",
+        "stage": "quality-report",
+        "method": "GET",
+        "path": "/api/assets/ast_1m45dqnzp00aartxyz6/quality-report",
+        "body": {},
+        "blocked": false,
+        "reason": "uploaded mesh should go through mesh/material/export QA"
+      },
+      {
+        "label": "repair until quality",
+        "stage": "repair-until-quality",
+        "method": "POST",
+        "path": "/api/assets/ast_1m45dqnzp00aartxyz6/repair-until-quality",
+        "body": {
+          "parameters": {
+            "profile": "game_asset_v1",
+            "allow_draft": true
+          }
+        },
+        "blocked": false,
+        "reason": "uploaded mesh can skip image-to-3D and enter repair/export"
+      }
+    ],
+    "provider_readiness": {
+      "meshy_grade_ready": false,
+      "final_3d_ok": false,
+      "fast_3d_ok": false,
+      "production_3d_ok": false,
+      "final_3d": {
+        "ok": [],
+        "unavailable": {
+          "hunyuan3d": "unreachable",
+          "trellis": "unreachable",
+          "triposg": "missing_config"
+        },
+        "setup": [
+          {
+            "provider_id": "hunyuan3d",
+            "state": "unreachable",
+            "action": "start Hunyuan3D 2.1 server and verify URL",
+            "requires": [
+              "HUNYUAN3D_URL"
+            ],
+            "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+          },
+          {
+            "provider_id": "trellis",
+            "state": "unreachable",
+            "action": "start TRELLIS.2 server and verify URL",
+            "requires": [
+              "TRELLIS_URL"
+            ],
+            "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+          },
+          {
+            "provider_id": "triposg",
+            "state": "missing_config",
+            "action": "set TRIPOSG_URL and recheck health",
+            "requires": [
+              "TRIPOSG_URL"
+            ],
+            "detail": "missing config: TRIPOSG_URL"
+          }
+        ]
+      },
+      "fast_3d": {
+        "ok": [],
+        "unavailable": {
+          "sf3d": "unreachable"
+        },
+        "setup": [
+          {
+            "provider_id": "sf3d",
+            "state": "unreachable",
+            "action": "start Stable Fast 3D server and verify URL",
+            "requires": [
+              "SF3D_URL"
+            ],
+            "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+          }
+        ]
+      },
+      "production_3d": {
+        "ok": [],
+        "unavailable": {
+          "hunyuan3d": "unreachable",
+          "trellis": "unreachable",
+          "triposg": "missing_config",
+          "sf3d": "unreachable"
+        },
+        "setup": [
+          {
+            "provider_id": "hunyuan3d",
+            "state": "unreachable",
+            "action": "start Hunyuan3D 2.1 server and verify URL",
+            "requires": [
+              "HUNYUAN3D_URL"
+            ],
+            "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+          },
+          {
+            "provider_id": "trellis",
+            "state": "unreachable",
+            "action": "start TRELLIS.2 server and verify URL",
+            "requires": [
+              "TRELLIS_URL"
+            ],
+            "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+          },
+          {
+            "provider_id": "triposg",
+            "state": "missing_config",
+            "action": "set TRIPOSG_URL and recheck health",
+            "requires": [
+              "TRIPOSG_URL"
+            ],
+            "detail": "missing config: TRIPOSG_URL"
+          },
+          {
+            "provider_id": "sf3d",
+            "state": "unreachable",
+            "action": "start Stable Fast 3D server and verify URL",
+            "requires": [
+              "SF3D_URL"
+            ],
+            "detail": "connect failed: [WinError 10061] 대상 컴퓨터에서 연결을 거부했으므로 연결하지 못했습니다"
+          }
+        ]
+      },
+      "blender": {
+        "ok": [
+          "blender_cli"
+        ],
+        "unavailable": {},
+        "setup": []
+      }
+    },
+    "codex_notes": [
+      "Skip image-to-3D; run compile to finalize, repair, and export the uploaded mesh."
+    ]
+  }
+}

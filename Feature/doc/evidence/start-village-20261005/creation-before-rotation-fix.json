@@ -1,0 +1,1371 @@
+{
+  "status": "created",
+  "started_utc": "2026-10-05T01:56:04.304165+00:00",
+  "map": "/Game/Rogue10m/Maps/StartHub",
+  "template_map": "/Game/FirstPerson/Lvl_FirstPerson",
+  "tag": "Rogue10m.StartVillage",
+  "target_size_m": [
+    120,
+    120
+  ],
+  "source_assets_modified": false,
+  "saved_owned_assets": [
+    "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_EarthPath",
+    "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Grass",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Blue",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Burgundy",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Ochre",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Teal",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_DarkTimber",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_LanternGlow",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_PortalGlow",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_PortalSurface",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_WarmStone",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_WellWater"
+  ],
+  "created_actor_labels": [
+    "SV_TemplateCleanupCheckpoint",
+    "SV_WalkableGrass_120m",
+    "SV_CentralStoneSquare",
+    "SV_DirtPath_South",
+    "SV_DirtPath_North",
+    "SV_DirtPath_West",
+    "SV_DirtPath_East",
+    "SV_PlazaBorder_00",
+    "SV_PlazaBorder_01",
+    "SV_PlazaBorder_02",
+    "SV_PlazaBorder_03",
+    "SV_PlazaBorder_04",
+    "SV_PlazaBorder_05",
+    "SV_PlazaBorder_06",
+    "SV_PlazaBorder_07",
+    "SV_PlazaBorder_08",
+    "SV_PlazaBorder_09",
+    "SV_PlazaBorder_10",
+    "SV_PlazaBorder_11",
+    "SV_PlazaBorder_12",
+    "SV_PlazaBorder_13",
+    "SV_PlazaBorder_14",
+    "SV_PlazaBorder_15",
+    "SV_PlazaBorder_16",
+    "SV_PlazaBorder_17",
+    "SV_PlazaBorder_18",
+    "SV_PlazaBorder_19",
+    "SV_PlazaBorder_20",
+    "SV_PlazaBorder_21",
+    "SV_PlazaBorder_22",
+    "SV_PlazaBorder_23",
+    "SV_PlazaBorder_24",
+    "SV_PlazaBorder_25",
+    "SV_PlazaBorder_26",
+    "SV_PlazaBorder_27",
+    "SV_PlazaBorder_28",
+    "SV_PlazaBorder_29",
+    "SV_PlazaBorder_30",
+    "SV_PlazaBorder_31",
+    "SV_BoundaryBlocking_North",
+    "SV_BoundaryBlocking_South",
+    "SV_BoundaryBlocking_West",
+    "SV_BoundaryBlocking_East",
+    "SV_FenceY_-1_70",
+    "SV_FenceX_-1_70",
+    "SV_FenceY_-1_135",
+    "SV_FenceX_-1_135",
+    "SV_FencePostY_-1_0",
+    "SV_FencePostX_-1_0",
+    "SV_FencePostY_-1_1",
+    "SV_FencePostX_-1_1",
+    "SV_FencePostY_-1_2",
+    "SV_FencePostX_-1_2",
+    "SV_FencePostY_-1_3",
+    "SV_FencePostX_-1_3",
+    "SV_FencePostY_-1_4",
+    "SV_FencePostX_-1_4",
+    "SV_FencePostY_-1_5",
+    "SV_FencePostX_-1_5",
+    "SV_FencePostY_-1_6",
+    "SV_FencePostX_-1_6",
+    "SV_FencePostY_-1_7",
+    "SV_FencePostX_-1_7",
+    "SV_FencePostY_-1_8",
+    "SV_FencePostX_-1_8",
+    "SV_FencePostY_-1_9",
+    "SV_FencePostX_-1_9",
+    "SV_FencePostY_-1_10",
+    "SV_FencePostX_-1_10",
+    "SV_FencePostY_-1_11",
+    "SV_FencePostX_-1_11",
+    "SV_FencePostY_-1_12",
+    "SV_FencePostX_-1_12",
+    "SV_FencePostY_-1_13",
+    "SV_FencePostX_-1_13",
+    "SV_FencePostY_-1_14",
+    "SV_FencePostX_-1_14",
+    "SV_FencePostY_-1_15",
+    "SV_FencePostX_-1_15",
+    "SV_FencePostY_-1_16",
+    "SV_FencePostX_-1_16",
+    "SV_FencePostY_-1_17",
+    "SV_FencePostX_-1_17",
+    "SV_FencePostY_-1_18",
+    "SV_FencePostX_-1_18",
+    "SV_FencePostY_-1_19",
+    "SV_FencePostX_-1_19",
+    "SV_FencePostY_-1_20",
+    "SV_FencePostX_-1_20",
+    "SV_FencePostY_-1_21",
+    "SV_FencePostX_-1_21",
+    "SV_FencePostY_-1_22",
+    "SV_FencePostX_-1_22",
+    "SV_FencePostY_-1_23",
+    "SV_FencePostX_-1_23",
+    "SV_FencePostY_-1_24",
+    "SV_FencePostX_-1_24",
+    "SV_FenceY_1_70",
+    "SV_FenceX_1_70",
+    "SV_FenceY_1_135",
+    "SV_FenceX_1_135",
+    "SV_FencePostY_1_0",
+    "SV_FencePostX_1_0",
+    "SV_FencePostY_1_1",
+    "SV_FencePostX_1_1",
+    "SV_FencePostY_1_2",
+    "SV_FencePostX_1_2",
+    "SV_FencePostY_1_3",
+    "SV_FencePostX_1_3",
+    "SV_FencePostY_1_4",
+    "SV_FencePostX_1_4",
+    "SV_FencePostY_1_5",
+    "SV_FencePostX_1_5",
+    "SV_FencePostY_1_6",
+    "SV_FencePostX_1_6",
+    "SV_FencePostY_1_7",
+    "SV_FencePostX_1_7",
+    "SV_FencePostY_1_8",
+    "SV_FencePostX_1_8",
+    "SV_FencePostY_1_9",
+    "SV_FencePostX_1_9",
+    "SV_FencePostY_1_10",
+    "SV_FencePostX_1_10",
+    "SV_FencePostY_1_11",
+    "SV_FencePostX_1_11",
+    "SV_FencePostY_1_12",
+    "SV_FencePostX_1_12",
+    "SV_FencePostY_1_13",
+    "SV_FencePostX_1_13",
+    "SV_FencePostY_1_14",
+    "SV_FencePostX_1_14",
+    "SV_FencePostY_1_15",
+    "SV_FencePostX_1_15",
+    "SV_FencePostY_1_16",
+    "SV_FencePostX_1_16",
+    "SV_FencePostY_1_17",
+    "SV_FencePostX_1_17",
+    "SV_FencePostY_1_18",
+    "SV_FencePostX_1_18",
+    "SV_FencePostY_1_19",
+    "SV_FencePostX_1_19",
+    "SV_FencePostY_1_20",
+    "SV_FencePostX_1_20",
+    "SV_FencePostY_1_21",
+    "SV_FencePostX_1_21",
+    "SV_FencePostY_1_22",
+    "SV_FencePostX_1_22",
+    "SV_FencePostY_1_23",
+    "SV_FencePostX_1_23",
+    "SV_FencePostY_1_24",
+    "SV_FencePostX_1_24",
+    "SV_Well_Rim_00",
+    "SV_Well_Rim_01",
+    "SV_Well_Rim_02",
+    "SV_Well_Rim_03",
+    "SV_Well_Rim_04",
+    "SV_Well_Rim_05",
+    "SV_Well_Rim_06",
+    "SV_Well_Rim_07",
+    "SV_Well_Rim_08",
+    "SV_Well_Rim_09",
+    "SV_Well_Rim_10",
+    "SV_Well_Rim_11",
+    "SV_Well_Rim_12",
+    "SV_Well_Rim_13",
+    "SV_Well_Water",
+    "SV_Well_Post_-1",
+    "SV_Well_Roof_-1",
+    "SV_Well_Post_1",
+    "SV_Well_Roof_1",
+    "SV_Well_Ridge",
+    "SV_House_01_Foundation",
+    "SV_House_01_WallY_-1",
+    "SV_House_01_WallX_-1",
+    "SV_House_01_FrontTimber_-1_-310.0",
+    "SV_House_01_FrontTimber_-1_0",
+    "SV_House_01_FrontTimber_-1_310.0",
+    "SV_House_01_TopBeamY_-1",
+    "SV_House_01_BaseBeamY_-1",
+    "SV_House_01_WallY_1",
+    "SV_House_01_WallX_1",
+    "SV_House_01_FrontTimber_1_-310.0",
+    "SV_House_01_FrontTimber_1_0",
+    "SV_House_01_FrontTimber_1_310.0",
+    "SV_House_01_TopBeamY_1",
+    "SV_House_01_BaseBeamY_1",
+    "SV_House_01_Roof_-1",
+    "SV_House_01_Gable_-1",
+    "SV_House_01_Roof_1",
+    "SV_House_01_Gable_1",
+    "SV_House_01_RoofRidge",
+    "SV_House_01_Door",
+    "SV_House_01_FrontWindow_-1",
+    "SV_House_01_SideWindow_-1",
+    "SV_House_01_FrontWindow_1",
+    "SV_House_01_SideWindow_1",
+    "SV_House_01_Chimney",
+    "SV_House_01_Doorstep",
+    "SV_House_01_Barrel",
+    "SV_House_01_Crate",
+    "SV_House_01_DoorPot",
+    "SV_House_01_DoorLantern",
+    "SV_House_01_LanternGlow",
+    "SV_House_01_Approach",
+    "SV_House_02_Foundation",
+    "SV_House_02_WallY_-1",
+    "SV_House_02_WallX_-1",
+    "SV_House_02_FrontTimber_-1_-330.0",
+    "SV_House_02_FrontTimber_-1_0",
+    "SV_House_02_FrontTimber_-1_330.0",
+    "SV_House_02_TopBeamY_-1",
+    "SV_House_02_BaseBeamY_-1",
+    "SV_House_02_WallY_1",
+    "SV_House_02_WallX_1",
+    "SV_House_02_FrontTimber_1_-330.0",
+    "SV_House_02_FrontTimber_1_0",
+    "SV_House_02_FrontTimber_1_330.0",
+    "SV_House_02_TopBeamY_1",
+    "SV_House_02_BaseBeamY_1",
+    "SV_House_02_Roof_-1",
+    "SV_House_02_Gable_-1",
+    "SV_House_02_Roof_1",
+    "SV_House_02_Gable_1",
+    "SV_House_02_RoofRidge",
+    "SV_House_02_Door",
+    "SV_House_02_FrontWindow_-1",
+    "SV_House_02_SideWindow_-1",
+    "SV_House_02_FrontWindow_1",
+    "SV_House_02_SideWindow_1",
+    "SV_House_02_Chimney",
+    "SV_House_02_Doorstep",
+    "SV_House_02_Barrel",
+    "SV_House_02_Crate",
+    "SV_House_02_DoorPot",
+    "SV_House_02_DoorLantern",
+    "SV_House_02_LanternGlow",
+    "SV_House_02_Approach",
+    "SV_House_03_Foundation",
+    "SV_House_03_WallY_-1",
+    "SV_House_03_WallX_-1",
+    "SV_House_03_FrontTimber_-1_-305.0",
+    "SV_House_03_FrontTimber_-1_0",
+    "SV_House_03_FrontTimber_-1_305.0",
+    "SV_House_03_TopBeamY_-1",
+    "SV_House_03_BaseBeamY_-1",
+    "SV_House_03_WallY_1",
+    "SV_House_03_WallX_1",
+    "SV_House_03_FrontTimber_1_-305.0",
+    "SV_House_03_FrontTimber_1_0",
+    "SV_House_03_FrontTimber_1_305.0",
+    "SV_House_03_TopBeamY_1",
+    "SV_House_03_BaseBeamY_1",
+    "SV_House_03_Roof_-1",
+    "SV_House_03_Gable_-1",
+    "SV_House_03_Roof_1",
+    "SV_House_03_Gable_1",
+    "SV_House_03_RoofRidge",
+    "SV_House_03_Door",
+    "SV_House_03_FrontWindow_-1",
+    "SV_House_03_SideWindow_-1",
+    "SV_House_03_FrontWindow_1",
+    "SV_House_03_SideWindow_1",
+    "SV_House_03_Chimney",
+    "SV_House_03_Doorstep",
+    "SV_House_03_Barrel",
+    "SV_House_03_Crate",
+    "SV_House_03_DoorPot",
+    "SV_House_03_DoorLantern",
+    "SV_House_03_LanternGlow",
+    "SV_House_03_Approach",
+    "SV_House_04_Foundation",
+    "SV_House_04_WallY_-1",
+    "SV_House_04_WallX_-1",
+    "SV_House_04_FrontTimber_-1_-350.0",
+    "SV_House_04_FrontTimber_-1_0",
+    "SV_House_04_FrontTimber_-1_350.0",
+    "SV_House_04_TopBeamY_-1",
+    "SV_House_04_BaseBeamY_-1",
+    "SV_House_04_WallY_1",
+    "SV_House_04_WallX_1",
+    "SV_House_04_FrontTimber_1_-350.0",
+    "SV_House_04_FrontTimber_1_0",
+    "SV_House_04_FrontTimber_1_350.0",
+    "SV_House_04_TopBeamY_1",
+    "SV_House_04_BaseBeamY_1",
+    "SV_House_04_Roof_-1",
+    "SV_House_04_Gable_-1",
+    "SV_House_04_Roof_1",
+    "SV_House_04_Gable_1",
+    "SV_House_04_RoofRidge",
+    "SV_House_04_Door",
+    "SV_House_04_FrontWindow_-1",
+    "SV_House_04_SideWindow_-1",
+    "SV_House_04_FrontWindow_1",
+    "SV_House_04_SideWindow_1",
+    "SV_House_04_Chimney",
+    "SV_House_04_Doorstep",
+    "SV_House_04_Barrel",
+    "SV_House_04_Crate",
+    "SV_House_04_DoorPot",
+    "SV_House_04_DoorLantern",
+    "SV_House_04_LanternGlow",
+    "SV_House_04_Approach",
+    "SV_House_05_Foundation",
+    "SV_House_05_WallY_-1",
+    "SV_House_05_WallX_-1",
+    "SV_House_05_FrontTimber_-1_-370.0",
+    "SV_House_05_FrontTimber_-1_0",
+    "SV_House_05_FrontTimber_-1_370.0",
+    "SV_House_05_TopBeamY_-1",
+    "SV_House_05_BaseBeamY_-1",
+    "SV_House_05_WallY_1",
+    "SV_House_05_WallX_1",
+    "SV_House_05_FrontTimber_1_-370.0",
+    "SV_House_05_FrontTimber_1_0",
+    "SV_House_05_FrontTimber_1_370.0",
+    "SV_House_05_TopBeamY_1",
+    "SV_House_05_BaseBeamY_1",
+    "SV_House_05_Roof_-1",
+    "SV_House_05_Gable_-1",
+    "SV_House_05_Roof_1",
+    "SV_House_05_Gable_1",
+    "SV_House_05_RoofRidge",
+    "SV_House_05_Door",
+    "SV_House_05_FrontWindow_-1",
+    "SV_House_05_SideWindow_-1",
+    "SV_House_05_FrontWindow_1",
+    "SV_House_05_SideWindow_1",
+    "SV_House_05_Chimney",
+    "SV_House_05_Doorstep",
+    "SV_House_05_Barrel",
+    "SV_House_05_Crate",
+    "SV_House_05_DoorPot",
+    "SV_House_05_DoorLantern",
+    "SV_House_05_LanternGlow",
+    "SV_House_05_Approach",
+    "SV_House_06_Foundation",
+    "SV_House_06_WallY_-1",
+    "SV_House_06_WallX_-1",
+    "SV_House_06_FrontTimber_-1_-310.0",
+    "SV_House_06_FrontTimber_-1_0",
+    "SV_House_06_FrontTimber_-1_310.0",
+    "SV_House_06_TopBeamY_-1",
+    "SV_House_06_BaseBeamY_-1",
+    "SV_House_06_WallY_1",
+    "SV_House_06_WallX_1",
+    "SV_House_06_FrontTimber_1_-310.0",
+    "SV_House_06_FrontTimber_1_0",
+    "SV_House_06_FrontTimber_1_310.0",
+    "SV_House_06_TopBeamY_1",
+    "SV_House_06_BaseBeamY_1",
+    "SV_House_06_Roof_-1",
+    "SV_House_06_Gable_-1",
+    "SV_House_06_Roof_1",
+    "SV_House_06_Gable_1",
+    "SV_House_06_RoofRidge",
+    "SV_House_06_Door",
+    "SV_House_06_FrontWindow_-1",
+    "SV_House_06_SideWindow_-1",
+    "SV_House_06_FrontWindow_1",
+    "SV_House_06_SideWindow_1",
+    "SV_House_06_Chimney",
+    "SV_House_06_Doorstep",
+    "SV_House_06_Barrel",
+    "SV_House_06_Crate",
+    "SV_House_06_DoorPot",
+    "SV_House_06_DoorLantern",
+    "SV_House_06_LanternGlow",
+    "SV_House_06_Approach",
+    "SV_House_07_Foundation",
+    "SV_House_07_WallY_-1",
+    "SV_House_07_WallX_-1",
+    "SV_House_07_FrontTimber_-1_-325.0",
+    "SV_House_07_FrontTimber_-1_0",
+    "SV_House_07_FrontTimber_-1_325.0",
+    "SV_House_07_TopBeamY_-1",
+    "SV_House_07_BaseBeamY_-1",
+    "SV_House_07_WallY_1",
+    "SV_House_07_WallX_1",
+    "SV_House_07_FrontTimber_1_-325.0",
+    "SV_House_07_FrontTimber_1_0",
+    "SV_House_07_FrontTimber_1_325.0",
+    "SV_House_07_TopBeamY_1",
+    "SV_House_07_BaseBeamY_1",
+    "SV_House_07_Roof_-1",
+    "SV_House_07_Gable_-1",
+    "SV_House_07_Roof_1",
+    "SV_House_07_Gable_1",
+    "SV_House_07_RoofRidge",
+    "SV_House_07_Door",
+    "SV_House_07_FrontWindow_-1",
+    "SV_House_07_SideWindow_-1",
+    "SV_House_07_FrontWindow_1",
+    "SV_House_07_SideWindow_1",
+    "SV_House_07_Chimney",
+    "SV_House_07_Doorstep",
+    "SV_House_07_Barrel",
+    "SV_House_07_Crate",
+    "SV_House_07_DoorPot",
+    "SV_House_07_DoorLantern",
+    "SV_House_07_LanternGlow",
+    "SV_House_07_Approach",
+    "SV_House_08_Foundation",
+    "SV_House_08_WallY_-1",
+    "SV_House_08_WallX_-1",
+    "SV_House_08_FrontTimber_-1_-330.0",
+    "SV_House_08_FrontTimber_-1_0",
+    "SV_House_08_FrontTimber_-1_330.0",
+    "SV_House_08_TopBeamY_-1",
+    "SV_House_08_BaseBeamY_-1",
+    "SV_House_08_WallY_1",
+    "SV_House_08_WallX_1",
+    "SV_House_08_FrontTimber_1_-330.0",
+    "SV_House_08_FrontTimber_1_0",
+    "SV_House_08_FrontTimber_1_330.0",
+    "SV_House_08_TopBeamY_1",
+    "SV_House_08_BaseBeamY_1",
+    "SV_House_08_Roof_-1",
+    "SV_House_08_Gable_-1",
+    "SV_House_08_Roof_1",
+    "SV_House_08_Gable_1",
+    "SV_House_08_RoofRidge",
+    "SV_House_08_Door",
+    "SV_House_08_FrontWindow_-1",
+    "SV_House_08_SideWindow_-1",
+    "SV_House_08_FrontWindow_1",
+    "SV_House_08_SideWindow_1",
+    "SV_House_08_Chimney",
+    "SV_House_08_Doorstep",
+    "SV_House_08_Barrel",
+    "SV_House_08_Crate",
+    "SV_House_08_DoorPot",
+    "SV_House_08_DoorLantern",
+    "SV_House_08_LanternGlow",
+    "SV_House_08_Approach",
+    "SV_House_09_Foundation",
+    "SV_House_09_WallY_-1",
+    "SV_House_09_WallX_-1",
+    "SV_House_09_FrontTimber_-1_-270.0",
+    "SV_House_09_FrontTimber_-1_0",
+    "SV_House_09_FrontTimber_-1_270.0",
+    "SV_House_09_TopBeamY_-1",
+    "SV_House_09_BaseBeamY_-1",
+    "SV_House_09_WallY_1",
+    "SV_House_09_WallX_1",
+    "SV_House_09_FrontTimber_1_-270.0",
+    "SV_House_09_FrontTimber_1_0",
+    "SV_House_09_FrontTimber_1_270.0",
+    "SV_House_09_TopBeamY_1",
+    "SV_House_09_BaseBeamY_1",
+    "SV_House_09_Roof_-1",
+    "SV_House_09_Gable_-1",
+    "SV_House_09_Roof_1",
+    "SV_House_09_Gable_1",
+    "SV_House_09_RoofRidge",
+    "SV_House_09_Door",
+    "SV_House_09_FrontWindow_-1",
+    "SV_House_09_SideWindow_-1",
+    "SV_House_09_FrontWindow_1",
+    "SV_House_09_SideWindow_1",
+    "SV_House_09_Chimney",
+    "SV_House_09_Doorstep",
+    "SV_House_09_Barrel",
+    "SV_House_09_Crate",
+    "SV_House_09_DoorPot",
+    "SV_House_09_DoorLantern",
+    "SV_House_09_LanternGlow",
+    "SV_House_09_Approach",
+    "SV_House_10_Foundation",
+    "SV_House_10_WallY_-1",
+    "SV_House_10_WallX_-1",
+    "SV_House_10_FrontTimber_-1_-280.0",
+    "SV_House_10_FrontTimber_-1_0",
+    "SV_House_10_FrontTimber_-1_280.0",
+    "SV_House_10_TopBeamY_-1",
+    "SV_House_10_BaseBeamY_-1",
+    "SV_House_10_WallY_1",
+    "SV_House_10_WallX_1",
+    "SV_House_10_FrontTimber_1_-280.0",
+    "SV_House_10_FrontTimber_1_0",
+    "SV_House_10_FrontTimber_1_280.0",
+    "SV_House_10_TopBeamY_1",
+    "SV_House_10_BaseBeamY_1",
+    "SV_House_10_Roof_-1",
+    "SV_House_10_Gable_-1",
+    "SV_House_10_Roof_1",
+    "SV_House_10_Gable_1",
+    "SV_House_10_RoofRidge",
+    "SV_House_10_Door",
+    "SV_House_10_FrontWindow_-1",
+    "SV_House_10_SideWindow_-1",
+    "SV_House_10_FrontWindow_1",
+    "SV_House_10_SideWindow_1",
+    "SV_House_10_Chimney",
+    "SV_House_10_Doorstep",
+    "SV_House_10_Barrel",
+    "SV_House_10_Crate",
+    "SV_House_10_DoorPot",
+    "SV_House_10_DoorLantern",
+    "SV_House_10_LanternGlow",
+    "SV_House_10_Approach",
+    "SV_Equipment_ReservedNPCPad",
+    "SV_Equipment_BannerPole",
+    "SV_Equipment_Banner",
+    "SV_Equipment_SignBoard",
+    "SV_Equipment_RoleSign",
+    "SV_Equipment_FutureService",
+    "SV_Traits_ReservedNPCPad",
+    "SV_Traits_BannerPole",
+    "SV_Traits_Banner",
+    "SV_Traits_SignBoard",
+    "SV_Traits_RoleSign",
+    "SV_Traits_FutureService",
+    "SV_Difficulty_ReservedNPCPad",
+    "SV_Difficulty_BannerPole",
+    "SV_Difficulty_Banner",
+    "SV_Difficulty_SignBoard",
+    "SV_Difficulty_RoleSign",
+    "SV_Difficulty_FutureService",
+    "SV_Story_ReservedNPCPad",
+    "SV_Story_BannerPole",
+    "SV_Story_Banner",
+    "SV_Story_SignBoard",
+    "SV_Story_RoleSign",
+    "SV_Story_FutureService",
+    "SV_PerimeterTree_00",
+    "SV_PerimeterTree_01",
+    "SV_PerimeterTree_02",
+    "SV_PerimeterTree_03",
+    "SV_PerimeterTree_04",
+    "SV_PerimeterTree_05",
+    "SV_PerimeterTree_06",
+    "SV_PerimeterTree_07",
+    "SV_PerimeterTree_08",
+    "SV_PerimeterTree_09",
+    "SV_PerimeterTree_12",
+    "SV_PerimeterTree_13",
+    "SV_PerimeterTree_14",
+    "SV_PerimeterTree_15",
+    "SV_PerimeterTree_16",
+    "SV_PerimeterTree_17",
+    "SV_PerimeterTree_18",
+    "SV_PerimeterTree_19",
+    "SV_PerimeterTree_20",
+    "SV_PerimeterTree_21",
+    "SV_PerimeterTree_22",
+    "SV_PerimeterTree_23",
+    "SV_PerimeterTree_24",
+    "SV_PerimeterTree_25",
+    "SV_PerimeterTree_26",
+    "SV_PerimeterTree_27",
+    "SV_PerimeterTree_28",
+    "SV_PerimeterTree_29",
+    "SV_PerimeterTree_30",
+    "SV_PerimeterTree_33",
+    "SV_PerimeterTree_34",
+    "SV_PerimeterTree_35",
+    "SV_PerimeterTree_36",
+    "SV_PerimeterTree_37",
+    "SV_PerimeterTree_38",
+    "SV_PerimeterTree_39",
+    "SV_PerimeterTree_40",
+    "SV_PerimeterTree_41",
+    "SV_Garden_bush_01",
+    "SV_Garden_bush_02",
+    "SV_Garden_rock_03",
+    "SV_Garden_bush_04",
+    "SV_Garden_bush_05",
+    "SV_Garden_bush_07",
+    "SV_Garden_bush_08",
+    "SV_Garden_bush_10",
+    "SV_Garden_bush_11",
+    "SV_Garden_rock_12",
+    "SV_Garden_bush_13",
+    "SV_Garden_bush_14",
+    "SV_Garden_bush_16",
+    "SV_Garden_bush_17",
+    "SV_Garden_rock_18",
+    "SV_Garden_bush_19",
+    "SV_Garden_bush_20",
+    "SV_Garden_rock_21",
+    "SV_Garden_bush_22",
+    "SV_Garden_rock_24",
+    "SV_Garden_bush_25",
+    "SV_Garden_bush_26",
+    "SV_Garden_rock_27",
+    "SV_Garden_bush_28",
+    "SV_Garden_bush_29",
+    "SV_Garden_rock_30",
+    "SV_Garden_bush_31",
+    "SV_Garden_bush_32",
+    "SV_Garden_rock_33",
+    "SV_Garden_bush_35",
+    "SV_Garden_bush_37",
+    "SV_EdgeBoulder_00",
+    "SV_EdgeBoulder_01",
+    "SV_EdgeBoulder_02",
+    "SV_EdgeBoulder_03",
+    "SV_EdgeBoulder_05",
+    "SV_EdgeBoulder_06",
+    "SV_EdgeBoulder_07",
+    "SV_EdgeBoulder_08",
+    "SV_EdgeBoulder_09",
+    "SV_EdgeBoulder_10",
+    "SV_EdgeBoulder_11",
+    "SV_EdgeBoulder_13",
+    "SV_EdgeBoulder_14",
+    "SV_EdgeBoulder_15",
+    "SV_PathLanternPost_-670_-1750",
+    "SV_PathLantern_-670_-1750",
+    "SV_PathLanternGlow_-670_-1750",
+    "SV_PathLanternPost_-670_1750",
+    "SV_PathLantern_-670_1750",
+    "SV_PathLanternGlow_-670_1750",
+    "SV_PathLanternPost_-670_3150",
+    "SV_PathLantern_-670_3150",
+    "SV_PathLanternGlow_-670_3150",
+    "SV_PathLanternPost_670_-1750",
+    "SV_PathLantern_670_-1750",
+    "SV_PathLanternGlow_670_-1750",
+    "SV_PathLanternPost_670_1750",
+    "SV_PathLantern_670_1750",
+    "SV_PathLanternGlow_670_1750",
+    "SV_PathLanternPost_670_3150",
+    "SV_PathLantern_670_3150",
+    "SV_PathLanternGlow_670_3150",
+    "SV_PortalStonePad",
+    "SV_RunPortal_ToPrototypeCombat",
+    "SV_PortalPillar_-205",
+    "SV_PortalPillar_205",
+    "SV_PortalArch_00",
+    "SV_PortalArch_01",
+    "SV_PortalArch_02",
+    "SV_PortalArch_03",
+    "SV_PortalArch_04",
+    "SV_PortalArch_05",
+    "SV_PortalArch_06",
+    "SV_PortalArch_07",
+    "SV_PortalArch_08",
+    "SV_PortalRune_00",
+    "SV_PortalRune_01",
+    "SV_PortalRune_02",
+    "SV_PortalRune_03",
+    "SV_PortalRune_04",
+    "SV_PortalRune_05",
+    "SV_PortalRune_06",
+    "SV_PortalRune_07",
+    "SV_PortalRune_08",
+    "SV_PortalRune_09",
+    "SV_PortalRune_10",
+    "SV_PortalRune_11",
+    "SV_PortalRune_12",
+    "SV_PortalRune_13",
+    "SV_PortalRune_14",
+    "SV_PortalRune_15",
+    "SV_PortalRune_16",
+    "SV_PortalRune_17",
+    "SV_PortalRune_18",
+    "SV_PortalRune_19",
+    "SV_PortalRune_20",
+    "SV_PortalRune_21",
+    "SV_PortalRune_22",
+    "SV_PortalRune_23",
+    "SV_PortalEnergySurface",
+    "SV_PortalDestinationSign",
+    "SV_PortalPrototypeSign",
+    "SV_PlayerStart_SouthApproach"
+  ],
+  "mesh_bounds": {
+    "cube": {
+      "asset": "/Engine/BasicShapes/Cube",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        100.0,
+        100.0,
+        100.0
+      ]
+    },
+    "cylinder": {
+      "asset": "/Engine/BasicShapes/Cylinder",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        100.0,
+        100.0,
+        100.0
+      ]
+    },
+    "sphere": {
+      "asset": "/Engine/BasicShapes/Sphere",
+      "origin": [
+        0.0,
+        3.814697265625e-06,
+        0.0
+      ],
+      "size": [
+        100.0,
+        100.0,
+        100.0
+      ]
+    },
+    "plaster": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/Plaster/SM_Plaster_FullXFull_Plaster_FullXFull",
+      "origin": [
+        0.0,
+        0.0,
+        250.0
+      ],
+      "size": [
+        500.0,
+        50.0,
+        500.0
+      ]
+    },
+    "beam": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/Wood/Pieces/SM_Beam_Long_1",
+      "origin": [
+        6.103515625e-05,
+        -3.0517578125e-05,
+        -0.06549501419067383
+      ],
+      "size": [
+        302.1534423828125,
+        15.66912841796875,
+        15.996968269348145
+      ]
+    },
+    "gable": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/Wood/Roof/SM_Wood_Wall_RoofFront_Large_LP",
+      "origin": [
+        0.0,
+        -6.103515625e-05,
+        -0.026702880859375
+      ],
+      "size": [
+        267.984375,
+        6.0401611328125,
+        174.74481201171875
+      ]
+    },
+    "roof": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/RoofTiles/Round/SM_RoofTiles_Round_FullXFull",
+      "origin": [
+        -6.103515625e-05,
+        0.06742477416992188,
+        4.958879470825195
+      ],
+      "size": [
+        507.2569580078125,
+        508.3162612915039,
+        29.08743667602539
+      ]
+    },
+    "door": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/Doors/SM_Door_01",
+      "origin": [
+        48.49583435058594,
+        0.002306222915649414,
+        103.61607360839844
+      ],
+      "size": [
+        102.68862915039062,
+        18.089619159698486,
+        207.4315185546875
+      ]
+    },
+    "window": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/Windows/SM_Window_FrenchPanes_01_LP",
+      "origin": [
+        0.0029540061950683594,
+        -2.5033950805664062e-06,
+        -0.0034360885620117188
+      ],
+      "size": [
+        29.45620346069336,
+        5.079957008361816,
+        104.94330406188965
+      ]
+    },
+    "chimney": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/Plaster/SM_Plaster_Chimney_Thick",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        53.65541458129883,
+        84.59461975097656,
+        155.97645568847656
+      ]
+    },
+    "stone_tile": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/StoneFloor/SM_StoneFloor_01_Full",
+      "origin": [
+        2.42816162109375,
+        3.2908477783203125,
+        -0.18013858795166016
+      ],
+      "size": [
+        311.8080749511719,
+        312.3647155761719,
+        22.72406578063965
+      ]
+    },
+    "tree_medium": {
+      "asset": "/Game/Stylized_Village/Assets/Foliage/Trees/Tree_Medium_Green",
+      "origin": [
+        22.585708618164062,
+        -20.13067626953125,
+        877.8107299804688
+      ],
+      "size": [
+        1008.1519775390625,
+        832.5399169921875,
+        1763.5904541015625
+      ]
+    },
+    "tree_large": {
+      "asset": "/Game/Stylized_Village/Assets/Foliage/Trees/Tree_Large_Green",
+      "origin": [
+        93.1151123046875,
+        -81.57672119140625,
+        1389.0335693359375
+      ],
+      "size": [
+        2104.421630859375,
+        2298.46923828125,
+        2776.697998046875
+      ]
+    },
+    "bush": {
+      "asset": "/Game/Stylized_Village/Assets/Foliage/Bushes/SM_Bush_01",
+      "origin": [
+        -22.503437042236328,
+        14.033451080322266,
+        86.03885650634766
+      ],
+      "size": [
+        186.05813598632812,
+        194.76763916015625,
+        172.1331329345703
+      ]
+    },
+    "rock": {
+      "asset": "/Game/Stylized_Village/Assets/Stones/Boulder/SM_Boulder_Medium_01",
+      "origin": [
+        2.9668540954589844,
+        3.988234043121338,
+        -0.4716949462890625
+      ],
+      "size": [
+        73.37480926513672,
+        60.51716899871826,
+        73.67024230957031
+      ]
+    },
+    "barrel": {
+      "asset": "/Game/Stylized_Village/Assets/Props/Furniture/SM_SM_Barrel_01",
+      "origin": [
+        -1.9073486328125e-06,
+        0.024496078491210938,
+        3.814697265625e-06
+      ],
+      "size": [
+        114.70625305175781,
+        113.84609985351562,
+        130.51785278320312
+      ]
+    },
+    "crate": {
+      "asset": "/Game/Stylized_Village/Assets/Props/Furniture/SM_Crate_01",
+      "origin": [
+        -0.0015611648559570312,
+        -1.9073486328125e-06,
+        0.40699195861816406
+      ],
+      "size": [
+        120.69480323791504,
+        121.41984558105469,
+        122.883056640625
+      ]
+    },
+    "lantern": {
+      "asset": "/Game/Stylized_Village/Assets/Props/Lanterns/SM_Lantern_Box",
+      "origin": [
+        0.05856895446777344,
+        0.10681343078613281,
+        -35.81307601928711
+      ],
+      "size": [
+        39.02469253540039,
+        39.095977783203125,
+        78.59061431884766
+      ]
+    },
+    "pot": {
+      "asset": "/Game/Stylized_Village/Assets/Props/Pots/SM_ClayPot_WideSmall",
+      "origin": [
+        0.0,
+        0.05858898162841797,
+        6.826690196990967
+      ],
+      "size": [
+        39.4573974609375,
+        39.15160369873047,
+        13.693268775939941
+      ]
+    }
+  },
+  "new_map_from_template": false,
+  "initial_actor_count": 11,
+  "cleanup_decisions": [
+    {
+      "label": "RecastNavMesh-Default",
+      "class": "/Script/NavigationSystem.RecastNavMesh",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.RecastNavMesh_UAID_244BFE8DA9DF99F402-Default",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "SkyAtmosphere",
+      "class": "/Script/Engine.SkyAtmosphere",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.SkyAtmosphere_0",
+      "location": [
+        0.0,
+        0.0,
+        500.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "WorldPartitionMiniMap0",
+      "class": "/Script/Engine.WorldPartitionMiniMap",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.WorldPartitionMiniMap_0",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "SM_SkySphere",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_0",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "SkyLight",
+      "class": "/Script/Engine.SkyLight",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.SkyLight_0",
+      "location": [
+        0.0,
+        0.0,
+        600.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "DirectionalLight",
+      "class": "/Script/Engine.DirectionalLight",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.DirectionalLight_0",
+      "location": [
+        0.0,
+        0.0,
+        400.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "NavMeshBoundsVolume",
+      "class": "/Script/NavigationSystem.NavMeshBoundsVolume",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.NavMeshBoundsVolume_UAID_244BFE8DA9DF99F402_1979577088",
+      "location": [
+        0.0,
+        0.0,
+        20.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "ExponentialHeightFog",
+      "class": "/Script/Engine.ExponentialHeightFog",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.ExponentialHeightFog_0",
+      "location": [
+        -5600.0,
+        -50.0,
+        -6850.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "VolumetricCloud",
+      "class": "/Script/Engine.VolumetricCloud",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.VolumetricCloud_0",
+      "location": [
+        0.0,
+        0.0,
+        700.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "WorldDataLayers",
+      "class": "/Script/Engine.WorldDataLayers",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.WorldDataLayers",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "SV_TemplateCleanupCheckpoint",
+      "class": "/Script/Engine.Actor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.Actor_UAID_244BFE8DA9DF330803_1958347255",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "owned village actor from previous execution"
+    }
+  ],
+  "removed_actor_count": 1,
+  "preserved_actor_count": 10,
+  "created_actor_count": 667,
+  "template_cleanup_checkpoint": {
+    "tag": "Rogue10m.StartVillage.TemplateCleaned",
+    "saved": true,
+    "source_map_saved": false,
+    "unknown_actors_preserved_on_rerun": true
+  },
+  "game_mode": {
+    "class": "/Game/FirstPerson/Blueprints/BP_FirstPersonGameMode.BP_FirstPersonGameMode_C",
+    "source_class": "/Game/FirstPerson/Blueprints/BP_FirstPersonGameMode.BP_FirstPersonGameMode_C",
+    "source_auto_run": false,
+    "hub_auto_run": false,
+    "source_prototype_duration": false,
+    "hub_prototype_duration": false,
+    "entry_requires_no_StartRun_travel_option": true,
+    "original_blueprint_modified": false
+  },
+  "ground_materials": {
+    "grass": {
+      "instance": "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Grass",
+      "existing_parent": "/Game/StarterContent/Materials/M_Ground_Grass.M_Ground_Grass",
+      "scalar_parameters": [],
+      "vector_parameters": [
+        "Dead Grass Color",
+        "Far Distance Color",
+        "Base Color tint"
+      ],
+      "applied_parameters": {
+        "Base Color tint": [
+          0.72,
+          0.86,
+          0.65,
+          1.0
+        ]
+      },
+      "original_material_modified": false,
+      "surface": "grass"
+    },
+    "dirt": {
+      "instance": "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_EarthPath",
+      "existing_parent": "/Game/StarterContent/Materials/M_Ground_Gravel.M_Ground_Gravel",
+      "scalar_parameters": [],
+      "vector_parameters": [],
+      "applied_parameters": {},
+      "original_material_modified": false,
+      "surface": "earth and fine gravel approach"
+    }
+  },
+  "boundary": {
+    "blocking_walls": 4,
+    "inside_limit_cm": 5820,
+    "wall_height_cm": 700,
+    "visual": "continuous low timber fence",
+    "prevents_floor_walkout": true
+  },
+  "houses": [
+    {
+      "id": 1,
+      "center": [
+        -2650,
+        -2350
+      ],
+      "size_cm": [
+        620,
+        640,
+        365
+      ],
+      "yaw": 180,
+      "exterior_only": true
+    },
+    {
+      "id": 2,
+      "center": [
+        2600,
+        -2500
+      ],
+      "size_cm": [
+        660,
+        690,
+        400
+      ],
+      "yaw": 180,
+      "exterior_only": true
+    },
+    {
+      "id": 3,
+      "center": [
+        -3450,
+        -850
+      ],
+      "size_cm": [
+        610,
+        720,
+        400
+      ],
+      "yaw": 90,
+      "exterior_only": true
+    },
+    {
+      "id": 4,
+      "center": [
+        3500,
+        -800
+      ],
+      "size_cm": [
+        700,
+        780,
+        430
+      ],
+      "yaw": -90,
+      "exterior_only": true
+    },
+    {
+      "id": 5,
+      "center": [
+        -3150,
+        1050
+      ],
+      "size_cm": [
+        740,
+        800,
+        455
+      ],
+      "yaw": 90,
+      "exterior_only": true
+    },
+    {
+      "id": 6,
+      "center": [
+        3200,
+        1100
+      ],
+      "size_cm": [
+        620,
+        650,
+        375
+      ],
+      "yaw": -90,
+      "exterior_only": true
+    },
+    {
+      "id": 7,
+      "center": [
+        -2450,
+        2850
+      ],
+      "size_cm": [
+        650,
+        690,
+        410
+      ],
+      "yaw": 0,
+      "exterior_only": true
+    },
+    {
+      "id": 8,
+      "center": [
+        2550,
+        2800
+      ],
+      "size_cm": [
+        660,
+        740,
+        420
+      ],
+      "yaw": 0,
+      "exterior_only": true
+    },
+    {
+      "id": 9,
+      "center": [
+        -4200,
+        3050
+      ],
+      "size_cm": [
+        540,
+        590,
+        340
+      ],
+      "yaw": 0,
+      "exterior_only": true
+    },
+    {
+      "id": 10,
+      "center": [
+        4150,
+        -2850
+      ],
+      "size_cm": [
+        560,
+        620,
+        355
+      ],
+      "yaw": 180,
+      "exterior_only": true
+    }
+  ],
+  "preparation_areas": [
+    {
+      "role": "Equipment",
+      "location": [
+        -1420,
+        -790,
+        32
+      ],
+      "status": "reserved scenery; NPC/service functionality not implemented"
+    },
+    {
+      "role": "Traits",
+      "location": [
+        1420,
+        -790,
+        32
+      ],
+      "status": "reserved scenery; NPC/service functionality not implemented"
+    },
+    {
+      "role": "Difficulty",
+      "location": [
+        -1420,
+        1150,
+        32
+      ],
+      "status": "reserved scenery; NPC/service functionality not implemented"
+    },
+    {
+      "role": "Story",
+      "location": [
+        1420,
+        1150,
+        32
+      ],
+      "status": "reserved scenery; NPC/service functionality not implemented"
+    }
+  ],
+  "portal": {
+    "actor": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.Rogue10mRunPortal_UAID_244BFE8DA9DF330803_2031631883",
+    "target_level": "/Game/FirstPerson/Lvl_FirstPerson",
+    "start_run_timer_on_travel": true,
+    "location": [
+      0,
+      4270.0,
+      200
+    ]
+  },
+  "player_start": {
+    "location": [
+      0,
+      -2240,
+      112
+    ],
+    "rotation": [
+      0,
+      90,
+      0
+    ],
+    "distance_to_portal_cm": 6510.0,
+    "spawn_outside_portal_overlap": true
+  },
+  "viewpoints": {
+    "overview": {
+      "location": [
+        -6550,
+        -6900,
+        5350
+      ],
+      "rotation": [
+        -29,
+        48,
+        0
+      ],
+      "purpose": "southwest overview of village and north portal"
+    },
+    "player_start": {
+      "location": [
+        0,
+        -2240,
+        175
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "purpose": "south approach player eye toward central square"
+    }
+  },
+  "validation_scope": "editor creation and save; PIE movement/portal/visual verification still required",
+  "completed_utc": "2026-10-05T01:56:21.323731+00:00"
+}

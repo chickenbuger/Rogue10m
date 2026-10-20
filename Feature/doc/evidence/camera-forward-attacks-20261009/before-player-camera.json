@@ -1,0 +1,111 @@
+{
+  "world": null,
+  "pie": true,
+  "dirty_content": [],
+  "dirty_maps": [],
+  "player": "/Game/Rogue10m/Maps/UEDPIE_0_StartHub.StartHub:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+  "player_class": "/Game/Character/Customization/Characters/BP_Rogue10m_HumanMaleCharacter.BP_Rogue10m_HumanMaleCharacter_C",
+  "components": [
+    {
+      "name": "CollisionCylinder",
+      "class": "/Script/Engine.CapsuleComponent"
+    },
+    {
+      "name": "Arrow",
+      "class": "/Script/Engine.ArrowComponent"
+    },
+    {
+      "name": "CharMoveComp",
+      "class": "/Script/Engine.CharacterMovementComponent"
+    },
+    {
+      "name": "CharacterMesh0",
+      "class": "/Script/Engine.SkeletalMeshComponent"
+    },
+    {
+      "name": "Appearance Camera Component",
+      "class": "/Script/Rogue10m.Rogue10mAppearanceCameraComponent"
+    },
+    {
+      "name": "First Person Mesh",
+      "class": "/Script/Engine.SkeletalMeshComponent"
+    },
+    {
+      "name": "Inventory Component",
+      "class": "/Script/Rogue10m.Rogue10mInventoryComponent"
+    },
+    {
+      "name": "Combat Component",
+      "class": "/Script/Rogue10m.Rogue10mCombatComponent"
+    },
+    {
+      "name": "Basic Brawler Component",
+      "class": "/Script/Rogue10m.Rogue10mBasicBrawlerComponent"
+    },
+    {
+      "name": "Character Animation Component",
+      "class": "/Script/Rogue10m.Rogue10mCharacterAnimationComponent"
+    },
+    {
+      "name": "First Person Presentation Component",
+      "class": "/Script/Rogue10m.Rogue10mFirstPersonPresentationComponent"
+    },
+    {
+      "name": "First Person Camera",
+      "class": "/Script/Engine.CameraComponent"
+    },
+    {
+      "name": "Player Feedback Component",
+      "class": "/Script/Rogue10m.Rogue10mPlayerFeedbackComponent"
+    },
+    {
+      "name": "Vital Regeneration Component",
+      "class": "/Script/Rogue10m.Rogue10mVitalRegenerationComponent"
+    },
+    {
+      "name": "Animation Source Mesh",
+      "class": "/Script/Engine.SkeletalMeshComponent"
+    },
+    {
+      "name": "Appearance Hair Mesh",
+      "class": "/Script/Engine.SkeletalMeshComponent"
+    },
+    {
+      "name": "Appearance Facial Mesh",
+      "class": "/Script/Engine.SkeletalMeshComponent"
+    },
+    {
+      "name": "CameraProxyMeshComponent_0",
+      "class": "/Script/Engine.CameraProxyMeshComponent"
+    },
+    {
+      "name": "DrawFrustumComponent_0",
+      "class": "/Script/Engine.DrawFrustumComponent"
+    },
+    {
+      "name": "Player Feedback Post Process",
+      "class": "/Script/Engine.PostProcessComponent"
+    },
+    {
+      "name": "PawnInputComponent0",
+      "class": "/Script/EnhancedInput.EnhancedInputComponent"
+    },
+    {
+      "name": "Rogue10mAppearanceShadowComponent_0",
+      "class": "/Script/Rogue10m.Rogue10mAppearanceShadowComponent"
+    },
+    {
+      "name": "PoseableMeshComponent_0",
+      "class": "/Script/Engine.PoseableMeshComponent"
+    }
+  ],
+  "camera_defaults": {
+    "eye_offset": "<Struct 'Vector' (0x0000028B69F9D580) {x: 8.000000, y: 0.000000, z: 4.000000}>",
+    "initial_view_pitch": "-20.0",
+    "inspection_distance": "300.0",
+    "inspection_pivot_height": "0.0"
+  },
+  "camera_location": "<Struct 'Vector' (0x0000028ABD0795F0) {x: -1.883547, y: -2245.155984, z: 173.169713}>",
+  "camera_rotation": "<Struct 'Rotator' (0x0000028ABD0795F0) {pitch: -22.040287, yaw: 90.787435, roll: 0.171729}>",
+  "actor_rotation": "<Struct 'Rotator' (0x0000028ABD0795F0) {pitch: 0.000000, yaw: 90.000000, roll: -0.000000}>"
+}

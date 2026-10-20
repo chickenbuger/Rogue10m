@@ -61,7 +61,8 @@ Check this list on every user command before finishing:
 - When a feature is developed, add a clearly marked Notion summary candidate inside the DevLog.
 - When a Sprint work item is completed or materially changed, update Docs/SprintChangeLog.md with its goal, major changes, validation, status, and related documents.
 - Before any GitHub commit or push summary, list the changed files and a short explanation.
-- Do not commit unless the user explicitly confirms.
+- Standing user authorization (2026-10-20): commit and push the current checkpoint, and after each future feature is completed and validated, commit it and promote it through `develop` -> `test` -> `main`, then push the work and integration branches. This instruction is explicit confirmation; do not ask again for routine feature completion.
+- Keep feature development on a work branch. Before promotion, fetch and inspect remote changes, run relevant checks, review the diff, and update the feature documents, Sprint changelog, and daily DevLog. Prefer fast-forward promotion when possible; never force-push or discard unrelated work under this authorization. If validation fails or integration is blocked, record the reason instead of claiming completion.
 - Write every new DevLog entry in Korean.
 - Always switch to an appropriate work branch before feature development.
 - For large or unclear work, apply `Docs/LazyCodexHarness.md` and record the selected Ultrawork Packets.
@@ -83,6 +84,18 @@ Check this list on every user command before finishing:
 - Use `UE_LOG(LogRogue10m, ...)`; avoid `LogTemp` for project code.
 - Never edit generated or cached outputs: `Intermediate/`, `Binaries/`, `Saved/`, `DerivedDataCache/`, `*.generated.h`, `*.gen.cpp`.
 - Do not edit `.uasset` or `.umap` binaries directly. Use Unreal Editor and then commit the resulting assets.
+
+## Fab Owned Asset Reuse
+
+- Prefer reusing suitable assets already in the project and the user's Fab My Library before creating new art or sourcing additional assets. Honor an explicit user request for a particular asset or new creation.
+- Before content work, check `Docs/FabAssetReuseGuide.md` and inspect the relevant owned packs. Record the chosen assets and why they fit in the feature plan; refresh ownership and compatibility for the assets actually needed.
+- Distinguish Fab library confirmation, local availability, historical use, and verified current runtime use. A project folder or a prior document alone does not establish current account ownership or integration.
+- Select the meshes, materials, animation clips, Niagara effects, and sounds needed for the feature. Preserve vendor originals and adapt through project-owned assets, Blueprint children, and Data Assets using the existing project layout.
+- For basic animation and VFX, default to editing suitable owned assets into project-owned derivatives. Create a new base only when the available assets cannot meet the requirement through reasonable editing, or the user explicitly requests new creation; record the reason in the feature plan.
+- For animation, adapt retargeting, clip ranges, playback rate, blending, poses, montages, and notifies as needed while preserving camera, root-motion, and hit-timing contracts. For VFX, adapt the chosen effect's parameters, materials, color, scale, lifetime, emission, timing, and attachment to fit the action and view. Validate the edited result in its actual gameplay context.
+- Keep the current art direction and C++ gameplay, save, progression, camera, and input contracts. Evaluate framework/template packs against those contracts before integrating their systems.
+- Before import or activation, check the chosen product's usage terms, UE version/format, skeleton/root motion or Niagara dependencies, and relevant performance cost. Import and validate a scoped candidate before wider use.
+- Use the Unreal Editor for binary assets, record the source and changed assets, and run validation appropriate to the actual change. This reuse preference does not authorize purchases or unrelated project changes.
 
 ## Build Commands
 

@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "version": "0.1.0",
+  "url": "http://127.0.0.1:8734",
+  "workers": [
+    "bridge",
+    "convert",
+    "export",
+    "export_grade_pack",
+    "generate_3d",
+    "generate_concepts",
+    "generate_multiview",
+    "generate_quality_variants",
+    "lod",
+    "mesh_cleanup",
+    "qa",
+    "remesh",
+    "repair_until_quality",
+    "resize",
+    "retexture",
+    "run_plan",
+    "texture",
+    "texture_edit",
+    "uv_unwrap"
+  ],
+  "providers": {
+    "ok": [
+      "apollo_cutout",
+      "apollo_hull",
+      "apollo_primitive",
+      "apollo_relief",
+      "apollo_sketch",
+      "trimesh_tools",
+      "upload",
+      "xatlas_uv"
+    ],
+    "missing_config": [
+      "gemini_image",
+      "openai_image",
+      "triposg"
+    ],
+    "unreachable": [
+      "comfyui",
+      "hunyuan3d",
+      "sf3d",
+      "trellis"
+    ],
+    "not_installed": [
+      "blender_cli",
+      "gltf_transform"
+    ],
+    "error": []
+  },
+  "note": "built-in apollo_* providers are honest CPU draft lanes, not hosted models"
+}

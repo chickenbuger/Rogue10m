@@ -1,0 +1,88 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Invalidating makefile for Rogue10mEditor (source file added)
+UHT compiled-in object format Default
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mFighterCombatStanceAnimInstance.cpp, Rogue10mAppearanceCameraComponent.cpp, Rogue10mCharacterAnimationComponent.cpp, Rogue10mCombatComponent.cpp, Rogue10mFirstPersonPresentationComponent.cpp, Rogue10mInventoryComponent.cpp, Rogue10mSkillBindingComponent.cpp, Rogue10mPlayerController.cpp, Rogue10mMonsterDataAsset.cpp, Rogue10mFistCombatAuthoring.cpp, Rogue10mMovingAttackAuthoring.cpp, Rogue10mOpenWorldAuthoring.cpp, Rogue10mBasicMonster.cpp, Rogue10mMonsterAttackPatternComponent.cpp, Rogue10mMonsterAIController.cpp, Rogue10mAppearanceCameraRuntimeTest.cpp, Rogue10mCameraForwardRuntimeTest.cpp, Rogue10mFighterCombatStanceRuntimeTest.cpp, Rogue10mFighterSkillTreeRuntimeTest.cpp, Rogue10mFistCombatRuntimeTest.cpp, Rogue10mInitialHeadFramingRuntimeTest.cpp, Rogue10mMovingAttackRuntimeTest.cpp, Rogue10mResponsiveHUDRuntimeTest.cpp, Rogue10mStoneFistAnimationRuntimeTest.cpp, Rogue10mThirdPersonInspectionRuntimeTest.cpp, Rogue10mWeaponSkillTreeRuntimeTest.cpp, Rogue10mBottomHUDWidget.cpp, Rogue10mHudWidgetParts.cpp, Rogue10mMainHUDWidget.cpp, Rogue10mMenuWindowWidgets.cpp, Rogue10mTutorialWidget.cpp, Rogue10mMonsterSpawner.cpp, Rogue10mOpenWorldBootstrap.cpp, Rogue10mRunPortal.cpp, Rogue10mTutorialAnimationComponent.cpp, Rogue10mTutorialNPC.cpp, Rogue10mTutorialRewardComponent.cpp, Rogue10mTutorialSupplySubsystem.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+Using XGE executor to run 21 action(s)
+Distributing 21 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {3401D2E4-EC84-455A-9C42-0A2457907376}
+ 
+--------------------Project: Default-------------------------------------------
+[1/21] Compile [x64] Rogue10mCameraForwardRuntimeTest.cpp (0:07.93 at +0:00)
+D:\Project\Rogue10m\Source\Rogue10m\Tests\Rogue10mCameraForwardRuntimeTest.cpp(290,61): error C2248: 'ARogue10mCharacter::DoJumpStart': protected ���('ARogue10mCharacter' Ŭ�������� ����)�� �׼����� �� �����ϴ�.
+            if(IsJump(S)&&!bJumped&&Elapsed>=.2){Character->DoJumpStart();bJumped=true;}
+                                                            ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mCharacter.h(118,15): note: 'ARogue10mCharacter::DoJumpStart' ������ �����Ͻʽÿ�.
+	virtual void DoJumpStart();
+	             ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mCharacter.h(31,20): note: 'ARogue10mCharacter' ������ �����Ͻʽÿ�.
+class ROGUE10M_API ARogue10mCharacter : public ACharacter, public IAbilitySystemInterface
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\Tests\Rogue10mCameraForwardRuntimeTest.cpp(291,60): error C2248: 'ARogue10mCharacter::DoJumpEnd': protected ���('ARogue10mCharacter' Ŭ�������� ����)�� �׼����� �� �����ϴ�.
+            if(IsJump(S)&&bJumped&&Elapsed>=.3){Character->DoJumpEnd();}
+                                                           ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mCharacter.h(121,15): note: 'ARogue10mCharacter::DoJumpEnd' ������ �����Ͻʽÿ�.
+	virtual void DoJumpEnd();
+	             ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mCharacter.h(31,20): note: 'ARogue10mCharacter' ������ �����Ͻʽÿ�.
+class ROGUE10M_API ARogue10mCharacter : public ACharacter, public IAbilitySystemInterface
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\Tests\Rogue10mCameraForwardRuntimeTest.cpp(340,136): error C2248: 'ARogue10mCharacter::DoJumpEnd': protected ���('ARogue10mCharacter' Ŭ�������� ����)�� �׼����� �� �����ϴ�.
+            Character->GetCombatComponent()->CancelBoundSkillInput();Character->GetCombatComponent()->CancelCombatVisuals();Character->DoJumpEnd();
+                                                                                                                                       ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mCharacter.h(121,15): note: 'ARogue10mCharacter::DoJumpEnd' ������ �����Ͻʽÿ�.
+	virtual void DoJumpEnd();
+	             ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mCharacter.h(31,20): note: 'ARogue10mCharacter' ������ �����Ͻʽÿ�.
+class ROGUE10M_API ARogue10mCharacter : public ACharacter, public IAbilitySystemInterface
+                   ^
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[2/21] Compile [x64] Module.Rogue10m.5.cpp (0:09.65 at +0:00)
+[3/21] Compile [x64] Rogue10mAppearanceCameraComponent.cpp (0:09.65 at +0:00)
+[4/21] Compile [x64] Rogue10mInitialHeadFramingRuntimeTest.cpp (0:09.39 at +0:00)
+[5/21] Compile [x64] Rogue10mFirstPersonPresentationComponent.cpp (0:10.20 at +0:00)
+[6/21] Compile [x64] Rogue10mCharacter.cpp (0:13.11 at +0:00)
+[7/21] Compile [x64] Rogue10mFighterCombatStanceRuntimeTest.cpp (0:14.25 at +0:00)
+[8/21] Compile [x64] Rogue10mAppearanceCameraRuntimeTest.cpp (0:14.67 at +0:00)
+[9/21] Compile [x64] Rogue10mMovingAttackRuntimeTest.cpp (0:14.43 at +0:00)
+[10/21] Compile [x64] Rogue10mFistCombatRuntimeTest.cpp (0:15.37 at +0:00)
+[11/21] Compile [x64] Rogue10mPlayerController.cpp (0:16.21 at +0:00)
+[12/21] Compile [x64] Rogue10mThirdPersonInspectionRuntimeTest.cpp (0:08.34 at +0:09)
+[13/21] Compile [x64] Rogue10mStoneFistAnimationRuntimeTest.cpp (0:12.42 at +0:08)
+[14/21] Compile [x64] Module.Rogue10m.2.cpp (0:20.54 at +0:00)
+[15/21] Compile [x64] Module.Rogue10m.4.cpp (0:20.62 at +0:00)
+[16/21] Compile [x64] Rogue10mCombatComponent.cpp (0:21.51 at +0:00)
+[17/21] Compile [x64] Module.Rogue10m.3.cpp (0:25.43 at +0:00)
+[18/21] Compile [x64] Module.Rogue10m.1.cpp (0:28.51 at +0:00)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 0 succeeded, 1 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 32.13 seconds
+
+Result: Failed (OtherCompilationError)
+Total execution time: 39.52 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 3.6kb

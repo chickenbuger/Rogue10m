@@ -1,0 +1,6 @@
+{
+  "success": false,
+  "command": "import runpy; api=runpy.run_path('D:/Project/Rogue10m/Scripts/Editor/ConfigureSafeHeadMotion.py', run_name='stable_head_manifest'); api['main'](apply=False)",
+  "result": "Traceback (most recent call last):\n\n  File \"<string>\", line 1, in <module>\n\n  File \"D:/Project/Rogue10m/Scripts/Editor/ConfigureSafeHeadMotion.py\", line 249, in main\n    plan = manifest(audit)\n           ^^^^^^^^^^^^^^^\n\n  File \"D:/Project/Rogue10m/Scripts/Editor/ConfigureSafeHeadMotion.py\", line 103, in manifest\n    raise RuntimeError('Uppercut timing changed since reviewed baseline')\n\nRuntimeError: Uppercut timing changed since reviewed baseline\n",
+  "output": []
+}

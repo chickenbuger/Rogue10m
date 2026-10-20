@@ -1,0 +1,760 @@
+{
+  "review_date": "2026-10-07",
+  "reviewed_utc": "2026-10-07T13:23:49.684446+00:00",
+  "reviewer": "/root/arin_quality_validation",
+  "status": "accepted_for_current_stationary_tutorial_npc_scope_with_documented_limits",
+  "method": "Independent direct viewing of all nine final actual Epic MCP editor captures across three LODs; prior independent viewing of all 22 actual imported final FBX renders; fresh evidence/hash/source inspection. No Blender/UE calls or runtime asset mutations by reviewer.",
+  "conclusion_ko": "최종 FBX 22개 자세 렌더와 Unreal의 실제 세 LOD 화면 9개를 검토했다. 이전 무릎-코트 관통 및 저해상도 LOD의 하얀 코트 조각은 해당 검토 시점에서 사라졌고, 최종 LOD2도 홍채와 눈꺼풀 형태를 유지한다. 최종 별도 프로세스 저장 검증, GUI 재로드, 실제 PIE 67개 검사 및 콘텐츠 변경 범위 감사가 통과했다. 현재 서 있는 시작마을 튜토리얼 NPC 범위는 수용할 수 있으며, 근접 인체·헤어 외형과 연속 보행·얼굴·손가락 애니메이션은 여전히 한계다.",
+  "scope": "Existing stationary StartHub tutorial guide appearance improvement, retained two-second Idle and existing native dialogue/exact once-only two-potion supply flow.",
+  "closed_blockers": [
+    {
+      "id": "VIS-01",
+      "result": "Final imported FBX knee oblique/right views show coat/tail/apron following the lifted thigh without the old large trouser-through-panel defect.",
+      "evidence": {
+        "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/final-visual-review-v2.json",
+        "sha256": "659fe3712ae68d1950dd92f35b85726ec6a8fff2197612878feb56f654dc88ca",
+        "modified_utc": "2026-10-07T12:51:31.248136+00:00"
+      }
+    },
+    {
+      "id": "UE-LOD-01",
+      "result": "Final LOD1/LOD2 front/oblique/closeup show coherent green waistcoat with no former ivory polygon fragments. Imported LOD0 remains coherent."
+    },
+    {
+      "id": "UE-LOD-02",
+      "result": "Final LOD2 closeup retains both recognizable green irises and eyelid shapes; former nearly blank white slits are absent. Some stylized faceting remains."
+    },
+    {
+      "id": "UE-CAPTURE-01",
+      "result": "Final captures have correct forced/predicted indices and two-second fixed-camera settling. Original one-frame capture is not used as final evidence."
+    },
+    {
+      "id": "UE-TEXTURE-01",
+      "result": "All sixteen actual loaded textures have intended 2k/4k sizes and channel settings after root batch-property/official finish-all recovery; fresh process reload passes. Save-alone failure preserved separately."
+    }
+  ],
+  "final_visual_result": {
+    "engine_images_opened": 9,
+    "fbx_images_previously_opened": 22,
+    "new_severe_visible_penetration_or_collapse": false,
+    "lod0": "Intact recognized head, braid, garments, hands, boots and accessories. No white waistcoat fragments in tested views.",
+    "lod1": "Shape and eyes retained; previous visible garment fragments are absent in all three reviewed cameras.",
+    "lod2": "Shape and recognizable irises/lids retained; no previous white fragments. Residual closeup faceting is an art limit.",
+    "representation": "Stylized gameplay candidate; no photorealistic or AAA character quality claim."
+  },
+  "final_lod_metrics": {
+    "count": 3,
+    "metrics": [
+      {
+        "index": 0,
+        "vertices": 40211,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 1.0,
+        "reduction_base_lod": 0,
+        "lock_edges": false,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 1,
+        "vertices": 35681,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 0.8500000238418579,
+        "reduction_base_lod": 0,
+        "lock_edges": true,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 2,
+        "vertices": 28851,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 0.6499999761581421,
+        "reduction_base_lod": 0,
+        "lock_edges": true,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      }
+    ],
+    "generation": "SkeletalMeshEditorSubsystem.regenerate_lod; imported LOD0 preserved",
+    "lod0_regeneration": false,
+    "requested_ratios": [
+      1.0,
+      0.8500000238418579,
+      0.6499999761581421
+    ],
+    "same_skeleton_and_materials": true,
+    "visual_review_required": true,
+    "runtime_triangle_count_limitation": "Exact runtime triangles need a separate exposed render-data/export inspection; do not infer them from vertices or reduction targets."
+  },
+  "retention_policy_tradeoff": "Final retained ratios 1/.85/.65 prioritize the validated garment/face appearance over the original preferred ~50%/~25% targets. Actual UE vertices are 40211/35681/28851 with four sections each; exact runtime triangle counts remain unmeasured and are not inferred from these vertices or ratios.",
+  "ratio_history_correction": {
+    "initial_measured": [
+      1.0,
+      0.25,
+      0.125
+    ],
+    "final_measured": [
+      1.0,
+      0.8500000238418579,
+      0.6499999761581421
+    ],
+    "original_application_report_limitation": "Original application.json requested_ratios [1,.5,.25] was an unverified descriptive assumption; it is not actual measured reduction. Final measured readbacks in first-reduction/refinement/reload/fresh reports take precedence."
+  },
+  "pbr": {
+    "groups": 4,
+    "parent_count": 1,
+    "texture_count": 16,
+    "slot_order": [
+      "Cloth",
+      "Face",
+      "Gear",
+      "Hair"
+    ],
+    "normal_import": {
+      "normal_import_method": "<FBXNormalImportMethod.FBXNIM_IMPORT_NORMALS: 1>",
+      "normal_generation_method": "<FBXNormalGenerationMethod.MIKK_T_SPACE: 1>",
+      "compute_weighted_normals": "False"
+    },
+    "normal_y_conversion": "Four actual Normal textures use TC_NORMALMAP, sRGB false, flip_green_channel true for baked Blender OpenGL normals.",
+    "all_textures": [
+      {
+        "group": "Face",
+        "channel": "BaseColor",
+        "size": [
+          2048,
+          2048
+        ],
+        "srgb": true,
+        "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+        "flip_green_channel": false,
+        "source_sha256": "3bbb52d17a7cae4671ab340f83209a93132d91d944fd7c3b1eab8b0d0666a71f"
+      },
+      {
+        "group": "Face",
+        "channel": "Roughness",
+        "size": [
+          2048,
+          2048
+        ],
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "flip_green_channel": false,
+        "source_sha256": "36e2708469866f31bc0c2fa01e11fa89799e2a5c7d16e9b62c89c6ff358d7098"
+      },
+      {
+        "group": "Face",
+        "channel": "Metallic",
+        "size": [
+          2048,
+          2048
+        ],
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "flip_green_channel": false,
+        "source_sha256": "863100354a621fb533ccdff403d08fa6b46cb599eedeaf0b5e04a24dc67f7d25"
+      },
+      {
+        "group": "Face",
+        "channel": "Normal",
+        "size": [
+          2048,
+          2048
+        ],
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+        "flip_green_channel": true,
+        "source_sha256": "9e7a12f8a8a3eca0ef7819592d600f1a05f9f4b9fba6adabbaff859d9bdac54c"
+      },
+      {
+        "group": "Hair",
+        "channel": "BaseColor",
+        "size": [
+          2048,
+          2048
+        ],
+        "srgb": true,
+        "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+        "flip_green_channel": false,
+        "source_sha256": "00597bda3c6c0e3a131c0ac8dd80edbc243c98ae98b3bc64379a0ab18c24960c"
+      },
+      {
+        "group": "Hair",
+        "channel": "Roughness",
+        "size": [
+          2048,
+          2048
+        ],
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "flip_green_channel": false,
+        "source_sha256": "dc1ea11737ecfcfe3670251571ea6c19354d490b3f268c70db8adff791aac57d"
+      },
+      {
+        "group": "Hair",
+        "channel": "Metallic",
+        "size": [
+          2048,
+          2048
+        ],
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "flip_green_channel": false,
+        "source_sha256": "863100354a621fb533ccdff403d08fa6b46cb599eedeaf0b5e04a24dc67f7d25"
+      },
+      {
+        "group": "Hair",
+        "channel": "Normal",
+        "size": [
+          2048,
+          2048
+        ],
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+        "flip_green_channel": true,
+        "source_sha256": "a086663e4f5eb8b723f1f9ea5e43324146652c8344dfa6c363008f75a8d080c5"
+      },
+      {
+        "group": "Cloth",
+        "channel": "BaseColor",
+        "size": [
+          4096,
+          4096
+        ],
+        "srgb": true,
+        "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+        "flip_green_channel": false,
+        "source_sha256": "a0fd6ee7982eae85b23f9bb88461f3a341a437b7359045239e0f9490309e419f"
+      },
+      {
+        "group": "Cloth",
+        "channel": "Roughness",
+        "size": [
+          4096,
+          4096
+        ],
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "flip_green_channel": false,
+        "source_sha256": "e1f24c4264b792cc79824f6c546831242cd2a33fa0c767b9fd35d5d4036a2df7"
+      },
+      {
+        "group": "Cloth",
+        "channel": "Metallic",
+        "size": [
+          4096,
+          4096
+        ],
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "flip_green_channel": false,
+        "source_sha256": "777855bc471d5971db1e6d60c2bcb04f887056879d0bc1d404fd523afd92421c"
+      },
+      {
+        "group": "Cloth",
+        "channel": "Normal",
+        "size": [
+          4096,
+          4096
+        ],
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+        "flip_green_channel": true,
+        "source_sha256": "4561d06c3b24113c04fd633ed476116f7e64643a56405e60dd73264cedb8bc86"
+      },
+      {
+        "group": "Gear",
+        "channel": "BaseColor",
+        "size": [
+          2048,
+          2048
+        ],
+        "srgb": true,
+        "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+        "flip_green_channel": false,
+        "source_sha256": "cf7d11f1ceed741273bbf9d8e7a0ac78b79918ece86553bdaf4886461a157d18"
+      },
+      {
+        "group": "Gear",
+        "channel": "Roughness",
+        "size": [
+          2048,
+          2048
+        ],
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "flip_green_channel": false,
+        "source_sha256": "74a11c20c99327217e1f2d871ee2412142f9f0c4027bc6e4286201d098d8e712"
+      },
+      {
+        "group": "Gear",
+        "channel": "Metallic",
+        "size": [
+          2048,
+          2048
+        ],
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+        "flip_green_channel": false,
+        "source_sha256": "61a3433e2e015404229d0142700fc8ad0cba38c40580557663d006d73ecc45b3"
+      },
+      {
+        "group": "Gear",
+        "channel": "Normal",
+        "size": [
+          2048,
+          2048
+        ],
+        "srgb": false,
+        "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+        "flip_green_channel": true,
+        "source_sha256": "2de4d40f26e419d0358d675440e8ba134ff8ef02a6c2c0fffbec17f44f962245"
+      }
+    ],
+    "parent_wiring": [
+      {
+        "channel": "BaseColor",
+        "parameter": "BaseColorTexture",
+        "output_pin": "RGB",
+        "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_COLOR: 0>"
+      },
+      {
+        "channel": "Roughness",
+        "parameter": "RoughnessTexture",
+        "output_pin": "R",
+        "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_MASKS: 4>"
+      },
+      {
+        "channel": "Metallic",
+        "parameter": "MetallicTexture",
+        "output_pin": "R",
+        "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_MASKS: 4>"
+      },
+      {
+        "channel": "Normal",
+        "parameter": "NormalTexture",
+        "output_pin": "RGB",
+        "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_NORMAL: 3>"
+      }
+    ]
+  },
+  "integrated_verification": {
+    "application": {
+      "status": "imported_and_applied",
+      "expected_asset_count": 24,
+      "saved_guide_assets": [
+        "/Game/Rogue10m/World/StartVillage/Tutorial/DA_StartVillageGuide",
+        "/Game/Rogue10m/World/StartVillage/Tutorial/BP_StartVillageGuide"
+      ],
+      "saved_external_actor_package": "/Game/__ExternalActors__/Rogue10m/Maps/StartHub/5/TO/W83RIU01UF417URBGM9BBZ",
+      "dialogue_and_supplies_unchanged": true,
+      "report": {
+        "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-refined-application.json",
+        "sha256": "da2a0e456918c14acc3312ec0954c2b9930a2ecc4122eebce763f35695277637",
+        "modified_utc": "2026-10-07T12:58:45.705300+00:00"
+      }
+    },
+    "gui_reload": {
+      "status": "reload_verified",
+      "validate_only": true,
+      "saved_assets": [],
+      "report": {
+        "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-refined-reload.json",
+        "sha256": "f5b8221890948772a8936e20711d7c33cf44c0cb45d04d744e40510ba3257fb7",
+        "modified_utc": "2026-10-07T13:19:16.648865+00:00"
+      }
+    },
+    "separate_process": {
+      "pid": 113212,
+      "status": "passed",
+      "nullrhi_rendering_test": false,
+      "guide_preserved": true,
+      "dependency_count": 24,
+      "known_height_cm": {
+        "expected_height_cm": 170,
+        "observed_height_cm": 170.00000074943506
+      },
+      "idle_seconds": 2.0,
+      "ue_bone_count": 24,
+      "report": {
+        "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-fresh-process.json",
+        "sha256": "6d3f955e2f804790dd496a4cbbbce94b53ffcb04ea3c3d35426869c5f8f57b58",
+        "modified_utc": "2026-10-07T13:17:10.742292+00:00"
+      }
+    },
+    "actual_pie": {
+      "status": "passed",
+      "checks_passed": 67,
+      "checks_failed": 0,
+      "head_motion_degrees": 0.3289947509765625,
+      "coverage": "Real mesh/Idle/skeleton/height/PBR/three LOD presence, actual Idle motion, native dialogue, exactly two potions once, full-bag retry, actual potion use, real portal carry and run timer.",
+      "limitations": [
+        "This fixture calls the real reflected dialogue and inventory APIs; physical F-key input and Korean text layout also require a visual check.",
+        "Receipts use PlayerState plus a GameInstance supply record across the real portal, not permanent character-profile saves. Network play is outside this single-player prototype check.",
+        "Runtime fixtures are disposable PIE data; a small damage stimulus verifies actual potion use before real portal travel. No assets or maps are saved."
+      ],
+      "report": {
+        "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/tutorial-runtime.json",
+        "sha256": "cc3c3911aa0e2ae321c9fe4d08de950e47dd966d3721ef073f29981b634d4b1b",
+        "modified_utc": "2026-10-07T13:19:50.655811+00:00"
+      }
+    },
+    "content_audit": {
+      "status": "passed",
+      "baseline_files": 6331,
+      "unchanged_sha256": 6328,
+      "changed": [
+        "Content/Rogue10m/World/StartVillage/Tutorial/BP_StartVillageGuide.uasset",
+        "Content/Rogue10m/World/StartVillage/Tutorial/DA_StartVillageGuide.uasset",
+        "Content/__ExternalActors__/Rogue10m/Maps/StartHub/5/TO/W83RIU01UF417URBGM9BBZ.uasset"
+      ],
+      "added": [
+        "Content/Rogue10m/Characters/Arin/RefinedV2/ArinIdle.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Cloth.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Face.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Gear.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Hair.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Materials/M_Arin_PBR.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/SK_Arin.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/SK_Arin_Skeleton.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_BaseColor.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Metallic.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Normal.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Roughness.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_BaseColor.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Metallic.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Normal.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Roughness.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_BaseColor.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Metallic.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Normal.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Roughness.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_BaseColor.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Metallic.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Normal.uasset",
+        "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Roughness.uasset"
+      ],
+      "deleted": [],
+      "unexpected_changes": [],
+      "unexpected_added": [],
+      "report": {
+        "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/content-preservation.json",
+        "sha256": "bb526668cf88cece8bacb2cb37a9aec645619d5658f809b8f3bc34d7bd124ff7",
+        "modified_utc": "2026-10-07T13:20:39.511790+00:00"
+      }
+    },
+    "no_pending_required_runtime_evidence": true
+  },
+  "source_export_evidence": [
+    {
+      "format": "blend",
+      "report": {
+        "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/fresh-blend.json",
+        "sha256": "f88fa9b172c1a1c9c68a5db59862eae86df53ff2e815f83201eb14567bd0f5bf",
+        "modified_utc": "2026-10-07T12:35:26.280735+00:00"
+      },
+      "source": {
+        "file": "D:/Project/Rogue10m/Art/NPC/Arin/Refined/Arin.blend",
+        "sha256": "3cde5f3c16d66ee3e1192db319c4a02d3b51991a8070b85e5c0cc75679b1c6df",
+        "modified_utc": "2026-10-07T12:34:08.969430+00:00"
+      },
+      "technical_status": "passed_requires_visual_review",
+      "totals": {
+        "mesh_objects": 4,
+        "materials": 4,
+        "armatures": 1,
+        "authored_triangles": 51634,
+        "evaluated_triangles": 51634,
+        "authored_vertices": 26185
+      },
+      "process_id": 119604,
+      "required_texture_channels": [
+        "Base Color",
+        "Roughness",
+        "Metallic",
+        "Normal"
+      ]
+    },
+    {
+      "format": "fbx",
+      "report": {
+        "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/fresh-fbx.json",
+        "sha256": "e9402808b12e26811a2b064d6f9e6da5281e4ca24c0b7c8b615240ec890a0eb7",
+        "modified_utc": "2026-10-07T12:35:26.256734+00:00"
+      },
+      "source": {
+        "file": "D:/Project/Rogue10m/Art/NPC/Arin/Refined/Arin.fbx",
+        "sha256": "aa4298d51a6917f245f4be4f9c1dca3ae739ec80d7d4fb44b3157a0a2b8979c3",
+        "modified_utc": "2026-10-07T12:31:40.301753+00:00"
+      },
+      "technical_status": "passed_requires_visual_review",
+      "totals": {
+        "mesh_objects": 4,
+        "materials": 4,
+        "armatures": 1,
+        "authored_triangles": 51634,
+        "evaluated_triangles": 51634,
+        "authored_vertices": 26185
+      },
+      "process_id": 110420,
+      "required_texture_channels": [
+        "Base Color",
+        "Normal"
+      ]
+    },
+    {
+      "format": "glb",
+      "report": {
+        "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/fresh-glb.json",
+        "sha256": "36432db53469284ef021cae1078d09568e3d5f3778559c76fb715a41f744dc8b",
+        "modified_utc": "2026-10-07T12:35:27.939279+00:00"
+      },
+      "source": {
+        "file": "D:/Project/Rogue10m/Art/NPC/Arin/Refined/Arin.glb",
+        "sha256": "bf2d64e591d9b9d95d4abf063ec92d5b7d73142bb98ec0cf886656e127407c89",
+        "modified_utc": "2026-10-07T12:31:43.188916+00:00"
+      },
+      "technical_status": "passed_requires_visual_review",
+      "totals": {
+        "mesh_objects": 4,
+        "materials": 4,
+        "armatures": 1,
+        "authored_triangles": 51634,
+        "evaluated_triangles": 51634,
+        "authored_vertices": 39908
+      },
+      "process_id": 65656,
+      "required_texture_channels": [
+        "Base Color",
+        "Roughness",
+        "Metallic",
+        "Normal"
+      ]
+    }
+  ],
+  "fbx_visual_evidence": {
+    "review": {
+      "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/final-visual-review-v2.json",
+      "sha256": "659fe3712ae68d1950dd92f35b85726ec6a8fff2197612878feb56f654dc88ca",
+      "modified_utc": "2026-10-07T12:51:31.248136+00:00"
+    },
+    "render_manifest": {
+      "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/imported-pose-final/render-manifest.json",
+      "sha256": "eb2473393d8e57a5e7b1bdcdb9e406958a21fd021f05a19a543a736e69c838b3",
+      "modified_utc": "2026-10-07T12:42:15.740760+00:00"
+    },
+    "source_fbx_sha256": "aa4298d51a6917f245f4be4f9c1dca3ae739ec80d7d4fb44b3157a0a2b8979c3",
+    "all_22_png_hashes_rechecked_match": true
+  },
+  "actual_engine_capture_evidence": [
+    {
+      "lod": 0,
+      "manifest": {
+        "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-0/manifest.json",
+        "sha256": "73a7b4665a13d36ad1ed2f1256dc1e4737866a687ef5ea9b7736651034d7b7d1",
+        "modified_utc": "2026-10-07T13:09:14.163673+00:00"
+      },
+      "actual_component": {
+        "forced_value": 1,
+        "predicted_lod_index": 0,
+        "update_animation_in_editor": true,
+        "background_throttle": false,
+        "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin.SK_Arin",
+        "asset_saved": false
+      },
+      "restored_component": {
+        "forced_value": 0,
+        "predicted_lod_index": 0,
+        "update_animation_in_editor": false,
+        "background_throttle": true,
+        "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin.SK_Arin",
+        "asset_saved": false,
+        "previous_forced_value": 1,
+        "previous_update_animation_in_editor": true,
+        "previous_background_throttle": false
+      },
+      "captures": [
+        {
+          "view": "village-front",
+          "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-0/village-front.png",
+          "sha256": "a52b300932f7d2518b6241f48a0b5091905ba1e652716125ba6b820fd9a20d21",
+          "modified_utc": "2026-10-07T13:09:04.515032+00:00",
+          "directly_opened_by_reviewer": true
+        },
+        {
+          "view": "village-face",
+          "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-0/village-face.png",
+          "sha256": "b841956a5e759cd6515b1334a9018b902c0bf1f9187a77ccfc6a0ae178172711",
+          "modified_utc": "2026-10-07T13:09:08.876616+00:00",
+          "directly_opened_by_reviewer": true
+        },
+        {
+          "view": "village-oblique",
+          "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-0/village-oblique.png",
+          "sha256": "3e04de209410c236d0b10b4958cf955bebcee5d6db670a29d850d9315ac0664a",
+          "modified_utc": "2026-10-07T13:09:13.095131+00:00",
+          "directly_opened_by_reviewer": true
+        }
+      ]
+    },
+    {
+      "lod": 1,
+      "manifest": {
+        "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-1/manifest.json",
+        "sha256": "df6921746ff6f7b3d7dc3535233d4006685ea1b8c052b6b5f744f56d71fb1a24",
+        "modified_utc": "2026-10-07T13:15:32.661296+00:00"
+      },
+      "actual_component": {
+        "forced_value": 2,
+        "predicted_lod_index": 1,
+        "update_animation_in_editor": true,
+        "background_throttle": false,
+        "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin.SK_Arin",
+        "asset_saved": false
+      },
+      "restored_component": {
+        "forced_value": 0,
+        "predicted_lod_index": 1,
+        "update_animation_in_editor": false,
+        "background_throttle": true,
+        "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin.SK_Arin",
+        "asset_saved": false,
+        "previous_forced_value": 2,
+        "previous_update_animation_in_editor": true,
+        "previous_background_throttle": false
+      },
+      "captures": [
+        {
+          "view": "village-front",
+          "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-1/village-front.png",
+          "sha256": "2bf264e31691c29edbc781705402820b1ccc961f6332b5eb3bbdb918f891c310",
+          "modified_utc": "2026-10-07T13:15:23.582972+00:00",
+          "directly_opened_by_reviewer": true
+        },
+        {
+          "view": "village-face",
+          "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-1/village-face.png",
+          "sha256": "a33f7d2c3d2d3ce725b249c9dcb5ef71445fcfaaec468aa218bb5e9c06d1d5ab",
+          "modified_utc": "2026-10-07T13:15:27.695035+00:00",
+          "directly_opened_by_reviewer": true
+        },
+        {
+          "view": "village-oblique",
+          "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-1/village-oblique.png",
+          "sha256": "c514412696b13ee97bd07cc7bcbb5c6c5d919539af45da54b118fab570691003",
+          "modified_utc": "2026-10-07T13:15:31.603720+00:00",
+          "directly_opened_by_reviewer": true
+        }
+      ]
+    },
+    {
+      "lod": 2,
+      "manifest": {
+        "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-2/manifest.json",
+        "sha256": "8027540a2098ba563c0310cd5c0a6ab08d19f5f90394a8c503511b9f9b940b60",
+        "modified_utc": "2026-10-07T13:16:44.949745+00:00"
+      },
+      "actual_component": {
+        "forced_value": 3,
+        "predicted_lod_index": 2,
+        "update_animation_in_editor": true,
+        "background_throttle": false,
+        "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin.SK_Arin",
+        "asset_saved": false
+      },
+      "restored_component": {
+        "forced_value": 0,
+        "predicted_lod_index": 2,
+        "update_animation_in_editor": false,
+        "background_throttle": true,
+        "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin.SK_Arin",
+        "asset_saved": false,
+        "previous_forced_value": 3,
+        "previous_update_animation_in_editor": true,
+        "previous_background_throttle": false
+      },
+      "captures": [
+        {
+          "view": "village-front",
+          "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-2/village-front.png",
+          "sha256": "1a9499fd14f434558bbd98ec57c7275b91018cce4593647ade1afdb15d252737",
+          "modified_utc": "2026-10-07T13:16:35.515897+00:00",
+          "directly_opened_by_reviewer": true
+        },
+        {
+          "view": "village-face",
+          "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-2/village-face.png",
+          "sha256": "cd7604dfc1724ccfe428ea7d10aa31e08a16db48be7a9e9149a2ef6337f8e3af",
+          "modified_utc": "2026-10-07T13:16:39.529115+00:00",
+          "directly_opened_by_reviewer": true
+        },
+        {
+          "view": "village-oblique",
+          "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-2/village-oblique.png",
+          "sha256": "5c4259b4cd0631ecd49340bac224d6fb713715bcf0b416a71c91940c98241eeb",
+          "modified_utc": "2026-10-07T13:16:43.637662+00:00",
+          "directly_opened_by_reviewer": true
+        }
+      ]
+    }
+  ],
+  "source_files_ast_and_hashes": [
+    {
+      "file": "D:/Project/Rogue10m/Scripts/Editor/ApplyRefinedArin.py",
+      "sha256": "8d0318d8d8138300461b3d229cd2814a9a87315da4cf2a3c4a076fb55a7be3a3",
+      "modified_utc": "2026-10-07T13:16:20.457275+00:00",
+      "ast_parse": true
+    },
+    {
+      "file": "D:/Project/Rogue10m/Scripts/Editor/ValidateRefinedArinFresh.py",
+      "sha256": "9c16afea0a21e3f045fcadf464d65f0cd189684e265504696df9b9026a9ef6e0",
+      "modified_utc": "2026-10-07T11:40:51.631793+00:00",
+      "ast_parse": true
+    },
+    {
+      "file": "D:/Project/Rogue10m/Scripts/Editor/ValidateRefinedArinPIE.py",
+      "sha256": "1d88eee2d62205636128b46cb498e94b2c477a33ae145bfc171cf2909bc04f50",
+      "modified_utc": "2026-10-07T12:09:06.681407+00:00",
+      "ast_parse": true
+    },
+    {
+      "file": "D:/Project/Rogue10m/Scripts/Editor/RefineArinGeneratedLODs.py",
+      "sha256": "d2c33897ae70533cf9c9be3be10c41aaef3c3e1994472d3cd06bd5f84d90bee2",
+      "modified_utc": "2026-10-07T13:16:21.099729+00:00",
+      "ast_parse": true
+    },
+    {
+      "file": "D:/Project/Rogue10m/Scripts/Editor/ReviewRefinedArinLOD.py",
+      "sha256": "a5632ca26bb42db02dd080ebbc82db5def02bce70631d56530953f46620ba1d4",
+      "modified_utc": "2026-10-07T13:06:52.716129+00:00",
+      "ast_parse": true
+    },
+    {
+      "file": "D:/Project/Rogue10m/Scripts/Blender/InspectArinQuality.py",
+      "sha256": "32a902282ec01053a2a3374ab3747279ef535e8c14dfd28f1e4ba2588b855e0d",
+      "modified_utc": "2026-10-07T11:53:55.371221+00:00",
+      "ast_parse": true
+    }
+  ],
+  "lod_writeback_source_review": {
+    "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/lod-reflected-writeback-source-review.json",
+    "sha256": "60b33ec9b90ec0a0ff33ea9e4dba7af2e05b6fc9d648d5a2871775b5ce9558bb",
+    "modified_utc": "2026-10-07T13:23:49.714495+00:00"
+  },
+  "remaining_limits": [
+    "Broad smooth doll-like facial forms, ribbon/cap hair, simple nail/knuckle anatomy, rigid shoulder mantle and simple boot detail remain visible closeup art limits.",
+    "No full gait or all-frame/combined-pose collision freedom established. Final FBX static stress poses and actual Idle motion do not prove arbitrary locomotion.",
+    "No facial lip sync, expressive finger gesture rig, cloth simulation, multiplayer or permanent profile save claim.",
+    "Nine engine images are editor-world Idle views; actual PIE proves runtime mechanics/motion by reflected native APIs, not physical F-key input or Korean dialogue pixel layout.",
+    "NullRHI separate process proves persisted asset/dependency/guide state, not rendering. Actual editor screenshots supply rendering evidence.",
+    "Conservative final LODs are visually safer but have a higher vertex cost than the preferred aggressive budgets; no crowd-scale frame-time/memory profiling or automatic LOD screen-transition visual study performed.",
+    "Exact UE runtime triangle counts are unavailable from the reflected editor subsystem; 51634 is the authored/export triangle count, not a measured count for each UE runtime LOD.",
+    "Scoped Content audit covers all 6331 baseline Content files. It does not assert every project file outside Content unchanged."
+  ]
+}

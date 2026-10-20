@@ -1,0 +1,61 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Invalidating makefile for Rogue10mEditor (source file added)
+UHT compiled-in object format Default
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mFighterCombatStanceAnimInstance.cpp, Rogue10mAppearanceCameraComponent.cpp, Rogue10mCharacterAnimationComponent.cpp, Rogue10mCombatComponent.cpp, Rogue10mFirstPersonPresentationComponent.cpp, Rogue10mInventoryComponent.cpp, Rogue10mSkillBindingComponent.cpp, Rogue10mPlayerController.cpp, Rogue10mMonsterDataAsset.cpp, Rogue10mFistCombatAuthoring.cpp, Rogue10mOpenWorldAuthoring.cpp, Rogue10mBasicMonster.cpp, Rogue10mMonsterAttackPatternComponent.cpp, Rogue10mMonsterAIController.cpp, Rogue10mAppearanceCameraRuntimeTest.cpp, Rogue10mFighterCombatStanceRuntimeTest.cpp, Rogue10mFighterSkillTreeRuntimeTest.cpp, Rogue10mFistCombatRuntimeTest.cpp, Rogue10mInitialHeadFramingRuntimeTest.cpp, Rogue10mResponsiveHUDRuntimeTest.cpp, Rogue10mStoneFistAnimationRuntimeTest.cpp, Rogue10mThirdPersonInspectionRuntimeTest.cpp, Rogue10mWeaponSkillTreeRuntimeTest.cpp, Rogue10mBottomHUDWidget.cpp, Rogue10mHudWidgetParts.cpp, Rogue10mMainHUDWidget.cpp, Rogue10mMenuWindowWidgets.cpp, Rogue10mTutorialWidget.cpp, Rogue10mMonsterSpawner.cpp, Rogue10mOpenWorldBootstrap.cpp, Rogue10mRunPortal.cpp, Rogue10mTutorialNPC.cpp, Rogue10mTutorialRewardComponent.cpp, Rogue10mTutorialSupplySubsystem.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+  Requested 1.5 GB memory per action, 7.34 GB available: limiting max parallel actions to 4
+Using XGE executor to run 14 action(s)
+Distributing 14 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {D4CF5EEC-145D-4EC6-B6F2-0C521C0440FB}
+ 
+--------------------Project: Default-------------------------------------------
+[1/14] Compile [x64] Rogue10mTutorialSupplySubsystem.cpp (0:05.53 at +0:00)
+[2/14] Compile [x64] Rogue10mRunPortal.cpp (0:05.98 at +0:00)
+[3/14] Compile [x64] Rogue10mMainHUDWidget.cpp (0:08.34 at +0:00)
+[4/14] Compile [x64] Rogue10mTutorialNPC.cpp (0:08.39 at +0:00)
+[5/14] Compile [x64] Rogue10mBottomHUDWidget.cpp (0:09.12 at +0:00)
+[6/14] Compile [x64] Rogue10mInventoryComponent.cpp (0:10.00 at +0:00)
+[7/14] Compile [x64] Rogue10mResponsiveHUDRuntimeTest.cpp (0:12.73 at +0:00)
+D:\Project\Rogue10m\Source\Rogue10m\Tests\Rogue10mResponsiveHUDRuntimeTest.cpp(425,33): error C4458: 'State' ������ Ŭ���� ����� ����ϴ�.
+        if (ARogue10mGameState* State = InWorld->GetGameState<ARogue10mGameState>()) { State->StartRun(); }
+                                ^
+D:\Project\Rogue10m\Source\Rogue10m\Tests\Rogue10mResponsiveHUDRuntimeTest.cpp(760,42): note: 'Rogue10mCompactHUDTest::FRun::State' ������ �����Ͻʽÿ�.
+    TWeakObjectPtr<ARogue10mPlayerState> State;
+                                         ^
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[8/14] Compile [x64] Module.Rogue10m.4.cpp (0:14.67 at +0:00)
+[9/14] Compile [x64] Module.Rogue10m.2.cpp (0:16.90 at +0:00)
+[10/14] Compile [x64] Module.Rogue10m.3.cpp (0:21.20 at +0:00)
+[11/14] Compile [x64] Module.Rogue10m.1.cpp (0:23.75 at +0:00)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 0 succeeded, 1 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 27.06 seconds
+
+Result: Failed (OtherCompilationError)
+Total execution time: 32.50 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 3.3kb

@@ -1,0 +1,304 @@
+{
+  "status": "passed",
+  "map": "/Game/Rogue10m/Maps/StartHub",
+  "checks_passed": 43,
+  "checks_total": 43,
+  "actor_count": 677,
+  "profiles": {
+    "grass": {
+      "instance": "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Grass.MI_StartVillage_Grass",
+      "tile_size_cm": 180.0,
+      "parent": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail"
+    },
+    "dirt": {
+      "instance": "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_EarthPath.MI_StartVillage_EarthPath",
+      "tile_size_cm": 90.0,
+      "parent": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail"
+    },
+    "stone": {
+      "instance": "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Cobblestone.MI_StartVillage_Cobblestone",
+      "tile_size_cm": 120.0,
+      "parent": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail"
+    }
+  },
+  "textures": {
+    "/Game/StarterContent/Textures/T_Ground_Grass_D": {
+      "settled_runtime_width": 2048,
+      "settled_runtime_height": 2048,
+      "lod_bias": 0,
+      "max_texture_size": 0
+    },
+    "/Game/StarterContent/Textures/T_Ground_Grass_N": {
+      "settled_runtime_width": 2048,
+      "settled_runtime_height": 2048,
+      "lod_bias": 0,
+      "max_texture_size": 0
+    },
+    "/Game/StarterContent/Textures/T_Ground_Gravel_D": {
+      "settled_runtime_width": 2048,
+      "settled_runtime_height": 2048,
+      "lod_bias": 0,
+      "max_texture_size": 0
+    },
+    "/Game/StarterContent/Textures/T_Ground_Gravel_N": {
+      "settled_runtime_width": 2048,
+      "settled_runtime_height": 2048,
+      "lod_bias": 0,
+      "max_texture_size": 0
+    },
+    "/Game/StarterContent/Textures/T_CobbleStone_Rough_D": {
+      "settled_runtime_width": 1024,
+      "settled_runtime_height": 1024,
+      "lod_bias": 0,
+      "max_texture_size": 0
+    },
+    "/Game/StarterContent/Textures/T_CobbleStone_Rough_N": {
+      "settled_runtime_width": 1024,
+      "settled_runtime_height": 1024,
+      "lod_bias": 0,
+      "max_texture_size": 0
+    }
+  },
+  "checks": [
+    {
+      "name": "master_material_type",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "master_scalar_parameters",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "master_vector_parameter",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "master_texture_parameters",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "grass_instance_type",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "grass_parent",
+      "passed": true,
+      "detail": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail"
+    },
+    {
+      "name": "grass_physical_tile_size",
+      "passed": true,
+      "detail": 180.0
+    },
+    {
+      "name": "grass_roughness",
+      "passed": true,
+      "detail": 0.8999999761581421
+    },
+    {
+      "name": "grass_tint",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "grass_BaseColorTexture",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "grass_BaseColorTexture_settled_size",
+      "passed": true,
+      "detail": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "grass_NormalTexture",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "grass_NormalTexture_settled_size",
+      "passed": true,
+      "detail": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "dirt_instance_type",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "dirt_parent",
+      "passed": true,
+      "detail": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail"
+    },
+    {
+      "name": "dirt_physical_tile_size",
+      "passed": true,
+      "detail": 90.0
+    },
+    {
+      "name": "dirt_roughness",
+      "passed": true,
+      "detail": 0.8799999952316284
+    },
+    {
+      "name": "dirt_tint",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "dirt_BaseColorTexture",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "dirt_BaseColorTexture_settled_size",
+      "passed": true,
+      "detail": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "dirt_NormalTexture",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "dirt_NormalTexture_settled_size",
+      "passed": true,
+      "detail": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "stone_instance_type",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stone_parent",
+      "passed": true,
+      "detail": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail"
+    },
+    {
+      "name": "stone_physical_tile_size",
+      "passed": true,
+      "detail": 120.0
+    },
+    {
+      "name": "stone_roughness",
+      "passed": true,
+      "detail": 0.8600000143051147
+    },
+    {
+      "name": "stone_tint",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stone_BaseColorTexture",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stone_BaseColorTexture_settled_size",
+      "passed": true,
+      "detail": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "stone_NormalTexture",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "stone_NormalTexture_settled_size",
+      "passed": true,
+      "detail": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "actor_count_preserved",
+      "passed": true,
+      "detail": {
+        "before": 677,
+        "after": 677
+      }
+    },
+    {
+      "name": "all_actor_transforms_meshes_collision_portals_preserved",
+      "passed": true,
+      "detail": {
+        "missing": [],
+        "unexpected": []
+      }
+    },
+    {
+      "name": "SV_CentralStoneSquare_saved_material_slot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SV_Difficulty_ReservedNPCPad_saved_material_slot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SV_Equipment_ReservedNPCPad_saved_material_slot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SV_PortalStonePad_saved_material_slot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SV_Story_ReservedNPCPad_saved_material_slot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SV_Traits_ReservedNPCPad_saved_material_slot",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "open_world_portal_target",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "open_world_portal_starts_run",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no_unsaved_map_packages",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "no_unsaved_content_packages",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "validation_scope": "idle editor after map unload/reload; no runtime gameplay changes"
+}

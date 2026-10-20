@@ -1,0 +1,85 @@
+{
+  "scope": "Static skill validation; no live Unreal, proxy, build, or PIE execution",
+  "success": true,
+  "upstream_sha": "a6aa73ada02a9fb1f5415bec491f9942c519b297",
+  "upstream_version": "3.1.1",
+  "quick_validate": {
+    "exit_code": 0,
+    "stdout": "Skill is valid!"
+  },
+  "skill_file_count": 20,
+  "changed_files": [
+    "SKILL.md",
+    "references/live-editor-workflow.md",
+    "references/operations.md",
+    "references/security.md",
+    "references/setup-codex.md",
+    "references/toolset-authoring.md",
+    "references/unreal-agent-skills.md",
+    "references/upstream.md",
+    "references/version-matrix.md"
+  ],
+  "unchanged_files": [
+    "LICENSE-EPIC-MIT.txt",
+    "agents/openai.yaml",
+    "references/triggers.md",
+    "scripts/_unreal_runner_common.py",
+    "scripts/build_unreal.py",
+    "scripts/check_unreal_mcp.ps1",
+    "scripts/check_unreal_mcp.py",
+    "scripts/cook_unreal.py",
+    "scripts/run_unreal_automation.py",
+    "scripts/run_unreal_python.py",
+    "scripts/validate_repo.py"
+  ],
+  "local_links_checked": 15,
+  "code_snippets_parsed": 3,
+  "files": [
+    {
+      "path": "SKILL.md",
+      "before_sha256": "c4e758a9af49f86030b882f2fe7d56be289666ef5686e2a4de09ce7900554374",
+      "after_sha256": "d6eaa5862df8bd73e67bf938c8a6aa8eee2b47ff4b90aaac23f735fbc897d2fb"
+    },
+    {
+      "path": "references/live-editor-workflow.md",
+      "before_sha256": "e3171a012c9c552ccba897981971dfd135bb46e9dea8c1e7bd72a46c2f73d16e",
+      "after_sha256": "cb1e695f1008e4c8d9910772592b71bf32c6e382c041582fb7eb57bda0366d4e"
+    },
+    {
+      "path": "references/operations.md",
+      "before_sha256": "7d891cd20dd311d3d76bf74a899cec83e27e7aa07321daaa65e6c16fde3be2a8",
+      "after_sha256": "d91d3dce8108171b018593ea78b5042b180862d9a87ec616efefad7de8ac1b17"
+    },
+    {
+      "path": "references/security.md",
+      "before_sha256": "47114098410af75393f724dd757208dcd263bb61b134f7b66a43b23cfdc8bee3",
+      "after_sha256": "794fd153ad9053ddaf94420bd1d8099de81fe64103be022f128c741caa552158"
+    },
+    {
+      "path": "references/setup-codex.md",
+      "before_sha256": "af8b849acc93ece7ae138075bc852274fdb846fbfaa27ec1273bf207b853d484",
+      "after_sha256": "e38dfa7da69b4bed6bd1961e80946b5bd7879a0e250b6f62cf576280be769c2d"
+    },
+    {
+      "path": "references/toolset-authoring.md",
+      "before_sha256": "d5680c167fa0265ec760c823761938e5bb3612ae286fc832422ef32510117c1f",
+      "after_sha256": "379880b6e182d207ffebccddea0a9c6437c783b8d61d60ce679a007843541a7d"
+    },
+    {
+      "path": "references/unreal-agent-skills.md",
+      "before_sha256": "f3e1fb9b2475d195cc024bf26ab8a0899e2bd04a5021ecd13a64cadc834365be",
+      "after_sha256": "f9a8d4cce5007538b643b4984a67d772436d35904d05a7dd06ba7a43a678a155"
+    },
+    {
+      "path": "references/upstream.md",
+      "before_sha256": "9015d04ca372469363548d98c6bb0f96e5d9cfcf7b8f78aca6c89fb237919dab",
+      "after_sha256": "b12e03065d7e443feda043ec82dce70763f22842e3c5fbd5e83cf2c33c1d0bdb"
+    },
+    {
+      "path": "references/version-matrix.md",
+      "before_sha256": "fa302ec48f1b14d33b6988664550186c21d49ca7d4c9ee1ea83058f9ccc37ef7",
+      "after_sha256": "853327ac32c838b1ffe28295d2eab6ff10d258b9c0e88d3a95c59ecdb09cb13c"
+    }
+  ],
+  "errors": []
+}

@@ -2,6 +2,7 @@
 
 #include "Rogue10mMonsterAIController.h"
 
+#include "AITypes.h"
 #include "BTTask_Rogue10mMonsterDecision.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
@@ -22,6 +23,7 @@
 #include "Rogue10mBasicMonster.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mMonsterDataAsset.h"
+#include "Rogue10mMonsterAttackPatternComponent.h"
 
 const FName ARogue10mMonsterAIController::TargetActorKey(TEXT("TargetActor"));
 const FName ARogue10mMonsterAIController::HomeLocationKey(TEXT("HomeLocation"));
@@ -43,7 +45,9 @@ ARogue10mMonsterAIController::ARogue10mMonsterAIController()
 	SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config"));
 	SightConfig->SightRadius = 1800.0f;
 	SightConfig->LoseSightRadius = 2200.0f;
-	SightConfig->PeripheralVisionAngleDegrees = 90.0f;
+	// These creatures have no directional look/scan behavior. Sense nearby
+	// players all around, while sight still respects range and world occlusion.
+	SightConfig->PeripheralVisionAngleDegrees = 180.0f;
 	SightConfig->SetMaxAge(5.0f);
 	SightConfig->DetectionByAffiliation.bDetectEnemies = true;
 	SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
@@ -77,6 +81,8 @@ void ARogue10mMonsterAIController::InitializeMonsterAI()
 		Monster->GetLoseSightRange(), Monster->GetDetectionRange());
 	SightConfig->SetMaxAge(Monster->GetForgetTargetSeconds());
 	DamageConfig->SetMaxAge(Monster->GetForgetTargetSeconds());
+	MonsterPerceptionComponent->ConfigureSense(*SightConfig);
+	MonsterPerceptionComponent->ConfigureSense(*DamageConfig);
 	MonsterPerceptionComponent->RequestStimuliListenerUpdate();
 
 	if (MonsterBehaviorTreeComponent && MonsterBehaviorTreeComponent->IsRunning())
@@ -108,7 +114,7 @@ void ARogue10mMonsterAIController::InitializeMonsterAI()
 	LastTargetSenseTime = -1.0;
 	NextPatrolMoveTime = 0.0;
 	bWaitingForPatrolArrival = false;
-	RunBehaviorTree(BehaviorTree);
+	bAIEnabled = RunBehaviorTree(BehaviorTree);
 }
 void ARogue10mMonsterAIController::OnUnPossess()
 {
@@ -119,7 +125,7 @@ void ARogue10mMonsterAIController::OnUnPossess()
 bool ARogue10mMonsterAIController::ExecuteBehaviorDecision()
 {
 	ARogue10mBasicMonster* Monster = GetMonsterPawn();
-	if (!Monster || Monster->IsDead() || !MonsterBlackboardComponent || !GetWorld())
+	if (!bAIEnabled || !Monster || Monster->IsDead() || !MonsterBlackboardComponent || !GetWorld())
 	{
 		return false;
 	}
@@ -159,6 +165,24 @@ bool ARogue10mMonsterAIController::ExecuteBehaviorDecision()
 		}
 	}
 
+	// Resume while already visible also works without a synthetic damage stimulus.
+	if (!Target && FVector::Dist2D(MonsterBlackboardComponent->GetValueAsVector(HomeLocationKey),
+		Monster->GetActorLocation()) <= Monster->GetMaxChaseDistance())
+	{
+		TArray<AActor*> VisibleActors;
+		MonsterPerceptionComponent->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), VisibleActors);
+		float NearestDistance = TNumericLimits<float>::Max();
+		const FVector Home = MonsterBlackboardComponent->GetValueAsVector(HomeLocationKey);
+		for (AActor* Actor : VisibleActors)
+		{
+			auto* Candidate = Cast<ARogue10mCharacter>(Actor);
+			if (!IsValidCombatTarget(Candidate)
+				|| FVector::Dist2D(Home, Candidate->GetActorLocation()) > Monster->GetMaxChaseDistance()) continue;
+			const float Distance = FVector::DistSquared2D(Monster->GetActorLocation(), Candidate->GetActorLocation());
+			if (Distance < NearestDistance) { NearestDistance = Distance; Target = Candidate; }
+		}
+		if (Target) { AcquireTarget(Target, false); Target = GetBlackboardTarget(); }
+	}
 	if (Target)
 	{
 		UpdateCombatBehavior(*Monster, *Target);
@@ -175,7 +199,7 @@ void ARogue10mMonsterAIController::NotifyDamageStimulus(
 {
 	ARogue10mCharacter* SourceCharacter = Cast<ARogue10mCharacter>(SourceActor);
 	ARogue10mBasicMonster* Monster = GetMonsterPawn();
-	if (!Monster || !IsValidCombatTarget(SourceCharacter))
+	if (!bAIEnabled || !Monster || !IsValidCombatTarget(SourceCharacter))
 	{
 		return;
 	}
@@ -192,6 +216,7 @@ void ARogue10mMonsterAIController::NotifyDamageStimulus(
 
 void ARogue10mMonsterAIController::StopMonsterAI()
 {
+	bAIEnabled = false;
 	StopMovement();
 	ClearFocus(EAIFocusPriority::Gameplay);
 	if (MonsterBehaviorTreeComponent)
@@ -205,7 +230,7 @@ void ARogue10mMonsterAIController::HandleTargetPerceptionUpdated(
 	AActor* Actor, FAIStimulus Stimulus)
 {
 	ARogue10mCharacter* Target = Cast<ARogue10mCharacter>(Actor);
-	if (!IsValidCombatTarget(Target) || !GetWorld())
+	if (!bAIEnabled || !IsValidCombatTarget(Target) || !GetWorld())
 	{
 		return;
 	}
@@ -240,23 +265,36 @@ ARogue10mCharacter* ARogue10mMonsterAIController::GetBlackboardTarget() const
 bool ARogue10mMonsterAIController::IsValidCombatTarget(
 	const ARogue10mCharacter* Target) const
 {
-	return Target && !Target->IsDead();
+	return IsValid(Target) && Target->GetWorld() == GetWorld() && !Target->IsDead();
 }
 
 void ARogue10mMonsterAIController::AcquireTarget(
 	ARogue10mCharacter* Target, bool bFromDamage)
 {
-	if (!IsValidCombatTarget(Target) || !MonsterBlackboardComponent || !GetWorld())
+	if (!bAIEnabled || !IsValidCombatTarget(Target) || !MonsterBlackboardComponent || !GetWorld())
 	{
 		return;
 	}
+	const auto* MonsterPawn = GetMonsterPawn();
+	if (!MonsterPawn || MonsterPawn->IsDead()
+		|| FVector::Dist2D(MonsterBlackboardComponent->GetValueAsVector(HomeLocationKey), MonsterPawn->GetActorLocation())
+			> MonsterPawn->GetMaxChaseDistance()
+		|| FVector::Dist2D(MonsterBlackboardComponent->GetValueAsVector(HomeLocationKey), Target->GetActorLocation())
+			> MonsterPawn->GetMaxChaseDistance()) return;
 	MonsterBlackboardComponent->SetValueAsObject(TargetActorKey, Target);
 	MonsterBlackboardComponent->SetValueAsVector(
 		LastKnownLocationKey, Target->GetActorLocation());
 	MonsterBlackboardComponent->SetValueAsBool(HasTargetKey, true);
 	MonsterBlackboardComponent->SetValueAsBool(WasDamagedKey, bFromDamage);
 	LastTargetSenseTime = GetWorld()->GetTimeSeconds();
-	SetFocus(Target, EAIFocusPriority::Gameplay);
+	if (const ARogue10mBasicMonster* Monster = GetMonsterPawn(); Monster && Monster->IsPatternAttackActive())
+	{
+		ClearFocus(EAIFocusPriority::Gameplay);
+	}
+	else
+	{
+		SetFocus(Target, EAIFocusPriority::Gameplay);
+	}
 }
 
 void ARogue10mMonsterAIController::ClearTarget()
@@ -264,6 +302,8 @@ void ARogue10mMonsterAIController::ClearTarget()
 	if (ARogue10mBasicMonster* Monster = GetMonsterPawn())
 	{
 		Monster->ClearAITarget();
+		// A finished attack can still have a short cosmetic tail in Idle.
+		if (auto* Pattern = Monster->GetAttackPatternComponent()) Pattern->CancelAttack();
 	}
 	if (MonsterBlackboardComponent)
 	{
@@ -288,6 +328,13 @@ void ARogue10mMonsterAIController::UpdateCombatBehavior(
 	MonsterBlackboardComponent->SetValueAsVector(
 		LastKnownLocationKey, Target.GetActorLocation());
 	Monster.SetAITarget(&Target);
+	if (Monster.IsPatternAttackActive())
+	{
+		// Hold a basic swing's facing until its short recovery completes.
+		StopMovement();
+		ClearFocus(EAIFocusPriority::Gameplay);
+		return;
+	}
 	SetFocus(&Target, EAIFocusPriority::Gameplay);
 
 	if (bInAttackRange)
@@ -297,14 +344,26 @@ void ARogue10mMonsterAIController::UpdateCombatBehavior(
 		return;
 	}
 
-	MoveToActor(
-		&Target,
-		FMath::Max(Monster.GetStopDistance(), AttackRange * 0.8f),
-		true,
-		true,
-		true,
-		nullptr,
-		true);
+	// Combat uses center-to-center distances. Exclude both reach-test radii so
+	// MoveTo's initial and final arrival checks use the same distance contract.
+	// Otherwise short-range monsters can finish outside melee range and never attack.
+	const float DesiredCenterDistance = FMath::Max(
+		0.0f, FMath::Min(Monster.GetStopDistance(), AttackRange * 0.8f));
+	FAIMoveRequest MoveRequest(&Target);
+	MoveRequest.SetAcceptanceRadius(DesiredCenterDistance);
+	MoveRequest.SetReachTestIncludesAgentRadius(false);
+	MoveRequest.SetReachTestIncludesGoalRadius(false);
+	MoveRequest.SetUsePathfinding(true);
+	MoveRequest.SetCanStrafe(true);
+	MoveRequest.SetAllowPartialPath(true);
+	MoveRequest.SetNavigationFilter(GetDefaultNavigationFilterClass());
+	// Actor goals follow moving targets. Keep useful paths instead of aborting
+	// and resubmitting them on every quarter-second decision.
+	if (GetMoveStatus() == EPathFollowingStatus::Idle || !GetPathFollowingComponent()
+		|| GetPathFollowingComponent()->GetMoveGoal() != &Target)
+	{
+		MoveTo(MoveRequest);
+	}
 }
 
 void ARogue10mMonsterAIController::UpdatePatrolBehavior(

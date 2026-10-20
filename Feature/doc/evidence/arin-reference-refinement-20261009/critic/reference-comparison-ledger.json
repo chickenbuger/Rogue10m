@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-09",
+  "reviewer": "/root/arin_reference_art_critic",
+  "method": "Independent direct visual inspection of the user PNG, the actual v2 six-view contact sheet, and eight original v2 Blender/FBX render views. Reviewer did not run Blender or Unreal, modify model sources, generate replacement images, or infer acceptance from previous numerical checks.",
+  "scope": "Reference match and visible character construction before revision; this is not the final revised model acceptance.",
+  "reference": {
+    "file": "C:/Users/PC/AppData/Local/Temp/codex-clipboard-b02420d9-32fa-42f1-92ad-fbe109a08d5c.png",
+    "sha256": "a7b50b564596b3e5bfb882d5bdb66f20a0320e2aa58bb398929dc8666bbcc067",
+    "angle": "Full-body front, near T-pose",
+    "observed_style": "Warm illustrated/semi-realistic stylized female fantasy adventurer with brown braid, olive hooded mantle, ivory blouse/apron, weathered dark leather equipment and red potion bottles",
+    "limits": [
+      "Single front image does not establish rear design, exact profile depth, concealed anatomy, topology, or material maps.",
+      "Ratios below are directional observations; the image is not a calibrated orthographic scan.",
+      "User supplied the PNG and FBX and requested revision based on them; separate commercial provenance of the FBX is not established by this art review."
+    ]
+  },
+  "candidate": {
+    "model": "D:/Project/Rogue10m/Art/NPC/Arin/Refined/Arin.fbx",
+    "sha256": "aa4298d51a6917f245f4be4f9c1dca3ae739ec80d7d4fb44b3157a0a2b8979c3",
+    "sheet": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/arin-quality-sheet.png",
+    "sheet_sha256": "770045a30dd034f0fcacf1871669354b0b40974ee4d9277d2ad4bac316080103",
+    "original_view_folder": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/candidate",
+    "neutral_front": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/imported-pose-final/neutral-front.png"
+  },
+  "requirements": [
+    {
+      "id": "REF-01",
+      "requirement": "Recognizable female fantasy tutorial adventurer with braid, mantle, blouse, belt, bag, two potions and boots",
+      "status": "pass",
+      "priority": "preserve",
+      "evidence": ["arin-front.png", "arin-oblique.png", "neutral-front.png"],
+      "observation": "All these semantic costume elements are visible in v2. The general adventurer identity and asymmetry are already established and should survive the revision."
+    },
+    {
+      "id": "REF-02",
+      "requirement": "Reference-like facial identity, eye expression and soft anatomical transitions",
+      "status": "fail",
+      "priority": 0,
+      "evidence": ["arin-face.png", "arin-face-profile.png", "reference front face"],
+      "observation": "The reference has large almond eyes with dark upper lids/lashes, warm hazel/brown irises, arched textured brows, a small softly shaped nose, cheek volume, freckles and a friendly relaxed mouth. v2 has tiny horizontal exposed eyeballs, light green irises, minimal eyelids, single-strip brows, an unarticulated long central nose/midface, a broad smooth chin and flat pale skin. This is an identity/form mismatch, not merely absent texture detail.",
+      "repair": "Prefer the inspected donor head if it matches the reference. Otherwise rebuild eye sockets/lid rims and the nose-cheek-mouth transition in the durable source; use a coherent face/ear/neck/hand skin system. Review neutral clay and actual shaded closeups before detail bakes."
+    },
+    {
+      "id": "REF-03",
+      "requirement": "Full chestnut wavy hair and a thick natural side braid",
+      "status": "fail",
+      "priority": 0,
+      "evidence": ["arin-face.png", "arin-face-profile.png", "arin-back.png", "reference front hair"],
+      "observation": "The reference has an asymmetric swept part, rounded interlocking locks, temple curls/flyaways and a volumetric braid draped on the front. v2 is a nearly uniform smooth cap with a few thick independent ribbon ridges; its lower hair has an abrupt cap boundary and the braid emerges from a long thin straight connector. It lacks the crown/root volume and flowing lock hierarchy of the reference.",
+      "repair": "Use donor hair when it preserves the actual sculpted silhouette and UVs. Keep a fitted underlying scalp, replace isolated ribbon ridges with coherent large/medium/small lock flow, and connect the side gathering continuously to a wider curved braid. Add strand-direction roughness/normal and chestnut color variation only after the silhouette passes."
+    },
+    {
+      "id": "REF-04",
+      "requirement": "Draped hooded shoulder cape/mantle with rounded folds and decorated border",
+      "status": "fail",
+      "priority": 0,
+      "evidence": ["neutral-front.png", "arin-right.png", "arin-back.png", "reference shoulder cape"],
+      "observation": "The reference has a folded hood around the neck and a broad curved shoulder mantle ending around the upper arm with overlapping front wings, a leaf medallion and embroidered border. v2 has a very thin pointed flat shoulder plate and an almost planar triangular back flap that stands away from the back. Small gold studs do not replace the missing hood/drape.",
+      "repair": "Reconstruct or retain donor draped cape as a surface with believable thickness, folds, front overlap, hood mass and curved edge. Give it enough joint clearance without expanding the whole garment. Author leaf/branch border in the cloth atlas rather than only isolated geometric studs."
+    },
+    {
+      "id": "REF-05",
+      "requirement": "Reference torso, waist/pelvis and trouser leg proportions",
+      "status": "fail",
+      "priority": 1,
+      "evidence": ["neutral-front.png", "arin-front.png", "arin-right.png", "reference full body"],
+      "observation": "v2 is very slender through the thighs/calves and its narrow straight trousers expose a smooth tube-like silhouette. The reference has a fuller pelvic/thigh garment, curved knee taper, fabric allowance and a less elongated visible lower body. v2 side torso is coherent but shallow and uniformly smooth. Both references are stylized; a global uniform shrink or generic adult ratio is not justified.",
+      "repair": "Compare donor and v2 at equal height, front T-pose and profile. Choose reference-relative shoulder/waist/pelvis/leg relationships, increase trouser allowance where supported, shape knee/ankle transitions, and preserve the continuous seat/inseam and joint clearance. Keep ground contact and arm reach invariant."
+    },
+    {
+      "id": "REF-06",
+      "requirement": "Layered olive tunic and ivory blouse/apron with believable folds and decorative edges",
+      "status": "fail",
+      "priority": 1,
+      "evidence": ["arin-front.png", "neutral-front.png", "arin-back.png", "reference tunic and sleeves"],
+      "observation": "The reference has gathered/pushed-up blouse sleeves, waist compression, flared layered coat panels, a shaped center ivory panel and leaf ornamentation. v2 sleeves and coat are mostly smooth straight surfaces with two uniform cuff rings, short sparse gold marks and no readable woven/embroidered surface hierarchy.",
+      "repair": "Preserve or introduce macro folds at collar, upper sleeve, elbow/cuff, waist and coat split. Add restrained woven roughness and raised/normal embroidery, not random high-frequency noise. Shape coat hem and maintain knee/hip deformation evidence after the change."
+    },
+    {
+      "id": "REF-07",
+      "requirement": "Natural palms, opposing thumbs and tapered articulated fingers",
+      "status": "fail",
+      "priority": 1,
+      "evidence": ["arin-hand.png", "neutral-front.png", "reference hands"],
+      "observation": "v2 improved earlier stepped fingers, but current closeup still shows a broad featureless palm edge with four separate thin straight shafts, polygonal tips and simple oval nails. The reference has finger length staggering, curved roots/web spaces, visible knuckle taper and a believable thumb mound. Exact side anatomy is obscured in the single reference view.",
+      "repair": "Prefer donor hand geometry if actual visual inspection confirms continuous roots and usable topology. Preserve opposing thumb/base volume, stagger lengths, curve neutral fingers slightly and keep nails shallow on the distal surface. Do not claim individual finger animation from geometry alone."
+    },
+    {
+      "id": "REF-08",
+      "requirement": "Fitted weathered boots with shaft folds, shaped instep/toe, thick cuff and attached straps",
+      "status": "fail",
+      "priority": 1,
+      "evidence": ["arin-boots.png", "arin-right.png", "arin-front.png", "reference footwear"],
+      "observation": "v2 has attached soles and recognizable tapered instep, but boot shafts are narrow smooth tubes, cuff rings are uniform rounded bands and the toe/sole are softly inflated. The reference has broader folded cuffs, shin/ankle leather wrinkles, separate upper panels and clearly wrapped ankle straps/buckles with richer worn leather surface.",
+      "repair": "Keep toe length and foot-ground contact while refining shaft shape/creases, cuff overlap, panel seams and a more deliberate heel/welt separation. Update sole, straps and buckle positions together after reshaping. Use leather microdetail in normal/roughness and larger wear/color variation in albedo."
+    },
+    {
+      "id": "REF-09",
+      "requirement": "Large fitted satchel, structured belt/bracers and translucent red potion bottles",
+      "status": "fail",
+      "priority": 2,
+      "evidence": ["arin-front.png", "arin-oblique.png", "arin-hand.png", "reference equipment"],
+      "observation": "v2 has all required equipment, but the satchel is a smooth pouch with one narrow vertical flap, belt/bracers are plain strips and the bottles read as opaque red solids. The reference bag has a broad curved flap, double straps, stitching, layered side wall and dark weathered leather; glass/liquid/cork separation is readable.",
+      "repair": "Retain donor equipment if matching; otherwise add a fitted broad satchel flap, actual strap wrap/contact, subtle inset seams/rivets and readable cork/glass/liquid zones. Use existing tutorial interaction collision rather than inventing static UCX on a deforming character."
+    },
+    {
+      "id": "REF-10",
+      "requirement": "Reference warm, deep material palette and varied PBR response",
+      "status": "fail",
+      "priority": 1,
+      "evidence": ["arin-quality-sheet.png", "arin-face.png", "arin-boots.png", "reference full body"],
+      "observation": "v2's cloth is pale mint, hair dusty pink-brown, leather light tan and skin uniformly pale. The reference is muted olive/forest green, chestnut brown, dark russet leather, warm ivory fabric and peach skin with freckles. The reference also has local stitch/wear/roughness contrast; v2's valid PBR atlas does not yet produce comparable visible surface richness.",
+      "repair": "Establish reference palette under identical neutral exposure; retain color/normal/roughness distinctions across face, hair, cloth and gear. Remove any donor baked lighting from albedo where practical and inspect normal convention and UV seams after export."
+    },
+    {
+      "id": "REF-11",
+      "requirement": "Reference rear/profile identity and concealed construction",
+      "status": "unclear",
+      "priority": "document_assumptions",
+      "evidence": ["reference front only", "arin-face-profile.png", "arin-back.png"],
+      "observation": "The supplied PNG cannot establish rear hood/cape, back tunic, opposite hair lock or precise nose depth. The donor FBX must provide these actual surfaces, or the revision must identify them as inferred design. Front-image projection alone cannot verify them."
+    },
+    {
+      "id": "REF-12",
+      "requirement": "Maintain existing Unreal skeletal/Idle/gameplay functionality while improving appearance",
+      "status": "unclear",
+      "priority": "hard_gate",
+      "evidence": ["visual review only"],
+      "observation": "This review did not execute Unreal or inspect the donor rig. Prior v2 test records do not prove a new donor-based mesh will preserve animations, scale, skeleton hierarchy, material slots or gameplay. Fresh export, deformation, engine material/LOD and tutorial runtime checks remain required."
+    }
+  ],
+  "decision": "revise_primary_form_before_surface_polish",
+  "overall": "v2 preserves the character concept but fails the newly supplied reference's primary face, hair, drape and surface appearance. Preserve v2 as rollback and evaluate donor-based revision first.",
+  "donor_integration_status": "actual_donor_four_original_views_and_seven_canonical_views_inspected; donor_surface_preservation_recommended_pending_repair_skinning_export_and_engine_checks",
+  "reviewed_original_views": [
+    "candidate/arin-front.png",
+    "candidate/arin-face.png",
+    "candidate/arin-face-profile.png",
+    "candidate/arin-boots.png",
+    "candidate/arin-hand.png",
+    "candidate/arin-back.png",
+    "candidate/arin-right.png",
+    "imported-pose-final/neutral-front.png"
+  ]
+}

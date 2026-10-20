@@ -1,0 +1,12 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"returnValue\":{\"name\":\"Write_DistanceFrom\",\"graphParamsSchema\":\"{\\\"maximumDistance\\\":{\\\"type\\\":\\\"number\\\",\\\"description\\\":\\\"Maximum search distance in centimeters.\\\",\\\"minimum\\\":0},\\\"outputAttribute\\\":{\\\"type\\\":\\\"string\\\",\\\"description\\\":\\\"Attribute to write to.\\\"},\\\"attributeOperation\\\":{\\\"type\\\":\\\"string\\\",\\\"title\\\":\\\"EPCG_AttributesMathOpsEnum\\\",\\\"enum\\\":[\\\"Set\\\",\\\"Add\\\",\\\"Subtract\\\",\\\"Multiply\\\",\\\"Divide\\\"],\\\"description\\\":\\\"Operation to apply when writing to the attribute (Set, Add, Subtract, Multiply or Divide). If the attribute to write does not previously exist, the data simply written to it without applying any operation.\\\"},\\\"normalized\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"When enabled, the computed distance will be normalized in 0 to 1 range. If OutputDistanceVector is enabled, the distance vector will be normalized.\\\"},\\\"computeIn2D\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"Compute in 2D will flatten all inputs on the Z plane before computing the distance.\\\"},\\\"outputDistanceVector\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"When enabled, writes the distance vector instead of the distance float value.\\\"},\\\"useRemap\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"When enabled, attribute value remapping is applied using the Remap parameters before the output over the written value. When disabled, the attribute value remapping is bypassed completely.\\\"},\\\"remapOutputMin\\\":{\\\"type\\\":\\\"number\\\",\\\"description\\\":\\\"The minimum value of the remapped output attribute.\\\"},\\\"remapOutputMax\\\":{\\\"type\\\":\\\"number\\\",\\\"description\\\":\\\"The maximum value of the remapped output attribute.\\\"},\\\"remapClampToUnitRange\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"If checked, outside values will be clamped between 0 and 1.\\\"},\\\"remapIgnoreValuesOutsideInputRange\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"Attribute values outside of the input range will be unaffected by the remapping.\\\"}}\",\"inputPins\":[{\"name\":\"PrimaryInput\",\"type\":\"Any\",\"description\":\"디폴트 입력 핀\"},{\"name\":\"SecondaryInput\",\"type\":\"Any\",\"description\":\"\"}],\"outputPins\":[{\"name\":\"Out\",\"type\":\"Any\",\"description\":\"\"}]}}"
+      }
+    ]
+  }
+}

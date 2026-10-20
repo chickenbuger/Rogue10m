@@ -1,0 +1,131 @@
+{
+  "status": "completed_for_stationary_tutorial_npc_scope",
+  "verified_utc": "2026-10-07T13:27:21.454053+00:00",
+  "source_files": {
+    "Arin.blend": {
+      "bytes": 39786751,
+      "sha256": "3cde5f3c16d66ee3e1192db319c4a02d3b51991a8070b85e5c0cc75679b1c6df"
+    },
+    "Arin.fbx": {
+      "bytes": 34208780,
+      "sha256": "aa4298d51a6917f245f4be4f9c1dca3ae739ec80d7d4fb44b3157a0a2b8979c3"
+    },
+    "Arin.glb": {
+      "bytes": 34626676,
+      "sha256": "bf2d64e591d9b9d95d4abf063ec92d5b7d73142bb98ec0cf886656e127407c89"
+    },
+    "Arin_EditableParts.blend": {
+      "bytes": 6185302,
+      "sha256": "762f02ac8bbfe66ace3e5ea27c93d40f89efd33968d159b4bb5d000d4e3266f3"
+    },
+    "A_Arin_Idle.fbx": {
+      "bytes": 235372,
+      "sha256": "790fca224b48dc640fc1e771631244c6914aa720644415fd8516e28296a34f76"
+    },
+    "SK_Arin.fbx": {
+      "bytes": 34003244,
+      "sha256": "0a3e0049f820196ddc683a9d7ec8551e82acb121b63dcf09a1e6cf979ae78d47"
+    }
+  },
+  "source_scripts": {
+    "BuildRefinedArin.py": "c3d639aa434a2c0360fd1df5355527a6043e5809b33a0b8bdda306b18955b4f5",
+    "BuildArin.py": "1b90962d1538395965e25c803500c9af6eed7977150aaa87d8a510c21bbfdc1f",
+    "ArinBodyRefined.py": "41db5ab4737105f7f94f583d81028fa77f2bc246c55996bc58f7cb8a23ded30c",
+    "ArinHeadRefined.py": "35df7d0a349c17ca87b7553483985379abf4720c2412cf7017ab2a5d0a6d0bf9",
+    "ArinSurface.py": "9ea1dc1522580f7e8417864c5dcf9f4e0af8a62d358eb0209b08018cf1b752e1",
+    "ArinCoatSkin.py": "179a774bcfabbdfdf9362356b38de0857fdb6ac7fd1d6d0df4c2d7a8b1880d61"
+  },
+  "texture_png_count": 16,
+  "fresh_blender_process_ids": [
+    119604,
+    110420,
+    65656
+  ],
+  "fresh_unreal_process_id": 113212,
+  "native_pie_checks_passed": 67,
+  "final_lod_vertices": [
+    40211,
+    35681,
+    28851
+  ],
+  "unreal_dependencies_sha256": {
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/ArinIdle": "d405db77a27be9ef2082cb35bc3d02c6715aa79b8236fd400381cc5b57f0cb50",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Cloth": "834057fd3c57701b2191a4ec379c0dc0cd0b6321268e6d3cf0e73be77919ca96",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Face": "3b50f33d200fe95abcf7d8bb363c7a9aa0936a4b425f9810c0903d5b15442553",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Gear": "3ea1b659faabba76f2a3a3da4227422069e5ed3c534b0150039caeca12973848",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Hair": "bfcdab236408002d9c1cd6101e934ff95e7d75b7956be5fc6f905cbe357b71b3",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/M_Arin_PBR": "b793c8ee440c1c1c42a68c92250c90bc91a9336a376aab263c68a05dab6d7af3",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin": "0369ba3a96227363eb13891588218cebc984dbc1c846056fe9db980e4baab450",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin_Skeleton": "7696e60816bc9a1ec2ebb1d35461f83e07602df36b0a17229ce5d565fb5ba11b",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_BaseColor": "780f98325536f982d3bf4fa9385d7515aeca87a10cc634a04075363e618fabdb",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Metallic": "b4a1e5f64212ddc5a3e3a31071b4cdeca3ae135123b668a4b3b27e9b5b6f455c",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Normal": "bc681830e0970e226600f95fdbbba0a2b91e7055cb9efc2e3a7f27d455f58367",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Roughness": "9c3576ab1a386ef791c2696d9e66b52514335cbd853b500664e5821560ac6936",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_BaseColor": "4cb4c6ac5ad01da64677d28dd3863e359e231491dee5668959e615682570dacf",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Metallic": "1d3be822ca5bb64b1cd91f81cc6bdf30b56299ce1e0e7b73f8a355a9c4b963c3",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Normal": "2e01d256c38c811e3c16edd1e1bd6ec049a98729badbc47d6b80c82c686cdd8a",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Roughness": "7c22c3311f46c8f48b8e22a320acff910a32682dc4e5f851f861df0621d8d074",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_BaseColor": "72c28d5a7379105201c3a0cbcffc0602a42fc549196f200e0bf8c184eeacf1f5",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Metallic": "38432b43db31107ba78ca4b30af0d86934efc7e108dc8decaabbd7a1e65e0917",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Normal": "a2c84a57f6ca9d0695a58abab2d6f5ba4c51f9743c93ef45ad58eae154645961",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Roughness": "3da9c7e9077ff090bd9df166008098e306181b37de86f50fd243c6cb37d12ce3",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_BaseColor": "d7a67a6d16f6e552641e160a94fdfd2630d2c5c352aea1ff82a8b3b1ee78d391",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Metallic": "12c217ee9fcb1bffc0058889c919779d210e7ef469c8e20d2f960ec1dba77164",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Normal": "f335569e6e6e88007fea7292203079d7958847a0eea07b56d3853959fec74514",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Roughness": "bb13a39a4309f805164868b5e4ee1a50688aa4728b63a6ffeb82e553f7f90841"
+  },
+  "actual_unreal_images_sha256": {
+    "LOD0/village-front": "a52b300932f7d2518b6241f48a0b5091905ba1e652716125ba6b820fd9a20d21",
+    "LOD0/village-face": "b841956a5e759cd6515b1334a9018b902c0bf1f9187a77ccfc6a0ae178172711",
+    "LOD0/village-oblique": "3e04de209410c236d0b10b4958cf955bebcee5d6db670a29d850d9315ac0664a",
+    "LOD1/village-front": "2bf264e31691c29edbc781705402820b1ccc961f6332b5eb3bbdb918f891c310",
+    "LOD1/village-face": "a33f7d2c3d2d3ce725b249c9dcb5ef71445fcfaaec468aa218bb5e9c06d1d5ab",
+    "LOD1/village-oblique": "c514412696b13ee97bd07cc7bcbb5c6c5d919539af45da54b118fab570691003",
+    "LOD2/village-front": "1a9499fd14f434558bbd98ec57c7275b91018cce4593647ade1afdb15d252737",
+    "LOD2/village-face": "cd7604dfc1724ccfe428ea7d10aa31e08a16db48be7a9e9149a2ef6337f8e3af",
+    "LOD2/village-oblique": "5c4259b4cd0631ecd49340bac224d6fb713715bcf0b416a71c91940c98241eeb"
+  },
+  "content_preservation": {
+    "status": "passed",
+    "baseline_files": 6331,
+    "unchanged_sha256": 6328,
+    "changed": [
+      "Content/Rogue10m/World/StartVillage/Tutorial/BP_StartVillageGuide.uasset",
+      "Content/Rogue10m/World/StartVillage/Tutorial/DA_StartVillageGuide.uasset",
+      "Content/__ExternalActors__/Rogue10m/Maps/StartHub/5/TO/W83RIU01UF417URBGM9BBZ.uasset"
+    ],
+    "added": [
+      "Content/Rogue10m/Characters/Arin/RefinedV2/ArinIdle.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Cloth.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Face.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Gear.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Hair.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Materials/M_Arin_PBR.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/SK_Arin.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/SK_Arin_Skeleton.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_BaseColor.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Metallic.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Normal.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Roughness.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_BaseColor.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Metallic.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Normal.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Roughness.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_BaseColor.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Metallic.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Normal.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Roughness.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_BaseColor.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Metallic.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Normal.uasset",
+      "Content/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Roughness.uasset"
+    ],
+    "deleted": [],
+    "unexpected_changes": [],
+    "unexpected_added": []
+  },
+  "independent_review_sha256": "fd6418d49354d7d054449e815b73777bcb222bafb87fa6ede9e403fb13deaf41",
+  "source_model_scope": "Stylized Arin guide with stationary 2-second Idle; no facial/finger animation or walking/combat claim",
+  "unreal_editor_final_map": "/Game/Rogue10m/Maps/StartHub",
+  "commit_or_push": false
+}

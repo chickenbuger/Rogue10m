@@ -1,0 +1,12 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"returnValue\":{\"name\":\"Get Graph Parameter\",\"description\":\"\",\"propertiesSchema\":\"{\\\"propertyPath\\\":{\\\"type\\\":\\\"string\\\"},\\\"bSanitizeOutputAttributeName\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"If the output attribute name has special characters, remove them.\\\"},\\\"outputAttributeName\\\":{\\\"type\\\":\\\"string\\\"},\\\"source\\\":{\\\"type\\\":\\\"string\\\",\\\"title\\\":\\\"EPCGUserParameterSource\\\",\\\"enum\\\":[\\\"Current\\\",\\\"Upstream\\\",\\\"Root\\\"]},\\\"bQuiet\\\":{\\\"type\\\":\\\"boolean\\\"},\\\"structExtractorBehavior\\\":{\\\"type\\\":\\\"string\\\",\\\"title\\\":\\\"EPCGStructExtractorBehavior\\\",\\\"enum\\\":[\\\"ExtractRootOnly\\\",\\\"NoExtract\\\",\\\"Extract\\\"],\\\"description\\\":\\\"How we should extract the structs. (cf. enum tooltips)\\\"},\\\"objectExtractorBehavior\\\":{\\\"type\\\":\\\"string\\\",\\\"title\\\":\\\"EPCGObjectExtractorBehavior\\\",\\\"enum\\\":[\\\"NoExtract\\\",\\\"Extract\\\"],\\\"description\\\":\\\"How we should extract the objects. (cf. enum tooltips)\\\"},\\\"containerExtractorBehavior\\\":{\\\"type\\\":\\\"string\\\",\\\"title\\\":\\\"EPCGContainerExtractorBehavior\\\",\\\"enum\\\":[\\\"FlattenLastAndDiscardNested\\\",\\\"NoFlattenLast\\\",\\\"FlattenLast\\\"],\\\"description\\\":\\\"How we should extract the containers. (cf. enum tooltips)\\\"}}\",\"inputPins\":[],\"outputPins\":[{\"name\":\"Out\",\"type\":\"Attribute Set\",\"description\":\"\"}]}}"
+      }
+    ]
+  }
+}

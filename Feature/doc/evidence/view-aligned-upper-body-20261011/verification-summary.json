@@ -1,0 +1,130 @@
+{
+  "feature": "플레이어 시야에 맞춘 상체 애니메이션",
+  "started": "2026-10-11",
+  "completed": "2026-10-13",
+  "branch": "Sprint#5-29-view-aligned-upper-body",
+  "committed_or_pushed": false,
+  "final_editor_build": "Succeeded, 8.23 seconds",
+  "tests": {
+    "baseline": {
+      "log": "D:/Project/Rogue10m/Feature/doc/evidence/view-aligned-upper-body-20261011/aim-baseline03.log",
+      "final_result": "RESULT=VIEW_ALIGNED_UPPER_BODY_PASSED frames=1575 assertions=459385 failures=0 output=../../../../../Project/Rogue10m/tmp/view-aligned-upper-body/aim-baseline03",
+      "frames": 1575,
+      "assertions": 459385,
+      "failures": 0
+    },
+    "runtime": {
+      "log": "D:/Project/Rogue10m/Feature/doc/evidence/view-aligned-upper-body-20261011/aim-runtime05.log",
+      "final_result": "RESULT=VIEW_ALIGNED_UPPER_BODY_PASSED frames=1575 assertions=460488 failures=0 output=../../../../../Project/Rogue10m/tmp/view-aligned-upper-body/aim-runtime05",
+      "frames": 1575,
+      "assertions": 460488,
+      "failures": 0
+    },
+    "render": {
+      "log": "D:/Project/Rogue10m/Feature/doc/evidence/view-aligned-upper-body-20261011/aim-render07.log",
+      "final_result": "RESULT=VIEW_ALIGNED_UPPER_BODY_PASSED frames=1575 assertions=460488 failures=0 output=../../../../../Project/Rogue10m/tmp/view-aligned-upper-body/aim-render07",
+      "frames": 1575,
+      "assertions": 460488,
+      "failures": 0
+    },
+    "negative": {
+      "log": "D:/Project/Rogue10m/Feature/doc/evidence/view-aligned-upper-body-20261011/aim-negative06.log",
+      "final_result": "RESULT=VIEW_ALIGNED_UPPER_BODY_FAILED frames=1575 assertions=459391 failures=2456 output=../../../../../Project/Rogue10m/tmp/view-aligned-upper-body/aim-negative06",
+      "frames": 1575,
+      "assertions": 459391,
+      "failures": 2456
+    },
+    "moving": {
+      "log": "D:/Project/Rogue10m/Feature/doc/evidence/moving-upper-body-attack-20261009/viewaim-moving-20261013.log",
+      "final_result": "RESULT=MOVING_ATTACK_PASSED frames=1100 assertions=258066 failures=0 output=../../../../../Project/Rogue10m/tmp/moving-attack/viewaim-moving-20261013",
+      "frames": 1100,
+      "assertions": 258066,
+      "failures": 0
+    },
+    "stance": {
+      "log": "D:/Project/Rogue10m/Feature/doc/evidence/fighter-combat-stance-20261005/viewaim-stance-20261013.log",
+      "final_result": "RESULT=FIGHTER_COMBAT_STANCE_RUNTIME_PASSED frames=640 failures=0 output=../../../../../Project/Rogue10m/tmp/fighter-combat-stance/viewaim-stance-20261013",
+      "frames": 640,
+      "failures": 0
+    },
+    "camera": {
+      "log": "D:/Project/Rogue10m/Feature/doc/evidence/camera-forward-attacks-20261009/viewaim-camera-20261013.log",
+      "final_result": "RESULT=CAMERA_FORWARD_PASSED frames=1572 assertions=4978 failures=0 cases=15/15 output=../../../../../Project/Rogue10m/tmp/camera-forward/viewaim-camera-20261013 images=../../../../../Project/Rogue10m/Saved/Screenshots/WindowsEditor/CameraForward/viewaim-camera-20261013",
+      "frames": 1572,
+      "assertions": 4978,
+      "failures": 0
+    },
+    "combat": {
+      "log": "D:/Project/Rogue10m/Feature/doc/evidence/fighter-combat-stance-20261005/viewaim-combat-20261013.log",
+      "final_result": "RESULT=FIST_COMBAT_PASSED frames=840 failures=0 output=../../../../../Project/Rogue10m/tmp/fist-combat/viewaim-combat-20261013",
+      "frames": 840,
+      "failures": 0
+    }
+  },
+  "preservation": {
+    "source_before_count": 451,
+    "source_changed": [
+      "Scripts\\VerifyMovingAttack.ps1",
+      "Scripts\\VerifyFighterCombatStance.ps1",
+      "Scripts\\VerifyCameraForwardAttacks.ps1",
+      "Source\\Rogue10m\\Character\\Rogue10mFighterCombatStanceAnimInstance.h",
+      "Source\\Rogue10m\\Character\\Rogue10mFighterCombatStanceAnimInstance.cpp",
+      "Source\\Rogue10m\\Tests\\Rogue10mMovingAttackRuntimeTest.cpp"
+    ],
+    "source_added": [
+      "Scripts\\VerifyViewAlignedUpperBody.ps1",
+      "Source\\Rogue10m\\Character\\Rogue10mViewAlignedUpperBodyProxy.h",
+      "Source\\Rogue10m\\Character\\Rogue10mViewAlignedUpperBodyProxy.cpp",
+      "Source\\Rogue10m\\Tests\\Rogue10mViewAlignedUpperBodyTest.cpp"
+    ],
+    "source_deleted": [],
+    "content_before_count": 6359,
+    "content_size_mtime_changed": [],
+    "content_added": [],
+    "content_deleted": [],
+    "common_animbp_sha_unchanged": true,
+    "production_save_checks": [
+      {
+        "Name": "Rogue10mCharacterProfiles.sav",
+        "Before": "7B6DD1C5A2FE7C435A647D42029C472C88A0042CC5F5FC1327736D29A9D4C724",
+        "After": "7B6DD1C5A2FE7C435A647D42029C472C88A0042CC5F5FC1327736D29A9D4C724",
+        "Unchanged": true
+      },
+      {
+        "Name": "Rogue10mProgression_F896E7AD4CDCF783285888A597914739.sav",
+        "Before": "B39F2FCD80C499C50928C39082714FF3920B82A419F775C8FC02E192718DE35D",
+        "After": "B39F2FCD80C499C50928C39082714FF3920B82A419F775C8FC02E192718DE35D",
+        "Unchanged": true
+      },
+      {
+        "Name": "Rogue10mSkillKeys_0.sav",
+        "Before": "23365C35A7E62C426B4381110F90703A2F079C3E2C434D6220A1D4FAEA3F9BE7",
+        "After": "23365C35A7E62C426B4381110F90703A2F079C3E2C434D6220A1D4FAEA3F9BE7",
+        "Unchanged": true
+      }
+    ]
+  },
+  "restored_editor": {
+    "world": "/Game/Rogue10m/Maps/OpenRunMap.OpenRunMap",
+    "game_world": null,
+    "dirty_content": [],
+    "dirty_maps": [],
+    "common_anim_class": "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed.ABP_Common_Unarmed_C",
+    "native_aim_settings": {
+      "enable_view_aligned_upper_body": true,
+      "upper_body_aim_max_pitch": 75.0,
+      "upper_body_aim_max_yaw": 45.0,
+      "upper_body_aim_torso_weight": 0.25,
+      "upper_body_aim_interpolation_speed": 18.0
+    }
+  },
+  "video_full": "D:/Project/Rogue10m/tmp/view-aligned-upper-body/view-aligned-upper-body-preview.mp4",
+  "video_attacks": "D:/Project/Rogue10m/tmp/view-aligned-upper-body/view-aligned-upper-body-attacks.mp4",
+  "limitations": [
+    "현재 인간 남성 LOD1·로컬 실행",
+    "고각 머리 위치 변화14.594cm",
+    "회피 진입 추가 머리 위치 step3.521cm",
+    "극단 상향 V회피 검사 시점 근접 클리핑",
+    "Shipping·멀티플레이·모든 외형/LOD 전환 별도"
+  ]
+}

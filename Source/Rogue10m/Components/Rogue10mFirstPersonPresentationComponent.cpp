@@ -53,11 +53,12 @@ void URogue10mFirstPersonPresentationComponent::ApplyInitialFullBodyViewPitchOnc
 	// another presentation. A later equipment/UI/refresh event must never replace user aim.
 	bInitialLocalViewHandled = true;
 	const bool bAppearanceView = Character->GetAppearanceCameraComponent() && Character->GetAppearanceCameraComponent()->IsAppearanceCameraActive();
+ const float InitialPitch = bAppearanceView ? Character->GetAppearanceCameraComponent()->InitialViewPitch : InitialFullBodyViewPitch;
  if (!bEnableInitialFullBodyViewPitch || (!IsFullBodyPresentationActive() && !bAppearanceView) || Character->IsDead()
-		|| !FMath::IsFinite(InitialFullBodyViewPitch)) { return; }
+		|| !FMath::IsFinite(InitialPitch)) { return; }
 	FRotator ViewRotation = PlayerController.GetControlRotation();
 	if (ViewRotation.ContainsNaN() || !FMath::IsNearlyZero(FRotator::NormalizeAxis(ViewRotation.Pitch), 0.01)) { return; }
-	ViewRotation.Pitch = FMath::Clamp(InitialFullBodyViewPitch, -60.0f, 0.0f);
+	ViewRotation.Pitch = FMath::Clamp(InitialPitch, -60.0f, 0.0f);
 	PlayerController.SetControlRotation(ViewRotation);
 }
 

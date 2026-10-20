@@ -1,0 +1,55 @@
+{
+  "status": "failed",
+  "hub_map": "/Game/Rogue10m/Maps/StartHub",
+  "run_map": "/Game/Rogue10m/Maps/OpenRunMap",
+  "checks": [
+    {
+      "name": "no_existing_pie",
+      "passed": true
+    },
+    {
+      "name": "correct_project",
+      "passed": true
+    },
+    {
+      "name": "run_map_exists",
+      "passed": true
+    },
+    {
+      "name": "hub_map_exists",
+      "passed": true
+    },
+    {
+      "name": "load_editor_map",
+      "passed": true,
+      "map": "/Game/Rogue10m/Maps/OpenRunMap"
+    },
+    {
+      "name": "exact_editor_map",
+      "passed": true,
+      "map": "/Game/Rogue10m/Maps/OpenRunMap"
+    },
+    {
+      "name": "map_owned_navigation_config",
+      "passed": true,
+      "navigation_system_class": "/Script/Rogue10m.Rogue10mOpenWorldNavigationSystem"
+    }
+  ],
+  "timer_samples": [],
+  "ground_samples": [],
+  "navigation_samples": [],
+  "streaming_samples": [],
+  "combat_samples": [],
+  "limitations": [
+    "Ground and walking coverage consists of six POIs and three samples on each of three bridges; it is not a full terrain traversal.",
+    "Streaming unload/reentry is required for the camp sentinel on a camp-to-boss-to-camp round trip; every POI sentinel must load on arrival.",
+    "Navigation paths are local to the player invoker. One authored normal monster is checked for real AI pursuit and player damage.",
+    "Pawn damage immunity during traversal, isolated AI logic, and a one-point monster damage stimulus are PIE-only test adjustments.",
+    "Final-boss victory, a full 20-minute timeout, all monsters, network play and packaged performance are not checked."
+  ],
+  "phase": "static",
+  "elapsed_wall_seconds": 1.639999999999418,
+  "exception": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateOpenWorld.py\", line 520, in main\n    validate_static()\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateOpenWorld.py\", line 160, in validate_static\n    record(\"world_partition_streaming_enabled\", partition is not None and bool(partition.get_editor_property(\"enable_streaming\")))\n                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nException: WorldPartition: Failed to find property 'enable_streaming' for attribute 'enable_streaming' on 'WorldPartition'\n",
+  "message": "WorldPartition: Failed to find property 'enable_streaming' for attribute 'enable_streaming' on 'WorldPartition'",
+  "owned_pie_cleanup_confirmed": true
+}

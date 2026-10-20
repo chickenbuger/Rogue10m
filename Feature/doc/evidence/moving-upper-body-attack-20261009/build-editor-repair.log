@@ -1,0 +1,35 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Invalidating makefile for Rogue10mEditor (source file added)
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mFighterCombatStanceAnimInstance.cpp, Rogue10mAppearanceCameraComponent.cpp, Rogue10mCharacterAnimationComponent.cpp, Rogue10mCombatComponent.cpp, Rogue10mFirstPersonPresentationComponent.cpp, Rogue10mInventoryComponent.cpp, Rogue10mSkillBindingComponent.cpp, Rogue10mPlayerController.cpp, Rogue10mMonsterDataAsset.cpp, Rogue10mFistCombatAuthoring.cpp, Rogue10mMovingAttackAuthoring.cpp, Rogue10mOpenWorldAuthoring.cpp, Rogue10mBasicMonster.cpp, Rogue10mMonsterAttackPatternComponent.cpp, Rogue10mMonsterAIController.cpp, Rogue10mAppearanceCameraRuntimeTest.cpp, Rogue10mFighterCombatStanceRuntimeTest.cpp, Rogue10mFighterSkillTreeRuntimeTest.cpp, Rogue10mFistCombatRuntimeTest.cpp, Rogue10mInitialHeadFramingRuntimeTest.cpp, Rogue10mMovingAttackRuntimeTest.cpp, Rogue10mResponsiveHUDRuntimeTest.cpp, Rogue10mStoneFistAnimationRuntimeTest.cpp, Rogue10mThirdPersonInspectionRuntimeTest.cpp, Rogue10mWeaponSkillTreeRuntimeTest.cpp, Rogue10mBottomHUDWidget.cpp, Rogue10mHudWidgetParts.cpp, Rogue10mMainHUDWidget.cpp, Rogue10mMenuWindowWidgets.cpp, Rogue10mTutorialWidget.cpp, Rogue10mMonsterSpawner.cpp, Rogue10mOpenWorldBootstrap.cpp, Rogue10mRunPortal.cpp, Rogue10mTutorialAnimationComponent.cpp, Rogue10mTutorialNPC.cpp, Rogue10mTutorialRewardComponent.cpp, Rogue10mTutorialSupplySubsystem.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+Using Unreal Build Accelerator local executor to run 5 action(s)
+UbaServer - Listening on 0.0.0.0:1345
+  CPU 8 physical cores, 16 logical cores
+  Memory 31.91 GB physical, 29.7 GB/79.91 GB committed
+  UBA Storage capacity 40 GB
+[1/5] Compile [x64] Rogue10mMovingAttackRuntimeTest.cpp
+D:\Project\Rogue10m\Source\Rogue10m\Tests\Rogue10mMovingAttackRuntimeTest.cpp(291,68): error C2248: 'URogue10mCombatComponent::GetAttackSpeedMultiplier': private 멤버('URogue10mCombatComponent' 클래스에서 선언)에 액세스할 수 없습니다.
+                const float Speed=Character->GetCombatComponent()->GetAttackSpeedMultiplier();
+                                                                   ^
+D:\Project\Rogue10m\Source\Rogue10m\Components\Rogue10mCombatComponent.h(145,8): note: 'URogue10mCombatComponent::GetAttackSpeedMultiplier' 선언을 참조하십시오.
+	float GetAttackSpeedMultiplier() const;
+	      ^
+D:\Project\Rogue10m\Source\Rogue10m\Components\Rogue10mCombatComponent.h(37,20): note: 'URogue10mCombatComponent' 선언을 참조하십시오.
+class ROGUE10M_API URogue10mCombatComponent : public UActorComponent
+                   ^
+[2/5] Compile [x64] Rogue10mMovingAttackAuthoring.cpp
+Total time in Unreal Build Accelerator local executor: 5.19 seconds
+
+Result: Failed (OtherCompilationError)
+Total execution time: 8.45 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 6.3kb

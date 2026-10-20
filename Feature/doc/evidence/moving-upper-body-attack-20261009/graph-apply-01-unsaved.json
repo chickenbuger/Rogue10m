@@ -1,0 +1,463 @@
+{
+  "apply": true,
+  "saved": false,
+  "status": "failed",
+  "native": {
+    "asset": "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed",
+    "saved": false,
+    "changed": true,
+    "before": {
+      "nodes": [
+        {
+          "name": "AnimGraphNode_Root_0",
+          "class": "AnimGraphNode_Root",
+          "guid": "BE5EEE17437C4EC93D6E2DB01B1C5574",
+          "comment": "",
+          "runtime": "(Result=(LinkID=-1,SourceLinkID=-1),LayerGroup=\"DefaultSharedGroup\",InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "AnimGraphNode_StateMachine_0",
+          "class": "AnimGraphNode_StateMachine",
+          "guid": "F05E337D484CFD0C96283DA6345653F9",
+          "comment": "",
+          "runtime": "(MaxTransitionsPerFrame=3,MaxTransitionsRequests=32,bSkipFirstUpdateTransition=True,bReinitializeOnBecomingRelevant=True,bCreateNotifyMetaData=True,InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "AnimGraphNode_SaveCachedPose_0",
+          "class": "AnimGraphNode_SaveCachedPose",
+          "guid": "8DD9A4B34260D7BEDA1CBEB6E28B80D6",
+          "comment": "",
+          "runtime": "(Pose=(LinkID=-1,SourceLinkID=-1),InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())",
+          "cache_name": "Locomotion"
+        },
+        {
+          "name": "AnimGraphNode_StateMachine_1",
+          "class": "AnimGraphNode_StateMachine",
+          "guid": "BC838AAE491612CD634228B3997A69C8",
+          "comment": "",
+          "runtime": "(MaxTransitionsPerFrame=3,MaxTransitionsRequests=32,bSkipFirstUpdateTransition=True,bReinitializeOnBecomingRelevant=True,bCreateNotifyMetaData=True,InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "AnimGraphNode_Slot_0",
+          "class": "AnimGraphNode_Slot",
+          "guid": "C040A73248D8275C57BDBFB2A3898611",
+          "comment": "",
+          "runtime": "(Source=(LinkID=-1,SourceLinkID=-1),SlotName=\"DefaultSlot\",InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "K2Node_VariableGet_0",
+          "class": "K2Node_VariableGet",
+          "guid": "E5C8BE2349E1F67CD925AB80CA1C5069",
+          "comment": "",
+          "runtime": "",
+          "variable": "IsFalling"
+        },
+        {
+          "name": "K2Node_CallFunction_0",
+          "class": "K2Node_CallFunction",
+          "guid": "D290BCC340128D96A54E6C88FCA858B4",
+          "comment": "",
+          "runtime": ""
+        },
+        {
+          "name": "AnimGraphNode_ControlRig_0",
+          "class": "AnimGraphNode_ControlRig",
+          "guid": "C0155B6149D802D6E8B387B135C794D8",
+          "comment": "",
+          "runtime": "(ControlRigAssetReference=(BlueprintRigClass=\"/Script/ControlRig.ControlRigBlueprintGeneratedClass'/Game/Characters/Mannequins/Rigs/CR_Mannequin_FootIK.CR_Mannequin_FootIK_C'\"),DefaultControlRigAssetReference=(),Alpha=1.000000,bAlphaBoolEnabled=True,AlphaScaleBias=(Scale=1.000000),AlphaBoolBlend=(),AlphaScaleBiasClamp=(InRange=(Max=1.000000),OutRange=(Max=1.000000),Scale=1.000000,ClampMax=1.000000,InterpSpeedIncreasing=10.000000,InterpSpeedDecreasing=10.000000),LODThreshold=-1,Source=(LinkID=-1,SourceLinkID=-1),bResetInputPoseToInitial=True,bTransferInputPose=True,bTransferInputCurves=True,InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "AnimGraphNode_TwoWayBlend_0",
+          "class": "AnimGraphNode_TwoWayBlend",
+          "guid": "FD889520452B66D467F5B099EDF6658E",
+          "comment": "",
+          "runtime": "(A=(LinkID=-1,SourceLinkID=-1),B=(LinkID=-1,SourceLinkID=-1),bAlphaBoolEnabled=True,AlphaScaleBias=(Scale=1.000000),AlphaBoolBlend=(BlendOption=HermiteCubic),AlphaScaleBiasClamp=(InRange=(Max=1.000000),OutRange=(Max=1.000000),Scale=1.000000,ClampMax=1.000000,InterpSpeedIncreasing=10.000000,InterpSpeedDecreasing=10.000000),InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "AnimGraphNode_SequencePlayer_0",
+          "class": "AnimGraphNode_SequencePlayer",
+          "guid": "0A8C59FE4005ECB57077B0AEA0D9C79D",
+          "comment": "",
+          "runtime": "(Sequence=\"/Script/Engine.AnimSequence'/Game/Rogue10m/Animation/Combat/FighterStance/A_Fighter_CombatIdle.A_Fighter_CombatIdle'\",PlayRateBasis=1.000000,PlayRate=1.000000,PlayRateScaleBiasClampConstants=(InRange=(Max=1.000000),OutRange=(Max=1.000000),Scale=1.000000,ClampMax=1.000000,InterpSpeedIncreasing=10.000000,InterpSpeedDecreasing=10.000000),bLoopAnimation=True,PlayRateScaleBiasClampState=(),InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "K2Node_VariableGet_1",
+          "class": "K2Node_VariableGet",
+          "guid": "EFAD52B941BA214E9606D1A466369375",
+          "comment": "",
+          "runtime": "",
+          "variable": "FighterCombatStanceAlpha"
+        }
+      ],
+      "edges": [
+        {
+          "a_node": "AnimGraphNode_Root_0",
+          "a_pin": "Result",
+          "a_direction": 0,
+          "b_node": "AnimGraphNode_Slot_0",
+          "b_pin": "Pose",
+          "b_direction": 1
+        },
+        {
+          "a_node": "AnimGraphNode_StateMachine_0",
+          "a_pin": "Pose",
+          "a_direction": 1,
+          "b_node": "AnimGraphNode_SaveCachedPose_0",
+          "b_pin": "Pose",
+          "b_direction": 0
+        },
+        {
+          "a_node": "AnimGraphNode_StateMachine_1",
+          "a_pin": "Pose",
+          "a_direction": 1,
+          "b_node": "AnimGraphNode_ControlRig_0",
+          "b_pin": "Source",
+          "b_direction": 0
+        },
+        {
+          "a_node": "AnimGraphNode_Slot_0",
+          "a_pin": "Source",
+          "a_direction": 0,
+          "b_node": "AnimGraphNode_TwoWayBlend_0",
+          "b_pin": "Pose",
+          "b_direction": 1
+        },
+        {
+          "a_node": "K2Node_VariableGet_0",
+          "a_pin": "IsFalling",
+          "a_direction": 1,
+          "b_node": "K2Node_CallFunction_0",
+          "b_pin": "A",
+          "b_direction": 0
+        },
+        {
+          "a_node": "K2Node_CallFunction_0",
+          "a_pin": "ReturnValue",
+          "a_direction": 1,
+          "b_node": "AnimGraphNode_ControlRig_0",
+          "b_pin": "ShouldDoIKTrace",
+          "b_direction": 0
+        },
+        {
+          "a_node": "AnimGraphNode_ControlRig_0",
+          "a_pin": "Pose",
+          "a_direction": 1,
+          "b_node": "AnimGraphNode_TwoWayBlend_0",
+          "b_pin": "A",
+          "b_direction": 0
+        },
+        {
+          "a_node": "AnimGraphNode_TwoWayBlend_0",
+          "a_pin": "B",
+          "a_direction": 0,
+          "b_node": "AnimGraphNode_SequencePlayer_0",
+          "b_pin": "Pose",
+          "b_direction": 1
+        },
+        {
+          "a_node": "AnimGraphNode_TwoWayBlend_0",
+          "a_pin": "Alpha",
+          "a_direction": 0,
+          "b_node": "K2Node_VariableGet_1",
+          "b_pin": "FighterCombatStanceAlpha",
+          "b_direction": 1
+        }
+      ]
+    },
+    "package_dirty_before": false,
+    "compile_passed": true,
+    "compile_passed_errors": 0,
+    "compile_passed_warnings": 0,
+    "idempotent": false,
+    "original_nodes_and_settings_preserved": true,
+    "added_node_count": 9,
+    "after": {
+      "nodes": [
+        {
+          "name": "AnimGraphNode_Root_0",
+          "class": "AnimGraphNode_Root",
+          "guid": "BE5EEE17437C4EC93D6E2DB01B1C5574",
+          "comment": "",
+          "runtime": "(Result=(LinkID=-1,SourceLinkID=-1),LayerGroup=\"DefaultSharedGroup\",InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "AnimGraphNode_StateMachine_0",
+          "class": "AnimGraphNode_StateMachine",
+          "guid": "F05E337D484CFD0C96283DA6345653F9",
+          "comment": "",
+          "runtime": "(MaxTransitionsPerFrame=3,MaxTransitionsRequests=32,bSkipFirstUpdateTransition=True,bReinitializeOnBecomingRelevant=True,bCreateNotifyMetaData=True,InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "AnimGraphNode_SaveCachedPose_0",
+          "class": "AnimGraphNode_SaveCachedPose",
+          "guid": "8DD9A4B34260D7BEDA1CBEB6E28B80D6",
+          "comment": "",
+          "runtime": "(Pose=(LinkID=-1,SourceLinkID=-1),InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())",
+          "cache_name": "Locomotion"
+        },
+        {
+          "name": "AnimGraphNode_StateMachine_1",
+          "class": "AnimGraphNode_StateMachine",
+          "guid": "BC838AAE491612CD634228B3997A69C8",
+          "comment": "",
+          "runtime": "(MaxTransitionsPerFrame=3,MaxTransitionsRequests=32,bSkipFirstUpdateTransition=True,bReinitializeOnBecomingRelevant=True,bCreateNotifyMetaData=True,InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "AnimGraphNode_Slot_0",
+          "class": "AnimGraphNode_Slot",
+          "guid": "C040A73248D8275C57BDBFB2A3898611",
+          "comment": "",
+          "runtime": "(Source=(LinkID=-1,SourceLinkID=-1),SlotName=\"DefaultSlot\",InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "K2Node_VariableGet_0",
+          "class": "K2Node_VariableGet",
+          "guid": "E5C8BE2349E1F67CD925AB80CA1C5069",
+          "comment": "",
+          "runtime": "",
+          "variable": "IsFalling"
+        },
+        {
+          "name": "K2Node_CallFunction_0",
+          "class": "K2Node_CallFunction",
+          "guid": "D290BCC340128D96A54E6C88FCA858B4",
+          "comment": "",
+          "runtime": ""
+        },
+        {
+          "name": "AnimGraphNode_ControlRig_0",
+          "class": "AnimGraphNode_ControlRig",
+          "guid": "C0155B6149D802D6E8B387B135C794D8",
+          "comment": "",
+          "runtime": "(ControlRigAssetReference=(BlueprintRigClass=\"/Script/ControlRig.ControlRigBlueprintGeneratedClass'/Game/Characters/Mannequins/Rigs/CR_Mannequin_FootIK.CR_Mannequin_FootIK_C'\"),DefaultControlRigAssetReference=(),Alpha=1.000000,bAlphaBoolEnabled=True,AlphaScaleBias=(Scale=1.000000),AlphaBoolBlend=(),AlphaScaleBiasClamp=(InRange=(Max=1.000000),OutRange=(Max=1.000000),Scale=1.000000,ClampMax=1.000000,InterpSpeedIncreasing=10.000000,InterpSpeedDecreasing=10.000000),LODThreshold=-1,Source=(LinkID=-1,SourceLinkID=-1),bResetInputPoseToInitial=True,bTransferInputPose=True,bTransferInputCurves=True,InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "AnimGraphNode_TwoWayBlend_0",
+          "class": "AnimGraphNode_TwoWayBlend",
+          "guid": "FD889520452B66D467F5B099EDF6658E",
+          "comment": "",
+          "runtime": "(A=(LinkID=-1,SourceLinkID=-1),B=(LinkID=-1,SourceLinkID=-1),bAlphaBoolEnabled=True,AlphaScaleBias=(Scale=1.000000),AlphaBoolBlend=(BlendOption=HermiteCubic),AlphaScaleBiasClamp=(InRange=(Max=1.000000),OutRange=(Max=1.000000),Scale=1.000000,ClampMax=1.000000,InterpSpeedIncreasing=10.000000,InterpSpeedDecreasing=10.000000),InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "AnimGraphNode_SequencePlayer_0",
+          "class": "AnimGraphNode_SequencePlayer",
+          "guid": "0A8C59FE4005ECB57077B0AEA0D9C79D",
+          "comment": "",
+          "runtime": "(Sequence=\"/Script/Engine.AnimSequence'/Game/Rogue10m/Animation/Combat/FighterStance/A_Fighter_CombatIdle.A_Fighter_CombatIdle'\",PlayRateBasis=1.000000,PlayRate=1.000000,PlayRateScaleBiasClampConstants=(InRange=(Max=1.000000),OutRange=(Max=1.000000),Scale=1.000000,ClampMax=1.000000,InterpSpeedIncreasing=10.000000,InterpSpeedDecreasing=10.000000),bLoopAnimation=True,PlayRateScaleBiasClampState=(),InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "K2Node_VariableGet_1",
+          "class": "K2Node_VariableGet",
+          "guid": "EFAD52B941BA214E9606D1A466369375",
+          "comment": "",
+          "runtime": "",
+          "variable": "FighterCombatStanceAlpha"
+        },
+        {
+          "name": "AnimGraphNode_SaveCachedPose_1",
+          "class": "AnimGraphNode_SaveCachedPose",
+          "guid": "DAF1FC664E11CE3AA73F1E9B32177E92",
+          "comment": "Rogue10m MovingAttack LocomotionCache",
+          "runtime": "(Pose=(LinkID=-1,SourceLinkID=-1),InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())",
+          "cache_name": "FighterMovingAttackLocomotion"
+        },
+        {
+          "name": "AnimGraphNode_UseCachedPose_0",
+          "class": "AnimGraphNode_UseCachedPose",
+          "guid": "1016E6464B2239B65AB134ABB92567AA",
+          "comment": "Rogue10m MovingAttack LocomotionToSlot",
+          "runtime": "(LinkToCachingNode=(LinkID=-1,SourceLinkID=-1),InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())",
+          "save_cached_pose_node": "AnimGraphNode_SaveCachedPose_1"
+        },
+        {
+          "name": "AnimGraphNode_UseCachedPose_1",
+          "class": "AnimGraphNode_UseCachedPose",
+          "guid": "65032A554C29A729C6922DB65A58C385",
+          "comment": "Rogue10m MovingAttack LocomotionBase",
+          "runtime": "(LinkToCachingNode=(LinkID=-1,SourceLinkID=-1),InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())",
+          "save_cached_pose_node": "AnimGraphNode_SaveCachedPose_1"
+        },
+        {
+          "name": "AnimGraphNode_SaveCachedPose_2",
+          "class": "AnimGraphNode_SaveCachedPose",
+          "guid": "6A86F1DB443395E0307881B1672733BD",
+          "comment": "Rogue10m MovingAttack MontageCache",
+          "runtime": "(Pose=(LinkID=-1,SourceLinkID=-1),InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())",
+          "cache_name": "FighterMovingAttackMontage"
+        },
+        {
+          "name": "AnimGraphNode_UseCachedPose_2",
+          "class": "AnimGraphNode_UseCachedPose",
+          "guid": "9C0602BF41867DB9729B4AB4EAB89FB7",
+          "comment": "Rogue10m MovingAttack MontageUpperBody",
+          "runtime": "(LinkToCachingNode=(LinkID=-1,SourceLinkID=-1),InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())",
+          "save_cached_pose_node": "AnimGraphNode_SaveCachedPose_2"
+        },
+        {
+          "name": "AnimGraphNode_UseCachedPose_3",
+          "class": "AnimGraphNode_UseCachedPose",
+          "guid": "8877835F463DBDAAB97FFBA0769CE830",
+          "comment": "Rogue10m MovingAttack MontageFullBody",
+          "runtime": "(LinkToCachingNode=(LinkID=-1,SourceLinkID=-1),InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())",
+          "save_cached_pose_node": "AnimGraphNode_SaveCachedPose_2"
+        },
+        {
+          "name": "AnimGraphNode_LayeredBoneBlend_0",
+          "class": "AnimGraphNode_LayeredBoneBlend",
+          "guid": "423A2A4840625D0C451DBBBFCDEA3C6F",
+          "comment": "Rogue10m MovingAttack UpperBodyLayer",
+          "runtime": "(BasePose=(LinkID=-1,SourceLinkID=-1),BlendPoses=(()),LayerSetup=((BranchFilters=((BoneName=\"spine_01\",BlendDepth=1),(BoneName=\"ik_hand_root\",BlendDepth=1)))),BlendWeights=(1.000000),SkeletonGuid=00000000000000000000000000000000,VirtualBoneGuid=00000000000000000000000000000000,LODThreshold=-1,bMeshSpaceRotationBlend=True,bBlendRootMotionBasedOnRootBone=True,InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "AnimGraphNode_TwoWayBlend_1",
+          "class": "AnimGraphNode_TwoWayBlend",
+          "guid": "E56B9E094ADC5496974E72AE3F5A0BEF",
+          "comment": "Rogue10m MovingAttack UpperBodySelector",
+          "runtime": "(A=(LinkID=-1,SourceLinkID=-1),B=(LinkID=-1,SourceLinkID=-1),bAlphaBoolEnabled=True,AlphaScaleBias=(Scale=1.000000),AlphaBoolBlend=(BlendOption=HermiteCubic),AlphaScaleBiasClamp=(InRange=(Max=1.000000),OutRange=(Max=1.000000),Scale=1.000000,ClampMax=1.000000,InterpSpeedIncreasing=10.000000,InterpSpeedDecreasing=10.000000),InitialUpdateFunction=(),BecomeRelevantFunction=(),UpdateFunction=())"
+        },
+        {
+          "name": "K2Node_VariableGet_2",
+          "class": "K2Node_VariableGet",
+          "guid": "D08BE2184C24129465CEADAAE6D500F7",
+          "comment": "Rogue10m MovingAttack UpperBodyAlpha",
+          "runtime": "",
+          "variable": "MovingAttackUpperBodyAlpha"
+        }
+      ],
+      "edges": [
+        {
+          "a_node": "AnimGraphNode_Root_0",
+          "a_pin": "Result",
+          "a_direction": 0,
+          "b_node": "AnimGraphNode_TwoWayBlend_1",
+          "b_pin": "Pose",
+          "b_direction": 1
+        },
+        {
+          "a_node": "AnimGraphNode_StateMachine_0",
+          "a_pin": "Pose",
+          "a_direction": 1,
+          "b_node": "AnimGraphNode_SaveCachedPose_0",
+          "b_pin": "Pose",
+          "b_direction": 0
+        },
+        {
+          "a_node": "AnimGraphNode_StateMachine_1",
+          "a_pin": "Pose",
+          "a_direction": 1,
+          "b_node": "AnimGraphNode_ControlRig_0",
+          "b_pin": "Source",
+          "b_direction": 0
+        },
+        {
+          "a_node": "AnimGraphNode_Slot_0",
+          "a_pin": "Source",
+          "a_direction": 0,
+          "b_node": "AnimGraphNode_UseCachedPose_0",
+          "b_pin": "Pose",
+          "b_direction": 1
+        },
+        {
+          "a_node": "AnimGraphNode_Slot_0",
+          "a_pin": "Pose",
+          "a_direction": 1,
+          "b_node": "AnimGraphNode_SaveCachedPose_2",
+          "b_pin": "Pose",
+          "b_direction": 0
+        },
+        {
+          "a_node": "K2Node_VariableGet_0",
+          "a_pin": "IsFalling",
+          "a_direction": 1,
+          "b_node": "K2Node_CallFunction_0",
+          "b_pin": "A",
+          "b_direction": 0
+        },
+        {
+          "a_node": "K2Node_CallFunction_0",
+          "a_pin": "ReturnValue",
+          "a_direction": 1,
+          "b_node": "AnimGraphNode_ControlRig_0",
+          "b_pin": "ShouldDoIKTrace",
+          "b_direction": 0
+        },
+        {
+          "a_node": "AnimGraphNode_ControlRig_0",
+          "a_pin": "Pose",
+          "a_direction": 1,
+          "b_node": "AnimGraphNode_TwoWayBlend_0",
+          "b_pin": "A",
+          "b_direction": 0
+        },
+        {
+          "a_node": "AnimGraphNode_TwoWayBlend_0",
+          "a_pin": "B",
+          "a_direction": 0,
+          "b_node": "AnimGraphNode_SequencePlayer_0",
+          "b_pin": "Pose",
+          "b_direction": 1
+        },
+        {
+          "a_node": "AnimGraphNode_TwoWayBlend_0",
+          "a_pin": "Alpha",
+          "a_direction": 0,
+          "b_node": "K2Node_VariableGet_1",
+          "b_pin": "FighterCombatStanceAlpha",
+          "b_direction": 1
+        },
+        {
+          "a_node": "AnimGraphNode_TwoWayBlend_0",
+          "a_pin": "Pose",
+          "a_direction": 1,
+          "b_node": "AnimGraphNode_SaveCachedPose_1",
+          "b_pin": "Pose",
+          "b_direction": 0
+        },
+        {
+          "a_node": "AnimGraphNode_UseCachedPose_1",
+          "a_pin": "Pose",
+          "a_direction": 1,
+          "b_node": "AnimGraphNode_LayeredBoneBlend_0",
+          "b_pin": "BasePose",
+          "b_direction": 0
+        },
+        {
+          "a_node": "AnimGraphNode_UseCachedPose_2",
+          "a_pin": "Pose",
+          "a_direction": 1,
+          "b_node": "AnimGraphNode_LayeredBoneBlend_0",
+          "b_pin": "BlendPoses_0",
+          "b_direction": 0
+        },
+        {
+          "a_node": "AnimGraphNode_UseCachedPose_3",
+          "a_pin": "Pose",
+          "a_direction": 1,
+          "b_node": "AnimGraphNode_TwoWayBlend_1",
+          "b_pin": "A",
+          "b_direction": 0
+        },
+        {
+          "a_node": "AnimGraphNode_LayeredBoneBlend_0",
+          "a_pin": "Pose",
+          "a_direction": 1,
+          "b_node": "AnimGraphNode_TwoWayBlend_1",
+          "b_pin": "B",
+          "b_direction": 0
+        },
+        {
+          "a_node": "AnimGraphNode_TwoWayBlend_1",
+          "a_pin": "Alpha",
+          "a_direction": 0,
+          "b_node": "K2Node_VariableGet_2",
+          "b_pin": "MovingAttackUpperBodyAlpha",
+          "b_direction": 1
+        }
+      ]
+    },
+    "result": "PASSED",
+    "marker": "RESULT=MOVING_ATTACK_UPPER_BODY_AUTHORING_PASSED",
+    "error": ""
+  },
+  "exception": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/ConfigureMovingAttackUpperBody.py\", line 123, in main\n    report['graph'] = validate_graph()\n                      ^^^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/ConfigureMovingAttackUpperBody.py\", line 54, in validate_graph\n    saved_locomotion = [n.get_editor_property('save_cached_pose_node') for n in source_nodes]\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/ConfigureMovingAttackUpperBody.py\", line 54, in <listcomp>\n    saved_locomotion = [n.get_editor_property('save_cached_pose_node') for n in source_nodes]\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nException: AnimGraphNode_UseCachedPose: Failed to find property 'save_cached_pose_node' for attribute 'save_cached_pose_node' on 'AnimGraphNode_UseCachedPose'\n"
+}

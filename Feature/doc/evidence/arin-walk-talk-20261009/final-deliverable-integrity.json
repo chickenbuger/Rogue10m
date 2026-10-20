@@ -1,0 +1,114 @@
+{
+  "status": "passed",
+  "ast_scripts": 8,
+  "records": {
+    "Art\\NPC\\Arin\\Animation\\A_Arin_Walk.fbx": {
+      "bytes": 211420,
+      "sha256": "cfb6f7d3dda9c3f3fe39da05f529da91d7f243bd78b9f3c92a9573d9af54c2b3"
+    },
+    "Art\\NPC\\Arin\\Animation\\A_Arin_Talk.fbx": {
+      "bytes": 277948,
+      "sha256": "172601a141d9e41983ac949e2e00db1de9adf539f81466fc5b2f7ff0fa76a82e"
+    },
+    "Art\\NPC\\Arin\\Animation\\Arin_Motions.blend": {
+      "bytes": 60822253,
+      "sha256": "379e07e07388f8095cfce59093deba2de4534bf028c706440674bcf55bae5528"
+    },
+    "Scripts/Blender/BuildArinWalkTalk.py": {
+      "sha256": "022bbdf2919e7b3410f22d38054196adbc801c437d408a63000d732f1437a6ed",
+      "ast": "passed"
+    },
+    "Scripts/Blender/RenderArinMotionPreview.py": {
+      "sha256": "9e8199054e2de4a80d1e28b336f398bce46045ca2c2554f1c8e76796f0fffb29",
+      "ast": "passed"
+    },
+    "Scripts/Editor/ApplyArinWalkTalk.py": {
+      "sha256": "ff7d03edbb9bc15f80b201f45ad3a396db8730f834344ec75958a94e9c99bfaa",
+      "ast": "passed"
+    },
+    "Scripts/Editor/ValidateArinWalkTalkPIE.py": {
+      "sha256": "4be6ceff0893050d7f9f7ce91f8f941c83d618fcb8e5449579293186fae0afba",
+      "ast": "passed"
+    },
+    "Scripts/Editor/ReviewArinMotion.py": {
+      "sha256": "c7f1cac2c20c449588d7eed17fd204af46e4b68b093007d3fb35f75ef41556d5",
+      "ast": "passed"
+    },
+    "Scripts/Editor/ValidateArinWalkTalkFresh.py": {
+      "sha256": "d70a8f15b760b260f1a32819ce76dba29e5fa93117e1eba4d3a1dbb121b4eec1",
+      "ast": "passed"
+    },
+    "Scripts/CaptureArinMotion.py": {
+      "sha256": "7f7af90edd596c27b4d43871aa4b042a5e1fdbd8b25b58d0ecf4b645a155228d",
+      "ast": "passed"
+    },
+    "Scripts/AuditArinWalkTalkContent.py": {
+      "sha256": "defeb8763df7602a48f10d8d64e25d9a257bd75a418fbfce042486c2845608d7",
+      "ast": "passed"
+    },
+    "Source\\Rogue10m\\World\\Rogue10mTutorialAnimationComponent.h": {
+      "sha256": "7943739ba84343828d287b02741177b99b76283e4679f2094b7ed8fa9cef719e"
+    },
+    "Source\\Rogue10m\\World\\Rogue10mTutorialAnimationComponent.cpp": {
+      "sha256": "a37f62cb9436908b178ea21346ad12c841064c319c2a5b422b82736ffabe4eb8"
+    },
+    "Source\\Rogue10m\\World\\Rogue10mTutorialNPC.h": {
+      "sha256": "c6ffec1ea857696785dd0698ccf6fd1a9bb7a6897750ebacf19fef00fd07f7b2"
+    },
+    "Source\\Rogue10m\\World\\Rogue10mTutorialNPC.cpp": {
+      "sha256": "0da59cd64330baae7fb2fc7065bbcf7a422d4ef3615f9d2d5b80c1b485795dec"
+    },
+    "Source\\Rogue10m\\World\\Rogue10mTutorialDataAsset.h": {
+      "sha256": "4e5736a31534f225501152a0e1072e7039ac93692713beb3d2f7f51d920f3184"
+    },
+    "Feature\\doc\\evidence\\arin-walk-talk-20261009\\tutorial-runtime.json": {
+      "sha256": "97573594c28c81f4594eae5c254cb52490806db47bd84a1af7dba308e9512b22"
+    },
+    "Feature\\doc\\evidence\\arin-walk-talk-20261009\\content-preservation.json": {
+      "sha256": "436a800506954ad8bf6eb5e7ef8a4ed07c076221587f3cc434bd571a529fd0fa"
+    },
+    "Feature\\doc\\evidence\\arin-walk-talk-20261009\\ue-fresh-process.json": {
+      "sha256": "e10012dddd4f8ede77ccc06e09ee2c2d51c3e78f757861e6e8adf610c8fdc8ea"
+    },
+    "Feature\\doc\\evidence\\arin-walk-talk-20261009\\ue-application.json": {
+      "sha256": "945fbe52233dbcb7dd0fb21633d0abdaad3b25a473bee8943879b15ee4a5ba8b"
+    },
+    "Feature\\doc\\evidence\\arin-walk-talk-20261009\\editor-final-state.json": {
+      "sha256": "5f66a3613ea28d84ab7556a020eea2d16853daa66a685f3eea03394109632b67"
+    },
+    "Feature\\doc\\evidence\\arin-walk-talk-20261009\\ue-motion\\manifest.json": {
+      "sha256": "6f4e988d5a3e629021007c498d1c66b9729623215962336987d8bc5577354145"
+    },
+    "Feature\\doc\\evidence\\arin-walk-talk-20261009\\build-final.log": {
+      "sha256": "bbf33f21c6659526310eb96cd46c8385e1131d3dbaba8997fe07bf67e75152fa"
+    }
+  },
+  "gifs": {
+    "walk": {
+      "frames": 18,
+      "duration_ms": 1200,
+      "sha256": "2cf7771ef8fe823125c33745cfe7b2e7b98726ed516c135849c713b7c85c3548"
+    },
+    "talk": {
+      "frames": 30,
+      "duration_ms": 3000,
+      "sha256": "c3b54a78cebdc12872300a72bbd56b16019525a0bf65776966492ee80d48379e"
+    }
+  },
+  "runtime_checks": 159,
+  "baseline_checks": 67,
+  "native_animation_phases": 23,
+  "source_preserved": true,
+  "old_content_sha256_unchanged": 6363,
+  "existing_content_changed": [
+    "Content/Rogue10m/World/StartVillage/Tutorial/DA_StartVillageGuide.uasset"
+  ],
+  "content_added": [
+    "Content/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Talk.uasset",
+    "Content/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk.uasset"
+  ],
+  "fresh_process_id": 51740,
+  "capture_component_camera_restored": true,
+  "configuration_saved_by_fixture": false,
+  "commit_or_push_performed": false
+}

@@ -1,0 +1,1387 @@
+{
+  "schema_version": 1,
+  "timestamp_utc": "2026-10-07T12:35:25.134262+00:00",
+  "blender_version": "4.5.14 LTS",
+  "process_id": 119604,
+  "background_process": true,
+  "source": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Arin.blend",
+  "source_sha256": "3cde5f3c16d66ee3e1192db319c4a02d3b51991a8070b85e5c0cc75679b1c6df",
+  "selection": {
+    "prefix": "Arin",
+    "exact_names": null
+  },
+  "coordinate_units": "Blender world units; expected_height_m assumes source units are meters",
+  "scene_unit_scale": 1.0,
+  "sampled_frames": [
+    1.0,
+    16.0,
+    31.0,
+    46.0,
+    61.0
+  ],
+  "fps": 30.0,
+  "meshes": [
+    {
+      "name": "Arin_Cloth",
+      "authored": {
+        "vertices": 4402,
+        "edges": 8912,
+        "polygons": 4576,
+        "triangles": 8672,
+        "quad_ratio": 0.8951048951048951,
+        "triangle_polygon_ratio": 0.1048951048951049,
+        "ngons": 0,
+        "smooth_polygon_ratio": 1.0,
+        "invalid_vertices": 0,
+        "zero_length_edges": 0,
+        "zero_area_triangles": 0,
+        "loose_vertices": 0,
+        "loose_edges": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "connected_components": 33,
+        "component_vertex_counts": [
+          720,
+          580,
+          514,
+          362,
+          362,
+          252,
+          252,
+          176,
+          162,
+          122,
+          122,
+          122,
+          122,
+          98,
+          98,
+          60,
+          60,
+          50,
+          32,
+          20,
+          20,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ]
+      },
+      "evaluated": {
+        "vertices": 4402,
+        "edges": 8912,
+        "polygons": 4576,
+        "triangles": 8672,
+        "quad_ratio": 0.8951048951048951,
+        "triangle_polygon_ratio": 0.1048951048951049,
+        "ngons": 0,
+        "smooth_polygon_ratio": 1.0,
+        "invalid_vertices": 0,
+        "zero_length_edges": 0,
+        "zero_area_triangles": 0,
+        "loose_vertices": 0,
+        "loose_edges": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "connected_components": 33,
+        "component_vertex_counts": [
+          720,
+          580,
+          514,
+          362,
+          362,
+          252,
+          252,
+          176,
+          162,
+          122,
+          122,
+          122,
+          122,
+          98,
+          98,
+          60,
+          60,
+          50,
+          32,
+          20,
+          20,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ]
+      },
+      "finite_object_matrix": true,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "negative_scale": false,
+      "region": "torso",
+      "rigid_bone": null,
+      "used_materials": [
+        "M_Arin_Cloth"
+      ],
+      "missing_material_faces": 0,
+      "uv_layers": [
+        {
+          "name": "UV_ArinAtlas",
+          "invalid_loops": 0,
+          "outside_0_1_loops": 0,
+          "non_degenerate_face_fraction": 1.0,
+          "summed_polygon_area": 0.4466203270659044,
+          "overlap_check": "not_performed; summed area is not unique atlas coverage"
+        }
+      ],
+      "skin": {
+        "rigs": [
+          "Arin_Rig"
+        ],
+        "unweighted_vertices": 0,
+        "unweighted_examples": [],
+        "unnormalized_vertices": 0,
+        "invalid_weight_vertices": 0,
+        "non_deform_group_vertices": 0,
+        "max_influences": 3,
+        "weight_sum_min": 0.9999999701976776,
+        "weight_sum_max": 1.0000000298023224
+      },
+      "modifiers": [
+        {
+          "name": "Arin Skin",
+          "type": "ARMATURE",
+          "viewport": true,
+          "render": true
+        }
+      ]
+    },
+    {
+      "name": "Arin_Face",
+      "authored": {
+        "vertices": 8176,
+        "edges": 16872,
+        "polygons": 8768,
+        "triangles": 16208,
+        "quad_ratio": 0.8485401459854015,
+        "triangle_polygon_ratio": 0.15145985401459855,
+        "ngons": 0,
+        "smooth_polygon_ratio": 1.0,
+        "invalid_vertices": 0,
+        "zero_length_edges": 0,
+        "zero_area_triangles": 0,
+        "loose_vertices": 0,
+        "loose_edges": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "connected_components": 36,
+        "component_vertex_counts": [
+          3878,
+          354,
+          354,
+          222,
+          222,
+          198,
+          194,
+          194,
+          162,
+          162,
+          162,
+          162,
+          162,
+          162,
+          162,
+          162,
+          162,
+          162,
+          162,
+          162,
+          86,
+          86,
+          42,
+          42,
+          34,
+          34,
+          34,
+          34,
+          34,
+          34,
+          34,
+          34,
+          34,
+          34,
+          10,
+          10
+        ]
+      },
+      "evaluated": {
+        "vertices": 8176,
+        "edges": 16872,
+        "polygons": 8768,
+        "triangles": 16208,
+        "quad_ratio": 0.8485401459854015,
+        "triangle_polygon_ratio": 0.15145985401459855,
+        "ngons": 0,
+        "smooth_polygon_ratio": 1.0,
+        "invalid_vertices": 0,
+        "zero_length_edges": 0,
+        "zero_area_triangles": 0,
+        "loose_vertices": 0,
+        "loose_edges": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "connected_components": 36,
+        "component_vertex_counts": [
+          3878,
+          354,
+          354,
+          222,
+          222,
+          198,
+          194,
+          194,
+          162,
+          162,
+          162,
+          162,
+          162,
+          162,
+          162,
+          162,
+          162,
+          162,
+          162,
+          162,
+          86,
+          86,
+          42,
+          42,
+          34,
+          34,
+          34,
+          34,
+          34,
+          34,
+          34,
+          34,
+          34,
+          34,
+          10,
+          10
+        ]
+      },
+      "finite_object_matrix": true,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "negative_scale": false,
+      "region": "neck",
+      "rigid_bone": null,
+      "used_materials": [
+        "M_Arin_Face"
+      ],
+      "missing_material_faces": 0,
+      "uv_layers": [
+        {
+          "name": "UV_ArinAtlas",
+          "invalid_loops": 0,
+          "outside_0_1_loops": 0,
+          "non_degenerate_face_fraction": 1.0,
+          "summed_polygon_area": 0.3765546816969265,
+          "overlap_check": "not_performed; summed area is not unique atlas coverage"
+        }
+      ],
+      "skin": {
+        "rigs": [
+          "Arin_Rig"
+        ],
+        "unweighted_vertices": 0,
+        "unweighted_examples": [],
+        "unnormalized_vertices": 0,
+        "invalid_weight_vertices": 0,
+        "non_deform_group_vertices": 0,
+        "max_influences": 2,
+        "weight_sum_min": 0.9999999701976776,
+        "weight_sum_max": 1.0000000149011612
+      },
+      "modifiers": [
+        {
+          "name": "Arin Skin",
+          "type": "ARMATURE",
+          "viewport": true,
+          "render": true
+        }
+      ]
+    },
+    {
+      "name": "Arin_Gear",
+      "authored": {
+        "vertices": 7937,
+        "edges": 16581,
+        "polygons": 8812,
+        "triangles": 15538,
+        "quad_ratio": 0.7632773490694508,
+        "triangle_polygon_ratio": 0.23672265093054926,
+        "ngons": 0,
+        "smooth_polygon_ratio": 1.0,
+        "invalid_vertices": 0,
+        "zero_length_edges": 0,
+        "zero_area_triangles": 0,
+        "loose_vertices": 0,
+        "loose_edges": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "connected_components": 85,
+        "component_vertex_counts": [
+          1098,
+          450,
+          450,
+          254,
+          242,
+          242,
+          192,
+          176,
+          170,
+          170,
+          170,
+          170,
+          170,
+          170,
+          170,
+          162,
+          146,
+          146,
+          146,
+          146,
+          130,
+          130,
+          126,
+          108,
+          98,
+          98,
+          98,
+          88,
+          86,
+          86,
+          82,
+          68,
+          68,
+          66,
+          66,
+          62,
+          58,
+          58,
+          56,
+          56,
+          56,
+          56,
+          50,
+          50,
+          50,
+          50,
+          50,
+          50,
+          50,
+          50,
+          50,
+          42,
+          42,
+          32,
+          32,
+          32,
+          32,
+          26,
+          26,
+          26,
+          26,
+          20,
+          18,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13
+        ]
+      },
+      "evaluated": {
+        "vertices": 7937,
+        "edges": 16581,
+        "polygons": 8812,
+        "triangles": 15538,
+        "quad_ratio": 0.7632773490694508,
+        "triangle_polygon_ratio": 0.23672265093054926,
+        "ngons": 0,
+        "smooth_polygon_ratio": 1.0,
+        "invalid_vertices": 0,
+        "zero_length_edges": 0,
+        "zero_area_triangles": 0,
+        "loose_vertices": 0,
+        "loose_edges": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "connected_components": 85,
+        "component_vertex_counts": [
+          1098,
+          450,
+          450,
+          254,
+          242,
+          242,
+          192,
+          176,
+          170,
+          170,
+          170,
+          170,
+          170,
+          170,
+          170,
+          162,
+          146,
+          146,
+          146,
+          146,
+          130,
+          130,
+          126,
+          108,
+          98,
+          98,
+          98,
+          88,
+          86,
+          86,
+          82,
+          68,
+          68,
+          66,
+          66,
+          62,
+          58,
+          58,
+          56,
+          56,
+          56,
+          56,
+          50,
+          50,
+          50,
+          50,
+          50,
+          50,
+          50,
+          50,
+          50,
+          42,
+          42,
+          32,
+          32,
+          32,
+          32,
+          26,
+          26,
+          26,
+          26,
+          20,
+          18,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13,
+          13
+        ]
+      },
+      "finite_object_matrix": true,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "negative_scale": false,
+      "region": "torso",
+      "rigid_bone": null,
+      "used_materials": [
+        "M_Arin_Gear"
+      ],
+      "missing_material_faces": 0,
+      "uv_layers": [
+        {
+          "name": "UV_ArinAtlas",
+          "invalid_loops": 0,
+          "outside_0_1_loops": 0,
+          "non_degenerate_face_fraction": 1.0,
+          "summed_polygon_area": 0.10668297435441461,
+          "overlap_check": "not_performed; summed area is not unique atlas coverage"
+        }
+      ],
+      "skin": {
+        "rigs": [
+          "Arin_Rig"
+        ],
+        "unweighted_vertices": 0,
+        "unweighted_examples": [],
+        "unnormalized_vertices": 0,
+        "invalid_weight_vertices": 0,
+        "non_deform_group_vertices": 0,
+        "max_influences": 2,
+        "weight_sum_min": 0.9999997615814209,
+        "weight_sum_max": 1.0000000298023224
+      },
+      "modifiers": [
+        {
+          "name": "Arin Skin",
+          "type": "ARMATURE",
+          "viewport": true,
+          "render": true
+        }
+      ]
+    },
+    {
+      "name": "Arin_Hair",
+      "authored": {
+        "vertices": 5670,
+        "edges": 11552,
+        "polygons": 5944,
+        "triangles": 11216,
+        "quad_ratio": 0.8869448183041723,
+        "triangle_polygon_ratio": 0.11305518169582772,
+        "ngons": 0,
+        "smooth_polygon_ratio": 1.0,
+        "invalid_vertices": 0,
+        "zero_length_edges": 0,
+        "zero_area_triangles": 0,
+        "loose_vertices": 0,
+        "loose_edges": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "connected_components": 31,
+        "component_vertex_counts": [
+          1122,
+          432,
+          432,
+          432,
+          212,
+          212,
+          212,
+          212,
+          212,
+          212,
+          212,
+          110,
+          110,
+          106,
+          106,
+          106,
+          106,
+          106,
+          106,
+          98,
+          98,
+          98,
+          98,
+          82,
+          82,
+          82,
+          82,
+          82,
+          82,
+          14,
+          14
+        ]
+      },
+      "evaluated": {
+        "vertices": 5670,
+        "edges": 11552,
+        "polygons": 5944,
+        "triangles": 11216,
+        "quad_ratio": 0.8869448183041723,
+        "triangle_polygon_ratio": 0.11305518169582772,
+        "ngons": 0,
+        "smooth_polygon_ratio": 1.0,
+        "invalid_vertices": 0,
+        "zero_length_edges": 0,
+        "zero_area_triangles": 0,
+        "loose_vertices": 0,
+        "loose_edges": 0,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "connected_components": 31,
+        "component_vertex_counts": [
+          1122,
+          432,
+          432,
+          432,
+          212,
+          212,
+          212,
+          212,
+          212,
+          212,
+          212,
+          110,
+          110,
+          106,
+          106,
+          106,
+          106,
+          106,
+          106,
+          98,
+          98,
+          98,
+          98,
+          82,
+          82,
+          82,
+          82,
+          82,
+          82,
+          14,
+          14
+        ]
+      },
+      "finite_object_matrix": true,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "negative_scale": false,
+      "region": null,
+      "rigid_bone": "head",
+      "used_materials": [
+        "M_Arin_Hair"
+      ],
+      "missing_material_faces": 0,
+      "uv_layers": [
+        {
+          "name": "UV_ArinAtlas",
+          "invalid_loops": 0,
+          "outside_0_1_loops": 0,
+          "non_degenerate_face_fraction": 1.0,
+          "summed_polygon_area": 0.14849001509964055,
+          "overlap_check": "not_performed; summed area is not unique atlas coverage"
+        }
+      ],
+      "skin": {
+        "rigs": [
+          "Arin_Rig"
+        ],
+        "unweighted_vertices": 0,
+        "unweighted_examples": [],
+        "unnormalized_vertices": 0,
+        "invalid_weight_vertices": 0,
+        "non_deform_group_vertices": 0,
+        "max_influences": 1,
+        "weight_sum_min": 1.0,
+        "weight_sum_max": 1.0
+      },
+      "modifiers": [
+        {
+          "name": "Arin Skin",
+          "type": "ARMATURE",
+          "viewport": true,
+          "render": true
+        }
+      ]
+    }
+  ],
+  "rigs": [
+    {
+      "name": "Arin_Rig",
+      "bones": [
+        "root",
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03",
+        "neck",
+        "head",
+        "clavicle_l",
+        "upperarm_l",
+        "lowerarm_l",
+        "hand_l",
+        "clavicle_r",
+        "upperarm_r",
+        "lowerarm_r",
+        "hand_r",
+        "thigh_l",
+        "calf_l",
+        "foot_l",
+        "ball_l",
+        "thigh_r",
+        "calf_r",
+        "foot_r",
+        "ball_r"
+      ],
+      "roots": [
+        "root"
+      ],
+      "deform_bone_count": 23
+    }
+  ],
+  "materials": [
+    {
+      "name": "M_Arin_Cloth",
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "T_Arin_Cloth_BaseColor",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Cloth_BaseColor.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            4096,
+            4096
+          ],
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "T_Arin_Cloth_Roughness",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Cloth_Roughness.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            4096,
+            4096
+          ],
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "T_Arin_Cloth_Metallic",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Cloth_Metallic.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            4096,
+            4096
+          ],
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "T_Arin_Cloth_Normal",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Cloth_Normal.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            4096,
+            4096
+          ],
+          "colorspace": "Non-Color"
+        }
+      ],
+      "pbr_inputs": {
+        "Base Color": {
+          "linked": true,
+          "images": [
+            "T_Arin_Cloth_BaseColor"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Roughness": {
+          "linked": true,
+          "images": [
+            "T_Arin_Cloth_Roughness"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Metallic": {
+          "linked": true,
+          "images": [
+            "T_Arin_Cloth_Metallic"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Normal": {
+          "linked": true,
+          "images": [
+            "T_Arin_Cloth_Normal"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Alpha": {
+          "linked": false,
+          "images": [],
+          "procedural_nodes_requires_bake": []
+        }
+      },
+      "empty_image_nodes": []
+    },
+    {
+      "name": "M_Arin_Face",
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "T_Arin_Face_BaseColor",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Face_BaseColor.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            2048,
+            2048
+          ],
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "T_Arin_Face_Roughness",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Face_Roughness.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            2048,
+            2048
+          ],
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "T_Arin_Face_Metallic",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Face_Metallic.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            2048,
+            2048
+          ],
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "T_Arin_Face_Normal",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Face_Normal.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            2048,
+            2048
+          ],
+          "colorspace": "Non-Color"
+        }
+      ],
+      "pbr_inputs": {
+        "Base Color": {
+          "linked": true,
+          "images": [
+            "T_Arin_Face_BaseColor"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Roughness": {
+          "linked": true,
+          "images": [
+            "T_Arin_Face_Roughness"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Metallic": {
+          "linked": true,
+          "images": [
+            "T_Arin_Face_Metallic"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Normal": {
+          "linked": true,
+          "images": [
+            "T_Arin_Face_Normal"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Alpha": {
+          "linked": false,
+          "images": [],
+          "procedural_nodes_requires_bake": []
+        }
+      },
+      "empty_image_nodes": []
+    },
+    {
+      "name": "M_Arin_Gear",
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "T_Arin_Gear_BaseColor",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Gear_BaseColor.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            2048,
+            2048
+          ],
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "T_Arin_Gear_Roughness",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Gear_Roughness.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            2048,
+            2048
+          ],
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "T_Arin_Gear_Metallic",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Gear_Metallic.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            2048,
+            2048
+          ],
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "T_Arin_Gear_Normal",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Gear_Normal.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            2048,
+            2048
+          ],
+          "colorspace": "Non-Color"
+        }
+      ],
+      "pbr_inputs": {
+        "Base Color": {
+          "linked": true,
+          "images": [
+            "T_Arin_Gear_BaseColor"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Roughness": {
+          "linked": true,
+          "images": [
+            "T_Arin_Gear_Roughness"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Metallic": {
+          "linked": true,
+          "images": [
+            "T_Arin_Gear_Metallic"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Normal": {
+          "linked": true,
+          "images": [
+            "T_Arin_Gear_Normal"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Alpha": {
+          "linked": false,
+          "images": [],
+          "procedural_nodes_requires_bake": []
+        }
+      },
+      "empty_image_nodes": []
+    },
+    {
+      "name": "M_Arin_Hair",
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "T_Arin_Hair_BaseColor",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Hair_BaseColor.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            2048,
+            2048
+          ],
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "T_Arin_Hair_Roughness",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Hair_Roughness.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            2048,
+            2048
+          ],
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "T_Arin_Hair_Metallic",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Hair_Metallic.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            2048,
+            2048
+          ],
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "T_Arin_Hair_Normal",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\Textures\\T_Arin_Hair_Normal.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            2048,
+            2048
+          ],
+          "colorspace": "Non-Color"
+        }
+      ],
+      "pbr_inputs": {
+        "Base Color": {
+          "linked": true,
+          "images": [
+            "T_Arin_Hair_BaseColor"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Roughness": {
+          "linked": true,
+          "images": [
+            "T_Arin_Hair_Roughness"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Metallic": {
+          "linked": true,
+          "images": [
+            "T_Arin_Hair_Metallic"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Normal": {
+          "linked": true,
+          "images": [
+            "T_Arin_Hair_Normal"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Alpha": {
+          "linked": false,
+          "images": [],
+          "procedural_nodes_requires_bake": []
+        }
+      },
+      "empty_image_nodes": []
+    }
+  ],
+  "actions": [
+    {
+      "name": "Arin_Idle",
+      "frame_range": [
+        1.0,
+        61.0
+      ],
+      "duration_seconds": 2.0,
+      "curves": 161,
+      "keyframes": 9821
+    }
+  ],
+  "motion": [
+    {
+      "frame": 1.0,
+      "bounds_min": [
+        -0.39297914505004883,
+        -0.15199558436870575,
+        1.862645149230957e-09
+      ],
+      "bounds_max": [
+        0.39297914505004883,
+        0.17387361824512482,
+        1.7000000476837158
+      ],
+      "dimensions": [
+        0.7859582901000977,
+        0.32586920261383057,
+        1.7000000458210707
+      ],
+      "local_geometry_sha256": {
+        "Arin_Cloth": "60779e46468a6233312306f24af26a307af9a7423d63434365e72bcf44e52531",
+        "Arin_Face": "e66abbbec6f38f71be27e265ecfbf1056fc958fc8cf1f4f55fe6a8cc9a711591",
+        "Arin_Gear": "6f93bfa9169a750cc7b0b2b64b5f6a0fe23ea2569915ef55b78d0fe057686bb8",
+        "Arin_Hair": "2d013dade0e905d1873c51922a4a846c889367bfebef69a560f8fcf4827bff0b"
+      },
+      "displacement_from_first_frame_m": {
+        "Arin_Cloth": 0.0,
+        "Arin_Face": 0.0,
+        "Arin_Gear": 0.0,
+        "Arin_Hair": 0.0
+      },
+      "root_matrix_delta_from_first": 0.0,
+      "finite_root_matrices": true
+    },
+    {
+      "frame": 16.0,
+      "bounds_min": [
+        -0.3868997097015381,
+        -0.15199558436870575,
+        1.862645149230957e-09
+      ],
+      "bounds_max": [
+        0.3868997097015381,
+        0.17344944179058075,
+        1.7000385522842407
+      ],
+      "dimensions": [
+        0.7737994194030762,
+        0.3254450261592865,
+        1.7000385504215956
+      ],
+      "local_geometry_sha256": {
+        "Arin_Cloth": "a262e8e760088bdc6ab2de782d46a77688db8588ff64bd5f8adea0c697cde1f6",
+        "Arin_Face": "97084c165056263575f6d4af843cfab8c775a3aee00365231b0511aff13a84bb",
+        "Arin_Gear": "0d3989ac4cf72d3ce109ac9091a31a66521082bdbab57d55011e0f576ff6f1ee",
+        "Arin_Hair": "f7255dba2c200bbff3f12c6406431765bc7ab7a897a26b8042a1401fdaea3bd8"
+      },
+      "displacement_from_first_frame_m": {
+        "Arin_Cloth": 0.0031002849541134393,
+        "Arin_Face": 0.007438865881898108,
+        "Arin_Gear": 0.005196163507442212,
+        "Arin_Hair": 0.0030126245776106336
+      },
+      "root_matrix_delta_from_first": 0.0,
+      "finite_root_matrices": true
+    },
+    {
+      "frame": 31.0,
+      "bounds_min": [
+        -0.39297914505004883,
+        -0.15199558436870575,
+        1.862645149230957e-09
+      ],
+      "bounds_max": [
+        0.39297914505004883,
+        0.17387361824512482,
+        1.7000000476837158
+      ],
+      "dimensions": [
+        0.7859582901000977,
+        0.32586920261383057,
+        1.7000000458210707
+      ],
+      "local_geometry_sha256": {
+        "Arin_Cloth": "60779e46468a6233312306f24af26a307af9a7423d63434365e72bcf44e52531",
+        "Arin_Face": "e66abbbec6f38f71be27e265ecfbf1056fc958fc8cf1f4f55fe6a8cc9a711591",
+        "Arin_Gear": "6f93bfa9169a750cc7b0b2b64b5f6a0fe23ea2569915ef55b78d0fe057686bb8",
+        "Arin_Hair": "2d013dade0e905d1873c51922a4a846c889367bfebef69a560f8fcf4827bff0b"
+      },
+      "displacement_from_first_frame_m": {
+        "Arin_Cloth": 0.0,
+        "Arin_Face": 0.0,
+        "Arin_Gear": 0.0,
+        "Arin_Hair": 0.0
+      },
+      "root_matrix_delta_from_first": 0.0,
+      "finite_root_matrices": true
+    },
+    {
+      "frame": 46.0,
+      "bounds_min": [
+        -0.39902496337890625,
+        -0.15199558436870575,
+        1.862645149230957e-09
+      ],
+      "bounds_max": [
+        0.39902520179748535,
+        0.17429675161838531,
+        1.6999555826187134
+      ],
+      "dimensions": [
+        0.7980501651763916,
+        0.32629233598709106,
+        1.6999555807560682
+      ],
+      "local_geometry_sha256": {
+        "Arin_Cloth": "f515f403852d64641685ba41c505a7ab1a7015767d489f26e9bbf4182e199905",
+        "Arin_Face": "25a5254b36ddfef85535fd4bac118f02f65c5a1df408c6008f3237fbd7854d0d",
+        "Arin_Gear": "2513d973004bd455331cc1db872f9a0784f463a01a930e37ef9a3a10e44a3b36",
+        "Arin_Hair": "1c6556c7afc271ebca06210fa1ad2a0ae0c91e3e31816ee420bd7a2e80402031"
+      },
+      "displacement_from_first_frame_m": {
+        "Arin_Cloth": 0.0030981053421740515,
+        "Arin_Face": 0.007438761765057545,
+        "Arin_Gear": 0.005196510585601864,
+        "Arin_Hair": 0.003009885685137811
+      },
+      "root_matrix_delta_from_first": 0.0,
+      "finite_root_matrices": true
+    },
+    {
+      "frame": 61.0,
+      "bounds_min": [
+        -0.39297914505004883,
+        -0.15199558436870575,
+        1.862645149230957e-09
+      ],
+      "bounds_max": [
+        0.39297914505004883,
+        0.17387361824512482,
+        1.7000000476837158
+      ],
+      "dimensions": [
+        0.7859582901000977,
+        0.32586920261383057,
+        1.7000000458210707
+      ],
+      "local_geometry_sha256": {
+        "Arin_Cloth": "60779e46468a6233312306f24af26a307af9a7423d63434365e72bcf44e52531",
+        "Arin_Face": "e66abbbec6f38f71be27e265ecfbf1056fc958fc8cf1f4f55fe6a8cc9a711591",
+        "Arin_Gear": "6f93bfa9169a750cc7b0b2b64b5f6a0fe23ea2569915ef55b78d0fe057686bb8",
+        "Arin_Hair": "2d013dade0e905d1873c51922a4a846c889367bfebef69a560f8fcf4827bff0b"
+      },
+      "displacement_from_first_frame_m": {
+        "Arin_Cloth": 0.0,
+        "Arin_Face": 0.0,
+        "Arin_Gear": 0.0,
+        "Arin_Hair": 0.0
+      },
+      "root_matrix_delta_from_first": 0.0,
+      "finite_root_matrices": true
+    }
+  ],
+  "loop_endpoint_displacement_m": {
+    "Arin_Cloth": 0.0,
+    "Arin_Face": 0.0,
+    "Arin_Gear": 0.0,
+    "Arin_Hair": 0.0
+  },
+  "totals": {
+    "mesh_objects": 4,
+    "materials": 4,
+    "armatures": 1,
+    "authored_triangles": 51634,
+    "evaluated_triangles": 51634,
+    "authored_vertices": 26185
+  },
+  "visual_review_required": true,
+  "not_measured": [
+    "UV overlap/unique texel coverage",
+    "bone-joint surface continuity",
+    "intersections and clipping",
+    "facial likeness and anatomy",
+    "Unreal runtime rendering"
+  ],
+  "findings": [],
+  "technical_status": "passed_requires_visual_review",
+  "contract": {
+    "max_triangles": 55000,
+    "max_materials": 4,
+    "expected_height_m": 1.7,
+    "height_tolerance_m": 0.01,
+    "require_uvs": true,
+    "min_uv_face_fraction": 0.995,
+    "require_skinning": true,
+    "maximum_bone_influences": 4,
+    "required_bones": [
+      "root",
+      "pelvis",
+      "spine_01",
+      "spine_02",
+      "spine_03",
+      "neck",
+      "head",
+      "clavicle_l",
+      "upperarm_l",
+      "lowerarm_l",
+      "hand_l",
+      "clavicle_r",
+      "upperarm_r",
+      "lowerarm_r",
+      "hand_r",
+      "thigh_l",
+      "calf_l",
+      "foot_l",
+      "ball_l",
+      "thigh_r",
+      "calf_r",
+      "foot_r",
+      "ball_r"
+    ],
+    "require_action_name_contains": "Idle",
+    "expected_idle_seconds": 2.0,
+    "require_stationary_root": true,
+    "require_loop": true,
+    "require_deformation": true,
+    "require_zero_degenerates": true,
+    "require_closed_meshes": [],
+    "require_baked_pbr": true,
+    "require_external_texture_files": true,
+    "required_texture_channels": [
+      "Base Color",
+      "Roughness",
+      "Metallic",
+      "Normal"
+    ]
+  }
+}

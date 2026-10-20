@@ -1,0 +1,230 @@
+{
+  "review_date": "2026-10-07",
+  "reviewer": "/root/arin_quality_validation",
+  "method": "Read-only actual local UE5.8 C++ source inspection. No UE or asset mutation executed by reviewer.",
+  "reported_symptom_from_root": "Fresh 2048px Face/Hair roughness/metallic/normal textures read back as 32px during the owned partial import; BaseColor and other groups report their actual sizes.",
+  "interpretation": "The root-owned save-alone proof remains failed and preserved. Root subsequently measured the batch-setting plus official compilation-manager console command changing Face Roughness from 32x32 to 2048x2048. Engine source supports one PreEditChange/PostEditChange pair for the batched settings and a registered manager completion path. The separate causal contribution of batching versus FinishAll was not isolated by this proof.",
+  "primary_local_evidence": [
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/Texture2D.cpp",
+      "lines": [
+        344,
+        347,
+        348,
+        349,
+        354,
+        357,
+        365,
+        370,
+        373
+      ],
+      "fact": "GetSizeX/GetSizeY return default-texture placeholders while platform data is compiling; the source explicitly directs consumers needing up-to-date platform data to finish texture compilation."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/Texture2D.cpp",
+      "lines": [
+        673,
+        675,
+        685,
+        688,
+        690
+      ],
+      "fact": "UTexture2D::PreSave calls FTextureCompilingManager::Get().FinishCompilation({this}) when the texture is compiling, before package serialization completes."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/Texture.cpp",
+      "lines": [
+        1431,
+        1439,
+        1448
+      ],
+      "fact": "UTexture::PreSave also blocks async build through Modify(false) before modifying/compressing texture source data."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Plugins/Editor/EditorScriptingUtilities/Source/EditorScriptingUtilities/Private/EditorAssetLibrary.cpp",
+      "lines": [
+        435,
+        437,
+        438
+      ],
+      "fact": "EditorAssetLibrary.SaveLoadedAsset delegates to EditorAssetSubsystem.SaveLoadedAsset."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Editor/UnrealEd/Private/Subsystems/EditorAssetSubsystem.cpp",
+      "lines": [
+        1290,
+        1294,
+        1299,
+        1305,
+        1306,
+        1309
+      ],
+      "fact": "SaveLoadedAsset validates the registered asset and saves that asset's package through EditorLoadingAndSavingUtils.SavePackages without a prompt."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Public/AssetCompilingManager.h",
+      "lines": [
+        44,
+        47
+      ],
+      "fact": "FAssetCompilingManager is a plain C++ manager class, not a UCLASS/UObject. Its C++ FinishAllCompilation/FinishCompilationForObjects methods must not be assumed to exist as reflected unreal Python methods."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Plugins/Experimental/PythonScriptPlugin/Source/PythonScriptPlugin/Private/PyWrapperObject.cpp",
+      "lines": [
+        943,
+        994,
+        995,
+        997,
+        1000,
+        1134
+      ],
+      "fact": "set_editor_properties is an actual Python binding. It resolves requested properties, then performs one PreEditChange(nullptr) and one PostEditChange for the mapping, with property conversions inside that scope."
+    }
+  ],
+  "recommended_owned_recovery": [
+    "Use the root-owned measured recovery design: exact owned textures verified against source hashes, final properties batched, then official manager completion before existing strict validation.",
+    "Retain the failed save-alone proof rather than repeating that disproved assumption. Do not claim batch-only or FinishAll-only causality from the combined proof.",
+    "Require all 16 actual current texture dimensions and settings to pass, then persist only owned dependencies and verify them in a fresh process.",
+    "Keep original tutorial dialogue/item/trait behavior and existing actor protected; complete guide, LOD and gameplay phases only after the measured owned dependency gates pass."
+  ],
+  "actual_recovery_executed_by_reviewer": false,
+  "actual_recovery_result": "Root measured the owned Face Roughness texture changing from 32x32 to 2048x2048 after batch property assignment plus the official texture FinishAll command. This proves that combined recovery for that texture; the full 16-texture and persistence/runtime gates remain separate.",
+  "save_proof": {
+    "file": "D:/Project/Rogue10m/tmp/arin-texture-save-proof.json",
+    "sha256": "6b1e26c9ec89f31eb4a0b568268402ceb85c0a0c41f9cce624f229512ed4d0bb",
+    "executed_by": "root",
+    "asset": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Roughness",
+    "before": [
+      32,
+      32
+    ],
+    "after": [
+      32,
+      32
+    ],
+    "save_reported_success": true,
+    "conclusion": "Do not repeat saves as an assumed compilation fix."
+  },
+  "source_proof_after_failed_save": [
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/Texture2D.cpp",
+      "lines": [
+        530,
+        532
+      ],
+      "fact": "IsDefaultTexture is true for unfinished private platform work OR an existing proxy resource. Placeholder dimensions are not conclusive proof of unfinished compilation alone."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/TextureCompiler.cpp",
+      "lines": [
+        465,
+        496,
+        498,
+        505,
+        507
+      ],
+      "fact": "FinishCompilation only selects textures found in RegisteredTextureBuckets, then returns immediately when none are pending. Save/PreSave completion alone is therefore not a measured guarantee that a stale proxy has been replaced."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Classes/Interfaces/Interface_AsyncCompilation.h",
+      "lines": [
+        24,
+        26,
+        29
+      ],
+      "fact": "IsCompiling is a plain virtual C++ interface function without UFUNCTION. No reflected Python API is established by this source."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/TextureCompiler.cpp",
+      "lines": [
+        26,
+        27,
+        28,
+        32
+      ],
+      "fact": "The standard async texture console helper binds its FinishAll callback to FTextureCompilingManager::Get().FinishAllCompilation."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/AsyncCompilationHelpers.cpp",
+      "lines": [
+        364,
+        386,
+        387,
+        389
+      ],
+      "fact": "The actual console command is Editor.AsyncTextureCompilationFinishAll and drains the entire registered editor texture queue. Reviewer executed nothing. Root subsequently measured batch settings plus this command recovering one affected texture to 2048x2048; this source proof alone does not certify all 16 textures."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/Texture2D.cpp",
+      "lines": [
+        638,
+        640,
+        642,
+        716,
+        718,
+        720,
+        721
+      ],
+      "fact": "Editor source logical dimensions come from GetImportedSize -> Source.GetLogicalSize, and the asset registry Dimensions tag uses that value. This can distinguish imported source dimensions from current platform/placeholder dimensions but cannot replace the strict platform-size gate."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Classes/Engine/Texture.h",
+      "lines": [
+        1853,
+        1855,
+        1857,
+        1858
+      ],
+      "fact": "Blueprint_GetBuiltTextureSize is reflected and described as current-platform built dimensions without causing a texture build. It is a useful read-only diagnostic when verified in live Python, not a compilation completion API."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Classes/Engine/Texture.h",
+      "lines": [
+        1933,
+        1934,
+        1935,
+        1937,
+        1938,
+        1940
+      ],
+      "fact": "FinishCachePlatformData is a plain C++ function documented as compiler-manager-only; direct manual use can leave registered work and cause AddTextures crashes. Do not invent a Python direct-finish workaround."
+    }
+  ],
+  "remaining_hypotheses": [
+    "The exact mechanism by which the earlier sequential edits left those six textures reporting 32px is not proven by the combined recovery test.",
+    "One Face Roughness recovery cannot establish all 16 textures or persisted/fresh-process material/runtime correctness; those still require their actual evidence."
+  ],
+  "batch_recovery_proof": {
+    "file": "D:/Project/Rogue10m/tmp/arin-texture-batch-proof.json",
+    "sha256": "9db7583a5817dc40418394e7f11ee0bdec2cfa2b7ab0a0cb7745acc6f7c1cd78",
+    "executed_by": "root",
+    "asset": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Roughness",
+    "before": [
+      32,
+      32
+    ],
+    "after": [
+      2048,
+      2048
+    ],
+    "scope": "one actually measured texture",
+    "operation": "_texture_settings with set_editor_properties then _finish_texture_compilation using Editor.AsyncTextureCompilationFinishAll",
+    "isolated_batch_only_or_finishall_only_causality": "not_established",
+    "all_16_or_persistence_success": "not_established_by_this_proof"
+  },
+  "latest_apply_source_review": {
+    "reviewed_utc": "2026-10-07T12:57:58.531509+00:00",
+    "file": "D:/Project/Rogue10m/Scripts/Editor/ApplyRefinedArin.py",
+    "sha256": "fced0d040801176ad98bd1f8ddccbd1d880ff863374e8e2321e603763ce2762c",
+    "python_ast_parsed": true,
+    "scope": "_texture_settings, _finish_texture_compilation, _import_textures, _validate_textures",
+    "blocking_findings": [],
+    "facts": [
+      "Five texture settings are assigned in one set_editor_properties mapping.",
+      "The official compilation command runs after all owned textures settings and metadata and before strict texture validation.",
+      "Exact scoped texture class/path/provenance, manifest dimensions, compression, sRGB and normal convention checks remain strict.",
+      "FinishAll drains the entire registered editor texture queue, not only the owned texture subset. It does not import, overwrite, delete or save assets. Actual later persistence is separately required."
+    ]
+  }
+}

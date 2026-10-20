@@ -18,11 +18,15 @@ class URogue10mCharacterDataAsset;
 class URogue10mDodgeSkillDataAsset;
 class URogue10mWeaponSkillProfileDataAsset;
 class USkeletalMeshComponent;
+struct FRogue10mCombatSnapshot;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRogue10mSkillTreeChanged);
 
 struct FRogue10mActiveAttackExecution
 {
+	uint32 ExecutionId = 0;
+	float TraitDodgeBonus = 0.0f;
+	bool bTraitHitRegistered = false;
 	TWeakObjectPtr<const URogue10mAttackSkillData> SkillData;
 	TMap<TWeakObjectPtr<AActor>, int32> TargetHitCounts;
 	TArray<TWeakObjectPtr<AActor>> LockedTargets;
@@ -40,16 +44,36 @@ class ROGUE10M_API URogue10mCombatComponent : public UActorComponent
 
 public:
 	URogue10mCombatComponent();
+	FRogue10mCombatSnapshot CaptureCombat() const;
+	bool RestoreCombat(const FRogue10mCombatSnapshot& Snapshot);
+	void ResetCombatProgression();
 
 	void InitializeAbilitySystem();
 	void InitializeSpawnedLoadout();
 	void HandleAttackPressed(bool bPrimaryAttack);
+
+	/** Actual input charge ownership, independent of the fighter-only guard state. */
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Charge")
+	bool IsAttackChargeHeld() const;
 	void HandleAttackReleased(bool bPrimaryAttack);
 	void CancelCombatVisuals();
 	bool ExecutePendingAttackSkillFromAbility();
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Combat")
 	bool ActivateQuickSlot(int32 SlotNumber);
+
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Skill Tree")
+	bool CanUnlockActiveTreeForTesting() const;
+
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Combat|Skill Tree")
+	int32 UnlockAllActiveTreeForTesting();
+
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Combat|Skill Tree")
+	bool ActivateTreeSkill(URogue10mAttackSkillData* SkillData);
+
+	void HandleBoundSkillPressed(URogue10mAttackSkillData* SkillData);
+	void HandleBoundSkillReleased(URogue10mAttackSkillData* SkillData);
+	void CancelBoundSkillInput();
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Combat|Skill Tree")
 	void UnlockAttackSkill(URogue10mAttackSkillData* SkillData);
@@ -118,6 +142,8 @@ public:
 	float GetAttackCooldownRemaining() const;
 	float GetAttackCooldownDuration() const { return AttackCooldownDuration; }
 	const URogue10mAttackSkillData* GetDisplayedAttackSkill() const;
+	/** Exact accepted presentation skill; HUD combo previews and cooldown roots can name a different skill. */
+	const URogue10mAttackSkillData* GetLastAcceptedAttackSkill() const { return LastAcceptedAttackSkill.Get(); }
 
 protected:
 	virtual void BeginPlay() override;
@@ -129,6 +155,8 @@ private:
 	URogue10mAttributeSet* GetOwnerAttributes() const;
 	float GetAttackSpeedMultiplier() const;
 	bool CanUseCombatInput() const;
+	bool CanUseBoundSkill(const URogue10mAttackSkillData* SkillData) const;
+	void MonitorBoundSkillInput();
 	void ExecuteCombatAttack(bool bPrimaryAttack, bool bChargedAttack);
 	bool ExecuteAttackSkill(const URogue10mAttackSkillData& SkillData, bool bComboAttack);
 	bool TryActivateAttackAbility(const URogue10mAttackSkillData& SkillData, bool bComboAttack);
@@ -198,6 +226,8 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Combat|Skill Tree", meta=(AllowPrivateAccess="true"))
 	TSet<FName> UnlockedAttackSkillNames;
+	UPROPERTY(Transient)
+	TArray<TObjectPtr<URogue10mAttackSkillData>> UnlockedSkillAssets;
 
 	/** 캐릭터의 기본 전투 프로필을 묶는 GDD Character Data Asset입니다. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Combat|Character Data", meta=(AllowPrivateAccess="true"))
@@ -222,6 +252,7 @@ private:
 	TWeakObjectPtr<const URogue10mAttackSkillData> ActiveComboSourceSkill;
 	TWeakObjectPtr<const URogue10mAttackSkillData> ActiveComboRootSkill;
 	TWeakObjectPtr<const URogue10mAttackSkillData> AttackCooldownSourceSkill;
+	TWeakObjectPtr<const URogue10mAttackSkillData> LastAcceptedAttackSkill;
 	TWeakObjectPtr<const URogue10mAttackSkillData> PendingAbilityAttackSkill;
 	TWeakObjectPtr<ARogue10mPlayerState> BoundProgressionState;
 	float ActiveComboWindowOpenTime = -1.0f;
@@ -231,6 +262,11 @@ private:
 	float AttackCooldownDuration = 0.0f;
 	bool bPendingAbilityComboAttack = false;
 	bool bExecutingAttackFromAbility = false;
+	bool bLastAbilityAttackExecuted = false;
+	bool bBoundChargeReady = false;
+	TWeakObjectPtr<URogue10mAttackSkillData> HeldBoundSkill;
+	float BoundSkillPressedTime = -1.0f;
+	FTimerHandle BoundSkillMonitorTimer;
 	uint32 NextAttackExecutionId = 1;
 	TMap<uint32, FRogue10mActiveAttackExecution> ActiveAttackExecutions;
 };

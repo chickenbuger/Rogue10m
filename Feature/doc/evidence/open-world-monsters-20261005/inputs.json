@@ -1,0 +1,1354 @@
+{
+  "world": "/Game/Rogue10m/Maps/OpenRunMap.OpenRunMap",
+  "species": {
+    "VerdantSlime": {
+      "canonical_source": {
+        "asset_name": "DA_Monster_Normal_VerdantSlime",
+        "asset_path": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_VerdantSlime",
+        "monster_id": "VerdantSlime",
+        "display_name": "초록 점액체",
+        "rank": "Normal",
+        "level": 1,
+        "max_health": 70.0,
+        "max_stamina": 100.0,
+        "max_mana": 100.0,
+        "experience_reward": 18,
+        "health_regeneration": 0.1,
+        "stamina_regeneration": 0.1,
+        "mana_regeneration": 0.1,
+        "mesh": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_SK",
+        "mesh_location": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_rotation": [
+          0.0,
+          -90.0,
+          0.0
+        ],
+        "mesh_scale": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "walk_speed": 220.0,
+        "detection_range": 1200.0,
+        "stop_distance": 105.0,
+        "attack_range": 120.0,
+        "attack_damage": 6.0,
+        "attack_interval": 1.45
+      },
+      "canonical_data": {
+        "monster_id": "VerdantSlime",
+        "display_name": "초록 점액체",
+        "level": 1,
+        "monster_rank": "<Rogue10mMonsterRank.NORMAL: 0>",
+        "is_boss": false,
+        "experience_reward": 18,
+        "max_health": 70.0,
+        "max_stamina": 100.0,
+        "max_mana": 100.0,
+        "health_regeneration_per_second": 0.10000000149011612,
+        "skeletal_mesh": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_SK.Slime_SK",
+        "animation_blueprint_class": null,
+        "mesh_relative_location": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_relative_rotation": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_relative_scale": [
+          0.75,
+          0.75,
+          0.75
+        ],
+        "walk_speed": 220.0,
+        "detection_range": 1200.0,
+        "stop_distance": 105.0,
+        "behavior_tree_asset": "/Game/AI/Monster/BT_Monster.BT_Monster",
+        "lose_sight_range": 2200.0,
+        "forget_target_seconds": 5.0,
+        "patrol_radius": 600.0,
+        "patrol_wait_seconds": 2.0,
+        "max_chase_distance": 2500.0,
+        "attack_skill": null,
+        "attack_range": 120.0,
+        "attack_damage": 6.0,
+        "attack_interval": 1.4500000476837158,
+        "destroy_on_death": true
+      },
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_VerdantSlime.BP_OW_VerdantSlime",
+      "cdo": {
+        "monster_data": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_VerdantSlime.DA_Monster_Normal_VerdantSlime",
+        "max_health": 100.0,
+        "attack_skill_data": null,
+        "attack_range": 170.0,
+        "attack_damage": 8.0,
+        "attack_interval": 1.25,
+        "behavior_tree_asset": null,
+        "ai_controller_class": "/Script/Rogue10m.Rogue10mMonsterAIController",
+        "auto_possess_ai": "<AutoPossessAI.PLACED_IN_WORLD_OR_SPAWNED: 3>",
+        "destroy_on_death": true
+      },
+      "cdo_visual": {
+        "mesh": "/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple",
+        "animation_mode": "<AnimationMode.ANIMATION_BLUEPRINT: 0>",
+        "anim_class": "/Game/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed.ABP_Unarmed_C",
+        "materials": [
+          "/Game/Characters/Mannequins/Materials/Manny/MI_Manny_01_New.MI_Manny_01_New",
+          "/Game/Characters/Mannequins/Materials/Manny/MI_Manny_02_New.MI_Manny_02_New"
+        ],
+        "relative_location": [
+          0.0,
+          0.0,
+          -96.0
+        ],
+        "relative_rotation": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "relative_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "capsule_radius_cm": 34.0,
+        "capsule_half_height_cm": 88.0
+      },
+      "mesh": {
+        "path": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_SK.Slime_SK",
+        "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_Skeleton.Slime_Skeleton",
+        "material_slots": [
+          {
+            "slot": "lambert1",
+            "material": "/Game/MonsterForSurvivalGame/Material/DefaultPBR_MAT.DefaultPBR_MAT"
+          }
+        ]
+      },
+      "available_animations": [
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.8333333134651184,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_Skeleton.Slime_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack02_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.8333333134651184,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_Skeleton.Slime_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Die_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 1.3333333730697632,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_Skeleton.Slime_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.8333333134651184,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_Skeleton.Slime_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 1.6666666269302368,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_Skeleton.Slime_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Run_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.6666666865348816,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_Skeleton.Slime_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 1.0,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_Skeleton.Slime_Skeleton",
+          "matches_mesh_skeleton": true
+        }
+      ]
+    },
+    "Sporeling": {
+      "canonical_source": {
+        "asset_name": "DA_Monster_Normal_Sporeling",
+        "asset_path": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_Sporeling",
+        "monster_id": "Sporeling",
+        "display_name": "어린 포자 버섯",
+        "rank": "Normal",
+        "level": 5,
+        "max_health": 150.0,
+        "max_stamina": 100.0,
+        "max_mana": 100.0,
+        "experience_reward": 35,
+        "health_regeneration": 0.1,
+        "stamina_regeneration": 0.1,
+        "mana_regeneration": 0.1,
+        "mesh": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_SK",
+        "mesh_location": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_rotation": [
+          0.0,
+          -90.0,
+          0.0
+        ],
+        "mesh_scale": [
+          0.8,
+          0.8,
+          0.8
+        ],
+        "walk_speed": 230.0,
+        "detection_range": 1500.0,
+        "stop_distance": 125.0,
+        "attack_range": 150.0,
+        "attack_damage": 10.0,
+        "attack_interval": 1.35
+      },
+      "canonical_data": {
+        "monster_id": "Sporeling",
+        "display_name": "어린 포자 버섯",
+        "level": 5,
+        "monster_rank": "<Rogue10mMonsterRank.NORMAL: 0>",
+        "is_boss": false,
+        "experience_reward": 35,
+        "max_health": 150.0,
+        "max_stamina": 100.0,
+        "max_mana": 100.0,
+        "health_regeneration_per_second": 0.10000000149011612,
+        "skeletal_mesh": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_SK.Mushroom_SK",
+        "animation_blueprint_class": null,
+        "mesh_relative_location": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_relative_rotation": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_relative_scale": [
+          0.8,
+          0.8,
+          0.8
+        ],
+        "walk_speed": 230.0,
+        "detection_range": 1500.0,
+        "stop_distance": 125.0,
+        "behavior_tree_asset": "/Game/AI/Monster/BT_Monster.BT_Monster",
+        "lose_sight_range": 2200.0,
+        "forget_target_seconds": 5.0,
+        "patrol_radius": 600.0,
+        "patrol_wait_seconds": 2.0,
+        "max_chase_distance": 2500.0,
+        "attack_skill": null,
+        "attack_range": 150.0,
+        "attack_damage": 10.0,
+        "attack_interval": 1.350000023841858,
+        "destroy_on_death": true
+      },
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_Sporeling.BP_OW_Sporeling",
+      "cdo": {
+        "monster_data": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_Sporeling.DA_Monster_Normal_Sporeling",
+        "max_health": 100.0,
+        "attack_skill_data": null,
+        "attack_range": 170.0,
+        "attack_damage": 8.0,
+        "attack_interval": 1.25,
+        "behavior_tree_asset": null,
+        "ai_controller_class": "/Script/Rogue10m.Rogue10mMonsterAIController",
+        "auto_possess_ai": "<AutoPossessAI.PLACED_IN_WORLD_OR_SPAWNED: 3>",
+        "destroy_on_death": true
+      },
+      "cdo_visual": {
+        "mesh": "/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple",
+        "animation_mode": "<AnimationMode.ANIMATION_BLUEPRINT: 0>",
+        "anim_class": "/Game/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed.ABP_Unarmed_C",
+        "materials": [
+          "/Game/Characters/Mannequins/Materials/Manny/MI_Manny_01_New.MI_Manny_01_New",
+          "/Game/Characters/Mannequins/Materials/Manny/MI_Manny_02_New.MI_Manny_02_New"
+        ],
+        "relative_location": [
+          0.0,
+          0.0,
+          -96.0
+        ],
+        "relative_rotation": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "relative_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "capsule_radius_cm": 34.0,
+        "capsule_half_height_cm": 88.0
+      },
+      "mesh": {
+        "path": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_SK.Mushroom_SK",
+        "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton",
+        "material_slots": [
+          {
+            "slot": "lambert1",
+            "material": "/Game/MonsterForSurvivalGame/Material/DefaultPBR_MAT.DefaultPBR_MAT"
+          }
+        ]
+      },
+      "available_animations": [
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.8333333134651184,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack02Smile_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.8333333134651184,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack03Smile_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.8333333134651184,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_DieSmile_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.8333333134651184,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.7333333492279053,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 1.3333333730697632,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_runFWDSmile_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.5333333611488342,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 1.0,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton",
+          "matches_mesh_skeleton": true
+        }
+      ]
+    },
+    "CrimsonSlime": {
+      "canonical_source": {
+        "asset_name": "DA_Monster_Normal_CrimsonSlime",
+        "asset_path": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_CrimsonSlime",
+        "monster_id": "CrimsonSlime",
+        "display_name": "붉은 점액체",
+        "rank": "Normal",
+        "level": 2,
+        "max_health": 90.0,
+        "max_stamina": 100.0,
+        "max_mana": 100.0,
+        "experience_reward": 22,
+        "health_regeneration": 0.1,
+        "stamina_regeneration": 0.1,
+        "mana_regeneration": 0.1,
+        "mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_SK",
+        "mesh_location": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_rotation": [
+          0.0,
+          -90.0,
+          0.0
+        ],
+        "mesh_scale": [
+          0.85,
+          0.85,
+          0.85
+        ],
+        "walk_speed": 235.0,
+        "detection_range": 1300.0,
+        "stop_distance": 110.0,
+        "attack_range": 125.0,
+        "attack_damage": 7.0,
+        "attack_interval": 1.4
+      },
+      "canonical_data": {
+        "monster_id": "CrimsonSlime",
+        "display_name": "붉은 점액체",
+        "level": 2,
+        "monster_rank": "<Rogue10mMonsterRank.NORMAL: 0>",
+        "is_boss": false,
+        "experience_reward": 22,
+        "max_health": 90.0,
+        "max_stamina": 100.0,
+        "max_mana": 100.0,
+        "health_regeneration_per_second": 0.10000000149011612,
+        "skeletal_mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_SK.Slime_SK",
+        "animation_blueprint_class": null,
+        "mesh_relative_location": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_relative_rotation": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_relative_scale": [
+          0.85,
+          0.85,
+          0.85
+        ],
+        "walk_speed": 235.0,
+        "detection_range": 1300.0,
+        "stop_distance": 110.0,
+        "behavior_tree_asset": "/Game/AI/Monster/BT_Monster.BT_Monster",
+        "lose_sight_range": 2200.0,
+        "forget_target_seconds": 5.0,
+        "patrol_radius": 600.0,
+        "patrol_wait_seconds": 2.0,
+        "max_chase_distance": 2500.0,
+        "attack_skill": null,
+        "attack_range": 125.0,
+        "attack_damage": 7.0,
+        "attack_interval": 1.399999976158142,
+        "destroy_on_death": true
+      },
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_CrimsonSlime.BP_OW_CrimsonSlime",
+      "cdo": {
+        "monster_data": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_CrimsonSlime.DA_Monster_Normal_CrimsonSlime",
+        "max_health": 100.0,
+        "attack_skill_data": null,
+        "attack_range": 170.0,
+        "attack_damage": 8.0,
+        "attack_interval": 1.25,
+        "behavior_tree_asset": null,
+        "ai_controller_class": "/Script/Rogue10m.Rogue10mMonsterAIController",
+        "auto_possess_ai": "<AutoPossessAI.PLACED_IN_WORLD_OR_SPAWNED: 3>",
+        "destroy_on_death": true
+      },
+      "cdo_visual": {
+        "mesh": "/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple",
+        "animation_mode": "<AnimationMode.ANIMATION_BLUEPRINT: 0>",
+        "anim_class": "/Game/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed.ABP_Unarmed_C",
+        "materials": [
+          "/Game/Characters/Mannequins/Materials/Manny/MI_Manny_01_New.MI_Manny_01_New",
+          "/Game/Characters/Mannequins/Materials/Manny/MI_Manny_02_New.MI_Manny_02_New"
+        ],
+        "relative_location": [
+          0.0,
+          0.0,
+          -96.0
+        ],
+        "relative_rotation": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "relative_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "capsule_radius_cm": 34.0,
+        "capsule_half_height_cm": 88.0
+      },
+      "mesh": {
+        "path": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_SK.Slime_SK",
+        "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_Skeleton.Slime_Skeleton",
+        "material_slots": [
+          {
+            "slot": "lambert1",
+            "material": "/Game/MonsterForSurvivalGame/Material/DefaultPBR_MAT.DefaultPBR_MAT"
+          }
+        ]
+      },
+      "available_animations": [
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Attack01_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.8333333134651184,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_Skeleton.Slime_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Attack02_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.8333333134651184,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_Skeleton.Slime_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Die_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 1.3333333730697632,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_Skeleton.Slime_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_GetHit_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.8333333134651184,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_Skeleton.Slime_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_IdleNormal_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 1.6666666269302368,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_Skeleton.Slime_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Run_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.6666666865348816,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_Skeleton.Slime_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Walk_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 1.0,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_Skeleton.Slime_Skeleton",
+          "matches_mesh_skeleton": true
+        }
+      ]
+    },
+    "IronShell": {
+      "canonical_source": {
+        "asset_name": "DA_Monster_Normal_IronShell",
+        "asset_path": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_IronShell",
+        "monster_id": "IronShell",
+        "display_name": "철갑 등껍질",
+        "rank": "Normal",
+        "level": 11,
+        "max_health": 330.0,
+        "max_stamina": 100.0,
+        "max_mana": 100.0,
+        "experience_reward": 66,
+        "health_regeneration": 0.1,
+        "stamina_regeneration": 0.1,
+        "mana_regeneration": 0.1,
+        "mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_SK",
+        "mesh_location": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_rotation": [
+          0.0,
+          -90.0,
+          0.0
+        ],
+        "mesh_scale": [
+          1.1,
+          1.1,
+          1.1
+        ],
+        "walk_speed": 170.0,
+        "detection_range": 1550.0,
+        "stop_distance": 150.0,
+        "attack_range": 175.0,
+        "attack_damage": 15.0,
+        "attack_interval": 1.38
+      },
+      "canonical_data": {
+        "monster_id": "IronShell",
+        "display_name": "철갑 등껍질",
+        "level": 11,
+        "monster_rank": "<Rogue10mMonsterRank.NORMAL: 0>",
+        "is_boss": false,
+        "experience_reward": 66,
+        "max_health": 330.0,
+        "max_stamina": 100.0,
+        "max_mana": 100.0,
+        "health_regeneration_per_second": 0.10000000149011612,
+        "skeletal_mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_SK.TurtleShell_SK",
+        "animation_blueprint_class": null,
+        "mesh_relative_location": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_relative_rotation": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_relative_scale": [
+          1.1,
+          1.1,
+          1.1
+        ],
+        "walk_speed": 170.0,
+        "detection_range": 1550.0,
+        "stop_distance": 150.0,
+        "behavior_tree_asset": "/Game/AI/Monster/BT_Monster.BT_Monster",
+        "lose_sight_range": 2200.0,
+        "forget_target_seconds": 5.0,
+        "patrol_radius": 600.0,
+        "patrol_wait_seconds": 2.0,
+        "max_chase_distance": 2500.0,
+        "attack_skill": null,
+        "attack_range": 175.0,
+        "attack_damage": 15.0,
+        "attack_interval": 1.3799999952316284,
+        "destroy_on_death": true
+      },
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_IronShell.BP_OW_IronShell",
+      "cdo": {
+        "monster_data": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_IronShell.DA_Monster_Normal_IronShell",
+        "max_health": 100.0,
+        "attack_skill_data": null,
+        "attack_range": 170.0,
+        "attack_damage": 8.0,
+        "attack_interval": 1.25,
+        "behavior_tree_asset": null,
+        "ai_controller_class": "/Script/Rogue10m.Rogue10mMonsterAIController",
+        "auto_possess_ai": "<AutoPossessAI.PLACED_IN_WORLD_OR_SPAWNED: 3>",
+        "destroy_on_death": true
+      },
+      "cdo_visual": {
+        "mesh": "/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple",
+        "animation_mode": "<AnimationMode.ANIMATION_BLUEPRINT: 0>",
+        "anim_class": "/Game/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed.ABP_Unarmed_C",
+        "materials": [
+          "/Game/Characters/Mannequins/Materials/Manny/MI_Manny_01_New.MI_Manny_01_New",
+          "/Game/Characters/Mannequins/Materials/Manny/MI_Manny_02_New.MI_Manny_02_New"
+        ],
+        "relative_location": [
+          0.0,
+          0.0,
+          -96.0
+        ],
+        "relative_rotation": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "relative_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "capsule_radius_cm": 34.0,
+        "capsule_half_height_cm": 88.0
+      },
+      "mesh": {
+        "path": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_SK.TurtleShell_SK",
+        "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_Skeleton.TurtleShell_Skeleton",
+        "material_slots": [
+          {
+            "slot": "lambert1",
+            "material": "/Game/MonsterForSurvivalGame/Material/DefaultPBR_MAT.DefaultPBR_MAT"
+          }
+        ]
+      },
+      "available_animations": [
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_Attack01_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.8333333134651184,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_Skeleton.TurtleShell_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_Attack02_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.8333333134651184,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_Skeleton.TurtleShell_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_Die_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 2.0,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_Skeleton.TurtleShell_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_GetHit_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.8333333134651184,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_Skeleton.TurtleShell_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_IdleNormal_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 1.6666666269302368,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_Skeleton.TurtleShell_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_Run_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.5333333611488342,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_Skeleton.TurtleShell_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_Walk_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 1.0,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_Skeleton.TurtleShell_Skeleton",
+          "matches_mesh_skeleton": true
+        }
+      ]
+    },
+    "ThornWarden": {
+      "canonical_source": {
+        "asset_name": "DA_Monster_MidBoss_ThornWarden",
+        "asset_path": "/Game/DataAsset/Monster/MidBoss/DA_Monster_MidBoss_ThornWarden",
+        "monster_id": "ThornWarden",
+        "display_name": "가시 성채의 수문장",
+        "rank": "MidBoss",
+        "level": 12,
+        "max_health": 1800.0,
+        "max_stamina": 250.0,
+        "max_mana": 250.0,
+        "experience_reward": 450,
+        "health_regeneration": 0.65,
+        "stamina_regeneration": 0.1,
+        "mana_regeneration": 0.1,
+        "mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_SK",
+        "mesh_location": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_rotation": [
+          0.0,
+          -90.0,
+          0.0
+        ],
+        "mesh_scale": [
+          1.65,
+          1.65,
+          1.65
+        ],
+        "walk_speed": 250.0,
+        "detection_range": 2500.0,
+        "stop_distance": 195.0,
+        "attack_range": 235.0,
+        "attack_damage": 30.0,
+        "attack_interval": 1.1
+      },
+      "canonical_data": {
+        "monster_id": "ThornWarden",
+        "display_name": "가시 성채의 수문장",
+        "level": 12,
+        "monster_rank": "<Rogue10mMonsterRank.MID_BOSS: 1>",
+        "is_boss": true,
+        "experience_reward": 450,
+        "max_health": 1800.0,
+        "max_stamina": 250.0,
+        "max_mana": 250.0,
+        "health_regeneration_per_second": 0.6499999761581421,
+        "skeletal_mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_SK.Cactus_SK",
+        "animation_blueprint_class": null,
+        "mesh_relative_location": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_relative_rotation": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_relative_scale": [
+          1.65,
+          1.65,
+          1.65
+        ],
+        "walk_speed": 250.0,
+        "detection_range": 2500.0,
+        "stop_distance": 195.0,
+        "behavior_tree_asset": "/Game/AI/Monster/BT_Monster.BT_Monster",
+        "lose_sight_range": 2500.0,
+        "forget_target_seconds": 5.0,
+        "patrol_radius": 600.0,
+        "patrol_wait_seconds": 2.0,
+        "max_chase_distance": 2500.0,
+        "attack_skill": null,
+        "attack_range": 235.0,
+        "attack_damage": 30.0,
+        "attack_interval": 1.100000023841858,
+        "destroy_on_death": true
+      },
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_ThornWarden.BP_OW_ThornWarden",
+      "cdo": {
+        "monster_data": "/Game/DataAsset/Monster/MidBoss/DA_Monster_MidBoss_ThornWarden.DA_Monster_MidBoss_ThornWarden",
+        "max_health": 100.0,
+        "attack_skill_data": null,
+        "attack_range": 170.0,
+        "attack_damage": 8.0,
+        "attack_interval": 1.25,
+        "behavior_tree_asset": null,
+        "ai_controller_class": "/Script/Rogue10m.Rogue10mMonsterAIController",
+        "auto_possess_ai": "<AutoPossessAI.PLACED_IN_WORLD_OR_SPAWNED: 3>",
+        "destroy_on_death": true
+      },
+      "cdo_visual": {
+        "mesh": "/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple",
+        "animation_mode": "<AnimationMode.ANIMATION_BLUEPRINT: 0>",
+        "anim_class": "/Game/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed.ABP_Unarmed_C",
+        "materials": [
+          "/Game/Characters/Mannequins/Materials/Manny/MI_Manny_01_New.MI_Manny_01_New",
+          "/Game/Characters/Mannequins/Materials/Manny/MI_Manny_02_New.MI_Manny_02_New"
+        ],
+        "relative_location": [
+          0.0,
+          0.0,
+          -96.0
+        ],
+        "relative_rotation": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "relative_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "capsule_radius_cm": 34.0,
+        "capsule_half_height_cm": 88.0
+      },
+      "mesh": {
+        "path": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_SK.Cactus_SK",
+        "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_Skeleton.Cactus_Skeleton",
+        "material_slots": [
+          {
+            "slot": "lambert1",
+            "material": "/Game/MonsterForSurvivalGame/Material/DefaultPBR_MAT.DefaultPBR_MAT"
+          }
+        ]
+      },
+      "available_animations": [
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_Attack01_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.6666666865348816,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_Skeleton.Cactus_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_Attack02_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.8333333134651184,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_Skeleton.Cactus_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_Die_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.7333333492279053,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_Skeleton.Cactus_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_GetHit_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.7333333492279053,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_Skeleton.Cactus_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_IdleNormal_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 1.3333333730697632,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_Skeleton.Cactus_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_RunFWD_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.5333333611488342,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_Skeleton.Cactus_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_WalkFWD_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 1.0,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_Skeleton.Cactus_Skeleton",
+          "matches_mesh_skeleton": true
+        }
+      ]
+    },
+    "AbyssOverlordAzathor": {
+      "canonical_source": {
+        "asset_name": "DA_Monster_FinalBoss_AbyssOverlordAzathor",
+        "asset_path": "/Game/DataAsset/Monster/FinalBoss/DA_Monster_FinalBoss_AbyssOverlordAzathor",
+        "monster_id": "AbyssOverlordAzathor",
+        "display_name": "심연의 군주 아자토르",
+        "rank": "FinalBoss",
+        "level": 25,
+        "max_health": 10000.0,
+        "max_stamina": 250.0,
+        "max_mana": 250.0,
+        "experience_reward": 3000,
+        "health_regeneration": 2.0,
+        "stamina_regeneration": 0.1,
+        "mana_regeneration": 0.1,
+        "mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_SK",
+        "mesh_location": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_rotation": [
+          0.0,
+          -90.0,
+          0.0
+        ],
+        "mesh_scale": [
+          2.4,
+          2.4,
+          2.4
+        ],
+        "walk_speed": 240.0,
+        "detection_range": 3200.0,
+        "stop_distance": 260.0,
+        "attack_range": 300.0,
+        "attack_damage": 70.0,
+        "attack_interval": 0.8
+      },
+      "canonical_data": {
+        "monster_id": "AbyssOverlordAzathor",
+        "display_name": "심연의 군주 아자토르",
+        "level": 25,
+        "monster_rank": "<Rogue10mMonsterRank.FINAL_BOSS: 2>",
+        "is_boss": true,
+        "experience_reward": 3000,
+        "max_health": 10000.0,
+        "max_stamina": 250.0,
+        "max_mana": 250.0,
+        "health_regeneration_per_second": 2.0,
+        "skeletal_mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_SK.Beholder_SK",
+        "animation_blueprint_class": null,
+        "mesh_relative_location": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_relative_rotation": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "mesh_relative_scale": [
+          2.4,
+          2.4,
+          2.4
+        ],
+        "walk_speed": 240.0,
+        "detection_range": 3200.0,
+        "stop_distance": 260.0,
+        "behavior_tree_asset": "/Game/AI/Monster/BT_Monster.BT_Monster",
+        "lose_sight_range": 3200.0,
+        "forget_target_seconds": 5.0,
+        "patrol_radius": 600.0,
+        "patrol_wait_seconds": 2.0,
+        "max_chase_distance": 3200.0,
+        "attack_skill": null,
+        "attack_range": 300.0,
+        "attack_damage": 70.0,
+        "attack_interval": 0.800000011920929,
+        "destroy_on_death": true
+      },
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_FinalBoss.BP_OW_FinalBoss",
+      "cdo": {
+        "monster_data": "/Game/DataAsset/Monster/FinalBoss/DA_Monster_FinalBoss_AbyssOverlordAzathor.DA_Monster_FinalBoss_AbyssOverlordAzathor",
+        "max_health": 100.0,
+        "attack_skill_data": null,
+        "attack_range": 170.0,
+        "attack_damage": 8.0,
+        "attack_interval": 1.25,
+        "behavior_tree_asset": null,
+        "ai_controller_class": "/Script/Rogue10m.Rogue10mMonsterAIController",
+        "auto_possess_ai": "<AutoPossessAI.PLACED_IN_WORLD_OR_SPAWNED: 3>",
+        "destroy_on_death": true
+      },
+      "cdo_visual": {
+        "mesh": "/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple",
+        "animation_mode": "<AnimationMode.ANIMATION_BLUEPRINT: 0>",
+        "anim_class": "/Game/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed.ABP_Unarmed_C",
+        "materials": [
+          "/Game/Characters/Mannequins/Materials/Manny/MI_Manny_01_New.MI_Manny_01_New",
+          "/Game/Characters/Mannequins/Materials/Manny/MI_Manny_02_New.MI_Manny_02_New"
+        ],
+        "relative_location": [
+          0.0,
+          0.0,
+          -96.0
+        ],
+        "relative_rotation": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "relative_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "capsule_radius_cm": 34.0,
+        "capsule_half_height_cm": 88.0
+      },
+      "mesh": {
+        "path": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_SK.Beholder_SK",
+        "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton",
+        "material_slots": [
+          {
+            "slot": "lambert1",
+            "material": "/Game/MonsterForSurvivalGame/Material/DefaultPBR_MAT.DefaultPBR_MAT"
+          }
+        ]
+      },
+      "available_animations": [
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Attack01_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.7333333492279053,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Attack02RPT_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.6666666865348816,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Attack02ST_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.5333333611488342,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Attack03_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.7333333492279053,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Die_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.7333333492279053,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_GetHit_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.7333333492279053,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_IdleNormal_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 1.3333333730697632,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Run_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.5333333611488342,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton",
+          "matches_mesh_skeleton": true
+        },
+        {
+          "path": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_WalkFWD_ANIM",
+          "loaded": true,
+          "valid_anim_sequence": true,
+          "duration_seconds": 0.9333333373069763,
+          "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton",
+          "matches_mesh_skeleton": true
+        }
+      ]
+    }
+  },
+  "encounters": [
+    {
+      "label": "OW_Encounter_1_Sporeling",
+      "location": [
+        -52200.0,
+        -23000.0,
+        3920.0
+      ],
+      "spatial": true,
+      "spawn_box_extent": [
+        1500.0,
+        1500.0,
+        100.0
+      ],
+      "monster_class": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_Sporeling.BP_OW_Sporeling_C",
+      "max_alive_monsters": 3,
+      "spawn_interval_seconds": 12.0,
+      "fill_to_maximum_on_begin_play": true,
+      "maintain_population": true,
+      "project_spawn_location_to_ground": true,
+      "ground_trace_distance": 2500.0
+    },
+    {
+      "label": "OW_Encounter_0_VerdantSlime",
+      "location": [
+        -47800.0,
+        -23000.0,
+        3892.1078905829627
+      ],
+      "spatial": true,
+      "spawn_box_extent": [
+        1500.0,
+        1500.0,
+        100.0
+      ],
+      "monster_class": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_VerdantSlime.BP_OW_VerdantSlime_C",
+      "max_alive_monsters": 3,
+      "spawn_interval_seconds": 12.0,
+      "fill_to_maximum_on_begin_play": true,
+      "maintain_population": true,
+      "project_spawn_location_to_ground": true,
+      "ground_trace_distance": 2500.0
+    },
+    {
+      "label": "OW_Encounter_2_CrimsonSlime",
+      "location": [
+        52200.0,
+        -3000.0,
+        3620.0
+      ],
+      "spatial": true,
+      "spawn_box_extent": [
+        1500.0,
+        1500.0,
+        100.0
+      ],
+      "monster_class": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_CrimsonSlime.BP_OW_CrimsonSlime_C",
+      "max_alive_monsters": 4,
+      "spawn_interval_seconds": 12.0,
+      "fill_to_maximum_on_begin_play": true,
+      "maintain_population": true,
+      "project_spawn_location_to_ground": true,
+      "ground_trace_distance": 2500.0
+    },
+    {
+      "label": "OW_Encounter_3_IronShell",
+      "location": [
+        -37200.0,
+        44000.0,
+        7520.0
+      ],
+      "spatial": true,
+      "spawn_box_extent": [
+        1500.0,
+        1500.0,
+        100.0
+      ],
+      "monster_class": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_IronShell.BP_OW_IronShell_C",
+      "max_alive_monsters": 4,
+      "spawn_interval_seconds": 12.0,
+      "fill_to_maximum_on_begin_play": true,
+      "maintain_population": true,
+      "project_spawn_location_to_ground": true,
+      "ground_trace_distance": 2500.0
+    },
+    {
+      "label": "OW_Encounter_4_ThornWarden",
+      "location": [
+        -32800.0,
+        44000.0,
+        7632.216624685138
+      ],
+      "spatial": true,
+      "spawn_box_extent": [
+        1500.0,
+        1500.0,
+        100.0
+      ],
+      "monster_class": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_ThornWarden.BP_OW_ThornWarden_C",
+      "max_alive_monsters": 1,
+      "spawn_interval_seconds": 12.0,
+      "fill_to_maximum_on_begin_play": true,
+      "maintain_population": true,
+      "project_spawn_location_to_ground": true,
+      "ground_trace_distance": 2500.0
+    }
+  ],
+  "bosses": [
+    {
+      "label": "OW_NorthernBoss",
+      "location": [
+        15000.0,
+        69800.0,
+        9780.0
+      ],
+      "spatial": false,
+      "monster_data": "/Game/DataAsset/Monster/FinalBoss/DA_Monster_FinalBoss_AbyssOverlordAzathor.DA_Monster_FinalBoss_AbyssOverlordAzathor",
+      "components": {
+        "mesh": "/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple",
+        "animation_mode": "<AnimationMode.ANIMATION_BLUEPRINT: 0>",
+        "anim_class": "/Game/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed.ABP_Unarmed_C",
+        "materials": [
+          "/Game/Characters/Mannequins/Materials/Manny/MI_Manny_01_New.MI_Manny_01_New",
+          "/Game/Characters/Mannequins/Materials/Manny/MI_Manny_02_New.MI_Manny_02_New"
+        ],
+        "relative_location": [
+          0.0,
+          0.0,
+          -96.0
+        ],
+        "relative_rotation": [
+          0.0,
+          0.0,
+          -90.0
+        ],
+        "relative_scale": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "capsule_radius_cm": 34.0,
+        "capsule_half_height_cm": 88.0
+      }
+    }
+  ],
+  "loaded_editor_actor_count": 1243,
+  "game_mode": {
+    "class": "/Game/FirstPerson/Blueprints/BP_FirstPersonGameMode.BP_FirstPersonGameMode_C",
+    "start_run_on_start_play": false,
+    "use_prototype_run_duration": false,
+    "prototype_run_duration_seconds": 30.0
+  },
+  "starter_character": {
+    "max_health": 100.0,
+    "attack_power": 10.0,
+    "defense": 0.0,
+    "walk_speed": 600.0,
+    "sprint_speed": 900.0
+  },
+  "starter_attacks": {
+    "LeftJab": {
+      "damage": 5.0,
+      "attack_cooldown": 0.550000011920929,
+      "attack_range": 180.0,
+      "charge_seconds": 0.6499999761581421,
+      "hit_start_delay_seconds": 0.3400000035762787
+    },
+    "RightJab": {
+      "damage": 6.25,
+      "attack_cooldown": 0.4099999964237213,
+      "attack_range": 180.0,
+      "charge_seconds": 0.0,
+      "hit_start_delay_seconds": 0.3400000035762787
+    },
+    "RightStraight": {
+      "damage": 6.75,
+      "attack_cooldown": 0.6899999976158142,
+      "attack_range": 180.0,
+      "charge_seconds": 0.0,
+      "hit_start_delay_seconds": 0.3400000035762787
+    },
+    "RightHook": {
+      "damage": 11.25,
+      "attack_cooldown": 1.100000023841858,
+      "attack_range": 180.0,
+      "charge_seconds": 0.8500000238418579,
+      "hit_start_delay_seconds": 0.6333333253860474
+    }
+  },
+  "dirty_maps": [],
+  "dirty_content": []
+}

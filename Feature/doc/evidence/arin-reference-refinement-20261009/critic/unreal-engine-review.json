@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-09",
+  "reviewer": "/root/arin_reference_art_critic",
+  "method": "Independent actual-image review: personally opened all nine final Unreal editor captures (three views at each of LOD0/LOD1/LOD2) and all three original V2 Unreal baseline captures, then read all four manifests plus Unreal import/application reports. File hashes and identical camera settings independently checked. No Blender/Unreal execution or asset/script edits by reviewer.",
+  "scope": "Actual Unreal editor appearance and discrete forced-LOD continuity in the existing village lighting. PIE interaction, save/reload persistence, continuous motion and performance are separate root validation tasks and are not approved by this image review.",
+  "provenance": {
+    "source_fbx_sha256": "45296f9fcbd0d182406c85d29f8627409e090dc0c97ec97815a8035221448f00",
+    "baseline_source_fbx_sha256": "aa4298d51a6917f245f4be4f9c1dca3ae739ec80d7d4fb44b3157a0a2b8979c3",
+    "final_mesh": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin.SK_Arin",
+    "baseline_mesh": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin.SK_Arin",
+    "evidence_root": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/unreal-captures",
+    "capture_source": "actual Epic official Unreal MCP CaptureViewport, editor world",
+    "all_camera_settings_equal": true,
+    "image_dimensions": [1558,769],
+    "comparison_limit": "Baseline was auto-LOD, predicted index1; final images were explicitly forced LOD0/1/2. Same camera comparison demonstrates appearance improvement, not an equal-LOD topology/performance comparison. Captures were settled at different editor ticks, not synchronized pixel-identical animation frames.",
+    "manifest_checks": [
+      {"phase":"baseline","forced_value":0,"predicted_lod_index":1,"manifest_sha256":"edf16b742ac0b3872c275803ff5be8f0587b02069ff53508ee9a468a669e8505"},
+      {"phase":"refined/lod-0","forced_value":1,"predicted_lod_index":0,"manifest_sha256":"21d29b41c2ada3fb904244822ab48ce3a9c5dce016f1a0088d625084f4097b61"},
+      {"phase":"refined/lod-1","forced_value":2,"predicted_lod_index":1,"manifest_sha256":"d61f27992197e97fdbca1cdea9d6e2e0d52aa713f094e7f9d7062c54fbb1a692"},
+      {"phase":"refined/lod-2","forced_value":3,"predicted_lod_index":2,"manifest_sha256":"9f4b9278e1d2e5be39c7ab659138919bec229e1ce7cc8de97f2760824f28e112"}
+    ],
+    "each_final_capture_checked": "Each capture's frame-state confirms the final FBX hash, expected mesh, matching forced and predicted LOD, animation-in-editor enabled and real editor ticks after camera changes. Review does not infer rendered LOD from folder names alone.",
+    "camera_views": {
+      "village-front":{"location":{"x":440,"y":-1950,"z":125},"rotation":{"pitch":-8,"yaw":90,"roll":0}},
+      "village-face":{"location":{"x":440,"y":-1730,"z":160},"rotation":{"pitch":-3,"yaw":90,"roll":0}},
+      "village-oblique":{"location":{"x":620,"y":-1850,"z":135},"rotation":{"pitch":-10,"yaw":126.87,"roll":0}}
+    }
+  },
+  "actual_image_ledger": [
+    {"phase":"baseline","view":"village-front","sha256":"c9e8642d0ef686cd8e349a5936460c79d80a7652c792cf134a958901a14a25ad"},
+    {"phase":"baseline","view":"village-face","sha256":"3b9b622679076a0b2871e25f55d8ad1967f98501ac2d5644bf65c3d6bb7107a1"},
+    {"phase":"baseline","view":"village-oblique","sha256":"dd248b04e137b97d0c9ec523fccfb9000d037b025e58246b36823ad7ba98ef32"},
+    {"phase":"refined/lod-0","view":"village-front","sha256":"c5808f963b22d591e38bdf35429461f611c3ba5b9d458b1ac7c888b954febbda"},
+    {"phase":"refined/lod-0","view":"village-face","sha256":"437f2fc729fd4b68545d2506e0b0d773123b9e1667e0f6afc02d57603c01044e"},
+    {"phase":"refined/lod-0","view":"village-oblique","sha256":"ee4984bac1c738077fdb3fd202c56cabf8a265c662a19c6c1ef617a0d0d185ff"},
+    {"phase":"refined/lod-1","view":"village-front","sha256":"7c01030c01d5fac2d019627eaafac3adb33260240f7f36c7ecf0ecb9f71fe7d3"},
+    {"phase":"refined/lod-1","view":"village-face","sha256":"a043814f1ac64c0fdd50988041bb62fd57d67a3ce6fd824136c8c6a44bca6ee4"},
+    {"phase":"refined/lod-1","view":"village-oblique","sha256":"4a1282c6c6af32fb6f9d8d26221736c31fbe6f804816b74dd8ac727bf1440d14"},
+    {"phase":"refined/lod-2","view":"village-front","sha256":"fca7089995302b6a21842ecf268cc3cf8b09113c263e2fef45832ab5006b9378"},
+    {"phase":"refined/lod-2","view":"village-face","sha256":"016ea9606098ce8a92e7c58ed0cd5ea2feee77c4f8d817f7b0e4d5023f4eb49c"},
+    {"phase":"refined/lod-2","view":"village-oblique","sha256":"6173129b12872eb5e595a4df9a50bda3966aa98e8b55ee03330ec24347694693"}
+  ],
+  "read_report_findings_separate_from_visual_approval": {
+    "import_state":"completed",
+    "application_status":"imported_and_applied",
+    "actual_ue_height_cm":169.99999880090422,
+    "material_slots":1,
+    "owned_material_assets":"one parent plus one material instance",
+    "four_maps_4096_verified_in_report":["BaseColor","Roughness","Metallic","Normal"],
+    "basecolor_srgb":true,
+    "roughness_metallic_normal_srgb":false,
+    "normal_compression":"TC_NORMALMAP",
+    "normal_flip_green_channel":true,
+    "same_idle_skeleton":true,
+    "idle_seconds":2,
+    "authored_bones":23,
+    "ue_wrapper_bone":"Arin_Rig",
+    "lod_metrics_from_report":[
+      {"index":0,"vertices":110688,"sections":1,"triangles":null,"target_triangle_ratio":1.0},
+      {"index":1,"vertices":100176,"sections":1,"triangles":null,"target_triangle_ratio":0.8500000238418579},
+      {"index":2,"vertices":81219,"sections":1,"triangles":null,"target_triangle_ratio":0.6499999761581421}
+    ],
+    "triangle_and_performance_limit":"Exact Unreal render-data triangle counts are not exposed in this report; do not calculate them from vertices or reduction targets. No frame-time, GPU, memory or target-platform benchmark was performed by this reviewer.",
+    "guide_configuration":"Report identifies DA_StartVillageGuide, BP_StartVillageGuide and live actor component using RefinedV3 mesh and same looping/playing single-node Idle; report preserves dialogue/supplies. These configuration facts are not a hands-on gameplay test."
+  },
+  "visual_requirements": [
+    {
+      "id":"UE-01","status":"pass","priority":"preserve",
+      "requirement":"Reference character identity remains improved in actual engine lighting",
+      "observation_ko":"기존 v2의 작은 눈과 단순한 얼굴·머리·평평한 민트색 옷에 비해 실제 엔진에서도 큰 눈과 부드러운 얼굴, 옆가르마 웨이브와 braid, olive hooded cape, 잎 자수, ivory cloth, 가죽 장비·붉은 물약이 명확하게 개선됐다. 전신과 사선 화면에서도 캐릭터 인상이 첨부 이미지에 훨씬 가깝다.",
+      "views":"baseline and all refined village-front/face/oblique views"
+    },
+    {
+      "id":"UE-02","status":"pass","priority":"preserve",
+      "requirement":"Face/eyes/neck and garments remain intact after import",
+      "observation_ko":"큰 눈과 양쪽 iris, 코와 입, braid와 후드, 가슴의 끈/브로치, 망토 자수와 cloth/leather 표면이 모든 LOD의 얼굴 화면에서 유지된다. 소스 수리 전 목 전체의 큰 색 모자이크가 재현되지 않고, 현재 보이는 명암은 머리·망토 아래의 짙은 그림자와 함께 읽힌다. 새로 생긴 큰 팔 가시·옷자락 찢김·장비 분리는 보이지 않는다.",
+      "views":"refined LOD0/1/2, three views each",
+      "limit_ko":"정면·사선의 해당 editor Idle 프레임만 검토했다. 엔진 뒤쪽·극단 자세·손 grasp·연속 보행의 교차가 없다는 뜻은 아니다. 원본 2K texture의 얼굴/눈·입 세부와 별도 얼굴/손가락 bones 부재는 그대로 남는다."
+    },
+    {
+      "id":"UE-03","status":"pass","priority":"preserve",
+      "requirement":"LOD0 to LOD1 to LOD2 preserve important appearance",
+      "observation_ko":"강제로 확인된 LOD0/1/2에서 얼굴 윤곽과 눈 위치, 머리와 braid, cape/leaf border, torso/strap/belt, bag/potions, 바지·부츠 실루엣이 연속적으로 유지된다. 얼굴 카메라에서도 눈·코·입·옷깃이 갑자기 사라지거나 큰 구멍/새 black triangle이 생기는 모습은 보이지 않는다.",
+      "views":"matching village-front, village-face and village-oblique across three LODs",
+      "limit_ko":"이것은 세 LOD를 별도로 고정해 찍은 정적 샘플의 연속성 검토다. 실제 이동 카메라에서 자동 LOD 경계의 순간 pop이나 animation 중 전체 변형을 측정하지 않았다."
+    },
+    {
+      "id":"UE-04","status":"pass","priority":"preserve",
+      "requirement":"Scene placement and cast shadow remain plausible",
+      "observation_ko":"기존 위치에서 양 부츠가 잔디면 근처에 놓이고 전신 스케일은 마을과 자연스럽게 이어진다. 모든 LOD에서 발 아래에서 시작해 같은 방향으로 뻗는 인물 그림자가 보이며, 떠 있는 큰 간격이나 떨어진 신체의 별도 그림자는 없다.",
+      "limit_ko":"지면 접촉의 정적 미술 검토이며 충돌/physics, ground projection 또는 전체 Idle foot sliding 측정은 아니다."
+    },
+    {
+      "id":"UE-05","status":"unclear","priority":2,
+      "requirement":"Closeup lighting communicates the face as well as the neutral reference",
+      "observation_ko":"마을의 현재 조명에서 얼굴·브로치·바지는 Blender studio와 레퍼런스보다 어둡고 머리 shadow가 눈 주변을 강하게 덮는다. 얼굴의 눈과 표정은 알아볼 수 있지만 대화 화면을 더 가까이 보여줄 때 조명 방향과 fill을 별도로 조정할 여지가 있다. 정수리의 원본 밝은 띠는 이 엔진 조명에서는 훨씬 덜 희게 보인다.",
+      "approximate_lod0_face_view_subject_bounds":[693,266,855,521],
+      "limit_ko":"일부 baked source 명암과 engine lighting 영향은 여기서 채널별로 분리하지 않았다. 엔진에서 crease가 덜 보인다는 이유로 소스의 머리 closeup 한계가 수리됐다고 주장하지 않는다. 현재 캐릭터 적용을 막는 새 결함은 아니다."
+    },
+    {
+      "id":"UE-06","status":"unclear","priority":"separate_runtime_gate",
+      "requirement":"NPC interaction and saved appearance persistence",
+      "observation_ko":"실제 Unreal editor 외형과 LOD 검토는 통과한다. PIE 대화·물약 지급·중복 지급 방지·특성 강화와 저장 후 재로드 확인은 root의 별도 검증 증거가 필요하며 본 기록은 이를 승인하지 않는다."
+    }
+  ],
+  "decision":"actual_unreal_editor_appearance_and_sampled_lod_continuity_pass_with_recorded_lighting_and_source_limits",
+  "not_claimed":[
+    "performance benchmark",
+    "exact Unreal runtime triangle count",
+    "continuous automatic LOD transition test",
+    "facial or finger animation production",
+    "full locomotion or all-pose collision validation",
+    "PIE tutorial reward/trait functionality from screenshots",
+    "asset persistence after reload from viewport captures",
+    "source hair/texture limitations resolved solely by scene shadows"
+  ]
+}

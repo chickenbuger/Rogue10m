@@ -1,0 +1,13 @@
+{
+  "meta": null,
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"ok\": true,\n  \"version\": \"0.1.0\",\n  \"url\": \"http://127.0.0.1:8734\",\n  \"workers\": [\n    \"bridge\",\n    \"convert\",\n    \"export\",\n    \"export_grade_pack\",\n    \"generate_3d\",\n    \"generate_concepts\",\n    \"generate_multiview\",\n    \"generate_quality_variants\",\n    \"lod\",\n    \"mesh_cleanup\",\n    \"qa\",\n    \"remesh\",\n    \"repair_until_quality\",\n    \"resize\",\n    \"retexture\",\n    \"run_plan\",\n    \"texture\",\n    \"texture_edit\",\n    \"uv_unwrap\"\n  ],\n  \"providers\": {\n    \"ok\": [\n      \"apollo_cutout\",\n      \"apollo_hull\",\n      \"apollo_primitive\",\n      \"apollo_relief\",\n      \"apollo_sketch\",\n      \"trimesh_tools\",\n      \"upload\",\n      \"xatlas_uv\"\n    ],\n    \"missing_config\": [\n      \"gemini_image\",\n      \"openai_image\",\n      \"triposg\"\n    ],\n    \"unreachable\": [\n      \"comfyui\",\n      \"hunyuan3d\",\n      \"sf3d\",\n      \"trellis\"\n    ],\n    \"not_installed\": [\n      \"blender_cli\",\n      \"gltf_transform\"\n    ],\n    \"error\": []\n  },\n  \"note\": \"built-in apollo_* providers are honest CPU draft lanes, not hosted models\"\n}",
+      "annotations": null,
+      "meta": null
+    }
+  ],
+  "structuredContent": null,
+  "isError": false
+}

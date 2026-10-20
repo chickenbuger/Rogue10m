@@ -1,0 +1,476 @@
+{
+  "status": "prepared_only_guide_unchanged",
+  "source_hashes": {
+    "Arin.RefinedFBXSHA256": "aa4298d51a6917f245f4be4f9c1dca3ae739ec80d7d4fb44b3157a0a2b8979c3",
+    "Arin.SurfaceManifestSHA256": "ac36ca632a2bbf5f126236e273324c229a1b741fc07459190dec69189c3b9a12",
+    "Arin.TextureBundleSHA256": "e116bf2806999b94020dbf0a537ac7e73f3a7dff2d8b571d20a526e698048b73"
+  },
+  "recovery": {
+    "reused_imported_assets": 19,
+    "new_material_assets": 5,
+    "reimport_or_overwrite": false,
+    "before_resource_sizes": {
+      "T_Arin_Face_BaseColor": [
+        2048,
+        2048
+      ],
+      "T_Arin_Face_Roughness": [
+        2048,
+        2048
+      ],
+      "T_Arin_Face_Metallic": [
+        32,
+        32
+      ],
+      "T_Arin_Face_Normal": [
+        32,
+        32
+      ],
+      "T_Arin_Hair_BaseColor": [
+        2048,
+        2048
+      ],
+      "T_Arin_Hair_Roughness": [
+        32,
+        32
+      ],
+      "T_Arin_Hair_Metallic": [
+        32,
+        32
+      ],
+      "T_Arin_Hair_Normal": [
+        32,
+        32
+      ],
+      "T_Arin_Cloth_BaseColor": [
+        4096,
+        4096
+      ],
+      "T_Arin_Cloth_Roughness": [
+        4096,
+        4096
+      ],
+      "T_Arin_Cloth_Metallic": [
+        4096,
+        4096
+      ],
+      "T_Arin_Cloth_Normal": [
+        4096,
+        4096
+      ],
+      "T_Arin_Gear_BaseColor": [
+        2048,
+        2048
+      ],
+      "T_Arin_Gear_Roughness": [
+        2048,
+        2048
+      ],
+      "T_Arin_Gear_Metallic": [
+        2048,
+        2048
+      ],
+      "T_Arin_Gear_Normal": [
+        2048,
+        2048
+      ]
+    },
+    "solution": "single set_editor_properties/PostEditChange per texture plus official Editor.AsyncTextureCompilationFinishAll"
+  },
+  "core": {
+    "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin.SK_Arin",
+    "skeleton": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin_Skeleton.SK_Arin_Skeleton",
+    "idle": "/Game/Rogue10m/Characters/Arin/RefinedV2/ArinIdle.ArinIdle",
+    "idle_seconds": 2.0,
+    "same_skeleton": true,
+    "bounds_size_cm": [
+      158.60794067382812,
+      32.58693885803223,
+      170.00000074943506
+    ],
+    "bounds_origin_cm": [
+      0.0,
+      -1.0939111709594727,
+      84.99999962528247
+    ],
+    "bone_names": [
+      "Arin_Rig",
+      "root",
+      "pelvis",
+      "spine_01",
+      "spine_02",
+      "spine_03",
+      "neck",
+      "head",
+      "clavicle_l",
+      "upperarm_l",
+      "lowerarm_l",
+      "hand_l",
+      "clavicle_r",
+      "upperarm_r",
+      "lowerarm_r",
+      "hand_r",
+      "thigh_l",
+      "calf_l",
+      "foot_l",
+      "ball_l",
+      "thigh_r",
+      "calf_r",
+      "foot_r",
+      "ball_r"
+    ],
+    "known_dimension_test": {
+      "expected_height_cm": 170,
+      "observed_height_cm": 170.00000074943506
+    },
+    "normal_import_settings": {
+      "normal_import_method": "<FBXNormalImportMethod.FBXNIM_IMPORT_NORMALS: 1>",
+      "normal_generation_method": "<FBXNormalGenerationMethod.MIKK_T_SPACE: 1>",
+      "compute_weighted_normals": "False"
+    },
+    "mesh_collision_plan": "existing detection sphere and non-colliding guide mesh preserved; no mesh physics asset"
+  },
+  "textures": [
+    {
+      "group": "Face",
+      "channel": "BaseColor",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_BaseColor.T_Arin_Face_BaseColor",
+      "size": [
+        2048,
+        2048
+      ],
+      "srgb": true,
+      "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+      "flip_green_channel": false,
+      "source_sha256": "3bbb52d17a7cae4671ab340f83209a93132d91d944fd7c3b1eab8b0d0666a71f"
+    },
+    {
+      "group": "Face",
+      "channel": "Roughness",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Roughness.T_Arin_Face_Roughness",
+      "size": [
+        2048,
+        2048
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "flip_green_channel": false,
+      "source_sha256": "36e2708469866f31bc0c2fa01e11fa89799e2a5c7d16e9b62c89c6ff358d7098"
+    },
+    {
+      "group": "Face",
+      "channel": "Metallic",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Metallic.T_Arin_Face_Metallic",
+      "size": [
+        2048,
+        2048
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "flip_green_channel": false,
+      "source_sha256": "863100354a621fb533ccdff403d08fa6b46cb599eedeaf0b5e04a24dc67f7d25"
+    },
+    {
+      "group": "Face",
+      "channel": "Normal",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Normal.T_Arin_Face_Normal",
+      "size": [
+        2048,
+        2048
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+      "flip_green_channel": true,
+      "source_sha256": "9e7a12f8a8a3eca0ef7819592d600f1a05f9f4b9fba6adabbaff859d9bdac54c"
+    },
+    {
+      "group": "Hair",
+      "channel": "BaseColor",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_BaseColor.T_Arin_Hair_BaseColor",
+      "size": [
+        2048,
+        2048
+      ],
+      "srgb": true,
+      "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+      "flip_green_channel": false,
+      "source_sha256": "00597bda3c6c0e3a131c0ac8dd80edbc243c98ae98b3bc64379a0ab18c24960c"
+    },
+    {
+      "group": "Hair",
+      "channel": "Roughness",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Roughness.T_Arin_Hair_Roughness",
+      "size": [
+        2048,
+        2048
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "flip_green_channel": false,
+      "source_sha256": "dc1ea11737ecfcfe3670251571ea6c19354d490b3f268c70db8adff791aac57d"
+    },
+    {
+      "group": "Hair",
+      "channel": "Metallic",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Metallic.T_Arin_Hair_Metallic",
+      "size": [
+        2048,
+        2048
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "flip_green_channel": false,
+      "source_sha256": "863100354a621fb533ccdff403d08fa6b46cb599eedeaf0b5e04a24dc67f7d25"
+    },
+    {
+      "group": "Hair",
+      "channel": "Normal",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Normal.T_Arin_Hair_Normal",
+      "size": [
+        2048,
+        2048
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+      "flip_green_channel": true,
+      "source_sha256": "a086663e4f5eb8b723f1f9ea5e43324146652c8344dfa6c363008f75a8d080c5"
+    },
+    {
+      "group": "Cloth",
+      "channel": "BaseColor",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_BaseColor.T_Arin_Cloth_BaseColor",
+      "size": [
+        4096,
+        4096
+      ],
+      "srgb": true,
+      "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+      "flip_green_channel": false,
+      "source_sha256": "a0fd6ee7982eae85b23f9bb88461f3a341a437b7359045239e0f9490309e419f"
+    },
+    {
+      "group": "Cloth",
+      "channel": "Roughness",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Roughness.T_Arin_Cloth_Roughness",
+      "size": [
+        4096,
+        4096
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "flip_green_channel": false,
+      "source_sha256": "e1f24c4264b792cc79824f6c546831242cd2a33fa0c767b9fd35d5d4036a2df7"
+    },
+    {
+      "group": "Cloth",
+      "channel": "Metallic",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Metallic.T_Arin_Cloth_Metallic",
+      "size": [
+        4096,
+        4096
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "flip_green_channel": false,
+      "source_sha256": "777855bc471d5971db1e6d60c2bcb04f887056879d0bc1d404fd523afd92421c"
+    },
+    {
+      "group": "Cloth",
+      "channel": "Normal",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Normal.T_Arin_Cloth_Normal",
+      "size": [
+        4096,
+        4096
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+      "flip_green_channel": true,
+      "source_sha256": "4561d06c3b24113c04fd633ed476116f7e64643a56405e60dd73264cedb8bc86"
+    },
+    {
+      "group": "Gear",
+      "channel": "BaseColor",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_BaseColor.T_Arin_Gear_BaseColor",
+      "size": [
+        2048,
+        2048
+      ],
+      "srgb": true,
+      "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+      "flip_green_channel": false,
+      "source_sha256": "cf7d11f1ceed741273bbf9d8e7a0ac78b79918ece86553bdaf4886461a157d18"
+    },
+    {
+      "group": "Gear",
+      "channel": "Roughness",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Roughness.T_Arin_Gear_Roughness",
+      "size": [
+        2048,
+        2048
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "flip_green_channel": false,
+      "source_sha256": "74a11c20c99327217e1f2d871ee2412142f9f0c4027bc6e4286201d098d8e712"
+    },
+    {
+      "group": "Gear",
+      "channel": "Metallic",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Metallic.T_Arin_Gear_Metallic",
+      "size": [
+        2048,
+        2048
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "flip_green_channel": false,
+      "source_sha256": "61a3433e2e015404229d0142700fc8ad0cba38c40580557663d006d73ecc45b3"
+    },
+    {
+      "group": "Gear",
+      "channel": "Normal",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Normal.T_Arin_Gear_Normal",
+      "size": [
+        2048,
+        2048
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+      "flip_green_channel": true,
+      "source_sha256": "2de4d40f26e419d0358d675440e8ba134ff8ef02a6c2c0fffbec17f44f962245"
+    }
+  ],
+  "materials": [
+    {
+      "group": "Face",
+      "material": "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Face.MI_Arin_Face",
+      "parent": "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/M_Arin_PBR.M_Arin_PBR",
+      "textures": {
+        "BaseColor": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_BaseColor.T_Arin_Face_BaseColor",
+        "Roughness": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Roughness.T_Arin_Face_Roughness",
+        "Metallic": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Metallic.T_Arin_Face_Metallic",
+        "Normal": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Normal.T_Arin_Face_Normal"
+      }
+    },
+    {
+      "group": "Hair",
+      "material": "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Hair.MI_Arin_Hair",
+      "parent": "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/M_Arin_PBR.M_Arin_PBR",
+      "textures": {
+        "BaseColor": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_BaseColor.T_Arin_Hair_BaseColor",
+        "Roughness": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Roughness.T_Arin_Hair_Roughness",
+        "Metallic": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Metallic.T_Arin_Hair_Metallic",
+        "Normal": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Normal.T_Arin_Hair_Normal"
+      }
+    },
+    {
+      "group": "Cloth",
+      "material": "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Cloth.MI_Arin_Cloth",
+      "parent": "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/M_Arin_PBR.M_Arin_PBR",
+      "textures": {
+        "BaseColor": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_BaseColor.T_Arin_Cloth_BaseColor",
+        "Roughness": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Roughness.T_Arin_Cloth_Roughness",
+        "Metallic": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Metallic.T_Arin_Cloth_Metallic",
+        "Normal": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Normal.T_Arin_Cloth_Normal"
+      }
+    },
+    {
+      "group": "Gear",
+      "material": "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Gear.MI_Arin_Gear",
+      "parent": "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/M_Arin_PBR.M_Arin_PBR",
+      "textures": {
+        "BaseColor": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_BaseColor.T_Arin_Gear_BaseColor",
+        "Roughness": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Roughness.T_Arin_Gear_Roughness",
+        "Metallic": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Metallic.T_Arin_Gear_Metallic",
+        "Normal": "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Normal.T_Arin_Gear_Normal"
+      }
+    }
+  ],
+  "slots": [
+    {
+      "index": 0,
+      "group": "Cloth",
+      "material": "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Cloth.MI_Arin_Cloth"
+    },
+    {
+      "index": 1,
+      "group": "Face",
+      "material": "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Face.MI_Arin_Face"
+    },
+    {
+      "index": 2,
+      "group": "Gear",
+      "material": "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Gear.MI_Arin_Gear"
+    },
+    {
+      "index": 3,
+      "group": "Hair",
+      "material": "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Hair.MI_Arin_Hair"
+    }
+  ],
+  "lods": {
+    "count": 3,
+    "metrics": [
+      {
+        "index": 0,
+        "vertices": 40211,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 1,
+        "vertices": 13555,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 2,
+        "vertices": 7803,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      }
+    ],
+    "generation": "SkeletalMeshEditorSubsystem.regenerate_lod(mesh, 3, False, False)",
+    "lod0_regeneration": false,
+    "requested_ratios": [
+      1,
+      0.5,
+      0.25
+    ],
+    "same_skeleton_and_materials": true,
+    "visual_review_required": true,
+    "runtime_triangle_count_limitation": "Exact runtime triangles need a separate exposed render-data/export inspection; do not infer them from vertices or reduction targets."
+  },
+  "saved_assets": [
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_BaseColor",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Roughness",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Metallic",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Normal",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_BaseColor",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Roughness",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Metallic",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Normal",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_BaseColor",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Roughness",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Metallic",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Normal",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_BaseColor",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Roughness",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Metallic",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Normal",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/M_Arin_PBR",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Face",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Hair",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Cloth",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Gear",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin_Skeleton",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/ArinIdle",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin"
+  ]
+}

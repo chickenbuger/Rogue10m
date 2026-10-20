@@ -1,0 +1,33 @@
+{
+  "status": "static_draft_exported_npc_acceptance_failed",
+  "provider": "unchanged ApolloHullAdapter.generate",
+  "provider_lane": "local_draft",
+  "vendor_commit": "8cadd481d0155589b39456a6266d88072d7111cf",
+  "geometry_checks": {
+    "geometry_present": true,
+    "closed_surface": true,
+    "consistent_winding": true,
+    "positive_enclosed_volume": true,
+    "single_connected_component": true,
+    "finite_vertices": true,
+    "finite_normals": true,
+    "face_budget": true,
+    "height_170cm": true,
+    "feet_at_zero": true,
+    "nonflat_humanoid_depth": true
+  },
+  "triangles": 24880,
+  "height_m": 1.7,
+  "armatures": 0,
+  "animations": 0,
+  "appearance": "geometry-only, no production textures",
+  "npc_applied": false,
+  "existing_npc_preserved": true,
+  "rig_failure": "No arm-down pose passed the deformation checks; no game FBX exported",
+  "interpretation": "Apollo ready/upload score is pipeline readiness; it does not certify NPC appearance or animation.",
+  "actual_fbx": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\hull-export-pack\\assets\\model.fbx",
+  "fbx_sha256": "06c31ea29bb8dc643889f5c7eae4fed3053f2df59839b24e3bd342f8e8449aff",
+  "fbx_bytes": 659468,
+  "glb_sha256": "77aee1ac1a6827d5f91fa83b4249b6496f2e9917e6bc64fc73311e106b2715fb",
+  "native_archive_sha256": "f308315dc179bb1cec27e255171e2f704728d1020aef5b5efb0ffe761940fab9"
+}

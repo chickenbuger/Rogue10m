@@ -1,0 +1,12 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"returnValue\":{\"name\":\"PCG_OpenWorldWoodland\",\"graphParamsSchema\":\"{\\\"forestCenter\\\":{\\\"title\\\":\\\"Vector\\\",\\\"description\\\":\\\"World location of a legal forest tile\\\",\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"x\\\":{\\\"type\\\":\\\"number\\\"},\\\"y\\\":{\\\"type\\\":\\\"number\\\"},\\\"z\\\":{\\\"type\\\":\\\"number\\\"}},\\\"required\\\":[\\\"x\\\",\\\"y\\\",\\\"z\\\"]},\\\"tileWidth\\\":{\\\"type\\\":\\\"number\\\",\\\"description\\\":\\\"Tile side length in centimeters\\\"},\\\"density\\\":{\\\"type\\\":\\\"number\\\",\\\"description\\\":\\\"Trees per square meter\\\"},\\\"meshAssets\\\":{\\\"type\\\":\\\"array\\\",\\\"items\\\":{\\\"type\\\":\\\"object\\\",\\\"title\\\":\\\"/Script/CoreUObject.Object\\\",\\\"properties\\\":{\\\"refPath\\\":{\\\"type\\\":\\\"string\\\",\\\"description\\\":\\\"소프트 경로 스트링으로 저장된 레퍼런스입니다.\\\"}},\\\"required\\\":[\\\"refPath\\\"]},\\\"description\\\":\\\"Purchased tree references; override per biome\\\"}}\",\"inputPins\":[{\"name\":\"In\",\"type\":\"Spatial\",\"description\":\"디폴트 입력 핀\"}],\"outputPins\":[{\"name\":\"Out\",\"type\":\"Any\",\"description\":\"\"}]}}"
+      }
+    ]
+  }
+}

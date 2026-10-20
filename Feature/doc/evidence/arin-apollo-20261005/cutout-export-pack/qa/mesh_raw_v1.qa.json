@@ -1,0 +1,104 @@
+{
+  "id": "qar_1m45cpchv0093e0fx9v",
+  "asset_id": "ast_1m45c3php007vt0fzyt",
+  "node_id": "nod_1m45cpcht00yk1ns6kc",
+  "stage": "mesh",
+  "status": "pass",
+  "score": 1.0,
+  "created_at": "2026-10-05T06:40:51.259674+00:00",
+  "checks": [
+    {
+      "name": "glb_parses",
+      "status": "pass",
+      "message": "1 mesh(es)",
+      "metrics": {}
+    },
+    {
+      "name": "geometry_present",
+      "status": "pass",
+      "message": "10204 vertices, 20404 faces",
+      "metrics": {
+        "vertices": 10204,
+        "faces": 20404
+      }
+    },
+    {
+      "name": "polycount_budget",
+      "status": "pass",
+      "message": "20404 faces vs budget 30000 (0.7x)",
+      "metrics": {
+        "faces": 20404,
+        "budget": 30000
+      }
+    },
+    {
+      "name": "bounding_box",
+      "status": "pass",
+      "message": "extents [1.6458, 1.6393, 0.12]",
+      "metrics": {
+        "extents": [
+          1.6458293199539185,
+          1.639285683631897,
+          0.11999999359250069
+        ]
+      }
+    },
+    {
+      "name": "floating_components",
+      "status": "pass",
+      "message": "single connected component",
+      "metrics": {
+        "components": 1
+      }
+    },
+    {
+      "name": "normals",
+      "status": "pass",
+      "message": "finite=True, winding_consistent=True",
+      "metrics": {
+        "winding_consistent": true
+      }
+    },
+    {
+      "name": "degenerate_faces",
+      "status": "pass",
+      "message": "0 degenerate faces",
+      "metrics": {
+        "degenerate": 0
+      }
+    },
+    {
+      "name": "watertight",
+      "status": "pass",
+      "message": "informational for non-print targets",
+      "metrics": {
+        "watertight": true
+      }
+    },
+    {
+      "name": "materials",
+      "status": "pass",
+      "message": "1 material(s)",
+      "metrics": {
+        "material_count": 1
+      }
+    },
+    {
+      "name": "uv_coordinates",
+      "status": "pass",
+      "message": "UVs present",
+      "metrics": {
+        "has_uv": true
+      }
+    },
+    {
+      "name": "textures",
+      "status": "pass",
+      "message": "1 texture(s) embedded",
+      "metrics": {
+        "texture_count": 1
+      }
+    }
+  ],
+  "repair_suggestions": []
+}

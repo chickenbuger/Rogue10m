@@ -1,0 +1,6 @@
+{
+  "success": false,
+  "command": "import sys, importlib; sys.path.insert(0,'D:/Project/Rogue10m/Scripts/Editor'); import ValidateCompactCombatHUD; importlib.reload(ValidateCompactCombatHUD); ValidateCompactCombatHUD.main(['CanvasPanel_34','SystemLogContainer','UI_RunTimerText','MonsterInfoWidget','EquipmentShortcutWidget','ItemWindowShortcutWidget','SkillTreeShortcutWidget','SettingsShortcutWidget'])",
+  "result": "Traceback (most recent call last):\n\n  File \"<string>\", line 1, in <module>\n\n  File \"D:\\Project/Rogue10m/Scripts/Editor\\ValidateCompactCombatHUD.py\", line 110, in main\n    require(set(preserved_main_names).issubset(main_widgets), \"Unrelated Main HUD widgets must survive\")\n\n  File \"D:\\Project/Rogue10m/Scripts/Editor\\ValidateCompactCombatHUD.py\", line 27, in require\n    raise RuntimeError(\"[Rogue10mCompactHUD] \" + message)\n\nRuntimeError: [Rogue10mCompactHUD] Unrelated Main HUD widgets must survive\n",
+  "output": []
+}

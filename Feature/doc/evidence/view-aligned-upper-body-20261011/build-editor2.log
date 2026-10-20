@@ -1,0 +1,79 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+UHT compiled-in object format Default
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mFighterCombatStanceAnimInstance.cpp, Rogue10mViewAlignedUpperBodyProxy.cpp, Rogue10mAppearanceCameraComponent.cpp, Rogue10mCharacterAnimationComponent.cpp, Rogue10mCombatComponent.cpp, Rogue10mCombatTestComponent.cpp, Rogue10mFirstPersonPresentationComponent.cpp, Rogue10mInventoryComponent.cpp, Rogue10mInventoryPersistence.cpp, Rogue10mSkillBindingComponent.cpp, Rogue10mTownProgressionComponent.cpp, Rogue10mTraitRuntimeComponent.cpp, Rogue10mVitalRegenerationComponent.cpp, Rogue10mCharacterProfileSubsystem.cpp, Rogue10mGameMode.cpp, Rogue10mPlayerController.cpp, Rogue10mPlayerState.cpp, Rogue10mProgressionSubsystem.cpp, Rogue10mMonsterDataAsset.cpp, Rogue10mTownServiceDataAsset.cpp, Rogue10mTraitCatalogDataAsset.cpp, Rogue10mFistCombatAuthoring.cpp, Rogue10mMovingAttackAuthoring.cpp, Rogue10mOpenWorldAuthoring.cpp, Rogue10mWalkPalmAuthoring.cpp, Rogue10mBasicMonster.cpp, Rogue10mMonsterAttackPatternComponent.cpp, Rogue10mMonsterAIController.cpp, Rogue10mAppearanceCameraRuntimeTest.cpp, Rogue10mCameraForwardRuntimeTest.cpp, Rogue10mCombatTestUIRuntimeTest.cpp, Rogue10mFighterCombatStanceRuntimeTest.cpp, Rogue10mFighterSkillTreeRuntimeTest.cpp, Rogue10mFistCombatRuntimeTest.cpp, Rogue10mInitialHeadFramingRuntimeTest.cpp, Rogue10mMonsterChaseEffectsRuntimeTest.cpp, Rogue10mMovingAttackRuntimeTest.cpp, Rogue10mProgressionFailureRuntimeTest.cpp, Rogue10mResponsiveHUDRuntimeTest.cpp, Rogue10mStoneFistAnimationRuntimeTest.cpp, Rogue10mThirdPersonInspectionRuntimeTest.cpp, Rogue10mTownRunRuntimeTest.cpp, Rogue10mTownServicesRuntimeTest.cpp, Rogue10mTownVisualRuntimeTest.cpp, Rogue10mTraitEffectsRuntimeTest.cpp, Rogue10mTraitPersistenceRuntimeTest.cpp, Rogue10mTraitUIRuntimeTest.cpp, Rogue10mViewAlignedUpperBodyTest.cpp, Rogue10mWalkPalmRuntimeTest.cpp, Rogue10mWeaponSkillTreeRuntimeTest.cpp, Rogue10mBottomHUDWidget.cpp, Rogue10mCombatTestWidget.cpp, Rogue10mHudWidgetParts.cpp, Rogue10mMainHUDWidget.cpp, Rogue10mMenuWindowWidgets.cpp, Rogue10mTraitWidget.cpp, Rogue10mTutorialWidget.cpp, Rogue10mDroppedItem.cpp, Rogue10mMonsterSpawner.cpp, Rogue10mOpenWorldBootstrap.cpp, Rogue10mRunPortal.cpp, Rogue10mTutorialAnimationComponent.cpp, Rogue10mTutorialNPC.cpp, Rogue10mTutorialRewardComponent.cpp, Rogue10mTutorialSupplySubsystem.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+  Requested 1.5 GB memory per action, 4.79 GB available: limiting max parallel actions to 3
+Using XGE executor to run 15 action(s)
+Distributing 15 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {127ADFC3-F97E-427E-A10E-6EDF7C63724B}
+ 
+--------------------Project: Default-------------------------------------------
+[1/15] Compile [x64] Rogue10mViewAlignedUpperBodyProxy.cpp (0:08.46 at +0:00)
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mViewAlignedUpperBodyProxy.cpp(180,84): error C2248: 'FAnimInstanceProxy::ComponentTransform': private ���('FAnimInstanceProxy' Ŭ�������� ����)�� �׼����� �� �����ϴ�.
+		const FTransform ParentTransform = Parent == INDEX_NONE ? FTransform::Identity : ComponentTransform(Pose, Parent);
+		                                                                                 ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Engine\Public\Animation\AnimInstanceProxy.h(1011,13): note: 'FAnimInstanceProxy::ComponentTransform' ������ �����Ͻʽÿ�.
+	FTransform ComponentTransform;
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Engine\Public\Animation\AnimInstanceProxy.h(143,8): note: 'FAnimInstanceProxy' ������ �����Ͻʽÿ�.
+struct FAnimInstanceProxy
+       ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mViewAlignedUpperBodyProxy.cpp(180,84): error C2064: ���� 2���� �μ��� �޾Ƶ��̴� �Լ��� ������ �ʽ��ϴ�.
+		const FTransform ParentTransform = Parent == INDEX_NONE ? FTransform::Identity : ComponentTransform(Pose, Parent);
+		                                                                                 ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mViewAlignedUpperBodyProxy.cpp(181,31): error C2248: 'FAnimInstanceProxy::ComponentTransform': private ���('FAnimInstanceProxy' Ŭ�������� ����)�� �׼����� �� �����ϴ�.
+		const FTransform Relative = ComponentTransform(Pose, Target).GetRelativeTransform(ParentTransform);
+		                            ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Engine\Public\Animation\AnimInstanceProxy.h(1011,13): note: 'FAnimInstanceProxy::ComponentTransform' ������ �����Ͻʽÿ�.
+	FTransform ComponentTransform;
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Engine\Public\Animation\AnimInstanceProxy.h(143,8): note: 'FAnimInstanceProxy' ������ �����Ͻʽÿ�.
+struct FAnimInstanceProxy
+       ^
+D:\Project\Rogue10m\Source\Rogue10m\Character\Rogue10mViewAlignedUpperBodyProxy.cpp(181,31): error C2064: ���� 2���� �μ��� �޾Ƶ��̴� �Լ��� ������ �ʽ��ϴ�.
+		const FTransform Relative = ComponentTransform(Pose, Target).GetRelativeTransform(ParentTransform);
+		                            ^
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[2/15] Compile [x64] Module.Rogue10m.6.cpp (0:18.60 at +0:00)
+[3/15] Compile [x64] Rogue10mFighterCombatStanceAnimInstance.cpp (0:18.64 at +0:00)
+[4/15] Compile [x64] Rogue10mFighterCombatStanceRuntimeTest.cpp (0:25.21 at +0:00)
+[5/15] Compile [x64] Rogue10mViewAlignedUpperBodyTest.cpp (0:25.15 at +0:00)
+[6/15] Compile [x64] Rogue10mWalkPalmRuntimeTest.cpp (0:25.61 at +0:00)
+[7/15] Compile [x64] Rogue10mMovingAttackRuntimeTest.cpp (0:25.96 at +0:00)
+[8/15] Compile [x64] Module.Rogue10m.2.cpp (0:29.06 at +0:00)
+[9/15] Compile [x64] Module.Rogue10m.5.cpp (0:32.67 at +0:00)
+[10/15] Compile [x64] Module.Rogue10m.3.cpp (0:37.15 at +0:00)
+[11/15] Compile [x64] Module.Rogue10m.4.cpp (0:38.43 at +0:00)
+[12/15] Compile [x64] Module.Rogue10m.1.cpp (0:46.71 at +0:00)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 0 succeeded, 1 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 51.50 seconds
+
+Result: Failed (OtherCompilationError)
+Total execution time: 57.51 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 4.5kb

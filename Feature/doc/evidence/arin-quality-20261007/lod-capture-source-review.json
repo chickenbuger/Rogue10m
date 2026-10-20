@@ -1,0 +1,180 @@
+{
+  "review_date": "2026-10-07",
+  "reviewer": "/root/arin_quality_validation",
+  "method": "Read-only local UE5.8 primary C++ source review plus direct opening of actual LOD0 village-face screenshot. No engine calls or runtime asset edits by reviewer.",
+  "observed_failure": {
+    "file": "D:/Project/Rogue10m/tmp/arin-lod1-capture.log",
+    "sha256": "dcae051d23f4e30580fc7d1a90887d052c7a21f2097e9d6bd1c86cdbd6a3ff07",
+    "forced_value": 2,
+    "predicted_lod_index": 0,
+    "update_animation_in_editor": true,
+    "lod1_validated": false
+  },
+  "restore_evidence": {
+    "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-1/restored-component.json",
+    "sha256": "7eeee764153d6e9dd2cf7dc919588b40dfe34113b0b36baf22377ecc2a8ffcbc",
+    "forced_value": 0,
+    "update_animation_in_editor": false
+  },
+  "conclusion": "Forced setting alone does not certify the rendered LOD. Existing failed LOD1 captures remain unverified and must not be accepted as LOD1 evidence. Component tick and effective editor realtime must be established before recapture.",
+  "primary_source_evidence": [
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/Components/SkinnedMeshComponent.cpp",
+      "lines": [
+        4502,
+        4504,
+        4505,
+        4667,
+        4671,
+        1867,
+        1869,
+        4750,
+        4753
+      ],
+      "fact": "SetForcedLOD sets streaming/rendered model fields. It does not call UpdateLODStatus or MarkRenderStateDirty. The component tick calls UpdateLODStatus, which calculates forced-1 as the predicted level."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/Components/SkeletalMeshComponent.cpp",
+      "lines": [
+        505,
+        2035,
+        2037,
+        2039,
+        5434,
+        5437,
+        5439
+      ],
+      "fact": "Skeletal mesh components tick in editor, but TickComponent exits while the skeletal mesh asset is compiling. SetUpdateAnimationInEditor only changes bUpdateAnimationInEditor for a registered component, without enabling tick or viewport realtime."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Classes/Components/SkinnedMeshComponent.h",
+      "lines": [
+        1101,
+        1681,
+        1684,
+        1693
+      ],
+      "fact": "SetForcedLOD explicitly documents next tick. UpdateLODStatus and SetPredictedLODLevel are not reflected UFUNCTIONs. GetPredictedLODLevel is reflected and remains a necessary actual check."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h",
+      "lines": [
+        1001,
+        1002,
+        1013,
+        1014
+      ],
+      "fact": "SetComponentTickEnabled and IsComponentTickEnabled are real reflected methods. Actual ticking still depends on world tick type and editor realtime."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/Components/ActorComponent.cpp",
+      "lines": [
+        1755,
+        1757,
+        1759
+      ],
+      "fact": "SetComponentTickEnabled only enables the primary component tick function if it can tick and is not a template; it does not change viewport realtime."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Editor/UnrealEd/Private/EditorEngine.cpp",
+      "lines": [
+        1806,
+        1807,
+        1813,
+        1814,
+        1958,
+        1964,
+        1967
+      ],
+      "fact": "Editor background CPU throttle adds a false realtime override when unfocused. Effective realtime false selects LEVELTICK_TimeOnly. Slate expensive-task throttling can also skip world ticking."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/LevelTick.cpp",
+      "lines": [
+        1650,
+        1651,
+        1736,
+        1737,
+        1742
+      ],
+      "fact": "LEVELTICK_TimeOnly skips actor/component tick scheduling. Drawing a framebuffer alone therefore does not establish UpdateLODStatus execution."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Editor/LevelEditor/Public/LevelEditorSubsystem.h",
+      "lines": [
+        68,
+        69
+      ],
+      "fact": "EditorSetViewportRealtime is reflected."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Editor/LevelEditor/Private/LevelEditorSubsystem.cpp",
+      "lines": [
+        223,
+        232,
+        234,
+        237,
+        238
+      ],
+      "fact": "EditorSetViewportRealtime(true) removes only its own Level Editor Subsystem false override. It does not set underlying realtime true or remove the separate Background Process override. Do not treat this as an unconditional realtime enable."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Editor/UnrealEd/Classes/Editor/EditorPerformanceSettings.h",
+      "lines": [
+        31,
+        72,
+        73,
+        74
+      ],
+      "fact": "EditorPerformanceSettings is an actual reflected settings class and bThrottleCPUWhenNotForeground is a reflected editable config property. Reading the actual setting can diagnose the background override. No settings changes were performed by reviewer."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/Components/SkinnedMeshComponent.cpp",
+      "lines": [
+        4525,
+        4528,
+        4531,
+        4535,
+        1315,
+        1316,
+        1321
+      ],
+      "fact": "SetMinLOD/OverrideMinLOD mark render state dirty, but CreateRenderState warns against changing LOD without animated bone update because it can cause skinning errors. A render-dirty-only workaround is not the preferred validation path."
+    }
+  ],
+  "recommended_root_owned_sequence": [
+    "Read actual guide component tick-enabled state and verify that the editor viewport effectively receives realtime world ticks. Check background throttle/focus and pending skeletal-mesh compilation rather than assuming update_animation_in_editor is sufficient.",
+    "If necessary, temporarily enable the reflected component tick, with original component state preserved and restored in finally. Avoid directly inventing reflected UpdateLODStatus/SetPredictedLODLevel calls.",
+    "Set the intended forced LOD, allow real editor ticks, and require GetPredictedLODLevel equals target before capturing. Keep a timeout/failure path instead of blessing captures on property readback alone.",
+    "Capture each intended LOD with actual model/path, current forced and predicted values, then restore all temporary component/camera/settings state without package modify/save.",
+    "If actual editor realtime cannot be established safely, an explicit root-owned PIE/SIE review can supply genuine game-world tick behavior; it requires an actual runtime component selector and separate verified evidence, not reinterpretation of the failed editor captures."
+  ],
+  "capture_temporal_review": {
+    "actual_image_opened": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-0/village-face.png",
+    "sha256": "5365edac97e8a6aff28d4a484fb13234dbad2df464cb46aba70af91f02dcfaf5",
+    "visual_observation": "Face/neck shadows are visibly stippled, and background sky/vegetation also show unstable/dither-like patterns. This is not confined to the character. Remaining scene icon/grid overlays are visible even with bShowUI=false.",
+    "temporal_cause_status": "plausible_capture_method_limit_not_proven",
+    "source": "D:/Program Files/UE_5.8/Engine/Plugins/Experimental/Toolsets/EditorToolset/Source/EditorToolset/Private/EditorAppToolset.cpp",
+    "lines": [
+      1085,
+      1089,
+      1117,
+      1119,
+      1120,
+      1124,
+      1125,
+      1126,
+      1129,
+      1133,
+      1134,
+      1144,
+      1148,
+      1152
+    ],
+    "source_fact": "CaptureViewport captures the active editor framebuffer, sets a supplied captureTransform, draws one frame synchronously, reads pixels, then restores the prior camera. It is not a scene-capture component and has no temporal warmup loop. bShowUI=false disables only ModeWidgets/SelectionOutline/Selection here, not every icon overlay.",
+    "recommended_sequence": "Preserve camera transform, use official SetCameraTransform to hold each review camera, permit real temporal frames while it remains fixed, capture with no captureTransform, then restore camera in finally. Compare settled images before attributing stippling or shadow color to the exported material. Do not silently modify scene lighting/materials to hide it.",
+    "final_lod_art_acceptance": "not_given_by_this_source_diagnosis"
+  },
+  "no_engine_execution": true,
+  "runtime_assets_modified": false
+}

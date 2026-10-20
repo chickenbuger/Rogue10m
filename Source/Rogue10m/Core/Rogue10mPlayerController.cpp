@@ -22,8 +22,14 @@
 #include "Rogue10mFirstPersonPresentationComponent.h"
 #include "Rogue10mCharacterProfileSubsystem.h"
 #include "Rogue10mCombatComponent.h"
+#include "Rogue10mCombatTestComponent.h"
+#include "Rogue10mCombatTestWidget.h"
+#include "Rogue10mSkillBindingComponent.h"
 #include "Rogue10mGameMode.h"
 #include "Rogue10mInventoryComponent.h"
+#include "Rogue10mPlayerState.h"
+#include "Rogue10mTownProgressionComponent.h"
+#include "Rogue10mTutorialNPC.h"
 #include "Rogue10mMenuGameMode.h"
 #include "Rogue10mGameState.h"
 #include "Rogue10mRunHUD.h"
@@ -31,6 +37,7 @@
 #include "Widgets/Rogue10mDamageIndicatorWidget.h"
 #include "Widgets/Rogue10mMainMenuWidget.h"
 #include "Widgets/Rogue10mMenuWindowWidgets.h"
+#include "Widgets/Rogue10mTraitWidget.h"
 #include "Widgets/Input/SVirtualJoystick.h"
 #include "UObject/ConstructorHelpers.h"
 
@@ -55,6 +62,8 @@ namespace
 
 ARogue10mPlayerController::ARogue10mPlayerController()
 {
+	SkillBindingComponent = CreateDefaultSubobject<URogue10mSkillBindingComponent>(TEXT("SkillBindingComponent"));
+	CombatTestComponent = CreateDefaultSubobject<URogue10mCombatTestComponent>(TEXT("CombatTestComponent"));
 	PlayerCameraManagerClass = ARogue10mCameraManager::StaticClass();
 	static ConstructorHelpers::FClassFinder<URogue10mDamageIndicatorWidget> DamageIndicatorWidgetFinder(
 		TEXT("/Game/Widget/Damage/WBP_DamageIndicator"));
@@ -76,7 +85,7 @@ ARogue10mPlayerController::ARogue10mPlayerController()
 	DefaultMainMenuWidgetClass = TSoftClassPtr<URogue10mMainMenuWidget>(
 		FSoftClassPath(TEXT("/Game/Widget/Menu/WBP_MainMenu.WBP_MainMenu_C")));
 	GameplayMap = TSoftObjectPtr<UWorld>(
-		FSoftObjectPath(TEXT("/Game/FirstPerson/Lvl_FirstPerson.Lvl_FirstPerson")));
+		FSoftObjectPath(TEXT("/Game/Rogue10m/Maps/StartHub.StartHub")));
 }
 
 void ARogue10mPlayerController::UpdateRotation(float DeltaTime)
@@ -95,6 +104,12 @@ void ARogue10mPlayerController::UpdateRotation(float DeltaTime)
 	}
 	// First-frame mouse input is applied after the initial baseline, just like later input.
 	Super::UpdateRotation(DeltaTime);
+}
+
+bool ARogue10mPlayerController::SetPause(bool bPause, FCanUnpause CanUnpauseDelegate)
+{
+	if (bPause && SkillBindingComponent) { SkillBindingComponent->CancelHeldInput(); }
+	return Super::SetPause(bPause, CanUnpauseDelegate);
 }
 
 void ARogue10mPlayerController::BeginPlay()
@@ -126,6 +141,7 @@ void ARogue10mPlayerController::BeginPlay()
 	InitializeRunHUD();
 	InitializeMenuWindows();
 	InitializeDamageIndicatorPool();
+	if (CombatTestComponent) CombatTestComponent->InitializeUI();
 	ResetIgnoreMoveInput();
 	ResetIgnoreLookInput();
 	UGameplayStatics::SetGamePaused(this, false);
@@ -146,6 +162,8 @@ void ARogue10mPlayerController::SetupInputComponent()
 	}
 
 	InputComponent->BindKey(EKeys::I, IE_Pressed, this, &ARogue10mPlayerController::ToggleInventory);
+	if (CombatTestComponent) CombatTestComponent->BindInput(InputComponent);
+	if (SkillBindingComponent) { SkillBindingComponent->InitializeBindings(InputComponent); }
 	InputComponent->BindKey(EKeys::P, IE_Pressed, this, &ARogue10mPlayerController::ToggleItemWindow);
 	InputComponent->BindKey(EKeys::K, IE_Pressed, this, &ARogue10mPlayerController::ToggleSkillTree);
 	InputComponent->BindKey(EKeys::O, IE_Pressed, this, &ARogue10mPlayerController::ToggleSettings);
@@ -175,6 +193,14 @@ void ARogue10mPlayerController::SetupInputComponent()
 			}
 		}
 	}
+}
+
+void ARogue10mPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	// Do not revive the dialogue/input stack while the controller is leaving its world.
+	TraitServiceNPC.Reset();
+	CloseTraitWindow();
+	Super::EndPlay(EndPlayReason);
 }
 
 void ARogue10mPlayerController::ToggleInspectionCamera()
@@ -234,17 +260,80 @@ void ARogue10mPlayerController::ToggleSkillTree()
 
 void ARogue10mPlayerController::ToggleSettings()
 {
+	if (bTraitWindowVisible) { CloseTraitWindow(); return; }
+	if (CombatTestComponent && CombatTestComponent->IsPanelOpen()) { CombatTestComponent->SetPanelOpen(false); return; }
 	SetPanelVisible(bSettingsVisible, !bSettingsVisible, nullptr);
 }
 
 void ARogue10mPlayerController::CloseAllBlockingPanels()
 {
+	CloseTraitWindow();
+	if (CombatTestComponent) CombatTestComponent->SetPanelOpen(false);
 	bInventoryVisible = false;
 	bItemWindowVisible = false;
 	bSkillTreeVisible = false;
 	bSettingsVisible = false;
 	ApplyMenuWindowVisibility();
 	RefreshInputMode();
+}
+
+bool ARogue10mPlayerController::OpenTraitWindow(ARogue10mTutorialNPC* ServiceNPC)
+{
+	if (!IsLocalPlayerController() || !IsValid(ServiceNPC) || IsMenuWorld()
+		|| (IsAnyBlockingWindowVisible() && (!bTraitWindowVisible || TraitServiceNPC.Get() != ServiceNPC)))
+	{
+		return false;
+	}
+	FText Reason;
+	if (!ServiceNPC->CanUseTraitWindow(Reason)) { return false; }
+	ARogue10mPlayerState* State = GetPlayerState<ARogue10mPlayerState>();
+	URogue10mTownProgressionComponent* Town = State ? State->GetTownProgressionComponent() : nullptr;
+	// NPC validation also admits a valid session awaiting a save retry. The widget
+	// still uses CanChangeTraits/CanUpgradeTrait for every investment and refund.
+	if (!Town) { return false; }
+	if (bTraitWindowVisible && TraitServiceNPC.Get() == ServiceNPC) { return true; }
+	if (!TraitWidget) { TraitWidget = CreateWidget<URogue10mTraitWidget>(this, URogue10mTraitWidget::StaticClass()); }
+	if (!TraitWidget) { return false; }
+	TraitServiceNPC = ServiceNPC;
+	bTraitWindowVisible = true;
+	// Every ignore push is paired with our own pop; unrelated ignore reasons are retained.
+	SetIgnoreMoveInput(true);
+	SetIgnoreLookInput(true);
+	bTraitAddedMoveIgnore = true;
+	bTraitAddedLookIgnore = true;
+	if (SkillBindingComponent) { SkillBindingComponent->CancelHeldInput(); }
+	if (ARogue10mCharacter* RogueCharacter = Cast<ARogue10mCharacter>(GetPawn()))
+	{
+		RogueCharacter->GetCharacterMovement()->StopMovementImmediately();
+		if (URogue10mCombatComponent* Combat = RogueCharacter->GetCombatComponent()) { Combat->CancelCombatVisuals(); }
+	}
+	TraitWidget->InitializeTraits(Town, ServiceNPC);
+	if (!TraitWidget->IsInViewport() && !TraitWidget->AddToPlayerScreen(200))
+	{
+		CloseTraitWindow();
+		return false;
+	}
+	TraitWidget->SetVisibility(ESlateVisibility::Visible);
+	RefreshInputMode();
+	TraitWidget->SetUserFocus(this);
+	return true;
+}
+
+void ARogue10mPlayerController::CloseTraitWindow()
+{
+	if (!bTraitWindowVisible && !bTraitAddedMoveIgnore && !bTraitAddedLookIgnore) { return; }
+	TWeakObjectPtr<ARogue10mTutorialNPC> PreviousNPC = TraitServiceNPC;
+	bTraitWindowVisible = false;
+	TraitServiceNPC.Reset();
+	if (TraitWidget)
+	{
+		TraitWidget->ReleaseContext();
+		TraitWidget->RemoveFromParent();
+	}
+	if (bTraitAddedMoveIgnore) { SetIgnoreMoveInput(false); bTraitAddedMoveIgnore = false; }
+	if (bTraitAddedLookIgnore) { SetIgnoreLookInput(false); bTraitAddedLookIgnore = false; }
+	RefreshInputMode();
+	if (PreviousNPC.IsValid()) { PreviousNPC->ResumeAfterTraitWindow(); }
 }
 
 void ARogue10mPlayerController::EnterSelectedCharacter()
@@ -331,10 +420,10 @@ bool ARogue10mPlayerController::TravelToGameplayMap()
 	bCharacterLobbyVisible = false;
 	UGameplayStatics::SetGamePaused(this, false);
 	UE_LOG(LogRogue10m, Log,
-		TEXT("Traveling from menu to gameplay map. Map=%s Options=StartRun=1"),
+		TEXT("Traveling from menu to starting hub. Map=%s"),
 		*MapPackageName);
-	UGameplayStatics::OpenLevel(
-		this, FName(*MapPackageName), true, TEXT("StartRun=1"));
+	// The hub keeps the run waiting; only its combat portal supplies StartRun.
+	UGameplayStatics::OpenLevel(this, FName(*MapPackageName), true);
 	return true;
 }
 void ARogue10mPlayerController::OpenCharacterLobbyFromMainMenu()
@@ -376,7 +465,8 @@ void ARogue10mPlayerController::OpenCharacterLobbyFromMainMenu()
 bool ARogue10mPlayerController::IsAnyBlockingWindowVisible() const
 {
 	return bMainMenuVisible || bCharacterLobbyVisible || bInventoryVisible
-		|| bItemWindowVisible || bSkillTreeVisible || bSettingsVisible;
+		|| bItemWindowVisible || bSkillTreeVisible || bSettingsVisible || bTraitWindowVisible
+		|| (CombatTestComponent && CombatTestComponent->IsPanelOpen());
 }
 
 void ARogue10mPlayerController::SetLookSensitivity(float NewSensitivityX, float NewSensitivityY)
@@ -886,6 +976,18 @@ void ARogue10mPlayerController::InitializeMainMenu()
 }
 void ARogue10mPlayerController::RefreshInputMode()
 {
+	if (IsAnyBlockingWindowVisible() && SkillBindingComponent) { SkillBindingComponent->CancelHeldInput(); }
+	if (bTraitWindowVisible && TraitWidget)
+	{
+		bShowMouseCursor = true;
+		bEnableClickEvents = true;
+		bEnableMouseOverEvents = true;
+		FInputModeUIOnly InputMode;
+		InputMode.SetWidgetToFocus(TraitWidget->TakeWidget());
+		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+		SetInputMode(InputMode);
+		return;
+	}
 	if (bMainMenuVisible && MainMenuWidget)
 	{
 		bShowMouseCursor = true;
@@ -918,6 +1020,7 @@ void ARogue10mPlayerController::RefreshInputMode()
 	{
 		FInputModeGameAndUI InputMode;
 		UUserWidget* FocusWidget = GetTopmostOpenMenuWindow();
+		if (CombatTestComponent && CombatTestComponent->IsPanelOpen()) FocusWidget = CombatTestComponent->GetWidget();
 		if (!FocusWidget) FocusWidget = RunHUD;
 		if (FocusWidget)
 		{
@@ -936,8 +1039,10 @@ void ARogue10mPlayerController::RefreshInputMode()
 void ARogue10mPlayerController::SetPanelVisible(
 	bool& PanelState, bool bVisible, URogue10mMenuWindowWidget* ActivatedWindow)
 {
+	if (bVisible && CombatTestComponent) CombatTestComponent->SetPanelOpen(false);
 	if (bVisible)
 	{
+		CloseTraitWindow();
 		bInventoryVisible = false;
 		bItemWindowVisible = false;
 		bSkillTreeVisible = false;
@@ -962,8 +1067,10 @@ void ARogue10mPlayerController::SetPanelVisible(
 void ARogue10mPlayerController::SetInventoryEquipmentPanelVisible(
 	bool& PanelState, bool bVisible, URogue10mMenuWindowWidget* ActivatedWindow)
 {
+	if (bVisible && CombatTestComponent) CombatTestComponent->SetPanelOpen(false);
 	if (bVisible)
 	{
+		CloseTraitWindow();
 		// 인벤토리와 장비창은 한 그룹으로 함께 열 수 있고, 다른 Blocking 창만 닫습니다.
 		bSkillTreeVisible = false;
 		bSettingsVisible = false;

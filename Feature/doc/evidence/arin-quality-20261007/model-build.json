@@ -1,0 +1,90 @@
+{
+  "status": "candidate_exported_requires_freshprocess_and_visual_review",
+  "blender_version": "4.5.14 LTS",
+  "authored_parts": 174,
+  "runtime_meshes": 4,
+  "triangles": 51634,
+  "bones": 23,
+  "materials": 4,
+  "units": "meters Zup front-Y",
+  "idle_seconds": 2,
+  "surface_manifest": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Refined\\surface-manifest.json",
+  "files": {
+    "Arin.blend": {
+      "bytes": 39786751,
+      "sha256": "3cde5f3c16d66ee3e1192db319c4a02d3b51991a8070b85e5c0cc75679b1c6df"
+    },
+    "Arin.fbx": {
+      "bytes": 34208780,
+      "sha256": "aa4298d51a6917f245f4be4f9c1dca3ae739ec80d7d4fb44b3157a0a2b8979c3"
+    },
+    "Arin.glb": {
+      "bytes": 34626676,
+      "sha256": "bf2d64e591d9b9d95d4abf063ec92d5b7d73142bb98ec0cf886656e127407c89"
+    },
+    "Arin_EditableParts.blend": {
+      "bytes": 6185302,
+      "sha256": "762f02ac8bbfe66ace3e5ea27c93d40f89efd33968d159b4bb5d000d4e3266f3"
+    },
+    "A_Arin_Idle.fbx": {
+      "bytes": 235372,
+      "sha256": "790fca224b48dc640fc1e771631244c6914aa720644415fd8516e28296a34f76"
+    },
+    "SK_Arin.fbx": {
+      "bytes": 34003244,
+      "sha256": "0a3e0049f820196ddc683a9d7ec8551e82acb121b63dcf09a1e6cf979ae78d47"
+    }
+  },
+  "skinning": "linear blend, influences measured by fresh-process validator, matches FBX/glTF/Unreal",
+  "coat_skinning": {
+    "objects": [
+      "Arin_GreenSplitCoatTail_L",
+      "Arin_TailFrontBorder_L",
+      "Arin_TailHem_L",
+      "Arin_GreenSplitCoatTail_R",
+      "Arin_TailFrontBorder_R",
+      "Arin_TailHem_R",
+      "Arin_IvoryFrontApron",
+      "Arin_ApronEmbroideredHem",
+      "Arin_ApronVine_-1",
+      "Arin_ApronLeaf_-1_0",
+      "Arin_ApronLeaf_-1_1",
+      "Arin_ApronLeaf_-1_2",
+      "Arin_ApronVine_1",
+      "Arin_ApronLeaf_1_0",
+      "Arin_ApronLeaf_1_1",
+      "Arin_ApronLeaf_1_2"
+    ],
+    "vertices": 1272,
+    "side_counts": {
+      "l": 3,
+      "r": 3,
+      "centre": 10
+    },
+    "weight_stops_metres": [
+      [
+        0.765,
+        "thigh_side"
+      ],
+      [
+        0.87,
+        "thigh_side"
+      ],
+      [
+        1.0,
+        "pelvis"
+      ]
+    ],
+    "part_side_used_at_centre": true,
+    "central_blend_half_width_metres": 0.045,
+    "maximum_influences": 3
+  },
+  "source_scripts_sha256": {
+    "BuildRefinedArin.py": "c3d639aa434a2c0360fd1df5355527a6043e5809b33a0b8bdda306b18955b4f5",
+    "BuildArin.py": "1b90962d1538395965e25c803500c9af6eed7977150aaa87d8a510c21bbfdc1f",
+    "ArinBodyRefined.py": "41db5ab4737105f7f94f583d81028fa77f2bc246c55996bc58f7cb8a23ded30c",
+    "ArinHeadRefined.py": "35df7d0a349c17ca87b7553483985379abf4720c2412cf7017ab2a5d0a6d0bf9",
+    "ArinSurface.py": "9ea1dc1522580f7e8417864c5dcf9f4e0af8a62d358eb0209b08018cf1b752e1",
+    "ArinCoatSkin.py": "179a774bcfabbdfdf9362356b38de0857fdb6ac7fd1d6d0df4c2d7a8b1880d61"
+  }
+}

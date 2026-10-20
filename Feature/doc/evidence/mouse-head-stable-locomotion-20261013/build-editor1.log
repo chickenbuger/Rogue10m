@@ -1,0 +1,91 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Invalidating makefile for Rogue10mEditor (source file added)
+UHT compiled-in object format Default
+UHT processed Rogue10mEditor in 7.518257 seconds (7 generated files written)
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mFighterCombatStanceAnimInstance.cpp, Rogue10mViewAlignedUpperBodyProxy.cpp, Rogue10mAppearanceCameraComponent.cpp, Rogue10mCharacterAnimationComponent.cpp, Rogue10mCombatComponent.cpp, Rogue10mCombatTestComponent.cpp, Rogue10mFirstPersonPresentationComponent.cpp, Rogue10mInventoryComponent.cpp, Rogue10mInventoryPersistence.cpp, Rogue10mSkillBindingComponent.cpp, Rogue10mTownProgressionComponent.cpp, Rogue10mTraitRuntimeComponent.cpp, Rogue10mVitalRegenerationComponent.cpp, Rogue10mCharacterProfileSubsystem.cpp, Rogue10mGameMode.cpp, Rogue10mPlayerController.cpp, Rogue10mPlayerState.cpp, Rogue10mProgressionSubsystem.cpp, Rogue10mMonsterDataAsset.cpp, Rogue10mTownServiceDataAsset.cpp, Rogue10mTraitCatalogDataAsset.cpp, Rogue10mFistCombatAuthoring.cpp, Rogue10mGroundLocomotionAuthoring.cpp, Rogue10mMovingAttackAuthoring.cpp, Rogue10mOpenWorldAuthoring.cpp, Rogue10mSafeHeadMontageAuthoring.cpp, Rogue10mWalkPalmAuthoring.cpp, Rogue10mBasicMonster.cpp, Rogue10mMonsterAttackPatternComponent.cpp, Rogue10mMonsterAIController.cpp, Rogue10mAppearanceCameraRuntimeTest.cpp, Rogue10mCameraForwardRuntimeTest.cpp, Rogue10mCombatTestUIRuntimeTest.cpp, Rogue10mFighterCombatStanceRuntimeTest.cpp, Rogue10mFighterSkillTreeRuntimeTest.cpp, Rogue10mFistCombatRuntimeTest.cpp, Rogue10mInitialHeadFramingRuntimeTest.cpp, Rogue10mMonsterChaseEffectsRuntimeTest.cpp, Rogue10mMouseHeadStableRuntimeTest.cpp, Rogue10mMovingAttackRuntimeTest.cpp, Rogue10mProgressionFailureRuntimeTest.cpp, Rogue10mResponsiveHUDRuntimeTest.cpp, Rogue10mStoneFistAnimationRuntimeTest.cpp, Rogue10mThirdPersonInspectionRuntimeTest.cpp, Rogue10mTownRunRuntimeTest.cpp, Rogue10mTownServicesRuntimeTest.cpp, Rogue10mTownVisualRuntimeTest.cpp, Rogue10mTraitEffectsRuntimeTest.cpp, Rogue10mTraitPersistenceRuntimeTest.cpp, Rogue10mTraitUIRuntimeTest.cpp, Rogue10mViewAlignedUpperBodyTest.cpp, Rogue10mWalkPalmRuntimeTest.cpp, Rogue10mWeaponSkillTreeRuntimeTest.cpp, Rogue10mBottomHUDWidget.cpp, Rogue10mCombatTestWidget.cpp, Rogue10mHudWidgetParts.cpp, Rogue10mMainHUDWidget.cpp, Rogue10mMenuWindowWidgets.cpp, Rogue10mTraitWidget.cpp, Rogue10mTutorialWidget.cpp, Rogue10mDroppedItem.cpp, Rogue10mMonsterSpawner.cpp, Rogue10mOpenWorldBootstrap.cpp, Rogue10mRunPortal.cpp, Rogue10mTutorialAnimationComponent.cpp, Rogue10mTutorialNPC.cpp, Rogue10mTutorialRewardComponent.cpp, Rogue10mTutorialSupplySubsystem.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+Using XGE executor to run 41 action(s)
+Distributing 41 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {FE7CC398-6FEA-4E45-98B4-8D0FD491789F}
+ 
+--------------------Project: Default-------------------------------------------
+[1/41] Compile [x64] Rogue10mFighterCombatStanceAnimInstance.cpp (0:09.65 at +0:00)
+[2/41] Compile [x64] Rogue10mAppearanceCameraComponent.cpp (0:10.79 at +0:00)
+[3/41] Compile [x64] Rogue10mFirstPersonPresentationComponent.cpp (0:11.09 at +0:00)
+[4/41] Compile [x64] Module.Rogue10m.2.cpp (0:13.25 at +0:00)
+[5/41] Compile [x64] Rogue10mGroundLocomotionAuthoring.cpp (0:03.42 at +0:10)
+D:\Project\Rogue10m\Source\Rogue10m\Editor\Rogue10mGroundLocomotionAuthoring.cpp(59,28): error C2039: 'GetAllGraphs': 'FBlueprintEditorUtils'�� ����� �ƴմϴ�.
+    FBlueprintEditorUtils::GetAllGraphs(Blueprint, Graphs);
+                           ^
+D:\Program Files\UE_5.8\Engine\Source\Editor\UnrealEd\Public\Kismet2\BlueprintEditorUtils.h(141,7): note: 'FBlueprintEditorUtils' ������ �����Ͻʽÿ�.
+class FBlueprintEditorUtils
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\Editor\Rogue10mGroundLocomotionAuthoring.cpp(59,28): error C3861: 'GetAllGraphs': �ĺ��ڸ� ã�� �� �����ϴ�.
+    FBlueprintEditorUtils::GetAllGraphs(Blueprint, Graphs);
+                           ^
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[6/41] Compile [x64] Rogue10mAppearanceCameraRuntimeTest.cpp (0:13.42 at +0:00)
+[7/41] Compile [x64] Rogue10mFighterCombatStanceRuntimeTest.cpp (0:13.26 at +0:00)
+[8/41] Compile [x64] Rogue10mCameraForwardRuntimeTest.cpp (0:14.64 at +0:00)
+[9/41] Compile [x64] Rogue10mCharacter.cpp (0:14.64 at +0:00)
+[10/41] Compile [x64] Rogue10mFistCombatRuntimeTest.cpp (0:15.12 at +0:00)
+[11/41] Compile [x64] Rogue10mCharacterAnimationComponent.cpp (0:16.62 at +0:00)
+[12/41] Compile [x64] Module.Rogue10m.5.cpp (0:17.67 at +0:00)
+[13/41] Compile [x64] Rogue10mFighterSkillTreeRuntimeTest.cpp (0:17.92 at +0:00)
+[14/41] Compile [x64] Rogue10mInitialHeadFramingRuntimeTest.cpp (0:09.12 at +0:12)
+[15/41] Compile [x64] Rogue10mInventoryPersistence.cpp (0:08.81 at +0:13)
+[16/41] Compile [x64] Rogue10mCombatComponent.cpp (0:21.89 at +0:00)
+[17/41] Compile [x64] Module.Rogue10m.3.cpp (0:24.40 at +0:00)
+[18/41] Compile [x64] Module.Rogue10m.4.cpp (0:25.04 at +0:00)
+[19/41] Compile [x64] Rogue10mProgressionSubsystem.cpp (0:09.57 at +0:16)
+[20/41] Compile [x64] Rogue10mHudWidgetParts.cpp (0:14.26 at +0:11)
+[21/41] Compile [x64] Rogue10mSafeHeadMontageAuthoring.cpp (0:08.07 at +0:18)
+[22/41] Compile [x64] Rogue10mProgressionFailureRuntimeTest.cpp (0:11.01 at +0:15)
+[23/41] Compile [x64] Rogue10mMenuWindowWidgets.cpp (0:14.06 at +0:13)
+[24/41] Compile [x64] Rogue10mMovingAttackRuntimeTest.cpp (0:15.57 at +0:14)
+[25/41] Compile [x64] Rogue10mSkillBindingComponent.cpp (0:12.46 at +0:18)
+[26/41] Compile [x64] Rogue10mMouseHeadStableRuntimeTest.cpp (0:17.36 at +0:14)
+[27/41] Compile [x64] Rogue10mThirdPersonInspectionRuntimeTest.cpp (0:09.36 at +0:22)
+[28/41] Compile [x64] Rogue10mPlayerController.cpp (0:16.62 at +0:15)
+[29/41] Compile [x64] Rogue10mViewAlignedUpperBodyProxy.cpp (0:07.04 at +0:25)
+[30/41] Compile [x64] Rogue10mTraitPersistenceRuntimeTest.cpp (0:08.04 at +0:25)
+[31/41] Compile [x64] Rogue10mStoneFistAnimationRuntimeTest.cpp (0:12.79 at +0:21)
+[32/41] Compile [x64] Rogue10mWeaponSkillTreeRuntimeTest.cpp (0:08.75 at +0:26)
+[33/41] Compile [x64] Rogue10mTownRunRuntimeTest.cpp (0:12.76 at +0:22)
+[34/41] Compile [x64] Rogue10mResponsiveHUDRuntimeTest.cpp (0:18.14 at +0:17)
+[35/41] Compile [x64] Rogue10mViewAlignedUpperBodyTest.cpp (0:11.17 at +0:25)
+[36/41] Compile [x64] Module.Rogue10m.1.cpp (0:37.04 at +0:00)
+[37/41] Compile [x64] Rogue10mWalkPalmRuntimeTest.cpp (0:11.20 at +0:26)
+[38/41] Compile [x64] Rogue10mTownServicesRuntimeTest.cpp (0:12.96 at +0:24)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 0 succeeded, 1 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 41.79 seconds
+
+Result: Failed (OtherCompilationError)
+Total execution time: 52.69 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 4.3kb

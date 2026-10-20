@@ -1,0 +1,234 @@
+{
+  "input_fbx_sha256": "45296f9fcbd0d182406c85d29f8627409e090dc0c97ec97815a8035221448f00",
+  "source_saved": false,
+  "geometry_modified": false,
+  "native_imported_action": [
+    {
+      "name": "Arin_Rig|Arin_Rig|Arin_Idle",
+      "frame_range": [
+        1.0,
+        61.0
+      ]
+    }
+  ],
+  "sampled_frames": [
+    1.0,
+    6.0,
+    11.0,
+    16.0,
+    21.0,
+    26.0,
+    31.0,
+    36.0,
+    41.0,
+    46.0,
+    51.0,
+    56.0,
+    61.0
+  ],
+  "render_resolution": [
+    600,
+    760
+  ],
+  "samples_per_frame": 16,
+  "cycles_denoising": true,
+  "gif": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-reference-refinement-20261009\\input-fbx\\final-export-poses-v4\\idle-motion\\Arin_Idle_2s.gif",
+  "gif_sha256": "4a1b7fc45ac00c1035bc106be782c1c47701fd6a55516fd073b90a15fc91487e",
+  "gif_frames": 12,
+  "gif_frame_durations_ms": [
+    170,
+    170,
+    160,
+    170,
+    170,
+    160,
+    170,
+    170,
+    160,
+    170,
+    170,
+    160
+  ],
+  "duration_ms": 2000,
+  "loop": 0,
+  "dropped_endpoint": {
+    "render_sample": 12,
+    "action_frame": 61.0,
+    "reason": "Frame 61 is the endpoint of the two-second loop. Use samples 0..11 to avoid displaying endpoint twice."
+  },
+  "all_13_png_sha_checked": true,
+  "contact_sheet": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-reference-refinement-20261009\\input-fbx\\final-export-poses-v4\\idle-motion\\idle-contact-sheet.png",
+  "contact_sheet_sha256": "c8d123dacbb6d45cf9e630933cad1f91198f5f2226f4469f81e6d8e4622a66c8",
+  "first_midpoint_pixel_difference": {
+    "bbox": null,
+    "mean_rgb": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "first_vs_each_non_endpoint_sample_pixel_difference": [
+    {
+      "sample": 1,
+      "frame": 6.0,
+      "bbox": [
+        0,
+        0,
+        600,
+        760
+      ],
+      "mean_rgb": [
+        0.35019736842105265,
+        0.31376973684210524,
+        0.2999122807017544
+      ]
+    },
+    {
+      "sample": 2,
+      "frame": 11.0,
+      "bbox": [
+        0,
+        0,
+        600,
+        760
+      ],
+      "mean_rgb": [
+        0.5635021929824562,
+        0.504673245614035,
+        0.48040570175438596
+      ]
+    },
+    {
+      "sample": 3,
+      "frame": 16.0,
+      "bbox": [
+        0,
+        0,
+        600,
+        760
+      ],
+      "mean_rgb": [
+        0.6395109649122807,
+        0.5724385964912281,
+        0.5449649122807018
+      ]
+    },
+    {
+      "sample": 4,
+      "frame": 21.0,
+      "bbox": [
+        0,
+        0,
+        600,
+        760
+      ],
+      "mean_rgb": [
+        0.5635021929824562,
+        0.504673245614035,
+        0.48040570175438596
+      ]
+    },
+    {
+      "sample": 5,
+      "frame": 26.0,
+      "bbox": [
+        0,
+        0,
+        600,
+        760
+      ],
+      "mean_rgb": [
+        0.35019736842105265,
+        0.31376973684210524,
+        0.2999122807017544
+      ]
+    },
+    {
+      "sample": 6,
+      "frame": 31.0,
+      "bbox": null,
+      "mean_rgb": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "sample": 7,
+      "frame": 36.0,
+      "bbox": [
+        0,
+        0,
+        600,
+        760
+      ],
+      "mean_rgb": [
+        0.3456425438596491,
+        0.30973903508771927,
+        0.29663815789473685
+      ]
+    },
+    {
+      "sample": 8,
+      "frame": 41.0,
+      "bbox": [
+        0,
+        0,
+        600,
+        760
+      ],
+      "mean_rgb": [
+        0.5657697368421053,
+        0.5064013157894737,
+        0.48248684210526316
+      ]
+    },
+    {
+      "sample": 9,
+      "frame": 46.0,
+      "bbox": [
+        0,
+        0,
+        600,
+        760
+      ],
+      "mean_rgb": [
+        0.6444276315789473,
+        0.5757916666666667,
+        0.5466929824561404
+      ]
+    },
+    {
+      "sample": 10,
+      "frame": 51.0,
+      "bbox": [
+        0,
+        0,
+        600,
+        760
+      ],
+      "mean_rgb": [
+        0.5657697368421053,
+        0.5064013157894737,
+        0.48248684210526316
+      ]
+    },
+    {
+      "sample": 11,
+      "frame": 56.0,
+      "bbox": [
+        0,
+        0,
+        600,
+        760
+      ],
+      "mean_rgb": [
+        0.3456425438596491,
+        0.30973903508771927,
+        0.29663815789473685
+      ]
+    }
+  ],
+  "at_least_one_sample_has_actual_pixel_motion": true,
+  "scope": "Actual fresh-imported 1..61 Idle action rendered at 13 frames; GIF is the first 12 samples over exactly 2 seconds."
+}

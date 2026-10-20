@@ -1,0 +1,34 @@
+{
+  "status": "contract_not_a_quality_pass",
+  "subject": "Arin v3 supplied FBX + reference image",
+  "method": "donor surface/UV preserved; local hair/bracer repair; fitted new 23-bone rig; shader PBR bake",
+  "inspector_contract": {
+    "max_triangles": 100000,
+    "max_materials": 1,
+    "expected_height_m": 1.7,
+    "height_tolerance_m": 0.01,
+    "require_uvs": true,
+    "min_uv_face_fraction": 0.995,
+    "require_skinning": true,
+    "maximum_bone_influences": 4,
+    "required_bones": ["root", "pelvis", "spine_01", "spine_02", "spine_03", "neck", "head", "clavicle_l", "upperarm_l", "lowerarm_l", "hand_l", "thigh_l", "calf_l", "foot_l", "ball_l", "clavicle_r", "upperarm_r", "lowerarm_r", "hand_r", "thigh_r", "calf_r", "foot_r", "ball_r"],
+    "require_action_name_contains": "Idle",
+    "expected_idle_seconds": 2.0,
+    "require_stationary_root": true,
+    "require_loop": true,
+    "require_deformation": true,
+    "require_zero_degenerates": true,
+    "require_closed_meshes": [],
+    "require_baked_pbr": true,
+    "require_external_texture_files": true,
+    "required_texture_channels": ["Base Color", "Roughness", "Metallic", "Normal"]
+  },
+  "inspector_format_overrides": {
+    ".fbx": {"required_texture_channels": ["Base Color", "Normal"]},
+    ".glb": {"require_external_texture_files": false}
+  },
+  "fbx_material_limit": "Blender FBX importer restores BaseColor/Normal; Roughness/Metallic maps are delivered separately and verified in BLEND/GLB/Unreal.",
+  "source_information_limit": "Original color atlas is 2048x2048; 4K shader bake adds procedural surface/cheek detail, does not recover absent photographic details.",
+  "visual_gates": ["rest silhouette and face", "Idle front/oblique/back", "shoulder/elbow bend", "reach", "torso twist", "knee bend", "boots and hands", "Unreal actual 3 LOD PBR views"],
+  "not_claimed": ["facial expression rig", "individual finger rig", "Manny skeleton compatibility", "cloth simulation", "walking/combat motions", "measured unique UV coverage", "packaged performance"]
+}

@@ -1,0 +1,6 @@
+{
+  "success": false,
+  "command": "import sys, importlib; sys.path.insert(0,'D:/Project/Rogue10m/Scripts/Editor'); import ValidateCompactCombatHUD; importlib.reload(ValidateCompactCombatHUD); ValidateCompactCombatHUD.main(['CanvasPanel_34','SystemLogContainer','UI_RunTimerText','MonsterInfoWidget','EquipmentShortcutWidget','ItemWindowShortcutWidget','SkillTreeShortcutWidget','SettingsShortcutWidget'])",
+  "result": "Traceback (most recent call last):\n\n  File \"<string>\", line 1, in <module>\n\n  File \"D:\\Project/Rogue10m/Scripts/Editor\\ValidateCompactCombatHUD.py\", line 89, in main\n    trees = {path: tree(path) for path in OUTPUT_PATHS}\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n  File \"D:\\Project/Rogue10m/Scripts/Editor\\ValidateCompactCombatHUD.py\", line 89, in <dictcomp>\n    trees = {path: tree(path) for path in OUTPUT_PATHS}\n                   ^^^^^^^^^^\n\n  File \"D:\\Project/Rogue10m/Scripts/Editor\\ValidateCompactCombatHUD.py\", line 41, in tree\n    infos = widget_infos(load_widget(path))\n                         ^^^^^^^^^^^^^^^^^\n\n  File \"D:\\Project/Rogue10m/Scripts/Editor\\ApplyClassThemedBottomHUD.py\", line 53, in load_widget\n    raise RuntimeError(f\"Widget Blueprint not found: {path}\")\n\nRuntimeError: Widget Blueprint not found: /Game/Widget/Parts/Compact/WBP_CompactVitalBar\n",
+  "output": []
+}

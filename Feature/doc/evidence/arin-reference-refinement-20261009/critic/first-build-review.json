@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-09",
+  "reviewer": "/root/arin_reference_art_critic",
+  "method": "Independent direct visual inspection of six actual candidate PNGs. No Blender/Unreal execution, model changes, generated replacement imagery or assumptions of rig success from metrics.",
+  "scope": "First complete source build with 4K baked PBR. Historical review identified by hashes; fresh export extreme poses and target engine still pending.",
+  "source": {
+    "model_build": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/model-build.json",
+    "model_build_sha256": "f0a5d0477d46aa473eb4607d55e188c8d98d819c44ef858c2116263cffcd8a9e",
+    "blend_sha256_from_build": "3357a0f82eed1f2fa0d5b548fb2b4ce750f59175dc85ed2eb3150897397e7622",
+    "fbx_sha256_from_build": "58bef503994ed65a5c34781b700b96f9a1e1bebcc1d9c1d4b0fa89a272bf4abc",
+    "triangles": 90255,
+    "bones": 23,
+    "material_groups": 1,
+    "texture_scope": "Actual 4K BaseColor/Roughness/Metallic/Normal atlas preserves and upsamples embedded original 2K color detail. It does not create new facial/embroidery detail solely by resolution increase."
+  },
+  "evidence": {
+    "root": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/candidate",
+    "image_dimensions": [900,1100],
+    "views": [
+      {"view":"idle-front","sha256":"735c37c46aada741112b7c432d9a3818771eaf01a4837e4333ac290ee1432b30"},
+      {"view":"idle-oblique","sha256":"1dbd3640ed539548151b020f158272136317985211069380c2a7c837453415af"},
+      {"view":"idle-back","sha256":"191a9f74f908253cbc175706743eada8db3bf5af151e7c551f10b8e0edaa34e0"},
+      {"view":"idle-face","sha256":"bcc5800ece62623657b3a3e8a2896558cc0812c0d93a6f21e16620f68fb8b039"},
+      {"view":"idle-face-profile","sha256":"5fb77a69821292e0a3b3760525ac7783bef7630932dc1404a296e91eaea0edb8"},
+      {"view":"neutral-front","sha256":"72e903df80eb804f90aa601c4f7746d518c39ca8250bdcfe1e167e760cc80a6b"}
+    ]
+  },
+  "ledger": [
+    {
+      "id":"B1-01",
+      "status":"pass",
+      "requirement":"Reference character identity is substantially closer than procedural v2",
+      "views":["idle-front","idle-oblique","idle-face","idle-face-profile","neutral-front"],
+      "observation":"Large expressive almond eyes, shaped cheeks/nose/ear, swept hair and braid, hood/cape, embroidery, fold-bearing blouse/coat, trousers, boots and detailed equipment all visibly improve likeness. This is a substantial source-model improvement, not just a new flattering image."
+    },
+    {
+      "id":"B1-02",
+      "status":"pass",
+      "requirement":"Close the prior bilateral sleeve/bracer Idle explosion",
+      "views":["idle-front","idle-oblique","idle-back"],
+      "observation":"The large white and brown triangular wings/spikes seen in preview2 are gone on both arms. Sleeves, bracers and hands retain a recognizable lowered-arm shape. No catastrophic arm detachment/collapse is observed in these three sampled views.",
+      "limit":"Only sampled stationary Idle appearance is established; arm extremes and the full action are separate checks."
+    },
+    {
+      "id":"B1-03",
+      "status":"pass",
+      "requirement":"Hood/cape, coat and equipment retain coherent sampled Idle silhouette",
+      "views":["idle-front","idle-oblique","idle-back"],
+      "observation":"The main rounded rear hood/cape and embroidered shoulder wings are connected and recognizable. Belt, satchel, potion holsters, coat/apron, trousers and boots retain recognizable fitted shapes. There are no large cape shard extensions in these views.",
+      "limit":"Rear lateral cape folds and front shoulder drape remain stylized and somewhat structured. Reach, twist and leg-bend deformation cannot be approved from these Idle images."
+    },
+    {
+      "id":"B1-04",
+      "status":"fail",
+      "priority":1,
+      "requirement":"Unwanted local crown/part black wedge closed",
+      "views":["idle-face"],
+      "observation":"A small black wedge remains below the swept lock near the front part, approximately x=390..413,y=306..340. The repair report says the source boundary loop was filled, but that report does not override the remaining visible defect. A neighboring patch, overlap, fill orientation or dark material/UV sampling remains possible.",
+      "repair":"Root should inspect the projected local faces/UVs including the adjacent small component. Recheck the same textured and neutral clay closeup after the source repair. Do not fill all hair gaps; curls intentionally contain gaps."
+    },
+    {
+      "id":"B1-05",
+      "status":"fail",
+      "priority":2,
+      "requirement":"Hair color/highlight remains close to reference chestnut",
+      "views":["idle-face","idle-face-profile","idle-front"],
+      "observation":"Front swept locks are warmer and darker than the initial donor, but a broad pale/white crown patch and bright pale stripe on the side remain. These are much larger than the reference's finer chestnut highlight variation.",
+      "repair":"Source atlas, semantic color mask and actual shading should be compared before another local correction. Preserve the improved skin/olive/ivory regions. A 4K bake cannot remove source baked highlights unless their content is specifically repaired."
+    },
+    {
+      "id":"B1-06",
+      "status":"unclear",
+      "priority":1,
+      "requirement":"Baked face/hair/neck surface remains continuous without sharp bright polygon patches",
+      "views":["idle-face-profile","idle-face"],
+      "observation":"The candidate profile has bright angular patches on the side-lock/temple around x=211..322,y=414..477 and lower neck skin around x=459..525,y=809..874. The same preview2 profile was smoother there. The face has small sharp bright marks near the nose and lower jaw. These may be source facets, changed tangent normal response or UV/bake/fill sampling; the images do not establish cause.",
+      "repair":"Use a clay face/profile and basecolor-only or SourceShader comparison at identical cameras to distinguish geometry from baked normal/roughness/color artifacts. Repair only confirmed cause. Reopen the final source and fresh-imported FBX profile after repair."
+    },
+    {
+      "id":"B1-07",
+      "status":"unclear",
+      "requirement":"Arms/reach/twist/bilateral knees and fresh FBX deformation pass",
+      "views":[],
+      "observation":"The delegated fresh-export pose render is still pending when this review is written. Five-frame edge-ratio records with zero edges above threshold are useful numeric evidence but cannot establish cloth collisions or natural joint silhouettes."
+    },
+    {
+      "id":"B1-08",
+      "status":"unclear",
+      "requirement":"Actual Unreal PBR, LOD, Idle and NPC gameplay preservation",
+      "views":[],
+      "observation":"No new engine visuals/runtime results have been inspected in this first-build review. Prior v2 test results do not approve this new donor-based build."
+    }
+  ],
+  "decision":"source_identity_and_stationary_arm_repair_improved_pending_local_surface_repair_fresh_pose_and_engine_validation",
+  "clay_needed":{
+    "yes":true,
+    "minimum_useful_views":["face","same_side_profile"],
+    "purpose":"Separate remaining crown wedge and new bright temple/neck patches into geometry versus texture/normal response. Existing neutral-front already establishes full-body T-pose silhouette; repeat full-body clay only if the fresh pose views reveal a new proportion/deformation concern."
+  },
+  "limits_to_report":[
+    "Original 2K color supplies face/eye/lip/embroidery detail; 4K output remains source-limited.",
+    "No separate facial/eyelid/finger rig or new moving eye geometry has been established.",
+    "Rendered identity improvement does not imply hyper-realistic facial anatomy or real-time performance.",
+    "No continuous walk/run or all-pose collision freedom established by stationary samples."
+  ]
+}

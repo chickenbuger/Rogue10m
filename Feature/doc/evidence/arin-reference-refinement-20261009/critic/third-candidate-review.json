@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-09",
+  "reviewer": "/root/arin_reference_art_critic",
+  "method": "Independent actual-image inspection: six third-candidate source renders, 12 fresh-FBX critical/detail views and four fresh-FBX clay views. Read-only shader and technical-report inspection. No model/asset/script changes or Blender/Unreal execution by reviewer.",
+  "scope": "Third candidate only. Later neck-fix builds require new source/hash and image review; this is not final Unreal or full animation production approval.",
+  "source": {
+    "fbx_sha256": "a0eeec33e917f0a2a598e9d26cd71746d7b5d98c818dea93fcc56458629da658",
+    "blend_sha256": "e82ac5a72e142e7c48c428b96c8bcdfad5790f842b812562b98dbd1b620eb13c",
+    "glb_sha256": "cceb3a02bea4d542d7caebdff82d398edc8ce716705eb0f9cb6d39dd0d2ca8c1",
+    "build_script_sha256_from_report": "d26dbb433051de54f57f2edb27c9f268b178a675c49683bdfe908a9735c870db",
+    "frozen_artifact_root": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/third-build",
+    "source_view_root": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/third-build/candidate",
+    "fresh_pose_root": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/input-fbx/final-export-poses-v3",
+    "provenance_limit": "Inspector reports render-process final live-file guard failed after root produced a later FBX; the images were rendered from the initial imported a0eeec33 hash. Frozen third-build FBX and manifest should be used for attribution, not the later live Art path."
+  },
+  "source_image_evidence": [
+    {"view":"idle-face","sha256":"7b22881955ae4f2cc0d73ab1e21c4694a2a55efab52b5af1aefbfeeb78085dd0"},
+    {"view":"idle-face-profile","sha256":"c2fdf439880e042b5db9dbfa51cb4000f7868f73f7b7d959dbf26c7108b1900e"},
+    {"view":"idle-front","sha256":"bf820d471df7dcdc83fa0dc5ba539c09d01f4e290de5c7593d5ce093d6c93174"},
+    {"view":"idle-oblique","sha256":"d2e6f193f4163eef0981bc2d0bf2efe0688f275cbd488d6823420ca56c3924fe"},
+    {"view":"idle-back","sha256":"9dc9babd76d02c37bb520710f5bb069d0b53b50763ff57a7fe01c345f5ba757f"},
+    {"view":"neutral-front","sha256":"72a3092f6764ca18c914c4dde4a3232920d722442b339720c03e58eea3dc9a3b"}
+  ],
+  "reviewed_fresh_pose_views": [
+    "knee-bend-oblique","knee-bend-right","right-knee-bend-oblique","right-knee-bend-right",
+    "neutral-hand","idle-boots","arm-bend-oblique","arm-bend-right","reach-oblique","reach-right",
+    "torso-twist-oblique","torso-twist-right"
+  ],
+  "reviewed_fresh_clay_views": [
+    {"view":"clay-face","sha256":"2095b00ef856695e4418076484721bf7b31e1b073b266724cdacd5405559b13c"},
+    {"view":"clay-face-profile","sha256":"08de9058a8e5671e7af279562003e7296d27914c04eb3aa68a8273c15c15e8b0"},
+    {"view":"clay-boots","sha256":"9a40c2923e1d309331f6d075a58114461814041cf2f5b1444438f407b9dbd80c"},
+    {"view":"clay-body","sha256":"9668d8812940d6894b69b7332e7a398ed31473aaf7f0ea30918b708e7689f279"}
+  ],
+  "technical_findings_separate_from_visual_ledger": {
+    "fresh_blend_status":"passed_requires_visual_review",
+    "fresh_fbx_status":"passed_requires_visual_review",
+    "fresh_glb_status":"passed_requires_visual_review",
+    "findings":[],
+    "fresh_blend_and_fbx_vertices":45205,
+    "fresh_glb_vertices_after_uv_normal_splits":110905,
+    "fresh_triangle_count_all_three":90214,
+    "builder_triangle_count":90215,
+    "triangle_count_note":"Use measured fresh-process count for runtime inspection; builder report differs by one triangle. Neither count is visual proof.",
+    "runtime_meshes":1,
+    "materials":1,
+    "armatures":1,
+    "max_influences":3,
+    "unweighted_vertices":0,
+    "unnormalized_vertices":0,
+    "invalid_vertices":0,
+    "zero_area_triangles":0,
+    "boundary_edges":334,
+    "non_manifold_edges":20,
+    "height_m":1.7000000476837158,
+    "loop_endpoint_displacement_m":0.0,
+    "limits":"No UV overlap, clipping, joint surface continuity, facial likeness or Unreal runtime measured by this technical inspector."
+  },
+  "ledger": [
+    {
+      "id":"T3-01","status":"pass","priority":"preserve",
+      "requirement":"Reference likeness and primary character forms improve over v2",
+      "views":["idle-front","idle-oblique","idle-face","idle-face-profile","neutral-front","clay-body"],
+      "observation_ko":"큰 눈/부드러운 얼굴, 물결치는 옆가르마와 braid, 후드 케이프, 자수와 주름, layered tunic, 바지/부츠/장비가 기존 procedural v2보다 첨부 이미지에 훨씬 가깝다. 얼굴 색은 앞선 complete build보다 매끈하고 자연스럽게 개선됐다.",
+      "limit_ko":"원본 2K 색 이미지의 눈·입·피부/자수 정보량에 의존한다. 4K 출력이나 높은 삼각형 수가 새 얼굴 구조/표정 리깅을 뜻하지 않는다."
+    },
+    {
+      "id":"T3-02","status":"pass","priority":"preserve",
+      "requirement":"Close prior sleeve/bracer spikes and sampled arm/reach/twist collapse",
+      "views":["idle-front","idle-oblique","idle-back","arm-bend-oblique","arm-bend-right","reach-oblique","reach-right","torso-twist-oblique","torso-twist-right"],
+      "observation_ko":"이전 큰 흰 소매/갈색 bracer 가시가 없고, 팔 굽힘·reach·twist의 해당 샘플에서 큰 찢김/붕괴/분리는 보이지 않는다. cape/strap/braid는 구조적으로 뻣뻣한 형태지만 이전 catastrophic spike와 구분된다.",
+      "limit_ko":"검토한 정적 샘플의 결과다. 전 Idle 구간이나 양쪽 모든 팔 자세/연속 보행은 승인하지 않는다."
+    },
+    {
+      "id":"T3-03","status":"pass","priority":"preserve",
+      "requirement":"Close bilateral knee coat/apron tear",
+      "views":["knee-bend-oblique","knee-bend-right","right-knee-bend-oblique","right-knee-bend-right"],
+      "observation_ko":"첫 FBX의 중앙 ivory apron 검은 삼각형/찢긴 하단과 반대 green coat의 불규칙 shard가 사라졌다. coat/apron가 굽힌 다리를 따라 비교적 연속적인 곡선으로 움직인다. bag/옷자락의 변형은 일부 기계적이지만 기존 tear가 재현되지 않는다.",
+      "limit_ko":"현재 정해진 양쪽 knee 샘플에 한정한다. 동시 두 다리 동작이나 전체 gait는 검증하지 않았다."
+    },
+    {
+      "id":"T3-04","status":"fail","priority":0,
+      "requirement":"Continuous face-to-neck skin system without triangular color mosaic",
+      "views":["idle-face","idle-face-profile","clay-face","clay-face-profile"],
+      "observation_ko":"얼굴은 매끈해졌으나 턱 아래부터 옷깃까지 큰 밝고 어두운 삼각형 색 패치가 목 전체에 남는다. 정확히 같은 FBX clay에서 목은 부드럽고 그 RGB 대비 패치가 없으므로, 이 문제는 큰 neck topology 붕괴보다는 색/roughness/normal 분류와 bake 체계 쪽이다.",
+      "approximate_pixel_bounds_900x1100":{
+        "front_neck_total":[312,792,616,1096],
+        "front_under_chin":[351,804,529,872],
+        "profile_neck_above_collar":[371,762,608,894]
+      },
+      "observed_shader_mechanism":"The reviewed source has a smooth spatial face/scalp override only at p.z>1.435. The lower neck override is gated by 1.365<p.z<1.435, abs(p.x)<.07 and r>g*1.08; remaining corners keep hard sampled-RGB skin/hair/ivory/leather tone, roughness and bump classification.",
+      "cause_status":"Actual shader branch and textured-versus-clay discontinuity are observed. The inference that this hard neck/corner classification drives the mosaic is strongly supported but should be checked by root's BaseColor/normal probes before stating the exact individual channel cause.",
+      "repair_ko":"목 노출 피부를 RGB 그림자와 무관한 연속 semantic/공간 마스크로 맞추고 face/ear/neck의 tone·roughness·micro normal을 통일한다. hood/머리/braid는 제외한다. 형태를 팽창시키거나 전체 색을 어둡게 바꾸는 수리는 필요하지 않다. 수정 후 같은 정면/프로필 source와 fresh FBX를 다시 열어야 한다."
+    },
+    {
+      "id":"T3-05","status":"unclear","priority":2,
+      "requirement":"Small crown dark wedge explained without claiming every dark crease is an open hole",
+      "views":["idle-face","clay-face","clay-face-profile"],
+      "observation_ko":"swept lock 아래 part 근처에 작은 어두운 angular crease가 아직 있다. clay에서도 작은 notch가 보여 순수한 painted black은 아니다. root가 loop를 닫았으므로 현재 실제 열린 구멍인지 겹친 patch/깊은 crease인지 이 art review는 확정하지 않는다.",
+      "approximate_pixels_in_face":[389,306,414,340],
+      "repair_ko":"목의 넓은 피부 결함보다 우선순위가 낮다. 최종 source의 boundary와 해당 인접 patch/normal을 확인해 원인을 기록하고, 실제로 unwanted gap이면 국소 수리한다. 의도된 curl 틈을 전부 닫지 않는다."
+    },
+    {
+      "id":"T3-06","status":"fail","priority":2,
+      "requirement":"Hair highlights closely match chestnut reference",
+      "views":["idle-face","idle-face-profile"],
+      "observation_ko":"앞쪽 짙은 갈색 locks는 개선됐지만 crown와 side에 넓은 밝은 streak가 남는다. 레퍼런스보다 희게 읽히며 일부 원본 atlas의 baked highlight에 의존한다. 이는 neck mosaic처럼 피부 체계의 심각한 불연속과는 별도의 미술적 한계다.",
+      "repair_ko":"추가 수정 시 neutral BaseColor/shading에서 원본 highlight를 확인하고 머리 영역만 국소적으로 조절한다. 피부/ivory를 함께 darken하지 않는다. 최종 결과에 남으면 구체적 closeup 한계로 기록한다."
+    },
+    {
+      "id":"T3-07","status":"pass","priority":"preserve",
+      "requirement":"Hand skin and boot cuff local continuity improve",
+      "views":["neutral-hand","idle-boots","clay-boots"],
+      "observation_ko":"손바닥의 이전 큰 다각형 밝은 패치가 상당히 줄어 더 매끈하다. 부츠 cuff의 이전 검은 open-hole 모습은 clay에서 보이지 않는다. textured cuff에는 짙은 seam/색 mark가 남지만 현재 clay와 함께 보면 큰 surface opening의 증거는 아니다.",
+      "limit_ko":"손가락 기저와 관절 구조는 단순하며 별도 finger rig는 없다. 매끈한 손 closeup은 실제 grip animation 완료가 아니다."
+    },
+    {
+      "id":"T3-08","status":"unclear","priority":"hard_gate",
+      "requirement":"Final revision and actual engine acceptance",
+      "views":[],
+      "observation_ko":"이번 기록은 a0eeec33 세 번째 후보만 승인 범위를 판단한다. 이후 neck 수정은 새로운 source/export SHA와 얼굴/목 재검토가 필요하다. Unreal 재질·LOD·Idle·기존 NPC 기능은 본 reviewer가 아직 검증하지 않았다."
+    }
+  ],
+  "decision":"retain_major_identity_and_deformation_improvements_but_require_focused_neck_material_repair_and_fresh_review",
+  "not_claimed":["hyper-realistic facial anatomy","facial or eyelid rig","individual finger animation","continuous locomotion validation","all-pose collision freedom","Unreal production readiness"]
+}

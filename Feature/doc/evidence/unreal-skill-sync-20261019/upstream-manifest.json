@@ -1,0 +1,61 @@
+{
+  "repo": "EpicGames/unreal-engine-skills-for-claude-code-plugin",
+  "sha": "a6aa73ada02a9fb1f5415bec491f9942c519b297",
+  "commit_date": "2026-09-17T01:28:32Z",
+  "message": "[MCP] Permit safe concurrent tool calls\n\nReplace the blanket parallel execution ban with guidance for independent and conflicting calls. Bump the plugin version to `3.1.1`.\n\n**Validation**\n\n- The `unreal-mcp` skill validation passed.\n- The full plugin validation passed.",
+  "retrieved_date_kst": "2026-10-19",
+  "paths": [
+    ".claude-plugin/plugin.json",
+    "LICENSE",
+    "README.md",
+    "hooks/hooks.json",
+    "hooks/unreal-context.sh",
+    "skills/create-toolset/SKILL.md",
+    "skills/unreal-mcp/SKILL.md",
+    "skills/unreal-mcp/references/operations.md",
+    "skills/unreal-mcp/references/setup.md",
+    "skills/unreal-skill/SKILL.md"
+  ],
+  "sha256_files": [
+    {
+      "path": ".claude-plugin/plugin.json",
+      "sha256": "5AA984848F0FD48C94394651C66F5B200EE1E2583D8DF8CAEECC22BB550B4D44"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "5B337BE051359EDCDEC510103AEE15F5F870EFB38B6D42EECD685DC3582314A6"
+    },
+    {
+      "path": "README.md",
+      "sha256": "483693AD0E14D027525D25C3D3EB4883E774B2F8150013181F9625E2DD46B40E"
+    },
+    {
+      "path": "hooks/hooks.json",
+      "sha256": "259124F0631B7D4B92E9E744003E8798B910C00DAC201656B97906B3B5EBDC0C"
+    },
+    {
+      "path": "hooks/unreal-context.sh",
+      "sha256": "D3F1C871CD4EDD5210EE2F448C403E1A441E569A14A1405D1A3F199C65651FDD"
+    },
+    {
+      "path": "skills/create-toolset/SKILL.md",
+      "sha256": "E9D050087F36DE51F7EEEF49ADB0BA9EBC603B65F74F475BC53A6DEBFC1F7B1C"
+    },
+    {
+      "path": "skills/unreal-mcp/SKILL.md",
+      "sha256": "7EF8B991A82F591C5776BB5FA167C2BC2269FD00338ED3E8534EACC551D038FA"
+    },
+    {
+      "path": "skills/unreal-mcp/references/operations.md",
+      "sha256": "DBED002B4A46AB104274A31EB6682C3D277CE669216D0378DF709F51567C3113"
+    },
+    {
+      "path": "skills/unreal-mcp/references/setup.md",
+      "sha256": "BD16206EA142DC9CC1950B88AF526A3137072EA152C5662E8549D21BC18A3B8A"
+    },
+    {
+      "path": "skills/unreal-skill/SKILL.md",
+      "sha256": "7A0AF781C458C7D192D6B23C16B5737922DC482470E2E4EF617BCDA80F435087"
+    }
+  ]
+}

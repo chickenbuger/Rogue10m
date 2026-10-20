@@ -1,0 +1,46 @@
+{
+  "jobs": [
+    {
+      "id": "job_1m45ctt9a000rn2ghsq",
+      "type": "export",
+      "status": "succeeded",
+      "progress": 100,
+      "error": null,
+      "created_at": "2026-10-05T06:43:16.394780+00:00"
+    },
+    {
+      "id": "job_1m45cpcj900wwnk622m",
+      "type": "export",
+      "status": "succeeded",
+      "progress": 100,
+      "error": null,
+      "created_at": "2026-10-05T06:40:51.273222+00:00"
+    },
+    {
+      "id": "job_1m45cpbme0039xt8teq",
+      "type": "generate_3d",
+      "status": "succeeded",
+      "progress": 100,
+      "error": null,
+      "created_at": "2026-10-05T06:40:50.318559+00:00"
+    },
+    {
+      "id": "job_1m45cpbkw008jpc69yb",
+      "type": "run_plan",
+      "status": "succeeded",
+      "progress": 100,
+      "error": null,
+      "created_at": "2026-10-05T06:40:50.300387+00:00"
+    }
+  ],
+  "queue": {
+    "pools": {
+      "cpu": 0,
+      "gpu_low": 0,
+      "gpu_high": 0,
+      "external_api": 0,
+      "orchestrator": 0
+    },
+    "active_jobs": []
+  }
+}

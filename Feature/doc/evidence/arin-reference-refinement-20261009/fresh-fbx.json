@@ -1,0 +1,479 @@
+{
+  "schema_version": 1,
+  "timestamp_utc": "2026-10-09T04:35:48.353635+00:00",
+  "blender_version": "4.5.14 LTS",
+  "process_id": 46464,
+  "background_process": true,
+  "source": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Arin.fbx",
+  "source_sha256": "45296f9fcbd0d182406c85d29f8627409e090dc0c97ec97815a8035221448f00",
+  "selection": {
+    "prefix": "Arin_Adventurer",
+    "exact_names": null
+  },
+  "coordinate_units": "Blender world units; expected_height_m assumes source units are meters",
+  "scene_unit_scale": 1.0,
+  "sampled_frames": [
+    1.0,
+    16.0,
+    31.0,
+    46.0,
+    61.0
+  ],
+  "fps": 30.0,
+  "meshes": [
+    {
+      "name": "Arin_Adventurer",
+      "authored": {
+        "vertices": 45205,
+        "edges": 90479,
+        "polygons": 45218,
+        "triangles": 90214,
+        "quad_ratio": 0.9950904507054713,
+        "triangle_polygon_ratio": 0.004909549294528728,
+        "ngons": 0,
+        "smooth_polygon_ratio": 1.0,
+        "invalid_vertices": 0,
+        "zero_length_edges": 0,
+        "zero_area_triangles": 0,
+        "loose_vertices": 0,
+        "loose_edges": 0,
+        "boundary_edges": 334,
+        "non_manifold_edges": 20,
+        "connected_components": 14,
+        "component_vertex_counts": [
+          44932,
+          55,
+          43,
+          27,
+          23,
+          23,
+          15,
+          15,
+          15,
+          15,
+          15,
+          14,
+          9,
+          4
+        ]
+      },
+      "evaluated": {
+        "vertices": 45205,
+        "edges": 90479,
+        "polygons": 45218,
+        "triangles": 90214,
+        "quad_ratio": 0.9950904507054713,
+        "triangle_polygon_ratio": 0.004909549294528728,
+        "ngons": 0,
+        "smooth_polygon_ratio": 1.0,
+        "invalid_vertices": 0,
+        "zero_length_edges": 0,
+        "zero_area_triangles": 0,
+        "loose_vertices": 0,
+        "loose_edges": 0,
+        "boundary_edges": 334,
+        "non_manifold_edges": 20,
+        "connected_components": 14,
+        "component_vertex_counts": [
+          44932,
+          55,
+          43,
+          27,
+          23,
+          23,
+          15,
+          15,
+          15,
+          15,
+          15,
+          14,
+          9,
+          4
+        ]
+      },
+      "finite_object_matrix": true,
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "negative_scale": false,
+      "region": null,
+      "rigid_bone": null,
+      "used_materials": [
+        "M_Arin_Adventurer"
+      ],
+      "missing_material_faces": 0,
+      "uv_layers": [
+        {
+          "name": "Retopo_Untitled_NewUVMap",
+          "invalid_loops": 0,
+          "outside_0_1_loops": 0,
+          "non_degenerate_face_fraction": 1.0,
+          "summed_polygon_area": 0.5025974871596763,
+          "overlap_check": "not_performed; summed area is not unique atlas coverage"
+        }
+      ],
+      "skin": {
+        "rigs": [
+          "Arin_Rig"
+        ],
+        "unweighted_vertices": 0,
+        "unweighted_examples": [],
+        "unnormalized_vertices": 0,
+        "invalid_weight_vertices": 0,
+        "non_deform_group_vertices": 0,
+        "max_influences": 3,
+        "weight_sum_min": 0.9999995529651642,
+        "weight_sum_max": 1.0000000447034836
+      },
+      "modifiers": [
+        {
+          "name": "Arin_Rig",
+          "type": "ARMATURE",
+          "viewport": true,
+          "render": true
+        }
+      ]
+    }
+  ],
+  "rigs": [
+    {
+      "name": "Arin_Rig",
+      "bones": [
+        "root",
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03",
+        "neck",
+        "head",
+        "clavicle_l",
+        "upperarm_l",
+        "lowerarm_l",
+        "hand_l",
+        "clavicle_r",
+        "upperarm_r",
+        "lowerarm_r",
+        "hand_r",
+        "thigh_l",
+        "calf_l",
+        "foot_l",
+        "ball_l",
+        "thigh_r",
+        "calf_r",
+        "foot_r",
+        "ball_r"
+      ],
+      "roots": [
+        "root"
+      ],
+      "deform_bone_count": 23
+    }
+  ],
+  "materials": [
+    {
+      "name": "M_Arin_Adventurer",
+      "use_nodes": true,
+      "images": [
+        {
+          "name": "T_Arin_Adventurer_BaseColor",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Textures\\T_Arin_Adventurer_BaseColor.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            4096,
+            4096
+          ],
+          "colorspace": "sRGB"
+        },
+        {
+          "name": "T_Arin_Adventurer_Normal",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Textures\\T_Arin_Adventurer_Normal.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            4096,
+            4096
+          ],
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "T_Arin_Adventurer_Roughness",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Textures\\T_Arin_Adventurer_Roughness.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            4096,
+            4096
+          ],
+          "colorspace": "Non-Color"
+        },
+        {
+          "name": "T_Arin_Adventurer_Metallic",
+          "source": "FILE",
+          "filepath": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Textures\\T_Arin_Adventurer_Metallic.png",
+          "file_exists": true,
+          "packed": true,
+          "dimensions": [
+            4096,
+            4096
+          ],
+          "colorspace": "Non-Color"
+        }
+      ],
+      "pbr_inputs": {
+        "Base Color": {
+          "linked": true,
+          "images": [
+            "T_Arin_Adventurer_BaseColor"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Roughness": {
+          "linked": true,
+          "images": [
+            "T_Arin_Adventurer_Roughness"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Metallic": {
+          "linked": true,
+          "images": [
+            "T_Arin_Adventurer_Metallic"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Normal": {
+          "linked": true,
+          "images": [
+            "T_Arin_Adventurer_Normal"
+          ],
+          "procedural_nodes_requires_bake": []
+        },
+        "Alpha": {
+          "linked": false,
+          "images": [],
+          "procedural_nodes_requires_bake": []
+        }
+      },
+      "empty_image_nodes": []
+    }
+  ],
+  "actions": [
+    {
+      "name": "Arin_Rig|Arin_Rig|Arin_Idle",
+      "frame_range": [
+        1.0,
+        61.0
+      ],
+      "duration_seconds": 2.0,
+      "curves": 239,
+      "keyframes": 14579
+    }
+  ],
+  "motion": [
+    {
+      "frame": 1.0,
+      "bounds_min": [
+        -0.38247618079185486,
+        -0.19196122884750366,
+        1.6503383903909707e-07
+      ],
+      "bounds_max": [
+        0.3813852369785309,
+        0.1936371922492981,
+        1.7000000476837158
+      ],
+      "dimensions": [
+        0.7638614177703857,
+        0.38559842109680176,
+        1.6999998826498768
+      ],
+      "local_geometry_sha256": {
+        "Arin_Adventurer": "07e27bacfca4ec271367f91ee239f88256042692f5dca378ba00f7ec80e73e92"
+      },
+      "displacement_from_first_frame_m": {
+        "Arin_Adventurer": 0.0
+      },
+      "root_matrix_delta_from_first": 0.0,
+      "finite_root_matrices": true
+    },
+    {
+      "frame": 16.0,
+      "bounds_min": [
+        -0.3758220374584198,
+        -0.19196122884750366,
+        1.6503383903909707e-07
+      ],
+      "bounds_max": [
+        0.37471428513526917,
+        0.19279979169368744,
+        1.6999781131744385
+      ],
+      "dimensions": [
+        0.750536322593689,
+        0.3847610205411911,
+        1.6999779481405994
+      ],
+      "local_geometry_sha256": {
+        "Arin_Adventurer": "0ddb7b5ff896a742c06091b6b4b20ecc9c08e748f581c6a4c8d849f781778a7a"
+      },
+      "displacement_from_first_frame_m": {
+        "Arin_Adventurer": 0.00807519762915269
+      },
+      "root_matrix_delta_from_first": 0.0,
+      "finite_root_matrices": true
+    },
+    {
+      "frame": 31.0,
+      "bounds_min": [
+        -0.38247618079185486,
+        -0.19196122884750366,
+        1.6503383903909707e-07
+      ],
+      "bounds_max": [
+        0.3813852369785309,
+        0.1936371922492981,
+        1.7000000476837158
+      ],
+      "dimensions": [
+        0.7638614177703857,
+        0.38559842109680176,
+        1.6999998826498768
+      ],
+      "local_geometry_sha256": {
+        "Arin_Adventurer": "07e27bacfca4ec271367f91ee239f88256042692f5dca378ba00f7ec80e73e92"
+      },
+      "displacement_from_first_frame_m": {
+        "Arin_Adventurer": 0.0
+      },
+      "root_matrix_delta_from_first": 0.0,
+      "finite_root_matrices": true
+    },
+    {
+      "frame": 46.0,
+      "bounds_min": [
+        -0.389100044965744,
+        -0.19196122884750366,
+        1.6503383903909707e-07
+      ],
+      "bounds_max": [
+        0.3880263864994049,
+        0.19447337090969086,
+        1.7000164985656738
+      ],
+      "dimensions": [
+        0.7771264314651489,
+        0.3864345997571945,
+        1.7000163335318348
+      ],
+      "local_geometry_sha256": {
+        "Arin_Adventurer": "bf2cea229fe79bcc84592ed37294ca9f501322e08bb1b15ad549f558051dd29f"
+      },
+      "displacement_from_first_frame_m": {
+        "Arin_Adventurer": 0.008075314874222696
+      },
+      "root_matrix_delta_from_first": 0.0,
+      "finite_root_matrices": true
+    },
+    {
+      "frame": 61.0,
+      "bounds_min": [
+        -0.38247618079185486,
+        -0.19196122884750366,
+        1.6503383903909707e-07
+      ],
+      "bounds_max": [
+        0.3813852369785309,
+        0.1936371922492981,
+        1.7000000476837158
+      ],
+      "dimensions": [
+        0.7638614177703857,
+        0.38559842109680176,
+        1.6999998826498768
+      ],
+      "local_geometry_sha256": {
+        "Arin_Adventurer": "07e27bacfca4ec271367f91ee239f88256042692f5dca378ba00f7ec80e73e92"
+      },
+      "displacement_from_first_frame_m": {
+        "Arin_Adventurer": 0.0
+      },
+      "root_matrix_delta_from_first": 0.0,
+      "finite_root_matrices": true
+    }
+  ],
+  "loop_endpoint_displacement_m": {
+    "Arin_Adventurer": 0.0
+  },
+  "totals": {
+    "mesh_objects": 1,
+    "materials": 1,
+    "armatures": 1,
+    "authored_triangles": 90214,
+    "evaluated_triangles": 90214,
+    "authored_vertices": 45205
+  },
+  "visual_review_required": true,
+  "not_measured": [
+    "UV overlap/unique texel coverage",
+    "bone-joint surface continuity",
+    "intersections and clipping",
+    "facial likeness and anatomy",
+    "Unreal runtime rendering"
+  ],
+  "findings": [],
+  "technical_status": "passed_requires_visual_review",
+  "contract": {
+    "max_triangles": 100000,
+    "max_materials": 1,
+    "expected_height_m": 1.7,
+    "height_tolerance_m": 0.01,
+    "require_uvs": true,
+    "min_uv_face_fraction": 0.995,
+    "require_skinning": true,
+    "maximum_bone_influences": 4,
+    "required_bones": [
+      "root",
+      "pelvis",
+      "spine_01",
+      "spine_02",
+      "spine_03",
+      "neck",
+      "head",
+      "clavicle_l",
+      "upperarm_l",
+      "lowerarm_l",
+      "hand_l",
+      "thigh_l",
+      "calf_l",
+      "foot_l",
+      "ball_l",
+      "clavicle_r",
+      "upperarm_r",
+      "lowerarm_r",
+      "hand_r",
+      "thigh_r",
+      "calf_r",
+      "foot_r",
+      "ball_r"
+    ],
+    "require_action_name_contains": "Idle",
+    "expected_idle_seconds": 2.0,
+    "require_stationary_root": true,
+    "require_loop": true,
+    "require_deformation": true,
+    "require_zero_degenerates": true,
+    "require_closed_meshes": [],
+    "require_baked_pbr": true,
+    "require_external_texture_files": true,
+    "required_texture_channels": [
+      "Base Color",
+      "Normal"
+    ]
+  }
+}

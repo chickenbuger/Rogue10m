@@ -1,0 +1,1095 @@
+{
+  "status": "failed",
+  "started_utc": "2026-10-05T01:54:59.044122+00:00",
+  "map": "/Game/Rogue10m/Maps/StartHub",
+  "template_map": "/Game/FirstPerson/Lvl_FirstPerson",
+  "tag": "Rogue10m.StartVillage",
+  "target_size_m": [
+    120,
+    120
+  ],
+  "source_assets_modified": false,
+  "saved_owned_assets": [],
+  "created_actor_labels": [
+    "SV_TemplateCleanupCheckpoint"
+  ],
+  "mesh_bounds": {
+    "cube": {
+      "asset": "/Engine/BasicShapes/Cube",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        100.0,
+        100.0,
+        100.0
+      ]
+    },
+    "cylinder": {
+      "asset": "/Engine/BasicShapes/Cylinder",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        100.0,
+        100.0,
+        100.0
+      ]
+    },
+    "sphere": {
+      "asset": "/Engine/BasicShapes/Sphere",
+      "origin": [
+        0.0,
+        3.814697265625e-06,
+        0.0
+      ],
+      "size": [
+        100.0,
+        100.0,
+        100.0
+      ]
+    },
+    "plaster": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/Plaster/SM_Plaster_FullXFull_Plaster_FullXFull",
+      "origin": [
+        0.0,
+        0.0,
+        250.0
+      ],
+      "size": [
+        500.0,
+        50.0,
+        500.0
+      ]
+    },
+    "beam": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/Wood/Pieces/SM_Beam_Long_1",
+      "origin": [
+        6.103515625e-05,
+        -3.0517578125e-05,
+        -0.06549501419067383
+      ],
+      "size": [
+        302.1534423828125,
+        15.66912841796875,
+        15.996968269348145
+      ]
+    },
+    "gable": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/Wood/Roof/SM_Wood_Wall_RoofFront_Large_LP",
+      "origin": [
+        0.0,
+        -6.103515625e-05,
+        -0.026702880859375
+      ],
+      "size": [
+        267.984375,
+        6.0401611328125,
+        174.74481201171875
+      ]
+    },
+    "roof": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/RoofTiles/Round/SM_RoofTiles_Round_FullXFull",
+      "origin": [
+        -6.103515625e-05,
+        0.06742477416992188,
+        4.958879470825195
+      ],
+      "size": [
+        507.2569580078125,
+        508.3162612915039,
+        29.08743667602539
+      ]
+    },
+    "door": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/Doors/SM_Door_01",
+      "origin": [
+        48.49583435058594,
+        0.002306222915649414,
+        103.61607360839844
+      ],
+      "size": [
+        102.68862915039062,
+        18.089619159698486,
+        207.4315185546875
+      ]
+    },
+    "window": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/Windows/SM_Window_FrenchPanes_01_LP",
+      "origin": [
+        0.0029540061950683594,
+        -2.5033950805664062e-06,
+        -0.0034360885620117188
+      ],
+      "size": [
+        29.45620346069336,
+        5.079957008361816,
+        104.94330406188965
+      ]
+    },
+    "chimney": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/Plaster/SM_Plaster_Chimney_Thick",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        53.65541458129883,
+        84.59461975097656,
+        155.97645568847656
+      ]
+    },
+    "stone_tile": {
+      "asset": "/Game/Stylized_Village/Assets/Architecture/StoneFloor/SM_StoneFloor_01_Full",
+      "origin": [
+        2.42816162109375,
+        3.2908477783203125,
+        -0.18013858795166016
+      ],
+      "size": [
+        311.8080749511719,
+        312.3647155761719,
+        22.72406578063965
+      ]
+    },
+    "tree_medium": {
+      "asset": "/Game/Stylized_Village/Assets/Foliage/Trees/Tree_Medium_Green",
+      "origin": [
+        22.585708618164062,
+        -20.13067626953125,
+        877.8107299804688
+      ],
+      "size": [
+        1008.1519775390625,
+        832.5399169921875,
+        1763.5904541015625
+      ]
+    },
+    "tree_large": {
+      "asset": "/Game/Stylized_Village/Assets/Foliage/Trees/Tree_Large_Green",
+      "origin": [
+        93.1151123046875,
+        -81.57672119140625,
+        1389.0335693359375
+      ],
+      "size": [
+        2104.421630859375,
+        2298.46923828125,
+        2776.697998046875
+      ]
+    },
+    "bush": {
+      "asset": "/Game/Stylized_Village/Assets/Foliage/Bushes/SM_Bush_01",
+      "origin": [
+        -22.503437042236328,
+        14.033451080322266,
+        86.03885650634766
+      ],
+      "size": [
+        186.05813598632812,
+        194.76763916015625,
+        172.1331329345703
+      ]
+    },
+    "rock": {
+      "asset": "/Game/Stylized_Village/Assets/Stones/Boulder/SM_Boulder_Medium_01",
+      "origin": [
+        2.9668540954589844,
+        3.988234043121338,
+        -0.4716949462890625
+      ],
+      "size": [
+        73.37480926513672,
+        60.51716899871826,
+        73.67024230957031
+      ]
+    },
+    "barrel": {
+      "asset": "/Game/Stylized_Village/Assets/Props/Furniture/SM_SM_Barrel_01",
+      "origin": [
+        -1.9073486328125e-06,
+        0.024496078491210938,
+        3.814697265625e-06
+      ],
+      "size": [
+        114.70625305175781,
+        113.84609985351562,
+        130.51785278320312
+      ]
+    },
+    "crate": {
+      "asset": "/Game/Stylized_Village/Assets/Props/Furniture/SM_Crate_01",
+      "origin": [
+        -0.0015611648559570312,
+        -1.9073486328125e-06,
+        0.40699195861816406
+      ],
+      "size": [
+        120.69480323791504,
+        121.41984558105469,
+        122.883056640625
+      ]
+    },
+    "lantern": {
+      "asset": "/Game/Stylized_Village/Assets/Props/Lanterns/SM_Lantern_Box",
+      "origin": [
+        0.05856895446777344,
+        0.10681343078613281,
+        -35.81307601928711
+      ],
+      "size": [
+        39.02469253540039,
+        39.095977783203125,
+        78.59061431884766
+      ]
+    },
+    "pot": {
+      "asset": "/Game/Stylized_Village/Assets/Props/Pots/SM_ClayPot_WideSmall",
+      "origin": [
+        0.0,
+        0.05858898162841797,
+        6.826690196990967
+      ],
+      "size": [
+        39.4573974609375,
+        39.15160369873047,
+        13.693268775939941
+      ]
+    }
+  },
+  "new_map_from_template": true,
+  "initial_actor_count": 67,
+  "cleanup_decisions": [
+    {
+      "label": "SM_Cube16",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_37",
+      "location": [
+        -500.0,
+        -200.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_QuarterCylinder2",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_17",
+      "location": [
+        1500.0000073007784,
+        -1499.9999999999995,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube8",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_18",
+      "location": [
+        1500.0,
+        -1200.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube2",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_8",
+      "location": [
+        1800.0,
+        -2000.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "Floor",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.Floor_0",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "RecastNavMesh-Default",
+      "class": "/Script/NavigationSystem.RecastNavMesh",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.RecastNavMesh_UAID_244BFE8DA9DF99F402-Default",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "SM_QuarterCylinder6",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_31",
+      "location": [
+        200.0,
+        -200.00001399999996,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube9",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_21",
+      "location": [
+        -1500.0000143007783,
+        -1200.0000143007787,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SkyAtmosphere",
+      "class": "/Script/Engine.SkyAtmosphere",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.SkyAtmosphere_0",
+      "location": [
+        0.0,
+        0.0,
+        500.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "SM_Cylinder4",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_63",
+      "location": [
+        10.0,
+        1900.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_QuarterCylinder5",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_30",
+      "location": [
+        200.0,
+        200.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cylinder9",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_68",
+      "location": [
+        1900.0,
+        -10.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cylinder8",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_67",
+      "location": [
+        1900.0,
+        -10.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "PlayerStart",
+      "class": "/Script/Engine.PlayerStart",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.PlayerStart_0",
+      "location": [
+        0.0,
+        0.0,
+        302.0126122070287
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "WorldPartitionMiniMap0",
+      "class": "/Script/Engine.WorldPartitionMiniMap",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.WorldPartitionMiniMap_0",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "SM_Cube11",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_26",
+      "location": [
+        -1200.0000213007788,
+        1500.0000213007781,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cylinder5",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_64",
+      "location": [
+        10.0,
+        1900.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube7",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_16",
+      "location": [
+        1200.0000073007786,
+        -1500.0000073007784,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Ramp3",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_15",
+      "location": [
+        1200.0000146015573,
+        -1800.000007300778,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cylinder7",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_66",
+      "location": [
+        -1899.9999999999986,
+        -9.999907523471848,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Ramp2",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_7",
+      "location": [
+        1200.0,
+        1500.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_QuarterCylinder9",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_54",
+      "location": [
+        200.0,
+        209.99998599999998,
+        -100.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Ramp6",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_24",
+      "location": [
+        -1200.0,
+        -1500.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube18",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_43",
+      "location": [
+        -1900.0,
+        -1900.0,
+        200.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube19",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_44",
+      "location": [
+        -1900.0,
+        2000.0,
+        200.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube17",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_42",
+      "location": [
+        1900.0,
+        -2000.0,
+        200.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_QuarterCylinder12",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_57",
+      "location": [
+        200.0,
+        -200.000014,
+        -100.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_SkySphere",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_0",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "SM_QuarterCylinder10",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_55",
+      "location": [
+        -199.99996599999986,
+        209.99998599999998,
+        -100.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_QuarterCylinder4",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_27",
+      "location": [
+        -1500.0000213007788,
+        1499.999999999999,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SkyLight",
+      "class": "/Script/Engine.SkyLight",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.SkyLight_0",
+      "location": [
+        0.0,
+        0.0,
+        600.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "SM_Cylinder3",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_62",
+      "location": [
+        10.0,
+        -1900.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cylinder2",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_61",
+      "location": [
+        10.0,
+        -1900.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Ramp11",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_40",
+      "location": [
+        500.0,
+        200.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Ramp5",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_20",
+      "location": [
+        -1800.0000143007776,
+        -1200.0000296015576,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_QuarterCylinder11",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_56",
+      "location": [
+        -200.0,
+        -200.000014,
+        -100.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube13",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_34",
+      "location": [
+        -200.0,
+        -200.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Ramp4",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_19",
+      "location": [
+        1500.0,
+        -1200.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "DirectionalLight",
+      "class": "/Script/Engine.DirectionalLight",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.DirectionalLight_0",
+      "location": [
+        0.0,
+        0.0,
+        400.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "SM_Cube12",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_28",
+      "location": [
+        -1500.0,
+        1200.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Ramp9",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_38",
+      "location": [
+        -500.0,
+        -200.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube3",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_9",
+      "location": [
+        -2000.0,
+        -2000.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Ramp8",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_29",
+      "location": [
+        -1500.0,
+        1200.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_4",
+      "location": [
+        1200.0,
+        1500.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube5",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_11",
+      "location": [
+        -1800.0,
+        2000.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube10",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_23",
+      "location": [
+        -1200.0,
+        -1500.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_QuarterCylinder7",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_32",
+      "location": [
+        -200.0,
+        200.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube20",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_45",
+      "location": [
+        -2000.0,
+        -2000.0,
+        200.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube4",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_10",
+      "location": [
+        -1800.0,
+        -1800.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube15",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_36",
+      "location": [
+        -200.0,
+        -200.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Ramp12",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_41",
+      "location": [
+        -200.0,
+        500.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Ramp10",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_39",
+      "location": [
+        200.0,
+        -500.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cube6",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_12",
+      "location": [
+        1500.0,
+        1200.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_QuarterCylinder",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_14",
+      "location": [
+        1500.0,
+        1500.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "NavMeshBoundsVolume",
+      "class": "/Script/NavigationSystem.NavMeshBoundsVolume",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.NavMeshBoundsVolume_UAID_244BFE8DA9DF99F402_1979577088",
+      "location": [
+        0.0,
+        0.0,
+        20.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "ExponentialHeightFog",
+      "class": "/Script/Engine.ExponentialHeightFog",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.ExponentialHeightFog_0",
+      "location": [
+        -5600.0,
+        -50.0,
+        -6850.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "VolumetricCloud",
+      "class": "/Script/Engine.VolumetricCloud",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.VolumetricCloud_0",
+      "location": [
+        0.0,
+        0.0,
+        700.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "SM_Cube14",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_35",
+      "location": [
+        200.0,
+        200.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_QuarterCylinder3",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_22",
+      "location": [
+        -1499.9999999999995,
+        -1500.0000143007785,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Ramp",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_6",
+      "location": [
+        1800.0,
+        1200.0,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cylinder6",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_65",
+      "location": [
+        -1899.9999999999986,
+        -9.999907523471848,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Cylinder",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_59",
+      "location": [
+        0.0,
+        0.0,
+        200.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_Ramp7",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_25",
+      "location": [
+        -1200.0000446015572,
+        1800.0000213007775,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "SM_QuarterCylinder8",
+      "class": "/Script/Engine.StaticMeshActor",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.StaticMeshActor_33",
+      "location": [
+        -200.0,
+        -200.00001400000002,
+        0.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "WorldDataLayers",
+      "class": "/Script/Engine.WorldDataLayers",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.WorldDataLayers",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "decision": "preserve",
+      "reason": "preserved template environment/system actor"
+    },
+    {
+      "label": "BP_MonsterSpawner",
+      "class": "/Game/Monster/BP_MonsterSpawner.BP_MonsterSpawner_C",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.BP_MonsterSpawner_C_UAID_244BFE8DA9DF69F202_2000983527",
+      "location": [
+        1170.0,
+        -770.0,
+        0.00010163573460886255
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    },
+    {
+      "label": "BP_BaseMonster",
+      "class": "/Game/Monster/BP_BaseMonster.BP_BaseMonster_C",
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.BP_BaseMonster_C_UAID_244BFE8DA9DF31E902_1748662167",
+      "location": [
+        930.0,
+        970.0,
+        88.0
+      ],
+      "decision": "remove",
+      "reason": "template test geometry/player spawn/gameplay fixture removed only from new map"
+    }
+  ],
+  "removed_actor_count": 57,
+  "preserved_actor_count": 10,
+  "created_actor_count": 1,
+  "template_cleanup_checkpoint": {
+    "tag": "Rogue10m.StartVillage.TemplateCleaned",
+    "saved": true,
+    "source_map_saved": false,
+    "unknown_actors_preserved_on_rerun": true
+  },
+  "game_mode": {
+    "class": "/Game/FirstPerson/Blueprints/BP_FirstPersonGameMode.BP_FirstPersonGameMode_C",
+    "source_class": "/Game/FirstPerson/Blueprints/BP_FirstPersonGameMode.BP_FirstPersonGameMode_C",
+    "source_auto_run": false,
+    "hub_auto_run": false,
+    "source_prototype_duration": false,
+    "hub_prototype_duration": false,
+    "entry_requires_no_StartRun_travel_option": true,
+    "original_blueprint_modified": false
+  },
+  "error": "Cannot adjust owned grass tint: /Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Grass",
+  "traceback": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/CreateStartVillage.py\", line 586, in main\n    builder.make_materials()\n  File \"D:/Project/Rogue10m/Scripts/Editor/CreateStartVillage.py\", line 267, in make_materials\n    self.grass = self.ground_material_instance(\"grass\", \"MI_StartVillage_Grass\", 65.0)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/CreateStartVillage.py\", line 247, in ground_material_instance\n    raise RuntimeError(\"Cannot adjust owned grass tint: \" + path)\nRuntimeError: Cannot adjust owned grass tint: /Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Grass\n",
+  "completed_utc": "2026-10-05T01:55:01.710224+00:00"
+}

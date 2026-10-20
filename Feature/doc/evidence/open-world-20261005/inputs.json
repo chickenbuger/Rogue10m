@@ -1,0 +1,169 @@
+{
+  "world": "/Game/Rogue10m/Maps/StartHub.StartHub",
+  "assets": [
+    {
+      "path": "/Game/Stylized_Village/Assets/Stones/Boulder/SM_Boulder_Medium_01.SM_Boulder_Medium_01",
+      "class": "StaticMesh",
+      "origin": [
+        2.9668540954589844,
+        3.988234043121338,
+        -0.4716949462890625
+      ],
+      "size": [
+        73.37480926513672,
+        60.51716899871826,
+        73.67024230957031
+      ]
+    },
+    {
+      "path": "/Game/Stylized_Village/Assets/Architecture/Flagstone/Structure/SM_FlagStone_Pillar_Full.SM_FlagStone_Pillar_Full",
+      "class": "StaticMesh",
+      "origin": [
+        -1.9073486328125e-06,
+        -9.5367431640625e-07,
+        49.53574752807617
+      ],
+      "size": [
+        52.80601119995117,
+        57.03185272216797,
+        105.01995086669922
+      ]
+    },
+    {
+      "path": "/Game/Stylized_Village/Assets/Architecture/Flagstone/Structure/SM_FlagStone_Steps_01.SM_FlagStone_Steps_01",
+      "class": "StaticMesh",
+      "origin": [
+        -7.62939453125e-06,
+        3.814697265625e-06,
+        25.978038787841797
+      ],
+      "size": [
+        134.61984252929688,
+        131.79391479492188,
+        76.58765411376953
+      ]
+    },
+    {
+      "path": "/Game/Stylized_Village/Assets/Architecture/Flagstone/Trims/SM_FlagStone_Trim_Arch.SM_FlagStone_Trim_Arch",
+      "class": "StaticMesh",
+      "origin": [
+        -3.814697265625e-06,
+        -0.0012923479080200195,
+        0.04271507263183594
+      ],
+      "size": [
+        229.4984130859375,
+        8.387914896011353,
+        85.35658264160156
+      ]
+    },
+    {
+      "path": "/Game/Stylized_Village/Assets/Architecture/Flagstone/Walls/SM_Flagstone_FullXFull.SM_Flagstone_FullXFull",
+      "class": "StaticMesh",
+      "origin": [
+        0.0,
+        0.0,
+        174.09552574157715
+      ],
+      "size": [
+        354.1180419921875,
+        68.2216796875,
+        352.37907791137695
+      ]
+    },
+    {
+      "path": "/Game/Stylized_Village/Assets/Architecture/Wood/Floors/SM_Wood_Floor_FullxFull_LP.SM_Wood_Floor_FullxFull_LP",
+      "class": "StaticMesh",
+      "origin": [
+        -0.07843780517578125,
+        0.157867431640625,
+        2.384185791015625e-07
+      ],
+      "size": [
+        201.85951232910156,
+        202.42266845703125,
+        10.692333221435547
+      ]
+    },
+    {
+      "path": "/Game/Stylized_Village/Assets/BP_Assets/BP_WaterMill.BP_WaterMill",
+      "class": "Blueprint"
+    },
+    {
+      "path": "/Game/Stylized_Village/Assets/BP_Assets/BP_WindMill.BP_WindMill",
+      "class": "Blueprint"
+    },
+    {
+      "path": "/Game/Stylized_Village/Assets/Stones/Boulder/SM_Boulder_Large_01.SM_Boulder_Large_01",
+      "class": "StaticMesh",
+      "origin": [
+        -2.1058731079101562,
+        4.9261932373046875,
+        33.51631164550781
+      ],
+      "size": [
+        188.3614730834961,
+        194.99984741210938,
+        122.766357421875
+      ]
+    },
+    {
+      "path": "/Game/Stylized_Village/Assets/Terrain/Material_Landscape/MI_Terrain.MI_Terrain",
+      "class": "MaterialInstanceConstant"
+    },
+    {
+      "path": "/Game/Stylized_Village/Assets/Terrain/TerrainLayerWeights/AutoLayer_LayerInfo.AutoLayer_LayerInfo",
+      "class": "LandscapeLayerInfoObject",
+      "layer_name": "Auto Layer"
+    },
+    {
+      "path": "/Game/Stylized_Village/Assets/VFX/Water/Material/MI_Water.MI_Water",
+      "class": "MaterialInstanceConstant"
+    },
+    {
+      "path": "/Game/Stylized_Village/Assets/VFX/Water/Mesh/SM_SM_WaterMesh.SM_SM_WaterMesh",
+      "class": "StaticMesh",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        1000.0,
+        1000.0,
+        0.00016292068175971508
+      ]
+    },
+    {
+      "path": "/Game/Stylized_Village/Assets/VFX/Water/Mesh/SM_WaterMesh.SM_WaterMesh",
+      "class": "StaticMesh",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        1000.0,
+        1000.0,
+        0.00016292068175971508
+      ]
+    }
+  ],
+  "partition": {
+    "error": "WorldPartition: Failed to find property 'runtime_hash' for attribute 'runtime_hash' on 'WorldPartition'"
+  },
+  "gameplay": [
+    {
+      "path": "/Game/FirstPerson/Blueprints/BP_FirstPersonGameMode",
+      "exists": true
+    },
+    {
+      "path": "/Game/Monster/BP_BaseMonster",
+      "exists": true
+    },
+    {
+      "path": "/Game/Monster/BP_MonsterSpawner",
+      "exists": true
+    }
+  ]
+}

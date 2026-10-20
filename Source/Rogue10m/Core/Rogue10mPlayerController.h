@@ -8,6 +8,7 @@
 #include "Rogue10mPlayerController.generated.h"
 
 class ARogue10mBasicMonster;
+class ARogue10mTutorialNPC;
 class UInputMappingContext;
 class URogue10mCharacterLobbyWidget;
 class URogue10mDamageIndicatorWidget;
@@ -16,6 +17,9 @@ class URogue10mInventoryWindowWidget;
 class URogue10mMainMenuWidget;
 class URogue10mMenuWindowWidget;
 class URogue10mSkillTreeWindowWidget;
+class URogue10mTraitWidget;
+class URogue10mSkillBindingComponent;
+class URogue10mCombatTestComponent;
 class URogue10mRunHUD;
 class URogue10mItemDataAsset;
 class UTexture2D;
@@ -48,6 +52,17 @@ class ROGUE10M_API ARogue10mPlayerController : public APlayerController
 public:
 	ARogue10mPlayerController();
 	virtual void UpdateRotation(float DeltaTime) override;
+	virtual bool SetPause(bool bPause, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Keys")
+	URogue10mSkillBindingComponent* GetSkillBindingComponent() const { return SkillBindingComponent; }
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat Test")
+	URogue10mCombatTestComponent* GetCombatTestComponent() const { return CombatTestComponent; }
+
+private:
+	friend class URogue10mCombatTestComponent;
+	UPROPERTY(VisibleAnywhere, Category="Rogue10m|Combat Test")
+	TObjectPtr<URogue10mCombatTestComponent> CombatTestComponent;
+public:
 
 	/** Switches the local gameplay view without moving the head camera used by combat. */
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Camera")
@@ -70,6 +85,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|UI")
 	void CloseAllBlockingPanels();
+
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Traits")
+	bool OpenTraitWindow(ARogue10mTutorialNPC* ServiceNPC);
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Traits")
+	void CloseTraitWindow();
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Traits")
+	bool IsTraitWindowVisible() const { return bTraitWindowVisible; }
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Traits")
+	URogue10mTraitWidget* GetTraitWidget() const { return TraitWidget; }
+	ARogue10mTutorialNPC* GetTraitServiceNPC() const { return TraitServiceNPC.Get(); }
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Character Lobby")
 	void EnterSelectedCharacter();
@@ -156,7 +181,10 @@ public:
 	float GetAimCrossLineThickness() const { return AimCrossLineThickness; }
 
 protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Keys")
+	TObjectPtr<URogue10mSkillBindingComponent> SkillBindingComponent;
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void SetupInputComponent() override;
 
 	UPROPERTY(EditAnywhere, Category="Input|Input Mappings")
@@ -265,6 +293,9 @@ protected:
 	UPROPERTY(Transient)
 	TObjectPtr<URogue10mSkillTreeWindowWidget> SkillTreeWindowWidget;
 
+	UPROPERTY(Transient)
+	TObjectPtr<URogue10mTraitWidget> TraitWidget;
+
 private:
 	bool ShouldUseTouchControls() const;
 	void InitializeMenuWindows();
@@ -296,6 +327,10 @@ private:
 	bool bItemWindowVisible = false;
 	bool bSkillTreeVisible = false;
 	bool bSettingsVisible = false;
+	bool bTraitWindowVisible = false;
+	bool bTraitAddedMoveIgnore = false;
+	bool bTraitAddedLookIgnore = false;
+	TWeakObjectPtr<ARogue10mTutorialNPC> TraitServiceNPC;
 	bool bShowCombatLog = true;
 	float LookSensitivityX = 1.0f;
 	float LookSensitivityY = 1.0f;

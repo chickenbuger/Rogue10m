@@ -11,6 +11,7 @@ class UBehaviorTree;
 class USkeletalMesh;
 class UTexture2D;
 class URogue10mAttackSkillData;
+class URogue10mMonsterAttackPatternProfile;
 
 UENUM(BlueprintType)
 enum class ERogue10mMonsterRank : uint8
@@ -113,6 +114,10 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Combat")
 	TObjectPtr<URogue10mAttackSkillData> AttackSkill;
+
+	/** Optional timed attacks and presentation; unset preserves legacy behavior. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Combat")
+	TObjectPtr<URogue10mMonsterAttackPatternProfile> AttackPatternProfile;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Combat", meta=(ClampMin="0.0"))
 	float AttackRange = 170.0f;

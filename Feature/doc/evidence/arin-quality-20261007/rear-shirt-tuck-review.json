@@ -1,0 +1,48 @@
+{
+  "stage": "source_repaired_pending_one_actual_back_view",
+  "decision": "source_repair_selected_actual_recheck_pending",
+  "before_source_sha256": "96986010056c562355518dd339bab34f16aa94b3e111d04bcc6ed0fbfed93312",
+  "actual_evidence": "Feature/doc/evidence/arin-quality-20261007/form-preview-final/back.png",
+  "visual_ledger": [
+    {
+      "requirement": "Rear slit shows trousers cleanly without concealed shirt protrusion",
+      "status": "fail",
+      "finding": "Two small ivory points are visible directly below the belt on both upper slit edges."
+    }
+  ],
+  "source_cause": {
+    "rear_blouse_trouser_crossing_hits_below_belt": 40,
+    "crossing_bounds": [
+      [
+        -0.05071521033346192,
+        0.05740021368249501,
+        1.0019253354896436
+      ],
+      [
+        0.050846091638574224,
+        0.06405607358478464,
+        1.0197923851940727
+      ]
+    ],
+    "finding": "Source crossings occupy rear Y>0, Z1.0019\u20131.0198m and X\u00b1.05m, consistent with the actual ivory points under the belt."
+  },
+  "selected_repair": "Rear-only tuck on the first three concealed blouse rings: subtract 11mm,10mm,14mm multiplied by max(0,sin(theta)) squared from Y; preserve front vertices, X/Z, and ring1.043m and higher. No coat shape, thigh/apron weights or other objects changed.",
+  "before_nonblouse_geometry_hash": "ed02ed9cb6bbad2afb1618710ba6226c874b57feadfd8b1fbbbec5fc3e612414",
+  "before_blouse_front_geometry_hash": "a509f153f57139c83139ac3727141b2a4e97c2df368d679c6200d1e94bd6aeb5",
+  "body_triangles_before": 29706,
+  "reported_actual_total_triangles": 51634,
+  "actual_Blender_executed_by_body_agent": false,
+  "source_sha256": "41db5ab4737105f7f94f583d81028fa77f2bc246c55996bc58f7cb8a23ded30c",
+  "after_rear_blouse_trouser_crossing_hits_below_belt": 0,
+  "body_triangles_after": 29706,
+  "invariants": {
+    "all_other_object_geometry_and_tags_unchanged": true,
+    "blouse_front_vertices_unchanged": true,
+    "upper_blouse_and_waistcoat_unchanged": true,
+    "X_Z_joint_height_unchanged": true,
+    "weight_function_unchanged": true,
+    "closed_meshes": true,
+    "zero_degenerate_triangles": true
+  },
+  "limits": "Source intersection evidence confirms the local cause and removes measured crossings below the belt; root must accept the actual targeted back rerender before full bake."
+}

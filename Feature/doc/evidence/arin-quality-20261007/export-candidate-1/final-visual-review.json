@@ -1,0 +1,389 @@
+{
+  "schema_version": 1,
+  "reviewer": "/root/arin_quality_validation",
+  "review_date": "2026-10-07",
+  "review_method": "Independent direct visual inspection of all 22 actual PNG renders listed in the imported FBX render manifest; no image generation, rerendering, code edits, asset edits, Blender execution, or Unreal execution by the reviewer.",
+  "source": "D:/Project/Rogue10m/Art/NPC/Arin/Refined/Arin.fbx",
+  "source_sha256": "5a109b14934bb56535e215d3b4c4af333e9ea9a070d964713c757efaf8991b96",
+  "render_manifest": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/imported-pose-views/render-manifest.json",
+  "render_environment_from_manifest": {
+    "blender": "4.5.14 LTS",
+    "presentation": "BuildArin.studio Cycles32 AgX fixed meter cameras",
+    "geometry_repaired": false,
+    "source_saved": false
+  },
+  "scope": {
+    "unreal_import_not_yet_reviewed": true,
+    "texture_fidelity_in_unreal_not_reviewed": true,
+    "lod_visuals_not_reviewed": true,
+    "continuous_animation_not_reviewed": true,
+    "static_render_review_does_not_prove_all_frame_collision_freedom": true,
+    "no_claim_of_watertight_joint_continuity_or_finger_facial_animation": true
+  },
+  "conclusion": {
+    "stationary_tutorial_npc": "conditional_accept_for_current_idle_and_dialogue_scope_pending_actual_unreal_validation",
+    "general_character_deformation": "not_accepted_for_locomotion_or_large_leg_motion",
+    "all_pose_clipping_gate": "failed_at_knee_bend",
+    "rendered_idle_or_neutral_catastrophic_collapse_observed": false,
+    "production_art_quality": "improved_stylized_prototype_with_visible_closeup_limits",
+    "summary_ko": "정지형 튜토리얼 NPC의 렌더된 Idle·중립 자세에는 큰 관통이나 몸체 붕괴가 보이지 않는다. 그러나 무릎 굽힘 검사에서 허벅지가 코트 앞판을 크게 뚫고 나오므로 일반 보행·다리 동작 준비 완료로 판정할 수 없다. 손·헤어·얼굴의 근접 품질 한계도 남아 있다. 실제 Unreal의 재질, Idle, 크기, LOD 결과를 확인한 뒤 현재 정지형 NPC 범위로 적용 여부를 결정해야 한다."
+  },
+  "pose_reviews": [
+    {
+      "pose": "idle",
+      "views": [
+        "idle-front",
+        "idle-oblique",
+        "idle-right",
+        "idle-left",
+        "idle-back",
+        "idle-top"
+      ],
+      "observed": "Head, torso, limbs, boots, bag and bottle shapes remain recognizable and coherent. Former conspicuous pale collar/sleeve peaks through the mantle are not visible in these views. No exploded vertices, detached limb, huge shoulder tear or missing body region is visible.",
+      "limits": "The mantle stays broad and stiff; its rear triangular sheet stands away from the back. The back coat split exposes a short pale inner-garment band at the upper trouser region. This is an appearance and layering concern, not proof of an open body hole from these images alone. A static Idle pose does not validate the entire loop."
+    },
+    {
+      "pose": "neutral",
+      "views": [
+        "neutral-front",
+        "neutral-right"
+      ],
+      "observed": "Both outstretched arms retain sleeve, bracer, wrist and hand silhouette. Upper-arm roots are covered and no large torso opening is visible from the front.",
+      "projection_check": "The circular wrist/hand shape over the shoulder in the exact side view is the end-on projection of the T-pose arm. The corresponding front view establishes a long continuous arm; the side view alone must not be labeled a detached limb."
+    },
+    {
+      "pose": "arm-bend",
+      "views": [
+        "arm-bend-oblique",
+        "arm-bend-right"
+      ],
+      "observed": "Raised arm and bent elbow retain volume, cuff, bracer and hand. No major elbow inversion, collapsed tube, blown shoulder or large mantle penetration is visible.",
+      "projection_check": "In the exact side view, the wrist/hand projects beside the head. The oblique view shows it well outside the face; this projected overlap is not evidence of hand-face contact.",
+      "limits": "The shoulder transition is rounded and bulky and the sleeve bend remains simple. This is not evidence for all larger arm rotations or interaction animations."
+    },
+    {
+      "pose": "reach",
+      "views": [
+        "reach-oblique",
+        "reach-right"
+      ],
+      "observed": "The forward-reaching arm retains sleeve volume and wrist/hand alignment. No visible large joint tear or arm separation occurs.",
+      "projection_check": "The hand overlaps the opposite sleeve in the oblique projection, while the side view separates the reaching arm in front of the torso; no severe contact is established by that overlap alone.",
+      "limits": "The proximal sleeve has a fairly cylindrical, capped transition under the rigid mantle. This is a stylized fit limit rather than a catastrophic deformation."
+    },
+    {
+      "pose": "torso-twist",
+      "views": [
+        "torso-twist-oblique",
+        "torso-twist-right"
+      ],
+      "observed": "The 15-degree spine_02 plus 10-degree spine_03 test retains waist, belt, torso, shoulder and head silhouette. No conspicuous waist inversion, exploding attachment, or large torso/coat tear is visible.",
+      "limits": "Strap, braid, mantle and bag keep a stiff arrangement. The render does not establish physically flexible cloth or accessory response."
+    },
+    {
+      "pose": "knee-bend",
+      "views": [
+        "knee-bend-oblique",
+        "knee-bend-right"
+      ],
+      "observed": "The knee, lower leg and boot remain connected and recognizable without skeletal collapse. The raised thigh visibly passes through the stationary green coat front panel, exposing a large brown trouser area high across the garment.",
+      "severity": "blocking_for_locomotion_or_large_leg_motion",
+      "projection_check": "The trouser exposure breaches the green panel silhouette in the oblique view and the raised thigh emerges outside the coat region in the side view. This is an actual garment clearance failure across two views, not merely the two legs overlapping in projection.",
+      "required_before_leg_animation": "Revise coat panel skinning/clearance or add a controlled pose corrective, then rerender these same imported-FBX views. Do not claim that numerical manifold, weights or finite-coordinate gates clear this visual failure."
+    }
+  ],
+  "closeup_reviews": [
+    {
+      "region": "face_and_head",
+      "views": [
+        "idle-face",
+        "idle-face-profile",
+        "clay-face"
+      ],
+      "observed": "A coherent shaped forehead, nose, cheeks, jaw, lips and two green eyes is present. Clay confirms that the major face and hair forms are geometry rather than only painted shading. No missing eye, open facial hole, collapsed nose or mouth inversion is visible.",
+      "quality_limits": [
+        "Smooth broad cheeks, a long relatively blocky jaw/profile, simple eyelid boundaries and small inset eye shapes produce a doll-like expression rather than a refined closeup human face.",
+        "Facial asymmetry, skin variation and expression detail are limited. No facial animation or lip-sync readiness follows from these static views.",
+        "Hair reads as a smooth cap with thick separate ribbons; large ribbon roots and crown loops are conspicuous in side/top views. Fine strand detail and convincing transitions are limited.",
+        "The profile shows a small skin-colored sliver behind a side lock and a small pale patch at the lower back hair boundary. These are local head/hair clearance issues; no large skull penetration or missing head region is visible.",
+        "The hair ribbons and braid remain recognizable but have stylized faceting and abrupt joins at close range."
+      ]
+    },
+    {
+      "region": "hands",
+      "views": [
+        "idle-hands",
+        "neutral-front",
+        "idle-front"
+      ],
+      "observed": "Five separated digits are recognizable in the full-character views. The closeup shows thick raised nail pieces, faceted finger tips, straight tubular finger shafts and an abrupt step around the little finger segment.",
+      "quality_limits": [
+        "Finger roots and knuckles are mechanically simplified; the hand has a segmented toy-like appearance in closeup.",
+        "The hand closeup crops the wrist and much of the palm at the image edge and covers one hand only. It cannot establish all finger-base/wrist seams or both sides of both hands.",
+        "These images do not establish finger bending, grasping or a finger rig."
+      ],
+      "catastrophic_failure_observed": false
+    },
+    {
+      "region": "boots",
+      "views": [
+        "idle-boots",
+        "idle-right",
+        "idle-left",
+        "knee-bend-oblique",
+        "knee-bend-right"
+      ],
+      "observed": "Boot shafts, cuffs, toe volumes, soles and buckles remain connected and recognizable, including on the bent leg. No detached sole, huge ankle collapse or inverted boot is visible.",
+      "quality_limits": [
+        "Large smooth toe masses, faceted cuffs, simple shaft taper and a thick rounded sole give a broad stylized silhouette.",
+        "Leather grain is subtle; believable creasing, sole construction and fine seam detail remain limited."
+      ]
+    },
+    {
+      "region": "body_clay",
+      "views": [
+        "clay-body"
+      ],
+      "observed": "The body, garment, strap, bracers, bottles, bag and braid retain distinct modeled form without their colors. Clay does not conceal a large missing part in the rendered neutral Idle pose.",
+      "quality_limits": "Clay makes the broad stiff mantle, tubular sleeves and thin straight fingers evident. One static clay view does not clear other poses or prove connected retopology."
+    }
+  ],
+  "findings": [
+    {
+      "id": "VIS-01",
+      "severity": "scope_blocker",
+      "scope": "locomotion_and_large_leg_motion",
+      "title": "Raised thigh penetrates coat front panel",
+      "views": [
+        "knee-bend-oblique",
+        "knee-bend-right"
+      ],
+      "status": "observed_unresolved",
+      "current_idle_scope": "Not observed in the reviewed Idle/neutral renders; prevents a general animation-ready claim."
+    },
+    {
+      "id": "VIS-02",
+      "severity": "quality_limit",
+      "scope": "closeup_hand_art",
+      "title": "Tubular fingers and abrupt segmented little finger/nail shapes",
+      "views": [
+        "idle-hands"
+      ],
+      "status": "observed_unresolved"
+    },
+    {
+      "id": "VIS-03",
+      "severity": "quality_limit",
+      "scope": "head_hair_closeup",
+      "title": "Cap/ribbon hair transitions and small pale boundary exposure",
+      "views": [
+        "idle-face-profile",
+        "idle-top",
+        "idle-back"
+      ],
+      "status": "observed_unresolved"
+    },
+    {
+      "id": "VIS-04",
+      "severity": "quality_limit",
+      "scope": "garment_layering_and_silhouette",
+      "title": "Stiff broad mantle and pale inner band visible through back coat split",
+      "views": [
+        "idle-right",
+        "idle-left",
+        "idle-back",
+        "clay-body"
+      ],
+      "status": "observed_unresolved",
+      "interpretation_limit": "No exact mesh-intersection or body-hole claim is made for the pale back band from the static image alone."
+    },
+    {
+      "id": "VIS-05",
+      "severity": "quality_limit",
+      "scope": "face_closeup",
+      "title": "Simple doll-like facial anatomy and expression",
+      "views": [
+        "idle-face",
+        "idle-face-profile",
+        "clay-face"
+      ],
+      "status": "observed_unresolved"
+    },
+    {
+      "id": "VIS-06",
+      "severity": "evidence_limit",
+      "scope": "runtime_animation_materials_and_lods",
+      "title": "Static FBX renders cannot establish continuous Unreal runtime behavior",
+      "status": "pending_actual_engine_validation"
+    }
+  ],
+  "evidence_views_opened": [
+    "idle-front",
+    "idle-right",
+    "idle-left",
+    "idle-oblique",
+    "idle-back",
+    "idle-top",
+    "idle-face",
+    "idle-face-profile",
+    "idle-hands",
+    "idle-boots",
+    "neutral-front",
+    "neutral-right",
+    "arm-bend-oblique",
+    "arm-bend-right",
+    "reach-oblique",
+    "reach-right",
+    "torso-twist-oblique",
+    "torso-twist-right",
+    "knee-bend-oblique",
+    "knee-bend-right",
+    "clay-face",
+    "clay-body"
+  ],
+  "approval_limits": [
+    "This review permits a scoped current-Idle integration decision; it does not approve locomotion, dynamic cloth, finger animation, facial animation, or cinematic closeup quality.",
+    "Unreal import, physical scale, actual Idle playback, PBR channel conventions, LOD appearance and existing tutorial dialogue/supply behavior remain engine validation requirements.",
+    "If current deployment adds leg poses, knee-bend clearance must be corrected before that expanded scope is approved."
+  ],
+  "integrity_verification": {
+    "utc": "2026-10-07T12:05:31.696910+00:00",
+    "source_hash_matches_manifest": true,
+    "all_22_png_hashes_match_manifest": true,
+    "render_manifest_sha256": "a84c49560be3b4366047c63a86c0a0a8161730357637b960ac76eabcb605269d",
+    "evidence": [
+      {
+        "view": "idle-front",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\idle-front.png",
+        "manifest_sha256": "80a6caf738a9bcc1bb2ad7f0c67aa8009108fe673d8830cc6fbc82f0481750f5",
+        "observed_sha256": "80a6caf738a9bcc1bb2ad7f0c67aa8009108fe673d8830cc6fbc82f0481750f5"
+      },
+      {
+        "view": "idle-right",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\idle-right.png",
+        "manifest_sha256": "51d97e6c8f448cb3cc77fa9beaed3183023098673f5b581c4f6038db35461501",
+        "observed_sha256": "51d97e6c8f448cb3cc77fa9beaed3183023098673f5b581c4f6038db35461501"
+      },
+      {
+        "view": "idle-left",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\idle-left.png",
+        "manifest_sha256": "8b92093817792ab7f494f746aaaa277f2154548ab8d7fe97b51f67764efa6db2",
+        "observed_sha256": "8b92093817792ab7f494f746aaaa277f2154548ab8d7fe97b51f67764efa6db2"
+      },
+      {
+        "view": "idle-oblique",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\idle-oblique.png",
+        "manifest_sha256": "e4984c3306b05e1e9c33832d4dea6d5e1ad7d75ede81df54cddfc35030f0abee",
+        "observed_sha256": "e4984c3306b05e1e9c33832d4dea6d5e1ad7d75ede81df54cddfc35030f0abee"
+      },
+      {
+        "view": "idle-back",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\idle-back.png",
+        "manifest_sha256": "d53566f44b273d8f3d3473ad325e14acce1d2d99e1a06a78efcf9f1048d428da",
+        "observed_sha256": "d53566f44b273d8f3d3473ad325e14acce1d2d99e1a06a78efcf9f1048d428da"
+      },
+      {
+        "view": "idle-top",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\idle-top.png",
+        "manifest_sha256": "cc8fa08afd132d12b5e473f8ebe3a25edb0f9bd90103d10595d28b0eeae52d4e",
+        "observed_sha256": "cc8fa08afd132d12b5e473f8ebe3a25edb0f9bd90103d10595d28b0eeae52d4e"
+      },
+      {
+        "view": "idle-face",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\idle-face.png",
+        "manifest_sha256": "8b57f2a0a900992a28bd938be39f1d22ec74d3f4d712f1f5294af9bd65bdfa2b",
+        "observed_sha256": "8b57f2a0a900992a28bd938be39f1d22ec74d3f4d712f1f5294af9bd65bdfa2b"
+      },
+      {
+        "view": "idle-face-profile",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\idle-face-profile.png",
+        "manifest_sha256": "561b38ca3a6947ab76bfb08b57bf4fd65b075386fc80b76bea5ee746b910bebc",
+        "observed_sha256": "561b38ca3a6947ab76bfb08b57bf4fd65b075386fc80b76bea5ee746b910bebc"
+      },
+      {
+        "view": "idle-hands",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\idle-hands.png",
+        "manifest_sha256": "246c27c7f68a7117ec6c5a6ff7ede79a3653aaea16fe17816599afee947c0017",
+        "observed_sha256": "246c27c7f68a7117ec6c5a6ff7ede79a3653aaea16fe17816599afee947c0017"
+      },
+      {
+        "view": "idle-boots",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\idle-boots.png",
+        "manifest_sha256": "671340972e4d7781b33b35d76eff31598560cb2d694b9832ff107bca91d3590b",
+        "observed_sha256": "671340972e4d7781b33b35d76eff31598560cb2d694b9832ff107bca91d3590b"
+      },
+      {
+        "view": "neutral-front",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\neutral-front.png",
+        "manifest_sha256": "7536c5cbe4d5317accd7ccb3bc18ec467bc10b4cb3a9a035924435b8c205d386",
+        "observed_sha256": "7536c5cbe4d5317accd7ccb3bc18ec467bc10b4cb3a9a035924435b8c205d386"
+      },
+      {
+        "view": "neutral-right",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\neutral-right.png",
+        "manifest_sha256": "3ae9451d4974b4b8346b3fb454e6ed5090f434cd003458da5a4bded6ef9cc048",
+        "observed_sha256": "3ae9451d4974b4b8346b3fb454e6ed5090f434cd003458da5a4bded6ef9cc048"
+      },
+      {
+        "view": "arm-bend-oblique",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\arm-bend-oblique.png",
+        "manifest_sha256": "1a9516d56464b2a9f42d31a93591ba17b9e635da812d646b2aa8cf7cea43d89f",
+        "observed_sha256": "1a9516d56464b2a9f42d31a93591ba17b9e635da812d646b2aa8cf7cea43d89f"
+      },
+      {
+        "view": "arm-bend-right",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\arm-bend-right.png",
+        "manifest_sha256": "7132822578ff871ddc61acd0fa050b69ce45687197651e2f873b7f9890f5996c",
+        "observed_sha256": "7132822578ff871ddc61acd0fa050b69ce45687197651e2f873b7f9890f5996c"
+      },
+      {
+        "view": "reach-oblique",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\reach-oblique.png",
+        "manifest_sha256": "975fd58e11f02a4e87d18d83f5275c24b81f76517fdffdceb44b62f134d742a5",
+        "observed_sha256": "975fd58e11f02a4e87d18d83f5275c24b81f76517fdffdceb44b62f134d742a5"
+      },
+      {
+        "view": "reach-right",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\reach-right.png",
+        "manifest_sha256": "a2b580919371f8b7b4e5e3af36e43cd80f544ce6307363f2bca2c855734f14a7",
+        "observed_sha256": "a2b580919371f8b7b4e5e3af36e43cd80f544ce6307363f2bca2c855734f14a7"
+      },
+      {
+        "view": "torso-twist-oblique",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\torso-twist-oblique.png",
+        "manifest_sha256": "fed4029b4878eb906dfd1dd7bbf120b9eb5a6054ef4480547e3d46e8ea86c5a0",
+        "observed_sha256": "fed4029b4878eb906dfd1dd7bbf120b9eb5a6054ef4480547e3d46e8ea86c5a0"
+      },
+      {
+        "view": "torso-twist-right",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\torso-twist-right.png",
+        "manifest_sha256": "03ee6fb0a004dc4f42ef71fcd8ed1727afa0cd000f26d978ed9ea8b97224d3d0",
+        "observed_sha256": "03ee6fb0a004dc4f42ef71fcd8ed1727afa0cd000f26d978ed9ea8b97224d3d0"
+      },
+      {
+        "view": "knee-bend-oblique",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\knee-bend-oblique.png",
+        "manifest_sha256": "2f769588e35f276ae7378c6e9c31ae2b9cf10b84e79da8c4f1a4a7a373950db3",
+        "observed_sha256": "2f769588e35f276ae7378c6e9c31ae2b9cf10b84e79da8c4f1a4a7a373950db3"
+      },
+      {
+        "view": "knee-bend-right",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\knee-bend-right.png",
+        "manifest_sha256": "3d7752fa847adf004822841a24b224639f5b3cdcba3d1095e26dada4dade60cf",
+        "observed_sha256": "3d7752fa847adf004822841a24b224639f5b3cdcba3d1095e26dada4dade60cf"
+      },
+      {
+        "view": "clay-face",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\clay-face.png",
+        "manifest_sha256": "0bd446e244d10efaef8d0b3f54edbe5305d36bbeadf63043a5ecb7e6244e53f2",
+        "observed_sha256": "0bd446e244d10efaef8d0b3f54edbe5305d36bbeadf63043a5ecb7e6244e53f2"
+      },
+      {
+        "view": "clay-body",
+        "file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-quality-20261007\\imported-pose-views\\clay-body.png",
+        "manifest_sha256": "15d3056bc7a4e20d77c9ad3aa8e5a40bd19c43538a5adef2b03898b17294cb76",
+        "observed_sha256": "15d3056bc7a4e20d77c9ad3aa8e5a40bd19c43538a5adef2b03898b17294cb76"
+      }
+    ]
+  }
+}

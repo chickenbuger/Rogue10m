@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-09",
+  "reviewer": "/root/arin_reference_art_critic",
+  "scope": "Actual supplied donor FBX rendered appearance and suitability as revision base. No final rig/export/Unreal acceptance.",
+  "source": "C:/Users/PC/Downloads/fantasy adventurer 3d model.fbx",
+  "source_sha256_from_inspector": "9ec4b4fb034071c8b6c46d015991c636be4f11544f03f913d4697eed0b5ab6b9",
+  "inventory": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/input-fbx/inventory.json",
+  "canonical_manifest": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/input-fbx/canonical-views/render-manifest.json",
+  "method": "Directly opened four original actual render PNGs and seven canonical actual render PNGs, and read actual inventory. The first view labels follow unnormalized input axes; canonical views provide corrected semantic camera names. Reviewer made no Blender/UE/model changes.",
+  "additional_actual_texture_inspection": {
+    "file": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/input-fbx/embedded-original-color.jpg",
+    "opened_with": "view_image",
+    "observation": "The actual embedded 2048x2048 color atlas visibly contains dark chestnut/russet leather/hair, olive cloth, warm ivory and skin/eye details. Pale studio render alone is not evidence that the atlas palette is absent or should be globally darkened.",
+    "display_limit": "Viewer downscaled to 1600x1600; this review establishes broad palette/content, not per-texel detail or UV sampling fidelity."
+  },
+  "axes": "Original donor front is +X and T-pose arm span follows Y; original right.png is front, left.png is rear, front.png/back.png are opposite profiles. Canonical camera front.png is actual front.",
+  "numeric_findings_from_inventory_not_visual_pass": {
+    "vertices": 45249,
+    "triangles": 90186,
+    "quads": 45009,
+    "n_gons": 13,
+    "boundary_edges": 453,
+    "non_manifold_edges": 469,
+    "loose_vertices": 10,
+    "connected_components": 26,
+    "uv_layers": 1,
+    "materials": 1,
+    "armatures": 0,
+    "actions": 0,
+    "vertex_groups": 0,
+    "height_m": 0.9779301285743713,
+    "height_and_origin": "Not yet normalized to existing 1.7m ground-level Arin contract."
+  },
+  "requirements": [
+    {
+      "id": "DONOR-01",
+      "status": "pass",
+      "requirement": "Face and hair visibly closer to reference than v2",
+      "evidence": ["canonical-views/face.png", "canonical-views/face-profile.png", "canonical-views/front.png", "canonical-views/oblique.png"],
+      "observation": "Large almond eyes, dark upper eye region, friendly mouth, shaped cheeks/chin, side part, swept locks, temple curl and full braid correspond closely to the supplied image. The profiles have an actual shaped ear/neck/nose and hair-root volume. These are substantially stronger reference matches than the small-eye/cap-hair v2.",
+      "limit": "Texture contributes much of the eye/lip appearance; separated eyeballs, eyelid geometry and facial controls are not established by this review."
+    },
+    {
+      "id": "DONOR-02",
+      "status": "pass",
+      "requirement": "Hood/cape drape, cloth folds and embroidery preserve reference identity",
+      "evidence": ["canonical-views/front.png", "canonical-views/back.png", "canonical-views/oblique.png", "input-fbx/front.png", "input-fbx/back.png"],
+      "observation": "Actual rear hood exists; rounded shoulder cape wraps the shoulder with front overlap, cloth-fold volume and a continuous leaf border. Sleeves, waist, coat/apron hem and rear coat have fabric folds and layered silhouette, without the v2 flat triangular mantle and bare rectangular coat panels.",
+      "limit": "The T-pose preserves a broad cape under the arms; its arms-down and reach deformation has not been demonstrated."
+    },
+    {
+      "id": "DONOR-03",
+      "status": "pass",
+      "requirement": "Body, trouser and footwear silhouette materially improves the reference match",
+      "evidence": ["canonical-views/front.png", "canonical-views/back.png", "input-fbx/front.png", "input-fbx/back.png"],
+      "observation": "Donor has fuller thigh/calf cloth allowance, visible knee/ankle folds, broad boot cuffs, shaped heels/toes, wrapped straps and panel stitching. Side and rear silhouette remain coherent and much closer to the reference than thin smooth v2 trousers and boots."
+    },
+    {
+      "id": "DONOR-04",
+      "status": "pass",
+      "requirement": "Bag/belt/potions/bracers remain recognizable fitted accessories",
+      "evidence": ["canonical-views/front.png", "canonical-views/oblique.png", "canonical-views/left-hand.png", "input-fbx/back.png"],
+      "observation": "Satchel has a broad rounded flap and stitched shape, belt and strap have detail, potion holsters and bracers are much less primitive than v2. Donor bag still differs from the reference's exact two-strap arrangement; preserving coherent existing donor detail is preferable to replacing it with v2's smooth pouch."
+    },
+    {
+      "id": "DONOR-05",
+      "status": "fail",
+      "requirement": "Reference palette and material depth under the current actual render",
+      "evidence": ["canonical-views/face.png", "canonical-views/front.png", "canonical-views/oblique.png", "reference PNG"],
+      "observation": "Current donor render is pale and desaturated relative to the reference. Hair looks light taupe/pink and the leather lacks the dark chestnut/russet depth; cape is light gray-olive. The embedded color texture supplies visible details, but no roughness/metallic/normal texture system is demonstrated.",
+      "repair": "Actual source atlas already contains the desired dark/olive/warm colors. First verify sRGB BaseColor, neutral emission/albedo, lighting and material response. Preserve original color detail; only make evidence-backed local color correction after that diagnosis. Author appropriate material-response maps without global atlas darkening."
+    },
+    {
+      "id": "DONOR-06",
+      "status": "unclear",
+      "requirement": "Local hair/bracer continuity free of dark triangular defects",
+      "evidence": ["canonical-views/face.png", "canonical-views/left-hand.png"],
+      "observation": "The face render contains a small black triangular discontinuity at the crown/part around pixel (370,244) in the 800x900 image. The hand view contains a black triangular discontinuity under a bracer seam around (122,378). Inventory reports open/non-manifold geometry, but these specific marks may be geometry openings, intersecting dark faces or baked texture shadow; pixels alone do not establish the cause.",
+      "repair": "Inspect those local source faces/UVs and adjacent normals before repair. Close only confirmed unwanted seams/holes while preserving curls, intended garment openings and existing UVs. Reopen the same camera views after final export."
+    },
+    {
+      "id": "DONOR-07",
+      "status": "unclear",
+      "requirement": "Hand anatomy and per-finger continuity ready for a closeup game character",
+      "evidence": ["canonical-views/left-hand.png", "canonical-views/front.png"],
+      "observation": "Donor has softer taper and a better thumb/palm shape than v2. The visible hand still has simplified rounded fused roots and the supplied reference is front-oriented. Opposite hand, palm-side, finger topology and articulation have not been inspected in enough views to call a complete anatomical/rig pass."
+    },
+    {
+      "id": "DONOR-08",
+      "status": "fail",
+      "requirement": "Preserve existing functional Unreal Arin rig and animation",
+      "evidence": ["inventory.json armatures/actions/vertex_groups"],
+      "observation": "The original donor is static: no armature, actions or skin weights. Reusing its visible surface alone does not preserve the working tutorial NPC's Idle. Binding, scale/origin normalization, safe export and actual engine validation remain required.",
+      "repair": "Root should preserve the current functionality contract, bind the donor surface or its retopologized version to the chosen compatible rig, and verify arm-down, reach, elbow, both knees, twist and Idle."
+    },
+    {
+      "id": "DONOR-09",
+      "status": "unclear",
+      "requirement": "Game budget and lower LOD preserve critical forms",
+      "evidence": ["inventory.json", "canonical-views/face.png", "canonical-views/left-hand.png"],
+      "observation": "90,186 triangles is above the previous procedural-v2 51,634, but no revised task budget or target gameplay performance has been measured. It is not an automatic quality defect. Face/hair/hand detail is vulnerable to indiscriminate reduction.",
+      "repair": "Preserve high-quality authored donor source and select an explicit export/LOD budget. Prefer region-aware reduction and inspect face/hair/cape/hand silhouette at every LOD; do not infer triangle counts from vertex ratios or claim performance from a polycount alone."
+    }
+  ],
+  "decision": "preserve_donor_surface_and_color_uv_as_revision_base_with_targeted_cleanup_pbr_and_compatible_skinning",
+  "source_inspector_followup": {
+    "sender": "/root/arin_reference_inspection",
+    "crown_mark": "Inspector reports actual small crown/part gap as 7-edge closed boundary loop at approximately normalized x=-0.009,y=-0.12,z=1.623. This is source inspection evidence supplied by that agent, not geometry inspection performed by this art reviewer.",
+    "bracer_mark": "Inspector reports an actual small black bracer hole; root/inspector should retain the location/topology report before source repair.",
+    "eyes": "Inspector reports eyes as textured surface, without separate eye geometry or facial rig."
+  },
+  "critical_recheck": [
+    "Neutral albedo/color-space review before palette correction",
+    "Hair part and bracer dark triangle source cause",
+    "Donor-to-existing-Arin scale/orientation normalization",
+    "Cape/braid/bag/coat motion under arms-down, reach, twist and bilateral knee bend",
+    "Fresh export surface/UV/materials and rig/Idle",
+    "Actual Unreal material, LOD and existing tutorial NPC behavior"
+  ],
+  "viewed_files": [
+    "input-fbx/right.png",
+    "input-fbx/left.png",
+    "input-fbx/front.png",
+    "input-fbx/back.png",
+    "input-fbx/canonical-views/face.png",
+    "input-fbx/canonical-views/face-profile.png",
+    "input-fbx/canonical-views/left-hand.png",
+    "input-fbx/canonical-views/oblique.png",
+    "input-fbx/canonical-views/front.png",
+    "input-fbx/canonical-views/back.png",
+    "input-fbx/canonical-views/top.png"
+  ]
+}

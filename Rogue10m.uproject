@@ -55,7 +55,7 @@
 		},
 		{
 			"Name": "AIAssistant",
-			"Enabled": true
+			"Enabled": false
 		},
 		{
 			"Name": "AIModuleToolset",
@@ -63,6 +63,17 @@
 		},
 		{
 			"Name": "AllToolsets",
+			"Enabled": true
+		},
+		{
+			"Name": "LiveCodingToolset",
+			"Enabled": true,
+			"TargetAllowList": [
+				"Editor"
+			]
+		},
+		{
+			"Name": "PCGPrimitives",
 			"Enabled": true
 		}
 	]

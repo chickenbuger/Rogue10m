@@ -1,0 +1,742 @@
+{
+  "result": "PASS",
+  "phase": "reload",
+  "checks": [
+    {
+      "name": "Unarmed_LeftJab",
+      "result": "PASS",
+      "errors": {
+        "local_position_cm": 0.0,
+        "local_scale": 0.0,
+        "limb_length_cm": 3.552713678800501e-14,
+        "stance_position_cm": 0.0,
+        "stance_rotation_deg": 0.0,
+        "finger_rotation_deg": 0.0,
+        "wrist_local_rotation_deg": 0.0,
+        "ik_position_cm": 4.325865666825517e-05,
+        "ik_rotation_deg": 0.00012259904172903305,
+        "head_travel_cm": 0.6099708261865163,
+        "head_rotation_deg": 1.3004292747236516e-05,
+        "max_elbow_step_cm": 1.7045758405972276,
+        "max_arm_rotation_step_deg": 3.615281824690257
+      },
+      "contact_deltas": [
+        {
+          "time": 0.3400000035762787,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 0.0,
+            "hand_l": 0.0,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 0.0,
+            "hand_r": 0.0,
+            "head": 0.0
+          }
+        }
+      ],
+      "arm_comparison": {
+        "hand_l": {
+          "before": {
+            "path_travel_cm": 46.75326847136748,
+            "peak_speed_cm_s": 161.46314074405737,
+            "max_excursion_cm": 23.097101702628468,
+            "axis_range_cm": [
+              1.2613857962355368,
+              22.606521841122444,
+              4.564009550983869
+            ]
+          },
+          "after": {
+            "path_travel_cm": 53.78329390666735,
+            "peak_speed_cm_s": 218.83158641247297,
+            "max_excursion_cm": 23.109524057525036,
+            "axis_range_cm": [
+              9.013663853504891,
+              22.73826422681349,
+              4.564009550983869
+            ]
+          },
+          "path_travel_ratio": 1.1503643630734648,
+          "peak_speed_ratio": 1.3553036649977779,
+          "max_trajectory_difference_cm": 8.66026420626745,
+          "meaningful_increase": true
+        }
+      },
+      "limits": "120 Hz clip audit; actual Appearance retarget and rendered view need runtime verification."
+    },
+    {
+      "name": "Unarmed_RightJab",
+      "result": "PASS",
+      "errors": {
+        "local_position_cm": 0.0,
+        "local_scale": 0.0,
+        "limb_length_cm": 3.552713678800501e-14,
+        "stance_position_cm": 0.0,
+        "stance_rotation_deg": 0.0,
+        "finger_rotation_deg": 0.0,
+        "wrist_local_rotation_deg": 0.0,
+        "ik_position_cm": 4.875562091507794e-05,
+        "ik_rotation_deg": 0.00012780395482875237,
+        "head_travel_cm": 1.2191956857978783,
+        "head_rotation_deg": 1.707547292503189e-05,
+        "max_elbow_step_cm": 1.9767209630527003,
+        "max_arm_rotation_step_deg": 3.980569523106937
+      },
+      "contact_deltas": [
+        {
+          "time": 0.3400000035762787,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 0.0,
+            "hand_l": 0.0,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 0.0,
+            "hand_r": 0.0,
+            "head": 0.0
+          }
+        }
+      ],
+      "arm_comparison": {
+        "hand_r": {
+          "before": {
+            "path_travel_cm": 67.03652090475236,
+            "peak_speed_cm_s": 228.96516665298572,
+            "max_excursion_cm": 33.33908154826506,
+            "axis_range_cm": [
+              8.06772299882136,
+              29.50600151389662,
+              13.283286641610133
+            ]
+          },
+          "after": {
+            "path_travel_cm": 70.72844337454568,
+            "peak_speed_cm_s": 279.39452971527885,
+            "max_excursion_cm": 33.33908154826506,
+            "axis_range_cm": [
+              10.88870292470505,
+              29.509187280016988,
+              13.283286641610133
+            ]
+          },
+          "path_travel_ratio": 1.0550733006421815,
+          "peak_speed_ratio": 1.2202490614597403,
+          "max_trajectory_difference_cm": 8.660246938134296,
+          "meaningful_increase": true
+        }
+      },
+      "limits": "120 Hz clip audit; actual Appearance retarget and rendered view need runtime verification."
+    },
+    {
+      "name": "Unarmed_Straight",
+      "result": "PASS",
+      "errors": {
+        "local_position_cm": 0.0,
+        "local_scale": 0.0,
+        "limb_length_cm": 3.552713678800501e-14,
+        "stance_position_cm": 0.0,
+        "stance_rotation_deg": 0.0,
+        "finger_rotation_deg": 0.0,
+        "wrist_local_rotation_deg": 0.0,
+        "ik_position_cm": 6.164474326437626e-05,
+        "ik_rotation_deg": 0.00012105534867297564,
+        "head_travel_cm": 1.8269345344331895,
+        "head_rotation_deg": 2.689048165283536e-05,
+        "max_elbow_step_cm": 1.861719153028633,
+        "max_arm_rotation_step_deg": 3.85986733809815
+      },
+      "contact_deltas": [
+        {
+          "time": 0.3400000035762787,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 0.0,
+            "hand_l": 0.0,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 0.0,
+            "hand_r": 0.0,
+            "head": 0.0
+          }
+        }
+      ],
+      "arm_comparison": {
+        "hand_r": {
+          "before": {
+            "path_travel_cm": 71.43744555203014,
+            "peak_speed_cm_s": 243.87416932797342,
+            "max_excursion_cm": 35.01540878283344,
+            "axis_range_cm": [
+              4.428255364560908,
+              31.490490010709657,
+              14.898187112380825
+            ]
+          },
+          "after": {
+            "path_travel_cm": 76.11873303883608,
+            "peak_speed_cm_s": 268.63250356478915,
+            "max_excursion_cm": 35.01540878283344,
+            "axis_range_cm": [
+              9.448541688685708,
+              31.490490010709657,
+              14.968581586315608
+            ]
+          },
+          "path_travel_ratio": 1.0655298835314095,
+          "peak_speed_ratio": 1.101520937231854,
+          "max_trajectory_difference_cm": 5.095259681534976,
+          "meaningful_increase": true
+        }
+      },
+      "limits": "120 Hz clip audit; actual Appearance retarget and rendered view need runtime verification."
+    },
+    {
+      "name": "Unarmed_Hook",
+      "result": "PASS",
+      "errors": {
+        "local_position_cm": 0.0,
+        "local_scale": 0.0,
+        "limb_length_cm": 3.907985046680551e-14,
+        "stance_position_cm": 0.0,
+        "stance_rotation_deg": 0.0,
+        "finger_rotation_deg": 0.0,
+        "wrist_local_rotation_deg": 0.0,
+        "ik_position_cm": 4.397122279610199e-05,
+        "ik_rotation_deg": 0.00012280102701008446,
+        "head_travel_cm": 1.2191970363323754,
+        "head_rotation_deg": 1.707547292503189e-05,
+        "max_elbow_step_cm": 2.002332527065551,
+        "max_arm_rotation_step_deg": 4.045043082912378
+      },
+      "contact_deltas": [
+        {
+          "time": 0.6333333253860474,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 0.0,
+            "hand_l": 0.0,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 0.0,
+            "hand_r": 0.0,
+            "head": 0.0
+          }
+        }
+      ],
+      "arm_comparison": {
+        "hand_r": {
+          "before": {
+            "path_travel_cm": 74.39309173443316,
+            "peak_speed_cm_s": 203.19209946326157,
+            "max_excursion_cm": 34.25802195983107,
+            "axis_range_cm": [
+              22.94232368433607,
+              22.48737371291198,
+              14.398773437259635
+            ]
+          },
+          "after": {
+            "path_travel_cm": 86.62739178613784,
+            "peak_speed_cm_s": 263.3654389041719,
+            "max_excursion_cm": 36.121699181697466,
+            "axis_range_cm": [
+              30.660695768368484,
+              22.48737371291198,
+              14.398773437259635
+            ]
+          },
+          "path_travel_ratio": 1.1644547869495518,
+          "peak_speed_ratio": 1.2961401530859722,
+          "max_trajectory_difference_cm": 7.852015834447645,
+          "meaningful_increase": true
+        }
+      },
+      "limits": "120 Hz clip audit; actual Appearance retarget and rendered view need runtime verification."
+    },
+    {
+      "name": "Knuckle_Jab",
+      "result": "PASS",
+      "errors": {
+        "local_position_cm": 0.0,
+        "local_scale": 0.0,
+        "limb_length_cm": 5.3290705182007514e-14,
+        "stance_position_cm": 0.0,
+        "stance_rotation_deg": 0.0,
+        "finger_rotation_deg": 0.0,
+        "wrist_local_rotation_deg": 0.0,
+        "ik_position_cm": 5.088872630686186e-05,
+        "ik_rotation_deg": 0.0001266581189433043,
+        "head_travel_cm": 1.2191970363323754,
+        "head_rotation_deg": 1.707547292503189e-05,
+        "max_elbow_step_cm": 3.6847945556224544,
+        "max_arm_rotation_step_deg": 7.393857981871422
+      },
+      "contact_deltas": [
+        {
+          "time": 0.15000000596046448,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 0.0,
+            "hand_l": 0.0,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 0.0,
+            "hand_r": 0.0,
+            "head": 0.0
+          }
+        }
+      ],
+      "arm_comparison": {
+        "hand_r": {
+          "before": {
+            "path_travel_cm": 67.0514323914447,
+            "peak_speed_cm_s": 425.056481921887,
+            "max_excursion_cm": 33.339083215052085,
+            "axis_range_cm": [
+              8.068673460242884,
+              29.50600531847045,
+              13.283284511681401
+            ]
+          },
+          "after": {
+            "path_travel_cm": 70.68196748086106,
+            "peak_speed_cm_s": 519.3394519782028,
+            "max_excursion_cm": 33.339083215052085,
+            "axis_range_cm": [
+              10.86749298828536,
+              29.50600531847045,
+              13.283284511681401
+            ]
+          },
+          "path_travel_ratio": 1.0541455262017576,
+          "peak_speed_ratio": 1.2218128038655396,
+          "max_trajectory_difference_cm": 8.660248399838396,
+          "meaningful_increase": true
+        }
+      },
+      "limits": "120 Hz clip audit; actual Appearance retarget and rendered view need runtime verification."
+    },
+    {
+      "name": "Knuckle_BodyStraight",
+      "result": "PASS",
+      "errors": {
+        "local_position_cm": 0.0,
+        "local_scale": 0.0,
+        "limb_length_cm": 5.684341886080802e-14,
+        "stance_position_cm": 0.0,
+        "stance_rotation_deg": 0.0,
+        "finger_rotation_deg": 0.0,
+        "wrist_local_rotation_deg": 0.0,
+        "ik_position_cm": 4.973087980687092e-05,
+        "ik_rotation_deg": 0.00011454575462499012,
+        "head_travel_cm": 0.6099642730252699,
+        "head_rotation_deg": 1.4886052178675776e-05,
+        "max_elbow_step_cm": 3.6658880585700087,
+        "max_arm_rotation_step_deg": 7.56855757124316
+      },
+      "contact_deltas": [
+        {
+          "time": 0.1599999964237213,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 0.0,
+            "hand_l": 0.0,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 0.0,
+            "hand_r": 0.0,
+            "head": 0.0
+          }
+        }
+      ],
+      "arm_comparison": {
+        "hand_r": {
+          "before": {
+            "path_travel_cm": 58.71494656012585,
+            "peak_speed_cm_s": 379.04338038264603,
+            "max_excursion_cm": 29.136028356508515,
+            "axis_range_cm": [
+              7.858033035815097,
+              22.380317567995952,
+              17.034702312531238
+            ]
+          },
+          "after": {
+            "path_travel_cm": 61.96194683292958,
+            "peak_speed_cm_s": 479.85872573422404,
+            "max_excursion_cm": 29.136028356508515,
+            "axis_range_cm": [
+              10.348146497208717,
+              22.387602037492137,
+              17.13461399846601
+            ]
+          },
+          "path_travel_ratio": 1.0553010853800011,
+          "peak_speed_ratio": 1.2659731064286215,
+          "max_trajectory_difference_cm": 8.777978691869006,
+          "meaningful_increase": true
+        }
+      },
+      "limits": "120 Hz clip audit; actual Appearance retarget and rendered view need runtime verification."
+    },
+    {
+      "name": "Knuckle_HookFlurry",
+      "result": "PASS",
+      "errors": {
+        "local_position_cm": 0.0,
+        "local_scale": 0.0,
+        "limb_length_cm": 4.973799150320701e-14,
+        "stance_position_cm": 0.0,
+        "stance_rotation_deg": 0.0,
+        "finger_rotation_deg": 0.0,
+        "wrist_local_rotation_deg": 0.0,
+        "ik_position_cm": 4.499174949346431e-05,
+        "ik_rotation_deg": 0.00011933300264790317,
+        "head_travel_cm": 0.6099677898832296,
+        "head_rotation_deg": 1.8390847172211968e-05,
+        "max_elbow_step_cm": 6.265722474521895,
+        "max_arm_rotation_step_deg": 12.330299912825208
+      },
+      "contact_deltas": [
+        {
+          "time": 0.18000000715255737,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 1.464821375527116e-14,
+            "hand_l": 5.131734664565624e-06,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 0.0,
+            "hand_r": 0.0,
+            "head": 0.0
+          }
+        },
+        {
+          "time": 0.2730000115633011,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 0.0,
+            "hand_l": 0.0,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 0.0,
+            "hand_r": 2.267932223900661e-06,
+            "head": 0.0
+          }
+        },
+        {
+          "time": 0.36600001597404486,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 3.004585079519504e-06,
+            "hand_l": 3.430811864431361e-06,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 0.0,
+            "hand_r": 0.0,
+            "head": 0.0
+          }
+        },
+        {
+          "time": 0.4590000203847886,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 0.0,
+            "hand_l": 0.0,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 0.0,
+            "hand_r": 3.5273837433663493e-06,
+            "head": 0.0
+          }
+        },
+        {
+          "time": 0.5520000247955323,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 0.0,
+            "hand_l": 0.0,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 0.0,
+            "hand_r": 0.0,
+            "head": 0.0
+          }
+        },
+        {
+          "time": 0.6450000292062761,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 0.0,
+            "hand_l": 0.0,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 1.8489458415151304e-06,
+            "hand_r": 2.2606114788976334e-06,
+            "head": 0.0
+          }
+        }
+      ],
+      "arm_comparison": {
+        "hand_l": {
+          "before": {
+            "path_travel_cm": 152.55957251081585,
+            "peak_speed_cm_s": 537.6457097883547,
+            "max_excursion_cm": 22.14021959994241,
+            "axis_range_cm": [
+              8.541872193760293,
+              13.41903033483769,
+              17.413304817629722
+            ]
+          },
+          "after": {
+            "path_travel_cm": 167.46165387476572,
+            "peak_speed_cm_s": 657.1288371243659,
+            "max_excursion_cm": 22.140219924916202,
+            "axis_range_cm": [
+              13.393569580518719,
+              13.419031427329191,
+              17.413301529492372
+            ]
+          },
+          "path_travel_ratio": 1.0976804085033298,
+          "peak_speed_ratio": 1.222233945441592,
+          "max_trajectory_difference_cm": 3.7461219234369754,
+          "meaningful_increase": true
+        },
+        "hand_r": {
+          "before": {
+            "path_travel_cm": 166.80486863274822,
+            "peak_speed_cm_s": 616.7581605798146,
+            "max_excursion_cm": 24.931789812328592,
+            "axis_range_cm": [
+              15.515415795004671,
+              17.276271153459376,
+              13.398665748784225
+            ]
+          },
+          "after": {
+            "path_travel_cm": 175.0757165408632,
+            "peak_speed_cm_s": 752.3266524004879,
+            "max_excursion_cm": 24.931791431784404,
+            "axis_range_cm": [
+              17.30719492973889,
+              17.27626819238587,
+              13.398667575446282
+            ]
+          },
+          "path_travel_ratio": 1.049583971834328,
+          "peak_speed_ratio": 1.2198081849346352,
+          "max_trajectory_difference_cm": 3.751045545986496,
+          "meaningful_increase": true
+        }
+      },
+      "limits": "120 Hz clip audit; actual Appearance retarget and rendered view need runtime verification."
+    },
+    {
+      "name": "Knuckle_Uppercut",
+      "result": "PASS",
+      "errors": {
+        "local_position_cm": 0.0,
+        "local_scale": 0.0,
+        "limb_length_cm": 4.973799150320701e-14,
+        "stance_position_cm": 0.0,
+        "stance_rotation_deg": 0.0,
+        "finger_rotation_deg": 0.0,
+        "wrist_local_rotation_deg": 0.0,
+        "ik_position_cm": 3.686289393324331e-05,
+        "ik_rotation_deg": 0.00011849935321995329,
+        "head_travel_cm": 0.6099683478368064,
+        "head_rotation_deg": 1.4080795695456205e-05,
+        "max_elbow_step_cm": 2.358552822386592,
+        "max_arm_rotation_step_deg": 4.774471204526512
+      },
+      "contact_deltas": [
+        {
+          "time": 0.20999999344348907,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 0.0,
+            "hand_l": 0.0,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 0.0,
+            "hand_r": 0.0,
+            "head": 0.0
+          }
+        }
+      ],
+      "arm_comparison": {
+        "hand_r": {
+          "before": {
+            "path_travel_cm": 47.77478440198065,
+            "peak_speed_cm_s": 188.9986629093249,
+            "max_excursion_cm": 20.264662166721116,
+            "axis_range_cm": [
+              7.5810034641603,
+              14.12470442729624,
+              15.41253451789106
+            ]
+          },
+          "after": {
+            "path_travel_cm": 59.38589534415694,
+            "peak_speed_cm_s": 294.93148038753475,
+            "max_excursion_cm": 21.04730684849046,
+            "axis_range_cm": [
+              9.810570838378336,
+              14.191780424924712,
+              21.626454517505266
+            ]
+          },
+          "path_travel_ratio": 1.2430384791374365,
+          "peak_speed_ratio": 1.5604950630208045,
+          "max_trajectory_difference_cm": 7.807757503208581,
+          "meaningful_increase": true
+        }
+      },
+      "limits": "120 Hz clip audit; actual Appearance retarget and rendered view need runtime verification."
+    },
+    {
+      "name": "Knuckle_ShortBlow",
+      "result": "PASS",
+      "errors": {
+        "local_position_cm": 0.0,
+        "local_scale": 0.0,
+        "limb_length_cm": 5.3290705182007514e-14,
+        "stance_position_cm": 0.0,
+        "stance_rotation_deg": 0.0,
+        "finger_rotation_deg": 0.0,
+        "wrist_local_rotation_deg": 0.0,
+        "ik_position_cm": 5.5523719183644485e-05,
+        "ik_rotation_deg": 0.00012537397825436173,
+        "head_travel_cm": 1.2191658014978,
+        "head_rotation_deg": 2.2909150924997106e-05,
+        "max_elbow_step_cm": 2.119698559740301,
+        "max_arm_rotation_step_deg": 4.123391389726927
+      },
+      "contact_deltas": [
+        {
+          "time": 0.2199999988079071,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 0.0,
+            "hand_l": 0.0,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 0.0,
+            "hand_r": 0.0,
+            "head": 0.0
+          }
+        }
+      ],
+      "arm_comparison": {
+        "hand_r": {
+          "before": {
+            "path_travel_cm": 46.91895939706432,
+            "peak_speed_cm_s": 198.44940054689522,
+            "max_excursion_cm": 23.392513089323923,
+            "axis_range_cm": [
+              6.258553382858022,
+              20.486799420357563,
+              9.398469433803811
+            ]
+          },
+          "after": {
+            "path_travel_cm": 56.98294428138213,
+            "peak_speed_cm_s": 289.89020452079143,
+            "max_excursion_cm": 23.47350495851604,
+            "axis_range_cm": [
+              13.72988645293665,
+              21.03820670851167,
+              9.398469433803811
+            ]
+          },
+          "path_travel_ratio": 1.2144971886343137,
+          "peak_speed_ratio": 1.4607764181796457,
+          "max_trajectory_difference_cm": 9.94182976755514,
+          "meaningful_increase": true
+        }
+      },
+      "limits": "120 Hz clip audit; actual Appearance retarget and rendered view need runtime verification."
+    },
+    {
+      "name": "IronChain_TwoPunch",
+      "result": "PASS",
+      "errors": {
+        "local_position_cm": 0.0,
+        "local_scale": 0.0,
+        "limb_length_cm": 4.973799150320701e-14,
+        "stance_position_cm": 0.0,
+        "stance_rotation_deg": 0.0,
+        "finger_rotation_deg": 0.0,
+        "wrist_local_rotation_deg": 0.0,
+        "ik_position_cm": 3.0181006103827765e-05,
+        "ik_rotation_deg": 0.00011327874401118259,
+        "head_travel_cm": 0.6096054296430261,
+        "head_rotation_deg": 2.4448356591142696e-05,
+        "max_elbow_step_cm": 5.963726923166668,
+        "max_arm_rotation_step_deg": 12.018728299445643
+      },
+      "contact_deltas": [
+        {
+          "time": 0.27300000190734863,
+          "bone_position_delta_cm": {
+            "upperarm_l": 0.0,
+            "lowerarm_l": 0.0,
+            "hand_l": 0.0,
+            "upperarm_r": 0.0,
+            "lowerarm_r": 2.7734187636812364e-06,
+            "hand_r": 3.412105910485357e-06,
+            "head": 0.0
+          }
+        }
+      ],
+      "arm_comparison": {
+        "hand_l": {
+          "before": {
+            "path_travel_cm": 52.01924000577477,
+            "peak_speed_cm_s": 523.2495945387126,
+            "max_excursion_cm": 22.12379416761066,
+            "axis_range_cm": [
+              8.538744740320915,
+              13.41012122967193,
+              17.40303723436336
+            ]
+          },
+          "after": {
+            "path_travel_cm": 57.38493512313735,
+            "peak_speed_cm_s": 619.4877794547366,
+            "max_excursion_cm": 22.123790822433516,
+            "axis_range_cm": [
+              12.985930931929644,
+              13.410119497592419,
+              17.40303299259979
+            ]
+          },
+          "path_travel_ratio": 1.103148279689725,
+          "peak_speed_ratio": 1.183924050626099,
+          "max_trajectory_difference_cm": 3.6493224015109345,
+          "meaningful_increase": true
+        },
+        "hand_r": {
+          "before": {
+            "path_travel_cm": 55.460707711315656,
+            "peak_speed_cm_s": 583.0929103602209,
+            "max_excursion_cm": 24.797058099562822,
+            "axis_range_cm": [
+              15.395485356491424,
+              17.255286350792787,
+              13.374545453631043
+            ]
+          },
+          "after": {
+            "path_travel_cm": 58.10045101895998,
+            "peak_speed_cm_s": 752.326094853161,
+            "max_excursion_cm": 24.797058099562832,
+            "axis_range_cm": [
+              16.822626861333887,
+              17.255286348106665,
+              13.374549474858398
+            ]
+          },
+          "path_travel_ratio": 1.0475966394331773,
+          "peak_speed_ratio": 1.290233651423393,
+          "max_trajectory_difference_cm": 3.5958335585281374,
+          "meaningful_increase": true
+        }
+      },
+      "limits": "120 Hz clip audit; actual Appearance retarget and rendered view need runtime verification."
+    }
+  ],
+  "data_asset_profile_contract_unchanged": true,
+  "protected_packages_unchanged": true,
+  "changed_scope": "Ten existing animation sequences; no montage or Data Asset metadata changed.",
+  "limitations": "Structural and clip-motion verification. Rendered Appearance retarget and live damage need runtime QA."
+}

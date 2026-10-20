@@ -1,0 +1,101 @@
+{
+  "status": "passed_reimport",
+  "source_fbx": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\hull-export-pack\\assets\\model.fbx",
+  "source_sha256": "06c31ea29bb8dc643889f5c7eae4fed3053f2df59839b24e3bd342f8e8449aff",
+  "source_size_bytes": 659468,
+  "blender_version": "4.5.14 LTS",
+  "scope": "actual FBX re-import and renders; no geometry repair, rigging, or Unreal modification",
+  "axes": {
+    "up": "+Z",
+    "front_camera": "-Y",
+    "side_camera": "+X"
+  },
+  "quality_acceptance": "not evaluated; preserve Apollo asset state and upstream QA separately",
+  "meshes": [
+    {
+      "name": "geometry_0",
+      "vertices": 12442,
+      "polygons": 24880,
+      "triangles": 24880,
+      "uv_layers": [],
+      "material_slots": [],
+      "dimensions_blender_units": [
+        1.7201029,
+        0.4194121,
+        1.7
+      ],
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        -2e-07,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "armature_modifier_targets": [],
+      "vertex_groups": [],
+      "vertices_weighted_to_existing_bones": 0,
+      "weighted_vertex_fraction": 0.0,
+      "hidden_for_render": false
+    }
+  ],
+  "mesh_count": 1,
+  "total_triangles": 24880,
+  "materials": [],
+  "world_bounds_min": [
+    -0.8600515,
+    -0.2097061,
+    -0.0
+  ],
+  "world_bounds_max": [
+    0.8600515,
+    0.2097063,
+    1.7
+  ],
+  "world_dimensions_blender_units": [
+    1.7201029,
+    0.4194124,
+    1.7
+  ],
+  "scene_unit_scale_length": 1.0,
+  "front_depth_to_height_ratio": 0.2467132,
+  "armatures": [],
+  "armature_count": 0,
+  "actions": [],
+  "action_count": 0,
+  "warnings": [
+    "No armature: this FBX is not a rigged skeletal NPC",
+    "No imported animation actions",
+    "One or more meshes have no UV layer"
+  ],
+  "renders": [
+    {
+      "view": "front",
+      "camera_axis": "-Y",
+      "projection": "orthographic",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\hull-shape-inspection\\fbx-front.png",
+      "geometry_only_display_override": true
+    },
+    {
+      "view": "side",
+      "camera_axis": "+X",
+      "projection": "orthographic",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\hull-shape-inspection\\fbx-side.png",
+      "geometry_only_display_override": true
+    },
+    {
+      "view": "oblique",
+      "camera_axis": "oblique",
+      "projection": "orthographic",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\hull-shape-inspection\\fbx-oblique.png",
+      "geometry_only_display_override": true
+    }
+  ]
+}

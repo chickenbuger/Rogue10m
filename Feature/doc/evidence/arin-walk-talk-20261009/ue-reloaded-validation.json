@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "validate_only": true,
+  "clips": {
+    "Walk": {
+      "path": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk.A_Arin_Walk",
+      "skeleton": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin_Skeleton.SK_Arin_Skeleton",
+      "seconds": 1.2000000476837158,
+      "root_motion": false,
+      "sample_rate": [
+        30,
+        1
+      ],
+      "number_of_frames": 36
+    },
+    "Talk": {
+      "path": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Talk.A_Arin_Talk",
+      "skeleton": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin_Skeleton.SK_Arin_Skeleton",
+      "seconds": 3.0,
+      "root_motion": false,
+      "sample_rate": [
+        30,
+        1
+      ],
+      "number_of_frames": 90
+    }
+  },
+  "components": {
+    "cdo": "/Game/Rogue10m/World/StartVillage/Tutorial/BP_StartVillageGuide.Default__BP_StartVillageGuide_C:GuideAnimation",
+    "placed_actor": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.BP_StartVillageGuide_C_UAID_244BFE8DA9DF3C0803_1304239839.GuideAnimation"
+  },
+  "guide_data": "/Game/Rogue10m/World/StartVillage/Tutorial/DA_StartVillageGuide",
+  "reference_speed_cm_s": 110.0,
+  "minimum_speed_cm_s": 10.0,
+  "protected_guide_preserved": true,
+  "saved_packages": [],
+  "source_preserved": true,
+  "mixamo_downloaded_motion": false
+}

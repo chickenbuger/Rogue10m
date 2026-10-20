@@ -1,0 +1,111 @@
+{
+  "status": "passed",
+  "review_date": "2026-10-05",
+  "reviewer": "independent_openworld_review_agent",
+  "scope": "Read-only final code and saved-evidence review; no editor or build invocation. Only this report was written in the final review step.",
+  "inspected_files": [
+    "Source/Rogue10m/Editor/Rogue10mOpenWorldAuthoring.h",
+    "Source/Rogue10m/Editor/Rogue10mOpenWorldAuthoring.cpp",
+    "Source/Rogue10m/World/Rogue10mOpenWorldBootstrap.h",
+    "Source/Rogue10m/World/Rogue10mOpenWorldBootstrap.cpp",
+    "Source/Rogue10m/World/Rogue10mMonsterSpawner.cpp",
+    "Source/Rogue10m/Enemy/AI/Rogue10mMonsterAIController.cpp",
+    "Source/Rogue10m/Rogue10m.Build.cs",
+    "Scripts/Editor/PolishOpenWorldWater.py",
+    "Scripts/Editor/ValidateOpenWorld.py",
+    "Scripts/Editor/ValidateOpenWorldAIBoundary.py"
+  ],
+  "inspected_evidence": [
+    "Feature/doc/evidence/open-world-20261005/build-editor-center-distance.log",
+    "Feature/doc/evidence/open-world-20261005/runtime.json",
+    "Feature/doc/evidence/open-world-20261005/ai-boundary.json",
+    "Feature/doc/evidence/open-world-20261005/reload.json",
+    "Feature/doc/evidence/open-world-20261005/vegetation.json",
+    "Feature/doc/evidence/open-world-20261005/water.json",
+    "Feature/doc/evidence/open-world-20261005/final-save.json"
+  ],
+  "fixed_issue": {
+    "status": "resolved",
+    "file": "Source/Rogue10m/Enemy/AI/Rogue10mMonsterAIController.cpp",
+    "function": "UpdateCombatBehavior",
+    "problem": "Subtracting only the moving capsule radius left the goal capsule radius and the engine's 1.1 moving-radius multiplier in MoveToActor's initial reach test. Short-range monsters could report arrival while still outside their center-to-center melee range.",
+    "implementation": "An explicit FAIMoveRequest now uses DesiredCenterDistance as acceptance and sets both SetReachTestIncludesAgentRadius(false) and SetReachTestIncludesGoalRadius(false). The initial and final reach tests therefore use the same center-distance contract as the attack-range check.",
+    "code_review": "Both flags are false in the final source; AITypes.h is explicitly included. Pathfinding, strafing, partial-path allowance and the default navigation filter are retained.",
+    "boundary_regression": "Two real native-AI encounters start at attack range plus 5 cm, inside the previous combined-radius threshold. Both acquire the player target, actually move inside melee range, and damage the stationary player without directly applied player damage."
+  },
+  "validation": {
+    "editor_build": {
+      "target": "Rogue10mEditor Win64 Development",
+      "result": "Succeeded",
+      "total_execution_seconds": 14.59,
+      "source": "build-editor-center-distance.log"
+    },
+    "integrated_pie": {
+      "status": "passed",
+      "checks": 99,
+      "passed": 99,
+      "failed": 0,
+      "owned_pie_cleanup_confirmed": true,
+      "source": "runtime.json"
+    },
+    "boundary_pie": {
+      "status": "passed",
+      "checks": 30,
+      "passed": 30,
+      "failed": 0,
+      "owned_pie_cleanup_confirmed": true,
+      "source": "ai-boundary.json",
+      "cases": [
+        {
+          "kind": "Sporeling",
+          "attack_range_cm": 150.0,
+          "initial_distance_cm": 155.0,
+          "old_combined_radius_threshold_cm": 157.4,
+          "minimum_observed_distance_cm": 119.14122591499472,
+          "maximum_monster_displacement_cm": 35.85877408500528,
+          "maximum_player_displacement_cm": 0.0,
+          "native_player_damage": 1.0
+        },
+        {
+          "kind": "VerdantSlime",
+          "attack_range_cm": 120.0,
+          "initial_distance_cm": 125.0,
+          "old_combined_radius_threshold_cm": 133.4,
+          "minimum_observed_distance_cm": 95.71862765194965,
+          "maximum_monster_displacement_cm": 29.281372348050354,
+          "maximum_player_displacement_cm": 0.0,
+          "native_player_damage": 1.0
+        }
+      ]
+    },
+    "terrain_reload": {
+      "status": "passed",
+      "world_size_cm": 180000,
+      "landscape_collision_components": 256,
+      "spatial_streaming_proxies": 16,
+      "reloaded_forest_tiles": 183,
+      "reloaded_tree_instances": 2806,
+      "source": "reload.json"
+    },
+    "vegetation": {
+      "status": "passed",
+      "spatial_tiles": 183,
+      "instances": 2806,
+      "excluded_placement_count": 0,
+      "maximum_ground_height_error_cm": 10.391085580312392,
+      "source": "vegetation.json"
+    }
+  },
+  "prototype_conclusion": "The inspected code and saved evidence support a playable local editor prototype: real StartHub portal travel into OpenRunMap, a configured 1200-second run with a decreasing timer, grounded PlayerStart landing, sampled POI and bridge walking, local navigation, a camp unload/reentry round trip, and native normal-monster pursuit and player damage. The previously identified melee reach mismatch is fixed and separately exercised at its failing distance boundary. No additional material execution blocker was identified in the reviewed scope.",
+  "remaining_limits": [
+    "Movement coverage uses teleports followed by short real walking checks at six POIs, three samples on each of three bridges, and camp reentry. A continuous traversal across the entire 1.8 km terrain is not verified.",
+    "Navigation is generated locally around the player invoker. The evidence does not prove arbitrary long-distance routes or every encounter's navigation.",
+    "The integrated test checks one Sporeling encounter; the separate boundary test checks Sporeling and VerdantSlime. Other monster types, attack patterns and all spawn population states are not verified.",
+    "The timer's 1200-second configuration and approximately 46 seconds of countdown are verified. A full 20-minute timeout and its end-of-run behavior are not exercised.",
+    "The persistent final boss is checked for remaining grounded before arrival. Final-boss victory, complete run progression and new boss patterns are not verified.",
+    "The tests use owned PIE-only actor placement, AI isolation, traversal damage immunity and regeneration suppression. Boundary observation itself requires stationary player position and native AI movement/damage.",
+    "The engine's MoveTo return value and actual reach-test radius multiplier are not exposed to this Python validator. Old-threshold membership is calculated from live capsule radii and the inspected UE 5.8 default; the final verdict relies on observed native pursuit and damage.",
+    "Multiplayer behavior, packaged builds, performance budgets, frame-time spikes and memory use are not verified by these editor-build and PIE results."
+  ],
+  "unresolved_findings": []
+}

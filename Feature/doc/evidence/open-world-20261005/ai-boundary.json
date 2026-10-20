@@ -1,0 +1,458 @@
+{
+  "status": "passed",
+  "map": "/Game/Rogue10m/Maps/OpenRunMap",
+  "checks": [
+    {
+      "name": "no_existing_pie",
+      "passed": true
+    },
+    {
+      "name": "correct_project",
+      "passed": true
+    },
+    {
+      "name": "saved_map_exists",
+      "passed": true
+    },
+    {
+      "name": "load_saved_editor_map",
+      "passed": true
+    },
+    {
+      "name": "exact_editor_map",
+      "passed": true
+    },
+    {
+      "name": "player_has_health_for_two_native_hits",
+      "passed": true,
+      "health": 135.0
+    },
+    {
+      "name": "runtime_placement_exact",
+      "passed": true,
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "expected": [
+        -49650.0,
+        -25000.0,
+        4300.0
+      ],
+      "actual": [
+        -49650.0,
+        -25000.0,
+        4300.0
+      ]
+    },
+    {
+      "name": "forest_streaming_and_player_invoker_ready",
+      "passed": true
+    },
+    {
+      "name": "existing_authored_native_monster",
+      "passed": true,
+      "kind": "Sporeling",
+      "actor": "/Memory/UEDPIE_0_OpenRunMap_0KR77TN7RE4Y31RLWEPPVYXLL.OpenRunMap:PersistentLevel.BP_OW_Sporeling_C_0",
+      "data": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_Sporeling.DA_Monster_Normal_Sporeling",
+      "controller": "/Script/Rogue10m.Rogue10mMonsterAIController"
+    },
+    {
+      "name": "expected_live_attack_range",
+      "passed": true,
+      "kind": "Sporeling",
+      "attack_range_cm": 150.0,
+      "attack_skill": null
+    },
+    {
+      "name": "runtime_placement_exact",
+      "passed": true,
+      "actor": "/Memory/UEDPIE_0_OpenRunMap_0KR77TN7RE4Y31RLWEPPVYXLL.OpenRunMap:PersistentLevel.BP_OW_Sporeling_C_0",
+      "expected": [
+        -51231.8461060524,
+        -22082.2930932045,
+        3889.5927508868003
+      ],
+      "actual": [
+        -51231.8461060524,
+        -22082.2930932045,
+        3889.5927508868003
+      ]
+    },
+    {
+      "name": "runtime_placement_exact",
+      "passed": true,
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "expected": [
+        -51076.8461060524,
+        -22082.2930932045,
+        3892.85704933497
+      ],
+      "actual": [
+        -51076.8461060524,
+        -22082.2930932045,
+        3892.85704933497
+      ]
+    },
+    {
+      "name": "boundary_actual_complete_navigation_path",
+      "passed": true,
+      "kind": "Sporeling",
+      "start": [
+        -51231.8461060524,
+        -22082.2930932045,
+        3814.0918866246334
+      ],
+      "end": [
+        -51076.8461060524,
+        -22082.2930932045,
+        3806.355642075481
+      ],
+      "points": [
+        [
+          -51231.8461060524,
+          -22082.2930932045,
+          3814.0918866246334
+        ],
+        [
+          -51076.8461060524,
+          -22082.2930932045,
+          3806.355642075481
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "outside_attack_inside_old_reach_threshold",
+      "passed": true,
+      "kind": "Sporeling",
+      "initial_distance_cm": 155.0,
+      "attack_range_cm": 150.0,
+      "old_acceptance_radius_cm": 86.0,
+      "old_combined_radius_threshold_cm": 157.4,
+      "agent_capsule_radius_cm": 34.0,
+      "goal_capsule_radius_cm": 34.0
+    },
+    {
+      "name": "player_input_suppressed_for_stationary_boundary",
+      "passed": true,
+      "speed_cm_per_second": 0.0
+    },
+    {
+      "name": "native_monster_damage_perception_stimulus",
+      "passed": true,
+      "kind": "Sporeling",
+      "damage_to_monster": 1.0,
+      "directly_applied_player_damage": false
+    },
+    {
+      "name": "native_perception_acquired_player_target",
+      "passed": true,
+      "kind": "Sporeling"
+    },
+    {
+      "name": "native_pursuit_crossed_melee_boundary",
+      "passed": true,
+      "kind": "Sporeling",
+      "initial_distance_cm": 155.0,
+      "final_distance_cm": 149.37152116716607,
+      "monster_displacement_cm": 5.628478832833935,
+      "player_displacement_cm": 0.0
+    },
+    {
+      "name": "native_monster_attack_damaged_stationary_player",
+      "passed": true,
+      "kind": "Sporeling",
+      "health_before": 135.0,
+      "health_after": 134.0,
+      "directly_applied_player_damage": false
+    },
+    {
+      "name": "existing_authored_native_monster",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "actor": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_VerdantSlime_C_0",
+      "data": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_VerdantSlime.DA_Monster_Normal_VerdantSlime",
+      "controller": "/Script/Rogue10m.Rogue10mMonsterAIController"
+    },
+    {
+      "name": "expected_live_attack_range",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "attack_range_cm": 120.0,
+      "attack_skill": null
+    },
+    {
+      "name": "runtime_placement_exact",
+      "passed": true,
+      "actor": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_VerdantSlime_C_0",
+      "expected": [
+        -47391.61651134491,
+        -23449.49182868004,
+        3890.0
+      ],
+      "actual": [
+        -47391.61651134491,
+        -23449.49182868004,
+        3890.0
+      ]
+    },
+    {
+      "name": "runtime_placement_exact",
+      "passed": true,
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "expected": [
+        -47266.61651134491,
+        -23449.49182868004,
+        3898.0
+      ],
+      "actual": [
+        -47266.61651134491,
+        -23449.49182868004,
+        3898.0
+      ]
+    },
+    {
+      "name": "boundary_actual_complete_navigation_path",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "start": [
+        -47391.61651134491,
+        -23449.49182868004,
+        3810.8305587747464
+      ],
+      "end": [
+        -47266.61651134491,
+        -23449.49182868004,
+        3814.036508817654
+      ],
+      "points": [
+        [
+          -47391.61651134491,
+          -23449.49182868004,
+          3810.8305587747464
+        ],
+        [
+          -47266.61651134491,
+          -23449.49182868004,
+          3814.036508817654
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "outside_attack_inside_old_reach_threshold",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "initial_distance_cm": 125.0,
+      "attack_range_cm": 120.0,
+      "old_acceptance_radius_cm": 62.0,
+      "old_combined_radius_threshold_cm": 133.4,
+      "agent_capsule_radius_cm": 34.0,
+      "goal_capsule_radius_cm": 34.0
+    },
+    {
+      "name": "player_input_suppressed_for_stationary_boundary",
+      "passed": true,
+      "speed_cm_per_second": 0.0
+    },
+    {
+      "name": "native_monster_damage_perception_stimulus",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "damage_to_monster": 1.0,
+      "directly_applied_player_damage": false
+    },
+    {
+      "name": "native_perception_acquired_player_target",
+      "passed": true,
+      "kind": "VerdantSlime"
+    },
+    {
+      "name": "native_pursuit_crossed_melee_boundary",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "initial_distance_cm": 125.0,
+      "final_distance_cm": 119.16765032574767,
+      "monster_displacement_cm": 5.8323496742523275,
+      "player_displacement_cm": 0.0
+    },
+    {
+      "name": "native_monster_attack_damaged_stationary_player",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "health_before": 134.0,
+      "health_after": 133.0,
+      "directly_applied_player_damage": false
+    }
+  ],
+  "cases": [
+    {
+      "kind": "Sporeling",
+      "status": "passed",
+      "samples": [
+        {
+          "elapsed_seconds": 0.01600000000325963,
+          "distance_to_player_cm": 155.0,
+          "monster_displacement_cm": 0.0,
+          "player_displacement_cm": 0.0,
+          "monster_location": [
+            -51231.8461060524,
+            -22082.2930932045,
+            3889.5927508868003
+          ],
+          "blackboard_target_is_player": true,
+          "player_health": 135.0
+        },
+        {
+          "elapsed_seconds": 0.125,
+          "distance_to_player_cm": 140.11966362100793,
+          "monster_displacement_cm": 14.88033637899207,
+          "player_displacement_cm": 0.0,
+          "monster_location": [
+            -51216.96576967341,
+            -22082.2930932045,
+            3889.258937999023
+          ],
+          "blackboard_target_is_player": true,
+          "player_health": 135.0
+        },
+        {
+          "elapsed_seconds": 0.23500000000058208,
+          "distance_to_player_cm": 119.14122591499472,
+          "monster_displacement_cm": 35.85877408500528,
+          "player_displacement_cm": 0.0,
+          "monster_location": [
+            -51195.98733196739,
+            -22082.2930932045,
+            3888.7883254606413
+          ],
+          "blackboard_target_is_player": true,
+          "player_health": 135.0
+        },
+        {
+          "elapsed_seconds": 0.3280000000013388,
+          "distance_to_player_cm": 119.14122591499472,
+          "monster_displacement_cm": 35.85877408500528,
+          "player_displacement_cm": 0.0,
+          "monster_location": [
+            -51195.98733196739,
+            -22082.2930932045,
+            3888.7883254606413
+          ],
+          "blackboard_target_is_player": true,
+          "player_health": 134.0,
+          "native_damage_observed": true
+        }
+      ],
+      "monster": "/Memory/UEDPIE_0_OpenRunMap_0KR77TN7RE4Y31RLWEPPVYXLL.OpenRunMap:PersistentLevel.BP_OW_Sporeling_C_0",
+      "data": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_Sporeling.DA_Monster_Normal_Sporeling",
+      "attack_range_cm": 150.0,
+      "isolated_other_ai_count": 12,
+      "initial_distance_cm": 155.0,
+      "old_combined_radius_threshold_cm": 157.4,
+      "monster_origin": [
+        -51231.8461060524,
+        -22082.2930932045,
+        3889.5927508868003
+      ],
+      "player_origin": [
+        -51076.8461060524,
+        -22082.2930932045,
+        3892.85704933497
+      ],
+      "health_before": 135.0,
+      "health_after": 134.0,
+      "player_damage_taken": 1.0
+    },
+    {
+      "kind": "VerdantSlime",
+      "status": "passed",
+      "samples": [
+        {
+          "elapsed_seconds": 0.01600000000325963,
+          "distance_to_player_cm": 125.0,
+          "monster_displacement_cm": 0.0,
+          "player_displacement_cm": 0.0,
+          "monster_location": [
+            -47391.61651134491,
+            -23449.49182868004,
+            3890.0
+          ],
+          "blackboard_target_is_player": true,
+          "player_health": 134.0
+        },
+        {
+          "elapsed_seconds": 0.125,
+          "distance_to_player_cm": 110.95111933809676,
+          "monster_displacement_cm": 14.04888066190324,
+          "player_displacement_cm": 0.0,
+          "monster_location": [
+            -47377.56763068301,
+            -23449.49182868004,
+            3890.0
+          ],
+          "blackboard_target_is_player": true,
+          "player_health": 134.0
+        },
+        {
+          "elapsed_seconds": 0.23500000000058208,
+          "distance_to_player_cm": 95.71862765194965,
+          "monster_displacement_cm": 29.281372348050354,
+          "player_displacement_cm": 0.0,
+          "monster_location": [
+            -47362.33513899686,
+            -23449.49182868004,
+            3890.0
+          ],
+          "blackboard_target_is_player": true,
+          "player_health": 134.0
+        },
+        {
+          "elapsed_seconds": 0.3280000000013388,
+          "distance_to_player_cm": 95.71862765194965,
+          "monster_displacement_cm": 29.281372348050354,
+          "player_displacement_cm": 0.0,
+          "monster_location": [
+            -47362.33513899686,
+            -23449.49182868004,
+            3890.0
+          ],
+          "blackboard_target_is_player": true,
+          "player_health": 133.0,
+          "native_damage_observed": true
+        }
+      ],
+      "monster": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_VerdantSlime_C_0",
+      "data": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_VerdantSlime.DA_Monster_Normal_VerdantSlime",
+      "attack_range_cm": 120.0,
+      "isolated_other_ai_count": 12,
+      "initial_distance_cm": 125.0,
+      "old_combined_radius_threshold_cm": 133.4,
+      "monster_origin": [
+        -47391.61651134491,
+        -23449.49182868004,
+        3890.0
+      ],
+      "player_origin": [
+        -47266.61651134491,
+        -23449.49182868004,
+        3898.0
+      ],
+      "health_before": 134.0,
+      "health_after": 133.0,
+      "player_damage_taken": 1.0
+    }
+  ],
+  "limitations": [
+    "Two existing authored normal forest types are tested in a standalone owned PIE session.",
+    "Player input suppression, AI isolation, regeneration suppression and actor placement are PIE-only setup.",
+    "The script applies a one-point native damage perception stimulus to the selected monster, never to the player.",
+    "The old combined-radius threshold is calculated from live capsule radii and UE 5.8's default 1.1 agent radius multiplier; the engine multiplier and MoveTo return value have no reflected Python accessor.",
+    "Pursuit proof uses native Blackboard targeting, actual monster movement into melee range and native player damage with other AI stopped; it does not call AI decisions or movement requests.",
+    "This is a short melee boundary regression, not whole-map, boss, network or packaged-performance verification."
+  ],
+  "phase": "cleanup",
+  "elapsed_wall_seconds": 7.313000000001921,
+  "message": "Sporeling and VerdantSlime pursued from outside melee inside the old reach threshold and natively damaged a stationary player.",
+  "owned_pie_cleanup_confirmed": true
+}

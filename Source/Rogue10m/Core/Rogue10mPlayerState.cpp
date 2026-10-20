@@ -5,6 +5,8 @@
 #include "AbilitySystemComponent.h"
 #include "Rogue10mAbilitySystemComponent.h"
 #include "Rogue10mAttributeSet.h"
+#include "Rogue10mProgressionSaveGame.h"
+#include "Rogue10mTownProgressionComponent.h"
 
 ARogue10mPlayerState::ARogue10mPlayerState()
 {
@@ -12,6 +14,7 @@ ARogue10mPlayerState::ARogue10mPlayerState()
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 	AttributeSet = CreateDefaultSubobject<URogue10mAttributeSet>(TEXT("Attribute Set"));
+	TownProgressionComponent = CreateDefaultSubobject<URogue10mTownProgressionComponent>(TEXT("Town Progression"));
 }
 
 UAbilitySystemComponent* ARogue10mPlayerState::GetAbilitySystemComponent() const
@@ -85,6 +88,7 @@ void ARogue10mPlayerState::AddExperience(int32 ExperienceAmount)
 	AttributeSet->SetPlayerLevel(static_cast<float>(Level));
 	AttributeSet->SetExperience(CurrentExperience);
 	AttributeSet->SetExperienceToNextLevel(RequiredExperience);
+	OnGrowthChanged.Broadcast();
 }
 
 void ARogue10mPlayerState::RecordSkillUse(FName SkillId, int32 Count)
@@ -94,7 +98,8 @@ void ARogue10mPlayerState::RecordSkillUse(FName SkillId, int32 Count)
 		return;
 	}
 
-	SkillUseCounts.FindOrAdd(SkillId) += Count;
+	int32& Value = SkillUseCounts.FindOrAdd(SkillId);
+	Value = static_cast<int32>(FMath::Min<int64>(MAX_int32, static_cast<int64>(Value) + Count));
 	OnMartialArtsProgressChanged.Broadcast();
 }
 
@@ -105,7 +110,8 @@ void ARogue10mPlayerState::RecordMonsterDefeat(FName MonsterId, int32 Count)
 		return;
 	}
 
-	MonsterDefeatCounts.FindOrAdd(MonsterId) += Count;
+	int32& Value = MonsterDefeatCounts.FindOrAdd(MonsterId);
+	Value = static_cast<int32>(FMath::Min<int64>(MAX_int32, static_cast<int64>(Value) + Count));
 	OnMartialArtsProgressChanged.Broadcast();
 }
 
@@ -138,4 +144,45 @@ float ARogue10mPlayerState::GetIdentityNormalized() const
 {
 	const float MaxIdentity = GetIdentityMax();
 	return MaxIdentity > 0.0f ? FMath::Clamp(GetIdentityCurrent() / MaxIdentity, 0.0f, 1.0f) : 0.0f;
+}
+
+FRogue10mGrowthSnapshot ARogue10mPlayerState::CaptureGrowth() const
+{
+	FRogue10mGrowthSnapshot Snapshot;
+	Snapshot.Level = GetPlayerLevel();
+	Snapshot.Experience = GetCurrentExperience();
+	Snapshot.ExperienceToNextLevel = GetExperienceToNextLevel();
+	Snapshot.WeaponType = EquippedWeaponType;
+	Snapshot.SkillUses = SkillUseCounts;
+	Snapshot.MonsterDefeats = MonsterDefeatCounts;
+	return Snapshot;
+}
+
+bool ARogue10mPlayerState::RestoreGrowth(const FRogue10mGrowthSnapshot& Snapshot)
+{
+	if (!HasAuthority() || !AttributeSet || Snapshot.Level < 1
+		|| !FMath::IsFinite(Snapshot.Experience) || !FMath::IsFinite(Snapshot.ExperienceToNextLevel)
+		|| Snapshot.Experience < 0.0f || Snapshot.ExperienceToNextLevel < 1.0f
+		|| Snapshot.Experience >= Snapshot.ExperienceToNextLevel
+		|| !StaticEnum<ERogue10mWeaponType>()->IsValidEnumValue(static_cast<int64>(Snapshot.WeaponType)))
+	{
+		return false;
+	}
+	for (const auto& Pair : Snapshot.SkillUses)
+	{
+		if (Pair.Key.IsNone() || Pair.Value < 0) { return false; }
+	}
+	for (const auto& Pair : Snapshot.MonsterDefeats)
+	{
+		if (Pair.Key.IsNone() || Pair.Value < 0) { return false; }
+	}
+	AttributeSet->SetPlayerLevel(static_cast<float>(Snapshot.Level));
+	AttributeSet->SetExperience(Snapshot.Experience);
+	AttributeSet->SetExperienceToNextLevel(Snapshot.ExperienceToNextLevel);
+	EquippedWeaponType = Snapshot.WeaponType;
+	SkillUseCounts = Snapshot.SkillUses;
+	MonsterDefeatCounts = Snapshot.MonsterDefeats;
+	OnGrowthChanged.Broadcast();
+	OnMartialArtsProgressChanged.Broadcast();
+	return true;
 }

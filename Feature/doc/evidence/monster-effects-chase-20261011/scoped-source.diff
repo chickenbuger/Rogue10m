@@ -1,0 +1,383 @@
+--- before/Enemy/AI/Rogue10mMonsterAIController.cpp
++++ after/Enemy/AI/Rogue10mMonsterAIController.cpp
+@@ -23,6 +23,7 @@
+ #include "Rogue10mBasicMonster.h"
+ #include "Rogue10mCharacter.h"
+ #include "Rogue10mMonsterDataAsset.h"
++#include "Rogue10mMonsterAttackPatternComponent.h"
+ 
+ const FName ARogue10mMonsterAIController::TargetActorKey(TEXT("TargetActor"));
+ const FName ARogue10mMonsterAIController::HomeLocationKey(TEXT("HomeLocation"));
+@@ -44,7 +45,9 @@
+ 	SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config"));
+ 	SightConfig->SightRadius = 1800.0f;
+ 	SightConfig->LoseSightRadius = 2200.0f;
+-	SightConfig->PeripheralVisionAngleDegrees = 90.0f;
++	// These creatures have no directional look/scan behavior. Sense nearby
++	// players all around, while sight still respects range and world occlusion.
++	SightConfig->PeripheralVisionAngleDegrees = 180.0f;
+ 	SightConfig->SetMaxAge(5.0f);
+ 	SightConfig->DetectionByAffiliation.bDetectEnemies = true;
+ 	SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
+@@ -78,6 +81,8 @@
+ 		Monster->GetLoseSightRange(), Monster->GetDetectionRange());
+ 	SightConfig->SetMaxAge(Monster->GetForgetTargetSeconds());
+ 	DamageConfig->SetMaxAge(Monster->GetForgetTargetSeconds());
++	MonsterPerceptionComponent->ConfigureSense(*SightConfig);
++	MonsterPerceptionComponent->ConfigureSense(*DamageConfig);
+ 	MonsterPerceptionComponent->RequestStimuliListenerUpdate();
+ 
+ 	if (MonsterBehaviorTreeComponent && MonsterBehaviorTreeComponent->IsRunning())
+@@ -109,7 +114,7 @@
+ 	LastTargetSenseTime = -1.0;
+ 	NextPatrolMoveTime = 0.0;
+ 	bWaitingForPatrolArrival = false;
+-	RunBehaviorTree(BehaviorTree);
++	bAIEnabled = RunBehaviorTree(BehaviorTree);
+ }
+ void ARogue10mMonsterAIController::OnUnPossess()
+ {
+@@ -120,7 +125,7 @@
+ bool ARogue10mMonsterAIController::ExecuteBehaviorDecision()
+ {
+ 	ARogue10mBasicMonster* Monster = GetMonsterPawn();
+-	if (!Monster || Monster->IsDead() || !MonsterBlackboardComponent || !GetWorld())
++	if (!bAIEnabled || !Monster || Monster->IsDead() || !MonsterBlackboardComponent || !GetWorld())
+ 	{
+ 		return false;
+ 	}
+@@ -160,6 +165,24 @@
+ 		}
+ 	}
+ 
++	// Resume while already visible also works without a synthetic damage stimulus.
++	if (!Target && FVector::Dist2D(MonsterBlackboardComponent->GetValueAsVector(HomeLocationKey),
++		Monster->GetActorLocation()) <= Monster->GetMaxChaseDistance())
++	{
++		TArray<AActor*> VisibleActors;
++		MonsterPerceptionComponent->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), VisibleActors);
++		float NearestDistance = TNumericLimits<float>::Max();
++		const FVector Home = MonsterBlackboardComponent->GetValueAsVector(HomeLocationKey);
++		for (AActor* Actor : VisibleActors)
++		{
++			auto* Candidate = Cast<ARogue10mCharacter>(Actor);
++			if (!IsValidCombatTarget(Candidate)
++				|| FVector::Dist2D(Home, Candidate->GetActorLocation()) > Monster->GetMaxChaseDistance()) continue;
++			const float Distance = FVector::DistSquared2D(Monster->GetActorLocation(), Candidate->GetActorLocation());
++			if (Distance < NearestDistance) { NearestDistance = Distance; Target = Candidate; }
++		}
++		if (Target) { AcquireTarget(Target, false); Target = GetBlackboardTarget(); }
++	}
+ 	if (Target)
+ 	{
+ 		UpdateCombatBehavior(*Monster, *Target);
+@@ -176,7 +199,7 @@
+ {
+ 	ARogue10mCharacter* SourceCharacter = Cast<ARogue10mCharacter>(SourceActor);
+ 	ARogue10mBasicMonster* Monster = GetMonsterPawn();
+-	if (!Monster || !IsValidCombatTarget(SourceCharacter))
++	if (!bAIEnabled || !Monster || !IsValidCombatTarget(SourceCharacter))
+ 	{
+ 		return;
+ 	}
+@@ -193,6 +216,7 @@
+ 
+ void ARogue10mMonsterAIController::StopMonsterAI()
+ {
++	bAIEnabled = false;
+ 	StopMovement();
+ 	ClearFocus(EAIFocusPriority::Gameplay);
+ 	if (MonsterBehaviorTreeComponent)
+@@ -206,7 +230,7 @@
+ 	AActor* Actor, FAIStimulus Stimulus)
+ {
+ 	ARogue10mCharacter* Target = Cast<ARogue10mCharacter>(Actor);
+-	if (!IsValidCombatTarget(Target) || !GetWorld())
++	if (!bAIEnabled || !IsValidCombatTarget(Target) || !GetWorld())
+ 	{
+ 		return;
+ 	}
+@@ -241,16 +265,22 @@
+ bool ARogue10mMonsterAIController::IsValidCombatTarget(
+ 	const ARogue10mCharacter* Target) const
+ {
+-	return Target && !Target->IsDead();
++	return IsValid(Target) && Target->GetWorld() == GetWorld() && !Target->IsDead();
+ }
+ 
+ void ARogue10mMonsterAIController::AcquireTarget(
+ 	ARogue10mCharacter* Target, bool bFromDamage)
+ {
+-	if (!IsValidCombatTarget(Target) || !MonsterBlackboardComponent || !GetWorld())
+-	{
+-		return;
+-	}
++	if (!bAIEnabled || !IsValidCombatTarget(Target) || !MonsterBlackboardComponent || !GetWorld())
++	{
++		return;
++	}
++	const auto* MonsterPawn = GetMonsterPawn();
++	if (!MonsterPawn || MonsterPawn->IsDead()
++		|| FVector::Dist2D(MonsterBlackboardComponent->GetValueAsVector(HomeLocationKey), MonsterPawn->GetActorLocation())
++			> MonsterPawn->GetMaxChaseDistance()
++		|| FVector::Dist2D(MonsterBlackboardComponent->GetValueAsVector(HomeLocationKey), Target->GetActorLocation())
++			> MonsterPawn->GetMaxChaseDistance()) return;
+ 	MonsterBlackboardComponent->SetValueAsObject(TargetActorKey, Target);
+ 	MonsterBlackboardComponent->SetValueAsVector(
+ 		LastKnownLocationKey, Target->GetActorLocation());
+@@ -272,6 +302,8 @@
+ 	if (ARogue10mBasicMonster* Monster = GetMonsterPawn())
+ 	{
+ 		Monster->ClearAITarget();
++		// A finished attack can still have a short cosmetic tail in Idle.
++		if (auto* Pattern = Monster->GetAttackPatternComponent()) Pattern->CancelAttack();
+ 	}
+ 	if (MonsterBlackboardComponent)
+ 	{
+@@ -325,7 +357,13 @@
+ 	MoveRequest.SetCanStrafe(true);
+ 	MoveRequest.SetAllowPartialPath(true);
+ 	MoveRequest.SetNavigationFilter(GetDefaultNavigationFilterClass());
+-	MoveTo(MoveRequest);
++	// Actor goals follow moving targets. Keep useful paths instead of aborting
++	// and resubmitting them on every quarter-second decision.
++	if (GetMoveStatus() == EPathFollowingStatus::Idle || !GetPathFollowingComponent()
++		|| GetPathFollowingComponent()->GetMoveGoal() != &Target)
++	{
++		MoveTo(MoveRequest);
++	}
+ }
+ 
+ void ARogue10mMonsterAIController::UpdatePatrolBehavior(
+--- before/Enemy/AI/Rogue10mMonsterAIController.h
++++ after/Enemy/AI/Rogue10mMonsterAIController.h
+@@ -30,6 +30,10 @@
+ 	bool ExecuteBehaviorDecision();
+ 	void NotifyDamageStimulus(AActor* SourceActor, float DamageAmount);
+ 	void StopMonsterAI();
++	UFUNCTION(BlueprintPure, Category="Rogue10m|Monster AI")
++	bool IsMonsterAIEnabled() const { return bAIEnabled; }
++	UFUNCTION(BlueprintPure, Category="Rogue10m|Monster AI")
++	ARogue10mCharacter* GetCombatTarget() const { return GetBlackboardTarget(); }
+ 
+ 	static const FName TargetActorKey;
+ 	static const FName HomeLocationKey;
+@@ -81,4 +85,5 @@
+ 	double LastTargetSenseTime = -1.0;
+ 	double NextPatrolMoveTime = 0.0;
+ 	bool bWaitingForPatrolArrival = false;
+-};+	bool bAIEnabled = false;
++};
+--- before/Enemy/Rogue10mMonsterAttackPatternComponent.cpp
++++ after/Enemy/Rogue10mMonsterAttackPatternComponent.cpp
+@@ -1,6 +1,10 @@
+ // Copyright Epic Games, Inc. All Rights Reserved.
+ 
+ #include "Rogue10mMonsterAttackPatternComponent.h"
++
++#include "NiagaraComponent.h"
++#include "NiagaraFunctionLibrary.h"
++#include "NiagaraSystem.h"
+ 
+ #include "AIController.h"
+ #include "AbilitySystemComponent.h"
+@@ -56,6 +60,11 @@
+ 	UnbindHealthDelegate();
+ 	if (GetWorld()) GetWorld()->GetTimerManager().ClearTimer(LocomotionTimer);
+ 	Profile = InProfile;
++	const bool bRender = GetWorld() && GetWorld()->GetNetMode() != NM_DedicatedServer;
++	AttackEffect = Profile && bRender ? Profile->AttackEffect.LoadSynchronous() : nullptr;
++	ImpactEffect = Profile && bRender ? Profile->ImpactEffect.LoadSynchronous() : nullptr;
++	FrontalWaveEffect = Profile && bRender ? Profile->FrontalWaveEffect.LoadSynchronous() : nullptr;
++	AbyssZoneEffect = Profile && bRender ? Profile->AbyssZoneEffect.LoadSynchronous() : nullptr;
+ 	NextAttackTime = 0.0;
+ 	NextFrontalWaveTime = 0.0;
+ 	NextAbyssZoneTime = 0.0;
+@@ -397,6 +406,19 @@
+ 		return;
+ 	}
+ 	// Only the locked geometry is tested; phase changes and subsequent AI range selection cannot move it.
++	UNiagaraSystem* Effect = AttackEffect;
++	FVector EffectLocation = LockedSourceLocation + LockedForward * FMath::Min(LockedRange * 0.5f, 120.0f);
++	if (CurrentAttackType == ERogue10mMonsterAttackType::FrontalWave)
++	{
++		Effect = FrontalWaveEffect;
++		EffectLocation = LockedSourceLocation + LockedForward * 80.0f;
++	}
++	else if (CurrentAttackType == ERogue10mMonsterAttackType::AbyssZone)
++	{
++		Effect = AbyssZoneEffect;
++		EffectLocation = LockedLocation;
++	}
++	if (SpawnEffect(Effect, EffectLocation, LockedForward.Rotation(), Profile->AttackEffectScale)) ++AttackEffectCount;
+ 	FVector OverlapCenter = LockedLocation;
+ 	FVector OverlapExtent(LockedRange, LockedHalfWidth, LockedHalfHeight);
+ 	FQuat OverlapRotation = FQuat::Identity;
+@@ -442,7 +464,13 @@
+ 	{
+ 		const float AppliedDamage = UGameplayStatics::ApplyDamage(Target, Damage,
+ 			Monster->GetController(), Monster, UDamageType::StaticClass());
+-		if (AppliedDamage > 0.0f) ++SuccessfulHitCount;
++		if (AppliedDamage > 0.0f)
++		{
++			++SuccessfulHitCount;
++			const FVector TowardMonster = (Monster->GetActorLocation() - Target->GetActorLocation()).GetSafeNormal2D();
++			if (SpawnEffect(ImpactEffect, Target->GetActorLocation() + TowardMonster * 35.0f,
++				(-TowardMonster).Rotation(), Profile->ImpactEffectScale)) ++ImpactEffectCount;
++		}
+ 	}
+ }
+ 
+@@ -462,6 +490,7 @@
+ 
+ void URogue10mMonsterAttackPatternComponent::CancelAttack()
+ {
++	ClearEffects();
+ 	DestroyTelegraph();
+ 	if (GetWorld())
+ 	{
+@@ -473,6 +502,47 @@
+ 	LockedTarget.Reset();
+ 	HitTargets.Reset();
+ 	RestoreAnimation();
++}
++
++bool URogue10mMonsterAttackPatternComponent::SpawnEffect(UNiagaraSystem* System,
++	const FVector& Location, const FRotator& Rotation, float Scale)
++{
++	if (!System || !GetWorld() || GetWorld()->GetNetMode() == NM_DedicatedServer) return false;
++	ActiveEffects.RemoveAll([](const auto& FX) { return !FX.IsValid(); });
++	// AutoRelease components must never be destroyed manually: deactivation
++	// returns them to Niagara's world pool when their finite burst completes.
++	auto* FX = UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, System, Location, Rotation,
++		FVector(FMath::Clamp(Scale, 0.01f, 5.0f)), true, false, ENCPoolMethod::AutoRelease, false);
++	if (!FX) return false;
++	FX->OnSystemFinished.AddDynamic(this, &ThisClass::HandleEffectFinished);
++	ActiveEffects.Add(FX);
++	FX->Activate(true);
++	return true;
++}
++
++int32 URogue10mMonsterAttackPatternComponent::GetActiveEffectCount() const
++{
++	int32 Count = 0;
++	for (const auto& FX : ActiveEffects) if (FX.IsValid() && FX->IsActive()) ++Count;
++	return Count;
++}
++
++void URogue10mMonsterAttackPatternComponent::ClearEffects()
++{
++	const auto Effects = MoveTemp(ActiveEffects);
++	ActiveEffects.Reset();
++	for (const auto& FX : Effects)
++	{
++		if (!FX.IsValid()) continue;
++		FX->OnSystemFinished.RemoveDynamic(this, &ThisClass::HandleEffectFinished);
++		FX->DeactivateImmediate();
++	}
++}
++
++void URogue10mMonsterAttackPatternComponent::HandleEffectFinished(UNiagaraComponent* FinishedEffect)
++{
++	ActiveEffects.RemoveAll([FinishedEffect](const auto& FX) { return !FX.IsValid() || FX.Get() == FinishedEffect; });
++	if (FinishedEffect) FinishedEffect->OnSystemFinished.RemoveDynamic(this, &ThisClass::HandleEffectFinished);
+ }
+ 
+ void URogue10mMonsterAttackPatternComponent::SaveAnimationMode()
+--- before/Enemy/Rogue10mMonsterAttackPatternComponent.h
++++ after/Enemy/Rogue10mMonsterAttackPatternComponent.h
+@@ -15,6 +15,8 @@
+ class UDecalComponent;
+ class UMaterialInterface;
+ class UMaterialInstanceDynamic;
++class UNiagaraSystem;
++class UNiagaraComponent;
+ struct FOnAttributeChangeData;
+ 
+ /** Timer-driven basic melee and opt-in telegraphed boss attacks. */
+@@ -61,6 +63,12 @@
+ 
+ 	UFUNCTION(BlueprintPure, Category="Rogue10m|Monster|Boss")
+ 	bool IsTelegraphVisible() const;
++	UFUNCTION(BlueprintPure, Category="Rogue10m|Monster|Effects")
++	int32 GetAttackEffectCount() const { return AttackEffectCount; }
++	UFUNCTION(BlueprintPure, Category="Rogue10m|Monster|Effects")
++	int32 GetImpactEffectCount() const { return ImpactEffectCount; }
++	UFUNCTION(BlueprintPure, Category="Rogue10m|Monster|Effects")
++	int32 GetActiveEffectCount() const;
+ 
+ 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Monster|BasicAttack")
+ 	bool TryStartAttack(ARogue10mCharacter* Target);
+@@ -97,6 +105,22 @@
+ 	void RestoreAnimation();
+ 	void SaveAnimationMode();
+ 	void UpdateLocomotionPresentation();
++	bool SpawnEffect(UNiagaraSystem* System, const FVector& Location, const FRotator& Rotation, float Scale);
++	void ClearEffects();
++	UFUNCTION()
++	void HandleEffectFinished(UNiagaraComponent* FinishedEffect);
++
++	UPROPERTY(Transient)
++	TObjectPtr<UNiagaraSystem> AttackEffect;
++	UPROPERTY(Transient)
++	TObjectPtr<UNiagaraSystem> ImpactEffect;
++	UPROPERTY(Transient)
++	TObjectPtr<UNiagaraSystem> FrontalWaveEffect;
++	UPROPERTY(Transient)
++	TObjectPtr<UNiagaraSystem> AbyssZoneEffect;
++	TArray<TWeakObjectPtr<UNiagaraComponent>> ActiveEffects;
++	int32 AttackEffectCount = 0;
++	int32 ImpactEffectCount = 0;
+ 
+ 	UPROPERTY(Transient)
+ 	TObjectPtr<URogue10mMonsterAttackPatternProfile> Profile;
+--- before/Enemy/Rogue10mMonsterAttackPatternProfile.h
++++ after/Enemy/Rogue10mMonsterAttackPatternProfile.h
+@@ -8,6 +8,7 @@
+ 
+ class UAnimSequence;
+ class UMaterialInterface;
++class UNiagaraSystem;
+ 
+ UENUM(BlueprintType)
+ enum class ERogue10mMonsterPatternState : uint8
+@@ -32,6 +33,19 @@
+ 	GENERATED_BODY()
+ 
+ public:
++	/** Finite CPU burst systems authored for this species; cosmetic only. */
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Effects")
++	TSoftObjectPtr<UNiagaraSystem> AttackEffect;
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Effects")
++	TSoftObjectPtr<UNiagaraSystem> ImpactEffect;
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Effects")
++	TSoftObjectPtr<UNiagaraSystem> FrontalWaveEffect;
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Effects")
++	TSoftObjectPtr<UNiagaraSystem> AbyssZoneEffect;
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Effects", meta=(ClampMin="0.01"))
++	float AttackEffectScale = 1.0f;
++	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Effects", meta=(ClampMin="0.01"))
++	float ImpactEffectScale = 0.5f;
+ 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|BasicAttack", meta=(ClampMin="1.0", Units="cm"))
+ 	float AttackRange = 220.0f;
+ 
+--- before/Components/Rogue10mCombatTestComponent.cpp
++++ after/Components/Rogue10mCombatTestComponent.cpp
+@@ -182,7 +182,7 @@
+ 	auto* Pattern = Monster ? Monster->GetAttackPatternComponent() : nullptr;
+ 	if (!Pattern || !Player || Player->IsDead()) { SetStatus(TEXT("살아 있는 플레이어와 테스트 대상이 필요합니다.")); return false; }
+ 	const float Distance = Type == ERogue10mMonsterAttackType::Basic
+-		? FMath::Max(120.0f, FMath::Min(220.0f, Pattern->GetProfile() ? Pattern->GetProfile()->AttackRange - 20.0f : 220.0f)) : 600.0f;
++		? FMath::Clamp(Pattern->GetProfile() ? Pattern->GetProfile()->AttackRange - 20.0f : 220.0f, 1.0f, 220.0f) : 600.0f;
+ 	FTransform Transform;
+ 	if (!FindPlacement(Monster->GetClass(), Distance, Monster, Transform))
+ 	{ SetStatus(TEXT("공격 시험 위치가 막혔습니다. 빈 공간으로 조금 이동하세요.")); return false; }
+@@ -227,7 +227,7 @@
+ 		auto* AI = Cast<ARogue10mMonsterAIController>(Monster->GetController());
+ 		if (!AI || !Player || Player->IsDead()) return false;
+ 		bTargetAI = !bTargetAI;
+-		if (bTargetAI) { AI->InitializeMonsterAI(); AI->NotifyDamageStimulus(Player, 1.0f); }
++		if (bTargetAI) { AI->InitializeMonsterAI(); AI->ExecuteBehaviorDecision(); }
+ 		else AI->StopMonsterAI();
+ 		SetStatus(bTargetAI ? TEXT("자동 AI 전투 시작. F6을 열면 일시정지합니다.") : TEXT("테스트 대상 AI 정지."));
+ 		if (bTargetAI) SetPanelOpen(false);

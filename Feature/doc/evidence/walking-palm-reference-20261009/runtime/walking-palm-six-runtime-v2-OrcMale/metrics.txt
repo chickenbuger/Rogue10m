@@ -1,0 +1,21 @@
+frames=650
+assertions=95975
+failures=0
+baseline_report_mode=0
+travel_cm=3029.415571341
+walk110_samples=60
+walk210_samples=60
+run600_samples=30
+yaw90_samples=70
+moving_jab_samples=11
+active_blendspace_samples=220
+max_camera_error_cm=0.000000000
+source_left_mean_forward=-0.414269923
+source_left_mean_outward=-0.858561857
+source_right_mean_forward=-0.241383575
+source_right_mean_outward=-0.941733007
+body_left_mean_forward=-0.488944708
+body_left_mean_outward=-0.805476563
+body_right_mean_forward=-0.378260431
+body_right_mean_outward=-0.876136938
+NOTE=Actual CharacterMovement on a transient collision floor 1000cm above StartHub, fixed-step observation with no animation/pose reset. Character physical input is disabled; DoMove/AddMovementInput remains active. Source signs L=-1/R=+1; body signs calibrated ONCE from its own reference thumb offset. Normals use wrist/middle/index/pinky base landmarks, independently parent-composed into world then actor axes. Baseline skips only the new anti-outward-flip direction predicate. Exact FBX roll matching, unchanged idle/lower-body/FootIK and modified-track isolation are separate frozen offline audits. Actual BlendSpace node weight/input/filter/time are logged; highest cached sample API is private. Front capture briefly uses a separate camera and third-person visibility, restoring gameplay view on the next observation frame. Two close hand cameras use the actual retargeted wrist/middle midpoint, 65cm in front plus 30cm outward and 15cm upward, FOV40. Existing moving-attack/camera-forward suites cover full regression matrix.

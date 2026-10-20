@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "command": "import runpy; runpy.run_path('D:/Project/Rogue10m/Scripts/Editor/ValidateMenuMapFlow.py', run_name='__main__')",
+  "result": "None",
+  "output": [
+    {
+      "type": "Warning",
+      "output": "D:/Project/Rogue10m/Scripts/Editor/ValidateMenuMapFlow.py:68: DeprecationWarning: EditorLevelLibrary: Function 'load_level' on 'EditorLevelLibrary' is deprecated: The Editor Scripting Utilities Plugin is deprecated - Use the function in Level Editor Subsystem\n  if not unreal.EditorLevelLibrary.load_level(MENU_MAP_PACKAGE):\n"
+    },
+    {
+      "type": "Warning",
+      "output": "D:/Project/Rogue10m/Scripts/Editor/ValidateMenuMapFlow.py:70: DeprecationWarning: EditorLevelLibrary: Function 'get_editor_world' on 'EditorLevelLibrary' is deprecated: The Editor Scripting Utilities Plugin is deprecated - Use the function in Unreal Editor Subsystem\n  world = unreal.EditorLevelLibrary.get_editor_world()\n"
+    },
+    {
+      "type": "Info",
+      "output": "[Rogue10mMenuMapValidation] PASSED: Menu Map + starting hub travel target + full-screen UI"
+    }
+  ]
+}

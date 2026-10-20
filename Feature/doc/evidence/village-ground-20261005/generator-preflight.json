@@ -1,0 +1,44 @@
+{
+  "saved_owned_assets": [],
+  "created_actor_labels": [],
+  "ground_material_preflight": {
+    "passed": true,
+    "read_only": true,
+    "detail_master": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail",
+    "existing_instances": {
+      "grass": {
+        "instance": "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Grass",
+        "tile_size_cm": 180.0,
+        "textures": {
+          "BaseColorTexture": "/Game/StarterContent/Textures/T_Ground_Grass_D.T_Ground_Grass_D",
+          "NormalTexture": "/Game/StarterContent/Textures/T_Ground_Grass_N.T_Ground_Grass_N"
+        }
+      },
+      "dirt": {
+        "instance": "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_EarthPath",
+        "tile_size_cm": 90.0,
+        "textures": {
+          "BaseColorTexture": "/Game/StarterContent/Textures/T_Ground_Gravel_D.T_Ground_Gravel_D",
+          "NormalTexture": "/Game/StarterContent/Textures/T_Ground_Gravel_N.T_Ground_Gravel_N"
+        }
+      },
+      "stone": {
+        "instance": "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Cobblestone",
+        "tile_size_cm": 120.0,
+        "textures": {
+          "BaseColorTexture": "/Game/StarterContent/Textures/T_CobbleStone_Rough_D.T_CobbleStone_Rough_D",
+          "NormalTexture": "/Game/StarterContent/Textures/T_CobbleStone_Rough_N.T_CobbleStone_Rough_N"
+        }
+      }
+    },
+    "required_source_textures": [
+      "/Game/StarterContent/Textures/T_Ground_Grass_D.T_Ground_Grass_D",
+      "/Game/StarterContent/Textures/T_Ground_Grass_N.T_Ground_Grass_N",
+      "/Game/StarterContent/Textures/T_Ground_Gravel_D.T_Ground_Gravel_D",
+      "/Game/StarterContent/Textures/T_Ground_Gravel_N.T_Ground_Gravel_N",
+      "/Game/StarterContent/Textures/T_MacroVariation.T_MacroVariation",
+      "/Game/StarterContent/Textures/T_CobbleStone_Rough_D.T_CobbleStone_Rough_D",
+      "/Game/StarterContent/Textures/T_CobbleStone_Rough_N.T_CobbleStone_Rough_N"
+    ]
+  }
+}

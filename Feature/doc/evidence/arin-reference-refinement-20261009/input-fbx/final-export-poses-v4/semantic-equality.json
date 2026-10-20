@@ -1,0 +1,167 @@
+{
+  "source_saved": false,
+  "geometry_modified": false,
+  "third": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-reference-refinement-20261009\\third-build\\Arin.fbx",
+  "third_sha256": "a0eeec33e917f0a2a598e9d26cd71746d7b5d98c818dea93fcc56458629da658",
+  "fourth": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Arin.fbx",
+  "fourth_sha256": "45296f9fcbd0d182406c85d29f8627409e090dc0c97ec97815a8035221448f00",
+  "third_import": {
+    "mesh": "Arin_Adventurer",
+    "vertices": 45205,
+    "polygons": 45218,
+    "loops": 180650,
+    "bones": 23,
+    "action_names": [
+      "Arin_Rig|Arin_Rig|Arin_Idle"
+    ],
+    "action_ranges": [
+      [
+        1.0,
+        61.0
+      ]
+    ],
+    "uv_names": [
+      "Retopo_Untitled_NewUVMap"
+    ],
+    "has_custom_normals": true
+  },
+  "fourth_import": {
+    "mesh": "Arin_Adventurer",
+    "vertices": 45205,
+    "polygons": 45218,
+    "loops": 180650,
+    "bones": 23,
+    "action_names": [
+      "Arin_Rig|Arin_Rig|Arin_Idle"
+    ],
+    "action_ranges": [
+      [
+        1.0,
+        61.0
+      ]
+    ],
+    "uv_names": [
+      "Retopo_Untitled_NewUVMap"
+    ],
+    "has_custom_normals": true
+  },
+  "method": "Fresh factory-startup FBX imports; exact Python value equality and canonical JSON SHA per sector, with no rounding/tolerance. Material images/colors excluded by design.",
+  "checks": [
+    {
+      "sector": "rest_positions",
+      "exactly_equal": true,
+      "third_semantic_sha256": "dd99ac30c2da15338664d2286c8f439a51acb75fd92ae295d0fc19e7ad31836f",
+      "fourth_semantic_sha256": "dd99ac30c2da15338664d2286c8f439a51acb75fd92ae295d0fc19e7ad31836f"
+    },
+    {
+      "sector": "mesh_world_matrix",
+      "exactly_equal": true,
+      "third_semantic_sha256": "3fe76b715248f15502e6e2e14a371d3f7a2b72491f188a3917717a038bcd17fd",
+      "fourth_semantic_sha256": "3fe76b715248f15502e6e2e14a371d3f7a2b72491f188a3917717a038bcd17fd"
+    },
+    {
+      "sector": "rig_world_matrix",
+      "exactly_equal": true,
+      "third_semantic_sha256": "6521d69b66888daa0134270eeae334d47e9ebf18d25b338330ceab074f6a9af7",
+      "fourth_semantic_sha256": "6521d69b66888daa0134270eeae334d47e9ebf18d25b338330ceab074f6a9af7"
+    },
+    {
+      "sector": "edges",
+      "exactly_equal": false,
+      "third_semantic_sha256": "d5fc717736dcb91c4681089f0bc31e24ae7d2a21fc1dc5deef8365df85e8210d",
+      "fourth_semantic_sha256": "72a67467bc0ff2ed4e7077267ab2dc6255aa6b66c5e1573e29812a31724c314a"
+    },
+    {
+      "sector": "polygons",
+      "exactly_equal": false,
+      "third_semantic_sha256": "3b1ed17dbe5381886bf212b7047d43614fff0afafbfef0f741b9742a1c5da93b",
+      "fourth_semantic_sha256": "1c0aa193ed901a01b493cb82b39ac77d4937968b309a9504f96e8f381cb76722"
+    },
+    {
+      "sector": "loops",
+      "exactly_equal": false,
+      "third_semantic_sha256": "bc0d9efe5faa3152ae9ae440c36f37a5b80b74e13d8b1c95ee7ec4230e3cccf5",
+      "fourth_semantic_sha256": "cdd29da6c528c38bb764ac40e560c0391eaa1afb6df3e3a46fd1cabcd259f712"
+    },
+    {
+      "sector": "uv_layers",
+      "exactly_equal": false,
+      "third_semantic_sha256": "bf9ca964ca040b280d1bd0ae680884d88782d745ae8769697892848c69d9f748",
+      "fourth_semantic_sha256": "fb3442c77cb16c8e641dd9eeb72ad303c1c2c3abe8452d2c64c99cf0b9d6bd84"
+    },
+    {
+      "sector": "skin_groups",
+      "exactly_equal": true,
+      "third_semantic_sha256": "0343f2afc9e817f9a0124460899c258258c1c270b491a0e0b58921f726e093fb",
+      "fourth_semantic_sha256": "0343f2afc9e817f9a0124460899c258258c1c270b491a0e0b58921f726e093fb"
+    },
+    {
+      "sector": "skin_weights",
+      "exactly_equal": true,
+      "third_semantic_sha256": "c5bea610f157b6cd4b4eab8729bb59f68feb2a50aadd4c0a4c7dc5744c9496fd",
+      "fourth_semantic_sha256": "c5bea610f157b6cd4b4eab8729bb59f68feb2a50aadd4c0a4c7dc5744c9496fd"
+    },
+    {
+      "sector": "bones",
+      "exactly_equal": true,
+      "third_semantic_sha256": "781c9e76adc1d5caaf2d82dab637b3b00fea86e89866b709b6061c089d18b411",
+      "fourth_semantic_sha256": "781c9e76adc1d5caaf2d82dab637b3b00fea86e89866b709b6061c089d18b411"
+    },
+    {
+      "sector": "modifiers",
+      "exactly_equal": true,
+      "third_semantic_sha256": "26060ea8d5db50446e5f7d20705143a24ebce79fe3ece7e2bd2ad2ef04cd3029",
+      "fourth_semantic_sha256": "26060ea8d5db50446e5f7d20705143a24ebce79fe3ece7e2bd2ad2ef04cd3029"
+    },
+    {
+      "sector": "corner_normals",
+      "exactly_equal": false,
+      "third_semantic_sha256": "705287140cdb9442ad96810d87a3f9c9aec3e6a9c70ffdfa6ad883e2cd8dec70",
+      "fourth_semantic_sha256": "f228ed4baf6c099cd5b3ae777fbd636c94b18605383703eb99eef2e2313e4e8a"
+    },
+    {
+      "sector": "edge_set_canonical",
+      "exactly_equal": true,
+      "third_semantic_sha256": "a8b2c6ee672359fb1a682a3a723ba037a706e94210a83c038173b435cabf2dd3",
+      "fourth_semantic_sha256": "a8b2c6ee672359fb1a682a3a723ba037a706e94210a83c038173b435cabf2dd3"
+    },
+    {
+      "sector": "face_set_canonical",
+      "exactly_equal": true,
+      "third_semantic_sha256": "26da74b432d26a89d45cc20bb3320f53a31c3ab9854be6838b38ff79c850be5b",
+      "fourth_semantic_sha256": "26da74b432d26a89d45cc20bb3320f53a31c3ab9854be6838b38ff79c850be5b"
+    },
+    {
+      "sector": "uv_face_corners_canonical",
+      "exactly_equal": true,
+      "third_semantic_sha256": "aac4bb20f83cf1f21a87bed7fffdf66678536ef74b18e5230fdb4df50018415f",
+      "fourth_semantic_sha256": "aac4bb20f83cf1f21a87bed7fffdf66678536ef74b18e5230fdb4df50018415f"
+    },
+    {
+      "sector": "normal_face_corners_canonical",
+      "exactly_equal": true,
+      "third_semantic_sha256": "5ce4f5d308dea9e45d7a9224c934448f7f302053b103b53d08f92431b4764415",
+      "fourth_semantic_sha256": "5ce4f5d308dea9e45d7a9224c934448f7f302053b103b53d08f92431b4764415"
+    },
+    {
+      "sector": "actions",
+      "exactly_equal": true,
+      "third_semantic_sha256": "d69844b837020cb7a62f79e58644d4a78ffd1cff19a48ec68d39f15198dd182c",
+      "fourth_semantic_sha256": "d69844b837020cb7a62f79e58644d4a78ffd1cff19a48ec68d39f15198dd182c"
+    },
+    {
+      "sector": "idle_evaluated_5_frames",
+      "exactly_equal": true,
+      "third_semantic_sha256": "484b6e1b383b816ee02295c2639b5a1566a8186a5cd0a075bdb2c7bc90a233c1",
+      "fourth_semantic_sha256": "484b6e1b383b816ee02295c2639b5a1566a8186a5cd0a075bdb2c7bc90a233c1"
+    }
+  ],
+  "all_geometry_uv_skin_bone_action_sectors_exactly_equal": false,
+  "scope": "Only sectors marked exactly_equal may be carried over from v3. Raw ordering differences are separately checked by canonical edge/face and corresponding UV/normal corner values. V4 material appearance requires new renders.",
+  "canonical_topology_uv_skin_bone_action_exactly_equal": true,
+  "canonical_corner_normals_exactly_equal": true,
+  "canonical_corner_normal_max_abs_component_delta": 0.0,
+  "canonical_corner_normal_nonzero_components": 0,
+  "final_canonical_semantic_equivalence_pass": true,
+  "raw_order_difference_explanation": "FBX exported edge/face/loop arrays are ordered differently. Canonical edge endpoints, cyclic face winding, corresponding face-corner UVs and normals match exactly. Rest positions, transforms, weights, skeleton, action keys/handles and five evaluated Idle frames also match exactly."
+}

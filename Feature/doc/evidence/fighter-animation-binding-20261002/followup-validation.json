@@ -1,0 +1,60 @@
+{
+  "result": "PASS",
+  "full_runtime": "RESULT=FIGHTER_SKILL_TREE_PASSED mode=full assertions=120 active_executed=13 failures=0",
+  "stone_runtime": "RESULT=STONE_FIST_ANIMATIONS_PASSED cases=3 assertions=1234 failures=0 camera_deg=7.002835",
+  "target_distance_cm": 135,
+  "new_skill_damage": [
+    {
+      "skill": "유운수",
+      "asset": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Jab.DA_Attack_StoneFist_Jab",
+      "health_drop": 32.868164062,
+      "pulses": 1,
+      "first_delay_seconds": 0.06666667,
+      "expected_first_delay_seconds": 0.048076926,
+      "first_delay_error_seconds": 0.018589744,
+      "montage_at_accept_seconds": 0.034666669,
+      "montage_at_hit_seconds": 0.104000002,
+      "raw_montage_contact_difference_seconds": 0.05400000199999999,
+      "elapsed_montage_error_seconds": 0.019333332999999994,
+      "rate": 1.039999962,
+      "montage_weight": 1.0
+    },
+    {
+      "skill": "금강쇄",
+      "asset": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Straight.DA_Attack_StoneFist_Straight",
+      "health_drop": 39.28515625,
+      "pulses": 1,
+      "first_delay_seconds": 0.266666681,
+      "expected_first_delay_seconds": 0.262500011,
+      "first_delay_error_seconds": 0.004166670000000039,
+      "montage_at_accept_seconds": 0.034666669,
+      "montage_at_hit_seconds": 0.312000006,
+      "raw_montage_contact_difference_seconds": 0.039000005999999976,
+      "elapsed_montage_error_seconds": 0.004333336999999993,
+      "rate": 1.039999962,
+      "montage_weight": 1.0
+    },
+    {
+      "skill": "무극패왕권",
+      "asset": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_ChargedShockwave.DA_Attack_StoneFist_ChargedShockwave",
+      "health_drop": 56.94140625,
+      "pulses": 1,
+      "first_delay_seconds": 0.300000016,
+      "expected_first_delay_seconds": 0.272435906,
+      "first_delay_error_seconds": 0.027564109999999975,
+      "montage_at_accept_seconds": 0.034666669,
+      "montage_at_hit_seconds": 0.346666664,
+      "raw_montage_contact_difference_seconds": 0.06333333066666669,
+      "elapsed_montage_error_seconds": 0.028666661666666704,
+      "rate": 1.039999962,
+      "montage_weight": 1.0
+    }
+  ],
+  "max_control_error_deg": 1.708e-06,
+  "max_camera_rotation_deg": 7.002834825,
+  "prior_binding_assets_unchanged": true,
+  "render_verified": false,
+  "diagnosis": "Old late Montage_IsActive check ran at frame439 after DesiredWeight changed 1→0 for normal blend-out; montage had positive weight before and terminated at443. No asset fix needed.",
+  "test_contract": "Accepted input only; matching montage positive weight observed at >=2 advancing positions. Damage and montage elapsed clocks use the same measured acceptance frame. Tolerances remain one30Hz frame. Raw montage positions/differences retained.",
+  "limits": "NullRHI verifies real game input, montage evaluation, fixed-front target overlap/damage and camera transform. Skin/pixel contact and actual render remain unverified. JumpSlam source scope unchanged. RisingDragon retains original Knuckle_Uppercut."
+}

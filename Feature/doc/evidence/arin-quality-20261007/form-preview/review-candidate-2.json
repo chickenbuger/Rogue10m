@@ -1,0 +1,14 @@
+{
+  "candidate": "form-candidate-2",
+  "opened_images": ["face.png", "front.png"],
+  "comparison": "same Blender executable, camera, frame 1, Cycles32 AgX and studio lighting as preserved form-candidate-1",
+  "ledger": [
+    {"requirement": "eye containment", "status": "pass", "evidence": "face.png", "observation": "No detached white surface above either eye; both iris/pupil remain visible through the eye openings."},
+    {"requirement": "mantle and concealed hip fit in Idle frame 1", "status": "pass", "evidence": "front.png", "observation": "Prior large ivory shoulder and hip fragments are absent; central ivory blouse remains visible."},
+    {"requirement": "identity outfit two bottles", "status": "pass", "evidence": "front.png"},
+    {"requirement": "neutral and large bend/reach/twist/knee poses", "status": "unclear", "evidence": null, "observation": "Must still inspect actual final linear-skinned source/export poses."},
+    {"requirement": "PBR portability and runtime engine appearance", "status": "unclear", "evidence": null, "observation": "Baking and fresh-process import are pending."}
+  ],
+  "decision": "retain_form_repairs_and_proceed_to_actual_bake",
+  "quality_limit": "Stylized static face; photographic likeness or facial animation readiness is not established."
+}

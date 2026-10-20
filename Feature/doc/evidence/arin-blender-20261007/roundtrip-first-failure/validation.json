@@ -1,0 +1,6130 @@
+{
+  "status": "failed_roundtrip",
+  "blender_version": "4.5.14 LTS",
+  "source_fbx": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\Arin.fbx",
+  "scope": "actual combined FBX import; inspect original geometry, skinning and Idle",
+  "axes": {
+    "up": "+Z",
+    "front": "-Y",
+    "units": "metres"
+  },
+  "thresholds": {
+    "height_m": 1.7,
+    "height_tolerance_m": 0.002,
+    "weight_sum_tolerance": 0.001,
+    "root_matrix_tolerance": 1e-05,
+    "loop_endpoint_tolerance": 0.0001,
+    "mesh_motion_min_m": 1e-05
+  },
+  "checks": {
+    "actual_nonempty_mesh": true,
+    "height_170cm": true,
+    "feet_at_ground": true,
+    "single_armature": true,
+    "required_humanoid_bones": true,
+    "root_has_no_parent": true,
+    "finite_mesh_vertices": true,
+    "every_mesh_bound_to_rig": true,
+    "all_vertices_weighted": true,
+    "normalized_deform_weights": false,
+    "active_arin_idle": true,
+    "idle_frames_1_to_61": true,
+    "idle_30fps": true,
+    "idle_changes_actual_bones": true,
+    "idle_deforms_actual_mesh": true,
+    "stationary_root": true,
+    "stationary_armature": true,
+    "idle_loops": true
+  },
+  "renders": [
+    {
+      "view": "front",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-blender-20261007\\roundtrip\\fbx-front.png",
+      "frame": 1,
+      "projection": "orthographic",
+      "material_override": false
+    },
+    {
+      "view": "side",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-blender-20261007\\roundtrip\\fbx-side.png",
+      "frame": 1,
+      "projection": "orthographic",
+      "material_override": false
+    },
+    {
+      "view": "oblique",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-blender-20261007\\roundtrip\\fbx-oblique.png",
+      "frame": 1,
+      "projection": "orthographic",
+      "material_override": false
+    }
+  ],
+  "source_sha256": "6b2d562e1325268f69cfd1a2bf060f2e0ad4e2c3a802f502ececcabf6a9af404",
+  "source_size_bytes": 5321932,
+  "mesh_count": 175,
+  "armature_count": 1,
+  "bounds_min_m": [
+    -0.399029732,
+    -0.151999921,
+    5.3e-08
+  ],
+  "bounds_max_m": [
+    0.399030089,
+    0.176964119,
+    1.699999809
+  ],
+  "dimensions_m": [
+    0.798059821,
+    0.328964055,
+    1.699999809
+  ],
+  "height_m": 1.6999998092651367,
+  "fps": 30.0,
+  "meshes": [
+    {
+      "name": "Arin_BeltStud_2",
+      "vertices": 24,
+      "triangles": 44,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 24,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Braid_Fibre_2",
+      "vertices": 207,
+      "triangles": 410,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 207,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair_light.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_CapeShoulderGoldHem_1",
+      "vertices": 72,
+      "triangles": 140,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 72,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_Lock_05",
+      "vertices": 162,
+      "triangles": 320,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 162,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_RolledCuff_l_1",
+      "vertices": 120,
+      "triangles": 236,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "lowerarm_l"
+      ],
+      "weighted_vertices": 120,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 120,
+      "unnormalized_examples": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.006666636560112238,
+      "weight_sum_max": 0.1133333221077919,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_cloth_ivory.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BeltStud_3",
+      "vertices": 24,
+      "triangles": 44,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 24,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Braid_Gather",
+      "vertices": 158,
+      "triangles": 312,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 158,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_ChestStrapAdjuster",
+      "vertices": 168,
+      "triangles": 332,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 168,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_Lock_06",
+      "vertices": 162,
+      "triangles": 320,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 162,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_RolledCuff_r_0",
+      "vertices": 120,
+      "triangles": 236,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "lowerarm_r",
+        "upperarm_r"
+      ],
+      "weighted_vertices": 120,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_cloth_ivory.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BlouseCollar_-1",
+      "vertices": 60,
+      "triangles": 116,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 60,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_cloth_ivory.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Braid_Interlace_0",
+      "vertices": 330,
+      "triangles": 656,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 330,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_DiagonalChestSatchelStrap",
+      "vertices": 88,
+      "triangles": 172,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03"
+      ],
+      "weighted_vertices": 88,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_SculptedScalp",
+      "vertices": 674,
+      "triangles": 1344,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 674,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_RolledCuff_r_1",
+      "vertices": 120,
+      "triangles": 236,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "lowerarm_r"
+      ],
+      "weighted_vertices": 120,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 120,
+      "unnormalized_examples": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.006666636560112238,
+      "weight_sum_max": 0.1133333221077919,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_cloth_ivory.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BlouseCollar_1",
+      "vertices": 60,
+      "triangles": 116,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 60,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_cloth_ivory.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Braid_Interlace_1",
+      "vertices": 330,
+      "triangles": 656,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 330,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Ear_-1",
+      "vertices": 162,
+      "triangles": 320,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 162,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_TempleWisp_0",
+      "vertices": 106,
+      "triangles": 208,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 106,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_SatchelBuckleTongue",
+      "vertices": 12,
+      "triangles": 20,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 12,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BlouseLaceBack_00",
+      "vertices": 12,
+      "triangles": 20,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 12,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Braid_Interlace_2",
+      "vertices": 330,
+      "triangles": 656,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 330,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Ear_1",
+      "vertices": 162,
+      "triangles": 320,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 162,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_TempleWisp_1",
+      "vertices": 106,
+      "triangles": 208,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 106,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_SatchelFlapStitching",
+      "vertices": 48,
+      "triangles": 92,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 48,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BlouseLaceBack_01",
+      "vertices": 12,
+      "triangles": 20,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_02",
+        "spine_03"
+      ],
+      "weighted_vertices": 12,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Braid_Tassel_0",
+      "vertices": 82,
+      "triangles": 160,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 82,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_EyeGlint_-1",
+      "vertices": 12,
+      "triangles": 20,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 12,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_eye_white.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Head_Sculpted",
+      "vertices": 1874,
+      "triangles": 3744,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 1874,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_SatchelGoldBuckle",
+      "vertices": 168,
+      "triangles": 332,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 168,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BlouseLaceBack_02",
+      "vertices": 12,
+      "triangles": 20,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_02",
+        "spine_03"
+      ],
+      "weighted_vertices": 12,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Braid_Tassel_1",
+      "vertices": 82,
+      "triangles": 160,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 82,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair_light.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_EyeGlint_1",
+      "vertices": 12,
+      "triangles": 20,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 12,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_eye_white.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Iris_-1",
+      "vertices": 74,
+      "triangles": 144,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 74,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_iris.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_SatchelLatchStrap",
+      "vertices": 60,
+      "triangles": 116,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 60,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BlouseLace_00",
+      "vertices": 12,
+      "triangles": 20,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 12,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Braid_Tassel_2",
+      "vertices": 82,
+      "triangles": 160,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 82,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_EyeWhite_L",
+      "vertices": 98,
+      "triangles": 192,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 98,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_eye_white.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Iris_1",
+      "vertices": 74,
+      "triangles": 144,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 74,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_iris.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_SatchelPotionCork",
+      "vertices": 64,
+      "triangles": 124,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 64,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BlouseLace_01",
+      "vertices": 12,
+      "triangles": 20,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_02",
+        "spine_03"
+      ],
+      "weighted_vertices": 12,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Braid_Tassel_3",
+      "vertices": 82,
+      "triangles": 160,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 82,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_EyeWhite_R",
+      "vertices": 98,
+      "triangles": 192,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 98,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_eye_white.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_IvoryBlouse",
+      "vertices": 512,
+      "triangles": 1020,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03"
+      ],
+      "weighted_vertices": 512,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_cloth_ivory.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_SatchelPotionGlassBottle",
+      "vertices": 240,
+      "triangles": 476,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 240,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_glass.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BlouseLace_02",
+      "vertices": 12,
+      "triangles": 20,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_02",
+        "spine_03"
+      ],
+      "weighted_vertices": 12,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Braid_Tassel_4",
+      "vertices": 82,
+      "triangles": 160,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 82,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Finger_l_index",
+      "vertices": 60,
+      "triangles": 116,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_l"
+      ],
+      "weighted_vertices": 60,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_IvoryFrontApron",
+      "vertices": 162,
+      "triangles": 320,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis",
+        "spine_01"
+      ],
+      "weighted_vertices": 162,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_cloth_ivory.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_SatchelPotionGoldNeckRing",
+      "vertices": 40,
+      "triangles": 76,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 40,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BootAnkleStrap_l",
+      "vertices": 48,
+      "triangles": 92,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "foot_l"
+      ],
+      "weighted_vertices": 48,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Braid_Tie",
+      "vertices": 192,
+      "triangles": 384,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 192,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Finger_l_little",
+      "vertices": 60,
+      "triangles": 116,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_l"
+      ],
+      "weighted_vertices": 60,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_IvorySleeve_l",
+      "vertices": 312,
+      "triangles": 620,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "clavicle_l",
+        "lowerarm_l",
+        "upperarm_l"
+      ],
+      "weighted_vertices": 312,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 127,
+      "unnormalized_examples": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.01335606537759304,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_cloth_ivory.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_SatchelPotionRedLiquid",
+      "vertices": 144,
+      "triangles": 284,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 144,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_potion_red.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BeltStud_1",
+      "vertices": 24,
+      "triangles": 44,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 24,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BootAnkleStrap_r",
+      "vertices": 48,
+      "triangles": 92,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "foot_r"
+      ],
+      "weighted_vertices": 48,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BroochGreenInset",
+      "vertices": 48,
+      "triangles": 92,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 48,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_cloth_green_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Finger_l_middle",
+      "vertices": 60,
+      "triangles": 116,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_l"
+      ],
+      "weighted_vertices": 60,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_IvorySleeve_r",
+      "vertices": 312,
+      "triangles": 620,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "clavicle_r",
+        "lowerarm_r",
+        "upperarm_r"
+      ],
+      "weighted_vertices": 312,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 127,
+      "unnormalized_examples": [
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.01335606537759304,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_cloth_ivory.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_SatchelRoundedFrontFlap",
+      "vertices": 126,
+      "triangles": 248,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 126,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BeltStud_0",
+      "vertices": 24,
+      "triangles": 44,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 24,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BootBuckle_l",
+      "vertices": 168,
+      "triangles": 332,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "foot_l"
+      ],
+      "weighted_vertices": 168,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BroochLeafStem",
+      "vertices": 18,
+      "triangles": 32,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 18,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Finger_l_ring",
+      "vertices": 60,
+      "triangles": 116,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_l"
+      ],
+      "weighted_vertices": 60,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_LeatherBoot_l",
+      "vertices": 392,
+      "triangles": 780,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "calf_l",
+        "foot_l"
+      ],
+      "weighted_vertices": 392,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 112,
+      "unnormalized_examples": [
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        289,
+        290,
+        291
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.05000000819563866,
+      "weight_sum_max": 1.0000000149011612,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_SatchelStrapEdge_-1",
+      "vertices": 66,
+      "triangles": 128,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03"
+      ],
+      "weighted_vertices": 66,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BeltPotionRedLiquid",
+      "vertices": 144,
+      "triangles": 284,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 144,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_potion_red.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BootBuckle_r",
+      "vertices": 168,
+      "triangles": 332,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "foot_r"
+      ],
+      "weighted_vertices": 168,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BroochLeaf_0",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Finger_l_thumb",
+      "vertices": 72,
+      "triangles": 140,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_l"
+      ],
+      "weighted_vertices": 72,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_LeatherBoot_r",
+      "vertices": 392,
+      "triangles": 780,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "calf_r",
+        "foot_r"
+      ],
+      "weighted_vertices": 392,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 112,
+      "unnormalized_examples": [
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        289,
+        290,
+        291
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.05000000819563866,
+      "weight_sum_max": 1.0000000149011612,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_SatchelStrapEdge_1",
+      "vertices": 66,
+      "triangles": 128,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03"
+      ],
+      "weighted_vertices": 66,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BeltPotionLeatherHolster",
+      "vertices": 80,
+      "triangles": 156,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 80,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BootFoldedCuff_l",
+      "vertices": 96,
+      "triangles": 188,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "calf_l"
+      ],
+      "weighted_vertices": 96,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 96,
+      "unnormalized_examples": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.1607143133878708,
+      "weight_sum_max": 0.3071429133415222,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BroochLeaf_1",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Finger_r_index",
+      "vertices": 60,
+      "triangles": 116,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_r"
+      ],
+      "weighted_vertices": 60,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_LeatherBracer_l",
+      "vertices": 144,
+      "triangles": 284,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_l",
+        "lowerarm_l"
+      ],
+      "weighted_vertices": 144,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 96,
+      "unnormalized_examples": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.42000001668930054,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_SeparateLeatherSatchel",
+      "vertices": 252,
+      "triangles": 500,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 252,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BeltPotionGoldNeckRing",
+      "vertices": 40,
+      "triangles": 76,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 40,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BootFoldedCuff_r",
+      "vertices": 96,
+      "triangles": 188,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "calf_r"
+      ],
+      "weighted_vertices": 96,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 96,
+      "unnormalized_examples": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.1607143133878708,
+      "weight_sum_max": 0.3071429133415222,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BroochLeaf_2",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Finger_r_little",
+      "vertices": 60,
+      "triangles": 116,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_r"
+      ],
+      "weighted_vertices": 60,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_LeatherBracer_r",
+      "vertices": 144,
+      "triangles": 284,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_r",
+        "lowerarm_r"
+      ],
+      "weighted_vertices": 144,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 96,
+      "unnormalized_examples": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.42000001668930054,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_SeparateShortBackCape",
+      "vertices": 340,
+      "triangles": 676,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 340,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_cloth_green_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BeltPotionGlassBottle",
+      "vertices": 240,
+      "triangles": 476,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 240,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_glass.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BootFrontSeam_l",
+      "vertices": 42,
+      "triangles": 80,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "calf_l",
+        "foot_l"
+      ],
+      "weighted_vertices": 42,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 24,
+      "unnormalized_examples": [
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.04988516494631767,
+      "weight_sum_max": 1.0000000149011612,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Brow_-1",
+      "vertices": 130,
+      "triangles": 256,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 130,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Finger_r_middle",
+      "vertices": 60,
+      "triangles": 116,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_r"
+      ],
+      "weighted_vertices": 60,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Lip_Lower",
+      "vertices": 189,
+      "triangles": 374,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 189,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_lip.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_ShapedTrousers_l",
+      "vertices": 432,
+      "triangles": 860,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "calf_l",
+        "foot_l",
+        "pelvis",
+        "thigh_l"
+      ],
+      "weighted_vertices": 432,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 288,
+      "unnormalized_examples": [
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.05483865737915039,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BeltPotionCork",
+      "vertices": 64,
+      "triangles": 124,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 64,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BootFrontSeam_r",
+      "vertices": 42,
+      "triangles": 80,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "calf_r",
+        "foot_r"
+      ],
+      "weighted_vertices": 42,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 24,
+      "unnormalized_examples": [
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.04988516494631767,
+      "weight_sum_max": 1.0000000149011612,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Brow_1",
+      "vertices": 130,
+      "triangles": 256,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 130,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Finger_r_ring",
+      "vertices": 60,
+      "triangles": 116,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_r"
+      ],
+      "weighted_vertices": 60,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Lip_Upper",
+      "vertices": 189,
+      "triangles": 374,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 189,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_lip.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_ShapedTrousers_r",
+      "vertices": 432,
+      "triangles": 860,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "calf_r",
+        "foot_r",
+        "pelvis",
+        "thigh_r"
+      ],
+      "weighted_vertices": 432,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 288,
+      "unnormalized_examples": [
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.05483865737915039,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BeltGoldBuckle",
+      "vertices": 168,
+      "triangles": 332,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 168,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BootSole_l",
+      "vertices": 128,
+      "triangles": 252,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "foot_l"
+      ],
+      "weighted_vertices": 128,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_CapeBackHem",
+      "vertices": 136,
+      "triangles": 268,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 136,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Finger_r_thumb",
+      "vertices": 72,
+      "triangles": 140,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_r"
+      ],
+      "weighted_vertices": 72,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_LowerLid_-1",
+      "vertices": 128,
+      "triangles": 252,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 128,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_TailFrontBorder_L",
+      "vertices": 56,
+      "triangles": 108,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis",
+        "spine_01"
+      ],
+      "weighted_vertices": 56,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BeltBuckleTongue",
+      "vertices": 16,
+      "triangles": 28,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 16,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BootSole_r",
+      "vertices": 128,
+      "triangles": 252,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "foot_r"
+      ],
+      "weighted_vertices": 128,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_CapeFrontShoulder_-1",
+      "vertices": 126,
+      "triangles": 248,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 126,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_cloth_green.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_FittedGreenWaistcoat",
+      "vertices": 720,
+      "triangles": 1436,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03"
+      ],
+      "weighted_vertices": 720,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_cloth_green.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_LowerLid_1",
+      "vertices": 128,
+      "triangles": 252,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 128,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_TailFrontBorder_R",
+      "vertices": 56,
+      "triangles": 108,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis",
+        "spine_01"
+      ],
+      "weighted_vertices": 56,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_ApronVine_1",
+      "vertices": 18,
+      "triangles": 32,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 18,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_cloth_green.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BracerFrontSeam_l",
+      "vertices": 48,
+      "triangles": 92,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_l",
+        "lowerarm_l"
+      ],
+      "weighted_vertices": 48,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 32,
+      "unnormalized_examples": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.418465793132782,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_CapeFrontShoulder_1",
+      "vertices": 126,
+      "triangles": 248,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 126,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_cloth_green.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_GreenSplitCoatTail_L",
+      "vertices": 252,
+      "triangles": 500,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis",
+        "spine_01"
+      ],
+      "weighted_vertices": 252,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_cloth_green.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Neck",
+      "vertices": 168,
+      "triangles": 332,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head",
+        "neck",
+        "spine_03"
+      ],
+      "weighted_vertices": 168,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999850988388,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_TailHem_L",
+      "vertices": 168,
+      "triangles": 332,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 168,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_ApronVine_-1",
+      "vertices": 18,
+      "triangles": 32,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 18,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_cloth_green.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BracerFrontSeam_r",
+      "vertices": 48,
+      "triangles": 92,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_r",
+        "lowerarm_r"
+      ],
+      "weighted_vertices": 48,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 32,
+      "unnormalized_examples": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.418465793132782,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_CapeLeaf_-1_0",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_GreenSplitCoatTail_R",
+      "vertices": 252,
+      "triangles": 500,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis",
+        "spine_01"
+      ],
+      "weighted_vertices": 252,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_cloth_green.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Nostril_-1",
+      "vertices": 18,
+      "triangles": 32,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 18,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_lip.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_TailHem_R",
+      "vertices": 168,
+      "triangles": 332,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 168,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_ApronLeaf_1_2",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BracerRivet_l_0",
+      "vertices": 30,
+      "triangles": 56,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "lowerarm_l"
+      ],
+      "weighted_vertices": 30,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 30,
+      "unnormalized_examples": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.47666695713996887,
+      "weight_sum_max": 0.5233334302902222,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_CapeLeaf_-1_1",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_Highlight_00",
+      "vertices": 98,
+      "triangles": 192,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 98,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair_light.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Nostril_1",
+      "vertices": 18,
+      "triangles": 32,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 18,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_lip.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_TrouserOuterSeam_l",
+      "vertices": 78,
+      "triangles": 152,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "calf_l",
+        "thigh_l"
+      ],
+      "weighted_vertices": 78,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 66,
+      "unnormalized_examples": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.05468406900763512,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_ApronLeaf_1_1",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BracerRivet_l_1",
+      "vertices": 30,
+      "triangles": 56,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_l",
+        "lowerarm_l"
+      ],
+      "weighted_vertices": 30,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999776482582,
+      "weight_sum_max": 1.0000000223517418,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_CapeLeaf_-1_2",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_Highlight_01",
+      "vertices": 98,
+      "triangles": 192,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 98,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair_light.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_OrbitalSkin_-1",
+      "vertices": 128,
+      "triangles": 256,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 128,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_TrouserOuterSeam_r",
+      "vertices": 78,
+      "triangles": 152,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "calf_r",
+        "thigh_r"
+      ],
+      "weighted_vertices": 78,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 66,
+      "unnormalized_examples": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.05468406900763512,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_ApronLeaf_1_0",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BracerRivet_r_0",
+      "vertices": 30,
+      "triangles": 56,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "lowerarm_r"
+      ],
+      "weighted_vertices": 30,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 30,
+      "unnormalized_examples": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.47666695713996887,
+      "weight_sum_max": 0.5233334302902222,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_CapeLeaf_-1_3",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_Highlight_03",
+      "vertices": 98,
+      "triangles": 192,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 98,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair_light.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_OrbitalSkin_1",
+      "vertices": 128,
+      "triangles": 256,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 128,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_TrouserPelvis",
+      "vertices": 112,
+      "triangles": 220,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 112,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_ApronLeaf_-1_2",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BracerRivet_r_1",
+      "vertices": 30,
+      "triangles": 56,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_r",
+        "lowerarm_r"
+      ],
+      "weighted_vertices": 30,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999776482582,
+      "weight_sum_max": 1.0000000223517418,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_CapeLeaf_1_0",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_Highlight_05",
+      "vertices": 98,
+      "triangles": 192,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 98,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair_light.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Palm_l",
+      "vertices": 120,
+      "triangles": 236,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_l"
+      ],
+      "weighted_vertices": 120,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_UpperLid_-1",
+      "vertices": 128,
+      "triangles": 252,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 128,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_ApronLeaf_-1_1",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BracerStrap_l_0",
+      "vertices": 48,
+      "triangles": 92,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "lowerarm_l"
+      ],
+      "weighted_vertices": 48,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 48,
+      "unnormalized_examples": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.46666648983955383,
+      "weight_sum_max": 0.5333334803581238,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_CapeLeaf_1_1",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_Highlight_06",
+      "vertices": 98,
+      "triangles": 192,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 98,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair_light.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Palm_r",
+      "vertices": 120,
+      "triangles": 236,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_r"
+      ],
+      "weighted_vertices": 120,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_UpperLid_1",
+      "vertices": 128,
+      "triangles": 252,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 128,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_ApronLeaf_-1_0",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BracerStrap_l_1",
+      "vertices": 48,
+      "triangles": 92,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_l",
+        "lowerarm_l"
+      ],
+      "weighted_vertices": 48,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999997615814209,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_CapeLeaf_1_2",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_Lock_00",
+      "vertices": 162,
+      "triangles": 320,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 162,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Pupil_-1",
+      "vertices": 42,
+      "triangles": 80,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 42,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_pupil.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_VestPiping_-1",
+      "vertices": 96,
+      "triangles": 188,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03"
+      ],
+      "weighted_vertices": 96,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_cloth_green_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_ApronEmbroideredHem",
+      "vertices": 30,
+      "triangles": 56,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 30,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_cloth_green.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BracerStrap_r_0",
+      "vertices": 48,
+      "triangles": 92,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "lowerarm_r"
+      ],
+      "weighted_vertices": 48,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 48,
+      "unnormalized_examples": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.46666648983955383,
+      "weight_sum_max": 0.5333334803581238,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_CapeLeaf_1_3",
+      "vertices": 13,
+      "triangles": 22,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 13,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_Lock_01",
+      "vertices": 162,
+      "triangles": 320,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 162,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Pupil_1",
+      "vertices": 42,
+      "triangles": 80,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 42,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_pupil.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_VestPiping_1",
+      "vertices": 96,
+      "triangles": 188,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03"
+      ],
+      "weighted_vertices": 96,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0000000298023224,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_cloth_green_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_AnatomicalArm_r",
+      "vertices": 220,
+      "triangles": 436,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "clavicle_r",
+        "hand_r",
+        "lowerarm_r",
+        "upperarm_r"
+      ],
+      "weighted_vertices": 220,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 120,
+      "unnormalized_examples": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.08000002056360245,
+      "weight_sum_max": 1.0000000149011612,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_BracerStrap_r_1",
+      "vertices": 48,
+      "triangles": 92,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "hand_r",
+        "lowerarm_r"
+      ],
+      "weighted_vertices": 48,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999997615814209,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_leather_dark.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_CapePinnedBrooch",
+      "vertices": 96,
+      "triangles": 188,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 96,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_Lock_02",
+      "vertices": 162,
+      "triangles": 320,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 162,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_WaistLeatherBelt",
+      "vertices": 160,
+      "triangles": 316,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "pelvis"
+      ],
+      "weighted_vertices": 160,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_leather.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_AnatomicalArm_l",
+      "vertices": 220,
+      "triangles": 436,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "clavicle_l",
+        "hand_l",
+        "lowerarm_l",
+        "upperarm_l"
+      ],
+      "weighted_vertices": 220,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 120,
+      "unnormalized_examples": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71
+      ],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.08000002056360245,
+      "weight_sum_max": 1.0000000149011612,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_skin.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Braid_Fibre_0",
+      "vertices": 207,
+      "triangles": 410,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 207,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair_light.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_CapeShoulderGoldHem_-1",
+      "vertices": 72,
+      "triangles": 140,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 72,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_metal_gold.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_Lock_03",
+      "vertices": 162,
+      "triangles": 320,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 162,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_RolledCuff_l_0",
+      "vertices": 120,
+      "triangles": 236,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "lowerarm_l",
+        "upperarm_l"
+      ],
+      "weighted_vertices": 120,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 0.9999999701976776,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 2,
+      "material_slots": [
+        "M_Arin_cloth_ivory.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Braid_Fibre_1",
+      "vertices": 207,
+      "triangles": 410,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "spine_03"
+      ],
+      "weighted_vertices": 207,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair_light.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    },
+    {
+      "name": "Arin_Hair_Lock_04",
+      "vertices": 162,
+      "triangles": 320,
+      "finite_vertices": true,
+      "armature_modifier_targets": [
+        "Arin_Rig"
+      ],
+      "uses_expected_rig": true,
+      "all_armature_modifiers_enabled": true,
+      "deform_bone_groups": [
+        "head"
+      ],
+      "weighted_vertices": 162,
+      "unweighted_vertices": 0,
+      "unweighted_examples": [],
+      "unnormalized_vertices": 0,
+      "unnormalized_examples": [],
+      "invalid_weight_vertices": 0,
+      "weights_outside_deform_bones_vertices": 0,
+      "weight_sum_min": 1.0,
+      "weight_sum_max": 1.0,
+      "max_bone_influences": 1,
+      "material_slots": [
+        "M_Arin_hair.002"
+      ],
+      "uv_layers": [],
+      "hidden_for_render": false
+    }
+  ],
+  "armatures": [
+    {
+      "name": "Arin_Rig",
+      "bone_count": 23,
+      "bones": [
+        "root",
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03",
+        "neck",
+        "head",
+        "clavicle_l",
+        "upperarm_l",
+        "lowerarm_l",
+        "hand_l",
+        "clavicle_r",
+        "upperarm_r",
+        "lowerarm_r",
+        "hand_r",
+        "thigh_l",
+        "calf_l",
+        "foot_l",
+        "ball_l",
+        "thigh_r",
+        "calf_r",
+        "foot_r",
+        "ball_r"
+      ],
+      "deform_bones": [
+        "root",
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03",
+        "neck",
+        "head",
+        "clavicle_l",
+        "upperarm_l",
+        "lowerarm_l",
+        "hand_l",
+        "clavicle_r",
+        "upperarm_r",
+        "lowerarm_r",
+        "hand_r",
+        "thigh_l",
+        "calf_l",
+        "foot_l",
+        "ball_l",
+        "thigh_r",
+        "calf_r",
+        "foot_r",
+        "ball_r"
+      ],
+      "bone_parents": {
+        "root": null,
+        "pelvis": "root",
+        "spine_01": "pelvis",
+        "spine_02": "spine_01",
+        "spine_03": "spine_02",
+        "neck": "spine_03",
+        "head": "neck",
+        "clavicle_l": "spine_03",
+        "upperarm_l": "clavicle_l",
+        "lowerarm_l": "upperarm_l",
+        "hand_l": "lowerarm_l",
+        "clavicle_r": "spine_03",
+        "upperarm_r": "clavicle_r",
+        "lowerarm_r": "upperarm_r",
+        "hand_r": "lowerarm_r",
+        "thigh_l": "pelvis",
+        "calf_l": "thigh_l",
+        "foot_l": "calf_l",
+        "ball_l": "foot_l",
+        "thigh_r": "pelvis",
+        "calf_r": "thigh_r",
+        "foot_r": "calf_r",
+        "ball_r": "foot_r"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "name": "Arin_Rig|Arin_Rig|Arin_Idle",
+      "frame_range": [
+        1.0,
+        61.0
+      ],
+      "frame_interval": 60.0,
+      "inclusive_frame_count": 61,
+      "curve_count": 239,
+      "keyframe_count": 14579,
+      "distinct_keyframe_count": 61,
+      "distinct_keyframes": [
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        7.0,
+        8.0,
+        9.0,
+        10.0,
+        11.0,
+        12.0,
+        13.0,
+        14.0,
+        15.0,
+        16.0,
+        17.0,
+        18.0,
+        19.0,
+        20.0,
+        21.0,
+        22.0,
+        23.0,
+        24.0,
+        25.0,
+        26.0,
+        27.0,
+        28.0,
+        29.0,
+        30.0,
+        31.0,
+        32.0,
+        33.0,
+        34.0,
+        35.0,
+        36.0,
+        37.0,
+        38.0,
+        39.0,
+        40.0,
+        41.0,
+        42.0,
+        43.0,
+        44.0,
+        45.0,
+        46.0,
+        47.0,
+        48.0,
+        49.0,
+        50.0,
+        51.0,
+        52.0,
+        53.0,
+        54.0,
+        55.0,
+        56.0,
+        57.0,
+        58.0,
+        59.0,
+        60.0,
+        61.0
+      ],
+      "animated_paths": [
+        "location",
+        "pose.bones[\"ball_l\"].location",
+        "pose.bones[\"ball_l\"].rotation_quaternion",
+        "pose.bones[\"ball_l\"].scale",
+        "pose.bones[\"ball_r\"].location",
+        "pose.bones[\"ball_r\"].rotation_quaternion",
+        "pose.bones[\"ball_r\"].scale",
+        "pose.bones[\"calf_l\"].location",
+        "pose.bones[\"calf_l\"].rotation_quaternion",
+        "pose.bones[\"calf_l\"].scale",
+        "pose.bones[\"calf_r\"].location",
+        "pose.bones[\"calf_r\"].rotation_quaternion",
+        "pose.bones[\"calf_r\"].scale",
+        "pose.bones[\"clavicle_l\"].location",
+        "pose.bones[\"clavicle_l\"].rotation_quaternion",
+        "pose.bones[\"clavicle_l\"].scale",
+        "pose.bones[\"clavicle_r\"].location",
+        "pose.bones[\"clavicle_r\"].rotation_quaternion",
+        "pose.bones[\"clavicle_r\"].scale",
+        "pose.bones[\"foot_l\"].location",
+        "pose.bones[\"foot_l\"].rotation_quaternion",
+        "pose.bones[\"foot_l\"].scale",
+        "pose.bones[\"foot_r\"].location",
+        "pose.bones[\"foot_r\"].rotation_quaternion",
+        "pose.bones[\"foot_r\"].scale",
+        "pose.bones[\"hand_l\"].location",
+        "pose.bones[\"hand_l\"].rotation_quaternion",
+        "pose.bones[\"hand_l\"].scale",
+        "pose.bones[\"hand_r\"].location",
+        "pose.bones[\"hand_r\"].rotation_quaternion",
+        "pose.bones[\"hand_r\"].scale",
+        "pose.bones[\"head\"].location",
+        "pose.bones[\"head\"].rotation_quaternion",
+        "pose.bones[\"head\"].scale",
+        "pose.bones[\"lowerarm_l\"].location",
+        "pose.bones[\"lowerarm_l\"].rotation_quaternion",
+        "pose.bones[\"lowerarm_l\"].scale",
+        "pose.bones[\"lowerarm_r\"].location",
+        "pose.bones[\"lowerarm_r\"].rotation_quaternion",
+        "pose.bones[\"lowerarm_r\"].scale",
+        "pose.bones[\"neck\"].location",
+        "pose.bones[\"neck\"].rotation_quaternion",
+        "pose.bones[\"neck\"].scale",
+        "pose.bones[\"pelvis\"].location",
+        "pose.bones[\"pelvis\"].rotation_quaternion",
+        "pose.bones[\"pelvis\"].scale",
+        "pose.bones[\"root\"].location",
+        "pose.bones[\"root\"].rotation_quaternion",
+        "pose.bones[\"root\"].scale",
+        "pose.bones[\"spine_01\"].location",
+        "pose.bones[\"spine_01\"].rotation_quaternion",
+        "pose.bones[\"spine_01\"].scale",
+        "pose.bones[\"spine_02\"].location",
+        "pose.bones[\"spine_02\"].rotation_quaternion",
+        "pose.bones[\"spine_02\"].scale",
+        "pose.bones[\"spine_03\"].location",
+        "pose.bones[\"spine_03\"].rotation_quaternion",
+        "pose.bones[\"spine_03\"].scale",
+        "pose.bones[\"thigh_l\"].location",
+        "pose.bones[\"thigh_l\"].rotation_quaternion",
+        "pose.bones[\"thigh_l\"].scale",
+        "pose.bones[\"thigh_r\"].location",
+        "pose.bones[\"thigh_r\"].rotation_quaternion",
+        "pose.bones[\"thigh_r\"].scale",
+        "pose.bones[\"upperarm_l\"].location",
+        "pose.bones[\"upperarm_l\"].rotation_quaternion",
+        "pose.bones[\"upperarm_l\"].scale",
+        "pose.bones[\"upperarm_r\"].location",
+        "pose.bones[\"upperarm_r\"].rotation_quaternion",
+        "pose.bones[\"upperarm_r\"].scale",
+        "rotation_euler",
+        "scale"
+      ]
+    }
+  ],
+  "total_vertices": 21726,
+  "total_triangles": 42764,
+  "missing_required_bones": [],
+  "active_armature_action": "Arin_Rig|Arin_Rig|Arin_Idle",
+  "motion": {
+    "sampled_frames": [
+      {
+        "frame": 1,
+        "bone_matrix_delta_max": 0.0,
+        "sampled_vertex_displacement_m": 0.0
+      },
+      {
+        "frame": 2,
+        "bone_matrix_delta_max": 0.0014595981920138001,
+        "sampled_vertex_displacement_m": 0.0007786689946430879
+      },
+      {
+        "frame": 3,
+        "bone_matrix_delta_max": 0.0029029815923422575,
+        "sampled_vertex_displacement_m": 0.0015483326684411643
+      },
+      {
+        "frame": 4,
+        "bone_matrix_delta_max": 0.004314647056162357,
+        "sampled_vertex_displacement_m": 0.002301737801523251
+      },
+      {
+        "frame": 5,
+        "bone_matrix_delta_max": 0.005679102148860693,
+        "sampled_vertex_displacement_m": 0.0030292590749937866
+      },
+      {
+        "frame": 6,
+        "bone_matrix_delta_max": 0.006981316022574902,
+        "sampled_vertex_displacement_m": 0.0037241344260873347
+      },
+      {
+        "frame": 7,
+        "bone_matrix_delta_max": 0.008206992410123348,
+        "sampled_vertex_displacement_m": 0.004378028071251167
+      },
+      {
+        "frame": 8,
+        "bone_matrix_delta_max": 0.00934277568012476,
+        "sampled_vertex_displacement_m": 0.0049838344442548225
+      },
+      {
+        "frame": 9,
+        "bone_matrix_delta_max": 0.010376027785241604,
+        "sampled_vertex_displacement_m": 0.005534905006496259
+      },
+      {
+        "frame": 10,
+        "bone_matrix_delta_max": 0.01129580195993185,
+        "sampled_vertex_displacement_m": 0.006025635004095346
+      },
+      {
+        "frame": 11,
+        "bone_matrix_delta_max": 0.012091823853552341,
+        "sampled_vertex_displacement_m": 0.006450021116137449
+      },
+      {
+        "frame": 12,
+        "bone_matrix_delta_max": 0.01275505218654871,
+        "sampled_vertex_displacement_m": 0.006804191588657461
+      },
+      {
+        "frame": 13,
+        "bone_matrix_delta_max": 0.013278809376060963,
+        "sampled_vertex_displacement_m": 0.007083435587806117
+      },
+      {
+        "frame": 14,
+        "bone_matrix_delta_max": 0.01365714892745018,
+        "sampled_vertex_displacement_m": 0.007285255986717936
+      },
+      {
+        "frame": 15,
+        "bone_matrix_delta_max": 0.013885769061744213,
+        "sampled_vertex_displacement_m": 0.007407067442128116
+      },
+      {
+        "frame": 16,
+        "bone_matrix_delta_max": 0.013962293043732643,
+        "sampled_vertex_displacement_m": 0.007447888939072515
+      },
+      {
+        "frame": 17,
+        "bone_matrix_delta_max": 0.013885769061744213,
+        "sampled_vertex_displacement_m": 0.007407067442128116
+      },
+      {
+        "frame": 18,
+        "bone_matrix_delta_max": 0.01365714892745018,
+        "sampled_vertex_displacement_m": 0.007285255986717936
+      },
+      {
+        "frame": 19,
+        "bone_matrix_delta_max": 0.013278809376060963,
+        "sampled_vertex_displacement_m": 0.007083435587806117
+      },
+      {
+        "frame": 20,
+        "bone_matrix_delta_max": 0.01275505218654871,
+        "sampled_vertex_displacement_m": 0.006804191588657461
+      },
+      {
+        "frame": 21,
+        "bone_matrix_delta_max": 0.012091823853552341,
+        "sampled_vertex_displacement_m": 0.006450021116137449
+      },
+      {
+        "frame": 22,
+        "bone_matrix_delta_max": 0.01129580195993185,
+        "sampled_vertex_displacement_m": 0.006025635004095346
+      },
+      {
+        "frame": 23,
+        "bone_matrix_delta_max": 0.010376027785241604,
+        "sampled_vertex_displacement_m": 0.005534905006496259
+      },
+      {
+        "frame": 24,
+        "bone_matrix_delta_max": 0.00934277568012476,
+        "sampled_vertex_displacement_m": 0.0049838344442548225
+      },
+      {
+        "frame": 25,
+        "bone_matrix_delta_max": 0.008206992410123348,
+        "sampled_vertex_displacement_m": 0.004378028071251167
+      },
+      {
+        "frame": 26,
+        "bone_matrix_delta_max": 0.006981316022574902,
+        "sampled_vertex_displacement_m": 0.0037241344260873347
+      },
+      {
+        "frame": 27,
+        "bone_matrix_delta_max": 0.005679102148860693,
+        "sampled_vertex_displacement_m": 0.0030292590749937866
+      },
+      {
+        "frame": 28,
+        "bone_matrix_delta_max": 0.004314647056162357,
+        "sampled_vertex_displacement_m": 0.002301737801523251
+      },
+      {
+        "frame": 29,
+        "bone_matrix_delta_max": 0.0029029815923422575,
+        "sampled_vertex_displacement_m": 0.0015483326684411643
+      },
+      {
+        "frame": 30,
+        "bone_matrix_delta_max": 0.0014595981920138001,
+        "sampled_vertex_displacement_m": 0.0007786689946430879
+      },
+      {
+        "frame": 31,
+        "bone_matrix_delta_max": 0.0,
+        "sampled_vertex_displacement_m": 0.0
+      },
+      {
+        "frame": 32,
+        "bone_matrix_delta_max": 0.0014595981920138001,
+        "sampled_vertex_displacement_m": 0.0007787158260660739
+      },
+      {
+        "frame": 33,
+        "bone_matrix_delta_max": 0.0029029815923422575,
+        "sampled_vertex_displacement_m": 0.0015485486328416487
+      },
+      {
+        "frame": 34,
+        "bone_matrix_delta_max": 0.004314647056162357,
+        "sampled_vertex_displacement_m": 0.0023015101661126042
+      },
+      {
+        "frame": 35,
+        "bone_matrix_delta_max": 0.005679102148860693,
+        "sampled_vertex_displacement_m": 0.003029551571153778
+      },
+      {
+        "frame": 36,
+        "bone_matrix_delta_max": 0.006981316022574902,
+        "sampled_vertex_displacement_m": 0.003723944192870745
+      },
+      {
+        "frame": 37,
+        "bone_matrix_delta_max": 0.008206992410123348,
+        "sampled_vertex_displacement_m": 0.00437773355479245
+      },
+      {
+        "frame": 38,
+        "bone_matrix_delta_max": 0.00934277568012476,
+        "sampled_vertex_displacement_m": 0.004983502515745695
+      },
+      {
+        "frame": 39,
+        "bone_matrix_delta_max": 0.010376027785241604,
+        "sampled_vertex_displacement_m": 0.005534900644316304
+      },
+      {
+        "frame": 40,
+        "bone_matrix_delta_max": 0.01129580195993185,
+        "sampled_vertex_displacement_m": 0.006025493198938673
+      },
+      {
+        "frame": 41,
+        "bone_matrix_delta_max": 0.012091823853552341,
+        "sampled_vertex_displacement_m": 0.006450037735050332
+      },
+      {
+        "frame": 42,
+        "bone_matrix_delta_max": 0.01275505218654871,
+        "sampled_vertex_displacement_m": 0.006803692462594669
+      },
+      {
+        "frame": 43,
+        "bone_matrix_delta_max": 0.013278809376060963,
+        "sampled_vertex_displacement_m": 0.0070832742907502464
+      },
+      {
+        "frame": 44,
+        "bone_matrix_delta_max": 0.01365714892745018,
+        "sampled_vertex_displacement_m": 0.007284953250117173
+      },
+      {
+        "frame": 45,
+        "bone_matrix_delta_max": 0.013885769061744213,
+        "sampled_vertex_displacement_m": 0.007406716480507073
+      },
+      {
+        "frame": 46,
+        "bone_matrix_delta_max": 0.013962293043732643,
+        "sampled_vertex_displacement_m": 0.007447503728686127
+      },
+      {
+        "frame": 47,
+        "bone_matrix_delta_max": 0.013885769061744213,
+        "sampled_vertex_displacement_m": 0.007406716480507073
+      },
+      {
+        "frame": 48,
+        "bone_matrix_delta_max": 0.01365714892745018,
+        "sampled_vertex_displacement_m": 0.007284953250117173
+      },
+      {
+        "frame": 49,
+        "bone_matrix_delta_max": 0.013278809376060963,
+        "sampled_vertex_displacement_m": 0.0070832742907502464
+      },
+      {
+        "frame": 50,
+        "bone_matrix_delta_max": 0.01275505218654871,
+        "sampled_vertex_displacement_m": 0.006803692462594669
+      },
+      {
+        "frame": 51,
+        "bone_matrix_delta_max": 0.012091823853552341,
+        "sampled_vertex_displacement_m": 0.006450037735050332
+      },
+      {
+        "frame": 52,
+        "bone_matrix_delta_max": 0.01129580195993185,
+        "sampled_vertex_displacement_m": 0.006025493198938673
+      },
+      {
+        "frame": 53,
+        "bone_matrix_delta_max": 0.010376027785241604,
+        "sampled_vertex_displacement_m": 0.005534900644316304
+      },
+      {
+        "frame": 54,
+        "bone_matrix_delta_max": 0.00934277568012476,
+        "sampled_vertex_displacement_m": 0.004983502515745695
+      },
+      {
+        "frame": 55,
+        "bone_matrix_delta_max": 0.008206992410123348,
+        "sampled_vertex_displacement_m": 0.00437773355479245
+      },
+      {
+        "frame": 56,
+        "bone_matrix_delta_max": 0.006981316022574902,
+        "sampled_vertex_displacement_m": 0.003723944192870745
+      },
+      {
+        "frame": 57,
+        "bone_matrix_delta_max": 0.005679102148860693,
+        "sampled_vertex_displacement_m": 0.003029551571153778
+      },
+      {
+        "frame": 58,
+        "bone_matrix_delta_max": 0.004314647056162357,
+        "sampled_vertex_displacement_m": 0.0023015101661126042
+      },
+      {
+        "frame": 59,
+        "bone_matrix_delta_max": 0.0029029815923422575,
+        "sampled_vertex_displacement_m": 0.0015485486328416487
+      },
+      {
+        "frame": 60,
+        "bone_matrix_delta_max": 0.0014595981920138001,
+        "sampled_vertex_displacement_m": 0.0007787158260660739
+      },
+      {
+        "frame": 61,
+        "bone_matrix_delta_max": 0.0,
+        "sampled_vertex_displacement_m": 0.0
+      }
+    ],
+    "bone_matrix_delta_by_name": {
+      "root": 0.0,
+      "pelvis": 0.0,
+      "spine_01": 0.0,
+      "spine_02": 0.005584927741452361,
+      "spine_03": 0.0024433101061873685,
+      "neck": 0.0024433101061873685,
+      "head": 0.013962293043732643,
+      "clavicle_l": 0.002443309873356725,
+      "upperarm_l": 0.008106857538223267,
+      "lowerarm_l": 0.013512745499610901,
+      "hand_l": 0.013512730598449707,
+      "clavicle_r": 0.002443309873356725,
+      "upperarm_r": 0.008106827735900879,
+      "lowerarm_r": 0.01351270079612732,
+      "hand_r": 0.01351270079612732,
+      "thigh_l": 0.0,
+      "calf_l": 0.0,
+      "foot_l": 0.0,
+      "ball_l": 0.0,
+      "thigh_r": 0.0,
+      "calf_r": 0.0,
+      "foot_r": 0.0,
+      "ball_r": 0.0
+    },
+    "moving_nonroot_bones": [
+      "spine_02",
+      "spine_03",
+      "neck",
+      "head",
+      "clavicle_l",
+      "upperarm_l",
+      "lowerarm_l",
+      "hand_l",
+      "clavicle_r",
+      "upperarm_r",
+      "lowerarm_r",
+      "hand_r"
+    ],
+    "root_world_matrix_delta_max": 0.0,
+    "armature_world_matrix_delta_max": 0.0,
+    "mesh_sample_displacement_max_m": 0.007447888939072515,
+    "loop_endpoint_bone_matrix_delta_max": 0.0,
+    "loop_endpoint_vertex_displacement_max_m": 0.0
+  },
+  "failed_checks": [
+    "normalized_deform_weights"
+  ],
+  "error": "Arin FBX roundtrip failed: normalized_deform_weights",
+  "traceback": "Traceback (most recent call last):\n  File \"D:\\Project\\Rogue10m\\Scripts\\Blender\\ValidateArin.py\", line 425, in main\n    raise ValueError(\"Arin FBX roundtrip failed: \" + \", \".join(report[\"failed_checks\"]))\nValueError: Arin FBX roundtrip failed: normalized_deform_weights\n"
+}

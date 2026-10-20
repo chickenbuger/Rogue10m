@@ -1,0 +1,90 @@
+{
+  "reference_target_actor": {
+    "Left": [
+      -0.6039185512936499,
+      0.7546854216214364,
+      -0.25638310746898635
+    ],
+    "Right": [
+      -0.5061251845293041,
+      -0.7697237522948301,
+      -0.38905352168865526
+    ]
+  },
+  "angles": {
+    "MF_Unarmed_Walk_Fwd": {
+      "l": -15.0,
+      "r": 10.0
+    },
+    "MF_Unarmed_Walk_Fwd_Left": {
+      "l": -15.0,
+      "r": 10.0
+    },
+    "MF_Unarmed_Walk_Left": {
+      "l": 0.0,
+      "r": 45.0
+    },
+    "MF_Unarmed_Walk_Fwd_Right": {
+      "l": -15.0,
+      "r": 10.0
+    },
+    "MF_Unarmed_Walk_Right": {
+      "l": 8.0,
+      "r": 45.0
+    },
+    "MF_Unarmed_Walk_Bwd": {
+      "l": -45.0,
+      "r": 22.900000000000006
+    },
+    "MF_Unarmed_Walk_Bwd_Left": {
+      "l": -45.0,
+      "r": 22.900000000000006
+    },
+    "MF_Unarmed_Walk_Bwd_Right": {
+      "l": -45.0,
+      "r": 22.900000000000006
+    },
+    "MF_Unarmed_Jog_Fwd": {
+      "l": -15.0,
+      "r": 20.0
+    },
+    "MF_Unarmed_Jog_Fwd_Left": {
+      "l": -15.0,
+      "r": 20.0
+    },
+    "MF_Unarmed_Jog_Fwd_Right": {
+      "l": -15.0,
+      "r": 20.0
+    },
+    "MF_Unarmed_Jog_Left": {
+      "l": 0.0,
+      "r": 4.300000000000004
+    },
+    "MF_Unarmed_Jog_Right": {
+      "l": 0.0,
+      "r": 3.5
+    },
+    "MF_Unarmed_Jog_Bwd": {
+      "l": -19.099999999999998,
+      "r": 8.5
+    },
+    "MF_Unarmed_Jog_Bwd_Left": {
+      "l": -19.099999999999998,
+      "r": 8.400000000000006
+    },
+    "MF_Unarmed_Jog_Bwd_Right": {
+      "l": -19.099999999999998,
+      "r": 8.5
+    }
+  },
+  "policy": {
+    "default": "constant twist per clip and hand; preserve original hand longitudinal axis",
+    "max_degrees": 45,
+    "inside_guard": "after_inward >= min(before_inward, 0.35) at all measured phases",
+    "objective": "minimize mean angular error to normalized reference cycle average",
+    "conservative_variant": "additional after_reference_dot >= before_reference_dot - 0.02",
+    "phase_copy": false,
+    "idle_untouched": true,
+    "warning": "Strict nonworsening inward magnitude plus strict per-phase reference error admits only zero constant roll; inward direction and backward tilt must be balanced."
+  }
+}

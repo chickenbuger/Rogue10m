@@ -5,13 +5,22 @@
 #include "Kismet/GameplayStatics.h"
 #include "Rogue10m.h"
 #include "Rogue10mCharacterProfileSaveGame.h"
-
-const FString URogue10mCharacterProfileSubsystem::SaveSlotName =
-	TEXT("Rogue10mCharacterProfiles");
+#include "Misc/CommandLine.h"
+#include "Misc/Parse.h"
 
 void URogue10mCharacterProfileSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
+#if WITH_EDITOR
+	FString TestSlot;
+	if (FParse::Value(FCommandLine::Get(), TEXT("RogueProfileSaveSlot="), TestSlot))
+	{
+		bool bValid = TestSlot.StartsWith(TEXT("Rogue10m_Town_QA_")) && TestSlot.Len() <= 100;
+		for (TCHAR Character : TestSlot) { bValid &= FChar::IsAlnum(Character) || Character == TCHAR('_'); }
+		if (bValid) { SaveSlotName = TestSlot; }
+		else { UE_LOG(LogRogue10m, Error, TEXT("Invalid isolated profile test slot; production slot remains selected.")); }
+	}
+#endif
 	LoadProfiles();
 }
 

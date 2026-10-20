@@ -12,9 +12,14 @@
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mCharacter.h"
+#include "Rogue10mTraitRuntimeComponent.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
+#include "Rogue10mInventoryComponent.h"
+#include "Rogue10mProgressionSubsystem.h"
+#include "Engine/GameInstance.h"
 #include "Rogue10mMonsterDataAsset.h"
+#include "Rogue10mMonsterAttackPatternComponent.h"
 #include "AI/Rogue10mMonsterAIController.h"
 #include "Rogue10mVitalRegenerationComponent.h"
 #include "Components/SkeletalMeshComponent.h"
@@ -29,6 +34,7 @@ ARogue10mBasicMonster::ARogue10mBasicMonster()
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 	AttributeSet = CreateDefaultSubobject<URogue10mAttributeSet>(TEXT("Attribute Set"));
 	VitalRegenerationComponent = CreateDefaultSubobject<URogue10mVitalRegenerationComponent>(TEXT("Vital Regeneration Component"));
+	AttackPatternComponent = CreateDefaultSubobject<URogue10mMonsterAttackPatternComponent>(TEXT("Attack Pattern Component"));
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	AIControllerClass = ARogue10mMonsterAIController::StaticClass();
@@ -92,7 +98,24 @@ void ARogue10mBasicMonster::BeginPlay()
 			MonsterData->StaminaRegenerationPerSecond,
 			MonsterData->ManaRegenerationPerSecond);
 	}
+	if (const UGameInstance* Instance = GetGameInstance())
+	{
+		if (const URogue10mProgressionSubsystem* Progression = Instance->GetSubsystem<URogue10mProgressionSubsystem>())
+		{
+			const FRogue10mDifficultyModifiers Difficulty = Progression->GetSelectedDifficultyModifiers();
+			MaxHealth *= Difficulty.HealthMultiplier;
+			AttackDamage *= Difficulty.DamageMultiplier;
+			DifficultyDamageMultiplier = Difficulty.DamageMultiplier;
+			ExperienceReward = static_cast<int32>(FMath::Clamp(
+				FMath::RoundToDouble(static_cast<double>(ExperienceReward) * Difficulty.ExperienceMultiplier),
+				0.0, static_cast<double>(MAX_int32)));
+		}
+	}
 	AttributeSet->InitializeVitals(MaxHealth, InitialStamina, InitialMana);
+	if (MonsterData && MonsterData->AttackPatternProfile)
+	{
+		ConfigureAttackPatternProfile(MonsterData->AttackPatternProfile);
+	}
 
 	if (ARogue10mMonsterAIController* MonsterController =
 		Cast<ARogue10mMonsterAIController>(GetController()))
@@ -105,13 +128,17 @@ float ARogue10mBasicMonster::TakeDamage(
 	float DamageAmount, const FDamageEvent& DamageEvent,
 	AController* EventInstigator, AActor* DamageCauser)
 {
+	if (!HasAuthority() || !FMath::IsFinite(DamageAmount)) { return 0.0f; }
 	const float AppliedDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-	if (bIsDead || !AttributeSet || AppliedDamage <= 0.0f)
+	if (bIsDead || !AttributeSet || !FMath::IsFinite(AppliedDamage) || AppliedDamage <= 0.0f)
 	{
 		return AppliedDamage;
 	}
 
 	LastDamageInstigator = EventInstigator;
+	ARogue10mCharacter* DirectCharacter = Cast<ARogue10mCharacter>(DamageCauser);
+	LastDirectDamageCharacter = DirectCharacter && EventInstigator && EventInstigator->GetPawn() == DirectCharacter
+		? DirectCharacter : nullptr;
 	AActor* AggroSource = EventInstigator ? EventInstigator->GetPawn() : DamageCauser;
 	if (ARogue10mMonsterAIController* MonsterController =
 		Cast<ARogue10mMonsterAIController>(GetController()))
@@ -137,6 +164,10 @@ float ARogue10mBasicMonster::TakeDamage(
 	{
 		Die();
 	}
+	else if (AttackPatternComponent)
+	{
+		AttackPatternComponent->PlayHitReaction();
+	}
 	return AppliedDamage;
 }
 
@@ -161,7 +192,21 @@ UBehaviorTree* ARogue10mBasicMonster::ResolveBehaviorTreeAsset() const
 
 float ARogue10mBasicMonster::GetEffectiveAttackRange() const
 {
+	if (AttackPatternComponent && AttackPatternComponent->IsEnabled())
+	{
+		return AttackPatternComponent->GetEngagementRange();
+	}
 	return AttackSkillData ? AttackSkillData->AttackRange : AttackRange;
+}
+
+void ARogue10mBasicMonster::ConfigureAttackPatternProfile(URogue10mMonsterAttackPatternProfile* Profile)
+{
+	if (AttackPatternComponent) AttackPatternComponent->ConfigureProfile(Profile);
+}
+
+bool ARogue10mBasicMonster::IsPatternAttackActive() const
+{
+	return AttackPatternComponent && AttackPatternComponent->IsEnabled() && AttackPatternComponent->IsAttackActive();
 }
 
 void ARogue10mBasicMonster::SetAITarget(ARogue10mCharacter* NewTarget)
@@ -171,6 +216,7 @@ void ARogue10mBasicMonster::SetAITarget(ARogue10mCharacter* NewTarget)
 
 void ARogue10mBasicMonster::ClearAITarget()
 {
+	if (AttackPatternComponent && AttackPatternComponent->IsAttackActive()) AttackPatternComponent->CancelAttack();
 	TargetCharacter.Reset();
 	LockedAttackTarget.Reset();
 	if (GetWorld())
@@ -191,6 +237,11 @@ void ARogue10mBasicMonster::ExecuteAICombat(ARogue10mCharacter* Target)
 void ARogue10mBasicMonster::TryAttackTarget(float DistanceToTarget)
 {
 	ARogue10mCharacter* Target = TargetCharacter.Get();
+	if (AttackPatternComponent && AttackPatternComponent->IsEnabled())
+	{
+		AttackPatternComponent->TryStartAttack(Target);
+		return;
+	}
 	const float Range = AttackSkillData ? AttackSkillData->AttackRange : AttackRange;
 	const float Cooldown = AttackSkillData ? AttackSkillData->AttackCooldown : AttackInterval;
 	if (!Target || !GetWorld() || DistanceToTarget > Range || GetWorld()->GetTimerManager().IsTimerActive(AttackSequenceTimer)) return;
@@ -224,7 +275,7 @@ void ARogue10mBasicMonster::ExecuteMonsterAttackPulse()
 		bool bCriticalHit = false;
 		if (AttackSkillData)
 		{
-			Damage = AttackSkillData->RollDamage(AttributeSet, bCriticalHit);
+			Damage = AttackSkillData->RollDamage(AttributeSet, bCriticalHit) * DifficultyDamageMultiplier;
 		}
 		else
 		{
@@ -270,7 +321,8 @@ void ARogue10mBasicMonster::Die()
 	}
 
 	bIsDead = true;
-	if (HasAuthority())
+	if (AttackPatternComponent) AttackPatternComponent->CancelAttack();
+	if (HasAuthority() && !bCombatTestInstance)
 	{
 		if (ARogue10mPlayerController* RewardController =
 			Cast<ARogue10mPlayerController>(LastDamageInstigator.Get()))
@@ -281,6 +333,20 @@ void ARogue10mBasicMonster::Die()
 				if (MonsterData && !MonsterData->MonsterId.IsNone())
 				{
 					RewardState->RecordMonsterDefeat(MonsterData->MonsterId);
+				}
+				ARogue10mCharacter* RewardCharacter = Cast<ARogue10mCharacter>(RewardController->GetPawn());
+				URogue10mTraitRuntimeComponent* Traits = RewardCharacter ? RewardCharacter->GetTraitRuntimeComponent() : nullptr;
+				if (Traits && RewardCharacter == LastDirectDamageCharacter.Get()) { Traits->NotifyDirectKill(); }
+				if (ExperienceReward > 0)
+				{
+					if (URogue10mInventoryComponent* Inventory = RewardCharacter ? RewardCharacter->GetInventoryComponent() : nullptr)
+					{
+						// Preserve the existing difficulty-adjusted base reward; GoldFind only changes gold, never XP.
+						const int32 BaseGoldReward = FMath::Max(1, ExperienceReward / 10);
+						const int32 GoldReward = Traits ? Traits->CalculateMonsterGoldReward(BaseGoldReward) : BaseGoldReward;
+						Inventory->AddGold(GoldReward);
+						RewardController->AddCombatLogMessage(FString::Printf(TEXT("골드 +%d"), GoldReward), FLinearColor(1.0f, 0.8f, 0.3f));
+					}
 				}
 				if (ExperienceReward > 0)
 				{
@@ -304,10 +370,19 @@ void ARogue10mBasicMonster::Die()
 	GetCharacterMovement()->StopMovementImmediately();
 	GetCharacterMovement()->DisableMovement();
 	SetActorEnableCollision(false);
+	const float DeathPresentationSeconds = AttackPatternComponent ? AttackPatternComponent->PlayDeathPresentation() : 0.0f;
+	if (HasAuthority()) OnMonsterDied.Broadcast(this);
 	UE_LOG(LogRogue10m, Log, TEXT("%s ?щ쭩"), *GetNameSafe(this));
 
 	if (bDestroyOnDeath)
 	{
-		Destroy();
+		if (DeathPresentationSeconds > 0.0f) SetLifeSpan(DeathPresentationSeconds);
+		else Destroy();
 	}
+}
+void ARogue10mBasicMonster::MarkCombatTestInstance()
+{
+#if !UE_BUILD_SHIPPING
+	if (HasAuthority() && GetWorld() && GetWorld()->GetNetMode() == NM_Standalone) bCombatTestInstance = true;
+#endif
 }

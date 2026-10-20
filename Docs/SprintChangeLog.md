@@ -1837,6 +1837,345 @@
 - 상태: 작업 브랜치 → develop → test → main 로컬 fast-forward 반영 완료. 후속 사용자 명시 승인으로 GitHub origin의 develop/test/main atomic push 성공(aa941d4), 원격 대기 해소. 다음 신규 작업은 main 병합 완료에 따라 `Sprint#5-1-<작업명>`부터 시작한다.
 - 관련: `Feature/doc/2026-09-29_sprint4-main-save.md`, `Feature/doc/evidence/main-save-20260929/changed-files.tsv`, `DevLog/20260929.txt`.
 
+## Sprint5
+
+### Sprint#5-1 — 맨손·너클 애니메이션 제작과 1인칭 안정화 (2026-09-29)
+
+- 브랜치: `Sprint#5-1-unarmed-knuckle-animation`
+- 목표: 무기별 기획서의 맨손·너클 동작을 제작하고 머리 흔들림·정면 가독성·손발 본 정상성을 실제 게임에서 검증한다.
+- 주요 변경: 맨손 4종·너클 5종 전용 Sequence/Montage 18개와 실제 DA 9개 연결. 오른잽/스트레이트 구분, IK 팔꿈치·양손 연타 연속성 보정, 오른손 타격 높이·어깨 방향 교정, 진입 블렌드 완화. 머리 회전 기여 15%·최대 8도, 초기 시선 -20도. 공유 원본·피해량·해금·히트 수 유지, 기존 너클 지연 0초만 접촉에 맞게 조정. 구형 생성기 4개에 새 연결 덮어쓰기 방지.
+- 검증: UE Editor 빌드, 9클립·14접촉·48원본 해시, 6체형 각 840프레임, 자세 711,486행 구조 검사 PASS. Human Male 9종 실제 피해 14회 및 지연/연타 간격 검사 PASS. 초기 시야 90·V 관찰 280·Appearance 카메라 570프레임 회귀, Harness 경로·diff·Python 문법 검사 통과. 실제 실행 영상과 수치 증거 저장.
+- 상태: 구현 및 명시 범위 QA 완료, 작업 브랜치 보존. 새 커밋·푸시 없음. 너클 장비 모델/모든 방어구 관통, 경사면·네트워크·사망/재빙의·극단 공격속도·RT 그림자는 미검증. Sprint5는 main 병합 전으로 유지한다.
+- 관련 문서: `Feature/architect/2026-09-29_unarmed-knuckle-animation.md`, `Feature/doc/2026-09-29_unarmed-knuckle-animation.md`, `Feature/doc/evidence/fist-combat-20260929/`, `DevLog/20260929.txt`.
+
+## Sprint#5-2 - 스튜디오 Git 조회 및 중단 안내 교정 (2026-09-29)
+
+- 브랜치: `Sprint#5-2-studio-review-diagnostics`
+- 목표: 기획 중단을 검증 실패로 오해하는 표시와 Windows sandbox Git 소유권 오류를 해결한다.
+- 주요 변경: 현재 저장소로 한정한 명령별 Git 조회 지침, 경로 인용, 역할별 중단 안내, 기존 구현 우선 확인. 전역 신뢰·ACL·승인 정책 유지.
+- 검증: Node22건 통과, 실제 read-only 역할의 Git status/branch 모두 종료0 및 브랜치 일치, diff 검토. 게임 변경 없어 UE 빌드 생략.
+- 상태: Git 조사 및 단계별 안내 수정 완료. 기존 맨손·너클 구현 보존. 자동 작업 전체 완료는 별도 검증 대상. 커밋·푸시 없음.
+- 관련 문서: `Feature/architect/2026-09-29_studio-review-diagnostics.md`, `Feature/doc/2026-09-29_studio-review-diagnostics.md`, `DevLog/20260929.txt`.
+
+## Sprint#5-3 - 스튜디오 맨손·너클 작업 인계 및 완료 검증 (2026-09-29)
+
+- 브랜치: `Sprint#5-3-studio-task-completion`
+- 목표: 반복 확인 필요 작업을 기존 구현 인계·실제 검증·독립 검토 후 완료로 연결한다.
+- 주요 변경: 원 작업 완료와 활성 충돌 없음 확인, 기존 미커밋 구현 인계 확정, 중복 제작 없이 스튜디오 검증 진행 기록. 기존 구현만으로 확인을 반복 요구하지 않는 coordinator 지침 보완.
+- 검증: UE빌드 성공4.09초, 새 HumanMale 9종840프레임/실패0·실제14회 피해, 자세118,581행 구조 PASS/비유한0·머리회전 최대7.0021도. V280·카메라570프레임 회귀 실패0. 독립 소스/실행자료 리뷰와 원본48개 SHA 일치.
+- 상태: 등록 요청 범위 완료 검증. 기존 게임 소스·에셋 보존, 커밋·푸시 없음. 나머지5체형은 기존 증거 확인이며 이번 재실행 아님. 장비별 관통·네트워크 등 기존 미검증 한계 유지.
+- 관련 문서: `Feature/architect/2026-09-29_studio-fist-completion.md`, `Feature/doc/2026-09-29_studio-fist-completion.md`, `Feature/doc/evidence/studio-fist-completion-20260929/`, `DevLog/20260929.txt`.
+
+## Sprint#5-4 - 격투가 스킬트리와 테스트 해금·키 설정 (2026-09-30)
+
+- 브랜치: `Sprint#5-4-fighter-skill-tree`
+- 목표: 맨손/너클 격투가 스킬을 기존 K 스킬트리에 연결하고 테스트 전체 해금·스킬별 키 설정을 제공한다.
+- 주요 변경: 공용14노드(공격13·심법1), 세션 테스트 해금과 Shipping 제외, Enhanced Input 키 지정/해제·로컬 SaveGame·충돌 검사, 차징/공중/쿨다운/GAS 검증·메뉴/정지/무기/키 변경 취소, 실제 위젯·설명 겹침 개선, Editor 구성 및 전투 값 보존 검사.
+- 검증: UE5.8 Editor 빌드10.44초 성공, Editor 두 프로필14노드/위젯 PASS, 실제 게임107항목/13개 공격 발동·몽타주 실패0, 새 프로세스 키 복원2항목 PASS, 기존11무기 전환 PASS, 9종840프레임·실제14회 피해 PASS, 자세118,581행 구조PASS/비유한0·머리회전7.0021도. 실제1920×1080 캡처와 독립 교차 리뷰, Python 문법·diff 검사.
+- 상태: 구현 및 명시 범위 검증 완료. 기존 미커밋 동작·카메라·Studio 변경을 보존했으며 커밋·푸시 없음. 전체13개 공격의 모든 상황별 피해·장비관통·온라인 복제와 영구 수련 저장은 범위 밖.
+- 관련 문서: `Feature/architect/2026-09-30_fighter-skill-tree.md`, `Feature/doc/2026-09-30_fighter-skill-tree.md`, `Docs/SkillTreeLoadoutGuide.md`, `Feature/doc/evidence/fighter-skill-tree-20260930/`, `DevLog/20260930.txt`.
+
+## Sprint#5-5 - 내장 AI Assistant 웹 인증 오류 처리 (2026-09-30)
+
+- 브랜치: `Sprint#5-5-editor-ai-assistant-error`
+- 목표: 사용자 로그의 Cloudflare iframe 스크립트 차단·IsAvailable 취소 오류를 프로젝트에서 처리한다.
+- 주요 변경: 프로젝트 AIAssistant 플러그인만 비활성화하고 내장 Epic AI 창의 웹 연결을 중지. Studio CLI·Unreal MCP·AllToolsets·게임 기능 설정 보존, 적용·복원 안내 추가.
+- 검증: 프로젝트 JSON·필수 플러그인 및 단일 설정 변경 확인, UE Editor 빌드120.41초 성공. 실제 새 Editor 시작·정상 종료0, AIAssistant 마운트/로그0건, MCP·AllToolsets·Python 마운트 확인. 관련 diff 검사 통과.
+- 상태: 요청된 AI Assistant 오류 경로 처리 완료. 인증 서비스 자체의 수정은 아니며 내장 Epic AI 창은 비활성화된다. 변경 전부터 있던 엔진 초기화 Condition failed15건은 범위 밖으로 기록. 기존 변경 보존, 커밋·푸시 없음.
+- 관련 문서: `Feature/architect/2026-09-30_editor-ai-assistant-error.md`, `Feature/doc/2026-09-30_editor-ai-assistant-error.md`, `Docs/UE58MCPSetup.md`, `Feature/doc/evidence/editor-ai-assistant-20260930/`, `DevLog/20260930.txt`.
+
+
+### Sprint#5-6 — close-combat-animation-preparation
+
+- 상태: 애니메이션 적용 준비·정적 QA 완료, 게임 통합·화면·표적 판정 미검증
+- 목표: 보유 Close Combat의 훅·어퍼컷·킥·가드·방향 회피를 Manny Preview로 검토하고 안정화 결과 보존
+- 주요 변경: 원본33패키지 동일 바이트 설치, Manny11시퀀스와 리그3개 생성, 새 Preview root lock, 준비/감사/분석 스크립트와 후보 문서
+- 검증: Unreal exit0, 983포즈 구조·root lock·DA11계약 PASS, 기존5,630파일·VaultCache121파일 SHA256 보존, AST·Harness·diff 검사
+- 한계: 직선 킥의 큰 회전·회피 덤블링/긴 스텝 보류, Rolls and Dodges 로컬 미확인, 패리와 타깃 판정 미검증
+- 관련 문서: Feature/architect/2026-10-02_close-combat-animation-preparation.md, Feature/doc/2026-10-02_close-combat-animation-preparation.md
+
+
+## Sprint#5-7 — 격투가 스킬별 애니메이션 연결 (2026-10-02)
+
+- 목표: 현재14노드의 실제 스킬마다 의미에 맞는 동작을 연결하고 안정화/밸런스 보존.
+- 변경: 기존9개 유지, 유운수·금강쇄·무극패왕권 새 몽타주/파생 클립6개 및 DA3개의 몽타주/지연 필드만 적용. 태산압정은 소스 부족·기존 연결 유지, 금강불괴는 상시패시브.
+- 검증: Editor14노드 전체 필드/에셋/root/limb PASS. 실제13개 키 발동 확인. 늦은 유운수 몽타주1항목 미통과. 기존9개 실제 정면타깃·머리카메라840프레임 회귀 PASS.
+- 상태: 가능한12개 적합 연결 저장 완료. 실제 렌더·새3개 개별 접촉 미검증, 태산압정 소스 필요. 셰이더 준비 제한 후 NullRHI 최소검사 사용. commit/push 없음.
+- 문서: Feature/architect/2026-10-02_fighter-skill-animation-binding.md, Feature/doc/2026-10-02_fighter-skill-animation-binding.md.
+
+
+### Sprint#5-7 후속 검사 완료
+
+- 유운수 미통과는 정상 블렌드 아웃 후의 늦은 활성 검사였다. 에셋 변경 없이 실제 수락 실행의 몽타주 가중치/시간 진행 관측으로 보강.
+- 최종 전체검사120항목/13개키실행 PASS. 새3개 production DA는135cm 정면타깃 각피해1회·한 프레임 이내 시간오차·기존카메라상한 PASS.
+- 검사 C++2파일/실행 스크립트만 변경, 에셋·전투/카메라/밸런스 보존. 승룡권은 기존 Knuckle_Uppercut 유지.
+- 실제 렌더/스킨 접촉 미검증과 태산압정 소스 부족 유지. 근거: 스킬별 연결 결과 문서 후속진단 및 followup-validation.json. commit/push 없음.
+
+## Sprint#5-8 — 격투가 팔 휘두르기 강화 (2026-10-05)
+
+- 브랜치: `Sprint#5-8-fighter-arm-swing`
+- 목표: 기본 맨손·너클·금강쇄 팔 움직임을 더 크게 만들고 타격/손발/머리 시야 안정성을 보존한다.
+- 주요 변경: opt-in AuthorFistSwing, 후방 준비·회수/훅 원호/어퍼컷 낙폭 강화, 접촉 주변 샘플 키 양팔 보호, 금강쇄 FK 기반 IK 재동기화, 시퀀스10개 Editor 저장, 기준선·재로드·실제 게임 검사 도구와 영상.
+- 검증: Editor 빌드 성공, 원시120Hz10종 PASS, 실제841프레임/118,581포즈·14회피해 PASS, V580/260샘플 PASS, StoneFist3종1,234검사 PASS, 렌더840프레임 PASS. 실제Appearance 손 경로1.03~9.62% 증가, 카메라전후7.002도 유지. 허용10개외 Content4,205개 같은바이트 확인. 독립 코드/실행 검토 PASS.
+- 상태: 요청 범위 적용·저장·실행 검증 완료. 원시/실제 속도 수치 구분, HUD/모션블러로 미세 손가락·발 전체 육안 확인 제한. 기존 미커밋 작업 보존, 커밋·푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-05_fighter-arm-swing.md`, `Feature/doc/2026-10-05_fighter-arm-swing.md`, `Feature/doc/evidence/fighter-arm-swing-20261005/`, `DevLog/20261005.txt`.
+## Sprint#5-9 — 격투가 전투 대기 자세 (2026-10-05)
+
+- 브랜치: `Sprint#5-9-fighter-combat-stance`
+- 목표: 기존 손을 내린 일반 Idle과 구분되는 맨손·너클 가드를 실제 Appearance Mesh에 연결한다.
+- 주요 변경: 기존 공격 시작 포즈의 2초 호흡 루프, native AnimInstance 부모와 FootIK→자세 블렌드→DefaultSlot 연결. 공격·차징·회피 후 3초 유지, 진입 0.20초/복귀 0.45초. 이동·공중 우선, 무기·메뉴·사망·조종 해제 정리. 기존 FootIK 준비기의 새 연결 인식 보강.
+- 검증: Editor 빌드, 재로드 원시241포즈, 통합640프레임·90,381포즈·렌더640프레임 PASS. 평균 외형 손 높이24.90cm 상승, 실제 발 높이 차이2.9345cm, 카메라최대7.0144도. FistCombat9종·피해14회·V580/260샘플 및 StoneFist3종1,234검사 PASS. 독립 코드·모션·선택 화면 검토, Python문법·Harness·diff 검사 통과.
+- 보존: 기존4,186개 uasset 중 공통AnimBP1개만 수정, 신규가드1개 생성, 나머지4,185개 같은SHA256. 기존 강화공격10종·DA·몽타주·카메라 설정 보존.
+- 상태: 요청 범위 구현·저장·실행 검사 완료. 21.33초 무음 영상 첨부. 실제 1인칭 오른손·3인칭 오른발 일부는HUD에가려짐; 이동가드레이어·별도 사망/재빙의 실행·전체체형/장비관통·온라인 미검증. 커밋·푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-05_fighter-combat-stance.md`, `Feature/doc/2026-10-05_fighter-combat-stance.md`, `Feature/doc/evidence/fighter-combat-stance-20261005/`, `DevLog/20261005.txt`.
+
+## Sprint#5-10 — 기본맵 기반 시작 마을 (2026-10-05)
+
+- 브랜치: `Sprint#5-10-start-village`
+- 목표: 기본 플레이맵을 복제하고 보유 Stylized Village 에셋으로 시작 마을을 제작하여 메뉴·준비 구역·전투 포탈을 연결한다.
+- 주요 변경: 신규 StartHub 120m × 120m, 집 외관 10채·우물 광장·네 방향 길·준비 구역 4곳·남쪽 PlayerStart·북쪽 포탈·외곽 BlockAll 경계. 신규 소유 액터 667개와 머티리얼 12개. 메뉴 이동 목적지 StartHub·StartRun 옵션 제거, 포탈 후 기존 전투맵 런 시작. 공식 MCP JSON-RPC 클라이언트와 생성·검사 도구, 자동 시작·8001 포트 기본값.
+- 검증: UE5.8 Editor NoHotReload 빌드·CheckGeneratedChanges PASS. 메뉴 정적·실제 PIE PASS. 허브/포탈 50항목 PASS, 시작점 실제 접지·허브 1200초 대기·2초 보행 약 11.50m·실제 native 포탈 overlap·전투 1200→1198초 확인. Python AST 검사와 Unreal API 노출 리뷰 완료.
+- 보존: 기존 Content 4,302개 크기·수정 시각 동일, 선정 70개 SHA256 동일. 신규 Content 720개는 새 맵·전용 콘텐츠·해당 외부 액터/객체 범위 안에 있음. 기존 전투·애니메이션 미커밋 작업 보존.
+- 상태: 공간 제작·저장·메뉴 연결·실제 런타임 검사 완료. 최종 전체/플레이어 화면과 독립 배치 검토, 명시적 서버 시작 없는 재기동·8001 자동 연결·StartHub 재로드 및 공식 MCP 저장 확인 완료. NPC 서비스·실내·대규모 오픈월드 확장·성능/패키징/온라인 검사는 미구현 또는 범위 밖. 커밋·푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-05_start-village.md`, `Feature/doc/2026-10-05_start-village.md`, `Feature/doc/evidence/start-village-20261005/`, `Docs/UE58MCPSetup.md`, `DevLog/20261005.txt`.
+
+## Sprint#5-11 — 오픈월드 플레이맵 (2026-10-05)
+
+- 브랜치: `Sprint#5-11-open-world-playmap`
+- 목표: 기본 World Partition 맵과 보유 지형·환경 에셋으로 실제 탐험·전투 가능한 플레이맵을 제작하고 시작마을 포탈에 연결한다.
+- 주요 변경: 신규 OpenRunMap 1800m × 1800m Landscape·256지형/충돌 컴포넌트·16공간 프록시,6개 지역·711길 패치·교량3개·야영지·풍차·북쪽 유적. 공식 PCG 그래프1개·183타일·나무2806개. 맵 전용 동적 Navigation invoker·256m 셀/700m 로드, 지역 스포너5개·몬스터 자식 Blueprint6종·고정 보스 접지. StartHub 포탈 목적지와20분 런 연결, 전용 강 재질과17패널 저장. PCGPrimitives 활성화, editor 한정 Landscape helper와 재현/QA 도구.
+- 공용 수정: 몬스터 지면 스폰에 캡슐 반높이+2cm 및 소유 스트리밍 레벨 적용. AI 도달 검사에서 이동자·목표 양쪽 반경을 제외한 중심 거리 계약으로 공격 범위 밖 정지 방지. 원본 전투 데이터는 보존.
+- 검증: 최종 Editor NoHotReload 빌드14.59초 성공, 프로젝트 파일 생성·재로드 PASS. 실제 포탈·1200초 런·지역/교량 보행·내비게이션·야영지 unload/reentry·보스 접지·native 몬스터 추적/피해99항목 PASS. 별도 짧은 사거리2종 경계 회귀30항목 PASS, 플레이어 정지 상태 실제 접근·피해 확인. 공식 MCP 실제 화면4개·명시적9패키지 저장·10패키지 미저장 상태false. Python AST13개·프로젝트 JSON·diff·CheckGeneratedChanges PASS.
+- 보존: 기준선 Content5022개 전체 크기·SHA256 검사, StartHub 맵/포탈 외부 액터2개만 허용 변경, 나머지5020개 동일. 신규1268개는 OpenRunMap·전용 콘텐츠·해당 외부 액터/객체 경로 안에 있음. 기존 미커밋 작업 보존.
+- 상태: 초기 플레이맵 제작·저장·명시 범위 검증 완료. 보스 처치 승리 연결·상세 미술/NPC/실내·전체20분 종료·전체 경로 연속 순회·다른 맵의 공용 AI/스폰 회귀·패키징/성능/온라인은 후속 범위. Sprint5 유지, 커밋·푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-05_open-world-playmap.md`, `Feature/doc/2026-10-05_open-world-playmap.md`, `Feature/doc/evidence/open-world-20261005/`, `Docs/WorldStructure.md`, `DevLog/20261005.txt`.
+
+## Sprint#5-12 — 시작마을 바닥 텍스처 개선 (2026-10-05)
+
+- 브랜치: `Sprint#5-12-start-village-ground`
+- 목표: 잔디·흙길 텍스처의 뭉개짐과 방향성 늘어짐을 수정하고 광장 바닥 질감을 개선한다.
+- 주요 변경: 마을 전용 World XY 재질, 잔디180cm·흙길90cm·돌120cm 반복. 기존 인스턴스2개 부모 교체, 광장·준비 구역·포탈 바닥6개 돌 재질 연결. 생성기 튜닝 재사용·읽기 전용 사전 검사, 조사/수정/캡처/재로드/Content 감사 도구.
+- 검증: native·공식 MCP 재질 컴파일 및 배선 PASS, 명시5패키지 저장·dirty=false, 맵 해제·재로드43항목 PASS. 기존677액터 배치·메시·충돌·포탈 보존, Content6290개 전체 SHA256에서 허용9개 외6281개 동일·신규2개. 실제 전후·동서 길·마을 화면 검토, 생성기 실제 사전 검사·Python AST·diff·하네스 경로 검사.
+- 상태: 요청 범위 적용·저장·재로드 검증 완료. 원본 에셋과 그래픽 전역 설정 보존. 재질 전용 변경으로 C++ 빌드·PIE 전투 재검사·패키징/성능 측정 미실행. 커밋·푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-05_start-village-ground.md`, `Feature/doc/2026-10-05_start-village-ground.md`, `Feature/doc/evidence/village-ground-20261005/`, `DevLog/20261005.txt`.
+
+## Sprint#5-13 — 제작된 오픈월드 탐험 지도 (2026-10-05)
+
+- 브랜치: `Sprint#5-13-open-world-map`
+- 목표: 완성된 OpenRunMap을 실제 배치와 일치하는 한국어 지도로 제공한다.
+- 주요 변경: 실제R16 지형 음영·10m등고선,6지역·3길·유한60m강·교량3개·조우/보스·입장 표시, 별도StartHub 포탈 삽입도·방위/500m축척. 2200×2550PNG·좌표/근거JSON·재현 렌더러와 문서.
+- 검증: 독립 좌표 검토, 제작POI/교량 일치·PCG183타일 완료, R16기준5점 양자화오차1cm이내·라벨범위/비중첩·실제PNG 육안 검토, Python AST·PNG무결성·diff 검사.
+- 상태: 지도 제작 완료. 수목/건물은 지도 기호이며 개별 인스턴스 정사영 캡처가 아니다. Unreal 콘텐츠·C++·설정 변경과 빌드/PIE 실행 없음, 기존 작업 보존·커밋/푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-05_open-world-map.md`, `Feature/doc/2026-10-05_open-world-map.md`, `Feature/doc/evidence/open-world-map-20261005/`, `DevLog/20261005.txt`.
+
+## Sprint#5-14 — 기본 몬스터와 시작마을 안내 NPC (2026-10-05)
+
+- 브랜치: `Sprint#5-14-open-world-monsters`
+- 목표: 오픈월드 기존 6종에 Idle·이동·기본 공격을 구현하고 시작마을에 간단한 대화와 기본 아이템 지급 NPC를 배치한다.
+- 주요 변경: 타이머 기반 기본 근접 공격 Profile/Component와 opt-in AI 연결, 보유 6종 모델·5개 동작 클립 및 전용 DataAsset/Profile 12개 연결. 원본 능력치·보상·스포너 정책 보존. 길잡이 아린의 F 대화·기존 회복 포션 2개 지급·중복 방지·만석 재시도, 지급 스택의 실제 잔여 수량만 OpenLevel 포탈 뒤로 전달. NPC native 카드 RebuildWidget 표시 수정, 전용 BP/DA·StartHub 액터 저장 및 검사 도구.
+- 검증: Editor NoHotReload 빌드 111.69초 및 표시 보완 70.11초 성공. 저장 재로드 100/100, 최종 실제 몬스터 PIE 219/219와 NPC PIE 57/57 통과. 6종 Idle·이동·native 추적/피해·회피/사망 취소, 물약 실제 사용·실제 포탈 후 잔여 1개·1200초 런 확인. 실제 F 열기/지급/닫기와 한글 카드 화면 2개, 독립 코드·화면 검토·문법/JSON/diff/하네스 검사.
+- 보존: 기준선 Content 6,292개 전체 SHA256에서 허용 기존 10개 변경·신규 15개, 6,282개 동일. 기존 마을 677액터·원본 25종·구매 모델/클립/재질·다른 미커밋 작업 보존.
+- 상태: 요청 범위 제작·저장·최종 집중 검사 완료, 에디터 StartHub 대기. 세션 단일 플레이어 보급이며 특성 강화·보스 특수 패턴/승리 목표·전체 20분·네트워크·패키징/출시 성능은 후속 범위. Sprint5 유지, 커밋·푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-05_open-world-monsters.md`, `Feature/architect/2026-10-05_start-hub-tutorial-npc.md`, `Feature/doc/2026-10-05_open-world-monsters.md`, `Feature/doc/2026-10-05_start-hub-tutorial-npc.md`, `Docs/OpenWorldMonsterDesign.md`, `Feature/doc/evidence/open-world-monsters-20261005/`, `DevLog/20261005.txt`.
+
+### Sprint#5-14 추가 — 길잡이 아린 시각 콘셉트
+
+- 목표: 시작마을의 대화·출발 보급 역할에 맞는 NPC 이미지를 제작한다.
+- 주요 변경: imagegen 내장 도구로 친근한 성인 안내인·초록 여행복·가죽 가방·물약 두 병·밝은 기와 마을의 전신 콘셉트 1024×1536 PNG를 생성하고 프로젝트에 사본·프롬프트를 저장했다.
+- 검증: 인물·손·물약·전신 구도 육안 검토, PNG 형식/크기와 원본·사본 SHA256 일치, diff 검사.
+- 상태: 이미지 제작 완료. 시각 콘셉트와 문서만 변경했으며 엔진 에셋·C++·설정·3D 모델·메시 교체는 이번 범위에 없음. 빌드/PIE 재실행과 커밋·푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-05_start-hub-tutorial-npc.md`, `Feature/doc/2026-10-05_start-hub-tutorial-npc.md`, `Feature/doc/evidence/start-hub-tutorial-npc-image-20261005/`, `DevLog/20261005.txt`.
+
+### Sprint#5-14 후속 — 아린 FBX 제작·적용 준비
+
+- 목표: 기존 아린 콘셉트를 실제 리깅된 FBX로 제작하고 StartHub NPC에 적용한다.
+- 준비한 변경: 동일 외형의 흰 배경·무그림자 정면 전신 T포즈 참조와 프롬프트, A1~A4 패킷, 새 Skeleton용 Idle 임포트/리타깃 경로 문서. 기존 NPC와 엔진 콘텐츠는 유지했다.
+- 검증: 실제 NPC Skeleton 일치 조건·기존 FBX/IK Retarget 코드 조사, 참조 PNG/원본 사본 해시·육안·diff/하네스 검사. Tripo 공식 인증·리깅·FBX 명세 확인.
+- 상태: 참조 준비 완료, TRIPO_API_KEY 연결 대기. 유료 생성 태스크·잔액 조회·실제 FBX·새 메시·맵 적용은 미실행이며 완료로 처리하지 않는다. 빌드/PIE는 실제 적용 시 수행. 커밋·푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-05_arin-npc-fbx.md`, `Feature/doc/2026-10-05_arin-npc-fbx.md`, `Feature/doc/evidence/arin-npc-fbx-20261005/`, `DevLog/20261005.txt`.
+
+## Sprint#5-15 — 하단 전투 HUD 시안 적용 (2026-10-05)
+
+- 브랜치: 작업 시작 시 `Sprint#5-15-compact-combat-hud` 생성·전환. 공유 체크아웃은 병행 작업에서 이후 `Sprint#5-14-open-world-monsters`로 전환됨.
+- 목표: 승인된 imagegen 시안의 낮은 검정·청동 HUD를 실제 UMG에 적용하고 경험치·레벨·획득 알림을 정리한다.
+- 주요 변경: 1200×196 코어·하단20·양옆24, 패널 내부 경험치, 실제 무기명·잠금 기호·준비 강조·HOLD 두 줄, Compact 5파트와 Main/Bottom 연결. 좁은 화면에서 획득 카드가 코어 위로 이동. HUD C++·Editor 재현/검증·프레이밍 보호·실제 게임 QA 추가.
+- 검증: UI 전체 Editor 빌드28.42초, 최종 별도 모듈 빌드25.40초 성공. 7패키지 validator PASS·공식 MCP dirty=false. 실제 StartHub 6해상도/DPI단계 922검사 PASS·실패0, PNG6개 크기/시각과 일반/좁은 화면 육안 확인. 독립 C++/UMG 리뷰·AST·PowerShell parse·diff·CheckGeneratedChanges·Harness 경로 PASS.
+- 보존: 기존 UI112개 중 Main/Bottom만 수정, 나머지110개 SHA256 동일. 신규 Compact5개. 기존 전투/애니메이션/맵 작업과 일반 수량0 로그 필터 유지.
+- 상태: 적용·저장·게임 재로드·검증·기록 완료. 패키징/온라인/장시간 성능 검사 범위 밖. 커밋·푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-05_compact-combat-hud.md`, `Feature/doc/2026-10-05_compact-combat-hud.md`, `Docs/CompactCombatHUDGuide.md`, `Feature/doc/evidence/compact-hud-20261005/`, `DevLog/20261005.txt`.
+
+### Sprint#5-14 후속 — Apollo 아린 정적 3D·FBX 제작 및 적용 검사
+
+- 목표: 사용자가 지정한 Apollo 스킬로 아린을 실제 FBX로 제작하고 검증을 통과하면 시작마을 NPC 외형에 적용한다.
+- 주요 변경: 프로젝트 전용 Python·실제 Apollo API/stdio MCP·공식 체크섬 검증 portable Blender, 단일 이미지2.5D FBX·정사각3뷰 참조·원본 ApolloHullAdapter의 실제 입체 GLB·공식 MCP 업로드/preview/export/download·검사/포장 스크립트6개와 정적 입체 FBX·GLB·설명 패키지.
+- 검증: 닫힌 표면·양의 체적·단일 연결 등11/11, 최종 FBX 실제 재수입 높이1.7m·24,880삼각형·뼈0·Action0, 원본GLB 보존 SHA256·manifest·ZIP CRC, 실제 정면/측면/사선·독립 검토·AST·하네스 경로. 두 팔 자세 리깅 검사는 최대 늘어남7.38/6.34배로 실패했고 사선 얼굴 중복·망토 투영 늘어짐을 확인했다.
+- 상태: 정적 입체 초안 FBX 전달 완료. 게임용 리깅·Idle·NPC 적용은 실제 품질 불합격으로 미완료이며 기존 안내 NPC·대화·지급을 유지했다. 업로드 score1.0/ready를 NPC 품질 승인으로 해석하지 않는다. CPU local_draft 출처와 실패 근거 동봉, C++/엔진 콘텐츠 변경·빌드/PIE 재실행·커밋/푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-05_arin-npc-fbx.md`, `Feature/doc/2026-10-05_arin-npc-fbx.md`, `Feature/doc/evidence/arin-apollo-20261005/`, `DevLog/20261005.txt`.
+
+## Sprint#5-16 — Blender MCP 아린 입체 모델·NPC 적용 (2026-10-07)
+
+- 브랜치: `Sprint#5-16-blender-arin-npc`에서 개발 후 사용자 품질 개선 지시에 따라 `Sprint#5-17-arin-quality-refinement`로 전환.
+- 목표: 사용자 지정 Blender MCP를 실제 설정하고 리깅된 아린 FBX를 시작마을 NPC에 적용한다.
+- 주요 변경: 프로젝트 전용 Blender4.5.14/Python/MCP addon·loopback9877·Codex blender 항목, 재현 시작/호출 도구. 실제 입체175메시/42,764삼각형·23본·2초 Idle·BLEND/FBX/GLB. 전용 UE19에셋과 guide 외형 참조·BP/외부 액터 저장.
+- 검증: 실제 MCP ping/version/scene/python/viewport, FBX18/18, 실제 NPC PIE64/64, 맵 해제·StartHub 재로드와 외형/보호설정 검증 PASS. 실제 마을 정면/얼굴/사선 캡처. Content6312기준 신규19·변경3·삭제0·나머지6309크기/수정시각 동일. 대화·정확한 물약2개·만석/중복/소모 후 포탈 잔여1개 유지.
+- 상태: 스타일화된 v1 제작·적용·저장·집중 검사 완료. 단색15재질·UV/텍스처/LOD/얼굴·손가락 리그 없음. Blender 재수입은 live 소유 프로세스였으며 이후 v1 원본 fresh-process 검사에서는 새 품질 계약의 UV/PBR 기준 미달을 사실대로 기록. 품질 개선용 동결 기준선으로 보존. C++ 빌드/패키징/성능/네트워크 미실행, 커밋·푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-07_blender-arin-npc.md`, `Feature/doc/2026-10-07_blender-arin-npc.md`, `Feature/doc/evidence/arin-blender-20261007/`, `Scripts/Blender/README.md`, `DevLog/20261007.txt`.
+
+## Sprint#5-17 — 아린 Blender 품질 개선 (2026-10-07)
+
+- 브랜치: `Sprint#5-17-arin-quality-refinement`.
+- 목표: 다섯 Blender 스킬·imagegen 참조·반복 검증으로 실제 아린 모델을 개선하고 UE용 UV/PBR·LOD·FBX를 적용한다.
+- 주요 변경: 다섯 스킬 설치와 v1 동결, Q1~Q6·imagegen 참조·독립 critic. 실제 얼굴/눈/입·두피/땋기·손/손톱·연결 바지·외투/앞치마 변형 개선. 174편집 부위·4런타임 메시·51,634삼각형·23제작 본·2초 Idle, 4개 UV/PBR atlas·16PNG(Cloth4k/나머지2k). BLEND·결합/분리 FBX·GLB 및 실제 렌더/GIF 전달. UE 전용 24에셋·기존 guide 외형 연결·3LOD 저장.
+- 검증: 새 Blender 프로세스 3포맷 검사·22개 최종 FBX 자세 렌더 검토, 실제 2초 Idle 13프레임. 최종 NPC PIE67/67·GUI 맵 해제/재로드·별도 UE Cmd 프로세스 저장 참조 검사 통과. 실제 UE 9화면에서 LOD1/2의 초기 의상 패치·홍채 손실을 발견해 실제 축소 비율1/.25/.125→1/.85/.65·경계 잠금으로 수정하고 재검토 통과. 최종 UE 정점40,211/35,681/28,851·각4sections·LOD0/골격 보존. 텍스처 임시32px는 배치 속성 설정+공식 컴파일 완료 후 실제2k/4k 검증. Python AST24개·diff·CheckGeneratedChanges 통과.
+- 보존: Content6,331개 전체 SHA256에서 기존 안내인 DA/BP/소유 외부 액터3개만 변경, 신규RefinedV2 24개·삭제0·나머지6,328개 동일. 대화·물약2개·중복/만석 재시도·실제 소모/포탈 잔여1개 유지. 에디터 검토용 카메라·강제LOD·백그라운드 갱신 설정 복원.
+- 상태: 스타일화된 안내 NPC 품질 개선·최종 적용·저장·집중 검증 완료. 근접 얼굴/헤어의 단순화·목 음영 경계·고정 망토 한계와 개별 손가락/얼굴 리그·보행/전투·Manny 호환·패키징/성능/온라인 미검증을 명시. C++ 변경/빌드 없음. Sprint5 유지, 커밋·푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-07_arin-quality-refinement.md`, `Feature/doc/2026-10-07_arin-quality-refinement.md`, `Feature/doc/evidence/arin-quality-20261007/`, `DevLog/20261007.txt`.
+
+## Sprint#5-18 — 사용자 FBX·이미지 기반 아린 v3 개선 (2026-10-09)
+
+- 브랜치: `Sprint#5-18-arin-reference-refinement`.
+- 목표: 첨부 판타지 모험가 FBX와 전신 이미지의 얼굴·헤어·후드·자수 의상·장비를 실제 아린 모델에 반영하고 기존 시작마을 NPC 기능을 보존한다.
+- 주요 변경: R1~R6 패킷·도너 조사와 원본/v2 동결, 도너 메시·UV·2K 색 atlas를 기반으로 헤어/팔보호대/부츠 국소 수리·재질 팔레트·피부 마스크·팔/무릎 가중치 개선. 최종45,205정점·90,214삼각형·1메시/1재질·23제작 본·최대3영향·170cm·2초 Idle, 실제4K PBR 네 장과 BLEND·결합/분리FBX·GLB·실제GIF. 전용 RefinedV3 새9에셋·guide 외형/Idle 연결·3LOD 저장. 임시32px resource 문제는 검사한7개 에셋을 재가져오기/삭제 없이 복구하고 실제4K gate 뒤 누락 재질2개를 준비했다.
+- 검증: fresh Blender3포맷과 최종FBX8뷰·canonical 동등형상27뷰/clay·native packed4PBR SHA,13실제 Idle 샘플/12프레임2000ms, source/engine 독립 검토. 실제UE9화면 강제/예측LOD0·1·2/1section 유지·카메라와 임시 설정 복원. LOD정점110,688/100,176/81,219·목표1/.85/.65·경계 잠금·LOD0/골격 보존, 정확한 UE LOD삼각형 수는 미노출로 명시. 실제 NPC PIE67/67, GUI 맵 해제·재로드, 별도 UE Cmd 프로세스 저장 검사 exit0, 최종 출처/원본 보존 해시23개·신규9Python AST·diff/harness 경로 통과.
+- 보존: Content6,355개 전체 SHA 감사에서 기존 guide DA/BP2개만 변경, 나머지6,353개 동일·새9개·삭제0·범위 밖 변경0. 소유 외부 액터 패키지는 저장했으나 SHA 동일. 기존 대화·포션2개·중복/만석 재시도·실제 소모와 포탈 잔여1개 유지. 사용자 첨부 원본과 v2 여섯 산출물의 SHA 동일.
+- 상태: 아린 v3 모델 개선·시작마을 적용·저장·집중 검증 완료. 원본2K 얼굴/헤어 세부·약한 목 측면 음영·열린 의상 경계와 비다양체 표면·개별 얼굴/손가락 리그 부재를 기록한다. 보행/전투·Manny 호환·천 시뮬레이션·성능/패키징은 미검증이다. C++ 변경/빌드 없음. Sprint5 유지, 커밋·푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-09_arin-reference-refinement.md`, `Feature/doc/2026-10-09_arin-reference-refinement.md`, `Art/NPC/Arin/ReferenceRefined/README.md`, `Feature/doc/evidence/arin-reference-refinement-20261009/`, `DevLog/20261009.txt`.
+
+## Sprint#5-19 — 아린 기본 걷기·대화 애니메이션 (2026-10-09)
+
+- 브랜치: `Sprint#5-19-arin-walk-talk-animation`.
+- 목표: 기존 아린 v3에 기본 Walk/Talk를 제작·적용하고 실제 이동·대화에 따른 자동 전환을 제공한다.
+- 주요 변경: Blender 30fps·Walk1.2초/Talk3초와 별도 BLEND·FBX2개, C++ 전용 애니메이션 컴포넌트, Guide DataAsset의 클립·속도 설정, 같은 프레임의 타이머 중복 호출 보호, 기존 골격에 새 UE클립2개와 Guide DA참조 저장.
+- 레퍼런스: Mixamo의 공개 걷기·대화 프리뷰. 적용 클립은 직접 제작한 키프레임이며 다운로드한 Mixamo FBX는0개.
+- 검증: 최종 Editor 빌드 성공·재시작, fresh FBX Walk37/Talk91 전체 자세, 원본28/독립FBX8/실제UE6화면, 실제 PIE159/159(기존67 전부·신규23단계), 임시5FPS 저프레임 검사 후120FPS 복원, 새 Editor-Cmd PID51740 저장 재로드 통과.
+- 보존: 기존 Content6363개 SHA동일·Guide DA1변경·신규클립2개·삭제/범위밖변경0. 기존 아린9패키지·Art59파일·대화/포션2/중복·만석/포탈잔여1 유지.
+- 상태: 완료. 커밋·푸시 없음. Talk는 몸짓이며 얼굴 립싱크·개별 손가락·AI순찰·지형발IK·의상물리·전환블렌딩은 포함하지 않는다.
+- 관련 문서: [설계](../Feature/architect/2026-10-09_arin-walk-talk-animation.md), [결과](../Feature/doc/2026-10-09_arin-walk-talk-animation.md), [사용 안내](../Art/NPC/Arin/Animation/README.md), [통합 검증](../Feature/doc/evidence/arin-walk-talk-20261009/tutorial-runtime.json), [일일 로그](../DevLog/20261009.txt).
+
+## Sprint#5-20 — 이동 중 상체 공격·하체 보행 분리 (2026-10-09)
+
+- 브랜치: `Sprint#5-20-moving-upper-body-attack`.
+- 목표: 플레이어가 걷는 중 공격할 때 다리가 전신 공격 몽타주로 고정되는 문제를 해결한다.
+- 주요 변경: 실제 수락 스킬/몽타주·지상 속도에 따른 native 상체 조건, 보행과 몽타주 결과의 별도 캐시, spine_01/ik_hand_root 상체 마스크, 정지0.12초 전신 복귀. 회피 weighted tail·점프/공중 유지, 이동 시 정지 가드 해제. 기존11노드·DefaultSlot·몽타주·Data Asset 보존 후 새9노드 추가. Editor 전용 제작/읽기 감사와 기존 가드·FootIK 검증 계약 갱신.
+- 검증: Editor 최종 빌드·프로젝트 재생성, 컴파일 오류/경고0, fresh 재로드와 legacy guard/FootIK 감사 통과. 원본 그래프 대조1100프레임 하체474실패→수정1100프레임·258066검사 실패0. 실제 렌더1100·가드640·기존 전투840프레임 실패0. 맨손/너클9종에서 source/retarget 하체 보행 최대차0.000002415도·source 위치차0cm, 실제 체력16펄스·타이밍 유지.
+- 보존: Content6366개 중 기존 Common AnimBP1개만 변경·6365개 SHA 동일·추가/삭제0. 기존 아린·월드·HUD와 미커밋 작업 유지. StartHub Editor·PIE 종료·dirty0·120FPS 복원.
+- 상태: 구현·저장·집중 QA 완료. 현재 맨손/너클 경로에 집중 검증. 커밋·푸시 없음.
+- 관련 문서: [설계](../Feature/architect/2026-10-09_moving-upper-body-attack.md), [결과](../Feature/doc/2026-10-09_moving-upper-body-attack.md), [검증 비교](../Feature/doc/evidence/moving-upper-body-attack-20261009/runtime-comparison.json), [일일 로그](../DevLog/20261009.txt).
+
+## Sprint#5-21 — 1인칭 카메라 하향·공격 전방 점검 (2026-10-09)
+
+- 브랜치: `Sprint#5-21-lower-camera-forward-attacks`.
+- 목표: 1인칭 카메라를 조금 낮추고 현재 플레이어 공격의 전방 방향과 실제 피해를 점검한다.
+- 주요 변경: native EyeOffset.Z 4→-3cm로 약7cm 하향. 초기 pitch=-20도·조준·3인칭 검사·몽타주·피해 시점 유지. 읽기 전용 전체 공격 감사와 실제 타격손/앞뒤 대상 피해/동일 자세 카메라 비교·1인칭 캡처 도구 추가.
+- 검증: 최종 Editor 빌드 성공. 74DA/13Profile 참조·타이밍 이상0, 현재 맨손/너클23공격·16시퀀스120Hz 방향 조사 이상0. 실제13종+회전2건=15건의 runtime/render 각각1,572프레임·4,978/4,979검사·실패0, 체력21펄스·15접촉/2idle화면. 카메라 동일 자세7.000000cm·독립 오차0. 기존 머리 카메라570·초기 시선90·3인칭280·이동 상하체1,100프레임 회귀 실패0.
+- 보존: Content6,366파일 전부 SHA 동일·추가/삭제/변경0, 집중207패키지/타격 데이터/프로필/몽타주 동일. 기존 아린·월드·HUD·미커밋 작업 유지. 여섯 Blueprint 기본값 확인, StartHub Editor·PIE 종료·dirty0·120FPS 복원.
+- 상태: 구현·집중 QA·독립 리뷰 완료. 실제 손 방향/전투 범위는 현재 맨손·너클·무투가 경로다. 원형 내려찍기의 후방 피해는 의도된 범위 판정이다. 커밋·푸시 없음.
+- 관련 문서: [설계](../Feature/architect/2026-10-09_lower-camera-forward-attacks.md), [결과](../Feature/doc/2026-10-09_lower-camera-forward-attacks.md), [원본 감사](../Feature/doc/evidence/camera-forward-attacks-20261009/audit.json), [일일 로그](../DevLog/20261009.txt).
+
+## Sprint#5-22 — Walking.fbx 기반 보행 손바닥 보정 (2026-10-09)
+
+- 브랜치: `Sprint#5-22-walking-palm-reference`.
+- 목표: 첨부 Walking.fbx의 손바닥 방향을 참고해 현재 플레이어의 맨손·너클 보행을 개선한다.
+- 주요 변경: Blender에서 65본·30FPS 원본을 해부학적 손 평면으로 분석했다. 원본 Walk/Jog 16개를 복제해 손목→중지 축의 제한된 회전만 적용하고 새 BlendSpace로 연결했다. 모든 위치·스케일, 손가락·하체·IK 원본 채널과 27표본·Idle·타이밍·마커·공격 그래프를 보존했다. 첫 보조 IK 보정의 실행 중 이동 문제를 발견해 원본 IK를 복원하고 더 엄격한 검증을 추가했다.
+- 검증: UE5.8 Editor 빌드27.97초 성공. native101,953키쌍·16클립 검사 통과, 보호 위치/스케일 오차0·회전0.000116414도 이내. 실제 render650프레임·95,970검사·9화면과 여섯 외형 각각650프레임·95,976검사 실패0. 독립 보행 대조220프레임에서 보조 손 IK 위치 변화0cm, 손바닥 평균 방향16조합 모두 개선. 이동 공격1,100프레임·258,066검사·피해16건, 전방/카메라1,572프레임·15건·피해21펄스 회귀 통과.
+- 보존: 기존 Content6,366개 중 Common AnimBP1개만 변경·나머지6,365개 SHA 동일, 신규17·삭제0. 제공 FBX SHA 동일. 새 에디터 재로드에서 그래프/표본/키 검사 통과, 여섯 카메라(8,0,-3)cm·pitch-20도 유지. StartHub·PIE 종료·dirty0·120FPS 복원.
+- 상태: 적용·저장·집중 QA·독립 정적/기하/시각 리뷰·문서 완료. 전체 Mixamo 보행을 이식하지 않고 손 방향을 반영했으며 모든 프레임의 참조 일치를 주장하지 않는다. 커밋·푸시 없음.
+- 관련 문서: [설계](../Feature/architect/2026-10-09_walking-palm-reference.md), [결과](../Feature/doc/2026-10-09_walking-palm-reference.md), [독립 실행 검토](../Feature/doc/evidence/walking-palm-reference-20261009/reference/runtime-review-v2.json), [일일 로그](../DevLog/20261009.txt).
+
+### Sprint5 운용 기록 — 스튜디오 활성화와 후속 개발 검토 (2026-10-11)
+
+- 목표: 개인 개발 스튜디오를 활성화하고 남은 개발 후보를 제시한다.
+- 변경: 기존 실행기로 로컬 서버 시작, 개발 일정 화면 열기 요청, 최신 결과 문서 기반 6개 후속 후보 정리 및 한국어 개발 기록 추가.
+- 검증: 실제 API 응답에서 ready·paused=false·진행/실행대기0·등록2건 모두 completed 확인.
+- 상태: 활성화·목록 검토 완료. 후보는 미등록이며 게임 구현·빌드/PIE·브랜치 변경·커밋/푸시 없음. 기존 게임·Studio 작업 보존.
+- 관련 문서: `Feature/doc/2026-10-11_studio-backlog-review.md`, `DevLog/20261011.txt`.
+
+## Sprint#5-23 — 아자토르 보스 전용 패턴 (2026-10-11)
+
+- 브랜치: Sprint#5-23-azathor-boss-patterns.
+- 목표: 기존 아자토르에 예고가 있는 정면/범위 특수 공격과 체력 단계 패턴을 구현하고 실제 검증한다.
+- 주요 기록: 사용자 요청으로 스튜디오 예정에 높은 우선순위·자동 실행으로 등록. 기존 미커밋 작업과 기본 보스 능력치 보존, 실제 빌드/PIE/재로드/독립 검토를 작업 범위에 명시.
+- 검증: API 저장 확인·기존2건 보존·새 작업 ID a359620e-46c8-409f-a2e2-6e991387d1da. dispatcher active와 engine busy, 기획 에이전트 running 및 실제 세션 시작 확인.
+- 상태: 확인 필요(blocked·일시정지). 기획 에이전트가 PATH의 python 부재로 중단했다. 설치된 Python 3.12.14의 절대 경로와 작업 메모를 보완했지만 샌드박스 읽기 전용 MCP 확인은 WinError 10013으로 실패했다. 사용자가 허용한 동일 확인 명령 하나를 승인 심사에 제출해 실제 실행했으나 이번에는 WinError 10061(연결 거부), 종료 코드 1로 실패했다. 현재 UnrealEditor 프로세스 0개이며 기본 MCP 설정은 자동 시작·8001/mcp다. PIE/미저장 상태 미확인·구현 패킷 미확정·게임 구현/빌드/QA 미실행. 단일 명령 허용을 지속 실행 설정 변경이나 자동 재검토 권한으로 확대하지 않았다. 커밋·푸시 없음.
+- 후속 지시: 사용자가 에디터 실행·재검토를 요청한 뒤 다른 채팅의 Studio 제거와 충돌을 확인했고, "스튜디오 없이 아자토르 직접 개발"을 선택했다. 아래 상태가 현재 개발 상태이며 위 blocked는 제거 전 초기 Studio 실행의 기록이다.
+- 현재 변경: 직접 개발로 보스 opt-in·기본→정면→기본→영역 순환·고정 직사각형/원형 경고·HP50% 강화·특수 쿨타임·범위/높이/가림/단일 타격·취소/사망/EndPlay 정리를 C++ 컴포넌트에 구현했다. 전용 프로필/데칼 4개를 새로 만들고 기존 아자토르 DA의 참조 한 곳만 연결했다. 기본 HP10000·피해70·EXP3000·이동240과 기존 애니메이션·다른5종 보존.
+- 현재 검증: Editor 빌드68.49초 성공, 실제 PIE22사례·480확인 실패0·55.688초, 강화 예고/피해/회복 시간의 관측 오차 구간까지 검증. 주황 직사각형·보라 원·붉은 강화 실제 화면3개 확인. 새 에디터 재로드와 콘텐츠 기존6296개 동일·기존DA1변경·4추가·삭제0 및 독립 리뷰 통과. 마지막 OpenRunMap·PIE없음·dirty0·원래 CPU제한/FPS 복원.
+- 현재 상태: 구현·저장·집중 QA·독립 검토·문서 완료. 첫 화면 확인의 GPU 메모리 오류는 기록 후 에디터 재실행·재로드·slow-motion 화면 확인으로 복구했다. 장시간 GPU 안정성·북부 이동/전체 AI 전투·물리 회피·패키징·네트워크·최종 밸런스는 별도 검증이다. 커밋·푸시 없음.
+- 관련: Feature/architect/2026-10-11_azathor-boss-patterns.md, Feature/doc/2026-10-11_azathor-boss-patterns.md, Feature/doc/evidence/azathor-boss-patterns-20261011/, DevLog/20261011.txt. 제거 전 일정·실행 이력은 Studio 제거 문서의 로컬 백업에 보존되어 있다.
+
+### Sprint5 운용 기록 — 개인 게임 개발 스튜디오 제거 (2026-10-11)
+
+- 목표: 사용하지 않는 개인 개발 스튜디오와 전용 실행·예약 연결을 제거한다.
+- 주요 변경: 실행 작업 없음 확인 후 서버 PID28988 종료, heartbeat rogue10m 삭제, Studio 전체 및 BAT·PowerShell 실행기 삭제(추적 파일21개), 현재 MCP 문서의 개인 Studio 설명 정리. 기존 앱·일정·실행 이력75파일을 Git 제외 로컬 ZIP에 백업·검증했다.
+- 검증: 실제 프로세스/포트 소유권 및 종료, 4317 리스너 없음, 자동화 삭제 응답과 설정 부재, ZIP 전항목 경로·크기·SHA256 일치, 제거 경로 부재·활성 참조 감사, CheckGeneratedChanges 종료 코드0.
+- 상태: 제거 완료. 과거 기록·게임 코드·에셋 보존. 성장·스킬·인벤토리 일정 추가는 이 채팅에서 미실행. 다른 채팅의 직접 개발과 공유 브랜치를 유지했고 UE 빌드/PIE·커밋/푸시 없음.
+- 관련 문서: `Feature/architect/2026-10-11_remove-personal-studio.md`, `Feature/doc/2026-10-11_remove-personal-studio.md`, `DevLog/20261011.txt`. 로컬 백업: `tmp/studio-removal-20261011/studio-backup.zip`.
+
+## Sprint#5-24 — 마을 NPC 서비스와 캐릭터 진행 영구 저장 (2026-10-11)
+
+- 작업 브랜치: `Sprint#5-24-npc-services-persistence`의 별도 작업 폴더. 원본 동시 작업의 현재 `Sprint#5-26-monster-test-ui` 브랜치 보존.
+- 목표: 아린의 물약 구매·주무기/방어구 강화·활력/힘 특성·다음 탐험 난이도를 실제 게임에 추가하고 성장·수련/토벌·스킬 진행·인벤토리를 프로필별로 영구 저장한다.
+- 주요 변경: Data Asset 기본값과 PlayerState 전용 특성 컴포넌트, 프로필 GUID SaveGame, 변경 이벤트 1초 자동 저장·포탈/종료 저장, 전체 인벤토리와 아이템 GUID/강화/퀵슬롯, 수령 기록과 프로필 전환 격리, 난이도 및 XP/골드 보상. 복원 실패는 롤백하고 기존 파일을 보존한다.
+- 검증: 격리 최종 Editor 빌드80.86초·원본 통합 빌드29.64초 성공. 원본 서비스 Write60/Read25와 실제 포탈/런 Write42/Read15 실패0. 오류 저장27검사 실패0·원본 바이트 동일. 720p/1080p 실제 입력/화면 각9검사 통과, 최신 원본 F8 입력과 함께 쓰는 NPC 메뉴9검사 추가 통과. 독립 리뷰·생성 출력 검사·scoped diff 검사 통과.
+- 보존: 기존 미커밋 작업·보스와 테스트 UI 변경 유지. 기능 Source34개 반영 후32개 해시 일치·BasicMonster2개 동시 테스트 인스턴스 변경 별도 대조. 본 기능의 바이너리 에셋·모듈/Build.cs 변경 없음, Studio 제거 유지.
+- 상태: 구현·원본 반영·빌드·실제 기능/화면 검증·독립 리뷰·문서 완료. 로컬 단일 플레이 저장을 지원하며 현재 런·현재 HP/MP/스태미나·월드 드롭 액터는 저장 대상이 아니다. 커밋·푸시 없음.
+- 관련 문서: [설계](../Feature/architect/2026-10-11_town-services-persistence.md), [결과](../Feature/doc/2026-10-11_town-services-persistence.md), [사용 가이드](TownServicesPersistenceGuide.md), [독립 리뷰](../Feature/doc/evidence/town-services-persistence-20261011/review.md), [개발 일지](../DevLog/20261011.txt).
+
+### Sprint5-26 — 현재 위치 몬스터 테스트 UI (2026-10-11)
+
+- 목표: 넓은 맵을 이동하지 않고 일반 몬스터와 아자토르를 현재 위치에서 바로 시험한다.
+- 주요 변경: 별도 C++ UMG 창/테스트 컴포넌트, F6 및 안내 버튼, 실제6종 안전 지면 소환·최대6마리·소유 대상 정리, 기본/정면/영역·HP40% 강화·초기화·자동 AI·회복·무적, pause/focus/캐릭터 전환 복원, 테스트 대상 보상 차단. F8 에디터 단축키 충돌을 피함. 바이너리 에셋·맵·원본 데이터·스튜디오 변경 없음.
+- 검증: 최종 Editor 빌드9.86초 성공; F6 실제 게임1280×720 80확인·실패0, 1920×1080 추가80확인·실패0; 실제 Slate hit-test 마우스 클릭·키/ESC·피해·보상·수명/안전 경계·화면; 새 Editor PIE 창/pause/blocking·공식 MCP 캡처; 최종 OpenRunMap·PIE없음·dirty0, CheckGeneratedChanges/diff --check 통과. 초기 실패와 수정 이력 보존.
+- 상태: 구현·집중 QA·검토·문서 완료. 작은 에디터 뷰포트는 F11 또는 새 에디터 창 사용 권장. Shipping 패키징·멀티플레이·장시간 GPU 안정성은 별도. 커밋·푸시 없음.
+- 관련: Feature/architect/2026-10-11_monster-test-ui.md, Feature/doc/2026-10-11_monster-test-ui.md, Feature/doc/evidence/monster-test-ui-20261011/, DevLog/20261011.txt.
+
+### Sprint5-28 — 몬스터 시야 추적과 종별 Niagara (2026-10-11)
+
+- 목표: 일반5종과 아자토르의 플레이어 인식→추적→공격을 보강하고 공격·실제 명중을 종별 효과로 표시한다.
+- 주요 변경: 주변360도 시야·정지/재개·리시 재인식 차단·이동 Actor 경로 유지, F6 자연 인식과 짧은 사거리 테스트 보정, 종별 CPU burst6개+보스 특수2개 제작 및 프로필6개 연결, AutoRelease 완료 참조 정리, 다중 Editor 프로젝트 경로 보호.
+- 검증: 원본 통합 빌드32.42초 성공, 최종 격리110 및 원본110검증 실패0, 기존 F6 UI80검증 실패0, Niagara8개 컴파일/스택 오류·경고0, 실제 종별/보스 화면, 생성 경로·diff·Python 문법 검사 통과. 초기 실패와 수정 기록 보존.
+- 상태: 구현·한정 원본 통합·빌드·실제 플레이 QA·검토·문서 완료. 다른 채팅의 특성·저장 변경 보존. 로컬 단일 플레이 검증; 커밋·푸시 없음.
+- 관련: Feature/architect/2026-10-11_monster-effects-chase.md, Feature/doc/2026-10-11_monster-effects-chase.md, Feature/doc/evidence/monster-effects-chase-20261011/review.md, DevLog/20261011.txt.
+
+## Sprint#5-27 — 특성 16종·강화 UI 실제 적용 (2026-10-11)
+
+- 목표: 설계한 16종을 실제 전투에 적용하고 아린의 독립 특성 강화창·영구 저장·무료 재분배를 제공한다. 인벤토리·스킬·성장은 각각 별도 관리한다.
+- 주요 변경: 카탈로그 Data Asset/CDO16종, 실제 비용·누적 보너스 투자 기록, 16종 능력치/조건부 효과, v1→v2 보존 전환과 손상 거절, 쓰기 실패 재시도, 네이티브 UMG 필터·상세·입력 복구, 공식 Editor 임포트 UI Texture1개.
+- 검증: 최종 Editor 빌드9.76초 성공. 효과100·저장125+227·UI260·기존 서비스60+25/런42+15, 총854확인·실패0. 실제 Slate 키·마우스·16카드 스크롤·재분배 모달·저장 재시도, 독립 검토, 생성 경로·공백 검사, 새 Editor 클래스3개/16종/Texture 재로드·dirty0 확인.
+- 브랜치: 최초 Sprint#5-27-trait16-runtime에서 시작. 동시 몬스터 작업이 공유 원본을 Sprint#5-28-monster-effects-chase로 전환하여 현재 브랜치와 다른 변경을 보존했다.
+- 상태: 구현·빌드·실제 단일 플레이 QA·독립 검토·문서 완료. 초기 실패 증거 보존. Shipping cook·멀티플레이·장기 밸런스는 별도. 커밋·푸시 없음.
+- 관련: Feature/architect/2026-10-11_trait16-runtime.md, Feature/doc/2026-10-11_trait16-runtime.md, Docs/TraitEnhancementGuide.md, Feature/doc/evidence/trait16-runtime-20261011/, DevLog/20261011.txt.
+
+## Sprint#5-29 — 플레이어 시야에 맞춘 상체 애니메이션 (2026-10-13 완료)
+
+- 브랜치: `Sprint#5-29-view-aligned-upper-body`. 10월11일 시작한 작업을13일 최종 검증했다.
+- 목표: 현재 외형 메시의 상체·팔 애니메이션이 플레이어의 시야각을 따라 움직이고 하체·손목·손가락과 머리 카메라의 회전 계약을 보존한다.
+- 주요 변경: native AnimInstanceProxy 최종 포즈 보정, pitch75도·잔여 yaw45도 제한, 척추25%·양팔 나머지75% 분배, 지수 보간, 목/머리 원본 회전 복원과 FK/IK 손 동기화. 독립 원본 대조·실제 입력·외형 리타깃 QA, 기존 이동 원본 검사용 중립 조준 선택과 회귀 QA 저장 경로 격리.
+- 검증: 최종 Editor 빌드8.23초 성공. 집중 통합/실제 렌더 각각21상황·1,575프레임·460,488검사·실패0, 원본 대조459,385검사·실패0, 부정 대조는 조준 관련4종만2,456건 검출. 이동1,100/가드640/카메라1,572/맨손 전투840프레임 회귀 모두 실패0. 20초 주요 공격·52.5초 전체 실행영상과 독립 소스/실제 화면 검토 완료.
+- 보존과 복원: Content6,359개 크기/mtime·추가·삭제 변경0, Common AnimBP SHA 동일. 초기 QA 저장 접두사 오류로 변경된 진행도는 작업 전 전체 SHA가 같은 원본 바이트로 Unreal API를 통해 복원했고 생산 저장3개 SHA를 재확인했다. 일회 복구 도구는 Source에서 제거했다. 기존 OpenRunMap·PIE 종료·dirty0과 새 native 기본값 확인.
+- 상태: 구현·빌드·범위 내 QA·독립 검토·문서 완료. 현재 인간 남성 LOD1 검증이며 극단 상향 V회피의 근접 클리핑·고각 머리 위치 변화는 한계로 기록했다. 기존 미커밋 작업을 보존했고 커밋·푸시는 없다.
+- 관련: [설계](../Feature/architect/2026-10-11_view-aligned-upper-body.md), [결과](../Feature/doc/2026-10-11_view-aligned-upper-body.md), [독립 QA](../Feature/doc/evidence/view-aligned-upper-body-20261011/qa-review.md), [최종 소스 리뷰](../Feature/doc/evidence/view-aligned-upper-body-20261011/final-source-review.md), [일일 로그](../DevLog/20261013.txt).
+
+## Sprint#5-30 — 마우스 기준 머리 안정화·안전 모션·속도 연동 (2026-10-13)
+
+- 브랜치: `Sprint#5-30-mouse-head-stable-locomotion`.
+- 목표: 걷기2도·달리기4도·공격3도 안으로 머리/카메라 잔여 회전을 제한하고, 상체 시선·하체 보행·공격/이동 속도를 일치시킨다. 스핀·뒤돌아차기·구르기를 활성 경로에서 제외한다.
+- 주요 변경: mouse head native proxy와 평가 직전 제한 재캡처, 포즈/basis snapshot·반복 camera read·작은 위치 잔여, Movement→Source→Appearance 순서, 비용 전 금지 모션 gate, DA35개와 회피 안전 연결, 파생sequence7+montage33, grounded BlendSpace rate getter와 발자국 cadence. 원본 첫root 높이·게임플레이 수치·섹션/Notify 보존.
+- 검증: 최종 Editor 빌드56.43초. 실제 통합/렌더 각각24상황·1800프레임·489428기록 검사·실패0. 비활성 대조21상황은 머리 관련3151건 예상 검출. Fist840프레임·9스킬14실제 피해/머리 그림자/V, Moving1100프레임·258033검사·9스킬16피해 회귀 통과. fresh74DA/13프로필·unsafe active0, 독립source20파일·PNG9장 검토. 25초/60초 실행영상.
+- 보존: source455개 중14개 수정·7개 추가·삭제0. Content6359개 중 의도한37개 변경·40개 추가·다른 변경/삭제0, 생산 저장3개 SHA/목록 동일. OpenRunMap·PIE종료·dirty0·native2/4/3기본값 확인.
+- 상태: 구현·빌드·범위 내 수치/렌더·독립 검토·문서 완료. 초기 실패 증거 보존. 인간 남성LOD1 단일 플레이 범위, 기본1인칭 HUD 손 가림·모든 target 손가락/지면접촉 불인증을 명시했다. 기존 미커밋 작업 보존, 커밋·푸시 없음.
+- 관련: Feature/architect/2026-10-13_mouse-head-stable-locomotion.md, Feature/doc/2026-10-13_mouse-head-stable-locomotion.md, Feature/doc/evidence/mouse-head-stable-locomotion-20261013/qa-review.md, Feature/doc/evidence/mouse-head-stable-locomotion-20261013/final-source-review.md, DevLog/20261013.txt.
+
+## Sprint#5-31 — 대검·맨손 아이덴티티 이미지 (2026-10-14)
+
+- 목표: 중앙 원형 HUD와 어울리는 대검·맨손 상징을 투명 PNG 원본으로 제작한다.
+- 주요 변경: built-in imagegen 자산별 생성1회·여백 편집1회, 흑철/황동/붉은 대검과 돌주먹/금빛/비취 기운, SourceArt 원본·정확한 프롬프트 보존. .gitignore에서 최종 PNG2개만 예외 처리.
+- 검증: 최종2개1254×1254 RGBA/alpha0~255, 본체 높이75.76%·72.65%, 실제 원본 독립 기술·시각 검토 PASS, 파일SHA·프롬프트·Git제외안됨 확인. Unreal source/Texture 변경이 없어 빌드 미실행.
+- 상태: 이미지 제작·원본 보존·검토·문서 완료. 실제 HUD import/binding와68px 실행 배치는 별도. 기존 작업 보존, 커밋·푸시 없음.
+- 브랜치: Sprint#5-31-identity-image-assets.
+- 관련: Feature/architect/2026-10-14_identity-images.md, Feature/doc/2026-10-14_identity-images.md, Feature/doc/evidence/identity-images-20261014/file-qa.json, Feature/doc/evidence/identity-images-20261014/visual-qa.md, DevLog/20261014.txt.
+
+
 ## Sprint#5-32 — 좌우 하단 전투 HUD 적용 (2026-10-14)
 
 - 브랜치: Sprint#5-32-split-combat-hud. 기존 Sprint#5-31 원본과 미커밋 작업 보존.
@@ -1854,3 +2193,75 @@
 - 추가 검증: HEAD 추적 파일+스테이징 HUD 소스7개만 있는 독립 Editor 빌드와 최종 QA 파일 재컴파일·링크 성공. 독립 범위/종료 보호 검토 미해결0.
 - 상태: 사용자 승인에 따라 이 작업 브랜치의 커밋과 일반 원격 푸시를 진행한다. Sprint는 main 병합 전이므로5를 유지한다.
 - 파일 목록/검증: Feature/doc/evidence/split-hud-20261014/commit-files.txt, commit-clean-build.log, commit-clean-build-final.log.
+
+## Sprint#5-33 — 중앙 확장형 혼합 성장 스킬트리 설계 (2026-10-18)
+
+- 브랜치: `Sprint#5-33-hybrid-skill-tree-design`. 기존 Sprint#5-32 체크아웃과 미커밋 작업을 유지하며 새 로컬 브랜치로 전환했다.
+- 목표: 사용자 참조 이미지의 중앙→아이덴티티·기본기→핵심 기술 구조와 격투 숙련·레벨업 포인트 혼합 성장 규칙을 설계한다.
+- 주요 변경: D1~D4 패킷, 기존 초기5기술 보존과9잠금 무공의 숙련/스탯 경로 제안, 아이덴티티 입문1P·일부 심화2P 또는 숙련 성장·성질2P·양부모 공명, 특성 공유 포인트 원장, 일회 보상·활성1계열·재분배/저장 이전 정책. 대표 정권 경로 클릭 구조도와 참조/검토 증거.
+- 검증: 독립 조사·최종 설계 검토 미해결0, 단계/선행·스탯/XP·포인트 산술, 구조도19노드·736/320/다크/터치 선택·요약·넘침/겹침/스크립트 오류0, 원본 참조SHA일치, Harness 경로 통과. 문서/로그 공백·링크와 기존 변경 보존 확인.
+- 상태: Pre-production 설계·검토·문서 완료. 실제 C++/원형UMG/노드DataAsset/숙련XP/공유 원장/새 저장·밸런스 검증은 후속 Production. 소스·설정·Unreal 바이너리·생산 저장 변경 없음, Editor 빌드 미실행. 커밋·푸시 없음, Sprint5 유지.
+- 관련: [설계](HybridSkillTreeDesign.md), [계획](../Feature/architect/2026-10-18_hybrid-skill-tree-design.md), [결과](../Feature/doc/2026-10-18_hybrid-skill-tree-design.md), [검토](../Feature/doc/evidence/hybrid-skill-tree-20261018/review.md), [일일 로그](../DevLog/20261018.txt).
+
+### imagegen 화면 시안 추가 (2026-10-18)
+
+- 목표: 사용자 후속 요청에 따라 확정 성장 규칙을 실제 화면 형태의 이미지로 보여준다.
+- 주요 변경: D5 패킷, built-in 참조 생성1회·상태/글자 교정1회, 흑철·황동 방사형 트리의 최종PNG와 두 프롬프트 보존. LV4/M12·내공 심화0P·잔액0P·활성내공·미래기술/공명잠금 표시.
+- 검증: 최종 이미지 시각 검토·PNG 치수·생성 원본과 복사SHA 일치. 첫 출력의M9 스태미나/비활성입문 상태·일부 기술명 교정. 일부 중간 노드는 대표 표현으로 생략함.
+- 상태: 화면 시안 제작 완료. 실제 원형UMG/공유 원장/숙련 시스템 구현은 후속 범위. 기존 브랜치 유지, 커밋·푸시 없음.
+- 관련: [최종 이미지](../Feature/doc/evidence/hybrid-skill-tree-20261018/imagegen-mockup-v2.png), [생성 프롬프트](../Feature/doc/evidence/hybrid-skill-tree-20261018/imagegen-prompt-v1.txt), [교정 프롬프트](../Feature/doc/evidence/hybrid-skill-tree-20261018/imagegen-prompt-v2.txt).
+
+### 격투가 아이덴티티 내공·투지 확정 (2026-10-18)
+
+- 목표: 사용자 확정에 따라 격투가는 내공·투지만 사용하도록 설계와 최신 이미지 시안을 정리한다.
+- 주요 변경: 격투가의 마나 표/성질/산식 제거, 직업 허용 목록 검증 명시, built-in 편집1회로마나 가지를 제거한v3 PNG·프롬프트 보존. 포인트/숙련 혼합 해금과활성1계열 정책 유지.
+- 검증: 상세 설계와v3 이미지의내공·투지 두계열 대조, 기존성장/잔액/수련0P유지, 생성원본/복사SHA동일, 문서공백·링크/생성경로검사.
+- 상태: 설계·최신화면시안수정완료. 기존HTML·v2는변경전기록, 실제런타임구현후속. 기존브랜치유지·커밋/푸시없음.
+- 관련: [설계](HybridSkillTreeDesign.md), [현재v3 이미지](../Feature/doc/evidence/hybrid-skill-tree-20261018/imagegen-mockup-v3.png), [현재 편집 프롬프트](../Feature/doc/evidence/hybrid-skill-tree-20261018/imagegen-prompt-v3.txt), [일일 로그](../DevLog/20261018.txt).
+
+## Sprint#5-34 — Unreal MCP 설치 스킬 Epic 최신 원본 보완 (2026-10-19)
+
+- 브랜치: `Sprint#5-34-unreal-skill-upstream-sync`. 기존 Sprint#5-33과 미커밋 작업 보존, main 병합 전이므로 Sprint5 유지.
+- 목표: 설치된 개인 Codex Unreal MCP 스킬과 Epic 최신 원본을 비교하고 누락 지침을 Codex 방식으로 반영한다.
+- 주요 변경: Epic 3.1.1/a6aa73ad 기준 Markdown 9개 보완. AllToolsets/provider, proxy status·catalog·복구, 독립 호출 병렬/의존 순차, native dispatch, toolset async/타입/테스트, Agent Skill class path·저장, 실제 설치 경로와 Saved/커밋 규칙, 원본 대응표.
+- 검증: candidate/설치본 공식 구조 검사·설치 전용 검사, 참조15·예제3·스크립트 AST/YAML/MIT 대조, 독립6사례·timeout 모호성1건 수정/재확인, 설치20파일 SHA256·파일 수 확인, 생성 경로/문서 검사 통과.
+- 상태: 비교·보완·개인 설치 반영·정적/행동 검토·문서 완료. 원본20파일 로컬 백업 보존. 8001·자동 호출·runner8·MIT·기존 프로젝트 변경 유지. 실제 엔진에는 proxy가 없어 라이브 MCP/PIE/빌드·품질 향상은 검증하지 않음. 커밋·푸시 없음.
+- 관련: [계획](../Feature/architect/2026-10-19_unreal-skill-upstream-sync.md), [결과](../Feature/doc/2026-10-19_unreal-skill-upstream-sync.md), [검토](../Feature/doc/evidence/unreal-skill-sync-20261019/review.md), [일일 로그](../DevLog/20261019.txt).
+
+## Sprint#5-35 — Unreal MCP 플러그인 직접 설정 (2026-10-19)
+
+- 브랜치: `Sprint#5-35-unreal-plugin-setup`. 기존 Sprint#5-34와 미커밋 작업 보존, main 병합 전이므로 Sprint5 유지.
+- 목표: 현재 설치 스킬에 필요한 Unreal 플러그인과 에디터 설정을 직접 보완하고 실제 연결을 확인한다.
+- 주요 변경: LiveCodingToolset Editor 한정 활성, 공식 설정 API의 Live Coding 활성·저장, tracked LiveCoding 기본값 추가. 기존 MCP/AllToolsets·8001 자동 시작/search·AIAssistant 비활성·Codex config 보존.
+- 검증: DLL/BuildId 55116800·의존성·Editor 제한 독립 검토, 실제 loopback8001/필수3플러그인/53toolset·3meta/CompileLiveCoding schema, settings·PIE/Entry 조회, 소유 에디터 정상 재시작 후 LiveCoding=True와 MCP4설정 유지, 문서/생성 경로 검사.
+- 상태: 플러그인·기능 활성·지속성·실제 MCP 연결·독립 검토·문서 완료. 에디터 실행 중, compile/게임 빌드/PIE/패키징 미실행. native 도구 목록은 필요 시 Codex 기존 연결 재연결. 커밋·푸시 없음.
+- 관련: [계획](../Feature/architect/2026-10-19_unreal-plugin-setup.md), [결과](../Feature/doc/2026-10-19_unreal-plugin-setup.md), [가이드](UE58MCPSetup.md), [검토](../Feature/doc/evidence/unreal-plugin-setup-20261019/review.md), [일일 로그](../DevLog/20261019.txt).
+
+## Sprint#5-36 — Fab 보유 에셋 우선 재사용 원칙 (2026-10-19)
+
+- 브랜치: `Sprint#5-36-fab-owned-asset-reuse`. 기존 미커밋 작업과 Sprint5 번호 유지.
+- 목표: 사용자 보유 Fab 에셋을 우선 활용하도록 실제 목록과 프로젝트 자원을 대조하고 개발 지침에 저장한다.
+- 주요 변경: Fab 내 라이브러리 최신순 일부/Combat/Monster 카드30개와 로컬 주요8팩 조사. AGENTS 재사용 규칙, 영역별 후보·기존 계약 보존·선별 반입/검증 가이드, 출처/현재 상태 구분과 부분 조사 기록.
+- 검증: 실제 런처 화면 확인·독립 로컬 조사/문서 검토, JSON/문서 링크·기존 로그/프로젝트 변경 보존·생성 경로 검사.
+- 상태: 조사·상시 지침·활용 가이드·기록 완료. 전체 보유 목록·버전/라이선스·실제 적용은 미검증. 구매/다운로드/설치/import·게임 소스/설정·빌드/PIE 변경 없음. 사용자 런처 입력 감지 후 추가 조작 중단, 커밋·푸시 없음.
+- 관련: [가이드](FabAssetReuseGuide.md), [계획](../Feature/architect/2026-10-19_fab-owned-asset-reuse.md), [결과](../Feature/doc/2026-10-19_fab-owned-asset-reuse.md), [보유 카드 기록](../Feature/doc/evidence/fab-owned-assets-20261019/launcher-observations.json), [일일 로그](../DevLog/20261019.txt).
+
+### Sprint#5-36 후속 — 기본 애니메이션·VFX 편집 우선 (2026-10-19)
+
+- 목표: 기본 동작·효과 제작을 보유 에셋 수정/편집 중심으로 구체화한다.
+- 주요 변경: AGENTS와 활용 가이드에 파생본 편집 기본 경로, 애니메이션/효과별 조정 범위와 원본·카메라·판정 보존, 새 제작이 필요한 경우의 이유 기록을 추가했다.
+- 검증/상태: 문서 검토·경로/공백 검사, 선호 반영 완료. 실제 에셋·소스·설정·빌드/PIE 변경 없음, 같은 작업 브랜치·기존 변경 보존, 커밋·푸시 없음.
+- 관련: Docs/FabAssetReuseGuide.md, Feature/architect/2026-10-19_fab-owned-asset-reuse.md, Feature/doc/2026-10-19_fab-owned-asset-reuse.md, DevLog/20261019.txt.
+
+## Sprint#5-37 — 현재 상태 main 통합과 완료 후 자동 병합 (2026-10-20)
+
+- 브랜치: `Sprint#5-37-main-checkpoint`. 원격 확인 후 기존 누적 변경을 유지하며 통합 전용 작업 브랜치를 만들었다.
+- 목표: 현재 상태를 main에 커밋·푸시하고, 이후 기능 완료마다 main까지 통합하는 사용자 상시 승인을 저장한다.
+- 주요 변경: 누적 Sprint5 게임/에셋/도구/설계/증거의 스냅샷, AGENTS·Git/Lazy 규칙 보완, P1 조사·P2 검증·P3 게시 패킷과 한국어 기록. 이번 통합에서 새로운 게임 동작은 구현하지 않는다.
+- 검증: 원격 브랜치 일치/조상 관계·파일 크기/고신뢰 자격 증명·생성 경로 조사, 프로젝트 파일 생성 성공(16.47초). Editor 빌드·스테이징 검사와 원격 게시 결과는 완료 전에 아래에 추가한다.
+- 상태: 현재 검증·게시 진행 중. main 병합 성공 후 Sprint5 종료, 다음 기능은 `Sprint#6-1-...`.
+- 관련: [계획](../Feature/architect/2026-10-20_main-checkpoint.md), [결과](../Feature/doc/2026-10-20_main-checkpoint.md), [증거](../Feature/doc/evidence/main-checkpoint-20261020/), [일일 로그](../DevLog/20261020.txt).
+
+### Sprint#5-37 검증 완료
+
+- 프로젝트 생성16.47초·전체 Editor 빌드144.03초/77 actions 성공, 격리 Write/Read 통합 QA 실패0·exit0, 생성 경로/활성 파일 공백 검사 통과. 기존 증거 원문 공백 보존과 캐릭터 교체 실패 저장 연결 후속 점검을 결과 문서에 명시했다. 스냅샷 커밋·승격·원격 게시 준비 완료.

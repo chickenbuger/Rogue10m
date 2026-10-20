@@ -1,0 +1,111 @@
+{
+  "status": "durable_source_ready_requires_actual_blender_review",
+  "source": "D:\\Project\\Rogue10m\\Scripts\\Blender\\ArinBodyRefined.py",
+  "source_sha256": "41db5ab4737105f7f94f583d81028fa77f2bc246c55996bc58f7cb8a23ded30c",
+  "preserved_v1_source": "D:\\Project\\Rogue10m\\Scripts\\Blender\\ArinBody.py",
+  "preserved_v1_sha256": "2de1c3bc7b93a7af8e3b002fe512cc13a8dd03172a2d2547807d84030d5deeea",
+  "contract": {
+    "Z_up": true,
+    "front": "-Y",
+    "units": "metres",
+    "adult_height_m": 1.7,
+    "body_max_z_m": 1.455,
+    "feet_z_m": 0,
+    "body_triangles_max": 30000,
+    "same_23_bone_contract": true,
+    "existing_material_keys_only": true,
+    "projection_textures": false
+  },
+  "reference_evidence": [
+    "Feature/doc/evidence/start-hub-tutorial-npc-image-20261005/arin-concept-v1.png",
+    "Feature/doc/evidence/arin-blender-20261007/arin-oblique.png",
+    "Feature/doc/evidence/arin-quality-20261007/reference/arin-refinement-v2.png"
+  ],
+  "source_metrics": {
+    "objects": 131,
+    "vertices": 15137,
+    "triangles": 29706,
+    "bounds_min": [
+      -0.7930397397754977,
+      -0.15199558249159958,
+      0.0
+    ],
+    "bounds_max": [
+      0.7930397397754977,
+      0.17387362176955484,
+      1.455
+    ]
+  },
+  "primitive_checks": {
+    "closed_meshes": true,
+    "finite_vertices": true,
+    "zero_degenerate_triangles": true,
+    "nonzero_edges": true,
+    "min_edge_metres": 8.211166640361798e-05,
+    "consistent_face_winding": true,
+    "deforming_ngons": 0,
+    "trouser_connected_components": 1,
+    "trouser_signed_volume_m3": 0.012808956414345818,
+    "fingers_per_hand": 5,
+    "modeled_nails": 10,
+    "red_potion_count": 2,
+    "mantle_x_extent_below_elbow": true,
+    "material_and_existing_region_bone_tags": true,
+    "no_new_material_keys": true,
+    "body_triangle_budget": true
+  },
+  "changes": [
+    {
+      "area": "pelvis_and_trousers",
+      "baseline": "Separate capped pelvis and leg volumes; seat/inseam hidden by tunic in the baseline oblique view.",
+      "repair": "Two 24-edge leg loops join inner semicircles to a five-column quad saddle; outer semicircles plus saddle front/back edges make one 32-edge waist boundary. No centre caps.",
+      "binding": "arin_region=leg_l plus approved arin_bilateral_legs=True; refined root binder chooses left/right from vertex X and pelvis near |X|<.045,Z>.9. Same 23 bones.",
+      "evidence": "single connected closed outward-wound trouser volume; live hip/knee deformation still pending"
+    },
+    {
+      "area": "mantle",
+      "baseline": "Squared separate front shoulder panels visible in original oblique render.",
+      "repair": "One curved sewn neck/shoulder/back mantle with a front opening, soft radial contour and deep back drape. Extent remains under .23m on X, separate from arms.",
+      "evidence": "closed-shell geometry checked; neutral/idle shoulder fit render pending"
+    },
+    {
+      "area": "garment_drape",
+      "baseline": "Limited broad garment folds; straight tunic hem in original oblique render.",
+      "repair": "Radial shoulder/elbow cloth tension folds, gathered sleeve rings, directional falling tunic folds and weighted hem contour.",
+      "evidence": "real vertex displacement, preserved elbow .43/wrist .651 and body height; fixed-camera visual comparison pending"
+    },
+    {
+      "area": "hands",
+      "baseline": "Uniform-looking digit tubes and simple thumb/palm transition in original oblique render.",
+      "repair": "Rounded dorsal/palmar planes, thenar volume, varying knuckle/phalange taper, opposed thumb trajectory and ten modeled nail beds.",
+      "binding": "hand_l/hand_r only; no individual finger bones or independently animated gripping claim.",
+      "evidence": "five separate digits per hand, closed nail geometry and wrist/fingertip bounds checked; skin-atlas nail appearance and close-up fit pending"
+    },
+    {
+      "area": "boots",
+      "baseline": "Round narrow shaft and simple oval toe/heel silhouette.",
+      "repair": "Narrower heel, anatomically offset tapered toe, sloping instep, extra ankle compression rings and seam following the deformed surface.",
+      "evidence": "sole vertices remain Z=0; knee/ankle rig invariants preserved; side/top boot review pending"
+    },
+    {
+      "area": "satchel",
+      "baseline": "Bulbous lofted pouch with shiny continuous gold seam lines.",
+      "repair": "Rounded panel cross-section, fitted dark side gusset, thick curved flap, contour-derived sewn stitches and restrained dark edge piping. Bag/potion assembly shifts 6mm outward for garment clearance.",
+      "evidence": "closed volumes and two potion identities checked; multiview clipping/contact review pending"
+    }
+  ],
+  "scope_notes": [
+    "Layered blouse/sleeve pieces remain fitted separate garment components; this pass does not claim a welded full-body skin mesh.",
+    "Skin, UV and PBR atlas/material generation owned by root assembly.",
+    "Hand bones support whole-hand posing only.",
+    "Mock geometry checks are source-level measurements, not Blender/export/runtime validation."
+  ],
+  "pending_live_checks": [
+    "fixed neutral front/back/left/right/top/oblique images",
+    "hand/thumb/nail close-ups",
+    "waist/crotch and shoulder deformation views",
+    "hip/knee/elbow bend, reach and idle frames",
+    "fresh FBX import with 170cm/weights/material/idle validation"
+  ],
+  "decision": "source_ready_not_visually_accepted"
+}

@@ -30,6 +30,10 @@ public:
 	bool ExecuteBehaviorDecision();
 	void NotifyDamageStimulus(AActor* SourceActor, float DamageAmount);
 	void StopMonsterAI();
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Monster AI")
+	bool IsMonsterAIEnabled() const { return bAIEnabled; }
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Monster AI")
+	ARogue10mCharacter* GetCombatTarget() const { return GetBlackboardTarget(); }
 
 	static const FName TargetActorKey;
 	static const FName HomeLocationKey;
@@ -81,4 +85,5 @@ private:
 	double LastTargetSenseTime = -1.0;
 	double NextPatrolMoveTime = 0.0;
 	bool bWaitingForPatrolArrival = false;
+	bool bAIEnabled = false;
 };

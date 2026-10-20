@@ -48,6 +48,6 @@ private:
 	UPROPERTY(Transient)
 	FText LastError;
 
-	static const FString SaveSlotName;
+	FString SaveSlotName = TEXT("Rogue10mCharacterProfiles");
 	static constexpr int32 SaveUserIndex = 0;
 };

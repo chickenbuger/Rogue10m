@@ -28,7 +28,7 @@ public class Rogue10m : ModuleRules
 		});
 		if (Target.bBuildEditor)
 		{
-			PrivateDependencyModuleNames.AddRange(new string[] { "MeshDescription", "SkeletalMeshDescription", "UnrealEd" });
+			PrivateDependencyModuleNames.AddRange(new string[] { "MeshDescription", "SkeletalMeshDescription", "UnrealEd", "Landscape", "Json", "AnimGraph", "AnimGraphRuntime", "BlueprintGraph", "KismetCompiler" });
 		}
 		PublicIncludePaths.AddRange(new string[] {
 			"Rogue10m",

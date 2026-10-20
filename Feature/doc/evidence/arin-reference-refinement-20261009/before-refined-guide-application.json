@@ -1,0 +1,93 @@
+{
+  "data": "/Game/Rogue10m/World/StartVillage/Tutorial/DA_StartVillageGuide",
+  "blueprint": "/Game/Rogue10m/World/StartVillage/Tutorial/BP_StartVillageGuide",
+  "protected_data": {
+    "guide_name": "길잡이 아린",
+    "guide_role": "모험가 안내 · 출발 보급",
+    "welcome_text": "어서 오세요. 마을에서는 천천히 준비해도 괜찮아요. 북쪽 포탈을 지나면 20분 탐험이 시작됩니다. 출발 전에 회복 물약을 챙겨 드릴게요.",
+    "reward_received_text": "보급품을 가방에 넣어 드렸어요. I를 눌러 인벤토리에서 확인하세요. 준비되면 북쪽 포탈로 출발해 보세요.",
+    "reward_already_received_text": "이번 출발 보급품은 이미 받으셨어요. 장비는 I, 기술은 K로 확인할 수 있어요. 북쪽 포탈을 지나면 탐험이 시작됩니다.",
+    "reward_id": "StartVillageSupplies",
+    "starting_item": "/Game/DataAsset/Item/Starter/DA_Item_HealthPotion.DA_Item_HealthPotion",
+    "starting_item_quantity": 2
+  },
+  "appearance": {
+    "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin.SK_Arin",
+    "idle": "/Game/Rogue10m/Characters/Arin/RefinedV2/ArinIdle.ArinIdle"
+  },
+  "cdo_data": "/Game/Rogue10m/World/StartVillage/Tutorial/DA_StartVillageGuide.DA_StartVillageGuide",
+  "cdo_component": {
+    "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin.SK_Arin",
+    "animation": "/Game/Rogue10m/Characters/Arin/RefinedV2/ArinIdle.ArinIdle",
+    "animation_mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>",
+    "looping": true,
+    "playing": true,
+    "relative_location": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "relative_rotation": [
+      0.0,
+      0.0,
+      -90.0
+    ],
+    "relative_scale": [
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "actor_component": {
+    "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin.SK_Arin",
+    "animation": "/Game/Rogue10m/Characters/Arin/RefinedV2/ArinIdle.ArinIdle",
+    "animation_mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>",
+    "looping": true,
+    "playing": true,
+    "relative_location": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "relative_rotation": [
+      0.0,
+      0.0,
+      -90.0
+    ],
+    "relative_scale": [
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "actor_protected": {
+    "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.BP_StartVillageGuide_C_UAID_244BFE8DA9DF3C0803_1304239839",
+    "label": "SV_TutorialGuide_Arin",
+    "class": "/Game/Rogue10m/World/StartVillage/Tutorial/BP_StartVillageGuide.BP_StartVillageGuide_C",
+    "data": "/Game/Rogue10m/World/StartVillage/Tutorial/DA_StartVillageGuide.DA_StartVillageGuide",
+    "location": [
+      440.0,
+      -1610.0,
+      2.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      -90.0
+    ],
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "tags": [
+      "Rogue10m.StartVillage",
+      "TutorialGuide"
+    ],
+    "folder": "StartVillage/Gameplay",
+    "spatially_loaded": false,
+    "interaction_radius": 320.0,
+    "detection_radius": 650.0
+  },
+  "actor_package": "/Game/__ExternalActors__/Rogue10m/Maps/StartHub/5/TO/W83RIU01UF417URBGM9BBZ"
+}

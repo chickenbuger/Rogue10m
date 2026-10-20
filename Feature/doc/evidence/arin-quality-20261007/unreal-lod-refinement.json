@@ -1,0 +1,115 @@
+{
+  "status": "generated_requires_visual_review",
+  "source_hashes": {
+    "Arin.RefinedFBXSHA256": "aa4298d51a6917f245f4be4f9c1dca3ae739ec80d7d4fb44b3157a0a2b8979c3",
+    "Arin.SurfaceManifestSHA256": "ac36ca632a2bbf5f126236e273324c229a1b741fc07459190dec69189c3b9a12",
+    "Arin.TextureBundleSHA256": "e116bf2806999b94020dbf0a537ac7e73f3a7dff2d8b571d20a526e698048b73"
+  },
+  "reason": "Actual initial .25/.125 reduction exposed ivory garment patches and lost eye detail",
+  "before": {
+    "count": 3,
+    "metrics": [
+      {
+        "index": 0,
+        "vertices": 40211,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 1.0,
+        "reduction_base_lod": 0,
+        "lock_edges": false,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 1,
+        "vertices": 13555,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 0.25,
+        "reduction_base_lod": 0,
+        "lock_edges": false,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 2,
+        "vertices": 7803,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 0.125,
+        "reduction_base_lod": 0,
+        "lock_edges": false,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      }
+    ],
+    "generation": "SkeletalMeshEditorSubsystem.regenerate_lod; imported LOD0 preserved",
+    "lod0_regeneration": false,
+    "requested_ratios": [
+      1.0,
+      0.25,
+      0.125
+    ],
+    "same_skeleton_and_materials": true,
+    "visual_review_required": true,
+    "runtime_triangle_count_limitation": "Exact runtime triangles need a separate exposed render-data/export inspection; do not infer them from vertices or reduction targets."
+  },
+  "after": {
+    "count": 3,
+    "metrics": [
+      {
+        "index": 0,
+        "vertices": 40211,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 1.0,
+        "reduction_base_lod": 0,
+        "lock_edges": false,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 1,
+        "vertices": 35681,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 0.8500000238418579,
+        "reduction_base_lod": 0,
+        "lock_edges": true,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 2,
+        "vertices": 28851,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 0.6499999761581421,
+        "reduction_base_lod": 0,
+        "lock_edges": true,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      }
+    ],
+    "generation": "SkeletalMeshEditorSubsystem.regenerate_lod; imported LOD0 preserved",
+    "lod0_regeneration": false,
+    "requested_ratios": [
+      1.0,
+      0.8500000238418579,
+      0.6499999761581421
+    ],
+    "same_skeleton_and_materials": true,
+    "visual_review_required": true,
+    "runtime_triangle_count_limitation": "Exact runtime triangles need a separate exposed render-data/export inspection; do not infer them from vertices or reduction targets."
+  },
+  "lod0_vertices_unchanged": true,
+  "shared_skeleton_unchanged": true,
+  "guide_properties_unchanged": true,
+  "modified_and_saved_only": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin"
+}

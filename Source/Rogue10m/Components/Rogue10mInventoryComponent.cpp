@@ -5,11 +5,14 @@
 #include "Rogue10m.h"
 
 #include "Rogue10mCharacter.h"
+#include "Rogue10mTraitRuntimeComponent.h"
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mDroppedItem.h"
 #include "Rogue10mItemDataAsset.h"
 #include "Rogue10mPlayerController.h"
 #include "Engine/World.h"
+#include "Engine/GameInstance.h"
+#include "Rogue10mTutorialSupplySubsystem.h"
 
 URogue10mInventoryComponent::URogue10mInventoryComponent()
 {
@@ -108,6 +111,8 @@ FRogue10mEquipmentStatModifiers URogue10mInventoryComponent::GetEquipmentStatMod
 				&& Slot.EquippedItem.ItemData)
 			{
 				Total.Accumulate(Slot.EquippedItem.ItemData->EquipmentStats);
+				Total.AttackPowerBonus += Slot.EquippedItem.EnhancementAttackBonus;
+				Total.DefenseBonus += Slot.EquippedItem.EnhancementDefenseBonus;
 			}
 		}
 	};
@@ -209,7 +214,19 @@ void URogue10mInventoryComponent::BeginPlay()
 			}
 			if (bRemovedEquippedStarterFromGrid)
 			{
-				OnInventoryGridChanged.Broadcast();
+				NotifyGridChanged();
+			}
+		}
+	}
+	// Only the guide's tracked supply stack crosses the existing hard-travel portal.
+	// Keep general inventory ownership and prototype initialization unchanged.
+	if (GetWorld() && GetWorld()->GetNetMode() == NM_Standalone && Cast<ARogue10mCharacter>(GetOwner()))
+	{
+		if (UGameInstance* Instance = GetWorld()->GetGameInstance())
+		{
+			if (URogue10mTutorialSupplySubsystem* Supplies = Instance->GetSubsystem<URogue10mTutorialSupplySubsystem>())
+			{
+				Supplies->AttachInventory(*this);
 			}
 		}
 	}
@@ -258,6 +275,7 @@ FRogue10mItemStack URogue10mInventoryComponent::MakeItemFromDataAsset(const URog
 		Quantity,
 		ItemData->InventoryTint);
 	Item.ItemData = ItemData;
+	Item.InstanceId = FGuid::NewGuid();
 	Item.WeaponType = ItemData->WeaponType;
 	Item.RestoreHealth = FMath::Max(0.0f, ItemData->RestoreHealth);
 	return Item;
@@ -473,6 +491,7 @@ bool URogue10mInventoryComponent::TryMoveItemSlot(int32 SourceItemSlotIndex, int
 		if (Assigned == SourceItemSlotIndex) Assigned = TargetItemSlotIndex;
 		else if (Assigned == TargetItemSlotIndex) Assigned = SourceItemSlotIndex;
 	}
+	OnInventoryChanged.Broadcast();
 	return true;
 }
 
@@ -492,6 +511,7 @@ bool URogue10mInventoryComponent::RemoveItemFromSlot(int32 ItemSlotIndex, FRogue
 	OutRemovedItem = SourceItem;
 	SourceItem = MakeEmptyItem();
 	ClearQuickSlotAssignmentsForItemSlot(ItemSlotIndex);
+	OnInventoryChanged.Broadcast();
 	return true;
 }
 
@@ -527,14 +547,30 @@ bool URogue10mInventoryComponent::AssignConsumableToQuickSlot(int32 ItemSlotInde
 	const FRogue10mItemStack& Item=ItemSlots[ItemSlotIndex];
 	if (!Item.bOccupied || Item.bLocked || Item.Category!=ERogue10mItemCategory::Consumable || Item.Quantity<=0) return false;
 	for (int32& Assigned:ConsumableQuickSlotItemIndices) if (Assigned==ItemSlotIndex) Assigned=INDEX_NONE;
-	ConsumableQuickSlotItemIndices[QuickSlotIndex]=ItemSlotIndex; ConsumableQuickSlotCooldownEndTimes[QuickSlotIndex]=0.0f; return true;
+	ConsumableQuickSlotItemIndices[QuickSlotIndex]=ItemSlotIndex; ConsumableQuickSlotCooldownEndTimes[QuickSlotIndex]=0.0f; OnInventoryChanged.Broadcast(); return true;
 }
-bool URogue10mInventoryComponent::UnassignConsumableQuickSlot(int32 Index){if(!ConsumableQuickSlotItemIndices.IsValidIndex(Index))return false;const bool b=ConsumableQuickSlotItemIndices[Index]!=INDEX_NONE;ConsumableQuickSlotItemIndices[Index]=INDEX_NONE;ConsumableQuickSlotCooldownEndTimes[Index]=0;return b;}
-bool URogue10mInventoryComponent::MoveConsumableQuickSlot(int32 A,int32 B){if(!ConsumableQuickSlotItemIndices.IsValidIndex(A)||!ConsumableQuickSlotItemIndices.IsValidIndex(B)||A==B)return false;Swap(ConsumableQuickSlotItemIndices[A],ConsumableQuickSlotItemIndices[B]);Swap(ConsumableQuickSlotCooldownEndTimes[A],ConsumableQuickSlotCooldownEndTimes[B]);return true;}
+bool URogue10mInventoryComponent::UnassignConsumableQuickSlot(int32 Index){if(!ConsumableQuickSlotItemIndices.IsValidIndex(Index))return false;const bool b=ConsumableQuickSlotItemIndices[Index]!=INDEX_NONE;ConsumableQuickSlotItemIndices[Index]=INDEX_NONE;ConsumableQuickSlotCooldownEndTimes[Index]=0;if(b){OnInventoryChanged.Broadcast();}return b;}
+bool URogue10mInventoryComponent::MoveConsumableQuickSlot(int32 A,int32 B){if(!ConsumableQuickSlotItemIndices.IsValidIndex(A)||!ConsumableQuickSlotItemIndices.IsValidIndex(B)||A==B)return false;Swap(ConsumableQuickSlotItemIndices[A],ConsumableQuickSlotItemIndices[B]);Swap(ConsumableQuickSlotCooldownEndTimes[A],ConsumableQuickSlotCooldownEndTimes[B]);OnInventoryChanged.Broadcast();return true;}
 int32 URogue10mInventoryComponent::GetConsumableQuickSlotInventoryIndex(int32 Index) const{return ConsumableQuickSlotItemIndices.IsValidIndex(Index)?ConsumableQuickSlotItemIndices[Index]:INDEX_NONE;}
 FRogue10mItemStack URogue10mInventoryComponent::GetConsumableQuickSlotItem(int32 Index) const{const int32 I=GetConsumableQuickSlotInventoryIndex(Index);return ItemSlots.IsValidIndex(I)?ItemSlots[I]:MakeEmptyItem();}
 float URogue10mInventoryComponent::GetConsumableQuickSlotCooldownRemaining(int32 Index) const{return ConsumableQuickSlotCooldownEndTimes.IsValidIndex(Index)&&GetWorld()?FMath::Max(0.f,ConsumableQuickSlotCooldownEndTimes[Index]-GetWorld()->GetTimeSeconds()):0.f;}
-bool URogue10mInventoryComponent::UseConsumableQuickSlot(int32 Index){const int32 I=GetConsumableQuickSlotInventoryIndex(Index);if(!ItemSlots.IsValidIndex(I)||GetConsumableQuickSlotCooldownRemaining(Index)>0)return false;FRogue10mItemStack& Item=ItemSlots[I];if(!Item.bOccupied||Item.Category!=ERogue10mItemCategory::Consumable||Item.Quantity<=0)return false;if(ARogue10mCharacter* Ch=Cast<ARogue10mCharacter>(GetOwner()))if(URogue10mAttributeSet* A=Ch->GetRogueAttributeSet())A->SetHealth(FMath::Min(A->GetMaxHealth(),A->GetHealth()+Item.RestoreHealth));ConsumableQuickSlotCooldownEndTimes[Index]=GetWorld()?GetWorld()->GetTimeSeconds()+Item.UseCooldown:0;--Item.Quantity;if(Item.Quantity<=0){Item=MakeEmptyItem();ClearQuickSlotAssignmentsForItemSlot(I);}return true;}
+bool URogue10mInventoryComponent::UseConsumableQuickSlot(int32 Index)
+{
+	ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner());
+	URogue10mAttributeSet* Attributes = Character ? Character->GetRogueAttributeSet() : nullptr;
+	const int32 ItemIndex = GetConsumableQuickSlotInventoryIndex(Index);
+	if (!Character || !Character->HasAuthority() || Character->IsDead() || !Attributes || Attributes->GetHealth() <= 0.0f
+		|| !ItemSlots.IsValidIndex(ItemIndex) || GetConsumableQuickSlotCooldownRemaining(Index) > 0.0f) { return false; }
+	FRogue10mItemStack& Item = ItemSlots[ItemIndex];
+	if (!Item.bOccupied || Item.Category != ERogue10mItemCategory::Consumable || Item.Quantity <= 0) { return false; }
+	const URogue10mTraitRuntimeComponent* Traits = Character->GetTraitRuntimeComponent();
+	const float RestoreHealth = FMath::Max(0.0f, Item.RestoreHealth) * (Traits ? Traits->GetPotionHealingMultiplier() : 1.0f);
+	Attributes->SetHealth(FMath::Min(Attributes->GetMaxHealth(), Attributes->GetHealth() + RestoreHealth));
+	ConsumableQuickSlotCooldownEndTimes[Index] = GetWorld() ? GetWorld()->GetTimeSeconds() + Item.UseCooldown : 0.0f;
+	if (--Item.Quantity <= 0) { Item = MakeEmptyItem(); ClearQuickSlotAssignmentsForItemSlot(ItemIndex); }
+	OnInventoryChanged.Broadcast();
+	return true;
+}
 void URogue10mInventoryComponent::ClearQuickSlotAssignmentsForItemSlot(int32 ItemIndex){for(int32 I=0;I<ConsumableQuickSlotItemIndices.Num();++I)if(ConsumableQuickSlotItemIndices[I]==ItemIndex)UnassignConsumableQuickSlot(I);}
 FRogue10mInventorySlot* URogue10mInventoryComponent::FindEquipmentSlot(ERogue10mInventorySlotType SlotType)
 {
@@ -564,6 +600,138 @@ void URogue10mInventoryComponent::NotifyEquipmentChanged()
 		Character->RefreshCharacterStats();
 	}
 	OnEquipmentChanged.Broadcast();
+	OnInventoryChanged.Broadcast();
+}
+
+void URogue10mInventoryComponent::NotifyGridChanged()
+{
+	OnInventoryGridChanged.Broadcast();
+	OnInventoryChanged.Broadcast();
+}
+
+void URogue10mInventoryComponent::AddGold(int32 Amount)
+{
+	if (!GetOwner() || !GetOwner()->HasAuthority() || Amount <= 0) { return; }
+	const int32 NewGold = static_cast<int32>(FMath::Min<int64>(MAX_int32, static_cast<int64>(Gold) + Amount));
+	if (NewGold == Gold) { return; }
+	Gold = NewGold;
+	OnInventoryChanged.Broadcast();
+}
+
+bool URogue10mInventoryComponent::TrySpendGold(int32 Amount)
+{
+	if (!GetOwner() || !GetOwner()->HasAuthority() || Amount <= 0 || Gold < Amount) { return false; }
+	Gold -= Amount;
+	OnInventoryChanged.Broadcast();
+	return true;
+}
+
+bool URogue10mInventoryComponent::TryPurchaseGridItem(const URogue10mItemDataAsset* ItemData,
+	int32 Quantity, int32 GoldCost)
+{
+	if (!GetOwner() || !GetOwner()->HasAuthority() || GoldCost <= 0 || Gold < GoldCost) { return false; }
+	Gold -= GoldCost;
+	int32 ContainerIndex;
+	FGuid InstanceId;
+	if (!TryAddGridItem(ItemData, Quantity, ContainerIndex, InstanceId))
+	{
+		Gold += GoldCost;
+		return false;
+	}
+	return true;
+}
+
+int32 URogue10mInventoryComponent::GetEquippedItemEnhancementLevel(ERogue10mInventorySlotType SlotType) const
+{
+	for (const TArray<FRogue10mInventorySlot>* Slots : { &LeftEquipmentSlots, &RightEquipmentSlots })
+	{
+		for (const FRogue10mInventorySlot& Slot : *Slots)
+		{
+			if (Slot.SlotType == SlotType && Slot.bHasEquippedItem && Slot.EquippedItem.bOccupied)
+			{
+				return Slot.EquippedItem.EnhancementLevel;
+			}
+		}
+	}
+	return 0;
+}
+
+bool URogue10mInventoryComponent::TryEnhanceEquippedItem(ERogue10mInventorySlotType SlotType,
+	int32 Cost, int32 MaxLevel, float AttackPerLevel, float DefensePerLevel)
+{
+	FRogue10mInventorySlot* Slot = FindEquipmentSlot(SlotType);
+	if (!GetOwner() || !GetOwner()->HasAuthority() || !Slot || Slot->bLocked || !Slot->bHasEquippedItem
+		|| !Slot->EquippedItem.bOccupied || !Slot->EquippedItem.ItemData || Slot->EquippedItem.bLocked
+		|| Slot->EquippedItem.Category != ERogue10mItemCategory::Equipment || Slot->EquippedItem.Quantity != 1
+		|| Cost <= 0 || Gold < Cost || MaxLevel <= 0 || MaxLevel > 5
+		|| Slot->EquippedItem.EnhancementLevel < 0 || Slot->EquippedItem.EnhancementLevel >= MaxLevel
+		|| !FMath::IsFinite(AttackPerLevel) || !FMath::IsFinite(DefensePerLevel)
+		|| AttackPerLevel < 0.0f || DefensePerLevel < 0.0f || AttackPerLevel > 200000.0f || DefensePerLevel > 200000.0f
+		|| !FMath::IsFinite(Slot->EquippedItem.EnhancementAttackBonus + AttackPerLevel)
+		|| !FMath::IsFinite(Slot->EquippedItem.EnhancementDefenseBonus + DefensePerLevel))
+	{
+		return false;
+	}
+	// Currency and item state commit together before observers can capture a snapshot.
+	Gold -= Cost;
+	++Slot->EquippedItem.EnhancementLevel;
+	Slot->EquippedItem.EnhancementAttackBonus += AttackPerLevel;
+	Slot->EquippedItem.EnhancementDefenseBonus += DefensePerLevel;
+	NotifyEquipmentChanged();
+	return true;
+}
+
+bool URogue10mInventoryComponent::TryAddItemStack(const FRogue10mItemStack& Stack,
+	int32& OutContainerIndex, FGuid& OutInstanceId)
+{
+	OutContainerIndex = INDEX_NONE;
+	OutInstanceId.Invalidate();
+	if (!GetOwner() || !GetOwner()->HasAuthority() || !Stack.bOccupied || !Stack.ItemData
+		|| Stack.Quantity <= 0 || Stack.Quantity > FMath::Max(1, Stack.ItemData->MaxStackSize)
+		|| Stack.EnhancementLevel < 0 || Stack.EnhancementLevel > 5 || !FMath::IsFinite(Stack.EnhancementAttackBonus)
+		|| !FMath::IsFinite(Stack.EnhancementDefenseBonus)
+		|| Stack.EnhancementAttackBonus < 0.0f || Stack.EnhancementDefenseBonus < 0.0f
+		|| Stack.EnhancementAttackBonus > 200000.0f * Stack.EnhancementLevel
+		|| Stack.EnhancementDefenseBonus > 200000.0f * Stack.EnhancementLevel)
+	{
+		return false;
+	}
+	if (Stack.InstanceId.IsValid())
+	{
+		for (const FRogue10mInventoryContainer& Container : InventoryContainers)
+		{
+			if (Container.Entries.ContainsByPredicate([&Stack](const FRogue10mInventoryGridEntry& Entry)
+				{ return Entry.InstanceId == Stack.InstanceId; })) { return false; }
+		}
+		for (const auto* Slots : { &LeftEquipmentSlots, &RightEquipmentSlots })
+		{
+			for (const auto& Slot : *Slots)
+			{
+				if (Slot.bHasEquippedItem && Slot.EquippedItem.InstanceId == Stack.InstanceId) { return false; }
+			}
+		}
+		if (ItemSlots.ContainsByPredicate([&Stack](const FRogue10mItemStack& Item)
+			{ return Item.bOccupied && Item.InstanceId == Stack.InstanceId; })) { return false; }
+	}
+	for (int32 Index = 0; Index < InventoryContainers.Num(); ++Index)
+	{
+		FIntPoint Position;
+		if (!FindFirstGridPosition(Index, Stack.ItemData, Position)) { continue; }
+		FRogue10mInventoryGridEntry Entry;
+		Entry.InstanceId = Stack.InstanceId.IsValid() ? Stack.InstanceId : FGuid::NewGuid();
+		Entry.ItemData = Stack.ItemData;
+		Entry.Quantity = Stack.Quantity;
+		Entry.Position = Position;
+		Entry.EnhancementLevel = Stack.EnhancementLevel;
+		Entry.EnhancementAttackBonus = Stack.EnhancementAttackBonus;
+		Entry.EnhancementDefenseBonus = Stack.EnhancementDefenseBonus;
+		InventoryContainers[Index].Entries.Add(Entry);
+		OutContainerIndex = Index;
+		OutInstanceId = Entry.InstanceId;
+		NotifyGridChanged();
+		return true;
+	}
+	return false;
 }
 
 const URogue10mItemDataAsset* URogue10mInventoryComponent::GetEquippedItemData(
@@ -734,7 +902,7 @@ bool URogue10mInventoryComponent::TryAddGridItem(const URogue10mItemDataAsset* I
 		InventoryContainers[ContainerIndex].Entries.Add(Entry);
 		OutContainerIndex = ContainerIndex;
 		OutInstanceId = Entry.InstanceId;
-		OnInventoryGridChanged.Broadcast();
+		NotifyGridChanged();
 		if (const ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner()))
 		{
 			if (ARogue10mPlayerController* Controller = Cast<ARogue10mPlayerController>(Character->GetController()))
@@ -787,7 +955,7 @@ bool URogue10mInventoryComponent::TryMoveGridItem(int32 SourceContainerIndex, FG
 		FRogue10mInventoryGridEntry* MutableEntry = InventoryContainers[SourceContainerIndex].Entries.FindByPredicate(
 			[InstanceId](const FRogue10mInventoryGridEntry& Entry) { return Entry.InstanceId == InstanceId; });
 		MutableEntry->Position = TargetPosition;
-		OnInventoryGridChanged.Broadcast();
+		NotifyGridChanged();
 		return true;
 	}
 
@@ -796,7 +964,7 @@ bool URogue10mInventoryComponent::TryMoveGridItem(int32 SourceContainerIndex, FG
 	InventoryContainers[SourceContainerIndex].Entries.RemoveAll(
 		[InstanceId](const FRogue10mInventoryGridEntry& Entry) { return Entry.InstanceId == InstanceId; });
 	InventoryContainers[TargetContainerIndex].Entries.Add(MoveTemp(MovedEntry));
-	OnInventoryGridChanged.Broadcast();
+	NotifyGridChanged();
 	return true;
 }
 
@@ -811,8 +979,10 @@ bool URogue10mInventoryComponent::TryUseGridConsumable(int32 ContainerIndex, FGu
 
 	ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner());
 	URogue10mAttributeSet* Attributes = Character ? Character->GetRogueAttributeSet() : nullptr;
-	const float RestoreHealth = FMath::Max(0.0f, Entry->ItemData->RestoreHealth);
-	if (!Attributes || RestoreHealth <= 0.0f || Attributes->GetHealth() >= Attributes->GetMaxHealth())
+	const URogue10mTraitRuntimeComponent* Traits = Character ? Character->GetTraitRuntimeComponent() : nullptr;
+	const float RestoreHealth = FMath::Max(0.0f, Entry->ItemData->RestoreHealth) * (Traits ? Traits->GetPotionHealingMultiplier() : 1.0f);
+	if (!Character || !Character->HasAuthority() || Character->IsDead() || !Attributes || Attributes->GetHealth() <= 0.0f
+		|| RestoreHealth <= 0.0f || Attributes->GetHealth() >= Attributes->GetMaxHealth())
 	{
 		return false;
 	}
@@ -835,7 +1005,7 @@ bool URogue10mInventoryComponent::TryUseGridConsumable(int32 ContainerIndex, FGu
 				return Candidate.InstanceId == InstanceId;
 			});
 	}
-	OnInventoryGridChanged.Broadcast();
+	NotifyGridChanged();
 
 	if (ARogue10mPlayerController* Controller = Character
 		? Cast<ARogue10mPlayerController>(Character->GetController()) : nullptr)
@@ -903,7 +1073,11 @@ bool URogue10mInventoryComponent::TryEquipGridItem(int32 ContainerIndex, FGuid I
 		}
 	}
 
-	const FRogue10mItemStack NewEquippedItem = MakeItemFromDataAsset(NewItemData, 1);
+	FRogue10mItemStack NewEquippedItem = MakeItemFromDataAsset(NewItemData, 1);
+	NewEquippedItem.InstanceId = SourceEntryCopy.InstanceId;
+	NewEquippedItem.EnhancementLevel = SourceEntryCopy.EnhancementLevel;
+	NewEquippedItem.EnhancementAttackBonus = SourceEntryCopy.EnhancementAttackBonus;
+	NewEquippedItem.EnhancementDefenseBonus = SourceEntryCopy.EnhancementDefenseBonus;
 	if (!NewEquippedItem.bOccupied)
 	{
 		return false;
@@ -912,7 +1086,11 @@ bool URogue10mInventoryComponent::TryEquipGridItem(int32 ContainerIndex, FGuid I
 	if (bHadEquippedItem)
 	{
 		FRogue10mInventoryGridEntry ReplacementEntry;
-		ReplacementEntry.InstanceId = InstanceId;
+		ReplacementEntry.InstanceId = PreviousEquippedItem.InstanceId.IsValid()
+			? PreviousEquippedItem.InstanceId : FGuid::NewGuid();
+		ReplacementEntry.EnhancementLevel = PreviousEquippedItem.EnhancementLevel;
+		ReplacementEntry.EnhancementAttackBonus = PreviousEquippedItem.EnhancementAttackBonus;
+		ReplacementEntry.EnhancementDefenseBonus = PreviousEquippedItem.EnhancementDefenseBonus;
 		ReplacementEntry.ItemData = PreviousEquippedItem.ItemData;
 		ReplacementEntry.Quantity = FMath::Clamp(PreviousEquippedItem.Quantity, 1,
 			FMath::Max(1, PreviousEquippedItem.ItemData->MaxStackSize));
@@ -953,7 +1131,7 @@ bool URogue10mInventoryComponent::TryEquipGridItem(int32 ContainerIndex, FGuid I
 		}
 	}
 
-	OnInventoryGridChanged.Broadcast();
+	NotifyGridChanged();
 	NotifyEquipmentChanged();
 
 	if (ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner()))
@@ -991,7 +1169,11 @@ bool URogue10mInventoryComponent::TryUnequipItemToGrid(
 	}
 
 	FRogue10mInventoryGridEntry Entry;
-	Entry.InstanceId = FGuid::NewGuid();
+	Entry.InstanceId = EquipmentSlot->EquippedItem.InstanceId.IsValid()
+		? EquipmentSlot->EquippedItem.InstanceId : FGuid::NewGuid();
+	Entry.EnhancementLevel = EquipmentSlot->EquippedItem.EnhancementLevel;
+	Entry.EnhancementAttackBonus = EquipmentSlot->EquippedItem.EnhancementAttackBonus;
+	Entry.EnhancementDefenseBonus = EquipmentSlot->EquippedItem.EnhancementDefenseBonus;
 	Entry.ItemData = ItemData;
 	Entry.Quantity = FMath::Clamp(EquipmentSlot->EquippedItem.Quantity, 1, FMath::Max(1, ItemData->MaxStackSize));
 	Entry.Position = TargetPosition;
@@ -1010,7 +1192,7 @@ bool URogue10mInventoryComponent::TryUnequipItemToGrid(
 		}
 	}
 
-	OnInventoryGridChanged.Broadcast();
+	NotifyGridChanged();
 	NotifyEquipmentChanged();
 	return true;
 }
@@ -1054,7 +1236,7 @@ bool URogue10mInventoryComponent::RemoveGridItem(int32 ContainerIndex, FGuid Ins
 	OutRemovedEntry = *Entry;
 	InventoryContainers[ContainerIndex].Entries.RemoveAll(
 		[InstanceId](const FRogue10mInventoryGridEntry& Candidate) { return Candidate.InstanceId == InstanceId; });
-	OnInventoryGridChanged.Broadcast();
+	NotifyGridChanged();
 	return true;
 }
 
@@ -1079,7 +1261,7 @@ bool URogue10mInventoryComponent::AddInventoryFromBag(const URogue10mItemDataAss
 	Container.GridSize = BagItemData->GetClampedBagSize();
 	Container.SourceBagItem = BagItemData;
 	InventoryContainers.Add(MoveTemp(Container));
-	OnInventoryGridChanged.Broadcast();
+	NotifyGridChanged();
 	return true;
 }
 
@@ -1112,7 +1294,7 @@ bool URogue10mInventoryComponent::DropGridItem(int32 ContainerIndex, FGuid Insta
 	if (!DroppedItem)
 	{
 		InventoryContainers[ContainerIndex].Entries.Add(RemovedEntry);
-		OnInventoryGridChanged.Broadcast();
+		NotifyGridChanged();
 		return false;
 	}
 
@@ -1124,6 +1306,10 @@ bool URogue10mInventoryComponent::DropGridItem(int32 ContainerIndex, FGuid Insta
 	Stack.DisplayName = RemovedEntry.ItemData->DisplayName;
 	Stack.Description = RemovedEntry.ItemData->Description;
 	Stack.Quantity = RemovedEntry.Quantity;
+	Stack.InstanceId = RemovedEntry.InstanceId;
+	Stack.EnhancementLevel = RemovedEntry.EnhancementLevel;
+	Stack.EnhancementAttackBonus = RemovedEntry.EnhancementAttackBonus;
+	Stack.EnhancementDefenseBonus = RemovedEntry.EnhancementDefenseBonus;
 	Stack.bOccupied = true;
 	DroppedItem->InitializeDroppedItem(Stack);
 	return true;

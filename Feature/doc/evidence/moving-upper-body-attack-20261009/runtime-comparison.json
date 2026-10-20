@@ -1,0 +1,1045 @@
+{
+  "schema": 1,
+  "feature": "moving-upper-body-attack",
+  "project": "D:/Project/Rogue10m",
+  "generated_utc": "2026-10-09T06:25:03.6804017Z",
+  "comparison_passed": true,
+  "method": {
+    "stable_window": "alpha>0.98; original montage weight>0.999; grounded; nonfalling; actual speed>10cm/s; actual actor XY step>0.1cm",
+    "calf_motion": "Maximum pairwise angular distance of normalized local calf quaternions within each stable attack window; no cumulative foot-path metric is used as gait amplitude.",
+    "paired_pose": "Same real pawn, independent same-owner source and retarget baseline meshes; no montage is played on the baseline.",
+    "independent_clock_reset_frames": [
+      300,
+      380,
+      480,
+      580
+    ],
+    "damage": "Actual monster health drops; production hit pulses are timer-driven, not AnimNotify-driven.",
+    "assertion_count_note": "metrics.txt is assembled before its own write assertion; final RESULT log therefore contains one additional assertion.",
+    "limits": [
+      "All nine fixture attacks are Unarmed/Knuckle; this does not test every available weapon profile.",
+      "Numeric bone checks do not certify fine mesh deformation; render review is separate.",
+      "No cumulative foot_cycle_travel_cm value is used to claim gait amplitude."
+    ],
+    "fixture_source_sha256": "a88b7b6f79a35cf23fb9683ac14e34979af16cec4145eb7c6bda1f64fbdbfd93"
+  },
+  "runs": [
+    {
+      "label": "original-full-body-negative-control",
+      "outcome": "FAILED",
+      "expected_outcome": "FAILED",
+      "frames": 1100,
+      "assertions_final_log": 258066,
+      "assertions_metrics_before_write_check": 258065,
+      "failures": 474,
+      "recorded_failure_reasons": [
+        "moving_attack_replaced_retarget_lower_pose",
+        "moving_attack_replaced_source_locomotion_lower_pose"
+      ],
+      "masked_attack_samples": 237,
+      "recomputed_source_lower_failures": 237,
+      "recomputed_retarget_rotation_failures": 237,
+      "source_lower_max_error_deg": 47.068370518,
+      "source_lower_max_error_cm": 98.927983274,
+      "appearance_lower_max_error_deg": 43.583722239,
+      "actual_masked_attack_actor_distance_cm": 1714.300089408,
+      "actual_health_drop_pulses": 16,
+      "actual_damage_max_timing_error_s": 0.03317824,
+      "standing_original_pose_samples": 10,
+      "standing_original_pose_max_error_deg": 0.051943763,
+      "jump_height_cm": 89.988888793,
+      "evidence": [
+        {
+          "path": "D:\\Project\\Rogue10m\\tmp\\moving-attack\\original-full-body-negative-control\\frames.csv",
+          "sha256": "29e658d08b5f7b90b932c5eaa3be29818a1a93f6526c5076613f69eef045aab1"
+        },
+        {
+          "path": "D:\\Project\\Rogue10m\\tmp\\moving-attack\\original-full-body-negative-control\\poses.csv",
+          "sha256": "f9eace02bbc9b758611fd2ef815eb5c0e0ec3e50bb33d21d5ae5604f8b9a58e5"
+        },
+        {
+          "path": "D:\\Project\\Rogue10m\\tmp\\moving-attack\\original-full-body-negative-control\\damage.csv",
+          "sha256": "721f3ac7da674f4017e509ff43082f589f88aef848a96e56d4c1ad7d48fd9cb1"
+        },
+        {
+          "path": "D:\\Project\\Rogue10m\\tmp\\moving-attack\\original-full-body-negative-control\\metrics.txt",
+          "sha256": "d3fba441ff4629ef5ec25a9af04a9ff9cffd71595f7f99b3fe687037033b33da"
+        },
+        {
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\moving-upper-body-attack-20261009\\original-full-body-negative-control.log",
+          "sha256": "66e326669379273e1f0d356cab638e65d2f76f560b9f8306c694bc94e266db3c"
+        }
+      ]
+    },
+    {
+      "label": "upper-body-fixed",
+      "outcome": "PASSED",
+      "expected_outcome": "PASSED",
+      "frames": 1100,
+      "assertions_final_log": 258066,
+      "assertions_metrics_before_write_check": 258065,
+      "failures": 0,
+      "recorded_failure_reasons": [],
+      "masked_attack_samples": 237,
+      "recomputed_source_lower_failures": 0,
+      "recomputed_retarget_rotation_failures": 0,
+      "source_lower_max_error_deg": 2.415E-06,
+      "source_lower_max_error_cm": 0.0,
+      "appearance_lower_max_error_deg": 2.415E-06,
+      "actual_masked_attack_actor_distance_cm": 1714.300089408,
+      "actual_health_drop_pulses": 16,
+      "actual_damage_max_timing_error_s": 0.03317824,
+      "standing_original_pose_samples": 10,
+      "standing_original_pose_max_error_deg": 0.051943763,
+      "jump_height_cm": 89.988888793,
+      "evidence": [
+        {
+          "path": "D:\\Project\\Rogue10m\\tmp\\moving-attack\\upper-body-fixed\\frames.csv",
+          "sha256": "c1fabfced92aa720d70067c6de40893b1bc00b8f19c5f47875e06a94dd79e6d8"
+        },
+        {
+          "path": "D:\\Project\\Rogue10m\\tmp\\moving-attack\\upper-body-fixed\\poses.csv",
+          "sha256": "7efb2769b299f8550e237ce84e2f582ac87478e265c4c88ef90cb9f1e4851c99"
+        },
+        {
+          "path": "D:\\Project\\Rogue10m\\tmp\\moving-attack\\upper-body-fixed\\damage.csv",
+          "sha256": "b7e9c5ca55759a2d8dc21e23ccef1c5149667ab8ed5592ec0043e938e676753d"
+        },
+        {
+          "path": "D:\\Project\\Rogue10m\\tmp\\moving-attack\\upper-body-fixed\\metrics.txt",
+          "sha256": "64b2f76f44c455ce65e51d2d1587d851d18c1b31511b572e9a4b7998ebee964b"
+        },
+        {
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\moving-upper-body-attack-20261009\\upper-body-fixed.log",
+          "sha256": "f41e6fd73d493d6b14cf49f397ba9e5b19581d34b75c414fcc008697369fff6b"
+        }
+      ]
+    }
+  ],
+  "attacks": [
+    {
+      "skill_name": "DA_BasicBrawler_LeftJab",
+      "montage_name": "AM_Unarmed_LeftJab",
+      "before": {
+        "stable_samples": 7,
+        "stable_frame_indices": [
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 33.055397,
+            "max_source_to_walking_error_deg": 20.852230235
+          },
+          "calf_l": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 7.275473,
+            "max_source_to_walking_error_deg": 23.098276286
+          }
+        },
+        "accepted_uses": 4,
+        "masked_samples": 17,
+        "source_lower_max_error_deg": 43.362070687,
+        "appearance_lower_max_error_deg": 42.49055342,
+        "source_upper_pose_peak_deg": 106.899916,
+        "source_hand_peak_divergence_cm": 64.824189355,
+        "appearance_hand_peak_divergence_cm": 74.410503706,
+        "actual_health_drop_pulses": 3,
+        "expected_health_drop_pulses": 3,
+        "damage_pulse_count_matches": true
+      },
+      "after": {
+        "stable_samples": 7,
+        "stable_frame_indices": [
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 33.055397,
+            "walking_baseline_angular_range_deg": 33.055397,
+            "max_source_to_walking_error_deg": 0.0
+          },
+          "calf_l": {
+            "source_angular_range_deg": 7.275473,
+            "walking_baseline_angular_range_deg": 7.275473,
+            "max_source_to_walking_error_deg": 0.0
+          }
+        },
+        "accepted_uses": 4,
+        "masked_samples": 17,
+        "source_lower_max_error_deg": 1.708E-06,
+        "appearance_lower_max_error_deg": 1.708E-06,
+        "source_upper_pose_peak_deg": 106.899916,
+        "source_hand_peak_divergence_cm": 66.301615542,
+        "appearance_hand_peak_divergence_cm": 74.16351966,
+        "actual_health_drop_pulses": 3,
+        "expected_health_drop_pulses": 3,
+        "damage_pulse_count_matches": true
+      }
+    },
+    {
+      "skill_name": "DA_BasicBrawler_RightJab",
+      "montage_name": "AM_Unarmed_RightJab",
+      "before": {
+        "stable_samples": 10,
+        "stable_frame_indices": [
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 40.989218,
+            "max_source_to_walking_error_deg": 26.595891087
+          },
+          "calf_l": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 38.578099,
+            "max_source_to_walking_error_deg": 34.519825198
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 15,
+        "source_lower_max_error_deg": 47.068370518,
+        "appearance_lower_max_error_deg": 42.690974186,
+        "source_upper_pose_peak_deg": 109.515157,
+        "source_hand_peak_divergence_cm": 64.7395691,
+        "appearance_hand_peak_divergence_cm": 74.314326637,
+        "actual_health_drop_pulses": 1,
+        "expected_health_drop_pulses": 1,
+        "damage_pulse_count_matches": true
+      },
+      "after": {
+        "stable_samples": 10,
+        "stable_frame_indices": [
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 40.989218,
+            "walking_baseline_angular_range_deg": 40.989218,
+            "max_source_to_walking_error_deg": 0.0
+          },
+          "calf_l": {
+            "source_angular_range_deg": 38.578099,
+            "walking_baseline_angular_range_deg": 38.578099,
+            "max_source_to_walking_error_deg": 0.0
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 15,
+        "source_lower_max_error_deg": 2.415E-06,
+        "appearance_lower_max_error_deg": 1.708E-06,
+        "source_upper_pose_peak_deg": 109.515157,
+        "source_hand_peak_divergence_cm": 65.84723276,
+        "appearance_hand_peak_divergence_cm": 74.477878289,
+        "actual_health_drop_pulses": 1,
+        "expected_health_drop_pulses": 1,
+        "damage_pulse_count_matches": true
+      }
+    },
+    {
+      "skill_name": "DA_BasicBrawler_RightStraight",
+      "montage_name": "AM_Unarmed_Straight",
+      "before": {
+        "stable_samples": 20,
+        "stable_frame_indices": [
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 42.38075,
+            "max_source_to_walking_error_deg": 26.595874487
+          },
+          "calf_l": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 45.381393,
+            "max_source_to_walking_error_deg": 34.519820558
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 24,
+        "source_lower_max_error_deg": 47.068370518,
+        "appearance_lower_max_error_deg": 42.690974186,
+        "source_upper_pose_peak_deg": 116.874071,
+        "source_hand_peak_divergence_cm": 85.044089664,
+        "appearance_hand_peak_divergence_cm": 92.359497873,
+        "actual_health_drop_pulses": 1,
+        "expected_health_drop_pulses": 1,
+        "damage_pulse_count_matches": true
+      },
+      "after": {
+        "stable_samples": 20,
+        "stable_frame_indices": [
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 42.38075,
+            "walking_baseline_angular_range_deg": 42.38075,
+            "max_source_to_walking_error_deg": 0.0
+          },
+          "calf_l": {
+            "source_angular_range_deg": 45.381393,
+            "walking_baseline_angular_range_deg": 45.381393,
+            "max_source_to_walking_error_deg": 0.0
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 24,
+        "source_lower_max_error_deg": 2.415E-06,
+        "appearance_lower_max_error_deg": 1.708E-06,
+        "source_upper_pose_peak_deg": 116.874071,
+        "source_hand_peak_divergence_cm": 84.198014532,
+        "appearance_hand_peak_divergence_cm": 91.052939916,
+        "actual_health_drop_pulses": 1,
+        "expected_health_drop_pulses": 1,
+        "damage_pulse_count_matches": true
+      }
+    },
+    {
+      "skill_name": "DA_BasicBrawler_RightHook",
+      "montage_name": "AM_Unarmed_Hook",
+      "before": {
+        "stable_samples": 23,
+        "stable_frame_indices": [
+          173,
+          174,
+          175,
+          176,
+          177,
+          178,
+          179,
+          180,
+          181,
+          182,
+          183,
+          184,
+          185,
+          186,
+          187,
+          188,
+          189,
+          190,
+          191,
+          192,
+          193,
+          194,
+          195
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 41.025424,
+            "max_source_to_walking_error_deg": 26.595874487
+          },
+          "calf_l": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 45.381394,
+            "max_source_to_walking_error_deg": 34.519820558
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 27,
+        "source_lower_max_error_deg": 45.16795542,
+        "appearance_lower_max_error_deg": 43.583708393,
+        "source_upper_pose_peak_deg": 114.862987,
+        "source_hand_peak_divergence_cm": 63.582604834,
+        "appearance_hand_peak_divergence_cm": 72.489481764,
+        "actual_health_drop_pulses": 1,
+        "expected_health_drop_pulses": 1,
+        "damage_pulse_count_matches": true
+      },
+      "after": {
+        "stable_samples": 23,
+        "stable_frame_indices": [
+          173,
+          174,
+          175,
+          176,
+          177,
+          178,
+          179,
+          180,
+          181,
+          182,
+          183,
+          184,
+          185,
+          186,
+          187,
+          188,
+          189,
+          190,
+          191,
+          192,
+          193,
+          194,
+          195
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 41.025424,
+            "walking_baseline_angular_range_deg": 41.025424,
+            "max_source_to_walking_error_deg": 0.0
+          },
+          "calf_l": {
+            "source_angular_range_deg": 45.381394,
+            "walking_baseline_angular_range_deg": 45.381394,
+            "max_source_to_walking_error_deg": 0.0
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 27,
+        "source_lower_max_error_deg": 1.708E-06,
+        "appearance_lower_max_error_deg": 2.415E-06,
+        "source_upper_pose_peak_deg": 114.862987,
+        "source_hand_peak_divergence_cm": 63.916333672,
+        "appearance_hand_peak_divergence_cm": 72.885075398,
+        "actual_health_drop_pulses": 1,
+        "expected_health_drop_pulses": 1,
+        "damage_pulse_count_matches": true
+      }
+    },
+    {
+      "skill_name": "DA_Attack_Knuckle_Primary01",
+      "montage_name": "AM_Knuckle_Jab",
+      "before": {
+        "stable_samples": 14,
+        "stable_frame_indices": [
+          615,
+          616,
+          617,
+          618,
+          619,
+          620,
+          621,
+          622,
+          623,
+          624,
+          625,
+          626,
+          627,
+          628
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 45.121446,
+            "max_source_to_walking_error_deg": 29.314683825
+          },
+          "calf_l": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 41.504593,
+            "max_source_to_walking_error_deg": 40.432990343
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 16,
+        "source_lower_max_error_deg": 42.730119459,
+        "appearance_lower_max_error_deg": 38.941690985,
+        "source_upper_pose_peak_deg": 100.444745,
+        "source_hand_peak_divergence_cm": 68.332884629,
+        "appearance_hand_peak_divergence_cm": 75.957998618,
+        "actual_health_drop_pulses": 1,
+        "expected_health_drop_pulses": 1,
+        "damage_pulse_count_matches": true
+      },
+      "after": {
+        "stable_samples": 14,
+        "stable_frame_indices": [
+          615,
+          616,
+          617,
+          618,
+          619,
+          620,
+          621,
+          622,
+          623,
+          624,
+          625,
+          626,
+          627,
+          628
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 45.121446,
+            "walking_baseline_angular_range_deg": 45.121446,
+            "max_source_to_walking_error_deg": 0.0
+          },
+          "calf_l": {
+            "source_angular_range_deg": 41.504593,
+            "walking_baseline_angular_range_deg": 41.504593,
+            "max_source_to_walking_error_deg": 0.0
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 16,
+        "source_lower_max_error_deg": 1.708E-06,
+        "appearance_lower_max_error_deg": 2.415E-06,
+        "source_upper_pose_peak_deg": 100.444745,
+        "source_hand_peak_divergence_cm": 71.884690394,
+        "appearance_hand_peak_divergence_cm": 77.2705994,
+        "actual_health_drop_pulses": 1,
+        "expected_health_drop_pulses": 1,
+        "damage_pulse_count_matches": true
+      }
+    },
+    {
+      "skill_name": "DA_Attack_Knuckle_Primary02",
+      "montage_name": "AM_Knuckle_BodyStraight",
+      "before": {
+        "stable_samples": 13,
+        "stable_frame_indices": [
+          660,
+          661,
+          662,
+          663,
+          664,
+          665,
+          666,
+          667,
+          668,
+          669,
+          670,
+          671,
+          672
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 45.121434,
+            "max_source_to_walking_error_deg": 29.31467244
+          },
+          "calf_l": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 41.504593,
+            "max_source_to_walking_error_deg": 40.432990343
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 15,
+        "source_lower_max_error_deg": 42.730119459,
+        "appearance_lower_max_error_deg": 38.921408128,
+        "source_upper_pose_peak_deg": 97.471881,
+        "source_hand_peak_divergence_cm": 64.960998871,
+        "appearance_hand_peak_divergence_cm": 76.392780464,
+        "actual_health_drop_pulses": 1,
+        "expected_health_drop_pulses": 1,
+        "damage_pulse_count_matches": true
+      },
+      "after": {
+        "stable_samples": 13,
+        "stable_frame_indices": [
+          660,
+          661,
+          662,
+          663,
+          664,
+          665,
+          666,
+          667,
+          668,
+          669,
+          670,
+          671,
+          672
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 45.121434,
+            "walking_baseline_angular_range_deg": 45.121434,
+            "max_source_to_walking_error_deg": 0.0
+          },
+          "calf_l": {
+            "source_angular_range_deg": 41.504593,
+            "walking_baseline_angular_range_deg": 41.504593,
+            "max_source_to_walking_error_deg": 0.0
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 15,
+        "source_lower_max_error_deg": 1.708E-06,
+        "appearance_lower_max_error_deg": 1.708E-06,
+        "source_upper_pose_peak_deg": 97.471881,
+        "source_hand_peak_divergence_cm": 63.893546832,
+        "appearance_hand_peak_divergence_cm": 74.293444465,
+        "actual_health_drop_pulses": 1,
+        "expected_health_drop_pulses": 1,
+        "damage_pulse_count_matches": true
+      }
+    },
+    {
+      "skill_name": "DA_Attack_Knuckle_Primary03",
+      "montage_name": "AM_Knuckle_HookFlurry",
+      "before": {
+        "stable_samples": 30,
+        "stable_frame_indices": [
+          711,
+          712,
+          713,
+          714,
+          715,
+          716,
+          717,
+          718,
+          719,
+          720,
+          721,
+          722,
+          723,
+          724,
+          725,
+          726,
+          727,
+          728,
+          729,
+          730,
+          731,
+          732,
+          733,
+          734,
+          735,
+          736,
+          737,
+          738,
+          739,
+          740
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 42.380735,
+            "max_source_to_walking_error_deg": 26.595851068
+          },
+          "calf_l": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 45.381413,
+            "max_source_to_walking_error_deg": 34.519820558
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 33,
+        "source_lower_max_error_deg": 47.068366609,
+        "appearance_lower_max_error_deg": 42.690970683,
+        "source_upper_pose_peak_deg": 109.3434,
+        "source_hand_peak_divergence_cm": 84.621443308,
+        "appearance_hand_peak_divergence_cm": 96.85895093,
+        "actual_health_drop_pulses": 6,
+        "expected_health_drop_pulses": 6,
+        "damage_pulse_count_matches": true
+      },
+      "after": {
+        "stable_samples": 30,
+        "stable_frame_indices": [
+          711,
+          712,
+          713,
+          714,
+          715,
+          716,
+          717,
+          718,
+          719,
+          720,
+          721,
+          722,
+          723,
+          724,
+          725,
+          726,
+          727,
+          728,
+          729,
+          730,
+          731,
+          732,
+          733,
+          734,
+          735,
+          736,
+          737,
+          738,
+          739,
+          740
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 42.380735,
+            "walking_baseline_angular_range_deg": 42.380735,
+            "max_source_to_walking_error_deg": 0.0
+          },
+          "calf_l": {
+            "source_angular_range_deg": 45.381413,
+            "walking_baseline_angular_range_deg": 45.381413,
+            "max_source_to_walking_error_deg": 0.0
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 33,
+        "source_lower_max_error_deg": 1.708E-06,
+        "appearance_lower_max_error_deg": 2.415E-06,
+        "source_upper_pose_peak_deg": 109.3434,
+        "source_hand_peak_divergence_cm": 83.984818063,
+        "appearance_hand_peak_divergence_cm": 95.600298323,
+        "actual_health_drop_pulses": 6,
+        "expected_health_drop_pulses": 6,
+        "damage_pulse_count_matches": true
+      }
+    },
+    {
+      "skill_name": "DA_Attack_Knuckle_Special",
+      "montage_name": "AM_Knuckle_Uppercut",
+      "before": {
+        "stable_samples": 34,
+        "stable_frame_indices": [
+          766,
+          767,
+          768,
+          769,
+          770,
+          771,
+          772,
+          773,
+          774,
+          775,
+          776,
+          777,
+          778,
+          779,
+          780,
+          781,
+          782,
+          783,
+          784,
+          785,
+          786,
+          787,
+          788,
+          789,
+          790,
+          791,
+          792,
+          793,
+          794,
+          795,
+          796,
+          797,
+          798,
+          799
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 41.025432,
+            "max_source_to_walking_error_deg": 26.595868242
+          },
+          "calf_l": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 51.708404,
+            "max_source_to_walking_error_deg": 37.88422932
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 37,
+        "source_lower_max_error_deg": 47.068366609,
+        "appearance_lower_max_error_deg": 43.583714131,
+        "source_upper_pose_peak_deg": 114.863506,
+        "source_hand_peak_divergence_cm": 70.15196566,
+        "appearance_hand_peak_divergence_cm": 78.413718138,
+        "actual_health_drop_pulses": 1,
+        "expected_health_drop_pulses": 1,
+        "damage_pulse_count_matches": true
+      },
+      "after": {
+        "stable_samples": 34,
+        "stable_frame_indices": [
+          766,
+          767,
+          768,
+          769,
+          770,
+          771,
+          772,
+          773,
+          774,
+          775,
+          776,
+          777,
+          778,
+          779,
+          780,
+          781,
+          782,
+          783,
+          784,
+          785,
+          786,
+          787,
+          788,
+          789,
+          790,
+          791,
+          792,
+          793,
+          794,
+          795,
+          796,
+          797,
+          798,
+          799
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 41.025432,
+            "walking_baseline_angular_range_deg": 41.025432,
+            "max_source_to_walking_error_deg": 0.0
+          },
+          "calf_l": {
+            "source_angular_range_deg": 51.708404,
+            "walking_baseline_angular_range_deg": 51.708404,
+            "max_source_to_walking_error_deg": 0.0
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 37,
+        "source_lower_max_error_deg": 1.708E-06,
+        "appearance_lower_max_error_deg": 1.708E-06,
+        "source_upper_pose_peak_deg": 114.863506,
+        "source_hand_peak_divergence_cm": 71.816650038,
+        "appearance_hand_peak_divergence_cm": 79.535370466,
+        "actual_health_drop_pulses": 1,
+        "expected_health_drop_pulses": 1,
+        "damage_pulse_count_matches": true
+      }
+    },
+    {
+      "skill_name": "DA_Attack_Knuckle_Charged",
+      "montage_name": "AM_Knuckle_ShortBlow",
+      "before": {
+        "stable_samples": 50,
+        "stable_frame_indices": [
+          849,
+          850,
+          851,
+          852,
+          853,
+          854,
+          855,
+          856,
+          857,
+          858,
+          859,
+          860,
+          861,
+          862,
+          863,
+          864,
+          865,
+          866,
+          867,
+          868,
+          869,
+          870,
+          871,
+          872,
+          873,
+          874,
+          875,
+          876,
+          877,
+          878,
+          879,
+          880,
+          881,
+          882,
+          883,
+          884,
+          885,
+          886,
+          887,
+          888,
+          889,
+          890,
+          891,
+          892,
+          893,
+          894,
+          895,
+          896,
+          897,
+          898
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 45.12137,
+            "max_source_to_walking_error_deg": 29.314661639
+          },
+          "calf_l": {
+            "source_angular_range_deg": 0.0,
+            "walking_baseline_angular_range_deg": 54.29281,
+            "max_source_to_walking_error_deg": 40.43297024
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 53,
+        "source_lower_max_error_deg": 47.068356836,
+        "appearance_lower_max_error_deg": 43.583722239,
+        "source_upper_pose_peak_deg": 114.863707,
+        "source_hand_peak_divergence_cm": 73.893325822,
+        "appearance_hand_peak_divergence_cm": 83.149548842,
+        "actual_health_drop_pulses": 1,
+        "expected_health_drop_pulses": 1,
+        "damage_pulse_count_matches": true
+      },
+      "after": {
+        "stable_samples": 50,
+        "stable_frame_indices": [
+          849,
+          850,
+          851,
+          852,
+          853,
+          854,
+          855,
+          856,
+          857,
+          858,
+          859,
+          860,
+          861,
+          862,
+          863,
+          864,
+          865,
+          866,
+          867,
+          868,
+          869,
+          870,
+          871,
+          872,
+          873,
+          874,
+          875,
+          876,
+          877,
+          878,
+          879,
+          880,
+          881,
+          882,
+          883,
+          884,
+          885,
+          886,
+          887,
+          888,
+          889,
+          890,
+          891,
+          892,
+          893,
+          894,
+          895,
+          896,
+          897,
+          898
+        ],
+        "calves": {
+          "calf_r": {
+            "source_angular_range_deg": 45.12137,
+            "walking_baseline_angular_range_deg": 45.12137,
+            "max_source_to_walking_error_deg": 0.0
+          },
+          "calf_l": {
+            "source_angular_range_deg": 54.29281,
+            "walking_baseline_angular_range_deg": 54.29281,
+            "max_source_to_walking_error_deg": 0.0
+          }
+        },
+        "accepted_uses": 1,
+        "masked_samples": 53,
+        "source_lower_max_error_deg": 2.415E-06,
+        "appearance_lower_max_error_deg": 2.415E-06,
+        "source_upper_pose_peak_deg": 114.863707,
+        "source_hand_peak_divergence_cm": 73.188271722,
+        "appearance_hand_peak_divergence_cm": 81.400466251,
+        "actual_health_drop_pulses": 1,
+        "expected_health_drop_pulses": 1,
+        "damage_pulse_count_matches": true
+      }
+    }
+  ]
+}

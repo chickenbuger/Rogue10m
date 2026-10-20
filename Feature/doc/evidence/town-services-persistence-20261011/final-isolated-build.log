@@ -1,0 +1,118 @@
+Log started at 10/11/2026 18:02:15 (2026-10-11T09:02:15Z)
+Resolved project argument D:/Project/Rogue10m/tmp/npc-services-persistence-worktree/Rogue10m.uproject to D:\Project\Rogue10m\tmp\npc-services-persistence-worktree\Rogue10m.uproject
+No config file at C:\ProgramData\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\PC\AppData\Local\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\PC\Documents\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Configuration will be read from:
+  C:\Users\PC\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\tmp\npc-services-persistence-worktree\Intermediate\Build\XmlConfigCache.bin): C:\Users\PC\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\tmp\npc-services-persistence-worktree\Intermediate\Build\XmlConfigCache.bin): D:\Project\Rogue10m\tmp\npc-services-persistence-worktree\Saved\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\tmp\npc-services-persistence-worktree\Intermediate\Build\XmlConfigCache.bin): C:\Users\PC\AppData\Local\UnrealEngine\Intermediate\Build\UnrealBuildTool.Env.BuildConfiguration.xml
+Setting temp directory to 'C:\Users\PC\AppData\Local\Temp\UnrealBuildTool\e98283ba'
+    Registering build platform: UnrealBuildTool.AndroidPlatformFactory
+Unable to find valid SDK(s) for Android:
+  Found Sdk Version=r25b, MinRequired=r27c, MaxRequired=r29.
+  Found AutoSdk Version, Required=r27c.
+        Registering build platform: Android - buildable: False
+    Registering build platform: UnrealBuildTool.IOSPlatformFactory
+    Registering build platform: UnrealBuildTool.LinuxPlatformFactory
+    Registering build platform: UnrealBuildTool.MacPlatformFactory
+    Registering build platform: UnrealBuildTool.TVOSPlatformFactory
+    Registering build platform: UnrealBuildTool.WindowsPlatformFactory
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (1)
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (2)
+Found Universal CRT version 10.0.10240.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.17763.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.17763.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.19041.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.19041.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.22621.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.22621.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.26100.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.26100.0 at C:\Program Files (x86)\Windows Kits\10
+Win64 Installed SDK(s): MinVersion_Sdk=10.0.19041.0, MaxVersion_Sdk=10.9.99999.0, CurrentVersion_Sdk=10.0.22621.0, Version_AutoSdk=10.0.22621.0, CurrentVersion_AutoSdk=
+        Registering build platform: Win64 - buildable: True
+    Registering build platform: UnrealBuildTool.VisionOSPlatformFactory
+Command line: "D:\Program Files\UE_5.8\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:/Project/Rogue10m/tmp/npc-services-persistence-worktree/Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload -NoXGE -NoUBA -MaxParallelActions=1
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Deleting old log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log-backup-2026.10.09-07.01.29.txt
+Deleting old log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log-backup-2026.10.09-07.01.29.json
+
+Executing up to 1 actions based on MaxProcessorCount override
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m\tmp\npc-services-persistence-worktree).
+UbaSessionServer - Disable remote execution (remote sessions will finish current processes)
+Skipping D:\Program Files\UE_5.8\Engine\Intermediate\Build\BuildRules\UE5Rules.dll: File is installed
+Waiting for 'git status' command to complete
+Skipping D:\Program Files\UE_5.8\Engine\Intermediate\Build\BuildRules\UE5ProgramRules.dll: File is installed
+Terminating git child process due to timeout
+Building UnrealEditor - Rogue10mEditor - Win64 - Development
+Generated code is up to date.
+Checking for live coding mutex: Global\LiveCoding_D++Program Files+UE_5.8+Engine+Binaries+Win64+UnrealEditor.exe
+Deleting outdated item: D:\Project\Rogue10m\tmp\npc-services-persistence-worktree\Binaries\Win64\UnrealEditor-Rogue10m.pdb
+Deleting outdated item: D:\Project\Rogue10m\tmp\npc-services-persistence-worktree\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\UnrealEditor-Rogue10m.lib
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mFighterCombatStanceAnimInstance.cpp, Rogue10mAppearanceCameraComponent.cpp, Rogue10mCharacterAnimationComponent.cpp, Rogue10mCombatComponent.cpp, Rogue10mFirstPersonPresentationComponent.cpp, Rogue10mInventoryComponent.cpp, Rogue10mInventoryPersistence.cpp, Rogue10mSkillBindingComponent.cpp, Rogue10mTownProgressionComponent.cpp, Rogue10mCharacterProfileSubsystem.cpp, Rogue10mGameMode.cpp, Rogue10mPlayerController.cpp, Rogue10mPlayerState.cpp, Rogue10mProgressionSubsystem.cpp, Rogue10mMonsterDataAsset.cpp, Rogue10mTownServiceDataAsset.cpp, Rogue10mFistCombatAuthoring.cpp, Rogue10mMovingAttackAuthoring.cpp, Rogue10mOpenWorldAuthoring.cpp, Rogue10mWalkPalmAuthoring.cpp, Rogue10mBasicMonster.cpp, Rogue10mMonsterAttackPatternComponent.cpp, Rogue10mMonsterAIController.cpp, Rogue10mAppearanceCameraRuntimeTest.cpp, Rogue10mCameraForwardRuntimeTest.cpp, Rogue10mFighterCombatStanceRuntimeTest.cpp, Rogue10mFighterSkillTreeRuntimeTest.cpp, Rogue10mFistCombatRuntimeTest.cpp, Rogue10mInitialHeadFramingRuntimeTest.cpp, Rogue10mMovingAttackRuntimeTest.cpp, Rogue10mProgressionFailureRuntimeTest.cpp, Rogue10mResponsiveHUDRuntimeTest.cpp, Rogue10mStoneFistAnimationRuntimeTest.cpp, Rogue10mThirdPersonInspectionRuntimeTest.cpp, Rogue10mTownRunRuntimeTest.cpp, Rogue10mTownServicesRuntimeTest.cpp, Rogue10mTownVisualRuntimeTest.cpp, Rogue10mWalkPalmRuntimeTest.cpp, Rogue10mWeaponSkillTreeRuntimeTest.cpp, Rogue10mBottomHUDWidget.cpp, Rogue10mHudWidgetParts.cpp, Rogue10mMainHUDWidget.cpp, Rogue10mMenuWindowWidgets.cpp, Rogue10mTutorialWidget.cpp, Rogue10mDroppedItem.cpp, Rogue10mMonsterSpawner.cpp, Rogue10mOpenWorldBootstrap.cpp, Rogue10mRunPortal.cpp, Rogue10mTutorialAnimationComponent.cpp, Rogue10mTutorialNPC.cpp, Rogue10mTutorialRewardComponent.cpp, Rogue10mTutorialSupplySubsystem.cpp
+=================================
+Using Unreal Build Accelerator local executor to run 5 action(s)
+  CPU 8 physical cores, 16 logical cores
+  Memory 31.91 GB physical, 53.28 GB/79.91 GB committed
+  UBA Storage capacity 40 GB
+  UBA RootDir C:\ProgramData\Epic\UnrealBuildAccelerator
+Cache bucket 1269191144 used. Action: Compile [x64] Rogue10mTownRunRuntimeTest.cpp ()
+Cache bucket 416513229 used. Action: Link [x64] UnrealEditor-Rogue10m.dll ()
+All processes queued
+[1/5] Compile [x64] Rogue10mTownRunRuntimeTest.cpp [NoUba]
+[2/5] Compile [x64] Rogue10mTownServicesRuntimeTest.cpp [NoUba]
+[3/5] Link [x64] UnrealEditor-Rogue10m.dll [NoUba]
+[4/5] Link [x64] UnrealEditor-Rogue10m.lib [NoUba]
+   D:/Project/Rogue10m/tmp/npc-services-persistence-worktree/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.lib ﾶ￳￀ￌﾺ￪ﾷﾯﾸﾮ ﾹￗ D:/Project/Rogue10m/tmp/npc-services-persistence-worktree/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.exp ﾰﾳￃﾼﾸﾦ ﾻ�ﾼﾺￇￏﾰ￭ ￀ￖﾽ￀ﾴￏﾴ￙.
+[5/5] WriteMetadata Rogue10mEditor.target [NoUba]
+
+Total time in Unreal Build Accelerator local executor: 43.47 seconds
+Output binary: D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe
+WriteFileIfChanged() wrote 0 changed files of 1 requested writes.
+
+Timeline:
+[  0.000]  +0.500 Main
+   0.023          [  0.023]  +0.156 Apply XmlConfig
+   0.183          [  0.183]  +0.091 AddTelemetry
+   0.309          [  0.309]  +0.191 RegisterPlatforms
+[  0.647]  +0.061 ParseCommandLine
+[  0.709]  +0.383 <unknown>
+[  1.092]  +0.465 LoadMakefile
+   1.141          [  0.048]  +0.963 EngineRulesPlugins
+   1.141             0.048          [  0.000]  +0.481 <unknown>
+   1.622             0.529          [  0.481]  +0.000 FindPlugins
+   1.648             0.556          [  0.507] +35.166 MakefileValid
+[  1.558] +35.258 <unknown>
+[ 36.817]  +0.126 Rogue10mEditor Win64 Development
+[ 36.944]  +0.147 UHTWait
+  36.947          [  0.003]  +0.141 UHTManifest
+  37.090          [  0.145]  +0.031 UHTTimestamps
+[ 37.131]  +0.011 CppDependencyCache
+[ 37.143]  +0.128 Preparing ActionGraph
+  37.159          [  0.015]  +0.005 LinkActions
+  37.164             0.021          [  0.005]  +0.000 DetectActionGraphCycles
+  37.165          [  0.022]  +0.000 GatherPrerequisiteActions
+  37.168          [  0.024]  +0.000 CppDependencyCacheWait
+  37.168          [  0.025]  +0.077 GatherOutdatedActions
+  37.251          [  0.107]  +0.012 LinkActions
+  37.251             0.107          [  0.000]  +0.000 DetectActionGraphCycles
+  37.266          [  0.122]  +0.003 DeleteOutdatedProducedItems
+  37.269          [  0.126]  +0.001 SaveActionHistory
+  37.272          [  0.128]  +0.000 CreateDirectoriesForProducedItems
+[ 37.292]  +0.141 GarbageCollect
+[ 37.434] +43.331 <unknown>
+[ 80.765]  +0.000 Deploying targets
+[ 80.767]  +0.000 DisconnectCache
+[ 80.771]  +0.000 SaveCasTable
+[ 80.775]  +0.082 Saving caches
+[ 80.858]  +0.003 TelemetryService.FlushEvents
+[ 80.862]
+
+Result: Succeeded
+Total execution time: 80.86 seconds

@@ -28,6 +28,12 @@ Create short-lived branches from `develop` using `Sprint#<sprint>-<work>-<short-
 5. Merge `test` into `main` only when the build is stable.
 6. After the successful `main` merge, close the current Sprint; the next work branch uses the next Sprint number and work number `1`.
 
+## Standing Completion Authorization
+
+On 2026-10-20 the user authorized committing and pushing the current checkpoint and merging each completed future feature into `main`. Treat this as continuing commit, merge, and push approval for routine feature completion; do not request the same confirmation again.
+
+Complete relevant build/QA, diff review, feature documents, Sprint changelog, and Korean daily DevLog before promotion. Fetch and inspect remote branches, commit scoped work on its work branch, then promote through `develop` -> `test` -> `main` and push the work and integration branches. Prefer fast-forward promotion when histories permit. Do not force-push, discard unrelated work, or call failed validation complete. Record integration blockers and resolve them within the authorized feature scope.
+
 ## Promotion Rules
 
 - `develop` can be messy but should compile.

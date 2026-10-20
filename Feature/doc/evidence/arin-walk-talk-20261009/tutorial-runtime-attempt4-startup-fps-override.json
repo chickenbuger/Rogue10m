@@ -1,0 +1,1890 @@
+{
+  "status": "failed",
+  "checks": [
+    {
+      "name": "animation_low_frame_limit_applied",
+      "passed": true,
+      "original": 120.0,
+      "requested": 5.0,
+      "observed": 5.0,
+      "configuration_saved": false
+    },
+    {
+      "name": "no_existing_pie",
+      "passed": true
+    },
+    {
+      "name": "current_editor_map_start_hub",
+      "passed": true
+    },
+    {
+      "name": "hub_waiting_before_dialogue",
+      "passed": true
+    },
+    {
+      "name": "exactly_one_authored_tutorial_guide",
+      "passed": true,
+      "count": 1
+    },
+    {
+      "name": "authored_tutorial_data_loaded",
+      "passed": true
+    },
+    {
+      "name": "real_starting_item_and_stack_valid",
+      "passed": true,
+      "item": "/Game/DataAsset/Item/Starter/DA_Item_HealthPotion.DA_Item_HealthPotion",
+      "quantity": 2
+    },
+    {
+      "name": "authored_reward_id_not_empty",
+      "passed": true
+    },
+    {
+      "name": "npc_is_not_damageable",
+      "passed": true
+    },
+    {
+      "name": "npc_tick_disabled",
+      "passed": true
+    },
+    {
+      "name": "guide_mesh_does_not_block_player",
+      "passed": true
+    },
+    {
+      "name": "npc_has_mesh_and_idle",
+      "passed": true,
+      "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin.SK_Arin",
+      "idle": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle.ArinIdle"
+    },
+    {
+      "name": "claim_requires_open_dialogue",
+      "passed": true
+    },
+    {
+      "name": "dialogue_denied_out_of_range",
+      "passed": true
+    },
+    {
+      "name": "reference_mesh_in_real_pie",
+      "passed": true
+    },
+    {
+      "name": "reference_idle_in_real_pie",
+      "passed": true
+    },
+    {
+      "name": "reference_same_skeleton_in_pie",
+      "passed": true
+    },
+    {
+      "name": "reference_two_second_idle_in_pie",
+      "passed": true
+    },
+    {
+      "name": "reference_exact_authored_bones_in_pie",
+      "passed": true,
+      "bone_names": [
+        "Arin_Rig",
+        "root",
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03",
+        "neck",
+        "head",
+        "clavicle_l",
+        "upperarm_l",
+        "lowerarm_l",
+        "hand_l",
+        "clavicle_r",
+        "upperarm_r",
+        "lowerarm_r",
+        "hand_r",
+        "thigh_l",
+        "calf_l",
+        "foot_l",
+        "ball_l",
+        "thigh_r",
+        "calf_r",
+        "foot_r",
+        "ball_r"
+      ],
+      "authored_bone_count": 23
+    },
+    {
+      "name": "reference_visible_physical_head_height_in_pie",
+      "passed": true,
+      "observed_cm": 144.49999879168703,
+      "expected_rest_cm": 144.50000524520874
+    },
+    {
+      "name": "reference_single_real_pbr_slot_in_pie",
+      "passed": true
+    },
+    {
+      "name": "reference_three_persisted_lods_in_pie",
+      "passed": true
+    },
+    {
+      "name": "animation_authored_clip_paths",
+      "passed": true,
+      "walk": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+      "talk": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Talk"
+    },
+    {
+      "name": "animation_clips_share_unchanged_v3_skeleton",
+      "passed": true
+    },
+    {
+      "name": "animation_authored_clip_durations",
+      "passed": true,
+      "walk_seconds": 1.2000000476837158,
+      "talk_seconds": 3.0
+    },
+    {
+      "name": "animation_walk_reference_speed_110",
+      "passed": true
+    },
+    {
+      "name": "animation_native_component_loaded",
+      "passed": true
+    },
+    {
+      "name": "animation_component_tick_disabled",
+      "passed": true
+    },
+    {
+      "name": "animation_wrong_skeleton_fixture_available",
+      "passed": true,
+      "clip": "/Game/Characters/Mannequins/Anims/Unarmed/MM_Idle"
+    },
+    {
+      "name": "initial_idle_native_state_and_clip",
+      "passed": true,
+      "observed": {
+        "world_seconds": 2.4572570957243443,
+        "state": "IDLE",
+        "requested_dialogue": false,
+        "dialogue_open": false,
+        "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+        "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+        "single_node": true,
+        "playing": true,
+        "position_seconds": 0.4572572410106659,
+        "play_rate": 1.0,
+        "measured_speed_cm_s": 0.0,
+        "actor_location": [
+          440.0,
+          -1610.0,
+          2.0
+        ],
+        "head_rotation": [
+          90.13899993896484,
+          0.001956204418092966,
+          179.1937255859375
+        ],
+        "thigh_rotation": [
+          -86.90775299072266,
+          4.991848945617676,
+          -174.73040771484375
+        ],
+        "forearm_rotation": [
+          -75.78902435302734,
+          0.13902410864830017,
+          90.0
+        ]
+      },
+      "expected_state": "IDLE",
+      "expected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle"
+    },
+    {
+      "name": "initial_idle_dialogue_request",
+      "passed": true,
+      "observed": {
+        "world_seconds": 2.4572570957243443,
+        "state": "IDLE",
+        "requested_dialogue": false,
+        "dialogue_open": false,
+        "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+        "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+        "single_node": true,
+        "playing": true,
+        "position_seconds": 0.4572572410106659,
+        "play_rate": 1.0,
+        "measured_speed_cm_s": 0.0,
+        "actor_location": [
+          440.0,
+          -1610.0,
+          2.0
+        ],
+        "head_rotation": [
+          90.13899993896484,
+          0.001956204418092966,
+          179.1937255859375
+        ],
+        "thigh_rotation": [
+          -86.90775299072266,
+          4.991848945617676,
+          -174.73040771484375
+        ],
+        "forearm_rotation": [
+          -75.78902435302734,
+          0.13902410864830017,
+          90.0
+        ]
+      }
+    },
+    {
+      "name": "initial_idle_stationary_speed_zero",
+      "passed": true,
+      "observed_cm_s": 0.0
+    },
+    {
+      "name": "walk_55_native_state_and_clip",
+      "passed": true,
+      "observed": {
+        "world_seconds": 4.268557794392109,
+        "state": "WALK",
+        "requested_dialogue": false,
+        "dialogue_open": false,
+        "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+        "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+        "single_node": true,
+        "playing": true,
+        "position_seconds": 0.8491777181625366,
+        "play_rate": 0.5065387487411499,
+        "measured_speed_cm_s": 55.719261169433594,
+        "actor_location": [
+          440.0,
+          -1709.621538426727,
+          2.0
+        ],
+        "head_rotation": [
+          88.50007629394531,
+          -0.01582924649119377,
+          -178.68145751953125
+        ],
+        "thigh_rotation": [
+          -109.81475067138672,
+          6.329719543457031,
+          -174.9288330078125
+        ],
+        "forearm_rotation": [
+          -75.10342407226562,
+          -4.5706610679626465,
+          91.92877197265625
+        ]
+      },
+      "expected_state": "WALK",
+      "expected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk"
+    },
+    {
+      "name": "walk_55_real_displacement_detected",
+      "passed": true,
+      "target_cm_s": 55.0,
+      "observed_cm_s": 55.719261169433594
+    },
+    {
+      "name": "walk_55_native_rate_tracks_real_speed",
+      "passed": true,
+      "observed_rate": 0.5065387487411499,
+      "expected_rate": 0.5065387379039418,
+      "nominal_rate": 0.5
+    },
+    {
+      "name": "walk_55_playback_advances_without_timer_restart",
+      "passed": true,
+      "observed_seconds": 0.7659454345703125,
+      "expected_seconds": 0.7657988088019747,
+      "tolerance_seconds": 0.2297396426405924,
+      "first": {
+        "world_seconds": 2.715171094983816,
+        "state": "WALK",
+        "requested_dialogue": false,
+        "dialogue_open": false,
+        "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+        "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+        "single_node": true,
+        "playing": true,
+        "position_seconds": 0.07174098491668701,
+        "play_rate": 0.49390730261802673,
+        "measured_speed_cm_s": 54.329803466796875,
+        "actor_location": [
+          440.0,
+          -1624.185269959271,
+          2.0
+        ],
+        "head_rotation": [
+          88.50000762939453,
+          0.0059944638051092625,
+          179.4980926513672
+        ],
+        "thigh_rotation": [
+          -121.60814666748047,
+          6.197826385498047,
+          -175.03909301757812
+        ],
+        "forearm_rotation": [
+          -74.7152099609375,
+          -22.42538070678711,
+          89.20914459228516
+        ]
+      },
+      "last": {
+        "world_seconds": 4.245871894061565,
+        "state": "WALK",
+        "requested_dialogue": false,
+        "dialogue_open": false,
+        "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+        "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+        "single_node": true,
+        "playing": true,
+        "position_seconds": 0.8376864194869995,
+        "play_rate": 0.5065387487411499,
+        "measured_speed_cm_s": 55.719261169433594,
+        "actor_location": [
+          440.0,
+          -1708.3738139085472,
+          2.0
+        ],
+        "head_rotation": [
+          88.50007629394531,
+          -0.01582924649119377,
+          -178.71131896972656
+        ],
+        "thigh_rotation": [
+          -107.17033386230469,
+          6.0714030265808105,
+          -174.86509704589844
+        ],
+        "forearm_rotation": [
+          -75.0733642578125,
+          -3.7003073692321777,
+          91.8967056274414
+        ]
+      }
+    },
+    {
+      "name": "walk_55_actual_bone_motion",
+      "passed": true,
+      "bone": "thigh_rotation",
+      "max_degrees": 51.935768127441406
+    },
+    {
+      "name": "walk_55_low_frame_timer_catchup_preserves_motion",
+      "passed": false,
+      "movement_sample_seconds": 0.1,
+      "observed_frame_interval_seconds": 0.046405598521232605,
+      "native_samples": 37,
+      "requirement": "Owned fixture temporarily caps t.MaxFPS at 5; the observed prior value is restored without saving configuration."
+    },
+    {
+      "name": "animation_frame_limit_restored",
+      "passed": true,
+      "original": 120.0,
+      "observed_after_restore": 120.0,
+      "restored": true,
+      "configuration_saved": false
+    }
+  ],
+  "limitations": [
+    "This fixture calls the real reflected dialogue and inventory APIs; physical F-key input and Korean text layout also require a visual check.",
+    "Receipts use PlayerState plus a GameInstance supply record across the real portal, not permanent character-profile saves. Network play is outside this single-player prototype check.",
+    "Runtime fixtures are disposable PIE data; a small damage stimulus verifies actual potion use before real portal travel. No assets or maps are saved.",
+    "Controlled actor displacement tests native clip selection, not autonomous NPC navigation or path following.",
+    "A temporary always-tick-pose setting is used only on the owned PIE mesh for reliable bone observations.",
+    "Talking is a body/head gesture loop; facial lip sync, individual fingers and recorded speech are outside this rig.",
+    "Numerical playback and bone changes require the separate Blender/engine visual review for deformation quality.",
+    "This owned fixture temporarily sets the process t.MaxFPS console value to 5 and restores its exact observed value on finish; no configuration is saved."
+  ],
+  "runtime": "Actual owned Unreal Editor StartHub PIE, followed by the real portal",
+  "asset_mutation_requested": false,
+  "fixture_movement_only": true,
+  "baseline_check_count": 67,
+  "baseline_report_sha256": "7a423f10cb93a680c5ea82e3e0da0d469eb981e18573622fd8a94581ebd6ecfb",
+  "validator_source_sha256": "30f1b9ffdca339cd737b028abb4f58f61b21460a91a423f65455f3f823542d72",
+  "animation_observations": [
+    {
+      "phase": "initial_idle",
+      "stimulus_speed_cm_s": 0.0,
+      "observations": [
+        {
+          "world_seconds": 2.258326195180416,
+          "state": "IDLE",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.25832632184028625,
+          "play_rate": 1.0,
+          "measured_speed_cm_s": 0.0,
+          "actor_location": [
+            440.0,
+            -1610.0,
+            2.0
+          ],
+          "head_rotation": [
+            90.10047912597656,
+            0.0009408171172253788,
+            179.46353149414062
+          ],
+          "thigh_rotation": [
+            -86.90775299072266,
+            4.991848945617676,
+            -174.73040771484375
+          ],
+          "forearm_rotation": [
+            -75.58258819580078,
+            0.10048937797546387,
+            90.0
+          ]
+        },
+        {
+          "world_seconds": 2.298536393791437,
+          "state": "IDLE",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.2985365092754364,
+          "play_rate": 1.0,
+          "measured_speed_cm_s": 0.0,
+          "actor_location": [
+            440.0,
+            -1610.0,
+            2.0
+          ],
+          "head_rotation": [
+            90.11306762695312,
+            0.0013132300227880478,
+            179.3345489501953
+          ],
+          "thigh_rotation": [
+            -86.90775299072266,
+            4.991848945617676,
+            -174.73040771484375
+          ],
+          "forearm_rotation": [
+            -75.6427001953125,
+            0.11307989060878754,
+            90.0
+          ]
+        },
+        {
+          "world_seconds": 2.3370291963219643,
+          "state": "IDLE",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.3370293080806732,
+          "play_rate": 1.0,
+          "measured_speed_cm_s": 0.0,
+          "actor_location": [
+            440.0,
+            -1610.0,
+            2.0
+          ],
+          "head_rotation": [
+            90.12452697753906,
+            0.0017524560680612922,
+            179.1937255859375
+          ],
+          "thigh_rotation": [
+            -86.90775299072266,
+            4.991848945617676,
+            -174.73040771484375
+          ],
+          "forearm_rotation": [
+            -75.69509887695312,
+            0.12454475462436676,
+            90.0
+          ]
+        },
+        {
+          "world_seconds": 2.380767796188593,
+          "state": "IDLE",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.38076794147491455,
+          "play_rate": 1.0,
+          "measured_speed_cm_s": 0.0,
+          "actor_location": [
+            440.0,
+            -1610.0,
+            2.0
+          ],
+          "head_rotation": [
+            90.13228607177734,
+            0.0018616394372656941,
+            179.1937255859375
+          ],
+          "thigh_rotation": [
+            -86.90775299072266,
+            4.991848945617676,
+            -174.73040771484375
+          ],
+          "forearm_rotation": [
+            -75.74119567871094,
+            0.1323038637638092,
+            90.0
+          ]
+        },
+        {
+          "world_seconds": 2.4222630970180035,
+          "state": "IDLE",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.4222632646560669,
+          "play_rate": 1.0,
+          "measured_speed_cm_s": 0.0,
+          "actor_location": [
+            440.0,
+            -1610.0,
+            2.0
+          ],
+          "head_rotation": [
+            90.13777923583984,
+            0.0019390098750591278,
+            179.1937255859375
+          ],
+          "thigh_rotation": [
+            -86.90775299072266,
+            4.991848945617676,
+            -174.73040771484375
+          ],
+          "forearm_rotation": [
+            -75.77293395996094,
+            0.13780218362808228,
+            90.0
+          ]
+        }
+      ],
+      "final": {
+        "world_seconds": 2.4572570957243443,
+        "state": "IDLE",
+        "requested_dialogue": false,
+        "dialogue_open": false,
+        "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+        "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+        "single_node": true,
+        "playing": true,
+        "position_seconds": 0.4572572410106659,
+        "play_rate": 1.0,
+        "measured_speed_cm_s": 0.0,
+        "actor_location": [
+          440.0,
+          -1610.0,
+          2.0
+        ],
+        "head_rotation": [
+          90.13899993896484,
+          0.001956204418092966,
+          179.1937255859375
+        ],
+        "thigh_rotation": [
+          -86.90775299072266,
+          4.991848945617676,
+          -174.73040771484375
+        ],
+        "forearm_rotation": [
+          -75.78902435302734,
+          0.13902410864830017,
+          90.0
+        ]
+      }
+    },
+    {
+      "phase": "walk_55",
+      "stimulus_speed_cm_s": 55.0,
+      "observations": [
+        {
+          "world_seconds": 2.715171094983816,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.07174098491668701,
+          "play_rate": 0.49390730261802673,
+          "measured_speed_cm_s": 54.329803466796875,
+          "actor_location": [
+            440.0,
+            -1624.185269959271,
+            2.0
+          ],
+          "head_rotation": [
+            88.50000762939453,
+            0.0059944638051092625,
+            179.4980926513672
+          ],
+          "thigh_rotation": [
+            -121.60814666748047,
+            6.197826385498047,
+            -175.03909301757812
+          ],
+          "forearm_rotation": [
+            -74.7152099609375,
+            -22.42538070678711,
+            89.20914459228516
+          ]
+        },
+        {
+          "world_seconds": 2.759573593735695,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.09367169439792633,
+          "play_rate": 0.49390730261802673,
+          "measured_speed_cm_s": 54.329803466796875,
+          "actor_location": [
+            440.0,
+            -1626.6274073906243,
+            2.0
+          ],
+          "head_rotation": [
+            88.5000228881836,
+            0.009452437050640583,
+            179.42132568359375
+          ],
+          "thigh_rotation": [
+            -121.15166473388672,
+            6.099461078643799,
+            -175.00904846191406
+          ],
+          "forearm_rotation": [
+            -74.64825439453125,
+            -21.697513580322266,
+            88.98824310302734
+          ]
+        },
+        {
+          "world_seconds": 2.797074895352125,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.11219386011362076,
+          "play_rate": 0.49390730261802673,
+          "measured_speed_cm_s": 54.329803466796875,
+          "actor_location": [
+            440.0,
+            -1628.689978979528,
+            2.0
+          ],
+          "head_rotation": [
+            88.50003051757812,
+            0.010450256988406181,
+            179.29466247558594
+          ],
+          "thigh_rotation": [
+            -120.3914794921875,
+            5.978642463684082,
+            -174.97169494628906
+          ],
+          "forearm_rotation": [
+            -74.60579681396484,
+            -20.93790054321289,
+            88.81716918945312
+          ]
+        },
+        {
+          "world_seconds": 2.833750296384096,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.13044141232967377,
+          "play_rate": 0.4995647072792053,
+          "measured_speed_cm_s": 54.952117919921875,
+          "actor_location": [
+            440.0,
+            -1630.7071260362864,
+            2.0
+          ],
+          "head_rotation": [
+            88.50003051757812,
+            0.010450256988406181,
+            179.13827514648438
+          ],
+          "thigh_rotation": [
+            -119.45122528076172,
+            5.83980655670166,
+            -174.93048095703125
+          ],
+          "forearm_rotation": [
+            -74.57122802734375,
+            -20.115463256835938,
+            88.65663146972656
+          ]
+        },
+        {
+          "world_seconds": 2.8762401938438416,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.15166787803173065,
+          "play_rate": 0.4995647072792053,
+          "measured_speed_cm_s": 54.952117919921875,
+          "actor_location": [
+            440.0,
+            -1633.0440703965724,
+            2.0
+          ],
+          "head_rotation": [
+            88.50003051757812,
+            0.010450256988406181,
+            178.97817993164062
+          ],
+          "thigh_rotation": [
+            -117.83663177490234,
+            5.625067234039307,
+            -174.87086486816406
+          ],
+          "forearm_rotation": [
+            -74.54964447021484,
+            -18.967918395996094,
+            88.4972152709961
+          ]
+        },
+        {
+          "world_seconds": 2.9195030964910984,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.17345479130744934,
+          "play_rate": 0.5138346552848816,
+          "measured_speed_cm_s": 56.521812438964844,
+          "actor_location": [
+            440.0,
+            -1635.4235300421715,
+            2.0
+          ],
+          "head_rotation": [
+            88.50003814697266,
+            0.01152058131992817,
+            178.8679656982422
+          ],
+          "thigh_rotation": [
+            -116.0368423461914,
+            5.391875267028809,
+            -174.81300354003906
+          ],
+          "forearm_rotation": [
+            -74.53880310058594,
+            -17.699203491210938,
+            88.34952545166016
+          ]
+        },
+        {
+          "world_seconds": 2.9607660956680775,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.19465714693069458,
+          "play_rate": 0.5138346552848816,
+          "measured_speed_cm_s": 56.521812438964844,
+          "actor_location": [
+            440.0,
+            -1637.6929949969053,
+            2.0
+          ],
+          "head_rotation": [
+            88.50006866455078,
+            0.014863645657896996,
+            178.86944580078125
+          ],
+          "thigh_rotation": [
+            -114.1590805053711,
+            5.157682418823242,
+            -174.76199340820312
+          ],
+          "forearm_rotation": [
+            -74.54601287841797,
+            -16.33550453186035,
+            88.23027038574219
+          ]
+        },
+        {
+          "world_seconds": 3.003205396234989,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.21646393835544586,
+          "play_rate": 0.49980348348617554,
+          "measured_speed_cm_s": 54.9783821105957,
+          "actor_location": [
+            440.0,
+            -1640.0271565280855,
+            2.0
+          ],
+          "head_rotation": [
+            88.50007629394531,
+            0.01570606417953968,
+            178.7953338623047
+          ],
+          "thigh_rotation": [
+            -112.17569732666016,
+            4.919157028198242,
+            -174.71875
+          ],
+          "forearm_rotation": [
+            -74.5711669921875,
+            -14.821930885314941,
+            88.13407897949219
+          ]
+        },
+        {
+          "world_seconds": 3.0458106957376003,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.23775821924209595,
+          "play_rate": 0.49980348348617554,
+          "measured_speed_cm_s": 54.9783821105957,
+          "actor_location": [
+            440.0,
+            -1642.370448000729,
+            2.0
+          ],
+          "head_rotation": [
+            88.50007629394531,
+            0.01570606417953968,
+            178.7074432373047
+          ],
+          "thigh_rotation": [
+            -110.21867370605469,
+            4.688949108123779,
+            -174.685302734375
+          ],
+          "forearm_rotation": [
+            -74.60371398925781,
+            -13.288237571716309,
+            88.05655670166016
+          ]
+        },
+        {
+          "world_seconds": 3.0895971953868866,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.2596428692340851,
+          "play_rate": 0.49980348348617554,
+          "measured_speed_cm_s": 54.9783821105957,
+          "actor_location": [
+            440.0,
+            -1644.7787054814398,
+            2.0
+          ],
+          "head_rotation": [
+            88.50007629394531,
+            0.01570606417953968,
+            178.65013122558594
+          ],
+          "thigh_rotation": [
+            -108.19136810302734,
+            4.4621663093566895,
+            -174.6605224609375
+          ],
+          "forearm_rotation": [
+            -74.64755249023438,
+            -11.631624221801758,
+            88.01042175292969
+          ]
+        },
+        {
+          "world_seconds": 3.1329051963984966,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.28114691376686096,
+          "play_rate": 0.4953739047050476,
+          "measured_speed_cm_s": 54.49113082885742,
+          "actor_location": [
+            440.0,
+            -1647.1606455370784,
+            2.0
+          ],
+          "head_rotation": [
+            88.50007629394531,
+            0.01570606417953968,
+            178.61793518066406
+          ],
+          "thigh_rotation": [
+            -106.22313690185547,
+            4.252251148223877,
+            -174.6456756591797
+          ],
+          "forearm_rotation": [
+            -74.70167541503906,
+            -9.968073844909668,
+            87.98858642578125
+          ]
+        },
+        {
+          "world_seconds": 3.1793107949197292,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.3041350245475769,
+          "play_rate": 0.4953739047050476,
+          "measured_speed_cm_s": 54.49113082885742,
+          "actor_location": [
+            440.0,
+            -1649.7129534557462,
+            2.0
+          ],
+          "head_rotation": [
+            88.50007629394531,
+            0.01570606417953968,
+            178.6039276123047
+          ],
+          "thigh_rotation": [
+            -104.14291381835938,
+            4.038884162902832,
+            -174.63893127441406
+          ],
+          "forearm_rotation": [
+            -74.76496124267578,
+            -8.171610832214355,
+            87.9842300415039
+          ]
+        },
+        {
+          "world_seconds": 3.2235119938850403,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.3261663019657135,
+          "play_rate": 0.5014439821243286,
+          "measured_speed_cm_s": 55.15884017944336,
+          "actor_location": [
+            440.0,
+            -1652.1440193988383,
+            2.0
+          ],
+          "head_rotation": [
+            88.50007629394531,
+            0.01570606417953968,
+            178.62490844726562
+          ],
+          "thigh_rotation": [
+            -102.19926452636719,
+            3.853449583053589,
+            -174.64114379882812
+          ],
+          "forearm_rotation": [
+            -74.8250961303711,
+            -6.451999187469482,
+            88.01278686523438
+          ]
+        },
+        {
+          "world_seconds": 3.2649111971259117,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.3469257056713104,
+          "play_rate": 0.5014439821243286,
+          "measured_speed_cm_s": 55.15884017944336,
+          "actor_location": [
+            440.0,
+            -1654.4209755770862,
+            2.0
+          ],
+          "head_rotation": [
+            88.50007629394531,
+            0.01570606417953968,
+            178.66732788085938
+          ],
+          "thigh_rotation": [
+            -100.36947631835938,
+            3.6907598972320557,
+            -174.64939880371094
+          ],
+          "forearm_rotation": [
+            -74.8834457397461,
+            -4.864014148712158,
+            88.06073760986328
+          ]
+        },
+        {
+          "world_seconds": 3.30808599665761,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.36857545375823975,
+          "play_rate": 0.4991796016693115,
+          "measured_speed_cm_s": 54.90975570678711,
+          "actor_location": [
+            440.0,
+            -1656.7955895513296,
+            2.0
+          ],
+          "head_rotation": [
+            88.50007629394531,
+            0.01570606417953968,
+            178.7276611328125
+          ],
+          "thigh_rotation": [
+            -98.47697448730469,
+            3.5311214923858643,
+            -174.66371154785156
+          ],
+          "forearm_rotation": [
+            -74.94396209716797,
+            -3.2343692779541016,
+            88.12522888183594
+          ]
+        },
+        {
+          "world_seconds": 3.35231289640069,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.3906526267528534,
+          "play_rate": 0.4991796016693115,
+          "measured_speed_cm_s": 54.90975570678711,
+          "actor_location": [
+            440.0,
+            -1659.228069037199,
+            2.0
+          ],
+          "head_rotation": [
+            88.50007629394531,
+            0.01570606417953968,
+            178.82752990722656
+          ],
+          "thigh_rotation": [
+            -96.70392608642578,
+            3.4019253253936768,
+            -174.68328857421875
+          ],
+          "forearm_rotation": [
+            -74.99327850341797,
+            -1.6645656824111938,
+            88.2266845703125
+          ]
+        },
+        {
+          "world_seconds": 3.398221295326948,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.4135691821575165,
+          "play_rate": 0.4991796016693115,
+          "measured_speed_cm_s": 54.90975570678711,
+          "actor_location": [
+            440.0,
+            -1661.7530309781432,
+            2.0
+          ],
+          "head_rotation": [
+            88.50005340576172,
+            0.013566572219133377,
+            178.86886596679688
+          ],
+          "thigh_rotation": [
+            -95.01353454589844,
+            3.298025608062744,
+            -174.7051239013672
+          ],
+          "forearm_rotation": [
+            -75.03639221191406,
+            -0.12874752283096313,
+            88.35095977783203
+          ]
+        },
+        {
+          "world_seconds": 3.4401734955608845,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.43466898798942566,
+          "play_rate": 0.5041935443878174,
+          "measured_speed_cm_s": 55.4612922668457,
+          "actor_location": [
+            440.0,
+            -1664.0604019910097,
+            2.0
+          ],
+          "head_rotation": [
+            88.50003051757812,
+            0.010450256988406181,
+            178.87734985351562
+          ],
+          "thigh_rotation": [
+            -93.53759002685547,
+            3.22110652923584,
+            -174.72607421875
+          ],
+          "forearm_rotation": [
+            -75.07006072998047,
+            1.2143380641937256,
+            88.47925567626953
+          ]
+        },
+        {
+          "world_seconds": 3.4836460947990417,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.45658761262893677,
+          "play_rate": 0.5041935443878174,
+          "measured_speed_cm_s": 55.4612922668457,
+          "actor_location": [
+            440.0,
+            -1666.4513949491084,
+            2.0
+          ],
+          "head_rotation": [
+            88.50003051757812,
+            0.010450256988406181,
+            179.0391082763672
+          ],
+          "thigh_rotation": [
+            -91.77891540527344,
+            3.133751153945923,
+            -174.7529296875
+          ],
+          "forearm_rotation": [
+            -75.09107971191406,
+            2.4310147762298584,
+            88.63895416259766
+          ]
+        },
+        {
+          "world_seconds": 3.5247002951800823,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.47725048661231995,
+          "play_rate": 0.5023649334907532,
+          "measured_speed_cm_s": 55.2601432800293,
+          "actor_location": [
+            440.0,
+            -1668.7093759700656,
+            2.0
+          ],
+          "head_rotation": [
+            88.50003051757812,
+            0.010450256988406181,
+            179.20419311523438
+          ],
+          "thigh_rotation": [
+            -90.01498413085938,
+            3.0474607944488525,
+            -174.7833251953125
+          ],
+          "forearm_rotation": [
+            -75.10089874267578,
+            3.466221809387207,
+            88.80299377441406
+          ]
+        },
+        {
+          "world_seconds": 3.5633838959038258,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.4966837763786316,
+          "play_rate": 0.5023649334907532,
+          "measured_speed_cm_s": 55.2601432800293,
+          "actor_location": [
+            440.0,
+            -1670.8369740098715,
+            2.0
+          ],
+          "head_rotation": [
+            88.50003051757812,
+            0.010450256988406181,
+            179.37074279785156
+          ],
+          "thigh_rotation": [
+            -88.26091003417969,
+            2.963015556335449,
+            -174.81686401367188
+          ],
+          "forearm_rotation": [
+            -75.10115814208984,
+            4.339757442474365,
+            88.96957397460938
+          ]
+        },
+        {
+          "world_seconds": 3.6052535958588123,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.5177175998687744,
+          "play_rate": 0.5008427500724792,
+          "measured_speed_cm_s": 55.09270095825195,
+          "actor_location": [
+            440.0,
+            -1673.1398075073957,
+            2.0
+          ],
+          "head_rotation": [
+            88.50001525878906,
+            0.00765660684555769,
+            179.46119689941406
+          ],
+          "thigh_rotation": [
+            -86.01420593261719,
+            2.8493001461029053,
+            -174.86215209960938
+          ],
+          "forearm_rotation": [
+            -75.0911865234375,
+            5.076186656951904,
+            89.16625213623047
+          ]
+        },
+        {
+          "world_seconds": 3.6481290943920612,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.539191484451294,
+          "play_rate": 0.5008427500724792,
+          "measured_speed_cm_s": 55.09270095825195,
+          "actor_location": [
+            440.0,
+            -1675.4979599267244,
+            2.0
+          ],
+          "head_rotation": [
+            88.5,
+            0.005194354802370071,
+            179.57443237304688
+          ],
+          "thigh_rotation": [
+            -83.54375457763672,
+            2.7207703590393066,
+            -174.91851806640625
+          ],
+          "forearm_rotation": [
+            -75.0768814086914,
+            5.713162422180176,
+            89.37335205078125
+          ]
+        },
+        {
+          "world_seconds": 3.691044993698597,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.5606856346130371,
+          "play_rate": 0.5008427500724792,
+          "measured_speed_cm_s": 55.09270095825195,
+          "actor_location": [
+            440.0,
+            -1677.858334388584,
+            2.0
+          ],
+          "head_rotation": [
+            88.5,
+            0.005194354802370071,
+            179.78933715820312
+          ],
+          "thigh_rotation": [
+            -80.77629089355469,
+            2.56862473487854,
+            -174.99269104003906
+          ],
+          "forearm_rotation": [
+            -75.05680847167969,
+            6.150835037231445,
+            89.58853149414062
+          ]
+        },
+        {
+          "world_seconds": 3.7350616939365864,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.582679033279419,
+          "play_rate": 0.49931561946868896,
+          "measured_speed_cm_s": 54.92471694946289,
+          "actor_location": [
+            440.0,
+            -1680.2792529016733,
+            2.0
+          ],
+          "head_rotation": [
+            88.5,
+            0.002728726016357541,
+            179.92274475097656
+          ],
+          "thigh_rotation": [
+            -77.39019012451172,
+            2.373199701309204,
+            -175.09300231933594
+          ],
+          "forearm_rotation": [
+            -75.02616882324219,
+            6.381902694702148,
+            89.81736755371094
+          ]
+        },
+        {
+          "world_seconds": 3.7796198949217796,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.604927659034729,
+          "play_rate": 0.49931561946868896,
+          "measured_speed_cm_s": 54.92471694946289,
+          "actor_location": [
+            440.0,
+            -1682.729953955859,
+            2.0
+          ],
+          "head_rotation": [
+            88.49999237060547,
+            -0.0007214618963189423,
+            -179.97630310058594
+          ],
+          "thigh_rotation": [
+            -73.79487609863281,
+            2.166982889175415,
+            -175.2122344970703
+          ],
+          "forearm_rotation": [
+            -74.99168395996094,
+            6.466128349304199,
+            90.05146026611328
+          ]
+        },
+        {
+          "world_seconds": 3.8198805935680866,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.6250492334365845,
+          "play_rate": 0.5002670884132385,
+          "measured_speed_cm_s": 55.029380798339844,
+          "actor_location": [
+            440.0,
+            -1684.9442923814058,
+            2.0
+          ],
+          "head_rotation": [
+            88.5,
+            -0.003918991424143314,
+            -179.88929748535156
+          ],
+          "thigh_rotation": [
+            -70.66859436035156,
+            1.9905952215194702,
+            -175.32699584960938
+          ],
+          "forearm_rotation": [
+            -74.96161651611328,
+            6.3273820877075195,
+            90.2608642578125
+          ]
+        },
+        {
+          "world_seconds": 3.8549077957868576,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.6425721645355225,
+          "play_rate": 0.5002670884132385,
+          "measured_speed_cm_s": 55.029380798339844,
+          "actor_location": [
+            440.0,
+            -1686.8707885034382,
+            2.0
+          ],
+          "head_rotation": [
+            88.50000762939453,
+            -0.005235421005636454,
+            -179.75962829589844
+          ],
+          "thigh_rotation": [
+            -69.67237854003906,
+            1.977325439453125,
+            -175.35690307617188
+          ],
+          "forearm_rotation": [
+            -74.94065856933594,
+            6.083080291748047,
+            90.44160461425781
+          ]
+        },
+        {
+          "world_seconds": 3.897089395672083,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.6636742353439331,
+          "play_rate": 0.5002670884132385,
+          "measured_speed_cm_s": 55.029380798339844,
+          "actor_location": [
+            440.0,
+            -1689.1907764971256,
+            2.0
+          ],
+          "head_rotation": [
+            88.50000762939453,
+            -0.005235421005636454,
+            -179.54530334472656
+          ],
+          "thigh_rotation": [
+            -70.33609008789062,
+            2.108966112136841,
+            -175.31207275390625
+          ],
+          "forearm_rotation": [
+            -74.92108917236328,
+            5.655546188354492,
+            90.65734100341797
+          ]
+        },
+        {
+          "world_seconds": 3.932483494281769,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.6811420917510986,
+          "play_rate": 0.4900536835193634,
+          "measured_speed_cm_s": 53.905906677246094,
+          "actor_location": [
+            440.0,
+            -1691.1374519206583,
+            2.0
+          ],
+          "head_rotation": [
+            88.50000762939453,
+            -0.005235421005636454,
+            -179.3781280517578
+          ],
+          "thigh_rotation": [
+            -72.73656463623047,
+            2.3721015453338623,
+            -175.20223999023438
+          ],
+          "forearm_rotation": [
+            -74.90682220458984,
+            5.114051818847656,
+            90.82427215576172
+          ]
+        },
+        {
+          "world_seconds": 3.9785457961261272,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.7037150859832764,
+          "play_rate": 0.4900536835193634,
+          "measured_speed_cm_s": 53.905906677246094,
+          "actor_location": [
+            440.0,
+            -1693.670878522098,
+            2.0
+          ],
+          "head_rotation": [
+            88.50000762939453,
+            -0.005825783126056194,
+            -179.19091796875
+          ],
+          "thigh_rotation": [
+            -76.50982666015625,
+            2.778005599975586,
+            -175.054443359375
+          ],
+          "forearm_rotation": [
+            -74.89286041259766,
+            4.320531845092773,
+            91.03328704833984
+          ]
+        },
+        {
+          "world_seconds": 4.024032194167376,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.7263250350952148,
+          "play_rate": 0.5037880539894104,
+          "measured_speed_cm_s": 55.416683197021484,
+          "actor_location": [
+            440.0,
+            -1696.1726304143667,
+            2.0
+          ],
+          "head_rotation": [
+            88.5000228881836,
+            -0.009418711997568607,
+            -179.13584899902344
+          ],
+          "thigh_rotation": [
+            -81.19010162353516,
+            3.2820401191711426,
+            -174.90956115722656
+          ],
+          "forearm_rotation": [
+            -74.89884185791016,
+            3.303725481033325,
+            91.22582244873047
+          ]
+        },
+        {
+          "world_seconds": 4.066813196986914,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.7478775978088379,
+          "play_rate": 0.5037880539894104,
+          "measured_speed_cm_s": 55.416683197021484,
+          "actor_location": [
+            440.0,
+            -1698.5255855694413,
+            2.0
+          ],
+          "head_rotation": [
+            88.50003051757812,
+            -0.010532383807003498,
+            -179.0088348388672
+          ],
+          "thigh_rotation": [
+            -85.95268249511719,
+            3.8021392822265625,
+            -174.80511474609375
+          ],
+          "forearm_rotation": [
+            -74.91461944580078,
+            2.182219982147217,
+            91.39474487304688
+          ]
+        },
+        {
+          "world_seconds": 4.110839694738388,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.7700576186180115,
+          "play_rate": 0.49808627367019653,
+          "measured_speed_cm_s": 54.78948974609375,
+          "actor_location": [
+            440.0,
+            -1700.9470429457724,
+            2.0
+          ],
+          "head_rotation": [
+            88.50003814697266,
+            -0.01107123214751482,
+            -178.86737060546875
+          ],
+          "thigh_rotation": [
+            -91.04188537597656,
+            4.361958980560303,
+            -174.7418975830078
+          ],
+          "forearm_rotation": [
+            -74.9382095336914,
+            0.9230881333351135,
+            91.55579376220703
+          ]
+        },
+        {
+          "world_seconds": 4.156466394662857,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.7927836775779724,
+          "play_rate": 0.49808627367019653,
+          "measured_speed_cm_s": 54.78948974609375,
+          "actor_location": [
+            440.0,
+            -1703.4565114416182,
+            2.0
+          ],
+          "head_rotation": [
+            88.50006866455078,
+            -0.014682546257972717,
+            -178.87106323242188
+          ],
+          "thigh_rotation": [
+            -96.46561431884766,
+            4.951858043670654,
+            -174.7299346923828
+          ],
+          "forearm_rotation": [
+            -74.97584533691406,
+            -0.5344118475914001,
+            91.68901062011719
+          ]
+        },
+        {
+          "world_seconds": 4.201966196298599,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.8154464960098267,
+          "play_rate": 0.5065387487411499,
+          "measured_speed_cm_s": 55.719261169433594,
+          "actor_location": [
+            440.0,
+            -1705.959000531584,
+            2.0
+          ],
+          "head_rotation": [
+            88.50007629394531,
+            -0.01582924649119377,
+            -178.80291748046875
+          ],
+          "thigh_rotation": [
+            -101.88485717773438,
+            5.527215957641602,
+            -174.77256774902344
+          ],
+          "forearm_rotation": [
+            -75.02214050292969,
+            -2.0970301628112793,
+            91.80213928222656
+          ]
+        },
+        {
+          "world_seconds": 4.245871894061565,
+          "state": "WALK",
+          "requested_dialogue": false,
+          "dialogue_open": false,
+          "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+          "single_node": true,
+          "playing": true,
+          "position_seconds": 0.8376864194869995,
+          "play_rate": 0.5065387487411499,
+          "measured_speed_cm_s": 55.719261169433594,
+          "actor_location": [
+            440.0,
+            -1708.3738139085472,
+            2.0
+          ],
+          "head_rotation": [
+            88.50007629394531,
+            -0.01582924649119377,
+            -178.71131896972656
+          ],
+          "thigh_rotation": [
+            -107.17033386230469,
+            6.0714030265808105,
+            -174.86509704589844
+          ],
+          "forearm_rotation": [
+            -75.0733642578125,
+            -3.7003073692321777,
+            91.8967056274414
+          ]
+        }
+      ],
+      "final": {
+        "world_seconds": 4.268557794392109,
+        "state": "WALK",
+        "requested_dialogue": false,
+        "dialogue_open": false,
+        "selected_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+        "native_clip": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Walk",
+        "single_node": true,
+        "playing": true,
+        "position_seconds": 0.8491777181625366,
+        "play_rate": 0.5065387487411499,
+        "measured_speed_cm_s": 55.719261169433594,
+        "actor_location": [
+          440.0,
+          -1709.621538426727,
+          2.0
+        ],
+        "head_rotation": [
+          88.50007629394531,
+          -0.01582924649119377,
+          -178.68145751953125
+        ],
+        "thigh_rotation": [
+          -109.81475067138672,
+          6.329719543457031,
+          -174.9288330078125
+        ],
+        "forearm_rotation": [
+          -75.10342407226562,
+          -4.5706610679626465,
+          91.92877197265625
+        ]
+      }
+    }
+  ],
+  "frame_limit_fixture": {
+    "original": 120.0,
+    "requested": 5.0,
+    "observed": 5.0,
+    "configuration_saved": false
+  },
+  "phase": "animation_walk_55",
+  "elapsed_seconds": 4.32799999999952,
+  "exception": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateArinWalkTalkPIE.py\", line 437, in tick\n    complete_phase(world, npc)\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateArinWalkTalkPIE.py\", line 273, in complete_phase\n    validate_progress(name, samples, base.state[\"animation_clips\"][\"walk\"], \"thigh_rotation\")\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateArinWalkTalkPIE.py\", line 241, in validate_progress\n    base.check(\"walk_55_low_frame_timer_catchup_preserves_motion\", maximum_interval > .10001\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ValidateTutorialNPC.py\", line 42, in check\n    raise RuntimeError(f\"{name}: {details}\")\nRuntimeError: walk_55_low_frame_timer_catchup_preserves_motion: {'movement_sample_seconds': 0.1, 'observed_frame_interval_seconds': 0.046405598521232605, 'native_samples': 37, 'requirement': 'Owned fixture temporarily caps t.MaxFPS at 5; the observed prior value is restored without saving configuration.'}\n",
+  "frame_limit_restoration": {
+    "original": 120.0,
+    "observed_after_restore": 120.0,
+    "restored": true,
+    "configuration_saved": false
+  },
+  "message": "walk_55_low_frame_timer_catchup_preserves_motion: {'movement_sample_seconds': 0.1, 'observed_frame_interval_seconds': 0.046405598521232605, 'native_samples': 37, 'requirement': 'Owned fixture temporarily caps t.MaxFPS at 5; the observed prior value is restored without saving configuration.'}"
+}

@@ -3,6 +3,7 @@
 #include "Rogue10mDroppedItem.h"
 
 #include "Rogue10mItemDataAsset.h"
+#include "Rogue10mCharacter.h"
 
 #include "Components/StaticMeshComponent.h"
 #include "Components/TextRenderComponent.h"
@@ -18,6 +19,7 @@ ARogue10mDroppedItem::ARogue10mDroppedItem()
 	ItemMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ItemMesh"));
 	ItemMesh->SetupAttachment(SceneRoot);
 	ItemMesh->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
+	ItemMesh->SetGenerateOverlapEvents(true);
 	ItemMesh->SetRelativeScale3D(FVector(0.32f, 0.32f, 0.16f));
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> CubeMesh(TEXT("/Engine/BasicShapes/Cube.Cube"));
@@ -52,4 +54,33 @@ void ARogue10mDroppedItem::InitializeDroppedItem(const FRogue10mItemStack& NewIt
 	{
 		ItemNameText->SetText(ItemStack.DisplayName.IsEmpty() ? FText::FromString(TEXT("이름 없는 아이템")) : ItemStack.DisplayName);
 	}
+}
+
+void ARogue10mDroppedItem::BeginPlay()
+{
+	Super::BeginPlay();
+	ItemMesh->OnComponentBeginOverlap.AddUniqueDynamic(this, &ThisClass::HandlePickupOverlap);
+}
+
+void ARogue10mDroppedItem::HandlePickupOverlap(UPrimitiveComponent* OverlappedComponent,
+	AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
+	bool bFromSweep, const FHitResult& SweepResult)
+{
+	TryPickup(Cast<ARogue10mCharacter>(OtherActor));
+}
+
+bool ARogue10mDroppedItem::TryPickup(ARogue10mCharacter* Character)
+{
+	if (bPickupInProgress || IsActorBeingDestroyed() || !HasAuthority() || !Character || Character->IsDead()
+		|| FVector::DistSquared(GetActorLocation(), Character->GetActorLocation()) > FMath::Square(250.0f))
+	{
+		return false;
+	}
+	URogue10mInventoryComponent* Inventory = Character->GetInventoryComponent();
+	TGuardValue<bool> PickupGuard(bPickupInProgress, true);
+	int32 ContainerIndex;
+	FGuid InstanceId;
+	if (!Inventory || !Inventory->TryAddItemStack(ItemStack, ContainerIndex, InstanceId)) { return false; }
+	Destroy();
+	return true;
 }

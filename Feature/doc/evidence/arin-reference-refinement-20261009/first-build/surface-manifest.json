@@ -1,0 +1,43 @@
+{
+  "method": "preserved donor UV + actual Cycles EMIT palette/roughness/metal and tangent micro-normal bake",
+  "original_color_resolution": [
+    2048,
+    2048
+  ],
+  "normal_convention": "OpenGL +Y tangent-space; Unreal flip_green_channel=True",
+  "image_projection": false,
+  "groups": {
+    "Adventurer": {
+      "resolution": [
+        4096,
+        4096
+      ],
+      "mesh": "Arin_Adventurer",
+      "material": "M_Arin_Adventurer",
+      "channels": {
+        "BaseColor": "T_Arin_Adventurer_BaseColor.png",
+        "Roughness": "T_Arin_Adventurer_Roughness.png",
+        "Metallic": "T_Arin_Adventurer_Metallic.png",
+        "Normal": "T_Arin_Adventurer_Normal.png"
+      }
+    }
+  },
+  "files": {
+    "T_Arin_Adventurer_BaseColor.png": {
+      "bytes": 14565471,
+      "sha256": "9e7574dd34e7460c09b67f119f07a2796d9133a24f2bbd945f4171c6b5373f38"
+    },
+    "T_Arin_Adventurer_Roughness.png": {
+      "bytes": 8557527,
+      "sha256": "b8d68f82e7a6ce4a90c7b0eb3e58962f7a4a789e959d25efbaffaee2c1caaacf"
+    },
+    "T_Arin_Adventurer_Metallic.png": {
+      "bytes": 220136,
+      "sha256": "777855bc471d5971db1e6d60c2bcb04f887056879d0bc1d404fd523afd92421c"
+    },
+    "T_Arin_Adventurer_Normal.png": {
+      "bytes": 11523633,
+      "sha256": "98a653c2c7fce58c09a75754ca6737709e59931d77775c9fe2e33b0c5f364a7c"
+    }
+  }
+}

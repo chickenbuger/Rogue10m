@@ -5,6 +5,7 @@
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mBasicMonster.h"
 #include "Rogue10mCharacter.h"
+#include "Rogue10mTraitRuntimeComponent.h"
 #include "TimerManager.h"
 
 URogue10mVitalRegenerationComponent::URogue10mVitalRegenerationComponent()
@@ -55,6 +56,8 @@ URogue10mAttributeSet* URogue10mVitalRegenerationComponent::ResolveAttributeSet(
 
 void URogue10mVitalRegenerationComponent::ApplyRegeneration()
 {
+	const ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner());
+	if (Character && Character->IsDead()) { return; }
 	URogue10mAttributeSet* Attributes = ResolveAttributeSet();
 	if (!Attributes || Attributes->GetHealth() <= 0.0f)
 	{
@@ -62,10 +65,12 @@ void URogue10mVitalRegenerationComponent::ApplyRegeneration()
 	}
 
 	const float Interval = FMath::Max(0.05f, RegenerationInterval);
+	const URogue10mTraitRuntimeComponent* Traits = Character ? Character->GetTraitRuntimeComponent() : nullptr;
+	const float TraitStaminaPerSecond = Traits ? Traits->GetTraitBonus(ERogue10mTownTrait::StaminaRecovery) : 0.0f;
 	Attributes->SetHealth(FMath::Min(Attributes->GetMaxHealth(),
 		Attributes->GetHealth() + HealthRegenerationPerSecond * Interval));
 	Attributes->SetStamina(FMath::Min(Attributes->GetMaxStamina(),
-		Attributes->GetStamina() + StaminaRegenerationPerSecond * Interval));
+		Attributes->GetStamina() + (StaminaRegenerationPerSecond + TraitStaminaPerSecond) * Interval));
 	Attributes->SetMana(FMath::Min(Attributes->GetMaxMana(),
 		Attributes->GetMana() + ManaRegenerationPerSecond * Interval));
 }

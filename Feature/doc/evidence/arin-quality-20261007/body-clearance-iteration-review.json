@@ -1,0 +1,178 @@
+{
+  "decision": "blocked",
+  "stage": "source_repaired_pending_identical_actual_views",
+  "defect": "Ivory blouse/collar and sleeve patches interrupt the green mantle in the actual Idle front and oblique views; the dark underarm outline reads as intersecting panels.",
+  "candidate_source": "Feature/doc/evidence/arin-quality-20261007/form-candidate-1/ArinBodyRefined.py",
+  "candidate_source_sha256": "def2bef7d71df72f47de41ebc6479e3694b3f98b0f1b803efb7ac86c9a43b262",
+  "evidence": [
+    "Feature/doc/evidence/arin-quality-20261007/form-candidate-1/front.png",
+    "Feature/doc/evidence/arin-quality-20261007/form-candidate-1/body-oblique.png"
+  ],
+  "critical_requirement_ledger": [
+    {
+      "requirement": "Mantle outer surface visibly covers the shirt around the neck and shoulder",
+      "status": "fail",
+      "view": "front.png and body-oblique.png",
+      "finding": "Both sides show sharp ivory patches through the green front/shoulder surface."
+    },
+    {
+      "requirement": "Shoulder and underarm silhouette reads as tailored layered fabric",
+      "status": "fail",
+      "view": "front.png and body-oblique.png",
+      "finding": "The shoulder is squared and dark rectangular outlines interrupt the underarm margin."
+    },
+    {
+      "requirement": "Mantle remains separate from arms, without an arm web",
+      "status": "pass",
+      "view": "front.png",
+      "finding": "Arms and sleeves remain readable and separate below the shoulder."
+    },
+    {
+      "requirement": "Adult proportions, continuous trouser silhouette, natural hand shape",
+      "status": "pass",
+      "view": "front.png and body-oblique.png",
+      "finding": "Height and joint placement match the frozen adult form; legs and hands retain improved silhouettes."
+    },
+    {
+      "requirement": "Exactly two red potion bottles and travel outfit identity",
+      "status": "pass",
+      "view": "front.png and body-oblique.png",
+      "finding": "Two red bottle silhouettes, green outfit, ivory shirt, satchel and boots remain visible."
+    },
+    {
+      "requirement": "Mantle clearance in Tpose and complete back shape",
+      "status": "unclear",
+      "view": "not provided in form-preview",
+      "finding": "Requires new actual Tpose and back renders from root."
+    },
+    {
+      "requirement": "No geometric penetration across the Idle motion cycle",
+      "status": "unclear",
+      "view": "form-preview includes frame 1 only",
+      "finding": "The identical full motion check remains required."
+    }
+  ],
+  "intended_scope": "Only durable ArinBodyRefined.py collar/shoulder garment fit; preserve body joints, height, 23 bones, material keys, closed meshes, <=30000 body triangles and two potions.",
+  "selected_repair": "Measure the frozen mantle versus collar, sleeve and waistcoat geometry in the current Tpose and a source-derived linear Idle pose, then adjust a tightly coupled collar/shoulder clearance contour; no oversized floating mantle.",
+  "final_evidence": [],
+  "acceptance": "Root must regenerate identical actual views plus Tpose/back/Idle motion checks. Source metrics are not visual acceptance.",
+  "blocked_reason": "Actual repaired Blender visual evidence and fresh export/import have not yet been produced by the parent. Numeric source checks are not visual acceptance.",
+  "source_sha256": "7afe7e736d7f71aadbb1adddad719b7f87109a2620b0b82c4bca629c0a5ad2a8",
+  "source_cause": "The collar outer upper corner sits about 13mm above the mantle. Oversized proximal sleeve rings and a linearly sloped mantle cut through the shoulders. Flat waistcoat top side termination did not form a fitted armhole. Concealed blouse hip radii exceeded the coat inner surface.",
+  "repair": [
+    "Tuck concealed collar outer corners beneath the local mantle with a tapered corner height; retain the centre ivory neckline and lacing.",
+    "Taper concealed sleeve heads and underlying shoulder-root volume while preserving shoulder/elbow/wrist coordinates and existing arm weights.",
+    "Change mantle front/back shoulder turnover to gradual powers and add a local rear clearance contour. Reduce X extent slightly rather than inflating the entire garment.",
+    "Shape a curved waistcoat arm opening and resample its radii at the lowered height so it follows the shirt surface.",
+    "Taper concealed hip blouse under the belt and coat tails while leaving the visible ivory front apron intact."
+  ],
+  "invariant_results": {
+    "body_triangles": 28346,
+    "objects": 131,
+    "vertices": 14457,
+    "bounds_min": [
+      -0.7934360332556125,
+      -0.15199558249159958,
+      0.0
+    ],
+    "bounds_max": [
+      0.7934360332556125,
+      0.17387362176955484,
+      1.455
+    ],
+    "closed": true,
+    "degenerate_triangles": 0,
+    "same_bone_material_contract": true,
+    "no_blender_execution": true,
+    "no_original_source_edit": true
+  },
+  "numeric_source_clearance": {
+    "Tpose_source": {
+      "Arin_BlouseCollar_-1": {
+        "crossing_edge_hits": 0,
+        "bounds": null
+      },
+      "Arin_BlouseCollar_1": {
+        "crossing_edge_hits": 0,
+        "bounds": null
+      },
+      "Arin_IvorySleeve_l": {
+        "crossing_edge_hits": 0,
+        "bounds": null
+      },
+      "Arin_IvorySleeve_r": {
+        "crossing_edge_hits": 0,
+        "bounds": null
+      },
+      "Arin_IvoryBlouse": {
+        "crossing_edge_hits": 0,
+        "bounds": null
+      },
+      "Arin_FittedGreenWaistcoat": {
+        "crossing_edge_hits": 0,
+        "bounds": null
+      }
+    },
+    "Idle_frame1_source_LBS": {
+      "Arin_BlouseCollar_-1": {
+        "crossing_edge_hits": 0,
+        "bounds": null
+      },
+      "Arin_BlouseCollar_1": {
+        "crossing_edge_hits": 0,
+        "bounds": null
+      },
+      "Arin_IvorySleeve_l": {
+        "crossing_edge_hits": 0,
+        "bounds": null
+      },
+      "Arin_IvorySleeve_r": {
+        "crossing_edge_hits": 0,
+        "bounds": null
+      },
+      "Arin_IvoryBlouse": {
+        "crossing_edge_hits": 0,
+        "bounds": null
+      },
+      "Arin_FittedGreenWaistcoat": {
+        "crossing_edge_hits": 0,
+        "bounds": null
+      }
+    },
+    "concealed_hip_vs_split_tails": {
+      "Arin_GreenSplitCoatTail_L": {
+        "crossing_edge_hits": 0,
+        "bounds": null
+      },
+      "Arin_GreenSplitCoatTail_R": {
+        "crossing_edge_hits": 0,
+        "bounds": null
+      }
+    },
+    "Idle_source_LBS_motion_extrema": {
+      "-1": {
+        "Arin_BlouseCollar_-1": 0,
+        "Arin_BlouseCollar_1": 0,
+        "Arin_IvorySleeve_l": 0,
+        "Arin_IvorySleeve_r": 0,
+        "Arin_IvoryBlouse": 0,
+        "Arin_FittedGreenWaistcoat": 0
+      },
+      "1": {
+        "Arin_BlouseCollar_-1": 0,
+        "Arin_BlouseCollar_1": 0,
+        "Arin_IvorySleeve_l": 0,
+        "Arin_IvorySleeve_r": 0,
+        "Arin_IvoryBlouse": 0,
+        "Arin_FittedGreenWaistcoat": 0
+      }
+    }
+  },
+  "numeric_check_limitations": "Triangle crossing checks ignore coplanar contacts and are not a minimum-distance proof. The Idle simulation uses source-derived linear shoulder/elbow skin matrices and relative motion extrema; actual Blender motion/render and export verification remain mandatory.",
+  "requested_recheck": [
+    "same front, body-oblique, profile and face cameras",
+    "actual Tpose and back views",
+    "same full Idle motion with linear blend skinning",
+    "final fresh FBX importer and triangle/material/bounds checks"
+  ]
+}

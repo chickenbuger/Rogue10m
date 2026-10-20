@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "runtime_cases": 22,
+  "runtime_checks": 480,
+  "visual_captures": 3,
+  "fresh_reload": true,
+  "six_species_baseline_preserved": true,
+  "final_pie": false,
+  "dirty_packages": 0,
+  "script_ast": [
+    "ApplyAzathorBossPatterns",
+    "InspectAzathorBossPatterns",
+    "ValidateAzathorBossPatterns",
+    "PreviewAzathorBossPatterns"
+  ],
+  "content": {
+    "before_count": 6297,
+    "after_count": 6301,
+    "unchanged_count": 6296,
+    "changed": [
+      "Content/Rogue10m/World/OpenWorld/Monsters/DA_OW_AbyssOverlordAzathor.uasset"
+    ],
+    "added": [
+      "Content/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.uasset",
+      "Content/Rogue10m/World/OpenWorld/Monsters/Azathor/MI_Azathor_FrontalWarning.uasset",
+      "Content/Rogue10m/World/OpenWorld/Monsters/Azathor/MI_Azathor_ZoneWarning.uasset",
+      "Content/Rogue10m/World/OpenWorld/Monsters/Azathor/M_Azathor_Telegraph.uasset"
+    ],
+    "removed": []
+  },
+  "scope_limits": "Focused controlled PIE; full northern traversal, whole AI fight, physical dodge, packaging/networking and long GPU stability remain separate."
+}

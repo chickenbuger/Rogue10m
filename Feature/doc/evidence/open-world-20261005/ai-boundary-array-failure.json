@@ -1,0 +1,60 @@
+{
+  "status": "failed",
+  "map": "/Game/Rogue10m/Maps/OpenRunMap",
+  "checks": [
+    {
+      "name": "no_existing_pie",
+      "passed": true
+    },
+    {
+      "name": "correct_project",
+      "passed": true
+    },
+    {
+      "name": "saved_map_exists",
+      "passed": true
+    },
+    {
+      "name": "load_saved_editor_map",
+      "passed": true
+    },
+    {
+      "name": "exact_editor_map",
+      "passed": true
+    },
+    {
+      "name": "player_has_health_for_two_native_hits",
+      "passed": true,
+      "health": 135.0
+    },
+    {
+      "name": "runtime_placement_exact",
+      "passed": true,
+      "actor": "/Game/Rogue10m/Maps/UEDPIE_0_OpenRunMap.OpenRunMap:PersistentLevel.BP_Rogue10m_HumanMaleCharacter_C_0",
+      "expected": [
+        -49650.0,
+        -25000.0,
+        4300.0
+      ],
+      "actual": [
+        -49650.0,
+        -25000.0,
+        4300.0
+      ]
+    }
+  ],
+  "cases": [],
+  "limitations": [
+    "Two existing authored normal forest types are tested in a standalone owned PIE session.",
+    "Player input suppression, AI isolation, regeneration suppression and actor placement are PIE-only setup.",
+    "The script applies a one-point native damage perception stimulus to the selected monster, never to the player.",
+    "The old combined-radius threshold is calculated from live capsule radii and UE 5.8's default 1.1 agent radius multiplier; the engine multiplier and MoveTo return value have no reflected Python accessor.",
+    "Pursuit proof uses native Blackboard targeting, actual monster movement into melee range and native player damage with other AI stopped; it does not call AI decisions or movement requests.",
+    "This is a short melee boundary regression, not whole-map, boss, network or packaged-performance verification."
+  ],
+  "phase": "cleanup",
+  "elapsed_wall_seconds": 4.4060000000026776,
+  "exception": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateOpenWorldAIBoundary.py\", line 453, in tick\n    tick_impl(delta_seconds)\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateOpenWorldAIBoundary.py\", line 426, in tick_impl\n    if (navigation_ready(world) and grounded(world, pawn, pawn)\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateOpenWorldAIBoundary.py\", line 189, in grounded\n    floor = ground(world, pawn, location.x, location.y)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateOpenWorldAIBoundary.py\", line 175, in ground\n    ignored = [pawn] + unreal.GameplayStatics.get_all_actors_of_class(world, unreal.Rogue10mBasicMonster)\n              ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nTypeError: can only concatenate list (not \"Array\") to list\n",
+  "message": "can only concatenate list (not \"Array\") to list",
+  "owned_pie_cleanup_confirmed": true
+}

@@ -1,0 +1,129 @@
+{
+  "method": "unique smart-projected packed UV per atlas, actual Cycles shader/normal bake",
+  "normal_convention": "OpenGL +Y tangent-space; Unreal texture flip_green_channel=True",
+  "image_projection": false,
+  "groups": {
+    "Face": {
+      "resolution": [
+        2048,
+        2048
+      ],
+      "mesh": "Arin_Face",
+      "material": "M_Arin_Face",
+      "channels": {
+        "BaseColor": "T_Arin_Face_BaseColor.png",
+        "Roughness": "T_Arin_Face_Roughness.png",
+        "Metallic": "T_Arin_Face_Metallic.png",
+        "Normal": "T_Arin_Face_Normal.png"
+      }
+    },
+    "Hair": {
+      "resolution": [
+        2048,
+        2048
+      ],
+      "mesh": "Arin_Hair",
+      "material": "M_Arin_Hair",
+      "channels": {
+        "BaseColor": "T_Arin_Hair_BaseColor.png",
+        "Roughness": "T_Arin_Hair_Roughness.png",
+        "Metallic": "T_Arin_Hair_Metallic.png",
+        "Normal": "T_Arin_Hair_Normal.png"
+      }
+    },
+    "Cloth": {
+      "resolution": [
+        4096,
+        4096
+      ],
+      "mesh": "Arin_Cloth",
+      "material": "M_Arin_Cloth",
+      "channels": {
+        "BaseColor": "T_Arin_Cloth_BaseColor.png",
+        "Roughness": "T_Arin_Cloth_Roughness.png",
+        "Metallic": "T_Arin_Cloth_Metallic.png",
+        "Normal": "T_Arin_Cloth_Normal.png"
+      }
+    },
+    "Gear": {
+      "resolution": [
+        2048,
+        2048
+      ],
+      "mesh": "Arin_Gear",
+      "material": "M_Arin_Gear",
+      "channels": {
+        "BaseColor": "T_Arin_Gear_BaseColor.png",
+        "Roughness": "T_Arin_Gear_Roughness.png",
+        "Metallic": "T_Arin_Gear_Metallic.png",
+        "Normal": "T_Arin_Gear_Normal.png"
+      }
+    }
+  },
+  "files": {
+    "T_Arin_Face_BaseColor.png": {
+      "bytes": 860263,
+      "sha256": "3bbb52d17a7cae4671ab340f83209a93132d91d944fd7c3b1eab8b0d0666a71f"
+    },
+    "T_Arin_Face_Roughness.png": {
+      "bytes": 1048582,
+      "sha256": "36e2708469866f31bc0c2fa01e11fa89799e2a5c7d16e9b62c89c6ff358d7098"
+    },
+    "T_Arin_Face_Metallic.png": {
+      "bytes": 55162,
+      "sha256": "863100354a621fb533ccdff403d08fa6b46cb599eedeaf0b5e04a24dc67f7d25"
+    },
+    "T_Arin_Face_Normal.png": {
+      "bytes": 2805103,
+      "sha256": "9e7a12f8a8a3eca0ef7819592d600f1a05f9f4b9fba6adabbaff859d9bdac54c"
+    },
+    "T_Arin_Hair_BaseColor.png": {
+      "bytes": 530646,
+      "sha256": "00597bda3c6c0e3a131c0ac8dd80edbc243c98ae98b3bc64379a0ab18c24960c"
+    },
+    "T_Arin_Hair_Roughness.png": {
+      "bytes": 877044,
+      "sha256": "dc1ea11737ecfcfe3670251571ea6c19354d490b3f268c70db8adff791aac57d"
+    },
+    "T_Arin_Hair_Metallic.png": {
+      "bytes": 55162,
+      "sha256": "863100354a621fb533ccdff403d08fa6b46cb599eedeaf0b5e04a24dc67f7d25"
+    },
+    "T_Arin_Hair_Normal.png": {
+      "bytes": 1408713,
+      "sha256": "a086663e4f5eb8b723f1f9ea5e43324146652c8344dfa6c363008f75a8d080c5"
+    },
+    "T_Arin_Cloth_BaseColor.png": {
+      "bytes": 3320827,
+      "sha256": "a0fd6ee7982eae85b23f9bb88461f3a341a437b7359045239e0f9490309e419f"
+    },
+    "T_Arin_Cloth_Roughness.png": {
+      "bytes": 2771300,
+      "sha256": "e1f24c4264b792cc79824f6c546831242cd2a33fa0c767b9fd35d5d4036a2df7"
+    },
+    "T_Arin_Cloth_Metallic.png": {
+      "bytes": 220136,
+      "sha256": "777855bc471d5971db1e6d60c2bcb04f887056879d0bc1d404fd523afd92421c"
+    },
+    "T_Arin_Cloth_Normal.png": {
+      "bytes": 15187422,
+      "sha256": "4561d06c3b24113c04fd633ed476116f7e64643a56405e60dd73264cedb8bc86"
+    },
+    "T_Arin_Gear_BaseColor.png": {
+      "bytes": 988772,
+      "sha256": "cf7d11f1ceed741273bbf9d8e7a0ac78b79918ece86553bdaf4886461a157d18"
+    },
+    "T_Arin_Gear_Roughness.png": {
+      "bytes": 956175,
+      "sha256": "74a11c20c99327217e1f2d871ee2412142f9f0c4027bc6e4286201d098d8e712"
+    },
+    "T_Arin_Gear_Metallic.png": {
+      "bytes": 190479,
+      "sha256": "61a3433e2e015404229d0142700fc8ad0cba38c40580557663d006d73ecc45b3"
+    },
+    "T_Arin_Gear_Normal.png": {
+      "bytes": 1199717,
+      "sha256": "2de4d40f26e419d0358d675440e8ba134ff8ef02a6c2c0fffbec17f44f962245"
+    }
+  }
+}

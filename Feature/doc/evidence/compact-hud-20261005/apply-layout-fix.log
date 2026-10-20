@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "command": "import sys, importlib; sys.path.insert(0,'D:/Project/Rogue10m/Scripts/Editor'); import ApplyCompactCombatHUD; importlib.reload(ApplyCompactCombatHUD); ApplyCompactCombatHUD.build_quick_slot(); ApplyCompactCombatHUD.build_bottom(); import ValidateCompactCombatHUD; importlib.reload(ValidateCompactCombatHUD); ValidateCompactCombatHUD.main(['CanvasPanel_34','SystemLogContainer','UI_RunTimerText','MonsterInfoWidget'])",
+  "result": "None",
+  "output": [
+    {
+      "type": "Info",
+      "output": "[Rogue10mClassBottomHUD] Compiled and saved: /Game/Widget/Parts/Compact/WBP_CompactQuickSlot"
+    },
+    {
+      "type": "Info",
+      "output": "[Rogue10mClassBottomHUD] Compiled and saved: /Game/Widget/Parts/WBP_BottomHUD"
+    },
+    {
+      "type": "Info",
+      "output": "RESULT=COMPACT_HUD_ASSET_VALIDATION_PASSED assets=7 evidence=D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\compact-hud-20261005\\setup-validation.json"
+    }
+  ]
+}

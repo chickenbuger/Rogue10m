@@ -1,0 +1,364 @@
+{
+  "status": "imported_and_applied",
+  "validate_only": false,
+  "source_fbx": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Arin.fbx",
+  "source_hashes": {
+    "Arin.RefinedFBXSHA256": "45296f9fcbd0d182406c85d29f8627409e090dc0c97ec97815a8035221448f00",
+    "Arin.SurfaceManifestSHA256": "eb37013d9fd18113e1dffbe7668d1f66fb38da73f1269438b0f103c18d2d386f",
+    "Arin.TextureBundleSHA256": "49520bb03ebc3068fe6b9ed57c56eb86885b3ed17a65ea225746b2589fe1df7c"
+  },
+  "surface_manifest": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\surface-manifest.json",
+  "source_method": "preserved donor UV + actual Cycles EMIT palette/roughness/metal and tangent micro-normal bake",
+  "reused_verified_scope": true,
+  "core": {
+    "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin.SK_Arin",
+    "skeleton": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin_Skeleton.SK_Arin_Skeleton",
+    "idle": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle.ArinIdle",
+    "idle_seconds": 2.0,
+    "same_skeleton": true,
+    "bounds_size_cm": [
+      169.00768280029297,
+      38.55985069274902,
+      169.99999880090422
+    ],
+    "bounds_origin_cm": [
+      -0.022914886474609375,
+      -0.08381938934326172,
+      85.00000059954789
+    ],
+    "bone_names": [
+      "Arin_Rig",
+      "root",
+      "pelvis",
+      "spine_01",
+      "spine_02",
+      "spine_03",
+      "neck",
+      "head",
+      "clavicle_l",
+      "upperarm_l",
+      "lowerarm_l",
+      "hand_l",
+      "clavicle_r",
+      "upperarm_r",
+      "lowerarm_r",
+      "hand_r",
+      "thigh_l",
+      "calf_l",
+      "foot_l",
+      "ball_l",
+      "thigh_r",
+      "calf_r",
+      "foot_r",
+      "ball_r"
+    ],
+    "source_bone_contract": {
+      "bone_names": [
+        "root",
+        "pelvis",
+        "spine_01",
+        "spine_02",
+        "spine_03",
+        "neck",
+        "head",
+        "clavicle_l",
+        "upperarm_l",
+        "lowerarm_l",
+        "hand_l",
+        "clavicle_r",
+        "upperarm_r",
+        "lowerarm_r",
+        "hand_r",
+        "thigh_l",
+        "calf_l",
+        "foot_l",
+        "ball_l",
+        "thigh_r",
+        "calf_r",
+        "foot_r",
+        "ball_r"
+      ],
+      "bone_count": 23,
+      "head_joint_z_m": 1.4450000524520874,
+      "model_build_sha256": "d9d0797b85e8df91a78b5df1bda82896b024f150423f1fe35daccb28162fef10"
+    },
+    "known_dimension_test": {
+      "expected_height_cm": 170,
+      "observed_height_cm": 169.99999880090422
+    },
+    "normal_import_settings": {
+      "normal_import_method": "<FBXNormalImportMethod.FBXNIM_IMPORT_NORMALS: 1>",
+      "normal_generation_method": "<FBXNormalGenerationMethod.MIKK_T_SPACE: 1>",
+      "compute_weighted_normals": "False"
+    },
+    "mesh_collision_plan": "existing detection sphere and non-colliding guide mesh preserved; no mesh physics asset"
+  },
+  "texture_count": 4,
+  "textures": [
+    {
+      "group": "Adventurer",
+      "channel": "BaseColor",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_BaseColor.T_Arin_Adventurer_BaseColor",
+      "size": [
+        4096,
+        4096
+      ],
+      "srgb": true,
+      "compression": "<TextureCompressionSettings.TC_DEFAULT: 0>",
+      "flip_green_channel": false,
+      "source_sha256": "56b55f9e7a70f7ffc468626adef708b99792434e2cac02d46c890fc5710e5534"
+    },
+    {
+      "group": "Adventurer",
+      "channel": "Roughness",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Roughness.T_Arin_Adventurer_Roughness",
+      "size": [
+        4096,
+        4096
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "flip_green_channel": false,
+      "source_sha256": "570bdd83a127d3a1887e429407231081822d35b6135337496e5a25b471fe081e"
+    },
+    {
+      "group": "Adventurer",
+      "channel": "Metallic",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Metallic.T_Arin_Adventurer_Metallic",
+      "size": [
+        4096,
+        4096
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_MASKS: 2>",
+      "flip_green_channel": false,
+      "source_sha256": "5a52539ae2774aa5276f42da671351e7788c7c913bff1da028e18cd8a356de04"
+    },
+    {
+      "group": "Adventurer",
+      "channel": "Normal",
+      "texture": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Normal.T_Arin_Adventurer_Normal",
+      "size": [
+        4096,
+        4096
+      ],
+      "srgb": false,
+      "compression": "<TextureCompressionSettings.TC_NORMALMAP: 1>",
+      "flip_green_channel": true,
+      "source_sha256": "b2af4078d12399ec981fc0d8362f194203ed1db93c91271c1193e713f6408b27"
+    }
+  ],
+  "material_count": 1,
+  "material_slots": [
+    {
+      "index": 0,
+      "group": "Adventurer",
+      "material": "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/MI_Arin_Adventurer.MI_Arin_Adventurer"
+    }
+  ],
+  "materials": [
+    {
+      "group": "Adventurer",
+      "material": "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/MI_Arin_Adventurer.MI_Arin_Adventurer",
+      "parent": "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/M_Arin_PBR.M_Arin_PBR",
+      "textures": {
+        "BaseColor": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_BaseColor.T_Arin_Adventurer_BaseColor",
+        "Roughness": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Roughness.T_Arin_Adventurer_Roughness",
+        "Metallic": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Metallic.T_Arin_Adventurer_Metallic",
+        "Normal": "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Normal.T_Arin_Adventurer_Normal"
+      }
+    }
+  ],
+  "owned_parent": "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/M_Arin_PBR",
+  "parent_wiring": [
+    {
+      "channel": "BaseColor",
+      "parameter": "BaseColorTexture",
+      "output_pin": "RGB",
+      "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_COLOR: 0>"
+    },
+    {
+      "channel": "Roughness",
+      "parameter": "RoughnessTexture",
+      "output_pin": "R",
+      "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_MASKS: 4>"
+    },
+    {
+      "channel": "Metallic",
+      "parameter": "MetallicTexture",
+      "output_pin": "R",
+      "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_MASKS: 4>"
+    },
+    {
+      "channel": "Normal",
+      "parameter": "NormalTexture",
+      "output_pin": "RGB",
+      "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_NORMAL: 3>"
+    }
+  ],
+  "lods": {
+    "count": 3,
+    "metrics": [
+      {
+        "index": 0,
+        "vertices": 110688,
+        "sections": 1,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 1.0,
+        "reduction_base_lod": 0,
+        "lock_edges": false,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 1,
+        "vertices": 100176,
+        "sections": 1,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 0.8500000238418579,
+        "reduction_base_lod": 0,
+        "lock_edges": true,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 2,
+        "vertices": 81219,
+        "sections": 1,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 0.6499999761581421,
+        "reduction_base_lod": 0,
+        "lock_edges": true,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      }
+    ],
+    "generation": "SkeletalMeshEditorSubsystem.regenerate_lod; imported LOD0 preserved",
+    "lod0_regeneration": false,
+    "requested_ratios": [
+      1.0,
+      0.8500000238418579,
+      0.6499999761581421
+    ],
+    "same_skeleton_and_materials": true,
+    "visual_review_required": true,
+    "runtime_triangle_count_limitation": "Exact runtime triangles need a separate exposed render-data/export inspection; do not infer them from vertices or reduction targets."
+  },
+  "saved_assets": [
+    "/Game/Rogue10m/World/StartVillage/Tutorial/DA_StartVillageGuide",
+    "/Game/Rogue10m/World/StartVillage/Tutorial/BP_StartVillageGuide"
+  ],
+  "saved_actor_package": "/Game/__ExternalActors__/Rogue10m/Maps/StartHub/5/TO/W83RIU01UF417URBGM9BBZ",
+  "expected_asset_count": 9,
+  "package_files_verified": [
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/MI_Arin_Adventurer",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/M_Arin_PBR",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin_Skeleton",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_BaseColor",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Metallic",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Normal",
+    "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Roughness"
+  ],
+  "guide": {
+    "data": "/Game/Rogue10m/World/StartVillage/Tutorial/DA_StartVillageGuide",
+    "blueprint": "/Game/Rogue10m/World/StartVillage/Tutorial/BP_StartVillageGuide",
+    "protected_data": {
+      "guide_name": "길잡이 아린",
+      "guide_role": "모험가 안내 · 출발 보급",
+      "welcome_text": "어서 오세요. 마을에서는 천천히 준비해도 괜찮아요. 북쪽 포탈을 지나면 20분 탐험이 시작됩니다. 출발 전에 회복 물약을 챙겨 드릴게요.",
+      "reward_received_text": "보급품을 가방에 넣어 드렸어요. I를 눌러 인벤토리에서 확인하세요. 준비되면 북쪽 포탈로 출발해 보세요.",
+      "reward_already_received_text": "이번 출발 보급품은 이미 받으셨어요. 장비는 I, 기술은 K로 확인할 수 있어요. 북쪽 포탈을 지나면 탐험이 시작됩니다.",
+      "reward_id": "StartVillageSupplies",
+      "starting_item": "/Game/DataAsset/Item/Starter/DA_Item_HealthPotion.DA_Item_HealthPotion",
+      "starting_item_quantity": 2
+    },
+    "appearance": {
+      "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin.SK_Arin",
+      "idle": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle.ArinIdle"
+    },
+    "cdo_data": "/Game/Rogue10m/World/StartVillage/Tutorial/DA_StartVillageGuide.DA_StartVillageGuide",
+    "cdo_component": {
+      "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin.SK_Arin",
+      "animation": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle.ArinIdle",
+      "animation_mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>",
+      "looping": true,
+      "playing": true,
+      "relative_location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "relative_rotation": [
+        0.0,
+        0.0,
+        -90.0
+      ],
+      "relative_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "actor_component": {
+      "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin.SK_Arin",
+      "animation": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle.ArinIdle",
+      "animation_mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>",
+      "looping": true,
+      "playing": true,
+      "relative_location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "relative_rotation": [
+        0.0,
+        0.0,
+        -90.0
+      ],
+      "relative_scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "actor_protected": {
+      "path": "/Game/Rogue10m/Maps/StartHub.StartHub:PersistentLevel.BP_StartVillageGuide_C_UAID_244BFE8DA9DF3C0803_1304239839",
+      "label": "SV_TutorialGuide_Arin",
+      "class": "/Game/Rogue10m/World/StartVillage/Tutorial/BP_StartVillageGuide.BP_StartVillageGuide_C",
+      "data": "/Game/Rogue10m/World/StartVillage/Tutorial/DA_StartVillageGuide.DA_StartVillageGuide",
+      "location": [
+        440.0,
+        -1610.0,
+        2.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        -90.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tags": [
+        "Rogue10m.StartVillage",
+        "TutorialGuide"
+      ],
+      "folder": "StartVillage/Gameplay",
+      "spatially_loaded": false,
+      "interaction_radius": 320.0,
+      "detection_radius": 650.0
+    },
+    "actor_package": "/Game/__ExternalActors__/Rogue10m/Maps/StartHub/5/TO/W83RIU01UF417URBGM9BBZ"
+  },
+  "before_checkpoint": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-reference-refinement-20261009\\before-refined-guide-application.json",
+  "dialogue_and_supplies_unchanged": true,
+  "image_projection": false,
+  "runtime_visual_review_required": true
+}

@@ -1,0 +1,6 @@
+{
+  "success": false,
+  "command": "import sys; sys.path.insert(0, 'D:/Project/Rogue10m/Scripts/Editor'); import ApplyCompactCombatHUD; ApplyCompactCombatHUD.main()",
+  "result": "Traceback (most recent call last):\n\n  File \"<string>\", line 1, in <module>\n\n  File \"D:\\Project/Rogue10m/Scripts/Editor\\ApplyCompactCombatHUD.py\", line 416, in main\n    build_vital()\n\n  File \"D:\\Project/Rogue10m/Scripts/Editor\\ApplyCompactCombatHUD.py\", line 210, in build_vital\n    label(bp, canvas, \"UI_ValueText\", \"\", (6, 2, 446, 26), 18, True)\n\n  File \"D:\\Project/Rogue10m/Scripts/Editor\\ApplyCompactCombatHUD.py\", line 160, in label\n    widget.set_justification(unreal.TextJustify.LEFT if left else unreal.TextJustify.CENTER)\n    ^^^^^^^^^^^^^^^^^^^^^^^^\n\nAttributeError: 'TextBlock' object has no attribute 'set_justification'\n",
+  "output": []
+}

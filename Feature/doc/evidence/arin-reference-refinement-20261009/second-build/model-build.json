@@ -1,0 +1,236 @@
+{
+  "status": "exported_requires_independent_validation",
+  "input_sha256": "9ec4b4fb034071c8b6c46d015991c636be4f11544f03f913d4697eed0b5ab6b9",
+  "blender_version": "4.5.14 LTS",
+  "runtime_meshes": 1,
+  "materials": 1,
+  "triangles": 90204,
+  "bones": 23,
+  "bone_names": [
+    "root",
+    "pelvis",
+    "spine_01",
+    "spine_02",
+    "spine_03",
+    "neck",
+    "head",
+    "clavicle_l",
+    "upperarm_l",
+    "lowerarm_l",
+    "hand_l",
+    "clavicle_r",
+    "upperarm_r",
+    "lowerarm_r",
+    "hand_r",
+    "thigh_l",
+    "calf_l",
+    "foot_l",
+    "ball_l",
+    "thigh_r",
+    "calf_r",
+    "foot_r",
+    "ball_r"
+  ],
+  "head_joint_z_m": 1.4450000524520874,
+  "units": "meters Zup front-Y",
+  "normalization": {
+    "rotation_z_degrees": -90,
+    "uniform_scale": 1.738365503145162,
+    "height_m": 1.7,
+    "foot_z_m": 0,
+    "front_axis": "-Y",
+    "transforms_applied": true
+  },
+  "repair": {
+    "before": {
+      "vertices": 45249,
+      "faces": 45150,
+      "boundary_edges": 453
+    },
+    "removed_loose_vertices": 10,
+    "removed_overlapping_micro_patch_vertices": 34,
+    "filled_hair_loops": [
+      {
+        "center_m": [
+          0.5453987121582031,
+          0.01552717573940754,
+          1.2931159734725952
+        ],
+        "perimeter_m": 0.010509873856790364,
+        "new_faces": 1
+      },
+      {
+        "center_m": [
+          -0.5276777148246765,
+          0.012463532388210297,
+          1.2887954711914062
+        ],
+        "perimeter_m": 0.003867808380164206,
+        "new_faces": 0
+      },
+      {
+        "center_m": [
+          0.5404812693595886,
+          0.01278263982385397,
+          1.2896466255187988
+        ],
+        "perimeter_m": 0.05680958926677704,
+        "new_faces": 1
+      },
+      {
+        "center_m": [
+          -0.006861507892608643,
+          -0.11944694072008133,
+          1.6245266199111938
+        ],
+        "perimeter_m": 0.036401447956450284,
+        "new_faces": 1
+      },
+      {
+        "center_m": [
+          -0.5295851230621338,
+          0.012619977816939354,
+          1.2888967990875244
+        ],
+        "perimeter_m": 0.0116042549489066,
+        "new_faces": 1
+      },
+      {
+        "center_m": [
+          -0.05409863591194153,
+          0.12852665781974792,
+          1.5759185552597046
+        ],
+        "perimeter_m": 0.008745588304009289,
+        "new_faces": 1
+      },
+      {
+        "center_m": [
+          -0.5279719233512878,
+          0.0128862289711833,
+          1.2886606454849243
+        ],
+        "perimeter_m": 0.009205652662785724,
+        "new_faces": 1
+      },
+      {
+        "center_m": [
+          -0.11416323482990265,
+          -0.028236139565706253,
+          1.5810881853103638
+        ],
+        "perimeter_m": 0.00905769260134548,
+        "new_faces": 1
+      },
+      {
+        "center_m": [
+          -0.5301334857940674,
+          0.012304665520787239,
+          1.287916898727417
+        ],
+        "perimeter_m": 0.010185406645177864,
+        "new_faces": 1
+      },
+      {
+        "center_m": [
+          -0.051886625587940216,
+          0.1268884390592575,
+          1.5829962491989136
+        ],
+        "perimeter_m": 0.018709819298237562,
+        "new_faces": 1
+      },
+      {
+        "center_m": [
+          -0.10414646565914154,
+          0.07239177823066711,
+          1.5902175903320312
+        ],
+        "perimeter_m": 0.009404575685039163,
+        "new_faces": 1
+      },
+      {
+        "center_m": [
+          -0.07999201118946075,
+          0.0829707607626915,
+          1.6248717308044434
+        ],
+        "perimeter_m": 0.01247490820242092,
+        "new_faces": 1
+      },
+      {
+        "center_m": [
+          -0.0871310830116272,
+          0.08213711529970169,
+          1.6157467365264893
+        ],
+        "perimeter_m": 0.023642454529181123,
+        "new_faces": 1
+      },
+      {
+        "center_m": [
+          -0.10785174369812012,
+          0.07326056808233261,
+          1.5896714925765991
+        ],
+        "perimeter_m": 0.0045449909957824275,
+        "new_faces": 0
+      }
+    ],
+    "after_vertices": 45205,
+    "after_triangles": 90205,
+    "policy": "localized closed hair holes; no global remesh, UV reproject or indiscriminate decimation"
+  },
+  "rig_regions": {
+    "arm_r": 3321,
+    "head": 6143,
+    "torso_cape": 6947,
+    "neck": 2048,
+    "arm_l": 3428,
+    "leg_l": 11570,
+    "belt_bag": 2306,
+    "leg_r": 9442
+  },
+  "surface_regions_corner_counts": {
+    "leather_or_trousers": 86113,
+    "olive_cloth": 34513,
+    "skin": 17578,
+    "ivory": 13363,
+    "hair": 27780,
+    "potion": 1113,
+    "brass": 163
+  },
+  "idle_seconds": 2,
+  "surface_manifest": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\surface-manifest.json",
+  "source_scripts_sha256": {
+    "BuildReferenceArin.py": "3d27976af6baf720a0b66331d22566d73403781dc6a202e36bd9e9d738409355",
+    "BuildArin.py": "1b90962d1538395965e25c803500c9af6eed7977150aaa87d8a510c21bbfdc1f",
+    "ArinSurface.py": "9ea1dc1522580f7e8417864c5dcf9f4e0af8a62d358eb0209b08018cf1b752e1"
+  },
+  "files": {
+    "Arin.blend": {
+      "bytes": 60452870,
+      "sha256": "ae57df134e4c541f8134cef9f1ce8b55e6b5f7d9af3396863985e2df5c806fa9"
+    },
+    "Arin.fbx": {
+      "bytes": 39982604,
+      "sha256": "b80e273ccce724d825b378f7c00fd2b4e8102f7e2b75342d5eb2269858b93a3b"
+    },
+    "Arin.glb": {
+      "bytes": 48130000,
+      "sha256": "a54dd9c2c0fc05b4e8fcbbd875fecb59765dcd28d8c91dbb5fa2f14bb05ff5cf"
+    },
+    "Arin_SourceShader.blend": {
+      "bytes": 24031041,
+      "sha256": "f6a5bcaa51f9a4353d38e3054d3c4ad88a554ed49398ef100e14db8db96cbddd"
+    },
+    "A_Arin_Idle.fbx": {
+      "bytes": 235436,
+      "sha256": "644e90d412025791cff992f1da0a728fce41c0f340cdf2fbdc54ee3bed84c81d"
+    },
+    "SK_Arin.fbx": {
+      "bytes": 39777340,
+      "sha256": "08574222781df71d6e2fcad718297f5bac0ad7e986287886b2bb8c9107b297ce"
+    }
+  }
+}

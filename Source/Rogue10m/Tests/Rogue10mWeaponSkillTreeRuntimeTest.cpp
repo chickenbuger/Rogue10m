@@ -42,7 +42,7 @@ static constexpr FWeaponStyle WeaponStyles[] = {
 	{ERogue10mWeaponType::Shield, TEXT("Shield"), 1, 5, 5, false},
 	{ERogue10mWeaponType::SwordBuckler, TEXT("SwordBuckler"), 1, 5, 5, false},
 	{ERogue10mWeaponType::Staff, TEXT("Staff"), 2, 5, 5, false},
-	{ERogue10mWeaponType::Knuckle, TEXT("Knuckle"), 2, 10, 1, true},
+	{ERogue10mWeaponType::Knuckle, TEXT("Knuckle"), 2, 14, 5, true},
 };
 
 static UWorld* FindGameWorld()
@@ -127,11 +127,13 @@ static void RunWeaponSkillTreeSwitchTest()
 		{
 			const bool bMatchesStyle = Skill && (Skill->GetPathName().Contains(Style.AssetId)
 				|| (Style.bUsesMartialArtsProgression && (Skill->GetPathName().Contains(TEXT("MartialArts"))
-					|| Skill->GetPathName().Contains(TEXT("StoneFist")))));
+						|| Skill->GetPathName().Contains(TEXT("StoneFist"))
+						|| Skill->GetPathName().Contains(TEXT("BasicBrawler")))));
 			Check(bMatchesStyle, Style, TEXT("다른 무기 스킬이 활성 트리에 포함됨"));
 			Check(Combat->IsSkillInActiveTree(Skill), Style,
 				TEXT("활성 트리 소속 판정 실패"));
-			const bool bShouldStartUnlocked = !Style.bUsesMartialArtsProgression || Skill == Primary;
+			const bool bShouldStartUnlocked = !Style.bUsesMartialArtsProgression || Skill == Primary
+				|| Skill->GetPathName().Contains(TEXT("BasicBrawler"));
 			Check(Combat->IsAttackSkillUnlocked(Skill) == bShouldStartUnlocked, Style,
 				TEXT("초기 해금 상태 불일치"));
 		}

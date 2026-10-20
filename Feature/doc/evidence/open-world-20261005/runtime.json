@@ -1,0 +1,3323 @@
+{
+  "status": "passed",
+  "hub_map": "/Game/Rogue10m/Maps/StartHub",
+  "run_map": "/Game/Rogue10m/Maps/OpenRunMap",
+  "checks": [
+    {
+      "name": "no_existing_pie",
+      "passed": true
+    },
+    {
+      "name": "correct_project",
+      "passed": true
+    },
+    {
+      "name": "run_map_exists",
+      "passed": true
+    },
+    {
+      "name": "hub_map_exists",
+      "passed": true
+    },
+    {
+      "name": "load_editor_map",
+      "passed": true,
+      "map": "/Game/Rogue10m/Maps/OpenRunMap"
+    },
+    {
+      "name": "exact_editor_map",
+      "passed": true,
+      "map": "/Game/Rogue10m/Maps/OpenRunMap"
+    },
+    {
+      "name": "map_owned_navigation_config",
+      "passed": true,
+      "navigation_system_class": "/Script/Rogue10m.Rogue10mOpenWorldNavigationSystem"
+    },
+    {
+      "name": "world_partition_streaming_enabled",
+      "passed": true
+    },
+    {
+      "name": "single_run_player_start",
+      "passed": true,
+      "labels": [
+        "OW_PlayerStart"
+      ]
+    },
+    {
+      "name": "single_always_loaded_bootstrap",
+      "passed": true,
+      "count": 1
+    },
+    {
+      "name": "run_game_mode",
+      "passed": true
+    },
+    {
+      "name": "prototype_run_duration_disabled",
+      "passed": true
+    },
+    {
+      "name": "load_editor_map",
+      "passed": true,
+      "map": "/Game/Rogue10m/Maps/StartHub"
+    },
+    {
+      "name": "exact_editor_map",
+      "passed": true,
+      "map": "/Game/Rogue10m/Maps/StartHub"
+    },
+    {
+      "name": "single_hub_portal",
+      "passed": true,
+      "count": 1
+    },
+    {
+      "name": "hub_portal_targets_open_run",
+      "passed": true,
+      "target": "/Game/Rogue10m/Maps/OpenRunMap"
+    },
+    {
+      "name": "hub_run_waiting",
+      "passed": true
+    },
+    {
+      "name": "runtime_hub_portal",
+      "passed": true
+    },
+    {
+      "name": "portal_overlap_events_enabled",
+      "passed": true
+    },
+    {
+      "name": "portal_starts_1200_second_open_world_run",
+      "passed": true,
+      "duration": 1200.0,
+      "arrival_remaining": 1200.0
+    },
+    {
+      "name": "actual_player_start_landing_before_teleport",
+      "passed": true,
+      "location": [
+        0.0,
+        -65000.0,
+        2898.154277437246
+      ],
+      "ground_z": 2800.0,
+      "capsule_bottom_clearance_cm": 2.154277437246037,
+      "moving_on_ground": true
+    },
+    {
+      "name": "runtime_invoker_navigation_mode",
+      "passed": true
+    },
+    {
+      "name": "initial_camp_sentinel_loaded",
+      "passed": true,
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 0,
+        "boss": 0
+      }
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        350.0,
+        -65000.0,
+        3248.3151750972766
+      ],
+      "actual": [
+        350.0,
+        -65000.0,
+        3248.3151750972766
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "poi_camp",
+      "ground_z": 2801.9998168917373,
+      "expected_walkable_z": 2802.3151750972766
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "poi_camp",
+      "start": [
+        350.0,
+        -65000.0,
+        2813.7651821862346
+      ],
+      "end": [
+        950.0,
+        -65000.0,
+        2814.2105263157896
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          350.0,
+          -65000.0,
+          2813.7651821862346
+        ],
+        [
+          950.0,
+          -65000.0,
+          2814.2105263157896
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "poi_camp",
+      "forward_displacement_cm": 833.5300560035103,
+      "elapsed_game_seconds": 1.5122164003551006,
+      "elapsed_wall_seconds": 1.514999999999418,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        -49650.0,
+        -25000.0,
+        4241.7317073170725
+      ],
+      "actual": [
+        -49650.0,
+        -25000.0,
+        4241.7317073170725
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "poi_forest",
+      "ground_z": 3796.0753429465176,
+      "expected_walkable_z": 3795.731707317073
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "poi_forest",
+      "start": [
+        -49650.0,
+        -25000.0,
+        3810.0
+      ],
+      "end": [
+        -49050.0,
+        -25000.0,
+        3795.015883836245
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -49650.0,
+          -25000.0,
+          3810.0
+        ],
+        [
+          -49050.0,
+          -25000.0,
+          3795.015883836245
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "poi_forest",
+      "forward_displacement_cm": 827.374600252042,
+      "elapsed_game_seconds": 1.5083090998232365,
+      "elapsed_wall_seconds": 1.5,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        350.0,
+        5000.0,
+        3746.0
+      ],
+      "actual": [
+        350.0,
+        5000.0,
+        3746.0
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "poi_crossroads",
+      "ground_z": 3300.0,
+      "expected_walkable_z": 3300.0
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "poi_crossroads",
+      "start": [
+        350.0,
+        5000.0,
+        3310.0
+      ],
+      "end": [
+        350.0,
+        5600.0,
+        3310.0
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          350.0,
+          5000.0,
+          3310.0
+        ],
+        [
+          350.0,
+          5600.0,
+          3310.0
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "poi_crossroads",
+      "forward_displacement_cm": 822.2432461669323,
+      "elapsed_game_seconds": 1.506096001714468,
+      "elapsed_wall_seconds": 1.4840000000040163,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        50350.0,
+        -5000.0,
+        3946.0
+      ],
+      "actual": [
+        50350.0,
+        -5000.0,
+        3946.0
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "poi_mill",
+      "ground_z": 3499.998809796292,
+      "expected_walkable_z": 3500.0
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "poi_mill",
+      "start": [
+        50350.0,
+        -5000.0,
+        3500.769230769231
+      ],
+      "end": [
+        50950.0,
+        -5000.0,
+        3500.0
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          50350.0,
+          -5000.0,
+          3500.769230769231
+        ],
+        [
+          50950.0,
+          -5000.0,
+          3500.0
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "poi_mill",
+      "forward_displacement_cm": 827.9891196629396,
+      "elapsed_game_seconds": 1.5028722025454044,
+      "elapsed_wall_seconds": 1.5,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        -34650.0,
+        42000.0,
+        7858.1221662468515
+      ],
+      "actual": [
+        -34649.99999999999,
+        42000.0,
+        7858.1221662468515
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "poi_highlands",
+      "ground_z": 7412.149764248112,
+      "expected_walkable_z": 7412.1221662468515
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "poi_highlands",
+      "start": [
+        -34649.99999999999,
+        42000.0,
+        7426.199682224471
+      ],
+      "end": [
+        -34049.99999999999,
+        42000.0,
+        7444.158518897192
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -34649.99999999999,
+          42000.0,
+          7426.199682224471
+        ],
+        [
+          -34049.99999999999,
+          42000.0,
+          7444.158518897192
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "poi_highlands",
+      "forward_displacement_cm": 828.5784750199673,
+      "elapsed_game_seconds": 1.5013905987143517,
+      "elapsed_wall_seconds": 1.5,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        15350.0,
+        68000.0,
+        10046.0
+      ],
+      "actual": [
+        15350.0,
+        68000.0,
+        10046.0
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "poi_boss",
+      "ground_z": 9600.0,
+      "expected_walkable_z": 9600.0
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "poi_boss",
+      "start": [
+        15350.0,
+        68000.0,
+        9610.0
+      ],
+      "end": [
+        15950.0,
+        68000.0,
+        9610.0
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          15350.0,
+          68000.0,
+          9610.0
+        ],
+        [
+          15950.0,
+          68000.0,
+          9610.0
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "camp_sentinel_unloaded_at_distant_boss",
+      "passed": true,
+      "counts": {
+        "camp": 0,
+        "forest": 0,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 1,
+        "boss": 1
+      }
+    },
+    {
+      "name": "persistent_boss_stays_grounded_before_arrival",
+      "passed": true,
+      "locations": [
+        [
+          15021.855268762198,
+          69687.60147493726,
+          9690.149999002228
+        ]
+      ]
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "poi_boss",
+      "forward_displacement_cm": 820.0747366545784,
+      "elapsed_game_seconds": 1.50180159881711,
+      "elapsed_wall_seconds": 1.4840000000040163,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        350.0,
+        -65000.0,
+        3248.3151750972766
+      ],
+      "actual": [
+        350.0,
+        -65000.0,
+        3248.3151750972766
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "camp_reentry",
+      "ground_z": 2801.9998168917373,
+      "expected_walkable_z": 2802.3151750972766
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "camp_reentry",
+      "start": [
+        350.0,
+        -65000.0,
+        2813.7651821862346
+      ],
+      "end": [
+        950.0,
+        -65000.0,
+        2814.2105263157896
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          350.0,
+          -65000.0,
+          2813.7651821862346
+        ],
+        [
+          950.0,
+          -65000.0,
+          2814.2105263157896
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "camp_sentinel_loaded_again_after_unload",
+      "passed": true,
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 0,
+        "boss": 0
+      }
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "camp_reentry",
+      "forward_displacement_cm": 823.1188878714806,
+      "elapsed_game_seconds": 1.503173403441906,
+      "elapsed_wall_seconds": 1.4840000000040163,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        0.0,
+        5000.0,
+        3746.0
+      ],
+      "actual": [
+        0.0,
+        5000.0,
+        3746.0
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "bridge_central_center",
+      "ground_z": 3300.0,
+      "expected_walkable_z": 3300.0
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "bridge_central_center",
+      "start": [
+        -0.0,
+        5000.0,
+        3310.0
+      ],
+      "end": [
+        -0.0,
+        5600.0,
+        3310.0
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -0.0,
+          5000.0,
+          3310.0
+        ],
+        [
+          -0.0,
+          5600.0,
+          3310.0
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "bridge_central_center",
+      "forward_displacement_cm": 833.5952534543721,
+      "elapsed_game_seconds": 1.5136422999203205,
+      "elapsed_wall_seconds": 1.514999999999418,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        0.0,
+        -850.0,
+        3746.0
+      ],
+      "actual": [
+        0.0,
+        -850.0,
+        3746.0
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "bridge_central_south_end",
+      "ground_z": 3300.0,
+      "expected_walkable_z": 3300.0
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "bridge_central_south_end",
+      "start": [
+        -0.0,
+        -850.0,
+        3310.0
+      ],
+      "end": [
+        -0.0,
+        -1450.0,
+        3291.2955465587042
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -0.0,
+          -850.0,
+          3310.0
+        ],
+        [
+          -0.0,
+          -1450.0,
+          3291.2955465587042
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "bridge_central_south_end",
+      "forward_displacement_cm": 834.0380390875753,
+      "elapsed_game_seconds": 1.5132241994142532,
+      "elapsed_wall_seconds": 1.514999999999418,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        0.0,
+        10850.0,
+        3746.0
+      ],
+      "actual": [
+        0.0,
+        10850.0,
+        3746.0
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "bridge_central_north_end",
+      "ground_z": 3300.0,
+      "expected_walkable_z": 3300.0
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "bridge_central_north_end",
+      "start": [
+        -0.0,
+        10850.0,
+        3310.0
+      ],
+      "end": [
+        -0.0,
+        11450.0,
+        3286.4372469635628
+      ],
+      "point_count": 3,
+      "points": [
+        [
+          -0.0,
+          10850.0,
+          3310.0
+        ],
+        [
+          -0.0,
+          10868.0,
+          3310.0
+        ],
+        [
+          -0.0,
+          11450.0,
+          3286.4372469635628
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "bridge_central_north_end",
+      "forward_displacement_cm": 827.8279530502859,
+      "elapsed_game_seconds": 1.5058188997209072,
+      "elapsed_wall_seconds": 1.5,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        -44000.0,
+        5000.0,
+        3746.0
+      ],
+      "actual": [
+        -44000.0,
+        5000.0,
+        3746.0
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "bridge_western_center",
+      "ground_z": 3300.0,
+      "expected_walkable_z": 3300.0
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "bridge_western_center",
+      "start": [
+        -44000.0,
+        5000.0,
+        3310.0
+      ],
+      "end": [
+        -44000.0,
+        5600.0,
+        3310.0
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -44000.0,
+          5000.0,
+          3310.0
+        ],
+        [
+          -44000.0,
+          5600.0,
+          3310.0
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "bridge_western_center",
+      "forward_displacement_cm": 829.8482720502698,
+      "elapsed_game_seconds": 1.5060584023594856,
+      "elapsed_wall_seconds": 1.5,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        -44000.0,
+        -850.0,
+        3746.0
+      ],
+      "actual": [
+        -44000.0,
+        -850.0,
+        3746.0
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "bridge_western_south_end",
+      "ground_z": 3300.0,
+      "expected_walkable_z": 3300.0
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "bridge_western_south_end",
+      "start": [
+        -44000.0,
+        -850.0,
+        3310.0
+      ],
+      "end": [
+        -44000.0,
+        -1450.0,
+        3294.5510777843656
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -44000.0,
+          -850.0,
+          3310.0
+        ],
+        [
+          -44000.0,
+          -1450.0,
+          3294.5510777843656
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "bridge_western_south_end",
+      "forward_displacement_cm": 827.46588538383,
+      "elapsed_game_seconds": 1.5063723996281624,
+      "elapsed_wall_seconds": 1.5,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        -44000.0,
+        10850.0,
+        3746.0
+      ],
+      "actual": [
+        -44000.0,
+        10850.0,
+        3746.0
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "bridge_western_north_end",
+      "ground_z": 3300.0,
+      "expected_walkable_z": 3300.0
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "bridge_western_north_end",
+      "start": [
+        -44000.0,
+        10850.0,
+        3310.0
+      ],
+      "end": [
+        -44000.0,
+        11450.0,
+        3290.3644883751545
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -44000.0,
+          10850.0,
+          3310.0
+        ],
+        [
+          -44000.0,
+          11450.0,
+          3290.3644883751545
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "bridge_western_north_end",
+      "forward_displacement_cm": 832.0767919514255,
+      "elapsed_game_seconds": 1.5119339004158974,
+      "elapsed_wall_seconds": 1.5,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        45000.0,
+        5000.0,
+        3746.0
+      ],
+      "actual": [
+        45000.0,
+        5000.0,
+        3746.0
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "bridge_eastern_center",
+      "ground_z": 3300.0,
+      "expected_walkable_z": 3300.0
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "bridge_eastern_center",
+      "start": [
+        45000.0,
+        5000.0,
+        3310.0
+      ],
+      "end": [
+        45000.0,
+        5600.0,
+        3310.0
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          45000.0,
+          5000.0,
+          3310.0
+        ],
+        [
+          45000.0,
+          5600.0,
+          3310.0
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "bridge_eastern_center",
+      "forward_displacement_cm": 825.1892214213976,
+      "elapsed_game_seconds": 1.5021775998175144,
+      "elapsed_wall_seconds": 1.485000000000582,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        45000.0,
+        -850.0,
+        3746.0
+      ],
+      "actual": [
+        45000.0,
+        -850.0,
+        3746.0
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "bridge_eastern_south_end",
+      "ground_z": 3300.0,
+      "expected_walkable_z": 3300.0
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "bridge_eastern_south_end",
+      "start": [
+        45000.0,
+        -850.0,
+        3310.0
+      ],
+      "end": [
+        45000.0,
+        -1450.0,
+        3294.452425322982
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          45000.0,
+          -850.0,
+          3310.0
+        ],
+        [
+          45000.0,
+          -1450.0,
+          3294.452425322982
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "bridge_eastern_south_end",
+      "forward_displacement_cm": 824.8655516680337,
+      "elapsed_game_seconds": 1.500414401292801,
+      "elapsed_wall_seconds": 1.5,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        45000.0,
+        10850.0,
+        3746.0
+      ],
+      "actual": [
+        45000.0,
+        10850.0,
+        3746.0
+      ]
+    },
+    {
+      "name": "waypoint_blocking_ground",
+      "passed": true,
+      "id": "bridge_eastern_north_end",
+      "ground_z": 3300.0,
+      "expected_walkable_z": 3300.0
+    },
+    {
+      "name": "waypoint_actual_complete_navigation_path",
+      "passed": true,
+      "id": "bridge_eastern_north_end",
+      "start": [
+        45000.0,
+        10850.0,
+        3310.0
+      ],
+      "end": [
+        45000.0,
+        11450.0,
+        3290.3644883751545
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          45000.0,
+          10850.0,
+          3310.0
+        ],
+        [
+          45000.0,
+          11450.0,
+          3290.3644883751545
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "waypoint_actual_walking",
+      "passed": true,
+      "id": "bridge_eastern_north_end",
+      "forward_displacement_cm": 829.3255419180423,
+      "elapsed_game_seconds": 1.5072375014424324,
+      "elapsed_wall_seconds": 1.5,
+      "used_add_movement_input": true
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        -49650.0,
+        -25000.0,
+        4300.0
+      ],
+      "actual": [
+        -49650.0,
+        -25000.0,
+        4300.0
+      ]
+    },
+    {
+      "name": "authored_normal_monster_has_ai_brain",
+      "passed": true,
+      "monster": "/Memory/UEDPIE_0_OpenRunMap_0KR77TN7RE4Y31RLWEPPVYXLL.OpenRunMap:PersistentLevel.BP_OW_Sporeling_C_1",
+      "monster_data": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_Sporeling.DA_Monster_Normal_Sporeling",
+      "controller_class": "/Script/Rogue10m.Rogue10mMonsterAIController"
+    },
+    {
+      "name": "runtime_teleport_exact",
+      "passed": true,
+      "destination": [
+        -50706.48166481593,
+        -24076.973956691174,
+        4230.950117081019
+      ],
+      "actual": [
+        -50706.48166481593,
+        -24076.973956691174,
+        4230.950117081019
+      ]
+    },
+    {
+      "name": "encounter_actual_complete_navigation_path",
+      "passed": true,
+      "start": [
+        -51606.48166481593,
+        -24076.973956691174,
+        3814.361154606557
+      ],
+      "end": [
+        -50706.48166481593,
+        -24076.973956691174,
+        3796.8195845285445
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -51606.48166481593,
+          -24076.973956691174,
+          3814.361154606557
+        ],
+        [
+          -50706.48166481593,
+          -24076.973956691174,
+          3796.8195845285445
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "name": "encounter_starts_outside_melee",
+      "passed": true,
+      "distance_cm": 900.0
+    },
+    {
+      "name": "native_damage_perception_stimulus",
+      "passed": true,
+      "damage_to_monster": 1.0
+    },
+    {
+      "name": "native_monster_ai_actual_pursuit",
+      "passed": true,
+      "displacement_cm": 150.86994707326812,
+      "distance_decrease_cm": 150.86994707326812,
+      "blackboard_target_is_player": true
+    },
+    {
+      "name": "native_monster_attack_damages_player",
+      "passed": true,
+      "health_before": 135.0,
+      "health_after": 134.0,
+      "player_damage_taken": 1.0,
+      "directly_applied_player_damage": false
+    },
+    {
+      "name": "run_timer_decreased_during_validation",
+      "passed": true,
+      "countdown_decrease": 46.0,
+      "remaining_seconds": 1154.0,
+      "duration_seconds": 1200.0
+    }
+  ],
+  "timer_samples": [
+    {
+      "id": "initial",
+      "remaining": 1199.0
+    },
+    {
+      "id": "final",
+      "remaining": 1154.0
+    }
+  ],
+  "ground_samples": [
+    {
+      "id": "player_start",
+      "location": [
+        0.0,
+        -65000.0,
+        2898.154277437246
+      ],
+      "ground_z": 2800.0,
+      "capsule_bottom_clearance_cm": 2.154277437246037,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_camp",
+      "location": [
+        350.0,
+        -65000.0,
+        2900.1518605286196
+      ],
+      "ground_z": 2801.9998168917373,
+      "capsule_bottom_clearance_cm": 2.152043636882354,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_camp_walk",
+      "location": [
+        350.0,
+        -65000.0,
+        2900.1518605286196
+      ],
+      "ground_z": 2801.9998168917373,
+      "capsule_bottom_clearance_cm": 2.152043636882354,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_camp_walk",
+      "location": [
+        419.03412688574076,
+        -65000.0,
+        2900.7476780945376
+      ],
+      "ground_z": 2802.6928404536175,
+      "capsule_bottom_clearance_cm": 2.054837640920141,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_camp_walk",
+      "location": [
+        576.0085478909605,
+        -65000.0,
+        2901.902618699701
+      ],
+      "ground_z": 2803.9993591210805,
+      "capsule_bottom_clearance_cm": 1.9032595786206912,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_camp_walk",
+      "location": [
+        725.6225473918312,
+        -65000.0,
+        2902.278368764551
+      ],
+      "ground_z": 2804.1263025897197,
+      "capsule_bottom_clearance_cm": 2.1520661748313614,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_camp_walk",
+      "location": [
+        886.3729230054014,
+        -65000.0,
+        2903.8575203949526
+      ],
+      "ground_z": 2805.9262947104835,
+      "capsule_bottom_clearance_cm": 1.9312256844691547,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_camp_walk",
+      "location": [
+        1043.079411584913,
+        -65000.0,
+        2905.725360208185
+      ],
+      "ground_z": 2807.681005663033,
+      "capsule_bottom_clearance_cm": 2.044354545152146,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_forest",
+      "location": [
+        -49650.0,
+        -25000.0,
+        3894.227411809703
+      ],
+      "ground_z": 3796.0753429465176,
+      "capsule_bottom_clearance_cm": 2.1520688631853773,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_forest_walk",
+      "location": [
+        -49650.0,
+        -25000.0,
+        3894.227411809703
+      ],
+      "ground_z": 3796.0753429465176,
+      "capsule_bottom_clearance_cm": 2.1520688631853773,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_forest_walk",
+      "location": [
+        -49583.25452893852,
+        -25000.0,
+        3893.4800336305975
+      ],
+      "ground_z": 3795.32796477369,
+      "capsule_bottom_clearance_cm": 2.15206885690759,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_forest_walk",
+      "location": [
+        -49432.67092845785,
+        -25000.0,
+        3891.7938833319186
+      ],
+      "ground_z": 3793.6418144717272,
+      "capsule_bottom_clearance_cm": 2.1520688601913207,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_forest_walk",
+      "location": [
+        -49277.970821926465,
+        -25000.0,
+        3890.061638708386
+      ],
+      "ground_z": 3791.9095698547244,
+      "capsule_bottom_clearance_cm": 2.1520688536616035,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_forest_walk",
+      "location": [
+        -49123.409658813944,
+        -25000.0,
+        3888.4251145079465
+      ],
+      "ground_z": 3790.1788810478292,
+      "capsule_bottom_clearance_cm": 2.2462334601173097,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_forest_walk",
+      "location": [
+        -48966.04900881099,
+        -25000.0,
+        3885.1640965821457
+      ],
+      "ground_z": 3786.836955759265,
+      "capsule_bottom_clearance_cm": 2.327140822880665,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_crossroads",
+      "location": [
+        350.0,
+        5000.0,
+        3398.149994378506
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499943785061078,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_crossroads_walk",
+      "location": [
+        350.0,
+        5000.0,
+        3398.149994378506
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499943785061078,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_crossroads_walk",
+      "location": [
+        350.0,
+        5074.246306872156,
+        3398.149994378506
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499943785061078,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_crossroads_walk",
+      "location": [
+        350.0,
+        5223.754642411101,
+        3398.149994378506
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499943785061078,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_crossroads_walk",
+      "location": [
+        350.0,
+        5381.747504948604,
+        3398.149994378506
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499943785061078,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_crossroads_walk",
+      "location": [
+        350.0,
+        5535.931585087406,
+        3398.149994378506
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499943785061078,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_crossroads_walk",
+      "location": [
+        350.0,
+        5686.438941090333,
+        3398.149994378506
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499943785061078,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_mill",
+      "location": [
+        50350.0,
+        -5000.0,
+        3598.148658062657
+      ],
+      "ground_z": 3499.998809796292,
+      "capsule_bottom_clearance_cm": 2.1498482663650975,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_mill_walk",
+      "location": [
+        50350.0,
+        -5000.0,
+        3598.148658062657
+      ],
+      "ground_z": 3499.998809796292,
+      "capsule_bottom_clearance_cm": 2.1498482663650975,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_mill_walk",
+      "location": [
+        50416.963287167884,
+        -5000.0,
+        3598.148658062657
+      ],
+      "ground_z": 3499.998809796292,
+      "capsule_bottom_clearance_cm": 2.1498482663650975,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_mill_walk",
+      "location": [
+        50572.54615954965,
+        -5000.0,
+        3598.148658062657
+      ],
+      "ground_z": 3499.998809796292,
+      "capsule_bottom_clearance_cm": 2.1498482663650975,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_mill_walk",
+      "location": [
+        50730.22611126214,
+        -5000.0,
+        3598.148658062657
+      ],
+      "ground_z": 3499.998809796292,
+      "capsule_bottom_clearance_cm": 2.1498482663650975,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_mill_walk",
+      "location": [
+        50892.435657232105,
+        -5000.0,
+        3598.148658062657
+      ],
+      "ground_z": 3499.998809796292,
+      "capsule_bottom_clearance_cm": 2.1498482663650975,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_mill_walk",
+      "location": [
+        51044.13930274457,
+        -5000.0,
+        3598.148658062657
+      ],
+      "ground_z": 3499.998809796292,
+      "capsule_bottom_clearance_cm": 2.1498482663650975,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_highlands",
+      "location": [
+        -34649.99999999999,
+        42000.0,
+        7510.320944313166
+      ],
+      "ground_z": 7412.149764248112,
+      "capsule_bottom_clearance_cm": 2.171180065054614,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_highlands_walk",
+      "location": [
+        -34649.99999999999,
+        42000.0,
+        7510.320944313166
+      ],
+      "ground_z": 7412.149764248112,
+      "capsule_bottom_clearance_cm": 2.171180065054614,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_highlands_walk",
+      "location": [
+        -34583.45665267084,
+        42000.0,
+        7512.964630543294
+      ],
+      "ground_z": 7414.783062990171,
+      "capsule_bottom_clearance_cm": 2.1815675531233865,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_highlands_walk",
+      "location": [
+        -34435.56085059877,
+        42000.0,
+        7517.934308646007
+      ],
+      "ground_z": 7419.752741072999,
+      "capsule_bottom_clearance_cm": 2.181567573007669,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_highlands_walk",
+      "location": [
+        -34278.8326625758,
+        42000.0,
+        7523.200777560525
+      ],
+      "ground_z": 7425.019209965738,
+      "capsule_bottom_clearance_cm": 2.1815675947873387,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_highlands_walk",
+      "location": [
+        -34119.23077302511,
+        42000.0,
+        7528.563810254277
+      ],
+      "ground_z": 7430.382242596587,
+      "capsule_bottom_clearance_cm": 2.1815676576898113,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_highlands_walk",
+      "location": [
+        -33969.15810110505,
+        42000.0,
+        7533.606636786598
+      ],
+      "ground_z": 7435.425069086749,
+      "capsule_bottom_clearance_cm": 2.1815676998485287,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_boss",
+      "location": [
+        15350.0,
+        68000.0,
+        9698.149994996464
+      ],
+      "ground_z": 9600.0,
+      "capsule_bottom_clearance_cm": 2.149994996463647,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_boss_walk",
+      "location": [
+        15350.0,
+        68000.0,
+        9698.149994996464
+      ],
+      "ground_z": 9600.0,
+      "capsule_bottom_clearance_cm": 2.149994996463647,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_boss_walk",
+      "location": [
+        15416.128551776168,
+        68000.0,
+        9698.149994996464
+      ],
+      "ground_z": 9600.0,
+      "capsule_bottom_clearance_cm": 2.149994996463647,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_boss_walk",
+      "location": [
+        15571.447933196841,
+        68000.0,
+        9698.149994996464
+      ],
+      "ground_z": 9600.0,
+      "capsule_bottom_clearance_cm": 2.149994996463647,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_boss_walk",
+      "location": [
+        15727.454565644084,
+        68000.0,
+        9698.149994996464
+      ],
+      "ground_z": 9600.0,
+      "capsule_bottom_clearance_cm": 2.149994996463647,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_boss_walk",
+      "location": [
+        15879.321644112288,
+        68000.0,
+        9698.149994996464
+      ],
+      "ground_z": 9600.0,
+      "capsule_bottom_clearance_cm": 2.149994996463647,
+      "moving_on_ground": true
+    },
+    {
+      "id": "poi_boss_walk",
+      "location": [
+        16032.481360390602,
+        68000.0,
+        9698.149994996464
+      ],
+      "ground_z": 9600.0,
+      "capsule_bottom_clearance_cm": 2.149994996463647,
+      "moving_on_ground": true
+    },
+    {
+      "id": "camp_reentry",
+      "location": [
+        350.0,
+        -65000.0,
+        2900.151903994943
+      ],
+      "ground_z": 2801.9998168917373,
+      "capsule_bottom_clearance_cm": 2.1520871032057585,
+      "moving_on_ground": true
+    },
+    {
+      "id": "camp_reentry_walk",
+      "location": [
+        350.0,
+        -65000.0,
+        2900.151903994943
+      ],
+      "ground_z": 2801.9998168917373,
+      "capsule_bottom_clearance_cm": 2.1520871032057585,
+      "moving_on_ground": true
+    },
+    {
+      "id": "camp_reentry_walk",
+      "location": [
+        414.6761104507325,
+        -65000.0,
+        2900.7195023378385
+      ],
+      "ground_z": 2802.6440418413886,
+      "capsule_bottom_clearance_cm": 2.0754604964499777,
+      "moving_on_ground": true
+    },
+    {
+      "id": "camp_reentry_walk",
+      "location": [
+        571.4286657720573,
+        -65000.0,
+        2902.149736770059
+      ],
+      "ground_z": 2803.9993591210805,
+      "capsule_bottom_clearance_cm": 2.1503776489785196,
+      "moving_on_ground": true
+    },
+    {
+      "id": "camp_reentry_walk",
+      "location": [
+        717.8755789547928,
+        -65000.0,
+        2902.149736770059
+      ],
+      "ground_z": 2804.0395564027,
+      "capsule_bottom_clearance_cm": 2.110180367359135,
+      "moving_on_ground": true
+    },
+    {
+      "id": "camp_reentry_walk",
+      "location": [
+        880.4361685663231,
+        -65000.0,
+        2903.9089006265654
+      ],
+      "ground_z": 2805.8598182797286,
+      "capsule_bottom_clearance_cm": 2.0490823468367125,
+      "moving_on_ground": true
+    },
+    {
+      "id": "camp_reentry_walk",
+      "location": [
+        1030.2428623586661,
+        -65000.0,
+        2905.481553920175
+      ],
+      "ground_z": 2807.5372692183946,
+      "capsule_bottom_clearance_cm": 1.9442847017803615,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_center",
+      "location": [
+        0.0,
+        5000.0,
+        3398.150001333328
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.150001333327964,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_center_walk",
+      "location": [
+        0.0,
+        5000.0,
+        3398.150001333328
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.150001333327964,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_center_walk",
+      "location": [
+        0.0,
+        5069.021289610197,
+        3398.150001333328
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.150001333327964,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_center_walk",
+      "location": [
+        0.0,
+        5226.2563994544,
+        3398.150001333328
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.150001333327964,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_center_walk",
+      "location": [
+        0.0,
+        5375.9068526344745,
+        3398.150001333328
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.150001333327964,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_center_walk",
+      "location": [
+        0.0,
+        5535.428635554239,
+        3398.150001333328
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.150001333327964,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_center_walk",
+      "location": [
+        0.0,
+        5691.212751122042,
+        3398.150001333328
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.150001333327964,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_south_end",
+      "location": [
+        0.0,
+        -850.0,
+        3398.149993800573
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499938005731565,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_south_end_walk",
+      "location": [
+        0.0,
+        -850.0,
+        3398.149993800573
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499938005731565,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_south_end_walk",
+      "location": [
+        0.0,
+        -913.358172031253,
+        3398.149993800573
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499938005731565,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_south_end_walk",
+      "location": [
+        0.0,
+        -1061.5285255902227,
+        3395.624489008352
+      ],
+      "ground_z": 3297.4449924975656,
+      "capsule_bottom_clearance_cm": 2.179496510786521,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_south_end_walk",
+      "location": [
+        0.0,
+        -1221.3408431553062,
+        3388.9656420992937
+      ],
+      "ground_z": 3290.786145332762,
+      "capsule_bottom_clearance_cm": 2.1794967665318836,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_south_end_walk",
+      "location": [
+        0.0,
+        -1372.6415511362966,
+        3382.6614456731786
+      ],
+      "ground_z": 3284.4819485992302,
+      "capsule_bottom_clearance_cm": 2.179497073948369,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_south_end_walk",
+      "location": [
+        0.0,
+        -1532.3344536267932,
+        3376.007574403032
+      ],
+      "ground_z": 3277.828077062982,
+      "capsule_bottom_clearance_cm": 2.179497340049693,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_south_end_walk",
+      "location": [
+        0.0,
+        -1684.0380390875753,
+        3369.6865913625625
+      ],
+      "ground_z": 3271.507093766281,
+      "capsule_bottom_clearance_cm": 2.179497596281635,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_north_end",
+      "location": [
+        0.0,
+        10850.0,
+        3398.1499982544415
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499982544414706,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_north_end_walk",
+      "location": [
+        0.0,
+        10850.0,
+        3398.1499982544415
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499982544414706,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_north_end_walk",
+      "location": [
+        0.0,
+        10918.157609991373,
+        3398.1499982544415
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499982544414706,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_north_end_walk",
+      "location": [
+        0.0,
+        11073.292798797042,
+        3395.2053158476942
+      ],
+      "ground_z": 3296.9548144031437,
+      "capsule_bottom_clearance_cm": 2.2505014445505367,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_north_end_walk",
+      "location": [
+        0.0,
+        11223.079218218476,
+        3388.9642147347354
+      ],
+      "ground_z": 3290.713713031941,
+      "capsule_bottom_clearance_cm": 2.2505017027942813,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_north_end_walk",
+      "location": [
+        0.0,
+        11382.716508234293,
+        3382.312660637022
+      ],
+      "ground_z": 3284.062158682347,
+      "capsule_bottom_clearance_cm": 2.2505019546747462,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_central_north_end_walk",
+      "location": [
+        0.0,
+        11536.640994200856,
+        3375.8991400489895
+      ],
+      "ground_z": 3277.6486378562386,
+      "capsule_bottom_clearance_cm": 2.2505021927509006,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_center",
+      "location": [
+        -44000.0,
+        5000.0,
+        3398.1499961037393
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499961037393405,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_center_walk",
+      "location": [
+        -44000.0,
+        5000.0,
+        3398.1499961037393
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499961037393405,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_center_walk",
+      "location": [
+        -44000.0,
+        5067.183611416637,
+        3398.1499961037393
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499961037393405,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_center_walk",
+      "location": [
+        -44000.0,
+        5218.686620513447,
+        3398.1499961037393
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499961037393405,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_center_walk",
+      "location": [
+        -44000.0,
+        5372.414626623043,
+        3398.1499961037393
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499961037393405,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_center_walk",
+      "location": [
+        -44000.0,
+        5524.394856313714,
+        3398.1499961037393
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499961037393405,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_center_walk",
+      "location": [
+        -44000.0,
+        5679.8996599712455,
+        3398.1499961037393
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499961037393405,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_south_end",
+      "location": [
+        -44000.0,
+        -850.0,
+        3398.1500010398568
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.150001039856761,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_south_end_walk",
+      "location": [
+        -44000.0,
+        -850.0,
+        3398.1500010398568
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.150001039856761,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_south_end_walk",
+      "location": [
+        -44000.0,
+        -919.0047731926334,
+        3398.1500010398568
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.150001039856761,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_south_end_walk",
+      "location": [
+        -44000.0,
+        -1074.354004440651,
+        3395.33254775738
+      ],
+      "ground_z": 3296.910597497345,
+      "capsule_bottom_clearance_cm": 2.4219502600349188,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_south_end_walk",
+      "location": [
+        -44000.0,
+        -1227.4114827344274,
+        3388.955152437588
+      ],
+      "ground_z": 3290.5332019941893,
+      "capsule_bottom_clearance_cm": 2.4219504433986003,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_south_end_walk",
+      "location": [
+        -44000.0,
+        -1382.1706731895065,
+        3382.506852518337
+      ],
+      "ground_z": 3284.0849018112613,
+      "capsule_bottom_clearance_cm": 2.4219507070756663,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_south_end_walk",
+      "location": [
+        -44000.0,
+        -1542.439559055314,
+        3375.828981940986
+      ],
+      "ground_z": 3277.4070309655476,
+      "capsule_bottom_clearance_cm": 2.421950975438449,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_north_end",
+      "location": [
+        -44000.0,
+        10850.0,
+        3398.1499987598813
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499987598813277,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_north_end_walk",
+      "location": [
+        -44000.0,
+        10850.0,
+        3398.1499987598813
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499987598813277,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_north_end_walk",
+      "location": [
+        -44000.0,
+        10911.138983960827,
+        3398.1499987598813
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1499987598813277,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_north_end_walk",
+      "location": [
+        -44000.0,
+        11064.234393367537,
+        3395.693654179182
+      ],
+      "ground_z": 3297.332247996692,
+      "capsule_bottom_clearance_cm": 2.3614061824901,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_north_end_walk",
+      "location": [
+        -44000.0,
+        11218.207548910745,
+        3389.2781056625913
+      ],
+      "ground_z": 3290.9166992713745,
+      "capsule_bottom_clearance_cm": 2.3614063912168604,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_north_end_walk",
+      "location": [
+        -44000.0,
+        11378.231904337175,
+        3382.6104239445303
+      ],
+      "ground_z": 3284.2490171948857,
+      "capsule_bottom_clearance_cm": 2.3614067496446296,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_western_north_end_walk",
+      "location": [
+        -44000.0,
+        11532.277537638314,
+        3376.1918555632146
+      ],
+      "ground_z": 3277.830448562716,
+      "capsule_bottom_clearance_cm": 2.3614070004987298,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_center",
+      "location": [
+        45000.0,
+        5000.0,
+        3398.1500006586266
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1500006586265954,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_center_walk",
+      "location": [
+        45000.0,
+        5000.0,
+        3398.1500006586266
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1500006586265954,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_center_walk",
+      "location": [
+        45000.0,
+        5065.066150444298,
+        3398.1500006586266
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1500006586265954,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_center_walk",
+      "location": [
+        45000.0,
+        5216.248966971553,
+        3398.1500006586266
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1500006586265954,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_center_walk",
+      "location": [
+        45000.0,
+        5372.902568498767,
+        3398.1500006586266
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1500006586265954,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_center_walk",
+      "location": [
+        45000.0,
+        5532.99617967955,
+        3398.1500006586266
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1500006586265954,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_center_walk",
+      "location": [
+        45000.0,
+        5687.836218172825,
+        3398.1500006586266
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.1500006586265954,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_south_end",
+      "location": [
+        45000.0,
+        -850.0,
+        3398.1499976814157
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.149997681415698,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_south_end_walk",
+      "location": [
+        45000.0,
+        -850.0,
+        3398.1499976814157
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.149997681415698,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_south_end_walk",
+      "location": [
+        45000.0,
+        -911.7812670286071,
+        3398.1499976814157
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.149997681415698,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_south_end_walk",
+      "location": [
+        45000.0,
+        -1066.2287868585445,
+        3395.5791779101805
+      ],
+      "ground_z": 3297.2491482604173,
+      "capsule_bottom_clearance_cm": 2.330029649763219,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_south_end_walk",
+      "location": [
+        45000.0,
+        -1221.0639288302518,
+        3389.127713310385
+      ],
+      "ground_z": 3290.7976834306783,
+      "capsule_bottom_clearance_cm": 2.3300298797066716,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_south_end_walk",
+      "location": [
+        45000.0,
+        -1372.7482931341983,
+        3382.807531156581
+      ],
+      "ground_z": 3284.477501015584,
+      "capsule_bottom_clearance_cm": 2.3300301409967688,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_south_end_walk",
+      "location": [
+        45000.0,
+        -1529.6800263252117,
+        3376.2687086430674
+      ],
+      "ground_z": 3277.938678210507,
+      "capsule_bottom_clearance_cm": 2.3300304325603065,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_north_end",
+      "location": [
+        45000.0,
+        10850.0,
+        3398.1499973702926
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.149997370292567,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_north_end_walk",
+      "location": [
+        45000.0,
+        10850.0,
+        3398.1499973702926
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.149997370292567,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_north_end_walk",
+      "location": [
+        45000.0,
+        10915.248633853655,
+        3398.1499973702926
+      ],
+      "ground_z": 3300.0,
+      "capsule_bottom_clearance_cm": 2.149997370292567,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_north_end_walk",
+      "location": [
+        45000.0,
+        11065.830829505685,
+        3395.6708213451675
+      ],
+      "ground_z": 3297.26572981828,
+      "capsule_bottom_clearance_cm": 2.405091526887645,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_north_end_walk",
+      "location": [
+        45000.0,
+        11221.67341000295,
+        3389.1773801424724
+      ],
+      "ground_z": 3290.772288379529,
+      "capsule_bottom_clearance_cm": 2.405091762943357,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_north_end_walk",
+      "location": [
+        45000.0,
+        11378.63341598666,
+        3382.637379505284
+      ],
+      "ground_z": 3284.2322875413174,
+      "capsule_bottom_clearance_cm": 2.405091963966697,
+      "moving_on_ground": true
+    },
+    {
+      "id": "bridge_eastern_north_end_walk",
+      "location": [
+        45000.0,
+        11533.148140673402,
+        3376.1992656414736
+      ],
+      "ground_z": 3277.7941734329875,
+      "capsule_bottom_clearance_cm": 2.405092208486167,
+      "moving_on_ground": true
+    }
+  ],
+  "navigation_samples": [
+    {
+      "id": "poi_camp",
+      "start": [
+        350.0,
+        -65000.0,
+        2813.7651821862346
+      ],
+      "end": [
+        950.0,
+        -65000.0,
+        2814.2105263157896
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          350.0,
+          -65000.0,
+          2813.7651821862346
+        ],
+        [
+          950.0,
+          -65000.0,
+          2814.2105263157896
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "poi_forest",
+      "start": [
+        -49650.0,
+        -25000.0,
+        3810.0
+      ],
+      "end": [
+        -49050.0,
+        -25000.0,
+        3795.015883836245
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -49650.0,
+          -25000.0,
+          3810.0
+        ],
+        [
+          -49050.0,
+          -25000.0,
+          3795.015883836245
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "poi_crossroads",
+      "start": [
+        350.0,
+        5000.0,
+        3310.0
+      ],
+      "end": [
+        350.0,
+        5600.0,
+        3310.0
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          350.0,
+          5000.0,
+          3310.0
+        ],
+        [
+          350.0,
+          5600.0,
+          3310.0
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "poi_mill",
+      "start": [
+        50350.0,
+        -5000.0,
+        3500.769230769231
+      ],
+      "end": [
+        50950.0,
+        -5000.0,
+        3500.0
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          50350.0,
+          -5000.0,
+          3500.769230769231
+        ],
+        [
+          50950.0,
+          -5000.0,
+          3500.0
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "poi_highlands",
+      "start": [
+        -34649.99999999999,
+        42000.0,
+        7426.199682224471
+      ],
+      "end": [
+        -34049.99999999999,
+        42000.0,
+        7444.158518897192
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -34649.99999999999,
+          42000.0,
+          7426.199682224471
+        ],
+        [
+          -34049.99999999999,
+          42000.0,
+          7444.158518897192
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "poi_boss",
+      "start": [
+        15350.0,
+        68000.0,
+        9610.0
+      ],
+      "end": [
+        15950.0,
+        68000.0,
+        9610.0
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          15350.0,
+          68000.0,
+          9610.0
+        ],
+        [
+          15950.0,
+          68000.0,
+          9610.0
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "camp_reentry",
+      "start": [
+        350.0,
+        -65000.0,
+        2813.7651821862346
+      ],
+      "end": [
+        950.0,
+        -65000.0,
+        2814.2105263157896
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          350.0,
+          -65000.0,
+          2813.7651821862346
+        ],
+        [
+          950.0,
+          -65000.0,
+          2814.2105263157896
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "bridge_central_center",
+      "start": [
+        -0.0,
+        5000.0,
+        3310.0
+      ],
+      "end": [
+        -0.0,
+        5600.0,
+        3310.0
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -0.0,
+          5000.0,
+          3310.0
+        ],
+        [
+          -0.0,
+          5600.0,
+          3310.0
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "bridge_central_south_end",
+      "start": [
+        -0.0,
+        -850.0,
+        3310.0
+      ],
+      "end": [
+        -0.0,
+        -1450.0,
+        3291.2955465587042
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -0.0,
+          -850.0,
+          3310.0
+        ],
+        [
+          -0.0,
+          -1450.0,
+          3291.2955465587042
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "bridge_central_north_end",
+      "start": [
+        -0.0,
+        10850.0,
+        3310.0
+      ],
+      "end": [
+        -0.0,
+        11450.0,
+        3286.4372469635628
+      ],
+      "point_count": 3,
+      "points": [
+        [
+          -0.0,
+          10850.0,
+          3310.0
+        ],
+        [
+          -0.0,
+          10868.0,
+          3310.0
+        ],
+        [
+          -0.0,
+          11450.0,
+          3286.4372469635628
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "bridge_western_center",
+      "start": [
+        -44000.0,
+        5000.0,
+        3310.0
+      ],
+      "end": [
+        -44000.0,
+        5600.0,
+        3310.0
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -44000.0,
+          5000.0,
+          3310.0
+        ],
+        [
+          -44000.0,
+          5600.0,
+          3310.0
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "bridge_western_south_end",
+      "start": [
+        -44000.0,
+        -850.0,
+        3310.0
+      ],
+      "end": [
+        -44000.0,
+        -1450.0,
+        3294.5510777843656
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -44000.0,
+          -850.0,
+          3310.0
+        ],
+        [
+          -44000.0,
+          -1450.0,
+          3294.5510777843656
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "bridge_western_north_end",
+      "start": [
+        -44000.0,
+        10850.0,
+        3310.0
+      ],
+      "end": [
+        -44000.0,
+        11450.0,
+        3290.3644883751545
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          -44000.0,
+          10850.0,
+          3310.0
+        ],
+        [
+          -44000.0,
+          11450.0,
+          3290.3644883751545
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "bridge_eastern_center",
+      "start": [
+        45000.0,
+        5000.0,
+        3310.0
+      ],
+      "end": [
+        45000.0,
+        5600.0,
+        3310.0
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          45000.0,
+          5000.0,
+          3310.0
+        ],
+        [
+          45000.0,
+          5600.0,
+          3310.0
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "bridge_eastern_south_end",
+      "start": [
+        45000.0,
+        -850.0,
+        3310.0
+      ],
+      "end": [
+        45000.0,
+        -1450.0,
+        3294.452425322982
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          45000.0,
+          -850.0,
+          3310.0
+        ],
+        [
+          45000.0,
+          -1450.0,
+          3294.452425322982
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    },
+    {
+      "id": "bridge_eastern_north_end",
+      "start": [
+        45000.0,
+        10850.0,
+        3310.0
+      ],
+      "end": [
+        45000.0,
+        11450.0,
+        3290.3644883751545
+      ],
+      "point_count": 2,
+      "points": [
+        [
+          45000.0,
+          10850.0,
+          3310.0
+        ],
+        [
+          45000.0,
+          11450.0,
+          3290.3644883751545
+        ]
+      ],
+      "valid": true,
+      "partial": false
+    }
+  ],
+  "streaming_samples": [
+    {
+      "id": "initial_camp",
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 0,
+        "boss": 0
+      }
+    },
+    {
+      "id": "poi_camp",
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 0,
+        "boss": 0
+      }
+    },
+    {
+      "id": "poi_forest",
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 0,
+        "highlands": 1,
+        "boss": 0
+      }
+    },
+    {
+      "id": "poi_crossroads",
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 1,
+        "boss": 1
+      }
+    },
+    {
+      "id": "poi_mill",
+      "counts": {
+        "camp": 1,
+        "forest": 0,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 0,
+        "boss": 1
+      }
+    },
+    {
+      "id": "poi_highlands",
+      "counts": {
+        "camp": 0,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 0,
+        "highlands": 1,
+        "boss": 1
+      }
+    },
+    {
+      "id": "poi_boss",
+      "counts": {
+        "camp": 0,
+        "forest": 0,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 1,
+        "boss": 1
+      }
+    },
+    {
+      "id": "camp_reentry",
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 0,
+        "boss": 0
+      }
+    },
+    {
+      "id": "bridge_central_center",
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 1,
+        "boss": 1
+      }
+    },
+    {
+      "id": "bridge_central_south_end",
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 1,
+        "boss": 1
+      }
+    },
+    {
+      "id": "bridge_central_north_end",
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 1,
+        "boss": 1
+      }
+    },
+    {
+      "id": "bridge_western_center",
+      "counts": {
+        "camp": 0,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 1,
+        "boss": 1
+      }
+    },
+    {
+      "id": "bridge_western_south_end",
+      "counts": {
+        "camp": 1,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 1,
+        "boss": 1
+      }
+    },
+    {
+      "id": "bridge_western_north_end",
+      "counts": {
+        "camp": 0,
+        "forest": 1,
+        "crossroads": 1,
+        "mill": 0,
+        "highlands": 1,
+        "boss": 1
+      }
+    },
+    {
+      "id": "bridge_eastern_center",
+      "counts": {
+        "camp": 1,
+        "forest": 0,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 0,
+        "boss": 1
+      }
+    },
+    {
+      "id": "bridge_eastern_south_end",
+      "counts": {
+        "camp": 1,
+        "forest": 0,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 0,
+        "boss": 1
+      }
+    },
+    {
+      "id": "bridge_eastern_north_end",
+      "counts": {
+        "camp": 1,
+        "forest": 0,
+        "crossroads": 1,
+        "mill": 1,
+        "highlands": 0,
+        "boss": 1
+      }
+    }
+  ],
+  "combat_samples": [
+    {
+      "elapsed_seconds": 0.031000000002677552,
+      "monster_location": [
+        -51606.48166481593,
+        -24076.973956691174,
+        3887.972696626201
+      ],
+      "distance_to_player_cm": 900.0,
+      "monster_displacement_cm": 0.0,
+      "blackboard_target_is_player": true,
+      "player_health": 135.0
+    },
+    {
+      "elapsed_seconds": 0.28100000000267755,
+      "monster_location": [
+        -51555.84914454958,
+        -24076.973956691174,
+        3887.7004836440233
+      ],
+      "distance_to_player_cm": 849.3674797336498,
+      "monster_displacement_cm": 50.632520266350184,
+      "blackboard_target_is_player": true,
+      "player_health": 135.0
+    },
+    {
+      "elapsed_seconds": 0.5310000000026776,
+      "monster_location": [
+        -51497.247697541505,
+        -24076.973956691174,
+        3886.91655620338
+      ],
+      "distance_to_player_cm": 790.7660327255726,
+      "monster_displacement_cm": 109.23396727442741,
+      "blackboard_target_is_player": true,
+      "player_health": 135.0
+    },
+    {
+      "elapsed_seconds": 0.7810000000026776,
+      "monster_location": [
+        -51441.92290036934,
+        -24076.973956691174,
+        3886.3993857741502
+      ],
+      "distance_to_player_cm": 735.4412355534078,
+      "monster_displacement_cm": 164.55876444659225,
+      "blackboard_target_is_player": true,
+      "player_health": 135.0
+    },
+    {
+      "elapsed_seconds": 1.0310000000026776,
+      "monster_location": [
+        -51381.561309423574,
+        -24076.973956691174,
+        3884.8832520518645
+      ],
+      "distance_to_player_cm": 675.079644607642,
+      "monster_displacement_cm": 224.92035539235803,
+      "blackboard_target_is_player": true,
+      "player_health": 135.0
+    },
+    {
+      "elapsed_seconds": 1.2810000000026776,
+      "monster_location": [
+        -51327.10515331656,
+        -24076.973956691174,
+        3883.6637133437875
+      ],
+      "distance_to_player_cm": 620.623488500627,
+      "monster_displacement_cm": 279.376511499373,
+      "blackboard_target_is_player": true,
+      "player_health": 135.0
+    },
+    {
+      "elapsed_seconds": 1.5310000000026776,
+      "monster_location": [
+        -51266.625388437526,
+        -24076.973956691174,
+        3882.309276675876
+      ],
+      "distance_to_player_cm": 560.1437236215934,
+      "monster_displacement_cm": 339.8562763784066,
+      "blackboard_target_is_player": true,
+      "player_health": 135.0
+    },
+    {
+      "elapsed_seconds": 1.7810000000026776,
+      "monster_location": [
+        -51211.391234195595,
+        -24076.973956691174,
+        3880.7709931002037
+      ],
+      "distance_to_player_cm": 504.90956937966257,
+      "monster_displacement_cm": 395.09043062033743,
+      "blackboard_target_is_player": true,
+      "player_health": 135.0
+    },
+    {
+      "elapsed_seconds": 2.0310000000026776,
+      "monster_location": [
+        -51154.00232543126,
+        -24076.973956691174,
+        3879.4857757895247
+      ],
+      "distance_to_player_cm": 447.5206606153297,
+      "monster_displacement_cm": 452.4793393846703,
+      "blackboard_target_is_player": true,
+      "player_health": 135.0
+    },
+    {
+      "elapsed_seconds": 2.2810000000026776,
+      "monster_location": [
+        -51094.6182584488,
+        -24076.973956691174,
+        3878.1558771500877
+      ],
+      "distance_to_player_cm": 388.1365936328657,
+      "monster_displacement_cm": 511.8634063671343,
+      "blackboard_target_is_player": true,
+      "player_health": 135.0
+    },
+    {
+      "elapsed_seconds": 2.5310000000026776,
+      "monster_location": [
+        -51036.71076868655,
+        -24076.973956691174,
+        3876.859046267978
+      ],
+      "distance_to_player_cm": 330.2291038706171,
+      "monster_displacement_cm": 569.7708961293829,
+      "blackboard_target_is_player": true,
+      "player_health": 135.0
+    },
+    {
+      "elapsed_seconds": 2.7810000000026776,
+      "monster_location": [
+        -50979.10848771973,
+        -24076.973956691174,
+        3875.5690505094326
+      ],
+      "distance_to_player_cm": 272.626822903796,
+      "monster_displacement_cm": 627.373177096204,
+      "blackboard_target_is_player": true,
+      "player_health": 135.0
+    },
+    {
+      "elapsed_seconds": 3.0310000000026776,
+      "monster_location": [
+        -50924.66196837514,
+        -24076.973956691174,
+        3874.3497276333633
+      ],
+      "distance_to_player_cm": 218.18030355920928,
+      "monster_displacement_cm": 681.8196964407907,
+      "blackboard_target_is_player": true,
+      "player_health": 135.0
+    },
+    {
+      "elapsed_seconds": 3.2810000000026776,
+      "monster_location": [
+        -50865.01002070894,
+        -24076.973956691174,
+        3873.3092675081602
+      ],
+      "distance_to_player_cm": 158.52835589300958,
+      "monster_displacement_cm": 741.4716441069904,
+      "blackboard_target_is_player": true,
+      "player_health": 135.0
+    }
+  ],
+  "limitations": [
+    "Ground and walking coverage consists of six POIs and three samples on each of three bridges; it is not a full terrain traversal.",
+    "Streaming unload/reentry is required for the camp sentinel on a camp-to-boss-to-camp round trip; every POI sentinel must load on arrival.",
+    "Navigation paths are local to the player invoker. One authored normal monster is checked for real AI pursuit and player damage.",
+    "Pawn damage immunity during traversal, isolated AI logic, and a one-point monster damage stimulus are PIE-only test adjustments.",
+    "Final-boss victory, a full 20-minute timeout, all monsters, network play and packaged performance are not checked."
+  ],
+  "phase": "cleanup",
+  "elapsed_wall_seconds": 55.48500000000058,
+  "portal_entry": {
+    "method": "real_native_overlap",
+    "destination": [
+      0.0,
+      4270.0,
+      200.0
+    ]
+  },
+  "message": "Hub portal, 1200-second run, PlayerStart landing, local navigation, POI/bridge walking, camp streaming round trip and native monster pursuit/damage verified.",
+  "owned_pie_cleanup_confirmed": true
+}

@@ -4,9 +4,13 @@
 
 #include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/GameInstance.h"
 #include "Kismet/GameplayStatics.h"
 #include "Rogue10m.h"
 #include "Rogue10mCharacter.h"
+#include "Rogue10mInventoryComponent.h"
+#include "Rogue10mTutorialSupplySubsystem.h"
+#include "Rogue10mProgressionSubsystem.h"
 
 ARogue10mRunPortal::ARogue10mRunPortal()
 {
@@ -42,6 +46,28 @@ void ARogue10mRunPortal::HandlePortalBeginOverlap(UPrimitiveComponent* Overlappe
 	}
 
 	bTravelStarted = true;
+	if (const ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(OtherActor))
+	{
+		if (UGameInstance* Instance = GetGameInstance())
+		{
+			if (URogue10mProgressionSubsystem* Progression = Instance->GetSubsystem<URogue10mProgressionSubsystem>())
+			{
+				if (Progression->IsAttachedTo(*Character) && !Progression->SaveNow())
+				{
+					bTravelStarted = false;
+					UE_LOG(LogRogue10m, Error, TEXT("Portal travel stopped: character progression could not be saved."));
+					return;
+				}
+			}
+			if (URogue10mTutorialSupplySubsystem* Supplies = Instance->GetSubsystem<URogue10mTutorialSupplySubsystem>())
+			{
+				if (const URogue10mInventoryComponent* Inventory = Character->GetInventoryComponent())
+				{
+					Supplies->CaptureSuppliesForTravel(*Inventory);
+				}
+			}
+		}
+	}
 	UE_LOG(LogRogue10m, Log, TEXT("Run portal opened level '%s' with options '%s'."), *TargetLevelName.ToString(), *BuildTravelOptions());
 	UGameplayStatics::OpenLevel(this, TargetLevelName, true, BuildTravelOptions());
 }

@@ -1,0 +1,120 @@
+{
+  "status": "passed_reimport",
+  "source_fbx": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\cutout-export-pack\\assets\\model.fbx",
+  "source_sha256": "9d9d7564a9aa592e87fa0a6d6250a603265d4831a0ef60859f9cbfb004268bfa",
+  "source_size_bytes": 1549148,
+  "blender_version": "4.5.14 LTS",
+  "scope": "actual FBX re-import and renders; no geometry repair, rigging, or Unreal modification",
+  "axes": {
+    "up": "+Z",
+    "front_camera": "-Y",
+    "side_camera": "+X"
+  },
+  "quality_acceptance": "not evaluated; preserve Apollo asset state and upstream QA separately",
+  "meshes": [
+    {
+      "name": "source_textured_cutout",
+      "vertices": 10204,
+      "polygons": 20404,
+      "triangles": 20404,
+      "uv_layers": [
+        "UVMap"
+      ],
+      "material_slots": [
+        "source_image_cutout"
+      ],
+      "dimensions_blender_units": [
+        1.6458293,
+        0.12,
+        1.6392857
+      ],
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_euler": [
+        -2e-07,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "armature_modifier_targets": [],
+      "vertex_groups": [],
+      "vertices_weighted_to_existing_bones": 0,
+      "weighted_vertex_fraction": 0.0,
+      "hidden_for_render": false
+    }
+  ],
+  "mesh_count": 1,
+  "total_triangles": 20404,
+  "materials": [
+    {
+      "name": "source_image_cutout",
+      "use_nodes": true,
+      "image_nodes": [
+        {
+          "node": "Image Texture",
+          "image": "Image_0",
+          "size": [
+            1154,
+            1139
+          ],
+          "packed": true,
+          "filepath": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\cutout-export-pack\\assets\\out.fbm",
+          "external_file_exists": false
+        }
+      ]
+    }
+  ],
+  "world_bounds_min": [
+    -0.8305039,
+    -0.0525,
+    -0.0
+  ],
+  "world_bounds_max": [
+    0.8153254,
+    0.0675003,
+    1.6392857
+  ],
+  "world_dimensions_blender_units": [
+    1.6458293,
+    0.1200003,
+    1.6392857
+  ],
+  "scene_unit_scale_length": 1.0,
+  "front_depth_to_height_ratio": 0.0732028,
+  "armatures": [],
+  "armature_count": 0,
+  "actions": [],
+  "action_count": 0,
+  "warnings": [
+    "No armature: this FBX is not a rigged skeletal NPC",
+    "No imported animation actions",
+    "Depth is less than 15% of height; inspect the side render for a flat or extruded 2.5D result"
+  ],
+  "renders": [
+    {
+      "view": "front",
+      "camera_axis": "-Y",
+      "projection": "orthographic",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\cutout-inspection\\fbx-front.png"
+    },
+    {
+      "view": "side",
+      "camera_axis": "+X",
+      "projection": "orthographic",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\cutout-inspection\\fbx-side.png"
+    },
+    {
+      "view": "oblique",
+      "camera_axis": "oblique",
+      "projection": "orthographic",
+      "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\arin-apollo-20261005\\cutout-inspection\\fbx-oblique.png"
+    }
+  ]
+}

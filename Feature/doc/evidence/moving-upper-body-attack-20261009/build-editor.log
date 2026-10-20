@@ -1,0 +1,124 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Invalidating makefile for Rogue10mEditor (source file added)
+UHT compiled-in object format Default
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mFighterCombatStanceAnimInstance.cpp, Rogue10mAppearanceCameraComponent.cpp, Rogue10mCharacterAnimationComponent.cpp, Rogue10mCombatComponent.cpp, Rogue10mFirstPersonPresentationComponent.cpp, Rogue10mInventoryComponent.cpp, Rogue10mSkillBindingComponent.cpp, Rogue10mPlayerController.cpp, Rogue10mMonsterDataAsset.cpp, Rogue10mFistCombatAuthoring.cpp, Rogue10mMovingAttackAuthoring.cpp, Rogue10mOpenWorldAuthoring.cpp, Rogue10mBasicMonster.cpp, Rogue10mMonsterAttackPatternComponent.cpp, Rogue10mMonsterAIController.cpp, Rogue10mAppearanceCameraRuntimeTest.cpp, Rogue10mFighterCombatStanceRuntimeTest.cpp, Rogue10mFighterSkillTreeRuntimeTest.cpp, Rogue10mFistCombatRuntimeTest.cpp, Rogue10mInitialHeadFramingRuntimeTest.cpp, Rogue10mResponsiveHUDRuntimeTest.cpp, Rogue10mStoneFistAnimationRuntimeTest.cpp, Rogue10mThirdPersonInspectionRuntimeTest.cpp, Rogue10mWeaponSkillTreeRuntimeTest.cpp, Rogue10mBottomHUDWidget.cpp, Rogue10mHudWidgetParts.cpp, Rogue10mMainHUDWidget.cpp, Rogue10mMenuWindowWidgets.cpp, Rogue10mTutorialWidget.cpp, Rogue10mMonsterSpawner.cpp, Rogue10mOpenWorldBootstrap.cpp, Rogue10mRunPortal.cpp, Rogue10mTutorialAnimationComponent.cpp, Rogue10mTutorialNPC.cpp, Rogue10mTutorialRewardComponent.cpp, Rogue10mTutorialSupplySubsystem.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+Using XGE executor to run 45 action(s)
+Distributing 45 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {B661AC26-E8C3-4E36-A9E5-CA5EC4C67077}
+ 
+--------------------Project: Default-------------------------------------------
+[1/45] Compile [x64] SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.cpp (0:35.54 at +0:00)
+[2/45] Compile [x64] Rogue10mAppearanceCameraComponent.cpp (0:06.37 at +0:36)
+[3/45] Compile [x64] Rogue10mFighterCombatStanceAnimInstance.cpp (0:06.34 at +0:36)
+[4/45] Compile [x64] Rogue10mFirstPersonPresentationComponent.cpp (0:07.28 at +0:36)
+[5/45] Compile [x64] Rogue10mFistCombatAuthoring.cpp (0:08.68 at +0:36)
+[6/45] Compile [x64] Rogue10mBottomHUDWidget.cpp (0:09.68 at +0:36)
+[7/45] Compile [x64] Rogue10mBasicMonster.cpp (0:11.37 at +0:36)
+[8/45] Compile [x64] Rogue10mCharacter.cpp (0:12.40 at +0:36)
+[9/45] Compile [x64] Rogue10mAppearanceCameraRuntimeTest.cpp (0:13.03 at +0:36)
+[10/45] Compile [x64] Rogue10mFighterCombatStanceRuntimeTest.cpp (0:13.01 at +0:36)
+[11/45] Compile [x64] Rogue10mCharacterAnimationComponent.cpp (0:14.04 at +0:36)
+[12/45] Compile [x64] Rogue10mInitialHeadFramingRuntimeTest.cpp (0:07.09 at +0:43)
+[13/45] Compile [x64] Rogue10mFighterSkillTreeRuntimeTest.cpp (0:16.85 at +0:36)
+[14/45] Compile [x64] Rogue10mMovingAttackAuthoring.cpp (0:03.92 at +0:50)
+D:\Project\Rogue10m\Source\Rogue10m\Editor\Rogue10mMovingAttackAuthoring.cpp(469,39): error C2039: 'ToSharedRef': 'TSharedRef<FJsonObject,ESPMode::ThreadSafe>'�� ����� �ƴմϴ�.
+    FJsonSerializer::Serialize(Report.ToSharedRef(), TJsonWriterFactory<>::Create(&Json));
+                                      ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(153,7): note: 'TSharedRef<FJsonObject,ESPMode::ThreadSafe>' ������ �����Ͻʽÿ�.
+class TSharedRef
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\Editor\Rogue10mMovingAttackAuthoring.cpp(469,22): error C2672: 'TJsonSerializer<FJsonSerializerPolicy_JsonObject>::Serialize': ��ġ�ϴ� �����ε�� �Լ��� �����ϴ�.
+    FJsonSerializer::Serialize(Report.ToSharedRef(), TJsonWriterFactory<>::Create(&Json));
+                     ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Json\Public\Serialization\JsonSerializer.h(620,14): note: 'bool TJsonSerializer<FJsonSerializerPolicy_JsonObject>::Serialize(const TSharedRef<FJsonSerializerPolicy_JsonObject::FElement,ESPMode::ThreadSafe> &,TJsonWriter<CharType,PrintPolicy> &,bool)'�� �� �ֽ��ϴ�.
+	static bool Serialize(const TSharedRef<typename Policy::FElement>& StartingElement, TJsonWriter<CharType, PrintPolicy>& Writer, bool bCloseWriter)
+	            ^
+D:\Project\Rogue10m\Source\Rogue10m\Editor\Rogue10mMovingAttackAuthoring.cpp(469,22): note: 'bool TJsonSerializer<FJsonSerializerPolicy_JsonObject>::Serialize(const TSharedRef<FJsonSerializerPolicy_JsonObject::FElement,ESPMode::ThreadSafe> &,TJsonWriter<CharType,PrintPolicy> &,bool)': 3���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+    FJsonSerializer::Serialize(Report.ToSharedRef(), TJsonWriterFactory<>::Create(&Json));
+                     ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Json\Public\Serialization\JsonSerializer.h(487,14): note: �Ǵ�       'bool TJsonSerializer<FJsonSerializerPolicy_JsonObject>::Serialize(const FJsonSerializerPolicy_JsonObject::FMapOfValues &,TJsonWriter<CharType,PrintPolicy> &,bool)'
+	static bool Serialize(const typename Policy::FMapOfValues& Object, TJsonWriter<CharType, PrintPolicy>& Writer, bool bCloseWriter = true)
+	            ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Json\Public\Serialization\JsonSerializer.h(467,14): note: �Ǵ�       'bool TJsonSerializer<FJsonSerializerPolicy_JsonObject>::Serialize(const FJsonSerializerPolicy_JsonObject::FMapOfValues &,const TSharedRef<TJsonWriter<CharType,PrintPolicy>,ESPMode::ThreadSafe> &,bool)'
+	static bool Serialize(const typename Policy::FMapOfValues& Object, const TSharedRef<TJsonWriter<CharType, PrintPolicy>>& Writer, bool bCloseWriter = true )
+	            ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Json\Public\Serialization\JsonSerializer.h(446,14): note: �Ǵ�       'bool TJsonSerializer<FJsonSerializerPolicy_JsonObject>::Serialize(const FJsonSerializerPolicy_JsonObject::FArrayOfValues &,TJsonWriter<CharType,PrintPolicy> &,bool)'
+	static bool Serialize(const typename Policy::FArrayOfValues& Array, TJsonWriter<CharType, PrintPolicy>& Writer, bool bCloseWriter = true )
+	            ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Json\Public\Serialization\JsonSerializer.h(426,14): note: �Ǵ�       'bool TJsonSerializer<FJsonSerializerPolicy_JsonObject>::Serialize(const FJsonSerializerPolicy_JsonObject::FArrayOfValues &,const TSharedRef<TJsonWriter<CharType,PrintPolicy>,ESPMode::ThreadSafe> &,bool)'
+	static bool Serialize(const typename Policy::FArrayOfValues& Array, const TSharedRef<TJsonWriter<CharType, PrintPolicy>>& Writer, bool bCloseWriter = true)
+	            ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Json\Public\Serialization\JsonSerializer.h(405,14): note: �Ǵ�       'bool TJsonSerializer<FJsonSerializerPolicy_JsonObject>::Serialize(const FJsonSerializerPolicy_JsonObject::FValue &,const FString &,TJsonWriter<CharType,PrintPolicy> &,bool)'
+	static bool Serialize(const typename Policy::FValue& Value, const FString& Identifier, TJsonWriter<CharType, PrintPolicy>& Writer, bool bCloseWriter = true)
+	            ^
+D:\Project\Rogue10m\Source\Rogue10m\Editor\Rogue10mMovingAttackAuthoring.cpp(469,22): note: 'bool TJsonSerializer<FJsonSerializerPolicy_JsonObject>::Serialize(const FJsonSerializerPolicy_JsonObject::FValue &,const FString &,TJsonWriter<CharType,PrintPolicy> &,bool)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+    FJsonSerializer::Serialize(Report.ToSharedRef(), TJsonWriterFactory<>::Create(&Json));
+                     ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Json\Public\Serialization\JsonSerializer.h(377,14): note: �Ǵ�       'bool TJsonSerializer<FJsonSerializerPolicy_JsonObject>::Serialize(const FJsonSerializerPolicy_JsonObject::FValue &,const FString &,const TSharedRef<TJsonWriter<CharType,PrintPolicy>,ESPMode::ThreadSafe> &,bool)'
+	static bool Serialize(const typename Policy::FValue& Value, const FString& Identifier, const TSharedRef<TJsonWriter<CharType, PrintPolicy>>& Writer, bool bCloseWriter = true)
+	            ^
+D:\Project\Rogue10m\Source\Rogue10m\Editor\Rogue10mMovingAttackAuthoring.cpp(469,22): note: 'bool TJsonSerializer<FJsonSerializerPolicy_JsonObject>::Serialize(const FJsonSerializerPolicy_JsonObject::FValue &,const FString &,const TSharedRef<TJsonWriter<CharType,PrintPolicy>,ESPMode::ThreadSafe> &,bool)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+    FJsonSerializer::Serialize(Report.ToSharedRef(), TJsonWriterFactory<>::Create(&Json));
+                     ^
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[15/45] Compile [x64] Module.Rogue10m.4.cpp (0:18.87 at +0:36)
+[16/45] Compile [x64] Rogue10mHudWidgetParts.cpp (0:13.34 at +0:42)
+[17/45] Compile [x64] Rogue10mMonsterDataAsset.cpp (0:07.20 at +0:49)
+[18/45] Compile [x64] Rogue10mCombatComponent.cpp (0:20.71 at +0:36)
+[19/45] Compile [x64] Rogue10mMainHUDWidget.cpp (0:11.25 at +0:45)
+[20/45] Compile [x64] Module.Rogue10m.2.cpp (0:22.39 at +0:36)
+[21/45] Compile [x64] Rogue10mMonsterSpawner.cpp (0:08.50 at +0:50)
+[22/45] Compile [x64] Rogue10mFistCombatRuntimeTest.cpp (0:16.45 at +0:42)
+[23/45] Compile [x64] Rogue10mInventoryComponent.cpp (0:13.93 at +0:45)
+[24/45] Compile [x64] Rogue10mMonsterAttackPatternComponent.cpp (0:10.29 at +0:49)
+[25/45] Compile [x64] Rogue10mTutorialAnimationComponent.cpp (0:06.57 at +0:58)
+[26/45] Compile [x64] Rogue10mMenuWindowWidgets.cpp (0:17.87 at +0:47)
+[27/45] Compile [x64] Rogue10mMonsterAIController.cpp (0:17.62 at +0:48)
+[28/45] Compile [x64] Module.Rogue10m.3.cpp (0:30.81 at +0:36)
+[29/45] Compile [x64] Rogue10mRunPortal.cpp (0:10.89 at +0:56)
+[30/45] Compile [x64] Rogue10mTutorialRewardComponent.cpp (0:08.50 at +0:59)
+[31/45] Compile [x64] Rogue10mTutorialSupplySubsystem.cpp (0:10.50 at +0:59)
+[32/45] Compile [x64] Rogue10mThirdPersonInspectionRuntimeTest.cpp (0:12.04 at +0:58)
+[33/45] Compile [x64] Rogue10mSkillBindingComponent.cpp (0:14.50 at +0:57)
+[34/45] Compile [x64] Rogue10mTutorialNPC.cpp (0:13.48 at +0:58)
+[35/45] Compile [x64] Rogue10mOpenWorldBootstrap.cpp (0:19.14 at +0:54)
+[36/45] Compile [x64] Module.Rogue10m.1.cpp (0:38.36 at +0:36)
+[37/45] Compile [x64] Rogue10mStoneFistAnimationRuntimeTest.cpp (0:17.51 at +0:57)
+[38/45] Compile [x64] Rogue10mTutorialWidget.cpp (0:09.70 at +1:05)
+[39/45] Compile [x64] Rogue10mPlayerController.cpp (0:20.09 at +0:55)
+[40/45] Compile [x64] Rogue10mWeaponSkillTreeRuntimeTest.cpp (0:10.06 at +1:05)
+[41/45] Compile [x64] Rogue10mOpenWorldAuthoring.cpp (0:22.78 at +0:53)
+[42/45] Compile [x64] Rogue10mResponsiveHUDRuntimeTest.cpp (0:21.21 at +0:56)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 0 succeeded, 1 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 81.15 seconds
+
+Result: Failed (OtherCompilationError)
+Total execution time: 88.33 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 6.2kb

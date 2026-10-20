@@ -1,0 +1,3447 @@
+{
+  "status": "failed",
+  "map": "/Game/Rogue10m/Maps/OpenRunMap",
+  "checks": [
+    {
+      "name": "no_existing_pie",
+      "passed": true
+    },
+    {
+      "name": "exact_project_and_idle_map",
+      "passed": true
+    },
+    {
+      "name": "saved_owned_basic_profile",
+      "passed": true,
+      "kind": "VerdantSlime"
+    },
+    {
+      "name": "saved_owned_blueprint_data",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_VerdantSlime.BP_OW_VerdantSlime"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "property": "idle_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "property": "idle_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_Skeleton.Slime_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "property": "movement_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "property": "movement_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_Skeleton.Slime_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "property": "attack_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "property": "attack_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_Skeleton.Slime_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "property": "hit_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "property": "hit_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_Skeleton.Slime_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "property": "death_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "property": "death_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Die_ANIM.Slime_Die_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_Skeleton.Slime_Skeleton"
+    },
+    {
+      "name": "saved_owned_basic_profile",
+      "passed": true,
+      "kind": "Sporeling"
+    },
+    {
+      "name": "saved_owned_blueprint_data",
+      "passed": true,
+      "kind": "Sporeling",
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_Sporeling.BP_OW_Sporeling"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "Sporeling",
+      "property": "idle_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "Sporeling",
+      "property": "idle_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "Sporeling",
+      "property": "movement_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "Sporeling",
+      "property": "movement_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "Sporeling",
+      "property": "attack_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "Sporeling",
+      "property": "attack_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "Sporeling",
+      "property": "hit_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "Sporeling",
+      "property": "hit_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "Sporeling",
+      "property": "death_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "Sporeling",
+      "property": "death_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_DieSmile_ANIM.Mushroom_DieSmile_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton"
+    },
+    {
+      "name": "saved_owned_basic_profile",
+      "passed": true,
+      "kind": "CrimsonSlime"
+    },
+    {
+      "name": "saved_owned_blueprint_data",
+      "passed": true,
+      "kind": "CrimsonSlime",
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_CrimsonSlime.BP_OW_CrimsonSlime"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "CrimsonSlime",
+      "property": "idle_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "CrimsonSlime",
+      "property": "idle_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_Skeleton.Slime_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "CrimsonSlime",
+      "property": "movement_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "CrimsonSlime",
+      "property": "movement_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_Skeleton.Slime_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "CrimsonSlime",
+      "property": "attack_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "CrimsonSlime",
+      "property": "attack_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_Skeleton.Slime_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "CrimsonSlime",
+      "property": "hit_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "CrimsonSlime",
+      "property": "hit_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_Skeleton.Slime_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "CrimsonSlime",
+      "property": "death_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "CrimsonSlime",
+      "property": "death_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Die_ANIM.Slime_Die_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_Skeleton.Slime_Skeleton"
+    },
+    {
+      "name": "saved_owned_basic_profile",
+      "passed": true,
+      "kind": "IronShell"
+    },
+    {
+      "name": "saved_owned_blueprint_data",
+      "passed": true,
+      "kind": "IronShell",
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_IronShell.BP_OW_IronShell"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "IronShell",
+      "property": "idle_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "IronShell",
+      "property": "idle_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_IdleNormal_ANIM.TurtleShell_IdleNormal_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_Skeleton.TurtleShell_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "IronShell",
+      "property": "movement_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "IronShell",
+      "property": "movement_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_Walk_ANIM.TurtleShell_Walk_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_Skeleton.TurtleShell_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "IronShell",
+      "property": "attack_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "IronShell",
+      "property": "attack_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_Attack01_ANIM.TurtleShell_Attack01_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_Skeleton.TurtleShell_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "IronShell",
+      "property": "hit_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "IronShell",
+      "property": "hit_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_GetHit_ANIM.TurtleShell_GetHit_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_Skeleton.TurtleShell_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "IronShell",
+      "property": "death_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "IronShell",
+      "property": "death_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_Die_ANIM.TurtleShell_Die_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_Skeleton.TurtleShell_Skeleton"
+    },
+    {
+      "name": "saved_owned_basic_profile",
+      "passed": true,
+      "kind": "ThornWarden"
+    },
+    {
+      "name": "saved_owned_blueprint_data",
+      "passed": true,
+      "kind": "ThornWarden",
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_ThornWarden.BP_OW_ThornWarden"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "ThornWarden",
+      "property": "idle_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "ThornWarden",
+      "property": "idle_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_IdleNormal_ANIM.Cactus_IdleNormal_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_Skeleton.Cactus_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "ThornWarden",
+      "property": "movement_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "ThornWarden",
+      "property": "movement_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_WalkFWD_ANIM.Cactus_WalkFWD_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_Skeleton.Cactus_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "ThornWarden",
+      "property": "attack_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "ThornWarden",
+      "property": "attack_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_Attack01_ANIM.Cactus_Attack01_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_Skeleton.Cactus_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "ThornWarden",
+      "property": "hit_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "ThornWarden",
+      "property": "hit_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_GetHit_ANIM.Cactus_GetHit_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_Skeleton.Cactus_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "ThornWarden",
+      "property": "death_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "ThornWarden",
+      "property": "death_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_Die_ANIM.Cactus_Die_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_Skeleton.Cactus_Skeleton"
+    },
+    {
+      "name": "saved_owned_basic_profile",
+      "passed": true,
+      "kind": "AbyssOverlordAzathor"
+    },
+    {
+      "name": "saved_owned_blueprint_data",
+      "passed": true,
+      "kind": "AbyssOverlordAzathor",
+      "blueprint": "/Game/Rogue10m/World/OpenWorld/Encounters/BP_OW_FinalBoss.BP_OW_FinalBoss"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "AbyssOverlordAzathor",
+      "property": "idle_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "AbyssOverlordAzathor",
+      "property": "idle_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_IdleNormal_ANIM.Beholder_IdleNormal_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "AbyssOverlordAzathor",
+      "property": "movement_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "AbyssOverlordAzathor",
+      "property": "movement_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_WalkFWD_ANIM.Beholder_WalkFWD_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "AbyssOverlordAzathor",
+      "property": "attack_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "AbyssOverlordAzathor",
+      "property": "attack_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Attack01_ANIM.Beholder_Attack01_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "AbyssOverlordAzathor",
+      "property": "hit_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "AbyssOverlordAzathor",
+      "property": "hit_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_GetHit_ANIM.Beholder_GetHit_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton"
+    },
+    {
+      "name": "unambiguous_owned_animation",
+      "passed": true,
+      "kind": "AbyssOverlordAzathor",
+      "property": "death_animation"
+    },
+    {
+      "name": "saved_owned_animation_reference",
+      "passed": true,
+      "kind": "AbyssOverlordAzathor",
+      "property": "death_animation",
+      "asset": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Die_ANIM.Beholder_Die_ANIM",
+      "skeleton": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_Skeleton.Beholder_Skeleton"
+    },
+    {
+      "name": "forest_streaming_ground_and_player_navigation_ready",
+      "passed": true
+    },
+    {
+      "name": "owned_runtime_species_and_native_profile",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "monster": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_VerdantSlime_C_0",
+      "data": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_VerdantSlime.DA_OW_VerdantSlime",
+      "profile": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_VerdantSlime.DA_OW_BasicAttack_VerdantSlime",
+      "runtime_spawn_supplement": false
+    },
+    {
+      "name": "owned_runtime_model",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "mesh": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_SK.Slime_SK"
+    },
+    {
+      "name": "runtime_grounded_pair_placement",
+      "passed": true,
+      "kind": "VerdantSlime"
+    },
+    {
+      "name": "actual_complete_navigation_path",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "points": [
+        [
+          -48595.93797028065,
+          -21931.867480278015,
+          3719.670833819791
+        ],
+        [
+          -47825.93797028065,
+          -21931.867480278015,
+          3740.3575522446245
+        ]
+      ]
+    },
+    {
+      "name": "idle_clip_timeline_progresses",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "expected_clip": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM"
+    },
+    {
+      "name": "pursuit_starts_outside_attack_range",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "distance_cm": 770.0
+    },
+    {
+      "name": "native_perception_stimulus_monster_only",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "applied_to_monster": 1.0,
+      "direct_player_damage": false
+    },
+    {
+      "name": "native_basic_attack_is_delayed",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "health_before": 135.0,
+      "health_during_windup": 135.0
+    },
+    {
+      "name": "native_basic_attack_animation",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "expected": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+      "actual": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM"
+    },
+    {
+      "name": "native_ai_pursuit_moves_and_plays_movement",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "displacement_cm": 673.0600609819594,
+      "expected_clip": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM"
+    },
+    {
+      "name": "native_attack_clip_timeline_progresses",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "expected_clip": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM"
+    },
+    {
+      "name": "native_basic_attack_real_health_damage",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "health_before": 135.0,
+      "health_after": 134.0,
+      "observed_delay_seconds": 0.35274970158934593,
+      "direct_player_damage": false
+    },
+    {
+      "name": "basic_attack_start_pair_in_range",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "distance_cm": 90.0,
+      "range_cm": 120.0
+    },
+    {
+      "name": "runtime_close_pair_placement",
+      "passed": true,
+      "kind": "VerdantSlime"
+    },
+    {
+      "name": "miss_case_native_windup_started",
+      "passed": true,
+      "kind": "VerdantSlime"
+    },
+    {
+      "name": "player_left_native_hit_range_during_windup",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "distance_cm": 404.0
+    },
+    {
+      "name": "out_of_range_windup_attack_misses",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "health_before": 134.0,
+      "health_after": 134.0
+    },
+    {
+      "name": "basic_attack_start_pair_in_range",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "distance_cm": 90.0,
+      "range_cm": 120.0
+    },
+    {
+      "name": "runtime_close_pair_placement",
+      "passed": true,
+      "kind": "VerdantSlime"
+    },
+    {
+      "name": "death_case_pending_native_hit",
+      "passed": true,
+      "kind": "VerdantSlime"
+    },
+    {
+      "name": "death_case_ai_was_running",
+      "passed": true,
+      "kind": "VerdantSlime"
+    },
+    {
+      "name": "native_death_cancels_pending_basic_attack",
+      "passed": true,
+      "kind": "VerdantSlime"
+    },
+    {
+      "name": "native_death_animation_started",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "expected": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Die_ANIM.Slime_Die_ANIM",
+      "actual": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Die_ANIM.Slime_Die_ANIM"
+    },
+    {
+      "name": "death_stops_running_ai_and_prevents_late_player_damage",
+      "passed": true,
+      "kind": "VerdantSlime",
+      "health_before": 134.0,
+      "health_after": 134.0
+    },
+    {
+      "name": "owned_runtime_species_and_native_profile",
+      "passed": true,
+      "kind": "Sporeling",
+      "monster": "/Memory/UEDPIE_0_OpenRunMap_0KR77TN7RE4Y31RLWEPPVYXLL.OpenRunMap:PersistentLevel.BP_OW_Sporeling_C_0",
+      "data": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_Sporeling.DA_OW_Sporeling",
+      "profile": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_Sporeling.DA_OW_BasicAttack_Sporeling",
+      "runtime_spawn_supplement": false
+    },
+    {
+      "name": "owned_runtime_model",
+      "passed": true,
+      "kind": "Sporeling",
+      "mesh": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_SK.Mushroom_SK"
+    },
+    {
+      "name": "runtime_grounded_pair_placement",
+      "passed": true,
+      "kind": "Sporeling"
+    },
+    {
+      "name": "actual_complete_navigation_path",
+      "passed": true,
+      "kind": "Sporeling",
+      "points": [
+        [
+          -52522.9621052742,
+          -22904.370307922363,
+          3810.0
+        ],
+        [
+          -51722.9621052742,
+          -22904.370307922363,
+          3814.0470487965263
+        ]
+      ]
+    },
+    {
+      "name": "idle_clip_timeline_progresses",
+      "passed": true,
+      "kind": "Sporeling",
+      "expected_clip": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM"
+    },
+    {
+      "name": "pursuit_starts_outside_attack_range",
+      "passed": true,
+      "kind": "Sporeling",
+      "distance_cm": 800.0
+    },
+    {
+      "name": "native_perception_stimulus_monster_only",
+      "passed": true,
+      "kind": "Sporeling",
+      "applied_to_monster": 1.0,
+      "direct_player_damage": false
+    },
+    {
+      "name": "native_basic_attack_is_delayed",
+      "passed": true,
+      "kind": "Sporeling",
+      "health_before": 135.0,
+      "health_during_windup": 135.0
+    },
+    {
+      "name": "native_basic_attack_animation",
+      "passed": true,
+      "kind": "Sporeling",
+      "expected": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+      "actual": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM"
+    },
+    {
+      "name": "native_ai_pursuit_moves_and_plays_movement",
+      "passed": true,
+      "kind": "Sporeling",
+      "displacement_cm": 682.6049184887597,
+      "expected_clip": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM"
+    },
+    {
+      "name": "native_attack_clip_timeline_progresses",
+      "passed": true,
+      "kind": "Sporeling",
+      "expected_clip": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM"
+    },
+    {
+      "name": "native_basic_attack_real_health_damage",
+      "passed": true,
+      "kind": "Sporeling",
+      "health_before": 135.0,
+      "health_after": 134.0,
+      "observed_delay_seconds": 0.36157650128006935,
+      "direct_player_damage": false
+    },
+    {
+      "name": "basic_attack_start_pair_in_range",
+      "passed": true,
+      "kind": "Sporeling",
+      "distance_cm": 112.5,
+      "range_cm": 150.0
+    },
+    {
+      "name": "runtime_close_pair_placement",
+      "passed": true,
+      "kind": "Sporeling"
+    },
+    {
+      "name": "miss_case_native_windup_started",
+      "passed": true,
+      "kind": "Sporeling"
+    },
+    {
+      "name": "player_left_native_hit_range_during_windup",
+      "passed": true,
+      "kind": "Sporeling",
+      "distance_cm": 434.0
+    },
+    {
+      "name": "out_of_range_windup_attack_misses",
+      "passed": true,
+      "kind": "Sporeling",
+      "health_before": 134.0,
+      "health_after": 134.0
+    },
+    {
+      "name": "basic_attack_start_pair_in_range",
+      "passed": true,
+      "kind": "Sporeling",
+      "distance_cm": 112.5,
+      "range_cm": 150.0
+    },
+    {
+      "name": "runtime_close_pair_placement",
+      "passed": true,
+      "kind": "Sporeling"
+    },
+    {
+      "name": "death_case_pending_native_hit",
+      "passed": true,
+      "kind": "Sporeling"
+    },
+    {
+      "name": "death_case_ai_was_running",
+      "passed": true,
+      "kind": "Sporeling"
+    },
+    {
+      "name": "native_death_cancels_pending_basic_attack",
+      "passed": true,
+      "kind": "Sporeling"
+    },
+    {
+      "name": "native_death_animation_started",
+      "passed": true,
+      "kind": "Sporeling",
+      "expected": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_DieSmile_ANIM.Mushroom_DieSmile_ANIM",
+      "actual": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_DieSmile_ANIM.Mushroom_DieSmile_ANIM"
+    },
+    {
+      "name": "death_stops_running_ai_and_prevents_late_player_damage",
+      "passed": true,
+      "kind": "Sporeling",
+      "health_before": 134.0,
+      "health_after": 134.0
+    }
+  ],
+  "cases": [
+    {
+      "kind": "VerdantSlime",
+      "status": "passed",
+      "monster": "/Memory/UEDPIE_0_OpenRunMap_3M298MFVEVUXRGU0Z1JG4P45J.OpenRunMap:PersistentLevel.BP_OW_VerdantSlime_C_0",
+      "data": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_VerdantSlime.DA_OW_VerdantSlime",
+      "profile": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_VerdantSlime.DA_OW_BasicAttack_VerdantSlime",
+      "runtime_spawn_supplement": false,
+      "attack_range_cm": 120.0,
+      "idle_samples": [
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.5382146835327148,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.5531711578369141,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.5673661828041077,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.580716609954834,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.5937246084213257,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.6069110035896301,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.6228609085083008,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.6357870101928711,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.6490095257759094,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.6641496419906616,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.6776013374328613,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.6916736364364624,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.7064390182495117,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.7211987972259521,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.734518826007843,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.748627245426178,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.7615399360656738,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.7778722047805786,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.7933284044265747,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.807300329208374,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.8261018395423889,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.8394163250923157,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.8532490134239197,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.8667263984680176,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.8801239132881165,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.8933740854263306,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.9071536064147949,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.9198440909385681,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.9331377148628235,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.9475970268249512,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.9600588083267212,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.977322518825531,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 0.9908119440078735,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.0054274797439575,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.0238933563232422,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.0398898124694824,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.0539366006851196,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.067726969718933,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.0820026397705078,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.095685362815857,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.1103994846343994,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.1242462396621704,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.137186050415039,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.1511552333831787,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.16488778591156,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.1780762672424316,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.191630482673645,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.2070503234863281,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.2231286764144897,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.2372816801071167,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.251834511756897,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.2657870054244995,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.2791500091552734,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.2930786609649658,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.3069285154342651,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+          "position_seconds": 1.321364164352417,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        }
+      ],
+      "pursuit_samples": [
+        {
+          "elapsed_seconds": 0.031000000002677552,
+          "distance_cm": 770.0,
+          "monster_displacement_cm": 0.0,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.037637099623680115,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.17100000000209548,
+          "distance_cm": 768.1195280466272,
+          "monster_displacement_cm": 1.880471953372762,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.0679389014840126,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.2180000000007567,
+          "distance_cm": 733.5509393578468,
+          "monster_displacement_cm": 36.4490606421532,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.2376919984817505,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.2649999999994179,
+          "distance_cm": 723.9394700678313,
+          "monster_displacement_cm": 46.06052993216872,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.2813805043697357,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.31199999999807915,
+          "distance_cm": 713.4671838848517,
+          "monster_displacement_cm": 56.53281611514831,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.32898181676864624,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.35899999999674037,
+          "distance_cm": 703.7611579257573,
+          "monster_displacement_cm": 66.23884207424271,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.3731001019477844,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.4210000000020955,
+          "distance_cm": 690.6341764671743,
+          "monster_displacement_cm": 79.36582353282574,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.43276819586753845,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.4680000000007567,
+          "distance_cm": 679.8865159371999,
+          "monster_displacement_cm": 90.11348406280013,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.4816212058067322,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.5149999999994179,
+          "distance_cm": 669.2864318555075,
+          "monster_displacement_cm": 100.71356814449246,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.5298033952713013,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.5619999999980791,
+          "distance_cm": 659.63993814079,
+          "monster_displacement_cm": 110.36006185920996,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.5736510753631592,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.6089999999967404,
+          "distance_cm": 646.5318985118502,
+          "monster_displacement_cm": 123.46810148814984,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.6332331299781799,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.6560000000026776,
+          "distance_cm": 636.8159944651998,
+          "monster_displacement_cm": 133.18400553480024,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.6773963570594788,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.7030000000013388,
+          "distance_cm": 625.8881544608957,
+          "monster_displacement_cm": 144.11184553910425,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.7270683646202087,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.75,
+          "distance_cm": 615.2711963539477,
+          "monster_displacement_cm": 154.72880364605226,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.7753272652626038,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.7960000000020955,
+          "distance_cm": 605.9584864607459,
+          "monster_displacement_cm": 164.04151353925408,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+          "position_seconds": 0.8176577687263489,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.8430000000007567,
+          "distance_cm": 596.1443306094734,
+          "monster_displacement_cm": 173.8556693905266,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.015041999518871307,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.8899999999994179,
+          "distance_cm": 586.4148529373706,
+          "monster_displacement_cm": 183.5851470626294,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.05926689878106117,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.9369999999980791,
+          "distance_cm": 574.6303106560445,
+          "monster_displacement_cm": 195.36968934395554,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.11283299326896667,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.9839999999967404,
+          "distance_cm": 565.502841096546,
+          "monster_displacement_cm": 204.49715890345396,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.15432149171829224,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.0310000000026776,
+          "distance_cm": 553.48204137828,
+          "monster_displacement_cm": 216.51795862172003,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.20896148681640625,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.0780000000013388,
+          "distance_cm": 544.8284077636781,
+          "monster_displacement_cm": 225.17159223632189,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.24829617142677307,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.125,
+          "distance_cm": 532.6628255091491,
+          "monster_displacement_cm": 237.33717449085088,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.3035942614078522,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.1710000000020955,
+          "distance_cm": 523.9842212797812,
+          "monster_displacement_cm": 246.0157787202188,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.3430424630641937,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.2180000000007567,
+          "distance_cm": 514.4690456282988,
+          "monster_displacement_cm": 255.53095437170123,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.3862932622432709,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.264999999999418,
+          "distance_cm": 502.20527808918996,
+          "monster_displacement_cm": 267.79472191081004,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.4420376718044281,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.3119999999980791,
+          "distance_cm": 493.1145259446639,
+          "monster_displacement_cm": 276.8854740553361,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.48335927724838257,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.3589999999967404,
+          "distance_cm": 481.0145260254867,
+          "monster_displacement_cm": 288.9854739745133,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.5383592247962952,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.4060000000026776,
+          "distance_cm": 470.89866234464716,
+          "monster_displacement_cm": 299.10133765535284,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.5843404531478882,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.4530000000013388,
+          "distance_cm": 463.15354042449326,
+          "monster_displacement_cm": 306.84645957550674,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.6195455193519592,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.5,
+          "distance_cm": 451.5129880853274,
+          "monster_displacement_cm": 318.4870119146726,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.6724571585655212,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.5460000000020955,
+          "distance_cm": 440.3483179251634,
+          "monster_displacement_cm": 329.6516820748366,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.7232056856155396,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.5930000000007567,
+          "distance_cm": 430.0772444581962,
+          "monster_displacement_cm": 339.9227555418038,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.7698923945426941,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.639999999999418,
+          "distance_cm": 419.5702202339089,
+          "monster_displacement_cm": 350.4297797660911,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.817651629447937,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.6869999999980791,
+          "distance_cm": 412.28525062095287,
+          "monster_displacement_cm": 357.71474937904713,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.8507651090621948,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.7339999999967404,
+          "distance_cm": 400.99841457795264,
+          "monster_displacement_cm": 369.00158542204736,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.9020689725875854,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.7810000000026776,
+          "distance_cm": 388.4370962861576,
+          "monster_displacement_cm": 381.5629037138424,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.9591658115386963,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.8280000000013388,
+          "distance_cm": 377.88937267485744,
+          "monster_displacement_cm": 392.11062732514256,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.007109999656677246,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.875,
+          "distance_cm": 370.8550487818429,
+          "monster_displacement_cm": 399.1449512181571,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.03908419981598854,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.9210000000020955,
+          "distance_cm": 359.03488915414346,
+          "monster_displacement_cm": 410.96511084585654,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.0928122028708458,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.9839999999967404,
+          "distance_cm": 347.07276287359855,
+          "monster_displacement_cm": 422.92723712640145,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.14718550443649292,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.0310000000026776,
+          "distance_cm": 334.5937696300971,
+          "monster_displacement_cm": 435.4062303699029,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.20390820503234863,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.0780000000013388,
+          "distance_cm": 326.28967153062695,
+          "monster_displacement_cm": 443.71032846937305,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.24165409803390503,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.125,
+          "distance_cm": 314.05593390139256,
+          "monster_displacement_cm": 455.94406609860744,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.2972620129585266,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.1710000000020955,
+          "distance_cm": 305.58828786776576,
+          "monster_displacement_cm": 464.41171213223424,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.33575132489204407,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.2180000000007567,
+          "distance_cm": 293.1696399756911,
+          "monster_displacement_cm": 476.8303600243089,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.39219972491264343,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.2810000000026776,
+          "distance_cm": 281.49553799122805,
+          "monster_displacement_cm": 488.50446200877195,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.4452638030052185,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.3280000000013388,
+          "distance_cm": 270.1175125761656,
+          "monster_displacement_cm": 499.8824874238344,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.4969821274280548,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.375,
+          "distance_cm": 260.38680236961955,
+          "monster_displacement_cm": 509.61319763038045,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.5412126183509827,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.436999999998079,
+          "distance_cm": 247.10392860937282,
+          "monster_displacement_cm": 522.8960713906272,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.6015893220901489,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.4839999999967404,
+          "distance_cm": 237.04249298441573,
+          "monster_displacement_cm": 532.9575070155843,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.6473231315612793,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.5310000000026776,
+          "distance_cm": 226.0400072477496,
+          "monster_displacement_cm": 543.9599927522504,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.6973344683647156,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.5780000000013388,
+          "distance_cm": 212.7781207108128,
+          "monster_displacement_cm": 557.2218792891872,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.7576157450675964,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.625,
+          "distance_cm": 205.6772473826568,
+          "monster_displacement_cm": 564.3227526173432,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.7898924350738525,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.6710000000020955,
+          "distance_cm": 195.58424159312563,
+          "monster_displacement_cm": 574.4157584068744,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.8357697129249573,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.7180000000007567,
+          "distance_cm": 183.34256145369,
+          "monster_displacement_cm": 586.65743854631,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.8914137482643127,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.764999999999418,
+          "distance_cm": 172.9218882977293,
+          "monster_displacement_cm": 597.0781117022707,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.9387804865837097,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.8280000000013388,
+          "distance_cm": 161.10549024336797,
+          "monster_displacement_cm": 608.894509756632,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.9924913644790649,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.875,
+          "distance_cm": 148.89478622645402,
+          "monster_displacement_cm": 621.105213773546,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.04799455776810646,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.9210000000020955,
+          "distance_cm": 137.20497639766836,
+          "monster_displacement_cm": 632.7950236023316,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.10113005340099335,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.9680000000007567,
+          "distance_cm": 126.96978452370968,
+          "monster_displacement_cm": 643.0302154762903,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.14765365421772003,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.014999999999418,
+          "distance_cm": 119.7042624914975,
+          "monster_displacement_cm": 650.2957375085025,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.18067875504493713,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.061999999998079,
+          "distance_cm": 108.21304703426722,
+          "monster_displacement_cm": 661.7869529657328,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+          "position_seconds": 0.23291155695915222,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.1089999999967404,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.0,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.1560000000026776,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.0431521013379097,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.2030000000013388,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.09074559807777405,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.25,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.1416218876838684,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.2960000000020955,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.1774158924818039,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.3430000000007567,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.22635680437088013,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.389999999999418,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.27668488025665283,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.436999999998079,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.32088708877563477,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        }
+      ],
+      "attack_samples": [
+        {
+          "elapsed_seconds": 3.1089999999967404,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.0,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.139999999999418,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.02813110128045082,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.1560000000026776,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.0431521013379097,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.1710000000020955,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.059170201420784,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.186999999998079,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.07482270151376724,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.2030000000013388,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.09074559807777405,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.2180000000007567,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.10627079755067825,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.2339999999967404,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.12457229197025299,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.25,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.1416218876838684,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.2810000000026776,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.15731929242610931,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.2960000000020955,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.1774158924818039,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.311999999998079,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.19332429766654968,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.3280000000013388,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.20935019850730896,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.3430000000007567,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.22635680437088013,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.3589999999967404,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.24255791306495667,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.375,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.2601858973503113,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.389999999999418,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.27668488025665283,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.4060000000026776,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.291924387216568,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.4210000000020955,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.3061977028846741,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.436999999998079,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.32088708877563477,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.4530000000013388,
+          "distance_cm": 96.9399390180406,
+          "monster_displacement_cm": 673.0600609819594,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+          "position_seconds": 0.3372475802898407,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        }
+      ],
+      "pursuit_origin": [
+        -48595.93797028065,
+        -21931.867480278015,
+        3798.9070496697923
+      ],
+      "health_before": 135.0,
+      "initial_distance_cm": 770.0,
+      "native_player_damage": 1.0
+    },
+    {
+      "kind": "Sporeling",
+      "status": "passed",
+      "monster": "/Memory/UEDPIE_0_OpenRunMap_0KR77TN7RE4Y31RLWEPPVYXLL.OpenRunMap:PersistentLevel.BP_OW_Sporeling_C_0",
+      "data": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_Sporeling.DA_OW_Sporeling",
+      "profile": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_Sporeling.DA_OW_BasicAttack_Sporeling",
+      "runtime_spawn_supplement": false,
+      "attack_range_cm": 150.0,
+      "idle_samples": [
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.5600910782814026,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.5766987800598145,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.5918476581573486,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.607607364654541,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.6233399510383606,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.6384341716766357,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.6530361771583557,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.6726622581481934,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.6882608532905579,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.703045666217804,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.7186984419822693,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.7361498475074768,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.7505900263786316,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.7647053003311157,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.7776862978935242,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.7912452220916748,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.805318295955658,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.821179986000061,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.8348289132118225,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.848011314868927,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.8630886077880859,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.8755162358283997,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.8887131214141846,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.9019067287445068,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.9158055186271667,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.9293879270553589,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.9433979988098145,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.956309974193573,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.9695179462432861,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.982229471206665,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.9969362020492554,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.00919771194458,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.0227112770080566,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.0355396270751953,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.0492455959320068,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.063778281211853,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.0774085521697998,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.0916754007339478,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.105899691581726,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.1190623044967651,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.1329582929611206,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.1472538709640503,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.1607152223587036,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.1737253665924072,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.1880195140838623,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.203323245048523,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.2166773080825806,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.2309001684188843,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.245412826538086,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.262276291847229,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.2763290405273438,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.2897086143493652,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.304360032081604,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.3185596466064453,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 1.3324204683303833,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.013486146926879883,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+          "position_seconds": 0.02835414931178093,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        }
+      ],
+      "pursuit_samples": [
+        {
+          "elapsed_seconds": 0.014999999999417923,
+          "distance_cm": 800.0,
+          "monster_displacement_cm": 0.0,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.038610897958278656,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.06199999999807915,
+          "distance_cm": 797.1186367839982,
+          "monster_displacement_cm": 2.8813632160017733,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.08454769849777222,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.10899999999674037,
+          "distance_cm": 790.4437032676724,
+          "monster_displacement_cm": 9.55629673232761,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.12803949415683746,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.1559999999954016,
+          "distance_cm": 777.2654435840959,
+          "monster_displacement_cm": 22.73455641590408,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.1862816959619522,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.20299999999406282,
+          "distance_cm": 767.3585846629139,
+          "monster_displacement_cm": 32.64141533708607,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.22935499250888824,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.25,
+          "distance_cm": 757.3715705913128,
+          "monster_displacement_cm": 42.628429408687225,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.2727767825126648,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.2969999999986612,
+          "distance_cm": 746.7568180826129,
+          "monster_displacement_cm": 53.24318191738712,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.3189278841018677,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.34399999999732245,
+          "distance_cm": 736.4082675330646,
+          "monster_displacement_cm": 63.591732466935355,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.36392155289649963,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.3899999999994179,
+          "distance_cm": 723.3617473669656,
+          "monster_displacement_cm": 76.63825263303443,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.4206455647945404,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.43699999999807915,
+          "distance_cm": 712.6578920329339,
+          "monster_displacement_cm": 87.34210796706611,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.46718406677246094,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.48399999999674037,
+          "distance_cm": 705.2546062139518,
+          "monster_displacement_cm": 94.74539378604823,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.4993722438812256,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.5309999999954016,
+          "distance_cm": 693.5896964793865,
+          "monster_displacement_cm": 106.41030352061352,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.5500892996788025,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.5779999999940628,
+          "distance_cm": 682.9447908749644,
+          "monster_displacement_cm": 117.05520912503562,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.5963714718818665,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.625,
+          "distance_cm": 672.0548888729172,
+          "monster_displacement_cm": 127.94511112708278,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.6437188982963562,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.6719999999986612,
+          "distance_cm": 660.6824234016749,
+          "monster_displacement_cm": 139.3175765983251,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+          "position_seconds": 0.6931644082069397,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.7189999999973224,
+          "distance_cm": 648.6674310261442,
+          "monster_displacement_cm": 151.3325689738558,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.0,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.7649999999994179,
+          "distance_cm": 638.0024690777573,
+          "monster_displacement_cm": 161.99753092224273,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.04636939987540245,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.8119999999980791,
+          "distance_cm": 627.4227219599416,
+          "monster_displacement_cm": 172.57727804005845,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.09236829727888107,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.8589999999967404,
+          "distance_cm": 616.9811821099502,
+          "monster_displacement_cm": 183.01881789004983,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.1377663016319275,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.9059999999954016,
+          "distance_cm": 606.1277814048808,
+          "monster_displacement_cm": 193.8722185951192,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.18495498597621918,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 0.9529999999940628,
+          "distance_cm": 594.4183669535341,
+          "monster_displacement_cm": 205.58163304646587,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.23586547374725342,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.014999999999418,
+          "distance_cm": 583.1227219748325,
+          "monster_displacement_cm": 216.87727802516747,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.2849769592285156,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.0619999999980791,
+          "distance_cm": 571.2039381461145,
+          "monster_displacement_cm": 228.79606185388548,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.3367977738380432,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.1089999999967404,
+          "distance_cm": 558.96688032776,
+          "monster_displacement_cm": 241.03311967224,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.39000236988067627,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.1559999999954016,
+          "distance_cm": 546.994643909049,
+          "monster_displacement_cm": 253.00535609095095,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.4420555531978607,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.2029999999940628,
+          "distance_cm": 539.3947768859362,
+          "monster_displacement_cm": 260.60522311406385,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.47509846091270447,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.25,
+          "distance_cm": 529.748669520668,
+          "monster_displacement_cm": 270.25133047933195,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.5170380473136902,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.2969999999986612,
+          "distance_cm": 515.7095151425674,
+          "monster_displacement_cm": 284.2904848574326,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.5780778527259827,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.3589999999967404,
+          "distance_cm": 503.79839033178723,
+          "monster_displacement_cm": 296.20160966821277,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.6298653483390808,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.4059999999954016,
+          "distance_cm": 491.4738174120139,
+          "monster_displacement_cm": 308.5261825879861,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.6834504008293152,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.4689999999973224,
+          "distance_cm": 478.58986130947596,
+          "monster_displacement_cm": 321.41013869052404,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.7394675612449646,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.514999999999418,
+          "distance_cm": 465.76589006472204,
+          "monster_displacement_cm": 334.23410993527796,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.7952239513397217,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.5619999999980791,
+          "distance_cm": 453.9592540218291,
+          "monster_displacement_cm": 346.0407459781709,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.8465571403503418,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.6089999999967404,
+          "distance_cm": 445.8958216710744,
+          "monster_displacement_cm": 354.1041783289256,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.8816155791282654,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.6719999999986612,
+          "distance_cm": 432.5840200929597,
+          "monster_displacement_cm": 367.4159799070403,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.93949294090271,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.7189999999973224,
+          "distance_cm": 419.31515960005345,
+          "monster_displacement_cm": 380.68484039994655,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.997183620929718,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.764999999999418,
+          "distance_cm": 407.51979339146783,
+          "monster_displacement_cm": 392.48020660853217,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.048467788845300674,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.8119999999980791,
+          "distance_cm": 399.4974394192468,
+          "monster_displacement_cm": 400.5025605807532,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.08334758877754211,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.8589999999967404,
+          "distance_cm": 387.15343103621854,
+          "monster_displacement_cm": 412.84656896378146,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.13701719045639038,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.9059999999954016,
+          "distance_cm": 378.4906889921331,
+          "monster_displacement_cm": 421.5093110078669,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.17468129098415375,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 1.9529999999940628,
+          "distance_cm": 365.32466102941544,
+          "monster_displacement_cm": 434.67533897058456,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.2319248914718628,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.0,
+          "distance_cm": 357.08626758843457,
+          "monster_displacement_cm": 442.91373241156543,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.2677440047264099,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.0469999999986612,
+          "distance_cm": 343.45253490447794,
+          "monster_displacement_cm": 456.54746509552206,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.32702112197875977,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.0939999999973224,
+          "distance_cm": 333.8451127389053,
+          "monster_displacement_cm": 466.1548872610947,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.3687925338745117,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.139999999999418,
+          "distance_cm": 321.5443445344936,
+          "monster_displacement_cm": 478.4556554655064,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.422274112701416,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.186999999998079,
+          "distance_cm": 313.32603055737127,
+          "monster_displacement_cm": 486.67396944262873,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.4580059051513672,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.2339999999967404,
+          "distance_cm": 300.8060962682139,
+          "monster_displacement_cm": 499.1939037317861,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.5124403834342957,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.2809999999954016,
+          "distance_cm": 288.675642818067,
+          "monster_displacement_cm": 511.324357181933,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.5651815533638,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.327999999994063,
+          "distance_cm": 280.63820114717237,
+          "monster_displacement_cm": 519.3617988528276,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.6001269221305847,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.375,
+          "distance_cm": 269.53550360864756,
+          "monster_displacement_cm": 530.4644963913524,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.6483994722366333,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.4219999999986612,
+          "distance_cm": 258.17256005769013,
+          "monster_displacement_cm": 541.8274399423099,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.6978035569190979,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.4689999999973224,
+          "distance_cm": 246.47469192306744,
+          "monster_displacement_cm": 553.5253080769326,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.7486639022827148,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.514999999999418,
+          "distance_cm": 237.19920589732646,
+          "monster_displacement_cm": 562.8007941026735,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.7889921069145203,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.561999999998079,
+          "distance_cm": 224.75671174394665,
+          "monster_displacement_cm": 575.2432882560533,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.8430899381637573,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.625,
+          "distance_cm": 212.57830376195488,
+          "monster_displacement_cm": 587.4216962380451,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.8960395455360413,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.6719999999986612,
+          "distance_cm": 200.56135608911427,
+          "monster_displacement_cm": 599.4386439108857,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.9482871294021606,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.7189999999973224,
+          "distance_cm": 191.7563351784629,
+          "monster_displacement_cm": 608.2436648215371,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.9865698218345642,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.764999999999418,
+          "distance_cm": 178.4362763593017,
+          "monster_displacement_cm": 621.5637236406983,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.04448309913277626,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.811999999998079,
+          "distance_cm": 170.7681915380308,
+          "monster_displacement_cm": 629.2318084619692,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.07782259583473206,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.8589999999967404,
+          "distance_cm": 157.2323467551687,
+          "monster_displacement_cm": 642.7676532448313,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.13667410612106323,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.9059999999954016,
+          "distance_cm": 148.2200499086175,
+          "monster_displacement_cm": 651.7799500913825,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.17585799098014832,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 2.952999999994063,
+          "distance_cm": 135.08318526879884,
+          "monster_displacement_cm": 664.9168147312012,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.23297478258609772,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.0,
+          "distance_cm": 126.40993157611229,
+          "monster_displacement_cm": 673.5900684238877,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.2706845998764038,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.0469999999986612,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.IDLE: 0>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+          "position_seconds": 0.32854118943214417,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.0939999999973224,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.0,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.1559999999954016,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.05684079974889755,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.202999999994063,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.11349700391292572,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.25,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.15001250803470612,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.2969999999986612,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.20909489691257477,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.3439999999973224,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.24712929129600525,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.389999999999418,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.3000763952732086,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.436999999998079,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.34045711159706116,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        }
+      ],
+      "attack_samples": [
+        {
+          "elapsed_seconds": 3.0939999999973224,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.0,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.125,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.037262000143527985,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.1559999999954016,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.05684079974889755,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.1719999999986612,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.07470709830522537,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.186999999998079,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.09478279948234558,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.202999999994063,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.11349700391292572,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.2189999999973224,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.13120630383491516,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.25,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.15001250803470612,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.264999999999418,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.16961680352687836,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.2809999999954016,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.19077759981155396,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.2969999999986612,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.20909489691257477,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.327999999994063,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.22902049124240875,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.3439999999973224,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.24712929129600525,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.3589999999967404,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.26390188932418823,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.375,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.280124694108963,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.389999999999418,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.3000763952732086,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.4219999999986612,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.32072409987449646,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        },
+        {
+          "elapsed_seconds": 3.436999999998079,
+          "distance_cm": 117.39508151124028,
+          "monster_displacement_cm": 682.6049184887597,
+          "target_is_player": true,
+          "player_health": 135.0,
+          "state": "<Rogue10mMonsterPatternState.WINDUP: 1>",
+          "asset": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+          "position_seconds": 0.34045711159706116,
+          "mode": "<AnimationMode.ANIMATION_SINGLE_NODE: 1>"
+        }
+      ],
+      "pursuit_origin": [
+        -52522.9621052742,
+        -22904.370307922363,
+        3890.0
+      ],
+      "health_before": 135.0,
+      "initial_distance_cm": 800.0,
+      "native_player_damage": 1.0
+    }
+  ],
+  "limitations": [
+    "Six saved owned classes are tested in loaded forest terrain; missing regional classes are spawned in PIE, not teleported editor actors.",
+    "Player input suppression, AI isolation, regeneration suppression, actor placement and off-screen mesh pose ticking are PIE-only setup.",
+    "Pursuit uses a one-point damage stimulus to the selected monster and observes native targeting and movement; it issues no MoveTo or AI decision calls.",
+    "The delayed damage case observes native AI combat; miss and death cancellation cases start the same native component directly for deterministic timing.",
+    "No damage is applied directly to the player. Lethal damage is applied only to the selected test monster.",
+    "Basic movement, Idle, attack and cancellation are checked; special patterns, balance, full terrain traversal, networking and packaged performance are outside this check."
+  ],
+  "phase": "cleanup",
+  "elapsed_wall_seconds": 23.764999999999418,
+  "exception": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateOpenWorldBasicMonsters.py\", line 528, in tick\n    tick_impl(delta_seconds)\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateOpenWorldBasicMonsters.py\", line 469, in tick_impl\n    choose_case(game, pawn)\n  File \"D:/Project/Rogue10m/Scripts/Editor/ValidateOpenWorldBasicMonsters.py\", line 216, in choose_case\n    monster = unreal.GameplayStatics.begin_deferred_actor_spawn_from_class(\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: type object 'GameplayStatics' has no attribute 'begin_deferred_actor_spawn_from_class'\n",
+  "message": "type object 'GameplayStatics' has no attribute 'begin_deferred_actor_spawn_from_class'",
+  "owned_pie_cleanup_confirmed": true
+}

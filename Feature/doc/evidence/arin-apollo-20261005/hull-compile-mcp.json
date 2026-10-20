@@ -1,0 +1,13 @@
+{
+  "meta": null,
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"ok\": true,\n  \"already_satisfied\": true,\n  \"job\": null,\n  \"plan\": {\n    \"goal\": \"preview\",\n    \"asset_id\": \"ast_1m45dqnzp00aartxyz6\",\n    \"strategy\": \"uploaded_mesh_finalize\",\n    \"strategy_label\": \"Uploaded mesh finalize\",\n    \"status\": \"already_satisfied\",\n    \"quality_ceiling\": \"High when the uploaded mesh is already good; Apollo can UV, texture, repair, and export.\",\n    \"known_limits\": [\n      \"Cannot recover missing geometry detail that is not present in the uploaded mesh.\"\n    ],\n    \"reasons\": [\n      \"a mesh already exists; compile should finalize, repair, and export it\"\n    ],\n    \"steps\": [],\n    \"notes\": [\n      \"local-first compile plan: no external GPU 3D provider selected\",\n      \"source state: mesh\",\n      \"selected strategy: uploaded_mesh_finalize\"\n    ],\n    \"executable\": true,\n    \"local_provider_health\": {\n      \"apollo_cutout\": {\n        \"state\": \"ok\",\n        \"detail\": \"configured\",\n        \"latency_ms\": null,\n        \"meta\": {},\n        \"checked_at\": 1791183762.1574173\n      },\n      \"apollo_hull\": {\n        \"state\": \"ok\",\n        \"detail\": \"configured\",\n        \"latency_ms\": null,\n        \"meta\": {},\n        \"checked_at\": 1791183762.1574173\n      },\n      \"apollo_primitive\": {\n        \"state\": \"ok\",\n        \"detail\": \"configured\",\n        \"latency_ms\": null,\n        \"meta\": {},\n        \"checked_at\": 1791183762.1574173\n      },\n      \"apollo_relief\": {\n        \"state\": \"ok\",\n        \"detail\": \"configured\",\n        \"latency_ms\": null,\n        \"meta\": {},\n        \"checked_at\": 1791183762.1574173\n      },\n      \"apollo_sketch\": {\n        \"state\": \"ok\",\n        \"detail\": \"configured\",\n        \"latency_ms\": null,\n        \"meta\": {},\n        \"checked_at\": 1791183762.1574173\n      },\n      \"trimesh_tools\": {\n        \"state\": \"ok\",\n        \"detail\": \"ready\",\n        \"latency_ms\": null,\n        \"meta\": {\n          \"trimesh\": \"5.1.1\",\n          \"quadric_simplify\": \"fast-simplification\",\n          \"boolean_engine\": \"manifold3d\"\n        },\n        \"checked_at\": 1791183762.1574173\n      },\n      \"xatlas_uv\": {\n        \"state\": \"ok\",\n        \"detail\": \"ready\",\n        \"latency_ms\": null,\n        \"meta\": {\n          \"xatlas\": \"0.0.11\"\n        },\n        \"checked_at\": 1791183762.1574173\n      }\n    }\n  }\n}",
+      "annotations": null,
+      "meta": null
+    }
+  ],
+  "structuredContent": null,
+  "isError": false
+}

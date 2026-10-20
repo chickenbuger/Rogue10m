@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-10-09",
+  "reviewer": "/root/arin_reference_art_critic",
+  "method": "Independent actual-image inspection of all six final source renders and all eight fresh final-FBX renders. Reopened the supplied reference and frozen third-build face/profile for direct comparison. Read-only shader, fresh technical reports and updated canonical semantic-equality report inspection. Reviewer did not execute Blender/Unreal or alter asset/model/script files.",
+  "scope": "Fourth candidate source/export appearance and four bilateral knee samples. Suitable to advance to Unreal integration review; not a claim of full facial/locomotion production or all-pose correctness.",
+  "source": {
+    "fbx_sha256": "45296f9fcbd0d182406c85d29f8627409e090dc0c97ec97815a8035221448f00",
+    "blend_sha256": "56cc68fda9a32ec932a83d57a20dbb8897ef51933922c609027a542e2ad01f74",
+    "glb_sha256": "6280e8499385415246cbb250a2d4504428a6f0c93c2803b15e8a3a736bec60ad",
+    "model_build_sha256": "d9d0797b85e8df91a78b5df1bda82896b024f150423f1fe35daccb28162fef10",
+    "build_script_sha256_from_report": "5a90077f5535208e71ca4a08684a9cb661eb518d027da352df26390f9c29b29b",
+    "source_view_root": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/candidate",
+    "fresh_view_root": "D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/input-fbx/final-export-poses-v4",
+    "reference_png": "C:/Users/PC/AppData/Local/Temp/codex-clipboard-b02420d9-32fa-42f1-92ad-fbe109a08d5c.png",
+    "reference_sha256": "a7b50b564596b3e5bfb882d5bdb66f20a0320e2aa58bb398929dc8666bbcc067"
+  },
+  "reviewed_source_images": [
+    {"view":"idle-face","sha256":"d93effdc0e5ee7cc5ec74c888f218e40dda3890ebb440082b2f7dc285507675b"},
+    {"view":"idle-face-profile","sha256":"2346a94c8d9bdf8a6e68cd3a177c138eb67db573e879538c362d9351130d9885"},
+    {"view":"idle-front","sha256":"9fb8deeaf8d05842df1a3e7388f224653bf7674f078ccd8b4f322d46335bf731"},
+    {"view":"idle-oblique","sha256":"4f5fe780e181b63afdd940be83dd3fd67d9ff861f05fef79f6b74cc5dca0945c"},
+    {"view":"idle-back","sha256":"38e85b855c79d9ffc4140ca86a693fb26e598177dd97e7cfd4095e1e499870ad"},
+    {"view":"neutral-front","sha256":"4efbcdc2126375e1c95b3148c2ff0854402ae798194183f2672663bb90e5c97a"}
+  ],
+  "reviewed_fresh_fbx_images": [
+    {"view":"idle-front","sha256":"53682acb811d095768403a815d6fbf3816dd92d5c9969d2bf355acef821ad4a5"},
+    {"view":"idle-oblique","sha256":"41f87e8997a73c732355a465f27e1f95457d06743a88988894f99a610cf08f9d"},
+    {"view":"idle-face","sha256":"c2c28c35d5fd8af4d31a07771c5b48f76156a92be1557c0fd5b24090b221b027"},
+    {"view":"idle-face-profile","sha256":"def7a4576667372485ce89b0429ee8775b06f3d40bea830d1312621f3ec1da73"},
+    {"view":"knee-bend-oblique","sha256":"be2fc8bba7cb727ddcf6969ebf68728b46e268a0938e6216cb57e86e0940cd54"},
+    {"view":"knee-bend-right","sha256":"616422d8ef05b0e51f8216f43f4fde8edb69a96ac61b8f7940c726254211f5aa"},
+    {"view":"right-knee-bend-oblique","sha256":"40b142db7e4ee0f84ec33551aba2a31b1aaed23d9f38fb7980e51c28f8a21f32"},
+    {"view":"right-knee-bend-right","sha256":"b46540dbe3c9eb3b00e0075806f10165454b042f882b77b42b0214caddbb54ba"}
+  ],
+  "technical_status_separate_from_visual_evidence": {
+    "fresh_blend":"passed_requires_visual_review",
+    "fresh_fbx":"passed_requires_visual_review",
+    "fresh_glb":"passed_requires_visual_review",
+    "all_three_expected_hashes_match":true,
+    "findings":[],
+    "triangles":90214,
+    "vertices_blend_fbx":45205,
+    "runtime_meshes":1,
+    "materials":1,
+    "bones":23,
+    "maximum_influences":3,
+    "unweighted_vertices":0,
+    "unnormalized_vertices":0,
+    "zero_area_triangles":0,
+    "height_m":1.7,
+    "idle_duration_seconds":2,
+    "idle_root_stationary":true,
+    "idle_endpoint_displacement_m":0,
+    "packed_linked_maps":["BaseColor","Normal","Roughness","Metallic"],
+    "map_resolution":[4096,4096],
+    "source_color_resolution":[2048,2048],
+    "normal_convention":"OpenGL +Y tangent space; Unreal FlipGreenChannel required per surface manifest",
+    "limits":"Triangle count and a 4K bake do not create new source detail. Technical inspection does not measure UV overlap, all clipping, joint quality, likeness or engine runtime rendering."
+  },
+  "ledger": [
+    {
+      "id":"T4-01","status":"pass","priority":"preserve",
+      "requirement":"Close the third candidate's broad neck material mosaic",
+      "views":["source/idle-face","source/idle-face-profile","source/idle-front","fresh/idle-face","fresh/idle-face-profile"],
+      "observation_ko":"세 번째 후보에서 목 전체를 덮던 밝고 어두운 큰 삼각형 모자이크가 사라졌다. 얼굴과 목 전면의 피부가 훨씬 연속적으로 읽히며 옷깃이나 braid의 색이 피부로 번지는 새로운 손상은 보이지 않는다. 정확한 최종 FBX의 실제 재수입 렌더에서도 개선이 유지된다.",
+      "observed_repair_mechanism":"Source lines 315-325 replace the lower-neck RGB threshold with an xyz spatial envelope and smooth fades, interpolating skin tone/roughness/bump and excluding the forward braid. Original albedo remains preserved.",
+      "residual_limit_ko":"턱 바로 아래와 귀 뒤에는 작은 각진 색 그림자가 아직 남는다. 목 전면 전체의 이전 결함과 구분되며 전신 뷰에서 두드러지지 않는다. 완전히 새로 제작한 피부나 정확한 채널별 원인 분석 완료로 표현하지 않는다.",
+      "approximate_residual_pixel_bounds_in_source_900x1100":{
+        "front_under_chin":[511,799,570,855],
+        "profile_under_hair":[366,725,586,839]
+      }
+    },
+    {
+      "id":"T4-02","status":"pass","priority":"preserve",
+      "requirement":"Retain the reference character's major identity and garment forms",
+      "views":["idle-front","idle-oblique","idle-back","neutral-front","idle-face","idle-face-profile"],
+      "observation_ko":"큰 눈과 부드러운 얼굴, 옆가르마의 물결 머리와 긴 braid, 후드 케이프, 잎 자수, ivory blouse/apron, 가죽 belt/bracer/bag, 붉은 potion, 주름진 trousers/boots가 유지된다. 기존 v2보다 첨부 이미지에 훨씬 가까운 인상이다. 팔을 내린 모습과 T-pose 모두 큰 가시나 분리된 소매가 보이지 않는다.",
+      "limit_ko":"레퍼런스의 짙은 chestnut/olive/russet 색 대비보다 스튜디오 렌더는 밝고 부드럽다. 눈과 입은 텍스처 의존도가 높고, 첨부 이미지와 동일한 고해상도 얼굴 구조·주근깨·섬유 미세정보를 완성한 것은 아니다."
+    },
+    {
+      "id":"T4-03","status":"pass","priority":"preserve",
+      "requirement":"Bilateral knee samples keep prior cloth tears closed in final FBX",
+      "views":["fresh/knee-bend-oblique","fresh/knee-bend-right","fresh/right-knee-bend-oblique","fresh/right-knee-bend-right"],
+      "observation_ko":"최종 FBX를 새로 불러온 양쪽 무릎 굽힘의 4뷰에서 첫 FBX의 중앙 앞치마 검은 삼각형/찢김과 반대 green coat shard가 재현되지 않는다. 옷자락과 가방은 일부 뻣뻣한 변형을 보이지만 큰 표면 분리는 없다.",
+      "limit_ko":"검토한 양쪽 무릎 정적 샘플의 결과다. 연속 보행·달리기·동시 두 다리 동작 및 모든 cloth/bag 교차를 승인하지 않는다."
+    },
+    {
+      "id":"T4-04","status":"fail","priority":2,
+      "requirement":"Reference-quality chestnut hair closeup",
+      "views":["idle-face","idle-face-profile","fresh/idle-face","fresh/idle-face-profile"],
+      "observation_ko":"정수리에 넓고 밝은 원본 하이라이트가 남고, swept lock 아래 작은 어두운 crease가 있다. 레퍼런스의 더 잘게 나뉜 짙은 갈색 머리 결보다 부드럽고 넓은 띠로 읽힌다.",
+      "approximate_source_pixels":{
+        "broad_crown_highlight":[204,70,737,275],
+        "small_dark_crease":[389,306,414,340]
+      },
+      "limitation_treatment":"Document as a retained closeup art limit for this deliverable, rather than blocking the now-repaired broad neck system. Third-build clay also contained the small crease, but there is no sufficient current proof that it is an open hole. Do not describe it as a confirmed hole or globally darken skin/ivory to hide it."
+    },
+    {
+      "id":"T4-05","status":"pass","priority":"scope_limit",
+      "requirement":"Carryover of third-build critical arm/clay evidence",
+      "observation_ko":"본 reviewer는 세 번째 후보의 팔 굽힘/reach/twist와 clay 얼굴/부츠를 실제로 열어 이전 결함 해결을 확인했다. 초기 raw 배열 동등성 결과는 false였으나 후속 canonical 비교는 edge 연결, face winding, 대응 face corner의 UV/normal을 허용오차 없이 정확히 같다고 확인한다. positions, weights, bones, actions, Idle 5frame evaluated vertices도 정확히 같다. 따라서 해당 세 번째 후보의 geometry/deformation/clay 증거를 최종본에 이어 쓸 수 있으며 재질 외형은 실제 최종 8뷰로 별도 확인했다.",
+      "evidence_report":"input-fbx/final-export-poses-v4/semantic-equality.json",
+      "initial_report_all_equal":false,
+      "followup_resolution":"Updated semantic-equality.json retains the raw array-order differences and separately proves exact canonical edge/face connectivity and winding, UV face corners and corresponding corner normals. Canonical normal maximum absolute component delta is 0, nonzero components 0. Material images/colors were excluded and were inspected through new actual renders.",
+      "canonical_topology_uv_skin_bone_action_exactly_equal":true,
+      "canonical_corner_normals_exactly_equal":true,
+      "canonical_corner_normal_max_abs_component_delta":0,
+      "limits":"Carryover is limited to the prior reviewed pose/clay evidence and exact sectors, not all arbitrary motion, full animation production or equality of material appearance. Raw ordered arrays remain false and are not reported as all-equal."
+    },
+    {
+      "id":"T4-06","status":"unclear","priority":"hard_gate",
+      "requirement":"Actual Unreal runtime/material/Idle and tutorial functionality",
+      "observation_ko":"현재 source/export 미술 검토는 Unreal 적용 단계로 진행할 수 있다. Unreal 실제 이미지와 정상 import/재질/Idle 확인, 기존 NPC 대화·아이템·특성 강화 동작은 별도 engine 단계의 증거가 필요하며 이 reviewer가 아직 승인하지 않았다."
+    }
+  ],
+  "decision":"source_and_final_fbx_face_and_knee_visual_pass_with_documented_closeup_limits_advance_to_engine_review",
+  "not_claimed":[
+    "reference-identical high-resolution facial surface",
+    "facial or eyelid rig",
+    "individual finger rig or animated grip",
+    "new 4K source-detail reconstruction",
+    "complete locomotion animation production",
+    "all-pose collision freedom",
+    "full semantic geometry/UV equality from the initial false report",
+    "Unreal runtime acceptance before actual engine review"
+  ]
+}

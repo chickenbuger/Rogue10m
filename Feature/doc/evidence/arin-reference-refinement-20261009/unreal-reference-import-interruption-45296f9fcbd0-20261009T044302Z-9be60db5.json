@@ -1,0 +1,57 @@
+{
+  "validate_only": false,
+  "root": "/Game/Rogue10m/Characters/Arin/RefinedV3",
+  "source_fbx": "D:\\Project\\Rogue10m\\Art\\NPC\\Arin\\ReferenceRefined\\Arin.fbx",
+  "source_hashes": {
+    "Arin.RefinedFBXSHA256": "45296f9fcbd0d182406c85d29f8627409e090dc0c97ec97815a8035221448f00",
+    "Arin.SurfaceManifestSHA256": "eb37013d9fd18113e1dffbe7668d1f66fb38da73f1269438b0f103c18d2d386f",
+    "Arin.TextureBundleSHA256": "49520bb03ebc3068fe6b9ed57c56eb86885b3ed17a65ea225746b2589fe1df7c"
+  },
+  "phase": "aborted_requires_inspection",
+  "events": [
+    {
+      "utc": "2026-10-09T04:36:42.543648+00:00",
+      "phase": "preflight",
+      "expected_assets": [
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/MI_Arin_Adventurer",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/Materials/M_Arin_PBR",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin_Skeleton",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_BaseColor",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Metallic",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Normal",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Roughness"
+      ],
+      "observed_assets": []
+    },
+    {
+      "utc": "2026-10-09T04:36:42.551692+00:00",
+      "phase": "import_fbx"
+    },
+    {
+      "utc": "2026-10-09T04:36:48.408147+00:00",
+      "phase": "import_4_textures",
+      "observed_assets": [
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin_Skeleton"
+      ]
+    },
+    {
+      "utc": "2026-10-09T04:36:49.864497+00:00",
+      "phase": "aborted_requires_inspection",
+      "error": "Imported atlas size differs: ('Adventurer', 'Roughness') [32, 32]",
+      "observed_assets": [
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin_Skeleton",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_BaseColor",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Metallic",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Normal",
+        "/Game/Rogue10m/Characters/Arin/RefinedV3/Textures/T_Arin_Adventurer_Roughness"
+      ],
+      "recovery_policy": "No automatic overwrite/delete; inspect this exact source hash and observed scope before a scoped recovery"
+    }
+  ]
+}

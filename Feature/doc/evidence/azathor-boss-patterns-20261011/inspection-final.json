@@ -1,0 +1,305 @@
+{
+  "world": "/Game/Rogue10m/Maps/OpenRunMap.OpenRunMap",
+  "pie": false,
+  "dirty_content": [],
+  "dirty_maps": [],
+  "species": {
+    "VerdantSlime": {
+      "monster_id": "VerdantSlime",
+      "display_name": "초록 점액체",
+      "level": 1,
+      "monster_rank": "<Rogue10mMonsterRank.NORMAL: 0>",
+      "max_health": 70.0,
+      "attack_damage": 6.0,
+      "experience_reward": 18,
+      "walk_speed": 220.0,
+      "skeletal_mesh": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_SK.Slime_SK",
+      "attack_pattern_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_VerdantSlime.DA_OW_BasicAttack_VerdantSlime",
+      "basic": {
+        "attack_range": 120.0,
+        "attack_arc_degrees": 100.0,
+        "attack_half_height": 160.0,
+        "attack_windup_seconds": 0.3499999940395355,
+        "attack_recovery_seconds": 0.4833333194255829,
+        "attack_cooldown_seconds": 0.6166667342185974,
+        "attack_damage_multiplier": 1.0
+      },
+      "animations": {
+        "idle_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+        "movement_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+        "attack_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+        "hit_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+        "death_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Die_ANIM.Slime_Die_ANIM"
+      },
+      "boss_patterns_enabled": false
+    },
+    "Sporeling": {
+      "monster_id": "Sporeling",
+      "display_name": "어린 포자 버섯",
+      "level": 5,
+      "monster_rank": "<Rogue10mMonsterRank.NORMAL: 0>",
+      "max_health": 150.0,
+      "attack_damage": 10.0,
+      "experience_reward": 35,
+      "walk_speed": 230.0,
+      "skeletal_mesh": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_SK.Mushroom_SK",
+      "attack_pattern_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_Sporeling.DA_OW_BasicAttack_Sporeling",
+      "basic": {
+        "attack_range": 150.0,
+        "attack_arc_degrees": 100.0,
+        "attack_half_height": 160.0,
+        "attack_windup_seconds": 0.3499999940395355,
+        "attack_recovery_seconds": 0.4833333194255829,
+        "attack_cooldown_seconds": 0.5166667103767395,
+        "attack_damage_multiplier": 1.0
+      },
+      "animations": {
+        "idle_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_IdleNormalSmile_ANIM.Mushroom_IdleNormalSmile_ANIM",
+        "movement_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_walkFWDSmile_ANIM.Mushroom_walkFWDSmile_ANIM",
+        "attack_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_Attack01Smile_ANIM.Mushroom_Attack01Smile_ANIM",
+        "hit_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_GetHitSmile_ANIM.Mushroom_GetHitSmile_ANIM",
+        "death_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Mushroom/SmileVersion/Mushroom_DieSmile_ANIM.Mushroom_DieSmile_ANIM"
+      },
+      "boss_patterns_enabled": false
+    },
+    "CrimsonSlime": {
+      "monster_id": "CrimsonSlime",
+      "display_name": "붉은 점액체",
+      "level": 2,
+      "monster_rank": "<Rogue10mMonsterRank.NORMAL: 0>",
+      "max_health": 90.0,
+      "attack_damage": 7.0,
+      "experience_reward": 22,
+      "walk_speed": 235.0,
+      "skeletal_mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_SK.Slime_SK",
+      "attack_pattern_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_CrimsonSlime.DA_OW_BasicAttack_CrimsonSlime",
+      "basic": {
+        "attack_range": 125.0,
+        "attack_arc_degrees": 100.0,
+        "attack_half_height": 160.0,
+        "attack_windup_seconds": 0.3499999940395355,
+        "attack_recovery_seconds": 0.4833333194255829,
+        "attack_cooldown_seconds": 0.5666666626930237,
+        "attack_damage_multiplier": 1.0
+      },
+      "animations": {
+        "idle_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+        "movement_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+        "attack_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+        "hit_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+        "death_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Die_ANIM.Slime_Die_ANIM"
+      },
+      "boss_patterns_enabled": false
+    },
+    "IronShell": {
+      "monster_id": "IronShell",
+      "display_name": "철갑 등껍질",
+      "level": 11,
+      "monster_rank": "<Rogue10mMonsterRank.NORMAL: 0>",
+      "max_health": 330.0,
+      "attack_damage": 15.0,
+      "experience_reward": 66,
+      "walk_speed": 170.0,
+      "skeletal_mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_SK.TurtleShell_SK",
+      "attack_pattern_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_IronShell.DA_OW_BasicAttack_IronShell",
+      "basic": {
+        "attack_range": 175.0,
+        "attack_arc_degrees": 100.0,
+        "attack_half_height": 160.0,
+        "attack_windup_seconds": 0.3499999940395355,
+        "attack_recovery_seconds": 0.4833333194255829,
+        "attack_cooldown_seconds": 0.54666668176651,
+        "attack_damage_multiplier": 1.0
+      },
+      "animations": {
+        "idle_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_IdleNormal_ANIM.TurtleShell_IdleNormal_ANIM",
+        "movement_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_Walk_ANIM.TurtleShell_Walk_ANIM",
+        "attack_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_Attack01_ANIM.TurtleShell_Attack01_ANIM",
+        "hit_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_GetHit_ANIM.TurtleShell_GetHit_ANIM",
+        "death_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_Die_ANIM.TurtleShell_Die_ANIM"
+      },
+      "boss_patterns_enabled": false
+    },
+    "ThornWarden": {
+      "monster_id": "ThornWarden",
+      "display_name": "가시 성채의 수문장",
+      "level": 12,
+      "monster_rank": "<Rogue10mMonsterRank.MID_BOSS: 1>",
+      "max_health": 1800.0,
+      "attack_damage": 30.0,
+      "experience_reward": 450,
+      "walk_speed": 250.0,
+      "skeletal_mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_SK.Cactus_SK",
+      "attack_pattern_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_ThornWarden.DA_OW_BasicAttack_ThornWarden",
+      "basic": {
+        "attack_range": 235.0,
+        "attack_arc_degrees": 100.0,
+        "attack_half_height": 160.0,
+        "attack_windup_seconds": 0.2800000011920929,
+        "attack_recovery_seconds": 0.3866666853427887,
+        "attack_cooldown_seconds": 0.4333333373069763,
+        "attack_damage_multiplier": 1.0
+      },
+      "animations": {
+        "idle_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_IdleNormal_ANIM.Cactus_IdleNormal_ANIM",
+        "movement_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_WalkFWD_ANIM.Cactus_WalkFWD_ANIM",
+        "attack_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_Attack01_ANIM.Cactus_Attack01_ANIM",
+        "hit_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_GetHit_ANIM.Cactus_GetHit_ANIM",
+        "death_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_Die_ANIM.Cactus_Die_ANIM"
+      },
+      "boss_patterns_enabled": false
+    },
+    "AbyssOverlordAzathor": {
+      "monster_id": "AbyssOverlordAzathor",
+      "display_name": "심연의 군주 아자토르",
+      "level": 25,
+      "monster_rank": "<Rogue10mMonsterRank.FINAL_BOSS: 2>",
+      "max_health": 10000.0,
+      "attack_damage": 70.0,
+      "experience_reward": 3000,
+      "walk_speed": 240.0,
+      "skeletal_mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/Beholder_SK.Beholder_SK",
+      "attack_pattern_profile": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/DA_Azathor_BossPatterns.DA_Azathor_BossPatterns",
+      "basic": {
+        "attack_range": 300.0,
+        "attack_arc_degrees": 100.0,
+        "attack_half_height": 160.0,
+        "attack_windup_seconds": 0.30799999833106995,
+        "attack_recovery_seconds": 0.4253333508968353,
+        "attack_cooldown_seconds": 0.20000000298023224,
+        "attack_damage_multiplier": 1.0
+      },
+      "animations": {
+        "idle_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_IdleNormal_ANIM.Beholder_IdleNormal_ANIM",
+        "movement_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_WalkFWD_ANIM.Beholder_WalkFWD_ANIM",
+        "attack_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Attack01_ANIM.Beholder_Attack01_ANIM",
+        "hit_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_GetHit_ANIM.Beholder_GetHit_ANIM",
+        "death_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Die_ANIM.Beholder_Die_ANIM"
+      },
+      "boss_patterns_enabled": true
+    }
+  },
+  "materials": {
+    "/Game/Stylized_Village/MasterMaterials/MM_Decal/Material/MM_Decal": {
+      "domain": "<MaterialDomain.MD_DEFERRED_DECAL: 1>",
+      "blend": "<BlendMode.BLEND_TRANSLUCENT: 2>",
+      "scalar_parameters": [],
+      "vector_parameters": [
+        "Tile",
+        "AlbedoTint"
+      ],
+      "texture_parameters": [
+        "Albedo",
+        "ORM",
+        "Normal"
+      ]
+    },
+    "/Game/Stylized_Village/MasterMaterials/MM_Decal/Material/MM_Decal_ColorRoughness": {
+      "domain": "<MaterialDomain.MD_DEFERRED_DECAL: 1>",
+      "blend": "<BlendMode.BLEND_MODULATE: 4>",
+      "scalar_parameters": [
+        "Opacity"
+      ],
+      "vector_parameters": [
+        "Tile",
+        "AlbedoTint"
+      ],
+      "texture_parameters": [
+        "ORM",
+        "Albedo"
+      ]
+    },
+    "/Game/StarterContent/Particles/Materials/M_Radial_Gradient": {
+      "domain": "<MaterialDomain.MD_SURFACE: 0>",
+      "blend": "<BlendMode.BLEND_TRANSLUCENT: 2>",
+      "scalar_parameters": [],
+      "vector_parameters": [],
+      "texture_parameters": []
+    },
+    "/Game/AdvancedPortalsSystemVFX/Materials/M_Portal_Ring": {
+      "domain": "<MaterialDomain.MD_SURFACE: 0>",
+      "blend": "<BlendMode.BLEND_TRANSLUCENT: 2>",
+      "scalar_parameters": [
+        "Bright"
+      ],
+      "vector_parameters": [
+        "Distortion Control",
+        "Form Control",
+        "Global  Control"
+      ],
+      "texture_parameters": [
+        "Distortion Texture",
+        "Color Variation Texture"
+      ]
+    }
+  },
+  "boss_blueprint_data": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_AbyssOverlordAzathor.DA_OW_AbyssOverlordAzathor",
+  "boss_tuning": {
+    "enable_boss_patterns": true,
+    "frontal_wave_range": 850.0,
+    "frontal_wave_half_width": 180.0,
+    "frontal_wave_half_height": 160.0,
+    "frontal_wave_windup_seconds": 1.100000023841858,
+    "frontal_wave_recovery_seconds": 0.6499999761581421,
+    "frontal_wave_cooldown_seconds": 6.0,
+    "frontal_wave_damage_multiplier": 1.4500000476837158,
+    "abyss_zone_cast_range": 1000.0,
+    "abyss_zone_radius": 260.0,
+    "abyss_zone_half_height": 160.0,
+    "abyss_zone_windup_seconds": 1.399999976158142,
+    "abyss_zone_recovery_seconds": 0.800000011920929,
+    "abyss_zone_cooldown_seconds": 8.0,
+    "abyss_zone_damage_multiplier": 1.600000023841858,
+    "enrage_health_threshold": 0.5,
+    "enrage_windup_multiplier": 0.75,
+    "enrage_recovery_multiplier": 0.800000011920929,
+    "enrage_cooldown_multiplier": 0.75,
+    "enrage_damage_multiplier": 1.25,
+    "frontal_wave_telegraph_material": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/MI_Azathor_FrontalWarning.MI_Azathor_FrontalWarning",
+    "abyss_zone_telegraph_material": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/MI_Azathor_ZoneWarning.MI_Azathor_ZoneWarning",
+    "frontal_wave_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Attack03_ANIM.Beholder_Attack03_ANIM",
+    "abyss_zone_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Beholder/Beholder_Attack02ST_ANIM.Beholder_Attack02ST_ANIM",
+    "telegraph_depth": 180.0,
+    "telegraph_ground_offset": 2.0
+  },
+  "owned_material": {
+    "domain": "<MaterialDomain.MD_DEFERRED_DECAL: 1>",
+    "blend": "<BlendMode.BLEND_TRANSLUCENT: 2>",
+    "scalar_parameters": [
+      "Shape",
+      "Progress",
+      "Opacity",
+      "Glow"
+    ]
+  },
+  "owned_material_instances": {
+    "MI_Azathor_FrontalWarning": {
+      "parent": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/M_Azathor_Telegraph.M_Azathor_Telegraph",
+      "shape": 0.0
+    },
+    "MI_Azathor_ZoneWarning": {
+      "parent": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/M_Azathor_Telegraph.M_Azathor_Telegraph",
+      "shape": 1.0
+    }
+  },
+  "radial_function": "/Engine/Functions/Engine_MaterialFunctions01/Gradient/RadialGradientExponential.RadialGradientExponential",
+  "function_api": [
+    "create_material_expression_in_function",
+    "delete_all_material_expressions_in_function",
+    "delete_material_expression_in_function",
+    "get_input_node_output_name_for_material_expression",
+    "get_inputs_for_material_expression",
+    "get_inputs_for_material_function_expression",
+    "get_material_expression_input_names",
+    "get_material_expression_input_types",
+    "get_material_function_expressions",
+    "get_material_property_input_node",
+    "get_material_property_input_node_output_name",
+    "get_materials_referencing_function",
+    "get_num_material_expressions_in_function",
+    "layout_material_function_expressions",
+    "refresh_material_function_editor",
+    "rename_material_function_parameter_group",
+    "update_material_function"
+  ]
+}

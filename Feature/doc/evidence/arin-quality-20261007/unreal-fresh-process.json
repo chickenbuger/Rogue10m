@@ -1,0 +1,140 @@
+{
+  "fresh_process_id": 113212,
+  "runtime": "UnrealEditor-Cmd fresh process, NullRHI persistence only",
+  "rendering_test": false,
+  "asset_mutation_requested": false,
+  "status": "passed",
+  "core": {
+    "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin.SK_Arin",
+    "skeleton": "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin_Skeleton.SK_Arin_Skeleton",
+    "idle": "/Game/Rogue10m/Characters/Arin/RefinedV2/ArinIdle.ArinIdle",
+    "idle_seconds": 2.0,
+    "same_skeleton": true,
+    "bounds_size_cm": [
+      158.60794067382812,
+      32.58693885803223,
+      170.00000074943506
+    ],
+    "bounds_origin_cm": [
+      0.0,
+      -1.0939111709594727,
+      84.99999962528247
+    ],
+    "bone_names": [
+      "Arin_Rig",
+      "root",
+      "pelvis",
+      "spine_01",
+      "spine_02",
+      "spine_03",
+      "neck",
+      "head",
+      "clavicle_l",
+      "upperarm_l",
+      "lowerarm_l",
+      "hand_l",
+      "clavicle_r",
+      "upperarm_r",
+      "lowerarm_r",
+      "hand_r",
+      "thigh_l",
+      "calf_l",
+      "foot_l",
+      "ball_l",
+      "thigh_r",
+      "calf_r",
+      "foot_r",
+      "ball_r"
+    ],
+    "known_dimension_test": {
+      "expected_height_cm": 170,
+      "observed_height_cm": 170.00000074943506
+    },
+    "normal_import_settings": {
+      "normal_import_method": "<FBXNormalImportMethod.FBXNIM_IMPORT_NORMALS: 1>",
+      "normal_generation_method": "<FBXNormalGenerationMethod.MIKK_T_SPACE: 1>",
+      "compute_weighted_normals": "False"
+    },
+    "mesh_collision_plan": "existing detection sphere and non-colliding guide mesh preserved; no mesh physics asset"
+  },
+  "texture_count": 16,
+  "material_count": 4,
+  "lods": {
+    "count": 3,
+    "metrics": [
+      {
+        "index": 0,
+        "vertices": 40211,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 1.0,
+        "reduction_base_lod": 0,
+        "lock_edges": false,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 1,
+        "vertices": 35681,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 0.8500000238418579,
+        "reduction_base_lod": 0,
+        "lock_edges": true,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      },
+      {
+        "index": 2,
+        "vertices": 28851,
+        "sections": 4,
+        "triangles": null,
+        "triangle_measurement": "not_exposed_by_skeletal_editor_subsystem",
+        "target_triangle_ratio": 0.6499999761581421,
+        "reduction_base_lod": 0,
+        "lock_edges": true,
+        "volume_importance": 1.0,
+        "source_model_probe_limitation": "SkeletalMeshSourceModel: Failed to find property 'triangle_count' for attribute 'triangle_count' on 'SkeletalMeshSourceModel'"
+      }
+    ],
+    "generation": "SkeletalMeshEditorSubsystem.regenerate_lod; imported LOD0 preserved",
+    "lod0_regeneration": false,
+    "requested_ratios": [
+      1.0,
+      0.8500000238418579,
+      0.6499999761581421
+    ],
+    "same_skeleton_and_materials": true,
+    "visual_review_required": true,
+    "runtime_triangle_count_limitation": "Exact runtime triangles need a separate exposed render-data/export inspection; do not infer them from vertices or reduction targets."
+  },
+  "guide_preserved": true,
+  "dependencies": [
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/ArinIdle",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Cloth",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Face",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Gear",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/MI_Arin_Hair",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Materials/M_Arin_PBR",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/SK_Arin_Skeleton",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_BaseColor",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Metallic",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Normal",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Cloth_Roughness",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_BaseColor",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Metallic",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Normal",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Face_Roughness",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_BaseColor",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Metallic",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Normal",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Gear_Roughness",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_BaseColor",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Metallic",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Normal",
+    "/Game/Rogue10m/Characters/Arin/RefinedV2/Textures/T_Arin_Hair_Roughness"
+  ]
+}

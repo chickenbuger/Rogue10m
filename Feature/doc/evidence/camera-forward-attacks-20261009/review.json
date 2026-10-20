@@ -1,0 +1,1063 @@
+{
+  "result": "PASSED",
+  "reviewer": "arin_animation_critic",
+  "reviewed_at": "2026-10-09T16:12:55.810156+09:00",
+  "review_mode": "Independent read-only source/report review, CSV recomputation and actual native screenshot viewing. No UE calls, builds, asset or production edits. This new review.json is the only reviewer-written file.",
+  "blocking_findings": [],
+  "scope": {
+    "current_profiles": [
+      "/Game/DataAsset/SkillProfile/DA_SkillProfile_Combat_Knuckle",
+      "/Game/DataAsset/SkillProfile/DA_SkillProfile_Unarmed"
+    ],
+    "selected_union": 24,
+    "source_active_measured": 23,
+    "source_unique_sequences_sampled_120hz": 16,
+    "source_known_style_gated_skills": 12,
+    "source_legacy_unclassified_report_only": 8,
+    "source_area_or_jump_report_only": 3,
+    "passive_skipped": 1,
+    "inventory_attack_data_assets": 74,
+    "inventory_profiles": 13,
+    "runtime_unique_active_tree_skills": 13,
+    "runtime_cases_including_two_yaw90_repeats": 15,
+    "all_inventory_reference_and_timing_errors": 0,
+    "missing_profile_references": [],
+    "unreferenced_inventory_skills": []
+  },
+  "source_before_after": {
+    "both_audits": "PASSED",
+    "changed_audit_fields": [
+      "camera"
+    ],
+    "camera_cdo_before": "(X=8.000000,Y=0.000000,Z=4.000000)",
+    "camera_cdo_after": "(X=8.000000,Y=0.000000,Z=-3.000000)",
+    "source_pose_export_sha_unchanged": true,
+    "all_data_profile_montage_timing_inventory_identical": true,
+    "protected_package_manifest_identical": true,
+    "protected_packages_rehashed_currently_unchanged": 207,
+    "direction_findings": 0
+  },
+  "coordinate_interpretation": {
+    "source_manny_forward": "+Y skeletal component space",
+    "source_component_native_yaw_deg": -90,
+    "source_to_actor_mapping": "Native AnimationSourceMesh is attached to capsule with yaw -90. Local source +Y maps to actor +X, then actor yaw maps to world. Source and visible retarget bones are evaluated independently through all raw local parents and actual component transforms. CSV world vectors were independently projected into actor forward/right and camera forward.",
+    "combat_direction": "Actual hit geometry uses the head camera position and quaternion, including user control pitch and stabilized head motion; actor forward alone is not the hit direction.",
+    "camera_height": "EyeOffset.z changes 4 to -3 cm. The displacement is 7 cm along the stabilized animated frame; world Z delta is slightly different when that frame tilts. Same-pose atomic comparison preserves view rotation.",
+    "contact_metric": "Shoulder-to-wrist forward/azimuth and camera-to-hand signed forward are positional measurements. They are not contact-surface normals. Hook/uppercut/area motions are interpreted by style."
+  },
+  "runtime_evidence": {
+    "runtime": {
+      "result": "PASSED",
+      "label": "lower-camera-final-runtime",
+      "frames_logged": 1572,
+      "assertions_logged": 4978,
+      "assertions_metrics_before_final_write_check": 4977,
+      "failures": 0,
+      "completed_cases": 15,
+      "unique_skills": 13,
+      "frame_csv_rows": 1513,
+      "probe_csv_rows": 12104,
+      "contact_rows_follow_actual_evaluation": true,
+      "actual_health_pulses_recomputed": 21,
+      "control_pitch_deg": -20,
+      "eye_offset_z_cm": -3,
+      "atomic_same_pose_camera_delta_vector_world_cm": [
+        0.004143118000000001,
+        -0.1872730960003537,
+        -6.997493238000004
+      ],
+      "atomic_delta_length_cm": 6.9999999995548645,
+      "atomic_camera_delta_error_cm": 0,
+      "atomic_rotation_error_deg": 0,
+      "max_cached_camera_oracle_error_cm": 2.2562e-05,
+      "independent_signed_projection_errors_cm": {
+        "actor_forward": 1.000444171950221e-09,
+        "actor_right": 1.0004259642926172e-09,
+        "camera_forward": 2.6423450094625878e-09
+      },
+      "cases": [
+        {
+          "case": 0,
+          "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab.DA_BasicBrawler_LeftJab",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_LeftJab.AM_Unarmed_LeftJab",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_l"
+          ],
+          "body_actor_forward_min_cm": 52.775264494,
+          "body_actor_forward_max_cm": 54.559293358,
+          "body_camera_forward_min_cm": 48.756234402,
+          "body_contact_max_abs_azimuth_deg": 5.476760754,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.017948718,
+          "style_policy": "strict_forward_extension"
+        },
+        {
+          "case": 1,
+          "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightJab.DA_BasicBrawler_RightJab",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_RightJab.AM_Unarmed_RightJab",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 53.345692504,
+          "body_actor_forward_max_cm": 56.525945859,
+          "body_camera_forward_min_cm": 35.678619523,
+          "body_contact_max_abs_azimuth_deg": 5.651233712,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.017948718,
+          "style_policy": "strict_forward_extension"
+        },
+        {
+          "case": 2,
+          "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight.DA_BasicBrawler_RightStraight",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Straight.AM_Unarmed_Straight",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 56.700596937,
+          "body_actor_forward_max_cm": 56.702175187,
+          "body_camera_forward_min_cm": 38.859697013,
+          "body_contact_max_abs_azimuth_deg": 0.819686139,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.026923077,
+          "style_policy": "strict_forward_extension"
+        },
+        {
+          "case": 3,
+          "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightHook.DA_BasicBrawler_RightHook",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Hook.AM_Unarmed_Hook",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 47.5305563,
+          "body_actor_forward_max_cm": 52.336523262,
+          "body_camera_forward_min_cm": 29.778719836,
+          "body_contact_max_abs_azimuth_deg": 26.790667218,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.005982895,
+          "style_policy": "style_direction_report_only"
+        },
+        {
+          "case": 4,
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 53.278862121,
+          "body_actor_forward_max_cm": 56.520761597,
+          "body_camera_forward_min_cm": 35.625319979,
+          "body_contact_max_abs_azimuth_deg": 5.662101475,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.007634903,
+          "style_policy": "strict_forward_extension"
+        },
+        {
+          "case": 5,
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02.DA_Attack_Knuckle_Primary02",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_BodyStraight.AM_Knuckle_BodyStraight",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 44.701083778,
+          "body_actor_forward_max_cm": 45.289455088,
+          "body_camera_forward_min_cm": 39.075376777,
+          "body_contact_max_abs_azimuth_deg": 2.22515882,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.009890108,
+          "style_policy": "strict_forward_extension"
+        },
+        {
+          "case": 6,
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03.DA_Attack_Knuckle_Primary03",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_HookFlurry.AM_Knuckle_HookFlurry",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_l",
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 28.101329757,
+          "body_actor_forward_max_cm": 47.996951248,
+          "body_camera_forward_min_cm": 15.507723669,
+          "body_contact_max_abs_azimuth_deg": 18.772357575,
+          "actual_health_drop_pulses": {
+            "front": 6,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.006244833,
+          "style_policy": "style_direction_report_only"
+        },
+        {
+          "case": 7,
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Special.DA_Attack_Knuckle_Special",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Uppercut.AM_Knuckle_Uppercut",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 2,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 44.608985241,
+          "body_actor_forward_max_cm": 45.135023776,
+          "body_camera_forward_min_cm": 24.93855679,
+          "body_contact_max_abs_azimuth_deg": 6.83627998,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.010458834,
+          "style_policy": "style_direction_report_only"
+        },
+        {
+          "case": 8,
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.DA_Attack_Knuckle_Charged",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_ShortBlow.AM_Knuckle_ShortBlow",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 48.698651376,
+          "body_actor_forward_max_cm": 48.785403248,
+          "body_camera_forward_min_cm": 32.351913369,
+          "body_contact_max_abs_azimuth_deg": 5.036146117,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.001709403,
+          "style_policy": "strict_forward_extension"
+        },
+        {
+          "case": 9,
+          "skill": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Jab.DA_Attack_StoneFist_Jab",
+          "montage": "/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_FlowingCloud_LeftCounter.AM_Fighter_FlowingCloud_LeftCounter",
+          "core_nine": false,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_l"
+          ],
+          "body_actor_forward_min_cm": 37.934879495,
+          "body_actor_forward_max_cm": 50.479314914,
+          "body_camera_forward_min_cm": 48.641703947,
+          "body_contact_max_abs_azimuth_deg": 28.433065411,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.01474359,
+          "style_policy": "style_direction_report_only"
+        },
+        {
+          "case": 10,
+          "skill": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Straight.DA_Attack_StoneFist_Straight",
+          "montage": "/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_IronChain_TwoPunch.AM_Fighter_IronChain_TwoPunch",
+          "core_nine": false,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 29.064928971,
+          "body_actor_forward_max_cm": 47.532212183,
+          "body_camera_forward_min_cm": 16.572820906,
+          "body_contact_max_abs_azimuth_deg": 13.6784244,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.029166666,
+          "style_policy": "style_direction_report_only"
+        },
+        {
+          "case": 11,
+          "skill": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_JumpSlam.DA_Attack_StoneFist_JumpSlam",
+          "montage": "/Game/Rogue10m/Animation/Combat/Knuckle/AM_Knuckle_Special.AM_Knuckle_Special",
+          "core_nine": false,
+          "yaw90_repeat": false,
+          "shape_enum": 3,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 2.16538446,
+          "body_actor_forward_max_cm": 4.518757593,
+          "body_camera_forward_min_cm": -4.833965839,
+          "body_contact_max_abs_azimuth_deg": 86.821520821,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 1
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 25,
+          "first_damage_error_s": 0.0,
+          "style_policy": "style_direction_report_only"
+        },
+        {
+          "case": 12,
+          "skill": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_ChargedShockwave.DA_Attack_StoneFist_ChargedShockwave",
+          "montage": "/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_Overlord_PowerPunch.AM_Fighter_Overlord_PowerPunch",
+          "core_nine": false,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 53.960559018,
+          "body_actor_forward_max_cm": 55.998000009,
+          "body_camera_forward_min_cm": 62.347094934,
+          "body_contact_max_abs_azimuth_deg": 19.096867596,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.005769225,
+          "style_policy": "style_direction_report_only"
+        },
+        {
+          "case": 13,
+          "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab.DA_BasicBrawler_LeftJab",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_LeftJab.AM_Unarmed_LeftJab",
+          "core_nine": true,
+          "yaw90_repeat": true,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_l"
+          ],
+          "body_actor_forward_min_cm": 52.775264494,
+          "body_actor_forward_max_cm": 54.559293358,
+          "body_camera_forward_min_cm": 48.756234402,
+          "body_contact_max_abs_azimuth_deg": 5.476760754,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.017948718,
+          "style_policy": "strict_forward_extension"
+        },
+        {
+          "case": 14,
+          "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight.DA_BasicBrawler_RightStraight",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Straight.AM_Unarmed_Straight",
+          "core_nine": true,
+          "yaw90_repeat": true,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 56.700596937,
+          "body_actor_forward_max_cm": 56.702175187,
+          "body_camera_forward_min_cm": 38.859697013,
+          "body_contact_max_abs_azimuth_deg": 0.819686139,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.026923077,
+          "style_policy": "strict_forward_extension"
+        }
+      ]
+    },
+    "render": {
+      "result": "PASSED",
+      "label": "lower-camera-final-render",
+      "frames_logged": 1572,
+      "assertions_logged": 4979,
+      "assertions_metrics_before_final_write_check": 4978,
+      "failures": 0,
+      "completed_cases": 15,
+      "unique_skills": 13,
+      "frame_csv_rows": 1513,
+      "probe_csv_rows": 12104,
+      "contact_rows_follow_actual_evaluation": true,
+      "actual_health_pulses_recomputed": 21,
+      "control_pitch_deg": -20,
+      "eye_offset_z_cm": -3,
+      "atomic_same_pose_camera_delta_vector_world_cm": [
+        0.004151789000000017,
+        -0.18727378199992017,
+        -6.9974932149999916
+      ],
+      "atomic_delta_length_cm": 7.000000000053384,
+      "atomic_camera_delta_error_cm": 0,
+      "atomic_rotation_error_deg": 0,
+      "max_cached_camera_oracle_error_cm": 2.2562e-05,
+      "independent_signed_projection_errors_cm": {
+        "actor_forward": 1.000444171950221e-09,
+        "actor_right": 1.0004259642926172e-09,
+        "camera_forward": 2.6423450094625878e-09
+      },
+      "cases": [
+        {
+          "case": 0,
+          "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab.DA_BasicBrawler_LeftJab",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_LeftJab.AM_Unarmed_LeftJab",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_l"
+          ],
+          "body_actor_forward_min_cm": 52.775264494,
+          "body_actor_forward_max_cm": 54.559293358,
+          "body_camera_forward_min_cm": 48.756234402,
+          "body_contact_max_abs_azimuth_deg": 5.476760754,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.017948718,
+          "style_policy": "strict_forward_extension"
+        },
+        {
+          "case": 1,
+          "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightJab.DA_BasicBrawler_RightJab",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_RightJab.AM_Unarmed_RightJab",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 53.345692504,
+          "body_actor_forward_max_cm": 56.525945859,
+          "body_camera_forward_min_cm": 35.678619523,
+          "body_contact_max_abs_azimuth_deg": 5.651233712,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.017948718,
+          "style_policy": "strict_forward_extension"
+        },
+        {
+          "case": 2,
+          "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight.DA_BasicBrawler_RightStraight",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Straight.AM_Unarmed_Straight",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 56.700596937,
+          "body_actor_forward_max_cm": 56.702175187,
+          "body_camera_forward_min_cm": 38.859697013,
+          "body_contact_max_abs_azimuth_deg": 0.819686139,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.026923077,
+          "style_policy": "strict_forward_extension"
+        },
+        {
+          "case": 3,
+          "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightHook.DA_BasicBrawler_RightHook",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Hook.AM_Unarmed_Hook",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 47.5305563,
+          "body_actor_forward_max_cm": 52.336523262,
+          "body_camera_forward_min_cm": 29.778719836,
+          "body_contact_max_abs_azimuth_deg": 26.790667218,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.005982895,
+          "style_policy": "style_direction_report_only"
+        },
+        {
+          "case": 4,
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 53.278862121,
+          "body_actor_forward_max_cm": 56.520761597,
+          "body_camera_forward_min_cm": 35.625319979,
+          "body_contact_max_abs_azimuth_deg": 5.662101475,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.007634903,
+          "style_policy": "strict_forward_extension"
+        },
+        {
+          "case": 5,
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02.DA_Attack_Knuckle_Primary02",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_BodyStraight.AM_Knuckle_BodyStraight",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 44.701083778,
+          "body_actor_forward_max_cm": 45.289455088,
+          "body_camera_forward_min_cm": 39.075376777,
+          "body_contact_max_abs_azimuth_deg": 2.22515882,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.009890108,
+          "style_policy": "strict_forward_extension"
+        },
+        {
+          "case": 6,
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03.DA_Attack_Knuckle_Primary03",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_HookFlurry.AM_Knuckle_HookFlurry",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_l",
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 28.101329757,
+          "body_actor_forward_max_cm": 47.996951248,
+          "body_camera_forward_min_cm": 15.507723669,
+          "body_contact_max_abs_azimuth_deg": 18.772357575,
+          "actual_health_drop_pulses": {
+            "front": 6,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.006244833,
+          "style_policy": "style_direction_report_only"
+        },
+        {
+          "case": 7,
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Special.DA_Attack_Knuckle_Special",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Uppercut.AM_Knuckle_Uppercut",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 2,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 44.608985241,
+          "body_actor_forward_max_cm": 45.135023776,
+          "body_camera_forward_min_cm": 24.93855679,
+          "body_contact_max_abs_azimuth_deg": 6.83627998,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.010458834,
+          "style_policy": "style_direction_report_only"
+        },
+        {
+          "case": 8,
+          "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.DA_Attack_Knuckle_Charged",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_ShortBlow.AM_Knuckle_ShortBlow",
+          "core_nine": true,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 48.698651376,
+          "body_actor_forward_max_cm": 48.785403248,
+          "body_camera_forward_min_cm": 32.351913369,
+          "body_contact_max_abs_azimuth_deg": 5.036146117,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.001709403,
+          "style_policy": "strict_forward_extension"
+        },
+        {
+          "case": 9,
+          "skill": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Jab.DA_Attack_StoneFist_Jab",
+          "montage": "/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_FlowingCloud_LeftCounter.AM_Fighter_FlowingCloud_LeftCounter",
+          "core_nine": false,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_l"
+          ],
+          "body_actor_forward_min_cm": 37.934879495,
+          "body_actor_forward_max_cm": 50.479314914,
+          "body_camera_forward_min_cm": 48.641703947,
+          "body_contact_max_abs_azimuth_deg": 28.433065411,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.01474359,
+          "style_policy": "style_direction_report_only"
+        },
+        {
+          "case": 10,
+          "skill": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Straight.DA_Attack_StoneFist_Straight",
+          "montage": "/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_IronChain_TwoPunch.AM_Fighter_IronChain_TwoPunch",
+          "core_nine": false,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 29.064928971,
+          "body_actor_forward_max_cm": 47.532212183,
+          "body_camera_forward_min_cm": 16.572820906,
+          "body_contact_max_abs_azimuth_deg": 13.6784244,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.029166666,
+          "style_policy": "style_direction_report_only"
+        },
+        {
+          "case": 11,
+          "skill": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_JumpSlam.DA_Attack_StoneFist_JumpSlam",
+          "montage": "/Game/Rogue10m/Animation/Combat/Knuckle/AM_Knuckle_Special.AM_Knuckle_Special",
+          "core_nine": false,
+          "yaw90_repeat": false,
+          "shape_enum": 3,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 2.16538446,
+          "body_actor_forward_max_cm": 4.518757593,
+          "body_camera_forward_min_cm": -4.833965839,
+          "body_contact_max_abs_azimuth_deg": 86.821520821,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 1
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 25,
+          "first_damage_error_s": 0.0,
+          "style_policy": "style_direction_report_only"
+        },
+        {
+          "case": 12,
+          "skill": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_ChargedShockwave.DA_Attack_StoneFist_ChargedShockwave",
+          "montage": "/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_Overlord_PowerPunch.AM_Fighter_Overlord_PowerPunch",
+          "core_nine": false,
+          "yaw90_repeat": false,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 53.960559018,
+          "body_actor_forward_max_cm": 55.998000009,
+          "body_camera_forward_min_cm": 62.347094934,
+          "body_contact_max_abs_azimuth_deg": 19.096867596,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.005769225,
+          "style_policy": "style_direction_report_only"
+        },
+        {
+          "case": 13,
+          "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab.DA_BasicBrawler_LeftJab",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_LeftJab.AM_Unarmed_LeftJab",
+          "core_nine": true,
+          "yaw90_repeat": true,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_l"
+          ],
+          "body_actor_forward_min_cm": 52.775264494,
+          "body_actor_forward_max_cm": 54.559293358,
+          "body_camera_forward_min_cm": 48.756234402,
+          "body_contact_max_abs_azimuth_deg": 5.476760754,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.017948718,
+          "style_policy": "strict_forward_extension"
+        },
+        {
+          "case": 14,
+          "skill": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight.DA_BasicBrawler_RightStraight",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Straight.AM_Unarmed_Straight",
+          "core_nine": true,
+          "yaw90_repeat": true,
+          "shape_enum": 0,
+          "active_hand_bones": [
+            "hand_r"
+          ],
+          "body_actor_forward_min_cm": 56.700596937,
+          "body_actor_forward_max_cm": 56.702175187,
+          "body_camera_forward_min_cm": 38.859697013,
+          "body_contact_max_abs_azimuth_deg": 0.819686139,
+          "actual_health_drop_pulses": {
+            "front": 1,
+            "rear": 0
+          },
+          "health_drop_counts_match_results": true,
+          "geometry_inclusion_matches_damage_presence": true,
+          "real_falling_sample_frames": 0,
+          "first_damage_error_s": -0.026923077,
+          "style_policy": "strict_forward_extension"
+        }
+      ]
+    }
+  },
+  "visual_review": {
+    "result": "NO_REVERSED_STRIKE_OBSERVED_IN_FINAL_CAPTURES",
+    "contact_pngs_opened": 15,
+    "idle_pngs_opened": 2,
+    "captures": [
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_00_DA_BasicBrawler_LeftJab.png",
+        "sha256": "b6cd32a8123e57c6c475de55ae6308b29557b93a0d453405e285761a5b6a2a12",
+        "actually_opened_with_view_image": true,
+        "case": 0,
+        "observation": "Left jab extends from the left toward the frontal playfield."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_01_DA_BasicBrawler_RightJab.png",
+        "sha256": "8e5581640991cc7d65e98fe20539881d9411898044eda0a546399f01523b3229",
+        "actually_opened_with_view_image": true,
+        "case": 1,
+        "observation": "Right jab projects forward; opposite fist remains in guard."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_02_DA_BasicBrawler_RightStraight.png",
+        "sha256": "cd4fa6883e9ee3d26ecc69436174f559c5e6975627a1423a38b86190f4fca749",
+        "actually_opened_with_view_image": true,
+        "case": 2,
+        "observation": "Right straight reaches ahead of the view."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_03_DA_BasicBrawler_RightHook.png",
+        "sha256": "3256196f2e4bd28c7fa64720d4c50f2f82ab34d68516e818eb36b4b3d8e1e308",
+        "actually_opened_with_view_image": true,
+        "case": 3,
+        "observation": "Hook crosses laterally in front of the view; cross-body direction is intentional."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_04_DA_Attack_Knuckle_Primary01.png",
+        "sha256": "5446cdfade03dfa8cbf5e2e349037337848a348810d10603ebca9b904b0f1038",
+        "actually_opened_with_view_image": true,
+        "case": 4,
+        "observation": "Forward right jab is visible with motion blur."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_05_DA_Attack_Knuckle_Primary02.png",
+        "sha256": "1dbc5330dec5cc87c1fa2268e2d8d7fce18742d45a4f2ea72e2cdc37c5c08f16",
+        "actually_opened_with_view_image": true,
+        "case": 5,
+        "observation": "Low body punch hand is partly outside this first-contact image; use live probes rather than silhouette."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_06_DA_Attack_Knuckle_Primary03.png",
+        "sha256": "cf8e9dd24958ce2de601933a7e709fa770f6f7005b271bdf36346d6c2c0c73ed",
+        "actually_opened_with_view_image": true,
+        "case": 6,
+        "observation": "Alternating flurry first contact shows the left fist high in front; top crop and blur do not establish knuckle normal."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_07_DA_Attack_Knuckle_Special.png",
+        "sha256": "e657e24954012c62de7585240c25bbf71d6cc45534b63bf297e36510217028af",
+        "actually_opened_with_view_image": true,
+        "case": 7,
+        "observation": "Rising uppercut hand moves in the frontal field."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_08_DA_Attack_Knuckle_Charged.png",
+        "sha256": "53ec39c5dd5fa85c64910bacef0b05e5ffc3e1e9994b13f162ab494b2cd50dc1",
+        "actually_opened_with_view_image": true,
+        "case": 8,
+        "observation": "Charged short blow projects the right fist forward."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_09_DA_Attack_StoneFist_Jab.png",
+        "sha256": "92872dd4b3c6fc6b320927eff27e04c05b469893cec793212d02c43c982ffa1f",
+        "actually_opened_with_view_image": true,
+        "case": 9,
+        "observation": "FlowingCloud left counter swings in front with substantial camera/arm motion blur; active bone is hand_l."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_10_DA_Attack_StoneFist_Straight.png",
+        "sha256": "402c3edd954b2826e4d817ce62dcaad00d49c352bb718a79622f3ec1f76b5362",
+        "actually_opened_with_view_image": true,
+        "case": 10,
+        "observation": "IronChain sampled frame shows the right finishing punch in front."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_11_DA_Attack_StoneFist_JumpSlam.png",
+        "sha256": "e5fd7e04ada6124e19c6be0035fd3a679ca45498140aed1b82f8954708289020",
+        "actually_opened_with_view_image": true,
+        "case": 11,
+        "observation": "Jump area attack shows motion/area FX; this is Circle damage and is not a strict hand punch."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_12_DA_Attack_StoneFist_ChargedShockwave.png",
+        "sha256": "8761a12339d4ab98211f9af07e1d1547a27c38b7f71de253e624f5e440654468",
+        "actually_opened_with_view_image": true,
+        "case": 12,
+        "observation": "Overlord power punch shows the right hand forward; blur limits contact-surface detail."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_13_DA_BasicBrawler_LeftJab_yaw90.png",
+        "sha256": "f29c6b6b9be1e8b9b8de801f607960242a5cd8f4fd9b95f66e0becf92a9e5029",
+        "actually_opened_with_view_image": true,
+        "case": 13,
+        "observation": "Yaw90 left jab preserves left/front relation in the new heading."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_14_DA_BasicBrawler_RightStraight_yaw90.png",
+        "sha256": "0fd0bb198132218c663c3f7f4649ac21ee3bd6b6e9ed76f0e9a48cc3938bec48",
+        "actually_opened_with_view_image": true,
+        "case": 14,
+        "observation": "Yaw90 straight preserves right/front relation in the new heading."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/idle_current_eye_minus3.png",
+        "sha256": "63d5811469be0c6c8831ee3fd46cad2bd6277eb89d74bc10d58e30879fe8fc37",
+        "actually_opened_with_view_image": true,
+        "case": null,
+        "observation": "Natural idle frame with old eye4 or current eye-3; frames differ and do not prove same-pose exact displacement."
+      },
+      {
+        "file": "Feature/doc/evidence/camera-forward-attacks-20261009/visual/idle_old_eye4.png",
+        "sha256": "4cba0a9e9f6d509690508b8463d2c5c8a2212411c45407b59ba3a83c29afe4a3",
+        "actually_opened_with_view_image": true,
+        "case": null,
+        "observation": "Natural idle frame with old eye4 or current eye-3; frames differ and do not prove same-pose exact displacement."
+      }
+    ],
+    "observations": [
+      "Final compile flush completed before capture; copied PNGs match the native renderer originals byte-for-byte.",
+      "Motion blur, cropped high/low hands and first contact window sampling limit visual direction judgement from a single frame. Authoritative evaluated live hand projections were used alongside each image.",
+      "No camera entering the hidden head or reversed ground strike was observed in these final images."
+    ]
+  },
+  "regressions": [
+    {
+      "test": "APPEARANCE_CAMERA",
+      "result": "PASSED",
+      "frames": 570,
+      "assertions": null,
+      "log": "Feature/doc/evidence/camera-forward-attacks-20261009/regression-appearance.log"
+    },
+    {
+      "test": "THIRD_PERSON_INSPECTION",
+      "result": "PASSED",
+      "frames": 280,
+      "assertions": null,
+      "log": "Feature/doc/evidence/camera-forward-attacks-20261009/regression-inspection.log"
+    },
+    {
+      "test": "INITIAL_HEAD_FRAMING",
+      "result": "PASSED",
+      "frames": 90,
+      "assertions": null,
+      "log": "Feature/doc/evidence/camera-forward-attacks-20261009/regression-framing.log"
+    },
+    {
+      "test": "MOVING_ATTACK",
+      "result": "PASSED",
+      "frames": 1100,
+      "assertions": 258066,
+      "log": "Feature/doc/evidence/moving-upper-body-attack-20261009/lower-camera-regression.log"
+    }
+  ],
+  "limits": [
+    "23 source-active entries include legacy aliases and combo recursion; 12 recognized fist-style entries receive style-aware numeric gates, while 8 unclassified legacy and 3 area/jump entries receive measurements and classification only. Zero audit issues is not a universal strict punch approval.",
+    "15 live cases cover 13 unique skills exposed by the current active trees plus two yaw90 repeats. Other legacy profile aliases were not independently executed for live target damage.",
+    "Other weapon profiles receive all-reference/timing inventory only, not live forward-direction approval.",
+    "Runtime uses fixed 30 Hz isolated game launches, actual movement/jump physics and native bound combat handlers; it does not test every aim pitch, frame rate, race/body or physical Enhanced Input path.",
+    "JumpSlam intentionally affects the rear Circle target; its near-shoulder/back-camera hand samples are not a reverse punch defect.",
+    "Idle before/after captures retain different natural animation frames. Exact 7 cm measurement comes from camera-height.csv same-pose atomic rows.",
+    "The fixture health oracle compares damage presence and current/previous geometry; it does not infer mesh knuckle contact with a target, and broad hitboxes can damage before visual contact.",
+    "The metrics file is captured before its own successful write assertion. Final RESULT log assertion count is one larger; this is bookkeeping rather than failure.",
+    "Current package protection was independently rehashed for207 packages. Parent handles the separate full Content tree preservation check."
+  ],
+  "evidence_sha256": {
+    "Feature/doc/evidence/camera-forward-attacks-20261009/audit.json": "10afb5c9fe93e7c1127d4d4f7ec6b6a99e2c245890f14e89fb35c74c7da4c4eb",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/inventory.json": "3b74fec272b3426fb145472809eab3da61c79c354fee0436cac2f37d65bc6aeb",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/source-poses.json": "d247f57c58a18812dabc38589b05d7846722fb48755e2e3369cc2e2bf9a042fa",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/protected-packages.json": "05a6cce46959031448ba00adda137c1e2459f99e1d555b9288992e75baea8b85",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/before-audit/audit.json": "600013b2b6f1b87414c65352f97b5b8fd5b9583888112be68742c706da6674f3",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/before-audit/inventory.json": "3b74fec272b3426fb145472809eab3da61c79c354fee0436cac2f37d65bc6aeb",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/before-audit/source-poses.json": "d247f57c58a18812dabc38589b05d7846722fb48755e2e3369cc2e2bf9a042fa",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/before-audit/protected-packages.json": "05a6cce46959031448ba00adda137c1e2459f99e1d555b9288992e75baea8b85",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/before-player-camera.json": "178ab3feb1c57943bef4436772558e733858c9853754f6e5957bd0dd2ddd08b1",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/before-camera-templates.json": "0ef68ec36d5cd46f5f0ea14d6a06457c88f6ea3c1b1452bc3460025cfba202be",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/build-editor-final.log": "0bc79a11fa07340a2f9d50896dfd3862f15617a1fb84cae4f15c6d915c704bd1",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/build-editor-reviewed.log": "5cd50af5c5938929b2b55ff625d6164176e711b2077d85b26cf1cdaa22fcd28a",
+    "Scripts/Editor/AuditCameraForwardAttacks.py": "488e1c5092cd924597ea2730fb965f205f4423e5ffea283379d5131e58dcd17e",
+    "Source/Rogue10m/Tests/Rogue10mCameraForwardRuntimeTest.cpp": "c63d22319df583192d6987ffdf2ead65746232da8880d10f7a3322e37d44aaea",
+    "Source/Rogue10m/Components/Rogue10mAppearanceCameraComponent.h": "4555dd9a515f0dafecdb5d2169cd2323107c21baf2f89567552dcceacc00e637",
+    "Source/Rogue10m/Components/Rogue10mAppearanceCameraComponent.cpp": "fc1c40908c2affebe6c3540aa938abebc9836c11c1cab987820b4f33e322c8ae",
+    "Source/Rogue10m/Character/Rogue10mStylizedCharacter.cpp": "278d86777b74539b8051d674bd0c75ed1dc489b400d3cb682529ef134c77bfe7",
+    "Source/Rogue10m/Components/Rogue10mCombatComponent.cpp": "624728c360f89ade04df7468f67aa845b9776a612f983d0ce775b14632a9d31d",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/final-runtime/camera-height.csv": "24cd120a0c4de52e3c5ae63e894f90b4ba46aeb749ea9066f58039d516b6b032",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/final-runtime/cases.csv": "40b9f0545c29b79c572da3ac11d3e90496949fe0c435e52525f7e341e76c4e2c",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/final-runtime/frames.csv": "64bbd87505bff14b2c1aebe42bf59da6437149666a77c948a3f319f7f1ee492d",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/final-runtime/metrics.txt": "94cc6a87d14bfb332a47d1e66aee1ee98a49558b744faad114f42d4a4feba40b",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/final-runtime/probes.csv": "a595a79f6a006ecd970a7d591c614b45c734c89684d4c2e95c7a67563484d905",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/final-runtime/results.csv": "e0f004cd7ab9caf1909edbc5d50b3aae64e16a3ac0f12a3f098d853c48b55a28",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/lower-camera-final-runtime.log": "35c891d5c32aaf702b20ceb6d295709db022aa6eb0b56ad08b4cdecd41a39f45",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/camera-height.csv": "eabf6b48b6cff55e80d5499b38f8eebdb62732ccd2bc3b415804cbaefb5a2286",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/cases.csv": "40b9f0545c29b79c572da3ac11d3e90496949fe0c435e52525f7e341e76c4e2c",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/frames.csv": "520d22874c4438e8e402473331c4acee3fea8a5f74c0d1fdf34c6c4b1c8d0fab",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/metrics.txt": "294ffb836b0dcf2dd22ae030c3ab3fe54de1b9096856c4d160433c725ad192c4",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/probes.csv": "c4d1d8ff73fa9648bc96ef72aeb0c8e231c9e32c67c9518e7cfee5aac8a10776",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/final-render/results.csv": "66bd06cb13feb32c27cb307db2b2b00d076c2cf85a60137ab475956061135d2a",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/lower-camera-final-render.log": "85bddded2994a86c4857de6bb157a83d621c6a754cf9fa14440fd9d15072a5a7",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_00_DA_BasicBrawler_LeftJab.png": "b6cd32a8123e57c6c475de55ae6308b29557b93a0d453405e285761a5b6a2a12",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_01_DA_BasicBrawler_RightJab.png": "8e5581640991cc7d65e98fe20539881d9411898044eda0a546399f01523b3229",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_02_DA_BasicBrawler_RightStraight.png": "cd4fa6883e9ee3d26ecc69436174f559c5e6975627a1423a38b86190f4fca749",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_03_DA_BasicBrawler_RightHook.png": "3256196f2e4bd28c7fa64720d4c50f2f82ab34d68516e818eb36b4b3d8e1e308",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_04_DA_Attack_Knuckle_Primary01.png": "5446cdfade03dfa8cbf5e2e349037337848a348810d10603ebca9b904b0f1038",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_05_DA_Attack_Knuckle_Primary02.png": "1dbc5330dec5cc87c1fa2268e2d8d7fce18742d45a4f2ea72e2cdc37c5c08f16",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_06_DA_Attack_Knuckle_Primary03.png": "cf8e9dd24958ce2de601933a7e709fa770f6f7005b271bdf36346d6c2c0c73ed",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_07_DA_Attack_Knuckle_Special.png": "e657e24954012c62de7585240c25bbf71d6cc45534b63bf297e36510217028af",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_08_DA_Attack_Knuckle_Charged.png": "53ec39c5dd5fa85c64910bacef0b05e5ffc3e1e9994b13f162ab494b2cd50dc1",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_09_DA_Attack_StoneFist_Jab.png": "92872dd4b3c6fc6b320927eff27e04c05b469893cec793212d02c43c982ffa1f",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_10_DA_Attack_StoneFist_Straight.png": "402c3edd954b2826e4d817ce62dcaad00d49c352bb718a79622f3ec1f76b5362",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_11_DA_Attack_StoneFist_JumpSlam.png": "e5fd7e04ada6124e19c6be0035fd3a679ca45498140aed1b82f8954708289020",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_12_DA_Attack_StoneFist_ChargedShockwave.png": "8761a12339d4ab98211f9af07e1d1547a27c38b7f71de253e624f5e440654468",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_13_DA_BasicBrawler_LeftJab_yaw90.png": "f29c6b6b9be1e8b9b8de801f607960242a5cd8f4fd9b95f66e0becf92a9e5029",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/contact_14_DA_BasicBrawler_RightStraight_yaw90.png": "0fd0bb198132218c663c3f7f4649ac21ee3bd6b6e9ed76f0e9a48cc3938bec48",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/idle_current_eye_minus3.png": "63d5811469be0c6c8831ee3fd46cad2bd6277eb89d74bc10d58e30879fe8fc37",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/visual/idle_old_eye4.png": "4cba0a9e9f6d509690508b8463d2c5c8a2212411c45407b59ba3a83c29afe4a3",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/regression-appearance.log": "7d8b2f1aa46436d0990b93208acbee8ef6b745e77cf4e75d9d547adf281b3e39",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/regression-inspection.log": "eab4a929163231938a67785751b247ce5eba6b7420c863e2533e73e776aec0ed",
+    "Feature/doc/evidence/camera-forward-attacks-20261009/regression-framing.log": "f7782f5e54acea0934a1f0a129d403ef6c86eb114869cdbfb47504977657de49",
+    "Feature/doc/evidence/moving-upper-body-attack-20261009/lower-camera-regression.log": "405a1a6988f4a98e1d3bde2275448282dbf9527b6d97395d7361a39b9b35b855"
+  }
+}

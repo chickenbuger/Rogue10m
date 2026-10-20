@@ -1,0 +1,45 @@
+{
+  "schema": "arin_final_scalp_fit_source_review/v1",
+  "before_source": "Feature/doc/evidence/arin-quality-20261007/export-candidate-1/ArinHeadRefined.py",
+  "before_profile": "Feature/doc/evidence/arin-quality-20261007/head-scalp-before/arin-face-profile.png",
+  "before_profile_sha256": "d703dfc8e0b8fd3d3908ab133b9f903e8bd0320d7c44a8d95674ab938df44c3e",
+  "after_source": "Scripts/Blender/ArinHeadRefined.py",
+  "after_source_sha256": "35df7d0a349c17ca87b7553483985379abf4720c2412cf7017ab2a5d0a6d0bf9",
+  "cause": "A small dense-skin triangle island at Y.021-.030/Z1.484-1.4865 projects outside the coarser lower scalp shell. Ear minZ1.525 proves it is not an ear lobe.",
+  "repair": "Added1.2mm maximum Gaussian fit allowance centredZ1.490/spread.024 to side/back lower scalp, suppressed on front hairline. No extra covering solids.",
+  "changed_functions": [
+    "_refined_scalp"
+  ],
+  "head_eye_space_unchanged": true,
+  "all_other_head_functions_unchanged": true,
+  "bone_semantics_unchanged": true,
+  "topology_and_triangle_count_unchanged": true,
+  "crown_z_m": 1.7,
+  "source_projection_comparison": [
+    {
+      "side": -1,
+      "sampled_covered_points": 7308,
+      "before_skin_protrusions_over_0_1mm": 52,
+      "after_skin_protrusions_over_0_1mm": 0,
+      "before_max_skin_protrusion_mm": 0.404686,
+      "after_max_skin_protrusion_mm": -0.72601
+    },
+    {
+      "side": 1,
+      "sampled_covered_points": 7291,
+      "before_skin_protrusions_over_0_1mm": 38,
+      "after_skin_protrusions_over_0_1mm": 0,
+      "before_max_skin_protrusion_mm": 0.338576,
+      "after_max_skin_protrusion_mm": -0.764491
+    }
+  ],
+  "actual_after_profile": "pending_root_preview",
+  "neck_observation": "No visible hole, but independent closed head/neck meshes produce a sharp overlap/normal boundary. Body owner agreed a minimal concealed upper-neck fit; head lower profile remains unchanged.",
+  "neck_source_owner": "Scripts/Blender/ArinBodyRefined.py",
+  "neck_agreed_fit_m": [
+    { "z": 1.445, "radius_x": 0.034, "radius_y": 0.030, "centre_y": 0.009, "action": "add_transition_ring" },
+    { "z": 1.455, "radius_x": 0.030, "radius_y": 0.025, "centre_y": 0.010, "action": "tuck_existing_top_ring" }
+  ],
+  "neck_fit_review": "No conflict with scalp-only edit. The final neck cap is inside the head at the retained maxZ1.455; the new side/profile preview must verify shading continuity before final bake.",
+  "decision": "source_repair_ready_for_actual_visual_recheck"
+}

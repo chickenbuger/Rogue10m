@@ -1,0 +1,140 @@
+{
+  "status": "known_first_material_failure_recovered",
+  "source_hashes": {
+    "Arin.BlenderFBXSHA256": "4a9297e31edbbdff07a72bd2873b071e56750d67312f2ff6362ea9b94de9294e",
+    "Arin.BlenderPaletteSHA256": "61c37cf4fb1646d018a8ad216700324908387058b0a10d94654aab5a63bdf49b"
+  },
+  "checkpoint_sha256": "7a95c248fc6b1d988f39974b176eb80480a2e747df47cca90d13df55a3bb8b32",
+  "inspected_partial_paths": [
+    "/Game/Rogue10m/Characters/Arin/Blender/ArinIdle",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_Base",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_skin",
+    "/Game/Rogue10m/Characters/Arin/Blender/SK_Arin",
+    "/Game/Rogue10m/Characters/Arin/Blender/SK_Arin_Skeleton"
+  ],
+  "created_instances": 14,
+  "reimported_fbx": false,
+  "reduplicated_parent": false,
+  "original_parent_modified": false,
+  "saved_assets": [
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_Base",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_skin",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_hair",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_hair_light",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_eye_white",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_iris",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_pupil",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_lip",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_cloth_ivory",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_cloth_green",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_cloth_green_dark",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_leather",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_leather_dark",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_metal_gold",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_potion_red",
+    "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_glass",
+    "/Game/Rogue10m/Characters/Arin/Blender/SK_Arin_Skeleton",
+    "/Game/Rogue10m/Characters/Arin/Blender/ArinIdle",
+    "/Game/Rogue10m/Characters/Arin/Blender/SK_Arin"
+  ],
+  "content_checkpoint_scope_was_empty": true,
+  "exact_fbx_roundtrip_verified": true,
+  "source_parent_usage_flags": {
+    "used_with_skeletal_mesh": false,
+    "automatically_set_usage_in_editor": true
+  },
+  "core": {
+    "mesh": "/Game/Rogue10m/Characters/Arin/Blender/SK_Arin.SK_Arin",
+    "skeleton": "/Game/Rogue10m/Characters/Arin/Blender/SK_Arin_Skeleton.SK_Arin_Skeleton",
+    "idle": "/Game/Rogue10m/Characters/Arin/Blender/ArinIdle.ArinIdle",
+    "idle_seconds": 2.0,
+    "bounds_size_cm": [
+      158.71266174316406,
+      32.89643096923828,
+      170.00000074943506
+    ],
+    "bounds_origin_cm": [
+      0.0,
+      -1.2482166290283203,
+      84.99999962528247
+    ],
+    "same_skeleton": true
+  },
+  "material_slots": [
+    {
+      "index": 0,
+      "key": "skin",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_skin.M_Arin_skin"
+    },
+    {
+      "index": 1,
+      "key": "cloth_green",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_cloth_green.M_Arin_cloth_green"
+    },
+    {
+      "index": 2,
+      "key": "metal_gold",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_metal_gold.M_Arin_metal_gold"
+    },
+    {
+      "index": 3,
+      "key": "leather",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_leather.M_Arin_leather"
+    },
+    {
+      "index": 4,
+      "key": "glass",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_glass.M_Arin_glass"
+    },
+    {
+      "index": 5,
+      "key": "potion_red",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_potion_red.M_Arin_potion_red"
+    },
+    {
+      "index": 6,
+      "key": "cloth_ivory",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_cloth_ivory.M_Arin_cloth_ivory"
+    },
+    {
+      "index": 7,
+      "key": "leather_dark",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_leather_dark.M_Arin_leather_dark"
+    },
+    {
+      "index": 8,
+      "key": "hair_light",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_hair_light.M_Arin_hair_light"
+    },
+    {
+      "index": 9,
+      "key": "hair",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_hair.M_Arin_hair"
+    },
+    {
+      "index": 10,
+      "key": "cloth_green_dark",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_cloth_green_dark.M_Arin_cloth_green_dark"
+    },
+    {
+      "index": 11,
+      "key": "eye_white",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_eye_white.M_Arin_eye_white"
+    },
+    {
+      "index": 12,
+      "key": "iris",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_iris.M_Arin_iris"
+    },
+    {
+      "index": 13,
+      "key": "lip",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_lip.M_Arin_lip"
+    },
+    {
+      "index": 14,
+      "key": "pupil",
+      "material": "/Game/Rogue10m/Characters/Arin/Blender/Materials/M_Arin_pupil.M_Arin_pupil"
+    }
+  ]
+}

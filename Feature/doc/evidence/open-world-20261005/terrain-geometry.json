@@ -1,0 +1,143 @@
+{
+  "world_size_cm": 180000.0,
+  "heightmap_size": 1009,
+  "heightmap_spacing_cm": 178.57142857142858,
+  "landscape_origin": [
+    -90000.0,
+    -90000.0,
+    0.0
+  ],
+  "landscape_z_scale": 256.0,
+  "road_visible_width_cm": 1200.0,
+  "routes": {
+    "main": {
+      "length_cm": 135720.01872658764,
+      "seconds_at_600_cm_per_second": 226.2000312109794,
+      "maximum_authored_grade_degrees": 8.130102354155978,
+      "maximum_sampled_walking_grade_degrees": 8.130102354156096
+    },
+    "west": {
+      "length_cm": 189638.465596297,
+      "seconds_at_600_cm_per_second": 316.06410932716165,
+      "maximum_authored_grade_degrees": 8.127134325384013,
+      "maximum_sampled_walking_grade_degrees": 8.127134325384429
+    },
+    "east": {
+      "length_cm": 148231.82230571448,
+      "seconds_at_600_cm_per_second": 247.0530371761908,
+      "maximum_authored_grade_degrees": 3.367106508235731,
+      "maximum_sampled_walking_grade_degrees": 3.3671065082358416
+    }
+  },
+  "bridges": [
+    {
+      "id": "central",
+      "x": 0.0,
+      "y": 5000.0,
+      "deck_z": 3300.0,
+      "bank_z": 3200.0,
+      "width": 1800.0,
+      "length": 12000.0,
+      "ramp_length": 2400.0
+    },
+    {
+      "id": "western",
+      "x": -44000.0,
+      "y": 5000.0,
+      "deck_z": 3300.0,
+      "bank_z": 3200.0,
+      "width": 1800.0,
+      "length": 12000.0,
+      "ramp_length": 2400.0
+    },
+    {
+      "id": "eastern",
+      "x": 45000.0,
+      "y": 5000.0,
+      "deck_z": 3300.0,
+      "bank_z": 3200.0,
+      "width": 1800.0,
+      "length": 12000.0,
+      "ramp_length": 2400.0
+    }
+  ],
+  "pois": {
+    "camp": {
+      "name": "Entrance Camp",
+      "x": 0.0,
+      "y": -65000.0,
+      "grade_z": 2800.0,
+      "placement_z": 2800.0,
+      "clearance_radius": 8000.0,
+      "terrain_z": 2800.0,
+      "walking_z": 2800.0
+    },
+    "forest": {
+      "name": "Western Forest",
+      "x": -50000.0,
+      "y": -25000.0,
+      "grade_z": 3800.0,
+      "placement_z": 3800.0,
+      "clearance_radius": 6500.0,
+      "terrain_z": 3800.0,
+      "walking_z": 3800.0
+    },
+    "crossroads": {
+      "name": "River Crossroads",
+      "x": 0.0,
+      "y": 5000.0,
+      "grade_z": 3200.0,
+      "placement_z": 3300.0,
+      "clearance_radius": 7500.0,
+      "terrain_z": 2300.0,
+      "walking_z": 3300.0
+    },
+    "mill": {
+      "name": "Eastern Old Mill",
+      "x": 50000.0,
+      "y": -5000.0,
+      "grade_z": 3500.0,
+      "placement_z": 3500.0,
+      "clearance_radius": 6500.0,
+      "terrain_z": 3500.0,
+      "walking_z": 3500.0
+    },
+    "highlands": {
+      "name": "Rocky Highlands",
+      "x": -35000.0,
+      "y": 42000.0,
+      "grade_z": 7400.0,
+      "placement_z": 7400.0,
+      "clearance_radius": 7000.0,
+      "terrain_z": 7400.0,
+      "walking_z": 7400.0
+    },
+    "boss": {
+      "name": "Northern Boss Ruins",
+      "x": 15000.0,
+      "y": 68000.0,
+      "grade_z": 9600.0,
+      "placement_z": 9600.0,
+      "clearance_radius": 10000.0,
+      "terrain_z": 9600.0,
+      "walking_z": 9600.0
+    }
+  },
+  "river": {
+    "center_y": 5000.0,
+    "bed_z": 2300.0,
+    "water_z": 2600.0,
+    "bank_z": 3200.0,
+    "width_cm": 6000.0
+  },
+  "notes": [
+    "Road samples include physical bridge decks; 100 cm end ramps are authored by the editor builder.",
+    "Crossroads terrain is the river bed; use placement_z for decoration on its bridge."
+  ],
+  "heightmap_file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\open-world-20261005\\terrain-height.r16",
+  "samples": 1018081,
+  "bytes": 2036162,
+  "minimum_height_cm": 2130.15264133577,
+  "maximum_height_cm": 13999.999400400106,
+  "generation_seconds": 3.3280000000013388
+}

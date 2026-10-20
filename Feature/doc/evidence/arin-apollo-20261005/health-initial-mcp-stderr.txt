@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\Project\Rogue10m\tmp\apollo-source\packages\mcp\apollo_mcp\server.py", line 12, in <module>
+    from mcp.server.fastmcp import FastMCP
+  File "D:\Project\Rogue10m\tmp\apollo-venv\Lib\site-packages\mcp\server\fastmcp.py", line 16, in <module>
+    raise ModuleNotFoundError(_MESSAGE, name=__name__)
+ModuleNotFoundError: No module named 'mcp.server.fastmcp'. This is mcp 2.x, where FastMCP was renamed to MCPServer (from mcp.server.mcpserver import MCPServer) and other APIs changed; see the migration guide at https://py.sdk.modelcontextprotocol.io/v2/migration/#fastmcp-renamed-to-mcpserver or pin 'mcp<2' to keep running v1 code.

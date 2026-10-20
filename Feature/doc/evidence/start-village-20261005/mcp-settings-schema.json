@@ -1,0 +1,12 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"returnValue\":\"{\\\"serverUrlPath\\\":{\\\"type\\\":\\\"string\\\",\\\"description\\\":\\\"서비스를 제공할 URL 베이스 경로입니다. 예: '/mcp' -> http://localhost/mcp\\\"},\\\"serverPortNumber\\\":{\\\"type\\\":\\\"integer\\\",\\\"description\\\":\\\"서비스를 제공할 포트 번호입니다. 예: 8000 -> http://localhost:8000/mcp\\\"},\\\"bAutoStartServer\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"true인 경우, 모듈 스타트업 동안 HTTP 서버 경로가 자동으로 등록되고 HTTP 리스너가 시작됩니다.\\\"},\\\"bEnableToolSearch\\\":{\\\"type\\\":\\\"boolean\\\",\\\"description\\\":\\\"true인 경우, tools/list는 list_toolsets, describe_toolset 및 call_tool만 반환합니다. LLM은 필요에 따라 툴세트 툴을 검색하고, 이를 네이티브 MCP 툴로 등록하지 않고 call_tool을 통해 디스패치합니다. false인 경우, 모든 툴세트 툴은 스타트업 시 네이티브로 등록됩니다.\\\"}}\"}"
+      }
+    ]
+  }
+}

@@ -1,0 +1,363 @@
+{
+  "schema": "arin_quality_critic/v1",
+  "created_local_date": "2026-10-07",
+  "author_role": "head_model_source_critic",
+  "review_mode": "read_only_critic; current Blender and Unreal scenes were not executed or edited",
+  "target": "Arin: friendly adult woman, semi-real stylized RPG NPC; chestnut side braid, warm coherent skin, readable eyes and fitted travel costume",
+  "candidate": {
+    "freeze_state": "preserved_v1",
+    "source_hashes": {
+      "Scripts/Blender/ArinHead.py": "2CA5674509B058C6396315618B6489C674117D1AA86055E9D9F6A51E00D92881",
+      "Scripts/Blender/ArinBody.py": "2DE1C3BC7B93A7AF8E3B002FE512CC13A8DD03172A2D2547807D84030D5DEEEA",
+      "Scripts/Blender/BuildArin.py": "1B90962D1538395965E25C803500C9AF6EED7977150AAA87D8A510C21BBFDC1F",
+      "Art/NPC/Arin/Arin.blend": "96C3915BDC10BE8BF2A529C147C4DB49AA1D6860BA7A6AF6854900373031C3F0",
+      "Art/NPC/Arin/Arin.fbx": "4A9297E31EDBBDFF07A72BD2873B071E56750D67312F2FF6362EA9B94DE9294E"
+    },
+    "source_snapshot_directory": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/baseline/source",
+    "artifact_snapshot_directory": "D:/Project/Rogue10m/Art/NPC/Arin/Versions/v1"
+  },
+  "skills_read": [
+    "C:/Users/PC/.codex/skills/blender-character-workflow/SKILL.md",
+    "C:/Users/PC/.codex/skills/blender-character-workflow/references/character-form-review.md",
+    "C:/Users/PC/.codex/skills/blender-character-workflow/references/astra-workflow.md",
+    "C:/Users/PC/.codex/skills/retopology/SKILL.md",
+    "C:/Users/PC/.codex/skills/retopology/references/facial-retopo.md",
+    "C:/Users/PC/.codex/skills/retopology/references/game-cinematic-topo.md",
+    "C:/Users/PC/.codex/skills/blender-iterative-refinement/SKILL.md"
+  ],
+  "evidence": [
+    {
+      "id": "face",
+      "path": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/baseline/renders/arin-face.png",
+      "sha256": "3131A93C7F6F325722D4BF687B446B50846052CD09A2AC3416F02FDE359DB814",
+      "opened": true,
+      "view": "front face/neck closeup; source render"
+    },
+    {
+      "id": "front",
+      "path": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/baseline/renders/arin-front.png",
+      "sha256": "4EFCD6BA6061972C852422C30DC105116D3E53A49B6A9DDCA72EA9116C9F6829",
+      "opened": true,
+      "view": "full-body front; source render"
+    },
+    {
+      "id": "side",
+      "path": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/baseline/renders/arin-side.png",
+      "sha256": "0EEC5C10DB058D10DBFC1DD4CFEB4F525A5ACF3D479A05EDE00E91F68A99850F",
+      "opened": true,
+      "view": "full-body profile; source render"
+    },
+    {
+      "id": "back",
+      "path": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/baseline/renders/arin-back.png",
+      "sha256": "DA3683561ECF707B42F28F4F2C2B84A891BF812772C986DFBCEEE2E47EBDEC36",
+      "opened": true,
+      "view": "full-body rear; source render"
+    },
+    {
+      "id": "oblique",
+      "path": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/baseline/renders/arin-oblique.png",
+      "sha256": "C7DCFE4D82C384495BC1210A983B69AA7EC8FE6754027E0C2A3E5757A17C9A5A",
+      "opened": true,
+      "view": "full-body three-quarter; source render"
+    },
+    {
+      "id": "fbx_oblique",
+      "path": "D:/Project/Rogue10m/Feature/doc/evidence/arin-blender-20261007/roundtrip/fbx-oblique.png",
+      "sha256": "FD9F78098E578A833007F6B335A7B60C40C21E6B94382A451B2ECDC3E24BB7E5",
+      "opened": true,
+      "view": "actual fresh-imported FBX three-quarter"
+    },
+    {
+      "id": "fbx_side",
+      "path": "D:/Project/Rogue10m/Feature/doc/evidence/arin-blender-20261007/roundtrip/fbx-side.png",
+      "sha256": "20D2092A6CB3EFB6B12C9DD21AEFF20ED7EE997ECA059960E0A51A2C6DD0D086",
+      "opened": true,
+      "view": "actual fresh-imported FBX profile"
+    },
+    {
+      "id": "approved_tpose",
+      "path": "D:/Project/Rogue10m/Feature/doc/evidence/arin-npc-fbx-20261005/arin-tpose-reference-v1.png",
+      "opened": true,
+      "view": "generated front design reference; style and identity, not calibrated anatomy"
+    },
+    {
+      "id": "approved_concept",
+      "path": "D:/Project/Rogue10m/Feature/doc/evidence/start-hub-tutorial-npc-image-20261005/arin-concept-v1.png",
+      "opened": true,
+      "view": "generated original Arin concept; style and identity"
+    }
+  ],
+  "invariants_to_preserve": [
+    "1.70 metre full assembly height and grounded feet; metres, Z up, front -Y",
+    "Actual volumetric human geometry and continuous chestnut hair coverage; do not regress to a silhouette projection",
+    "Arin identity: adult woman, chestnut side braid, green eyes, ivory and green traveling clothes, leather accessories and red potions",
+    "Editable durable Blender/Python source; preserve complete v1 separately before modifying source",
+    "Existing rig hierarchy and Idle action must keep working unless the root contract explicitly extends them",
+    "All deform weights finite and normalized; retain the actual FBX fresh-import gates and engine integration",
+    "Material slots/names and runtime asset identities remain stable or are migrated explicitly",
+    "Identical cameras, framing, render settings and required poses for before/after comparison"
+  ],
+  "deterministic_gate_summary": {
+    "status": "pass_for_existing_v1_contract",
+    "evidence": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/baseline/reports/roundtrip.json",
+    "actual_fbx_import": true,
+    "passed_checks": 18,
+    "failed_checks": [],
+    "height_m": 1.6999998092651367,
+    "total_bones": 23,
+    "total_mesh_parts": 175,
+    "total_triangles": 42764,
+    "total_vertices": 21726,
+    "head_mesh": {
+      "name": "Arin_Head_Sculpted",
+      "vertices": 1874,
+      "triangles": 3744,
+      "max_bone_influences": 1,
+      "uv_layers": []
+    },
+    "limitations": "These metrics prove the existing asset's geometry/export/Idle operation; they do not prove facial likeness, anatomical form, grip support or large-pose deformation."
+  },
+  "critical_requirement_ledger": [
+    {
+      "id": "visible_volumetric_adult_subject",
+      "status": "pass",
+      "priority": 0,
+      "evidence": [
+        "front",
+        "side",
+        "oblique",
+        "fbx_side"
+      ],
+      "observation": "The primary character is readable and fully three-dimensional; nose, chin, rear skull and torso have profile depth. The result is an adult NPC at gameplay scale.",
+      "source_cause": "Shaped ring meshes and actual independent geometry replaced the previous silhouette approach.",
+      "proposed_source_fix": "Preserve the full 3D construction and world dimensions throughout refinement.",
+      "acceptance": "Recheck matching full-body front/profile/back/three-quarter and fresh-FBX views after the last source change."
+    },
+    {
+      "id": "arin_face_identity_and_warm_expression",
+      "status": "fail",
+      "priority": 1,
+      "evidence": [
+        "face",
+        "approved_tpose",
+        "approved_concept"
+      ],
+      "observation": "The closeup reads as a generic smooth doll: a long narrow lower face, tall arched blank forehead, staring pale sclera and tiny lifted mouth. It lacks the reference's full cheek volume, expressive eye/iris relationship and relaxed warm smile.",
+      "source_cause": "A uniform latitude cranium plus isolated eye/lip/brow islands establishes generic placements, with limited cheek/muzzle and expression structure.",
+      "proposed_source_fix": "Re-establish face proportions from the new root-approved reference board before detail. Shape cheekbone, cheek pad, jaw/chin, brow and muzzle together; soften the hairline arch and use subtle asymmetric expression. Adjust eye/iris relationship with the eyelid topology, rather than independently enlarging disks.",
+      "acceptance": "Fixed face front and both three-quarter/profile closeups, plus full-body identity comparison under matched light. Proportion changes must remain deliberate stylization; generated references are not precision anatomy measurements."
+    },
+    {
+      "id": "integrated_eye_socket_and_eyelid",
+      "status": "fail",
+      "priority": 1,
+      "evidence": [
+        "face",
+        "oblique",
+        "fbx_oblique"
+      ],
+      "observation": "Each white almond has a conspicuous double raised skin outline and a separate lower pouch; eyelids read as rims applied above the face rather than anatomical skin folding around an embedded eyeball.",
+      "source_cause": "_almond_eye, _orbital_skin and _eyelids are separate closed components. Orbital bands have only inner/outer boundaries and the lid is an elliptical tube; their vertices and normals do not form continuous skin with _head_surface.",
+      "proposed_source_fix": "Replace the skin rim/annulus islands with a continuous face patch containing actual eye apertures and three concentric eye-socket loops. Seat full spherical eyeballs behind the apertures, use thin upper/lower lid volumes and a gentle crease flowing into cheek and brow; offset poles from eye corners. Keep sclera, iris, pupil and cornea separate as appropriate.",
+      "acceptance": "Front/profile/three-quarter macro views under clay and skin materials; no raised double rim or visible gap. Test blink/eye-close if facial controls are added to the contract, with no intersection or volume collapse."
+    },
+    {
+      "id": "organic_nose_mouth_and_ears",
+      "status": "fail",
+      "priority": 1,
+      "evidence": [
+        "face",
+        "side",
+        "approved_tpose"
+      ],
+      "observation": "Nose tip/alar details are simplified and the two nostril dots look like tiny applied pink marks. Lips look like small separate ribbons, and the visible ear has little internal form.",
+      "source_cause": "The nose is a Gaussian displacement field in coarse latitude bands; nostrils are projecting lip-material disks. Upper/lower lips are closed standalone strips; the ear is a bean disk with a single radial ridge.",
+      "proposed_source_fix": "Model bridge/tip/alar-wing/columella transitions with continuous nose loops and enclosed recessed nostril cavities. Integrate upper/lower lips and corners into the muzzle with a real commissure and Cupid's bow; build an oral cavity only if the resolved facial contract needs jaw opening. Add restrained helix/antihelix/concha/lobe form to ears.",
+      "acceptance": "Matched front, both profiles and oblique face/ear closeups. Lips and nostril interiors remain naturally coloured and seated; surface normals flow continuously into surrounding skin."
+    },
+    {
+      "id": "face_topology_supports_intended_deformation",
+      "status": "unclear",
+      "priority": 1,
+      "evidence": [
+        "face",
+        "D:/Project/Rogue10m/Feature/doc/evidence/arin-blender-20261007/roundtrip/validation.json",
+        "D:/Project/Rogue10m/Scripts/Blender/ArinHead.py"
+      ],
+      "observation": "The current head is rigidly weighted to one head bone. The source has broad horizontal rings with isolated face components, not a continuous expression-ready eye/mouth/jaw flow. Static form can be improved now; required facial controls remain a root contract decision.",
+      "source_cause": "Rigid arin_bone=head is assigned to every face feature; BuildArin.py has no facial bones/shape keys. _head_surface's latitude grid does not surround real eye or mouth openings.",
+      "proposed_source_fix": "Retopologize the chosen face form into quad-dominant skin before rigging facial deformation. Use three eye loops, a jaw-following loop and two brow loops; reserve six to eight mouth loops only if dialogue/lip sync is required. Keep poles on scalp/back-neck or inside oral cavity, not at moving corners.",
+      "acceptance": "Record the resolved facial scope first. If expressions are included, inspect blink, smile, jaw open, brow raise and frown separately and in combinations, then repeat on a fresh export. A joined object is not proof of a connected skin surface."
+    },
+    {
+      "id": "complete_hair_coverage",
+      "status": "pass",
+      "priority": 0,
+      "evidence": [
+        "face",
+        "side",
+        "back",
+        "fbx_side"
+      ],
+      "observation": "The revised cap covers the crown, temples and back consistently. The formerly exposed bald scalp patches are absent in the actual source and FBX views.",
+      "source_cause": "_scalp now fits interpolated real cranial ring dimensions with an outward allowance.",
+      "proposed_source_fix": "Retain fitted cap clearance and coverage while reshaping hair masses; do not restore the smaller ellipsoid cap.",
+      "acceptance": "Matched front/back/profile/top and both three-quarter hair views; verify evaluated hair-to-cranium clearance and visible absence of bald patches."
+    },
+    {
+      "id": "hair_flow_gather_and_braid_form",
+      "status": "fail",
+      "priority": 1,
+      "evidence": [
+        "face",
+        "side",
+        "back",
+        "oblique",
+        "approved_tpose"
+      ],
+      "observation": "The crown/back is a glossy smooth helmet with a few large raised locks. The gathered section beside the neck is a smooth bean-shaped mass ending abruptly at the braided strands, which read as an open mechanical helix. This is weaker than the reference's connected swept chestnut coiffure and natural plait.",
+      "source_cause": "A fitted cap supplies the entire silhouette; sparse elliptical lock tubes sit over it. _Braid_Gather is one large tapered sweep, while three circular helices continue as constant-radius tubes without a lobe/contact-aware weave.",
+      "proposed_source_fix": "Sculpt broad primary/secondary hair masses into the fitted cap and vary part, temple and nape flows. Replace the bean gather with overlapping flattened swept bundles converging into the first plait crossing. Build a compact alternating three-lobe braid with intentional contact and flattened elliptical sections, taper toward the tie, and integrate restrained strand grooves into surfaces rather than bright separate cords.",
+      "acceptance": "Profile/back/oblique/root-braid closeups at fixed framing. Hair must remain covered, scalp-fitted, readable at gameplay distance, and connected during allowed head and chest motion."
+    },
+    {
+      "id": "brows_lashes_and_skin_surface_coherence",
+      "status": "fail",
+      "priority": 2,
+      "evidence": [
+        "face",
+        "oblique",
+        "approved_concept"
+      ],
+      "observation": "Eyebrows appear as uniform narrow strips with blunt-looking inner ends. Skin is coherent in colour across face/neck/hands, but completely smooth and almost uniform; hair highlights read plastic under the fixed lighting.",
+      "source_cause": "Brows are constant-depth elliptical sweeps. Skin/hair use one constant base colour and roughness per key and no UV or colour-attribute variation. The render's strong broad highlights compound the simple surface forms; no colour-space defect has been established.",
+      "proposed_source_fix": "Fit tapered brow clumps close to skin with a gentle root/body/tip density change and a very restrained upper lash rim. Add a coherent skin colour system with subtle cheek/nose warmth, lip transition and sparse reference-supported freckles; carry that system across ears/neck/hands. Establish medium roughness and fine directional hair variation. Validate neutral/unlit colour before changing global palette or lighting.",
+      "acceptance": "Neutral clay, unlit/base-colour and final-lit face/ear/neck/hand closeups. No front-only texture border, mismatched skin patches, excessive blush or glossy plastic hair."
+    },
+    {
+      "id": "continuous_hand_form_and_thumb",
+      "status": "unclear",
+      "priority": 1,
+      "evidence": [
+        "front",
+        "back",
+        "oblique",
+        "D:/Project/Rogue10m/Scripts/Blender/ArinBody.py"
+      ],
+      "observation": "All five digits are visible and count is correct. Full-body images cannot establish webbing, thumb base, knuckle shape or wrist fit reliably. Source inspection proves fingers/thumb are individually capped tubes separate from the capped palm, and all hand vertices are rigid to one hand bone.",
+      "source_cause": "Arin_Palm is a six-ring loft; four fingers and thumb are independent tapered sweeps, with no common palm/web/thenar vertex flow and no individual finger controls.",
+      "proposed_source_fix": "After hand closeups and resolved grip scope, build a continuous palm-to-finger/web surface with joint taper, knuckles, thenar/thumb web and naturally staggered finger lengths. Add three phalange segments per articulated digit only when actual grip support is required. Preserve intentional relaxed spread.",
+      "acceptance": "Both hands/thumbs from palm, dorsal and side closeups; inspect neutral, reaching and potion-grip poses if required. Do not promote this visual check to pass from digit count, names or normalized weights."
+    },
+    {
+      "id": "body_head_proportion_and_garment_fit",
+      "status": "fail",
+      "priority": 1,
+      "evidence": [
+        "front",
+        "side",
+        "back",
+        "oblique",
+        "approved_tpose"
+      ],
+      "observation": "Overall adult proportions and waist taper are readable, but sleeves and shoulders are broad simplified masses, rear cape is a stiff rectangular slab and waist/coat layers are mechanically shaped. Reference clothing has curved shoulder drape, softer volume transitions and intentional cloth folds.",
+      "source_cause": "Torso/sleeve sections are independent lofts and cape is a short rectangular shell rigid to spine_03. Details decorate these simple forms instead of establishing cloth drape and fitted shoulder transitions.",
+      "proposed_source_fix": "Coordinate the face/head revision with torso/shoulder silhouette. Rebuild cape shoulder/nape drape and garment openings as fitted shell surfaces, refine cloth allowance and gravity/tension folds, and preserve accessory attachment. Body owner should resolve proportion and fit before further decorative detail.",
+      "acceptance": "Matched clay and material full-body front/back/profile/three-quarter plus shoulder/waist closeups and reach/twist poses. No underarm webbing, inflated torso or garment clipping."
+    },
+    {
+      "id": "neck_wrist_pelvis_and_joint_continuity",
+      "status": "unclear",
+      "priority": 1,
+      "evidence": [
+        "face",
+        "side",
+        "back",
+        "D:/Project/Rogue10m/Scripts/Blender/ArinBody.py"
+      ],
+      "observation": "No static head/neck or limb gap is visible in the reviewed poses, but the back-neck join has a hard level transition and clothing occludes the pelvis. Source uses separate capped neck, palm, pelvis and leg parts; neutral renders cannot prove continuity under reach or extreme bends.",
+      "source_cause": "Independent capped lofts are skinned by position bands; connected bone endpoints and normalized weights do not weld or preserve these surfaces.",
+      "proposed_source_fix": "Inspect evaluated neutral and major joint bends before repair. Create continuous visible skin transitions at neck/wrist and a continuous trouser seat/inseam where required; use supporting joint loops and weighted blending. Retain intentional separate cloth layers and accessories.",
+      "acceptance": "Neck rotation, wrist bend, elbow/shoulder reach, hip/knee bend and twist closeups, including exported deformation. Record visible gaps, collapse and intersections or explicitly keep this criterion unclear."
+    },
+    {
+      "id": "source_to_fbx_visual_preservation",
+      "status": "pass",
+      "priority": 0,
+      "evidence": [
+        "oblique",
+        "side",
+        "fbx_oblique",
+        "fbx_side"
+      ],
+      "observation": "Actual fresh FBX import retains the corrected head/hair placement and full-body profile. No loss of face pieces or scalp coverage is visible.",
+      "source_cause": "The durable builders produce mesh components with actual skinning, and the exporter preserves hierarchy/material assignments for the current candidate.",
+      "proposed_source_fix": "Rerun the same exporter/import inspector after topology, materials, weights or actions change. Preserve prior evidence as baseline rather than overwriting the only copy.",
+      "acceptance": "Fresh-import technical gate report and all current fixed views, plus any new contract poses/closeups, for the final retained source revision."
+    }
+  ],
+  "highest_priority_repair_groups": [
+    {
+      "order": 1,
+      "id": "face_form_and_continuous_skin",
+      "critical_failures": [
+        "arin_face_identity_and_warm_expression",
+        "integrated_eye_socket_and_eyelid",
+        "organic_nose_mouth_and_ears"
+      ],
+      "owner": "head source",
+      "cause": "The primary face form and disconnected skin features are wrong for the requested higher-quality identity; cosmetic texture alone will not solve them.",
+      "proposed_change": "Build a source-authored continuous quad face around real eye openings and integrated muzzle/nose/lips from the selected reference, with deliberate cheek/jaw/forehead form. Set the required facial deformation contract before loops and rig controls are finalized."
+    },
+    {
+      "order": 2,
+      "id": "hair_primary_form_and_braid_connection",
+      "critical_failures": [
+        "hair_flow_gather_and_braid_form"
+      ],
+      "owner": "head source",
+      "cause": "Continuous coverage is solved but cap/lock/gather/braid forms remain primitive.",
+      "proposed_change": "Reshape cap masses and flow, replace gather, and weave a compact contact-aware plait while preserving scalp coverage and head/chest motion attachment."
+    },
+    {
+      "order": 3,
+      "id": "continuous_hands_and_garment_joints",
+      "critical_failures": [
+        "continuous_hand_form_and_thumb",
+        "body_head_proportion_and_garment_fit",
+        "neck_wrist_pelvis_and_joint_continuity"
+      ],
+      "owner": "body source and root rig",
+      "cause": "Separate capped tube construction and rigid attachments need feature closeups and pose evidence before high-quality acceptance.",
+      "proposed_change": "Resolve hand grip/rig scope, rebuild palm-web-thumb flow and visible joint transitions, refine cape/garment drape, then run affected poses."
+    },
+    {
+      "order": 4,
+      "id": "skin_hair_costume_material_polish",
+      "critical_failures": [
+        "brows_lashes_and_skin_surface_coherence"
+      ],
+      "owner": "source material system",
+      "cause": "Constant material fields cannot carry the reference's skin and surface richness, and lighting accentuates the simplified masses.",
+      "proposed_change": "Add coherent export-supported skin variation and restrained texture/roughness detail after shapes pass. Keep all exposed skin as one material system and compare neutral and final-lit evidence."
+    }
+  ],
+  "pending_evidence": [
+    "New root-selected reference/polish board and final facial/grip/triangle/material/texture contract.",
+    "Hands/thumbs, shoulders/underarms, waist/crotch and boots from feature-scale closeups.",
+    "Fixed both-side face profiles and top scalp view.",
+    "Contract poses beyond the tiny Idle: head turn, major joint bends, reach, twist and actual grip where required.",
+    "Final source revision and identical fresh-export/runtime evidence after source repairs."
+  ],
+  "decision": "critic_complete_no_repair_started",
+  "exclusion": "No UE API calls, no Blender execution and no current model source edits were performed for this ledger.",
+  "resolved_refinement_contract": {
+    "reference": "D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/reference/arin-refinement-v2.png",
+    "source_owner_file": "Scripts/Blender/ArinHeadRefined.py",
+    "head_triangle_budget": 23000,
+    "existing_bone_semantics_preserved": true,
+    "full_facial_rig_lip_sync_claim": false,
+    "optional_colour_attribute": "ArinSkinTint POINT FLOAT_COLOR, multiplicative .9..1.05"
+  }
+}
