@@ -1,7 +1,7 @@
 # 과거 제작 파일과 중복 산출물 최적화 결과
 
 작성: 2026-10-20 / 브랜치: `Sprint#6-2-unused-file-optimization`
-상태: 파일 정리·무결성·복구·독립 검토 완료. 최종 Git 통합은 아래에 기록한다.
+상태: 파일 정리·무결성·복구·독립 검토·커밋·main 통합·공개 원격 게시 완료.
 
 ## 결과
 
@@ -39,3 +39,9 @@ U1 참조/중복 조사, U2 확정 파일 정리/검증기 호환, U3 무결성/
 ## 최종 파일 검사
 
 [파일별 변경 목록](evidence/unused-file-optimization-20261020/commit-files.txt)에32개를 고정했다. Python6개 구문, JSON8개 보고서 파싱, 상대 문서 링크10개, 일일/Sprint 로그의 기존 내용 보존, Source/Config/Content 변경0을 확인했다. 필수 생성 경로 검사도 통과했다. [최종 검사 보고서](evidence/unused-file-optimization-20261020/final-checks.json)를 참조한다.
+
+## Git 통합과 공개 게시
+
+32개 파일 스테이징 일치·필수 생성 경로·추가/변경 파일 공백 검사를 통과한 뒤 기능 커밋 `a70c521649eca752ef2e3f0e17f9ae7f216b9050`을 생성했다. fetch한 원격과 조상 관계·다른 worktree 점유를 확인하고 develop→test→main을 원자적 CAS fast-forward로 승격했다. 첫 PowerShell 파이프의 줄바꿈 오류는 참조 변경 없이 거절됐고 LF 바이트 입력으로 수정했다. 먼저 게시된 작업 브랜치에 이어 통합3개를 정상 atomic push했으며 강제 푸시는 없었다.
+
+직접 `git ls-remote`를 조회해 공개 GitHub의 작업/develop/test/main4개가 모두 기능 커밋과 같음을 확인했다. [로컬 통합](evidence/unused-file-optimization-20261020/local-integration.json), [원격 대조](evidence/unused-file-optimization-20261020/public-push-result.json)에 남겼다. 이 완료 기록도 별도 문서 커밋으로 같은 순서에 반영한다. 현재 게임 코드·에셋과 별도 진행 중인 무기 작업은 보존됐다.

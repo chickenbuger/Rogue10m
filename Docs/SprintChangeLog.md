@@ -2318,3 +2318,5 @@
 - 관련: [계획](../Feature/architect/2026-10-20_unused-file-optimization.md), [결과](../Feature/doc/2026-10-20_unused-file-optimization.md), [확정 목록](../Feature/doc/evidence/unused-file-optimization-20261020/selection.json), [복구](../Feature/doc/evidence/unused-file-optimization-20261020/RESTORE.md), [개발 일지](../DevLog/20261020.txt).
 
 - Sprint#6-2 최종 파일 검사: 변경32개 명시 목록, Python6개·JSON8개·문서 링크10개·append-only DevLog/Sprint·Source/Config/Content 변경0 통과. 생성 경로 검사 통과, 스테이징/공백 및 커밋·승격 준비.
+
+- Sprint#6-2 완료: 기능 커밋 `a70c521649eca752ef2e3f0e17f9ae7f216b9050`, 변경32개 스테이징/필수 경로/공백 통과, 원격·조상·worktree 확인 후 develop→test→main CAS fast-forward와 일반 atomic push 완료. 원격4개 직접 SHA 일치 확인. [로컬 통합](../Feature/doc/evidence/unused-file-optimization-20261020/local-integration.json), [원격 검증](../Feature/doc/evidence/unused-file-optimization-20261020/public-push-result.json). 첫 줄바꿈 입력 오류는 무변경 거절 후 LF로 수정했다. 이번 완료 기록도 같은 순서로 문서 커밋·반영한다.
