@@ -17,6 +17,9 @@
 #include "Rogue10mPlayerState.h"
 #include "Rogue10mInventoryComponent.h"
 #include "Rogue10mProgressionSubsystem.h"
+#include "Rogue10mGameMode.h"
+#include "Rogue10mGameState.h"
+#include "Rogue10mRunCompletionComponent.h"
 #include "Engine/GameInstance.h"
 #include "Rogue10mMonsterDataAsset.h"
 #include "Rogue10mMonsterAttackPatternComponent.h"
@@ -129,6 +132,8 @@ float ARogue10mBasicMonster::TakeDamage(
 	AController* EventInstigator, AActor* DamageCauser)
 {
 	if (!HasAuthority() || !FMath::IsFinite(DamageAmount)) { return 0.0f; }
+	const ARogue10mGameState* Run = GetWorld() ? GetWorld()->GetGameState<ARogue10mGameState>() : nullptr;
+	if (Run && (Run->GetRunPhase() == ERogue10mRunPhase::Victory || Run->GetRunPhase() == ERogue10mRunPhase::Defeat)) { return 0.0f; }
 	const float AppliedDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	if (bIsDead || !AttributeSet || !FMath::IsFinite(AppliedDamage) || AppliedDamage <= 0.0f)
 	{
@@ -322,7 +327,11 @@ void ARogue10mBasicMonster::Die()
 
 	bIsDead = true;
 	if (AttackPatternComponent) AttackPatternComponent->CancelAttack();
-	if (HasAuthority() && !bCombatTestInstance)
+	int32 AwardedExperience = 0;
+	int32 AwardedGold = 0;
+	const ARogue10mGameState* Run = GetWorld() ? GetWorld()->GetGameState<ARogue10mGameState>() : nullptr;
+	const bool bRunEnded = Run && (Run->GetRunPhase() == ERogue10mRunPhase::Victory || Run->GetRunPhase() == ERogue10mRunPhase::Defeat);
+	if (HasAuthority() && !bCombatTestInstance && !bRunEnded)
 	{
 		if (ARogue10mPlayerController* RewardController =
 			Cast<ARogue10mPlayerController>(LastDamageInstigator.Get()))
@@ -344,13 +353,16 @@ void ARogue10mBasicMonster::Die()
 						// Preserve the existing difficulty-adjusted base reward; GoldFind only changes gold, never XP.
 						const int32 BaseGoldReward = FMath::Max(1, ExperienceReward / 10);
 						const int32 GoldReward = Traits ? Traits->CalculateMonsterGoldReward(BaseGoldReward) : BaseGoldReward;
+						const int32 PreviousGold = Inventory->GetGold();
 						Inventory->AddGold(GoldReward);
+						AwardedGold = Inventory->GetGold() - PreviousGold;
 						RewardController->AddCombatLogMessage(FString::Printf(TEXT("골드 +%d"), GoldReward), FLinearColor(1.0f, 0.8f, 0.3f));
 					}
 				}
 				if (ExperienceReward > 0)
 				{
 					RewardState->AddExperience(ExperienceReward);
+					AwardedExperience = ExperienceReward;
 					RewardController->AddCombatLogMessage(
 						FString::Printf(TEXT("%s 처치: 경험치 +%d"),
 							*MonsterDisplayName.ToString(), ExperienceReward),
@@ -371,6 +383,13 @@ void ARogue10mBasicMonster::Die()
 	GetCharacterMovement()->DisableMovement();
 	SetActorEnableCollision(false);
 	const float DeathPresentationSeconds = AttackPatternComponent ? AttackPatternComponent->PlayDeathPresentation() : 0.0f;
+	if (ARogue10mGameMode* Mode = GetWorld() ? GetWorld()->GetAuthGameMode<ARogue10mGameMode>() : nullptr)
+	{
+		if (URogue10mRunCompletionComponent* Completion = Mode->GetRunCompletionComponent())
+		{
+			Completion->NotifyFinalBossDefeated(*this, LastDamageInstigator.Get(), AwardedExperience, AwardedGold);
+		}
+	}
 	if (HasAuthority()) OnMonsterDied.Broadcast(this);
 	UE_LOG(LogRogue10m, Log, TEXT("%s ?щ쭩"), *GetNameSafe(this));
 

@@ -2271,3 +2271,13 @@
 - 스냅샷: `207c595`(Source103개·전체6084개 변경). 별도 인덱스로 검증 후 병행 구현9개를 제외하고 작업→develop→test→main fast-forward 완료.
 - 상태: 로컬 main 통합 완료, Sprint5 체크포인트 종료. 신규 브랜치는 Sprint#6-1부터, 이미 만들어진 Sprint#5-38과 미완성 스킬트리 코드는 보존한다.
 - 원격: chickenbuger/Rogue10m의 사용자/소유자·admin/push 권한·공개 상태를 확인했으나, 자동 승인 검토가 공개 자료 전송의 별도 승인을 요구해 push를 차단했다. 구체적 목적지/자료 범위를 제시하여 사용자 승인 대기. 원격 성공으로 보고하지 않는다.
+
+## Sprint#5-39 — 보스 처치·런 정산·시작마을 복귀 (2026-10-20)
+
+- 브랜치: `Sprint#5-39-boss-run-completion`. Sprint5 main 병합 전에 생성한 번호를 유지한다. 병행 스킬트리와 원본을 보존하는 별도 작업 폴더에서 개발했다.
+- 목표: 아자토르의 실제 사망을 승리·기존 보상 정산·진행 저장·결과 화면·StartHub 귀환으로 연결하고 일반 사망/시간 초과도 종료한다.
+- 주요 변경: R1 GameState 최초 종료 가드와 GameMode 소유 RunCompletionComponent·사망 연결, R2 네이티브 결과 UI/입력 차단·저장 실패 재시도·옵션 없는 마을 이동, R3 격리 QA/빌드/독립 검토와 기존 특성 fixture의 종료 계약 보완, R4 결과·DevLog·최종 통합 준비. 기존 보스 XP3,000/골드300을 한 번만 지급하며 새 보상·SaveGame 스키마·스킬트리 경제·원본 바이너리는 변경하지 않는다.
+- 검증: 콘텐츠 고정 Editor 빌드90.27초 성공. 렌더된 실제 게임 Write53·Read12·Failure58·FailureRead12·Timeout33·Death32, 합계200검사·실패0·여섯 프로세스 exit0. 기존 Trait Effects 회귀101검사·실패0·exit0, 총301검사 통과. 실제 StartHub 포탈→OpenRunMap 저장 보스→플레이어 좌클릭 마지막 피해→결과창 Enter→StartHub 및 별도 프로세스 복원. Windows 읽기 공유 잠금의 실제 저장 실패·귀환 차단·재시도 보상 불변, 전체 Growth/Inventory GUID·골드/Combat/Town 스냅샷 일치. 실제 승리/실패/시간 초과 화면과 독립 코드 검토 완료.
+- 보존과 한계: Write/Read 사이 공유 콘텐츠 변경을 검출한 뒤 연결을 제거하고207c595의6,417콘텐츠 파일·트리890c83ca26eb5ac410bbd9b0d34e406c9a3c44e3를 고정했다. 비교 완화 없이 재검증, 원본 소스·스킬트리·에셋 유지. 순간이동·AI정지·준비 중 임시 무적·1HP 보스 마무리·1초 타임아웃 fixture 범위이며 전체20분/밸런스/Shipping/D3D12/장시간GPU/네트워크는 미검증이다.
+- 상태: 구현·빌드·핵심 QA·특성 회귀·독립 정적 검토·문서 완료. 최종 경로 검사·안전한 원본 통합·커밋·로컬 승격은 준비 중이다. 이번 기능의 push는 미시도이며 기존 체크포인트 채팅의 공개 전송 승인 대기 상태가 이어진다. main/원격 반영 완료로 보고하지 않는다.
+- 관련: [설계](../Feature/architect/2026-10-20_boss-run-completion.md), [결과](../Feature/doc/2026-10-20_boss-run-completion.md), [최종 실행](../Feature/doc/evidence/boss-run-completion-20261020/frozen-runtime-launcher.log), [콘텐츠 고정](../Feature/doc/evidence/boss-run-completion-20261020/content-freeze.json), [독립 검토](../Feature/doc/evidence/boss-run-completion-20261020/review.md), [일일 로그](../DevLog/20261020.txt).

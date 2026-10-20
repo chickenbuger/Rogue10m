@@ -56,7 +56,7 @@ This should be tuned after the final player movement speed is decided.
 - The player must defeat the boss within 20 minutes.
 - If the boss is not defeated within 20 minutes, the run fails.
 - The current saved GameMode disables the prototype override and uses 1,200 seconds when entering through the StartHub run portal.
-- The timeout rule is implemented. Final-boss-specific victory completion remains a separate gameplay task; placing the existing boss actor does not add that rule.
+- The timeout and final-boss victory rules are implemented. A real FinalBoss death settles its existing XP/gold once, saves progression, and opens the result screen. Returning to StartHub requires a successful save and clears StartRun travel options. See `Docs/RunCompletionGuide.md` for the result/retry flow and QA scope.
 
 ## Combat Starting State
 
@@ -111,4 +111,4 @@ This should be tuned after the final player movement speed is decided.
 - 월드 전용 동적 내비게이션은 플레이어 주변60m에서 생성하고80m 밖에서 제거한다. 월드 파티션은256m 셀·700m 로드 범위다.
 - 지역 조우는 기존 몬스터 Data Asset을 참조하는 전용 Blueprint 자식으로 구성했다. 숲·풍차·고원 스포너5개와 고정 보스1개다. Capsule 중심을 고려한 지면 스폰 보정과 소유 스트리밍 레벨을 적용했다.
 - 시작마을의 기존 포탈만 새 맵으로 연결했다. 메뉴→StartHub 대기→포탈 overlap→OpenRunMap 20분 런 흐름이다. 맵을 직접 PIE로 열면 현재 GameMode는 포탈 옵션 없이 런을 자동 시작하지 않는다.
-- 새 NPC 서비스·집 실내·보스 전용 패턴·승리 연결·패키징 성능은 후속 범위다. 자세한 실제 검사와 한계는 `Feature/doc/2026-10-05_open-world-playmap.md`에 기록한다.
+- 초기 맵 제작 당시의 검사 범위와 한계는 `Feature/doc/2026-10-05_open-world-playmap.md`에 기록한다. 이후 NPC 서비스·보스 전용 패턴·승리/저장/마을 복귀는 별도 기능으로 연결했다. 집 실내·전체 경로/20분 밸런스·패키징 성능은 후속 범위다. 종료 흐름은 `Docs/RunCompletionGuide.md`를 참조한다.

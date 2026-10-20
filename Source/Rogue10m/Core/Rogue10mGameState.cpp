@@ -21,6 +21,7 @@ void ARogue10mGameState::BeginPlay()
 
 void ARogue10mGameState::StartRun()
 {
+	if (!HasAuthority() || RunPhase != ERogue10mRunPhase::WaitingToStart) { return; }
 	RunSeed = FMath::Rand();
 	CurrentFloor = 1;
 	DefeatedEnemyCount = 0;
@@ -34,12 +35,14 @@ void ARogue10mGameState::StartRun()
 
 void ARogue10mGameState::StartRunWithDuration(float NewRunDurationSeconds)
 {
+	if (!HasAuthority() || RunPhase != ERogue10mRunPhase::WaitingToStart) { return; }
 	RunDurationSeconds = FMath::Max(1.0f, NewRunDurationSeconds);
 	StartRun();
 }
 
 void ARogue10mGameState::FinishRun(bool bVictory)
 {
+	if (!HasAuthority() || !IsRunActive()) { return; }
 	GetWorldTimerManager().ClearTimer(RunTimerHandle);
 	SetRunPhase(bVictory ? ERogue10mRunPhase::Victory : ERogue10mRunPhase::Defeat);
 	BroadcastTimer();

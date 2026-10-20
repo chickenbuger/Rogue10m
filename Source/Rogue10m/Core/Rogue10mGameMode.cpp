@@ -13,10 +13,12 @@
 #include "Rogue10mGameState.h"
 #include "Rogue10mPlayerState.h"
 #include "Rogue10mProgressionSubsystem.h"
+#include "Rogue10mRunCompletionComponent.h"
 #include "UObject/ConstructorHelpers.h"
 
 ARogue10mGameMode::ARogue10mGameMode()
 {
+	RunCompletionComponent = CreateDefaultSubobject<URogue10mRunCompletionComponent>(TEXT("Run Completion"));
 	GameStateClass = ARogue10mGameState::StaticClass();
 	HUDClass = AHUD::StaticClass();
 	PlayerStateClass = ARogue10mPlayerState::StaticClass();
@@ -45,6 +47,7 @@ void ARogue10mGameMode::StartPlay()
 	if (ARogue10mGameState* RogueGameState = GetGameState<ARogue10mGameState>())
 	{
 		RogueGameState->OnRunPhaseChanged.AddDynamic(this, &ARogue10mGameMode::HandleRunPhaseChanged);
+		RunCompletionComponent->Initialize(*RogueGameState);
 		if (bStartRunOnStartPlay || ShouldStartRunFromTravelOptions())
 		{
 			StartConfiguredRun(*RogueGameState);

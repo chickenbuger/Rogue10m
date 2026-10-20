@@ -289,7 +289,11 @@ private:
 		Check(!Traits->TryPreventLethalDamage(10000.0f, Normal.Get()), TEXT("last_stand_cannot_repeat_in_same_run"));
 		GameState->FinishRun(true);
 		GameState->StartRunWithDuration(1200.0f);
-		Check(!Traits->HasUsedLastStand(), TEXT("actual_run_phase_transition_resets_last_stand_state"));
+		Check(GameState->GetRunPhase() == ERogue10mRunPhase::Victory && Traits->HasUsedLastStand(),
+			TEXT("completed_run_cannot_restart_and_reset_last_stand_in_same_world"));
+		// A new exploration now starts after actual hub travel; its pawn calls this reset in BeginPlay.
+		Traits->ResetRunState();
+		Check(!Traits->HasUsedLastStand(), TEXT("new_run_reset_clears_last_stand_state"));
 		Check(!Traits->TryPreventLethalDamage(10000.0f,nullptr), TEXT("forced_sourceless_damage_cannot_trigger_last_stand"));
 		Character->Die();
 		Check(Character->IsDead() && !Traits->HasUsedLastStand(), TEXT("forced_death_bypasses_unused_last_stand"));

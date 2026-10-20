@@ -63,6 +63,7 @@ void URogue10mCombatTestComponent::SetPanelOpen(bool bOpen)
 {
 	if (!IsAvailable() || bOpen == bPanelOpen) return;
 	auto* PC = CastChecked<ARogue10mPlayerController>(GetOwner());
+	if (bOpen && PC->IsRunResultVisible()) return;
 	if (bOpen)
 	{
 		InitializeUI();

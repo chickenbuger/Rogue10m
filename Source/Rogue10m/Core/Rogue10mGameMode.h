@@ -13,6 +13,7 @@ class APawn;
 class APlayerController;
 class AHUD;
 class URogue10mCharacterCustomizationDataAsset;
+class URogue10mRunCompletionComponent;
 enum class ERogue10mRunPhase : uint8;
 
 /**
@@ -25,11 +26,16 @@ class ARogue10mGameMode : public AGameModeBase
 
 public:
 	ARogue10mGameMode();
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Run")
+	URogue10mRunCompletionComponent* GetRunCompletionComponent() const { return RunCompletionComponent; }
 
 	ARogue10mCharacter* SpawnSelectedCharacterForController(
 		AController* Controller);
 
 protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Run")
+	TObjectPtr<URogue10mRunCompletionComponent> RunCompletionComponent;
+
 	virtual void StartPlay() override;
 	virtual UClass* GetDefaultPawnClassForController_Implementation(
 		AController* InController) override;

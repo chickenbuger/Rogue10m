@@ -1,0 +1,8 @@
+PASS actual_StartHub_initial_world
+PASS profile_subsystems_and_controller_present
+PASS fresh_isolated_profile_slot
+FAIL isolated_profile_created_and_selected
+mode=Write
+checks=4
+failures=1
+profile=00000000000000000000000000000000

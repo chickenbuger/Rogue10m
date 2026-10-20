@@ -1,0 +1,71 @@
+Sprint#5-39-boss-run-completion
+기준: 05f74f1 / 검증: 핵심200+특성회귀101, 실패0
+스테이징은 아래 파일에만 한정한다. Content/캐시/병행 스킬트리 제외.
+
+DevLog/20261020.txt — 한국어 일일 기록과 Notion 요약 후보 추가
+Docs/RunCompletionGuide.md — 런 종료 사용 흐름·저장/입력 계약·QA 실행 안내
+Docs/SprintChangeLog.md — Sprint#5-39 목표·변경·검증·상태 기록 추가
+Docs/WorldStructure.md — 보스 승리·저장·마을 귀환 설명 현행화
+Feature/architect/2026-10-20_boss-run-completion.md — R1~R4 작업 패킷·범위·검증·되돌리기 경계 설계
+Feature/doc/2026-10-20_boss-run-completion.md — 구현 결과·301검사·실패 수정·검증 한계와 통합 상태
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_death/death-results.txt — 사례별 assertion PASS/FAIL 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_death/death.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_death/run-result.png — 실제 렌더된 결과창 스크린샷 증거
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_failure/expected.bin — 저장 복원 전후 전체 상태의 엄격한 비교 기준
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_failure/failure-results.txt — 사례별 assertion PASS/FAIL 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_failure/failure.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_failure/failureread-results.txt — 사례별 assertion PASS/FAIL 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_failure/failureread.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_failure/run-result.png — 실제 렌더된 결과창 스크린샷 증거
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_timeout/run-result.png — 실제 렌더된 결과창 스크린샷 증거
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_timeout/timeout-results.txt — 사례별 assertion PASS/FAIL 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_timeout/timeout.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_victory/expected.bin — 저장 복원 전후 전체 상태의 엄격한 비교 기준
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_victory/read-results.txt — 사례별 assertion PASS/FAIL 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_victory/read.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_victory/run-result.png — 실제 렌더된 결과창 스크린샷 증거
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_victory/write-results.txt — 사례별 assertion PASS/FAIL 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_victory/write.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r1_victory/write-results.txt — 사례별 assertion PASS/FAIL 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r1_victory/write.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_failure/expected.bin — 저장 복원 전후 전체 상태의 엄격한 비교 기준
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_failure/failure-results.txt — 사례별 assertion PASS/FAIL 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_failure/failure.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_failure/failureread-results.txt — 사례별 assertion PASS/FAIL 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_failure/failureread.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_failure/run-result.png — 실제 렌더된 결과창 스크린샷 증거
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_victory/expected.bin — 저장 복원 전후 전체 상태의 엄격한 비교 기준
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_victory/read-results.txt — 사례별 assertion PASS/FAIL 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_victory/read.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_victory/run-result.png — 실제 렌더된 결과창 스크린샷 증거
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_victory/write-results.txt — 사례별 assertion PASS/FAIL 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_victory/write.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/base-alignment.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/commit-files.txt — 커밋 대상 파일별 변경 설명
+Feature/doc/evidence/boss-run-completion-20261020/content-freeze.json — 콘텐츠 고정 기준과 공유 변경 검출 기록
+Feature/doc/evidence/boss-run-completion-20261020/editor-build-final.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/editor-build-frozen.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/editor-build-qa-fix.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/editor-build-validated.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/editor-build.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/frozen-runtime-launcher.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/boss-run-completion-20261020/primary-integration.json — 원본 병행 작업 보존 통합의 파일 해시·브랜치/HEAD 대조
+Feature/doc/evidence/boss-run-completion-20261020/review.md — 독립 Unreal 코드 검토·수정과 잔여 범위 기록
+Feature/doc/evidence/boss-run-completion-20261020/trait-regression-launcher.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Feature/doc/evidence/trait16-runtime-20261011/Rogue10m_Town_QA_boss_completion_frozen1/effects-results.txt — 사례별 assertion PASS/FAIL 원문
+Feature/doc/evidence/trait16-runtime-20261011/Rogue10m_Town_QA_boss_completion_frozen1/effects.log — 빌드/게임/실행기 원문 증거(초기 실패와 최종 성공 구분)
+Scripts/ValidateRunCompletion.ps1 — 별도 QA 프로필·렌더 게임 6프로세스 실행과 실패/종료 검사
+Source/Rogue10m/Character/Rogue10mCharacter.cpp — 플레이어 사망을 패배로 연결·종료 후 피해 차단
+Source/Rogue10m/Components/Rogue10mCombatTestComponent.cpp — 결과창 표시 중 전투 테스트 패널 열기 차단
+Source/Rogue10m/Components/Rogue10mRunCompletionComponent.cpp — 최초 런 정산·저장·실패 재시도·마을 이동 관리
+Source/Rogue10m/Components/Rogue10mRunCompletionComponent.h — 최초 런 정산·저장·실패 재시도·마을 이동 관리
+Source/Rogue10m/Core/Rogue10mGameMode.cpp — 런 정산 컴포넌트 소유·이벤트 초기화
+Source/Rogue10m/Core/Rogue10mGameMode.h — 런 정산 컴포넌트 소유·이벤트 초기화
+Source/Rogue10m/Core/Rogue10mGameState.cpp — 권한 검사·최초 종료 유지·완료 런 재시작 차단
+Source/Rogue10m/Core/Rogue10mPlayerController.cpp — 결과 UI 표시·다른 패널 닫기·입력 포커스와 전투 차단
+Source/Rogue10m/Core/Rogue10mPlayerController.h — 결과 UI 표시·다른 패널 닫기·입력 포커스와 전투 차단
+Source/Rogue10m/Enemy/Rogue10mBasicMonster.cpp — 기존 1회 보상 이후 최종 보스 승리 통지·종료 후 피해 차단
+Source/Rogue10m/Tests/Rogue10mRunCompletionRuntimeTest.cpp — 실제 보스 공격·귀환·저장 복원과 실패 경계 QA
+Source/Rogue10m/Tests/Rogue10mTraitEffectsRuntimeTest.cpp — 종료 후 재시작 금지 계약과 기존 특성 효과 회귀 검증
+Source/Rogue10m/UI/Widgets/Rogue10mRunResultWidget.cpp — 성공/실패·보상·저장 상태와 귀환 입력을 표시하는 네이티브 UI
+Source/Rogue10m/UI/Widgets/Rogue10mRunResultWidget.h — 성공/실패·보상·저장 상태와 귀환 입력을 표시하는 네이티브 UI

@@ -21,6 +21,7 @@ class URogue10mTraitWidget;
 class URogue10mSkillBindingComponent;
 class URogue10mCombatTestComponent;
 class URogue10mRunHUD;
+class URogue10mRunResultWidget;
 class URogue10mItemDataAsset;
 class UTexture2D;
 class UUserWidget;
@@ -85,6 +86,13 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|UI")
 	void CloseAllBlockingPanels();
+
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Run")
+	void ShowRunResult();
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Run")
+	bool IsRunResultVisible() const { return bRunResultVisible; }
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Run")
+	URogue10mRunResultWidget* GetRunResultWidget() const { return RunResultWidget; }
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Traits")
 	bool OpenTraitWindow(ARogue10mTutorialNPC* ServiceNPC);
@@ -230,6 +238,9 @@ protected:
 	UPROPERTY()
 	TObjectPtr<URogue10mRunHUD> RunHUD;
 
+	UPROPERTY(Transient)
+	TObjectPtr<URogue10mRunResultWidget> RunResultWidget;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Character Lobby")
 	TSubclassOf<URogue10mCharacterLobbyWidget> CharacterLobbyWidgetClass;
 
@@ -328,6 +339,7 @@ private:
 	bool bSkillTreeVisible = false;
 	bool bSettingsVisible = false;
 	bool bTraitWindowVisible = false;
+	bool bRunResultVisible = false;
 	bool bTraitAddedMoveIgnore = false;
 	bool bTraitAddedLookIgnore = false;
 	TWeakObjectPtr<ARogue10mTutorialNPC> TraitServiceNPC;

@@ -1,0 +1,399 @@
+{
+  "base": "05f74f1",
+  "primaryBranch": "Sprint#5-38-hybrid-skill-tree-runtime",
+  "primaryHeadBefore": "05f74f1bfca73fe1db831975c711370db64fd7df",
+  "files": [
+    {
+      "path": "DevLog/20261020.txt",
+      "operation": "append preserving other work",
+      "previousSha256": "c8d00f6525f2a6534f9e23934f3e03e069a12302526b89ff4196274af3b6c0fc",
+      "resultSha256": "3fefa21aa3413b4f26cec4e93ff6938be35be56032e78b40b9b9584efd3b3a51"
+    },
+    {
+      "path": "Docs/RunCompletionGuide.md",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "e0a9183698e245196df20862321573e493a114f38bb7648c8da5e2ebd60a7591"
+    },
+    {
+      "path": "Docs/SprintChangeLog.md",
+      "operation": "append preserving other work",
+      "previousSha256": "77e4524d501a6aed1ef4d10b1327472a07de90014beee2e0ea123879bf20508b",
+      "resultSha256": "d93416d92ee0abbd921e4fa82a0c8e1c2f134ea81057b1597f4c650e189db256"
+    },
+    {
+      "path": "Docs/WorldStructure.md",
+      "operation": "three-way merge preserving other work",
+      "previousSha256": "0569965421ceb8d7dd191a8cc132720efe63d3e62302ce3fe101afca035921ca",
+      "resultSha256": "22428897ad346d26e2b3f1a35c473d374a70d025fa813a507890d6887b7c634c"
+    },
+    {
+      "path": "Feature/architect/2026-10-20_boss-run-completion.md",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "ff8904856cdb004489854899cb86f60df121a86d40181fd8344e9c4cf3bd0ee8"
+    },
+    {
+      "path": "Feature/doc/2026-10-20_boss-run-completion.md",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "822f7fa67663c142f1677a1ff28244da11f6127e770d821112aac76e0793b046"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_death/death-results.txt",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "379f5f1f88ff50b9f791022b4da606c271f504bdeabfbd786992c4fb8d72ba33"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_death/death.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "c6262e27f2c5f2b64d8b0320c246d46d22deff1908cf6076f10ae06599c792b6"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_death/run-result.png",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "0798d5fd0b45a523184fb10f40d0c6460c5a3f06b1a09a21dab978970a4cc6cb"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_failure/expected.bin",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "16d05adc5a0a1b0512d4b7dd6a9847fd7be303f32279f5cd0ca4762707fd1d13"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_failure/failure-results.txt",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "5206d9b9d03ceceb2487ea6e4e0768cfd1f5c50518d2fd82c845b08c5b693dff"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_failure/failure.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "f0f344f2fab25557b10460ad617efcdcda6f000fe68d649f7eda72efd9aa6bf1"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_failure/failureread-results.txt",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "8247ea1a6de7b329ff8cc4a09a876b310d398fe5a9b501d54b78669670f14f62"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_failure/failureread.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "1236e8c31ba4e2086e0dee84f0ed2381be923830ad19e022ba09cce4c3b15813"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_failure/run-result.png",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "79970a8a80e616099ec911a3931b051f7a0eacce321405f8298e8544d5f997f0"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_timeout/run-result.png",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "63b2f026cf30da37dda06c6642a2d3faa7d2dc1ffb2b773100f7af38f432e745"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_timeout/timeout-results.txt",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "536eefd835520a93582321110e55fa011f7d71158c90da9c1717ca274c9ba4bf"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_timeout/timeout.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "0d48a3ad03cef563b76cca879bcfe19a971edef2607e389c20f632a7bd459242"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_victory/expected.bin",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "e08d390ceec1aa940ef255031162915f56167266f596422c7f6498f2adae4e8d"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_victory/read-results.txt",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "35e444491ed8392e20eb60c9b0736d6a7a6c9bfe7b73829a280a11783d25575d"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_victory/read.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "49eec070d6381566c48dea73721dcca4b6fb6a1da80f84d3af8f48d37a86fd8a"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_victory/run-result.png",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "e12d76bcb7234a9fced8ab91e36007e4e513dc342f7d87a809e96d79c03cad03"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_victory/write-results.txt",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "5ee0ece969fa87b7876510798e31791d74e29c10e8e2e2970365011febccd8ab"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_victory/write.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "bb6cb81caa994c48e7793e0d2738e36192d693fc69328fd3170c58851400c279"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r1_victory/write-results.txt",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "b2be99ff9b8eb06710dfa34ac7f754a4d8bbed08fc56b8731c2f8d89896c8e49"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r1_victory/write.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "487ae6bbe6e375675456b1fb06ac8468d81f746e5dae3d01eb0359cc89175688"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_failure/expected.bin",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "d3686737ee982ee3439b070629fdebf9a0f8f314186d0ba15d5f0da11e8a8c5a"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_failure/failure-results.txt",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "7d572f136d19c5ef8e49426b14cff8fa034c2f22aa317d159da9bc2a0c15f97f"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_failure/failure.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "9fe9e24f7d315e4663406ad21f6474b8b6202924ac65b9c1c1a83d2e24411905"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_failure/failureread-results.txt",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "2e8aa23b8fea00ac71365eed823d1de17b3e928d8a65b38e7e38005986a53b94"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_failure/failureread.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "53468803a2b07340ce74d3f4d87eaaf1e67c6570d5d4ac9a8bf51a4bf2de1d03"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_failure/run-result.png",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "1634746bdfa931d2d4874e69c19803b403d73c8671a3230a5a8932ebd05aaa9d"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_victory/expected.bin",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "8140ad8d9cb1a2505821c72fbe7f98b174b9d98b914b83498814604202038d2a"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_victory/read-results.txt",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "593efc028b41d3ae2568a75a018b902d7cd96e148d781df3866b78064dee8740"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_victory/read.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "4c83f577f84dd020359b6502f191c8ccc27fac4455353203112a205171edd37a"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_victory/run-result.png",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "99791308a0af809679c7aab314d1a809e88b38125c2ba1b7f7a30fbd436be2a1"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_victory/write-results.txt",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "0173ec9161d830a82e5f01c750d728ca85eb23dc2e7790fe5b2bce292ac0a268"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_r2_victory/write.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "c941ba3ae4a79684819758ec75d9ff65915996e3c3dff9ff1212638f107e197f"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/base-alignment.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "2dd04a11dace127f704e66ee30d7b0fb467b40e3d0bc15c6666e21b29e0dacb5"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/content-freeze.json",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "e940680ff91936c21777ccd72e08bf0e14234dfccd293dead1481f05ff526d2c"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/editor-build-final.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "c6d32a084167cc38bef7d713a883bbbf8147186e02a6dc883dca77cd6d63916f"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/editor-build-frozen.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "6a1beb97afd44d2d8a0733fc5841ecd227c7fe85fea32d8a0a3f52e24f79c0bf"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/editor-build-qa-fix.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "74bae60fc63beaf82c02990668a1db3f58846faac42753ce31c0ed3a8bfc104d"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/editor-build-validated.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "62698f298b05e6101e790159917207ef400ad2e4acf060ca9b38553a4701c9d0"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/editor-build.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "6e62d4fc8d7e7e78cfcbf19c152ceea8dbffff5d288ff18ecd65043a18d0472a"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/frozen-runtime-launcher.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "e250bf56c0360eff9b2f0af070087a59517d837c6bd20cf60b1bfc7343b0c1a7"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/review.md",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "34f94b618ec2a58d9d8a4345a4b10552a331e5a65defa1c6caeb51303fc03330"
+    },
+    {
+      "path": "Feature/doc/evidence/boss-run-completion-20261020/trait-regression-launcher.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "af8d0ba3fb81c3ce0a26f3dff02fa3716b47cd755d020317b1e8579131ee702e"
+    },
+    {
+      "path": "Feature/doc/evidence/trait16-runtime-20261011/Rogue10m_Town_QA_boss_completion_frozen1/effects-results.txt",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "41ef9606f0ff8433c332823b3978d2be734cf673213e0ccbd015b76962cac1b4"
+    },
+    {
+      "path": "Feature/doc/evidence/trait16-runtime-20261011/Rogue10m_Town_QA_boss_completion_frozen1/effects.log",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "cb694631fa7982bbbd9c108fb02b2bdcdbff6fbce6b32c07c9dce36cbbe341a6"
+    },
+    {
+      "path": "Scripts/ValidateRunCompletion.ps1",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "39d194f5526f79ed3a60ead7b68fcb76c732d6c630f4a1c15107dfacca6a1b1f"
+    },
+    {
+      "path": "Source/Rogue10m/Character/Rogue10mCharacter.cpp",
+      "operation": "three-way merge preserving other work",
+      "previousSha256": "aa884b611b25d8c7d42053d0f8b9cc80c2b144c16d59662f8e70ae26e913726e",
+      "resultSha256": "d7c9bd118fa27c20c996d9e1b861d8f78e5be60ab408afa063e56122a8fcfdfe"
+    },
+    {
+      "path": "Source/Rogue10m/Components/Rogue10mCombatTestComponent.cpp",
+      "operation": "three-way merge preserving other work",
+      "previousSha256": "f0177b61fd1898903299d3b405a9ddbc5d32b9710b67330af6b918c4ac319135",
+      "resultSha256": "84657f2d32f50548652080ea53d399a09b69182f6b4f846ef8b74909366f21c9"
+    },
+    {
+      "path": "Source/Rogue10m/Components/Rogue10mRunCompletionComponent.cpp",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "1189e8a1f9c41fbd25c2db0eabc45da9a25f63df5c3670ebbb66ea729c1c1eb0"
+    },
+    {
+      "path": "Source/Rogue10m/Components/Rogue10mRunCompletionComponent.h",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "a0465e17fdcd2a2341137b8b17dae27cd5cc86ae5a386e6e8ac4d02d548831ef"
+    },
+    {
+      "path": "Source/Rogue10m/Core/Rogue10mGameMode.cpp",
+      "operation": "three-way merge preserving other work",
+      "previousSha256": "b1b70fd0a904f101c4ac48b296042b4c71fdc8d5068e7fc41f72a8c031e15688",
+      "resultSha256": "0cff0d544702c5c680df2ad7acf02623d72e314512bfc5dbcd5b6879c35f1bbf"
+    },
+    {
+      "path": "Source/Rogue10m/Core/Rogue10mGameMode.h",
+      "operation": "three-way merge preserving other work",
+      "previousSha256": "70b62f87240de5de43fd50b6e5cd172ec6c580759f8fdb8cb3dabd54c5598657",
+      "resultSha256": "ae1cd8012fb9b1582b4e589f9ca524cb38becd29a61b201664222efd608d2552"
+    },
+    {
+      "path": "Source/Rogue10m/Core/Rogue10mGameState.cpp",
+      "operation": "three-way merge preserving other work",
+      "previousSha256": "5d9e6b126d39147f4b078ec31628a6fa33fbcff32122c45a03dacd28cef1b298",
+      "resultSha256": "ca584bba8ffb75617e66a29c9469f880ad5467d5b3e3aaf1b9b508dadafd16a6"
+    },
+    {
+      "path": "Source/Rogue10m/Core/Rogue10mPlayerController.cpp",
+      "operation": "three-way merge preserving other work",
+      "previousSha256": "d0ef8cc4fe7372932d0d814dbc62040b6b425226722d007d3f38cd32eaa0adc2",
+      "resultSha256": "646782bb3c2662929f19c61d99ab2af7ddcc7a075f9b73b15715ff9378a224ef"
+    },
+    {
+      "path": "Source/Rogue10m/Core/Rogue10mPlayerController.h",
+      "operation": "three-way merge preserving other work",
+      "previousSha256": "1b2f78b22ca12f71d4a41aced6be7c5d19ac7449d6c030e52fab7702cbd858f7",
+      "resultSha256": "32f05402a8ce2365e6cde6af1350fe8de3f59ae9669a929a192f65763d8b84f2"
+    },
+    {
+      "path": "Source/Rogue10m/Enemy/Rogue10mBasicMonster.cpp",
+      "operation": "three-way merge preserving other work",
+      "previousSha256": "e6f03ed231b8f4095c9c4d666c6eee40c8ac1d5041cea84828e767fa76904022",
+      "resultSha256": "cf973afb7df7db1702d40a130aa946317726b808aefc8e5ae8dabc108f99f9ec"
+    },
+    {
+      "path": "Source/Rogue10m/Tests/Rogue10mRunCompletionRuntimeTest.cpp",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "190b56ba6ad9aa14e6f3e0f15901ef6ec0eb779a922b1675f34c89f3f2f63d39"
+    },
+    {
+      "path": "Source/Rogue10m/Tests/Rogue10mTraitEffectsRuntimeTest.cpp",
+      "operation": "three-way merge preserving other work",
+      "previousSha256": "6176bf365bd6816d9fedf4e9bd407fa16c9cb17af0ce69895875e7a77966ed0b",
+      "resultSha256": "e5ba2b6a0b4cd4c4155eccdce19ba1931c5b4a9bc9c6ae27881eeb1dbfac6af0"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mRunResultWidget.cpp",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "69d80f48943f46bb7072b21938b6bfe9590b5ad2273996e3359c23526789851a"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mRunResultWidget.h",
+      "operation": "create",
+      "previousSha256": null,
+      "resultSha256": "bb29a04d1b6acd5dc130c60149f2ac3cdaa8713f17735ffe4f2225dbaed35b30"
+    }
+  ],
+  "primaryBranchAfter": "Sprint#5-38-hybrid-skill-tree-runtime",
+  "primaryHeadAfter": "05f74f1bfca73fe1db831975c711370db64fd7df"
+}

@@ -25,6 +25,8 @@
 #include "Rogue10mPlayerFeedbackComponent.h"
 #include "Rogue10mPlayerState.h"
 #include "Rogue10mProgressionSubsystem.h"
+#include "Rogue10mGameState.h"
+#include "Engine/World.h"
 #include "Rogue10mTownProgressionComponent.h"
 #include "Rogue10mTraitRuntimeComponent.h"
 #include "Engine/GameInstance.h"
@@ -161,6 +163,8 @@ float ARogue10mCharacter::TakeDamage(
 	AController* EventInstigator, AActor* DamageCauser)
 {
 	if (!HasAuthority() || !FMath::IsFinite(DamageAmount)) { return 0.0f; }
+	const ARogue10mGameState* Run = GetWorld() ? GetWorld()->GetGameState<ARogue10mGameState>() : nullptr;
+	if (Run && (Run->GetRunPhase() == ERogue10mRunPhase::Victory || Run->GetRunPhase() == ERogue10mRunPhase::Defeat)) { return 0.0f; }
 	URogue10mAttributeSet* Attributes = GetRogueAttributeSet();
 	const float DefenseMitigatedDamage = Attributes && DamageAmount > 0.0f
 		? FMath::Max(1.0f, DamageAmount - Attributes->GetDefense())
@@ -589,6 +593,10 @@ void ARogue10mCharacter::Die()
 	GetCharacterMovement()->DisableMovement();
 	BP_OnRunDeath();
 	UE_LOG(LogRogue10m, Log, TEXT("%s 사망"), *GetNameSafe(this));
+	if (ARogue10mGameState* Run = GetWorld() ? GetWorld()->GetGameState<ARogue10mGameState>() : nullptr)
+	{
+		Run->FinishRun(false);
+	}
 }
 
 bool ARogue10mCharacter::IsDead() const

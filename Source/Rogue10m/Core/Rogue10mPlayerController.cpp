@@ -38,6 +38,7 @@
 #include "Widgets/Rogue10mMainMenuWidget.h"
 #include "Widgets/Rogue10mMenuWindowWidgets.h"
 #include "Widgets/Rogue10mTraitWidget.h"
+#include "Widgets/Rogue10mRunResultWidget.h"
 #include "Widgets/Input/SVirtualJoystick.h"
 #include "UObject/ConstructorHelpers.h"
 
@@ -230,6 +231,7 @@ void ARogue10mPlayerController::ToggleInspectionCamera()
 
 void ARogue10mPlayerController::ToggleInventory()
 {
+	if (bRunResultVisible) { return; }
 	if (!InventoryWindowWidget)
 	{
 		UE_LOG(LogRogue10m, Warning, TEXT("InventoryWindowWidgetClass가 설정되지 않았습니다."));
@@ -240,6 +242,7 @@ void ARogue10mPlayerController::ToggleInventory()
 
 void ARogue10mPlayerController::ToggleItemWindow()
 {
+	if (bRunResultVisible) { return; }
 	if (!EquipmentWindowWidget)
 	{
 		UE_LOG(LogRogue10m, Warning, TEXT("EquipmentWindowWidgetClass가 설정되지 않았습니다."));
@@ -250,6 +253,7 @@ void ARogue10mPlayerController::ToggleItemWindow()
 
 void ARogue10mPlayerController::ToggleSkillTree()
 {
+	if (bRunResultVisible) { return; }
 	if (!SkillTreeWindowWidget)
 	{
 		UE_LOG(LogRogue10m, Warning, TEXT("SkillTreeWindowWidgetClass가 설정되지 않았습니다."));
@@ -260,6 +264,7 @@ void ARogue10mPlayerController::ToggleSkillTree()
 
 void ARogue10mPlayerController::ToggleSettings()
 {
+	if (bRunResultVisible) { return; }
 	if (bTraitWindowVisible) { CloseTraitWindow(); return; }
 	if (CombatTestComponent && CombatTestComponent->IsPanelOpen()) { CombatTestComponent->SetPanelOpen(false); return; }
 	SetPanelVisible(bSettingsVisible, !bSettingsVisible, nullptr);
@@ -275,6 +280,38 @@ void ARogue10mPlayerController::CloseAllBlockingPanels()
 	bSettingsVisible = false;
 	ApplyMenuWindowVisibility();
 	RefreshInputMode();
+}
+
+void ARogue10mPlayerController::ShowRunResult()
+{
+	if (!IsLocalPlayerController() || IsMenuWorld()) { return; }
+	CloseAllBlockingPanels();
+	if (!RunResultWidget)
+	{
+		RunResultWidget = CreateWidget<URogue10mRunResultWidget>(this, URogue10mRunResultWidget::StaticClass());
+	}
+	if (!RunResultWidget)
+	{
+		UE_LOG(LogRogue10m, Error, TEXT("탐험 결과 위젯을 생성하지 못했습니다."));
+		return;
+	}
+	bRunResultVisible = true;
+	if (!RunResultWidget->IsInViewport()) { RunResultWidget->AddToPlayerScreen(300); }
+	RunResultWidget->SetVisibility(ESlateVisibility::Visible);
+	RunResultWidget->RefreshResult();
+	if (RunHUD) { RunHUD->SetVisibility(ESlateVisibility::Collapsed); }
+	if (MobileControlsWidget) { MobileControlsWidget->SetVisibility(ESlateVisibility::Collapsed); }
+	if (CombatTestComponent && CombatTestComponent->GetWidget())
+	{
+		CombatTestComponent->GetWidget()->SetVisibility(ESlateVisibility::Collapsed);
+	}
+	if (ARogue10mCharacter* ResultCharacter = Cast<ARogue10mCharacter>(GetPawn()))
+	{
+		ResultCharacter->GetCharacterMovement()->StopMovementImmediately();
+		if (URogue10mCombatComponent* Combat = ResultCharacter->GetCombatComponent()) { Combat->CancelCombatVisuals(); }
+	}
+	RefreshInputMode();
+	RunResultWidget->SetUserFocus(this);
 }
 
 bool ARogue10mPlayerController::OpenTraitWindow(ARogue10mTutorialNPC* ServiceNPC)
@@ -465,7 +502,7 @@ void ARogue10mPlayerController::OpenCharacterLobbyFromMainMenu()
 bool ARogue10mPlayerController::IsAnyBlockingWindowVisible() const
 {
 	return bMainMenuVisible || bCharacterLobbyVisible || bInventoryVisible
-		|| bItemWindowVisible || bSkillTreeVisible || bSettingsVisible || bTraitWindowVisible
+		|| bItemWindowVisible || bSkillTreeVisible || bSettingsVisible || bTraitWindowVisible || bRunResultVisible
 		|| (CombatTestComponent && CombatTestComponent->IsPanelOpen());
 }
 
@@ -977,6 +1014,17 @@ void ARogue10mPlayerController::InitializeMainMenu()
 void ARogue10mPlayerController::RefreshInputMode()
 {
 	if (IsAnyBlockingWindowVisible() && SkillBindingComponent) { SkillBindingComponent->CancelHeldInput(); }
+	if (bRunResultVisible && RunResultWidget)
+	{
+		bShowMouseCursor = true;
+		bEnableClickEvents = true;
+		bEnableMouseOverEvents = true;
+		FInputModeUIOnly InputMode;
+		InputMode.SetWidgetToFocus(RunResultWidget->TakeWidget());
+		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+		SetInputMode(InputMode);
+		return;
+	}
 	if (bTraitWindowVisible && TraitWidget)
 	{
 		bShowMouseCursor = true;

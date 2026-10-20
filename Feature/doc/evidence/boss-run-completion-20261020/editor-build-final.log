@@ -1,0 +1,48 @@
+Build.bat is already running, waiting for existing script to terminate...
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\tmp\boss-run-completion-worktree\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m\tmp\boss-run-completion-worktree).
+Invalidating makefile for Rogue10mEditor (source file added)
+Waiting for 'git status' command to complete
+Terminating git child process due to timeout
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mFighterCombatStanceAnimInstance.cpp, Rogue10mStylizedCharacter.cpp, Rogue10mViewAlignedUpperBodyProxy.cpp, Rogue10mAppearanceCameraComponent.cpp, Rogue10mCharacterAnimationComponent.cpp, Rogue10mCombatComponent.cpp, Rogue10mCombatTestComponent.cpp, Rogue10mFirstPersonPresentationComponent.cpp, Rogue10mInventoryComponent.cpp, Rogue10mInventoryPersistence.cpp, Rogue10mRunCompletionComponent.cpp, Rogue10mSkillBindingComponent.cpp, Rogue10mTownProgressionComponent.cpp, Rogue10mTraitRuntimeComponent.cpp, Rogue10mVitalRegenerationComponent.cpp, Rogue10mCharacterProfileSubsystem.cpp, Rogue10mGameMode.cpp, Rogue10mGameState.cpp, Rogue10mPlayerController.cpp, Rogue10mPlayerState.cpp, Rogue10mProgressionSubsystem.cpp, Rogue10mMonsterDataAsset.cpp, Rogue10mTownServiceDataAsset.cpp, Rogue10mTraitCatalogDataAsset.cpp, Rogue10mFistCombatAuthoring.cpp, Rogue10mGroundLocomotionAuthoring.cpp, Rogue10mMovingAttackAuthoring.cpp, Rogue10mOpenWorldAuthoring.cpp, Rogue10mSafeHeadMontageAuthoring.cpp, Rogue10mWalkPalmAuthoring.cpp, Rogue10mBasicMonster.cpp, Rogue10mMonsterAttackPatternComponent.cpp, Rogue10mMonsterAIController.cpp, Rogue10mAppearanceCameraRuntimeTest.cpp, Rogue10mCameraForwardRuntimeTest.cpp, Rogue10mCombatTestUIRuntimeTest.cpp, Rogue10mFighterCombatStanceRuntimeTest.cpp, Rogue10mFighterSkillTreeRuntimeTest.cpp, Rogue10mFistCombatRuntimeTest.cpp, Rogue10mInitialHeadFramingRuntimeTest.cpp, Rogue10mMonsterChaseEffectsRuntimeTest.cpp, Rogue10mMouseHeadStableRuntimeTest.cpp, Rogue10mMovingAttackRuntimeTest.cpp, Rogue10mProgressionFailureRuntimeTest.cpp, Rogue10mResponsiveHUDRuntimeTest.cpp, Rogue10mRunCompletionRuntimeTest.cpp, Rogue10mSplitHUDRuntimeTest.cpp, Rogue10mStoneFistAnimationRuntimeTest.cpp, Rogue10mThirdPersonInspectionRuntimeTest.cpp, Rogue10mTownRunRuntimeTest.cpp, Rogue10mTownServicesRuntimeTest.cpp, Rogue10mTownVisualRuntimeTest.cpp, Rogue10mTraitEffectsRuntimeTest.cpp, Rogue10mTraitPersistenceRuntimeTest.cpp, Rogue10mTraitUIRuntimeTest.cpp, Rogue10mViewAlignedUpperBodyTest.cpp, Rogue10mWalkPalmRuntimeTest.cpp, Rogue10mWeaponSkillTreeRuntimeTest.cpp, Rogue10mBottomHUDWidget.cpp, Rogue10mCombatTestWidget.cpp, Rogue10mHudWidgetParts.cpp, Rogue10mMainHUDWidget.cpp, Rogue10mMenuWindowWidgets.cpp, Rogue10mRunResultWidget.cpp, Rogue10mTraitWidget.cpp, Rogue10mTutorialWidget.cpp, Rogue10mDroppedItem.cpp, Rogue10mMonsterSpawner.cpp, Rogue10mOpenWorldBootstrap.cpp, Rogue10mRunPortal.cpp, Rogue10mTutorialAnimationComponent.cpp, Rogue10mTutorialNPC.cpp, Rogue10mTutorialRewardComponent.cpp, Rogue10mTutorialSupplySubsystem.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+Using Unreal Build Accelerator local executor to run 6 action(s)
+UbaServer - Listening on 0.0.0.0:1345
+  CPU 8 physical cores, 16 logical cores
+  Memory 31.91 GB physical, 28.8 GB/79.91 GB committed
+  UBA Storage capacity 40 GB
+[1/6] Compile [x64] Rogue10mRunResultWidget.cpp
+[2/6] Compile [x64] Rogue10mRunCompletionRuntimeTest.cpp
+D:\Project\Rogue10m\tmp\boss-run-completion-worktree\Source\Rogue10m\Tests\Rogue10mRunCompletionRuntimeTest.cpp(312,14): error C2248: 'ARogue10mCharacter::DoPrimaryAttackPressed': protected 멤버('ARogue10mCharacter' 클래스에서 선언)에 액세스할 수 없습니다.
+		Character->DoPrimaryAttackPressed(); Character->DoPrimaryAttackReleased();
+		           ^
+D:\Project\Rogue10m\tmp\boss-run-completion-worktree\Source\Rogue10m\Character\Rogue10mCharacter.h(138,15): note: 'ARogue10mCharacter::DoPrimaryAttackPressed' 선언을 참조하십시오.
+	virtual void DoPrimaryAttackPressed();
+	             ^
+D:\Project\Rogue10m\tmp\boss-run-completion-worktree\Source\Rogue10m\Character\Rogue10mCharacter.h(32,20): note: 'ARogue10mCharacter' 선언을 참조하십시오.
+class ROGUE10M_API ARogue10mCharacter : public ACharacter, public IAbilitySystemInterface
+                   ^
+D:\Project\Rogue10m\tmp\boss-run-completion-worktree\Source\Rogue10m\Tests\Rogue10mRunCompletionRuntimeTest.cpp(312,51): error C2248: 'ARogue10mCharacter::DoPrimaryAttackReleased': protected 멤버('ARogue10mCharacter' 클래스에서 선언)에 액세스할 수 없습니다.
+		Character->DoPrimaryAttackPressed(); Character->DoPrimaryAttackReleased();
+		                                                ^
+D:\Project\Rogue10m\tmp\boss-run-completion-worktree\Source\Rogue10m\Character\Rogue10mCharacter.h(141,15): note: 'ARogue10mCharacter::DoPrimaryAttackReleased' 선언을 참조하십시오.
+	virtual void DoPrimaryAttackReleased();
+	             ^
+D:\Project\Rogue10m\tmp\boss-run-completion-worktree\Source\Rogue10m\Character\Rogue10mCharacter.h(32,20): note: 'ARogue10mCharacter' 선언을 참조하십시오.
+class ROGUE10M_API ARogue10mCharacter : public ACharacter, public IAbilitySystemInterface
+                   ^
+[3/6] Compile [x64] Rogue10mPlayerController.cpp
+Total time in Unreal Build Accelerator local executor: 10.30 seconds
+
+Result: Failed (OtherCompilationError)
+Total execution time: 60.92 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 10.6kb

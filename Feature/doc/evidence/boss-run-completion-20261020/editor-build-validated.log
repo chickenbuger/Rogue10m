@@ -1,0 +1,54 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\tmp\boss-run-completion-worktree\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m\tmp\boss-run-completion-worktree).
+Invalidating makefile for Rogue10mEditor (UHT files changed)
+UHT compiled-in object format Default
+Waiting for 'git status' command to complete
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mCombatTestComponent.cpp, Rogue10mRunCompletionComponent.cpp, Rogue10mGameMode.cpp, Rogue10mGameState.cpp, Rogue10mPlayerController.cpp, Rogue10mBasicMonster.cpp, Rogue10mRunCompletionRuntimeTest.cpp, Rogue10mSplitHUDRuntimeTest.cpp, Rogue10mTraitEffectsRuntimeTest.cpp, Rogue10mBottomHUDWidget.cpp, Rogue10mHudWidgetParts.cpp, Rogue10mMainHUDWidget.cpp, Rogue10mRunResultWidget.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+Using XGE executor to run 10 action(s)
+Distributing 10 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {4A4DAF16-4E35-4630-A5EE-3581F6F2E065}
+ 
+--------------------Project: Default-------------------------------------------
+[1/10] Compile [x64] Rogue10mRunCompletionRuntimeTest.cpp (0:11.25 at +0:00)
+[2/10] Compile [x64] Module.Rogue10m.5.cpp (0:18.90 at +0:00)
+[3/10] Compile [x64] Module.Rogue10m.1.cpp (0:22.00 at +0:00)
+[4/10] Compile [x64] Module.Rogue10m.6.cpp (0:23.31 at +0:00)
+[5/10] Compile [x64] Module.Rogue10m.2.cpp (0:23.87 at +0:00)
+[6/10] Compile [x64] Module.Rogue10m.4.cpp (0:29.29 at +0:00)
+[7/10] Compile [x64] Module.Rogue10m.3.cpp (0:36.21 at +0:00)
+[8/10] Link [x64] UnrealEditor-Rogue10m.lib (0:00.28 at +0:36)
+   D:/Project/Rogue10m/tmp/boss-run-completion-worktree/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.lib ���̺귯�� �� D:/Project/Rogue10m/tmp/boss-run-completion-worktree/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.exp ��ü�� �����ϰ� �ֽ��ϴ�.
+[9/10] Link [x64] UnrealEditor-Rogue10m.dll (0:01.67 at +0:36)
+[10/10] WriteMetadata Rogue10mEditor.target (0:00.71 at +0:38)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 1 succeeded, 0 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 41.86 seconds
+Output binary: D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe
+
+Result: Succeeded
+Total execution time: 50.76 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 4.3kb
