@@ -2330,3 +2330,6 @@
 - 보존: 기존87개, 제작/glob/basename/CSV 입력, 고유 대형 출력·Fab/Content·현재 게임 소스. 수동 크기필터 오류는 삭제 전 수정·보고 재검증. 별도 보스 저장 작업의 Source3개·문서·공유 로그는 이번 커밋에서 제외하고 보존한다.
 - 상태: 남은 감사·정리·검증·복구·리뷰 완료. 별도 인덱스의 명시 범위 검사 후 커밋·develop→test→main·공개 원격 반영 진행.
 - 관련: [계획](../Feature/architect/2026-10-20_finish-unused-work-audit.md), [결과](../Feature/doc/2026-10-20_finish-unused-work-audit.md), [최종 감사](../Feature/doc/evidence/finish-unused-work-audit-20261020/tmp-audit-final.json), [복구](../Feature/doc/evidence/finish-unused-work-audit-20261020/RESTORE.md).
+
+
+- Sprint#7-1 완료: 기능 커밋 `007c0902b661f69edb64602f70311dc55f34e041`, 별도 인덱스29개·구문/JSON/링크/범위/필수경로/공백 PASS. 원격·조상·worktree 확인 후 develop→test→main fast-forward와 일반 atomic push, 작업/통합4개 원격 SHA 일치. 병행 보스 소스/문서/로그 보존·게시 제외. [로컬 통합](../Feature/doc/evidence/finish-unused-work-audit-20261020/local-integration.json), [원격 대조](../Feature/doc/evidence/finish-unused-work-audit-20261020/public-push-result.json). 완료 기록도 같은 방식으로 반영한다.

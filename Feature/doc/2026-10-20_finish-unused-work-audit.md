@@ -1,7 +1,7 @@
 # 남은 tmp 중복 감사와 후속 정리
 
 작성: 2026-10-20 / `Sprint#7-1-finish-unused-work-audit`
-상태: 남은 감사·후보 검토·확정4개 정리·복구 검증 완료. 최종 통합 준비.
+상태: 남은 감사·후보 검토·확정4개 정리·복구·독립 검토·커밋·main·공개 원격 반영 완료.
 
 ## 해결할 미완료 항목
 
@@ -18,7 +18,7 @@
 
 독립 수동 감사에서 tmp34개 경로의 직하·1단계 출력51개, 1,912,473,722바이트를 비교했다. 최초 크기 필터가 배열 길이를 파일 크기로 사용한 오류를 확인해 그 결론을 무효화하고 개별 파일 크기로 재검사했다. 실제 동일 보존 쌍은2개이며 둘 다 패키징 입력이라 유지했다. 고유 ZIP/영상5개도 보존했다. 삭제 전 오류를 바로잡았고 [수정된 제한 조사](evidence/finish-unused-work-audit-20261020/manual-candidates.json)에 정확한51개 경로와 경위를 기록했다.
 
-도구의 최종12개 회귀 검사가 통과했다. 보호 폴더 미진입, backup/baseline/checkpoint·UTF16·nested project 저작 참조 보존, 입력 무변경, suffix 선별, 경로/reparse 거부, 동시 생성된 evidence 덮어쓰기 거부, 신규 timestamp 출력 경로를 확인했다. Reviewer는 초기11개를 별도 실행했고 checkpoint 보강도 검토한다. [최종 회귀 로그](evidence/finish-unused-work-audit-20261020/fixture-final.log).
+도구의 최종12개 회귀 검사가 통과했다. 보호 폴더 미진입, backup/baseline/checkpoint·UTF16·nested project 저작 참조 보존, 입력 무변경, suffix 선별, 경로/reparse 거부, 동시 생성된 evidence 덮어쓰기 거부, 신규 timestamp 출력 경로를 확인했다. Reviewer는 초기11개를 별도 실행했고 checkpoint 보강도 검토했다. [최종 회귀 로그](evidence/finish-unused-work-audit-20261020/fixture-final.log).
 
 최종 실제 감사는79.828초에 종료 코드0·issues0으로 완료했다. 후보 탐색2,659파일, 크기 일치 해시1,060파일, 참조2,578파일, 단계별 보호 제외77경로, 중첩 프로젝트6개를 확인했다. 제외한 폴더의 하위 파일 수를 추정하지 않았다. 원래471개 후보는 모두 두 독립 검토의 합집합으로 검토됐고,242개 복구 checkpoint를 탐색 입구 보호로 보강한 뒤 남은229개 중225개와 참조가 있는15개는 유지했다. [최종 감사](evidence/finish-unused-work-audit-20261020/tmp-audit-final.json), [최종 판정](evidence/finish-unused-work-audit-20261020/candidate-review-final.json).
 
@@ -31,3 +31,9 @@
 현재 게임 C++/설정/Unreal 자산을 이번 기능에서 수정하지 않아 전체 Editor 빌드를 반복하지 않았다. 같은 작업 폴더의 별도 보스 저장 통합 변경은 보존하며 이번 커밋에서 제외한다. 추가 삭제량은 작고 핵심 결과는 중단됐던 감사의 완료와 이후 감사의 탐색·기록 보호다. 앞선294.12MiB 정리는 유지되며 새 검증 기록의 디스크 사용량은 삭제량에 포함하지 않는다.
 
 관련: [계획](../architect/2026-10-20_finish-unused-work-audit.md), [이전 정리](2026-10-20_unused-file-optimization.md), [Sprint](../../Docs/SprintChangeLog.md).
+
+## 최종 통합
+
+[변경29개](evidence/finish-unused-work-audit-20261020/commit-files.txt)를 별도 Git 인덱스에 고정했다. Python4개 구문·JSON13개·문서 링크10개·명시 staging 범위·필수 생성 경로·공백 검사를 통과했다. 공유 DevLog/Sprint에는 이 기능의 항목만 합성했고 작업 파일에는 기존·병행 항목을 유지하며 추가했다. staged Source/Config/Content 변경0이다. [검사](evidence/finish-unused-work-audit-20261020/final-checks.json).
+
+기능 커밋 `007c0902b661f69edb64602f70311dc55f34e041` 생성 후 fetch·원격/조상·worktree 점유를 확인하고 develop→test→main을 CAS fast-forward로 승격했다. 공개 원격에 일반 atomic push를 완료하고4개 branch SHA 일치를 직접 대조했다. [로컬 통합](evidence/finish-unused-work-audit-20261020/local-integration.json), [원격 검증](evidence/finish-unused-work-audit-20261020/public-push-result.json). 이 완료 기록도 동일한 별도 인덱스 방식으로 문서 커밋·반영한다. 별도 진행 중인 보스 저장 통합의 소스·자료·기록은 이번 게시에 포함하지 않았다.
