@@ -29,6 +29,13 @@ void URogue10mRunCompletionComponent::Initialize(ARogue10mGameState& State)
 	State.OnRunPhaseChanged.AddUniqueDynamic(this, &ThisClass::HandleRunPhaseChanged);
 }
 
+void URogue10mRunCompletionComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	if (UWorld* World = GetWorld()) { World->GetTimerManager().ClearTimer(FinalizeTimerHandle); }
+	bSettlementPending = false;
+	Super::EndPlay(EndPlayReason);
+}
+
 void URogue10mRunCompletionComponent::NotifyFinalBossDefeated(
 	ARogue10mBasicMonster& Boss, AController* RewardController, int32 Experience, int32 Gold)
 {
@@ -67,13 +74,36 @@ void URogue10mRunCompletionComponent::HandleRunPhaseChanged(ERogue10mRunPhase Ph
 	}
 	if (ARogue10mPlayerController* Controller = ResultController.Get())
 	{
-		if (ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(Controller->GetPawn()))
+		ResultCharacter = Cast<ARogue10mCharacter>(Controller->GetPawn());
+		if (ARogue10mCharacter* Character = ResultCharacter.Get())
 		{
 			Character->GetCharacterMovement()->StopMovementImmediately();
-			if (URogue10mCombatComponent* Combat = Character->GetCombatComponent()) { Combat->CancelCombatVisuals(); }
+			if (UGameInstance* Instance = GetWorld()->GetGameInstance())
+			{
+				if (URogue10mProgressionSubsystem* Progression = Instance->GetSubsystem<URogue10mProgressionSubsystem>();
+					Progression && Progression->IsAttachedTo(*Character))
+				{
+					ResultProfileId = Progression->GetAttachedProfileId();
+				}
+			}
 		}
 	}
+	// Damage may synchronously end the run before the accepted attack awards mastery.
+	// Keep the terminal guard now; persist and present after that attack has unwound.
+	bSettlementPending = true;
+	FinalizeTimerHandle = GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::FinalizeSettlement);
+}
+
+void URogue10mRunCompletionComponent::FinalizeSettlement()
+{
+	if (!bSettlementPending || !bSettled || bTravelStarted || !GetWorld()
+		|| !RunState.IsValid() || RunState->GetWorld() != GetWorld()) { return; }
+	if (ARogue10mCharacter* Character = ResultCharacter.Get(); Character && Character->GetWorld() == GetWorld())
+	{
+		if (URogue10mCombatComponent* Combat = Character->GetCombatComponent()) { Combat->CancelCombatVisuals(); }
+	}
 	SaveSettlement();
+	bSettlementPending = false;
 	RefreshResult();
 	UE_LOG(LogRogue10m, Log, TEXT("Run settled victory=%d boss_xp=%d boss_gold=%d saved=%d"),
 		bVictory, RewardExperience, RewardGold, bProgressionSaved);
@@ -85,7 +115,9 @@ bool URogue10mRunCompletionComponent::SaveSettlement()
 	const ARogue10mCharacter* Character = Controller ? Cast<ARogue10mCharacter>(Controller->GetPawn()) : nullptr;
 	UGameInstance* Instance = GetWorld() ? GetWorld()->GetGameInstance() : nullptr;
 	URogue10mProgressionSubsystem* Progression = Instance ? Instance->GetSubsystem<URogue10mProgressionSubsystem>() : nullptr;
-	bProgressionSaved = Character && Progression && Progression->IsAttachedTo(*Character)
+	bProgressionSaved = Character && Character == ResultCharacter.Get() && Character->GetWorld() == GetWorld()
+		&& ResultProfileId.IsValid() && Progression && Progression->GetAttachedProfileId() == ResultProfileId
+		&& Progression->IsAttachedTo(*Character)
 		&& Progression->CanRetrySave() && Progression->SaveNow();
 	if (bProgressionSaved)
 	{
@@ -109,7 +141,7 @@ void URogue10mRunCompletionComponent::RefreshResult()
 bool URogue10mRunCompletionComponent::ReturnToTown()
 {
 	const ARogue10mGameState* State = RunState.Get();
-	if (!bSettled || bTravelStarted || !State || State->IsRunActive() || !GetOwner()
+	if (!bSettled || bSettlementPending || bTravelStarted || !State || State->IsRunActive() || !GetOwner()
 		|| !GetOwner()->HasAuthority() || !GetWorld() || GetWorld()->GetNetMode() != NM_Standalone)
 	{
 		return false;

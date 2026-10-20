@@ -1,0 +1,57 @@
+{
+  "base": "ddc79e5a8270afb1b40660e969771ed920057816",
+  "green": [
+    {
+      "mode": "write",
+      "checks": 74,
+      "failures": 0,
+      "result": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_victory/write-results.txt"
+    },
+    {
+      "mode": "read",
+      "checks": 16,
+      "failures": 0,
+      "result": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_victory/read-results.txt"
+    },
+    {
+      "mode": "failure",
+      "checks": 76,
+      "failures": 0,
+      "result": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_failure/failure-results.txt"
+    },
+    {
+      "mode": "failureread",
+      "checks": 16,
+      "failures": 0,
+      "result": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_failure/failureread-results.txt"
+    },
+    {
+      "mode": "timeout",
+      "checks": 52,
+      "failures": 0,
+      "result": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_timeout/timeout-results.txt"
+    },
+    {
+      "mode": "death",
+      "checks": 51,
+      "failures": 0,
+      "result": "Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_death/death-results.txt"
+    }
+  ],
+  "renderedChecks": 285,
+  "traitRegressionChecks": 101,
+  "totalChecks": 386,
+  "greenFailures": 0,
+  "redExpectedFailure": {
+    "checks": 49,
+    "failures": 2,
+    "postSaveMilliseconds": 146
+  },
+  "buildSeconds": 180.25,
+  "sourceAndModuleHashesMatchTestedBuild": true,
+  "contentAndConfigChanged": false,
+  "scope": "Rendered D3D11 1280x720; authored portal/boss; prepared 1HP boss; mastery7XP and paid1P active FightingSpirit; timer shortened for timeout",
+  "publicationBase": "b11aefe04105c50fb2ca79bdbae24c760a93da20",
+  "publicationBranch": "Sprint#7-2-boss-integration-validation",
+  "concurrentIntegrationPreserved": "Later audit/document commits contain no Source/Config/Content change"
+}

@@ -3,10 +3,12 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "TimerManager.h"
 #include "UObject/SoftObjectPtr.h"
 #include "Rogue10mRunCompletionComponent.generated.h"
 
 class ARogue10mBasicMonster;
+class ARogue10mCharacter;
 class AController;
 class ARogue10mGameState;
 class ARogue10mPlayerController;
@@ -33,19 +35,26 @@ public:
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Run") FText GetSaveStatus() const { return SaveStatus; }
 
 protected:
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Run")
 	TSoftObjectPtr<UWorld> TownMap;
 
 private:
 	UFUNCTION() void HandleRunPhaseChanged(ERogue10mRunPhase Phase);
+	void FinalizeSettlement();
 	bool SaveSettlement();
 	void RefreshResult();
 	TWeakObjectPtr<ARogue10mGameState> RunState;
 	TWeakObjectPtr<ARogue10mPlayerController> ResultController;
+	TWeakObjectPtr<ARogue10mCharacter> ResultCharacter;
+	FGuid ResultProfileId;
+	FTimerHandle FinalizeTimerHandle;
 	UPROPERTY(Transient) FText SaveStatus;
 	int32 RewardExperience = 0;
 	int32 RewardGold = 0;
 	bool bSettled = false;
+	bool bSettlementPending = false;
 	bool bVictory = false;
 	bool bProgressionSaved = false;
 	bool bTravelStarted = false;

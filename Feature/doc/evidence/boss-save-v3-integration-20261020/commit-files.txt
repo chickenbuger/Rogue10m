@@ -1,0 +1,43 @@
+Sprint#7-2-boss-integration-validation
+렌더285 + 특성회귀101 = 386검사, 실패0
+
+DevLog/20261020.txt — 한국어 일일 기록과 Notion 후보·재현/수정/검증/게시 결과
+Docs/RunCompletionGuide.md — 최종 명중 숙련을 포함한 저장 계약과 v3 QA 안내
+Docs/SprintChangeLog.md — Sprint#7-1 목표·변경·실제 검증과 상태 기록
+Feature/architect/2026-10-20_boss-save-v3-integration.md — V1~V3 패킷·재현/수정·검증·되돌리기 경계 계획
+Feature/doc/2026-10-20_boss-run-completion.md — 후속 v3 통합 저장 보완 결과 링크 추가
+Feature/doc/2026-10-20_boss-save-v3-integration.md — 실제 원인·red/green·검증 한계·통합 결과
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_death/death-results.txt — 각 assertion PASS/FAIL 및 검사 수 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_death/death.log — 실제 빌드·게임·실행기 원문; red 실패와 green 성공 구분
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_death/run-result.png — 실제 렌더된 결과 화면 증거
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_failure/expected.bin — 독립 프로세스 복원 전후의 엄격한 전체 저장 스냅샷 기준
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_failure/failure-results.txt — 각 assertion PASS/FAIL 및 검사 수 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_failure/failure.log — 실제 빌드·게임·실행기 원문; red 실패와 green 성공 구분
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_failure/failureread-results.txt — 각 assertion PASS/FAIL 및 검사 수 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_failure/failureread.log — 실제 빌드·게임·실행기 원문; red 실패와 green 성공 구분
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_failure/run-result.png — 실제 렌더된 결과 화면 증거
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_timeout/run-result.png — 실제 렌더된 결과 화면 증거
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_timeout/timeout-results.txt — 각 assertion PASS/FAIL 및 검사 수 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_timeout/timeout.log — 실제 빌드·게임·실행기 원문; red 실패와 green 성공 구분
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_victory/expected.bin — 독립 프로세스 복원 전후의 엄격한 전체 저장 스냅샷 기준
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_victory/read-results.txt — 각 assertion PASS/FAIL 및 검사 수 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_victory/read.log — 실제 빌드·게임·실행기 원문; red 실패와 green 성공 구분
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_victory/run-result.png — 실제 렌더된 결과 화면 증거
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_victory/write-results.txt — 각 assertion PASS/FAIL 및 검사 수 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3green1_victory/write.log — 실제 빌드·게임·실행기 원문; red 실패와 green 성공 구분
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3red1_victory/write-results.txt — 각 assertion PASS/FAIL 및 검사 수 원문
+Feature/doc/evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_v3red1_victory/write.log — 실제 빌드·게임·실행기 원문; red 실패와 green 성공 구분
+Feature/doc/evidence/boss-save-v3-integration-20261020/commit-files.txt — 커밋 대상 파일별 설명
+Feature/doc/evidence/boss-save-v3-integration-20261020/editor-build-green.log — 실제 빌드·게임·실행기 원문; red 실패와 green 성공 구분
+Feature/doc/evidence/boss-save-v3-integration-20261020/editor-build-red.log — 실제 빌드·게임·실행기 원문; red 실패와 green 성공 구분
+Feature/doc/evidence/boss-save-v3-integration-20261020/review.md — 독립 Unreal 정적 검토와 초기 저장 재현 기록
+Feature/doc/evidence/boss-save-v3-integration-20261020/runtime-green-launcher.log — 실제 빌드·게임·실행기 원문; red 실패와 green 성공 구분
+Feature/doc/evidence/boss-save-v3-integration-20261020/runtime-red-launcher.log — 실제 빌드·게임·실행기 원문; red 실패와 green 성공 구분
+Feature/doc/evidence/boss-save-v3-integration-20261020/trait-regression-launcher.log — 실제 빌드·게임·실행기 원문; red 실패와 green 성공 구분
+Feature/doc/evidence/boss-save-v3-integration-20261020/validation-results.json — 테스트한 코드/모듈/콘텐츠 기준 또는 검증 수치의 기계 판독 증거
+Feature/doc/evidence/boss-save-v3-integration-20261020/validation-scope.json — 테스트한 코드/모듈/콘텐츠 기준 또는 검증 수치의 기계 판독 증거
+Feature/doc/evidence/trait16-runtime-20261011/Rogue10m_Town_QA_boss_v3_green1/effects-results.txt — 각 assertion PASS/FAIL 및 검사 수 원문
+Feature/doc/evidence/trait16-runtime-20261011/Rogue10m_Town_QA_boss_v3_green1/effects.log — 실제 빌드·게임·실행기 원문; red 실패와 green 성공 구분
+Source/Rogue10m/Components/Rogue10mRunCompletionComponent.cpp — 마지막 명중 완료 후 정산 저장·원래 Pawn/프로필·pending 귀환·수명 보호
+Source/Rogue10m/Components/Rogue10mRunCompletionComponent.h — 마지막 명중 완료 후 정산 저장·원래 Pawn/프로필·pending 귀환·수명 보호
+Source/Rogue10m/Tests/Rogue10mRunCompletionRuntimeTest.cpp — 비어 있지 않은 Save v3 원장의 최초 디스크·귀환·새 프로세스 검증

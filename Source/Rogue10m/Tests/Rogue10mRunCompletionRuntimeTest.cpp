@@ -41,8 +41,10 @@
 #include "Rogue10mRunCompletionComponent.h"
 #include "Rogue10mRunPortal.h"
 #include "Rogue10mRunResultWidget.h"
+#include "Rogue10mSkillTreeProgressionComponent.h"
 #include "Rogue10mTownProgressionComponent.h"
 #include "Rogue10mTraitRuntimeComponent.h"
+#include "Rogue10mTutorialNPC.h"
 #include "UnrealClient.h"
 #include "UObject/StrongObjectPtr.h"
 #include "UObject/UnrealType.h"
@@ -98,6 +100,7 @@ public:
 			{
 				Self->Check(false, TEXT("bounded_run_completion_watchdog")); Self->Finish(); return false;
 			}
+			Self->ObserveInitialVictorySave();
 			if (Self->Next && Now >= Self->NextAt)
 			{
 				TFunction<void()> Callback = MoveTemp(Self->Next);
@@ -182,6 +185,8 @@ private:
 		}
 		Inventory->AddGold(77);
 		State->RecordSkillUse(TEXT("RunCompletionQaPreserved"), 3);
+		SeedSkillTree();
+		if (Failures) { Finish(); return; }
 		Check(Persistence->SaveNow(), TEXT("initial_QA_progression_saved_before_portal"));
 		Expected.Reset(NewObject<URogue10mProgressionSaveGame>());
 		CaptureExpected();
@@ -193,6 +198,30 @@ private:
 		Character->SetActorLocation(Box->GetComponentLocation() + FVector(500, 0, 0), false, nullptr, ETeleportType::TeleportPhysics);
 		bExpectRun = true;
 		Character->SetActorLocation(Box->GetComponentLocation(), false, nullptr, ETeleportType::TeleportPhysics);
+	}
+	void SeedSkillTree()
+	{
+		auto* Tree = State->GetSkillTreeProgressionComponent();
+		ARogue10mTutorialNPC* ServiceNPC = nullptr;
+		for (TActorIterator<ARogue10mTutorialNPC> It(World.Get()); It; ++It) { ServiceNPC = *It; break; }
+		Check(Tree && ServiceNPC, TEXT("v3_skill_tree_and_authored_town_service_exist"));
+		if (!Tree || !ServiceNPC) { return; }
+		const auto Track = Tree->GetActiveTrack();
+		Check(Track == ERogue10mSkillTreeTrack::Brawler || Track == ERogue10mSkillTreeTrack::GreatSword,
+			TEXT("v3_fixture_uses_supported_authored_weapon_track"));
+		if (Failures) { return; }
+		const int32 BeforeMastery = Tree->GetMasteryTotalExperience(Track);
+		for (int32 Count = 0; Count < 7; ++Count) { Tree->NotifyConfirmedAttack(Track); }
+		Check(Tree->GetMasteryTotalExperience(Track) == BeforeMastery + 7, TEXT("v3_fixture_has_nonzero_mastery_from_public_notification"));
+		// Give this disposable profile one earned point and buy through the actual NPC-range API.
+		State->AddExperience(100);
+		const FVector OriginalLocation = Character->GetActorLocation();
+		Character->SetActorLocation(ServiceNPC->GetActorLocation() + FVector(100, 0, 100), false, nullptr, ETeleportType::TeleportPhysics);
+		Check(Tree->CanChangeInvestments() && Tree->TryUnlockNode(TEXT("I.FightingSpirit.Entry"), ERogue10mSkillTreeUnlockRoute::Points, NAME_None),
+			TEXT("v3_fixture_purchases_identity_entry_with_actual_shared_point"));
+		Check(Tree->GetSpentSkillTreePoints() == 1 && Tree->GetActiveIdentity() == ERogue10mSkillTreeIdentity::FightingSpirit,
+			TEXT("v3_fixture_has_paid_ledger_and_active_identity"));
+		Character->SetActorLocation(OriginalLocation, false, nullptr, ETeleportType::TeleportPhysics);
 	}
 	void VerifyRun()
 	{
@@ -309,6 +338,10 @@ private:
 		Check(!Boss->IsDead() && Boss->GetRogueAttributeSet()->GetHealth() > 0, TEXT("controlled_nonlethal_damage_leaves_real_final_hit_to_player_combat"));
 		Check(Persistence->SaveNow(), TEXT("prekill_progression_saved_before_write_failure_fixture"));
 		if (bFailure && !LockSaveFile()) { Finish(); return; }
+		const auto* Tree = State->GetSkillTreeProgressionComponent();
+		BossMasteryTrack = Tree->GetActiveTrack();
+		BeforeBossMastery = Tree->GetMasteryTotalExperience(BossMasteryTrack);
+		bWatchInitialVictorySave = !bFailure;
 		// The actual accepted player attack, montage timing and damage query deliver the final hit.
 		Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::LeftMouseButton, IE_Pressed, 1.0f));
 		HitDeadline = FPlatformTime::Seconds() + 5.0;
@@ -318,6 +351,16 @@ private:
 			Later(0.35, [this] { WaitFinalHit(); });
 		});
 	}
+	void ObserveInitialVictorySave()
+	{
+		if (!bWatchInitialVictorySave || !Completion.IsValid() || !Controller.IsValid()
+			|| !Completion->IsProgressionSaved() || !Controller->IsRunResultVisible()) { return; }
+		bWatchInitialVictorySave = false;
+		bInitialVictorySaveObserved = true;
+		// Core ticker observes the first saved result before the later screenshot/return steps.
+		// Do not call SaveNow here: that would hide the final-hit/settlement ordering regression.
+		VerifyDiskSnapshot(TEXT("initial_victory_before_autosave_or_return"));
+	}
 	void WaitFinalHit()
 	{
 		if (RunState->IsRunActive() && FPlatformTime::Seconds() < HitDeadline)
@@ -326,6 +369,9 @@ private:
 		}
 		Check(RunState->GetRunPhase() == ERogue10mRunPhase::Victory, TEXT("real_player_attack_final_hit_transitions_run_to_Victory"));
 		Check(Completion->IsSettled() && Completion->IsVictory(), TEXT("native_completion_settles_victory_once"));
+		Check(bFailure || bInitialVictorySaveObserved, TEXT("first_victory_save_observed_before_return_or_explicit_resave"));
+		Check(State->GetSkillTreeProgressionComponent()->GetMasteryTotalExperience(BossMasteryTrack) == BeforeBossMastery + 1,
+			TEXT("actual_final_player_attack_grants_exactly_one_mastery_XP"));
 		Check(Completion->GetRewardExperience() == ExpectedXP && Completion->GetRewardGold() == ExpectedGold, TEXT("result_reports_existing_authored_boss_rewards"));
 		auto ExpectedGrowth = BeforeBossGrowth;
 		ExpectedGrowth.Experience += static_cast<float>(ExpectedXP);
@@ -340,6 +386,7 @@ private:
 			&& State->GetMonsterDefeatCount(BossId) == BeforeBossGrowth.MonsterDefeats.FindRef(BossId) + 1, TEXT("actual_boss_gold_and_kill_record_awarded_once"));
 		if (Failures) { Finish(); return; }
 		const auto OnceGrowth = State->CaptureGrowth(); const int32 OnceGold = Inventory->GetGold();
+		const auto OnceTree = State->GetSkillTreeProgressionComponent()->Capture();
 		if (Boss.IsValid())
 		{
 			UGameplayStatics::ApplyDamage(Boss.Get(), 99999, Controller.Get(), Character.Get(), UDamageType::StaticClass());
@@ -351,7 +398,8 @@ private:
 		const float HP = Character->GetRogueAttributeSet()->GetHealth();
 		UGameplayStatics::ApplyDamage(Character.Get(), HP + 99999, nullptr, nullptr, UDamageType::StaticClass());
 		Check(!Character->IsDead() && FMath::IsNearlyEqual(HP, Character->GetRogueAttributeSet()->GetHealth()), TEXT("postvictory_lethal_damage_cannot_kill_player"));
-		Check(OnceGold == Inventory->GetGold() && Same(OnceGrowth, State->CaptureGrowth()), TEXT("duplicate_boss_notification_and_terminal_calls_do_not_repeat_rewards"));
+		Check(OnceGold == Inventory->GetGold() && Same(OnceGrowth, State->CaptureGrowth())
+			&& Same(OnceTree, State->GetSkillTreeProgressionComponent()->Capture()), TEXT("duplicate_boss_notification_and_terminal_calls_do_not_repeat_rewards"));
 		Check(Controller->IsRunResultVisible() && Controller->GetRunResultWidget() && Controller->IsAnyBlockingWindowVisible(), TEXT("actual_native_result_widget_visible_and_blocks_gameplay"));
 		Check(Completion->IsProgressionSaved() != bFailure, TEXT("settlement_save_status_matches_real_platform_write_outcome"));
 		if (bFailure)
@@ -359,7 +407,8 @@ private:
 			Check(!Completion->ReturnToTown() && !Completion->IsTravelStarted() && World.IsValid()
 				&& UGameplayStatics::GetCurrentLevelName(World.Get(), true) == TEXT("OpenRunMap"), TEXT("blocked_disk_write_prevents_ReturnToTown_and_keeps_result"));
 			Check(!Completion->GetSaveStatus().IsEmpty() && Persistence->CanRetrySave(), TEXT("failed_save_has_visible_reason_and_valid_retry_session"));
-			Check(OnceGold == Inventory->GetGold() && Same(OnceGrowth, State->CaptureGrowth()), TEXT("failed_return_retry_preserves_exactly_once_rewards"));
+			Check(OnceGold == Inventory->GetGold() && Same(OnceGrowth, State->CaptureGrowth())
+				&& Same(OnceTree, State->GetSkillTreeProgressionComponent()->Capture()), TEXT("failed_return_retry_preserves_exactly_once_rewards"));
 		}
 		CaptureExpected();
 		TArray<uint8> Bytes;
@@ -377,6 +426,7 @@ private:
 		Check(RunState->GetRunPhase() == ERogue10mRunPhase::Defeat, TEXT("terminal_Death_or_timeout_cannot_flip_to_Victory"));
 		Check(Controller->IsRunResultVisible() && Controller->GetRunResultWidget(), TEXT("Defeat_native_result_visible_even_when_Pawn_input_disabled"));
 		CaptureExpected();
+		VerifyDiskSnapshot(TEXT("defeat_settlement"));
 		FScreenshotRequest::RequestScreenshot(FPaths::Combine(Output, TEXT("run-result.png")), true, false);
 		Later(2.0, [this] { ReturnViaEnter(); });
 	}
@@ -394,6 +444,7 @@ private:
 		FSlateApplication::Get().ProcessKeyDownEvent(FKeyEvent(EKeys::Enter, FModifierKeysState(), 0, false, 0, 0));
 		FSlateApplication::Get().ProcessKeyUpEvent(FKeyEvent(EKeys::Enter, FModifierKeysState(), 0, false, 0, 0));
 		Check(Completion->IsTravelStarted() && Completion->IsProgressionSaved(), TEXT("focused_result_Enter_saves_and_requests_town_travel"));
+		VerifyDiskSnapshot(TEXT("result_Enter_saved_before_hard_travel"));
 	}
 	void VerifyTown()
 	{
@@ -409,9 +460,11 @@ private:
 	void CaptureExpected()
 	{
 		Expected->ProfileId = ProfileId;
+		Expected->SaveVersion = URogue10mProgressionSaveGame::CurrentVersion;
 		Expected->Growth = State->CaptureGrowth(); Expected->Inventory = Inventory->CaptureInventory();
 		Expected->Combat = Character->GetCombatComponent()->CaptureCombat();
 		Expected->Town = State->GetTownProgressionComponent()->CaptureProgression();
+		Expected->SkillTree = State->GetSkillTreeProgressionComponent()->Capture();
 	}
 	void VerifySnapshots()
 	{
@@ -440,6 +493,22 @@ private:
 			DumpCombat(TEXT("actual"), ActualCombat);
 		}
 		Check(Expected && Same(Expected->Town, State->GetTownProgressionComponent()->CaptureProgression()), TEXT("full_traits_and_difficulty_restored"));
+		Check(Expected && Expected->SaveVersion == URogue10mProgressionSaveGame::CurrentVersion
+			&& Same(Expected->SkillTree, State->GetSkillTreeProgressionComponent()->Capture()), TEXT("full_v3_mastery_investment_choice_and_active_identity_ledger_restored"));
+		VerifyDiskSnapshot(bRead ? TEXT("fresh_process_read") : TEXT("restored_world"));
+	}
+	void VerifyDiskSnapshot(const TCHAR* Stage)
+	{
+		const auto* Saved = Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveSlot, 0));
+		Check(Saved && Saved->ProfileId == ProfileId && Saved->SaveVersion == URogue10mProgressionSaveGame::CurrentVersion,
+			*FString::Printf(TEXT("%s_disk_profile_and_current_save_version_match"), Stage));
+		if (!Saved) { return; }
+		Check(Same(Saved->Growth, State->CaptureGrowth()) && Same(Saved->Inventory, Inventory->CaptureInventory())
+			&& Same(Saved->Combat, Character->GetCombatComponent()->CaptureCombat())
+			&& Same(Saved->Town, State->GetTownProgressionComponent()->CaptureProgression()),
+			*FString::Printf(TEXT("%s_disk_growth_inventory_combat_and_town_match_memory"), Stage));
+		Check(Same(Saved->SkillTree, State->GetSkillTreeProgressionComponent()->Capture()),
+			*FString::Printf(TEXT("%s_disk_complete_SkillTree_ledger_matches_memory"), Stage));
 	}
 	bool LockSaveFile()
 	{
@@ -488,6 +557,7 @@ private:
 	URogue10mInventoryComponent* Inventory = nullptr;
 	TStrongObjectPtr<URogue10mProgressionSaveGame> Expected;
 	FRogue10mGrowthSnapshot BeforeBossGrowth;
+	ERogue10mSkillTreeTrack BossMasteryTrack = ERogue10mSkillTreeTrack::None;
 	FGuid ProfileId;
 	FName BossId;
 	FString Mode, ProfileSlot, SavePrefix, SaveSlot, Output, Results;
@@ -496,7 +566,9 @@ private:
 	TFunction<void()> Next;
 	double NextAt = 0, Deadline = 0, BossDeadline = 0, HitDeadline = 0;
 	int32 Checks = 0, Failures = 0, BeforeBossGold = 0, ExpectedXP = 0, ExpectedGold = 0;
+	int32 BeforeBossMastery = 0;
 	bool bRead = false, bFailure = false, bFinished = false, bExpectRun = false, bExpectTown = false;
+	bool bWatchInitialVictorySave = false, bInitialVictorySaveObserved = false;
 #if PLATFORM_WINDOWS
 	HANDLE SaveLock = INVALID_HANDLE_VALUE;
 #endif

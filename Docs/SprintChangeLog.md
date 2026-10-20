@@ -2321,6 +2321,13 @@
 
 - Sprint#6-2 완료: 기능 커밋 `a70c521649eca752ef2e3f0e17f9ae7f216b9050`, 변경32개 스테이징/필수 경로/공백 통과, 원격·조상·worktree 확인 후 develop→test→main CAS fast-forward와 일반 atomic push 완료. 원격4개 직접 SHA 일치 확인. [로컬 통합](../Feature/doc/evidence/unused-file-optimization-20261020/local-integration.json), [원격 검증](../Feature/doc/evidence/unused-file-optimization-20261020/public-push-result.json). 첫 줄바꿈 입력 오류는 무변경 거절 후 LF로 수정했다. 이번 완료 기록도 같은 순서로 문서 커밋·반영한다.
 
+## Sprint#7-2 — 보스 정산 Save v3 통합 보완 (2026-10-20)
+
+- 목표: 스킬트리 병합 뒤 남은 보스 종료·저장·귀환 통합 검증과 최종 명중 숙련의 초기 저장 순서를 보완한다.
+- 범위: V1 QA v3 전체 원장/디스크 비교·재현, V2 RunCompletion 저장 확정 순서·대기 가드, V3 빌드/렌더6프로세스·리뷰·기록·main 게시. 게임 보상/Save 버전/에셋 경제 변경 없음.
+- 상태: 기준 main ddc79e5a 확인·작업 브랜치 생성·정적 원인 확인. 구현/런타임 재현·수정은 진행 중이며 기존301개를 최신 통합 성공으로 재사용하지 않는다.
+- 관련: [계획](../Feature/architect/2026-10-20_boss-save-v3-integration.md), [결과](../Feature/doc/2026-10-20_boss-save-v3-integration.md), [일일 로그](../DevLog/20261020.txt).
+
 
 ## Sprint#7-1 — 미완료 tmp 감사와 후속 정리 (2026-10-20)
 
@@ -2330,6 +2337,17 @@
 - 보존: 기존87개, 제작/glob/basename/CSV 입력, 고유 대형 출력·Fab/Content·현재 게임 소스. 수동 크기필터 오류는 삭제 전 수정·보고 재검증. 별도 보스 저장 작업의 Source3개·문서·공유 로그는 이번 커밋에서 제외하고 보존한다.
 - 상태: 남은 감사·정리·검증·복구·리뷰 완료. 별도 인덱스의 명시 범위 검사 후 커밋·develop→test→main·공개 원격 반영 진행.
 - 관련: [계획](../Feature/architect/2026-10-20_finish-unused-work-audit.md), [결과](../Feature/doc/2026-10-20_finish-unused-work-audit.md), [최종 감사](../Feature/doc/evidence/finish-unused-work-audit-20261020/tmp-audit-final.json), [복구](../Feature/doc/evidence/finish-unused-work-audit-20261020/RESTORE.md).
+
+### Sprint#7-2 보스 Save v3 통합 — 구현·검증 완료, 게시 준비
+
+- 작업 식별: `Sprint#7-2-boss-integration-validation`. 병행 `Sprint#7-1-finish-unused-work-audit` 번호와 기록을 보존하도록 보스 작업 번호를 조정한다.
+- 완료: V1 최초 저장 누락 실제 재현, V2 terminal 즉시 고정·원래 Pawn/프로필GUID·약한 다음 틱 저장/UI·EndPlay 정리·pending 귀환 거절, V3 빌드·렌더 QA·회귀·독립 검토·문서 완료. Source3개만 변경하며 보상·Save 버전·원본 Content/Config 변경0이다.
+- 수정 전: 빌드99.68초 성공, saved=1 후146ms의 최초 디스크/메모리 비교에서49개 중2개 예상 실패. 마지막 실제 공격의 숙련+1은 통과했다. 게임 exit0이어도 FAILED 마커/실패 수로 실행기exit1이 거절했으며 최종 성공 수치에 포함하지 않는다.
+- 수정 후: 빌드180.25초 성공. v3green1 Write74·Read16·Failure76·FailureRead16·Timeout52·Death51=285개·실패0, 여섯 게임/전체 실행기 exit0. 기존 특성 효과101개·실패0·exit0을 합쳐386개 통과. 자동저장/귀환 전 최초 Save v3의 마지막 명중 숙련·전체 원장, 실패 재시도·하드 트래블·독립 재시작과 보상 불변을 확인했다. 승리/저장 실패 화면 직접 확인과 정적 검토 완료.
+- 범위: 실제 마지막 타격·플랫폼 저장·UMG Enter·마을 이동을 통제 fixture로 검사했다. 전체20분/밸런스/Shipping/D3D12/네트워크/장시간 안정성은 별도이며 실행 중 공격 참조 제거를 확정 결함으로 주장하지 않는다.
+- 상태: 기능·빌드·386검사·리뷰·기록 완료. Source/모듈 해시·생성 경로·스테이징 최종 검사와 커밋·로컬 main 승격·공개 게시 준비 중이다. 실제 커밋/원격 SHA는 성공 후 기록한다.
+- 통합 준비: 병행 감사가 공유 브랜치/main을 전진시켰지만 Source/Config/Content는 동일하다. 감사 종료 후 별도 게시 인덱스·명시40파일·main compare-and-set으로 공유 브랜치와 인덱스를 보존하며 반영할 예정이다. 실제 승격·전송 성공은 아직 기록하지 않는다.
+- 관련: [최신 결과](../Feature/doc/2026-10-20_boss-save-v3-integration.md), [Green 실행](../Feature/doc/evidence/boss-save-v3-integration-20261020/runtime-green-launcher.log), [검증 요약](../Feature/doc/evidence/boss-save-v3-integration-20261020/validation-results.json), [독립 검토](../Feature/doc/evidence/boss-save-v3-integration-20261020/review.md), [개발 일지](../DevLog/20261020.txt).
 
 
 - Sprint#7-1 완료: 기능 커밋 `007c0902b661f69edb64602f70311dc55f34e041`, 별도 인덱스29개·구문/JSON/링크/범위/필수경로/공백 PASS. 원격·조상·worktree 확인 후 develop→test→main fast-forward와 일반 atomic push, 작업/통합4개 원격 SHA 일치. 병행 보스 소스/문서/로그 보존·게시 제외. [로컬 통합](../Feature/doc/evidence/finish-unused-work-audit-20261020/local-integration.json), [원격 대조](../Feature/doc/evidence/finish-unused-work-audit-20261020/public-push-result.json). 완료 기록도 같은 방식으로 반영한다.
