@@ -1,0 +1,33 @@
+{
+  "result": "PASS",
+  "fixture_checks": [
+    "plain_json_utf8",
+    "plain_has_priority_when_both_exist",
+    "gzip_fallback_utf8",
+    "missing_evidence_fails",
+    "corrupt_gzip_fails",
+    "corrupt_plain_does_not_fall_back",
+    "archived_baseline_blocks_capture_without_overwrite"
+  ],
+  "actual_archives": [
+    {
+      "name": "baseline.json",
+      "status": "PASS",
+      "clip_count": 10,
+      "reader_used_gzip": true
+    },
+    {
+      "name": "in-memory-poses.json",
+      "status": "PASS",
+      "clip_count": 10,
+      "reader_used_gzip": true
+    },
+    {
+      "name": "reload-poses.json",
+      "status": "PASS",
+      "clip_count": 10,
+      "reader_used_gzip": true
+    }
+  ],
+  "unreal_imported": false
+}

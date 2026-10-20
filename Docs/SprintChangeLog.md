@@ -2307,3 +2307,14 @@
 - 원격 작업 참조: Sprint#5-37=05f74f1, Sprint#5-38=77a52b6a, Sprint#5-39=f49915b4. 체크포인트·보스·스킬트리와 공개 게시 상시 승인 규칙이 모두 원격에 포함된다.
 - 진행 중인 무기/애니메이션·파일 최적화는 미포함, 강제 푸시·공유 체크아웃 변경 없음. 공개 승인 차단 해소.
 - 원문: Feature/doc/evidence/main-checkpoint-20261020/public-push.log. 직접 원격 해시 검증: public-push-result.json. 이 성공 기록만 후속 문서 커밋·푸시한다.
+
+## Sprint#6-2 — 과거 제작 파일과 중복 산출물 최적화 (2026-10-20)
+
+- 목표: 과거 제작·검증 파일의 참조와 중복을 확인해 현재 작업 폴더의 디스크 부담을 줄인다.
+- 주요 변경: 동일 SHA 보존 사본이 있는 Blender 백업4개 정리, 120Hz JSON3개 무손실 gzip 보관, 기존 검증기의 gzip fallback과 압축 baseline 재캡처 차단. 원본345,395,090바이트→새 archive36,988,290바이트, 순감소308,406,800바이트(294.12MiB; 새 기록 크기 별도).
+- 검증: 원본7개/보존 사본4개 독립 SHA·크기 대조, gzip 전량 해제 해시, 실제7개 복구→해시 확인→재정리. 실제 reader/main 오프라인7검사·압축본3개 각10클립 파싱 통과. 현재 Source/Config/Content 변경0으로 Editor 빌드·PIE 반복 없음. 최종 경로·구문·스테이징·통합 결과는 후속 기록.
+- 보존: 승인 기준 .blend1·고유 모션 백업, FBX .fbm 재수입 경로, 현재 아트/입력/스크립트, Fab 원본과 실패 로그, 등록 worktree·진행 중 무기 작업. tmp 전체 감사는 비용 때문에 읽기만 중단했고 tmp 삭제0.
+- 상태: 정리·복구 검증·독립 검토·문서 완료. 선행 공개 게시 main97cc9191을10개 파일 blob 동일 대조 후 작업 파일 덮어쓰기 없이 반영했다. 최종 커밋·승격·푸시 준비 중.
+- 관련: [계획](../Feature/architect/2026-10-20_unused-file-optimization.md), [결과](../Feature/doc/2026-10-20_unused-file-optimization.md), [확정 목록](../Feature/doc/evidence/unused-file-optimization-20261020/selection.json), [복구](../Feature/doc/evidence/unused-file-optimization-20261020/RESTORE.md), [개발 일지](../DevLog/20261020.txt).
+
+- Sprint#6-2 최종 파일 검사: 변경32개 명시 목록, Python6개·JSON8개·문서 링크10개·append-only DevLog/Sprint·Source/Config/Content 변경0 통과. 생성 경로 검사 통과, 스테이징/공백 및 커밋·승격 준비.

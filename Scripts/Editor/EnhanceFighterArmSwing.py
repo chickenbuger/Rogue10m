@@ -6,6 +6,7 @@ derivative in memory, validate every clip, then save only those ten sequences.
 -RogueFistSwingAudit: independently resample the saved clips in a fresh Editor.
 All reports stay in this task's new evidence folder. No old authoring main runs.
 """
+import gzip
 import hashlib
 import json
 import math
@@ -84,8 +85,17 @@ def write(name, value):
     (EVIDENCE / name).write_text(json.dumps(value, ensure_ascii=False, indent=2), encoding='utf-8')
 
 
+def evidence_exists(name):
+    path = EVIDENCE / name
+    return path.exists() or path.with_name(path.name + '.gz').exists()
+
+
 def read(name):
-    return json.loads((EVIDENCE / name).read_text(encoding='utf-8'))
+    path = EVIDENCE / name
+    if path.exists():
+        return json.loads(path.read_text(encoding='utf-8'))
+    with gzip.open(path.with_name(path.name + '.gz'), 'rt', encoding='utf-8') as stream:
+        return json.load(stream)
 
 
 def property_fields(relative, class_name):
@@ -527,7 +537,7 @@ def main():
         audit(read('baseline.json'), mesh, 'reload')
         unreal.log('RESULT=FIGHTER_ARM_SWING_RELOAD_PASSED sequences=10')
     else:
-        if (EVIDENCE / 'baseline.json').exists():
+        if evidence_exists('baseline.json'):
             raise RuntimeError('Baseline already exists; preserve it and use an explicit phase')
         baseline = capture(mesh)
         write('baseline.json', baseline)
