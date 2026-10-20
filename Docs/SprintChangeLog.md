@@ -2363,3 +2363,5 @@
 - 사고와 복원: 초기 Content junction의 sparse 정리가 공유 추적 에셋6,423개를 삭제했다. 사용자 고지 후 실제 부재 경로만 한정 복원·기존 존재파일 덮기0, 전량4,480,714,917B blob/텍스트 clean-filter 대조로 불일치0. 독립 실제 Content로 전환하고 재발 방지 지침을 추가했다. 초기 실패와 사고 기록을 보존한다.
 - 상태: 구현·통합 QA·독립 검토 완료, 문서/최종 검사·작업 커밋→develop→test→main·일반 푸시 준비. 완료 게시 SHA는 뒤에 추가한다.
 - 관련: [계획](../Feature/architect/2026-10-20_hybrid-tree-input-polish.md), [결과](../Feature/doc/2026-10-20_hybrid-tree-input-polish.md), [증거](../Feature/doc/evidence/hybrid-tree-input-polish-20261020/), [사고·복원 검토](../Feature/doc/evidence/hybrid-tree-input-polish-20261020/incident-review.md).
+
+- Sprint#7-2 완료: 기능 `e6269dfab273b7eb36feaae64804434050cc1a0d`, 명시48파일 스테이징·생성 경로·공백·JSON/25링크·append-only·고신뢰 비밀 패턴 검사 통과. 최신 fetch/조상/worktree 점유 후 develop→test→main CAS fast-forward 및 일반 atomic push 성공, 실제 원격4개 SHA 일치 확인. Source tree fc0d9591/Content tree561dc863. [통합](../Feature/doc/evidence/hybrid-tree-input-polish-20261020/local-integration.json)·[게시](../Feature/doc/evidence/hybrid-tree-input-polish-20261020/public-push-result.json). 복원 사고 기록과 원본 실패도 포함한다. 이번 완료 기록은 Source/Content 변경 없는 문서 커밋으로 반영한다.

@@ -35,4 +35,6 @@ OS 입력 장치 자체나 모든 충전 기술·화면 배율·20분 전체 플
 
 ## 통합과 게시
 
-기능·검증·독립 검토를 마쳤다. 변경 파일 명시 목록과 최종 경로·공백·문서 검사를 확인하고 작업 커밋 및 develop→test→main·원격 반영을 진행한다. 확정 SHA는 완료 후 아래에 기록한다.
+기능 커밋 `e6269dfab273b7eb36feaae64804434050cc1a0d`의48개 명시 파일을 스테이징 대조하고 생성 경로·공백·JSON·25개 문서 링크·append-only 로그·고신뢰 비밀 패턴 검사를 통과했다. 최신 원격과 조상/worktree 점유를 확인한 뒤 develop→test→main CAS fast-forward와 일반 atomic push를 완료했다. 실제 원격 작업/develop/test/main4개 SHA가 모두 기능 커밋과 같음을 직접 확인했다.
+
+[명시 변경 목록](evidence/hybrid-tree-input-polish-20261020/commit-files.txt), [최종 검사](evidence/hybrid-tree-input-polish-20261020/final-checks.json), [통합](evidence/hybrid-tree-input-polish-20261020/local-integration.json), [푸시 원문](evidence/hybrid-tree-input-polish-20261020/public-push.log), [원격 검증](evidence/hybrid-tree-input-polish-20261020/public-push-result.json)을 참조한다. 최종 Source tree는 `fc0d959160125e9aea1fad27e40e23a39f2d6397`, Content tree는 복원 검증한 `561dc863470c130a9b5fe511c6f9c68dd8f74b41`이다. 공유 root의 병행3개 Source 변경을 건드리지 않고 별도 worktree의 기능을 게시했다. 이 게시 결과와 증거만 문서 커밋으로 기록한다.
