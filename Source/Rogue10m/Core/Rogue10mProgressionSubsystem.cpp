@@ -14,10 +14,18 @@
 #include "Rogue10mPlayerState.h"
 #include "Rogue10mProgressionSaveGame.h"
 #include "Rogue10mTownProgressionComponent.h"
+#include "Rogue10mSkillTreeProgressionComponent.h"
 #include "TimerManager.h"
 
 namespace Rogue10mProgressionPersistence
 {
+static int32 TraitSpent(const FRogue10mTownProgressionSnapshot& Town)
+{
+	const auto Canonical = URogue10mTownProgressionComponent::MigrateLegacySnapshot(Town);
+	int64 Total = 0;
+	for (const auto& Investment : Canonical.TraitInvestments) { Total += Investment.SpentPoints; }
+	return static_cast<int32>(FMath::Clamp<int64>(Total, 0, MAX_int32));
+}
 /** Version 2 mirrors its canonical records for compatibility with old callers. */
 static bool HasCanonicalTraitMirrors(const FRogue10mTownProgressionSnapshot& Town)
 {
@@ -51,11 +59,18 @@ static bool Validate(const URogue10mProgressionSaveGame& Save, const FGuid& Prof
 	const auto& Town = Save.Town;
 	// Old files have no canonical records. A file claiming version 1 cannot import new traits.
 	if (Save.SaveVersion == 1 && !Town.TraitInvestments.IsEmpty()) { return false; }
-	if (Save.SaveVersion == URogue10mProgressionSaveGame::CurrentVersion && !HasCanonicalTraitMirrors(Town))
+	if (Save.SaveVersion >= 2 && !HasCanonicalTraitMirrors(Town))
 	{
 		return false;
 	}
 	if (!URogue10mTownProgressionComponent::ValidateSnapshot(Town, Save.Growth.Level - 1)) { return false; }
+	if (Save.SaveVersion < 3)
+	{
+		// A legacy version cannot claim the new domain and bypass its ledger checks.
+		if (!Save.SkillTree.Masteries.IsEmpty() || !Save.SkillTree.Investments.IsEmpty() || !Save.SkillTree.LegacyGrantedSkills.IsEmpty()
+			|| Save.SkillTree.ActiveIdentity != ERogue10mSkillTreeIdentity::None) { return false; }
+	}
+	else if (!URogue10mSkillTreeProgressionComponent::Validate(Save.SkillTree, Save.Growth.Level - 1, TraitSpent(Town))) { return false; }
 	for (const FRogue10mTraitInvestment& Investment : Town.TraitInvestments)
 	{
 		if (Investment.Trait == ERogue10mTownTrait::LastStand && Investment.Rank > 0 && Save.Growth.Level < 20)
@@ -112,6 +127,11 @@ URogue10mProgressionSaveGame* URogue10mProgressionSubsystem::LoadSnapshot(
 	{
 		// Keep the old version until every domain has restored successfully. No disk write here.
 		Loaded->Town = URogue10mTownProgressionComponent::MigrateLegacySnapshot(Loaded->Town);
+	}
+	if (Loaded->SaveVersion < 3)
+	{
+		// Old use counters include empty swings and never represent confirmed-hit mastery.
+		Loaded->SkillTree = URogue10mSkillTreeProgressionComponent::MigrateLegacy(Loaded->Combat.UnlockedSkills);
 	}
 	return Loaded;
 }
@@ -178,7 +198,8 @@ bool URogue10mProgressionSubsystem::AttachCharacter(ARogue10mCharacter& Characte
 	URogue10mInventoryComponent* Inventory = Character.GetInventoryComponent();
 	URogue10mCombatComponent* Combat = Character.GetCombatComponent();
 	URogue10mTownProgressionComponent* Town = State ? State->GetTownProgressionComponent() : nullptr;
-	if (!State || !Inventory || !Combat || !Town) { return false; }
+	URogue10mSkillTreeProgressionComponent* Tree = State ? State->GetSkillTreeProgressionComponent() : nullptr;
+	if (!State || !Inventory || !Combat || !Town || !Tree) { return false; }
 	CurrentCharacter = &Character;
 	CurrentPlayerState = State;
 	AttachedProfileId = Selected->ProfileId;
@@ -196,19 +217,22 @@ bool URogue10mProgressionSubsystem::AttachCharacter(ARogue10mCharacter& Characte
 		const auto PreviousInventory = Inventory->CaptureInventory();
 		const auto PreviousCombat = Combat->CaptureCombat();
 		const auto PreviousTown = Town->CaptureProgression();
+		const auto PreviousTree = Tree->Capture();
 		const TCHAR* FailedStage = nullptr;
 		if (!State->RestoreGrowth(SaveData->Growth)) { FailedStage = TEXT("Growth"); }
 		else if (!Inventory->RestoreInventory(SaveData->Inventory)) { FailedStage = TEXT("Inventory"); }
+		else if (!Tree->RestoreForTransaction(SaveData->SkillTree, false, Rogue10mProgressionPersistence::TraitSpent(SaveData->Town))) { FailedStage = TEXT("SkillTree"); }
 		else if (!Town->RestoreProgression(SaveData->Town)) { FailedStage = TEXT("Town"); }
 		else if (!Combat->RestoreCombat(SaveData->Combat)) { FailedStage = TEXT("Combat"); }
 		if (FailedStage)
 		{
 			const bool bGrowthRolledBack = State->RestoreGrowth(PreviousGrowth);
 			const bool bInventoryRolledBack = Inventory->RestoreInventory(PreviousInventory);
+			const bool bTreeRolledBack = Tree->RestoreForTransaction(PreviousTree, false, Rogue10mProgressionPersistence::TraitSpent(PreviousTown));
 			const bool bTownRolledBack = Town->RestoreProgression(PreviousTown);
 			const bool bCombatRolledBack = Combat->RestoreCombat(PreviousCombat);
-			UE_LOG(LogRogue10m, Error, TEXT("Progression restore rejected profile=%s stage=%s rollback_growth=%d rollback_inventory=%d rollback_town=%d rollback_combat=%d"),
-				*AttachedProfileId.ToString(), FailedStage, bGrowthRolledBack, bInventoryRolledBack, bTownRolledBack, bCombatRolledBack);
+			UE_LOG(LogRogue10m, Error, TEXT("Progression restore rejected profile=%s stage=%s rollback_growth=%d rollback_inventory=%d rollback_tree=%d rollback_town=%d rollback_combat=%d"),
+				*AttachedProfileId.ToString(), FailedStage, bGrowthRolledBack, bInventoryRolledBack, bTreeRolledBack, bTownRolledBack, bCombatRolledBack);
 			SetError(NSLOCTEXT("Rogue10mSave", "RestoreFailed", "진행 데이터를 복원하지 못했습니다. 누락 에셋과 인벤토리 배치를 확인해 주세요. 기존 파일은 보존됩니다."));
 			return false;
 		}
@@ -219,9 +243,12 @@ bool URogue10mProgressionSubsystem::AttachCharacter(ARogue10mCharacter& Characte
 		FRogue10mGrowthSnapshot NewGrowth;
 		NewGrowth.WeaponType = Character.GetEquippedWeaponType();
 		State->RestoreGrowth(NewGrowth);
+		Tree->RestoreForTransaction(FRogue10mSkillTreeSnapshot(), false, 0);
+		Tree->RefreshAutomaticUnlocks();
 		Town->RestoreProgression(FRogue10mTownProgressionSnapshot());
 		Combat->ResetCombatProgression();
 	}
+	Tree->RefreshAutomaticUnlocks();
 	Character.RefreshCharacterStats(true);
 	State->SetCharacterDead(false);
 	bSaveReady = true;
@@ -276,6 +303,7 @@ void URogue10mProgressionSubsystem::BindChanges(ARogue10mCharacter& Character)
 		State->OnGrowthChanged.AddUniqueDynamic(this, &ThisClass::HandleStateChanged);
 		State->OnMartialArtsProgressChanged.AddUniqueDynamic(this, &ThisClass::HandleStateChanged);
 		State->GetTownProgressionComponent()->OnTownProgressionChanged.AddUniqueDynamic(this, &ThisClass::HandleStateChanged);
+		State->GetSkillTreeProgressionComponent()->OnChanged.AddUniqueDynamic(this, &ThisClass::HandleStateChanged);
 	}
 }
 
@@ -292,6 +320,7 @@ void URogue10mProgressionSubsystem::UnbindChanges()
 		State->OnGrowthChanged.RemoveDynamic(this, &ThisClass::HandleStateChanged);
 		State->OnMartialArtsProgressChanged.RemoveDynamic(this, &ThisClass::HandleStateChanged);
 		State->GetTownProgressionComponent()->OnTownProgressionChanged.RemoveDynamic(this, &ThisClass::HandleStateChanged);
+		State->GetSkillTreeProgressionComponent()->OnChanged.RemoveDynamic(this, &ThisClass::HandleStateChanged);
 	}
 }
 
@@ -316,6 +345,7 @@ void URogue10mProgressionSubsystem::CaptureCurrentState()
 	SaveData->Inventory = Character->GetInventoryComponent()->CaptureInventory();
 	SaveData->Combat = Character->GetCombatComponent()->CaptureCombat();
 	SaveData->Town = State->GetTownProgressionComponent()->CaptureProgression();
+	SaveData->SkillTree = State->GetSkillTreeProgressionComponent()->Capture();
 	SaveData->SaveVersion = URogue10mProgressionSaveGame::CurrentVersion;
 }
 

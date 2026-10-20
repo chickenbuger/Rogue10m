@@ -7,6 +7,7 @@
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mProgressionSaveGame.h"
 #include "Rogue10mTownProgressionComponent.h"
+#include "Rogue10mSkillTreeProgressionComponent.h"
 
 ARogue10mPlayerState::ARogue10mPlayerState()
 {
@@ -15,6 +16,7 @@ ARogue10mPlayerState::ARogue10mPlayerState()
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 	AttributeSet = CreateDefaultSubobject<URogue10mAttributeSet>(TEXT("Attribute Set"));
 	TownProgressionComponent = CreateDefaultSubobject<URogue10mTownProgressionComponent>(TEXT("Town Progression"));
+	SkillTreeProgressionComponent = CreateDefaultSubobject<URogue10mSkillTreeProgressionComponent>(TEXT("Skill Tree Progression"));
 }
 
 UAbilitySystemComponent* ARogue10mPlayerState::GetAbilitySystemComponent() const
@@ -31,7 +33,9 @@ void ARogue10mPlayerState::SetCharacterProfileIdentity(
 
 void ARogue10mPlayerState::SetEquippedWeaponType(ERogue10mWeaponType NewWeaponType)
 {
+	const bool bChanged = EquippedWeaponType != NewWeaponType;
 	EquippedWeaponType = NewWeaponType;
+	if (bChanged && SkillTreeProgressionComponent) { SkillTreeProgressionComponent->NotifyWeaponChanged(); }
 }
 
 void ARogue10mPlayerState::SetCharacterDead(bool bNewCharacterDead)
@@ -89,6 +93,7 @@ void ARogue10mPlayerState::AddExperience(int32 ExperienceAmount)
 	AttributeSet->SetExperience(CurrentExperience);
 	AttributeSet->SetExperienceToNextLevel(RequiredExperience);
 	OnGrowthChanged.Broadcast();
+	if (SkillTreeProgressionComponent) { SkillTreeProgressionComponent->NotifySharedPointsChanged(); }
 }
 
 void ARogue10mPlayerState::RecordSkillUse(FName SkillId, int32 Count)
@@ -127,7 +132,7 @@ int32 ARogue10mPlayerState::GetMonsterDefeatCount(FName MonsterId) const
 
 int32 ARogue10mPlayerState::GetWeaponMasteryLevel(ERogue10mWeaponType WeaponType) const
 {
-	return WeaponType == ERogue10mWeaponType::Knuckle || WeaponType == ERogue10mWeaponType::Unarmed ? 1 : 0;
+	return SkillTreeProgressionComponent ? SkillTreeProgressionComponent->GetMasteryLevel(URogue10mSkillTreeProgressionComponent::ResolveTrack(WeaponType)) : 0;
 }
 
 float ARogue10mPlayerState::GetIdentityCurrent() const

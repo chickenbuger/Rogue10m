@@ -123,6 +123,13 @@ const URogue10mTownServiceDataAsset& ARogue10mTutorialNPC::GetServiceData() cons
 	return ServiceData ? *ServiceData : *GetDefault<URogue10mTownServiceDataAsset>();
 }
 
+bool ARogue10mTutorialNPC::IsWithinSkillTreeServiceRange(const ARogue10mCharacter* Character) const
+{
+	return IsValid(Character) && !IsActorBeingDestroyed() && !Character->IsDead() && Character->GetWorld() == GetWorld()
+		&& FMath::IsFinite(InteractionRadius) && InteractionRadius > 0.0f
+		&& FVector::DistSquared(GetActorLocation(), Character->GetActorLocation()) <= FMath::Square(InteractionRadius);
+}
+
 bool ARogue10mTutorialNPC::IsPlayerAvailable(ARogue10mCharacter* Character, float Radius) const
 {
 	if (!IsValid(Character)) { return false; }

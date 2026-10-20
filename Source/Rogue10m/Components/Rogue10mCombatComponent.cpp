@@ -33,6 +33,8 @@
 #include "Rogue10mInventoryComponent.h"
 #include "Rogue10mSkillLoadoutDataAsset.h"
 #include "Rogue10mProgressionSaveGame.h"
+#include "Rogue10mSkillTreeProgressionComponent.h"
+#include "Rogue10mMonsterDataAsset.h"
 #include "TimerManager.h"
 
 URogue10mCombatComponent::URogue10mCombatComponent()
@@ -53,6 +55,10 @@ void URogue10mCombatComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	{
 		ProgressionState->OnMartialArtsProgressChanged.RemoveDynamic(
 			this, &URogue10mCombatComponent::HandleMartialArtsProgressChanged);
+		if (auto* Tree = ProgressionState->GetSkillTreeProgressionComponent())
+		{
+			Tree->OnChanged.RemoveDynamic(this, &URogue10mCombatComponent::HandleHybridSkillTreeChanged);
+		}
 	}
 	BoundProgressionState.Reset();
 	CancelCombatVisuals();
@@ -257,6 +263,11 @@ bool URogue10mCombatComponent::ActivateQuickSlot(int32 SlotNumber)
 
 void URogue10mCombatComponent::UnlockAttackSkill(URogue10mAttackSkillData* SkillData)
 {
+	if (const auto* State = BoundProgressionState.Get())
+	{
+		const auto* Tree = State->GetSkillTreeProgressionComponent();
+		if (Tree && Tree->IsSkillManaged(SkillData) && !Tree->IsSkillGranted(SkillData)) { return; }
+	}
 	if (!SkillData || UnlockedAttackSkillNames.Contains(SkillData->GetFName()))
 	{
 		return;
@@ -284,9 +295,9 @@ int32 URogue10mCombatComponent::UnlockAllActiveTreeForTesting()
 	int32 Added = 0;
 	for (const URogue10mAttackSkillData* Skill : GetActiveSkillTreeSkills())
 	{
-		if (Skill && !UnlockedAttackSkillNames.Contains(Skill->GetFName()))
+		if (Skill && !IsAttackSkillUnlocked(Skill))
 		{
-			UnlockedAttackSkillNames.Add(Skill->GetFName());
+			TestUnlockedAttackSkillNames.Add(Skill->GetFName());
 			++Added;
 		}
 	}
@@ -362,7 +373,21 @@ void URogue10mCombatComponent::MonitorBoundSkillInput()
 
 bool URogue10mCombatComponent::IsAttackSkillUnlocked(const URogue10mAttackSkillData* SkillData) const
 {
-	return SkillData && UnlockedAttackSkillNames.Contains(SkillData->GetFName());
+	if (!SkillData) { return false; }
+#if !UE_BUILD_SHIPPING
+	if (TestUnlockedAttackSkillNames.Contains(SkillData->GetFName())) { return true; }
+#endif
+	return IsSkillDurablyUnlocked(SkillData);
+}
+
+bool URogue10mCombatComponent::IsSkillDurablyUnlocked(const URogue10mAttackSkillData* SkillData) const
+{
+	if (!SkillData) { return false; }
+	const auto* Character = GetOwnerCharacter();
+	const auto* State = Character ? Character->GetPlayerState<ARogue10mPlayerState>() : nullptr;
+	const auto* Tree = State ? State->GetSkillTreeProgressionComponent() : nullptr;
+	if (Tree && Tree->IsSkillManaged(SkillData)) { return Tree->IsSkillGranted(SkillData); }
+	return UnlockedAttackSkillNames.Contains(SkillData->GetFName());
 }
 
 bool URogue10mCombatComponent::IsSkillInActiveTree(const URogue10mAttackSkillData* SkillData) const
@@ -394,6 +419,21 @@ bool URogue10mCombatComponent::AssignSkillToInputSlot(
 		return false;
 	}
 
+	// A preview may have become genuinely learned since it was equipped. Preserve
+	// that real choice before another temporary preview replaces the slot.
+	for (const auto& Pair : EquippedSkillBindings)
+	{
+		if (Pair.Value && IsSkillDurablyUnlocked(Pair.Value)) { DurableSkillBindings.Add(Pair.Key, Pair.Value); }
+	}
+	if (IsSkillDurablyUnlocked(SkillData))
+	{
+		for (auto It = DurableSkillBindings.CreateIterator(); It; ++It)
+		{
+			if (It.Value() == SkillData) { It.RemoveCurrent(); }
+		}
+		DurableSkillBindings.Add(InputSlot, SkillData);
+	}
+
 	for (TPair<ERogue10mAttackInputSlot, TObjectPtr<URogue10mAttackSkillData>>& Pair : EquippedSkillBindings)
 	{
 		if (Pair.Value == SkillData)
@@ -408,7 +448,11 @@ bool URogue10mCombatComponent::AssignSkillToInputSlot(
 
 bool URogue10mCombatComponent::UnassignSkillFromInputSlot(ERogue10mAttackInputSlot InputSlot)
 {
-	const bool bChanged = EquippedSkillBindings.Remove(InputSlot) > 0;
+	const bool bEquippedChanged = EquippedSkillBindings.Remove(InputSlot) > 0;
+	// Explicit clearing is a real user choice even while a test preview occupies
+	// the slot; do not restore a remembered/default skill over that empty choice.
+	const bool bDurableChanged = DurableSkillBindings.Remove(InputSlot) > 0;
+	const bool bChanged = bEquippedChanged || bDurableChanged;
 	if (bChanged) { OnSkillTreeChanged.Broadcast(); }
 	return bChanged;
 }
@@ -470,6 +514,11 @@ bool URogue10mCombatComponent::IsSkillAvailableToUnlock(const URogue10mAttackSki
 	{
 		return false;
 	}
+	const auto* Character = GetOwnerCharacter();
+	const auto* State = Character ? Character->GetPlayerState<ARogue10mPlayerState>() : nullptr;
+	const auto* Tree = State ? State->GetSkillTreeProgressionComponent() : nullptr;
+	// Managed techniques use the new source-of-truth ledger, never old usage/kill conditions.
+	if (Tree && Tree->IsSkillManaged(SkillData)) { return false; }
 
 	for (const URogue10mAttackSkillData* Prerequisite : SkillData->PrerequisiteSkills)
 	{
@@ -588,6 +637,7 @@ void URogue10mCombatComponent::HandleEquippedWeaponChanged()
 {
 	CancelWeaponTransitionState();
 	ApplyActiveWeaponProfile();
+	HandleHybridSkillTreeChanged();
 }
 
 const URogue10mWeaponSkillProfileDataAsset* URogue10mCombatComponent::FindActiveWeaponProfile() const
@@ -642,6 +692,7 @@ void URogue10mCombatComponent::ApplyActiveWeaponProfile()
 		}
 	}
 	EquippedSkillBindings.Reset();
+	DurableSkillBindings.Reset();
 	AppliedProfileWeaponType = ERogue10mWeaponType::Unarmed;
 	const URogue10mWeaponSkillProfileDataAsset* Profile = FindActiveWeaponProfile();
 	if (!Profile)
@@ -666,9 +717,11 @@ void URogue10mCombatComponent::ApplyActiveWeaponProfile()
 	for (const TPair<ERogue10mAttackInputSlot, TObjectPtr<URogue10mAttackSkillData>>& Pair
 		: Profile->DefaultSkillBindings)
 	{
-		if (Pair.Value)
+		const auto* Tree = BoundProgressionState.IsValid() ? BoundProgressionState->GetSkillTreeProgressionComponent() : nullptr;
+		if (Pair.Value && (!Tree || !Tree->IsSkillManaged(Pair.Value) || Tree->IsSkillGranted(Pair.Value)))
 		{
 			EquippedSkillBindings.Add(Pair.Key, Pair.Value);
+			DurableSkillBindings.Add(Pair.Key, Pair.Value);
 			UnlockedAttackSkillNames.Add(Pair.Value->GetFName());
 		}
 	}
@@ -700,13 +753,38 @@ void URogue10mCombatComponent::BindProgressionState()
 	{
 		PreviousState->OnMartialArtsProgressChanged.RemoveDynamic(
 			this, &URogue10mCombatComponent::HandleMartialArtsProgressChanged);
+		if (auto* Tree = PreviousState->GetSkillTreeProgressionComponent())
+		{
+			Tree->OnChanged.RemoveDynamic(this, &URogue10mCombatComponent::HandleHybridSkillTreeChanged);
+		}
 	}
 	BoundProgressionState = ProgressionState;
 	if (ProgressionState)
 	{
 		ProgressionState->OnMartialArtsProgressChanged.AddUniqueDynamic(
 			this, &URogue10mCombatComponent::HandleMartialArtsProgressChanged);
+		if (auto* Tree = ProgressionState->GetSkillTreeProgressionComponent())
+		{
+			Tree->OnChanged.AddUniqueDynamic(this, &URogue10mCombatComponent::HandleHybridSkillTreeChanged);
+			Tree->RefreshAutomaticUnlocks();
+		}
 	}
+}
+
+void URogue10mCombatComponent::HandleHybridSkillTreeChanged()
+{
+	ARogue10mCharacter* Character = GetOwnerCharacter();
+	auto* Tree = BoundProgressionState.IsValid() ? BoundProgressionState->GetSkillTreeProgressionComponent() : nullptr;
+	if (!Character || !Tree) { return; }
+	for (auto* Skill : Tree->GetGrantedSkills(Tree->GetActiveTrack()))
+	{
+		if (!Skill) { continue; }
+		UnlockedAttackSkillNames.Add(Skill->GetFName());
+		UnlockedSkillAssets.AddUnique(Skill);
+	}
+	if (auto* Identity = Character->GetSkillTreeCombatComponent()) { Identity->SynchronizeIdentity(); }
+	Character->RefreshCharacterStats(false);
+	OnSkillTreeChanged.Broadcast();
 }
 
 void URogue10mCombatComponent::HandleMartialArtsProgressChanged()
@@ -933,13 +1011,19 @@ bool URogue10mCombatComponent::ExecuteAttackSkill(const URogue10mAttackSkillData
 			FLinearColor(1.0f, 0.65f, 0.35f, 1.0f));
 		return false;
 	}
-	if (!CanPayResourceCosts(SkillData))
+	if (!CanPayResourceCosts(SkillData, bComboAttack))
 	{
 		return false;
 	}
 
-	ConsumeResourceCosts(SkillData);
+	ConsumeResourceCosts(SkillData, bComboAttack);
+	AcceptedIdentityEffect = Character->GetSkillTreeCombatComponent()
+		? Character->GetSkillTreeCombatComponent()->AcceptAttack(SkillData, bComboAttack) : FRogue10mSkillTreeAttackEffect();
 	StartSharedAttackCooldown(SkillData, bComboAttack);
+	if (AcceptedIdentityEffect.bTriggered)
+	{
+		AddCombatLog(TEXT("아이덴티티 발동"), FLinearColor(0.25f, 0.90f, 0.70f));
+	}
 
 	const float AnimationRate = FMath::Max(0.01f, GetAttackSpeedMultiplier() * SkillData.AnimationPlayRate);
 	const bool bMontagePlayed = Character->PlayCommonMontage(SkillData.AttackMontage, AnimationRate);
@@ -980,6 +1064,8 @@ void URogue10mCombatComponent::StartAttackHitSequence(const URogue10mAttackSkill
 	Execution.ExecutionId = ExecutionId;
 	Execution.SkillData = &SkillData;
 	const ARogue10mCharacter* Character = GetOwnerCharacter();
+	Execution.MasteryTrack = URogue10mSkillTreeDataAsset::ResolveTrack(Character ? Character->GetEquippedWeaponType() : ERogue10mWeaponType::Unarmed);
+	Execution.IdentityEffect = AcceptedIdentityEffect;
 	if (URogue10mTraitRuntimeComponent* Traits = Character ? Character->GetTraitRuntimeComponent() : nullptr)
 	{
 		Execution.TraitDodgeBonus = Traits->ConsumeDodgeCounterForAttack();
@@ -1116,20 +1202,22 @@ void URogue10mCombatComponent::GatherAttackTargets(
 	FVector QueryCenter = Origin;
 	FCollisionShape QueryShape;
 	FQuat QueryRotation = FQuat::Identity;
+	const float RangeScale = FMath::Clamp(Execution.IdentityEffect.RangeMultiplier, 1.0f, 2.0f);
+	const float AttackRange = SkillData.AttackRange * RangeScale;
 
 	switch (SkillData.AttackShape)
 	{
 	case ERogue10mAttackShape::LinearBox:
-		QueryCenter = Origin + Forward * (SkillData.AttackRange * 0.5f);
+		QueryCenter = Origin + Forward * (AttackRange * 0.5f);
 		QueryShape = FCollisionShape::MakeBox(FVector(
-			SkillData.AttackRange * 0.5f, SkillData.BoxHalfWidth, SkillData.BoxHalfHeight));
+			AttackRange * 0.5f, SkillData.BoxHalfWidth * RangeScale, SkillData.BoxHalfHeight));
 		QueryRotation = Rotation;
 		break;
 	case ERogue10mAttackShape::Projectile:
 	{
 		const int32 PulseCount = SkillData.HitMode == ERogue10mAttackHitMode::Single
 			? 1 : FMath::Clamp(SkillData.HitCount, 1, 64);
-		const float SegmentLength = SkillData.AttackRange / PulseCount;
+		const float SegmentLength = AttackRange / PulseCount;
 		QueryCenter = Origin + Forward * (Execution.ProjectileTravelDistance + SegmentLength * 0.5f);
 		Execution.ProjectileTravelDistance += SegmentLength;
 		QueryShape = FCollisionShape::MakeBox(FVector(
@@ -1139,11 +1227,11 @@ void URogue10mCombatComponent::GatherAttackTargets(
 	}
 	case ERogue10mAttackShape::Arc:
 		QueryCenter = Origin;
-		QueryShape = FCollisionShape::MakeSphere(SkillData.AttackRange);
+		QueryShape = FCollisionShape::MakeSphere(AttackRange);
 		break;
 	case ERogue10mAttackShape::Circle:
 		QueryCenter = Origin + Forward * SkillData.CircleForwardOffset;
-		QueryShape = FCollisionShape::MakeSphere(SkillData.AttackRange);
+		QueryShape = FCollisionShape::MakeSphere(AttackRange);
 		break;
 	default:
 		return;
@@ -1189,13 +1277,13 @@ void URogue10mCombatComponent::GatherAttackTargets(
 		const FColor Color = SkillData.DebugColor.ToFColor(true);
 		if (SkillData.AttackShape == ERogue10mAttackShape::Arc)
 		{
-			DrawDebugCone(GetWorld(), Origin, Forward, SkillData.AttackRange,
+			DrawDebugCone(GetWorld(), Origin, Forward, AttackRange,
 				FMath::DegreesToRadians(SkillData.ArcAngleDegrees * 0.5f),
 				FMath::DegreesToRadians(SkillData.ArcAngleDegrees * 0.5f), 24, Color, false, 1.2f);
 		}
 		else if (SkillData.AttackShape == ERogue10mAttackShape::Circle)
 		{
-			DrawDebugSphere(GetWorld(), QueryCenter, SkillData.AttackRange, 24, Color, false, 1.2f);
+			DrawDebugSphere(GetWorld(), QueryCenter, AttackRange, 24, Color, false, 1.2f);
 		}
 		else
 		{
@@ -1225,7 +1313,13 @@ bool URogue10mCombatComponent::ApplyAttackDamage(
 	bool bCriticalHit = false;
 	URogue10mTraitRuntimeComponent* Traits = Character->GetTraitRuntimeComponent();
 	const float TraitMultiplier = Traits ? Traits->GetAttackDamageMultiplier(TargetActor, Execution.TraitDodgeBonus) : 1.0f;
-	const float RolledDamage = SkillData.RollDamage(GetOwnerAttributes(), bCriticalHit) * TraitMultiplier;
+	const ARogue10mBasicMonster* MasteryTarget = Cast<ARogue10mBasicMonster>(&TargetActor);
+	// Check life before damage so the killing hit still counts; training/dummy targets do not.
+	const bool bEligibleMasteryTarget = MasteryTarget && !MasteryTarget->IsDead() && !MasteryTarget->IsCombatTestInstance()
+		&& MasteryTarget->GetMonsterData() && MasteryTarget->GetMonsterData()->ExperienceReward > 0
+		&& !TargetActor.ActorHasTag(TEXT("TrainingTarget"));
+	const float RolledDamage = SkillData.RollDamage(GetOwnerAttributes(), bCriticalHit) * TraitMultiplier
+		* Execution.IdentityEffect.DamageMultiplier;
 	const float AppliedDamage = UGameplayStatics::ApplyDamage(
 		&TargetActor, RolledDamage, Character->GetController(), Character, UDamageType::StaticClass());
 	if (!FMath::IsFinite(AppliedDamage) || AppliedDamage <= 0.0f)
@@ -1234,6 +1328,15 @@ bool URogue10mCombatComponent::ApplyAttackDamage(
 	}
 
 	Execution.TargetHitCounts.FindOrAdd(&TargetActor) += 1;
+	if (bEligibleMasteryTarget && !Execution.bMasteryAwarded)
+	{
+		Execution.bMasteryAwarded = true;
+		if (auto* State = Character->GetPlayerState<ARogue10mPlayerState>())
+		{
+			if (auto* Tree = State->GetSkillTreeProgressionComponent()) { Tree->NotifyConfirmedAttack(Execution.MasteryTrack); }
+		}
+		if (auto* Identity = Character->GetSkillTreeCombatComponent()) { Identity->NotifyConfirmedAttack(Execution.MasteryTrack); }
+	}
 	if (Traits && !Execution.bTraitHitRegistered)
 	{
 		// First confirmed target owns this execution's combo credit; multi-hit pulses cannot add credit.
@@ -1568,7 +1671,7 @@ bool URogue10mCombatComponent::TryActivateAttackAbility(const URogue10mAttackSki
 	return true;
 }
 
-bool URogue10mCombatComponent::CanPayResourceCosts(const URogue10mAttackSkillData& SkillData) const
+bool URogue10mCombatComponent::CanPayResourceCosts(const URogue10mAttackSkillData& SkillData, bool bComboAttack) const
 {
 	const URogue10mAttributeSet* Attributes = GetOwnerAttributes();
 	if (!Attributes)
@@ -1583,13 +1686,16 @@ bool URogue10mCombatComponent::CanPayResourceCosts(const URogue10mAttackSkillDat
 			continue;
 		}
 
+		const auto* Identity = GetOwnerCharacter() ? GetOwnerCharacter()->GetSkillTreeCombatComponent() : nullptr;
+		const float ActualCost = Cost.Cost * (Identity && Cost.ResourceType == ERogue10mAttackResourceType::Stamina
+			? Identity->GetStaminaCostMultiplier(bComboAttack) : 1.0f);
 		const bool bEnough = Cost.ResourceType == ERogue10mAttackResourceType::Health
-			? Attributes->GetHealth() > Cost.Cost
+			? Attributes->GetHealth() > ActualCost
 			: Cost.ResourceType == ERogue10mAttackResourceType::Stamina
-				? Attributes->GetStamina() >= Cost.Cost
+				? Attributes->GetStamina() >= ActualCost
 				: Cost.ResourceType == ERogue10mAttackResourceType::Mana
-					? Attributes->GetMana() >= Cost.Cost
-					: Attributes->GetIdentity() >= Cost.Cost;
+					? Attributes->GetMana() >= ActualCost
+					: Attributes->GetIdentity() >= ActualCost;
 		if (!bEnough)
 		{
 			if (Cost.ResourceType == ERogue10mAttackResourceType::Stamina)
@@ -1611,7 +1717,7 @@ bool URogue10mCombatComponent::CanPayResourceCosts(const URogue10mAttackSkillDat
 	return true;
 }
 
-void URogue10mCombatComponent::ConsumeResourceCosts(const URogue10mAttackSkillData& SkillData)
+void URogue10mCombatComponent::ConsumeResourceCosts(const URogue10mAttackSkillData& SkillData, bool bComboAttack)
 {
 	URogue10mAttributeSet* Attributes = GetOwnerAttributes();
 	if (!Attributes)
@@ -1621,19 +1727,22 @@ void URogue10mCombatComponent::ConsumeResourceCosts(const URogue10mAttackSkillDa
 
 	for (const FRogue10mAttackResourceCost& Cost : SkillData.ResourceCosts)
 	{
+		const auto* Identity = GetOwnerCharacter() ? GetOwnerCharacter()->GetSkillTreeCombatComponent() : nullptr;
+		const float ActualCost = Cost.Cost * (Identity && Cost.ResourceType == ERogue10mAttackResourceType::Stamina
+			? Identity->GetStaminaCostMultiplier(bComboAttack) : 1.0f);
 		switch (Cost.ResourceType)
 		{
 		case ERogue10mAttackResourceType::Health:
-			Attributes->ConsumeHealth(Cost.Cost);
+			Attributes->ConsumeHealth(ActualCost);
 			break;
 		case ERogue10mAttackResourceType::Stamina:
-			Attributes->ConsumeStamina(Cost.Cost);
+			Attributes->ConsumeStamina(ActualCost);
 			break;
 		case ERogue10mAttackResourceType::Mana:
-			Attributes->ConsumeMana(Cost.Cost);
+			Attributes->ConsumeMana(ActualCost);
 			break;
 		case ERogue10mAttackResourceType::Energy:
-			Attributes->ConsumeIdentity(Cost.Cost);
+			Attributes->ConsumeIdentity(ActualCost);
 			break;
 		default:
 			break;
@@ -1660,7 +1769,8 @@ void URogue10mCombatComponent::StartSharedAttackCooldown(const URogue10mAttackSk
 
 	AttackCooldownSourceSkill = CooldownSource;
 	const float AttackSpeed = GetAttackSpeedMultiplier();
-	AttackCooldownDuration = FMath::Max(0.0f, CooldownSource->AttackCooldown) / AttackSpeed;
+	AttackCooldownDuration = FMath::Max(0.0f, CooldownSource->AttackCooldown) / AttackSpeed
+		* FMath::Clamp(AcceptedIdentityEffect.RecoveryMultiplier, 0.1f, 1.0f);
 	const bool bHasNextCombo = bAllowAttackCombo && SkillData.bEnableCombo && SkillData.NextComboSkill;
 	const float StartDelay = bHasNextCombo
 		? FMath::Max(SkillData.ComboWindowOpenSeconds, SkillData.ComboWindowCloseSeconds) / AttackSpeed
@@ -1751,7 +1861,7 @@ FRogue10mCombatSnapshot URogue10mCombatComponent::CaptureCombat() const
 		ChargedSpecialAttackSkill.Get() }) { KnownSkills.Add(Skill); }
 	for (URogue10mAttackSkillData* Skill : KnownSkills)
 	{
-		if (Skill && UnlockedAttackSkillNames.Contains(Skill->GetFName()))
+		if (IsSkillDurablyUnlocked(Skill))
 		{
 			Snapshot.UnlockedSkills.Add(TSoftObjectPtr<URogue10mAttackSkillData>(Skill));
 		}
@@ -1760,9 +1870,21 @@ FRogue10mCombatSnapshot URogue10mCombatComponent::CaptureCombat() const
 	{
 		return Left.ToSoftObjectPath().ToString() < Right.ToSoftObjectPath().ToString();
 	});
+	// A temporary preview can occupy (or have moved away from) a real slot. Start
+	// with the last real choices, then overlay any newly learned current choices.
+	for (const auto& Pair : DurableSkillBindings)
+	{
+		if (Pair.Value && Snapshot.UnlockedSkills.Contains(TSoftObjectPtr<URogue10mAttackSkillData>(Pair.Value.Get())))
+		{
+			Snapshot.SkillBindings.Add(Pair.Key, TSoftObjectPtr<URogue10mAttackSkillData>(Pair.Value.Get()));
+		}
+	}
 	for (const auto& Pair : EquippedSkillBindings)
 	{
-		if (Pair.Value) { Snapshot.SkillBindings.Add(Pair.Key, TSoftObjectPtr<URogue10mAttackSkillData>(Pair.Value.Get())); }
+		if (Pair.Value && Snapshot.UnlockedSkills.Contains(TSoftObjectPtr<URogue10mAttackSkillData>(Pair.Value.Get())))
+		{
+			Snapshot.SkillBindings.Add(Pair.Key, TSoftObjectPtr<URogue10mAttackSkillData>(Pair.Value.Get()));
+		}
 	}
 	return Snapshot;
 }
@@ -1782,8 +1904,13 @@ bool URogue10mCombatComponent::RestoreCombat(const FRogue10mCombatSnapshot& Snap
 	for (const auto& Pair : Snapshot.SkillBindings)
 	{
 		URogue10mAttackSkillData* Skill = Pair.Value.LoadSynchronous();
+		const auto* Profile = FindActiveWeaponProfile();
+		const auto* DefaultSkill = Profile ? Profile->DefaultSkillBindings.Find(Pair.Key) : nullptr;
+		// Existing profiles include default jump attacks outside their visible
+		// tree. Preserve that exact default slot without admitting other skills.
+		const bool bProfileBinding = IsSkillInActiveTree(Skill) || (DefaultSkill && DefaultSkill->Get() == Skill);
 		if (static_cast<uint8>(Pair.Key) > static_cast<uint8>(ERogue10mAttackInputSlot::ChargedSpecial)
-			|| !Skill || !RestoredNames.Contains(Skill->GetFName()) || !IsSkillInActiveTree(Skill)
+			|| !Skill || !RestoredNames.Contains(Skill->GetFName()) || !bProfileBinding
 			|| Skill->SkillTreeNodeType != ERogue10mSkillTreeNodeType::ActiveTechnique)
 		{
 			return false;
@@ -1791,8 +1918,10 @@ bool URogue10mCombatComponent::RestoreCombat(const FRogue10mCombatSnapshot& Snap
 		RestoredBindings.Add(Pair.Key, Skill);
 	}
 	CancelWeaponTransitionState();
+	TestUnlockedAttackSkillNames.Reset();
 	UnlockedAttackSkillNames = MoveTemp(RestoredNames);
 	UnlockedSkillAssets = MoveTemp(RestoredAssets);
+	DurableSkillBindings = RestoredBindings;
 	EquippedSkillBindings = MoveTemp(RestoredBindings);
 	EvaluateActiveSkillUnlocks();
 	OnSkillTreeChanged.Broadcast();
@@ -1803,6 +1932,7 @@ void URogue10mCombatComponent::ResetCombatProgression()
 {
 	CancelWeaponTransitionState();
 	UnlockedAttackSkillNames.Reset();
+	TestUnlockedAttackSkillNames.Reset();
 	UnlockedSkillAssets.Reset();
 	ApplyActiveWeaponProfile();
 }

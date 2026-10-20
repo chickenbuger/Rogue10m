@@ -2283,3 +2283,12 @@
 - 관련: [설계](../Feature/architect/2026-10-20_boss-run-completion.md), [결과](../Feature/doc/2026-10-20_boss-run-completion.md), [최종 실행](../Feature/doc/evidence/boss-run-completion-20261020/frozen-runtime-launcher.log), [콘텐츠 고정](../Feature/doc/evidence/boss-run-completion-20261020/content-freeze.json), [독립 검토](../Feature/doc/evidence/boss-run-completion-20261020/review.md), [일일 로그](../DevLog/20261020.txt).
 
 - Sprint#5-39 최종 통합: 필수 경로·67파일 범위·공백·PowerShell 구문 검사 통과 후 기능 커밋 `c680f1ba689d643956c954023d306c45404c8a54`, develop→test→main 로컬 fast-forward 완료. 원격 fetch와 조상 관계·체크아웃·이전 해시 대조 완료. 원본5-38 브랜치/HEAD 및 병행 스킬트리 보존을 Source14개 독립 대조로 확인. [통합 결과](../Feature/doc/evidence/boss-run-completion-20261020/local-integration.json). 최종 기록 문서는 별도 커밋으로 같은 경로로 승격한다. 공개 전송 승인은 계속 대기 중이며 push 미시도다.
+
+## Sprint#5-38 — 격투가·대검술사 혼합 성장 스킬트리 (2026-10-20)
+
+- 브랜치: `Sprint#5-38-hybrid-skill-tree-runtime`. main 병합 전 생성한 번호를 유지하고, 공유 보스 정산 `f49915b4`를 기준으로 기존 작업을 보존했다.
+- 목표: 확정한 중앙 확장형 시안과 숙련/레벨업 포인트 혼합 설계를 두 직업의 실제 성장·전투·저장·K 메뉴에 연결한다.
+- 주요 변경: 53노드 카탈로그, PlayerState 숙련·공유 실제 지출 원장, Save v3/legacy 이전, 명중 실행당1XP, 격투가 내공·투지/대검 투지·마나, 성질·공명·MP 소비·부분 환급, 대검 파생5개, native 원형 UI·조건·키 지정. 기존 기본 공격·프로필 입력·몽타주 보존.
+- 검증: 최종 Editor 빌드 성공(83.55초), Automation3개 Success, 실제 게임50개/새 프로세스 저장 복원14개 확인에서 실패0·exit0. 원본 공격19개·초기 계약 보존, 1080p/720p 실제 화면 검토. 생성 경로·스테이징 목록/공백·스크립트 구문·문서 링크 검사 통과.
+- 상태: 구현·통합 QA·독립 리뷰·기록 완료, 로컬 커밋·develop→test→main 승격 진행. 공개 푸시는 선행 체크포인트의 공개 자료 전송 승인 대기를 존중하며 우회하지 않는다. 전용 무기 애니메이션·무기별 archive·20분 전체 플레이·Shipping·멀티는 별도 범위다.
+- 관련: [계획](../Feature/architect/2026-10-20_hybrid-skill-tree-runtime.md), [결과](../Feature/doc/2026-10-20_hybrid-skill-tree-runtime.md), [설계](HybridSkillTreeDesign.md), [실제 격투가 화면](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/brawler-1080p.png), [실제 대검 화면](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/greatsword-720p.png), [검토](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/review.md).

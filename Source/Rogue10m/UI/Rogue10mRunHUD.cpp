@@ -10,6 +10,8 @@
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mSkillLoadoutDataAsset.h"
 #include "Rogue10mPlayerState.h"
+#include "Rogue10mSkillTreeProgressionComponent.h"
+#include "Rogue10mSkillTreeCombatComponent.h"
 
 namespace
 {
@@ -100,7 +102,9 @@ FRogue10mHudVitalView URogue10mRunHUD::GetManaView() const
 {
 	const ARogue10mPlayerState* State = GetOwningPlayer() ? GetOwningPlayer()->GetPlayerState<ARogue10mPlayerState>() : nullptr;
 	const URogue10mAttributeSet* Attributes = State ? State->GetRogueAttributeSet() : nullptr;
-	if (!State || !State->IsManaEnabled() || !Attributes)
+	const auto* Tree = State ? State->GetSkillTreeProgressionComponent() : nullptr;
+	const bool bTreeMana = Tree && Tree->GetActiveIdentity() == ERogue10mSkillTreeIdentity::Mana;
+	if (!State || (!State->IsManaEnabled() && !bTreeMana) || !Attributes)
 	{
 		return FRogue10mHudVitalView();
 	}
@@ -155,6 +159,25 @@ FRogue10mHudIdentityView URogue10mRunHUD::GetIdentityView() const
 	View.Max = State->GetIdentityMax();
 	View.Normalized = State->GetIdentityNormalized();
 	View.bHasIdentityResource = State->HasIdentityResource();
+	if (const auto* Tree = State->GetSkillTreeProgressionComponent(); Tree && Tree->GetActiveTrack() != ERogue10mSkillTreeTrack::None)
+	{
+		const int32 Required = Tree->GetMasteryExperienceToNextLevel(Tree->GetActiveTrack());
+		View.MasteryNormalized = Required > 0
+			? FMath::Clamp(float(Tree->GetMasteryExperience(Tree->GetActiveTrack())) / Required, 0.0f, 1.0f) : 1.0f;
+		const auto Identity = Tree->GetActiveIdentity();
+		const bool bInner = Identity == ERogue10mSkillTreeIdentity::InternalEnergy;
+		const bool bSpirit = Identity == ERogue10mSkillTreeIdentity::FightingSpirit;
+		View.IdentityType = bInner ? ERogue10mIdentityType::Vigor : bSpirit ? ERogue10mIdentityType::Rage
+			: Identity == ERogue10mSkillTreeIdentity::Mana ? ERogue10mIdentityType::Mana : ERogue10mIdentityType::None;
+		View.ResourceLabel = FText::FromString(bInner ? TEXT("내공") : bSpirit ? TEXT("투지")
+			: Identity == ERogue10mSkillTreeIdentity::Mana ? TEXT("마나") : TEXT("아이덴티티 미선택"));
+		View.IconTexture = GetIdentityIconTexture(View.IdentityType);
+		const auto* IdentityCombat = Character ? Character->GetSkillTreeCombatComponent() : nullptr;
+		View.Current = IdentityCombat ? IdentityCombat->GetGauge() : 0.0f;
+		View.Max = IdentityCombat ? IdentityCombat->GetGaugeMaximum() : 100.0f;
+		View.Normalized = View.Max > 0.0f ? View.Current / View.Max : 0.0f;
+		View.bHasIdentityResource = Identity != ERogue10mSkillTreeIdentity::None;
+	}
 	return View;
 }
 

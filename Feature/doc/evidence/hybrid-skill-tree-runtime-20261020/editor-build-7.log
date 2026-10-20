@@ -1,0 +1,71 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Invalidating makefile for Rogue10mEditor (source file added)
+UHT compiled-in object format Default
+UHT processed Rogue10mEditor in 10.0409831 seconds (10 generated files written)
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mCombatComponent.cpp, Rogue10mCombatTestComponent.cpp, Rogue10mRunCompletionComponent.cpp, Rogue10mSkillTreeCombatComponent.cpp, Rogue10mSkillTreeProgressionComponent.cpp, Rogue10mTownProgressionComponent.cpp, Rogue10mGameMode.cpp, Rogue10mGameState.cpp, Rogue10mPlayerController.cpp, Rogue10mPlayerState.cpp, Rogue10mProgressionSubsystem.cpp, Rogue10mSkillTreeCatalog.cpp, Rogue10mSkillTreeData.cpp, Rogue10mBasicMonster.cpp, Rogue10mHybridSkillTreeRuntimeTest.cpp, Rogue10mHybridSkillTreeTests.cpp, Rogue10mRunCompletionRuntimeTest.cpp, Rogue10mTraitEffectsRuntimeTest.cpp, Rogue10mRunHUD.cpp, Rogue10mHybridSkillTreeWidget.cpp, Rogue10mMenuWindowWidgets.cpp, Rogue10mRunResultWidget.cpp, Rogue10mTutorialNPC.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+  Requested 1.5 GB memory per action, 10.85 GB available: limiting max parallel actions to 7
+Using XGE executor to run 26 action(s)
+Distributing 26 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {7998C69B-53DA-4403-8688-9A427AAF83D6}
+ 
+--------------------Project: Default-------------------------------------------
+[1/26] Compile [x64] Rogue10mGameState.cpp (0:17.25 at +0:00)
+[2/26] Compile [x64] Rogue10mGameMode.cpp (0:17.32 at +0:00)
+[3/26] Compile [x64] Rogue10mBasicMonster.cpp (0:21.95 at +0:00)
+[4/26] Compile [x64] Rogue10mCombatTestComponent.cpp (0:22.36 at +0:00)
+[5/26] Compile [x64] Rogue10mCharacter.cpp (0:22.62 at +0:00)
+[6/26] Compile [x64] Rogue10mMenuWindowWidgets.cpp (0:22.61 at +0:00)
+[7/26] Compile [x64] Rogue10mHybridSkillTreeWidget.cpp (0:23.62 at +0:00)
+[8/26] Compile [x64] Rogue10mHybridSkillTreeRuntimeTest.cpp (0:25.06 at +0:00)
+[9/26] Compile [x64] Rogue10mRunCompletionComponent.cpp (0:17.84 at +0:18)
+[10/26] Compile [x64] Rogue10mCombatComponent.cpp (0:40.21 at +0:00)
+[11/26] Compile [x64] Rogue10mRunResultWidget.cpp (0:18.31 at +0:23)
+[12/26] Compile [x64] Module.Rogue10m.6.cpp (0:42.90 at +0:00)
+[13/26] Compile [x64] Rogue10mPlayerController.cpp (0:26.51 at +0:17)
+[14/26] Compile [x64] Module.Rogue10m.7.cpp (0:44.11 at +0:00)
+[15/26] Compile [x64] Rogue10mTraitEffectsRuntimeTest.cpp (0:22.04 at +0:23)
+[16/26] Compile [x64] Rogue10mTutorialNPC.cpp (0:24.57 at +0:24)
+[17/26] Compile [x64] Rogue10mRunHUD.cpp (0:26.79 at +0:23)
+[18/26] Compile [x64] Module.Rogue10m.5.cpp (0:50.73 at +0:00)
+[19/26] Compile [x64] Module.Rogue10m.1.cpp (0:51.12 at +0:00)
+[20/26] Compile [x64] Module.Rogue10m.2.cpp (0:51.61 at +0:00)
+[21/26] Compile [x64] Rogue10mRunCompletionRuntimeTest.cpp (0:30.06 at +0:22)
+[22/26] Compile [x64] Module.Rogue10m.4.cpp (0:55.21 at +0:00)
+[23/26] Compile [x64] Module.Rogue10m.3.cpp (1:01.45 at +0:00)
+[24/26] Link [x64] UnrealEditor-Rogue10m.lib (0:00.31 at +1:01)
+   D:/Project/Rogue10m/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.lib ���̺귯�� �� D:/Project/Rogue10m/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.exp ��ü�� �����ϰ� �ֽ��ϴ�.
+[25/26] Link [x64] UnrealEditor-Rogue10m.dll (0:01.48 at +1:01)
+[26/26] WriteMetadata Rogue10mEditor.target (0:00.78 at +1:03)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 1 succeeded, 0 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 68.09 seconds
+Output binary: D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe
+
+Result: Succeeded
+Total execution time: 81.39 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 5.8kb

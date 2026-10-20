@@ -1,0 +1,77 @@
+격투가·대검술사 혼합 성장 스킬트리 변경 파일
+기준: f49915b4029151d4fc96ea298f7c62546e13089f
+구현과 검증을 통과한 이번 기능 범위만 커밋한다.
+
+Content/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_CrushingSlash.uasset	Unreal Editor에서 생성한 카탈로그·대검 파생 기술 또는 대검 프로필 확장
+Content/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_EarthSplitter.uasset	Unreal Editor에서 생성한 카탈로그·대검 파생 기술 또는 대검 프로필 확장
+Content/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_GuardBreak.uasset	Unreal Editor에서 생성한 카탈로그·대검 파생 기술 또는 대검 프로필 확장
+Content/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_Ultimate.uasset	Unreal Editor에서 생성한 카탈로그·대검 파생 기술 또는 대검 프로필 확장
+Content/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_Whirlwind.uasset	Unreal Editor에서 생성한 카탈로그·대검 파생 기술 또는 대검 프로필 확장
+Content/DataAsset/SkillProfile/DA_SkillProfile_Combat_GreatSword.uasset	Unreal Editor에서 생성한 카탈로그·대검 파생 기술 또는 대검 프로필 확장
+Content/DataAsset/SkillTree/DA_HybridSkillTreeCatalog.uasset	Unreal Editor에서 생성한 카탈로그·대검 파생 기술 또는 대검 프로필 확장
+DevLog/20261020.txt	한국어 개발 경과·검증 결과·Notion 요약 후보 추가
+Docs/HybridSkillTreeDesign.md	설계·사용법·계획·구현 결과·Sprint 기록 갱신
+Docs/SkillTreeLoadoutGuide.md	설계·사용법·계획·구현 결과·Sprint 기록 갱신
+Docs/SprintChangeLog.md	설계·사용법·계획·구현 결과·Sprint 기록 갱신
+Feature/architect/2026-10-20_hybrid-skill-tree-runtime.md	설계·사용법·계획·구현 결과·Sprint 기록 갱신
+Feature/doc/2026-10-20_hybrid-skill-tree-runtime.md	설계·사용법·계획·구현 결과·Sprint 기록 갱신
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/asset-authoring.json	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/assets-HybridAssets01.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/assets-HybridAssets02.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/automation-HybridAuto01.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/automation-HybridAuto02.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/automation-report/index.html	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/automation-report/index.json	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/automation-summary.json	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/baseline-tracked.json	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/before-ui-brawler-1080p.png	화면 개선 전 비교 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/before-ui-greatsword-720p.png	화면 개선 전 비교 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/brawler-1080p.png	최종 실제 게임 UI 캡처
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/commit-files.txt	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/editor-build-2.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/editor-build-3.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/editor-build-4.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/editor-build-5.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/editor-build-6.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/editor-build-7.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/editor-build-8.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/editor-build.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/greatsword-720p.png	최종 실제 게임 UI 캡처
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/greatsword-locked-1080p.png	최종 실제 게임 UI 캡처
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/read-HybridRun05.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/review.md	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/runtime-HybridRun01.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/runtime-HybridRun02.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/runtime-HybridRun03.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/runtime-HybridRun04.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/runtime-HybridRun05.log	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/runtime-read-results.txt	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/runtime-results.txt	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/visual-review.md	빌드·자동화·실행·독립 리뷰·변경 목록 증거
+Scripts/Editor/CreateHybridSkillTreeAssets.py	Editor 자산 작성 또는 격리된 검증 실행기
+Scripts/VerifyHybridSkillTree.ps1	Editor 자산 작성 또는 격리된 검증 실행기
+Source/Rogue10m/Character/Rogue10mCharacter.cpp	숙련 스탯과 일시 아이덴티티 전투 컴포넌트 연결
+Source/Rogue10m/Character/Rogue10mCharacter.h	숙련 스탯과 일시 아이덴티티 전투 컴포넌트 연결
+Source/Rogue10m/Components/Rogue10mCombatComponent.cpp	숙련·아이덴티티·실제 피해·안전한 장착 저장과 특성 공유 포인트
+Source/Rogue10m/Components/Rogue10mCombatComponent.h	숙련·아이덴티티·실제 피해·안전한 장착 저장과 특성 공유 포인트
+Source/Rogue10m/Components/Rogue10mSkillTreeCombatComponent.cpp	숙련·아이덴티티·실제 피해·안전한 장착 저장과 특성 공유 포인트
+Source/Rogue10m/Components/Rogue10mSkillTreeCombatComponent.h	숙련·아이덴티티·실제 피해·안전한 장착 저장과 특성 공유 포인트
+Source/Rogue10m/Components/Rogue10mSkillTreeProgressionComponent.cpp	숙련·아이덴티티·실제 피해·안전한 장착 저장과 특성 공유 포인트
+Source/Rogue10m/Components/Rogue10mSkillTreeProgressionComponent.h	숙련·아이덴티티·실제 피해·안전한 장착 저장과 특성 공유 포인트
+Source/Rogue10m/Components/Rogue10mTownProgressionComponent.cpp	숙련·아이덴티티·실제 피해·안전한 장착 저장과 특성 공유 포인트
+Source/Rogue10m/Core/Rogue10mPlayerState.cpp	PlayerState 영구 성장 소유·공유 원장·v3 저장 이전과 복원
+Source/Rogue10m/Core/Rogue10mPlayerState.h	PlayerState 영구 성장 소유·공유 원장·v3 저장 이전과 복원
+Source/Rogue10m/Core/Rogue10mProgressionSaveGame.h	PlayerState 영구 성장 소유·공유 원장·v3 저장 이전과 복원
+Source/Rogue10m/Core/Rogue10mProgressionSubsystem.cpp	PlayerState 영구 성장 소유·공유 원장·v3 저장 이전과 복원
+Source/Rogue10m/Data/Rogue10mSkillTreeCatalog.cpp	혼합 트리 데이터 스키마·53노드·허용 계열·성장 조건
+Source/Rogue10m/Data/Rogue10mSkillTreeData.cpp	혼합 트리 데이터 스키마·53노드·허용 계열·성장 조건
+Source/Rogue10m/Data/Rogue10mSkillTreeData.h	혼합 트리 데이터 스키마·53노드·허용 계열·성장 조건
+Source/Rogue10m/Tests/Rogue10mHybridSkillTreeRuntimeTest.cpp	숙련·원장·실제 UI·피해·저장 재시작 회귀 검사
+Source/Rogue10m/Tests/Rogue10mHybridSkillTreeTests.cpp	숙련·원장·실제 UI·피해·저장 재시작 회귀 검사
+Source/Rogue10m/UI/Rogue10mRunHUD.cpp	실제 원형 트리·고정 버튼·키 지정·HUD 숙련과 아이덴티티 표시
+Source/Rogue10m/UI/Widgets/Rogue10mHybridSkillTreeWidget.cpp	실제 원형 트리·고정 버튼·키 지정·HUD 숙련과 아이덴티티 표시
+Source/Rogue10m/UI/Widgets/Rogue10mHybridSkillTreeWidget.h	실제 원형 트리·고정 버튼·키 지정·HUD 숙련과 아이덴티티 표시
+Source/Rogue10m/UI/Widgets/Rogue10mMenuWindowWidgets.cpp	실제 원형 트리·고정 버튼·키 지정·HUD 숙련과 아이덴티티 표시
+Source/Rogue10m/UI/Widgets/Rogue10mMenuWindowWidgets.h	실제 원형 트리·고정 버튼·키 지정·HUD 숙련과 아이덴티티 표시
+Source/Rogue10m/World/Rogue10mTutorialNPC.cpp	마을 NPC의 스킬트리 서비스 거리 검사
+Source/Rogue10m/World/Rogue10mTutorialNPC.h	마을 NPC의 스킬트리 서비스 거리 검사

@@ -13,6 +13,7 @@ class UAbilitySystemComponent;
 class URogue10mAbilitySystemComponent;
 class URogue10mAttributeSet;
 class URogue10mTownProgressionComponent;
+class URogue10mSkillTreeProgressionComponent;
 struct FRogue10mGrowthSnapshot;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRogue10mMartialArtsProgressChanged);
@@ -31,6 +32,8 @@ public:
 	FRogue10mGrowthChanged OnGrowthChanged;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Progression|Town")
 	URogue10mTownProgressionComponent* GetTownProgressionComponent() const { return TownProgressionComponent; }
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree")
+	URogue10mSkillTreeProgressionComponent* GetSkillTreeProgressionComponent() const { return SkillTreeProgressionComponent; }
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
@@ -119,6 +122,8 @@ public:
 	void SetManaEnabled(bool bEnabled) { bManaEnabled = bEnabled; }
 
 private:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree", meta=(AllowPrivateAccess="true"))
+	TObjectPtr<URogue10mSkillTreeProgressionComponent> SkillTreeProgressionComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Progression|Town", meta=(AllowPrivateAccess="true"))
 	TObjectPtr<URogue10mTownProgressionComponent> TownProgressionComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|GAS", meta=(AllowPrivateAccess="true"))

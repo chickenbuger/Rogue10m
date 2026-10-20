@@ -17,6 +17,7 @@ class URogue10mAttackSkillData;
 class URogue10mAttributeSet;
 class URogue10mCharacterAnimationComponent;
 class URogue10mCombatComponent;
+class URogue10mSkillTreeCombatComponent;
 class URogue10mBasicBrawlerComponent;
 class URogue10mFirstPersonPresentationComponent;
 class URogue10mAppearanceCameraComponent;
@@ -89,6 +90,9 @@ public:
 	URogue10mFirstPersonPresentationComponent* GetFirstPersonPresentationComponent() const { return FirstPersonPresentationComponent; }
 	URogue10mInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
 	URogue10mCombatComponent* GetCombatComponent() const { return CombatComponent; }
+
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree")
+	URogue10mSkillTreeCombatComponent* GetSkillTreeCombatComponent() const { return SkillTreeCombatComponent; }
 	URogue10mBasicBrawlerComponent* GetBasicBrawlerComponent() const { return BasicBrawlerComponent; }
 	URogue10mCharacterAnimationComponent* GetCharacterAnimationComponent() const { return CharacterAnimationComponent; }
 	URogue10mPlayerFeedbackComponent* GetPlayerFeedbackComponent() const { return PlayerFeedbackComponent; }
@@ -193,6 +197,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<URogue10mCombatComponent> CombatComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree", meta=(AllowPrivateAccess="true"))
+	TObjectPtr<URogue10mSkillTreeCombatComponent> SkillTreeCombatComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<URogue10mBasicBrawlerComponent> BasicBrawlerComponent;

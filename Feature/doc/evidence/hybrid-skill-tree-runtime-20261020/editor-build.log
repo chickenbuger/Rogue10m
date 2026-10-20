@@ -1,0 +1,803 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Invalidating makefile for Rogue10mEditor (source file added)
+UHT compiled-in object format Default
+Waiting for 'git status' command to complete
+UHT processed Rogue10mEditor in 9.84781 seconds (20 generated files written)
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mFighterCombatStanceAnimInstance.cpp, Rogue10mStylizedCharacter.cpp, Rogue10mViewAlignedUpperBodyProxy.cpp, Rogue10mAppearanceCameraComponent.cpp, Rogue10mCharacterAnimationComponent.cpp, Rogue10mCombatComponent.cpp, Rogue10mCombatTestComponent.cpp, Rogue10mFirstPersonPresentationComponent.cpp, Rogue10mInventoryComponent.cpp, Rogue10mInventoryPersistence.cpp, Rogue10mSkillBindingComponent.cpp, Rogue10mSkillTreeCombatComponent.cpp, Rogue10mSkillTreeProgressionComponent.cpp, Rogue10mTownProgressionComponent.cpp, Rogue10mTraitRuntimeComponent.cpp, Rogue10mVitalRegenerationComponent.cpp, Rogue10mCharacterProfileSubsystem.cpp, Rogue10mGameMode.cpp, Rogue10mPlayerController.cpp, Rogue10mPlayerState.cpp, Rogue10mProgressionSubsystem.cpp, Rogue10mMonsterDataAsset.cpp, Rogue10mSkillTreeCatalog.cpp, Rogue10mSkillTreeData.cpp, Rogue10mTownServiceDataAsset.cpp, Rogue10mTraitCatalogDataAsset.cpp, Rogue10mFistCombatAuthoring.cpp, Rogue10mGroundLocomotionAuthoring.cpp, Rogue10mMovingAttackAuthoring.cpp, Rogue10mOpenWorldAuthoring.cpp, Rogue10mSafeHeadMontageAuthoring.cpp, Rogue10mWalkPalmAuthoring.cpp, Rogue10mBasicMonster.cpp, Rogue10mMonsterAttackPatternComponent.cpp, Rogue10mMonsterAIController.cpp, Rogue10mAppearanceCameraRuntimeTest.cpp, Rogue10mCameraForwardRuntimeTest.cpp, Rogue10mCombatTestUIRuntimeTest.cpp, Rogue10mFighterCombatStanceRuntimeTest.cpp, Rogue10mFighterSkillTreeRuntimeTest.cpp, Rogue10mFistCombatRuntimeTest.cpp, Rogue10mHybridSkillTreeRuntimeTest.cpp, Rogue10mHybridSkillTreeTests.cpp, Rogue10mInitialHeadFramingRuntimeTest.cpp, Rogue10mMonsterChaseEffectsRuntimeTest.cpp, Rogue10mMouseHeadStableRuntimeTest.cpp, Rogue10mMovingAttackRuntimeTest.cpp, Rogue10mProgressionFailureRuntimeTest.cpp, Rogue10mResponsiveHUDRuntimeTest.cpp, Rogue10mStoneFistAnimationRuntimeTest.cpp, Rogue10mThirdPersonInspectionRuntimeTest.cpp, Rogue10mTownRunRuntimeTest.cpp, Rogue10mTownServicesRuntimeTest.cpp, Rogue10mTownVisualRuntimeTest.cpp, Rogue10mTraitEffectsRuntimeTest.cpp, Rogue10mTraitPersistenceRuntimeTest.cpp, Rogue10mTraitUIRuntimeTest.cpp, Rogue10mViewAlignedUpperBodyTest.cpp, Rogue10mWalkPalmRuntimeTest.cpp, Rogue10mWeaponSkillTreeRuntimeTest.cpp, Rogue10mRunHUD.cpp, Rogue10mCombatTestWidget.cpp, Rogue10mHybridSkillTreeWidget.cpp, Rogue10mMenuWindowWidgets.cpp, Rogue10mTraitWidget.cpp, Rogue10mTutorialWidget.cpp, Rogue10mDroppedItem.cpp, Rogue10mMonsterSpawner.cpp, Rogue10mOpenWorldBootstrap.cpp, Rogue10mRunPortal.cpp, Rogue10mTutorialAnimationComponent.cpp, Rogue10mTutorialNPC.cpp, Rogue10mTutorialRewardComponent.cpp, Rogue10mTutorialSupplySubsystem.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+  Requested 1.5 GB memory per action, 11.81 GB available: limiting max parallel actions to 7
+Using XGE executor to run 69 action(s)
+Distributing 69 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {1E1B25F6-243E-48B8-A5E1-63B51A1E9AE7}
+ 
+--------------------Project: Default-------------------------------------------
+[1/69] Compile [x64] Module.Rogue10m.7.cpp (0:09.90 at +0:00)
+[2/69] Compile [x64] Rogue10mAppearanceCameraComponent.cpp (0:10.59 at +0:00)
+[3/69] Compile [x64] Rogue10mAppearanceCameraRuntimeTest.cpp (0:18.25 at +0:00)
+[4/69] Compile [x64] Rogue10mBasicMonster.cpp (0:18.39 at +0:00)
+[5/69] Compile [x64] Rogue10mCharacter.cpp (0:19.34 at +0:00)
+[6/69] Compile [x64] Rogue10mCameraForwardRuntimeTest.cpp (0:19.57 at +0:00)
+[7/69] Compile [x64] Rogue10mCombatTestComponent.cpp (0:19.86 at +0:01)
+[8/69] Compile [x64] Rogue10mCombatTestUIRuntimeTest.cpp (0:19.85 at +0:01)
+[9/69] Compile [x64] Module.Rogue10m.6.cpp (0:20.32 at +0:00)
+[10/69] Compile [x64] Rogue10mDroppedItem.cpp (0:10.43 at +0:10)
+[11/69] Compile [x64] Module.Rogue10m.2.cpp (0:21.75 at +0:00)
+[12/69] Compile [x64] Rogue10mCharacterAnimationComponent.cpp (0:22.15 at +0:00)
+[13/69] Compile [x64] Rogue10mFighterCombatStanceAnimInstance.cpp (0:12.25 at +0:11)
+[14/69] Compile [x64] Module.Rogue10m.5.cpp (0:26.82 at +0:00)
+[15/69] Compile [x64] Rogue10mGameMode.cpp (0:10.34 at +0:20)
+[16/69] Compile [x64] Rogue10mHybridSkillTreeWidget.cpp (0:10.17 at +0:21)
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(27,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeButton : public UButton
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(26,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(29,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(42,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeEntryWidget : public UUserWidget
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(41,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(44,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(65,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeConnectionsWidget : public UUserWidget
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(64,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(67,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(79,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeGraphWidget : public UUserWidget
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(78,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(81,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(102,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeWidget : public UUserWidget
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(101,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(104,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(142,12): error C2039: 'Clicked': 'UButton'�� ����� �ƴմϴ�.
+	OnClicked.AddUniqueDynamic(this, &ThisClass::Clicked);
+	          ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Components\Button.h(32,7): note: 'UButton' ������ �����Ͻʽÿ�.
+class UButton : public UContentWidget
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(142,12): error C2276: '&': ���ε��� ��� �Լ� ���� ������ �߸��Ǿ����ϴ�.
+	OnClicked.AddUniqueDynamic(this, &ThisClass::Clicked);
+	          ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(142,12): error C2672: 'TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic': ��ġ�ϴ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1451,18): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'�� �� �ֽ��ϴ�.
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(142,12): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	OnClicked.AddUniqueDynamic(this, &ThisClass::Clicked);
+	          ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1446,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(142,12): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	OnClicked.AddUniqueDynamic(this, &ThisClass::Clicked);
+	          ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1440,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(142,12): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	OnClicked.AddUniqueDynamic(this, &ThisClass::Clicked);
+	          ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1434,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(142,12): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	OnClicked.AddUniqueDynamic(this, &ThisClass::Clicked);
+	          ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(167,16): error C4458: 'Slot' ������ Ŭ���� ����� ����ϴ�.
+	UOverlaySlot* Slot = Overlay->AddChildToOverlay(Symbol);
+	              ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Components\Widget.h(264,25): note: 'UWidget::Slot' ������ �����Ͻʽÿ�.
+	TObjectPtr<UPanelSlot> Slot;
+	                       ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(212,16): error C2039: 'NativeOnPreviewMouseButtonDown': 'UWidget'�� ����� �ƴմϴ�.
+	return Super::NativeOnPreviewMouseButtonDown(Geometry, Event);
+	              ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Components\Widget.h(216,7): note: 'UWidget' ������ �����Ͻʽÿ�.
+class UWidget : public UVisual, public INotifyFieldValueChanged
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(308,33): error C2039: 'NativePaint': 'UWidget'�� ����� �ƴմϴ�.
+	const int32 BaseLayer = Super::NativePaint(Args, Geometry, CullingRect, Elements, LayerId, Style, bParentEnabled);
+	                               ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Components\Widget.h(216,7): note: 'UWidget' ������ �����Ͻʽÿ�.
+class UWidget : public UVisual, public INotifyFieldValueChanged
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(369,9): error C2039: 'NativeConstruct': 'UWidget'�� ����� �ƴմϴ�.
+	Super::NativeConstruct(); InitializeTree();
+	       ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Components\Widget.h(216,7): note: 'UWidget' ������ �����Ͻʽÿ�.
+class UWidget : public UVisual, public INotifyFieldValueChanged
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(373,27): error C2039: 'NativeDestruct': 'UWidget'�� ����� �ƴմϴ�.
+	ReleaseContext(); Super::NativeDestruct();
+	                         ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Components\Widget.h(216,7): note: 'UWidget' ������ �����Ͻʽÿ�.
+class UWidget : public UVisual, public INotifyFieldValueChanged
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(458,39): error C2039: 'HandleBasicSkillSelected': 'UUserWidget'�� ����� �ƴմϴ�.
+	BasicSkillPicker->OnSelectionChanged.AddUniqueDynamic(this, &ThisClass::HandleBasicSkillSelected);
+	                                     ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Blueprint\UserWidget.h(280,7): note: 'UUserWidget' ������ �����Ͻʽÿ�.
+class UUserWidget : public UWidget, public INamedSlotInterface
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(458,39): error C2276: '&': ���ε��� ��� �Լ� ���� ������ �߸��Ǿ����ϴ�.
+	BasicSkillPicker->OnSelectionChanged.AddUniqueDynamic(this, &ThisClass::HandleBasicSkillSelected);
+	                                     ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(458,39): error C2672: 'TDynamicMulticastDelegate<void (FString,ESelectInfo::Type),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic': ��ġ�ϴ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1451,18): note: 'void TDynamicMulticastDelegate<void (FString,ESelectInfo::Type),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<RetValType (FString,ESelectInfo::Type),ThreadSafetyMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'�� �� �ֽ��ϴ�.
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(458,39): note: 'void TDynamicMulticastDelegate<void (FString,ESelectInfo::Type),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<RetValType (FString,ESelectInfo::Type),ThreadSafetyMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	BasicSkillPicker->OnSelectionChanged.AddUniqueDynamic(this, &ThisClass::HandleBasicSkillSelected);
+	                                     ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1446,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (FString,ESelectInfo::Type),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<RetValType (FString,ESelectInfo::Type),ThreadSafetyMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(458,39): note: 'void TDynamicMulticastDelegate<void (FString,ESelectInfo::Type),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<RetValType (FString,ESelectInfo::Type),ThreadSafetyMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	BasicSkillPicker->OnSelectionChanged.AddUniqueDynamic(this, &ThisClass::HandleBasicSkillSelected);
+	                                     ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1440,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (FString,ESelectInfo::Type),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<RetValType (FString,ESelectInfo::Type),ThreadSafetyMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(458,39): note: 'void TDynamicMulticastDelegate<void (FString,ESelectInfo::Type),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<RetValType (FString,ESelectInfo::Type),ThreadSafetyMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	BasicSkillPicker->OnSelectionChanged.AddUniqueDynamic(this, &ThisClass::HandleBasicSkillSelected);
+	                                     ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1434,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (FString,ESelectInfo::Type),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<RetValType (FString,ESelectInfo::Type),ThreadSafetyMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(458,39): note: 'void TDynamicMulticastDelegate<void (FString,ESelectInfo::Type),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<RetValType (FString,ESelectInfo::Type),ThreadSafetyMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	BasicSkillPicker->OnSelectionChanged.AddUniqueDynamic(this, &ThisClass::HandleBasicSkillSelected);
+	                                     ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(463,29): error C2039: 'HandleKeySelected': 'UUserWidget'�� ����� �ƴմϴ�.
+	KeySelector->OnKeySelected.AddUniqueDynamic(this, &ThisClass::HandleKeySelected);
+	                           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Blueprint\UserWidget.h(280,7): note: 'UUserWidget' ������ �����Ͻʽÿ�.
+class UUserWidget : public UWidget, public INamedSlotInterface
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(463,29): error C2276: '&': ���ε��� ��� �Լ� ���� ������ �߸��Ǿ����ϴ�.
+	KeySelector->OnKeySelected.AddUniqueDynamic(this, &ThisClass::HandleKeySelected);
+	                           ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(463,29): error C2672: 'TDynamicMulticastDelegate<void (FInputChord),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic': ��ġ�ϴ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1451,18): note: 'void TDynamicMulticastDelegate<void (FInputChord),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<RetValType (FInputChord),ThreadSafetyMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'�� �� �ֽ��ϴ�.
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(463,29): note: 'void TDynamicMulticastDelegate<void (FInputChord),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<RetValType (FInputChord),ThreadSafetyMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	KeySelector->OnKeySelected.AddUniqueDynamic(this, &ThisClass::HandleKeySelected);
+	                           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1446,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (FInputChord),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<RetValType (FInputChord),ThreadSafetyMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(463,29): note: 'void TDynamicMulticastDelegate<void (FInputChord),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<RetValType (FInputChord),ThreadSafetyMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	KeySelector->OnKeySelected.AddUniqueDynamic(this, &ThisClass::HandleKeySelected);
+	                           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1440,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (FInputChord),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<RetValType (FInputChord),ThreadSafetyMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(463,29): note: 'void TDynamicMulticastDelegate<void (FInputChord),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<RetValType (FInputChord),ThreadSafetyMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	KeySelector->OnKeySelected.AddUniqueDynamic(this, &ThisClass::HandleKeySelected);
+	                           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1434,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (FInputChord),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<RetValType (FInputChord),ThreadSafetyMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(463,29): note: 'void TDynamicMulticastDelegate<void (FInputChord),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<RetValType (FInputChord),ThreadSafetyMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+        with
+        [
+            RetValType=void,
+            ThreadSafetyMode=FNotThreadSafeDelegateMode
+        ]
+	KeySelector->OnKeySelected.AddUniqueDynamic(this, &ThisClass::HandleKeySelected);
+	                           ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(489,26): error C2039: 'HandleProgressionChanged': 'UUserWidget'�� ����� �ƴմϴ�.
+		State->OnGrowthChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+		                       ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Blueprint\UserWidget.h(280,7): note: 'UUserWidget' ������ �����Ͻʽÿ�.
+class UUserWidget : public UWidget, public INamedSlotInterface
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(489,26): error C2276: '&': ���ε��� ��� �Լ� ���� ������ �߸��Ǿ����ϴ�.
+		State->OnGrowthChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+		                       ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(489,26): error C2672: 'TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic': ��ġ�ϴ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1451,18): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'�� �� �ֽ��ϴ�.
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(489,26): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+		State->OnGrowthChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+		                       ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1446,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(489,26): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+		State->OnGrowthChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+		                       ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1440,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(489,26): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+		State->OnGrowthChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+		                       ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1434,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(489,26): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+		State->OnGrowthChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+		                       ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(491,64): error C2039: 'HandleProgressionChanged': 'UUserWidget'�� ����� �ƴմϴ�.
+		if (BoundTown.IsValid()) BoundTown->OnTownProgressionChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+		                                                             ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Blueprint\UserWidget.h(280,7): note: 'UUserWidget' ������ �����Ͻʽÿ�.
+class UUserWidget : public UWidget, public INamedSlotInterface
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(491,64): error C2276: '&': ���ε��� ��� �Լ� ���� ������ �߸��Ǿ����ϴ�.
+		if (BoundTown.IsValid()) BoundTown->OnTownProgressionChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+		                                                             ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(491,64): error C2672: 'TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic': ��ġ�ϴ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1451,18): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'�� �� �ֽ��ϴ�.
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(491,64): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+		if (BoundTown.IsValid()) BoundTown->OnTownProgressionChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+		                                                             ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1446,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(491,64): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+		if (BoundTown.IsValid()) BoundTown->OnTownProgressionChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+		                                                             ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1440,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(491,64): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+		if (BoundTown.IsValid()) BoundTown->OnTownProgressionChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+		                                                             ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1434,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(491,64): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+		if (BoundTown.IsValid()) BoundTown->OnTownProgressionChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+		                                                             ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(493,38): error C2039: 'HandleProgressionChanged': 'UUserWidget'�� ����� �ƴմϴ�.
+	if (Component) Component->OnChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                    ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Blueprint\UserWidget.h(280,7): note: 'UUserWidget' ������ �����Ͻʽÿ�.
+class UUserWidget : public UWidget, public INamedSlotInterface
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(493,38): error C2276: '&': ���ε��� ��� �Լ� ���� ������ �߸��Ǿ����ϴ�.
+	if (Component) Component->OnChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                    ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(493,38): error C2672: 'TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic': ��ġ�ϴ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1451,18): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'�� �� �ֽ��ϴ�.
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(493,38): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (Component) Component->OnChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                    ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1446,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(493,38): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (Component) Component->OnChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                    ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1440,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(493,38): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (Component) Component->OnChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                    ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1434,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(493,38): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (Component) Component->OnChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                    ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(495,61): error C2039: 'HandleProgressionChanged': 'UUserWidget'�� ����� �ƴմϴ�.
+	if (BoundCombat.IsValid()) BoundCombat->OnSkillTreeChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Blueprint\UserWidget.h(280,7): note: 'UUserWidget' ������ �����Ͻʽÿ�.
+class UUserWidget : public UWidget, public INamedSlotInterface
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(495,61): error C2276: '&': ���ε��� ��� �Լ� ���� ������ �߸��Ǿ����ϴ�.
+	if (BoundCombat.IsValid()) BoundCombat->OnSkillTreeChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                           ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(495,61): error C2672: 'TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic': ��ġ�ϴ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1451,18): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'�� �� �ֽ��ϴ�.
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(495,61): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundCombat.IsValid()) BoundCombat->OnSkillTreeChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1446,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(495,61): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundCombat.IsValid()) BoundCombat->OnSkillTreeChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1440,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(495,61): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundCombat.IsValid()) BoundCombat->OnSkillTreeChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1434,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(495,61): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundCombat.IsValid()) BoundCombat->OnSkillTreeChanged.AddUniqueDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                           ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(497,69): error C2039: 'HandleBindingsChanged': 'UUserWidget'�� ����� �ƴմϴ�.
+	if (BoundBindings.IsValid()) BoundBindings->OnSkillBindingsChanged.AddUniqueDynamic(this, &ThisClass::HandleBindingsChanged);
+	                                                                   ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Blueprint\UserWidget.h(280,7): note: 'UUserWidget' ������ �����Ͻʽÿ�.
+class UUserWidget : public UWidget, public INamedSlotInterface
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(497,69): error C2276: '&': ���ε��� ��� �Լ� ���� ������ �߸��Ǿ����ϴ�.
+	if (BoundBindings.IsValid()) BoundBindings->OnSkillBindingsChanged.AddUniqueDynamic(this, &ThisClass::HandleBindingsChanged);
+	                                                                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(497,69): error C2672: 'TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic': ��ġ�ϴ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1451,18): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'�� �� �ֽ��ϴ�.
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(497,69): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundBindings.IsValid()) BoundBindings->OnSkillBindingsChanged.AddUniqueDynamic(this, &ThisClass::HandleBindingsChanged);
+	                                                                   ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1446,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(497,69): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundBindings.IsValid()) BoundBindings->OnSkillBindingsChanged.AddUniqueDynamic(this, &ThisClass::HandleBindingsChanged);
+	                                                                   ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1440,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(497,69): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundBindings.IsValid()) BoundBindings->OnSkillBindingsChanged.AddUniqueDynamic(this, &ThisClass::HandleBindingsChanged);
+	                                                                   ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1434,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_AddUniqueDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(497,69): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_AddUniqueDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundBindings.IsValid()) BoundBindings->OnSkillBindingsChanged.AddUniqueDynamic(this, &ThisClass::HandleBindingsChanged);
+	                                                                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(502,52): error C2039: 'HandleProgressionChanged': 'UUserWidget'�� ����� �ƴմϴ�.
+	if (Progression.IsValid()) Progression->OnChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Blueprint\UserWidget.h(280,7): note: 'UUserWidget' ������ �����Ͻʽÿ�.
+class UUserWidget : public UWidget, public INamedSlotInterface
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(502,52): error C2276: '&': ���ε��� ��� �Լ� ���� ������ �߸��Ǿ����ϴ�.
+	if (Progression.IsValid()) Progression->OnChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                  ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(502,52): error C2672: 'TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic': ��ġ�ϴ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1496,18): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'�� �� �ֽ��ϴ�.
+	UE_REWRITE void __Internal_RemoveDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes&&...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(502,52): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (Progression.IsValid()) Progression->OnChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1491,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(502,52): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (Progression.IsValid()) Progression->OnChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1486,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic( TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes&&...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(502,52): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (Progression.IsValid()) Progression->OnChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1481,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(502,52): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (Progression.IsValid()) Progression->OnChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                  ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(503,56): error C2039: 'HandleProgressionChanged': 'UUserWidget'�� ����� �ƴմϴ�.
+	if (BoundState.IsValid()) BoundState->OnGrowthChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                      ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Blueprint\UserWidget.h(280,7): note: 'UUserWidget' ������ �����Ͻʽÿ�.
+class UUserWidget : public UWidget, public INamedSlotInterface
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(503,56): error C2276: '&': ���ε��� ��� �Լ� ���� ������ �߸��Ǿ����ϴ�.
+	if (BoundState.IsValid()) BoundState->OnGrowthChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(503,56): error C2672: 'TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic': ��ġ�ϴ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1496,18): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'�� �� �ֽ��ϴ�.
+	UE_REWRITE void __Internal_RemoveDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes&&...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(503,56): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundState.IsValid()) BoundState->OnGrowthChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                      ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1491,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(503,56): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundState.IsValid()) BoundState->OnGrowthChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                      ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1486,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic( TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes&&...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(503,56): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundState.IsValid()) BoundState->OnGrowthChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                      ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1481,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(503,56): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundState.IsValid()) BoundState->OnGrowthChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(504,63): error C2039: 'HandleProgressionChanged': 'UUserWidget'�� ����� �ƴմϴ�.
+	if (BoundTown.IsValid()) BoundTown->OnTownProgressionChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                             ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Blueprint\UserWidget.h(280,7): note: 'UUserWidget' ������ �����Ͻʽÿ�.
+class UUserWidget : public UWidget, public INamedSlotInterface
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(504,63): error C2276: '&': ���ε��� ��� �Լ� ���� ������ �߸��Ǿ����ϴ�.
+	if (BoundTown.IsValid()) BoundTown->OnTownProgressionChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                             ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(504,63): error C2672: 'TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic': ��ġ�ϴ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1496,18): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'�� �� �ֽ��ϴ�.
+	UE_REWRITE void __Internal_RemoveDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes&&...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(504,63): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundTown.IsValid()) BoundTown->OnTownProgressionChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                             ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1491,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(504,63): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundTown.IsValid()) BoundTown->OnTownProgressionChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                             ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1486,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic( TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes&&...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(504,63): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundTown.IsValid()) BoundTown->OnTownProgressionChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                             ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1481,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(504,63): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundTown.IsValid()) BoundTown->OnTownProgressionChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                             ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(505,61): error C2039: 'HandleProgressionChanged': 'UUserWidget'�� ����� �ƴմϴ�.
+	if (BoundCombat.IsValid()) BoundCombat->OnSkillTreeChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Blueprint\UserWidget.h(280,7): note: 'UUserWidget' ������ �����Ͻʽÿ�.
+class UUserWidget : public UWidget, public INamedSlotInterface
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(505,61): error C2276: '&': ���ε��� ��� �Լ� ���� ������ �߸��Ǿ����ϴ�.
+	if (BoundCombat.IsValid()) BoundCombat->OnSkillTreeChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                           ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(505,61): error C2672: 'TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic': ��ġ�ϴ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1496,18): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'�� �� �ֽ��ϴ�.
+	UE_REWRITE void __Internal_RemoveDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes&&...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(505,61): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundCombat.IsValid()) BoundCombat->OnSkillTreeChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1491,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(505,61): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundCombat.IsValid()) BoundCombat->OnSkillTreeChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1486,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic( TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes&&...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(505,61): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundCombat.IsValid()) BoundCombat->OnSkillTreeChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1481,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(505,61): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundCombat.IsValid()) BoundCombat->OnSkillTreeChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
+	                                                           ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(506,69): error C2039: 'HandleBindingsChanged': 'UUserWidget'�� ����� �ƴմϴ�.
+	if (BoundBindings.IsValid()) BoundBindings->OnSkillBindingsChanged.RemoveDynamic(this, &ThisClass::HandleBindingsChanged);
+	                                                                   ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\UMG\Public\Blueprint\UserWidget.h(280,7): note: 'UUserWidget' ������ �����Ͻʽÿ�.
+class UUserWidget : public UWidget, public INamedSlotInterface
+      ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(506,69): error C2276: '&': ���ε��� ��� �Լ� ���� ������ �߸��Ǿ����ϴ�.
+	if (BoundBindings.IsValid()) BoundBindings->OnSkillBindingsChanged.RemoveDynamic(this, &ThisClass::HandleBindingsChanged);
+	                                                                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(506,69): error C2672: 'TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic': ��ġ�ϴ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1496,18): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'�� �� �ֽ��ϴ�.
+	UE_REWRITE void __Internal_RemoveDynamic(TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes&&...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(506,69): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundBindings.IsValid()) BoundBindings->OnSkillBindingsChanged.RemoveDynamic(this, &ThisClass::HandleBindingsChanged);
+	                                                                   ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1491,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<true, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(506,69): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<true,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundBindings.IsValid()) BoundBindings->OnSkillBindingsChanged.RemoveDynamic(this, &ThisClass::HandleBindingsChanged);
+	                                                                   ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1486,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic( TObjectPtr<UserClass> InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes&&...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(506,69): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(TObjectPtr<UObjectTemplate>,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundBindings.IsValid()) BoundBindings->OnSkillBindingsChanged.RemoveDynamic(this, &ThisClass::HandleBindingsChanged);
+	                                                                   ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Delegates\DelegateSignatureImpl.inl(1481,18): note: �Ǵ�       'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)'
+	UE_REWRITE void __Internal_RemoveDynamic(UserClass* InUserObject, typename FDelegate::template TMethodPtrResolver<false, UserClass, VarTypes...>::FMethodPtr InMethodPtr, FName InFunctionName, VarTypes&&... Vars)
+	                ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.cpp(506,69): note: 'void TDynamicMulticastDelegate<void (void),FNotThreadSafeDelegateMode>::__Internal_RemoveDynamic(UserClass *,TDynamicDelegate<void (void),FNotThreadSafeDelegateMode>::TMethodPtrResolver<false,UserClass,VarTypes...>::FMethodPtr,FName,VarTypes ...)': 4���� �μ��� �ʿ��մϴ�. 2���� �����Ǿ����ϴ�.
+	if (BoundBindings.IsValid()) BoundBindings->OnSkillBindingsChanged.RemoveDynamic(this, &ThisClass::HandleBindingsChanged);
+	                                                                   ^
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[17/69] Compile [x64] Module.Rogue10m.3.cpp (0:31.84 at +0:00)
+[18/69] Compile [x64] Rogue10mFirstPersonPresentationComponent.cpp (0:12.26 at +0:20)
+[19/69] Compile [x64] Rogue10mHybridSkillTreeRuntimeTest.cpp (0:13.67 at +0:20)
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(27,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeButton : public UButton
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(26,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(29,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(42,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeEntryWidget : public UUserWidget
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(41,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(44,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(65,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeConnectionsWidget : public UUserWidget
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(64,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(67,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(79,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeGraphWidget : public UUserWidget
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(78,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(81,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(102,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeWidget : public UUserWidget
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(101,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(104,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[20/69] Compile [x64] Rogue10mInitialHeadFramingRuntimeTest.cpp (0:13.71 at +0:22)
+[21/69] Compile [x64] Rogue10mInventoryPersistence.cpp (0:13.18 at +0:23)
+[22/69] Compile [x64] Rogue10mCombatComponent.cpp (0:36.57 at +0:00)
+[23/69] Compile [x64] Module.Rogue10m.4.cpp (0:38.00 at +0:00)
+[24/69] Compile [x64] Rogue10mMenuWindowWidgets.cpp (0:12.85 at +0:27)
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(27,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeButton : public UButton
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(26,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(29,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(42,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeEntryWidget : public UUserWidget
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(41,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(44,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(65,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeConnectionsWidget : public UUserWidget
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(64,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(67,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(79,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeGraphWidget : public UUserWidget
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(78,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(81,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(102,20): error C2143: ���� ����: ';'��(��) '<class-head>' �տ� �����ϴ�.
+class ROGUE10M_API URogue10mHybridSkillTreeWidget : public UUserWidget
+                   ^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(101,1): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+UCLASS()
+^
+D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h(104,2): error C4430: ���� �����ڰ� �����ϴ�. int�� �����մϴ�. ����: C++������ �⺻ int�� �������� �ʽ��ϴ�.
+	GENERATED_BODY()
+	^
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[25/69] Compile [x64] Rogue10mHybridSkillTreeTests.cpp (0:19.78 at +0:21)
+[26/69] Compile [x64] Rogue10mInventoryComponent.cpp (0:20.50 at +0:23)
+[27/69] Compile [x64] Rogue10mFighterCombatStanceRuntimeTest.cpp (0:24.57 at +0:19)
+[28/69] Compile [x64] Rogue10mFistCombatRuntimeTest.cpp (0:24.79 at +0:20)
+[29/69] Compile [x64] Rogue10mFighterSkillTreeRuntimeTest.cpp (0:29.25 at +0:19)
+[30/69] Compile [x64] Module.Rogue10m.1.cpp (0:49.39 at +0:00)
+[31/69] Compile [x64] Rogue10mProgressionFailureRuntimeTest.cpp (0:13.67 at +0:37)
+[32/69] Compile [x64] Rogue10mProgressionSubsystem.cpp (0:12.73 at +0:38)
+[33/69] Compile [x64] Rogue10mMonsterAIController.cpp (0:20.25 at +0:31)
+[34/69] Compile [x64] Rogue10mPlayerState.cpp (0:16.12 at +0:36)
+[35/69] Compile [x64] Rogue10mRunPortal.cpp (0:11.78 at +0:43)
+[36/69] Compile [x64] Rogue10mSkillTreeCatalog.cpp (0:10.31 at +0:45)
+[37/69] Compile [x64] Rogue10mMovingAttackRuntimeTest.cpp (0:22.42 at +0:34)
+[38/69] Compile [x64] Rogue10mMouseHeadStableRuntimeTest.cpp (0:24.92 at +0:32)
+[39/69] Compile [x64] Rogue10mMonsterChaseEffectsRuntimeTest.cpp (0:25.00 at +0:32)
+[40/69] Compile [x64] Rogue10mSkillTreeData.cpp (0:08.89 at +0:50)
+[41/69] Compile [x64] Rogue10mSkillBindingComponent.cpp (0:16.21 at +0:43)
+[42/69] Compile [x64] Rogue10mPlayerController.cpp (0:23.82 at +0:36)
+[43/69] Compile [x64] Rogue10mStylizedCharacter.cpp (0:09.67 at +0:51)
+[44/69] Compile [x64] Rogue10mSkillTreeProgressionComponent.cpp (0:10.26 at +0:51)
+[45/69] Compile [x64] Rogue10mMonsterAttackPatternComponent.cpp (0:30.95 at +0:31)
+[46/69] Compile [x64] Rogue10mRunHUD.cpp (0:21.78 at +0:40)
+[47/69] Compile [x64] Rogue10mSkillTreeCombatComponent.cpp (0:15.34 at +0:48)
+[48/69] Compile [x64] Rogue10mThirdPersonInspectionRuntimeTest.cpp (0:12.34 at +0:52)
+[49/69] Compile [x64] Rogue10mTownProgressionComponent.cpp (0:10.03 at +0:55)
+[50/69] Compile [x64] Rogue10mResponsiveHUDRuntimeTest.cpp (0:28.06 at +0:40)
+[51/69] Compile [x64] Rogue10mStoneFistAnimationRuntimeTest.cpp (0:17.25 at +0:51)
+[52/69] Compile [x64] Rogue10mTutorialAnimationComponent.cpp (0:07.85 at +1:01)
+[53/69] Compile [x64] Rogue10mTraitPersistenceRuntimeTest.cpp (0:11.46 at +0:58)
+[54/69] Compile [x64] Rogue10mTownVisualRuntimeTest.cpp (0:13.89 at +0:57)
+[55/69] Compile [x64] Rogue10mViewAlignedUpperBodyProxy.cpp (0:09.03 at +1:02)
+[56/69] Compile [x64] Rogue10mTraitRuntimeComponent.cpp (0:13.50 at +0:59)
+[57/69] Compile [x64] Rogue10mTownRunRuntimeTest.cpp (0:17.87 at +0:55)
+[58/69] Compile [x64] Rogue10mTraitEffectsRuntimeTest.cpp (0:16.26 at +0:57)
+[59/69] Compile [x64] Rogue10mTutorialNPC.cpp (0:12.31 at +1:02)
+[60/69] Compile [x64] Rogue10mTownServicesRuntimeTest.cpp (0:18.67 at +0:57)
+[61/69] Compile [x64] Rogue10mVitalRegenerationComponent.cpp (0:10.82 at +1:05)
+[62/69] Compile [x64] Rogue10mTraitUIRuntimeTest.cpp (0:17.56 at +0:59)
+[63/69] Compile [x64] Rogue10mWeaponSkillTreeRuntimeTest.cpp (0:09.43 at +1:08)
+[64/69] Compile [x64] Rogue10mViewAlignedUpperBodyTest.cpp (0:15.50 at +1:03)
+[65/69] Compile [x64] Rogue10mTraitWidget.cpp (0:18.23 at +1:01)
+[66/69] Compile [x64] Rogue10mWalkPalmRuntimeTest.cpp (0:14.42 at +1:05)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 0 succeeded, 1 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 83.16 seconds
+
+Result: Failed (OtherCompilationError)
+Total execution time: 97.21 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 6.6kb

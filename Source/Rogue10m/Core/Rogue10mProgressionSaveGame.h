@@ -6,6 +6,7 @@
 #include "Rogue10mInventoryComponent.h"
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mTownServiceDataAsset.h"
+#include "Rogue10mSkillTreeData.h"
 #include "Rogue10mProgressionSaveGame.generated.h"
 
 /** Runtime presentation values contain no hard asset reference in the save. */
@@ -82,12 +83,13 @@ class ROGUE10M_API URogue10mProgressionSaveGame : public USaveGame
 {
 	GENERATED_BODY()
 public:
-	static constexpr int32 CurrentVersion = 2;
+	static constexpr int32 CurrentVersion = 3;
 	UPROPERTY(SaveGame) int32 SaveVersion = CurrentVersion;
 	UPROPERTY(SaveGame) FGuid ProfileId;
 	UPROPERTY(SaveGame) FRogue10mGrowthSnapshot Growth;
 	UPROPERTY(SaveGame) FRogue10mInventorySnapshot Inventory;
 	UPROPERTY(SaveGame) FRogue10mCombatSnapshot Combat;
 	UPROPERTY(SaveGame) FRogue10mTownProgressionSnapshot Town;
+	UPROPERTY(SaveGame) FRogue10mSkillTreeSnapshot SkillTree;
 	UPROPERTY(SaveGame) TSet<FName> ClaimedRewards;
 };

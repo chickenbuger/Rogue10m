@@ -16,6 +16,8 @@
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mCharacterAnimationComponent.h"
 #include "Rogue10mCombatComponent.h"
+#include "Rogue10mSkillTreeCombatComponent.h"
+#include "Rogue10mSkillTreeProgressionComponent.h"
 #include "Rogue10mBasicBrawlerComponent.h"
 #include "Rogue10mCharacterDataAsset.h"
 #include "Rogue10mFirstPersonPresentationComponent.h"
@@ -42,6 +44,7 @@ ARogue10mCharacter::ARogue10mCharacter()
 	FirstPersonMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("First Person Mesh"));
 	InventoryComponent = CreateDefaultSubobject<URogue10mInventoryComponent>(TEXT("Inventory Component"));
 	CombatComponent = CreateDefaultSubobject<URogue10mCombatComponent>(TEXT("Combat Component"));
+	SkillTreeCombatComponent = CreateDefaultSubobject<URogue10mSkillTreeCombatComponent>(TEXT("Skill Tree Combat Component"));
 	BasicBrawlerComponent = CreateDefaultSubobject<URogue10mBasicBrawlerComponent>(TEXT("Basic Brawler Component"));
 	CharacterAnimationComponent = CreateDefaultSubobject<URogue10mCharacterAnimationComponent>(
 		TEXT("Character Animation Component"));
@@ -655,6 +658,10 @@ FRogue10mCharacterStatSnapshot ARogue10mCharacter::GetCharacterStatSnapshot() co
 	}
 	if (const ARogue10mPlayerState* State = GetPlayerState<ARogue10mPlayerState>())
 	{
+		if (const URogue10mSkillTreeProgressionComponent* Tree = State->GetSkillTreeProgressionComponent())
+		{
+			Snapshot.Equipment.Accumulate(Tree->GetMasteryStatModifiers(State->GetEquippedWeaponType()));
+		}
 		if (const URogue10mTownProgressionComponent* Town = State->FindComponentByClass<URogue10mTownProgressionComponent>())
 		{
 			Snapshot.Equipment.Accumulate(Town->GetStatModifiers());

@@ -48,6 +48,8 @@ public:
 	/** The standalone trait UI may only operate on this NPC's live dialogue owner. */
 	bool CanUseTraitWindow(FText& OutReason) const;
 	const URogue10mTownServiceDataAsset* GetTraitServiceData() const { return &GetServiceData(); }
+	/** Skill-tree browsing does not require dialogue; investment still requires this service range. */
+	bool IsWithinSkillTreeServiceRange(const ARogue10mCharacter* Character) const;
 	void ResumeAfterTraitWindow();
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Town")
 	bool SelectDifficulty(ERogue10mDifficulty Difficulty);

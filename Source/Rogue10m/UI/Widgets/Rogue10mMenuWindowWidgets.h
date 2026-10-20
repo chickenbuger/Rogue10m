@@ -13,6 +13,7 @@
 class URogue10mAttackSkillData;
 class URogue10mCombatComponent;
 class URogue10mSkillBindingComponent;
+class URogue10mHybridSkillTreeWidget;
 class UInputKeySelector;
 class URogue10mInventoryComponent;
 class URogue10mItemDataAsset;
@@ -558,8 +559,11 @@ public:
 	bool SetSelectedSkillKey(FKey Key);
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
 	bool ClearSelectedSkillKey();
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree")
+	URogue10mHybridSkillTreeWidget* GetHybridSkillTreeWidget() const { return HybridSkillTreePanel; }
 
 protected:
+	virtual TSharedRef<SWidget> RebuildWidget() override;
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Skill Tree")
 	TObjectPtr<UPanelWidget> UI_SkillListContainer;
 
@@ -618,6 +622,10 @@ protected:
 	TObjectPtr<UTextBlock> UI_SkillKeyResultText;
 
 private:
+	URogue10mHybridSkillTreeWidget* EnsureHybridSkillTreePanel();
+	UPROPERTY(Transient)
+	TObjectPtr<URogue10mHybridSkillTreeWidget> HybridSkillTreePanel;
+
 	UFUNCTION()
 	void HandleSkillSelected(URogue10mAttackSkillData* SkillData);
 

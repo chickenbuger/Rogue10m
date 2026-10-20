@@ -1,4 +1,5 @@
 #include "Rogue10mTownProgressionComponent.h"
+#include "Rogue10mSkillTreeProgressionComponent.h"
 
 #include "Engine/World.h"
 #include "Engine/GameInstance.h"
@@ -64,7 +65,8 @@ int32 URogue10mTownProgressionComponent::GetSpentTraitPoints() const
 int32 URogue10mTownProgressionComponent::GetAvailableTraitPoints() const
 {
 	const ARogue10mPlayerState* State = Cast<ARogue10mPlayerState>(GetOwner());
-	return State ? FMath::Max(0, State->GetPlayerLevel() - 1 - GetSpentTraitPoints()) : 0;
+	if (State && State->GetSkillTreeProgressionComponent()) { return State->GetSkillTreeProgressionComponent()->GetAvailableGrowthPoints(); }
+	return State ? FMath::Max(0, State->GetPlayerLevel() - 1) - GetSpentTraitPoints() : 0;
 }
 
 FRogue10mTownProgressionSnapshot URogue10mTownProgressionComponent::CaptureProgression() const
@@ -148,7 +150,8 @@ bool URogue10mTownProgressionComponent::ValidateSnapshot(
 bool URogue10mTownProgressionComponent::RestoreProgression(const FRogue10mTownProgressionSnapshot& Snapshot)
 {
 	const ARogue10mPlayerState* State = Cast<ARogue10mPlayerState>(GetOwner());
-	if (!State || !State->HasAuthority() || !ValidateSnapshot(Snapshot, FMath::Max(0, State->GetPlayerLevel() - 1))) { return false; }
+	const int32 TreeSpent = State && State->GetSkillTreeProgressionComponent() ? State->GetSkillTreeProgressionComponent()->GetSpentSkillTreePoints() : 0;
+	if (!State || !State->HasAuthority() || !ValidateSnapshot(Snapshot, FMath::Max(0, State->GetPlayerLevel() - 1) - TreeSpent)) { return false; }
 	const auto Canonical = MigrateLegacySnapshot(Snapshot);
 	TraitInvestments = Canonical.TraitInvestments;
 	Difficulty = Canonical.Difficulty;
@@ -274,4 +277,8 @@ void URogue10mTownProgressionComponent::NotifyChanged()
 		if (ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(State->GetPawn())) { Character->RefreshCharacterStats(false); }
 	}
 	OnTownProgressionChanged.Broadcast();
+	if (const auto* State = Cast<ARogue10mPlayerState>(GetOwner()))
+	{
+		if (auto* Tree = State->GetSkillTreeProgressionComponent()) { Tree->NotifySharedPointsChanged(); }
+	}
 }

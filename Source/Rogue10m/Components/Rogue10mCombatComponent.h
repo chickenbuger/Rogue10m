@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mWeaponTypes.h"
+#include "Rogue10mSkillTreeCombatComponent.h"
 #include "Rogue10mCombatComponent.generated.h"
 
 class ARogue10mCharacter;
@@ -27,6 +28,9 @@ struct FRogue10mActiveAttackExecution
 	uint32 ExecutionId = 0;
 	float TraitDodgeBonus = 0.0f;
 	bool bTraitHitRegistered = false;
+	bool bMasteryAwarded = false;
+	ERogue10mSkillTreeTrack MasteryTrack = ERogue10mSkillTreeTrack::None;
+	FRogue10mSkillTreeAttackEffect IdentityEffect;
 	TWeakObjectPtr<const URogue10mAttackSkillData> SkillData;
 	TMap<TWeakObjectPtr<AActor>, int32> TargetHitCounts;
 	TArray<TWeakObjectPtr<AActor>> LockedTargets;
@@ -151,6 +155,7 @@ protected:
 
 private:
 	friend class URogue10mBasicBrawlerComponent;
+	friend struct FRogue10mHybridCombatTestAccess;
 	ARogue10mCharacter* GetOwnerCharacter() const;
 	URogue10mAttributeSet* GetOwnerAttributes() const;
 	float GetAttackSpeedMultiplier() const;
@@ -168,8 +173,8 @@ private:
 		AActor& TargetActor, const FVector& DamageDirection, int32 PulseIndex);
 	void FinishAttackHitSequence(uint32 ExecutionId);
 	void CancelPendingAttackHits(const URogue10mAttackSkillData* SkillData = nullptr);
-	bool CanPayResourceCosts(const URogue10mAttackSkillData& SkillData) const;
-	void ConsumeResourceCosts(const URogue10mAttackSkillData& SkillData);
+	bool CanPayResourceCosts(const URogue10mAttackSkillData& SkillData, bool bComboAttack = false) const;
+	void ConsumeResourceCosts(const URogue10mAttackSkillData& SkillData, bool bComboAttack = false);
 	void StartSharedAttackCooldown(const URogue10mAttackSkillData& SkillData, bool bComboAttack);
 	void OpenComboWindow(const URogue10mAttackSkillData& SkillData);
 	void ResetComboWindow();
@@ -183,6 +188,9 @@ private:
 
 	UFUNCTION()
 	void HandleMartialArtsProgressChanged();
+
+	UFUNCTION()
+	void HandleHybridSkillTreeChanged();
 
 	void CancelWeaponTransitionState();
 	void StartChargeEffect(const URogue10mAttackSkillData& SkillData);
@@ -226,6 +234,8 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Combat|Skill Tree", meta=(AllowPrivateAccess="true"))
 	TSet<FName> UnlockedAttackSkillNames;
+	/** Development preview grants never enter the durable combat snapshot. */
+	TSet<FName> TestUnlockedAttackSkillNames;
 	UPROPERTY(Transient)
 	TArray<TObjectPtr<URogue10mAttackSkillData>> UnlockedSkillAssets;
 
@@ -239,6 +249,10 @@ private:
 
 	UPROPERTY(Transient)
 	TMap<ERogue10mAttackInputSlot, TObjectPtr<URogue10mAttackSkillData>> EquippedSkillBindings;
+	/** Last real choices for the active profile; temporary test equipment never replaces them in saves. */
+	UPROPERTY(Transient)
+	TMap<ERogue10mAttackInputSlot, TObjectPtr<URogue10mAttackSkillData>> DurableSkillBindings;
+	bool IsSkillDurablyUnlocked(const URogue10mAttackSkillData* SkillData) const;
 
 	UPROPERTY(Transient)
 	TObjectPtr<UNiagaraComponent> ActiveChargeEffectComponent;
@@ -269,4 +283,5 @@ private:
 	FTimerHandle BoundSkillMonitorTimer;
 	uint32 NextAttackExecutionId = 1;
 	TMap<uint32, FRogue10mActiveAttackExecution> ActiveAttackExecutions;
+	FRogue10mSkillTreeAttackEffect AcceptedIdentityEffect;
 };

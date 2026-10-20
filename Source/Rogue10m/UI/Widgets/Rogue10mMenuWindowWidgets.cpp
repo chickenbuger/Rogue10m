@@ -33,6 +33,7 @@
 #include "InputCoreTypes.h"
 #include "Widgets/Rogue10mItemDragDropOperation.h"
 #include "Widgets/Rogue10mSkillDragDropOperation.h"
+#include "Widgets/Rogue10mHybridSkillTreeWidget.h"
 
 void URogue10mMenuWindowWidget::InitializeMenuWindow(URogue10mInventoryComponent* InInventoryComponent)
 {
@@ -1971,10 +1972,33 @@ void URogue10mSkillTreeEntryWidget::NativeOnDragDetected(
 	OutOperation = Operation;
 }
 
+URogue10mHybridSkillTreeWidget* URogue10mSkillTreeWindowWidget::EnsureHybridSkillTreePanel()
+{
+	if (!HybridSkillTreePanel && GetOwningPlayer())
+	{
+		HybridSkillTreePanel = CreateWidget<URogue10mHybridSkillTreeWidget>(GetOwningPlayer());
+	}
+	return HybridSkillTreePanel;
+}
+
+TSharedRef<SWidget> URogue10mSkillTreeWindowWidget::RebuildWidget()
+{
+	if (URogue10mHybridSkillTreeWidget* Panel = EnsureHybridSkillTreePanel())
+	{
+		return Panel->TakeWidget();
+	}
+	return Super::RebuildWidget();
+}
+
 void URogue10mSkillTreeWindowWidget::InitializeMenuWindow(
 	URogue10mInventoryComponent* InInventoryComponent)
 {
 	Super::InitializeMenuWindow(InInventoryComponent);
+	if (URogue10mHybridSkillTreeWidget* Panel = EnsureHybridSkillTreePanel())
+	{
+		Panel->InitializeTree();
+		return;
+	}
 	if (UI_UnlockAllSkillsButton)
 	{
 		UI_UnlockAllSkillsButton->OnClicked.AddUniqueDynamic(this, &ThisClass::HandleUnlockAllClicked);
@@ -2006,6 +2030,12 @@ void URogue10mSkillTreeWindowWidget::InitializeMenuWindow(
 
 void URogue10mSkillTreeWindowWidget::NativeDestruct()
 {
+	if (HybridSkillTreePanel)
+	{
+		HybridSkillTreePanel->ReleaseContext();
+		Super::NativeDestruct();
+		return;
+	}
 	CancelKeySelection();
 	if (auto* Bindings = GetSkillBindingComponent())
 	{
@@ -2021,6 +2051,13 @@ void URogue10mSkillTreeWindowWidget::NativeDestruct()
 
 void URogue10mSkillTreeWindowWidget::SetWindowOpen(bool bOpen)
 {
+	if (URogue10mHybridSkillTreeWidget* Panel = EnsureHybridSkillTreePanel())
+	{
+		Panel->CancelKeySelection();
+		Super::SetWindowOpen(bOpen);
+		Panel->SetWindowActive(bOpen);
+		return;
+	}
 	CancelKeySelection();
 	ShowKeyResult(FText::GetEmpty(), false);
 	Super::SetWindowOpen(bOpen);
@@ -2032,6 +2069,11 @@ void URogue10mSkillTreeWindowWidget::SetWindowOpen(bool bOpen)
 
 void URogue10mSkillTreeWindowWidget::RefreshSkillTree()
 {
+	if (URogue10mHybridSkillTreeWidget* Panel = EnsureHybridSkillTreePanel())
+	{
+		Panel->RefreshFromData();
+		return;
+	}
 	URogue10mCombatComponent* Combat = GetCombatComponent();
 	bool bShowTestUnlock = false;
 #if !UE_BUILD_SHIPPING
@@ -2275,6 +2317,11 @@ URogue10mSkillBindingComponent* URogue10mSkillTreeWindowWidget::GetSkillBindingC
 
 void URogue10mSkillTreeWindowWidget::SelectSkill(URogue10mAttackSkillData* SkillData)
 {
+	if (URogue10mHybridSkillTreeWidget* Panel = EnsureHybridSkillTreePanel())
+	{
+		Panel->SelectAttackSkill(SkillData);
+		return;
+	}
 	CancelKeySelection();
 	const auto* Combat = GetCombatComponent();
 	SelectedSkill = Combat && Combat->GetActiveSkillTreeSkills().Contains(SkillData) ? SkillData : nullptr;
@@ -2366,6 +2413,7 @@ void URogue10mSkillTreeWindowWidget::HandleKeySelected(FInputChord SelectedKey)
 
 bool URogue10mSkillTreeWindowWidget::SetSelectedSkillKey(FKey Key)
 {
+	if (HybridSkillTreePanel) return HybridSkillTreePanel->SetSelectedSkillKey(Key);
 	FText Error;
 	bool bSuccess = false;
 	{
@@ -2380,6 +2428,7 @@ bool URogue10mSkillTreeWindowWidget::SetSelectedSkillKey(FKey Key)
 
 bool URogue10mSkillTreeWindowWidget::ClearSelectedSkillKey()
 {
+	if (HybridSkillTreePanel) return HybridSkillTreePanel->ClearSelectedSkillKey();
 	FText Error;
 	bool bSuccess = false;
 	{
