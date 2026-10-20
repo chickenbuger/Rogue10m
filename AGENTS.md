@@ -129,3 +129,7 @@ Create a paired feature document set:
 ```powershell
 .\Scripts\NewHarnessFeature.ps1 -Name "player combat"
 ```
+
+## Worktree Content Isolation
+
+- Never junction or symlink a Git-tracked Content directory to another checkout's Content. Git sparse-checkout/checkout/merge can remove tracked files through that link. Use an independent physical checkout and verify the resolved project/content paths before Git mutations.

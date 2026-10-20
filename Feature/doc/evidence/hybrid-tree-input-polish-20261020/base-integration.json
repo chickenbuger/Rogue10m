@@ -1,0 +1,23 @@
+{
+  "result": "PASS",
+  "previous": "ddc79e5a8270afb1b40660e969771ed920057816",
+  "target": "e12df4146affa1225acfdcaa5377a60f5670850a",
+  "own_source_sha256": {
+    "Source/Rogue10m/UI/Widgets/Rogue10mHybridSkillTreeWidget.cpp": "45ccdc668fe1326f41e8a9c56b78de0259c2866d77929336d71a719e5fa187d6",
+    "Source/Rogue10m/UI/Widgets/Rogue10mHybridSkillTreeWidget.h": "f8ff464b9c84819003600df3052afe21803a8548890f297c986009071c939cff",
+    "Source/Rogue10m/Tests/Rogue10mHybridSkillTreeRuntimeTest.cpp": "9b74ec8a1f285285d16058ba0b415b94880e45988b7525ecd5b3f03d388cf18b",
+    "Scripts/VerifyHybridSkillTree.ps1": "96666ca97de2be4c16f49fbe0a9ee06f2286b310dffe7616aa5c1bb616470bb6"
+  },
+  "devlog_append_preserved": true,
+  "shared_checkout_modified": true,
+  "method": "Git canonical restore of backed-up own DevLog + path-only stat refresh + fast-forward + append own suffix",
+  "initial_attempts": "3 conservative checkout refusals with raw LF base; zero ref changes; canonical Git checkout fixed CRLF working-tree form",
+  "content_junction_incident": {
+    "type": "sparse checkout removed tracked files through shared Content junction",
+    "affected_missing_tracked_files": 6423,
+    "scope": "Source and index blob preservation checks passed; shared Content filesystem was affected despite unchanged Git Content tree",
+    "recovery_audit": "content-recovery-audit.json",
+    "recovery_result": "content-recovery-result.json",
+    "future_content_strategy": "independent physical checkout; no junction"
+  }
+}

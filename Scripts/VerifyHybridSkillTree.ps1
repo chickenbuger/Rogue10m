@@ -1,6 +1,7 @@
 param(
     [ValidateSet('assets','automation','runtime','read')][string]$Phase = 'automation',
     [string]$TestId = 'Hybrid20261020',
+    [switch]$InputChecks,
     [int]$TimeoutSeconds = 240
 )
 $ErrorActionPreference = 'Stop'
@@ -30,7 +31,8 @@ function Confirm-HybridAutomationReport {
     }
 }
 $projectRoot = Split-Path $PSScriptRoot -Parent
-$evidence = Join-Path $projectRoot 'Feature\doc\evidence\hybrid-skill-tree-runtime-20261020'
+$evidenceName = if ($InputChecks) { 'hybrid-tree-input-polish-20261020' } else { 'hybrid-skill-tree-runtime-20261020' }
+$evidence = Join-Path $projectRoot ('Feature\doc\evidence\' + $evidenceName)
 New-Item -ItemType Directory -Path $evidence -Force | Out-Null
 $log = Join-Path $evidence ($Phase + '-' + $TestId + '.log')
 $editor = 'D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor-Cmd.exe'
@@ -40,6 +42,7 @@ $arguments = @('"' + (Join-Path $projectRoot 'Rogue10m.uproject') + '"',
     ('-RogueProfileSaveSlot=Rogue10m_Town_QA_' + $TestId),
     ('-RogueProgressionSavePrefix=Rogue10m_Progression_QA_' + $TestId),
     ('-RogueSkillKeySaveSlot=Rogue10m_Fighter_QA_' + $TestId))
+if ($InputChecks) { $arguments += '-RogueHybridInputQA' }
 if ($Phase -eq 'assets') {
     $arguments += @('-nullrhi','-run=pythonscript',
         ('-script="' + (Join-Path $projectRoot 'Scripts\Editor\CreateHybridSkillTreeAssets.py') + '"'))
@@ -71,6 +74,10 @@ $body = Get-Content -LiteralPath $log -Raw
 if ($process.ExitCode -ne 0 -or -not $body.Contains($marker)) {
     Get-Content -LiteralPath $log -Tail 75
     throw "$Phase verification failed (exit=$($process.ExitCode)); see $log"
+}
+if ($InputChecks -and $Phase -in @('runtime','read')) {
+    $inputMarker = if ($Phase -eq 'read') { 'RESULT=HYBRID_INPUT_READ_PASSED' } else { 'RESULT=HYBRID_INPUT_RUNTIME_PASSED' }
+    if (-not $body.Contains($inputMarker)) { throw "Missing actual input QA marker; see $log" }
 }
 if ($Phase -eq 'automation') {
     Confirm-HybridAutomationReport -ReportPath (Join-Path $evidence 'automation-report\index.json')

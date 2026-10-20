@@ -31,6 +31,7 @@
 #include "Framework/Application/SlateApplication.h"
 #include "Engine/Texture2D.h"
 #include "Rendering/DrawElements.h"
+#include "Slate/UMGDragDropOp.h"
 #include "Widgets/Rogue10mSkillDragDropOperation.h"
 
 namespace Rogue10mHybridTreeUI
@@ -143,6 +144,48 @@ namespace Rogue10mHybridTreeUI
 	{
 		return Center + Node.Position;
 	}
+	bool HasIdentityFrame(ERogue10mHybridSkillTreeNodeType Type)
+	{
+		return Type == ERogue10mHybridSkillTreeNodeType::IdentityEntry
+			|| Type == ERogue10mHybridSkillTreeNodeType::IdentityAdvanced
+			|| Type == ERogue10mHybridSkillTreeNodeType::IdentityChoice;
+	}
+	struct FNodeFrame
+	{
+		FName Shape = TEXT("Circle");
+		int32 OutlineCount = 1;
+		float Extent = 0.0f;
+		TArray<FVector2f> OuterPoints;
+	};
+	FNodeFrame NodeFrame(const FRogue10mSkillTreeNodeDefinition& Node)
+	{
+		FNodeFrame Frame;
+		Frame.Extent = Diameter(Node.NodeType) * 0.5f;
+		const FVector2f Location(Position(Node));
+		if (HasIdentityFrame(Node.NodeType))
+		{
+			Frame.Shape = TEXT("IdentityDiamond");
+			// Enclose the unchanged circular control with a small clearance at each edge.
+			const float Radius = Diameter(Node.NodeType) * 0.5f * UE_SQRT_2 + 3.0f;
+			Frame.Extent = Radius + 2.0f; // Include the selected stroke and its antialiasing in the hit area.
+			Frame.OuterPoints = {Location + FVector2f(0.0f, -Radius), Location + FVector2f(Radius, 0.0f),
+				Location + FVector2f(0.0f, Radius), Location + FVector2f(-Radius, 0.0f), Location + FVector2f(0.0f, -Radius)};
+		}
+		else if (Node.NodeType == ERogue10mHybridSkillTreeNodeType::Resonance)
+		{
+			Frame.Shape = TEXT("ResonanceDoubleRing");
+			Frame.OutlineCount = 2; // The native button supplies the inner ring.
+			const float Radius = Diameter(Node.NodeType) * 0.5f + 5.0f;
+			Frame.Extent = Radius + 2.0f;
+			Frame.OuterPoints.Reserve(49);
+			for (int32 Step = 0; Step <= 48; ++Step)
+			{
+				const float Angle = 2.0f * PI * static_cast<float>(Step) / 48.0f;
+				Frame.OuterPoints.Add(Location + FVector2f(FMath::Cos(Angle), FMath::Sin(Angle)) * Radius);
+			}
+		}
+		return Frame;
+	}
 	FText RewardText(const FRogue10mEquipmentStatModifiers& Stats)
 	{
 		TArray<FString> First, Second, Lines;
@@ -175,8 +218,16 @@ TSharedRef<SWidget> URogue10mHybridSkillTreeEntryWidget::RebuildWidget()
 void URogue10mHybridSkillTreeEntryWidget::BuildEntry()
 {
 	if (NodeButton || !WidgetTree) return;
+	// The complete visible frame receives input; the original circular body stays centered.
+	SetVisibility(ESlateVisibility::Visible);
+	UOverlay* FrameRoot = WidgetTree->ConstructWidget<UOverlay>();
+	FrameRoot->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+	WidgetTree->RootWidget = FrameRoot;
+	BodyBox = WidgetTree->ConstructWidget<USizeBox>();
+	UOverlaySlot* BodySlot = FrameRoot->AddChildToOverlay(BodyBox);
+	BodySlot->SetHorizontalAlignment(HAlign_Center); BodySlot->SetVerticalAlignment(VAlign_Center);
 	NodeButton = WidgetTree->ConstructWidget<URogue10mHybridSkillTreeButton>();
-	WidgetTree->RootWidget = NodeButton;
+	BodyBox->AddChild(NodeButton);
 	UOverlay* Overlay = WidgetTree->ConstructWidget<UOverlay>();
 	NodeButton->AddChild(Overlay);
 	Icon = WidgetTree->ConstructWidget<UImage>();
@@ -193,6 +244,9 @@ void URogue10mHybridSkillTreeEntryWidget::Configure(URogue10mHybridSkillTreeWidg
 {
 	using namespace Rogue10mHybridTreeUI;
 	BuildEntry(); OwnerWidget = Owner; NodeId = Definition.NodeId;
+	const float BodySize = Diameter(Definition.NodeType);
+	BodyBox->SetWidthOverride(BodySize); BodyBox->SetHeightOverride(BodySize);
+	bHasOuterFrame = HasIdentityFrame(Definition.NodeType) || Definition.NodeType == ERogue10mHybridSkillTreeNodeType::Resonance;
 	Skill = Definition.Skill.LoadSynchronous();
 	if (!Skill && !Definition.GrantedSkills.IsEmpty()) Skill = Definition.GrantedSkills[0].LoadSynchronous();
 	if (Definition.NodeType == ERogue10mHybridSkillTreeNodeType::Basic && Owner && Owner->GetSelectedNodeId() == NodeId)
@@ -206,9 +260,14 @@ void URogue10mHybridSkillTreeEntryWidget::Configure(URogue10mHybridSkillTreeWidg
 	NodeButton->Configure(Owner, SelectNode, NodeId);
 	FLinearColor Accent = NodeColor(Definition);
 	if (State == ERogue10mSkillTreeNodeState::Locked) Accent = Muted * 0.55f;
-	NodeButton->SetStyle(ButtonStyle(Accent, bSelected, bLearned, Diameter(Definition.NodeType) * 0.5f));
+	FButtonStyle Style = ButtonStyle(Accent, bSelected, bLearned, Diameter(Definition.NodeType) * 0.5f);
+	// The diamond is the identity's resting silhouette. Keep the native circle's fill,
+	// hover/press feedback, without a second competing resting border.
+	if (HasIdentityFrame(Definition.NodeType)) Style.Normal.OutlineSettings.Width = 0.0f;
+	NodeButton->SetStyle(Style);
 	NodeButton->SetToolTipText(FText::Format(FText::FromString(TEXT("{0}\n{1} · {2}\n{3}")),
 		Definition.DisplayName, StateName(State), CostText(Definition), Definition.Description));
+	SetToolTipText(NodeButton->GetToolTipText());
 	const bool bHasIcon = Skill && Skill->SkillIcon && Definition.NodeType != ERogue10mHybridSkillTreeNodeType::Basic;
 	Icon->SetBrushFromTexture(bHasIcon ? Skill->SkillIcon : nullptr);
 	Icon->SetColorAndOpacity(bLearned ? Pale : Muted);
@@ -233,13 +292,42 @@ FReply URogue10mHybridSkillTreeEntryWidget::NativeOnPreviewMouseButtonDown(const
 	}
 	return Super::NativeOnPreviewMouseButtonDown(Geometry, Event);
 }
+FReply URogue10mHybridSkillTreeEntryWidget::NativeOnMouseButtonDown(const FGeometry& Geometry, const FPointerEvent& Event)
+{
+	// Central button input is handled by SButton first. Only the surrounding frame bubbles here.
+	if (bHasOuterFrame && !bCanDrag && Event.GetEffectingButton() == EKeys::LeftMouseButton && OwnerWidget.IsValid())
+	{
+		OwnerWidget->HandleAction(Rogue10mHybridTreeUI::SelectNode, NodeId);
+		return FReply::Handled();
+	}
+	return Super::NativeOnMouseButtonDown(Geometry, Event);
+}
 void URogue10mHybridSkillTreeEntryWidget::NativeOnDragDetected(const FGeometry& Geometry,
 	const FPointerEvent& Event, UDragDropOperation*& Operation)
 {
 	if (!bCanDrag || !Skill) return;
 	URogue10mSkillDragDropOperation* Drag = NewObject<URogue10mSkillDragDropOperation>(this);
 	Drag->SkillData = Skill; Drag->bUnlocked = true; Drag->Pivot = EDragPivot::MouseDown;
+	if (WidgetTree)
+	{
+		UBorder* Visual = WidgetTree->ConstructWidget<UBorder>();
+		Visual->SetBrushColor(Rogue10mHybridTreeUI::Iron); Visual->SetPadding(FMargin(8));
+		Visual->SetVisibility(ESlateVisibility::HitTestInvisible);
+		UHorizontalBox* Row = WidgetTree->ConstructWidget<UHorizontalBox>(); Visual->AddChild(Row);
+		if (Skill->SkillIcon)
+		{
+			USizeBox* IconSize = WidgetTree->ConstructWidget<USizeBox>();
+			IconSize->SetWidthOverride(36); IconSize->SetHeightOverride(36);
+			UImage* DragIcon = WidgetTree->ConstructWidget<UImage>(); DragIcon->SetBrushFromTexture(Skill->SkillIcon);
+			IconSize->AddChild(DragIcon); Row->AddChildToHorizontalBox(IconSize)->SetPadding(FMargin(0, 0, 8, 0));
+		}
+		UTextBlock* Name = WidgetTree->ConstructWidget<UTextBlock>(); Name->SetText(Skill->SkillName);
+		Rogue10mHybridTreeUI::SetTextStyle(Name, 16, Rogue10mHybridTreeUI::Pale);
+		Row->AddChildToHorizontalBox(Name)->SetVerticalAlignment(VAlign_Center);
+		Drag->DefaultDragVisual = Visual;
+	}
 	Operation = Drag;
+	if (OwnerWidget.IsValid()) OwnerWidget->BeginSkillDrag(Drag);
 }
 
 TSharedRef<SWidget> URogue10mHybridSkillTreeGraphWidget::RebuildWidget()
@@ -305,10 +393,10 @@ void URogue10mHybridSkillTreeGraphWidget::BuildGraph()
 		if (!Entry) continue;
 		Entries[Index] = Entry;
 		const FVector2D Location = Position(Node);
-		const float Size = Diameter(Node.NodeType);
+		const float FrameExtent = NodeFrame(Node).Extent;
 		UCanvasPanelSlot* EntrySlot = Canvas->AddChildToCanvas(Entry);
 		EntrySlot->SetPosition(Location); EntrySlot->SetAlignment(FVector2D(0.5f));
-		EntrySlot->SetSize(FVector2D(Size)); EntrySlot->SetZOrder(3);
+		EntrySlot->SetSize(FVector2D(FrameExtent * 2.0f)); EntrySlot->SetZOrder(3);
 		if (Node.NodeType == ERogue10mHybridSkillTreeNodeType::Root || Node.NodeType == ERogue10mHybridSkillTreeNodeType::Basic) continue;
 		UTextBlock* Label = WidgetTree->ConstructWidget<UTextBlock>();
 		Labels[Index] = Label;
@@ -317,8 +405,8 @@ void URogue10mHybridSkillTreeGraphWidget::BuildGraph()
 		UCanvasPanelSlot* LabelSlot = Canvas->AddChildToCanvas(Label);
 		const bool bResonance = Node.NodeType == ERogue10mHybridSkillTreeNodeType::Resonance;
 		// Three separate label corridors: outside each side branch, left of the central spine.
-		const float LeftX = Location.X - Size * 0.5f - 153.0f;
-		const float RightX = Location.X + Size * 0.5f + 9.0f;
+		const float LeftX = Location.X - FrameExtent - 153.0f;
+		const float RightX = Location.X + FrameExtent + 9.0f;
 		const bool bCentralSpine = FMath::IsNearlyZero(Node.Position.X);
 		const bool bLeftBranch = Node.Position.Y < 0.0f && Node.Position.X < 0.0f;
 		const bool bPlaceLeft = bCentralSpine || (bLeftBranch ? LeftX >= 8.0f : RightX + 144.0f > GraphSize.X - 8.0f);
@@ -332,8 +420,8 @@ void URogue10mHybridSkillTreeGraphWidget::BuildGraph()
 		{
 			LabelPosition = Location + FVector2D(35.0f, 23.0f); Label->SetJustification(ETextJustify::Left);
 		}
-		if (bResonance) { LabelPosition = Location + FVector2D(-83.0f, 27.0f); Label->SetJustification(ETextJustify::Center); }
-		LabelSlot->SetPosition(LabelPosition); LabelSlot->SetSize(FVector2D(bResonance ? 166.0f : 144.0f, 57.0f));
+		if (bResonance) { LabelPosition = Location + FVector2D(-83.0f, FrameExtent + 9.0f); Label->SetJustification(ETextJustify::Center); }
+		LabelSlot->SetPosition(LabelPosition); LabelSlot->SetSize(FVector2D(bResonance ? 166.0f : 144.0f, bResonance ? 46.0f : 57.0f));
 		LabelSlot->SetZOrder(4);
 	}
 }
@@ -409,7 +497,44 @@ int32 URogue10mHybridSkillTreeGraphWidget::PaintConnections(const FGeometry& Geo
 			}
 		}
 	}
-	return LayerId + 2;
+	for (const FRogue10mSkillTreeNodeDefinition& Node : Nodes)
+	{
+		FNodeFrame Frame = NodeFrame(Node);
+		if (Frame.OuterPoints.IsEmpty()) continue;
+		const ERogue10mSkillTreeNodeState State = Progression.IsValid()
+			? Progression->GetNodeState(Node.NodeId, Track) : ERogue10mSkillTreeNodeState::Locked;
+		FLinearColor Color = State == ERogue10mSkillTreeNodeState::Locked ? Muted * 0.55f : NodeColor(Node);
+		const bool bSelected = Node.NodeId == Selected;
+		if (bSelected) Color = Pale;
+		// This hit-test-invisible sibling is below the native controls and their labels.
+		FSlateDrawElement::MakeLines(Elements, LayerId + 2, Geometry.ToPaintGeometry(), MoveTemp(Frame.OuterPoints),
+			ESlateDrawEffect::None, Color, true, bSelected ? 2.5f : 1.5f);
+	}
+	return LayerId + 3;
+}
+
+URogue10mHybridSkillTreeEntryWidget* URogue10mHybridSkillTreeGraphWidget::FindNodeEntry(FName NodeId) const
+{
+	for (int32 Index = 0; Index < Nodes.Num(); ++Index)
+	{
+		if (Nodes[Index].NodeId == NodeId && Entries.IsValidIndex(Index)) return Entries[Index].Get();
+	}
+	return nullptr;
+}
+FName URogue10mHybridSkillTreeGraphWidget::GetNodeFrameShape(FName NodeId) const
+{
+	const auto* Node = Nodes.FindByPredicate([NodeId](const auto& Item) { return Item.NodeId == NodeId; });
+	return Node ? Rogue10mHybridTreeUI::NodeFrame(*Node).Shape : NAME_None;
+}
+int32 URogue10mHybridSkillTreeGraphWidget::GetNodeFrameOutlineCount(FName NodeId) const
+{
+	const auto* Node = Nodes.FindByPredicate([NodeId](const auto& Item) { return Item.NodeId == NodeId; });
+	return Node ? Rogue10mHybridTreeUI::NodeFrame(*Node).OutlineCount : 0;
+}
+TArray<FVector2f> URogue10mHybridSkillTreeGraphWidget::GetNodeOuterFramePoints(FName NodeId) const
+{
+	const auto* Node = Nodes.FindByPredicate([NodeId](const auto& Item) { return Item.NodeId == NodeId; });
+	return Node ? Rogue10mHybridTreeUI::NodeFrame(*Node).OuterPoints : TArray<FVector2f>();
 }
 
 TSharedRef<SWidget> URogue10mHybridSkillTreeWidget::RebuildWidget()
@@ -433,7 +558,50 @@ void URogue10mHybridSkillTreeWidget::SetWindowActive(bool bActive)
 {
 	bWindowActive = bActive;
 	if (bActive) InitializeTree();
-	else { CancelKeySelection(); bRefundConfirmation = false; }
+	else { CancelOwnedSkillDrag(); CancelKeySelection(); bRefundConfirmation = false; }
+}
+void URogue10mHybridSkillTreeWidget::BeginSkillDrag(UDragDropOperation* Operation)
+{
+	if (!Operation) return;
+	RestoreSkillDragPresentation();
+	CancelKeySelection();
+	VisibilityBeforeSkillDrag = GetVisibility(); OpacityBeforeSkillDrag = GetRenderOpacity();
+	ActiveSkillDrag = Operation; bSkillDragPresentation = true;
+	Operation->OnDrop.AddUniqueDynamic(this, &ThisClass::HandleSkillDragEnded);
+	Operation->OnDragCancelled.AddUniqueDynamic(this, &ThisClass::HandleSkillDragEnded);
+	// Keep the menu/input-blocking state, but expose the actual HUD drop targets below it.
+	SetRenderOpacity(OpacityBeforeSkillDrag * 0.12f);
+	SetVisibility(ESlateVisibility::HitTestInvisible);
+}
+void URogue10mHybridSkillTreeWidget::HandleSkillDragEnded(UDragDropOperation* Operation)
+{
+	if (ActiveSkillDrag.Get() == Operation) RestoreSkillDragPresentation();
+}
+void URogue10mHybridSkillTreeWidget::CancelOwnedSkillDrag()
+{
+	if (ActiveSkillDrag.IsValid() && FSlateApplication::IsInitialized())
+	{
+		const TSharedPtr<FDragDropOperation> Content = FSlateApplication::Get().GetDragDroppingContent();
+		if (Content.IsValid() && Content->IsOfType<FUMGDragDropOp>()
+			&& StaticCastSharedPtr<FUMGDragDropOp>(Content)->GetOperation() == ActiveSkillDrag.Get())
+		{
+			FSlateApplication::Get().CancelDragDrop();
+		}
+	}
+	// Cancellation can synchronously broadcast OnDragCancelled and already restore us.
+	RestoreSkillDragPresentation();
+}
+void URogue10mHybridSkillTreeWidget::RestoreSkillDragPresentation()
+{
+	if (UDragDropOperation* Operation = ActiveSkillDrag.Get())
+	{
+		Operation->OnDrop.RemoveDynamic(this, &ThisClass::HandleSkillDragEnded);
+		Operation->OnDragCancelled.RemoveDynamic(this, &ThisClass::HandleSkillDragEnded);
+	}
+	ActiveSkillDrag.Reset();
+	if (!bSkillDragPresentation) return;
+	bSkillDragPresentation = false;
+	SetRenderOpacity(OpacityBeforeSkillDrag); SetVisibility(VisibilityBeforeSkillDrag);
 }
 UTextBlock* URogue10mHybridSkillTreeWidget::MakeText(FName Name, const FText& Text, int32 Size, FLinearColor Color)
 {
@@ -561,6 +729,7 @@ void URogue10mHybridSkillTreeWidget::BindContext()
 }
 void URogue10mHybridSkillTreeWidget::ReleaseContext()
 {
+	CancelOwnedSkillDrag();
 	CancelKeySelection();
 	if (Progression.IsValid()) Progression->OnChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
 	if (BoundState.IsValid()) BoundState->OnGrowthChanged.RemoveDynamic(this, &ThisClass::HandleProgressionChanged);
@@ -862,4 +1031,20 @@ void URogue10mHybridSkillTreeWidget::HandleBasicSkillSelected(FString Selection,
 int32 URogue10mHybridSkillTreeWidget::GetVisibleNodeCount() const
 {
 	return Progression.IsValid() ? Progression->GetNodes(DisplayedTrack).Num() : 0;
+}
+URogue10mHybridSkillTreeEntryWidget* URogue10mHybridSkillTreeWidget::FindNodeEntry(FName NodeId) const
+{
+	return Graph ? Graph->FindNodeEntry(NodeId) : nullptr;
+}
+FName URogue10mHybridSkillTreeWidget::GetNodeFrameShape(FName NodeId) const
+{
+	return Graph ? Graph->GetNodeFrameShape(NodeId) : NAME_None;
+}
+int32 URogue10mHybridSkillTreeWidget::GetNodeFrameOutlineCount(FName NodeId) const
+{
+	return Graph ? Graph->GetNodeFrameOutlineCount(NodeId) : 0;
+}
+TArray<FVector2f> URogue10mHybridSkillTreeWidget::GetNodeOuterFramePoints(FName NodeId) const
+{
+	return Graph ? Graph->GetNodeOuterFramePoints(NodeId) : TArray<FVector2f>();
 }

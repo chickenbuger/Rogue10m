@@ -1,0 +1,61 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\tmp\hybrid-tree-input-polish\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m\tmp\hybrid-tree-input-polish).
+Creating makefile for Rogue10mEditor (no existing makefile)
+UHT compiled-in object format Default
+Waiting for 'git status' command to complete
+UHT processed Rogue10mEditor in 6.4830599 seconds (176 generated files written)
+Terminating git child process due to timeout
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mHybridSkillTreeRuntimeTest.cpp, Rogue10mHybridSkillTreeWidget.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+  Requested 1.5 GB memory per action, 6.38 GB available: limiting max parallel actions to 4
+Using XGE executor to run 14 action(s)
+Distributing 14 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {2606BA10-D01E-49C8-B848-A3C4DA6ABFE3}
+ 
+--------------------Project: Default-------------------------------------------
+[1/14] Compile Resource [x64] Default.rc2 (0:00.43 at +0:00)
+[2/14] Compile [x64] SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.cpp (1:28.53 at +0:00)
+[3/14] Compile [x64] Rogue10mHybridSkillTreeWidget.cpp (0:17.92 at +1:29)
+[4/14] Compile [x64] Rogue10mHybridSkillTreeRuntimeTest.cpp (0:20.43 at +1:29)
+[5/14] Compile [x64] Module.Rogue10m.7.cpp (0:31.64 at +1:29)
+[6/14] Compile [x64] Module.Rogue10m.6.cpp (0:33.53 at +1:29)
+[7/14] Compile [x64] Module.Rogue10m.4.cpp (0:52.42 at +1:28)
+[8/14] Compile [x64] Module.Rogue10m.5.cpp (0:52.90 at +1:28)
+[9/14] Compile [x64] Module.Rogue10m.1.cpp (0:53.29 at +1:28)
+[10/14] Compile [x64] Module.Rogue10m.2.cpp (1:00.67 at +1:28)
+[11/14] Compile [x64] Module.Rogue10m.3.cpp (1:24.78 at +1:28)
+[12/14] Link [x64] UnrealEditor-Rogue10m.lib (0:00.42 at +2:53)
+   D:/Project/Rogue10m/tmp/hybrid-tree-input-polish/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.lib ���̺귯�� �� D:/Project/Rogue10m/tmp/hybrid-tree-input-polish/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.exp ��ü�� �����ϰ� �ֽ��ϴ�.
+[13/14] Link [x64] UnrealEditor-Rogue10m.dll (0:02.12 at +2:53)
+[14/14] WriteMetadata Rogue10mEditor.target (0:01.04 at +2:55)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 1 succeeded, 0 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 180.98 seconds
+Output binary: D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe
+
+Result: Succeeded
+Total execution time: 293.46 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 16.5kb

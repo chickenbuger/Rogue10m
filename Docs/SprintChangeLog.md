@@ -2353,3 +2353,13 @@
 - Sprint#7-1 완료: 기능 커밋 `007c0902b661f69edb64602f70311dc55f34e041`, 별도 인덱스29개·구문/JSON/링크/범위/필수경로/공백 PASS. 원격·조상·worktree 확인 후 develop→test→main fast-forward와 일반 atomic push, 작업/통합4개 원격 SHA 일치. 병행 보스 소스/문서/로그 보존·게시 제외. [로컬 통합](../Feature/doc/evidence/finish-unused-work-audit-20261020/local-integration.json), [원격 대조](../Feature/doc/evidence/finish-unused-work-audit-20261020/public-push-result.json). 완료 기록도 같은 방식으로 반영한다.
 
 - Sprint#7-2 공개 게시 완료: 기능 커밋 `64935351`, 별도 인덱스40개·필수경로/범위/공백 검사 PASS, 검증 뒤 추가 감사 b11aefe0의 게임 tree 동일 대조·이력 보존. 공유 브랜치/HEAD/index 유지, develop→test→main CAS fast-forward·일반 atomic push·원격4개 SHA 직접 일치. 빌드180.25초·386검사 실패0. [통합](../Feature/doc/evidence/boss-save-v3-integration-20261020/local-integration.json), [공개 확인](../Feature/doc/evidence/boss-save-v3-integration-20261020/public-push-result.json). 이 완료 기록도 후속 문서 커밋으로 같은 순서로 게시한다.
+
+## Sprint#7-2 — 혼합 스킬트리 도형·드래그·실입력 마무리 (2026-10-20)
+
+- 브랜치: `Sprint#7-2-hybrid-tree-input-polish`. 독립 작업 폴더에서 최신 main `e12df414`를 포함해 최종 빌드했다.
+- 목표: 이전 visual-review에 남긴 아이덴티티 마름모·공명 이중 표식과 실제 HUD 드래그·키 선택/발동 검증을 마무리한다.
+- 주요 변경: 외곽 클릭 영역·라벨 간격, drag 중 패널 투명/통과와 실제 HUD 장착, Drop/Cancel/창 닫힘·컨텍스트 종료 복원/소유 operation 취소, 기술명·아이콘 드래그 표시. 격투가 개념도의 남은 마나 경로 정리. 성장 수치·Save v3·Content 에셋 저작 변경 없음.
+- 검증: 최종 Editor 빌드103.04초 성공, Automation3 Success/errors0, 실제 게임176검사·새 프로세스 복원/재입력77검사에서 실패0·exit0. 실제 Primary 장착·E거절·놓기 전 창 닫기 취소·외곽 클릭·Esc/예약키/해제·정확 기술1회 발동,1080p/720p PNG 확인. 최종 생성 경로·범위·공백·커밋/게시 검사는 이어서 확정한다.
+- 사고와 복원: 초기 Content junction의 sparse 정리가 공유 추적 에셋6,423개를 삭제했다. 사용자 고지 후 실제 부재 경로만 한정 복원·기존 존재파일 덮기0, 전량4,480,714,917B blob/텍스트 clean-filter 대조로 불일치0. 독립 실제 Content로 전환하고 재발 방지 지침을 추가했다. 초기 실패와 사고 기록을 보존한다.
+- 상태: 구현·통합 QA·독립 검토 완료, 문서/최종 검사·작업 커밋→develop→test→main·일반 푸시 준비. 완료 게시 SHA는 뒤에 추가한다.
+- 관련: [계획](../Feature/architect/2026-10-20_hybrid-tree-input-polish.md), [결과](../Feature/doc/2026-10-20_hybrid-tree-input-polish.md), [증거](../Feature/doc/evidence/hybrid-tree-input-polish-20261020/), [사고·복원 검토](../Feature/doc/evidence/hybrid-tree-input-polish-20261020/incident-review.md).

@@ -1,0 +1,74 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "JINSOO",
+			"instance": "EDB69F1E486FBB2B2308F2859DC448B0",
+			"instanceName": "JINSOO-39144",
+			"platform": "WindowsEditor",
+			"oSVersion": "Windows 11 (26H2) [10.0.26300.9711] ",
+			"model": "Default",
+			"gPU": "NVIDIA GeForce RTX 3070",
+			"cPUModel": "AMD Ryzen 7 5800X 8-Core Processor             ",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.10.20-13.56.42",
+	"succeeded": 3,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.15127238631248474,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "MasteryAlternativesAndLegacy",
+			"fullTestPath": "Rogue10m.HybridSkillTree.MasteryAlternativesAndLegacy",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"EDB69F1E486FBB2B2308F2859DC448B0"
+			],
+			"duration": 0.084179297089576721,
+			"dateTime": "2026.10.20-13.56.42",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "MasteryAndRewards",
+			"fullTestPath": "Rogue10m.HybridSkillTree.MasteryAndRewards",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"EDB69F1E486FBB2B2308F2859DC448B0"
+			],
+			"duration": 0.058237902820110321,
+			"dateTime": "2026.10.20-13.56.42",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SharedLedgerAndValidation",
+			"fullTestPath": "Rogue10m.HybridSkillTree.SharedLedgerAndValidation",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"EDB69F1E486FBB2B2308F2859DC448B0"
+			],
+			"duration": 0.0088552013039588928,
+			"dateTime": "2026.10.20-13.56.42",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

@@ -154,3 +154,7 @@ Work Packet 3
 - 실패하면 같은 구현을 반복하지 않고 이전 역할 단계로 되돌린다.
 - 기능 단위 종료 시 ULW Loop Exit Gate를 확인한다.
 - Lazy Codex 개념은 로컬 하네스 운용 규칙으로만 사용하며, 외부 자동화 도구 설치는 별도 사용자 지시가 있을 때만 진행한다.
+
+### Git 작업 폴더의 콘텐츠 격리
+
+Git이 추적하는 `Content` 등의 폴더를 다른 checkout의 원본 폴더에 junction/symlink로 연결하지 않는다. `sparse-checkout`, checkout, merge가 링크 아래의 추적 파일을 정리할 수 있으므로 각 작업 폴더는 독립된 실제 checkout을 사용한다. Git 변경 전에는 프로젝트 root와 콘텐츠 경로의 reparse 여부를 확인한다. 2026-10-20 스킬트리 후속 작업의 연결 오류·누락 경로 한정 복원과 전량 blob 대조는 `Feature/doc/evidence/hybrid-tree-input-polish-20261020/`에 기록했다.

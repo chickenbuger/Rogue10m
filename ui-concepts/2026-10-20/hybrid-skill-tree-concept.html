@@ -1,0 +1,176 @@
+<div id="r10m-hybrid-tree" lang="ko">
+  <style>
+    #r10m-hybrid-tree { color: var(--foreground); }
+    #r10m-hybrid-tree .tree-heading { max-width: calc(100% - 90px); margin-bottom: 8px; }
+    #r10m-hybrid-tree .tree-caption { margin-bottom: 16px; }
+    #r10m-hybrid-tree .tree-detail { margin-bottom: 20px; overflow-wrap: anywhere; }
+    #r10m-hybrid-tree .tree-board { position: relative; padding-inline: 10px; }
+    #r10m-hybrid-tree .tree-wires { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+    #r10m-hybrid-tree .wire { fill: none; stroke: var(--border); stroke-width: 1.5; }
+    #r10m-hybrid-tree .wire.is-route { stroke: var(--viz-series-1); }
+    #r10m-hybrid-tree .wire.is-choice { stroke-dasharray: 4 4; }
+    #r10m-hybrid-tree .tree-origin { display: flex; justify-content: center; margin-bottom: 54px; }
+    #r10m-hybrid-tree .tree-branches { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 42px; }
+    #r10m-hybrid-tree .tree-branch { min-width: 0; }
+    #r10m-hybrid-tree .branch-label { margin-bottom: 22px; text-align: center; font-weight: 500; }
+    #r10m-hybrid-tree .basics-origin { display: flex; justify-content: center; margin-bottom: 42px; }
+    #r10m-hybrid-tree .basics-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 22px; }
+    #r10m-hybrid-tree .identities-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 66px 10px; }
+    #r10m-hybrid-tree .tree-node { position: relative; min-width: 0; text-align: center; z-index: 1; }
+    #r10m-hybrid-tree .node-note { display: block; margin-top: 6px; overflow-wrap: anywhere; }
+    #r10m-hybrid-tree .category-mark { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-inline-end: 4px; }
+    #r10m-hybrid-tree .mark-inner { background: var(--viz-series-3); }
+    #r10m-hybrid-tree .mark-spirit { background: var(--viz-series-2); }
+    #r10m-hybrid-tree .identity-choice { display: flex; justify-content: center; margin-top: 38px; }
+    #r10m-hybrid-tree .tree-fusion { display: flex; justify-content: center; margin-top: 58px; }
+    #r10m-hybrid-tree .tree-legend { margin-top: 18px; }
+    #r10m-hybrid-tree .legend-line { display: inline-block; width: 22px; border-top: 1.5px solid var(--border); margin-inline-end: 5px; vertical-align: middle; }
+    #r10m-hybrid-tree .legend-choice { border-top-style: dashed; }
+    @media (max-width: 580px) {
+      #r10m-hybrid-tree .tree-branches { grid-template-columns: minmax(0, 1fr); gap: 54px; }
+      #r10m-hybrid-tree .tree-board { padding-inline: 16px; }
+      #r10m-hybrid-tree .tree-origin { margin-bottom: 38px; }
+      #r10m-hybrid-tree .basics-grid { gap: 42px 24px; }
+      #r10m-hybrid-tree .identities-grid { gap: 54px 8px; }
+      #r10m-hybrid-tree .tree-fusion { margin-top: 58px; }
+    }
+  </style>
+  <h2 class="tree-heading">격투가 혼합 성장 트리</h2>
+  <div class="tree-caption text-small text-muted">격투가 대표 경로 · 내공·투지 · P 레벨업 포인트 · M 무기 숙련 레벨 · 게임 화면이 아닌 개념도</div>
+  <div class="card tree-detail" aria-live="polite" aria-atomic="true">
+    <span id="tree-selected-name">중앙 노드</span><span id="tree-selected-detail"> · 조건: 캐릭터 생성 · 효과: 기본기 4종·연환권 무료 해금 · 경로: 기본기 / 아이덴티티</span>
+  </div>
+  <div class="tree-board" aria-label="중앙에서 기본기와 아이덴티티로 갈라진 뒤 핵심 기술과 성질이 코어 공명으로 합쳐지는 설계 구조도">
+    <svg class="tree-wires" aria-hidden="true"></svg>
+    <div class="tree-origin">
+      <div class="tree-node" data-node="center"><button type="button" class="btn" aria-pressed="true" aria-label="중앙 노드 선택">중앙 노드</button><span class="node-note text-small text-muted">격투가 · 너클</span></div>
+    </div>
+    <div class="tree-branches">
+      <section class="tree-branch" aria-label="기본기와 핵심 기술 경로">
+        <div class="branch-label">기본기 → 성장 → 핵심 기술</div>
+        <div class="basics-origin"><div class="tree-node" data-node="basic"><button type="button" class="btn" aria-pressed="false" aria-label="기본기 4종과 연환권 선택">기본기·연환권</button><span class="node-note text-small text-muted">기본 4종 + 연환권 · 무료</span></div></div>
+        <div class="basics-grid">
+          <div class="tree-node" data-node="s1"><button type="button" class="btn viz-tile" aria-pressed="false" aria-label="숙련 3 공격력 성장 선택">공격력 +1</button><span class="node-note text-small text-muted">S1 · M3</span></div>
+          <div class="tree-node" data-node="t1"><button type="button" class="btn viz-tile" aria-pressed="false" aria-label="숙련 5 붕권 선택">붕권</button><span class="node-note text-small text-muted">T1 · M5</span></div>
+          <div class="tree-node" data-node="s2"><button type="button" class="btn viz-tile" aria-pressed="false" aria-label="숙련 8 공격력 성장 선택">공격력 +2</button><span class="node-note text-small text-muted">S2 · M8</span></div>
+          <div class="tree-node" data-node="t2"><button type="button" class="btn viz-tile" aria-pressed="false" aria-label="숙련 12 금강쇄 조건 제안 선택">금강쇄</button><span class="node-note text-small text-muted">T2 · M12 (조건 제안)</span></div>
+          <div class="tree-node" data-node="s3"><button type="button" class="btn viz-tile" aria-pressed="false" aria-label="숙련 16 공격력 성장 선택">공격력 +2</button><span class="node-note text-small text-muted">S3 · M16</span></div>
+          <div class="tree-node" data-node="t3"><button type="button" class="btn viz-tile" aria-pressed="false" aria-label="숙련 20 무극패왕권 조건 제안 선택">무극패왕권</button><span class="node-note text-small text-muted">T3 · M20 (조건 제안)</span></div>
+        </div>
+      </section>
+      <section class="tree-branch" aria-label="내공 투지 아이덴티티 경로">
+        <div class="branch-label">아이덴티티 → 심화 → 성질</div>
+        <div class="identities-grid">
+          <div class="tree-node" data-node="inner1"><button type="button" class="btn viz-tile" aria-pressed="false" aria-label="내공 입문 선택">내공 입문</button><span class="node-note text-small text-muted"><span class="category-mark mark-inner" aria-hidden="true"></span>1P</span></div>
+          <div class="tree-node" data-node="spirit1"><button type="button" class="btn viz-tile" aria-pressed="false" aria-label="투지 입문 선택">투지 입문</button><span class="node-note text-small text-muted"><span class="category-mark mark-spirit" aria-hidden="true"></span>1P</span></div>
+          <div class="tree-node" data-node="inner2"><button type="button" class="btn viz-tile" aria-pressed="false" aria-label="내공 심화 선택">내공 심화</button><span class="node-note text-small text-muted">2P 또는<br>숙련 성장</span></div>
+          <div class="tree-node" data-node="spirit2"><button type="button" class="btn viz-tile" aria-pressed="false" aria-label="투지 심화 선택">투지 심화</button><span class="node-note text-small text-muted">2P 또는<br>숙련 성장</span></div>
+          <div class="tree-node" data-node="inner3"><button type="button" class="btn viz-tile" aria-pressed="false" aria-label="내공 성질 선택">내공 성질</button><span class="node-note text-small text-muted"><span class="category-mark mark-inner" aria-hidden="true"></span>2P</span></div>
+          <div class="tree-node" data-node="spirit3"><button type="button" class="btn viz-tile" aria-pressed="false" aria-label="투지 성질 선택">투지 성질</button><span class="node-note text-small text-muted"><span class="category-mark mark-spirit" aria-hidden="true"></span>2P</span></div>
+        </div>
+        <div class="identity-choice"><div class="tree-node" data-node="active"><button type="button" class="btn" aria-pressed="false" aria-label="내공 또는 투지의 활성 성질 한 계열 규칙 선택">활성 성질 1개</button><span class="node-note text-small text-muted">내공 / 투지 중 택1</span></div></div>
+      </section>
+    </div>
+    <div class="tree-fusion"><div class="tree-node" data-node="fusion"><button type="button" class="btn" aria-pressed="false" aria-label="코어 공명 융합 선택">코어 공명</button><span class="node-note text-small text-muted">T3 + 활성 성질 · 모두 필요 · 추가 0P</span></div></div>
+  </div>
+  <div class="tree-legend viz-row text-small text-muted"><span><span class="legend-line" aria-hidden="true"></span>필수 선행</span><span><span class="legend-line legend-choice" aria-hidden="true"></span>활성 1계열 선택</span><span>노드 선택 → 조건·효과·경로</span></div>
+  <script>
+    (() => {
+      const root = document.getElementById('r10m-hybrid-tree');
+      const board = root.querySelector('.tree-board');
+      const svg = root.querySelector('.tree-wires');
+      const nameField = document.getElementById('tree-selected-name');
+      const detailField = document.getElementById('tree-selected-detail');
+      const nodes = {
+        center: ['중앙 노드', '캐릭터 생성', '기본기 4종·연환권 무료 해금', '기본기 / 아이덴티티'],
+        basic: ['기본기·연환권', '중앙 노드 · 비용 0P', '기본기 4종과 연환권 초기 해금', '중앙 → 기본기 → 숙련 성장'],
+        s1: ['S1 · 공격력 성장', '기본기 · M3 · 비용 0P', '영구 숙련 공격력 +1', '기본기 → S1 → 붕권'],
+        t1: ['T1 · 붕권', 'S1 · M5 · 비용 0P', '붕권 해금', 'S1 → T1 → S2'],
+        s2: ['S2 · 공격력 성장', '붕권 · M8 · 비용 0P', '영구 숙련 공격력 +2 · 누적 +3', '붕권 → S2 → 금강쇄'],
+        t2: ['T2 · 금강쇄 (조건 제안)', 'S2 · M12 · 비용 0P', '기존 금강쇄 해금 · 기존 전투 데이터 재사용', 'S2 → T2 → S3'],
+        s3: ['S3 · 공격력 성장', '금강쇄 · M16 · 비용 0P', '영구 숙련 공격력 +2 · 누적 +5', '금강쇄 → S3 → 무극패왕권'],
+        t3: ['T3 · 무극패왕권 (조건 제안)', 'S3 · M20 · 비용 0P', '기존 무극패왕권 해금 · 기존 전투 데이터 재사용', 'S3 → 핵심 기술 T3 → 코어 공명'],
+        inner1: ['내공 입문', '중앙 노드 + 1P · 숙련 조건 없음', '내공 계열 입문', '중앙 → 내공 입문 → 내공 심화'],
+        spirit1: ['투지 입문', '중앙 노드 + 1P · 숙련 조건 없음', '투지 계열 입문', '중앙 → 투지 입문 → 투지 심화'],
+        inner2: ['내공 심화', '내공 입문 + [2P 또는 (M12 이상 & 영구 숙련 스태미나 성장 +10 이상)]', '내공 성질 선택 경로 개방', '내공 입문 → 내공 심화 → 내공 성질'],
+        spirit2: ['투지 심화', '투지 입문 + [2P 또는 (M12 이상 & 영구 숙련 공격력 성장 +3 이상)]', '투지 성질 선택 경로 개방', '투지 입문 → 투지 심화 → 투지 성질'],
+        inner3: ['내공 성질', '내공 심화 + 2P', '내공 성질 선택 · 활성은 한 계열', '내공 심화 → 성질 → 활성 성질 → 코어 공명'],
+        spirit3: ['투지 성질', '투지 심화 + 2P', '투지 성질 선택 · 활성은 한 계열', '투지 심화 → 성질 → 활성 성질 → 코어 공명'],
+        active: ['활성 성질 1개', '해금한 내공·투지 성질 중 택1', '활성 계열 하나를 융합 선행으로 사용', '성질 선택 → 활성 성질 → 코어 공명'],
+        fusion: ['코어 공명', '핵심 기술 T3 & 활성 계열 성질 선택 · 두 선행 모두 필요 · 추가 0P', '기존 핵심 기술 변형 · 중복 공격 지급 없음', 'T3 + 활성 성질 → 코어 공명']
+      };
+      const edges = [
+        ['center','basic'], ['center','inner1'], ['center','spirit1'],
+        ['basic','s1'], ['s1','t1'], ['t1','s2'], ['s2','t2'], ['t2','s3'], ['s3','t3'],
+        ['inner1','inner2'], ['inner2','inner3'], ['spirit1','spirit2'], ['spirit2','spirit3'],
+        ['inner3','active','choice'], ['spirit3','active','choice'],
+        ['t3','fusion'], ['active','fusion']
+      ];
+      const nodeElements = new Map(Array.from(root.querySelectorAll('[data-node]'), el => [el.dataset.node, el]));
+      let selected = 'center';
+      function ancestors(id, visited = new Set()) {
+        if (visited.has(id)) return visited;
+        visited.add(id);
+        edges.filter(e => e[1] === id && e[2] !== 'choice').forEach(e => ancestors(e[0], visited));
+        return visited;
+      }
+      function draw() {
+        const bounds = board.getBoundingClientRect();
+        const width = bounds.width;
+        const height = bounds.height;
+        const narrow = width < 550;
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        const route = ancestors(selected);
+        const parts = [];
+        const coords = id => {
+          const element = nodeElements.get(id);
+          const rect = element.querySelector('button').getBoundingClientRect();
+          const content = element.getBoundingClientRect();
+          return { x: rect.left - bounds.left + rect.width / 2, y: rect.top - bounds.top, cy: rect.top - bounds.top + rect.height / 2, bottom: content.bottom - bounds.top + 6, left: rect.left - bounds.left, right: rect.right - bounds.left };
+        };
+        edges.forEach(([from, to, kind]) => {
+          const a = coords(from), b = coords(to);
+          let path;
+          if (from === 'center') {
+            const section = nodeElements.get(to).closest('.tree-branch').getBoundingClientRect();
+            const outer = narrow && to !== 'basic' ? width - 3 : section.left - bounds.left - 8;
+            const y = b.y - 10;
+            path = `M ${a.x} ${a.bottom} V ${a.bottom + 12} H ${outer} V ${y} H ${b.x} V ${b.y}`;
+          } else if (from === 't3' && to === 'fusion' && narrow) {
+            const outer = 3;
+            path = `M ${a.left} ${a.cy} H ${outer} V ${b.y - 18} H ${b.x} V ${b.y}`;
+          } else if (a.y === b.y && a.right < b.left) {
+            path = `M ${a.right} ${a.cy} H ${b.left}`;
+          } else {
+            const mid = a.bottom + (b.y - a.bottom)/2;
+            path = `M ${a.x} ${a.bottom} V ${mid} H ${b.x} V ${b.y}`;
+          }
+          const classes = ['wire', kind === 'choice' ? 'is-choice' : '', route.has(from) && route.has(to) ? 'is-route' : ''].filter(Boolean).join(' ');
+          parts.push(`<path class="${classes}" d="${path}" data-from="${from}" data-to="${to}"></path>`);
+        });
+        svg.innerHTML = parts.join('');
+      }
+      function select(id, save) {
+        if (!nodes[id]) id = 'center';
+        selected = id;
+        const [name, condition, effect, path] = nodes[id];
+        nameField.textContent = name;
+        detailField.textContent = ` · 조건: ${condition} · 효과: ${effect} · 경로: ${path}`;
+        nodeElements.forEach((el, key) => el.querySelector('button').setAttribute('aria-pressed', String(key === id)));
+        draw();
+        if (save && window.openai && typeof window.openai.setWidgetState === 'function') {
+          window.openai.setWidgetState({ modelContent: { selectedNode: name, condition, effect, path, status: '격투가 대표 경로 · 내공·투지 · 개념도' }, privateContent: { selected: id } }).catch(() => {});
+        }
+      }
+      nodeElements.forEach((el, id) => el.querySelector('button').addEventListener('click', () => select(id, true)));
+      const saved = window.openai && window.openai.widgetState;
+      select(saved && saved.privateContent && saved.privateContent.selected || 'center', false);
+      window.addEventListener('openai:set_globals', event => {
+        const state = event.detail && event.detail.globals && event.detail.globals.widgetState;
+        if (state) select(state.privateContent && state.privateContent.selected || 'center', false);
+      });
+      new ResizeObserver(draw).observe(board);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+    })();
+  </script>
+</div>

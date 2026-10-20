@@ -1,5 +1,13 @@
 #if WITH_EDITOR
 #include "Components/Button.h"
+#include "Components/InputKeySelector.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "HAL/FileManager.h"
+#include "InputKeyEventArgs.h"
+#include "Slate/UMGDragDropOp.h"
+#include "Rogue10mHudWidgetParts.h"
+#include "Rogue10mMainHUDWidget.h"
+#include "Rogue10mSkillDragDropOperation.h"
 #include "Containers/Ticker.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
@@ -63,13 +71,17 @@ public:
 	{
 		World = &InWorld;
 		bRead = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridRead"));
+		bInputQA = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridInputQA"));
 		if (!SafeFlag(TEXT("RogueProfileSaveSlot="), TEXT("Rogue10m_Town_QA_"))
 			|| !SafeFlag(TEXT("RogueProgressionSavePrefix="), TEXT("Rogue10m_Progression_QA_"))
 			|| !SafeFlag(TEXT("RogueSkillKeySaveSlot="), TEXT("Rogue10m_Fighter_QA_")))
 		{
 			Check(false, TEXT("all_three_isolated_save_flags_required")); Finish(); return;
 		}
-		Output = FPaths::Combine(FPaths::ProjectDir(), TEXT("Feature/doc/evidence/hybrid-skill-tree-runtime-20261020"));
+		Output = FPaths::Combine(FPaths::ProjectDir(), bInputQA
+			? TEXT("Feature/doc/evidence/hybrid-tree-input-polish-20261020")
+			: TEXT("Feature/doc/evidence/hybrid-skill-tree-runtime-20261020"));
+		IFileManager::Get().MakeDirectory(*Output, true);
 		Later(3.0, [this] { Prepare(); });
 		FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self = AsShared()](float)
 		{
@@ -87,25 +99,310 @@ private:
 		if (!Passed) { ++Failures; }
 	}
 	void Later(double Seconds, TFunction<void()> F) { NextTime = FPlatformTime::Seconds() + Seconds; Next = MoveTemp(F); }
+	bool HitPath(UWidget* Target, FWidgetPath& OutPath, FVector2D& Point, const FVector2D& NormalizedPoint = FVector2D(0.5, 0.5))
+	{
+		FWidgetPath FocusPath;
+		if (!Target || !Target->GetIsEnabled()
+			|| !FSlateApplication::Get().GeneratePathToWidgetUnchecked(Target->TakeWidget(), FocusPath))
+		{ Check(false, TEXT("enabled_real_widget_path")); return false; }
+		Point = Target->GetCachedGeometry().GetAbsolutePositionAtCoordinates(NormalizedPoint);
+		OutPath = FSlateApplication::Get().LocateWindowUnderMouse(Point,
+			TArray<TSharedRef<SWindow>>{FocusPath.GetWindow()}, false, 0);
+		const bool Hit = OutPath.IsValid() && OutPath.ContainsWidget(&Target->TakeWidget().Get());
+		if (!Hit) { UE_LOG(LogRogue10m, Warning, TEXT("HYBRID_RUNTIME widget outside hit path: %s point=%s size=%s"),
+			*Target->GetName(), *Point.ToString(), *Target->GetCachedGeometry().GetLocalSize().ToString()); }
+		Check(Hit, TEXT("real_mouse_hit_reaches_widget"));
+		return Hit;
+	}
+	bool ClickWidget(UWidget* Target, const FVector2D& NormalizedPoint = FVector2D(0.5, 0.5))
+	{
+		FWidgetPath Path; FVector2D Point;
+		if (!HitPath(Target, Path, Point, NormalizedPoint)) { return false; }
+		auto& Slate = FSlateApplication::Get();
+		Slate.RoutePointerMoveEvent(Path,
+			FPointerEvent(0, Point, Point, TSet<FKey>{}, EKeys::Invalid, 0, FModifierKeysState()), false);
+		Slate.RoutePointerDownEvent(Path, FPointerEvent(0, Point, Point,
+			TSet<FKey>{EKeys::LeftMouseButton}, EKeys::LeftMouseButton, 0, FModifierKeysState()));
+		Slate.RoutePointerUpEvent(Path, FPointerEvent(0, Point, Point,
+			TSet<FKey>{}, EKeys::LeftMouseButton, 0, FModifierKeysState()));
+		return true;
+	}
 	bool Click(const TCHAR* Name)
 	{
-		UButton* Button = Widget.IsValid() ? Cast<UButton>(Widget->GetWidgetFromName(Name)) : nullptr;
-		FWidgetPath FocusPath;
-		if (!Button || !Button->GetIsEnabled() || !FSlateApplication::Get().GeneratePathToWidgetUnchecked(Button->TakeWidget(), FocusPath))
-		{ Check(false, TEXT("enabled_real_button_path")); return false; }
-		const FVector2D Point = Button->GetCachedGeometry().GetAbsolutePositionAtCoordinates({0.5, 0.5});
-		auto Path = FSlateApplication::Get().LocateWindowUnderMouse(Point, TArray<TSharedRef<SWindow>>{FocusPath.GetWindow()}, false, 0);
-		const bool Hit = Path.IsValid() && Path.ContainsWidget(&Button->TakeWidget().Get());
-		if (!Hit) { UE_LOG(LogRogue10m, Warning, TEXT("HYBRID_RUNTIME button outside hit path: %s point=%s size=%s"),
-			Name, *Point.ToString(), *Button->GetCachedGeometry().GetLocalSize().ToString()); }
-		Check(Hit, TEXT("real_mouse_hit_reaches_button")); if (!Hit) { return false; }
-		// Slate updates SButton's hover state on pointer movement; a physical click
-		// includes that movement before down/up. Match the existing UI QA helpers.
-		FSlateApplication::Get().RoutePointerMoveEvent(Path,
-			FPointerEvent(0, Point, Point, TSet<FKey>{}, EKeys::Invalid, 0, FModifierKeysState()), false);
-		FSlateApplication::Get().RoutePointerDownEvent(Path, FPointerEvent(0, Point, Point, TSet<FKey>{EKeys::LeftMouseButton}, EKeys::LeftMouseButton, 0, FModifierKeysState()));
-		FSlateApplication::Get().RoutePointerUpEvent(Path, FPointerEvent(0, Point, Point, TSet<FKey>{}, EKeys::LeftMouseButton, 0, FModifierKeysState()));
-		return true;
+		return ClickWidget(Widget.IsValid() ? Widget->GetWidgetFromName(Name) : nullptr);
+	}
+	URogue10mQuickSlotWidget* FindHUDSlot(bool bDodge)
+	{
+		for (TObjectIterator<URogue10mQuickSlotWidget> It; It; ++It)
+		{
+			const auto View = It->GetQuickSlotView();
+			auto* MainHUD = It->GetOwningMainHUD();
+			if (It->GetWorld() != World.Get() || It->GetOwningPlayer() != PC.Get()
+				|| View.bDodgeSlot != bDodge || (!bDodge && View.InputSlot != ERogue10mAttackInputSlot::Primary)
+				|| It->GetCachedGeometry().GetLocalSize().GetMin() <= 1.0
+				|| !MainHUD || !MainHUD->IsInViewport() || MainHUD->GetOwningPlayer() != PC.Get()) { continue; }
+			// Equipment preview widgets retain geometry even while hidden. Require
+			// the actual displayed HUD as a Slate ancestor, not merely a matching view.
+			FWidgetPath Path;
+			if (!FSlateApplication::Get().GeneratePathToWidgetUnchecked(It->TakeWidget(), Path)
+				|| !Path.ContainsWidget(&MainHUD->TakeWidget().Get())) { continue; }
+			UE_LOG(LogRogue10m, Display, TEXT("HYBRID_RUNTIME actual HUD drop target: %s owner=%s size=%s"),
+				*It->GetPathName(), *MainHUD->GetName(), *It->GetCachedGeometry().GetLocalSize().ToString());
+			return *It;
+		}
+		return nullptr;
+	}
+	void CheckDragPresentationRestored(ESlateVisibility BeforeVisibility, float BeforeOpacity)
+	{
+		Check(Widget.IsValid() && !Widget->IsSkillDragInProgress() && Widget->GetVisibility() == BeforeVisibility
+			&& FMath::IsNearlyEqual(Widget->GetRenderOpacity(), BeforeOpacity) && PC->IsAnyBlockingWindowVisible(),
+			TEXT("input_drop_or_cancel_restores_menu_visibility_opacity_and_open_state"));
+	}
+	void DragNodeToHUD(FName NodeId, bool bDodge, bool bExpectDrag, TFunction<void()> Continuation, bool bCloseMenu = false)
+	{
+		auto* Entry = Widget.IsValid() ? Widget->FindNodeEntry(NodeId) : nullptr;
+		FWidgetPath SourcePath; FVector2D Start;
+		if (!HitPath(Entry, SourcePath, Start)) { Later(0.15, MoveTemp(Continuation)); return; }
+		auto* Target = bExpectDrag ? FindHUDSlot(bDodge) : nullptr;
+		if (bExpectDrag)
+		{
+			Check(Target != nullptr, TEXT("input_real_HUD_target_exists"));
+			if (!Target) { Later(0.15, MoveTemp(Continuation)); return; }
+		}
+		const auto Before = Player->GetCombatComponent()->CaptureCombat().SkillBindings;
+		const auto BeforeHUD = Target ? Target->GetQuickSlotView() : FRogue10mHudQuickSlotView();
+		const auto BeforeVisibility = Widget->GetVisibility();
+		const float BeforeOpacity = Widget->GetRenderOpacity();
+		auto& Slate = FSlateApplication::Get();
+		Check(!Slate.IsDragDropping(), TEXT("input_drag_starts_without_stale_operation"));
+		Slate.RoutePointerMoveEvent(SourcePath, FPointerEvent(0, Start, Start,
+			TSet<FKey>{}, EKeys::Invalid, 0, FModifierKeysState()), false);
+		Slate.RoutePointerDownEvent(SourcePath, FPointerEvent(0, Start, Start,
+			TSet<FKey>{EKeys::LeftMouseButton}, EKeys::LeftMouseButton, 0, FModifierKeysState()));
+		const FVector2D Threshold = Start + FVector2D(32, 0);
+		auto MovePath = Slate.LocateWindowUnderMouse(Threshold,
+			TArray<TSharedRef<SWindow>>{SourcePath.GetWindow()}, false, 0);
+		Slate.RoutePointerMoveEvent(MovePath, FPointerEvent(0, Threshold, Start,
+			TSet<FKey>{EKeys::LeftMouseButton}, EKeys::Invalid, 0, FModifierKeysState()), false);
+		const auto ActiveDrag = Slate.GetDragDroppingContent();
+		const auto UMGDrag = ActiveDrag.IsValid() && ActiveDrag->IsOfType<FUMGDragDropOp>()
+			? StaticCastSharedPtr<FUMGDragDropOp>(ActiveDrag) : TSharedPtr<FUMGDragDropOp>();
+		const auto* Payload = UMGDrag ? Cast<URogue10mSkillDragDropOperation>(UMGDrag->GetOperation()) : nullptr;
+		Check(bExpectDrag ? Payload && Payload->bUnlocked && Payload->SkillData == InputSkill.Get()
+			: !ActiveDrag.IsValid(), bExpectDrag ? TEXT("input_real_drag_contains_learned_skill_payload")
+			: TEXT("input_locked_node_cannot_start_drag"));
+		if (!bExpectDrag)
+		{
+			// A locked node must not expose the HUD or start a drop operation.
+			Slate.RoutePointerUpEvent(SourcePath, FPointerEvent(0, Start, Threshold,
+				TSet<FKey>{}, EKeys::LeftMouseButton, 0, FModifierKeysState()));
+			Check(!Slate.IsDragDropping() && Before.OrderIndependentCompareEqual(
+				Player->GetCombatComponent()->CaptureCombat().SkillBindings), TEXT("input_locked_drag_does_not_change_HUD"));
+			if (Slate.IsDragDropping()) { Slate.CancelDragDrop(); }
+			CheckDragPresentationRestored(BeforeVisibility, BeforeOpacity);
+			Later(0.15, MoveTemp(Continuation));
+			return;
+		}
+		// Visibility changes take effect in Slate's next paint/hit-test grid. Do
+		// not synthesize the drop in the same frame as drag detection.
+		Later(0.15, [this, Target = TWeakObjectPtr<URogue10mQuickSlotWidget>(Target), bDodge, bCloseMenu,
+			Before, BeforeHUD, BeforeVisibility, BeforeOpacity, SourcePath, Start, Threshold,
+			Continuation = MoveTemp(Continuation)]() mutable
+		{
+			Check(Widget.IsValid() && Widget->IsSkillDragInProgress()
+				&& Widget->GetVisibility() == ESlateVisibility::HitTestInvisible
+				&& Widget->GetRenderOpacity() < BeforeOpacity, TEXT("input_active_drag_dims_menu_and_exposes_HUD_hit_testing"));
+			if (bCloseMenu)
+			{
+				// Deliberately exercise the controller state transition, not a physical K event.
+				// The product must cancel its owned Slate operation before any pointer release.
+				PC->ToggleSkillTree();
+				auto& App = FSlateApplication::Get();
+				Check(!PC->IsAnyBlockingWindowVisible() && !App.IsDragDropping() && !Widget->IsSkillDragInProgress()
+					&& Widget->GetVisibility() == BeforeVisibility && FMath::IsNearlyEqual(Widget->GetRenderOpacity(), BeforeOpacity),
+					TEXT("input_controller_menu_close_cancels_owned_Slate_drag_and_restores_presentation"));
+				Check(Before.OrderIndependentCompareEqual(Player->GetCombatComponent()->CaptureCombat().SkillBindings),
+					TEXT("input_menu_close_during_drag_keeps_loadout_unchanged"));
+				const auto ReleasePath = App.LocateWindowUnderMouse(Threshold,
+					TArray<TSharedRef<SWindow>>{SourcePath.GetWindow()}, false, 0);
+				App.RoutePointerUpEvent(ReleasePath, FPointerEvent(0, Threshold, Threshold,
+					TSet<FKey>{}, EKeys::LeftMouseButton, 0, FModifierKeysState()));
+				Later(0.15, [this, BeforeVisibility, BeforeOpacity, Continuation = MoveTemp(Continuation)]() mutable
+				{
+					PC->ToggleSkillTree();
+					Later(0.15, [this, BeforeVisibility, BeforeOpacity, Continuation = MoveTemp(Continuation)]() mutable
+					{
+						CheckDragPresentationRestored(BeforeVisibility, BeforeOpacity);
+						Check(Widget->GetSelectedNodeId() == InputNode, TEXT("input_reopen_after_cancel_preserves_selected_technique"));
+						if (Continuation) { Continuation(); }
+					});
+				});
+				return;
+			}
+			if (!bDodge)
+			{
+				Shot(InputTrack == ETrack::Brawler ? TEXT("input-brawler-drag-active.png")
+					: bRead ? TEXT("input-greatsword-read-drag-active.png") : TEXT("input-greatsword-drag-active-720p.png"));
+			}
+			// Leave a real frame for the requested active-drag screenshot before release.
+			Later(0.15, [this, Target, bDodge, Before, BeforeHUD, BeforeVisibility, BeforeOpacity,
+				SourcePath, Start, Threshold, Continuation = MoveTemp(Continuation)]() mutable
+			{
+				FWidgetPath TargetPath; FVector2D End;
+				const bool TargetHit = HitPath(Target.Get(), TargetPath, End);
+				auto& App = FSlateApplication::Get();
+				if (TargetHit)
+				{
+					App.RoutePointerMoveEvent(TargetPath, FPointerEvent(0, End, Threshold,
+						TSet<FKey>{EKeys::LeftMouseButton}, EKeys::Invalid, 0, FModifierKeysState()), false);
+					App.RoutePointerUpEvent(TargetPath, FPointerEvent(0, End, End,
+						TSet<FKey>{}, EKeys::LeftMouseButton, 0, FModifierKeysState()));
+				}
+				else { App.RoutePointerUpEvent(SourcePath, FPointerEvent(0, Start, Threshold,
+					TSet<FKey>{}, EKeys::LeftMouseButton, 0, FModifierKeysState())); }
+				Check(!App.IsDragDropping(), TEXT("input_pointer_release_finishes_drag"));
+				if (App.IsDragDropping()) { App.CancelDragDrop(); }
+				Later(0.15, [this, Target, TargetHit, bDodge, Before, BeforeHUD, BeforeVisibility,
+					BeforeOpacity, Continuation = MoveTemp(Continuation)]() mutable
+				{
+					CheckDragPresentationRestored(BeforeVisibility, BeforeOpacity);
+					Check(Widget->GetSelectedNodeId() == InputNode, TEXT("input_drag_end_preserves_selected_technique"));
+					if (TargetHit && Target.IsValid())
+					{
+						if (!bDodge)
+						{
+							Check(Player->GetCombatComponent()->GetEquippedSkill(ERogue10mAttackInputSlot::Primary) == InputSkill.Get()
+								&& Target->GetQuickSlotView().SkillData == InputSkill.Get(), TEXT("input_real_HUD_drop_equips_learned_technique"));
+						}
+						else
+						{
+							Check(Before.OrderIndependentCompareEqual(Player->GetCombatComponent()->CaptureCombat().SkillBindings)
+								&& Target->GetQuickSlotView().SkillData == BeforeHUD.SkillData,
+								TEXT("input_E_dodge_drop_rejected_without_binding_change"));
+						}
+					}
+					if (Continuation) { Continuation(); }
+				});
+			});
+		});
+	}
+	UInputKeySelector* Selector() const
+	{
+		return Widget.IsValid() ? Cast<UInputKeySelector>(Widget->GetWidgetFromName(TEXT("HybridTreeKeySelector"))) : nullptr;
+	}
+	bool SelectKeyByInput(FKey Key)
+	{
+		auto* Control = Selector();
+		if (!ClickWidget(Control)) { return false; }
+		Check(Control->GetIsSelectingKey(), TEXT("input_pointer_click_enters_key_capture"));
+		if (!Control->GetIsSelectingKey()) { return false; }
+		auto& Slate = FSlateApplication::Get();
+		Slate.ProcessKeyDownEvent(FKeyEvent(Key, FModifierKeysState(), 0, false, 0, 0));
+		Slate.ProcessKeyUpEvent(FKeyEvent(Key, FModifierKeysState(), 0, false, 0, 0));
+		Check(!Control->GetIsSelectingKey(), TEXT("input_actual_key_event_exits_capture"));
+		return !Control->GetIsSelectingKey();
+	}
+	void GameKey(FKey Key, bool bDown)
+	{
+		PC->InputKey(FInputKeyEventArgs::CreateSimulated(Key,
+			bDown ? IE_Pressed : IE_Released, bDown ? 1.0f : 0.0f));
+	}
+	void BeginInputChecks(ETrack Track, TFunction<void()> Continuation)
+	{
+		InputTrack = Track; InputContinuation = MoveTemp(Continuation);
+		InputNode = Track == ETrack::Brawler ? FName(TEXT("F.DiamondStrike")) : FName(TEXT("G.CrushingSlash"));
+		InputKey = Track == ETrack::Brawler ? EKeys::F7 : EKeys::F8;
+		const auto* Node = Tree->FindNode(InputNode);
+		InputSkill = Node ? Node->Skill.LoadSynchronous() : nullptr;
+		Check(InputSkill.IsValid() && Tree->IsNodeUnlocked(InputNode)
+			&& Tree->GetActiveTrack() == Track, TEXT("input_fixture_uses_real_learned_current_track_technique"));
+		if (!InputSkill.IsValid()) { Finish(); return; }
+		if (!PC->IsAnyBlockingWindowVisible()) { PC->ToggleSkillTree(); }
+		Click(Track == ETrack::Brawler ? TEXT("HybridTreeFighter") : TEXT("HybridTreeGreatSword"));
+		Later(0.35, [this]
+		{
+			const FName IdentityNode = InputTrack == ETrack::Brawler ? FName(TEXT("I.InternalEnergy.Entry")) : FName(TEXT("I.Mana.Entry"));
+			const FName ResonanceNode = InputTrack == ETrack::Brawler ? FName(TEXT("F.Resonance.Release")) : FName(TEXT("G.Resonance.Spread"));
+			const auto Diamond = Widget->GetNodeOuterFramePoints(IdentityNode);
+			const auto Ring = Widget->GetNodeOuterFramePoints(ResonanceNode);
+			Check(Widget->GetNodeFrameShape(IdentityNode) == TEXT("IdentityDiamond") && Diamond.Num() == 5
+				&& Diamond[0].Equals(Diamond.Last()) && Widget->GetNodeFrameOutlineCount(IdentityNode) == 1,
+				TEXT("input_actual_paint_geometry_has_closed_identity_diamond"));
+			Check(Widget->GetNodeFrameShape(ResonanceNode) == TEXT("ResonanceDoubleRing") && Ring.Num() == 49
+				&& Ring[0].Equals(Ring.Last()) && Widget->GetNodeFrameOutlineCount(ResonanceNode) == 2,
+				TEXT("input_actual_paint_geometry_has_double_resonance_outline"));
+			// The visible outer frames extend beyond the old central 44-unit button.
+			// Route real clicks at their upper edge; cached centers would miss this regression.
+			ClickWidget(Widget->FindNodeEntry(IdentityNode), FVector2D(0.5, 0.06));
+			Check(Widget->GetSelectedNodeId() == IdentityNode, TEXT("input_identity_outer_diamond_pointer_click_selects_node"));
+			ClickWidget(Widget->FindNodeEntry(ResonanceNode), FVector2D(0.5, 0.06));
+			Check(Widget->GetSelectedNodeId() == ResonanceNode, TEXT("input_resonance_outer_ring_pointer_click_selects_node"));
+			TFunction<void()> LearnedDrops = [this]
+			{
+				DragNodeToHUD(InputNode, true, true, [this]
+				{
+					DragNodeToHUD(InputNode, false, true, [this]
+					{
+						DragNodeToHUD(InputNode, false, true, [this] { InputKeys(); }, true);
+					});
+				});
+			};
+			if (InputTrack == ETrack::Brawler) { DragNodeToHUD(TEXT("F.Ultimate"), false, false, MoveTemp(LearnedDrops)); }
+			else { LearnedDrops(); }
+		});
+	}
+	void InputKeys()
+	{
+		auto* Keys = PC->GetSkillBindingComponent();
+		Check(Widget->GetSelectedNodeId() == InputNode, TEXT("input_drag_selects_technique_for_key_controls"));
+		SelectKeyByInput(InputKey);
+		Check(Keys && Keys->GetSkillKey(InputSkill.Get()) == InputKey, TEXT("input_selector_actual_key_persists_binding"));
+		SelectKeyByInput(EKeys::Escape);
+		Check(Keys && Keys->GetSkillKey(InputSkill.Get()) == InputKey && PC->IsAnyBlockingWindowVisible(),
+			TEXT("input_Esc_cancels_selection_preserves_key_and_menu"));
+		SelectKeyByInput(EKeys::E);
+		Check(Keys && Keys->GetSkillKey(InputSkill.Get()) == InputKey, TEXT("input_reserved_E_key_rejected_preserves_binding"));
+		Click(TEXT("HybridTreeClearKey"));
+		Check(Keys && !Keys->GetSkillKey(InputSkill.Get()).IsValid(), TEXT("input_real_clear_button_removes_binding"));
+		SelectKeyByInput(InputKey);
+		Check(Keys && Keys->GetSkillKey(InputSkill.Get()) == InputKey, TEXT("input_reassign_after_clear_through_actual_key_event"));
+		Shot(InputTrack == ETrack::Brawler ? TEXT("input-brawler-drag-key-1080p.png") : TEXT("input-greatsword-drag-key.png"));
+		Later(0.15, [this]
+		{
+			Click(TEXT("HybridTreeClose"));
+			Check(!PC->IsAnyBlockingWindowVisible() && !UGameplayStatics::IsGamePaused(World.Get())
+				&& Selector() && !Selector()->GetIsSelectingKey(), TEXT("input_real_close_restores_gameplay_without_key_capture"));
+			Later(0.6, [this] { InputAttack(); });
+		});
+	}
+	void InputAttack()
+	{
+		// A hitless real cast validates binding/input/presentation without changing the exact saved mastery fixture.
+		Player->GetCharacterMovement()->StopMovementImmediately();
+		auto* Attributes = State->GetRogueAttributeSet();
+		Attributes->SetStamina(Attributes->GetMaxStamina()); Attributes->SetMana(Attributes->GetMaxMana());
+		InputUseBefore = State->GetSkillUseCount(InputSkill->GetFName());
+		InputStaminaBefore = Attributes->GetStamina();
+		Check(Player->GetCombatComponent()->GetAttackCooldownRemaining() <= 0,
+			TEXT("input_cast_starts_after_shared_cooldown"));
+		GameKey(InputKey, true);
+		Later(0.15, [this]
+		{
+			GameKey(InputKey, false);
+			auto* Combat = Player->GetCombatComponent();
+			Check(State->GetSkillUseCount(InputSkill->GetFName()) == InputUseBefore + 1
+				&& Combat->GetLastAcceptedAttackSkill() == InputSkill.Get() && Combat->GetAttackCooldownRemaining() > 0
+				&& State->GetRogueAttributeSet()->GetStamina() <= InputStaminaBefore,
+				TEXT("input_bound_key_executes_exact_skill_use_and_cooldown_once"));
+			InputCompletedTracks.Add(InputTrack);
+			Shot(InputTrack == ETrack::Brawler ? TEXT("input-brawler-key-cast.png") : TEXT("input-greatsword-key-cast.png"));
+			Later(1.5, [this]
+			{
+				const bool bExactlyOnce = State->GetSkillUseCount(InputSkill->GetFName()) == InputUseBefore + 1;
+				Check(bExactlyOnce, TEXT("input_key_release_does_not_duplicate_cast"));
+				auto Continuation = MoveTemp(InputContinuation); if (Continuation) { Continuation(); }
+			});
+		});
 	}
 	void Shot(const TCHAR* Name) { FScreenshotRequest::RequestScreenshot(FPaths::Combine(Output, Name), true, false); }
 	void Prepare()
@@ -170,6 +467,12 @@ private:
 				Click(TEXT("HybridTreeLearnPoints"));
 				Check(Tree->GetSelectedProperty(EIdentity::InternalEnergy) == TEXT("InternalEnergy.Release")
 					&& Tree->GetAvailableGrowthPoints() == 0, TEXT("UI_property_spends_remaining_two_points"));
+				if (bInputQA)
+				{
+					Shot(TEXT("brawler-1080p.png"));
+					BeginInputChecks(ETrack::Brawler, [this] { PC->ToggleSkillTree(); Later(0.35, [this] { GreatSword(); }); });
+					return;
+				}
 				Widget->HandleAction(100, TEXT("F.DiamondStrike"));
 				Check(Widget->SetSelectedSkillKey(EKeys::F7), TEXT("learned_technique_key_assignment"));
 				Widget->HandleAction(100, TEXT("F.Ultimate"));
@@ -241,6 +544,19 @@ private:
 		const auto* IdentityCombat = Player->GetSkillTreeCombatComponent();
 		Check(IdentityCombat && IdentityCombat->GetGauge() == 0.0f && IdentityCombat->GetCooldownRemaining() == 0.0f,
 			TEXT("read_transient_identity_gauge_and_cooldown_start_empty"));
+		if (bInputQA)
+		{
+			const auto* Node = Tree->FindNode(TEXT("G.CrushingSlash"));
+			auto* Crushing = Node ? Node->Skill.LoadSynchronous() : nullptr;
+			Check(Keys && Crushing && Keys->GetSkillKey(Crushing) == EKeys::F8
+				&& Combat->GetEquippedSkill(ERogue10mAttackInputSlot::Primary) == Crushing,
+				TEXT("read_real_HUD_drop_and_F8_key_restored_from_disk"));
+			PC->ToggleSkillTree();
+			for (TObjectIterator<URogue10mHybridSkillTreeWidget> It; It; ++It)
+			{ if (It->GetWorld() == World.Get() && It->GetOwningPlayer() == PC.Get()) { Widget = *It; break; } }
+			Later(0.4, [this] { BeginInputChecks(ETrack::GreatSword, [this] { Finish(); }); });
+			return;
+		}
 		Finish();
 	}
 	void ExerciseTemporaryBindings()
@@ -343,7 +659,15 @@ private:
 			IdentityAndSave();
 			PC->ToggleSkillTree(); Widget->HandleAction(2); Widget->HandleAction(100, TEXT("G.Ultimate"));
 			PC->ConsoleCommand(TEXT("r.SetRes 1280x720w"), false);
-			Later(0.7, [this] { Shot(TEXT("greatsword-720p.png")); Later(0.6, [this] { Finish(); }); });
+			Later(0.7, [this]
+			{
+				Shot(TEXT("greatsword-720p.png"));
+				Later(0.6, [this]
+				{
+					if (bInputQA) { BeginInputChecks(ETrack::GreatSword, [this] { Finish(); }); }
+					else { Finish(); }
+				});
+			});
 		});
 	}
 	void IdentityAndSave()
@@ -384,6 +708,13 @@ private:
 	void Finish()
 	{
 		if (Done) { return; }
+		if (bInputQA)
+		{
+			Check(InputCompletedTracks.Contains(ETrack::GreatSword) && (bRead || InputCompletedTracks.Contains(ETrack::Brawler)),
+				TEXT("input_required_tracks_completed_real_UI_and_gameplay_routes"));
+			if (FSlateApplication::IsInitialized() && FSlateApplication::Get().IsDragDropping()) { FSlateApplication::Get().CancelDragDrop(); }
+			if (Widget.IsValid()) { Widget->CancelKeySelection(); }
+		}
 		if (!bRead && State.IsValid() && Tree.IsValid())
 		{
 			auto* Persistence = World.IsValid() ? World->GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>() : nullptr;
@@ -391,6 +722,11 @@ private:
 		}
 		Done = true;
 		const TCHAR* Phase = bRead ? TEXT("READ") : TEXT("RUNTIME");
+		if (bInputQA)
+		{
+			Report += FString::Printf(TEXT("RESULT=HYBRID_INPUT_%s_%s failures=%d\n"), Phase, Failures ? TEXT("FAILED") : TEXT("PASSED"), Failures);
+			UE_LOG(LogRogue10m, Display, TEXT("RESULT=HYBRID_INPUT_%s_%s failures=%d"), Phase, Failures ? TEXT("FAILED") : TEXT("PASSED"), Failures);
+		}
 		Report += FString::Printf(TEXT("RESULT=HYBRID_%s_%s failures=%d\n"), Phase, Failures ? TEXT("FAILED") : TEXT("PASSED"), Failures);
 		if (!Output.IsEmpty()) { FFileHelper::SaveStringToFile(Report, *FPaths::Combine(Output, bRead ? TEXT("runtime-read-results.txt") : TEXT("runtime-results.txt"))); }
 		UE_LOG(LogRogue10m, Display, TEXT("RESULT=HYBRID_%s_%s failures=%d"), Phase, Failures ? TEXT("FAILED") : TEXT("PASSED"), Failures);
@@ -408,6 +744,15 @@ private:
 	int32 Failures = 0;
 	bool Done = false;
 	bool bRead = false;
+	bool bInputQA = false;
+	ETrack InputTrack = ETrack::None;
+	FName InputNode;
+	FKey InputKey;
+	TWeakObjectPtr<URogue10mAttackSkillData> InputSkill;
+	TSet<ETrack> InputCompletedTracks;
+	TFunction<void()> InputContinuation;
+	int32 InputUseBefore = 0;
+	float InputStaminaBefore = 0;
 	FGuid ReadProfileId;
 	FString Output, Report;
 };

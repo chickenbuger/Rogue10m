@@ -17,9 +17,11 @@ class URogue10mSkillTreeProgressionComponent;
 class URogue10mTownProgressionComponent;
 class UCanvasPanel;
 class UComboBoxString;
+class UDragDropOperation;
 class UImage;
 class UInputKeySelector;
 class UProgressBar;
+class USizeBox;
 class UTextBlock;
 
 /** Action context belongs to the control, never to an unstable visible array index. */
@@ -45,16 +47,22 @@ class ROGUE10M_API URogue10mHybridSkillTreeEntryWidget : public UUserWidget
 public:
 	void Configure(URogue10mHybridSkillTreeWidget* Owner, const FRogue10mSkillTreeNodeDefinition& Definition,
 		ERogue10mSkillTreeNodeState State, bool bSelected, bool bCurrentTrack);
+	FName GetNodeId() const { return NodeId; }
+	bool CanDragSkill() const { return bCanDrag; }
+	URogue10mAttackSkillData* GetDragSkill() const { return Skill.Get(); }
 protected:
 	virtual TSharedRef<SWidget> RebuildWidget() override;
 	virtual FReply NativeOnPreviewMouseButtonDown(const FGeometry& Geometry, const FPointerEvent& Event) override;
+	virtual FReply NativeOnMouseButtonDown(const FGeometry& Geometry, const FPointerEvent& Event) override;
 	virtual void NativeOnDragDetected(const FGeometry& Geometry, const FPointerEvent& Event, UDragDropOperation*& Operation) override;
 private:
 	void BuildEntry();
 	TWeakObjectPtr<URogue10mHybridSkillTreeWidget> OwnerWidget;
 	FName NodeId;
 	bool bCanDrag = false;
+	bool bHasOuterFrame = false;
 	UPROPERTY(Transient) TObjectPtr<URogue10mAttackSkillData> Skill;
+	UPROPERTY(Transient) TObjectPtr<USizeBox> BodyBox;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> NodeButton;
 	UPROPERTY(Transient) TObjectPtr<UImage> Icon;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> Symbol;
@@ -83,6 +91,10 @@ public:
 	void SetData(URogue10mHybridSkillTreeWidget* Owner, URogue10mSkillTreeProgressionComponent* Progression,
 		ERogue10mSkillTreeTrack Track, FName SelectedNode);
 	int32 PaintConnections(const FGeometry& Geometry, FSlateWindowElementList& Elements, int32 LayerId) const;
+	URogue10mHybridSkillTreeEntryWidget* FindNodeEntry(FName NodeId) const;
+	FName GetNodeFrameShape(FName NodeId) const;
+	int32 GetNodeFrameOutlineCount(FName NodeId) const;
+	TArray<FVector2f> GetNodeOuterFramePoints(FName NodeId) const;
 protected:
 	virtual TSharedRef<SWidget> RebuildWidget() override;
 private:
@@ -108,6 +120,8 @@ public:
 	void ReleaseContext();
 	void RefreshFromData();
 	void CancelKeySelection();
+	void BeginSkillDrag(UDragDropOperation* Operation);
+	bool IsSkillDragInProgress() const { return bSkillDragPresentation; }
 	void HandleAction(int32 Action, FName NodeId = NAME_None, FName ChoiceId = NAME_None);
 	void SelectAttackSkill(URogue10mAttackSkillData* Skill);
 	bool SetSelectedSkillKey(FKey Key);
@@ -123,6 +137,11 @@ public:
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree")
 	int32 GetVisibleNodeCount() const;
 	URogue10mAttackSkillData* GetSelectedAttackSkill() const { return GetSelectedSkill(); }
+	/** Read-only presentation queries share the geometry used by the painted frame. */
+	URogue10mHybridSkillTreeEntryWidget* FindNodeEntry(FName NodeId) const;
+	FName GetNodeFrameShape(FName NodeId) const;
+	int32 GetNodeFrameOutlineCount(FName NodeId) const;
+	TArray<FVector2f> GetNodeOuterFramePoints(FName NodeId) const;
 protected:
 	virtual TSharedRef<SWidget> RebuildWidget() override;
 	virtual void NativeConstruct() override;
@@ -133,6 +152,8 @@ private:
 	void RefreshDetails();
 	void ShowMessage(const FText& Message, bool bError = false);
 	void RefreshKeyControls();
+	void CancelOwnedSkillDrag();
+	void RestoreSkillDragPresentation();
 	URogue10mCombatComponent* GetCombat() const;
 	URogue10mSkillBindingComponent* GetBindings() const;
 	URogue10mAttackSkillData* GetSelectedSkill() const;
@@ -143,6 +164,7 @@ private:
 	UFUNCTION() void HandleKeySelected(FInputChord Key);
 	UFUNCTION() void HandleBindingsChanged();
 	UFUNCTION() void HandleBasicSkillSelected(FString Selection, ESelectInfo::Type SelectionType);
+	UFUNCTION() void HandleSkillDragEnded(UDragDropOperation* Operation);
 	TWeakObjectPtr<ARogue10mPlayerState> BoundState;
 	TWeakObjectPtr<URogue10mSkillTreeProgressionComponent> Progression;
 	TWeakObjectPtr<URogue10mTownProgressionComponent> BoundTown;
@@ -152,6 +174,10 @@ private:
 	FName SelectedNodeId;
 	FName PendingChoiceId;
 	TWeakObjectPtr<URogue10mAttackSkillData> SelectedBasicSkill;
+	TWeakObjectPtr<UDragDropOperation> ActiveSkillDrag;
+	ESlateVisibility VisibilityBeforeSkillDrag = ESlateVisibility::SelfHitTestInvisible;
+	float OpacityBeforeSkillDrag = 1.0f;
+	bool bSkillDragPresentation = false;
 	bool bHasChosenTrack = false;
 	bool bUpdatingKeys = false;
 	bool bApplyingAction = false;
