@@ -2,7 +2,7 @@
 
 작성일: 2026-10-20. 작업 브랜치: `Sprint#5-39-boss-run-completion`.
 
-상태: 기능 구현·Editor 빌드·렌더된 핵심 런타임 QA·기존 특성 효과 회귀·독립 정적 검토와 원본의 병행 작업을 보존하는 통합 완료. 최종 경로 검사·커밋·로컬 승격은 준비 중이다. 원격 push는 실행하지 않았다. 이 브랜치는 Sprint5의 main 병합 전에 만들어졌으므로 번호를 유지한다.
+상태: 기능 구현·Editor 빌드·렌더된 핵심 런타임 QA·기존 특성 효과 회귀·독립 정적 검토와 원본의 병행 작업을 보존하는 통합 완료. 필수 생성 경로 검사·정확한 67개 스테이징 대조·공백·PowerShell 구문 검사 후 기능 커밋 `c680f1ba`를 만들고 로컬 develop→test→main에 fast-forward 승격했다. 원격 push는 실행하지 않았다. 이 브랜치는 Sprint5의 main 병합 전에 만들어졌으므로 번호를 유지한다.
 
 ## 해결한 문제와 실제 동작
 
@@ -30,7 +30,7 @@
 | R1 Architect / Implementer | GameState 종료 가드, GameMode 소유 RunCompletionComponent, 몬스터·캐릭터 사망 연결과 종료 후 피해 차단 | 구현·빌드·런타임 검사 완료 |
 | R2 Implementer | 네이티브 RunResultWidget, Controller 입력·포커스, 저장 실패 표시·재시도·StartHub 귀환 | 실제 화면·Enter 귀환 검사 완료 |
 | R3 Builder / Reviewer | 격리 QA 코드와 실행 스크립트, 고정 콘텐츠 빌드, 여섯 프로세스 검사와 독립 코드 검토, 기존 특성 fixture의 종료 계약 보완 | 핵심 QA 200개·특성 회귀 101개·정적 검토 완료 |
-| R4 Doc Writer / Exit Gate | 결과 문서·한국어 DevLog·Sprint 기록, 범위 검사와 병행 작업 보존 통합 | 기록·원본 통합 완료, 최종 검사·커밋 준비 중 |
+| R4 Doc Writer / Exit Gate | 결과 문서·한국어 DevLog·Sprint 기록, 범위 검사와 병행 작업 보존 통합 | 기록·원본 통합·최종 검사·기능 커밋·로컬 승격 완료 |
 
 주요 변경은 `Core/Rogue10mGameState`, `Core/Rogue10mGameMode`, `Character/Rogue10mCharacter`, `Enemy/Rogue10mBasicMonster`, 새 `Components/Rogue10mRunCompletionComponent`, 새 `UI/Widgets/Rogue10mRunResultWidget`와 `Core/Rogue10mPlayerController`다. 검증은 새 `Tests/Rogue10mRunCompletionRuntimeTest.cpp`, `Scripts/ValidateRunCompletion.ps1`와 기존 특성 효과 fixture를 사용한다. 위 C++ 경로는 `Source/Rogue10m/` 기준이다. 새 애니메이션·VFX·Fab 반입이나 원본 `.uasset`/`.umap` 편집은 없다.
 
@@ -70,6 +70,6 @@
 
 로컬 단일 플레이와 Editor Development 게임 실행을 검증했다. 전체 20분 밸런스, Shipping cook/패키징, D3D12와 장시간 GPU 안정성, 네트워크, 모든 무기·외형의 회귀는 별도다. 결과창 스크린샷 확인도 모든 해상도에 대한 UI 인증은 아니다.
 
-이 기능의 순수 변경을 원본 작업 폴더에 3방향으로 반영했다. 기존 파일은 원본 바이트를 별도 백업한 뒤 병합했고 DevLog와 Sprint 기록은 다른 작업 뒤에 추가했다. 원본의 `Sprint#5-38-hybrid-skill-tree-runtime` 브랜치와 HEAD `05f74f1`은 바꾸지 않았으며 스킬트리 작업을 보존했다. [통합 증거](evidence/boss-run-completion-20261020/primary-integration.json)에 파일별 이전/결과 해시를 남겼다. 검증은 고정 기준에서 수행한 결과이며 원본의 미완성 스킬트리까지 통합 검증한 결과는 아니다. 최종 검사 후 기능 커밋·로컬 승격을 진행하며, 실제 참조를 확인하기 전에는 main 반영 완료로 보고하지 않는다.
+이 기능의 순수 변경을 원본 작업 폴더에 3방향으로 반영했다. 기존 파일은 원본 바이트를 별도 백업한 뒤 병합했고 DevLog와 Sprint 기록은 다른 작업 뒤에 추가했다. 원본의 `Sprint#5-38-hybrid-skill-tree-runtime` 브랜치와 HEAD `05f74f1`은 바꾸지 않았으며 스킬트리 작업을 보존했다. [통합 증거](evidence/boss-run-completion-20261020/primary-integration.json)에 파일별 이전/결과 해시를 남겼다. 검증은 고정 기준에서 수행한 결과이며 원본의 미완성 스킬트리까지 통합 검증한 결과는 아니다. 필수 검사 후 기능 커밋 `c680f1ba689d643956c954023d306c45404c8a54`를 만들었다. 원격 fetch 결과 선행 로컬 main은 origin/main보다 3개 앞서고 0개 뒤처져 있었으며, 이후 develop/test/main의 조상 관계와 체크아웃 부재를 확인한 원자적 compare-and-set으로 세 참조를 기능 커밋까지 fast-forward했다. [로컬 통합 결과](evidence/boss-run-completion-20261020/local-integration.json)에 이전/이후 참조와 검사 결과를 남겼다. 이 최종 기록은 별도 문서 커밋으로 같은 순서로 승격한다.
 
 공개 원격 게시에는 기존 체크포인트 채팅의 승인 대기 상태가 이어진다. 체크포인트 `207c595`와 문서 종료 `05f74f1`은 로컬에 있고 확인된 `origin/main`은 `b7ab6b6`이다. 그 채팅에서 자동 승인 검토가 저장소 소유 확인과 별개로 공개 코드·에셋·자료 전송의 명시 승인을 요구했다. 이번 기능에서는 push를 시도하지 않았으며, 그 선행 승인과 실제 전송 결과가 확인되기 전에는 원격 게시 완료를 주장하지 않는다.

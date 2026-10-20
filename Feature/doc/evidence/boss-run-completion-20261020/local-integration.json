@@ -1,0 +1,30 @@
+{
+  "featureBranch": "Sprint#5-39-boss-run-completion",
+  "target": "c680f1ba689d643956c954023d306c45404c8a54",
+  "before": {
+    "refs/heads/develop": "05f74f1bfca73fe1db831975c711370db64fd7df",
+    "refs/heads/test": "05f74f1bfca73fe1db831975c711370db64fd7df",
+    "refs/heads/main": "05f74f1bfca73fe1db831975c711370db64fd7df"
+  },
+  "after": {
+    "refs/heads/develop": "c680f1ba689d643956c954023d306c45404c8a54",
+    "refs/heads/test": "c680f1ba689d643956c954023d306c45404c8a54",
+    "refs/heads/main": "c680f1ba689d643956c954023d306c45404c8a54"
+  },
+  "transaction": "start: ok\nprepare: ok\ncommit: ok",
+  "method": "verified ancestor; atomic compare-and-set fast-forward refs; no checkout/index changes",
+  "push": "not attempted; preceding public-transfer approval pending",
+  "checks": {
+    "generatedPaths": "PASS",
+    "exactScopedFiles": 67,
+    "cachedDiffCheck": "PASS",
+    "qaPowerShellSyntax": "PASS",
+    "frozenContentDiff": 0,
+    "renderedAssertions": 200,
+    "traitRegressionAssertions": 101,
+    "failures": 0,
+    "sourceIntegrationIndependentHashesMatched": 14,
+    "fetchBeforePromotion": "PASS; predecessor main 3 ahead / 0 behind origin/main"
+  },
+  "scope": "Frozen checkpoint gameplay tested; primary unfinished hybrid skill tree retained, not certified"
+}
