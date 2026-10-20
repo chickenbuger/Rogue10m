@@ -2290,5 +2290,5 @@
 - 목표: 확정한 중앙 확장형 시안과 숙련/레벨업 포인트 혼합 설계를 두 직업의 실제 성장·전투·저장·K 메뉴에 연결한다.
 - 주요 변경: 53노드 카탈로그, PlayerState 숙련·공유 실제 지출 원장, Save v3/legacy 이전, 명중 실행당1XP, 격투가 내공·투지/대검 투지·마나, 성질·공명·MP 소비·부분 환급, 대검 파생5개, native 원형 UI·조건·키 지정. 기존 기본 공격·프로필 입력·몽타주 보존.
 - 검증: 최종 Editor 빌드 성공(83.55초), Automation3개 Success, 실제 게임50개/새 프로세스 저장 복원14개 확인에서 실패0·exit0. 원본 공격19개·초기 계약 보존, 1080p/720p 실제 화면 검토. 생성 경로·스테이징 목록/공백·스크립트 구문·문서 링크 검사 통과.
-- 상태: 구현·통합 QA·독립 리뷰·기록 완료, 로컬 커밋·develop→test→main 승격 진행. 공개 푸시는 선행 체크포인트의 공개 자료 전송 승인 대기를 존중하며 우회하지 않는다. 전용 무기 애니메이션·무기별 archive·20분 전체 플레이·Shipping·멀티는 별도 범위다.
+- 상태: 구현·통합 QA·독립 리뷰·기록 완료. 기능 커밋 `a2a1db8b`와 로컬 develop→test→main fast-forward 승격 완료, 최종 통합 기록은 후속 문서 커밋으로 확정한다. 공개 푸시는 선행 체크포인트의 공개 자료 전송 승인 대기를 존중하며 우회하지 않는다. 전용 무기 애니메이션·무기별 archive·20분 전체 플레이·Shipping·멀티는 별도 범위다.
 - 관련: [계획](../Feature/architect/2026-10-20_hybrid-skill-tree-runtime.md), [결과](../Feature/doc/2026-10-20_hybrid-skill-tree-runtime.md), [설계](HybridSkillTreeDesign.md), [실제 격투가 화면](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/brawler-1080p.png), [실제 대검 화면](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/greatsword-720p.png), [검토](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/review.md).
