@@ -2380,3 +2380,5 @@
 - 검증: 실제 Landscape 지면 배치·높이/yaw/scale·소유 WP 로더·잠금/혼합 보호·Undo/Redo·필터·OFPA 저장/재로드·Slate 생성. 임시 GUID 외부 패키지까지 네이티브 삭제 후 잔여 파일 0. 생산 OpenRunMap 1,260파일 SHA 변경 0 및 Content 변경 0.
 - 실제 맵을 저장 없이 읽어 WP RuntimeHashSet/streaming, 지형·충돌 256개와 공간 프록시 16개를 확인했다. NullRHI이므로 렌더 UI/생산맵 편집 저장/20분 런/cook·Shipping은 미검증이다.
 - 상태: 구현·검증·리뷰·문서 완료, 명시 변경 범위 검사 후 커밋·develop→test→main·공개 게시 준비. 결과 SHA는 성공 후 추가한다.
+
+- Sprint#8-1 완료 (2026-10-25): 기능 커밋 `49bbd46df68334233be4edfc21140e0a103a7346`, 명시 46파일·필수 경로/구문/링크·스테이징·공백 PASS. develop→test→main fast-forward와 작업·통합 네 브랜치 atomic 일반 push 완료. [원격 직접 SHA 확인](../Feature/doc/evidence/world-map-maker-20261024/publication.json) 모두 일치. 원본 Content 변경 0. 이 완료 기록은 후속 문서 커밋으로 같은 흐름에 반영한다.
