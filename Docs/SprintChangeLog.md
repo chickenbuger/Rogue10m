@@ -2382,3 +2382,20 @@
 - 상태: 구현·검증·리뷰·문서 완료, 명시 변경 범위 검사 후 커밋·develop→test→main·공개 게시 준비. 결과 SHA는 성공 후 추가한다.
 
 - Sprint#8-1 완료 (2026-10-25): 기능 커밋 `49bbd46df68334233be4edfc21140e0a103a7346`, 명시 46파일·필수 경로/구문/링크·스테이징·공백 PASS. develop→test→main fast-forward와 작업·통합 네 브랜치 atomic 일반 push 완료. [원격 직접 SHA 확인](../Feature/doc/evidence/world-map-maker-20261024/publication.json) 모두 일치. 원본 Content 변경 0. 이 완료 기록은 후속 문서 커밋으로 같은 흐름에 반영한다.
+
+## Sprint#9-1 — 맵 메이커 실제 에디터 QA (2026-10-25)
+
+- 목표: 실제 Unreal Editor 화면과 주요 기능을 조작해 검증하고 발견한 문제를 수정한다.
+- 주요 발견/변경: 356px 패널 격자 글자 잘림 재현→고정 가독 폭/가로 스크롤, 남쪽 작업 구역의 얕은 시점이 경계 벽 뒤로 이동하는 문제→에디터 카메라 프레이밍 보완.
+- 검증: OpenRunMap 실제 렌더/Window 메뉴 열기·구역 로드·청록 표시·저장 없음 확인. 원본 1,260파일 기준과 초기 dirty 0 기록. 수정/빌드/주요 조작 재검증 진행 중.
+- 상태: 실제 QA 후 범위 수정 중. 완료와 통합·게시 결과는 검증 후 기록한다.
+- 관련: [계획](../Feature/architect/2026-10-25_map-maker-live-qa.md), [결과](../Feature/doc/2026-10-25_map-maker-live-qa.md), [사용 가이드](WorldMapMakerGuide.md).
+
+### Sprint#9-1 실제 GUI·회귀 검증 완료 / 게시 준비
+
+- 최종 변경: 400px 가독 격자·축소 금지 가로 스크롤·560×900 초기 독립 창. 남쪽 야영지와 최외곽 `(3,-4)` 포커스를 -80°로 보완했다. -70° 재현 뒤 Reviewer/Architect로 돌아가 경계 가림을 재검토했고, 현재 월드의 활성 viewport만 조작하며 pilot/lock을 거절한다.
+- 빌드/회귀: 공식 Live Coding timeout 후 UBT 성공과 별개의 런타임 패치 LNK2011/LNK1120 실패를 보존하고 정상 종료·정식 빌드 115.11초 성공으로 복구했다. 최종 Automation 3개 Success·실패/오류 0·57.22초·실행기/에디터 exit0. 자동화 전후 생산맵 1,260파일 SHA 변경 0이다.
+- 실제 GUI: 좁은 창 양 끝 스크롤, 외곽/야영지 -80° 포커스, Engine Cube Height125/Yaw45/Scale20 배치, 실제 Ctrl+Z/ Ctrl+Y 제거·복원, `OW_MM_Cube` 필터 선택 1개, 목적지 `(1,-3)` 이동 후 Z/yaw/scale 유지, native Landscape/WP 열기, Simulate 편집 차단·종료 복귀, 다른 맵 거절·원본 복귀, clean 맵 저장 버튼 성공을 확인했다.
+- 보존/한계: 임시 액터·폴더 dirty 2개만 확인 후 저장 없이 폐기·원본 reload. 최종 로드 액터 1,243개·maker 0·dirty map/content 0, Editor 정상 종료·Content 변경 0이다. 실제 변경 저장/재로드는 격리 WP fixture에서 검증했다. 전체 20분/Shipping/실제 지형 sculpt·paint는 미검증이며 네이티브 경고 4개를 보존한다.
+- 상태: GUI·빌드·회귀·독립 코드 리뷰 완료. GUI 종료 후 최종 증거 검사도 원본 1,260파일 SHA 변경 0·Content 변경 0·임시 소품/dirty 0으로 통과했다. 명시 변경 범위·문서 경로 검사 뒤 커밋·develop→test→main·일반 push 예정이며 이번 QA 수정의 게시 성공 SHA는 아직 기록하지 않는다.
+- 관련: [최종 결과와 검증표](../Feature/doc/2026-10-25_map-maker-live-qa.md), [자동화](../Feature/doc/evidence/map-maker-live-qa-20261025/automation-final/result.json), [최종 증거 검사](../Feature/doc/evidence/map-maker-live-qa-20261025/final-checks.json), [최종 GUI 상태](../Feature/doc/evidence/map-maker-live-qa-20261025/live-final.json), [외곽 화면](../Feature/doc/evidence/map-maker-live-qa-20261025/focus-edge-final.png), [개발 일지](../DevLog/20261025.txt).

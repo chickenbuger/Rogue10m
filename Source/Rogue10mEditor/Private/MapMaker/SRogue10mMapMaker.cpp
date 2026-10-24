@@ -127,7 +127,7 @@ void SRogue10mMapMaker::Construct(const FArguments& InArgs)
 				[MakeSection(LOCTEXT("WorkArea", "01   WORK AREA"), SNew(SVerticalBox)
 					+ SVerticalBox::Slot().AutoHeight()
 					[SNew(STextBlock).AutoWrapText(true)
-						.Text(LOCTEXT("GridLegend", "NORTH (+Y)  |  256m editing grid  |  cyan = tool-loaded\nNumbers count loaded environment actors. Work areas are not runtime cell IDs."))
+						.Text(LOCTEXT("GridLegend", "NORTH (+Y)  |  256m editing grid  |  cyan = tool-loaded\nNumbers count loaded environment actors. Work areas are not runtime cell IDs. Scroll the grid horizontally in narrow panels."))
 						.ColorAndOpacity(FSlateColor::UseSubduedForeground())]
 					+ SVerticalBox::Slot().AutoHeight().Padding(0, 8, 0, 8)[MakeGrid()]
 					+ SVerticalBox::Slot().AutoHeight().Padding(0, 0, 0, 6)
@@ -179,7 +179,8 @@ TSharedRef<SWidget> SRogue10mMapMaker::MakeSection(const FText& Title, const TSh
 
 TSharedRef<SWidget> SRogue10mMapMaker::MakeGrid()
 {
-	TSharedRef<SUniformGridPanel> Grid = SNew(SUniformGridPanel).SlotPadding(FMargin(1.5f));
+	TSharedRef<SUniformGridPanel> Grid = SNew(SUniformGridPanel)
+		.SlotPadding(FMargin(1.5f)).MinDesiredSlotWidth(50.0f);
 	for (int32 Y = Rogue10mMapMaker::MaxCell; Y >= Rogue10mMapMaker::MinCell; --Y)
 	{
 		for (int32 X = Rogue10mMapMaker::MinCell; X <= Rogue10mMapMaker::MaxCell; ++X)
@@ -187,6 +188,7 @@ TSharedRef<SWidget> SRogue10mMapMaker::MakeGrid()
 			const FIntPoint Coordinate(X, Y);
 			Grid->AddSlot(X - Rogue10mMapMaker::MinCell, Rogue10mMapMaker::MaxCell - Y)
 			[SNew(SButton).HAlign(HAlign_Center).VAlign(VAlign_Center).ContentPadding(FMargin(2))
+				.NormalPaddingOverride(FMargin(0)).PressedPaddingOverride(FMargin(0))
 				.ButtonColorAndOpacity(this, &SRogue10mMapMaker::GetCellColor, Coordinate)
 				.ToolTipText(FText::FromString(FString::Printf(TEXT("Work area (%d, %d). Click to choose; Load + focus loads it."), X, Y)))
 				.OnClicked_Lambda([this, Coordinate] { SelectedCell = Coordinate; return FReply::Handled(); })
@@ -196,7 +198,12 @@ TSharedRef<SWidget> SRogue10mMapMaker::MakeGrid()
 						.Text(this, &SRogue10mMapMaker::GetCellText, Coordinate)]]];
 		}
 	}
-	return Grid;
+	// Uniform grids divide the allotted width even when child labels request more.
+	// Keep each of the eight columns readable and scroll the work area at narrow dock widths.
+	return SNew(SScrollBox).Orientation(Orient_Horizontal)
+		.ScrollBarAlwaysVisible(true).AllowOverscroll(EAllowOverscroll::No).AllowContentToShrink(false)
+		+ SScrollBox::Slot().HAlign(HAlign_Left).VAlign(VAlign_Top)
+		[SNew(SBox).WidthOverride(400.0f)[Grid]];
 }
 
 TSharedRef<SWidget> SRogue10mMapMaker::MakeButton(const FText& Label, const FText& Tooltip, TFunction<FReply()> Action)

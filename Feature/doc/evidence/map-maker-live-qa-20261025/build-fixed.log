@@ -1,0 +1,157 @@
+Log started at 10/25/2026 00:24:24 (2026-10-24T15:24:24Z)
+Resolved project argument D:\Project\Rogue10m\Rogue10m.uproject to D:\Project\Rogue10m\Rogue10m.uproject
+No config file at C:\ProgramData\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\PC\AppData\Local\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\PC\Documents\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Configuration will be read from:
+  C:\Users\PC\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\Intermediate\Build\XmlConfigCache.bin): C:\Users\PC\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\Intermediate\Build\XmlConfigCache.bin): D:\Project\Rogue10m\Saved\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\Intermediate\Build\XmlConfigCache.bin): C:\Users\PC\AppData\Local\UnrealEngine\Intermediate\Build\UnrealBuildTool.Env.BuildConfiguration.xml
+Setting temp directory to 'C:\Users\PC\AppData\Local\Temp\UnrealBuildTool\e98283ba'
+    Registering build platform: UnrealBuildTool.AndroidPlatformFactory
+Unable to find valid SDK(s) for Android:
+  Found Sdk Version=r25b, MinRequired=r27c, MaxRequired=r29.
+  Found AutoSdk Version, Required=r27c.
+        Registering build platform: Android - buildable: False
+    Registering build platform: UnrealBuildTool.IOSPlatformFactory
+    Registering build platform: UnrealBuildTool.LinuxPlatformFactory
+    Registering build platform: UnrealBuildTool.MacPlatformFactory
+    Registering build platform: UnrealBuildTool.TVOSPlatformFactory
+    Registering build platform: UnrealBuildTool.WindowsPlatformFactory
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (1)
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (2)
+Found Universal CRT version 10.0.10240.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.17763.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.17763.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.19041.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.19041.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.22621.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.22621.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.26100.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.26100.0 at C:\Program Files (x86)\Windows Kits\10
+Win64 Installed SDK(s): MinVersion_Sdk=10.0.19041.0, MaxVersion_Sdk=10.9.99999.0, CurrentVersion_Sdk=10.0.22621.0, Version_AutoSdk=10.0.22621.0, CurrentVersion_AutoSdk=
+        Registering build platform: Win64 - buildable: True
+    Registering build platform: UnrealBuildTool.VisionOSPlatformFactory
+Command line: "D:\Program Files\UE_5.8\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Deleting old log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log-backup-2026.10.22-10.55.46.txt
+Deleting old log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log-backup-2026.10.22-10.55.46.json
+
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Makefile is older than .uproject file, ignoring it
+Creating makefile for Rogue10mEditor (.uproject file is newer)
+Skipping D:\Program Files\UE_5.8\Engine\Intermediate\Build\BuildRules\UE5Rules.dll: File is installed
+Skipping D:\Program Files\UE_5.8\Engine\Intermediate\Build\BuildRules\UE5ProgramRules.dll: File is installed
+Compiling D:\Project\Rogue10m\Intermediate\Build\BuildRules\Rogue10mModuleRules.dll: D:\Project\Rogue10m\Source\Rogue10mEditor\Rogue10mEditor.Build.cs is newer
+Compiler: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe
+Linker: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\link.exe
+Library Manager: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\link.exe
+Resource Compiler: C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\x64\rc.exe
+Resource Converter: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cvtres.exe
+Using EngineIncludeOrderVersion.Unreal5_8 for target Rogue10mEditor.Target.cs
+Building UnrealEditor - Rogue10mEditor - Win64 - Development
+VerseVMBytecodeGenerator.Generate, generating CPP headers in: 'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode'
+	Writing out generated header file. Changed:False Path:'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode\VVMBytecodeOps.gen.h'
+	Writing out generated header file. Changed:False Path:'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode\VVMBytecodesAndCaptures.gen.h'
+	Writing out generated header file. Changed:False Path:'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode\VVMMakeCapturesFuncs.gen.h'
+	Writing out generated header file. Changed:False Path:'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode\VVMCaptureSwitch.gen.h'
+Generated code is up to date.
+Found 5 shared PCH headers (listed in order of preference):
+	UnrealEd
+	Engine
+	Slate
+	CoreUObject
+	Core
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10mEditor\UnrealEditor-Rogue10mEditor.lib.rsp: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10mEditor\UnrealEditor-Rogue10mEditor.lib.rsp.old.
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10mEditor\UnrealEditor-Rogue10mEditor.dll.rsp: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10mEditor\UnrealEditor-Rogue10mEditor.dll.rsp.old.
+Checking for live coding mutex: Global\LiveCoding_D++Program Files+UE_5.8+Engine+Binaries+Win64+UnrealEditor.exe
+Deleting outdated item: D:\Project\Rogue10m\Binaries\Win64\UnrealEditor-Rogue10mEditor.pdb
+Deleting outdated item: D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10mEditor\UnrealEditor-Rogue10mEditor.lib
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10mEditor unity file: Rogue10mEditorModule.cpp, Rogue10mMapMakerModel.cpp, SRogue10mMapMaker.cpp
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+  Requested 1.5 GB memory per action, 8.94 GB available: limiting max parallel actions to 5
+Using XGE executor to run 7 action(s)
+Distributing 7 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {BEF40A3F-EAF5-496C-A3F7-A2FA55078953}
+ 
+--------------------Project: Default-------------------------------------------
+[1/7] Compile [x64] Rogue10mEditorModule.cpp (0:09.75 at +0:00)
+[2/7] Compile [x64] Rogue10mMapMakerModel.cpp (0:15.35 at +0:00)
+[3/7] Compile [x64] SRogue10mMapMaker.cpp (0:16.42 at +0:00)
+[4/7] Compile [x64] Rogue10mMapMakerTests.cpp (0:17.40 at +0:00)
+[5/7] Link [x64] UnrealEditor-Rogue10mEditor.lib (0:00.20 at +0:17)
+   D:/Project/Rogue10m/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10mEditor/UnrealEditor-Rogue10mEditor.lib ���̺귯�� �� D:/Project/Rogue10m/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10mEditor/UnrealEditor-Rogue10mEditor.exp ��ü�� �����ϰ� �ֽ��ϴ�.
+[6/7] Link [x64] UnrealEditor-Rogue10mEditor.dll (0:02.07 at +0:17)
+[7/7] WriteMetadata Rogue10mEditor.target (0:01.06 at +0:19)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 1 succeeded, 0 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 25.06 seconds
+Output binary: D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe
+WriteFileIfChanged() wrote 0 changed files of 1 requested writes.
+
+Timeline:
+[  0.000]  +0.502 Main
+   0.020          [  0.019]  +0.126 Apply XmlConfig
+   0.148          [  0.148]  +0.086 AddTelemetry
+   0.260          [  0.260]  +0.241 RegisterPlatforms
+[  0.582]  +0.045 ParseCommandLine
+[  0.628]  +0.495 <unknown>
+[  1.123]  +0.272 EngineRulesPlugins
+[  1.407]  +0.086 EngineRulesFetchDirs
+[  1.506]  +0.016 EngineRulesAssembly
+[  1.522]  +0.003 ProgramRulesAssembly
+[  1.526]  +3.825 ProjectRulesAssembly
+[  5.352]  +0.259 CreateTargetRules
+[  5.702]  +0.012 CppDependencyCache
+[  5.727]  +2.326 Rogue10mEditor Win64 Development
+   5.727          [  0.000]  +1.090 <unknown>
+   6.817          [  1.090]  +0.073 UHTModules
+   7.082          [  1.355]  +0.029 UHTManifest
+   7.113          [  1.386]  +0.022 UHTTimestamps
+   7.136          [  1.409]  +0.341 <unknown>
+   7.477          [  1.750]  +0.000 GitWait
+   7.478          [  1.751]  +0.555 <unknown>
+   8.033          [  2.306]  +0.000 WaitOnWrites
+[  8.054]  +0.162 SavingMakefile
+   8.055          [  0.001]  +0.003 UHTWait
+   8.104          [  0.050]  +0.005 CppDependencyCache
+   8.109          [  0.055]  +0.122 Preparing ActionGraph
+   8.126             0.072          [  0.016]  +0.009 LinkActions
+   8.136             0.082          [  0.026]  +0.000 GatherPrerequisiteActions
+   8.138             0.084          [  0.028]  +0.000 CppDependencyCacheWait
+   8.139             0.085          [  0.029]  +0.071 GatherOutdatedActions
+   8.215             0.161          [  0.105]  +0.003 LinkActions
+   8.220             0.166          [  0.111]  +0.005 DeleteOutdatedProducedItems
+   8.226             0.171          [  0.116]  +0.005 SaveActionHistory
+   8.232             0.178          [  0.122]  +0.000 CreateDirectoriesForProducedItems
+[  8.265]  +0.320 GarbageCollect
+[  8.585] +24.739 <unknown>
+[ 33.324]  +0.000 Deploying targets
+[ 33.331]  +0.219 Saving caches
+[ 33.552]  +0.003 TelemetryService.FlushEvents
+[ 33.557]
+
+Result: Succeeded
+Total execution time: 33.56 seconds

@@ -1,0 +1,123 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "JINSOO",
+			"instance": "9DDF38C34477354DCB938CAE71BA3A28",
+			"instanceName": "JINSOO-1352",
+			"platform": "WindowsEditor",
+			"oSVersion": "Windows 11 (26H2) [10.0.26300.9711] ",
+			"model": "Default",
+			"gPU": "NVIDIA GeForce RTX 3070",
+			"cPUModel": "AMD Ryzen 7 5800X 8-Core Processor             ",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.10.24-15.43.44",
+	"succeeded": 2,
+	"succeededWithWarnings": 1,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 8.4045000076293945,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "EditorIntegration",
+			"fullTestPath": "Rogue10m.MapMaker.EditorIntegration",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"9DDF38C34477354DCB938CAE71BA3A28"
+			],
+			"duration": 8.3825950622558594,
+			"dateTime": "2026.10.24-15.43.36",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogObjectTools: Detected inconsistencies between reference gathering algorithms. Switching 'Editor.UseLegacyGetReferencersForDeletion' on for the remainder of this editor session.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-15.43.39"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogAssetRegistry: D:/Project/Rogue10m/Content/__MapMakerTests/MapMakerFixture_5FF3BF3D4338B737542566A2A845CEBA.umap: package was marked as deleted in editor, but has been modified on disk. It will once again be returned from AssetRegistry queries.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-15.43.44"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogAssetRegistry: D:/Project/Rogue10m/Content/__MapMakerTests/MapMakerFixture_5FF3BF3D4338B737542566A2A845CEBA_HLODLayer_Instanced.uasset: package was marked as deleted in editor, but has been modified on disk. It will once again be returned from AssetRegistry queries.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-15.43.44"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogAssetRegistry: D:/Project/Rogue10m/Content/__MapMakerTests/MapMakerFixture_5FF3BF3D4338B737542566A2A845CEBA_HLODLayer_Merged.uasset: package was marked as deleted in editor, but has been modified on disk. It will once again be returned from AssetRegistry queries.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-15.43.44"
+				}
+			],
+			"warnings": 4,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "EnvironmentPolicy",
+			"fullTestPath": "Rogue10m.MapMaker.EnvironmentPolicy",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"9DDF38C34477354DCB938CAE71BA3A28"
+			],
+			"duration": 0.013768099248409271,
+			"dateTime": "2026.10.24-15.43.44",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "GridBounds",
+			"fullTestPath": "Rogue10m.MapMaker.GridBounds",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"9DDF38C34477354DCB938CAE71BA3A28"
+			],
+			"duration": 0.0081369020044803619,
+			"dateTime": "2026.10.24-15.43.44",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

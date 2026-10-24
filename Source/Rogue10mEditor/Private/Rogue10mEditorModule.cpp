@@ -23,6 +23,7 @@ public:
 		{
 			return;
 		}
+		FTabManager::RegisterDefaultTabWindowSize(MapMakerTabId, FVector2D(560.0f, 900.0f));
 		FGlobalTabmanager::Get()->RegisterNomadTabSpawner(MapMakerTabId,
 			FOnSpawnTab::CreateRaw(this, &FRogue10mEditorModule::SpawnMapMaker))
 			.SetDisplayName(LOCTEXT("MapMakerTab", "World Map Maker"))
@@ -48,6 +49,7 @@ public:
 				Tab->RequestCloseTab();
 			}
 			FGlobalTabmanager::Get()->UnregisterNomadTabSpawner(MapMakerTabId);
+			FTabManager::UnregisterDefaultTabWindowSize(MapMakerTabId);
 		}
 	}
 

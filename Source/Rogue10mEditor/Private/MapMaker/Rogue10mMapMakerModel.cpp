@@ -13,6 +13,7 @@
 #include "FileHelpers.h"
 #include "LandscapeHeightfieldCollisionComponent.h"
 #include "LandscapeProxy.h"
+#include "LevelEditorViewport.h"
 #include "LevelUtils.h"
 #include "ScopedTransaction.h"
 #include "UObject/Package.h"
@@ -312,11 +313,38 @@ bool FModel::FocusCell(FIntPoint Coordinate, FString& OutMessage) const
 		if (World) OutMessage = TEXT("Choose a valid editing region first.");
 		return false;
 	}
+	FLevelEditorViewportClient* ViewportClient = GCurrentLevelEditingViewportClient;
+	if (!ViewportClient || !GEditor->GetLevelViewportClients().Contains(ViewportClient) ||
+		ViewportClient->GetWorld() != World || !ViewportClient->Viewport)
+	{
+		OutMessage = TEXT("Activate a level editor viewport before focusing an editing region.");
+		return false;
+	}
+	if (ViewportClient->IsAnyActorLocked())
+	{
+		OutMessage = TEXT("Stop piloting or unlock the active viewport camera before focusing an editing region.");
+		return false;
+	}
 	// Vertical loader padding is intentionally larger than the camera focus height.
 	Bounds.Min.Z = 0.0;
 	Bounds.Max.Z = 16000.0;
-	GEditor->MoveViewportCamerasToBox(Bounds, true);
-	OutMessage = TEXT("Focused the active editor viewport on the editing region.");
+	if (ViewportClient->IsPerspective())
+	{
+		// Native framing backs away along the current camera direction. A ground-level
+		// direction can put the camera behind this map's boundary walls, so region
+		// focus deliberately uses an elevated overview while retaining heading.
+		const double CurrentYaw = ViewportClient->GetViewRotation().Yaw;
+		// The outer cell center is only 61m from the boundary wall (top at Z=310m).
+		// At 80 degrees its center ray clears that wall even when native framing
+		// backs the camera outside the authored bounds; 70 degrees does not.
+		ViewportClient->SetViewRotation(FRotator(-80.0, FMath::IsFinite(CurrentYaw) ? CurrentYaw : 0.0, 0.0));
+	}
+	// Frame just this viewport immediately; native framing also handles orthographic
+	// zoom. Calling the client directly avoids linked-viewport camera changes.
+	ViewportClient->FocusViewportOnBox(Bounds, true);
+	OutMessage = ViewportClient->IsPerspective()
+		? TEXT("Focused the active level viewport on the editing region from an elevated overview.")
+		: TEXT("Focused the active level viewport on the editing region with native orthographic framing.");
 	return true;
 }
 

@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "original_map_file_count": 1260,
+  "changed_original_map_files": [],
+  "content_git_status": "",
+  "final_actor_count": 1243,
+  "final_map_maker_actor_count": 0,
+  "final_dirty_map_count": 0,
+  "final_dirty_content_count": 0,
+  "live_readback_assertions": "placement, keyboard undo/redo, move, edge/camp focus, cleanup passed",
+  "regression": {
+    "Rogue10m.MapMaker.EditorIntegration": "Success",
+    "Rogue10m.MapMaker.EnvironmentPolicy": "Success",
+    "Rogue10m.MapMaker.GridBounds": "Success"
+  },
+  "screen_checks": "See feature document: screenshots were inspected directly during GUI actions."
+}

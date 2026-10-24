@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "exit_code": 0,
+  "timed_out": false,
+  "seconds": 57.22,
+  "tests": {
+    "Rogue10m.MapMaker.EditorIntegration": "Success",
+    "Rogue10m.MapMaker.EnvironmentPolicy": "Success",
+    "Rogue10m.MapMaker.GridBounds": "Success"
+  },
+  "required_tests_passed": true,
+  "original_map_file_count": 1260,
+  "changed_original_map_files": [],
+  "command": [
+    "D:\\Program Files\\UE_5.8\\Engine\\Binaries\\Win64\\UnrealEditor-Cmd.exe",
+    "D:\\Project\\Rogue10m\\Rogue10m.uproject",
+    "-Unattended",
+    "-NullRHI",
+    "-NoSplash",
+    "-NoSound",
+    "-NoLiveCoding",
+    "-MapMakerIntegrationTest",
+    "-ExecCmds=Automation RunTests Rogue10m.MapMaker",
+    "-TestExit=Automation Test Queue Empty",
+    "-ReportExportPath=D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\map-maker-live-qa-20261025\\automation-final\\report",
+    "-abslog=D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\map-maker-live-qa-20261025\\automation-final\\automation.log"
+  ],
+  "output": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\map-maker-live-qa-20261025\\automation-final"
+}
