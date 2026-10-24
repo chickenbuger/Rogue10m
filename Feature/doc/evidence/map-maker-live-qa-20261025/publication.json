@@ -1,0 +1,32 @@
+{
+  "success": true,
+  "date": "2026-10-25",
+  "repository": "https://github.com/chickenbuger/Rogue10m",
+  "feature_commit": "8ca0523309866aed5aa48fc4b435c02845241d8a",
+  "previous_integration_commit": "3fbfc3eaadede77feb4c8cbc8ff95ee3b25d89bf",
+  "feature_changed_file_count": 94,
+  "checks": {
+    "full_editor_build_seconds": 115.11,
+    "required_automation_successes": 3,
+    "integration_warnings_retained": 4,
+    "original_map_files_unchanged": 1260,
+    "final_dirty_package_count": 0,
+    "content_changes": 0,
+    "explicit_staged_scope": true,
+    "generated_path_check": true,
+    "json_files_parsed": 50,
+    "python_files_parsed": 2,
+    "document_links_checked": 38,
+    "devlog_append_only": true,
+    "staged_whitespace_check": true
+  },
+  "promotion": "develop -> test -> main, fast-forward only",
+  "push": "normal atomic push; no forced updates",
+  "remote_heads_directly_verified_after_feature_push": {
+    "Sprint#9-1-map-maker-live-qa": "8ca0523309866aed5aa48fc4b435c02845241d8a",
+    "develop": "8ca0523309866aed5aa48fc4b435c02845241d8a",
+    "test": "8ca0523309866aed5aa48fc4b435c02845241d8a",
+    "main": "8ca0523309866aed5aa48fc4b435c02845241d8a"
+  },
+  "note": "This records the completed feature push. The publication record is a subsequent documentation-only checkpoint; consult Git history for its commit."
+}

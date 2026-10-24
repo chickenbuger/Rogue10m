@@ -48,5 +48,5 @@
 - 이번 결과는 실제 렌더된 Editor 패널과 주요 입력을 검증했다. 전체 20분 런·장시간 스트리밍 성능·cook/Shipping·실제 Landscape sculpt/paint 변경은 검증하지 않았다.
 - 생산맵에 임시 큐브를 디스크 저장하지 않았다. 변경 저장·재로드의 근거는 격리 fixture이고, 생산맵의 저장 버튼 검사는 clean 상태의 성공 경로다.
 - 최종 자동화는 일반 성공 2개와 경고를 동반한 성공 1개다. `EditorIntegration`의 네이티브 경고 4개(참조 수집 fallback 1개·fixture/HLOD AssetRegistry 재인식 3개), 최초 Live Coding 실패·-70° 외곽 재현 증거를 보존한다. UBT 성공을 런타임 패치 성공으로 해석하지 않는다.
-- [Editor 원문 로그](evidence/map-maker-live-qa-20261025/editor-final-live.log)의 테스트 시작 전 frame 0에는 `Condition failed` 메시지가 있다. 수정 전과 회귀 전 실행에도 같은 메시지가 관찰됐다. 위 오류 0은 선택한 자동화 3개 보고서의 결과이며, 원문 로그 전체에 오류 문자열이 없다는 뜻이 아니다.
-- GUI·정식 빌드·회귀·코드 리뷰 완료. 최종 범위 검사 후 사용자 상시 승인에 따른 커밋과 `develop -> test -> main` 승격·일반 push를 진행할 예정이다. 이 문서 시점에는 이번 QA 수정의 커밋·원격 게시 성공을 주장하지 않는다.
+- [Editor 원문 로그](evidence/map-maker-live-qa-20261025/editor-final-live.log)의 frame 0에는 기존 startup Smoke 검사 오류 `Condition failed` 15개가 있다. 수정 전과 회귀 전 실행에도 같다. [설치된 엔진 소스 검토](evidence/map-maker-live-qa-20261025/review.md)에서 시작 시 Smoke 검사와 오류 출력 경로를 확인했지만 개별 15개 검사의 이름·정확한 원인은 미확정이며 엔진 수정은 하지 않았다. 위 오류 0은 선택한 맵 메이커 자동화 3개 보고서의 결과다.
+- GUI·정식 빌드·회귀·[독립 리뷰](evidence/map-maker-live-qa-20261025/review.md) 완료. 기능 커밋 `8ca0523309866aed5aa48fc4b435c02845241d8a`에 명시한 94파일만 포함했다. 생성 경로·공백·JSON 50개·Python 2개·문서 링크 38개·DevLog 추가 전용 검사가 통과했다. 원격 변경을 다시 확인한 뒤 `develop -> test -> main`을 fast-forward하고 네 브랜치를 일반 atomic push했다. [직접 원격 SHA 대조](evidence/map-maker-live-qa-20261025/publication.json)가 모두 일치했다. 이 완료 기록도 소스/콘텐츠 변경 없는 문서 체크포인트로 같은 흐름에 반영한다.
