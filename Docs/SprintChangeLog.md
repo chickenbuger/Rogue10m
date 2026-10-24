@@ -2365,3 +2365,18 @@
 - 관련: [계획](../Feature/architect/2026-10-20_hybrid-tree-input-polish.md), [결과](../Feature/doc/2026-10-20_hybrid-tree-input-polish.md), [증거](../Feature/doc/evidence/hybrid-tree-input-polish-20261020/), [사고·복원 검토](../Feature/doc/evidence/hybrid-tree-input-polish-20261020/incident-review.md).
 
 - Sprint#7-2 완료: 기능 `e6269dfab273b7eb36feaae64804434050cc1a0d`, 명시48파일 스테이징·생성 경로·공백·JSON/25링크·append-only·고신뢰 비밀 패턴 검사 통과. 최신 fetch/조상/worktree 점유 후 develop→test→main CAS fast-forward 및 일반 atomic push 성공, 실제 원격4개 SHA 일치 확인. Source tree fc0d9591/Content tree561dc863. [통합](../Feature/doc/evidence/hybrid-tree-input-polish-20261020/local-integration.json)·[게시](../Feature/doc/evidence/hybrid-tree-input-polish-20261020/public-push-result.json). 복원 사고 기록과 원본 실패도 포함한다. 이번 완료 기록은 Source/Content 변경 없는 문서 커밋으로 반영한다.
+
+## Sprint#8-1 — World Partition 맵 메이커 (2026-10-24)
+
+- 목표: 현재 OpenRunMap을 구역별로 수정하는 전용 Unreal Editor 도구를 만든다.
+- 주요 변경: 기존 WP RuntimeHashSet 유지, 256m 편집 격자/소유 로더/환경물 선택·배치·이동/Undo/맵+외부 액터 저장, 새 Editor 전용 모듈과 임시 WP 자동화 fixture.
+- 검증: 프로젝트 파일 생성 통과. 첫 Slate API 컴파일 문제와 독립 리뷰의 이동 잠금·PIE 갱신 문제를 수정했고 최종 빌드/자동화 진행 중이다. 생산 콘텐츠 변경 없이 원본 맵 SHA 대조를 실행한다.
+- 상태: Production 구현·리뷰 보완 후 Builder/QA 진행. 완료·게시 결과는 검증 후 기록한다.
+- 관련: [계획](../Feature/architect/2026-10-24_world-map-maker.md), [결과](../Feature/doc/2026-10-24_world-map-maker.md), [사용 가이드](WorldMapMakerGuide.md), [개발 일지](../DevLog/20261024.txt).
+
+### Sprint#8-1 검증 완료 / 게시 준비
+
+- Editor 최종 빌드 18.62초 성공, 3개 Automation 42.39초 전부 Success·오류/실패 0. 네이티브 경고 4개는 원본 보고서에 보존한다.
+- 검증: 실제 Landscape 지면 배치·높이/yaw/scale·소유 WP 로더·잠금/혼합 보호·Undo/Redo·필터·OFPA 저장/재로드·Slate 생성. 임시 GUID 외부 패키지까지 네이티브 삭제 후 잔여 파일 0. 생산 OpenRunMap 1,260파일 SHA 변경 0 및 Content 변경 0.
+- 실제 맵을 저장 없이 읽어 WP RuntimeHashSet/streaming, 지형·충돌 256개와 공간 프록시 16개를 확인했다. NullRHI이므로 렌더 UI/생산맵 편집 저장/20분 런/cook·Shipping은 미검증이다.
+- 상태: 구현·검증·리뷰·문서 완료, 명시 변경 범위 검사 후 커밋·develop→test→main·공개 게시 준비. 결과 SHA는 성공 후 추가한다.

@@ -1,0 +1,363 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "JINSOO",
+			"instance": "A6C4070D48C33A7F8E5313B4D42E072C",
+			"instanceName": "JINSOO-41264",
+			"platform": "WindowsEditor",
+			"oSVersion": "Windows 11 (26H2) [10.0.26300.9711] ",
+			"model": "Default",
+			"gPU": "NVIDIA GeForce RTX 3070",
+			"cPUModel": "AMD Ryzen 7 5800X 8-Core Processor             ",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.10.24-14.46.44",
+	"succeeded": 2,
+	"succeededWithWarnings": 0,
+	"failed": 1,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 4.2117600440979004,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "EditorIntegration",
+			"fullTestPath": "Rogue10m.MapMaker.EditorIntegration",
+			"tags": [],
+			"state": "Fail",
+			"deviceInstance": [
+				"A6C4070D48C33A7F8E5313B4D42E072C"
+			],
+			"duration": 4.1954379081726074,
+			"dateTime": "2026.10.24-14.46.39",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogStreaming: FlushAsyncLoading(354): 1 QueuedPackages, 0 AsyncPackages",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogStreaming: Partially loaded package /Engine/Maps/Templates/HLODs/HLODLayer_Merged (state: WaitingForIo) to avoid deadlock when it was recursively flushed by package /Engine/Maps/Templates/HLODs/HLODLayer_Instanced (state: PreloadExports). UniqueCallstack(-1).",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogStreaming: Package /Engine/Maps/Templates/HLODs/HLODLayer_Instanced is adding a dynamic import to package /Engine/Maps/Templates/HLODs/HLODLayer_Merged because of a recursive sync load",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogStreaming: Partially loaded package /Engine/Maps/Templates/HLODs/HLODLayer_Merged (state: DeferredPostLoad) to avoid deadlock when it was recursively flushed by package /Engine/Maps/Templates/HLODs/HLODLayer_Instanced (state: PreloadExports). UniqueCallstack(-1).",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogWorldPartition: WorldPartition initialize started...",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogWorldPartition: WorldPartition initialize took 1.875 ms",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogLandscape: The component /Game/__MapMakerTests/MapMakerFixture_08C900784684B3FBC4FF1EA97A950065.MapMakerFixture_08C900784684B3FBC4FF1EA97A950065:PersistentLevel.Landscape_UAID_244BFE8DA9DF570E03_1935150928.LandscapeComponent_0 had non-optimal bounds.  The bounds have been recalculated (old CachedLocalBox: IsValid=true, Min=(X=0.000 Y=0.000 Z=0.000), Max=(X=63.000 Y=63.000 Z=0.000), new CachedLocalBox: IsValid=true, Min=(X=0.000 Y=0.000 Z=-1.000), Max=(X=63.000 Y=63.000 Z=1.000))",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogSlate: Synchronously lazy loading font file '../../../Engine/Content/Slate/Fonts/Roboto-BoldCondensed.ttf' with subface index 0 in Game thread.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogSlate: Took 0.007878 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-BoldCondensed.ttf' (158K) on Game thread.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogSlate: Freetype font face in memory successfully created with synchronously loaded raw font file '../../../Engine/Content/Slate/Fonts/Roboto-BoldCondensed.ttf' subface 0 in Game thread.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogSlate: Font face '../../../Engine/Content/Slate/Fonts/Roboto-BoldCondensed.ttf' subface index 0 successfully added to font face map in Game thread.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogSlate: Synchronously lazy loading font file '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' with subface index 0 in Game thread.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogSlate: Took 0.009427 seconds to synchronously load lazily loaded font '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' (160K) on Game thread.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogSlate: Freetype font face in memory successfully created with synchronously loaded raw font file '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' subface 0 in Game thread.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogSlate: Font face '../../../Engine/Content/Slate/Fonts/Roboto-Bold.ttf' subface index 0 successfully added to font face map in Game thread.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Error",
+						"message": "Expected 'Place reused mesh on real Landscape' to be true.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "D:\\Project\\Rogue10m\\Source\\Rogue10mEditor\\Private\\Tests\\Rogue10mMapMakerTests.cpp",
+					"lineNumber": 254,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Error",
+						"message": "No loaded Landscape collision at the region center. Load the region before placing a mesh.",
+						"context": "",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "D:\\Project\\Rogue10m\\Source\\Rogue10mEditor\\Private\\Tests\\Rogue10mMapMakerTests.cpp",
+					"lineNumber": 231,
+					"timestamp": "2026.10.24-14.46.40"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogWorldPartition: WorldPartition initialize started...",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.41"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogWorldPartition: WorldPartition initialize took 5.045 ms (total: 6.921 ms)",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.41"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogObjectTools: Detected inconsistencies between reference gathering algorithms. Switching 'Editor.UseLegacyGetReferencersForDeletion' on for the remainder of this editor session.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.42"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogHttp: HTTP request timed out after 3.00 seconds URL=https://www.google.com/generate_204",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.42"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogSourceControl: Uncontrolled Changelist persistency file saved ../../../../../Project/Rogue10m/Saved/SourceControl/UncontrolledChangelists.json",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.43"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogAssetRegistry: D:/Project/Rogue10m/Content/__MapMakerTests/MapMakerFixture_08C900784684B3FBC4FF1EA97A950065.umap: package was marked as deleted in editor, but has been modified on disk. It will once again be returned from AssetRegistry queries.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.43"
+				},
+				{
+					"event":
+					{
+						"type": "Info",
+						"message": "LogContentValidation: Starting to validate 2 assets (0 associated objects such as actors)",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.10.24-14.46.43"
+				}
+			],
+			"warnings": 3,
+			"errors": 2,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "EnvironmentPolicy",
+			"fullTestPath": "Rogue10m.MapMaker.EnvironmentPolicy",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"A6C4070D48C33A7F8E5313B4D42E072C"
+			],
+			"duration": 0.013580698519945145,
+			"dateTime": "2026.10.24-14.46.43",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "GridBounds",
+			"fullTestPath": "Rogue10m.MapMaker.GridBounds",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"A6C4070D48C33A7F8E5313B4D42E072C"
+			],
+			"duration": 0.0027411989867687225,
+			"dateTime": "2026.10.24-14.46.43",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

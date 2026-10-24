@@ -1,0 +1,836 @@
+Log started at 10/24/2026 23:38:56 (2026-10-24T14:38:56Z)
+Resolved project argument D:\Project\Rogue10m\Rogue10m.uproject to D:\Project\Rogue10m\Rogue10m.uproject
+No config file at C:\ProgramData\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\PC\AppData\Local\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\PC\Documents\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Configuration will be read from:
+  C:\Users\PC\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\Intermediate\Build\XmlConfigCache.bin): C:\Users\PC\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\Intermediate\Build\XmlConfigCache.bin): D:\Project\Rogue10m\Saved\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\Intermediate\Build\XmlConfigCache.bin): C:\Users\PC\AppData\Local\UnrealEngine\Intermediate\Build\UnrealBuildTool.Env.BuildConfiguration.xml
+Setting temp directory to 'C:\Users\PC\AppData\Local\Temp\UnrealBuildTool\e98283ba'
+    Registering build platform: UnrealBuildTool.AndroidPlatformFactory
+Unable to find valid SDK(s) for Android:
+  Found Sdk Version=r25b, MinRequired=r27c, MaxRequired=r29.
+  Found AutoSdk Version, Required=r27c.
+        Registering build platform: Android - buildable: False
+    Registering build platform: UnrealBuildTool.IOSPlatformFactory
+    Registering build platform: UnrealBuildTool.LinuxPlatformFactory
+    Registering build platform: UnrealBuildTool.MacPlatformFactory
+    Registering build platform: UnrealBuildTool.TVOSPlatformFactory
+    Registering build platform: UnrealBuildTool.WindowsPlatformFactory
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (1)
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (2)
+Found Universal CRT version 10.0.10240.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.17763.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.17763.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.19041.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.19041.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.22621.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.22621.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.26100.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.26100.0 at C:\Program Files (x86)\Windows Kits\10
+Win64 Installed SDK(s): MinVersion_Sdk=10.0.19041.0, MaxVersion_Sdk=10.9.99999.0, CurrentVersion_Sdk=10.0.22621.0, Version_AutoSdk=10.0.22621.0, CurrentVersion_AutoSdk=
+        Registering build platform: Win64 - buildable: True
+    Registering build platform: UnrealBuildTool.VisionOSPlatformFactory
+Command line: "D:\Program Files\UE_5.8\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Deleting old log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log-backup-2026.10.22-08.35.14.txt
+Deleting old log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log-backup-2026.10.22-08.35.14.json
+
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Makefile is older than .uproject file, ignoring it
+Creating makefile for Rogue10mEditor (.uproject file is newer)
+Skipping D:\Program Files\UE_5.8\Engine\Intermediate\Build\BuildRules\UE5Rules.dll: File is installed
+Skipping D:\Program Files\UE_5.8\Engine\Intermediate\Build\BuildRules\UE5ProgramRules.dll: File is installed
+Compiler: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe
+Linker: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\link.exe
+Library Manager: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\link.exe
+Resource Compiler: C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\x64\rc.exe
+Resource Converter: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cvtres.exe
+Using EngineIncludeOrderVersion.Unreal5_8 for target Rogue10mEditor.Target.cs
+Building UnrealEditor - Rogue10mEditor - Win64 - Development
+VerseVMBytecodeGenerator.Generate, generating CPP headers in: 'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode'
+	Writing out generated header file. Changed:False Path:'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode\VVMBytecodeOps.gen.h'
+	Writing out generated header file. Changed:False Path:'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode\VVMBytecodesAndCaptures.gen.h'
+	Writing out generated header file. Changed:False Path:'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode\VVMMakeCapturesFuncs.gen.h'
+	Writing out generated header file. Changed:False Path:'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode\VVMCaptureSwitch.gen.h'
+UnrealHeaderTool needs to run because SavedTimestamp is older than HeaderFileTimestamp (D:\Project\Rogue10m\Source\Rogue10m\UI\Widgets\Rogue10mHybridSkillTreeWidget.h) for module Rogue10m
+Found 5 shared PCH headers (listed in order of preference):
+	UnrealEd
+	Engine
+	Slate
+	CoreUObject
+	Core
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\Core\SharedDefinitions.Core.Cpp20.h: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\Core\SharedDefinitions.Core.Cpp20.h.old.
+Parsing headers for Rogue10mEditor
+  Running Internal UnrealHeaderTool D:\Project\Rogue10m\Rogue10m.uproject D:\Project\Rogue10m\Intermediate\Build\Win64\Rogue10mEditor\Rogue10mEditor.uhtmanifest -WarningsAsErrors -installed
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\CoreUObject\SharedDefinitions.CoreUObject.Cpp20.h: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\CoreUObject\SharedDefinitions.CoreUObject.Cpp20.h.old.
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\CoreUObject\SharedDefinitions.CoreUObject.RTTI.Cpp20.h: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\CoreUObject\SharedDefinitions.CoreUObject.RTTI.Cpp20.h.old.
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\Slate\SharedDefinitions.Slate.Cpp20.h: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\Slate\SharedDefinitions.Slate.Cpp20.h.old.
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\Engine\SharedDefinitions.Engine.Cpp20.h: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\Engine\SharedDefinitions.Engine.Cpp20.h.old.
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\UnrealEd\SharedDefinitions.UnrealEd.Cpp20.h: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\UnrealEd\SharedDefinitions.UnrealEd.Cpp20.h.old.
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\UnrealEd\SharedDefinitions.UnrealEd.RTTI.Cpp20.h: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\UnrealEd\SharedDefinitions.UnrealEd.RTTI.Cpp20.h.old.
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\UnrealEd\SharedDefinitions.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\Rogue10mEditor\Development\UnrealEd\SharedDefinitions.UnrealEd.Project.ValApi.ValExpApi.Cpp20.h.old.
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\Module.Rogue10m.2.cpp: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\Module.Rogue10m.2.cpp.old.
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\Module.Rogue10m.5.cpp: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\Module.Rogue10m.5.cpp.old.
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\Module.Rogue10m.6.cpp: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\Module.Rogue10m.6.cpp.old.
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\Module.Rogue10m.7.cpp: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\Module.Rogue10m.7.cpp.old.
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\Module.Rogue10m.4.cpp: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\Module.Rogue10m.4.cpp.old.
+UHT compiled-in object format Default
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\UnrealEditor-Rogue10m.lib.rsp: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\UnrealEditor-Rogue10m.lib.rsp.old.
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\UnrealEditor-Rogue10m.dll.rsp: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\UnrealEditor-Rogue10m.dll.rsp.old.
+Step - Parse Headers
+Reading engine version from file: D:\Program Files\UE_5.8\Engine\Source\Runtime\Launch\Resources\Version.h
+Got engine version 5.8.3
+Step - Populate symbol table
+Step - Exports
+       Exporter Stats skipped
+       Exporter Json skipped
+       Running exporter CodeGen
+UHT processed Rogue10mEditor in 13.3211843 seconds (3 generated files written)
+Checking for live coding mutex: Global\LiveCoding_D++Program Files+UE_5.8+Engine+Binaries+Win64+UnrealEditor.exe
+Deleting outdated item: D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10m\UnrealEditor-Rogue10m.lib
+Deleting outdated item: D:\Project\Rogue10m\Binaries\Win64\UnrealEditor-Rogue10m.pdb
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+  Requested 1.5 GB memory per action, 2.23 GB available: limiting max parallel actions to 1
+Using XGE executor to run 18 action(s)
+Distributing 18 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {D4C40663-EF5D-4324-AFD1-9BD7C4B7B7CE}
+ 
+--------------------Project: Default-------------------------------------------
+[1/18] Compile Resource [x64] Default.rc2 (0:00.42 at +0:00)
+[2/18] Compile [x64] SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.cpp (1:13.98 at +0:00)
+[3/18] Compile [x64] SRogue10mMapMaker.cpp (0:15.31 at +1:14)
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(36,58): error C2039: 'UseAllottedWidth': 'SWrapBox::FArguments'�� ����� �ƴմϴ�.
+	const TSharedRef<SWrapBox> AreaActions = SNew(SWrapBox).UseAllottedWidth(true).InnerSlotPadding(FVector2D(4.0f, 4.0f));
+	                                                        ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Slate\Public\Widgets\Layout\SWrapBox.h(141,2): note: 'SWrapBox::FArguments' ������ �����Ͻʽÿ�.
+	SLATE_BEGIN_ARGS(SWrapBox)
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(63,19): error C2039: 'UseAllottedWidth': 'SWrapBox::FArguments'�� ����� �ƴմϴ�.
+		[SNew(SWrapBox).UseAllottedWidth(true).InnerSlotPadding(FVector2D(4.0f, 4.0f))
+		                ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Slate\Public\Widgets\Layout\SWrapBox.h(141,2): note: 'SWrapBox::FArguments' ������ �����Ͻʽÿ�.
+	SLATE_BEGIN_ARGS(SWrapBox)
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): error C7732: ']' �տ� ���� �ʿ��մϴ�.
+				{ return RunAction([this](FString& Out) { return Model.MoveSelectionToCell(SelectedCell, Out); }); })]]
+				                                                                                                      ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(62,36): error C2679: ���� '[': ������ �ǿ����ڷ� 'int' ������ ����ϴ� �����ڰ� ���ų� ���Ǵ� ��ȯ�� �����ϴ�.
+		+ SVerticalBox::Slot().AutoHeight()
+		                                 ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\SlateCore\Public\SlotBase.h(170,38): note: 'SVerticalBox::FSlot::FSlotArguments &TSlotBase<SlotType>::FSlotArguments::operator [](const TSharedRef<SWidget,ESPMode::ThreadSafe> &)'�� �� �ֽ��ϴ�.
+        with
+        [
+            SlotType=SVerticalBox::FSlot
+        ]
+		typename SlotType::FSlotArguments& operator[](const TSharedRef<SWidget>& InChildWidget)
+		                                   ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(62,36): note: 'SVerticalBox::FSlot::FSlotArguments &TSlotBase<SlotType>::FSlotArguments::operator [](const TSharedRef<SWidget,ESPMode::ThreadSafe> &)': �μ� 2��(��) 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe> &'(��)�� ��ȯ�� �� �����ϴ�.
+        with
+        [
+            SlotType=SVerticalBox::FSlot
+        ]
+		+ SVerticalBox::Slot().AutoHeight()
+		                                 ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: ����: 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+				{ return RunAction([this](FString& Out) { return Model.MoveSelectionToCell(SelectedCell, Out); }); })]]
+				                                                                                                      ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': ��� �μ� ������ ��ȯ�� �� �ִ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(354,13): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)'�� �� �ֽ��ϴ�.
+	UE_NODEBUG inline TSharedRef( TSharedRef&& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)': �μ� 1��(��) 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe> &&'(��)�� ��ȯ�� �� �����ϴ�.
+				{ return RunAction([this](FString& Out) { return Model.MoveSelectionToCell(SelectedCell, Out); }); })]]
+				                                                                                                      ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: ����: 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(348,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef const& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)': �μ� 1��(��) 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe> &'(��)�� ��ȯ�� �� �����ϴ�.
+				{ return RunAction([this](FString& Out) { return Model.MoveSelectionToCell(SelectedCell, Out); }); })]]
+				                                                                                                      ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: ����: 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(203,2): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(void)'
+	TSharedRef()
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': �Լ��� 1���� �μ��� ������� �ʽ��ϴ�.
+				{ return RunAction([this](FString& Out) { return Model.MoveSelectionToCell(SelectedCell, Out); }); })]]
+				                                                                                                      ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(339,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,ObjectType *)'
+        with
+        [
+            ObjectType=SWidget
+        ]
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& OtherSharedRef, ObjectType* InObject )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(325,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FConstCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FConstCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(310,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FStaticCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FStaticCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(295,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(272,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &&)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType >&& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(247,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(222,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxy<OtherType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxy< OtherType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(191,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(OtherType *,DeleterType &&)'
+	UE_NODEBUG inline TSharedRef( OtherType* InObject, DeleterType&& InDeleter )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: �μ� ��� '(int)'��(��) ��ġ��Ű�� ����
+				{ return RunAction([this](FString& Out) { return Model.MoveSelectionToCell(SelectedCell, Out); }); })]]
+				                                                                                                      ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\SlateCore\Public\SlotBase.h(165,38): note: �Ǵ�       'SVerticalBox::FSlot::FSlotArguments &TSlotBase<SlotType>::FSlotArguments::operator [](TSharedRef<SWidget,ESPMode::ThreadSafe> &&)'
+        with
+        [
+            SlotType=SVerticalBox::FSlot
+        ]
+		typename SlotType::FSlotArguments& operator[](TSharedRef<SWidget>&& InChildWidget)
+		                                   ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(62,36): note: 'SVerticalBox::FSlot::FSlotArguments &TSlotBase<SlotType>::FSlotArguments::operator [](TSharedRef<SWidget,ESPMode::ThreadSafe> &&)': �μ� 2��(��) 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe> &&'(��)�� ��ȯ�� �� �����ϴ�.
+        with
+        [
+            SlotType=SVerticalBox::FSlot
+        ]
+		+ SVerticalBox::Slot().AutoHeight()
+		                                 ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: ����: 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+				{ return RunAction([this](FString& Out) { return Model.MoveSelectionToCell(SelectedCell, Out); }); })]]
+				                                                                                                      ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': ��� �μ� ������ ��ȯ�� �� �ִ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(354,13): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)'�� �� �ֽ��ϴ�.
+	UE_NODEBUG inline TSharedRef( TSharedRef&& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)': �μ� 1��(��) 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe> &&'(��)�� ��ȯ�� �� �����ϴ�.
+				{ return RunAction([this](FString& Out) { return Model.MoveSelectionToCell(SelectedCell, Out); }); })]]
+				                                                                                                      ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: ����: 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(348,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef const& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)': �μ� 1��(��) 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe> &'(��)�� ��ȯ�� �� �����ϴ�.
+				{ return RunAction([this](FString& Out) { return Model.MoveSelectionToCell(SelectedCell, Out); }); })]]
+				                                                                                                      ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: ����: 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(203,2): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(void)'
+	TSharedRef()
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': �Լ��� 1���� �μ��� ������� �ʽ��ϴ�.
+				{ return RunAction([this](FString& Out) { return Model.MoveSelectionToCell(SelectedCell, Out); }); })]]
+				                                                                                                      ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(339,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,ObjectType *)'
+        with
+        [
+            ObjectType=SWidget
+        ]
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& OtherSharedRef, ObjectType* InObject )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(325,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FConstCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FConstCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(310,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FStaticCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FStaticCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(295,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(272,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &&)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType >&& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(247,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(222,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxy<OtherType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxy< OtherType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(191,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(OtherType *,DeleterType &&)'
+	UE_NODEBUG inline TSharedRef( OtherType* InObject, DeleterType&& InDeleter )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(72,107): note: �μ� ��� '(int)'��(��) ��ġ��Ű�� ����
+				{ return RunAction([this](FString& Out) { return Model.MoveSelectionToCell(SelectedCell, Out); }); })]]
+				                                                                                                      ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(62,36): note: �μ� ��� '(SVerticalBox::FSlot::FSlotArguments, int)'��(��) ��ġ��Ű�� ����
+		+ SVerticalBox::Slot().AutoHeight()
+		                                 ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(142,21): error C2039: 'UseAllottedWidth': 'SWrapBox::FArguments'�� ����� �ƴմϴ�.
+					SNew(SWrapBox).UseAllottedWidth(true).InnerSlotPadding(FVector2D(4, 4))
+					               ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Slate\Public\Widgets\Layout\SWrapBox.h(141,2): note: 'SWrapBox::FArguments' ������ �����Ͻʽÿ�.
+	SLATE_BEGIN_ARGS(SWrapBox)
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(141,6): error C2660: 'SRogue10mMapMaker::MakeSection': �Լ��� 1���� �μ��� ������� �ʽ��ϴ�.
+				[MakeSection(LOCTEXT("NativeTools", "04   TERRAIN & STREAMING"),
+				 ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.h(21,22): note: 'SRogue10mMapMaker::MakeSection' ������ �����Ͻʽÿ�.
+	TSharedRef<SWidget> MakeSection(const FText& Title, const TSharedRef<SWidget>& Content) const;
+	                    ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(141,6): note: �μ� ��� '(FText)'��(��) ��ġ��Ű�� ����
+				[MakeSection(LOCTEXT("NativeTools", "04   TERRAIN & STREAMING"),
+				 ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(146,152): error C2088: �⺻ ���� ������ '['��(��) 'SVerticalBox::FSlot::FSlotArguments' ������ �ǿ����ڿ� ����� �� �����ϴ�.
+						LOCTEXT("WPTip", "Open Unreal's native World Partition editor for advanced region management."), [this] { return OpenNativeWorldPartition(); })])]
+						                                                                                                                                                 ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(148,21): error C2039: 'UseAllottedWidth': 'SWrapBox::FArguments'�� ����� �ƴմϴ�.
+				[SNew(SWrapBox).UseAllottedWidth(true).InnerSlotPadding(FVector2D(4, 4))
+				                ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Slate\Public\Widgets\Layout\SWrapBox.h(141,2): note: 'SWrapBox::FArguments' ������ �����Ͻʽÿ�.
+	SLATE_BEGIN_ARGS(SWrapBox)
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): error C7732: ']' �տ� ���� �ʿ��մϴ�.
+						{ return RunAction([this](FString& Out) { return Model.SaveMap(Out); }); })]]
+						                                                                            ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(147,48): error C2679: ���� '[': ������ �ǿ����ڷ� 'int' ������ ����ϴ� �����ڰ� ���ų� ���Ǵ� ��ȯ�� �����ϴ�.
+				+ SVerticalBox::Slot().AutoHeight().Padding(0, 12, 0, 0)
+				                                           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\SlateCore\Public\SlotBase.h(170,38): note: 'SVerticalBox::FSlot::FSlotArguments &TSlotBase<SlotType>::FSlotArguments::operator [](const TSharedRef<SWidget,ESPMode::ThreadSafe> &)'�� �� �ֽ��ϴ�.
+        with
+        [
+            SlotType=SVerticalBox::FSlot
+        ]
+		typename SlotType::FSlotArguments& operator[](const TSharedRef<SWidget>& InChildWidget)
+		                                   ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(147,48): note: 'SVerticalBox::FSlot::FSlotArguments &TSlotBase<SlotType>::FSlotArguments::operator [](const TSharedRef<SWidget,ESPMode::ThreadSafe> &)': �μ� 2��(��) 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe> &'(��)�� ��ȯ�� �� �����ϴ�.
+        with
+        [
+            SlotType=SVerticalBox::FSlot
+        ]
+				+ SVerticalBox::Slot().AutoHeight().Padding(0, 12, 0, 0)
+				                                           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: ����: 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+						{ return RunAction([this](FString& Out) { return Model.SaveMap(Out); }); })]]
+						                                                                            ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': ��� �μ� ������ ��ȯ�� �� �ִ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(354,13): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)'�� �� �ֽ��ϴ�.
+	UE_NODEBUG inline TSharedRef( TSharedRef&& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)': �μ� 1��(��) 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe> &&'(��)�� ��ȯ�� �� �����ϴ�.
+						{ return RunAction([this](FString& Out) { return Model.SaveMap(Out); }); })]]
+						                                                                            ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: ����: 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(348,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef const& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)': �μ� 1��(��) 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe> &'(��)�� ��ȯ�� �� �����ϴ�.
+						{ return RunAction([this](FString& Out) { return Model.SaveMap(Out); }); })]]
+						                                                                            ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: ����: 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(203,2): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(void)'
+	TSharedRef()
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': �Լ��� 1���� �μ��� ������� �ʽ��ϴ�.
+						{ return RunAction([this](FString& Out) { return Model.SaveMap(Out); }); })]]
+						                                                                            ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(339,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,ObjectType *)'
+        with
+        [
+            ObjectType=SWidget
+        ]
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& OtherSharedRef, ObjectType* InObject )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(325,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FConstCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FConstCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(310,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FStaticCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FStaticCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(295,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(272,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &&)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType >&& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(247,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(222,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxy<OtherType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxy< OtherType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(191,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(OtherType *,DeleterType &&)'
+	UE_NODEBUG inline TSharedRef( OtherType* InObject, DeleterType&& InDeleter )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: �μ� ��� '(int)'��(��) ��ġ��Ű�� ����
+						{ return RunAction([this](FString& Out) { return Model.SaveMap(Out); }); })]]
+						                                                                            ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\SlateCore\Public\SlotBase.h(165,38): note: �Ǵ�       'SVerticalBox::FSlot::FSlotArguments &TSlotBase<SlotType>::FSlotArguments::operator [](TSharedRef<SWidget,ESPMode::ThreadSafe> &&)'
+        with
+        [
+            SlotType=SVerticalBox::FSlot
+        ]
+		typename SlotType::FSlotArguments& operator[](TSharedRef<SWidget>&& InChildWidget)
+		                                   ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(147,48): note: 'SVerticalBox::FSlot::FSlotArguments &TSlotBase<SlotType>::FSlotArguments::operator [](TSharedRef<SWidget,ESPMode::ThreadSafe> &&)': �μ� 2��(��) 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe> &&'(��)�� ��ȯ�� �� �����ϴ�.
+        with
+        [
+            SlotType=SVerticalBox::FSlot
+        ]
+				+ SVerticalBox::Slot().AutoHeight().Padding(0, 12, 0, 0)
+				                                           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: ����: 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+						{ return RunAction([this](FString& Out) { return Model.SaveMap(Out); }); })]]
+						                                                                            ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': ��� �μ� ������ ��ȯ�� �� �ִ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(354,13): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)'�� �� �ֽ��ϴ�.
+	UE_NODEBUG inline TSharedRef( TSharedRef&& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)': �μ� 1��(��) 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe> &&'(��)�� ��ȯ�� �� �����ϴ�.
+						{ return RunAction([this](FString& Out) { return Model.SaveMap(Out); }); })]]
+						                                                                            ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: ����: 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(348,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef const& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)': �μ� 1��(��) 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe> &'(��)�� ��ȯ�� �� �����ϴ�.
+						{ return RunAction([this](FString& Out) { return Model.SaveMap(Out); }); })]]
+						                                                                            ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: ����: 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(203,2): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(void)'
+	TSharedRef()
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': �Լ��� 1���� �μ��� ������� �ʽ��ϴ�.
+						{ return RunAction([this](FString& Out) { return Model.SaveMap(Out); }); })]]
+						                                                                            ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(339,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,ObjectType *)'
+        with
+        [
+            ObjectType=SWidget
+        ]
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& OtherSharedRef, ObjectType* InObject )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(325,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FConstCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FConstCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(310,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FStaticCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FStaticCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(295,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(272,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &&)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType >&& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(247,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(222,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxy<OtherType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxy< OtherType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(191,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(OtherType *,DeleterType &&)'
+	UE_NODEBUG inline TSharedRef( OtherType* InObject, DeleterType&& InDeleter )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(153,83): note: �μ� ��� '(int)'��(��) ��ġ��Ű�� ����
+						{ return RunAction([this](FString& Out) { return Model.SaveMap(Out); }); })]]
+						                                                                            ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(147,48): note: �μ� ��� '(SVerticalBox::FSlot::FSlotArguments, int)'��(��) ��ġ��Ű�� ����
+				+ SVerticalBox::Slot().AutoHeight().Padding(0, 12, 0, 0)
+				                                           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): error C7732: ']' �տ� ���� �ʿ��մϴ�.
+			]]];
+			^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(116,22): error C2679: ���� '[': ������ �ǿ����ڷ� 'int' ������ ����ϴ� �����ڰ� ���ų� ���Ǵ� ��ȯ�� �����ϴ�.
+			+ SScrollBox::Slot()
+			                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\SlateCore\Public\SlotBase.h(170,38): note: 'SScrollBox::FSlot::FSlotArguments &TSlotBase<SlotType>::FSlotArguments::operator [](const TSharedRef<SWidget,ESPMode::ThreadSafe> &)'�� �� �ֽ��ϴ�.
+        with
+        [
+            SlotType=SScrollBox::FSlot
+        ]
+		typename SlotType::FSlotArguments& operator[](const TSharedRef<SWidget>& InChildWidget)
+		                                   ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(116,22): note: 'SScrollBox::FSlot::FSlotArguments &TSlotBase<SlotType>::FSlotArguments::operator [](const TSharedRef<SWidget,ESPMode::ThreadSafe> &)': �μ� 2��(��) 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe> &'(��)�� ��ȯ�� �� �����ϴ�.
+        with
+        [
+            SlotType=SScrollBox::FSlot
+        ]
+			+ SScrollBox::Slot()
+			                  ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: ����: 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+			]]];
+			^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': ��� �μ� ������ ��ȯ�� �� �ִ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(354,13): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)'�� �� �ֽ��ϴ�.
+	UE_NODEBUG inline TSharedRef( TSharedRef&& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)': �μ� 1��(��) 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe> &&'(��)�� ��ȯ�� �� �����ϴ�.
+			]]];
+			^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: ����: 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(348,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef const& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)': �μ� 1��(��) 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe> &'(��)�� ��ȯ�� �� �����ϴ�.
+			]]];
+			^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: ����: 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(203,2): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(void)'
+	TSharedRef()
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': �Լ��� 1���� �μ��� ������� �ʽ��ϴ�.
+			]]];
+			^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(339,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,ObjectType *)'
+        with
+        [
+            ObjectType=SWidget
+        ]
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& OtherSharedRef, ObjectType* InObject )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(325,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FConstCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FConstCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(310,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FStaticCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FStaticCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(295,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(272,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &&)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType >&& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(247,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(222,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxy<OtherType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxy< OtherType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(191,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(OtherType *,DeleterType &&)'
+	UE_NODEBUG inline TSharedRef( OtherType* InObject, DeleterType&& InDeleter )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: �μ� ��� '(int)'��(��) ��ġ��Ű�� ����
+			]]];
+			^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\SlateCore\Public\SlotBase.h(165,38): note: �Ǵ�       'SScrollBox::FSlot::FSlotArguments &TSlotBase<SlotType>::FSlotArguments::operator [](TSharedRef<SWidget,ESPMode::ThreadSafe> &&)'
+        with
+        [
+            SlotType=SScrollBox::FSlot
+        ]
+		typename SlotType::FSlotArguments& operator[](TSharedRef<SWidget>&& InChildWidget)
+		                                   ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(116,22): note: 'SScrollBox::FSlot::FSlotArguments &TSlotBase<SlotType>::FSlotArguments::operator [](TSharedRef<SWidget,ESPMode::ThreadSafe> &&)': �μ� 2��(��) 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe> &&'(��)�� ��ȯ�� �� �����ϴ�.
+        with
+        [
+            SlotType=SScrollBox::FSlot
+        ]
+			+ SScrollBox::Slot()
+			                  ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: ����: 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+			]]];
+			^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': ��� �μ� ������ ��ȯ�� �� �ִ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(354,13): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)'�� �� �ֽ��ϴ�.
+	UE_NODEBUG inline TSharedRef( TSharedRef&& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)': �μ� 1��(��) 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe> &&'(��)�� ��ȯ�� �� �����ϴ�.
+			]]];
+			^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: ����: 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(348,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef const& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)': �μ� 1��(��) 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe> &'(��)�� ��ȯ�� �� �����ϴ�.
+			]]];
+			^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: ����: 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(203,2): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(void)'
+	TSharedRef()
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': �Լ��� 1���� �μ��� ������� �ʽ��ϴ�.
+			]]];
+			^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(339,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,ObjectType *)'
+        with
+        [
+            ObjectType=SWidget
+        ]
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& OtherSharedRef, ObjectType* InObject )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(325,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FConstCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FConstCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(310,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FStaticCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FStaticCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(295,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(272,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &&)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType >&& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(247,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(222,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxy<OtherType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxy< OtherType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(191,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(OtherType *,DeleterType &&)'
+	UE_NODEBUG inline TSharedRef( OtherType* InObject, DeleterType&& InDeleter )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,4): note: �μ� ��� '(int)'��(��) ��ġ��Ű�� ����
+			]]];
+			^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(116,22): note: �μ� ��� '(SScrollBox::FSlot::FSlotArguments, int)'��(��) ��ġ��Ű�� ����
+			+ SScrollBox::Slot()
+			                  ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,5): error C7732: ']' �տ� ���� �ʿ��մϴ�.
+			]]];
+			 ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(114,40): error C2679: ���� '[': ������ �ǿ����ڷ� 'int' ������ ����ϴ� �����ڰ� ���ų� ���Ǵ� ��ȯ�� �����ϴ�.
+	[SNew(SBorder).Padding(12).BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+	                                      ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Slate\Public\Widgets\Layout\SBorder.h(55,3): note: 'SBorder::FArguments &SBorder::FArguments::operator [](const TSharedRef<SWidget,ESPMode::ThreadSafe> &)'�� �� �ֽ��ϴ�.
+		SLATE_DEFAULT_SLOT( FArguments, Content )
+		^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(114,40): note: 'SBorder::FArguments &SBorder::FArguments::operator [](const TSharedRef<SWidget,ESPMode::ThreadSafe> &)': �μ� 2��(��) 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe> &'(��)�� ��ȯ�� �� �����ϴ�.
+	[SNew(SBorder).Padding(12).BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+	                                      ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,5): note: ����: 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+			]]];
+			 ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,5): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': ��� �μ� ������ ��ȯ�� �� �ִ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(354,13): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)'�� �� �ֽ��ϴ�.
+	UE_NODEBUG inline TSharedRef( TSharedRef&& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,5): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)': �μ� 1��(��) 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe> &&'(��)�� ��ȯ�� �� �����ϴ�.
+			]]];
+			 ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,5): note: ����: 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,5): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(348,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef const& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,5): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)': �μ� 1��(��) 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe> &'(��)�� ��ȯ�� �� �����ϴ�.
+			]]];
+			 ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,5): note: ����: 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,5): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(203,2): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(void)'
+	TSharedRef()
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,5): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': �Լ��� 1���� �μ��� ������� �ʽ��ϴ�.
+			]]];
+			 ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(339,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,ObjectType *)'
+        with
+        [
+            ObjectType=SWidget
+        ]
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& OtherSharedRef, ObjectType* InObject )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(325,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FConstCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FConstCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(310,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FStaticCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FStaticCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(295,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(272,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &&)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType >&& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(247,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(222,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxy<OtherType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxy< OtherType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(191,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(OtherType *,DeleterType &&)'
+	UE_NODEBUG inline TSharedRef( OtherType* InObject, DeleterType&& InDeleter )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,5): note: �μ� ��� '(int)'��(��) ��ġ��Ű�� ����
+			]]];
+			 ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(114,40): note: �μ� ��� '(SBorder::FArguments::WidgetArgsType, int)'��(��) ��ġ��Ű�� ����
+	[SNew(SBorder).Padding(12).BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
+	                                      ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,6): error C7732: ']' �տ� ���� �ʿ��մϴ�.
+			]]];
+			  ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(113,2): error C2679: ���� '[': ������ �ǿ����ڷ� 'int' ������ ����ϴ� �����ڰ� ���ų� ���Ǵ� ��ȯ�� �����ϴ�.
+	ChildSlot
+	^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\SlateCore\Public\Layout\Children.h(364,12): note: 'SlotType &TSingleWidgetChildrenWithSlot<SlotType>::operator [](const TSharedRef<SWidget,ESPMode::ThreadSafe> &)'�� �� �ֽ��ϴ�.
+        with
+        [
+            SlotType=TSingleWidgetChildrenWithBasicLayoutSlot<EInvalidateWidgetReason::None>
+        ]
+	SlotType& operator[](const TSharedRef<SWidget>& InChildWidget)
+	          ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(113,2): note: 'SlotType &TSingleWidgetChildrenWithSlot<SlotType>::operator [](const TSharedRef<SWidget,ESPMode::ThreadSafe> &)': �μ� 2��(��) 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe> &'(��)�� ��ȯ�� �� �����ϴ�.
+        with
+        [
+            SlotType=TSingleWidgetChildrenWithBasicLayoutSlot<EInvalidateWidgetReason::None>
+        ]
+	ChildSlot
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,6): note: ����: 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+			]]];
+			  ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,6): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': ��� �μ� ������ ��ȯ�� �� �ִ� �����ε�� �Լ��� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(354,13): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)'�� �� �ֽ��ϴ�.
+	UE_NODEBUG inline TSharedRef( TSharedRef&& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,6): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(TSharedRef<SWidget,ESPMode::ThreadSafe> &&)': �μ� 1��(��) 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe> &&'(��)�� ��ȯ�� �� �����ϴ�.
+			]]];
+			  ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,6): note: ����: 'int'���� 'TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,6): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(348,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef const& InSharedRef )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,6): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<SWidget,ESPMode::ThreadSafe> &)': �μ� 1��(��) 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe> &'(��)�� ��ȯ�� �� �����ϴ�.
+			]]];
+			  ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,6): note: ����: 'int'���� 'const TSharedRef<SWidget,ESPMode::ThreadSafe>'(��)�� ��ȯ�� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,6): note: ��ȯ�Ϸ��� ��° ����� ���� ��ȯ ������ �Ǵ� �����ڰ� �־�� �մϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(203,2): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(void)'
+	TSharedRef()
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,6): note: 'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef': �Լ��� 1���� �μ��� ������� �ʽ��ϴ�.
+			]]];
+			  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(339,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,ObjectType *)'
+        with
+        [
+            ObjectType=SWidget
+        ]
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& OtherSharedRef, ObjectType* InObject )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(325,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FConstCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FConstCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(310,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &,SharedPointerInternals::FStaticCastTag)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef, SharedPointerInternals::FStaticCastTag )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(295,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const TSharedRef<UserClass,ESPMode::ThreadSafe> &)'
+	UE_NODEBUG inline TSharedRef( TSharedRef< OtherType, Mode > const& InSharedRef )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(272,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &&)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType >&& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(247,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxyWithDeleter<OtherType,DeleterType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxyWithDeleter< OtherType, DeleterType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(222,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(const SharedPointerInternals::TRawPtrProxy<OtherType> &)'
+	UE_NODEBUG inline TSharedRef( SharedPointerInternals::TRawPtrProxy< OtherType > const& InRawPtrProxy )
+	           ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Templates\SharedPointer.h(191,13): note: �Ǵ�       'TSharedRef<SWidget,ESPMode::ThreadSafe>::TSharedRef(OtherType *,DeleterType &&)'
+	UE_NODEBUG inline TSharedRef( OtherType* InObject, DeleterType&& InDeleter )
+	           ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(159,6): note: �μ� ��� '(int)'��(��) ��ġ��Ű�� ����
+			]]];
+			  ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\MapMaker\SRogue10mMapMaker.cpp(113,2): note: �μ� ��� '(SCompoundWidget::FCompoundWidgetOneChildSlot, int)'��(��) ��ġ��Ű�� ����
+	ChildSlot
+	^
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[4/18] Compile [x64] PerModuleInline.gen.cpp (0:17.56 at +1:14)
+[5/18] Compile [x64] Rogue10mEditorModule.cpp (0:17.71 at +1:14)
+[6/18] Compile [x64] Rogue10mMapMakerModel.cpp (0:35.06 at +1:14)
+[7/18] Compile [x64] Module.Rogue10m.7.cpp (0:52.86 at +1:14)
+[8/18] Compile [x64] Module.Rogue10m.6.cpp (1:01.29 at +1:14)
+[9/18] Compile [x64] Module.Rogue10m.5.cpp (1:02.48 at +1:14)
+[10/18] Compile [x64] Module.Rogue10m.1.cpp (1:06.60 at +1:14)
+[11/18] Compile [x64] Module.Rogue10m.4.cpp (1:13.03 at +1:14)
+[12/18] Compile [x64] Module.Rogue10m.2.cpp (1:16.28 at +1:14)
+[13/18] Compile [x64] Module.Rogue10m.3.cpp (1:34.34 at +1:14)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 0 succeeded, 1 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 174.15 seconds
+CompilationResultException: OtherCompilationError
+   at UnrealBuildTool.ActionGraph.InternalExecuteActions(ActionExecutor Executor, List`1 ActionsToExecute, ILogger Logger) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Actions\ActionGraph.cs:line 442
+   at UnrealBuildTool.ActionGraph.ExecuteActionsAsync(BuildConfiguration BuildConfiguration, List`1 ActionsToExecute, List`1 TargetDescriptors, ILogger Logger, ActionExecutor executor) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Actions\ActionGraph.cs:line 413
+   at UnrealBuildTool.BuildMode.BuildAsync(List`1 Targets, BuildConfiguration BuildConfiguration, BuildOptions Options, FileReference WriteOutdatedActionsFile, CppDependencyCache cppDependencyCache, ILogger Logger, String ActionTypeFilter, ActionExecutor executor) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Modes\BuildMode.cs:line 812
+   at UnrealBuildTool.BuildMode.ExecuteAsync(CommandLineArguments Arguments, ILogger Logger) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Modes\BuildMode.cs:line 282
+   at UnrealBuildTool.BuildMode.ExecuteAsync(CommandLineArguments Arguments, ILogger Logger) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Modes\BuildMode.cs:line 303
+   at UnrealBuildTool.UnrealBuildTool.Main(String[] ArgumentsArray) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\UnrealBuildTool.cs:line 483
+WriteFileIfChanged() wrote 0 changed files of 1 requested writes.
+
+Timeline:
+[  0.000]  +0.600 Main
+   0.037          [  0.037]  +0.169 Apply XmlConfig
+   0.209          [  0.209]  +0.097 AddTelemetry
+   0.352          [  0.352]  +0.247 RegisterPlatforms
+[  0.679]  +0.036 ParseCommandLine
+[  0.716]  +0.367 <unknown>
+[  1.083]  +0.224 EngineRulesPlugins
+[  1.324]  +0.102 EngineRulesFetchDirs
+[  1.439]  +0.014 EngineRulesAssembly
+[  1.453]  +0.002 ProgramRulesAssembly
+[  1.455]  +0.005 ProjectRulesAssembly
+[  1.461]  +0.407 CreateTargetRules
+[  1.971]  +0.018 CppDependencyCache
+[  2.003]  +3.875 Rogue10mEditor Win64 Development
+   2.003          [  0.000]  +1.391 <unknown>
+   3.394          [  1.391]  +0.080 UHTModules
+   3.475          [  1.472]  +0.245 <unknown>
+   3.720          [  1.717]  +0.302 UHTManifest
+   4.022          [  2.019] +13.328 UHT
+   4.022             2.019          [  0.000]  +0.204 <unknown>
+   4.227             2.224          [  0.204]  +0.000 GitWait
+   4.227             2.224          [  0.204]  +1.534 <unknown>
+   5.762             3.759          [  1.739]  +0.000 WaitOnWrites
+   5.881             3.877          [  1.858] +11.478 UHTWait
+[  5.878] +11.571 <unknown>
+[ 17.449]  +0.018 CppDependencyCache
+[ 17.468]  +0.210 Preparing ActionGraph
+  17.491          [  0.023]  +0.010 LinkActions
+  17.501             0.033          [  0.009]  +0.000 DetectActionGraphCycles
+  17.502          [  0.034]  +0.000 GatherPrerequisiteActions
+  17.505          [  0.037]  +0.000 CppDependencyCacheWait
+  17.507          [  0.039]  +0.120 GatherOutdatedActions
+  17.633          [  0.165]  +0.006 LinkActions
+  17.633             0.165          [  0.000]  +0.000 DetectActionGraphCycles
+  17.644          [  0.176]  +0.009 DeleteOutdatedProducedItems
+  17.654          [  0.186]  +0.020 SaveActionHistory
+  17.678          [  0.209]  +0.000 CreateDirectoriesForProducedItems
+[ 17.746]  +0.404 GarbageCollect
+[ 18.151]+173.756 <unknown>
+[191.907]  +0.202 Saving caches
+[192.144]  +0.003 TelemetryService.FlushEvents
+[192.149]
+
+Result: Failed (OtherCompilationError)
+Total execution time: 192.15 seconds

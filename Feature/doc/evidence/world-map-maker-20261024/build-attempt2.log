@@ -1,0 +1,438 @@
+Log started at 10/24/2026 23:43:06 (2026-10-24T14:43:06Z)
+Resolved project argument D:\Project\Rogue10m\Rogue10m.uproject to D:\Project\Rogue10m\Rogue10m.uproject
+No config file at C:\ProgramData\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\PC\AppData\Local\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+No config file at C:\Users\PC\Documents\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Configuration will be read from:
+  C:\Users\PC\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\Intermediate\Build\XmlConfigCache.bin): C:\Users\PC\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\Intermediate\Build\XmlConfigCache.bin): D:\Project\Rogue10m\Saved\UnrealBuildTool\BuildConfiguration.xml
+Reading configuration file from cache (D:\Project\Rogue10m\Intermediate\Build\XmlConfigCache.bin): C:\Users\PC\AppData\Local\UnrealEngine\Intermediate\Build\UnrealBuildTool.Env.BuildConfiguration.xml
+Setting temp directory to 'C:\Users\PC\AppData\Local\Temp\UnrealBuildTool\e98283ba'
+    Registering build platform: UnrealBuildTool.AndroidPlatformFactory
+Unable to find valid SDK(s) for Android:
+  Found Sdk Version=r25b, MinRequired=r27c, MaxRequired=r29.
+  Found AutoSdk Version, Required=r27c.
+        Registering build platform: Android - buildable: False
+    Registering build platform: UnrealBuildTool.IOSPlatformFactory
+    Registering build platform: UnrealBuildTool.LinuxPlatformFactory
+    Registering build platform: UnrealBuildTool.MacPlatformFactory
+    Registering build platform: UnrealBuildTool.TVOSPlatformFactory
+    Registering build platform: UnrealBuildTool.WindowsPlatformFactory
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (1)
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (2)
+Found Universal CRT version 10.0.10240.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.17763.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.17763.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.19041.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.19041.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.22621.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.22621.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.26100.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.26100.0 at C:\Program Files (x86)\Windows Kits\10
+Win64 Installed SDK(s): MinVersion_Sdk=10.0.19041.0, MaxVersion_Sdk=10.9.99999.0, CurrentVersion_Sdk=10.0.22621.0, Version_AutoSdk=10.0.22621.0, CurrentVersion_AutoSdk=
+        Registering build platform: Win64 - buildable: True
+    Registering build platform: UnrealBuildTool.VisionOSPlatformFactory
+Command line: "D:\Program Files\UE_5.8\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Deleting old log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log-backup-2026.10.22-08.46.03.txt
+Deleting old log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log-backup-2026.10.22-08.46.03.json
+
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Invalidating makefile for Rogue10mEditor (source directory added)
+Skipping D:\Program Files\UE_5.8\Engine\Intermediate\Build\BuildRules\UE5Rules.dll: File is installed
+Skipping D:\Program Files\UE_5.8\Engine\Intermediate\Build\BuildRules\UE5ProgramRules.dll: File is installed
+Compiler: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe
+Linker: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\link.exe
+Library Manager: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\link.exe
+Resource Compiler: C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\x64\rc.exe
+Resource Converter: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cvtres.exe
+Using EngineIncludeOrderVersion.Unreal5_8 for target Rogue10mEditor.Target.cs
+Building UnrealEditor - Rogue10mEditor - Win64 - Development
+VerseVMBytecodeGenerator.Generate, generating CPP headers in: 'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode'
+	Writing out generated header file. Changed:False Path:'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode\VVMBytecodeOps.gen.h'
+	Writing out generated header file. Changed:False Path:'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode\VVMBytecodesAndCaptures.gen.h'
+	Writing out generated header file. Changed:False Path:'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode\VVMMakeCapturesFuncs.gen.h'
+	Writing out generated header file. Changed:False Path:'D:\Program Files\UE_5.8\Engine\Intermediate\Build\Win64\UnrealEditor\Inc\CoreUObject\VerseVMBytecode\VVMCaptureSwitch.gen.h'
+Generated code is up to date.
+Found 5 shared PCH headers (listed in order of preference):
+	UnrealEd
+	Engine
+	Slate
+	CoreUObject
+	Core
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10mEditor\UnrealEditor-Rogue10mEditor.lib.rsp: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10mEditor\UnrealEditor-Rogue10mEditor.lib.rsp.old.
+Updating D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10mEditor\UnrealEditor-Rogue10mEditor.dll.rsp: contents have changed. Saving previous version to D:\Project\Rogue10m\Intermediate\Build\Win64\x64\UnrealEditor\Development\Rogue10mEditor\UnrealEditor-Rogue10mEditor.dll.rsp.old.
+Checking for live coding mutex: Global\LiveCoding_D++Program Files+UE_5.8+Engine+Binaries+Win64+UnrealEditor.exe
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+=================================
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+  Requested 1.5 GB memory per action, 7.66 GB available: limiting max parallel actions to 5
+Using XGE executor to run 8 action(s)
+Distributing 8 actions to XGE
+UnrealBuildTool Compile
+
+--------------------Build System Warning---------------------------------------
+License not activated:
+    License is not activated. Please activate the license in the coordinator.
+    This build will run in standalone mode.
+
+-------------------------------------------------------------------------------
+ 
+Build ID: {2E4544C1-8D1F-4B24-82D6-90638A7AC569}
+ 
+--------------------Project: Default-------------------------------------------
+[1/8] Link [x64] UnrealEditor-Rogue10m.lib (0:00.40 at +0:00)
+   D:/Project/Rogue10m/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.lib ���̺귯�� �� D:/Project/Rogue10m/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.exp ��ü�� �����ϰ� �ֽ��ϴ�.
+[2/8] Link [x64] UnrealEditor-Rogue10m.dll (0:02.04 at +0:00)
+[3/8] Compile [x64] Rogue10mMapMakerTests.cpp (0:08.14 at +0:00)
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): error C2665: 'FAutomationTestBase::TestEqual': ��� �μ� ������ ��ȯ�� �� �ִ� �����ε�� �Լ��� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2086,7): note: 'bool FAutomationTestBase::TestEqual(const FString &,FUtf8StringView,FStringView)'�� �� �ֽ��ϴ�.
+	bool TestEqual(const FString& What, FUtf8StringView Actual, FStringView Expected)
+	     ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const FString &,FUtf8StringView,FStringView)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'FUtf8StringView'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2079,7): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const FString &,FStringView,FUtf8StringView)'
+	bool TestEqual(const FString& What, FStringView Actual, FUtf8StringView Expected)
+	     ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const FString &,FStringView,FUtf8StringView)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'FStringView'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2074,7): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const FString &,FStringView,FStringView)'
+	bool TestEqual(const FString& What, FStringView Actual, FStringView Expected)
+	     ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const FString &,FStringView,FStringView)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'FStringView'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2069,7): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const FString &,FUtf8StringView,FUtf8StringView)'
+	bool TestEqual(const FString& What, FUtf8StringView Actual, FUtf8StringView Expected)
+	     ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const FString &,FUtf8StringView,FUtf8StringView)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'FUtf8StringView'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2064,7): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const FString &,const TCHAR *,const TCHAR *)'
+	bool TestEqual(const FString& What, const TCHAR* Actual, const TCHAR* Expected)
+	     ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const FString &,const TCHAR *,const TCHAR *)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const TCHAR *'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2059,7): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const FString &,const FColor,const FColor)'
+	bool TestEqual(const FString& What, const FColor Actual, const FColor Expected)
+	     ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const FString &,const FColor,const FColor)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const FColor'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2054,7): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const FString &,const FRotator,const FRotator,float)'
+	bool TestEqual(const FString& What, const FRotator Actual, const FRotator Expected, float Tolerance = UE_KINDA_SMALL_NUMBER)
+	     ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const FString &,const FRotator,const FRotator,float)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const FRotator'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2049,7): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const FString &,const FTransform,const FTransform,float)'
+	bool TestEqual(const FString& What, const FTransform Actual, const FTransform Expected, float Tolerance = UE_KINDA_SMALL_NUMBER)
+	     ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const FString &,const FTransform,const FTransform,float)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const FTransform'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2044,7): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const FString &,const FVector,const FVector,float)'
+	bool TestEqual(const FString& What, const FVector Actual, const FVector Expected, float Tolerance = UE_KINDA_SMALL_NUMBER)
+	     ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const FString &,const FVector,const FVector,float)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const FVector'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2039,7): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const FString &,const double,const double,double)'
+	bool TestEqual(const FString& What, const double Actual, const double Expected, double Tolerance = UE_KINDA_SMALL_NUMBER)
+	     ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const FString &,const double,const double,double)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const double'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2034,7): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const FString &,const float,const float,float)'
+	bool TestEqual(const FString& What, const float Actual, const float Expected, float Tolerance = UE_KINDA_SMALL_NUMBER)
+	     ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const FString &,const float,const float,float)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const float'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2029,7): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const FString &,const int32,const int32)'
+	bool TestEqual(const FString& What, const int32 Actual, const int32 Expected)
+	     ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const FString &,const int32,const int32)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const int32'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2003,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const FName,const FName)'
+	CORE_API bool TestEqual(const TCHAR* What, const FName Actual, const FName Expected);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const FName,const FName)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const FName'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2002,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const FText,const FText)'
+	CORE_API bool TestEqual(const TCHAR* What, const FText Actual, const FText Expected);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const FText,const FText)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const FText'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2001,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,FUtf8StringView,FUtf8StringView)'
+	CORE_API bool TestEqual(const TCHAR* What, FUtf8StringView Actual, FUtf8StringView Expected);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,FUtf8StringView,FUtf8StringView)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'FUtf8StringView'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(1997,7): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const FString &,const FString &)'
+	bool TestEqual(const TCHAR* What, const FString& Actual, const FString& Expected)
+	     ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const FString &,const FString &)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const FString &'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: ����: 'TObjectPtr<UStaticMesh>'���� 'const FString'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(1996,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,FStringView,FStringView)'
+	CORE_API bool TestEqual(const TCHAR* What, FStringView Actual, FStringView Expected);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,FStringView,FStringView)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'FStringView'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(1995,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const TCHAR *,const TCHAR *)'
+	CORE_API bool TestEqual(const TCHAR* What, const TCHAR* Actual, const TCHAR* Expected);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const TCHAR *,const TCHAR *)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const TCHAR *'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(1994,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const FLinearColor,const FLinearColor)'
+	CORE_API bool TestEqual(const TCHAR* What, const FLinearColor Actual, const FLinearColor Expected);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const FLinearColor,const FLinearColor)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const FLinearColor'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(1993,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const FColor,const FColor)'
+	CORE_API bool TestEqual(const TCHAR* What, const FColor Actual, const FColor Expected);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const FColor,const FColor)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const FColor'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(1992,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const FRotator,const FRotator,float)'
+	CORE_API bool TestEqual(const TCHAR* What, const FRotator Actual, const FRotator Expected, float Tolerance = UE_KINDA_SMALL_NUMBER);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const FRotator,const FRotator,float)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const FRotator'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(1991,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const FTransform,const FTransform,float)'
+	CORE_API bool TestEqual(const TCHAR* What, const FTransform Actual, const FTransform Expected, float Tolerance = UE_KINDA_SMALL_NUMBER);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const FTransform,const FTransform,float)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const FTransform'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(1990,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const FVector,const FVector,float)'
+	CORE_API bool TestEqual(const TCHAR* What, const FVector Actual, const FVector Expected, float Tolerance = UE_KINDA_SMALL_NUMBER);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const FVector,const FVector,float)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const FVector'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(1989,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const double,const double,double)'
+	CORE_API bool TestEqual(const TCHAR* What, const double Actual, const double Expected, double Tolerance = UE_KINDA_SMALL_NUMBER);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const double,const double,double)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const double'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(1988,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const float,const float,float)'
+	CORE_API bool TestEqual(const TCHAR* What, const float Actual, const float Expected, float Tolerance = UE_KINDA_SMALL_NUMBER);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const float,const float,float)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const float'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(1987,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const SIZE_T,const SIZE_T)'
+	CORE_API bool TestEqual(const TCHAR* What, const SIZE_T Actual, const SIZE_T Expected);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const SIZE_T,const SIZE_T)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const SIZE_T'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(1986,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const int64,const int64)'
+	CORE_API bool TestEqual(const TCHAR* What, const int64 Actual, const int64 Expected);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const int64,const int64)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const int64'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(1985,16): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const int32,const int32)'
+	CORE_API bool TestEqual(const TCHAR* What, const int32 Actual, const int32 Expected);
+	              ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const int32,const int32)': �μ� 2��(��) 'TObjectPtr<UStaticMesh>'���� 'const int32'(��)�� ��ȯ�� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,116): note: �� ��ȯ�� ������ �� �ִ� ��� ������ ����� ���� ��ȯ �����ڰ� ���ų� �����ڸ� ȣ���� �� �����ϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	                                                                                                                  ^
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2197,7): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const FString &,const ValueType &,const ValueType &)'
+	bool TestEqual(const FString& What, const ValueType& Actual, const ValueType& Expected)
+	     ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const FString &,const ValueType &,const ValueType &)': ���ø� �Ű� ���� 'ValueType'��(��) ��ȣ�մϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'UStaticMesh *'�� �� �ֽ��ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: �Ǵ�      'TObjectPtr<UStaticMesh>'
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const FString &,const ValueType &,const ValueType &)': 'UStaticMesh *'���� 'const ValueType &'�� ���� ���ø� �μ��� �߷��� �� �����ϴ�.
+D:\Program Files\UE_5.8\Engine\Source\Runtime\Core\Public\Misc\AutomationTest.h(2186,14): note: �Ǵ�       'bool FAutomationTestBase::TestEqual(const TCHAR *,const ValueType &,const ValueType &)'
+	inline bool TestEqual(const TCHAR* What, const ValueType& Actual, const ValueType& Expected)
+	            ^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const ValueType &,const ValueType &)': ���ø� �Ű� ���� 'ValueType'��(��) ��ȣ�մϴ�.
+	TestEqual(TEXT("Saved static mesh reference survives map reload"), Placed->GetStaticMeshComponent()->GetStaticMesh(), Mesh);
+	^
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'UStaticMesh *'�� �� �ֽ��ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: �Ǵ�      'TObjectPtr<UStaticMesh>'
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: 'bool FAutomationTestBase::TestEqual(const TCHAR *,const ValueType &,const ValueType &)': 'UStaticMesh *'���� 'const ValueType &'�� ���� ���ø� �μ��� �߷��� �� �����ϴ�.
+D:\Project\Rogue10m\Source\Rogue10mEditor\Private\Tests\Rogue10mMapMakerTests.cpp(339,2): note: �μ� ��� '(const wchar_t [48], TObjectPtr<UStaticMesh>, UStaticMesh *)'��(��) ��ġ��Ű�� ����
+
+Error executing C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe (tool returned code: 2)
+[4/8] Compile [x64] Rogue10mMapMakerModel.cpp (0:12.40 at +0:00)
+[5/8] Compile [x64] SRogue10mMapMaker.cpp (0:12.84 at +0:00)
+---------------------- Done ----------------------
+ 
+    Rebuild All: 0 succeeded, 1 failed, 0 skipped
+ 
+1 build system warning(s):
+   - License not activated
+ 
+Total time in XGE executor: 16.34 seconds
+CompilationResultException: OtherCompilationError
+   at UnrealBuildTool.ActionGraph.InternalExecuteActions(ActionExecutor Executor, List`1 ActionsToExecute, ILogger Logger) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Actions\ActionGraph.cs:line 442
+   at UnrealBuildTool.ActionGraph.ExecuteActionsAsync(BuildConfiguration BuildConfiguration, List`1 ActionsToExecute, List`1 TargetDescriptors, ILogger Logger, ActionExecutor executor) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Actions\ActionGraph.cs:line 413
+   at UnrealBuildTool.BuildMode.BuildAsync(List`1 Targets, BuildConfiguration BuildConfiguration, BuildOptions Options, FileReference WriteOutdatedActionsFile, CppDependencyCache cppDependencyCache, ILogger Logger, String ActionTypeFilter, ActionExecutor executor) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Modes\BuildMode.cs:line 812
+   at UnrealBuildTool.BuildMode.ExecuteAsync(CommandLineArguments Arguments, ILogger Logger) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Modes\BuildMode.cs:line 282
+   at UnrealBuildTool.BuildMode.ExecuteAsync(CommandLineArguments Arguments, ILogger Logger) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\Modes\BuildMode.cs:line 303
+   at UnrealBuildTool.UnrealBuildTool.Main(String[] ArgumentsArray) in D:\build\++UE5\Sync\Engine\Source\Programs\UnrealBuildTool\UnrealBuildTool.cs:line 483
+WriteFileIfChanged() wrote 0 changed files of 1 requested writes.
+
+Timeline:
+[  0.000]  +0.513 Main
+   0.023          [  0.023]  +0.127 Apply XmlConfig
+   0.153          [  0.153]  +0.086 AddTelemetry
+   0.280          [  0.279]  +0.233 RegisterPlatforms
+[  0.596]  +0.080 ParseCommandLine
+[  0.676]  +0.323 <unknown>
+[  1.000]  +0.530 LoadMakefile
+   1.170          [  0.170]  +0.738 EngineRulesPlugins
+   1.170             0.170          [  0.000]  +0.442 <unknown>
+   1.612             0.612          [  0.442]  +0.000 FindPlugins
+   1.627             0.627          [  0.457]  +0.261 MakefileValid
+[  1.530]  +0.380 <unknown>
+[  1.911]  +0.025 EngineRulesFetchDirs
+[  1.946]  +0.027 EngineRulesAssembly
+[  1.974]  +0.003 ProgramRulesAssembly
+[  1.977]  +0.021 ProjectRulesAssembly
+[  1.998]  +0.380 CreateTargetRules
+[  2.491]  +0.009 CppDependencyCache
+[  2.519]  +2.704 Rogue10mEditor Win64 Development
+   2.519          [  0.000]  +1.151 <unknown>
+   3.670          [  1.151]  +0.076 UHTModules
+   3.747          [  1.227]  +0.216 <unknown>
+   3.963          [  1.444]  +0.045 UHTManifest
+   4.009          [  1.490]  +0.020 UHTTimestamps
+   4.030          [  1.510]  +0.427 <unknown>
+   4.457          [  1.938]  +0.000 GitWait
+   4.458          [  1.939]  +0.745 <unknown>
+   5.203          [  2.684]  +0.000 WaitOnWrites
+[  5.224]  +0.185 SavingMakefile
+   5.225          [  0.000]  +0.003 UHTWait
+   5.265          [  0.041]  +0.006 CppDependencyCache
+   5.271          [  0.047]  +0.140 Preparing ActionGraph
+   5.287             0.063          [  0.015]  +0.009 LinkActions
+   5.298             0.073          [  0.026]  +0.000 GatherPrerequisiteActions
+   5.300             0.075          [  0.028]  +0.000 CppDependencyCacheWait
+   5.300             0.076          [  0.029]  +0.080 GatherOutdatedActions
+   5.387             0.162          [  0.115]  +0.013 LinkActions
+   5.402             0.178          [  0.130]  +0.000 DeleteOutdatedProducedItems
+   5.403             0.178          [  0.131]  +0.007 SaveActionHistory
+   5.411             0.187          [  0.140]  +0.000 CreateDirectoriesForProducedItems
+[  5.446]  +0.221 GarbageCollect
+[  5.668] +16.119 <unknown>
+[ 21.788]  +0.187 Saving caches
+[ 21.994]  +0.003 TelemetryService.FlushEvents
+[ 21.998]
+
+Result: Failed (OtherCompilationError)
+Total execution time: 22.00 seconds

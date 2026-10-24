@@ -11,5 +11,6 @@ public class Rogue10mEditorTarget : TargetRules
 		DefaultBuildSettings = BuildSettingsVersion.V7;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_8;
 		ExtraModuleNames.Add("Rogue10m");
+		ExtraModuleNames.Add("Rogue10mEditor");
 	}
 }
