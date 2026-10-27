@@ -87,11 +87,21 @@ FRogue10mSkillTreeAttackEffect URogue10mSkillTreeCombatComponent::AcceptAttack(
 	const URogue10mAttackSkillData& Skill, bool bComboAttack)
 {
 	SynchronizeIdentity();
+	auto* Character = Cast<ARogue10mCharacter>(GetOwner());
+	auto* Attributes = Character ? Character->GetRogueAttributeSet() : nullptr;
+	const auto Result = PreviewAttack(Skill, Attributes ? Attributes->GetMana() : 0.0f);
+	if (Result.ManaCost > 0.0f && (!Attributes || !Attributes->ConsumeMana(Result.ManaCost))) { return {}; }
+	CommitAttack(Result, bComboAttack);
+	return Result;
+}
+
+FRogue10mSkillTreeAttackEffect URogue10mSkillTreeCombatComponent::PreviewAttack(
+	const URogue10mAttackSkillData& Skill, float AvailableMana) const
+{
 	FRogue10mSkillTreeAttackEffect Result;
 	const auto* Progression = GetProgression();
 	const auto* Data = Progression ? Progression->GetCatalog() : nullptr;
 	if (!GetOwner() || !GetOwner()->HasAuthority() || !Data || !GetWorld()) { return Result; }
-	if (bComboAttack) { CirculationExpiresAt = 0.0f; }
 	if (CachedIdentity == ERogue10mSkillTreeIdentity::None || Gauge < GetGaugeMaximum() || GetCooldownRemaining() > 0.0f)
 	{
 		return Result;
@@ -110,17 +120,16 @@ FRogue10mSkillTreeAttackEffect URogue10mSkillTreeCombatComponent::AcceptAttack(
 	const bool bStrong = bCore || Skill.InputSlot == ERogue10mAttackInputSlot::ChargedPrimary
 		|| Skill.InputSlot == ERogue10mAttackInputSlot::ChargedSpecial || Skill.InputSlot == ERogue10mAttackInputSlot::Special;
 	if (CachedIdentity == ERogue10mSkillTreeIdentity::FightingSpirit && !bStrong) { return Result; }
-	auto* Character = Cast<ARogue10mCharacter>(GetOwner());
-	auto* Attributes = Character ? Character->GetRogueAttributeSet() : nullptr;
 	if (CachedIdentity == ERogue10mSkillTreeIdentity::Mana
-		&& (!Attributes || Attributes->GetMana() < Data->ManaProcCost)) { return Result; }
+		&& (!FMath::IsFinite(AvailableMana) || !FMath::IsFinite(Data->ManaProcCost)
+			|| Data->ManaProcCost < 0.0f || AvailableMana < Data->ManaProcCost)) { return Result; }
 	const auto Growth = Progression->GetTrackMasteryStatModifiers(CachedTrack);
 	const FName Property = Progression->GetSelectedProperty(CachedIdentity);
 	float Bonus = 0.0f;
 	if (CachedIdentity == ERogue10mSkillTreeIdentity::InternalEnergy)
 	{
 		Bonus = Data->InternalEnergyBaseBonus + Data->InternalEnergyStaminaScaling * Growth.MaxStaminaBonus;
-		if (Property == TEXT("InternalEnergy.Cycle")) { CirculationExpiresAt = GetWorld()->GetTimeSeconds() + Data->IdentityProcCooldown; }
+		Result.bStartsCirculation = Property == TEXT("InternalEnergy.Cycle");
 		if (Property == TEXT("InternalEnergy.Release") && bCore) { Result.RangeMultiplier = Data->IdentityRangeMultiplier; }
 	}
 	else if (CachedIdentity == ERogue10mSkillTreeIdentity::FightingSpirit)
@@ -135,7 +144,7 @@ FRogue10mSkillTreeAttackEffect URogue10mSkillTreeCombatComponent::AcceptAttack(
 	}
 	else if (CachedIdentity == ERogue10mSkillTreeIdentity::Mana)
 	{
-		Attributes->ConsumeMana(Data->ManaProcCost);
+		Result.ManaCost = Data->ManaProcCost;
 		Bonus = Data->ManaBaseBonus;
 		if (Property == TEXT("Mana.Pursuit")) { Bonus += Data->IdentityNatureDamageBonus; }
 		if (Property == TEXT("Mana.Spread") && bCore) { Result.RangeMultiplier = Data->IdentityRangeMultiplier; }
@@ -143,7 +152,17 @@ FRogue10mSkillTreeAttackEffect URogue10mSkillTreeCombatComponent::AcceptAttack(
 	if (bUltimate && Progression->HasResonance(CachedTrack, CachedIdentity)) { Bonus += Data->ResonanceDamageBonus; }
 	Result.DamageMultiplier = 1.0f + FMath::Max(0.0f, Bonus);
 	Result.bTriggered = true;
+	return Result;
+}
+
+void URogue10mSkillTreeCombatComponent::CommitAttack(const FRogue10mSkillTreeAttackEffect& Effect, bool bComboAttack)
+{
+	const auto* Progression = GetProgression();
+	const auto* Data = Progression ? Progression->GetCatalog() : nullptr;
+	if (!GetOwner() || !GetOwner()->HasAuthority() || !Data || !GetWorld()) { return; }
+	if (bComboAttack) { CirculationExpiresAt = 0.0f; }
+	if (!Effect.bTriggered) { return; }
+	if (Effect.bStartsCirculation) { CirculationExpiresAt = GetWorld()->GetTimeSeconds() + Data->IdentityProcCooldown; }
 	Gauge = 0.0f;
 	NextProcTime = GetWorld()->GetTimeSeconds() + FMath::Max(0.01f, Data->IdentityProcCooldown);
-	return Result;
 }

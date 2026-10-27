@@ -156,6 +156,8 @@ protected:
 private:
 	friend class URogue10mBasicBrawlerComponent;
 	friend struct FRogue10mHybridCombatTestAccess;
+	friend struct FRogue10mAttackCostTestAccess;
+	bool bAcceptingAttack = false;
 	ARogue10mCharacter* GetOwnerCharacter() const;
 	URogue10mAttributeSet* GetOwnerAttributes() const;
 	float GetAttackSpeedMultiplier() const;
@@ -173,8 +175,8 @@ private:
 		AActor& TargetActor, const FVector& DamageDirection, int32 PulseIndex);
 	void FinishAttackHitSequence(uint32 ExecutionId);
 	void CancelPendingAttackHits(const URogue10mAttackSkillData* SkillData = nullptr);
+	bool TryPayResourceCosts(const URogue10mAttackSkillData& SkillData, bool bComboAttack = false);
 	bool CanPayResourceCosts(const URogue10mAttackSkillData& SkillData, bool bComboAttack = false) const;
-	void ConsumeResourceCosts(const URogue10mAttackSkillData& SkillData, bool bComboAttack = false);
 	void StartSharedAttackCooldown(const URogue10mAttackSkillData& SkillData, bool bComboAttack);
 	void OpenComboWindow(const URogue10mAttackSkillData& SkillData);
 	void ResetComboWindow();

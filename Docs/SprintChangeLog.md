@@ -2401,3 +2401,12 @@
 - 관련: [최종 결과와 검증표](../Feature/doc/2026-10-25_map-maker-live-qa.md), [자동화](../Feature/doc/evidence/map-maker-live-qa-20261025/automation-final/result.json), [최종 증거 검사](../Feature/doc/evidence/map-maker-live-qa-20261025/final-checks.json), [최종 GUI 상태](../Feature/doc/evidence/map-maker-live-qa-20261025/live-final.json), [외곽 화면](../Feature/doc/evidence/map-maker-live-qa-20261025/focus-edge-final.png), [개발 일지](../DevLog/20261025.txt).
 
 - Sprint#9-1 게시 완료: 기능 `8ca0523309866aed5aa48fc4b435c02845241d8a`, 명시 94파일·생성 경로·공백·JSON/Python/문서 링크·DevLog 추가 전용 검사 통과. 최신 원격 변경 재확인 뒤 develop→test→main fast-forward 및 작업/통합 네 브랜치 일반 atomic push 성공, [직접 원격 SHA](../Feature/doc/evidence/map-maker-live-qa-20261025/publication.json) 전부 일치. 원본 Content 변경 0·QA dirty 0. 이 완료 기록은 소스/콘텐츠 변경 없는 후속 문서 체크포인트로 동일하게 게시한다.
+
+
+## Sprint#9-2 — R11 공격 자원 합산·원자적 결제 (2026-10-26)
+
+- 목표: 중복 비용 행의 합계 부족을 사전에 거부하고 부분 차감 없이 공격을 수락한다.
+- 변경: 공통 자원 예산, 기본+선택 마나 비용 계획/결제 후 아이덴티티 확정, 재진입 방지, 신규 자동화4건 및 검증 스크립트.
+- 검증: UE5.8.3 Editor 빌드 성공, 신규4+기존숙련3 Success/errors0/warnings0. 원본 clean 및 저장98개 해시 동일. 최초 컴파일/fixture 실패와 수정 증거 보존.
+- 상태: 독립 복제에서 구현·검증 완료, 로컬 체크포인트. 자동 병합/push/PR 없음. R02/R03 및 R05/생산 맵은 미착수.
+- 문서: [계획](../Feature/architect/2026-10-26_atomic-attack-costs.md), [결과](../Feature/doc/2026-10-26_atomic-attack-costs.md), [증거](../Feature/doc/evidence/atomic-attack-costs-20261026/).

@@ -16,6 +16,7 @@
 #include "NiagaraSystem.h"
 #include "Rogue10m.h"
 #include "Rogue10mAttributeSet.h"
+#include "Rogue10mAttackResourceBudget.h"
 #include "Rogue10mBasicBrawlerComponent.h"
 #include "Rogue10mBasicMonster.h"
 #include "Rogue10mHitFeedbackComponent.h"
@@ -989,6 +990,8 @@ void URogue10mCombatComponent::ExecuteCombatAttack(bool bPrimaryAttack, bool bCh
 
 bool URogue10mCombatComponent::ExecuteAttackSkill(const URogue10mAttackSkillData& SkillData, bool bComboAttack)
 {
+	if (bAcceptingAttack) { return false; }
+	TGuardValue<bool> AcceptingGuard(bAcceptingAttack, true);
 	ARogue10mCharacter* Character = GetOwnerCharacter();
 	UCameraComponent* Camera = Character ? Character->GetFirstPersonCameraComponent() : nullptr;
 	if (!Character || Character->IsDead() || !Camera || !GetWorld())
@@ -1011,14 +1014,11 @@ bool URogue10mCombatComponent::ExecuteAttackSkill(const URogue10mAttackSkillData
 			FLinearColor(1.0f, 0.65f, 0.35f, 1.0f));
 		return false;
 	}
-	if (!CanPayResourceCosts(SkillData, bComboAttack))
+	if (!TryPayResourceCosts(SkillData, bComboAttack))
 	{
 		return false;
 	}
 
-	ConsumeResourceCosts(SkillData, bComboAttack);
-	AcceptedIdentityEffect = Character->GetSkillTreeCombatComponent()
-		? Character->GetSkillTreeCombatComponent()->AcceptAttack(SkillData, bComboAttack) : FRogue10mSkillTreeAttackEffect();
 	StartSharedAttackCooldown(SkillData, bComboAttack);
 	if (AcceptedIdentityEffect.bTriggered)
 	{
@@ -1673,81 +1673,43 @@ bool URogue10mCombatComponent::TryActivateAttackAbility(const URogue10mAttackSki
 
 bool URogue10mCombatComponent::CanPayResourceCosts(const URogue10mAttackSkillData& SkillData, bool bComboAttack) const
 {
-	const URogue10mAttributeSet* Attributes = GetOwnerAttributes();
-	if (!Attributes)
+	const auto* Attributes = GetOwnerAttributes();
+	auto* Character = GetOwnerCharacter();
+	if (!Attributes || !Character) { return false; }
+	const auto* Identity = Character->GetSkillTreeCombatComponent();
+	const auto Budget = FRogue10mAttackResourceBudget::Build(SkillData.ResourceCosts,
+		Identity ? Identity->GetStaminaCostMultiplier(bComboAttack) : 1.0f);
+	if (!Budget.CanPay(*Attributes))
 	{
+		if (Budget.bValid && Attributes->GetStamina() < Budget.Stamina)
+		{
+			if (auto* Feedback = Character->GetPlayerFeedbackComponent()) { Feedback->NotifyInsufficientStamina(); }
+		}
+		AddCombatLog(FString::Printf(TEXT("%s 사용 불가: 자원 비용을 지불할 수 없습니다."), *SkillData.SkillName.ToString()),
+			FLinearColor(1.0f, 0.42f, 0.24f, 1.0f));
 		return false;
-	}
-
-	for (const FRogue10mAttackResourceCost& Cost : SkillData.ResourceCosts)
-	{
-		if (Cost.Cost <= 0.0f)
-		{
-			continue;
-		}
-
-		const auto* Identity = GetOwnerCharacter() ? GetOwnerCharacter()->GetSkillTreeCombatComponent() : nullptr;
-		const float ActualCost = Cost.Cost * (Identity && Cost.ResourceType == ERogue10mAttackResourceType::Stamina
-			? Identity->GetStaminaCostMultiplier(bComboAttack) : 1.0f);
-		const bool bEnough = Cost.ResourceType == ERogue10mAttackResourceType::Health
-			? Attributes->GetHealth() > ActualCost
-			: Cost.ResourceType == ERogue10mAttackResourceType::Stamina
-				? Attributes->GetStamina() >= ActualCost
-				: Cost.ResourceType == ERogue10mAttackResourceType::Mana
-					? Attributes->GetMana() >= ActualCost
-					: Attributes->GetIdentity() >= ActualCost;
-		if (!bEnough)
-		{
-			if (Cost.ResourceType == ERogue10mAttackResourceType::Stamina)
-			{
-				if (ARogue10mCharacter* Character = GetOwnerCharacter())
-				{
-					if (URogue10mPlayerFeedbackComponent* Feedback = Character->GetPlayerFeedbackComponent())
-					{
-						Feedback->NotifyInsufficientStamina();
-					}
-				}
-			}
-			AddCombatLog(
-				FString::Printf(TEXT("%s 사용 불가: 자원이 부족합니다."), *SkillData.SkillName.ToString()),
-				FLinearColor(1.0f, 0.42f, 0.24f, 1.0f));
-			return false;
-		}
 	}
 	return true;
 }
 
-void URogue10mCombatComponent::ConsumeResourceCosts(const URogue10mAttackSkillData& SkillData, bool bComboAttack)
+bool URogue10mCombatComponent::TryPayResourceCosts(const URogue10mAttackSkillData& SkillData, bool bComboAttack)
 {
-	URogue10mAttributeSet* Attributes = GetOwnerAttributes();
-	if (!Attributes)
-	{
-		return;
-	}
-
-	for (const FRogue10mAttackResourceCost& Cost : SkillData.ResourceCosts)
-	{
-		const auto* Identity = GetOwnerCharacter() ? GetOwnerCharacter()->GetSkillTreeCombatComponent() : nullptr;
-		const float ActualCost = Cost.Cost * (Identity && Cost.ResourceType == ERogue10mAttackResourceType::Stamina
-			? Identity->GetStaminaCostMultiplier(bComboAttack) : 1.0f);
-		switch (Cost.ResourceType)
-		{
-		case ERogue10mAttackResourceType::Health:
-			Attributes->ConsumeHealth(ActualCost);
-			break;
-		case ERogue10mAttackResourceType::Stamina:
-			Attributes->ConsumeStamina(ActualCost);
-			break;
-		case ERogue10mAttackResourceType::Mana:
-			Attributes->ConsumeMana(ActualCost);
-			break;
-		case ERogue10mAttackResourceType::Energy:
-			Attributes->ConsumeIdentity(ActualCost);
-			break;
-		default:
-			break;
-		}
-	}
+	auto* Attributes = GetOwnerAttributes();
+	auto* Character = GetOwnerCharacter();
+	if (!Attributes || !Character) { return false; }
+	auto* Identity = Character->GetSkillTreeCombatComponent();
+	if (Identity) { Identity->SynchronizeIdentity(); }
+	if (!CanPayResourceCosts(SkillData, bComboAttack)) { return false; }
+	auto Budget = FRogue10mAttackResourceBudget::Build(SkillData.ResourceCosts,
+		Identity ? Identity->GetStaminaCostMultiplier(bComboAttack) : 1.0f);
+	// Optional identity effects can use only the mana left after the full base cost.
+	const auto Effect = Identity ? Identity->PreviewAttack(SkillData, Attributes->GetMana() - Budget.Mana)
+		: FRogue10mSkillTreeAttackEffect();
+	Budget.Mana += Effect.ManaCost;
+	if (!Budget.TryPay(*Attributes)) { return false; }
+	AcceptedIdentityEffect = Effect;
+	if (Identity) { Identity->CommitAttack(Effect, bComboAttack); }
+	return true;
 }
 
 void URogue10mCombatComponent::StartSharedAttackCooldown(const URogue10mAttackSkillData& SkillData, bool bComboAttack)
