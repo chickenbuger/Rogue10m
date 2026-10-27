@@ -47,7 +47,7 @@ static bool Prerequisites(const FSnapshot& Snapshot, const FNode& Node)
 	if (Node.PrerequisiteGroups.IsEmpty()) { return true; }
 	for (const auto& Group : Node.PrerequisiteGroups)
 	{
-		bool bComplete = true;
+		bool bComplete = !Group.NodeIds.IsEmpty();
 		for (FName Id : Group.NodeIds) { bComplete &= Find(Snapshot, Id) != nullptr; }
 		if (bComplete) { return true; }
 	}
@@ -73,6 +73,27 @@ static bool Mastery(const FSnapshot& Snapshot, const FNode& Node, const URogue10
 			&& Growth.MaxStaminaBonus + KINDA_SMALL_NUMBER >= Requirement.StaminaBonus) { return true; }
 	}
 	return Node.MasteryAlternatives.IsEmpty() && Node.bAutomaticUnlock;
+}
+static FRogue10mProgressionRequirementContext Context(const FSnapshot& Snapshot, const URogue10mSkillTreeDataAsset& Catalog)
+{
+	FRogue10mProgressionRequirementContext Result;
+	Result.GreatSwordLevel = Level(Snapshot, ETrack::GreatSword, Catalog);
+	Result.BrawlerLevel = Level(Snapshot, ETrack::Brawler, Catalog);
+	// Compatibility adapter only. Future run/lobby ownership is not decided by this input.
+	// Discipline rank is unwired; Mana identity is intentionally not consulted.
+	return Result;
+}
+static FRogue10mSkillTreeEligibility Eligibility(const FSnapshot& Snapshot, const FNode& Node,
+	const URogue10mSkillTreeDataAsset& Catalog, int32 AvailablePoints)
+{
+	FRogue10mSkillTreeEligibility Result;
+	Result.RequiredAll = FRogue10mProgressionRequirements::Evaluate(Node.RequiredAll, Context(Snapshot, Catalog));
+	Result.bValid = Result.RequiredAll.bValid;
+	Result.bPrerequisitesSatisfied = Prerequisites(Snapshot, Node);
+	Result.bPointsRouteSatisfied = !Node.bAutomaticUnlock && Node.PointCost > 0 && AvailablePoints >= Node.PointCost;
+	Result.bMasteryRouteSatisfied = !Node.bAutomaticUnlock && !Node.MasteryAlternatives.IsEmpty() && Mastery(Snapshot, Node, Catalog);
+	Result.bAutomaticRouteSatisfied = Node.bAutomaticUnlock && Mastery(Snapshot, Node, Catalog);
+	return Result;
 }
 static bool LearnedIdentity(const FSnapshot& Snapshot, EIdentity Identity, const URogue10mSkillTreeDataAsset& Catalog)
 {
@@ -155,6 +176,16 @@ FName URogue10mSkillTreeProgressionComponent::GetSelectedChoice(FName NodeId) co
 bool URogue10mSkillTreeProgressionComponent::PrerequisitesComplete(const FRogue10mSkillTreeNodeDefinition& Node) const { return Rogue10mSkillTree::Prerequisites(State, Node); }
 bool URogue10mSkillTreeProgressionComponent::MasteryRequirementsComplete(const FRogue10mSkillTreeNodeDefinition& Node) const { return Rogue10mSkillTree::Mastery(State, Node, *GetCatalog()); }
 
+FRogue10mProgressionRequirementContext URogue10mSkillTreeProgressionComponent::GetRequirementContext() const
+{
+	return Rogue10mSkillTree::Context(State, *GetCatalog());
+}
+FRogue10mSkillTreeEligibility URogue10mSkillTreeProgressionComponent::EvaluateNodeEligibility(FName NodeId) const
+{
+	const auto* Node = FindNode(NodeId);
+	return Node ? Rogue10mSkillTree::Eligibility(State, *Node, *GetCatalog(), GetAvailableGrowthPoints()) : FRogue10mSkillTreeEligibility();
+}
+
 ERogue10mSkillTreeNodeState URogue10mSkillTreeProgressionComponent::GetNodeState(FName NodeId, ERogue10mSkillTreeTrack Track) const
 {
 	const auto* Node = FindNode(NodeId);
@@ -165,8 +196,9 @@ ERogue10mSkillTreeNodeState URogue10mSkillTreeProgressionComponent::GetNodeState
 		const bool bIdentityActive = Node->Identity != ERogue10mSkillTreeIdentity::None && GetActiveIdentity(Track) == Node->Identity;
 		return bIdentityActive ? ERogue10mSkillTreeNodeState::Active : ERogue10mSkillTreeNodeState::Learned;
 	}
-	const bool bAvailable = PrerequisitesComplete(*Node)
-		&& ((Node->PointCost > 0 && GetAvailableGrowthPoints() >= Node->PointCost) || MasteryRequirementsComplete(*Node));
+	const auto Evaluation = EvaluateNodeEligibility(NodeId);
+	const bool bAvailable = Evaluation.CanAcquire(ERogue10mSkillTreeUnlockRoute::Points)
+		|| Evaluation.CanAcquire(ERogue10mSkillTreeUnlockRoute::Mastery) || Evaluation.CanAcquire(ERogue10mSkillTreeUnlockRoute::Automatic);
 	return bAvailable ? ERogue10mSkillTreeNodeState::Available : ERogue10mSkillTreeNodeState::Locked;
 }
 
@@ -175,6 +207,15 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 	const auto* Node = FindNode(NodeId);
 	if (!Node) { return FText::GetEmpty(); }
 	TArray<FString> Lines;
+	const auto Evaluation = EvaluateNodeEligibility(NodeId);
+	const auto RequirementContext = GetRequirementContext();
+	for (const auto& Requirement : Node->RequiredAll)
+	{
+		const bool bMissing = Evaluation.RequiredAll.MissingRequirements.ContainsByPredicate([&Requirement](const auto& Item) { return Item.Kind == Requirement.Kind && Item.Id == Requirement.Id; });
+		Lines.Add(FString::Printf(TEXT("필수 AND · %s %s >= %d (현재 %d)"),
+			Evaluation.RequiredAll.bValid ? (bMissing ? TEXT("미완료") : TEXT("완료")) : TEXT("설정 오류"),
+			*Requirement.Id.ToString(), Requirement.Minimum, RequirementContext.GetValue(Requirement)));
+	}
 	if (!Node->PrerequisiteGroups.IsEmpty())
 	{
 		TArray<FString> Alternatives;
@@ -233,17 +274,19 @@ bool URogue10mSkillTreeProgressionComponent::CanUnlockNode(FName NodeId, ERogue1
 	if (Node->Identity != ERogue10mSkillTreeIdentity::None && !GetCatalog()->IsIdentityAllowed(GetActiveTrack(), Node->Identity)) { return Fail(TEXT("현재 직업에서 사용할 수 없는 아이덴티티입니다.")); }
 	if (IsNodeUnlocked(NodeId)) { return Fail(TEXT("이미 전수한 노드입니다.")); }
 	if (Node->bAutomaticUnlock) { return Fail(TEXT("숙련 조건을 만족하면 자동 전수됩니다.")); }
-	if (!PrerequisitesComplete(*Node)) { return Fail(TEXT("선행 노드를 먼저 전수해 주세요.")); }
+	const auto Evaluation = EvaluateNodeEligibility(NodeId);
+	if (!Evaluation.RequiredAll.bSatisfied) { return Fail(TEXT("필수 AND 조건을 모두 충족해야 합니다.")); }
+	if (!Evaluation.bPrerequisitesSatisfied) { return Fail(TEXT("선행 노드를 먼저 전수해 주세요.")); }
 	if (!Rogue10mSkillTree::ChoiceValid(*Node, ChoiceId)) { return Fail(TEXT("성질을 하나 선택해 주세요.")); }
 	const auto* Player = GetPlayerState();
 	if (!Validate(State, FMath::Max(0, Player->GetPlayerLevel() - 1), Player->GetTownProgressionComponent()->GetSpentTraitPoints(), nullptr, GetCatalog())) { return Fail(TEXT("성장 포인트 원장을 확인해 주세요.")); }
 	if (Route == ERogue10mSkillTreeUnlockRoute::Points)
 	{
-		if (Node->PointCost <= 0 || GetAvailableGrowthPoints() < Node->PointCost) { return Fail(TEXT("공용 성장 포인트가 부족합니다.")); }
+		if (!Evaluation.CanAcquire(Route)) { return Fail(TEXT("공용 성장 포인트가 부족합니다.")); }
 	}
 	else if (Route == ERogue10mSkillTreeUnlockRoute::Mastery)
 	{
-		if (Node->MasteryAlternatives.IsEmpty() || !MasteryRequirementsComplete(*Node)) { return Fail(TEXT("숙련과 숙련 출처 영구 성장 조건이 부족합니다.")); }
+		if (!Evaluation.CanAcquire(Route)) { return Fail(TEXT("숙련과 숙련 출처 영구 성장 조건이 부족합니다.")); }
 	}
 	else { return Fail(TEXT("허용되지 않는 전수 경로입니다.")); }
 	return true;
@@ -420,7 +463,8 @@ void URogue10mSkillTreeProgressionComponent::RefreshAutomaticUnlocks()
 		bChanged = false;
 		for (const auto& Node : GetCatalog()->Nodes)
 		{
-			if (!Node.bAutomaticUnlock || IsNodeUnlocked(Node.NodeId) || !PrerequisitesComplete(Node) || !MasteryRequirementsComplete(Node)) { continue; }
+			if (!Node.bAutomaticUnlock || IsNodeUnlocked(Node.NodeId)
+				|| !Rogue10mSkillTree::Eligibility(State, Node, *GetCatalog(), GetAvailableGrowthPoints()).CanAcquire(ERogue10mSkillTreeUnlockRoute::Automatic)) { continue; }
 			auto& Row = State.Investments.AddDefaulted_GetRef(); Row.NodeId = Node.NodeId; Row.Route = ERogue10mSkillTreeUnlockRoute::Automatic;
 			bChanged = true;
 		}
@@ -462,6 +506,8 @@ bool URogue10mSkillTreeProgressionComponent::Validate(const FRogue10mSkillTreeSn
 		if (!Node || Seen.Contains(Row.NodeId) || Row.SpentPoints < 0 || Row.SpentPoints > 1000000
 			|| static_cast<uint8>(Row.Route) > static_cast<uint8>(ERoute::Legacy) || !ChoiceValid(*Node, Row.ChoiceId)) { return Fail(); }
 		Seen.Add(Row.NodeId);
+		// Mandatory conditions apply even to forged acquisition routes; empty legacy gates remain true.
+		if (!FRogue10mProgressionRequirements::Evaluate(Node->RequiredAll, Context(Snapshot, Catalog)).bSatisfied) { return Fail(); }
 		if (Row.Route == ERoute::Legacy)
 		{
 			if (Row.SpentPoints != 0 || (Node->NodeType != EType::Technique && Node->NodeType != EType::Passive) || Node->Skill.IsNull() || !Legacy.Contains(Node->Skill.ToSoftObjectPath())) { return Fail(); }

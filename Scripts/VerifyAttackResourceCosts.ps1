@@ -1,16 +1,18 @@
 param(
-    [ValidateSet('AttackResources','HybridSkillTree')][string]$Suite = 'AttackResources',
+    [ValidateSet('AttackResources','HybridSkillTree','ProgressionRequirements')][string]$Suite = 'AttackResources',
     [ValidateRange(60,600)][int]$TimeoutSeconds = 240,
-    [ValidatePattern('^[A-Za-z0-9_]{1,24}$')][string]$RunLabel = 'final'
+    [ValidatePattern('^[A-Za-z0-9_]{1,24}$')][string]$RunLabel = 'final',
+    [ValidatePattern('^[A-Za-z0-9_-]{1,80}$')][string]$EvidencePacket = 'atomic-attack-costs-20261026'
 )
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path $PSScriptRoot -Parent
-$evidence = Join-Path $projectRoot ('Feature\doc\evidence\atomic-attack-costs-20261026\' + $Suite + '_' + $RunLabel)
+$evidence = Join-Path $projectRoot ('Feature\doc\evidence\' + $EvidencePacket + '\' + $Suite + '_' + $RunLabel)
 if (Test-Path -LiteralPath $evidence) { throw 'Evidence already exists; preserve the previous run or choose a new evidence root before rerunning.' }
 New-Item -ItemType Directory -Path $evidence | Out-Null
 $expected = if ($Suite -eq 'AttackResources') {
     @('AggregationAndAtomicFailure','InvalidDataAndDiscount','OptionalManaAndExecutionSnapshot','ReentrantAcceptanceRejected')
-} else { @('MasteryAlternativesAndLegacy','MasteryAndRewards','SharedLedgerAndValidation') }
+} elseif ($Suite -eq 'ProgressionRequirements') { @('TruthTable','InvalidDataAndEmptyDefaults','LegacyAlternativesAndGroups','LiveAcquisitionAndAttack') }
+else { @('MasteryAlternativesAndLegacy','MasteryAndRewards','SharedLedgerAndValidation') }
 $arguments = @(
     ('"' + (Join-Path $projectRoot 'Rogue10m.uproject') + '"'), '/Engine/Maps/Entry',
     '-nullrhi','-unattended','-nosplash','-nosound','-NoLiveCoding','-NoRemoteShaderCompile',

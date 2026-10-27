@@ -157,6 +157,7 @@ private:
 	friend class URogue10mBasicBrawlerComponent;
 	friend struct FRogue10mHybridCombatTestAccess;
 	friend struct FRogue10mAttackCostTestAccess;
+	friend struct FRogue10mRequirementTestAccess;
 	bool bAcceptingAttack = false;
 	ARogue10mCharacter* GetOwnerCharacter() const;
 	URogue10mAttributeSet* GetOwnerAttributes() const;

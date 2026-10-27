@@ -36,6 +36,9 @@ public:
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") ERogue10mSkillTreeNodeState GetNodeState(FName NodeId, ERogue10mSkillTreeTrack Track) const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") FName GetSelectedChoice(FName NodeId) const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") FText GetNodeRequirementsText(FName NodeId) const;
+	/** Reads existing state for compatibility; does not choose future run/lobby progression lifetimes. */
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") FRogue10mProgressionRequirementContext GetRequirementContext() const;
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") FRogue10mSkillTreeEligibility EvaluateNodeEligibility(FName NodeId) const;
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree") bool CanUnlockNode(FName NodeId, ERogue10mSkillTreeUnlockRoute Route, FName ChoiceId, FText& OutReason) const;
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree") bool TryUnlockNode(FName NodeId, ERogue10mSkillTreeUnlockRoute Route, FName ChoiceId);
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") ERogue10mSkillTreeIdentity GetActiveIdentity() const;

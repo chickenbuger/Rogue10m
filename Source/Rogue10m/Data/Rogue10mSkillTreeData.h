@@ -4,6 +4,7 @@
 #include "Engine/DataAsset.h"
 #include "Rogue10mCharacterStats.h"
 #include "Rogue10mWeaponTypes.h"
+#include "Rogue10mProgressionRequirementTypes.h"
 #include "Rogue10mSkillTreeData.generated.h"
 
 class URogue10mAttackSkillData;
@@ -74,6 +75,8 @@ struct FRogue10mSkillTreeNodeDefinition
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") int32 Ring = 1;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") FLinearColor Color = FLinearColor::White;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") TArray<FRogue10mSkillTreePrerequisiteGroup> PrerequisiteGroups;
+	/** Mandatory AND gate for every acquisition route. Empty preserves the legacy catalog. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") TArray<FRogue10mProgressionRequirement> RequiredAll;
 	/** True only for free roots, basics, mastery rewards and resonance. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") bool bAutomaticUnlock = false;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree", meta=(ClampMin="0")) int32 PointCost = 0;
@@ -115,6 +118,30 @@ struct FRogue10mSkillTreeSnapshot
 	UPROPERTY(SaveGame, BlueprintReadOnly, Category="Rogue10m|Skill Tree") TArray<FRogue10mSkillTreeInvestment> Investments;
 	UPROPERTY(SaveGame, BlueprintReadOnly, Category="Rogue10m|Skill Tree") TArray<TSoftObjectPtr<URogue10mAttackSkillData>> LegacyGrantedSkills;
 	UPROPERTY(SaveGame, BlueprintReadOnly, Category="Rogue10m|Skill Tree") ERogue10mSkillTreeIdentity ActiveIdentity = ERogue10mSkillTreeIdentity::None;
+};
+
+/** Shared content eligibility; town/authority/choice and ledger checks remain command gates. */
+USTRUCT(BlueprintType)
+struct FRogue10mSkillTreeEligibility
+{
+	GENERATED_BODY()
+	UPROPERTY(BlueprintReadOnly, Category="Rogue10m|Requirements") bool bValid = false;
+	UPROPERTY(BlueprintReadOnly, Category="Rogue10m|Requirements") FRogue10mProgressionRequirementEvaluation RequiredAll;
+	UPROPERTY(BlueprintReadOnly, Category="Rogue10m|Requirements") bool bPrerequisitesSatisfied = false;
+	UPROPERTY(BlueprintReadOnly, Category="Rogue10m|Requirements") bool bPointsRouteSatisfied = false;
+	UPROPERTY(BlueprintReadOnly, Category="Rogue10m|Requirements") bool bMasteryRouteSatisfied = false;
+	UPROPERTY(BlueprintReadOnly, Category="Rogue10m|Requirements") bool bAutomaticRouteSatisfied = false;
+	bool CanAcquire(ERogue10mSkillTreeUnlockRoute Route) const
+	{
+		if (!bValid || !RequiredAll.bSatisfied || !bPrerequisitesSatisfied) { return false; }
+		switch (Route)
+		{
+		case ERogue10mSkillTreeUnlockRoute::Points: return bPointsRouteSatisfied;
+		case ERogue10mSkillTreeUnlockRoute::Mastery: return bMasteryRouteSatisfied;
+		case ERogue10mSkillTreeUnlockRoute::Automatic: return bAutomaticRouteSatisfied;
+		default: return false;
+		}
+	}
 };
 
 UCLASS(BlueprintType)
