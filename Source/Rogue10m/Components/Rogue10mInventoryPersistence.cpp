@@ -196,7 +196,7 @@ bool URogue10mInventoryComponent::RestoreInventory(const FRogue10mInventorySnaps
 		{
 			if (ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner()))
 			{
-				Character->SetEquippedWeaponType(MainWeapon->EquippedItem.WeaponType);
+				Character->RestoreEquippedWeaponType(MainWeapon->EquippedItem.WeaponType);
 			}
 		}
 		else if (ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner()))

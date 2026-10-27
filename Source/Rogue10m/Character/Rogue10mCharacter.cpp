@@ -628,12 +628,23 @@ ERogue10mWeaponType ARogue10mCharacter::GetEquippedWeaponType() const
 
 void ARogue10mCharacter::SetEquippedWeaponType(ERogue10mWeaponType NewWeaponType)
 {
+	ApplyEquippedWeaponType(NewWeaponType, true);
+}
+
+void ARogue10mCharacter::RestoreEquippedWeaponType(ERogue10mWeaponType NewWeaponType)
+{
+	ApplyEquippedWeaponType(NewWeaponType, false);
+}
+
+void ARogue10mCharacter::ApplyEquippedWeaponType(ERogue10mWeaponType NewWeaponType, bool bApplySwapCooldown)
+{
 	if (ARogue10mPlayerState* State = GetPlayerState<ARogue10mPlayerState>())
 	{
+		const bool bWeaponTypeChanged = State->GetEquippedWeaponType() != NewWeaponType;
 		State->SetEquippedWeaponType(NewWeaponType);
 		if (CombatComponent)
 		{
-			CombatComponent->HandleEquippedWeaponChanged();
+			CombatComponent->HandleEquippedWeaponChanged(bApplySwapCooldown && bWeaponTypeChanged);
 		}
 	}
 }

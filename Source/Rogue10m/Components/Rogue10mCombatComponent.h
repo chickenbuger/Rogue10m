@@ -133,7 +133,8 @@ public:
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Character Data")
 	const URogue10mCharacterDataAsset* GetCharacterData() const { return CharacterData; }
 
-	void HandleEquippedWeaponChanged();
+	/** Initialization/restoration refreshes do not introduce a gameplay swap cooldown. */
+	void HandleEquippedWeaponChanged(bool bApplySwapCooldown = false);
 	const URogue10mAttackSkillData* ResolveAttackSkill(bool bPrimaryAttack, bool bChargedAttack, bool bJumpAttack) const;
 	const URogue10mAttackSkillData* ResolveChargedAttackSkill(bool bPrimaryAttack, bool bJumpAttack) const;
 	const URogue10mAttackSkillData* ResolveComboAttackSkill(bool bPrimaryAttack, bool bJumpAttack) const;
@@ -158,6 +159,7 @@ private:
 	friend struct FRogue10mHybridCombatTestAccess;
 	friend struct FRogue10mAttackCostTestAccess;
 	friend struct FRogue10mRequirementTestAccess;
+	friend struct FRogue10mWeaponCooldownTestAccess;
 	bool bAcceptingAttack = false;
 	ARogue10mCharacter* GetOwnerCharacter() const;
 	URogue10mAttributeSet* GetOwnerAttributes() const;

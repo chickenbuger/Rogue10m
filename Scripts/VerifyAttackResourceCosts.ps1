@@ -1,5 +1,5 @@
 param(
-    [ValidateSet('AttackResources','HybridSkillTree','ProgressionRequirements')][string]$Suite = 'AttackResources',
+    [ValidateSet('AttackResources','HybridSkillTree','ProgressionRequirements','WeaponCooldown')][string]$Suite = 'AttackResources',
     [ValidateRange(60,600)][int]$TimeoutSeconds = 240,
     [ValidatePattern('^[A-Za-z0-9_]{1,24}$')][string]$RunLabel = 'final',
     [ValidatePattern('^[A-Za-z0-9_-]{1,80}$')][string]$EvidencePacket = 'atomic-attack-costs-20261026'
@@ -12,6 +12,7 @@ New-Item -ItemType Directory -Path $evidence | Out-Null
 $expected = if ($Suite -eq 'AttackResources') {
     @('AggregationAndAtomicFailure','InvalidDataAndDiscount','OptionalManaAndExecutionSnapshot','ReentrantAcceptanceRejected')
 } elseif ($Suite -eq 'ProgressionRequirements') { @('TruthTable','InvalidDataAndEmptyDefaults','LegacyAlternativesAndGroups','LiveAcquisitionAndAttack') }
+elseif ($Suite -eq 'WeaponCooldown') { @('FloorBoundaries','SameTypeAndRestore','ReservedComboDeadline','TimeAcrossWeapons','RealAttackAcceptance') }
 else { @('MasteryAlternativesAndLegacy','MasteryAndRewards','SharedLedgerAndValidation') }
 $arguments = @(
     ('"' + (Join-Path $projectRoot 'Rogue10m.uproject') + '"'), '/Engine/Maps/Entry',

@@ -634,9 +634,25 @@ const URogue10mDodgeSkillDataAsset* URogue10mCombatComponent::GetActiveDodgeSkil
 	return Profile ? Profile->DefaultDodgeSkill : nullptr;
 }
 
-void URogue10mCombatComponent::HandleEquippedWeaponChanged()
+void URogue10mCombatComponent::HandleEquippedWeaponChanged(bool bApplySwapCooldown)
 {
+	const auto PreviousCooldownSource = AttackCooldownSourceSkill;
 	CancelWeaponTransitionState();
+	if (bApplySwapCooldown && GetWorld())
+	{
+		const float Now = GetWorld()->GetTimeSeconds();
+		const float SwapFloorEnd = Now + 0.5f;
+		// A combo can reserve a cooldown that starts in the future. Once its
+		// combo is cancelled by a swap, block immediately through that original
+		// deadline rather than allowing an attack before the reserved start.
+		if (!IsAttackOnCooldown(Now) || AttackCooldownEndTime < SwapFloorEnd)
+		{
+			AttackCooldownEndTime = FMath::Max(AttackCooldownEndTime, SwapFloorEnd);
+			AttackCooldownStartTime = Now;
+			AttackCooldownDuration = AttackCooldownEndTime - Now;
+		}
+		AttackCooldownSourceSkill = PreviousCooldownSource;
+	}
 	ApplyActiveWeaponProfile();
 	HandleHybridSkillTreeChanged();
 }
@@ -679,7 +695,7 @@ void URogue10mCombatComponent::ApplyCharacterData()
 					}
 				}
 			}
-			Character->SetEquippedWeaponType(EffectiveWeapon);
+			Character->RestoreEquippedWeaponType(EffectiveWeapon);
 		}
 	}
 }

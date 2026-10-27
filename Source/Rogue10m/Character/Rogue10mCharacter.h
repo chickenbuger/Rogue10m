@@ -64,6 +64,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Combat")
 	void SetEquippedWeaponType(ERogue10mWeaponType NewWeaponType);
+	/** C++ initialization/load path; preserves the existing cooldown without adding a swap floor. */
+	void RestoreEquippedWeaponType(ERogue10mWeaponType NewWeaponType);
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|GAS")
 	URogue10mAttributeSet* GetRogueAttributeSet() const;
@@ -253,6 +255,7 @@ protected:
 	FRogue10mCharacterAppearance CharacterAppearance;
 
 private:
+	void ApplyEquippedWeaponType(ERogue10mWeaponType NewWeaponType, bool bApplySwapCooldown);
 	void MoveInput(const FInputActionValue& Value);
 	void LookInput(const FInputActionValue& Value);
 	void SetSprinting(bool bNewSprinting);
