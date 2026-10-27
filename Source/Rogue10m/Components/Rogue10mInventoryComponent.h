@@ -185,6 +185,7 @@ class ROGUE10M_API URogue10mInventoryComponent : public UActorComponent
 
 public:
 	URogue10mInventoryComponent();
+	bool IsEquipmentChangeInProgress() const { return bEquipmentChangeInProgress; }
 
 	UPROPERTY(BlueprintAssignable, Category="Rogue10m|Inventory|Grid")
 	FRogue10mInventoryGridChanged OnInventoryGridChanged;
@@ -367,6 +368,11 @@ protected:
 	TArray<float> ConsumableQuickSlotCooldownEndTimes;
 
 private:
+	friend struct FRogue10mWeaponSwitchTestAccess;
+	bool CanChangeEquipmentSlot(ERogue10mInventorySlotType SlotType) const;
+	void CommitWeaponEquipmentChange(ERogue10mWeaponType WeaponType);
+	bool bEquipmentChangeInProgress = false;
+	bool bInitializingEquipment = false;
 	bool FindFirstGridPosition(int32 ContainerIndex, const URogue10mItemDataAsset* ItemData, FIntPoint& OutPosition,
 		FGuid IgnoredInstanceId = FGuid()) const;
 	FRogue10mInventoryGridEntry* FindGridEntry(int32 ContainerIndex, FGuid InstanceId);

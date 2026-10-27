@@ -636,7 +636,29 @@ void ARogue10mCharacter::RestoreEquippedWeaponType(ERogue10mWeaponType NewWeapon
 	ApplyEquippedWeaponType(NewWeaponType, false);
 }
 
-void ARogue10mCharacter::ApplyEquippedWeaponType(ERogue10mWeaponType NewWeaponType, bool bApplySwapCooldown)
+bool ARogue10mCharacter::CanChangeWeapon() const
+{
+	const URogue10mAttributeSet* Attributes = GetRogueAttributeSet();
+	const UCharacterMovementComponent* Movement = GetCharacterMovement();
+	if (IsDead() || !Attributes || Attributes->GetHealth() <= 0.0f || bIsDodging || !Movement
+		|| (Movement->MovementMode != MOVE_Walking && Movement->MovementMode != MOVE_NavWalking)
+		|| (CombatComponent && CombatComponent->IsWeaponChangeBlocked())) { return false; }
+	// Existing non-locomotion montages (including hit/cast presentation) are a
+	// conservative busy signal; combat stance duration is deliberately not one.
+	for (const USkeletalMeshComponent* PlaybackComponent : {GetAnimationPlaybackMesh(), GetFirstPersonMesh()})
+	{
+		if (const UAnimInstance* Anim = PlaybackComponent ? PlaybackComponent->GetAnimInstance() : nullptr;
+			Anim && Anim->IsAnyMontagePlaying()) { return false; }
+	}
+	return true;
+}
+
+void ARogue10mCharacter::NotifyWeaponEquipmentChanged(ERogue10mWeaponType NewWeaponType)
+{
+	ApplyEquippedWeaponType(NewWeaponType, true, true);
+}
+
+void ARogue10mCharacter::ApplyEquippedWeaponType(ERogue10mWeaponType NewWeaponType, bool bApplySwapCooldown, bool bItemChanged)
 {
 	if (ARogue10mPlayerState* State = GetPlayerState<ARogue10mPlayerState>())
 	{
@@ -644,7 +666,7 @@ void ARogue10mCharacter::ApplyEquippedWeaponType(ERogue10mWeaponType NewWeaponTy
 		State->SetEquippedWeaponType(NewWeaponType);
 		if (CombatComponent)
 		{
-			CombatComponent->HandleEquippedWeaponChanged(bApplySwapCooldown && bWeaponTypeChanged);
+			CombatComponent->HandleEquippedWeaponChanged(bApplySwapCooldown && (bWeaponTypeChanged || bItemChanged));
 		}
 	}
 }

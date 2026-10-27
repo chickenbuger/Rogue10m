@@ -130,6 +130,16 @@ bool URogue10mCombatComponent::IsAttackChargeHeld() const
 	return LeftAttackPressedTime >= 0.0f || RightAttackPressedTime >= 0.0f || HeldBoundSkill.IsValid();
 }
 
+bool URogue10mCombatComponent::IsWeaponChangeBlocked() const
+{
+	if (bAcceptingAttack || PendingAbilityAttackSkill.IsValid() || IsAttackChargeHeld()
+		|| (GetWorld() && GetWorld()->GetTimeSeconds() < AttackActionEndTime)) { return true; }
+	const ARogue10mCharacter* Character = GetOwnerCharacter();
+	const URogue10mBasicBrawlerComponent* Basic = Character ? Character->GetBasicBrawlerComponent() : nullptr;
+	return Basic && Basic->IsBasicBrawlerActive()
+		&& Basic->GetSnapshot().Phase == ERogue10mBasicBrawlerPhase::Attacking;
+}
+
 void URogue10mCombatComponent::HandleAttackPressed(bool bPrimaryAttack)
 {
 	if (ARogue10mCharacter* Character = GetOwnerCharacter())
@@ -812,6 +822,7 @@ void URogue10mCombatComponent::HandleMartialArtsProgressChanged()
 
 void URogue10mCombatComponent::CancelWeaponTransitionState()
 {
+	AttackActionEndTime = 0.0;
 	CancelCombatVisuals();
 	ResetComboWindow();
 	PendingAbilityAttackSkill.Reset();
@@ -961,6 +972,7 @@ bool URogue10mCombatComponent::CanUseCombatInput() const
 	const ARogue10mCharacter* Character = GetOwnerCharacter();
 	const ARogue10mPlayerController* Controller = Character ? Cast<ARogue10mPlayerController>(Character->GetController()) : nullptr;
 	return Character && !Character->IsDead() && !UGameplayStatics::IsGamePaused(this)
+		&& (!Character->GetInventoryComponent() || !Character->GetInventoryComponent()->IsEquipmentChangeInProgress())
 		&& (!Controller || !Controller->IsAnyBlockingWindowVisible());
 }
 
@@ -1010,7 +1022,8 @@ bool URogue10mCombatComponent::ExecuteAttackSkill(const URogue10mAttackSkillData
 	TGuardValue<bool> AcceptingGuard(bAcceptingAttack, true);
 	ARogue10mCharacter* Character = GetOwnerCharacter();
 	UCameraComponent* Camera = Character ? Character->GetFirstPersonCameraComponent() : nullptr;
-	if (!Character || Character->IsDead() || !Camera || !GetWorld())
+	if (!Character || Character->IsDead() || !Camera || !GetWorld()
+		|| (Character->GetInventoryComponent() && Character->GetInventoryComponent()->IsEquipmentChangeInProgress()))
 	{
 		return false;
 	}
@@ -1042,6 +1055,18 @@ bool URogue10mCombatComponent::ExecuteAttackSkill(const URogue10mAttackSkillData
 	}
 
 	const float AnimationRate = FMath::Max(0.01f, GetAttackSpeedMultiplier() * SkillData.AnimationPlayRate);
+	const float Windup = FMath::Max(0.0f, SkillData.HitStartDelaySeconds) / AnimationRate;
+	const int32 Pulses = SkillData.HitMode == ERogue10mAttackHitMode::Single ? 1 : FMath::Clamp(SkillData.HitCount, 1, 64);
+	const float MeleeTail = SkillData.AttackShape != ERogue10mAttackShape::Projectile
+		? (Pulses - 1) * FMath::Max(0.01f, SkillData.HitInterval / GetAttackSpeedMultiplier()) : 0.0f;
+	float AnimationDuration = SkillData.AttackMontage ? SkillData.AttackMontage->GetPlayLength() / AnimationRate : 0.0f;
+	if (!SkillData.AttackMontage && Character->GetBasicBrawlerComponent()
+		&& Character->GetBasicBrawlerComponent()->IsBasicBrawlerActive())
+	{
+		AnimationDuration = FMath::Max(0.05f, SkillData.AttackCooldown / GetAttackSpeedMultiplier());
+	}
+	AttackActionEndTime = FMath::Max(AttackActionEndTime,
+		GetWorld()->GetTimeSeconds() + FMath::Max(AnimationDuration, Windup + MeleeTail));
 	const bool bMontagePlayed = Character->PlayCommonMontage(SkillData.AttackMontage, AnimationRate);
 	LastAcceptedAttackSkill = bMontagePlayed ? &SkillData : nullptr;
 	if (URogue10mCharacterAnimationComponent* Animation = Character->GetCharacterAnimationComponent())

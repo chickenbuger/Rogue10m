@@ -59,6 +59,9 @@ public:
 	/** Actual input charge ownership, independent of the fighter-only guard state. */
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Charge")
 	bool IsAttackChargeHeld() const;
+	/** Action ownership, independent of the shared reuse cooldown and menu focus. */
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Weapon Change")
+	bool IsWeaponChangeBlocked() const;
 	void HandleAttackReleased(bool bPrimaryAttack);
 	void CancelCombatVisuals();
 	bool ExecutePendingAttackSkillFromAbility();
@@ -160,7 +163,9 @@ private:
 	friend struct FRogue10mAttackCostTestAccess;
 	friend struct FRogue10mRequirementTestAccess;
 	friend struct FRogue10mWeaponCooldownTestAccess;
+	friend struct FRogue10mWeaponSwitchTestAccess;
 	bool bAcceptingAttack = false;
+	double AttackActionEndTime = 0.0;
 	ARogue10mCharacter* GetOwnerCharacter() const;
 	URogue10mAttributeSet* GetOwnerAttributes() const;
 	float GetAttackSpeedMultiplier() const;

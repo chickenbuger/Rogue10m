@@ -125,6 +125,7 @@ FRogue10mEquipmentStatModifiers URogue10mInventoryComponent::GetEquipmentStatMod
 void URogue10mInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	TGuardValue<bool> InitializationGuard(bInitializingEquipment, true);
 	BaseInventorySize.X = FMath::Clamp(BaseInventorySize.X, 1, 20);
 	BaseInventorySize.Y = FMath::Clamp(BaseInventorySize.Y, 1, 20);
 	if (InventoryContainers.IsEmpty())
@@ -300,6 +301,23 @@ FRogue10mItemStack URogue10mInventoryComponent::MakeEmptyItem()
 	return Item;
 }
 
+bool URogue10mInventoryComponent::CanChangeEquipmentSlot(ERogue10mInventorySlotType SlotType) const
+{
+	if (bEquipmentChangeInProgress) { return false; }
+	const ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner());
+	return SlotType != ERogue10mInventorySlotType::MainWeapon || bInitializingEquipment
+		|| !Character || Character->CanChangeWeapon();
+}
+
+void URogue10mInventoryComponent::CommitWeaponEquipmentChange(ERogue10mWeaponType WeaponType)
+{
+	if (ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner()))
+	{
+		if (bInitializingEquipment) { Character->RestoreEquippedWeaponType(WeaponType); }
+		else { Character->NotifyWeaponEquipmentChanged(WeaponType); }
+	}
+}
+
 bool URogue10mInventoryComponent::TryEquipItemFromSlot(int32 ItemSlotIndex)
 {
 	if (!ItemSlots.IsValidIndex(ItemSlotIndex))
@@ -312,13 +330,15 @@ bool URogue10mInventoryComponent::TryEquipItemFromSlot(int32 ItemSlotIndex)
 
 bool URogue10mInventoryComponent::TryEquipItemToSlot(int32 ItemSlotIndex, ERogue10mInventorySlotType TargetSlotType)
 {
+	if (!CanChangeEquipmentSlot(TargetSlotType)) { return false; }
+	TGuardValue<bool> ChangeGuard(bEquipmentChangeInProgress, true);
 	// 인덱스, 잠금 상태, 장비 카테고리, 목표 슬롯 호환성을 순서대로 검증합니다.
 	if (!ItemSlots.IsValidIndex(ItemSlotIndex))
 	{
 		return false;
 	}
 
-	const FRogue10mItemStack Item = ItemSlots[ItemSlotIndex];
+	FRogue10mItemStack Item = ItemSlots[ItemSlotIndex];
 	if (!Item.bOccupied || Item.bLocked || Item.Category != ERogue10mItemCategory::Equipment)
 	{
 		return false;
@@ -335,6 +355,10 @@ bool URogue10mInventoryComponent::TryEquipItemToSlot(int32 ItemSlotIndex, ERogue
 		return false;
 	}
 
+	if (EquipmentSlot->bHasEquippedItem && Item.InstanceId.IsValid()
+		&& EquipmentSlot->EquippedItem.InstanceId == Item.InstanceId) { return false; }
+	if (!Item.InstanceId.IsValid()) { Item.InstanceId = FGuid::NewGuid(); }
+
 	EquipmentSlot->DisplayName = Item.DisplayName;
 	EquipmentSlot->SlotColor = Item.ItemColor;
 	EquipmentSlot->bEquipped = true;
@@ -347,10 +371,7 @@ bool URogue10mInventoryComponent::TryEquipItemToSlot(int32 ItemSlotIndex, ERogue
 	// 무기 장착 성공 시 캐릭터의 현재 무기 타입도 함께 갱신합니다.
 	if (TargetSlotType == ERogue10mInventorySlotType::MainWeapon)
 	{
-		if (ARogue10mCharacter* OwningCharacter = Cast<ARogue10mCharacter>(GetOwner()))
-		{
-			OwningCharacter->SetEquippedWeaponType(Item.WeaponType);
-		}
+		CommitWeaponEquipmentChange(Item.WeaponType);
 	}
 
 	NotifyEquipmentChanged();
@@ -359,6 +380,8 @@ bool URogue10mInventoryComponent::TryEquipItemToSlot(int32 ItemSlotIndex, ERogue
 
 bool URogue10mInventoryComponent::TryUnequipItemFromSlot(ERogue10mInventorySlotType TargetSlotType)
 {
+	if (!CanChangeEquipmentSlot(TargetSlotType)) { return false; }
+	TGuardValue<bool> ChangeGuard(bEquipmentChangeInProgress, true);
 	FRogue10mInventorySlot* EquipmentSlot = FindEquipmentSlot(TargetSlotType);
 	if (!EquipmentSlot || EquipmentSlot->bLocked || !EquipmentSlot->bHasEquippedItem || !EquipmentSlot->EquippedItem.bOccupied)
 	{
@@ -381,10 +404,7 @@ bool URogue10mInventoryComponent::TryUnequipItemFromSlot(ERogue10mInventorySlotT
 		EquipmentSlot->DisplayName = FText::FromString(TEXT("무기"));
 		EquipmentSlot->SlotColor = FLinearColor(0.86f, 0.64f, 0.30f, 1.0f);
 		EquipmentSlot->bEquipped = true;
-		if (ARogue10mCharacter* OwningCharacter = Cast<ARogue10mCharacter>(GetOwner()))
-		{
-			OwningCharacter->SetEquippedWeaponType(ERogue10mWeaponType::Unarmed);
-		}
+		CommitWeaponEquipmentChange(ERogue10mWeaponType::Unarmed);
 	}
 	else
 	{
@@ -427,6 +447,8 @@ bool URogue10mInventoryComponent::TryUnequipItemFromSlot(ERogue10mInventorySlotT
 
 bool URogue10mInventoryComponent::TryUnequipItemFromSlotToItemSlot(ERogue10mInventorySlotType TargetSlotType, int32 TargetItemSlotIndex)
 {
+	if (!CanChangeEquipmentSlot(TargetSlotType)) { return false; }
+	TGuardValue<bool> ChangeGuard(bEquipmentChangeInProgress, true);
 	FRogue10mInventorySlot* EquipmentSlot = FindEquipmentSlot(TargetSlotType);
 	if (!EquipmentSlot || EquipmentSlot->bLocked || !EquipmentSlot->bHasEquippedItem || !EquipmentSlot->EquippedItem.bOccupied)
 	{
@@ -451,10 +473,7 @@ bool URogue10mInventoryComponent::TryUnequipItemFromSlotToItemSlot(ERogue10mInve
 
 	if (TargetSlotType == ERogue10mInventorySlotType::MainWeapon)
 	{
-		if (ARogue10mCharacter* OwningCharacter = Cast<ARogue10mCharacter>(GetOwner()))
-		{
-			OwningCharacter->SetEquippedWeaponType(ERogue10mWeaponType::Unarmed);
-		}
+		CommitWeaponEquipmentChange(ERogue10mWeaponType::Unarmed);
 	}
 
 	NotifyEquipmentChanged();
@@ -517,6 +536,8 @@ bool URogue10mInventoryComponent::RemoveItemFromSlot(int32 ItemSlotIndex, FRogue
 
 bool URogue10mInventoryComponent::RemoveEquippedItemFromSlot(ERogue10mInventorySlotType TargetSlotType, FRogue10mItemStack& OutRemovedItem)
 {
+	if (!CanChangeEquipmentSlot(TargetSlotType)) { return false; }
+	TGuardValue<bool> ChangeGuard(bEquipmentChangeInProgress, true);
 	FRogue10mInventorySlot* EquipmentSlot = FindEquipmentSlot(TargetSlotType);
 	if (!EquipmentSlot || EquipmentSlot->bLocked || !EquipmentSlot->bHasEquippedItem || !EquipmentSlot->EquippedItem.bOccupied)
 	{
@@ -531,10 +552,7 @@ bool URogue10mInventoryComponent::RemoveEquippedItemFromSlot(ERogue10mInventoryS
 
 	if (TargetSlotType == ERogue10mInventorySlotType::MainWeapon)
 	{
-		if (ARogue10mCharacter* OwningCharacter = Cast<ARogue10mCharacter>(GetOwner()))
-		{
-			OwningCharacter->SetEquippedWeaponType(ERogue10mWeaponType::Unarmed);
-		}
+		CommitWeaponEquipmentChange(ERogue10mWeaponType::Unarmed);
 	}
 
 	NotifyEquipmentChanged();
@@ -1028,6 +1046,8 @@ bool URogue10mInventoryComponent::TryEquipGridItem(int32 ContainerIndex, FGuid I
 
 	const FRogue10mInventoryGridEntry SourceEntryCopy = *SourceEntry;
 	const URogue10mItemDataAsset* NewItemData = SourceEntryCopy.ItemData.Get();
+	if (!InstanceId.IsValid() || !CanChangeEquipmentSlot(NewItemData->EquipSlotType)) { return false; }
+	TGuardValue<bool> ChangeGuard(bEquipmentChangeInProgress, true);
 	FRogue10mInventorySlot* EquipmentSlot = FindEquipmentSlot(NewItemData->EquipSlotType);
 	if (!EquipmentSlot || EquipmentSlot->bLocked)
 	{
@@ -1037,6 +1057,7 @@ bool URogue10mInventoryComponent::TryEquipGridItem(int32 ContainerIndex, FGuid I
 	const FRogue10mItemStack PreviousEquippedItem = EquipmentSlot->EquippedItem;
 	const bool bHadEquippedItem = EquipmentSlot->bHasEquippedItem
 		&& PreviousEquippedItem.bOccupied;
+	if (bHadEquippedItem && PreviousEquippedItem.InstanceId == InstanceId) { return false; }
 	int32 ReplacementContainerIndex = INDEX_NONE;
 	FIntPoint ReplacementPosition = FIntPoint::ZeroValue;
 	if (bHadEquippedItem)
@@ -1125,10 +1146,7 @@ bool URogue10mInventoryComponent::TryEquipGridItem(int32 ContainerIndex, FGuid I
 	EquipmentSlot->EquippedItem = NewEquippedItem;
 	if (NewItemData->EquipSlotType == ERogue10mInventorySlotType::MainWeapon)
 	{
-		if (ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner()))
-		{
-			Character->SetEquippedWeaponType(NewEquippedItem.WeaponType);
-		}
+		CommitWeaponEquipmentChange(NewEquippedItem.WeaponType);
 	}
 
 	NotifyGridChanged();
@@ -1154,6 +1172,8 @@ bool URogue10mInventoryComponent::TryUnequipItemToGrid(
 	int32 TargetContainerIndex,
 	FIntPoint TargetPosition)
 {
+	if (!CanChangeEquipmentSlot(SourceSlotType)) { return false; }
+	TGuardValue<bool> ChangeGuard(bEquipmentChangeInProgress, true);
 	FRogue10mInventorySlot* EquipmentSlot = FindEquipmentSlot(SourceSlotType);
 	if (!EquipmentSlot || EquipmentSlot->bLocked || !EquipmentSlot->bHasEquippedItem
 		|| !EquipmentSlot->EquippedItem.bOccupied || !EquipmentSlot->EquippedItem.ItemData)
@@ -1186,10 +1206,7 @@ bool URogue10mInventoryComponent::TryUnequipItemToGrid(
 
 	if (SourceSlotType == ERogue10mInventorySlotType::MainWeapon)
 	{
-		if (ARogue10mCharacter* OwningCharacter = Cast<ARogue10mCharacter>(GetOwner()))
-		{
-			OwningCharacter->SetEquippedWeaponType(ERogue10mWeaponType::Unarmed);
-		}
+		CommitWeaponEquipmentChange(ERogue10mWeaponType::Unarmed);
 	}
 
 	NotifyGridChanged();
