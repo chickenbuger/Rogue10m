@@ -42,6 +42,7 @@
 #include "Widgets/Rogue10mMenuWindowWidgets.h"
 #include "Widgets/Rogue10mTraitWidget.h"
 #include "Widgets/Rogue10mRunResultWidget.h"
+#include "Widgets/Rogue10mAbandonMenuWidget.h"
 #include "Widgets/Input/SVirtualJoystick.h"
 #include "UObject/ConstructorHelpers.h"
 
@@ -201,11 +202,90 @@ void ARogue10mPlayerController::SetupInputComponent()
 
 void ARogue10mPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	ResetAbandonMenuContext();
+	if (AbandonMenuWidget) { AbandonMenuWidget->SetMenuOpen(false); AbandonMenuWidget->RemoveFromParent(); AbandonMenuWidget = nullptr; }
 	ClearAbandonConfirmation();
 	// Do not revive the dialogue/input stack while the controller is leaving its world.
 	TraitServiceNPC.Reset();
 	CloseTraitWindow();
 	Super::EndPlay(EndPlayReason);
+}
+
+void ARogue10mPlayerController::ResetAbandonMenuContext()
+{
+	bAbandonMenuConfirmOpen = false;
+	AbandonMenuWorld.Reset(); AbandonMenuProfile.Invalidate(); AbandonMenuRun.Invalidate();
+	if (AbandonMenuWidget) { AbandonMenuWidget->SetConfirmationOpen(false); }
+}
+
+bool ARogue10mPlayerController::CanOpenAbandonMenuConfirmation(FText& OutReason) const
+{
+	OutReason = FText::GetEmpty();
+	URogue10mProgressionSubsystem* Progression = nullptr; ARogue10mGameState* Run = nullptr;
+	if (!bSettingsVisible || bAbandonMenuSubmitting || !ResolveAbandonContext(Progression, Run))
+	{
+		OutReason = NSLOCTEXT("Rogue10mAbandonMenu", "NotActive", "진행 중인 탐험에서만 포기할 수 있습니다.");
+		return false;
+	}
+	if (bAbandonMenuConfirmOpen && (AbandonMenuWorld.Get() != GetWorld()
+		|| AbandonMenuProfile != Progression->GetAttachedProfileId() || AbandonMenuRun != Progression->GetAttachedRunId()))
+	{
+		OutReason = NSLOCTEXT("Rogue10mAbandonMenu", "ContextChanged", "탐험 또는 캐릭터가 바뀌었습니다. 창을 닫고 다시 확인하세요.");
+		return false;
+	}
+	int32 Gold, Crystals, Lobby;
+	if (!Progression->TryResolveAbandonCurrencyBalances(Gold, Crystals, Lobby))
+	{
+		OutReason = NSLOCTEXT("Rogue10mAbandonMenu", "NoCheckpoint", "입장 전 재화 기록이 없어 안전하게 복원할 수 없습니다.");
+		return false;
+	}
+	return true;
+}
+
+bool ARogue10mPlayerController::OpenAbandonMenuConfirmation()
+{
+	FText Reason;
+	if (!AbandonMenuWidget || !CanOpenAbandonMenuConfirmation(Reason))
+	{
+		if (AbandonMenuWidget) { AbandonMenuWidget->ShowError(Reason); AbandonMenuWidget->RefreshAvailability(); }
+		return false;
+	}
+	if (bAbandonMenuConfirmOpen) { return true; }
+	ClearAbandonConfirmation(); // UI has its own confirmation; no armed console action may leak across it.
+	const auto* Progression = GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>();
+	AbandonMenuWorld = GetWorld(); AbandonMenuProfile = Progression->GetAttachedProfileId(); AbandonMenuRun = Progression->GetAttachedRunId();
+	bAbandonMenuConfirmOpen = true;
+	AbandonMenuWidget->SetConfirmationOpen(true);
+	RefreshInputMode();
+	return true;
+}
+
+void ARogue10mPlayerController::CancelAbandonMenuConfirmation()
+{
+	if (bAbandonMenuSubmitting) { return; }
+	ClearAbandonConfirmation(); ResetAbandonMenuContext(); RefreshInputMode();
+}
+
+bool ARogue10mPlayerController::ConfirmAbandonMenu()
+{
+	if (!bAbandonMenuConfirmOpen || bAbandonMenuSubmitting || !AbandonMenuWidget || !AbandonMenuWidget->IsConfirmationOpen()) { return false; }
+	FText Reason;
+	const auto* Progression = GetGameInstance() ? GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>() : nullptr;
+	if (!CanOpenAbandonMenuConfirmation(Reason) || !Progression || AbandonMenuWorld.Get() != GetWorld()
+		|| AbandonMenuProfile != Progression->GetAttachedProfileId() || AbandonMenuRun != Progression->GetAttachedRunId())
+	{
+		AbandonMenuWidget->ShowError(Reason.IsEmpty() ? NSLOCTEXT("Rogue10mAbandonMenu", "ContextChanged", "탐험 또는 캐릭터가 바뀌었습니다. 창을 닫고 다시 확인하세요.") : Reason);
+		AbandonMenuWidget->RefreshAvailability();
+		return false;
+	}
+	TGuardValue<bool> SubmitGuard(bAbandonMenuSubmitting, true);
+	ClearAbandonConfirmation();
+	const bool bAccepted = RequestAbandonCurrentRun(); // Explicit UI confirmation never invokes the double-console path.
+	if (!bAccepted)
+	{
+		AbandonMenuWidget->ShowError(NSLOCTEXT("Rogue10mAbandonMenu", "RequestRejected", "포기 요청을 처리할 수 없습니다. 현재 탐험 상태를 확인하세요."));
+	}
+	return bAccepted;
 }
 
 void ARogue10mPlayerController::ClearAbandonConfirmation()
@@ -463,6 +543,7 @@ void ARogue10mPlayerController::CloseTraitWindow()
 
 void ARogue10mPlayerController::EnterSelectedCharacter()
 {
+	ResetAbandonMenuContext();
 	ClearAbandonConfirmation();
 	URogue10mCharacterProfileSubsystem* Profiles = GetGameInstance()
 		? GetGameInstance()->GetSubsystem<URogue10mCharacterProfileSubsystem>()
@@ -521,7 +602,7 @@ void ARogue10mPlayerController::EnterSelectedCharacter()
 	AddCombatLogMessage(
 		FString::Printf(TEXT("%s 캐릭터로 접속했습니다."), *Profile->CharacterName),
 		FLinearColor(0.55f, 0.88f, 1.0f, 1.0f));
-	AddCombatLogMessage(TEXT("탐험 포기(프로토타입): 콘솔에서 AbandonRun을 3초 안에 두 번 실행하세요."),
+	AddCombatLogMessage(TEXT("탐험 중 설정(O / Esc / F10)에서 포기할 수 있습니다."),
 		FLinearColor(0.75f, 0.82f, 0.88f), 6.0f);
 }
 
@@ -958,6 +1039,14 @@ void ARogue10mPlayerController::InitializeMenuWindows()
 
 void ARogue10mPlayerController::ApplyMenuWindowVisibility()
 {
+	if (IsLocalPlayerController() && !IsMenuWorld() && bSettingsVisible && !AbandonMenuWidget)
+	{
+		AbandonMenuWidget = CreateWidget<URogue10mAbandonMenuWidget>(this, URogue10mAbandonMenuWidget::StaticClass());
+		if (AbandonMenuWidget) { AbandonMenuWidget->AddToPlayerScreen(150); }
+	}
+	if (!bSettingsVisible) { ResetAbandonMenuContext(); }
+	if (AbandonMenuWidget) { AbandonMenuWidget->SetMenuOpen(bSettingsVisible); }
+
 	if (InventoryWindowWidget && InventoryWindowWidget->IsWindowOpen() != bInventoryVisible)
 	{
 		InventoryWindowWidget->SetWindowOpen(bInventoryVisible);
@@ -1116,6 +1205,15 @@ void ARogue10mPlayerController::RefreshInputMode()
 		SetInputMode(InputMode);
 		return;
 	}
+	if (bSettingsVisible && AbandonMenuWidget && bAbandonMenuConfirmOpen)
+	{
+		bShowMouseCursor = true; bEnableClickEvents = true; bEnableMouseOverEvents = true;
+		FInputModeUIOnly InputMode;
+		InputMode.SetWidgetToFocus(AbandonMenuWidget->TakeWidget());
+		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock); SetInputMode(InputMode);
+		AbandonMenuWidget->FocusConfirmationCancel();
+		return;
+	}
 	if (bTraitWindowVisible && TraitWidget)
 	{
 		bShowMouseCursor = true;
@@ -1159,6 +1257,7 @@ void ARogue10mPlayerController::RefreshInputMode()
 	{
 		FInputModeGameAndUI InputMode;
 		UUserWidget* FocusWidget = GetTopmostOpenMenuWindow();
+		if (bSettingsVisible && AbandonMenuWidget) { FocusWidget = AbandonMenuWidget.Get(); }
 		if (CombatTestComponent && CombatTestComponent->IsPanelOpen()) FocusWidget = CombatTestComponent->GetWidget();
 		if (!FocusWidget) FocusWidget = RunHUD;
 		if (FocusWidget)

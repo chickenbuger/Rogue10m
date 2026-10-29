@@ -2552,3 +2552,7 @@ DevLog/20261027_DesktopIntegration_DPlayB_20261027에 실제 Unreal 뷰포트 �
 - 검증: Editor빌드/자동화30/UI7시나리오/기존종료3종회귀PASS,기존270파일SHA256불변,실제PNG13장.
 - 제약: 수동완주/실제프로세스강제종료미검증,콘솔/API프로토타입포기,설정버튼후속. push/merge없음.
 - 문서: Feature/architect/2026-10-29_result-lobby-ui.md, Feature/doc/2026-10-29_result-lobby-ui.md.
+
+
+## Sprint#9-9-abandon-menu (2026-10-29)
+설정 포기 버튼·정책 확인·취소/닫기·문맥 재검증·연타 방어를 구현했다. Editor 빌드, 기존 회귀30개, 최종 메뉴 정상/실패 198항목 PASS. 실제 PNG6장 생성·디코딩·시각 검토. 보존438파일 해시 불변. 일시적 연결/렌더러 실패 뒤 새 QA 슬롯으로 완료했으며 물리 입력·수동 완주·강제종료는 미검증이다. 원격 변경 없음. 계획 Feature/architect/2026-10-29_abandon-menu.md, 결과 Feature/doc/2026-10-29_abandon-menu.md.

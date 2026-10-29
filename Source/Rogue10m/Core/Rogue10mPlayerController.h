@@ -24,6 +24,7 @@ class URogue10mSkillBindingComponent;
 class URogue10mCombatTestComponent;
 class URogue10mRunHUD;
 class URogue10mRunResultWidget;
+class URogue10mAbandonMenuWidget;
 class URogue10mItemDataAsset;
 class UTexture2D;
 class UUserWidget;
@@ -94,6 +95,11 @@ public:
 	/** Explicit user action. Requires an active owned run and a recorded entry checkpoint. */
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Run")
 	bool RequestAbandonCurrentRun();
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Run|Menu") bool OpenAbandonMenuConfirmation();
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Run|Menu") void CancelAbandonMenuConfirmation();
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Run|Menu") bool ConfirmAbandonMenu();
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Run|Menu") bool CanOpenAbandonMenuConfirmation(FText& OutReason) const;
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Run|Menu") URogue10mAbandonMenuWidget* GetAbandonMenuWidget() const { return AbandonMenuWidget; }
 	/** Prototype entry without reserving or replacing any gameplay key. Run twice within three seconds. */
 	UFUNCTION(Exec)
 	void AbandonRun();
@@ -332,6 +338,13 @@ private:
 	void HandleToggleCombatLog();
 	void HandleAbandonConfirmation();
 	void ClearAbandonConfirmation();
+	void ResetAbandonMenuContext();
+	UPROPERTY(Transient) TObjectPtr<URogue10mAbandonMenuWidget> AbandonMenuWidget;
+	TWeakObjectPtr<UWorld> AbandonMenuWorld;
+	FGuid AbandonMenuProfile;
+	FGuid AbandonMenuRun;
+	bool bAbandonMenuConfirmOpen = false;
+	bool bAbandonMenuSubmitting = false;
 	bool ResolveAbandonContext(URogue10mProgressionSubsystem*& OutProgression, ARogue10mGameState*& OutRun) const;
 	void InitializeDamageIndicatorPool();
 	URogue10mDamageIndicatorWidget* AcquireDamageIndicator();
