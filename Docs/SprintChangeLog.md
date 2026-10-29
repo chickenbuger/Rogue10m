@@ -2564,3 +2564,7 @@ DevLog/20261027_DesktopIntegration_DPlayB_20261027에 실제 Unreal 뷰포트 �
 ## Sprint#9-11-first-person-settings (2026-10-29)
 
 이미 1인칭인 기존 카메라 위에 FPHeavy 토글·0~100% 동작 강도·기존 표현 복원을 O/Esc/F10 설정 메뉴로 제공한다. 실행 한정 설정이며 세이브/키/맵을 변경하지 않는다. 최종 Editor 빌드·HeadB560항목·기존 저장실패 메뉴97항목 PASS. 실제 UI PNG8장 디코딩과 가독성 확인. RenderC 전체 ABBA는 입력 해제로5실패하므로 미완전으로 기록하고 성능 개선을 주장하지 않는다. 기존 sprint PP 경로/정상 비교값으로 블러0.35/fringe0.6을 분리했다. 물리 입력·필드 완주·콜드 공격 hitch 원인은 미검증. 보존606파일 해시 불변, 로컬 커밋만, push/병합 없음. 계획/결과 Feature/*/2026-10-29_first-person-settings.md.
+
+## Sprint#9-12-input-validation (2026-10-29 UTC)
+
+제품 동작을 바꾸지 않고 공식 입력/Flush/포커스 관측과 viewport 입력·시야 오염 gate를 QA에 추가했다. native569/Offscreen565항목 PASS로 실제 이동 ON/OFF 비교를 완결했다. 프로그램 포커스 양성 대조의 정상 두키해제/새입력복구 확인. 촬영 없는 첫 공격 ABBA4프로세스/8공격142항목 PASS, 공통 첫 사용 수락75~77ms·첫 피해63~68ms 프레임을 재현했으나 내부 원인은 미확정. 과거 RenderC 원인도 단정하지 않는다. 빌드·663파일 원본/복사본 보존 PASS, 실제사진16장/대표5장 기능폴더 보존. 물리 입력·필드 완주 미실행, 로컬 커밋만. 계획/결과 Feature/*/2026-10-29_input-frame-validation.md.

@@ -2,6 +2,9 @@ param(
     [Parameter(Mandatory=$true)][ValidatePattern('^[A-Za-z0-9_]{1,24}$')][string]$Label,
     [switch]$Rendered,
     [switch]$VisibleWindow,
+    [switch]$InputTrace,
+    [switch]$FocusProbe,
+    [switch]$Offscreen,
     [ValidateSet('D3D11','D3D12')][string]$Renderer='D3D11',
     [ValidateSet(30,60)][int]$MaxFPS=60,
     [ValidateRange(60,260)][int]$TimeoutSeconds=260,
@@ -25,6 +28,8 @@ function Assert-OriginalSaves([object[]]$Before,[object[]]$Current) {
     if($changed.Count -gt 0){throw ('Original save preservation failed for '+$changed.Count+' path(s).')}
 }
 if($VisibleWindow -and -not $Rendered){throw 'VisibleWindow requires Rendered.'}
+if($Offscreen -and (-not $Rendered -or $VisibleWindow)){throw 'Offscreen requires Rendered and is mutually exclusive with VisibleWindow.'}
+if($FocusProbe -and (-not $InputTrace -or -not $Rendered -or $Offscreen)){throw 'FocusProbe requires InputTrace and native Rendered mode (not Offscreen).'}
 $ProjectRoot=(Resolve-Path -LiteralPath $ProjectRoot).Path
 $profile='Rogue10m_Town_QA_FpUi_'+$Label
 $prefix='Rogue10m_Progression_QA_FpUi_'+$Label
@@ -57,6 +62,9 @@ $arguments=@(('"'+$project+'"'),'/Game/Rogue10m/Maps/StartHub','-game','-unatten
     ('-RogueSkillKeySaveSlot='+$keys),('-RogueFirstPersonSettingsLabel='+$Label),
     ('-ExecCmds="t.MaxFPS '+$MaxFPS+',Rogue10m.TestFirstPersonSettings"'),('-abslog="'+$log+'"'))
 if($Rendered){$arguments+=@(('-'+$Renderer.ToLowerInvariant()),'-windowed','-ForceRes','-ResX=1280','-ResY=720')}else{$arguments+='-nullrhi'}
+if($InputTrace){$arguments+='-RogueFirstPersonSettingsInputTrace'}
+if($FocusProbe){$arguments+='-RogueFirstPersonSettingsFocusProbe'}
+if($Offscreen){$arguments+='-RenderOffScreen'}
 $process=$null
 $failure=$null
 $preservationFailure=$null
@@ -80,6 +88,25 @@ try {
     if($resultText -notmatch '(?m)^failures=0\s*$' -or $resultText -notmatch ('(?m)^rendered='+$renderedValue+'\s*$') -or
         -not $resultText.Contains('input=programmatic_InputKey_and_actual_UMG_delegates') -or
         -not $resultText.Contains('performance_assertions=none') -or -not(Test-Path -LiteralPath $frames) -or -not(Test-Path -LiteralPath $metrics)) {throw 'Results do not confirm the requested QA mode or evidence.'}
+    $offscreenValue=if($Offscreen){1}else{0}
+    $traceValue=if($InputTrace){1}else{0}
+    $probeValue=if($FocusProbe){1}else{0}
+    if($resultText -notmatch ('(?m)^offscreen='+$offscreenValue+'\s*$') -or
+        $resultText -notmatch ('(?m)^input_trace='+$traceValue+'\s*$') -or
+        $resultText -notmatch ('(?m)^focus_probe='+$probeValue+'\s*$')){throw 'Result mode differs from requested offscreen/input-trace/focus-probe fixture.'}
+    if($InputTrace){
+        $trace=Join-Path $output 'input-trace.csv'
+        $stacks=Join-Path $output 'input-flush-stacks.txt'
+        if(-not(Test-Path -LiteralPath $trace) -or -not(Test-Path -LiteralPath $stacks) -or
+            $resultText -notmatch '(?m)^input_trace_dropped=0\s*$' -or
+            $resultText -notmatch '(?m)^input_trace_measured_flushes=0\s*$' -or
+            $resultText -notmatch '(?m)^input_trace_measured_viewport_key_events=0\s*$' -or
+            $resultText -notmatch '(?m)^input_trace_measured_control_rotation_mismatches=0\s*$' -or
+            $resultText -notmatch '(?m)^input_trace_flush_hook_available=1\s*$'){throw 'Input-trace evidence is missing, truncated, or records contaminated measured input.'}
+        $traceRows=@((Read-BomText $trace)|ConvertFrom-Csv)
+        if($traceRows.Count -eq 0 -or @($traceRows|Where-Object origin -eq 'qa_direct_before').Count -eq 0){throw 'Input trace does not contain the actual QA-direct key path.'}
+        if($FocusProbe -and @($traceRows|Where-Object origin -eq 'flush_controlled_focus_probe').Count -ne 1){throw 'Controlled viewport-focus probe did not capture its exact input flush.'}
+    }
     $frameRows=@((Read-BomText $frames) | ConvertFrom-Csv)
     $metricRows=@((Read-BomText $metrics) | ConvertFrom-Csv)
     if($frameRows.Count -eq 0 -or $metricRows.Count -ne 4){throw 'Frame observations or four ABBA metric rows are missing.'}

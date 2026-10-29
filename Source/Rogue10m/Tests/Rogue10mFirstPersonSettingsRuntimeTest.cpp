@@ -12,14 +12,18 @@
 #include "Containers/Ticker.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
+#include "Engine/GameViewportClient.h"
 #include "Engine/Scene.h"
 #include "Engine/SkeletalMesh.h"
 #include "Engine/World.h"
 #include "Framework/Application/SlateApplication.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/PlayerInput.h"
+#include "GameFramework/PlayerInputDebugging.h"
 #include "HAL/FileManager.h"
 #include "HAL/IConsoleManager.h"
 #include "HAL/PlatformMisc.h"
+#include "HAL/PlatformStackWalk.h"
 #include "HAL/PlatformTime.h"
 #include "Input/Events.h"
 #include "InputKeyEventArgs.h"
@@ -65,6 +69,18 @@ struct FSegment
     float ExpectedSprintSpeed=0.f;
     int32 GroundedSamples=0;
 };
+struct FInputTraceRecord
+{
+    uint64 EngineFrame=0,EventTimestamp=0;
+    double Wall=0.,WorldTime=0.;
+    FString Stage,Origin,Key;
+    int32 Segment=INDEX_NONE,Event=INDEX_NONE,Detail=0,FlushCount=0;
+    float Amount=0.f;
+    bool bSimulated=false,bHasViewport=false,bW=false,bShift=false,bLastW=false,bLastShift=false,bWantedW=false,bWantedShift=false;
+    int32 AppActive=-1,ViewportFocus=-1,ViewportForeground=-1,ViewportIgnore=-1;
+    uint32 StackDepth=0;
+    uint64 Stack[24]{};
+};
 class FRun : public TSharedFromThis<FRun>
 {
 public:
@@ -90,11 +106,17 @@ public:
         Output=FPaths::ProjectDir()/TEXT("Feature/doc/evidence/first-person-settings-20261029")/Label;
         Images=FPaths::ProjectDir()/TEXT("DevLog")/(TEXT("20261029_FirstPersonSettings_")+Label);
         bRendered=!FParse::Param(Args,TEXT("nullrhi"));
+        bOffscreen=FParse::Param(Args,TEXT("RenderOffScreen"));
+        bInputTrace=FParse::Param(Args,TEXT("RogueFirstPersonSettingsInputTrace"));
+        bFocusProbe=FParse::Param(Args,TEXT("RogueFirstPersonSettingsFocusProbe"));
+        if ((bOffscreen && !bRendered) || (bFocusProbe && (!bRendered || bOffscreen || !bInputTrace)))
+        { UE_LOG(LogRogue10m,Error,TEXT("RESULT=FIRST_PERSON_SETTINGS_FAILED reason=invalid_trace_or_offscreen_fixture")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+
         if (IFileManager::Get().DirectoryExists(*Output) || IFileManager::Get().DirectoryExists(*Images))
         { UE_LOG(LogRogue10m,Error,TEXT("RESULT=FIRST_PERSON_SETTINGS_FAILED reason=fresh_evidence_required")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
         IFileManager::Get().MakeDirectory(*Output,true);
         if (bRendered) { IFileManager::Get().MakeDirectory(*Images,true); }
-        Frames=TEXT("frame,stage,segment,profile,weighted,active,run_phase,world_s,world_delta_s,frame_wall_delta_s,speed_cm_s,sprinting,fov,pp_priority,pp_blend,pp_motion_blur,pp_fringe,pp_override_blur,pp_override_fringe,fixture,actor_x_cm,actor_y_cm,actor_z_cm,movement_mode,max_walk_speed_cm_s,acceleration_cm_s2,blocking_ui,move_ignored,on_ground,w_key_down,shift_key_down\n");
+        Frames=TEXT("frame,stage,segment,profile,weighted,active,run_phase,world_s,world_delta_s,frame_wall_delta_s,speed_cm_s,sprinting,fov,pp_priority,pp_blend,pp_motion_blur,pp_fringe,pp_override_blur,pp_override_fringe,fixture,actor_x_cm,actor_y_cm,actor_z_cm,movement_mode,max_walk_speed_cm_s,acceleration_cm_s2,blocking_ui,move_ignored,on_ground,w_key_down,shift_key_down,input_trace,input_flush_count,app_active,viewport_focus,viewport_foreground,viewport_ignore,control_yaw,control_pitch\n");
         Metrics=TEXT("segment,profile,phase,samples,wall_median_ms,wall_p95_ms,wall_max_ms,wall_hitches_gt50ms,world_median_ms,world_p95_ms,world_max_ms,world_hitches_gt50ms,min_speed_cm_s,max_speed_cm_s,net_xy_cm,expected_sprint_speed_cm_s,grounded_samples\n");
         Heavy=IConsoleManager::Get().FindConsoleVariable(TEXT("Rogue10m.FPHeavy"));
         Motion=IConsoleManager::Get().FindConsoleVariable(TEXT("Rogue10m.FPHeavyMotionScale"));
@@ -120,8 +142,133 @@ private:
     void Check(bool bOK,const TCHAR* Why)
     { ++Checks; if (!bOK) { ++Failures; Results+=FString(TEXT("FAIL "))+Why+TEXT("\n"); if (Failures<40) { UE_LOG(LogRogue10m,Error,TEXT("FIRST_PERSON_SETTINGS FAIL %s"),Why); } } }
     void Later(double Delay,TFunction<void()> Work) { NextAt=FPlatformTime::Seconds()+Delay; Next=MoveTemp(Work); }
+    void TraceFocusState(FInputTraceRecord& Record) const
+    {
+        if (FSlateApplication::IsInitialized()) { Record.AppActive=FSlateApplication::Get().IsActive()?1:0; }
+        if (TraceViewport.IsValid())
+        {
+            Record.ViewportIgnore=TraceViewport->IgnoreInput()?1:0;
+            if (const FViewport* V=TraceViewport->Viewport)
+            { Record.ViewportFocus=V->HasFocus()?1:0; Record.ViewportForeground=V->IsForegroundWindow()?1:0; }
+        }
+    }
+    void TraceInput(const TCHAR* Origin,const FInputKeyEventArgs* Event=nullptr,bool bCaptureStack=false,int32 Detail=0)
+    {
+        if (!bInputTrace || bFinished || !PC.IsValid()) { return; }
+        if (InputTraceRecords.Num()>=1024) { ++DroppedInputTraceRecords; return; }
+        FInputTraceRecord Record;
+        Record.EngineFrame=GFrameCounter; Record.Wall=FPlatformTime::Seconds(); Record.WorldTime=World.IsValid()?World->GetTimeSeconds():-1.;
+        Record.Stage=Stage; Record.Origin=Origin; Record.Segment=Segment; Record.Detail=Detail; Record.FlushCount=InputFlushCount;
+        Record.bW=PC->IsInputKeyDown(EKeys::W); Record.bShift=PC->IsInputKeyDown(EKeys::LeftShift);
+        Record.bLastW=bLastSampleW; Record.bLastShift=bLastSampleShift; Record.bWantedW=bWantedW; Record.bWantedShift=bWantedShift;
+        if (Event)
+        { Record.Key=Event->Key.ToString(); Record.Event=static_cast<int32>(Event->Event); Record.Amount=Event->AmountDepressed; Record.EventTimestamp=Event->EventTimestamp; Record.bSimulated=Event->IsSimulatedInput(); Record.bHasViewport=Event->Viewport!=nullptr; }
+        TraceFocusState(Record);
+        // Capture addresses only; symbol loading, formatting and all disk writes occur after measurement in Finish.
+        if (bCaptureStack)
+        {
+            if (CapturedInputStacks<8) { Record.StackDepth=FPlatformStackWalk::CaptureStackBackTrace(Record.Stack,UE_ARRAY_COUNT(Record.Stack)); ++CapturedInputStacks; }
+            else { ++DroppedInputStacks; }
+        }
+        InputTraceRecords.Add(MoveTemp(Record));
+    }
+    void InstallInputTrace()
+    {
+        if (!bInputTrace) { return; }
+        InputTraceRecords.Reserve(1024); TraceViewport=World->GetGameViewport();
+        Check(TraceViewport.IsValid() && PC->PlayerInput,TEXT("trace_owns_actual_QA_viewport_and_player_input"));
+        if (Failures) { return; }
+        const TWeakPtr<FRun> WeakSelf=AsShared();
+#if UE_PLAYER_INPUT_INCLUDE_DEBUG
+        InputFlushHandle=UE::Input::FPlayerInputDebugging::OnPlayerInputFlushed.AddLambda([WeakSelf](const UPlayerInput* Input)
+        {
+            if (auto Self=WeakSelf.Pin(); Self && !Self->bFinished && Self->PC.IsValid() && Input==Self->PC->PlayerInput)
+            {
+                ++Self->InputFlushCount;
+                if (Self->bInControlledFocusProbe) { ++Self->ControlledFocusFlushCount; }
+                else { ++Self->NonProbeFlushCount; if (Self->Segment!=INDEX_NONE) { ++Self->MeasuredInputFlushCount; } }
+                const bool bHadHeldKey=Self->bWantedW || Self->bWantedShift || Self->bLastSampleW || Self->bLastSampleShift;
+                Self->TraceInput(Self->bInControlledFocusProbe?TEXT("flush_controlled_focus_probe"):TEXT("flush_observed"),nullptr,bHadHeldKey);
+            }
+        });
+        bFlushTraceAvailable=true;
+#else
+        Check(false,TEXT("trace_requires_engine_player_input_debug_flush_delegate"));
+#endif
+        ViewportInputHandle=TraceViewport->OnInputKey().AddLambda([WeakSelf](const FInputKeyEventArgs& Event)
+        {
+            if (auto Self=WeakSelf.Pin(); Self && !Self->bFinished)
+            {
+                // Normal QA keys go directly to the controller. Any viewport key during a
+                // measured segment can contaminate the trajectory even if released/repressed
+                // between post-actor samples, so record all keys and reject the whole trial.
+                const bool bMeasured=Self->Segment!=INDEX_NONE;
+                if (bMeasured) { ++Self->MeasuredViewportInputCount; }
+                if (bMeasured || Event.Key==EKeys::W || Event.Key==EKeys::LeftShift)
+                { Self->TraceInput(TEXT("viewport_input"),&Event,Event.Event==IE_Released && (Self->bWantedW || Self->bWantedShift)); }
+            }
+        });
+        if (FSlateApplication::IsInitialized())
+        {
+            AppActivationHandle=FSlateApplication::Get().OnApplicationActivationStateChanged().AddLambda([WeakSelf](const bool bActive)
+            { if (auto Self=WeakSelf.Pin()) { Self->TraceInput(TEXT("application_activation"),nullptr,false,bActive?1:0); } });
+            FocusChangingHandle=FSlateApplication::Get().OnFocusChanging().AddLambda([WeakSelf](const FFocusEvent& Event,const FWeakWidgetPath&,const TSharedPtr<SWidget>&,const FWidgetPath&,const TSharedPtr<SWidget>&)
+            { if (auto Self=WeakSelf.Pin()) { Self->TraceInput(TEXT("slate_focus_changing"),nullptr,false,static_cast<int32>(Event.GetCause())); } });
+        }
+        TraceInput(TEXT("trace_installed"));
+    }
+    void RemoveInputTrace()
+    {
+#if UE_PLAYER_INPUT_INCLUDE_DEBUG
+        UE::Input::FPlayerInputDebugging::OnPlayerInputFlushed.Remove(InputFlushHandle);
+#endif
+        if (TraceViewport.IsValid()) { TraceViewport->OnInputKey().Remove(ViewportInputHandle); }
+        if (FSlateApplication::IsInitialized())
+        {
+            FSlateApplication::Get().OnApplicationActivationStateChanged().Remove(AppActivationHandle);
+            FSlateApplication::Get().OnFocusChanging().Remove(FocusChangingHandle);
+        }
+    }
+    void SaveInputTrace()
+    {
+        if (!bInputTrace) { return; }
+        FString CSV=TEXT("trace_index,engine_frame,stage,segment,world_s,wall_s,origin,key,event,is_simulated,has_viewport,event_timestamp_cycles,amount,detail,flush_count,w_key_down,shift_key_down,last_sample_w,last_sample_shift,wanted_w,wanted_shift,app_active,viewport_focus,viewport_foreground,viewport_ignore,stack_depth\n");
+        FString Stacks=TEXT("QA-only input trace. Raw stacks captured synchronously at input/flush notifications; symbol resolution occurs only after all measurement. Controlled focus probe calls own viewport LostFocus/ReceivedFocus APIs programmatically and is not OS physical-input evidence.\n");
+        for (int32 I=0;I<InputTraceRecords.Num();++I)
+        {
+            const auto& R=InputTraceRecords[I];
+            CSV+=FString::Printf(TEXT("%d,%llu,%s,%d,%.9f,%.9f,%s,%s,%d,%d,%d,%llu,%.6f,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%u\n"),I,R.EngineFrame,*R.Stage,R.Segment,R.WorldTime,R.Wall,*R.Origin,*R.Key,R.Event,R.bSimulated,R.bHasViewport,R.EventTimestamp,R.Amount,R.Detail,R.FlushCount,R.bW,R.bShift,R.bLastW,R.bLastShift,R.bWantedW,R.bWantedShift,R.AppActive,R.ViewportFocus,R.ViewportForeground,R.ViewportIgnore,R.StackDepth);
+            if (R.StackDepth)
+            {
+                Stacks+=FString::Printf(TEXT("\ntrace_index=%d origin=%s stage=%s segment=%d engine_frame=%llu world_s=%.9f\n"),I,*R.Origin,*R.Stage,R.Segment,R.EngineFrame,R.WorldTime);
+                for (uint32 J=0;J<R.StackDepth;++J)
+                {
+                    ANSICHAR Line[2048]{};
+                    const bool bResolved=FPlatformStackWalk::ProgramCounterToHumanReadableString(static_cast<int32>(J),R.Stack[J],Line,UE_ARRAY_COUNT(Line));
+                    Stacks+=FString::Printf(TEXT("%02u address=0x%016llx resolved=%d %s\n"),J,R.Stack[J],bResolved,ANSI_TO_TCHAR(Line));
+                }
+            }
+        }
+        Check(FFileHelper::SaveStringToFile(CSV,*(Output/TEXT("input-trace.csv"))),TEXT("bounded_input_trace_written_after_measurement"));
+        Check(FFileHelper::SaveStringToFile(Stacks,*(Output/TEXT("input-flush-stacks.txt"))),TEXT("input_stack_evidence_written_after_measurement"));
+        Check(DroppedInputTraceRecords==0,TEXT("input_trace_record_capacity_not_exceeded"));
+        Check(MeasuredInputFlushCount==0,TEXT("no_unexpected_input_flush_during_measured_ABBA"));
+        Check(MeasuredViewportInputCount==0,TEXT("no_viewport_key_events_during_direct_controller_measured_ABBA"));
+        Check(MeasuredControlRotationMismatchCount==0,TEXT("measured_ABBA_control_rotation_remains_at_fixture_rotation"));
+        Results+=FString::Printf(TEXT("input_trace_measured_viewport_key_events=%d\ninput_trace_measured_control_rotation_mismatches=%d\ninput_trace_expected_control_rotation=%s\ninput_trace_control_rotation_tolerance_degrees=0.01\n"),MeasuredViewportInputCount,MeasuredControlRotationMismatchCount,*InitialControl.ToString());
+        Results+=FString::Printf(TEXT("input_trace_events=%d\ninput_trace_dropped=%d\ninput_trace_flush_hook_available=%d\ninput_trace_flushes=%d\ninput_trace_non_probe_flushes=%d\ninput_trace_measured_flushes=%d\ninput_trace_controlled_probe_flushes=%d\ninput_trace_stacks_captured=%d\ninput_trace_stacks_dropped=%d\ninput_trace_scope=QA_only_observers_no_input_or_flush_suppression_no_key_reinjection\ninput_trace_stack_symbols=resolved_only_after_measurement\n"),InputTraceRecords.Num(),DroppedInputTraceRecords,bFlushTraceAvailable,InputFlushCount,NonProbeFlushCount,MeasuredInputFlushCount,ControlledFocusFlushCount,CapturedInputStacks,DroppedInputStacks);
+        if (DroppedInputStacks) { UE_LOG(LogRogue10m,Warning,TEXT("Input trace stack cap reached: %d further stacks omitted; events remain recorded."),DroppedInputStacks); }
+    }
     void Key(FKey Value,bool bDown)
-    { if (PC.IsValid()) { PC->InputKey(FInputKeyEventArgs::CreateSimulated(Value,bDown?IE_Pressed:IE_Released,bDown?1.f:0.f)); } }
+    {
+        if (!PC.IsValid()) { return; }
+        const FInputKeyEventArgs Event=FInputKeyEventArgs::CreateSimulated(Value,bDown?IE_Pressed:IE_Released,bDown?1.f:0.f);
+        if (Value==EKeys::W) { bWantedW=bDown; } else if (Value==EKeys::LeftShift) { bWantedShift=bDown; }
+        const bool bTracedKey=Value==EKeys::W || Value==EKeys::LeftShift;
+        if (bTracedKey) { TraceInput(TEXT("qa_direct_before"),&Event); }
+        PC->InputKey(Event);
+        if (bTracedKey) { TraceInput(TEXT("qa_direct_after"),&Event); }
+    }
     void MenuKey(FKey Value)
     {
         if (PC->IsSettingsVisible() && bRendered && FSlateApplication::IsInitialized())
@@ -205,6 +352,8 @@ private:
         OriginalFOV=Camera->FieldOfView; OriginalArmsFOV=Camera->FirstPersonFieldOfView; OriginalArmsScale=Camera->FirstPersonScale;
         bOriginalFirstFOV=Camera->bEnableFirstPersonFieldOfView; bOriginalFirstScale=Camera->bEnableFirstPersonScale;
         bPrepared=true; Character->SetCanBeDamaged(false);
+        InstallInputTrace();
+        if (Failures) { Finish(); return; }
         SampleHandle=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* W,ELevelTick,float DT)
         { if (W==Self->World.Get()) { Self->Sample(DT); } });
         Check(!PC->SetWeightedFirstPersonEnabled(true) && !PC->SetWeightedFirstPersonMotionScale(.2f) && !PC->RestoreOriginalFirstPersonPresentation()
@@ -336,7 +485,42 @@ private:
         if (Failures) { Finish(); return; }
         LocomotionActor=Character->GetActorTransform();
         Results+=FString::Printf(TEXT("locomotion_fixture=QA_owned_transient_collision_floor\nlocomotion_fixture_location=%s\nlocomotion_fixture_ground_surface_z_cm=%.6f\nui_screenshots_01_to_06=actual_hub\nsprint_screenshots_07_to_08=elevated_collision_fixture\n"),*LocomotionActor.GetLocation().ToString(),Ground->GetActorLocation().Z+20.);
-        Warm(false);
+        if (bFocusProbe) { ControlledFocusProbe(); } else { Warm(false); }
+    }
+    void ControlledFocusProbe()
+    {
+        // Positive control of the real engine focus-boundary API in this QA process only.
+        // This is a programmatic viewport callback, not an OS focus change or physical-input test.
+        Stage=TEXT("controlled_focus_probe_input_settle"); Stop(); PC->CloseAllBlockingPanels();
+        Later(.3,[this]
+        {
+            Stage=TEXT("controlled_focus_probe_press"); Key(EKeys::W,true); Key(EKeys::LeftShift,true);
+            Later(.2,[this]
+            {
+                Check(TraceViewport.IsValid() && TraceViewport->Viewport && PC->IsInputKeyDown(EKeys::W) && PC->IsInputKeyDown(EKeys::LeftShift),TEXT("controlled_focus_probe_starts_with_two_actual_held_key_states"));
+                if (Failures) { Finish(); return; }
+                const int32 Before=ControlledFocusFlushCount;
+                Stage=TEXT("controlled_focus_probe_lost_focus"); bInControlledFocusProbe=true;
+                TraceInput(TEXT("controlled_focus_probe_before_lost_focus"));
+                TraceViewport->LostFocus(TraceViewport->Viewport);
+                TraceInput(TEXT("controlled_focus_probe_after_lost_focus"));
+                Check(!PC->IsInputKeyDown(EKeys::W) && !PC->IsInputKeyDown(EKeys::LeftShift),TEXT("actual_own_viewport_LostFocus_clears_both_held_keys"));
+                Check(ControlledFocusFlushCount==Before+1,TEXT("actual_own_viewport_LostFocus_emits_exact_own_input_flush_hook"));
+                Stage=TEXT("controlled_focus_probe_received_focus"); TraceViewport->ReceivedFocus(TraceViewport->Viewport);
+                TraceInput(TEXT("controlled_focus_probe_after_received_focus")); bInControlledFocusProbe=false; Stop();
+                Later(.3,[this]
+                {
+                    Stage=TEXT("controlled_focus_probe_fresh_press_recovery"); MoveOrigin=Character->GetActorLocation(); Key(EKeys::W,true); Key(EKeys::LeftShift,true);
+                    Later(.45,[this]
+                    {
+                        Check(PC->IsInputKeyDown(EKeys::W) && PC->IsInputKeyDown(EKeys::LeftShift) && Character->IsSprinting()
+                            && FVector::Dist2D(MoveOrigin,Character->GetActorLocation())>5.f,TEXT("fresh_programmatic_press_recovers_real_movement_after_focus_probe"));
+                        TraceInput(TEXT("controlled_focus_probe_recovered")); Stop();
+                        if (Failures) { Finish(); return; } Warm(false);
+                    });
+                });
+            });
+        });
     }
     void Stop()
     {
@@ -448,6 +632,13 @@ private:
         const auto* Movement=Character->GetCharacterMovement(); const FVector Location=Character->GetActorLocation(); const double Speed=Character->GetVelocity().Size2D();
         if (Segment!=INDEX_NONE)
         {
+            // Mouse axes use a separate viewport route. Detect resulting aim/trajectory
+            // changes without suppressing hardware input or repairing a contaminated trial.
+            if (!PC->GetControlRotation().Equals(InitialControl,.01f))
+            {
+                if (MeasuredControlRotationMismatchCount==0) { TraceInput(TEXT("measured_control_rotation_mismatch")); }
+                ++MeasuredControlRotationMismatchCount;
+            }
             const bool bFinite=FMath::IsFinite(WallDelta) && WallDelta>=0. && FMath::IsFinite(WorldDelta) && WorldDelta>=0. && FMath::IsFinite(Speed);
             Check(bFinite,TEXT("frame_observation_deltas_are_finite_nonnegative"));
             if (bFinite)
@@ -457,7 +648,9 @@ private:
                 Observation.GroundedSamples+=Movement->IsMovingOnGround()?1:0;
             }
         }
-        Frames+=FString::Printf(TEXT("%d,%s,%d,%s,%d,%d,%d,%.9f,%.9f,%.9f,%.6f,%d,%.6f,%.6f,%.6f,%.9f,%.9f,%d,%d,%s,%.6f,%.6f,%.6f,%d,%.6f,%.6f,%d,%d,%d,%d,%d\n"),++Frame,*Stage,Segment,*ProfileId.ToString(EGuidFormats::Digits),PC->IsWeightedFirstPersonEnabled(),Appearance->IsWeightedFirstPersonActive(),static_cast<int32>(RunState->GetRunPhase()),World->GetTimeSeconds(),WorldDelta,WallDelta,Speed,Character->IsSprinting(),View.FOV,PostProcess->Priority,PostProcess->BlendWeight,S.MotionBlurAmount,S.SceneFringeIntensity,S.bOverride_MotionBlurAmount,S.bOverride_SceneFringeIntensity,Ground.IsValid()?TEXT("elevated_collision"):TEXT("actual_hub"),Location.X,Location.Y,Location.Z,static_cast<int32>(Movement->MovementMode),Movement->MaxWalkSpeed,Movement->GetCurrentAcceleration().Size(),PC->IsAnyBlockingWindowVisible(),PC->IsMoveInputIgnored(),Movement->IsMovingOnGround(),PC->IsInputKeyDown(EKeys::W),PC->IsInputKeyDown(EKeys::LeftShift));
+        FInputTraceRecord Focus; if (bInputTrace) { TraceFocusState(Focus); } const FRotator Control=PC->GetControlRotation();
+        Frames+=FString::Printf(TEXT("%d,%s,%d,%s,%d,%d,%d,%.9f,%.9f,%.9f,%.6f,%d,%.6f,%.6f,%.6f,%.9f,%.9f,%d,%d,%s,%.6f,%.6f,%.6f,%d,%.6f,%.6f,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%.6f,%.6f\n"),++Frame,*Stage,Segment,*ProfileId.ToString(EGuidFormats::Digits),PC->IsWeightedFirstPersonEnabled(),Appearance->IsWeightedFirstPersonActive(),static_cast<int32>(RunState->GetRunPhase()),World->GetTimeSeconds(),WorldDelta,WallDelta,Speed,Character->IsSprinting(),View.FOV,PostProcess->Priority,PostProcess->BlendWeight,S.MotionBlurAmount,S.SceneFringeIntensity,S.bOverride_MotionBlurAmount,S.bOverride_SceneFringeIntensity,Ground.IsValid()?TEXT("elevated_collision"):TEXT("actual_hub"),Location.X,Location.Y,Location.Z,static_cast<int32>(Movement->MovementMode),Movement->MaxWalkSpeed,Movement->GetCurrentAcceleration().Size(),PC->IsAnyBlockingWindowVisible(),PC->IsMoveInputIgnored(),Movement->IsMovingOnGround(),PC->IsInputKeyDown(EKeys::W),PC->IsInputKeyDown(EKeys::LeftShift),bInputTrace,InputFlushCount,Focus.AppActive,Focus.ViewportFocus,Focus.ViewportForeground,Focus.ViewportIgnore,Control.Yaw,Control.Pitch);
+        bLastSampleW=PC->IsInputKeyDown(EKeys::W); bLastSampleShift=PC->IsInputKeyDown(EKeys::LeftShift);
     }
     static FString Statistics(TArray<double> Values)
     {
@@ -470,6 +663,7 @@ private:
     {
         if (bFinished) { return; } bFinished=true; Next=nullptr;
         FWorldDelegates::OnWorldPostActorTick.Remove(SampleHandle); FWorldDelegates::OnWorldCleanup.Remove(Cleanup);
+        RemoveInputTrace();
         Stop();
         if (bPrepared && Character.IsValid())
         {
@@ -480,6 +674,8 @@ private:
         if (Ground.IsValid()) { Ground->Destroy(); }
         if (bOwnCVars) { Heavy->Set(OldHeavy,ECVF_SetByConsole); Motion->Set(OldMotion,ECVF_SetByConsole); FOV->Set(OldFOV,ECVF_SetByConsole); }
         for (int32 I=0;I<4;++I) { const auto& O=Segments[I]; Metrics+=FString::Printf(TEXT("%d,%s,warmed_sprint,%d,%s,%s,%.6f,%.6f,%.6f,%.6f,%d\n"),I,O.bWeighted?TEXT("ON"):TEXT("OFF"),O.WallDeltas.Num(),*Statistics(O.WallDeltas),*Statistics(O.WorldDeltas),O.WallDeltas.IsEmpty()?0.:O.MinSpeed,O.MaxSpeed,O.NetDistance,O.ExpectedSprintSpeed,O.GroundedSamples); }
+        SaveInputTrace();
+        Results+=FString::Printf(TEXT("offscreen=%d\ninput_trace=%d\nfocus_probe=%d\nfocus_probe_scope=programmatic_own_viewport_callback_outside_ABBA_not_OS_focus_or_physical_input\n"),bOffscreen,bInputTrace,bFocusProbe);
         Check(FFileHelper::SaveStringToFile(Frames,*(Output/TEXT("frames.csv"))),TEXT("frame_evidence_written"));
         Check(FFileHelper::SaveStringToFile(Metrics,*(Output/TEXT("metrics.csv"))),TEXT("observation_metrics_written"));
         Results+=FString::Printf(TEXT("checks=%d\nfailures=%d\nframes=%d\nrendered=%d\nprofile_id=%s\ninput=programmatic_InputKey_and_actual_UMG_delegates\nmenu_input=controller_InputKey_and_rendered_Slate_keys\nmanual_play=not_performed\nperformance_assertions=none\nmetrics_scope=same_process_warmed_locomotion_OFF_ON_ON_OFF_1p5s_each_on_elevated_transient_collision_floor\ncapture_hold_s=0.85_equal_all_four_segments_before_measurement\npost_menu_input_settle_s=0.3_before_fresh_W_press\nframe_wall_delta=PlatformTime_seconds_between_world_post_actor_tick_observations\nworld_delta=OnWorldPostActorTick_game_tick_seconds\nresult_guard=synthetic_result_panel_only_no_settlement_or_travel\ncold_first_attack_hitch=not_measured_use_separate_existing_rendered_attack_evidence\nNOTE=Fresh QA-owned profile; transient presentation tests detached from autosave. Modal-only checkpoint temporarily reattached then detached. No physical input, manual full run, or cold attack hitch comparison. ABBA numbers on a QA-owned elevated collision floor are observations under renderer/frame-cap/save-hash-monitor conditions, without performance causality or improvement claims. Viewport PNG readability requires visual review.\n"),Checks,Failures,Frame,bRendered,*ProfileId.ToString(EGuidFormats::Digits));
@@ -489,6 +685,7 @@ private:
     }
     TWeakObjectPtr<UWorld> World;
     TWeakObjectPtr<AActor> Ground;
+    TWeakObjectPtr<UGameViewportClient> TraceViewport;
     TWeakObjectPtr<ARogue10mPlayerController> PC;
     TWeakObjectPtr<ARogue10mCharacter> Character;
     TWeakObjectPtr<ARogue10mGameState> RunState;
@@ -504,6 +701,8 @@ private:
     URogue10mProgressionSubsystem* Saves=nullptr;
     IConsoleVariable* Heavy=nullptr; IConsoleVariable* Motion=nullptr; IConsoleVariable* FOV=nullptr;
     FDelegateHandle SampleHandle,Cleanup;
+    FDelegateHandle InputFlushHandle,ViewportInputHandle,AppActivationHandle,FocusChangingHandle;
+    TArray<FInputTraceRecord> InputTraceRecords;
     TFunction<void()> Next;
     FSegment Segments[4];
     FPostProcessSettings SprintSettings;
@@ -516,6 +715,9 @@ private:
     float OldMotion=1,OldFOV=0,OriginalFOV=90,OriginalArmsFOV=80,OriginalArmsScale=.6f,SprintBlend=0,SprintPriority=0;
     int32 OldHeavy=0,Checks=0,Failures=0,Frame=0,Segment=INDEX_NONE;
     bool bFinished=false,bRendered=false,bOwnCVars=false,bPrepared=false,bInitialDamage=true,bOriginalFirstFOV=false,bOriginalFirstScale=false;
+    int32 InputFlushCount=0,NonProbeFlushCount=0,MeasuredInputFlushCount=0,ControlledFocusFlushCount=0,CapturedInputStacks=0,DroppedInputStacks=0,DroppedInputTraceRecords=0;
+    int32 MeasuredViewportInputCount=0,MeasuredControlRotationMismatchCount=0;
+    bool bOffscreen=false,bInputTrace=false,bFocusProbe=false,bInControlledFocusProbe=false,bFlushTraceAvailable=false,bLastSampleW=false,bLastSampleShift=false,bWantedW=false,bWantedShift=false;
 };
 static TSharedPtr<FRun> Active;
 static void Run()

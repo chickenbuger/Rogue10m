@@ -44,3 +44,7 @@ UE5.8.3 CL58210709, MSVC14.44, SDK10.0.22621.0. 최종 Editor Development 빌드
 기준 `021921ff`, 별도 `Sprint#9-11-first-person-settings`. 보존 목록은 세이브216+기존 증거390=606파일이며 전체 SHA256 불변을 다시 확인한다. 새 QA 슬롯도 삭제하지 않는다. 증거 `DevLog/20261029_FirstPersonSettings_FpUiRenderC1029/`의 README/verification.json, raw `Feature/doc/evidence/first-person-settings-20261029/`, task 체크포인트에 최종 커밋·소스 해시를 남긴다. 미디어는 커밋하지 않는다. 로컬 커밋만 하고 push/병합은 하지 않는다.
 
 물리 입력·일반 OpenRunMap 완주·전체 클리핑·장시간 체감·콜드 공격 hitch 원인 분리는 미실행이다. 다음 재개에서 실제 사용자 조작으로 새 메뉴를 확인하고, 입력/포커스 변경을 함께 기록한 렌더링 비교와 필드 루프 검증을 진행할 수 있다. 새 사용자 질문이나 앱 승인 대기는 없다.
+
+## 후속 검증 완료 — Sprint#9-12
+
+기존 RenderC5실패 기록은 그대로 보존한다. 공식 입력/Flush 계측과 오염 gate를 보강한 일반 렌더링569항목, Offscreen565항목이 모두 통과했다. 실제 포커스 상실 API의 두키해제/새입력복구를 프로그램 양성 대조로 확인했지만 과거 실패의 정확한 원인은 소급 단정하지 않는다. 별도 촬영 없는 첫 공격4프로세스에서 두 모드 공통의 수락/첫 피해 프레임 지연을 재현했다. 상세와 한계는 2026-10-29_input-frame-validation.md를 참조한다.
