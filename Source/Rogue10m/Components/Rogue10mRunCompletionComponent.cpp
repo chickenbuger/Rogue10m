@@ -118,7 +118,7 @@ bool URogue10mRunCompletionComponent::SaveSettlement()
 	bProgressionSaved = Character && Character == ResultCharacter.Get() && Character->GetWorld() == GetWorld()
 		&& ResultProfileId.IsValid() && Progression && Progression->GetAttachedProfileId() == ResultProfileId
 		&& Progression->IsAttachedTo(*Character)
-		&& Progression->CanRetrySave() && Progression->SaveNow();
+		&& Progression->CanRetrySave() && Progression->SaveRunSettlement(bVictory);
 	if (bProgressionSaved)
 	{
 		SaveStatus = NSLOCTEXT("Rogue10mRun", "Saved", "성장과 아이템을 저장했습니다.");

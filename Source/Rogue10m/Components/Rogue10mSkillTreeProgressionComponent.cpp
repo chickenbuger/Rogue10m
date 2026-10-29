@@ -166,7 +166,7 @@ int32 URogue10mSkillTreeProgressionComponent::GetAvailableGrowthPoints() const
 {
 	const auto* Player = GetPlayerState();
 	const auto* Town = Player ? Player->GetTownProgressionComponent() : nullptr;
-	return Player && Town ? FMath::Max(0, Player->GetPlayerLevel() - 1) - Town->GetSpentTraitPoints() - GetSpentSkillTreePoints() : 0;
+	return Player && Town ? FMath::Max(0, Player->GetPlayerLevel() - 1) - Town->GetRunSharedTraitSpent() - GetSpentSkillTreePoints() : 0;
 }
 bool URogue10mSkillTreeProgressionComponent::IsNodeUnlocked(FName NodeId) const { return Rogue10mSkillTree::Find(State, NodeId) != nullptr; }
 FName URogue10mSkillTreeProgressionComponent::GetSelectedChoice(FName NodeId) const
@@ -279,7 +279,7 @@ bool URogue10mSkillTreeProgressionComponent::CanUnlockNode(FName NodeId, ERogue1
 	if (!Evaluation.bPrerequisitesSatisfied) { return Fail(TEXT("선행 노드를 먼저 전수해 주세요.")); }
 	if (!Rogue10mSkillTree::ChoiceValid(*Node, ChoiceId)) { return Fail(TEXT("성질을 하나 선택해 주세요.")); }
 	const auto* Player = GetPlayerState();
-	if (!Validate(State, FMath::Max(0, Player->GetPlayerLevel() - 1), Player->GetTownProgressionComponent()->GetSpentTraitPoints(), nullptr, GetCatalog())) { return Fail(TEXT("성장 포인트 원장을 확인해 주세요.")); }
+	if (!Validate(State, FMath::Max(0, Player->GetPlayerLevel() - 1), Player->GetTownProgressionComponent()->GetRunSharedTraitSpent(), nullptr, GetCatalog())) { return Fail(TEXT("성장 포인트 원장을 확인해 주세요.")); }
 	if (Route == ERogue10mSkillTreeUnlockRoute::Points)
 	{
 		if (!Evaluation.CanAcquire(Route)) { return Fail(TEXT("공용 성장 포인트가 부족합니다.")); }
@@ -390,7 +390,7 @@ bool URogue10mSkillTreeProgressionComponent::RefundNode(FName NodeId)
 	} while (Removed > 0);
 	if (!Rogue10mSkillTree::LearnedIdentity(Candidate, Candidate.ActiveIdentity, *GetCatalog())) { Candidate.ActiveIdentity = ERogue10mSkillTreeIdentity::None; }
 	const auto* Player = GetPlayerState();
-	if (!Player || !Validate(Candidate, FMath::Max(0, Player->GetPlayerLevel() - 1), Player->GetTownProgressionComponent()->GetSpentTraitPoints(), nullptr, GetCatalog())) { return false; }
+	if (!Player || !Validate(Candidate, FMath::Max(0, Player->GetPlayerLevel() - 1), Player->GetTownProgressionComponent()->GetRunSharedTraitSpent(), nullptr, GetCatalog())) { return false; }
 	State = MoveTemp(Candidate);
 	RefreshAutomaticUnlocks(); NotifyChanged(true); return true;
 }
@@ -533,7 +533,7 @@ bool URogue10mSkillTreeProgressionComponent::Restore(const FRogue10mSkillTreeSna
 {
 	const auto* Player = GetPlayerState();
 	const auto* Town = Player ? Player->GetTownProgressionComponent() : nullptr;
-	return Town && RestoreForTransaction(Snapshot, bNotify, Town->GetSpentTraitPoints());
+	return Town && RestoreForTransaction(Snapshot, bNotify, Town->GetRunSharedTraitSpent());
 }
 
 bool URogue10mSkillTreeProgressionComponent::RestoreForTransaction(const FRogue10mSkillTreeSnapshot& Snapshot, bool bNotify, int32 TraitSpentPoints)

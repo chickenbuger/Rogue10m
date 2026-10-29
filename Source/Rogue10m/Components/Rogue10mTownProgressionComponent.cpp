@@ -64,6 +64,7 @@ int32 URogue10mTownProgressionComponent::GetSpentTraitPoints() const
 
 int32 URogue10mTownProgressionComponent::GetAvailableTraitPoints() const
 {
+	if (UsesLobbyBudget()) { return FMath::Max(0, LobbyEarnedPoints - GetSpentTraitPoints()); }
 	const ARogue10mPlayerState* State = Cast<ARogue10mPlayerState>(GetOwner());
 	if (State && State->GetSkillTreeProgressionComponent()) { return State->GetSkillTreeProgressionComponent()->GetAvailableGrowthPoints(); }
 	return State ? FMath::Max(0, State->GetPlayerLevel() - 1) - GetSpentTraitPoints() : 0;
@@ -101,7 +102,7 @@ FRogue10mTownProgressionSnapshot URogue10mTownProgressionComponent::MigrateLegac
 }
 
 bool URogue10mTownProgressionComponent::ValidateSnapshot(
-	const FRogue10mTownProgressionSnapshot& Snapshot, int32 EarnedPoints)
+	const FRogue10mTownProgressionSnapshot& Snapshot, int32 EarnedPoints, int32 UnlockLevel)
 {
 	const auto ValidScale = [](float Value) { return FMath::IsFinite(Value) && Value >= .1f && Value <= 10.0f; };
 	const auto ValidLegacy = [](int32 Rank, float Bonus)
@@ -129,7 +130,7 @@ bool URogue10mTownProgressionComponent::ValidateSnapshot(
 			|| !FMath::IsFinite(Row.Bonus) || Row.Bonus < 0.0f
 			|| Row.Bonus > URogue10mTraitCatalogDataAsset::GetMaximumBonusPerRank(Row.Trait) * Row.Rank) { return false; }
 		if (Row.Trait == ERogue10mTownTrait::LastStand
-			&& (EarnedPoints < 19 || Row.SpentPoints < 3 || Row.Bonus <= 0.0f)) { return false; }
+			&& ((UnlockLevel == INDEX_NONE ? EarnedPoints + 1 : UnlockLevel) < 20 || Row.SpentPoints < 3 || Row.Bonus <= 0.0f)) { return false; }
 		if (Row.Trait == ERogue10mTownTrait::Vitality)
 		{
 			if (Row.SpentPoints != Row.Rank) { return false; }
@@ -151,7 +152,7 @@ bool URogue10mTownProgressionComponent::RestoreProgression(const FRogue10mTownPr
 {
 	const ARogue10mPlayerState* State = Cast<ARogue10mPlayerState>(GetOwner());
 	const int32 TreeSpent = State && State->GetSkillTreeProgressionComponent() ? State->GetSkillTreeProgressionComponent()->GetSpentSkillTreePoints() : 0;
-	if (!State || !State->HasAuthority() || !ValidateSnapshot(Snapshot, FMath::Max(0, State->GetPlayerLevel() - 1) - TreeSpent)) { return false; }
+	if (!State || !State->HasAuthority() || !ValidateSnapshot(Snapshot, UsesLobbyBudget() ? LobbyEarnedPoints : FMath::Max(0, State->GetPlayerLevel() - 1) - TreeSpent, UsesLobbyBudget() ? LobbyUnlockLevel : INDEX_NONE)) { return false; }
 	const auto Canonical = MigrateLegacySnapshot(Snapshot);
 	TraitInvestments = Canonical.TraitInvestments;
 	Difficulty = Canonical.Difficulty;
@@ -213,7 +214,7 @@ bool URogue10mTownProgressionComponent::CanUpgradeTrait(
 		return false;
 	}
 	const ARogue10mPlayerState* State = Cast<ARogue10mPlayerState>(GetOwner());
-	if (!State || State->GetPlayerLevel() < Def.UnlockLevel)
+	if (!State || (UsesLobbyBudget() ? LobbyUnlockLevel : State->GetPlayerLevel()) < Def.UnlockLevel)
 	{
 		OutReason = FText::Format(NSLOCTEXT("Rogue10mTraits", "LevelLock", "LV {0} 해금"), FText::AsNumber(Def.UnlockLevel));
 		return false;

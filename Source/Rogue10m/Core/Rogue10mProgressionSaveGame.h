@@ -83,7 +83,16 @@ class ROGUE10M_API URogue10mProgressionSaveGame : public USaveGame
 {
 	GENERATED_BODY()
 public:
-	static constexpr int32 CurrentVersion = 3;
+	static constexpr int32 CurrentVersion = 4;
+	/** Lobby currency is earned independently of the current run level. Spent value is Town's ledger. */
+	UPROPERTY(SaveGame) int32 LobbyEarnedPoints = 0;
+	UPROPERTY(SaveGame) int32 HighestRunLevel = 1;
+	UPROPERTY(SaveGame) int64 RewardDefeatBaseline = 0;
+	/** Informational discovery only; never used as learned skills or acquisition requirements. */
+	UPROPERTY(SaveGame) TSet<FName> DiscoveredNodes;
+	UPROPERTY(SaveGame) FGuid RunId;
+	UPROPERTY(SaveGame) FGuid LastSettledRunId;
+	UPROPERTY(SaveGame) bool bRunCompleted = false;
 	UPROPERTY(SaveGame) int32 SaveVersion = CurrentVersion;
 	UPROPERTY(SaveGame) FGuid ProfileId;
 	UPROPERTY(SaveGame) FRogue10mGrowthSnapshot Growth;

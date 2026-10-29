@@ -336,6 +336,11 @@ protected:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="Rogue10m|Inventory|Grid")
 	TArray<FRogue10mInventoryContainer> InventoryContainers;
 
+	/** The first-version run weapon. Other weapons are acquired in the field. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Inventory|Starter")
+	TSoftObjectPtr<URogue10mItemDataAsset> StarterWeaponItem = TSoftObjectPtr<URogue10mItemDataAsset>(
+		FSoftObjectPath(TEXT("/Game/DataAsset/Item/Starter/DA_Item_StarterKnuckle.DA_Item_StarterKnuckle")));
+
 	/** Adds the configured prototype items once when the base inventory starts empty. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Inventory|Prototype")
 	bool bAddPrototypeStartingItems = true;

@@ -8,6 +8,8 @@
 
 class ARogue10mCharacter;
 class ARogue10mPlayerState;
+class ARogue10mGameState;
+enum class ERogue10mRunPhase : uint8;
 class URogue10mProgressionSaveGame;
 
 /** Character-owned progression, inventory and NPC receipts survive travel and restart. */
@@ -31,6 +33,13 @@ public:
 	ERogue10mDifficulty GetSelectedDifficulty() const;
 	FRogue10mDifficultyModifiers GetSelectedDifficultyModifiers() const;
 	FString GetSaveSlotForProfile(const FGuid& ProfileId) const;
+	FString GetLegacySaveSlotForProfile(const FGuid& ProfileId) const;
+	/** Terminal phase only. Applies the run receipt once, including after a failed disk write. */
+	bool SaveRunSettlement(bool bVictory);
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Lobby") int32 GetLobbyAvailablePoints() const;
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Lobby") bool HasDiscoveredNode(FName NodeId) const;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Lobby", meta=(ClampMin="0", ClampMax="1000")) int32 LobbyPointsPerDefeat = 1;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Lobby", meta=(ClampMin="0", ClampMax="10000")) int32 LobbyVictoryBonus = 10;
 private:
 	URogue10mProgressionSaveGame* LoadSelectedSnapshot() const;
 	URogue10mProgressionSaveGame* LoadSnapshot(const FGuid& ProfileId, bool& bOutExists) const;
@@ -39,7 +48,14 @@ private:
 	void CaptureCurrentState();
 	void SetError(const FText& Error) const;
 	UFUNCTION() void HandleStateChanged();
+	UFUNCTION() void HandleRunPhaseChanged(ERogue10mRunPhase Phase);
+	TWeakObjectPtr<ARogue10mGameState> ObservedRun;
+	FGuid SettlementProfileId;
+	FGuid SettlementRunId;
 	UPROPERTY(Transient) TObjectPtr<URogue10mProgressionSaveGame> SaveData;
+	/** Captured before the first save restore on each pawn; reattach cannot recycle run loot. */
+	UPROPERTY(Transient) TObjectPtr<URogue10mProgressionSaveGame> PawnStarterState;
+	TWeakObjectPtr<ARogue10mCharacter> StarterCharacter;
 	UPROPERTY(Transient) mutable TObjectPtr<URogue10mProgressionSaveGame> SelectedSnapshotCache;
 	UPROPERTY(Transient) mutable FText LastError;
 	TWeakObjectPtr<ARogue10mCharacter> CurrentCharacter;
