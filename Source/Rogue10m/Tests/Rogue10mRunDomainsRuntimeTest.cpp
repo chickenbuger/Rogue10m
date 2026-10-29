@@ -147,7 +147,7 @@ private:
 		Check(Saves->SaveNow(),TEXT("active_run_snapshot_saved"));
 		Slot=Saves->GetSaveSlotForProfile(ProfileId);
 		Seed.Reset(Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(Slot,0)));
-		Check(Seed.IsValid() && Seed->SaveVersion==4 && Seed->RunId.IsValid(),TEXT("v4_slot_has_explicit_run_identity"));
+		Check(Seed.IsValid() && Seed->SaveVersion==URogue10mProgressionSaveGame::CurrentVersion && Seed->RunId.IsValid(),TEXT("current_slot_has_explicit_run_identity"));
 		if (Failures) { Finish(); return; }
 		RunId=Seed->RunId;
 		for (const auto& Investment:Tree->Capture().Investments) { Discovered.Add(Investment.NodeId); }

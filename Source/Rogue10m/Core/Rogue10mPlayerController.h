@@ -8,6 +8,8 @@
 #include "Rogue10mPlayerController.generated.h"
 
 class ARogue10mBasicMonster;
+class ARogue10mGameState;
+class URogue10mProgressionSubsystem;
 class ARogue10mTutorialNPC;
 class UInputMappingContext;
 class URogue10mCharacterLobbyWidget;
@@ -89,6 +91,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Run")
 	void ShowRunResult();
+	/** Explicit user action. Requires an active owned run and a recorded entry checkpoint. */
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Run")
+	bool RequestAbandonCurrentRun();
+	/** Prototype entry without reserving or replacing any gameplay key. Run twice within three seconds. */
+	UFUNCTION(Exec)
+	void AbandonRun();
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Run")
 	bool IsRunResultVisible() const { return bRunResultVisible; }
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Run")
@@ -322,6 +330,9 @@ private:
 	void SetPanelVisible(bool& PanelState, bool bVisible, URogue10mMenuWindowWidget* ActivatedWindow);
 	void SetInventoryEquipmentPanelVisible(bool& PanelState, bool bVisible, URogue10mMenuWindowWidget* ActivatedWindow);
 	void HandleToggleCombatLog();
+	void HandleAbandonConfirmation();
+	void ClearAbandonConfirmation();
+	bool ResolveAbandonContext(URogue10mProgressionSubsystem*& OutProgression, ARogue10mGameState*& OutRun) const;
 	void InitializeDamageIndicatorPool();
 	URogue10mDamageIndicatorWidget* AcquireDamageIndicator();
 	void ShowDamageIndicatorAtLocation(const FVector& WorldLocation, float DamageAmount, bool bCriticalHit);
@@ -340,6 +351,10 @@ private:
 	bool bSettingsVisible = false;
 	bool bTraitWindowVisible = false;
 	bool bRunResultVisible = false;
+	TWeakObjectPtr<UWorld> AbandonConfirmationWorld;
+	FGuid AbandonConfirmationProfile;
+	FGuid AbandonConfirmationRun;
+	double AbandonConfirmationDeadline = 0.0;
 	bool bTraitAddedMoveIgnore = false;
 	bool bTraitAddedLookIgnore = false;
 	TWeakObjectPtr<ARogue10mTutorialNPC> TraitServiceNPC;

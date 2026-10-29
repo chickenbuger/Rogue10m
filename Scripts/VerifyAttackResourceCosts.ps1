@@ -1,5 +1,5 @@
 param(
-    [ValidateSet('AttackResources','HybridSkillTree','ProgressionRequirements','WeaponCooldown','WeaponSwitch')][string]$Suite = 'AttackResources',
+    [ValidateSet('AttackResources','HybridSkillTree','ProgressionRequirements','WeaponCooldown','WeaponSwitch','RunCurrencyBaseline')][string]$Suite = 'AttackResources',
     [ValidateRange(60,600)][int]$TimeoutSeconds = 240,
     [ValidatePattern('^[A-Za-z0-9_]{1,24}$')][string]$RunLabel = 'final',
     [ValidatePattern('^[A-Za-z0-9_-]{1,80}$')][string]$EvidencePacket = 'atomic-attack-costs-20261026'
@@ -13,6 +13,7 @@ $expected = if ($Suite -eq 'AttackResources') {
     @('AggregationAndAtomicFailure','InvalidDataAndDiscount','OptionalManaAndExecutionSnapshot','ReentrantAcceptanceRejected')
 } elseif ($Suite -eq 'ProgressionRequirements') { @('TruthTable','InvalidDataAndEmptyDefaults','LegacyAlternativesAndGroups','LiveAcquisitionAndAttack') }
 elseif ($Suite -eq 'WeaponCooldown') { @('FloorBoundaries','SameTypeAndRestore','ReservedComboDeadline','TimeAcrossWeapons','RealAttackAcceptance') }
+elseif ($Suite -eq 'RunCurrencyBaseline') { @('PostPaymentRollback','ImmutableCapture','InvalidCaptureIsAtomic','InvalidResolutionIsAtomic','RepeatedRollbackAndRunIsolation','ZeroAndMaximumBalances') }
 elseif ($Suite -eq 'WeaponSwitch') { @('LocomotionAndNoInvulnerability','RejectBeforeMutation','AttackBoundaryAndLongCooldown','SameTypeAndDuplicateInstance','ValidationFailureIsAtomic','ReentrantCommandsRejected','ConservativeBusyStates','AllMutationPathsSucceedAtIdle') }
 else { @('MasteryAlternativesAndLegacy','MasteryAndRewards','SharedLedgerAndValidation') }
 $arguments = @(

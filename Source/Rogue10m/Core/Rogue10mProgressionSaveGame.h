@@ -7,6 +7,7 @@
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mTownServiceDataAsset.h"
 #include "Rogue10mSkillTreeData.h"
+#include "Rogue10mRunCurrencyBaseline.h"
 #include "Rogue10mProgressionSaveGame.generated.h"
 
 /** Runtime presentation values contain no hard asset reference in the save. */
@@ -83,7 +84,7 @@ class ROGUE10M_API URogue10mProgressionSaveGame : public USaveGame
 {
 	GENERATED_BODY()
 public:
-	static constexpr int32 CurrentVersion = 4;
+	static constexpr int32 CurrentVersion = 5;
 	/** Lobby currency is earned independently of the current run level. Spent value is Town's ledger. */
 	UPROPERTY(SaveGame) int32 LobbyEarnedPoints = 0;
 	UPROPERTY(SaveGame) int32 HighestRunLevel = 1;
@@ -91,8 +92,13 @@ public:
 	/** Informational discovery only; never used as learned skills or acquisition requirements. */
 	UPROPERTY(SaveGame) TSet<FName> DiscoveredNodes;
 	UPROPERTY(SaveGame) FGuid RunId;
+	/** Cost-committed balance at the hub portal; additive optional field for existing v4 files. */
+	UPROPERTY(SaveGame) FRogue10mRunCurrencyBaseline EntryCurrencies;
 	UPROPERTY(SaveGame) FGuid LastSettledRunId;
 	UPROPERTY(SaveGame) bool bRunCompleted = false;
+	UPROPERTY(SaveGame) bool bAbandoned = false;
+	/** Armed only after the run starts, never merely by a portal save attempt. */
+	UPROPERTY(SaveGame) bool bEnteredRun = false;
 	UPROPERTY(SaveGame) int32 SaveVersion = CurrentVersion;
 	UPROPERTY(SaveGame) FGuid ProfileId;
 	UPROPERTY(SaveGame) FRogue10mGrowthSnapshot Growth;

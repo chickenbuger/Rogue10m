@@ -52,7 +52,8 @@ void ARogue10mRunPortal::HandlePortalBeginOverlap(UPrimitiveComponent* Overlappe
 		{
 			if (URogue10mProgressionSubsystem* Progression = Instance->GetSubsystem<URogue10mProgressionSubsystem>())
 			{
-				if (Progression->IsAttachedTo(*Character) && !Progression->SaveNow())
+				if (Progression->IsAttachedTo(*Character)
+					&& !(bStartRunTimerOnTravel ? Progression->SaveRunEntryCurrencyBaseline() : Progression->SaveNow()))
 				{
 					bTravelStarted = false;
 					UE_LOG(LogRogue10m, Error, TEXT("Portal travel stopped: character progression could not be saved."));

@@ -61,7 +61,9 @@ static bool Validate(const URogue10mProgressionSaveGame& Save, const FGuid& Prof
 	if (Save.SaveVersion >= 4 && (Save.LobbyEarnedPoints < 0 || Save.HighestRunLevel < Save.Growth.Level
 		|| Save.HighestRunLevel > 1000000 || !Save.RunId.IsValid()
 		|| (Save.bRunCompleted != (Save.LastSettledRunId == Save.RunId))
+		|| (Save.bAbandoned && (!Save.bRunCompleted || !Save.EntryCurrencies.IsValid()))
 		|| Save.RewardDefeatBaseline < 0
+		|| (Save.EntryCurrencies.bCaptured && (!Save.EntryCurrencies.IsValid() || Save.EntryCurrencies.RunId != Save.RunId))
 		|| Save.DiscoveredNodes.Contains(NAME_None))) { return false; }
 	const auto& Town = Save.Town;
 	// Old files have no canonical records. A file claiming version 1 cannot import new traits.
@@ -91,7 +93,7 @@ static bool Validate(const URogue10mProgressionSaveGame& Save, const FGuid& Prof
 
 FString URogue10mProgressionSubsystem::GetSaveSlotForProfile(const FGuid& ProfileId) const
 {
-	return GetLegacySaveSlotForProfile(ProfileId) + TEXT("_v4");
+	return GetLegacySaveSlotForProfile(ProfileId) + TEXT("_v5");
 }
 
 FString URogue10mProgressionSubsystem::GetLegacySaveSlotForProfile(const FGuid& ProfileId) const
@@ -120,8 +122,12 @@ URogue10mProgressionSaveGame* URogue10mProgressionSubsystem::LoadSnapshot(
 	const FGuid& ProfileId, bool& bOutExists) const
 {
 	FString Slot = GetSaveSlotForProfile(ProfileId);
-	// An existing v4 file always wins, including an invalid one. Never silently fall back and lose progress.
-	if (!UGameplayStatics::DoesSaveGameExist(Slot, 0)) { Slot = GetLegacySaveSlotForProfile(ProfileId); }
+	// Each newer format wins even when invalid; do not resurrect an older balance after a rejected load.
+	if (!UGameplayStatics::DoesSaveGameExist(Slot, 0))
+	{
+		const FString Version4Slot = GetLegacySaveSlotForProfile(ProfileId) + TEXT("_v4");
+		Slot = UGameplayStatics::DoesSaveGameExist(Version4Slot, 0) ? Version4Slot : GetLegacySaveSlotForProfile(ProfileId);
+	}
 	bOutExists = UGameplayStatics::DoesSaveGameExist(Slot, 0);
 	URogue10mProgressionSaveGame* Loaded = bOutExists
 		? Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(Slot, 0))
@@ -157,6 +163,8 @@ URogue10mProgressionSaveGame* URogue10mProgressionSubsystem::LoadSnapshot(
 		for (const auto& Row : Loaded->SkillTree.Investments) { Loaded->DiscoveredNodes.Add(Row.NodeId); }
 		Loaded->SaveVersion = 4;
 	}
+	// This marker did not exist in v4; older saves cannot prove a cost-committed field entry.
+	if (Loaded->SaveVersion < 5) { Loaded->bEnteredRun = false; }
 	return Loaded;
 }
 
@@ -239,11 +247,22 @@ bool URogue10mProgressionSubsystem::AttachCharacter(ARogue10mCharacter& Characte
 	bool bExists = false;
 	SaveData = LoadSnapshot(AttachedProfileId, bExists);
 	if (!SaveData) { return false; }
+	const auto OriginalSaveData = TStrongObjectPtr<URogue10mProgressionSaveGame>(DuplicateObject(SaveData.Get(), this));
 	const bool bNeedsMigration = bExists && !UGameplayStatics::DoesSaveGameExist(GetSaveSlotForProfile(AttachedProfileId), 0);
+	// Reopening the hub after an interrupted new-format field run is abandonment, not a fresh 20-minute continuation.
+	const auto* AttachingRun = Character.GetWorld()->GetGameState<ARogue10mGameState>();
+	const bool bInterruptedRun = bExists && SaveData->bEnteredRun && !SaveData->bRunCompleted && SaveData->EntryCurrencies.IsValid()
+		&& AttachingRun && AttachingRun->GetRunPhase() == ERogue10mRunPhase::WaitingToStart
+		&& UGameplayStatics::GetCurrentLevelName(&Character, true) == TEXT("StartHub");
+	if (bInterruptedRun)
+	{
+		SaveData->bAbandoned = true;
+		SaveData->bRunCompleted = true;
+		SaveData->LastSettledRunId = SaveData->RunId;
+	}
 	const bool bResetCompletedRun = SaveData->bRunCompleted;
 	const int32 PreviousLobbyBudget = Town->GetLobbyEarnedBudget();
 	const int32 PreviousUnlockLevel = Town->GetLobbyUnlockLevel();
-	const auto OriginalSaveData = TStrongObjectPtr<URogue10mProgressionSaveGame>(DuplicateObject(SaveData.Get(), this));
 	Town->SetLobbyBudget(SaveData->LobbyEarnedPoints, SaveData->HighestRunLevel);
 	if (bResetCompletedRun)
 	{
@@ -251,10 +270,27 @@ bool URogue10mProgressionSubsystem::AttachCharacter(ARogue10mCharacter& Characte
 		SaveData->Growth = FRogue10mGrowthSnapshot();
 		SaveData->Growth.WeaponType = Character.GetEquippedWeaponType();
 		SaveData->Inventory = PawnStarterState->Inventory;
+		if (SaveData->bAbandoned)
+		{
+			int32 Gold, Crystals, Lobby;
+			if (!SaveData->EntryCurrencies.TryResolve(SaveData->RunId, Gold, Crystals, Lobby))
+			{
+				SaveData = OriginalSaveData.Get();
+				Town->SetLobbyBudget(PreviousLobbyBudget, PreviousUnlockLevel);
+				return false;
+			}
+			SaveData->Inventory.Gold = Gold;
+			SaveData->Inventory.Crystals = Crystals;
+			SaveData->LobbyEarnedPoints = Lobby;
+			Town->SetLobbyBudget(Lobby, SaveData->HighestRunLevel);
+		}
+		SaveData->bAbandoned = false;
+		SaveData->bEnteredRun = false;
 		SaveData->Combat = FRogue10mCombatSnapshot();
 		SaveData->SkillTree = FRogue10mSkillTreeSnapshot();
 		SaveData->ClaimedRewards.Reset(); // NPC receipts are run-scoped; Discovery has its own permanent domain.
 		SaveData->RunId = FGuid::NewGuid();
+		SaveData->EntryCurrencies = FRogue10mRunCurrencyBaseline();
 		SaveData->RewardDefeatBaseline = 0;
 		SaveData->bRunCompleted = false;
 	}
@@ -313,7 +349,7 @@ bool URogue10mProgressionSubsystem::AttachCharacter(ARogue10mCharacter& Characte
 	LastError = FText::GetEmpty();
 	BindChanges(Character);
 	} // Restoration is complete before the persistence gate is evaluated.
-	if (!bExists || bNeedsMigration || bResetCompletedRun)
+	if (!bExists || bNeedsMigration || bResetCompletedRun || SaveData->bEnteredRun != OriginalSaveData->bEnteredRun)
 	{
 		bDirty = true;
 		CaptureCurrentState();
@@ -358,6 +394,8 @@ void URogue10mProgressionSubsystem::HandleRunPhaseChanged(ERogue10mRunPhase Phas
 	{
 		SettlementProfileId = AttachedProfileId;
 		SettlementRunId = SaveData->RunId;
+		SaveData->bEnteredRun = true;
+		if (!bRestoring) { HandleStateChanged(); }
 	}
 }
 
@@ -387,6 +425,8 @@ void URogue10mProgressionSubsystem::UnbindChanges()
 	ObservedRun.Reset();
 	SettlementProfileId.Invalidate();
 	SettlementRunId.Invalidate();
+	PresentedRewardRunId.Invalidate();
+	PresentedRewardAmount = 0;
 	if (ARogue10mCharacter* Character = CurrentCharacter.Get())
 	{
 		Character->GetWorld()->GetTimerManager().ClearTimer(AutoSaveTimer);
@@ -446,6 +486,75 @@ bool URogue10mProgressionSubsystem::HasDiscoveredNode(FName NodeId) const
 	return !NodeId.IsNone() && Snapshot && Snapshot->DiscoveredNodes.Contains(NodeId);
 }
 
+FGuid URogue10mProgressionSubsystem::GetAttachedRunId() const
+{
+	return CanRetrySave() && SaveData ? SaveData->RunId : FGuid();
+}
+
+bool URogue10mProgressionSubsystem::SaveRunAbandonment()
+{
+	if (!CanRetrySave()) { return false; }
+	const auto* Run = CurrentCharacter->GetWorld()->GetGameState<ARogue10mGameState>();
+	if (!Run || Run != ObservedRun.Get() || Run->GetRunPhase() != ERogue10mRunPhase::Abandoned
+		|| SettlementProfileId != AttachedProfileId || SettlementRunId != SaveData->RunId) { return false; }
+	if (SaveData->LastSettledRunId != SaveData->RunId)
+	{
+		int32 Gold, Crystals, Lobby;
+		if (!SaveData->EntryCurrencies.TryResolve(SaveData->RunId, Gold, Crystals, Lobby)) { return false; }
+		CaptureCurrentState(); // Includes discovery made this run, independently of learned skills.
+		const auto Candidate = TStrongObjectPtr<URogue10mProgressionSaveGame>(DuplicateObject(SaveData.Get(), this));
+		Candidate->Inventory.Gold = Gold; Candidate->Inventory.Crystals = Crystals;
+		Candidate->LobbyEarnedPoints = Lobby;
+		Candidate->LastSettledRunId = Candidate->RunId;
+		Candidate->bRunCompleted = true;
+		Candidate->bAbandoned = true;
+		if (!Rogue10mProgressionPersistence::Validate(*Candidate, AttachedProfileId)) { return false; }
+		{
+			TGuardValue<bool> RestoreGuard(bRestoring, true);
+			if (!CurrentCharacter->GetInventoryComponent()->RestoreInventory(Candidate->Inventory)) { return false; }
+		}
+		SaveData = Candidate.Get();
+		PresentedRewardRunId = SaveData->RunId;
+		PresentedRewardAmount = 0; // Abandonment never mints a reward.
+	}
+	else if (!SaveData->bAbandoned) { return false; }
+	return SaveNow(); // A failed write retries the same already-applied receipt.
+}
+
+bool URogue10mProgressionSubsystem::SaveRunEntryCurrencyBaseline()
+{
+	if (!CanRetrySave()) { return false; }
+	const auto* Run = CurrentCharacter->GetWorld()->GetGameState<ARogue10mGameState>();
+	const auto* Inventory = CurrentCharacter->GetInventoryComponent();
+	FRogue10mRunCurrencyBaseline Candidate;
+	if (!Run || Run->GetRunPhase() != ERogue10mRunPhase::WaitingToStart || !Inventory
+		|| UGameplayStatics::GetCurrentLevelName(this, true) != TEXT("StartHub")
+		|| !Candidate.TryCapture(SaveData->RunId, Inventory->GetGold(), Inventory->GetCrystals(), SaveData->LobbyEarnedPoints)) { return false; }
+	// While still in town, each travel attempt uses the latest cost-committed balance.
+	// A rejected write must not freeze a stale checkpoint and prevent a later paid entry.
+	const auto Previous = SaveData->EntryCurrencies;
+	SaveData->EntryCurrencies = Candidate;
+	if (SaveNow()) { return true; }
+	SaveData->EntryCurrencies = Previous;
+	return false;
+}
+
+bool URogue10mProgressionSubsystem::TryResolveAbandonCurrencyBalances(int32& OutGold, int32& OutCrystals, int32& OutLobbyEarned) const
+{
+	return CanRetrySave() && SaveData && SaveData->EntryCurrencies.TryResolve(SaveData->RunId, OutGold, OutCrystals, OutLobbyEarned);
+}
+
+bool URogue10mProgressionSubsystem::TryGetCurrentRunLobbyReward(int32& OutAward, int32& OutAvailable, bool& bOutSaved) const
+{
+	if (!CanRetrySave() || !SaveData || PresentedRewardRunId != SaveData->RunId
+		|| SaveData->LastSettledRunId != SaveData->RunId || !SaveData->bRunCompleted
+		|| SettlementProfileId != AttachedProfileId || SettlementRunId != SaveData->RunId) { return false; }
+	OutAward = PresentedRewardAmount;
+	OutAvailable = GetLobbyAvailablePoints();
+	bOutSaved = IsSaveReady();
+	return true;
+}
+
 bool URogue10mProgressionSubsystem::SaveRunSettlement(bool bVictory)
 {
 	if (!CanRetrySave()) { return false; }
@@ -460,7 +569,10 @@ bool URogue10mProgressionSubsystem::SaveRunSettlement(bool bVictory)
 		for (const auto& Pair : SaveData->Growth.MonsterDefeats) { Defeats += FMath::Max(0, Pair.Value); }
 		const int64 Reward = FMath::Max<int64>(0, Defeats - SaveData->RewardDefeatBaseline) * FMath::Clamp(LobbyPointsPerDefeat, 0, 1000)
 			+ (bVictory ? FMath::Clamp(LobbyVictoryBonus, 0, 10000) : 0);
+		const int32 BeforeAward = SaveData->LobbyEarnedPoints;
 		SaveData->LobbyEarnedPoints = static_cast<int32>(FMath::Min<int64>(MAX_int32, static_cast<int64>(SaveData->LobbyEarnedPoints) + Reward));
+		PresentedRewardRunId = SaveData->RunId;
+		PresentedRewardAmount = SaveData->LobbyEarnedPoints - BeforeAward;
 		SaveData->LastSettledRunId = SaveData->RunId;
 		SaveData->bRunCompleted = true;
 	}

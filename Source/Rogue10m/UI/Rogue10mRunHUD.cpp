@@ -401,6 +401,13 @@ FRogue10mHudRunResultView URogue10mRunHUD::GetRunResultView() const
 		View.DescriptionText = FText::FromString(TEXT("보스를 처치하고 생존에 성공했습니다."));
 		View.ResultColor = FLinearColor(0.2f, 1.0f, 0.35f, 1.0f);
 	}
+	else if (View.RunPhase == ERogue10mRunPhase::Abandoned)
+	{
+		View.bVisible = true;
+		View.ResultText = FText::FromString(TEXT("탐험 포기"));
+		View.DescriptionText = FText::FromString(TEXT("입장 전 재화로 복원하며 공개한 기술 정보는 유지됩니다."));
+		View.ResultColor = FLinearColor(1.0f, 0.7f, 0.25f, 1.0f);
+	}
 	else if (View.RunPhase == ERogue10mRunPhase::Defeat)
 	{
 		View.bVisible = true;

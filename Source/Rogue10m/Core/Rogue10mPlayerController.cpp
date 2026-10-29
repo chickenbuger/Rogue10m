@@ -8,6 +8,9 @@
 
 #include "Engine/LocalPlayer.h"
 #include "Engine/World.h"
+#include "Engine/GameInstance.h"
+#include "HAL/PlatformTime.h"
+#include "Rogue10mProgressionSubsystem.h"
 #include "EnhancedInputSubsystems.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
@@ -198,10 +201,95 @@ void ARogue10mPlayerController::SetupInputComponent()
 
 void ARogue10mPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	ClearAbandonConfirmation();
 	// Do not revive the dialogue/input stack while the controller is leaving its world.
 	TraitServiceNPC.Reset();
 	CloseTraitWindow();
 	Super::EndPlay(EndPlayReason);
+}
+
+void ARogue10mPlayerController::ClearAbandonConfirmation()
+{
+	AbandonConfirmationWorld.Reset();
+	AbandonConfirmationProfile.Invalidate();
+	AbandonConfirmationRun.Invalidate();
+	AbandonConfirmationDeadline = 0.0;
+}
+
+bool ARogue10mPlayerController::ResolveAbandonContext(URogue10mProgressionSubsystem*& OutProgression, ARogue10mGameState*& OutRun) const
+{
+	OutProgression = nullptr;
+	OutRun = nullptr;
+	const UWorld* World = GetWorld();
+	const auto* PawnCharacter = Cast<ARogue10mCharacter>(GetPawn());
+	const auto* RogueState = PawnCharacter ? PawnCharacter->GetPlayerState<ARogue10mPlayerState>() : nullptr;
+	UGameInstance* Instance = GetGameInstance();
+	auto* Progression = Instance ? Instance->GetSubsystem<URogue10mProgressionSubsystem>() : nullptr;
+	auto* Run = World ? World->GetGameState<ARogue10mGameState>() : nullptr;
+	if (!IsLocalPlayerController() || !HasAuthority() || !World || World->GetNetMode() != NM_Standalone
+		|| IsMenuWorld() || bMainMenuVisible || bCharacterLobbyVisible || bRunResultVisible
+		|| !Run || !Run->IsRunActive() || Run->GetRemainingRunSeconds() <= 0.0f || !PawnCharacter || PawnCharacter->GetController() != this
+		|| PawnCharacter->IsDead() || !RogueState || RogueState->IsCharacterDead()
+		|| !Progression || !Progression->IsAttachedTo(*PawnCharacter) || !Progression->CanRetrySave()
+		|| !Progression->GetAttachedProfileId().IsValid() || !Progression->GetAttachedRunId().IsValid()) { return false; }
+	OutProgression = Progression;
+	OutRun = Run;
+	return true;
+}
+
+bool ARogue10mPlayerController::RequestAbandonCurrentRun()
+{
+	ClearAbandonConfirmation();
+	URogue10mProgressionSubsystem* Progression = nullptr;
+	ARogue10mGameState* Run = nullptr;
+	if (!ResolveAbandonContext(Progression, Run)) { return false; }
+	int32 EntryGold = 0, EntryCrystals = 0, EntryLobby = 0;
+	if (!Progression->TryResolveAbandonCurrencyBalances(EntryGold, EntryCrystals, EntryLobby))
+	{
+		bShowCombatLog = true;
+		AddCombatLogMessage(TEXT("입장 전 재화 기준선이 없는 저장입니다. 기존 진행과 보상을 보존하기 위해 포기를 실행하지 않았습니다."),
+			FLinearColor(1.0f, 0.64f, 0.43f), 6.0f);
+		return false;
+	}
+	if (!Run->AbandonRun()) { return false; }
+	CloseAllBlockingPanels();
+	UGameplayStatics::SetGamePaused(this, false);
+	return true;
+}
+
+void ARogue10mPlayerController::AbandonRun()
+{
+	HandleAbandonConfirmation();
+}
+
+void ARogue10mPlayerController::HandleAbandonConfirmation()
+{
+	URogue10mProgressionSubsystem* Progression = nullptr;
+	ARogue10mGameState* Run = nullptr;
+	if (!ResolveAbandonContext(Progression, Run)) { ClearAbandonConfirmation(); return; }
+	int32 EntryGold = 0, EntryCrystals = 0, EntryLobby = 0;
+	if (!Progression->TryResolveAbandonCurrencyBalances(EntryGold, EntryCrystals, EntryLobby))
+	{
+		RequestAbandonCurrentRun(); // Shares the same preservation notice and never creates a missing checkpoint.
+		return;
+	}
+	const double Now = FPlatformTime::Seconds();
+	if (AbandonConfirmationDeadline > 0.0 && Now <= AbandonConfirmationDeadline
+		&& AbandonConfirmationWorld.Get() == GetWorld()
+		&& AbandonConfirmationProfile == Progression->GetAttachedProfileId()
+		&& AbandonConfirmationRun == Progression->GetAttachedRunId())
+	{
+		RequestAbandonCurrentRun();
+		return;
+	}
+	ClearAbandonConfirmation();
+	AbandonConfirmationWorld = GetWorld();
+	AbandonConfirmationProfile = Progression->GetAttachedProfileId();
+	AbandonConfirmationRun = Progression->GetAttachedRunId();
+	AbandonConfirmationDeadline = Now + 3.0;
+	bShowCombatLog = true;
+	AddCombatLogMessage(TEXT("포기 확인: 3초 안에 콘솔에서 AbandonRun을 한 번 더 실행하세요. 런 물품은 초기화하고 입장 전 재화를 복원합니다. 마을 비용은 환불하지 않으며 습득 정보는 보존합니다."),
+		FLinearColor(1.0f, 0.76f, 0.42f), 3.0f);
 }
 
 void ARogue10mPlayerController::ToggleInspectionCamera()
@@ -375,6 +463,7 @@ void ARogue10mPlayerController::CloseTraitWindow()
 
 void ARogue10mPlayerController::EnterSelectedCharacter()
 {
+	ClearAbandonConfirmation();
 	URogue10mCharacterProfileSubsystem* Profiles = GetGameInstance()
 		? GetGameInstance()->GetSubsystem<URogue10mCharacterProfileSubsystem>()
 		: nullptr;
@@ -432,6 +521,8 @@ void ARogue10mPlayerController::EnterSelectedCharacter()
 	AddCombatLogMessage(
 		FString::Printf(TEXT("%s 캐릭터로 접속했습니다."), *Profile->CharacterName),
 		FLinearColor(0.55f, 0.88f, 1.0f, 1.0f));
+	AddCombatLogMessage(TEXT("탐험 포기(프로토타입): 콘솔에서 AbandonRun을 3초 안에 두 번 실행하세요."),
+		FLinearColor(0.75f, 0.82f, 0.88f), 6.0f);
 }
 
 

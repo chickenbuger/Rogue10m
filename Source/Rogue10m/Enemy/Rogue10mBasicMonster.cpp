@@ -1,4 +1,4 @@
-﻿// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "Rogue10mBasicMonster.h"
 
@@ -133,7 +133,7 @@ float ARogue10mBasicMonster::TakeDamage(
 {
 	if (!HasAuthority() || !FMath::IsFinite(DamageAmount)) { return 0.0f; }
 	const ARogue10mGameState* Run = GetWorld() ? GetWorld()->GetGameState<ARogue10mGameState>() : nullptr;
-	if (Run && (Run->GetRunPhase() == ERogue10mRunPhase::Victory || Run->GetRunPhase() == ERogue10mRunPhase::Defeat)) { return 0.0f; }
+	if (Run && Run->IsRunTerminal()) { return 0.0f; }
 	const float AppliedDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	if (bIsDead || !AttributeSet || !FMath::IsFinite(AppliedDamage) || AppliedDamage <= 0.0f)
 	{
@@ -330,7 +330,7 @@ void ARogue10mBasicMonster::Die()
 	int32 AwardedExperience = 0;
 	int32 AwardedGold = 0;
 	const ARogue10mGameState* Run = GetWorld() ? GetWorld()->GetGameState<ARogue10mGameState>() : nullptr;
-	const bool bRunEnded = Run && (Run->GetRunPhase() == ERogue10mRunPhase::Victory || Run->GetRunPhase() == ERogue10mRunPhase::Defeat);
+	const bool bRunEnded = Run && Run->IsRunTerminal();
 	if (HasAuthority() && !bCombatTestInstance && !bRunEnded)
 	{
 		if (ARogue10mPlayerController* RewardController =

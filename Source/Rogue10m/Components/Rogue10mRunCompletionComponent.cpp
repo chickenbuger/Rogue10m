@@ -12,6 +12,7 @@
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mGameState.h"
+#include "Rogue10mInventoryComponent.h"
 #include "Rogue10mMonsterDataAsset.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
@@ -61,13 +62,14 @@ void URogue10mRunCompletionComponent::NotifyFinalBossDefeated(
 
 void URogue10mRunCompletionComponent::HandleRunPhaseChanged(ERogue10mRunPhase Phase)
 {
-	if (bSettled || (Phase != ERogue10mRunPhase::Victory && Phase != ERogue10mRunPhase::Defeat)
+	if (bSettled || (Phase != ERogue10mRunPhase::Victory && Phase != ERogue10mRunPhase::Defeat && Phase != ERogue10mRunPhase::Abandoned)
 		|| !GetOwner() || !GetOwner()->HasAuthority() || !GetWorld() || GetWorld()->GetNetMode() != NM_Standalone)
 	{
 		return;
 	}
 	bSettled = true;
 	bVictory = Phase == ERogue10mRunPhase::Victory;
+	bAbandoned = Phase == ERogue10mRunPhase::Abandoned;
 	if (!ResultController.IsValid())
 	{
 		ResultController = Cast<ARogue10mPlayerController>(GetWorld()->GetFirstPlayerController());
@@ -109,6 +111,25 @@ void URogue10mRunCompletionComponent::FinalizeSettlement()
 		bVictory, RewardExperience, RewardGold, bProgressionSaved);
 }
 
+FRogue10mRunResultEconomy URogue10mRunCompletionComponent::GetEconomySummary() const
+{
+	FRogue10mRunResultEconomy Summary;
+	const auto* Character = ResultCharacter.Get();
+	const auto* Controller = ResultController.Get();
+	const auto* Instance = GetWorld() ? GetWorld()->GetGameInstance() : nullptr;
+	const auto* Progression = Instance ? Instance->GetSubsystem<URogue10mProgressionSubsystem>() : nullptr;
+	const auto* Inventory = Character ? Character->GetInventoryComponent() : nullptr;
+	if (!bSettled || !Character || !Controller || Controller->GetPawn() != Character
+		|| Character->GetWorld() != GetWorld() || !Progression || !Inventory
+		|| Progression->GetAttachedProfileId() != ResultProfileId || !Progression->IsAttachedTo(*Character)
+		|| !Progression->TryGetCurrentRunLobbyReward(Summary.LobbyAward, Summary.LobbyAvailable, Summary.bSaved)) { return Summary; }
+	Summary.bAvailable = true;
+	Summary.bAbandoned = bAbandoned;
+	Summary.RunGold = Inventory->GetGold();
+	Summary.RunCrystals = Inventory->GetCrystals();
+	return Summary;
+}
+
 bool URogue10mRunCompletionComponent::SaveSettlement()
 {
 	ARogue10mPlayerController* Controller = ResultController.Get();
@@ -118,7 +139,7 @@ bool URogue10mRunCompletionComponent::SaveSettlement()
 	bProgressionSaved = Character && Character == ResultCharacter.Get() && Character->GetWorld() == GetWorld()
 		&& ResultProfileId.IsValid() && Progression && Progression->GetAttachedProfileId() == ResultProfileId
 		&& Progression->IsAttachedTo(*Character)
-		&& Progression->CanRetrySave() && Progression->SaveRunSettlement(bVictory);
+		&& Progression->CanRetrySave() && (bAbandoned ? Progression->SaveRunAbandonment() : Progression->SaveRunSettlement(bVictory));
 	if (bProgressionSaved)
 	{
 		SaveStatus = NSLOCTEXT("Rogue10mRun", "Saved", "성장과 아이템을 저장했습니다.");

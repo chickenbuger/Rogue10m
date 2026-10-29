@@ -33,6 +33,9 @@ private:
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> TitleText;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> DescriptionText;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> RewardText;
+	UPROPERTY(Transient) TObjectPtr<UTextBlock> LobbyRewardText;
+	UPROPERTY(Transient) TObjectPtr<UTextBlock> LobbyBalanceText;
+	UPROPERTY(Transient) TObjectPtr<UTextBlock> RunCurrencyText;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> SaveStatusText;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> ReturnText;
 	UPROPERTY(Transient) TObjectPtr<UButton> ReturnButton;

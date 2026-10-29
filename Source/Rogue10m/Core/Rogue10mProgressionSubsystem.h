@@ -36,6 +36,14 @@ public:
 	FString GetLegacySaveSlotForProfile(const FGuid& ProfileId) const;
 	/** Terminal phase only. Applies the run receipt once, including after a failed disk write. */
 	bool SaveRunSettlement(bool bVictory);
+	bool SaveRunAbandonment();
+	FGuid GetAttachedRunId() const;
+	/** Called after hub costs commit, immediately before field travel; blocks travel on write failure. */
+	bool SaveRunEntryCurrencyBaseline();
+	/** Read-only resolution. Applying abandonment awaits the non-currency run-state policy. */
+	bool TryResolveAbandonCurrencyBalances(int32& OutGold, int32& OutCrystals, int32& OutLobbyEarned) const;
+	/** Read-only view of this session's applied receipt. Available even while its disk write is pending. */
+	bool TryGetCurrentRunLobbyReward(int32& OutAward, int32& OutAvailable, bool& bOutSaved) const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Lobby") int32 GetLobbyAvailablePoints() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Lobby") bool HasDiscoveredNode(FName NodeId) const;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Lobby", meta=(ClampMin="0", ClampMax="1000")) int32 LobbyPointsPerDefeat = 1;
@@ -52,6 +60,8 @@ private:
 	TWeakObjectPtr<ARogue10mGameState> ObservedRun;
 	FGuid SettlementProfileId;
 	FGuid SettlementRunId;
+	FGuid PresentedRewardRunId;
+	int32 PresentedRewardAmount = 0;
 	UPROPERTY(Transient) TObjectPtr<URogue10mProgressionSaveGame> SaveData;
 	/** Captured before the first save restore on each pawn; reattach cannot recycle run loot. */
 	UPROPERTY(Transient) TObjectPtr<URogue10mProgressionSaveGame> PawnStarterState;

@@ -167,7 +167,7 @@ float ARogue10mCharacter::TakeDamage(
 {
 	if (!HasAuthority() || !FMath::IsFinite(DamageAmount)) { return 0.0f; }
 	const ARogue10mGameState* Run = GetWorld() ? GetWorld()->GetGameState<ARogue10mGameState>() : nullptr;
-	if (Run && (Run->GetRunPhase() == ERogue10mRunPhase::Victory || Run->GetRunPhase() == ERogue10mRunPhase::Defeat)) { return 0.0f; }
+	if (Run && Run->IsRunTerminal()) { return 0.0f; }
 	URogue10mAttributeSet* Attributes = GetRogueAttributeSet();
 	const float DefenseMitigatedDamage = Attributes && DamageAmount > 0.0f
 		? FMath::Max(1.0f, DamageAmount - Attributes->GetDefense())

@@ -2545,3 +2545,10 @@ DevLog/20261027_DesktopIntegration_DPlayB_20261027에 실제 Unreal 뷰포트 �
 - 검증: Editor 빌드 PASS, 기존24개 PASS, 실제 귀환68/68/69 assertion PASS, 렌더링 InputKey34 PASS, 기존102세이브+66증거파일 해시 불변.
 - 제약: 수동 완주/60초 실측/정산 UI 로비 재화 표시/??? UI/퀘스트·필드보스 추가 보상/중도 종료 정책은 후속. 원격 변경 없음.
 - 관련: Feature/architect/2026-10-29_run-lobby-domains.md, Feature/doc/2026-10-29_run-lobby-domains.md
+
+
+## Sprint#9-8-result-lobby-ui (2026-10-29)
+- 완료: 정산획득/보유/런재화표시,포기기준선복원·무보상·Discovery유지,중단허브복구,v5보존형저장.
+- 검증: Editor빌드/자동화30/UI7시나리오/기존종료3종회귀PASS,기존270파일SHA256불변,실제PNG13장.
+- 제약: 수동완주/실제프로세스강제종료미검증,콘솔/API프로토타입포기,설정버튼후속. push/merge없음.
+- 문서: Feature/architect/2026-10-29_result-lobby-ui.md, Feature/doc/2026-10-29_result-lobby-ui.md.

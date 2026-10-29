@@ -83,6 +83,9 @@ void URogue10mRunResultWidget::BuildTree()
 	TitleText = AddText(TEXT("RunResultTitle"), 42, FLinearColor(0.96f, 0.79f, 0.39f));
 	DescriptionText = AddText(TEXT("RunResultDescription"), 20, FLinearColor(0.84f, 0.89f, 0.90f));
 	RewardText = AddText(TEXT("RunResultRewards"), 25, FLinearColor(0.96f, 0.86f, 0.59f));
+	LobbyRewardText = AddText(TEXT("LobbyRewardText"), 25, FLinearColor(0.96f, 0.86f, 0.59f));
+	LobbyBalanceText = AddText(TEXT("LobbyBalanceText"), 20, FLinearColor(0.84f, 0.89f, 0.90f));
+	RunCurrencyText = AddText(TEXT("RunCurrencyText"), 17, FLinearColor(0.64f, 0.71f, 0.73f));
 	SaveStatusText = AddText(TEXT("RunResultSaveStatus"), 17, FLinearColor(0.52f, 0.84f, 0.73f));
 	ReturnButton = WidgetTree->ConstructWidget<UButton>(UButton::StaticClass(), TEXT("RunResultReturnToTown"));
 	ReturnButton->OnClicked.AddUniqueDynamic(this, &ThisClass::HandleReturnToTown);
@@ -112,22 +115,40 @@ void URogue10mRunResultWidget::RefreshResult()
 	const URogue10mRunCompletionComponent* Completion = GetCompletion();
 	const bool bSettled = Completion && Completion->IsSettled();
 	const bool bVictory = bSettled && Completion->IsVictory();
-	TitleText->SetText(FText::FromString(bVictory ? TEXT("토벌 성공") : TEXT("탐험 실패")));
+	TitleText->SetText(FText::FromString(Completion && Completion->IsAbandoned() ? TEXT("탐험 포기") : bVictory ? TEXT("토벌 성공") : TEXT("탐험 실패")));
 	TitleText->SetColorAndOpacity(FSlateColor(bVictory ? FLinearColor(0.96f, 0.79f, 0.39f) : FLinearColor(0.91f, 0.52f, 0.42f)));
-	DescriptionText->SetText(FText::FromString(bVictory
+	DescriptionText->SetText(FText::FromString(Completion && Completion->IsAbandoned()
+		? TEXT("입장 직전 재화로 복원합니다. 런 물품·성장은 초기화되고 공개한 기술 정보는 유지됩니다.") : bVictory
 		? TEXT("아자토르를 처치했습니다. 마을로 돌아가 다음 탐험을 준비하세요.")
 		: TEXT("이번 탐험을 마쳤습니다. 마을에서 다시 도전할 수 있습니다.")));
 	RewardText->SetVisibility(bVictory ? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
-	RewardText->SetText(FText::Format(FText::FromString(TEXT("보스 처치 보상\n경험치  +{0}     골드  +{1}")),
+	RewardText->SetText(FText::Format(FText::FromString(TEXT("보스 처치 런 보상\n경험치  +{0}     골드  +{1}")),
 		FText::AsNumber(Completion ? Completion->GetRewardExperience() : 0),
 		FText::AsNumber(Completion ? Completion->GetRewardGold() : 0)));
-	const bool bSaved = bSettled && Completion->IsProgressionSaved();
+	const auto Economy = Completion ? Completion->GetEconomySummary() : FRogue10mRunResultEconomy();
+	const bool bSaved = bSettled && Economy.bAvailable && Economy.bSaved;
+	LobbyRewardText->SetText(Economy.bAvailable
+		? Economy.bAbandoned ? NSLOCTEXT("Rogue10mRun", "NoAbandonReward", "포기 보상 없음  +0") : FText::Format(NSLOCTEXT("Rogue10mRun", "LobbyAward", "이번 판 로비 포인트  +{0}"), FText::AsNumber(Economy.LobbyAward))
+		: NSLOCTEXT("Rogue10mRun", "LobbyAwardUnavailable", "이번 판 로비 포인트  —"));
+	LobbyBalanceText->SetText(Economy.bAvailable
+		? FText::Format(NSLOCTEXT("Rogue10mRun", "LobbyAvailable", "정산 후 로비 사용 가능  {0}"), FText::AsNumber(Economy.LobbyAvailable))
+		: NSLOCTEXT("Rogue10mRun", "LobbyAvailableUnavailable", "로비 재화 정산을 확인할 수 없습니다."));
+	RunCurrencyText->SetText(Economy.bAvailable
+		? Economy.bAbandoned
+			? FText::Format(NSLOCTEXT("Rogue10mRun", "AbandonCurrency", "복원된 재화 잔액  골드 {0} · 크리스탈 {1}\n마을 준비 비용은 환불되지 않습니다."), FText::AsNumber(Economy.RunGold), FText::AsNumber(Economy.RunCrystals))
+			: FText::Format(NSLOCTEXT("Rogue10mRun", "RunCurrency", "런 재화 잔액  골드 {0} · 크리스탈 {1}\n다음 판에는 유지되지 않습니다."),
+			FText::AsNumber(Economy.RunGold), FText::AsNumber(Economy.RunCrystals))
+		: FText::GetEmpty());
 	const bool bTravelStarted = bSettled && Completion->IsTravelStarted();
-	SaveStatusText->SetText(Completion ? Completion->GetSaveStatus() : FText::FromString(TEXT("탐험 결과를 불러오지 못했습니다.")));
+	SaveStatusText->SetText(bSaved
+		? Economy.bAbandoned ? NSLOCTEXT("Rogue10mRun", "AbandonSaved", "재화 복원 저장 완료") : NSLOCTEXT("Rogue10mRun", "LobbySaved", "로비 포인트 저장 완료")
+		: Economy.bAvailable
+			? FText::Format(NSLOCTEXT("Rogue10mRun", "LobbyPending", "저장 대기 · 재시도 후 귀환할 수 있습니다.\n{0}"), Completion->GetSaveStatus())
+			: NSLOCTEXT("Rogue10mRun", "EconomyUnavailable", "정산 정보를 확인할 수 없습니다. 선택한 캐릭터를 확인하세요."));
 	SaveStatusText->SetColorAndOpacity(FSlateColor(bSaved ? FLinearColor(0.52f, 0.84f, 0.73f) : FLinearColor(1.0f, 0.64f, 0.43f)));
 	ReturnText->SetText(FText::FromString(bTravelStarted ? TEXT("마을로 이동 중…")
 		: bSaved ? TEXT("마을로 돌아가기") : TEXT("저장 재시도 후 귀환")));
-	ReturnButton->SetIsEnabled(bSettled && !bTravelStarted);
+	ReturnButton->SetIsEnabled(bSettled && Economy.bAvailable && !bTravelStarted);
 }
 
 void URogue10mRunResultWidget::HandleReturnToTown()
