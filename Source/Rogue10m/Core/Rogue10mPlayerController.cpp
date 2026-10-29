@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "Rogue10mPlayerController.h"
+#include "HAL/IConsoleManager.h"
 #include "Data/Rogue10mItemDataAsset.h"
 
 #include "Blueprint/UserWidget.h"
@@ -682,6 +683,61 @@ void ARogue10mPlayerController::SetLookSensitivity(float NewSensitivityX, float 
 {
 	LookSensitivityX = FMath::Clamp(NewSensitivityX, 0.1f, 5.0f);
 	LookSensitivityY = FMath::Clamp(NewSensitivityY, 0.1f, 5.0f);
+}
+
+namespace
+{
+ EConsoleVariableFlags FirstPersonUiSetPriority(const IConsoleVariable& Variable)
+ {
+  // A deliberate UI change must not silently lose to a previous debug/command-line value.
+  // Match that existing source priority; normal UI/console actions both use SetByConsole.
+  return static_cast<EConsoleVariableFlags>(FMath::Max<uint32>(
+   static_cast<uint32>(Variable.GetFlags() & ECVF_SetByMask), static_cast<uint32>(ECVF_SetByConsole)));
+ }
+}
+bool ARogue10mPlayerController::CanEditFirstPersonPresentation() const
+{
+ return IsLocalPlayerController() && bSettingsVisible && !bAbandonMenuConfirmOpen && !bAbandonMenuSubmitting && !bRunResultVisible;
+}
+bool ARogue10mPlayerController::IsWeightedFirstPersonEnabled() const
+{
+ const auto* Value = IConsoleManager::Get().FindConsoleVariable(TEXT("Rogue10m.FPHeavy"));
+ return Value && Value->GetInt() != 0;
+}
+float ARogue10mPlayerController::GetWeightedFirstPersonMotionScale() const
+{
+ const auto* Value = IConsoleManager::Get().FindConsoleVariable(TEXT("Rogue10m.FPHeavyMotionScale"));
+ const float Scale = Value ? Value->GetFloat() : 1.0f;
+ return FMath::IsFinite(Scale) ? FMath::Clamp(Scale, 0.0f, 1.0f) : 1.0f;
+}
+bool ARogue10mPlayerController::SetWeightedFirstPersonEnabled(bool bEnabled)
+{
+ if (!CanEditFirstPersonPresentation()) { return false; }
+ auto* Value = IConsoleManager::Get().FindConsoleVariable(TEXT("Rogue10m.FPHeavy"));
+ if (!Value) { return false; }
+ Value->Set(bEnabled ? 1 : 0, FirstPersonUiSetPriority(*Value));
+ return IsWeightedFirstPersonEnabled() == bEnabled;
+}
+bool ARogue10mPlayerController::SetWeightedFirstPersonMotionScale(float Scale)
+{
+ if (!CanEditFirstPersonPresentation() || !FMath::IsFinite(Scale)) { return false; }
+ auto* Value = IConsoleManager::Get().FindConsoleVariable(TEXT("Rogue10m.FPHeavyMotionScale"));
+ if (!Value) { return false; }
+ const float Desired = FMath::Clamp(Scale, 0.0f, 1.0f);
+ Value->Set(Desired, FirstPersonUiSetPriority(*Value));
+ return FMath::IsNearlyEqual(GetWeightedFirstPersonMotionScale(), Desired);
+}
+bool ARogue10mPlayerController::RestoreOriginalFirstPersonPresentation()
+{
+ if (!CanEditFirstPersonPresentation()) { return false; }
+ auto* Enabled = IConsoleManager::Get().FindConsoleVariable(TEXT("Rogue10m.FPHeavy"));
+ auto* Motion = IConsoleManager::Get().FindConsoleVariable(TEXT("Rogue10m.FPHeavyMotionScale"));
+ auto* Fov = IConsoleManager::Get().FindConsoleVariable(TEXT("Rogue10m.FPHeavyFOV"));
+ if (!Enabled || !Motion || !Fov) { return false; }
+ Enabled->Set(0, FirstPersonUiSetPriority(*Enabled));
+ Motion->Set(1.0f, FirstPersonUiSetPriority(*Motion));
+ Fov->Set(0.0f, FirstPersonUiSetPriority(*Fov));
+ return !IsWeightedFirstPersonEnabled() && FMath::IsNearlyEqual(Motion->GetFloat(), 1.0f) && FMath::IsNearlyZero(Fov->GetFloat());
 }
 
 void ARogue10mPlayerController::SetFpsLimit(int32 FpsValue)

@@ -9,7 +9,9 @@ class ARogue10mPlayerController;
 class UBorder;
 class UButton;
 class UCanvasPanel;
+class UCheckBox;
 class UScaleBox;
+class USlider;
 class UTextBlock;
 
 /** Adds a settings action and a modal confirmation without replacing authored settings content. */
@@ -34,13 +36,22 @@ protected:
 
 private:
 	void BuildTree();
+	void RefreshPresentationValues();
 	ARogue10mPlayerController* GetRogueController() const;
 	UFUNCTION() void HandleOpenConfirmation();
 	UFUNCTION() void HandleConfirm();
 	UFUNCTION() void HandleCancel();
+	UFUNCTION() void HandleWeightedFirstPersonChanged(bool bEnabled);
+	UFUNCTION() void HandleWeightedFirstPersonMotionChanged(float MotionScale);
+	UFUNCTION() void HandleRestoreOriginalPresentation();
 
 	UPROPERTY(Transient) TObjectPtr<UCanvasPanel> RootCanvas;
 	UPROPERTY(Transient) TObjectPtr<UBorder> Footer;
+	UPROPERTY(Transient) TObjectPtr<UBorder> PresentationCard;
+	UPROPERTY(Transient) TObjectPtr<UCheckBox> WeightedFirstPersonCheck;
+	UPROPERTY(Transient) TObjectPtr<USlider> WeightedFirstPersonMotionSlider;
+	UPROPERTY(Transient) TObjectPtr<UTextBlock> WeightedFirstPersonMotionValue;
+	UPROPERTY(Transient) TObjectPtr<UButton> WeightedFirstPersonRestoreButton;
 	UPROPERTY(Transient) TObjectPtr<UBorder> ConfirmationShade;
 	UPROPERTY(Transient) TObjectPtr<UScaleBox> ConfirmationContent;
 	UPROPERTY(Transient) TObjectPtr<UButton> MenuButton;
@@ -52,4 +63,5 @@ private:
 	bool bMenuOpen = false;
 	bool bConfirmationOpen = false;
 	bool bHandlingPress = false;
+	bool bRefreshingPresentationValues = false;
 };

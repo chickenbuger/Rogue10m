@@ -159,6 +159,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Settings")
 	void SetLookSensitivity(float NewSensitivityX, float NewSensitivityY);
+	/** Session-only presentation preferences. Both modes retain the existing first-person camera. */
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Settings|First Person") bool IsWeightedFirstPersonEnabled() const;
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Settings|First Person") float GetWeightedFirstPersonMotionScale() const;
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Settings|First Person") bool SetWeightedFirstPersonEnabled(bool bEnabled);
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Settings|First Person") bool SetWeightedFirstPersonMotionScale(float Scale);
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Settings|First Person") bool RestoreOriginalFirstPersonPresentation();
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Settings")
 	int32 GetCurrentFpsLimit() const { return CurrentFpsLimit; }
@@ -339,6 +345,7 @@ private:
 	void HandleAbandonConfirmation();
 	void ClearAbandonConfirmation();
 	void ResetAbandonMenuContext();
+	bool CanEditFirstPersonPresentation() const;
 	UPROPERTY(Transient) TObjectPtr<URogue10mAbandonMenuWidget> AbandonMenuWidget;
 	TWeakObjectPtr<UWorld> AbandonMenuWorld;
 	FGuid AbandonMenuProfile;

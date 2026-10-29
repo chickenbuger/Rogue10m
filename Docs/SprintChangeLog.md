@@ -2560,3 +2560,7 @@ DevLog/20261027_DesktopIntegration_DPlayB_20261027에 실제 Unreal 뷰포트 �
 
 ## Sprint#9-10-weighted-first-person (2026-10-29)
 기존 Appearance 1인칭을 보존한 opt-in 시야/머리 안정화·상완 sway·제한된 공격 회수/준비·전환 프로필을 추가했다. 기본OFF, 원본 입력·공격 clock·자산·세이브 불변. Editor 빌드/회귀17개/일반 렌더와2배속30fps 상한 QA PASS, 실제 PNG9장. 원본516파일 해시 불변. 현재 맨손, 이후 아이템별 너클 모델 방향 확정. 물리 입력·실제맵 완주·전면 clipping은 미검증. 로컬 커밋만, push/병합 없음. 계획/결과 Feature/*/2026-10-29_weighted-first-person.md.
+
+## Sprint#9-11-first-person-settings (2026-10-29)
+
+이미 1인칭인 기존 카메라 위에 FPHeavy 토글·0~100% 동작 강도·기존 표현 복원을 O/Esc/F10 설정 메뉴로 제공한다. 실행 한정 설정이며 세이브/키/맵을 변경하지 않는다. 최종 Editor 빌드·HeadB560항목·기존 저장실패 메뉴97항목 PASS. 실제 UI PNG8장 디코딩과 가독성 확인. RenderC 전체 ABBA는 입력 해제로5실패하므로 미완전으로 기록하고 성능 개선을 주장하지 않는다. 기존 sprint PP 경로/정상 비교값으로 블러0.35/fringe0.6을 분리했다. 물리 입력·필드 완주·콜드 공격 hitch 원인은 미검증. 보존606파일 해시 불변, 로컬 커밋만, push/병합 없음. 계획/결과 Feature/*/2026-10-29_first-person-settings.md.

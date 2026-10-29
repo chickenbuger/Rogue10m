@@ -3,9 +3,11 @@
 
 #include "Blueprint/WidgetTree.h"
 #include "Components/Border.h"
+#include "Components/BorderSlot.h"
 #include "Components/Button.h"
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
+#include "Components/CheckBox.h"
 #include "Components/HorizontalBox.h"
 #include "Components/HorizontalBoxSlot.h"
 #include "Components/Overlay.h"
@@ -13,6 +15,7 @@
 #include "Components/ScaleBox.h"
 #include "Components/ScaleBoxSlot.h"
 #include "Components/SizeBox.h"
+#include "Components/Slider.h"
 #include "Components/TextBlock.h"
 #include "Components/VerticalBox.h"
 #include "Components/VerticalBoxSlot.h"
@@ -31,6 +34,7 @@ void URogue10mAbandonMenuWidget::NativeConstruct()
 	SetIsFocusable(true);
 	SetVisibility(bMenuOpen ? ESlateVisibility::SelfHitTestInvisible : ESlateVisibility::Collapsed);
 	RefreshAvailability();
+	RefreshPresentationValues();
 }
 
 ARogue10mPlayerController* URogue10mAbandonMenuWidget::GetRogueController() const
@@ -68,6 +72,74 @@ void URogue10mAbandonMenuWidget::BuildTree()
 		Button->AddChild(ButtonText);
 		return Button;
 	};
+
+	PresentationCard = WidgetTree->ConstructWidget<UBorder>(UBorder::StaticClass(), TEXT("FirstPersonPresentationCard"));
+	PresentationCard->SetBrushColor(FLinearColor(0.02f, 0.032f, 0.038f, 0.98f));
+	PresentationCard->SetPadding(FMargin(22, 14));
+	PresentationCard->SetVisibility(ESlateVisibility::Visible);
+	auto* PresentationCardSlot = RootCanvas->AddChildToCanvas(PresentationCard);
+	PresentationCardSlot->SetAnchors(FAnchors(0.5f, 0.5f));
+	PresentationCardSlot->SetAlignment(FVector2D(0.5f, 0.5f));
+	PresentationCardSlot->SetPosition(FVector2D(0.0f, -45.0f));
+	PresentationCardSlot->SetSize(FVector2D(620.0f, 220.0f));
+	auto* PresentationRows = WidgetTree->ConstructWidget<UVerticalBox>();
+	PresentationCard->AddChild(PresentationRows);
+	auto* PresentationRowsSlot = CastChecked<UBorderSlot>(PresentationRows->Slot);
+	PresentationRowsSlot->SetHorizontalAlignment(HAlign_Fill);
+	PresentationRowsSlot->SetVerticalAlignment(VAlign_Fill);
+	const auto AddPresentationText = [&MakeText, PresentationRows](FName Name, const FText& Value, int32 FontSize)
+	{
+		auto* Text = MakeText(Name, Value, FontSize, FLinearColor(0.9f, 0.94f, 0.96f));
+		Text->SetAutoWrapText(false);
+		Text->SetJustification(ETextJustify::Left);
+		auto* Slot = PresentationRows->AddChildToVerticalBox(Text);
+		Slot->SetHorizontalAlignment(HAlign_Fill);
+		return Slot;
+	};
+	AddPresentationText(TEXT("FirstPersonPresentationTitle"), NSLOCTEXT("Rogue10mPresentation", "Title", "1인칭 표현"), 24)->SetPadding(FMargin(0, 0, 0, 4));
+	AddPresentationText(TEXT("FirstPersonPresentationDescription"), NSLOCTEXT("Rogue10mPresentation", "Description", "무게감을 꺼도 1인칭 시점은 유지됩니다."), 16)->SetPadding(FMargin(0, 0, 0, 10));
+
+	auto* ToggleRow = WidgetTree->ConstructWidget<UHorizontalBox>();
+	auto* ToggleRowSlot = PresentationRows->AddChildToVerticalBox(ToggleRow);
+	ToggleRowSlot->SetHorizontalAlignment(HAlign_Fill); ToggleRowSlot->SetPadding(FMargin(0, 0, 0, 8));
+	WeightedFirstPersonCheck = WidgetTree->ConstructWidget<UCheckBox>(UCheckBox::StaticClass(), TEXT("WeightedFirstPersonCheck"));
+	auto* CheckSlot = ToggleRow->AddChildToHorizontalBox(WeightedFirstPersonCheck);
+	CheckSlot->SetVerticalAlignment(VAlign_Center);
+	auto* ToggleLabel = MakeText(TEXT("FirstPersonWeightedLabel"), NSLOCTEXT("Rogue10mPresentation", "Enabled", "무게감 사용"), 18, FLinearColor(0.96f, 0.97f, 0.98f));
+	ToggleLabel->SetAutoWrapText(false); ToggleLabel->SetJustification(ETextJustify::Left);
+	auto* ToggleLabelSlot = ToggleRow->AddChildToHorizontalBox(ToggleLabel);
+	ToggleLabelSlot->SetSize(FSlateChildSize(ESlateSizeRule::Fill));
+	ToggleLabelSlot->SetVerticalAlignment(VAlign_Center); ToggleLabelSlot->SetPadding(FMargin(10, 0, 0, 0));
+	WeightedFirstPersonCheck->OnCheckStateChanged.AddUniqueDynamic(this, &ThisClass::HandleWeightedFirstPersonChanged);
+
+	auto* MotionRow = WidgetTree->ConstructWidget<UHorizontalBox>();
+	auto* MotionRowSlot = PresentationRows->AddChildToVerticalBox(MotionRow);
+	MotionRowSlot->SetHorizontalAlignment(HAlign_Fill); MotionRowSlot->SetPadding(FMargin(0, 0, 0, 10));
+	auto* MotionLabel = MakeText(TEXT("FirstPersonMotionLabel"), NSLOCTEXT("Rogue10mPresentation", "Motion", "무게감 동작 강도"), 16, FLinearColor(0.82f, 0.88f, 0.9f));
+	MotionLabel->SetAutoWrapText(false); MotionLabel->SetJustification(ETextJustify::Left);
+	MotionRow->AddChildToHorizontalBox(MotionLabel)->SetVerticalAlignment(VAlign_Center);
+	WeightedFirstPersonMotionSlider = WidgetTree->ConstructWidget<USlider>(USlider::StaticClass(), TEXT("WeightedFirstPersonMotionSlider"));
+	WeightedFirstPersonMotionSlider->SetMinValue(0.0f); WeightedFirstPersonMotionSlider->SetMaxValue(1.0f);
+	auto* MotionSliderSlot = MotionRow->AddChildToHorizontalBox(WeightedFirstPersonMotionSlider);
+	MotionSliderSlot->SetSize(FSlateChildSize(ESlateSizeRule::Fill));
+	MotionSliderSlot->SetVerticalAlignment(VAlign_Center); MotionSliderSlot->SetPadding(FMargin(16, 0, 12, 0));
+	auto* MotionValueSize = WidgetTree->ConstructWidget<USizeBox>(); MotionValueSize->SetWidthOverride(64.0f);
+	MotionRow->AddChildToHorizontalBox(MotionValueSize)->SetVerticalAlignment(VAlign_Center);
+	WeightedFirstPersonMotionValue = MakeText(TEXT("WeightedFirstPersonMotionValue"), FText::GetEmpty(), 16, FLinearColor(0.96f, 0.97f, 0.98f));
+	WeightedFirstPersonMotionValue->SetAutoWrapText(false); WeightedFirstPersonMotionValue->SetJustification(ETextJustify::Right);
+	MotionValueSize->AddChild(WeightedFirstPersonMotionValue);
+	WeightedFirstPersonMotionSlider->OnValueChanged.AddUniqueDynamic(this, &ThisClass::HandleWeightedFirstPersonMotionChanged);
+
+	auto* PresentationActions = WidgetTree->ConstructWidget<UHorizontalBox>();
+	PresentationRows->AddChildToVerticalBox(PresentationActions)->SetHorizontalAlignment(HAlign_Fill);
+	WeightedFirstPersonRestoreButton = MakeButton(TEXT("WeightedFirstPersonRestoreButton"), NSLOCTEXT("Rogue10mPresentation", "Restore", "기존 표현으로 돌아가기"), false);
+	PresentationActions->AddChildToHorizontalBox(WeightedFirstPersonRestoreButton)->SetVerticalAlignment(VAlign_Center);
+	WeightedFirstPersonRestoreButton->OnClicked.AddUniqueDynamic(this, &ThisClass::HandleRestoreOriginalPresentation);
+	auto* SessionHint = MakeText(TEXT("FirstPersonPresentationSessionHint"), NSLOCTEXT("Rogue10mPresentation", "SessionOnly", "이번 실행 동안 적용됩니다."), 14, FLinearColor(0.64f, 0.73f, 0.77f));
+	SessionHint->SetAutoWrapText(false); SessionHint->SetJustification(ETextJustify::Right);
+	auto* SessionHintSlot = PresentationActions->AddChildToHorizontalBox(SessionHint);
+	SessionHintSlot->SetSize(FSlateChildSize(ESlateSizeRule::Fill));
+	SessionHintSlot->SetVerticalAlignment(VAlign_Center); SessionHintSlot->SetPadding(FMargin(12, 0, 0, 0));
 
 	Footer = WidgetTree->ConstructWidget<UBorder>(UBorder::StaticClass(), TEXT("AbandonSettingsFooter"));
 	Footer->SetBrushColor(FLinearColor(0.02f, 0.032f, 0.038f, 0.97f));
@@ -135,6 +207,7 @@ void URogue10mAbandonMenuWidget::SetMenuOpen(bool bOpen)
 	if (!bOpen) { SetConfirmationOpen(false); }
 	SetVisibility(bOpen ? ESlateVisibility::SelfHitTestInvisible : ESlateVisibility::Collapsed);
 	RefreshAvailability();
+	RefreshPresentationValues();
 }
 
 void URogue10mAbandonMenuWidget::SetConfirmationOpen(bool bOpen)
@@ -146,6 +219,7 @@ void URogue10mAbandonMenuWidget::SetConfirmationOpen(bool bOpen)
 	if (ConfirmationContent) { ConfirmationContent->SetVisibility(bConfirmationOpen ? ESlateVisibility::SelfHitTestInvisible : ESlateVisibility::Collapsed); }
 	if (Footer) { Footer->SetVisibility(bConfirmationOpen ? ESlateVisibility::Collapsed : ESlateVisibility::Visible); }
 	RefreshAvailability();
+	RefreshPresentationValues();
 	if (bConfirmationOpen) { FocusConfirmationCancel(); }
 }
 
@@ -161,6 +235,58 @@ void URogue10mAbandonMenuWidget::RefreshAvailability()
 	ReasonText->SetText(bAllowed
 		? NSLOCTEXT("Rogue10mAbandon", "Ready", "마을 준비 비용은 환불되지 않습니다.")
 		: Reason.IsEmpty() ? NSLOCTEXT("Rogue10mAbandon", "Unavailable", "지금은 탐험을 포기할 수 없습니다.") : Reason);
+}
+
+void URogue10mAbandonMenuWidget::RefreshPresentationValues()
+{
+	if (!PresentationCard || !WeightedFirstPersonCheck || !WeightedFirstPersonMotionSlider
+		|| !WeightedFirstPersonMotionValue || !WeightedFirstPersonRestoreButton) { return; }
+	TGuardValue<bool> RefreshGuard(bRefreshingPresentationValues, true);
+	const auto* Controller = GetRogueController();
+	const bool bEnabled = Controller && Controller->IsWeightedFirstPersonEnabled();
+	const float MotionScale = Controller ? Controller->GetWeightedFirstPersonMotionScale() : 1.0f;
+	const bool bEditable = bMenuOpen && !bConfirmationOpen && !bHandlingPress && Controller
+		&& Controller->IsLocalPlayerController() && Controller->IsSettingsVisible() && !Controller->IsRunResultVisible();
+	PresentationCard->SetVisibility(bMenuOpen && !bConfirmationOpen ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
+	WeightedFirstPersonCheck->SetIsChecked(bEnabled);
+	WeightedFirstPersonCheck->SetIsEnabled(bEditable);
+	WeightedFirstPersonMotionSlider->SetValue(MotionScale);
+	WeightedFirstPersonMotionSlider->SetIsEnabled(bEditable && bEnabled);
+	WeightedFirstPersonMotionValue->SetText(FText::AsPercent(MotionScale));
+	WeightedFirstPersonRestoreButton->SetIsEnabled(bEditable);
+}
+
+void URogue10mAbandonMenuWidget::HandleWeightedFirstPersonChanged(bool bEnabled)
+{
+	if (bRefreshingPresentationValues) { return; }
+	if (bMenuOpen && !bConfirmationOpen && !bHandlingPress && WeightedFirstPersonCheck && WeightedFirstPersonCheck->GetIsEnabled())
+	{
+		TGuardValue<bool> PressGuard(bHandlingPress, true);
+		if (auto* Controller = GetRogueController()) { Controller->SetWeightedFirstPersonEnabled(bEnabled); }
+	}
+	RefreshPresentationValues();
+}
+
+void URogue10mAbandonMenuWidget::HandleWeightedFirstPersonMotionChanged(float MotionScale)
+{
+	if (bRefreshingPresentationValues) { return; }
+	if (bMenuOpen && !bConfirmationOpen && !bHandlingPress && WeightedFirstPersonMotionSlider && WeightedFirstPersonMotionSlider->GetIsEnabled())
+	{
+		TGuardValue<bool> PressGuard(bHandlingPress, true);
+		if (auto* Controller = GetRogueController()) { Controller->SetWeightedFirstPersonMotionScale(MotionScale); }
+	}
+	RefreshPresentationValues();
+}
+
+void URogue10mAbandonMenuWidget::HandleRestoreOriginalPresentation()
+{
+	if (bRefreshingPresentationValues) { return; }
+	if (bMenuOpen && !bConfirmationOpen && !bHandlingPress && WeightedFirstPersonRestoreButton && WeightedFirstPersonRestoreButton->GetIsEnabled())
+	{
+		TGuardValue<bool> PressGuard(bHandlingPress, true);
+		if (auto* Controller = GetRogueController()) { Controller->RestoreOriginalFirstPersonPresentation(); }
+	}
+	RefreshPresentationValues();
 }
 
 void URogue10mAbandonMenuWidget::ShowError(const FText& Error)
