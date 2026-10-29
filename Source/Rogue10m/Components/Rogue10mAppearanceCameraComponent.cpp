@@ -23,6 +23,20 @@ URogue10mAppearanceCameraComponent::URogue10mAppearanceCameraComponent()
 {
  PrimaryComponentTick.bCanEverTick = false;
 }
+bool URogue10mAppearanceCameraComponent::IsWeightedFirstPersonActive() const
+{
+ const auto* Character = Cast<ARogue10mCharacter>(GetOwner());
+ return Rogue10mWeightedFirstPerson::IsRequested() && bApplied && bEnableAppearanceCamera && !bThirdPersonInspection
+  && Character && Character->IsLocallyControlled() && !Character->IsDead();
+}
+FRogue10mWeightedFirstPersonSettings URogue10mAppearanceCameraComponent::GetWeightedFirstPersonSettings() const
+{
+ auto Settings = WeightedFirstPersonSettings.Sanitized();
+ const float Scale = Rogue10mWeightedFirstPerson::ConsoleMotionScale();
+ Settings.HeadMotionScale *= Scale; Settings.HandMotionScale *= Scale;
+ Settings.WorldFieldOfView = Rogue10mWeightedFirstPerson::ResolveFieldOfView(Settings.WorldFieldOfView);
+ return Settings;
+}
 void URogue10mAppearanceCameraComponent::BeginPlay()
 {
  Super::BeginPlay();
@@ -214,6 +228,17 @@ FRogue10mHeadMotionSettings URogue10mAppearanceCameraComponent::GetHeadMotionSet
   Settings.MaxRotationDegrees = Safe(WalkingHeadMaxRotationDegrees, 2.0f, 2.0f);
   Settings.MaxPositionOffsetCm = Safe(WalkingHeadMaxPositionOffset, 1.0f, 5.0f);
  }
+ if (IsWeightedFirstPersonActive())
+ {
+  const auto Feel = GetWeightedFirstPersonSettings();
+  Settings.RotationWeight = FMath::Min(Settings.RotationWeight, Feel.HeadRotationWeight);
+  Settings.InterpolationSpeed = Feel.HeadFollowSpeed;
+  const bool bAction = bAttackContributes || bCharging || bDodgeContributes || bAirborne;
+  const float RotationLimit = bAction ? Feel.AttackingRotationDegrees : bRunning ? Feel.RunningRotationDegrees : Feel.WalkingRotationDegrees;
+  const float PositionLimit = bAction ? Feel.AttackingPositionCm : bRunning ? Feel.RunningPositionCm : Feel.WalkingPositionCm;
+  Settings.MaxRotationDegrees = FMath::Min(Settings.MaxRotationDegrees, RotationLimit * Feel.HeadMotionScale);
+  Settings.MaxPositionOffsetCm = FMath::Min(Settings.MaxPositionOffsetCm, PositionLimit * Feel.HeadMotionScale);
+ }
  return Settings;
 }
 
@@ -266,7 +291,7 @@ bool URogue10mAppearanceCameraComponent::ReadCameraTransform(FTransform& OutCame
   const FQuat CurrentPoseAim = (Transport * PoseWorldAim * Transport.Inverse()).GetNormalized();
   Motion = (Motion * CurrentPoseAim.Inverse()).GetNormalized();
  }
- if (bStabilizeAllHeadMotion)
+ if (bStabilizeAllHeadMotion || IsWeightedFirstPersonActive())
  {
   const FRogue10mHeadMotionSettings Settings = GetHeadMotionSettings();
   const USkeletalMeshComponent* Mesh = AppliedMesh.Get();

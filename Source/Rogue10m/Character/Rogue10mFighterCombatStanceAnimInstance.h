@@ -83,6 +83,13 @@ public:
 	UPROPERTY(BlueprintReadOnly, Transient, Category="Rogue10m|Animation|Moving Attack")
 	float MovingAttackUpperBodyAlpha = 0.0f;
 
+	/** Evaluated optional arm pitch only; published on the game thread after pose evaluation. */
+	UPROPERTY(BlueprintReadOnly, Transient, Category="Rogue10m|Animation|Weighted First Person")
+	FVector2D WeightedHandPitch = FVector2D::ZeroVector;
+
+	UPROPERTY(BlueprintReadOnly, Transient, Category="Rogue10m|Animation|Weighted First Person")
+	bool bWeightedHandMotionApplied = false;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Moving Attack", meta=(ClampMin="0.0", Units="cm/s"))
 	float MovingAttackGroundSpeedThreshold = 10.0f;
 

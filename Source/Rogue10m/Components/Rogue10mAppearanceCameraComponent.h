@@ -2,6 +2,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Rogue10mWeightedFirstPersonSettings.h"
 #include "Rogue10mAppearanceCameraComponent.generated.h"
 
 class URogue10mAppearanceShadowComponent;
@@ -33,6 +34,12 @@ public:
  void UpdateCameraFromAppearance();
  UFUNCTION(BlueprintPure, Category="Rogue10m|Appearance Camera")
  bool IsAppearanceCameraActive() const { return bApplied; }
+ UFUNCTION(BlueprintPure, Category="Rogue10m|Weighted First Person")
+ bool IsWeightedFirstPersonActive() const;
+ UFUNCTION(BlueprintPure, Category="Rogue10m|Weighted First Person")
+ FRogue10mWeightedFirstPersonSettings GetWeightedFirstPersonSettings() const;
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Weighted First Person")
+ FRogue10mWeightedFirstPersonSettings WeightedFirstPersonSettings;
  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Appearance Camera")
  bool bEnableAppearanceCamera = true;
  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Appearance Camera")

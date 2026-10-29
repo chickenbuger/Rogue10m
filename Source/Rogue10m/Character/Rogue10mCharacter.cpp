@@ -82,6 +82,10 @@ void ARogue10mCharacter::CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult
 {
 	if (AppearanceCameraComponent) { AppearanceCameraComponent->UpdateCameraFromAppearance(); }
 	Super::CalcCamera(DeltaTime, OutResult);
+	if (AppearanceCameraComponent && AppearanceCameraComponent->IsWeightedFirstPersonActive())
+	{
+		OutResult.FOV = AppearanceCameraComponent->GetWeightedFirstPersonSettings().WorldFieldOfView;
+	}
 	// Inspection only overrides the rendered POV; the head camera remains the combat origin.
 	if (AppearanceCameraComponent) { AppearanceCameraComponent->ApplyInspectionView(OutResult); }
 }

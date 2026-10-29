@@ -6,12 +6,14 @@
 #include "Animation/AnimSequence.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Rogue10mAttackSkillData.h"
+#include "Rogue10mAppearanceCameraComponent.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCharacterAnimationComponent.h"
 #include "Rogue10mCharacterMotionDataAsset.h"
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mViewAlignedUpperBodyProxy.h"
+#include "Rogue10mWeightedFirstPersonSettings.h"
 
 URogue10mFighterCombatStanceAnimInstance::URogue10mFighterCombatStanceAnimInstance()
 {
@@ -25,6 +27,8 @@ void URogue10mFighterCombatStanceAnimInstance::NativeInitializeAnimation()
 	FighterCombatStanceAnimation = FighterCombatStanceSequence.LoadSynchronous();
 	FighterCombatBlendProgress = FighterCombatStanceAlpha = 0.0f;
 	MovingAttackUpperBodyAlpha = 0.0f;
+	WeightedHandPitch = FVector2D::ZeroVector;
+	bWeightedHandMotionApplied = false;
 	UpperBodyAimPitch = UpperBodyAimYaw = 0.0f;
 	bMouseDrivenHeadApplied = false;
 	MouseDrivenHeadWorldAim = FQuat::Identity;
@@ -98,8 +102,13 @@ void URogue10mFighterCombatStanceAnimInstance::NativeUpdateAnimation(float Delta
 	const UAnimMontage* ActiveMontage = GetCurrentActiveMontage();
 	const FAnimMontageInstance* AcceptedInstance = AcceptedMontage ? GetInstanceForMontage(AcceptedMontage) : nullptr;
 	bool bDodgePoseContributes = false;
+	bool bAnyMontageContributes = false;
 	for (const FAnimMontageInstance* Instance : MontageInstances)
 	{
+		if (Instance && Instance->Montage && (Instance->IsActive() || Instance->GetWeight() > UE_SMALL_NUMBER))
+		{
+			bAnyMontageContributes = true;
+		}
 		if (Instance && Instance->Montage && Instance->GetWeight() > UE_SMALL_NUMBER)
 		{
 			// A soft-only configuration can be collected between uses. Recover the
@@ -162,7 +171,15 @@ void URogue10mFighterCombatStanceAnimInstance::NativeUpdateAnimation(float Delta
 	const bool bStanding = bContextValid && Movement->IsMovingOnGround() && !Character->IsSprinting()
 		&& !Animation->HasMovementInput() && GroundSpeed <= FMath::Max(0.0f, FighterCombatStationarySpeed);
 	const bool bRaise = FighterCombatStanceAnimation && bStanding && Animation->IsFighterCombatStanceRequested();
-	const float Duration = bRaise ? FighterCombatRaiseSeconds : FighterCombatLowerSeconds;
+	const auto* Appearance = Character ? Character->GetAppearanceCameraComponent() : nullptr;
+	const bool bWeightedGuard = bContextValid && !bAnyMontageContributes && Appearance && Appearance->IsWeightedFirstPersonActive();
+	const FRogue10mWeightedFirstPersonSettings WeightedSettings = bWeightedGuard
+		? Appearance->GetWeightedFirstPersonSettings() : FRogue10mWeightedFirstPersonSettings();
+	const float RaiseSeconds = bWeightedGuard
+		? FMath::Lerp(FighterCombatRaiseSeconds, WeightedSettings.GuardRaiseSeconds, WeightedSettings.HandMotionScale) : FighterCombatRaiseSeconds;
+	const float LowerSeconds = bWeightedGuard
+		? FMath::Lerp(FighterCombatLowerSeconds, WeightedSettings.GuardLowerSeconds, WeightedSettings.HandMotionScale) : FighterCombatLowerSeconds;
+	const float Duration = bRaise ? RaiseSeconds : LowerSeconds;
 	const float Step = FMath::Max(0.0f, DeltaSeconds) / FMath::Max(0.01f, Duration);
 	FighterCombatBlendProgress = FMath::Clamp(FighterCombatBlendProgress + (bRaise ? Step : -Step), 0.0f, 1.0f);
 	FighterCombatStanceAlpha = FMath::SmoothStep(0.0f, 1.0f, FighterCombatBlendProgress);
