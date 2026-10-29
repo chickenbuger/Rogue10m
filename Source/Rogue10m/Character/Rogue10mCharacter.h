@@ -89,6 +89,12 @@ public:
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Movement")
 	bool IsSprinting() const { return bIsSprinting; }
 
+	/** Read-only state shared by HUD and runtime verification; does not accept or reset a dodge. */
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Movement|Dodge")
+	bool IsDodging() const { return bIsDodging; }
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Movement|Dodge")
+	float GetDodgeCooldownRemaining() const;
+
 	URogue10mAppearanceCameraComponent* GetAppearanceCameraComponent() const { return AppearanceCameraComponent; }
 	USkeletalMeshComponent* GetFirstPersonMesh() const { return FirstPersonMesh; }
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }

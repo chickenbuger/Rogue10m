@@ -334,6 +334,12 @@ void ARogue10mCharacter::Landed(const FHitResult& Hit)
 	}
 }
 
+float ARogue10mCharacter::GetDodgeCooldownRemaining() const
+{
+	const UWorld* World = GetWorld();
+	return World ? static_cast<float>(FMath::Max(0.0, static_cast<double>(NextDodgeAllowedTime) - World->GetTimeSeconds())) : 0.0f;
+}
+
 void ARogue10mCharacter::DoDodge()
 {
 	UWorld* World = GetWorld();

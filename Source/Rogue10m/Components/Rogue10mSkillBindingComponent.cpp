@@ -10,6 +10,8 @@
 #include "InputMappingContext.h"
 #include "InputMappingQuery.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameFramework/PlayerInput.h"
+#include "KeyState.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
 #include "Rogue10mAttackSkillData.h"
@@ -303,6 +305,11 @@ void URogue10mSkillBindingComponent::SkillPressed(URogue10mAttackSkillData* Skil
 	auto* PC = Cast<ARogue10mPlayerController>(GetOwner());
 	const FKey Key = GetSkillKey(Skill);
 	if (!PC || !IsAllowedSkill(Skill) || IsReservedKey(Key)) { return; }
+	// A higher-priority legacy interaction (for example NPC dialogue) may have
+	// consumed this key before Enhanced Input dispatches the skill callback.
+	// Keep release/cancel delivery intact so an already-held skill can clean up.
+	const FKeyState* KeyState = PC->PlayerInput ? PC->PlayerInput->GetKeyState(Key) : nullptr;
+	if (KeyState && KeyState->bConsumed) { return; }
 	// Modifier chords are intentionally unsupported even if the bare key was saved.
 	for (FKey Modifier : {EKeys::LeftShift,EKeys::RightShift,EKeys::LeftControl,EKeys::RightControl,EKeys::LeftAlt,EKeys::RightAlt,EKeys::LeftCommand,EKeys::RightCommand})
 	{

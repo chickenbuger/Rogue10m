@@ -2568,3 +2568,8 @@ DevLog/20261027_DesktopIntegration_DPlayB_20261027에 실제 Unreal 뷰포트 �
 ## Sprint#9-12-input-validation (2026-10-29 UTC)
 
 제품 동작을 바꾸지 않고 공식 입력/Flush/포커스 관측과 viewport 입력·시야 오염 gate를 QA에 추가했다. native569/Offscreen565항목 PASS로 실제 이동 ON/OFF 비교를 완결했다. 프로그램 포커스 양성 대조의 정상 두키해제/새입력복구 확인. 촬영 없는 첫 공격 ABBA4프로세스/8공격142항목 PASS, 공통 첫 사용 수락75~77ms·첫 피해63~68ms 프레임을 재현했으나 내부 원인은 미확정. 과거 RenderC 원인도 단정하지 않는다. 빌드·663파일 원본/복사본 보존 PASS, 실제사진16장/대표5장 기능폴더 보존. 물리 입력·필드 완주 미실행, 로컬 커밋만. 계획/결과 Feature/*/2026-10-29_input-frame-validation.md.
+
+
+## Sprint#9-13-look-dash-interaction (2026-10-29 UTC)
+
+NPC가 소비한 F 입력의 중복 공격을 수정하고 실제 비용형 Special 양성 대조 포함39항목 PASS, 회귀17개/Editor 빌드 PASS. 아래보기·달리기·E 회피·벽/쿨다운 새 QA와 PNG 실측을 추가했다. **카메라 몸통 가림은 미완료**이며 단순 위치 후보를 채택하지 않고 실험 패치로 보존했다. Map Maker/NPC 키 사용법은 실제 소스로 확인했다. 원본747파일·QA 슬롯/증거 보존, 로컬 체크포인트만 생성, push/병합 없음. 계획/결과 Feature/*/2026-10-29_look-dash-interaction.md.
