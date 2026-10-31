@@ -24,7 +24,7 @@ URogue10mAppearanceCameraComponent::URogue10mAppearanceCameraComponent()
 {
  PrimaryComponentTick.bCanEverTick = false;
 }
-USkeletalMeshComponent* URogue10mAppearanceCameraComponent::GetOwnerArmsMesh() const
+USkinnedMeshComponent* URogue10mAppearanceCameraComponent::GetOwnerArmsMesh() const
 {
  return IsOwnerArmsViewActive() ? OwnerArmsComponent->GetOwnerArmsMesh() : nullptr;
 }
@@ -355,6 +355,7 @@ void URogue10mAppearanceCameraComponent::UpdateCameraFromAppearance()
  FTransform View;
  if (!Character || !ReadCameraTransform(View)) { return; }
  Character->GetFirstPersonCameraComponent()->SetWorldLocationAndRotation(View.GetLocation(), View.GetRotation());
+ if (OwnerArmsComponent && IsOwnerArmsViewActive()) { OwnerArmsComponent->UpdatePresentation(View); }
 }
 void URogue10mAppearanceCameraComponent::Restore()
 {

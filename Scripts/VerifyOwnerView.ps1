@@ -1,7 +1,7 @@
 ﻿param(
  [Parameter(Mandatory=$true)][ValidatePattern('^[A-Za-z0-9_]{1,24}$')][string]$Label,
  [ValidateSet('Original','Weighted')][string]$Profile='Weighted',
- [switch]$Rendered,[switch]$Offscreen,[switch]$VisibleWindow,
+ [switch]$Rendered,[switch]$Offscreen,[switch]$VisibleWindow,[switch]$Framed,
  [ValidateRange(60,360)][int]$TimeoutSeconds=300,
  [string]$ProjectRoot=(Split-Path -Parent $PSScriptRoot)
 )
@@ -35,6 +35,7 @@ $before | Export-Csv -LiteralPath $beforeFile -NoTypeInformation -Encoding utf8
 $arguments=@(('"'+$project+'"'),'/Game/Rogue10m/Maps/StartHub','-game','-unattended','-nosplash','-nosound','-NoLiveCoding','-NoRemoteShaderCompile',
  ('-RogueProfileSaveSlot='+$town),('-RogueProgressionSavePrefix='+$prefix),('-RogueSkillKeySaveSlot='+$keys),
  ('-RogueOwnerViewLabel='+$Label),('-RogueOwnerViewProfile='+$Profile),'-ExecCmds="t.MaxFPS 60,Rogue10m.TestOwnerView"',('-abslog="'+$log+'"'))
+if($Framed){$arguments+='-RogueOwnerViewFramed'}
 if($Rendered){$arguments+=@('-d3d11','-windowed','-ForceRes','-ResX=1280','-ResY=720')}else{$arguments+='-nullrhi'}
 if($Offscreen){$arguments+='-RenderOffScreen'}
 $window=if($VisibleWindow){'Normal'}else{'Hidden'}
@@ -44,18 +45,20 @@ try {
  Write-Output ('Owned OwnerView QA PID='+$process.Id+' profile='+$Profile+' rendered='+$Rendered+' offscreen='+$Offscreen+' log='+$log)
  if(-not $process.WaitForExit($TimeoutSeconds*1000)){throw 'OwnerView QA timed out.'}
  $process.Refresh()
- $result=Join-Path $output 'results.txt';$frames=Join-Path $output 'frames.csv';$captures=Join-Path $output 'captures.csv';$attackFrames=Join-Path $output 'attackframes.csv';$animationFrames=Join-Path $output 'animationframes.csv'
- if(-not(Test-Path -LiteralPath $result) -or -not(Test-Path -LiteralPath $frames) -or -not(Test-Path -LiteralPath $captures) -or -not(Test-Path -LiteralPath $attackFrames) -or -not(Test-Path -LiteralPath $animationFrames)){throw ('QA incomplete; exit='+$process.ExitCode+' log='+$log)}
+ $result=Join-Path $output 'results.txt';$frames=Join-Path $output 'frames.csv';$captures=Join-Path $output 'captures.csv';$attackFrames=Join-Path $output 'attackframes.csv';$animationFrames=Join-Path $output 'animationframes.csv';$presentationFrames=Join-Path $output 'presentationframes.csv'
+ if(-not(Test-Path -LiteralPath $result) -or -not(Test-Path -LiteralPath $frames) -or -not(Test-Path -LiteralPath $captures) -or -not(Test-Path -LiteralPath $attackFrames) -or -not(Test-Path -LiteralPath $animationFrames) -or -not(Test-Path -LiteralPath $presentationFrames)){throw ('QA incomplete; exit='+$process.ExitCode+' log='+$log)}
  $text=Read-BomText $result;Write-Output $text
  $renderedValue=if($Rendered){1}else{0};$offValue=if($Offscreen){1}else{0}
  if($process.ExitCode -ne 0 -or $text -notmatch '(?m)^failures=0\s*$' -or $text -notmatch ('(?m)^profile='+$Profile+'\s*$') -or
   $text -notmatch ('(?m)^rendered='+$renderedValue+'\s*$') -or $text -notmatch ('(?m)^offscreen='+$offValue+'\s*$') -or
   $text -notmatch '(?m)^measured_flushes=0\s*$' -or $text -notmatch '(?m)^measured_viewport_events=0\s*$' -or $text -notmatch '(?m)^owner_view_toggle_invariant_pairs=3\s*$' -or
   -not((Read-BomText $log).Contains('RESULT=OWNER_VIEW_PASSED'))){throw ('OwnerView QA failed; exit='+$process.ExitCode+' log='+$log)}
+ $framedValue=if($Framed){1}else{0};if($text -notmatch ('(?m)^framing_mode='+$framedValue+'\s*$')){throw 'Requested framing mode was not measured.'}
  $rows=@((Read-BomText $frames)|ConvertFrom-Csv)
  if($rows.Count -lt 1 -or @($rows|Where-Object stage -eq 'downlook_sprint').Count -lt 1 -or @($rows|Where-Object dodging -eq '1').Count -lt 1){throw 'Actual movement frame observations are missing.'}
  $attackRows=@((Read-BomText $attackFrames)|ConvertFrom-Csv)
  foreach($stage in @('attack_0','attack_1','attack_2')){if(@($attackRows|Where-Object {$_.stage -eq $stage -and [double]::Parse($_.montage_weight,[Globalization.CultureInfo]::InvariantCulture) -gt 0}).Count -lt 2){throw ('Actual montage frame observations missing: '+$stage)}}
+ $presentationRows=@((Read-BomText $presentationFrames)|ConvertFrom-Csv);if($Framed -and @($presentationRows|Where-Object framing_active -eq '1').Count -lt 1){throw 'Actual framed hand trajectory was not recorded.'}
  $animationRows=@((Read-BomText $animationFrames)|ConvertFrom-Csv)
  foreach($stage in @('attack_0_ready_before_input','attack_0','attack_0_recovered','attack_1_ready_before_input','attack_1','attack_1_recovered')){if(@($animationRows|Where-Object stage -eq $stage).Count -lt 1){throw ('Actual animation trajectory stage missing: '+$stage)}}
  foreach($row in $animationRows){foreach($field in @('hand_l_world_x','hand_l_world_y','hand_l_world_z','hand_r_world_x','hand_r_world_y','hand_r_world_z','hand_l_view_forward','hand_l_view_right','hand_l_view_up','hand_r_view_forward','hand_r_view_right','hand_r_view_up')){$v=[double]::Parse($row.$field,[Globalization.CultureInfo]::InvariantCulture);if([double]::IsNaN($v) -or [double]::IsInfinity($v)){throw ('Non-finite actual hand trajectory: '+$field)}}}

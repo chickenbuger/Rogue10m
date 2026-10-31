@@ -2582,3 +2582,12 @@ NPC가 소비한 F 입력의 중복 공격을 수정하고 실제 비용형 Spec
 - 검증: 최종빌드PASS,회귀30PASS,Weighted4552/0·Original4664/0,NPC39/0,포기Normal89/0·SaveFailure97/0,43PNGdecode.
 - 상태: PARTIAL. 중앙몸통가림제거,손프레이밍/극하향·벽팔절단면미완료. defaultOFF. 원본·세이브보존,원격변경없음.
 - 문서: Feature/doc/2026-10-31_owner-first-person-resume.md, DevLog/20261031_OwnerFirstPerson_Review/AnimationRecord.md.
+
+
+## Sprint#9-15 owner view framing (2026-10-31)
+<!-- OwnerViewFraming_1031_Final -->
+- 목표: 극하향·벽근접 팔절단면/손프레이밍 보정.
+- 변경: owner-only posecopy/4회전IK·화면goal범위·기존leaderfallback; actualproxy getter; shadow/mesh/CPUnear분리QA와전후·애니메이션사진기록.
+- 검증: BuildG PASS,관련회귀30PASS,진단252506/0각15사진,Weighted103802/0·Original106518/0각20사진.
+- 상태: 재현장면보정검증완료/기본OFF. 원본·팔6·세이브270보존. 수동입력·일반필드완주·패키징/모든외형은미검증. push/병합없음.
+- 문서: Feature/doc/2026-10-31_owner-view-framing.md, DevLog/20261031_OwnerViewFraming_Review/.

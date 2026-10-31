@@ -9,6 +9,7 @@ class URogue10mAppearanceShadowComponent;
 class URogue10mOwnerArmsComponent;
 class USkeletalMesh;
 class USkeletalMeshComponent;
+class USkinnedMeshComponent;
 class USceneComponent;
 struct FMinimalViewInfo;
 
@@ -36,7 +37,7 @@ public:
  UFUNCTION(BlueprintPure, Category="Rogue10m|Appearance Camera")
  bool IsAppearanceCameraActive() const { return bApplied; }
  /** Presentation-only mesh. Gameplay animation, hit geometry and equipped-item data remain on the world body. */
- USkeletalMeshComponent* GetOwnerArmsMesh() const;
+ USkinnedMeshComponent* GetOwnerArmsMesh() const;
  bool IsOwnerArmsViewActive() const;
  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Appearance Camera|Owner View")
  // Kept off until the owner-view visual acceptance gate passes.
