@@ -2573,3 +2573,12 @@ DevLog/20261027_DesktopIntegration_DPlayB_20261027에 실제 Unreal 뷰포트 �
 ## Sprint#9-13-look-dash-interaction (2026-10-29 UTC)
 
 NPC가 소비한 F 입력의 중복 공격을 수정하고 실제 비용형 Special 양성 대조 포함39항목 PASS, 회귀17개/Editor 빌드 PASS. 아래보기·달리기·E 회피·벽/쿨다운 새 QA와 PNG 실측을 추가했다. **카메라 몸통 가림은 미완료**이며 단순 위치 후보를 채택하지 않고 실험 패치로 보존했다. Map Maker/NPC 키 사용법은 실제 소스로 확인했다. 원본747파일·QA 슬롯/증거 보존, 로컬 체크포인트만 생성, push/병합 없음. 계획/결과 Feature/*/2026-10-29_look-dash-interaction.md.
+
+
+## Sprint#9-14 owner first-person 재개 체크포인트 (2026-10-31)
+<!-- OwnerFirstPerson_1031_Checkpoint -->
+- 목표: 누락Or_F복구와아래보기몸통가림진단.
+- 변경: full polygon authoring/Or_F단일복구,owner-only leader proxy,기본OFF,QA명시활성화/20장phase사진/손궤적/애니메이션기록지침.
+- 검증: 최종빌드PASS,회귀30PASS,Weighted4552/0·Original4664/0,NPC39/0,포기Normal89/0·SaveFailure97/0,43PNGdecode.
+- 상태: PARTIAL. 중앙몸통가림제거,손프레이밍/극하향·벽팔절단면미완료. defaultOFF. 원본·세이브보존,원격변경없음.
+- 문서: Feature/doc/2026-10-31_owner-first-person-resume.md, DevLog/20261031_OwnerFirstPerson_Review/AnimationRecord.md.

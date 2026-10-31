@@ -6,6 +6,7 @@
 #include "Rogue10mAppearanceCameraComponent.generated.h"
 
 class URogue10mAppearanceShadowComponent;
+class URogue10mOwnerArmsComponent;
 class USkeletalMesh;
 class USkeletalMeshComponent;
 class USceneComponent;
@@ -34,6 +35,12 @@ public:
  void UpdateCameraFromAppearance();
  UFUNCTION(BlueprintPure, Category="Rogue10m|Appearance Camera")
  bool IsAppearanceCameraActive() const { return bApplied; }
+ /** Presentation-only mesh. Gameplay animation, hit geometry and equipped-item data remain on the world body. */
+ USkeletalMeshComponent* GetOwnerArmsMesh() const;
+ bool IsOwnerArmsViewActive() const;
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Appearance Camera|Owner View")
+ // Kept off until the owner-view visual acceptance gate passes.
+ bool bEnableOwnerArms = false;
  UFUNCTION(BlueprintPure, Category="Rogue10m|Weighted First Person")
  bool IsWeightedFirstPersonActive() const;
  UFUNCTION(BlueprintPure, Category="Rogue10m|Weighted First Person")
@@ -110,6 +117,8 @@ protected:
 private:
  UPROPERTY(Transient)
  TObjectPtr<URogue10mAppearanceShadowComponent> ShadowComponent;
+ UPROPERTY(Transient)
+ TObjectPtr<URogue10mOwnerArmsComponent> OwnerArmsComponent;
  void Restore();
  void RefreshInspectionParts();
  void RestoreInspectionParts();

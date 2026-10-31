@@ -133,3 +133,9 @@ Create a paired feature document set:
 ## Worktree Content Isolation
 
 - Never junction or symlink a Git-tracked Content directory to another checkout's Content. Git sparse-checkout/checkout/merge can remove tracked files through that link. Use an independent physical checkout and verify the resolved project/content paths before Git mutations.
+
+## Animation Evidence Records
+
+- Follow `Docs/AnimationRecordingGuide.md` when creating or changing animation, or validating an existing animation in a feature.
+- Keep actual ready/contact-or-first-damage/recovery captures, asset provenance and paths, authored versus observed timing, and hand/weapon trajectory evidence in that feature's DevLog folder.
+- Distinguish numeric tests, programmatic rendered input, physical input and full-run play. Preserve failed candidates and state visual failures separately from numeric passes.

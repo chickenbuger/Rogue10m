@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 #include "Rogue10mAppearanceCameraComponent.h"
 #include "Rogue10mAppearanceShadowComponent.h"
+#include "Rogue10mOwnerArmsComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Camera/CameraTypes.h"
 #include "CollisionQueryParams.h"
@@ -22,6 +23,14 @@
 URogue10mAppearanceCameraComponent::URogue10mAppearanceCameraComponent()
 {
  PrimaryComponentTick.bCanEverTick = false;
+}
+USkeletalMeshComponent* URogue10mAppearanceCameraComponent::GetOwnerArmsMesh() const
+{
+ return IsOwnerArmsViewActive() ? OwnerArmsComponent->GetOwnerArmsMesh() : nullptr;
+}
+bool URogue10mAppearanceCameraComponent::IsOwnerArmsViewActive() const
+{
+ return bApplied && OwnerArmsComponent && OwnerArmsComponent->IsActive();
 }
 bool URogue10mAppearanceCameraComponent::IsWeightedFirstPersonActive() const
 {
@@ -110,12 +119,24 @@ void URogue10mAppearanceCameraComponent::RefreshAppearanceCamera()
   HeadPoseFinalizedHandle = Mesh->RegisterOnBoneTransformsFinalizedDelegate(
    FOnBoneTransformsFinalizedMultiCast::FDelegate::CreateUObject(this, &URogue10mAppearanceCameraComponent::CaptureEvaluatedHeadBasis));
  }
- Mesh->SetOwnerNoSee(false); Mesh->SetOnlyOwnerSee(false);
+ // The separate arms mesh shares the evaluated appearance pose without running
+ // a second animation/notify clock. The world body remains intact for other views.
+ if (bEnableOwnerArms && !bThirdPersonInspection && !OwnerArmsComponent)
+ {
+  OwnerArmsComponent = NewObject<URogue10mOwnerArmsComponent>(Character, NAME_None, RF_Transient);
+  Character->AddInstanceComponent(OwnerArmsComponent);
+  OwnerArmsComponent->RegisterComponent();
+ }
+ const bool bOwnerArmsView = OwnerArmsComponent
+  && OwnerArmsComponent->Refresh(Mesh, bEnableOwnerArms && !bThirdPersonInspection);
+ Mesh->SetOwnerNoSee(bOwnerArmsView); Mesh->SetOnlyOwnerSee(false);
  Mesh->SetVisibility(true, false); Mesh->SetHiddenInGame(false, false);
  Mesh->SetFirstPersonPrimitiveType(EFirstPersonPrimitiveType::None);
  // Hidden bones must still be evaluated; only rendering hides the head, never the camera source pose.
  Mesh->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
- const bool bShouldHideHead = bHideHeadForOwner && !bThirdPersonInspection;
+ // OwnerNoSee removes the whole world body only from its owner's view. Do not
+ // collapse the world head when arms-only rendering is active (inspection/other views/shadows need it).
+ const bool bShouldHideHead = bHideHeadForOwner && !bThirdPersonInspection && !bOwnerArmsView;
  if (bShouldHideHead && !Mesh->IsBoneHiddenByName(HeadBone))
  {
   Mesh->HideBoneByName(HeadBone, EPhysBodyOp::PBO_None); HiddenHeadBone = HeadBone; bHidHead = true;
@@ -337,6 +358,7 @@ void URogue10mAppearanceCameraComponent::UpdateCameraFromAppearance()
 }
 void URogue10mAppearanceCameraComponent::Restore()
 {
+ if (OwnerArmsComponent) { OwnerArmsComponent->Deactivate(); }
  if (USkeletalMeshComponent* Mesh = AppliedMesh.Get(); Mesh && HeadPoseFinalizedHandle.IsValid())
  {
   Mesh->UnregisterOnBoneTransformsFinalizedDelegate(HeadPoseFinalizedHandle);
