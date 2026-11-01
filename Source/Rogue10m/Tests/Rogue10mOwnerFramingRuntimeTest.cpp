@@ -32,6 +32,7 @@
 #include "Rendering/SkinWeightVertexBuffer.h"
 #include "RawIndexBuffer.h"
 #include "Rogue10m.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mAppearanceCameraComponent.h"
 #include "Rogue10mAppearanceShadowComponent.h"
 #include "Rogue10mAttributeSet.h"
@@ -163,13 +164,13 @@ private:
   if((Character->IsDodging()||Character->GetDodgeCooldownRemaining()>.001f||!Character->CanChangeWeapon())&&FPlatformTime::Seconds()<WaitDeadline){Later(.05,[this]{WaitReady();});return;}
   Check(!Character->IsDodging()&&Character->GetDodgeCooldownRemaining()<=.001f&&Character->CanChangeWeapon(),TEXT("real_dodge_and_action_recovered_before_diagnostic_case"));if(Failures){Finish();return;}
   ApplyVisibility();ReadyAfter=FPlatformTime::Seconds()+.2;
-  if(Scene>=3){bDodgeRequested=true;bSawDodge=false;Key(EKeys::E,true);bEKeyDown=true;ReleaseEAt=FPlatformTime::Seconds()+.025;}
+  if(Scene>=3){bDodgeRequested=true;bSawDodge=false;Key(Rogue10mInput::DodgeKey(),true);bDodgeKeyDown=true;ReleaseDodgeKeyAt=FPlatformTime::Seconds()+.025;}
   else bWantCapture=true;
  }
  void Observe()
  {
   if(bFinished||!bPrepared||!Character.IsValid())return;
-  if(bEKeyDown&&FPlatformTime::Seconds()>=ReleaseEAt){Key(EKeys::E,false);bEKeyDown=false;}
+  if(bDodgeKeyDown&&FPlatformTime::Seconds()>=ReleaseDodgeKeyAt){Key(Rogue10mInput::DodgeKey(),false);bDodgeKeyDown=false;}
   RefreshActualProxy();if(!Proxy.IsValid()){if(FPlatformTime::Seconds()>CandidateReadyBy){Check(false,TEXT("actual_owner_proxy_missing_after_bounded_wait"));Finish();}return;}
   if(bDodgeRequested){if(Character->IsDodging()){bSawDodge=true;if(Scene==3)bWantCapture=true;}else if(Scene==4&&bSawDodge){bWantCapture=true;}else if(FPlatformTime::Seconds()>WaitDeadline){Check(false,TEXT("actual_E_dodge_did_not_reach_requested_phase"));Finish();return;}}
   if(!bWantCapture||!Pending.IsEmpty()||(Scene<3&&FPlatformTime::Seconds()<ReadyAfter))return;
@@ -198,18 +199,19 @@ private:
  }
  void Finish(bool Exit=true)
  {
-  if(bFinished)return;bFinished=true;Next=nullptr;FWorldDelegates::OnWorldPostActorTick.Remove(PostTick);FWorldDelegates::OnWorldCleanup.Remove(Cleanup);UGameViewportClient::OnScreenshotCaptured().Remove(CaptureHandle);Key(EKeys::E,false);
+  if(bFinished)return;bFinished=true;Next=nullptr;FWorldDelegates::OnWorldPostActorTick.Remove(PostTick);FWorldDelegates::OnWorldCleanup.Remove(Cleanup);UGameViewportClient::OnScreenshotCaptured().Remove(CaptureHandle);Key(Rogue10mInput::DodgeKey(),false);
   if(bPrepared&&Character.IsValid()){PC->HiddenPrimitiveComponents=InitialHidden;for(const auto& S:Shadows)if(S.Component.IsValid())S.Component->SetCastShadow(S.Cast);if(FramingProperty&&Arms.IsValid())FramingProperty->SetPropertyValue_InContainer(Arms.Get(),OldFraming);Appearance->bEnableOwnerArms=InitialEnable;Appearance->RefreshAppearanceCamera();Check(!Appearance->IsOwnerArmsViewActive()&&!GetDefault<URogue10mAppearanceCameraComponent>()->bEnableOwnerArms,TEXT("QA_optin_restored_product_default_OFF"));Character->SetCanBeDamaged(bInitialDamage);Character->GetCharacterMovement()->StopMovementImmediately();Character->SetBase(static_cast<FMovementBaseInterfaceData*>(nullptr));Character->SetActorTransform(InitialTransform,false,nullptr,ETeleportType::TeleportPhysics);PC->SetControlRotation(InitialControl);}
   if(Floor.IsValid())Floor->Destroy();if(Wall.IsValid())Wall->Destroy();if(Heavy)Heavy->Set(OldHeavy,ECVF_SetByConsole);
   if(bRendered)Check(Requested==15&&Completed==15&&Pending.IsEmpty(),TEXT("all_fifteen_actual_diagnostic_captures_completed"));
   for(const auto& Image:ImageData){TArray64<uint8> Bytes;FImageUtils::PNGCompressImageArray(Image.Width,Image.Height,Image.Pixels,Bytes);Check(FFileHelper::SaveArrayToFile(Bytes,*(Images/Image.Name)),TEXT("actual_viewport_PNG_saved"));}
   Check(FFileHelper::SaveStringToFile(Vertices,*(Output/TEXT("vertices.csv"))),TEXT("actual_CPU_skinned_vertices_written"));Check(FFileHelper::SaveStringToFile(Geometry,*(Output/TEXT("geometry.csv"))),TEXT("actual_triangle_and_boundary_projection_written"));Check(FFileHelper::SaveStringToFile(Captures,*(Output/TEXT("captures.csv"))),TEXT("actual_request_capture_metadata_written"));
+  Results+=FString::Printf(TEXT("dodge_key=%s\n"),*Rogue10mInput::DodgeKey().ToString());
   Results+=FString::Printf(TEXT("checks=%d\nfailures=%d\nmode=%s\nrendered=%d\nrequested_captures=%d\ncompleted_captures=%d\ninput=programmatic_Controller_InputKey\nphysical_input=not_performed\nmanual_field_completion=not_performed\ngeometry_scope=actual_CPU_skinned_LOD0_vertices_and_indices_not_socket_only\nvisibility_modes=0_proxy_and_world_shadows_ON_1_proxy_view_excluded_world_shadows_ON_2_proxy_ON_owned_world_shadows_OFF\nscene_names=0_neutral_1_minus85_2_minus85_nearwall_3_minus85_active_E_4_minus85_wall_E_recovered\npose_policy=no_animation_or_world_time_freeze_no_asset_edit_each_capture_has_real_time_and_hand_pose\nprojection_scope=conventional_world_camera_FOV_1280x720_not_material_opacity_or_TAA_pixel_occlusion\nboundary_scope=render_index_boundaries_include_material_UV_seams_not_all_are_derivative_cut_surfaces\nvisual_acceptance=requires_real_image_review_not_numeric_PASS\n"),Checks,Failures,*Mode,bRendered,Requested,Completed);
   Check(FFileHelper::SaveStringToFile(Results,*(Output/TEXT("results.txt"))),TEXT("results_written"));UE_LOG(LogRogue10m,Display,TEXT("RESULT=OWNER_FRAMING_%s checks=%d failures=%d output=%s"),Failures?TEXT("FAILED"):TEXT("PASSED"),Checks,Failures,*Output);if(Exit)FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Code=Failures?1:0](float){FPlatformMisc::RequestExitWithStatus(false,Code);return false;}),.5f);
  }
  TWeakObjectPtr<UWorld> World;TWeakObjectPtr<ARogue10mPlayerController> PC;TWeakObjectPtr<ARogue10mCharacter> Character;TWeakObjectPtr<URogue10mAppearanceCameraComponent> Appearance;TWeakObjectPtr<URogue10mOwnerArmsComponent> Arms;TWeakObjectPtr<USkeletalMeshComponent> Body,Source;TWeakObjectPtr<USkinnedMeshComponent> Proxy;TWeakObjectPtr<URogue10mCombatComponent> Combat;TWeakObjectPtr<URogue10mProgressionSubsystem> Saves;TWeakObjectPtr<AActor> Floor,Wall;TWeakObjectPtr<UStaticMesh> Cube;
  TArray<FShadow> Shadows;TArray<TWeakObjectPtr<UPrimitiveComponent>> InitialHidden;TArray<FImage> ImageData;FString Label,Mode,Output,Images,Pending,Results,Captures,Vertices,Geometry;FTransform InitialTransform,Fixture;FRotator InitialControl;FDelegateHandle PostTick,Cleanup,CaptureHandle;TFunction<void()> Next;IConsoleVariable* Heavy=nullptr;FBoolProperty* FramingProperty=nullptr;
- double Deadline=0,NextAt=0,WaitDeadline=0,ReadyAfter=0,Surface=0,ReleaseEAt=0,CandidateReadyBy=0;int32 Scene=0,VisibilityMode=0,Checks=0,Failures=0,Requested=0,Completed=0,OldHeavy=0;bool bPrepared=false,bFinished=false,bRendered=false,bInitialDamage=true,InitialEnable=false,bWantCapture=false,bDodgeRequested=false,bSawDodge=false,bEKeyDown=false,OldFraming=false;
+ double Deadline=0,NextAt=0,WaitDeadline=0,ReadyAfter=0,Surface=0,ReleaseDodgeKeyAt=0,CandidateReadyBy=0;int32 Scene=0,VisibilityMode=0,Checks=0,Failures=0,Requested=0,Completed=0,OldHeavy=0;bool bPrepared=false,bFinished=false,bRendered=false,bInitialDamage=true,InitialEnable=false,bWantCapture=false,bDodgeRequested=false,bSawDodge=false,bDodgeKeyDown=false,OldFraming=false;
 };
 static TSharedPtr<FRun> Active;
 static void Run(){if(!GEngine||GIsEditor||(Active&&!Active->Finished()))return;for(const FWorldContext& C:GEngine->GetWorldContexts())if(UWorld* W=C.World();W&&C.WorldType==EWorldType::Game){Active=MakeShared<FRun>();Active->Start(*W);return;}UE_LOG(LogRogue10m,Error,TEXT("RESULT=OWNER_FRAMING_FAILED no_game_world"));FPlatformMisc::RequestExitWithStatus(false,1);}

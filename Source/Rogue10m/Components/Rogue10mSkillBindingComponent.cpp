@@ -1,4 +1,5 @@
 #include "Rogue10mSkillBindingComponent.h"
+#include "Rogue10mInputKeys.h"
 
 #include "Components/InputComponent.h"
 #include "EnhancedInputComponent.h"
@@ -127,7 +128,7 @@ bool URogue10mSkillBindingComponent::IsUsableKey(FKey Key) const
 bool URogue10mSkillBindingComponent::IsReservedKey(FKey Key) const
 {
 	// Reserve legacy controls even before possession has created the pawn input component.
-	static const TSet<FKey> Legacy = {EKeys::W,EKeys::A,EKeys::S,EKeys::D,EKeys::SpaceBar,EKeys::E,
+	static const TSet<FKey> Legacy = {EKeys::W,EKeys::A,EKeys::S,EKeys::D,EKeys::SpaceBar,Rogue10mInput::DodgeKey(),
 		EKeys::One,EKeys::Two,EKeys::Three,EKeys::Four,EKeys::Five,EKeys::I,EKeys::P,EKeys::K,
 		EKeys::O,EKeys::Escape,EKeys::F10,EKeys::L,EKeys::V,EKeys::Tilde};
 	if (Legacy.Contains(Key)) { return true; }

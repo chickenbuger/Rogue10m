@@ -2596,3 +2596,15 @@ NPC가 소비한 F 입력의 중복 공격을 수정하고 실제 비용형 Spec
 ## Sprint#9-16 — 기본 플레이 연결 (2026-11-01)
 
 필드 수동 학습 권한 분리, 기존 대검 런타임 단일 배치, 숙련도100 비율 표시, 타이머/F6 겹침 수정, 새 QA 슬롯과 네이티브 관찰기. 빌드 PASS; 신규QA87/88/87, 렌더90, 관련회귀30/0. 실제 입력 완주는 CUA 키 유지 미지원으로 남아 있고 관찰 I/O 부분 실패도 보존. 시작 저장폴더284개+별도 증거용27개(총311개 .sav)/31패키지 SHA 유지, 현재 저장폴더304개(신규QA20개). 초기311개 집계 범위 정정. 로컬 체크포인트이며 원격 작업 없음. Feature/doc/2026-11-01_basic-play-loop.md 및 Docs/BasicPlayGuide.md 참조.
+
+
+## Sprint#9-17 — Alt 회피·대시 입력 분리
+
+- 목표: E 액티브와 회피 충돌 제거. 왼쪽Alt/HUD/예약키 단일 정의. 비용·스키마·모션 유지.
+- 검증: Editor2회빌드, Hybrid207+89/LookDash535/NPC39/핵심30통과. OwnerFraming15장과 CUA마을Alt 입력 확인. failedA 보존, fixture수정B통과.
+- 보존: 실제세이브304개/자산31개해시 동일, 종료후318세이브. 28장증거 디코딩. 원격변경 없음.
+- 상태: 로컬 입력 기능검증 완료. 사람의 물리입력/정상필드완주/4슬롯프리셋/안전지대메뉴정지는 별도.
+- 문서: Feature/architect/2026-11-01_alt-dodge.md, Feature/doc/2026-11-01_alt-dodge.md, DevLog/20261101_AltDodge_Review/README.md.
+
+
+최종 QA 실행기 리뷰 보정: PASS를 세이브 보존 검사 뒤로 옮기고 runtime 완료 영수증(label/namespace/로그 SHA/보존 성공)이 있어야 read를 허용한다. 새 AltGate1101C runtime207/read89 통과, 두 단계 모두 non-QA318개 해시 보존. 현재 실제 세이브321개이며 시작304개 모두 동일하다. 제품 바이너리/규칙 변경 없이 wrapper gate만 강화했다. 기존 failedA 결과 보존.

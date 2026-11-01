@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "Rogue10mRunHUD.h"
+#include "Rogue10mInputKeys.h"
 
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mAttributeSet.h"
@@ -261,7 +262,7 @@ TArray<FRogue10mHudQuickSlotView> URogue10mRunHUD::GetSkillQuickSlotViews() cons
 
 	FRogue10mHudQuickSlotView DodgeView;
 	DodgeView.SlotNumber = 5;
-	DodgeView.InputText = FText::FromString(TEXT("E"));
+	DodgeView.InputText = Rogue10mInput::DodgeKeyLabel();
 	DodgeView.bDodgeSlot = true;
 	DodgeView.bUnlocked = true;
 	if (const URogue10mDodgeSkillDataAsset* DodgeSkill = Combat->GetActiveDodgeSkill())

@@ -19,6 +19,7 @@
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
 #include "Rogue10m.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCharacterProfileSubsystem.h"
@@ -121,9 +122,9 @@ public:
         CsvPath = Output / TEXT("samples.csv");
         ShotPath = Output / TEXT("screenshots.csv");
         InputPath = Output / TEXT("input-frames.csv");
-        const FString Header = TEXT("sample,utc,wall_seconds,frame_counter,core_delta_seconds,world_delta_seconds,map,phase,run_id,selected_profile,world_seconds,run_remaining_seconds,paused,pawn_present,x,y,z,speed,health,max_health,player_level,current_xp,weapon,run_gold,run_crystals,lobby_available,save_ready,save_retry_available,save_attached,attached_profile,attached_run,save_error,settled,victory,abandoned,settlement_saved,travel_started,result_visible,main_menu_visible,character_lobby_visible,inventory_visible,skill_tree_visible,settings_visible,npc_dialogue_open,game_key_w,game_key_a,game_key_s,game_key_d,game_key_shift,game_key_f,game_key_e,game_key_lmb\n");
+        const FString Header = TEXT("sample,utc,wall_seconds,frame_counter,core_delta_seconds,world_delta_seconds,map,phase,run_id,selected_profile,world_seconds,run_remaining_seconds,paused,pawn_present,x,y,z,speed,health,max_health,player_level,current_xp,weapon,run_gold,run_crystals,lobby_available,save_ready,save_retry_available,save_attached,attached_profile,attached_run,save_error,settled,victory,abandoned,settlement_saved,travel_started,result_visible,main_menu_visible,character_lobby_visible,inventory_visible,skill_tree_visible,settings_visible,npc_dialogue_open,game_key_w,game_key_a,game_key_s,game_key_d,game_key_shift,game_key_f,game_key_e,game_key_dodge,game_key_lmb\n");
         const FString ShotHeader = TEXT("utc,event,image,trigger_state,request_state,world_state_when_logged,bytes,note\n");
-        const FString InputHeader = TEXT("frame_counter,utc,wall_seconds,world_seconds,core_delta_seconds,world_delta_seconds,map,paused,pawn_present,x,y,z,speed,move_ignored,blocking_window,last_input_x,last_input_y,game_key_w,game_key_a,game_key_s,game_key_d,game_key_shift,w_just_pressed,w_just_released,a_just_pressed,a_just_released,s_just_pressed,s_just_released,d_just_pressed,d_just_released,game_key_f,game_key_e,game_key_lmb\n");
+        const FString InputHeader = TEXT("frame_counter,utc,wall_seconds,world_seconds,core_delta_seconds,world_delta_seconds,map,paused,pawn_present,x,y,z,speed,move_ignored,blocking_window,last_input_x,last_input_y,game_key_w,game_key_a,game_key_s,game_key_d,game_key_shift,w_just_pressed,w_just_released,a_just_pressed,a_just_released,s_just_pressed,s_just_released,d_just_pressed,d_just_released,game_key_f,game_key_e,game_key_dodge,game_key_lmb\n");
         if (!WriteNew(CsvPath, Header) || !WriteNew(ShotPath, ShotHeader) || !WriteNew(InputPath, InputHeader))
         {
             Ar.Logf(TEXT("Manual observer could not initialize evidence files. Existing files were not overwritten. Game remains running."));
@@ -239,7 +240,7 @@ private:
             PC ? Flag(PC->WasInputKeyJustPressed(EKeys::A)) : FString(), PC ? Flag(PC->WasInputKeyJustReleased(EKeys::A)) : FString(),
             PC ? Flag(PC->WasInputKeyJustPressed(EKeys::S)) : FString(), PC ? Flag(PC->WasInputKeyJustReleased(EKeys::S)) : FString(),
             PC ? Flag(PC->WasInputKeyJustPressed(EKeys::D)) : FString(), PC ? Flag(PC->WasInputKeyJustReleased(EKeys::D)) : FString(),
-            PC ? Flag(PC->IsInputKeyDown(EKeys::F)) : FString(), PC ? Flag(PC->IsInputKeyDown(EKeys::E)) : FString(), PC ? Flag(PC->IsInputKeyDown(EKeys::LeftMouseButton)) : FString()
+            PC ? Flag(PC->IsInputKeyDown(EKeys::F)) : FString(), PC ? Flag(PC->IsInputKeyDown(EKeys::E)) : FString(), PC ? Flag(PC->IsInputKeyDown(Rogue10mInput::DodgeKey())) : FString(), PC ? Flag(PC->IsInputKeyDown(EKeys::LeftMouseButton)) : FString()
         };
         for (FString& Value : Values) { Value = Csv(Value); }
         InputBuffer += FString::Join(Values, TEXT(",")) + TEXT("\n");
@@ -315,7 +316,7 @@ private:
             PC ? Flag(PC->IsInventoryVisible()) : FString(), PC ? Flag(PC->IsSkillTreeVisible()) : FString(), PC ? Flag(PC->IsSettingsVisible()) : FString(),
             World ? Flag(bDialogue) : FString(), PC ? Flag(PC->IsInputKeyDown(EKeys::W)) : FString(), PC ? Flag(PC->IsInputKeyDown(EKeys::A)) : FString(),
             PC ? Flag(PC->IsInputKeyDown(EKeys::S)) : FString(), PC ? Flag(PC->IsInputKeyDown(EKeys::D)) : FString(), PC ? Flag(PC->IsInputKeyDown(EKeys::LeftShift)) : FString(),
-            PC ? Flag(PC->IsInputKeyDown(EKeys::F)) : FString(), PC ? Flag(PC->IsInputKeyDown(EKeys::E)) : FString(), PC ? Flag(PC->IsInputKeyDown(EKeys::LeftMouseButton)) : FString()
+            PC ? Flag(PC->IsInputKeyDown(EKeys::F)) : FString(), PC ? Flag(PC->IsInputKeyDown(EKeys::E)) : FString(), PC ? Flag(PC->IsInputKeyDown(Rogue10mInput::DodgeKey())) : FString(), PC ? Flag(PC->IsInputKeyDown(EKeys::LeftMouseButton)) : FString()
         };
         for (FString& Value : Values) { Value = Csv(Value); }
         Append(CsvPath, FString::Join(Values, TEXT(",")) + TEXT("\n"));
@@ -389,7 +390,8 @@ private:
     void WriteSummary(const TCHAR* Reason)
     {
         const FString Text = FString::Printf(TEXT("observer_status=%s\nlabel=%s\nsamples=%d\ninput_frames_sampled=%d\ninput_frames_flushed=%d\ninput_frame_cap=%d\ninput_frame_cap_reached=%d\ntransitions=%d\nscreenshot_requests_queued=%d\nscreenshot_files_observed=%d\nscreenshot_unconfirmed_or_skipped=%d\nlast_map=%s\nlast_phase=%s\nevidence_io_error=%d\nphysical_input=not_assessed\nnormal_full_run=not_assessed\nNOTE=Read-only runtime observation. Combine with separately recorded external OS input and UI evidence. No input/profile selection/spawn/teleport/reward/save/gameplay state change or game exit is performed. Core-ticker wall timeout stops observation only; a stalled process cannot be sampled. Input-frame samples read game key states/just-pressed/released once per core-ticker engine frame and are not proof of OS or EnhancedInput event delivery. Input frames flush every 0.25 wall seconds or 256 rows; abrupt termination can lose the last batch. Screenshots and logging add measurement overhead.\n"),
-            Reason, *Label, Samples, InputFrames, InputFramesFlushed, MaximumInputFrames, InputFrames >= MaximumInputFrames, Transitions, ShotsQueued, ShotsObserved, ShotsUnconfirmed, *LastMap, *LastPhase, bIoFailed);
+            Reason, *Label, Samples, InputFrames, InputFramesFlushed, MaximumInputFrames, InputFrames >= MaximumInputFrames, Transitions, ShotsQueued, ShotsObserved, ShotsUnconfirmed, *LastMap, *LastPhase, bIoFailed)
+            + FString::Printf(TEXT("dodge_key=%s\ndodge_label=%s\n"), *Rogue10mInput::DodgeKey().ToString(), *Rogue10mInput::DodgeKeyLabel().ToString());
         if (!FFileHelper::SaveStringToFile(Text, *(Output / TEXT("summary.txt")), FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM)) { bIoFailed = true; }
     }
 

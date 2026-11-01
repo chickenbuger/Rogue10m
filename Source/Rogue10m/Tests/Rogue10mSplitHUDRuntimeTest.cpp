@@ -24,6 +24,7 @@
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
 #include "Rogue10m.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCharacterProfileSubsystem.h"
@@ -343,8 +344,8 @@ private:
             {
                 FString Display = Key->GetText().ToString();
                 Display.ReplaceInline(TEXT("\n"), TEXT("")); Display.ReplaceInline(TEXT("\r"), TEXT("")); Display.ReplaceInline(TEXT(" "), TEXT(""));
-                const TCHAR* Keys[] = {TEXT("LMB"), TEXT("RMB"), TEXT("HOLDLMB"), TEXT("HOLDRMB"), TEXT("E")};
-                Check(Display == Keys[ChildIndex], TEXT("actual_five_skill_keys_LMB_RMB_HOLDLMB_HOLDRMB_E"));
+                const FString Keys[] = {TEXT("LMB"), TEXT("RMB"), TEXT("HOLDLMB"), TEXT("HOLDRMB"), Rogue10mInput::DodgeKeyLabel().ToString()};
+                Check(Display == Keys[ChildIndex], TEXT("actual_attack_keys_and_shared_dodge_label_match_production"));
                 Check(Key->GetCachedGeometry().GetLocalSize().Y + 1.0 >= Key->GetDesiredSize().Y
                     && Key->GetCachedGeometry().GetLocalSize().X + 1.0 >= Key->GetDesiredSize().X,
                     TEXT("input_label_desired_width_and_height_not_clipped"));
@@ -355,7 +356,7 @@ private:
                     Check(!Actual.bDodgeSlot && Actual.InputSlot == InputSlots[ChildIndex]
                         && Actual.SkillData == Combat->GetEquippedSkill(InputSlots[ChildIndex]), TEXT("displayed_skill_slot_matches_actual_combat_binding"));
                 }
-                else { Check(Actual.bDodgeSlot && Expected.InputText.ToString() == TEXT("E"), TEXT("fifth_slot_remains_actual_E_dodge")); }
+                else { Check(Actual.bDodgeSlot && Expected.InputText.EqualTo(Rogue10mInput::DodgeKeyLabel()), TEXT("fifth_slot_matches_actual_shared_dodge_key_label")); }
                 auto* Icon = Cast<UImage>(Slot->GetWidgetFromName(TEXT("UI_IconImage")));
                 if (Expected.SkillIcon)
                 {

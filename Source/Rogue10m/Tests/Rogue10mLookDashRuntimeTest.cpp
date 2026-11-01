@@ -30,6 +30,8 @@
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
 #include "Rogue10m.h"
+#include "Components/InputComponent.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mAppearanceCameraComponent.h"
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mCharacter.h"
@@ -79,7 +81,7 @@ private:
  void Check(bool OK,const TCHAR* Why){++Checks;if(!OK){++Failures;Results+=FString(TEXT("FAIL "))+Why+TEXT("\n");if(Failures<25)UE_LOG(LogRogue10m,Error,TEXT("LOOK_DASH FAIL %s"),Why);}}
  void Later(double Delay,TFunction<void()> F){NextAt=FPlatformTime::Seconds()+Delay;Next=MoveTemp(F);}
  void Key(FKey K,bool Down){if(PC.IsValid())PC->InputKey(FInputKeyEventArgs::CreateSimulated(K,Down?IE_Pressed:IE_Released,Down?1.f:0.f));}
- void Stop(){Key(EKeys::W,false);Key(EKeys::LeftShift,false);Key(EKeys::E,false);if(Character.IsValid())Character->GetCharacterMovement()->StopMovementImmediately();}
+ void Stop(){Key(EKeys::W,false);Key(EKeys::LeftShift,false);Key(Rogue10mInput::DodgeKey(),false);if(Character.IsValid())Character->GetCharacterMovement()->StopMovementImmediately();}
  void Photo(const TCHAR* Name)
  {
   if(!bRendered)return;Check(PendingCapture.IsEmpty(),TEXT("previous_screenshot_completed_before_next_request"));++RequestedCaptures;PendingCapture=Name;Captures+=FString::Printf(TEXT("%s,request,%llu,%.9f,%d,%.6f,%.6f,%s\n"),*PendingCapture,GFrameCounter,World->GetTimeSeconds(),Character->IsDodging(),PC->GetControlRotation().Pitch,PC->GetControlRotation().Yaw,*Stage);
@@ -106,6 +108,12 @@ private:
   Saves->DetachCharacter(*Character,false);Check(!Saves->IsAttachedTo(*Character),TEXT("autosave_detached_before_transient_fixture"));
   Appearance=Character->GetAppearanceCameraComponent();Body=Character->GetMesh();Source=Character->GetAnimationPlaybackMesh();Camera=Character->GetFirstPersonCameraComponent();Combat=Character->GetCombatComponent();
   Check(Appearance.IsValid()&&Body.IsValid()&&Source.IsValid()&&Camera.IsValid()&&Combat.IsValid()&&Character->GetRogueAttributeSet()&&PC->PlayerCameraManager,TEXT("camera_body_source_combat_attributes_available"));if(Failures){Finish();return;}
+  Check(Rogue10mInput::DodgeKey()==EKeys::LeftAlt,TEXT("dodge_contract_is_independent_LeftAlt_not_legacy_E"));
+  bool bHasLeftAlt=false,bHasLegacyE=false;
+  if(const UInputComponent* Input=Character->InputComponent){for(const FInputKeyBinding& Binding:Input->KeyBindings){if(Binding.KeyEvent!=IE_Pressed)continue;bHasLeftAlt|=Binding.Chord.Key==EKeys::LeftAlt;bHasLegacyE|=Binding.Chord.Key==EKeys::E;}}
+  Check(bHasLeftAlt&&!bHasLegacyE,TEXT("actual_pawn_pressed_bindings_have_LeftAlt_and_no_legacy_E_alias"));
+  Results+=FString::Printf(TEXT("dodge_key=%s\ndodge_label=%s\nlegacy_E_image_names=retained_for_wrapper_compatibility_not_input_proof\n"),*Rogue10mInput::DodgeKey().ToString(),*Rogue10mInput::DodgeKeyLabel().ToString());
+  if(Failures){Finish();return;}
   Dodge=Combat->GetActiveDodgeSkill();DodgeConfig=Dodge.IsValid()?Editable(*Dodge):TEXT("actual_character_fallback");
   SavedEyeOffset=Appearance->EyeOffset;float EyeForward=0.f;
   if(FParse::Value(FCommandLine::Get(),TEXT("RogueLookDashEyeForward="),EyeForward))
@@ -175,14 +183,15 @@ private:
  }
  void DodgeCase(int32 Index)
  {
-  GroundDeadline=FPlatformTime::Seconds()+12.;WaitReady([this,Index]{ResetFixture();SetLook(Index==0?0.f:-85.f,[this,Index]{if(Index==2)MakeWall();if(Failures){Finish();return;}Stage=FString::Printf(TEXT("dodge_%d"),Index);DodgeIndex=Index;DodgeOrigin=Character->GetActorLocation();Forward=Character->GetActorForwardVector().GetSafeNormal2D();BeforeStamina=Character->GetRogueAttributeSet()->GetStamina();AcceptedAt=-1;DodgeEndObserved=-1;FirstActiveDT=0;EndObservedDT=0;MaxDodgeDT=0;DashSamples=0;bDashPhoto=false;bMeasured=true;DodgeRequestWorld=World->GetTimeSeconds();DodgeRequestWall=FPlatformTime::Seconds();Key(EKeys::E,true);
-   Later(.04,[this,Index]{Key(EKeys::E,false);Check(AcceptedAt>=0.,TEXT("actual_E_key_accepts_owned_weapon_dodge"));if(Failures){Finish();return;}Later(.02,[this,Index]{if(!Character->IsDodging()&&Character->GetDodgeCooldownRemaining()<=.001f){Results+=FString::Printf(TEXT("case_%d_early_repeat_guard=not_applicable_no_active_or_cooldown_window\n"),Index);WaitDodgeEnd(Index);return;}RepeatDeadline=World->GetTimeSeconds()+Character->GetDodgeCooldownRemaining();RepeatStamina=Character->GetRogueAttributeSet()->GetStamina();Key(EKeys::E,true);Later(.03,[this,Index]{Key(EKeys::E,false);Check(Cooldown>0.f?FMath::Abs((World->GetTimeSeconds()+Character->GetDodgeCooldownRemaining())-RepeatDeadline)<.005f:Character->GetDodgeCooldownRemaining()<=.001f,TEXT("early_repeated_E_does_not_extend_cooldown"));Check(Character->GetRogueAttributeSet()->GetStamina()>=RepeatStamina-.01f,TEXT("repeat_interval_stamina_does_not_drop_in_observed_samples"));WaitDodgeEnd(Index);});});});});});
+  GroundDeadline=FPlatformTime::Seconds()+12.;WaitReady([this,Index]{ResetFixture();SetLook(Index==0?0.f:-85.f,[this,Index]{if(Index==2)MakeWall();if(Failures){Finish();return;}Stage=FString::Printf(TEXT("dodge_%d"),Index);DodgeIndex=Index;DodgeOrigin=Character->GetActorLocation();Forward=Character->GetActorForwardVector().GetSafeNormal2D();BeforeStamina=Character->GetRogueAttributeSet()->GetStamina();AcceptedAt=-1;DodgeEndObserved=-1;FirstActiveDT=0;EndObservedDT=0;MaxDodgeDT=0;DashSamples=0;DodgeActivationCount=0;bObservedDodgeActive=false;bDashPhoto=false;bMeasured=true;DodgeRequestWorld=World->GetTimeSeconds();DodgeRequestWall=FPlatformTime::Seconds();Key(Rogue10mInput::DodgeKey(),true);
+   Later(.04,[this,Index]{Key(Rogue10mInput::DodgeKey(),false);Check(AcceptedAt>=0.,TEXT("actual_dodge_key_accepts_owned_weapon_dodge"));if(Failures){Finish();return;}Later(.02,[this,Index]{if(!Character->IsDodging()&&Character->GetDodgeCooldownRemaining()<=.001f){Results+=FString::Printf(TEXT("case_%d_early_repeat_guard=not_applicable_no_active_or_cooldown_window\n"),Index);WaitDodgeEnd(Index);return;}RepeatDeadline=World->GetTimeSeconds()+Character->GetDodgeCooldownRemaining();RepeatStamina=Character->GetRogueAttributeSet()->GetStamina();Key(Rogue10mInput::DodgeKey(),true);Later(.03,[this,Index]{Key(Rogue10mInput::DodgeKey(),false);Check(Cooldown>0.f?FMath::Abs((World->GetTimeSeconds()+Character->GetDodgeCooldownRemaining())-RepeatDeadline)<.005f:Character->GetDodgeCooldownRemaining()<=.001f,TEXT("early_repeated_dodge_key_does_not_extend_cooldown"));Check(Character->GetRogueAttributeSet()->GetStamina()>=RepeatStamina-.01f,TEXT("repeat_interval_stamina_does_not_drop_in_observed_samples"));WaitDodgeEnd(Index);});});});});});
  }
  void WaitDodgeEnd(int32 Index)
  {
   if(Character->IsDodging()){if(FPlatformTime::Seconds()>DodgeRequestWall+6.||World->GetTimeSeconds()>DodgeRequestWorld+Duration+MaxDodgeDT+.3){Check(false,TEXT("active_dodge_exceeds_bounded_authored_timer_window"));Finish();return;}Later(.025,[this,Index]{WaitDodgeEnd(Index);});return;}
   const double Travel=FVector::DotProduct(Character->GetActorLocation()-DodgeOrigin,Forward);const double DZ=FMath::Abs(Character->GetActorLocation().Z-DodgeOrigin.Z);
   Check(DashSamples>0&&DZ<1.f,TEXT("dodge_has_actual_sampled_horizontal_movement_without_vertical_launch"));
+   Check(DodgeActivationCount==1,TEXT("one_LeftAlt_press_and_guarded_repeats_produce_exactly_one_sampled_dodge_activation"));
   const double Elapsed=DodgeEndObserved-AcceptedAt;const double Early=FMath::Max(0.,static_cast<double>(Duration)-FirstActiveDT-.002);const double Late=Duration+EndObservedDT+.002;
   Check(DodgeEndObserved>=AcceptedAt&&Elapsed>=Early&&Elapsed<=Late,TEXT("active_dodge_ends_within_authored_duration_and_recorded_frame_quantization"));
   Check(Character->GetRogueAttributeSet()->GetStamina()>=BeforeStamina-Cost-.05f,TEXT("observed_stamina_not_below_single_effective_cost_ceiling"));
@@ -196,7 +205,7 @@ private:
   bMeasured=false;
   if(Character->GetDodgeCooldownRemaining()>.04f)
   {
-   const float Remaining=Character->GetDodgeCooldownRemaining();const float Stam=Character->GetRogueAttributeSet()->GetStamina();Key(EKeys::E,true);Later(.025,[this,Index,Remaining,Stam]{Key(EKeys::E,false);Check(!Character->IsDodging(),TEXT("post_active_E_is_blocked_until_real_cooldown_expires"));Check(Character->GetDodgeCooldownRemaining()<=Remaining+.001f&&Character->GetRogueAttributeSet()->GetStamina()>=Stam-.01f,TEXT("cooldown_rejection_does_not_restart_or_charge"));AfterDodgeCase(Index);});
+   const float Remaining=Character->GetDodgeCooldownRemaining();const float Stam=Character->GetRogueAttributeSet()->GetStamina();Key(Rogue10mInput::DodgeKey(),true);Later(.025,[this,Index,Remaining,Stam]{Key(Rogue10mInput::DodgeKey(),false);Check(!Character->IsDodging(),TEXT("post_active_dodge_key_is_blocked_until_real_cooldown_expires"));Check(Character->GetDodgeCooldownRemaining()<=Remaining+.001f&&Character->GetRogueAttributeSet()->GetStamina()>=Stam-.01f,TEXT("cooldown_rejection_does_not_restart_or_charge"));AfterDodgeCase(Index);});
   }
   else{Results+=FString::Printf(TEXT("case_%d_post_active_cooldown_guard=not_applicable_no_remaining_window\n"),Index);AfterDodgeCase(Index);}
  }
@@ -206,12 +215,12 @@ private:
  }
  void BlockingBoundaries()
  {
-  GroundDeadline=FPlatformTime::Seconds()+12.;WaitReady([this]{ResetFixture();PC->ToggleSettings();const float S=Character->GetRogueAttributeSet()->GetStamina();Key(EKeys::E,true);Later(.06,[this,S]{Key(EKeys::E,false);Check(PC->IsSettingsVisible()&&!Character->IsDodging()&&Character->GetDodgeCooldownRemaining()<=.001f&&Character->GetRogueAttributeSet()->GetStamina()>=S-.01f,TEXT("settings_blocks_actual_E_without_partial_dodge_or_cost"));PC->CloseAllBlockingPanels();Later(.3,[this]{AirBoundary();});});});
+  GroundDeadline=FPlatformTime::Seconds()+12.;WaitReady([this]{ResetFixture();PC->ToggleSettings();const float S=Character->GetRogueAttributeSet()->GetStamina();Key(Rogue10mInput::DodgeKey(),true);Later(.06,[this,S]{Key(Rogue10mInput::DodgeKey(),false);Check(PC->IsSettingsVisible()&&!Character->IsDodging()&&Character->GetDodgeCooldownRemaining()<=.001f&&Character->GetRogueAttributeSet()->GetStamina()>=S-.01f,TEXT("settings_blocks_actual_dodge_key_without_partial_dodge_or_cost"));PC->CloseAllBlockingPanels();Later(.3,[this]{AirBoundary();});});});
  }
  void AirBoundary()
  {
-  ResetFixture();Character->SetBase(static_cast<FMovementBaseInterfaceData*>(nullptr));Character->AddActorWorldOffset(FVector(0,0,100),false,nullptr,ETeleportType::TeleportPhysics);Character->GetCharacterMovement()->SetMovementMode(MOVE_Falling);Check(Character->GetCharacterMovement()->IsFalling(),TEXT("air_boundary_is_actual_falling"));const float S=Character->GetRogueAttributeSet()->GetStamina();Key(EKeys::E,true);
-  Later(.06,[this,S]{Key(EKeys::E,false);Check(!Character->IsDodging()&&Character->GetDodgeCooldownRemaining()<=.001f&&Character->GetRogueAttributeSet()->GetStamina()>=S-.01f,TEXT("airborne_E_is_rejected_without_dodge_or_cost"));Later(.7,[this]{Check((!Dodge.IsValid()||Editable(*Dodge)==DodgeConfig)&&Editable(*Appearance)==AppearanceConfig,TEXT("authored_dodge_and_appearance_data_unchanged"));Check(MeasuredFlushes==0&&MeasuredViewportEvents==0,TEXT("measured_movement_has_no_flush_or_external_viewport_input"));Finish();});});
+  ResetFixture();Character->SetBase(static_cast<FMovementBaseInterfaceData*>(nullptr));Character->AddActorWorldOffset(FVector(0,0,100),false,nullptr,ETeleportType::TeleportPhysics);Character->GetCharacterMovement()->SetMovementMode(MOVE_Falling);Check(Character->GetCharacterMovement()->IsFalling(),TEXT("air_boundary_is_actual_falling"));const float S=Character->GetRogueAttributeSet()->GetStamina();Key(Rogue10mInput::DodgeKey(),true);
+  Later(.06,[this,S]{Key(Rogue10mInput::DodgeKey(),false);Check(!Character->IsDodging()&&Character->GetDodgeCooldownRemaining()<=.001f&&Character->GetRogueAttributeSet()->GetStamina()>=S-.01f,TEXT("airborne_dodge_key_is_rejected_without_dodge_or_cost"));Later(.7,[this]{Check((!Dodge.IsValid()||Editable(*Dodge)==DodgeConfig)&&Editable(*Appearance)==AppearanceConfig,TEXT("authored_dodge_and_appearance_data_unchanged"));Check(MeasuredFlushes==0&&MeasuredViewportEvents==0,TEXT("measured_movement_has_no_flush_or_external_viewport_input"));Finish();});});
  }
  void ValidateView()
  {
@@ -222,6 +231,12 @@ private:
  void Sample(float DT)
  {
   if(bFinished||!bPrepared||!Character.IsValid()||!Appearance.IsValid())return;const double Now=FPlatformTime::Seconds();const double WallDT=LastWall>0?Now-LastWall:0.;LastWall=Now;FMinimalViewInfo V;Character->CalcCamera(0,V);FTransform T;const bool Have=Appearance->ReadCameraTransform(T);const FVector P=Character->GetActorLocation();const FVector Vel=Character->GetVelocity();
+  if(bMeasured&&Stage.StartsWith(TEXT("dodge_")))
+  {
+   const bool bActive=Character->IsDodging();
+   if(bActive&&!bObservedDodgeActive){++DodgeActivationCount;}
+   bObservedDodgeActive=bActive;
+  }
   if(bMeasured)
   {
    Check(Have&&!V.Location.ContainsNaN()&&!V.Rotation.ContainsNaN()&&FMath::IsFinite(V.FOV),TEXT("measured_camera_is_finite_and_trace_readable"));Check(Appearance->IsWeightedFirstPersonActive()==bWeighted,TEXT("profile_stays_active_during_actual_movement"));Check(PC->GetControlRotation().Equals(FRotator(WantedPitch,InitialControl.Yaw,0),.04f),TEXT("measured_control_rotation_is_not_changed_by_sprint_dodge_or_external_input"));
@@ -244,16 +259,16 @@ private:
   // Keep PNG compression and disk IO out of the measured movement/dodge frames.
   for(const auto& Capture:CapturedImages){TArray64<uint8> Bytes;FImageUtils::PNGCompressImageArray(Capture.Width,Capture.Height,Capture.Pixels,Bytes);Check(FFileHelper::SaveArrayToFile(Bytes,*(Images/Capture.Name)),TEXT("actual_viewport_pixels_saved_as_PNG"));}CapturedImages.Empty();
   Check(FFileHelper::SaveStringToFile(Frames,*(Output/TEXT("frames.csv"))),TEXT("raw_frames_written"));Check(FFileHelper::SaveStringToFile(Captures,*(Output/TEXT("captures.csv"))),TEXT("capture_metadata_written"));
-  Results+=FString::Printf(TEXT("checks=%d\nfailures=%d\nprofile=%s\nrendered=%d\noffscreen=%d\ninput=programmatic_Controller_InputKey_and_reflected_DoAim\nphysical_input=not_performed\nmanual_field_completion=not_performed\nvisual_clipping=requires_actual_PNG_review_numeric_depths_are_diagnostics_only\nfixture=transient_visible_floor_and_collision_wall_existing_engine_cube_no_saved_map_edits\nstamina_assertion_scope=observed_cost_ceiling_only_regeneration_retained_exact_billing_not_claimed\nmeasured_flushes=%d\nmeasured_viewport_events=%d\nrequested_captures=%d\ncompleted_captures=%d\nNOTE=E invokes existing DoDodge; timing/cost/assets unchanged. Distance data sets initial velocity and is not asserted as realized travel. Pictures during dodge retain original duration and record request/capture frame; idle pictures hold state before case changes. Captures are not complete motion/mesh clipping certification.\n"),Checks,Failures,*Profile,bRendered,bOffscreen,MeasuredFlushes,MeasuredViewportEvents,RequestedCaptures,CompletedCaptures);
+  Results+=FString::Printf(TEXT("checks=%d\nfailures=%d\nprofile=%s\nrendered=%d\noffscreen=%d\ninput=programmatic_Controller_InputKey_and_reflected_DoAim\nphysical_input=not_performed\nmanual_field_completion=not_performed\nvisual_clipping=requires_actual_PNG_review_numeric_depths_are_diagnostics_only\nfixture=transient_visible_floor_and_collision_wall_existing_engine_cube_no_saved_map_edits\nstamina_assertion_scope=observed_cost_ceiling_only_regeneration_retained_exact_billing_not_claimed\nmeasured_flushes=%d\nmeasured_viewport_events=%d\nrequested_captures=%d\ncompleted_captures=%d\nNOTE=The recorded dodge_key invokes existing DoDodge; timing/cost/assets unchanged. Distance data sets initial velocity and is not asserted as realized travel. Pictures during dodge retain original duration and record request/capture frame; idle pictures hold state before case changes. Captures are not complete motion/mesh clipping certification.\n"),Checks,Failures,*Profile,bRendered,bOffscreen,MeasuredFlushes,MeasuredViewportEvents,RequestedCaptures,CompletedCaptures);
   if(!FFileHelper::SaveStringToFile(Results,*(Output/TEXT("results.txt"))))++Failures;UE_LOG(LogRogue10m,Display,TEXT("RESULT=LOOK_DASH_%s checks=%d failures=%d output=%s"),Failures?TEXT("FAILED"):TEXT("PASSED"),Checks,Failures,*Output);if(Exit)FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Code=Failures?1:0](float){FPlatformMisc::RequestExitWithStatus(false,Code);return false;}),.5f);
  }
  TWeakObjectPtr<UWorld> World;TWeakObjectPtr<ARogue10mPlayerController> PC;TWeakObjectPtr<ARogue10mCharacter> Character;TWeakObjectPtr<URogue10mAppearanceCameraComponent> Appearance;TWeakObjectPtr<USkeletalMeshComponent> Body,Source;TWeakObjectPtr<UCameraComponent> Camera;TWeakObjectPtr<URogue10mCombatComponent> Combat;TWeakObjectPtr<const URogue10mDodgeSkillDataAsset> Dodge;TWeakObjectPtr<UGameViewportClient> Viewport;TWeakObjectPtr<AActor> Ground,Wall;TWeakObjectPtr<UStaticMesh> Cube;
  TWeakObjectPtr<URogue10mProgressionSubsystem> Saves;IConsoleVariable* Heavy=nullptr;IConsoleVariable* Motion=nullptr;IConsoleVariable* Fov=nullptr;FDelegateHandle SampleHandle,Cleanup,FlushHandle,InputHandle,CaptureHandle;TFunction<void()> Next;
  TArray<FCapturedPixels> CapturedImages;FString Label,Profile,Output,Images,Stage=TEXT("prepare"),Frames,Results,Captures,PendingCapture,DodgeConfig,AppearanceConfig;FTransform InitialTransform,Fixture;FRotator InitialControl;FVector MoveOrigin,DodgeOrigin,Forward,SavedEyeOffset;
- double Deadline=0,NextAt=0,GroundDeadline=0,LastWall=0,Surface=0,AcceptedAt=-1,DodgeRequestWorld=0,DodgeRequestWall=0,RepeatDeadline=0,FreeTravel[2]{},DodgeEndObserved=-1,FirstActiveDT=0,EndObservedDT=0,MaxDodgeDT=0;float PitchPerInput=1,WantedPitch=0,Duration=.16f,Cooldown=.45f,Distance=100,Cost=0,BeforeStamina=0,RepeatStamina=0,OldMotion=1,OldFov=0;int32 Checks=0,Failures=0,OldHeavy=0,DodgeIndex=0,DashSamples=0,Flushes=0,ViewportEvents=0,MeasuredFlushes=0,MeasuredViewportEvents=0,RequestedCaptures=0,CompletedCaptures=0;bool bFinished=false,bPrepared=false,bRendered=false,bOffscreen=false,bWeighted=false,bOwnCVars=false,bOwnEyeOffset=false,bInitialDamage=true,bFlushHook=false,bMeasured=false,bDashPhoto=false;
+ double Deadline=0,NextAt=0,GroundDeadline=0,LastWall=0,Surface=0,AcceptedAt=-1,DodgeRequestWorld=0,DodgeRequestWall=0,RepeatDeadline=0,FreeTravel[2]{},DodgeEndObserved=-1,FirstActiveDT=0,EndObservedDT=0,MaxDodgeDT=0;float PitchPerInput=1,WantedPitch=0,Duration=.16f,Cooldown=.45f,Distance=100,Cost=0,BeforeStamina=0,RepeatStamina=0,OldMotion=1,OldFov=0;int32 Checks=0,Failures=0,OldHeavy=0,DodgeIndex=0,DashSamples=0,DodgeActivationCount=0,Flushes=0,ViewportEvents=0,MeasuredFlushes=0,MeasuredViewportEvents=0,RequestedCaptures=0,CompletedCaptures=0;bool bFinished=false,bPrepared=false,bRendered=false,bOffscreen=false,bWeighted=false,bOwnCVars=false,bOwnEyeOffset=false,bInitialDamage=true,bFlushHook=false,bMeasured=false,bDashPhoto=false,bObservedDodgeActive=false;
 };
 static TSharedPtr<FRun> Active;
 static void Run(){if(!GEngine||GIsEditor||(Active&&!Active->Finished()))return;for(const FWorldContext& C:GEngine->GetWorldContexts())if(UWorld* W=C.World();W&&C.WorldType==EWorldType::Game){Active=MakeShared<FRun>();Active->Start(*W);return;}UE_LOG(LogRogue10m,Error,TEXT("RESULT=LOOK_DASH_FAILED reason=no_game_world"));FPlatformMisc::RequestExitWithStatus(false,1);}
-static FAutoConsoleCommand Command(TEXT("Rogue10m.TestLookDash"),TEXT("Exact fresh LookDash QA profiles only. Production downlook clamp, sprint, E dodge, collision and cooldown; viewport photos require visual clipping review."),FConsoleCommandDelegate::CreateStatic(&Run));
+static FAutoConsoleCommand Command(TEXT("Rogue10m.TestLookDash"),TEXT("Exact fresh LookDash QA profiles only. Production downlook clamp, sprint, configured dodge input, collision and cooldown; viewport photos require visual clipping review."),FConsoleCommandDelegate::CreateStatic(&Run));
 }
 #endif

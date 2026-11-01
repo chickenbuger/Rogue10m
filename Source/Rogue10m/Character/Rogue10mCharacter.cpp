@@ -13,6 +13,7 @@
 #include "InputActionValue.h"
 #include "InputCoreTypes.h"
 #include "Rogue10m.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mCharacterAnimationComponent.h"
 #include "Rogue10mCombatComponent.h"
@@ -237,7 +238,7 @@ void ARogue10mCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindKey(EKeys::RightMouseButton, IE_Released, this, &ARogue10mCharacter::DoSpecialAttackReleased);
 	PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Pressed, this, &ARogue10mCharacter::DoSprintStart);
 	PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Released, this, &ARogue10mCharacter::DoSprintEnd);
-	PlayerInputComponent->BindKey(EKeys::E, IE_Pressed, this, &ARogue10mCharacter::DoDodge);
+	PlayerInputComponent->BindKey(Rogue10mInput::DodgeKey(), IE_Pressed, this, &ARogue10mCharacter::DoDodge);
 
 	PlayerInputComponent->BindKey(EKeys::One, IE_Pressed, this, &ARogue10mCharacter::DoQuickSlot1);
 	PlayerInputComponent->BindKey(EKeys::Two, IE_Pressed, this, &ARogue10mCharacter::DoQuickSlot2);

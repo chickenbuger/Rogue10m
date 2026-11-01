@@ -114,3 +114,8 @@ __pycache__/
 
 # Local manual QA contains save/profile hash inventories and local captures.
 /DevLog/ManualPlayQA/
+
+# Preserve QA save inventories/snapshots locally; never add them as evidence uploads.
+/Feature/doc/evidence/**/*.saves-before.csv
+/Feature/doc/evidence/**/*.saves-after.csv
+/Feature/doc/evidence/**/*.sav
