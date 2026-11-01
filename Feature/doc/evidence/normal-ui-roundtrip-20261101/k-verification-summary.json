@@ -1,0 +1,27 @@
+{
+  "source_commit": "74637e4b4f247b2d0f7989f943c5e48b486754c1",
+  "outcome": "returned_timeout",
+  "gear_ui_verified": true,
+  "wall_seconds": 1224.856,
+  "run_time_limit_seconds": 1200,
+  "original_saves_unchanged": 348,
+  "new_QA_save_files": 2,
+  "boss_victory": false,
+  "boss_min_sampled_hp": 9882.672,
+  "boss_last_sampled_hp": 10000,
+  "dodge_requests": 14,
+  "dodge_accepted": 14,
+  "photos_reviewed_decoded": 5,
+  "physical_input": "not_performed",
+  "limitations": [
+    "per-frame input capped at120000",
+    "blur and return material/shader warning",
+    "reset gate narrow scope; not all inventory domains",
+    "no human full play or packaging"
+  ],
+  "core_automation": {
+    "passed": 30,
+    "failed": 0,
+    "scope": "before QA-only diagnostic edits; same product runtime"
+  }
+}

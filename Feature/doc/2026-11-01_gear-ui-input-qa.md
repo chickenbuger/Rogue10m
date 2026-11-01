@@ -1,15 +1,33 @@
-# 정상 인벤토리 대검 장착 UI 검증 — 체크포인트
+# 정상 대검 장착과 20분 종료·귀환 검증
 
-Sprint#9-22-gear-ui-input-qa, 기반3a306c8c. 이전 자동 플레이는 고정 대검을 획득했지만 너클로 계속 싸웠으므로 실제 인벤토리 타일 우클릭 경로를 검증한다. 제품 변경은 InventoryItemWidget의 const 식별 getter2개뿐이다. 테스트는 실제 획득 GUID/컨테이너, local window, Slate hit-test/ancestor/leaf, 우클릭, 같은 GUID의 MainWeapon 단일 장착과 grid제거, GreatSword 타입 및 실제 Primary 바인딩 전환을 모두 요구한다. handled reply만으로 성공 처리하지 않는다.
+K는 실제 보이는 UE 창에서 정상 메뉴·NPC·필드·고정 대검 획득·자연 처치 XP·UMG 학습·인벤토리 우클릭 장착·보스 도달을 거쳐, 게임 시간 1200초의 자연 시간초과와 정산 저장·마을 복귀까지 완료했다. 보스 승리는 아니며 사람의 키보드·마우스 완주는 하지 않았다.
 
-J는 메뉴·NPC F·필드·고정 대검 획득·자연 처치 경험치·UMG 기술 학습까지 진행했으나 gear_open_inventory에서 시간 초과했다. 인벤토리와 대검이 사진에 보이지만 click_routed0/equipped0이며 결과는 blocked이다. OSexit0이나 wrapper는1로 종료했다. 346개 기존 저장 모두 해시 유지, 새 QA2개만 추가되어348개. 보스·정산·장착 완료는 이번 실행에서 검증하지 않았다.
+프로젝트는 D:\Project\Rogue10m, 실행 코드 commit은 74637e4b4f247b2d0f7989f943c5e48b486754c1, driver CPP SHA는 7059cbb6이다. 제품 변경은 InventoryItemWidget의 const 식별 getter 두 개뿐이고, 나머지는 기본 OFF editor QA/안전 실행기와 기록이다. 실제 게임의 비용·체력·리젠·충돌·저장 스키마·에셋 수치는 바꾸지 않았다.
 
-실패 원인 후보를 분리했다. UE는 hidden/minimized native window를 LocateWindowUnderMouse 대상에서 제외하며 J는 offscreen/Hidden이었다. 별도로 UUserWidget의 기본 SelfHitTestInvisible 수신자를 정확히 Visible만 허용하던 QA 조건은 합법적인 child-hit→bubble 수신을 제외할 수 있다. 당시 guard별 로그가 없어 J의 유일 원인을 확정하지 않는다.
+## 실제 장착 확인
 
-후속 후보는 receiver 조건만 IsVisible로 정정하되 HitTestInvisible ancestor, 실제 native창 hit-path와 leaf/children/enabled, 고유 GUID,15초 stage제한, 실제 장착·바인딩 결과 검사는 유지한다. 거부 원인별2초 제한 로그와 RMB직전once hit-path 로그를 추가했다. 실제 포인터 검사를 보장하려면 launcher는 GearUI에 -Visible을 요구하며 native 숨김 가드를 우회하지 않는다.
+Native 창 visible=true/minimized=false에서 실제 Slate 경로 19개와 SBorder hit leaf를 확인했다. SelfHitTestInvisible 아이템 수신자를 포함한 경로로 RMB 한 번을 전달한 뒤 다음을 모두 검사했다: 실제 획득 GUID의 MainWeapon 단일 장착, grid 제거, GreatSword 타입, 실제 Primary 바인딩 전환. handled reply만으로 통과하지 않았다. 공유 공격 쿨타임은 교체 직후 0.500초였으며 모든 개별 스킬 쿨타임 구현을 뜻하지 않는다. Charged의 비용12/hold0.72초는 데이터 계획 로그이고 실제 차지 입력은 하지 않았다.
 
-최초 진단 빌드는 인자 Reason의 C4458 shadow로22.87초 후 실패했다. GuardReason 이름만 고쳐11.84초 실제 QA CPP 재컴파일 통과. 현재 K는 보이는 UE 창/단독 UI 제어 반환 전까지 미실행이다. 프로그램 입력을 물리 입력으로 표현하지 않는다.
+기존 J는 인벤토리를 열었지만 우클릭 전에 시간 초과했다. native 숨김 창 제외와 UUserWidget receiver 역할을 잘못 제한한 QA 조건을 분리 진단했다. K는 실제 receiver=SelfHitTestInvisible임을 기록했으며, 실제 leaf/ancestor/enabled/고유 GUID와 장착 성공 조건을 유지한 채 합법적인 child→bubble 수신을 허용했다. 당시 J에는 guard별 로그가 없어 그 실행의 유일 원인을 확정하지 않는다. 실패 자료를 보존하고 제품 widget visibility를 바꾸지 않았다.
 
-별도 headless 회귀30개(공격4/성장3/필수조건4/쿨타임5/교체8/포기재화6)는 실패·경고·미실행0이었다. 이는 진단 전 같은 제품 코드의 빌드 기준이며 후속 QA-only 진단의 실제 창 검증과 분리한다. 원본31에셋/OpenRunMap 해시는 그대로다. 기존 새 owner-arms/view-framing은 기본OFF이며 그 UI 노출/화면 품질이 이 패킷으로 해결된 것은 아니다.
+## 시간초과·정산·보존
 
-로비 강화 동반 검증은 2026-11-01_lobby-upgrade-roundtrip-qa.md 참조. 실패 사진과 보존 자료: DevLog/20261101_GearUi_Review/FailedJ 및 DevLog/BasicRunPlayQA/BasicRun1101J. 실제 사진2장을 열어 확인하고 decode/hash를 기록했다. 보스 승리·수동 완주·4액티브·60초 직행맵·패키징은 미완료다. 다음 재개 첫 단계는 UI 반환 확인 후 fresh K -PreparedBossStrategy -AnimationEvidence -GearUI -Visible 단일 실행이다. push/병합 없음.
+K의 벽시계는 1224.856초, OS/launcher 종료 코드는 모두0이었다. 실제 RunDuration1200초를 유지했고 자연 timeout 이후 로비 재화+6 저장을 결과 화면에서 확인했다. 마을에서 LV/XP, Brawler 및 장착 검의 숙련, 선택 학습 노드와 특정 검 GUID가 초기화되고 Discovery가 유지되는 좁은 gate를 통과했다. 모든 인벤토리 도메인을 전수 검증한 것으로 확대하지 않는다. K는 마을까지이며, 귀환 후 다음 판 진입은 앞선 로비 B 왕복 검증과 구분한다.
+
+기존348개 저장 SHA는 모두 유지됐고 새 격리 QA2개만 추가되어350개가 됐다. 이후 읽기 전용 데이터 commandlet 전후350개도 그대로였다. 원본31에셋과 OpenRunMap 해시는 같다. 사용자 진행 슬롯의 초기화·삭제·속성 변경이나 원격 push/병합은 하지 않았다.
+
+보스 샘플3239개에서 최저HP9882.672, 마지막10000, 플레이어 보스 구간 최저 샘플HP135였다. 대시14요청/14수락은 모든 회피 성공이나 사람의 반응성을 보장하지 않는다. 현재 봇은 비용10의 대시를 최소 회복 직후 반복해 기본 유효타를3회만 냈다. 실제 BP가 연결한 파생 데이터는 HP10000/리젠2, GS 기본·콤보 비용은0이다. 다음 시도는 정상 성장과 공격 기회·회복 예산을 검토하며 데이터를 약화하지 않는다.
+
+## 검증과 실제 사진
+
+- 로비 B: 실제 구매·저장·다음 판·포기·귀환27회 검사/실패0(중복 포함9항목), 별도 기능 문서 참조.
+- 관련 headless 회귀: 공격4/성장3/필수조건4/쿨타임5/교체8/포기 재화6, 총30 PASS. 같은 제품 코드 기준이며 이후 QA-only 진단 수정과 구분한다.
+- 새 로비 CPP22.29초, 진단은 C4458 인자 이름 충돌 수정 후11.84초 실제 컴파일 통과. 실패 로그도 보존했다.
+- K 선별사진5장(장착 전후·보스·결과·귀환)을 직접 열어 보고1280×720 디코딩·SHA256을 확인했다. 보스 사진의 모션 블러, 귀환의 셰이더 준비·체커보드 재질·스카이 경고는 해결된 것으로 표시하지 않는다.
+- 프레임별 입력은120000행 이후 기록을 멈춘다. 일반0.25초 샘플·events·종료 및 reset 검사는 계속됐다. 전체20분을 모든 프레임에서 관측했다고 주장하지 않는다.
+
+근거: DevLog/BasicRunPlayQA/BasicRun1101K, DevLog/20261101_GearUi_Review/KVerified, Feature/doc/evidence/normal-ui-roundtrip-20261101/k-verification-summary.json. J 실패와 원본 A/B 기록은 유지한다. 개인 저장 목록·프로필·프로세스 메타데이터와 대형 미디어는 로컬에 보존하고 Git에서 제외한다.
+
+## 남은 범위
+
+정상 보스 승리, 사람의 완주, 패키징,4액티브 Ctrl/Q/E/R 연결, 안전지대 메뉴 pause,60초 직행맵 목표와 기본 팔 표현 품질은 미완료다. 기존 OwnerArms/ViewFraming은 기본 OFF이다. 다음 정상 시도는 합법적인 GS 성장·자원/보행 전략과 실제 입력을 사용해 진행하며 승리 gate를 완화하지 않는다.

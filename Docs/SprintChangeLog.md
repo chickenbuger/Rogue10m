@@ -2667,3 +2667,11 @@ NPC44검사와 핵심6suite30검사를 모두 통과했다. 정상 E/F/G는 메�
 - J는 인벤토리 우클릭 전 시간 초과·장착0, wrapper1. 원본346SHA유지→348. 후속 진단 이름 충돌 수정 후11.84초 실제 컴파일 통과. K 보이는 창 검증은 UI재양도 대기.
 - headless6suite30/0, 원본31에셋/맵 해시 유지. 실제 사진/미검증은 기능 문서·DevLog에 구분. push/병합 없음.
 - 관련: Feature/architect/2026-11-01_gear-ui-input-qa.md, Feature/architect/2026-11-01_lobby-upgrade-roundtrip-qa.md, Feature/doc/2026-11-01_gear-ui-input-qa.md, Feature/doc/2026-11-01_lobby-upgrade-roundtrip-qa.md.
+
+
+### Sprint#9-22 K 검증 마무리
+
+- 실제 native 창에서 고유 GUID 대검 우클릭 장착·기본 공격 전환·공유 쿨타임 0.500초 관측.
+- 정상 게임 시간 1200초 후 timeout 정산+6 저장·Hub 복귀·선택 런 값 reset/Discovery 유지, OS/launcher exit0. 보스 승리0/물리 입력 없음.
+- 기존348 SHA 유지→350(QA2개), 원본31에셋/맵 동일, 사진5장 직접 검토·디코딩. CSV120000행 상한·블러·귀환 재질 경고 분리 기록.
+- 실제 BP 연결 데이터에서 보스 HP10000/regen2 및 GS 기본 공격 비용0 확인. 다음 전략 후보의 Idle 공격 기회 차단을 정적 발견하여 미적용 중. 제품 수치/원격 변경 없음.
