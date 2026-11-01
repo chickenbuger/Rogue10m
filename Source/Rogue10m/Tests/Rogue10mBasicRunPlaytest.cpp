@@ -13,6 +13,7 @@
 #include "Components/EditableTextBox.h"
 #include "Components/PanelWidget.h"
 #include "Engine/Engine.h"
+#include "Engine/SkeletalMesh.h"
 #include "Engine/GameInstance.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -32,7 +33,15 @@
 #include "Misc/Paths.h"
 #include "Rogue10m.h"
 #include "Rogue10mAttributeSet.h"
+#include "Rogue10mAttackResourceBudget.h"
+#include "Rogue10mMonsterAttackPatternComponent.h"
+#include "Rogue10mMonsterAttackPatternProfile.h"
+#include "Rogue10mSkillLoadoutDataAsset.h"
+#include "Rogue10mTraitRuntimeComponent.h"
 #include "Rogue10mAttackSkillData.h"
+#include "Rogue10mCharacterAnimationComponent.h"
+#include "Rogue10mCharacterMotionDataAsset.h"
+#include "Rogue10mSkillLoadoutDataAsset.h"
 #include "Rogue10mBasicMonster.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCharacterLobbyWidget.h"
@@ -115,6 +124,7 @@ public:
             UE_LOG(LogRogue10m, Error, TEXT("BASIC_RUN_REJECTED exact_fresh_three_slots_rendered_L_Menu_required"));
             FPlatformMisc::RequestExitWithStatus(false, 3); return;
         }
+        bPreparedBossStrategy = FParse::Param(FCommandLine::Get(), TEXT("RogueBasicRunPreparedBoss"));
         Instance = Initial.GetGameInstance(); World = &Initial;
         if (!IFileManager::Get().MakeDirectory(*(Output / TEXT("screenshots")), true)
             || !WriteNew(TEXT("samples.csv"), TEXT("wall,stage,map,phase,world_time,remaining,x,y,z,speed,hp,max_hp,level,xp,mastery,run_gold,save_ready,target,target_hp,w,a,s,d,shift,lmb,first_kill,sword,learned,boss_reached\n"))
@@ -123,13 +133,25 @@ public:
             || !WriteNew(TEXT("screenshots.csv"), TEXT("wall,event,file,request_stage,observed_stage,bytes\n"))
             || !WriteNew(TEXT("input-frames.csv"), TEXT("frame,wall,stage,map,dt,world_dt,x,y,z,yaw,pitch,desired_w,actual_w,desired_a,actual_a,desired_s,actual_s,desired_d,actual_d,desired_shift,actual_shift,actual_alt,actual_lmb,last_input_x,last_input_y,move_ignored,look_ignored,paused,streaming_ready,waypoint,remaining\n")))
         { FPlatformMisc::RequestExitWithStatus(false, 3); return; }
+        bAnimationEvidence = FParse::Param(FCommandLine::Get(), TEXT("RogueBasicRunAnimationEvidence"));
+        if (bAnimationEvidence && (!WriteNew(TEXT("animation-events.csv"), TEXT("event,phase,frame,world_s,wall_s,stage,phase_matches,skill,montage,source_mesh,source_asset,body_asset,target,target_hp,skill_uses,attack_busy,attack_cd,combo,dodging,dodge_cd,montage_s,montage_rate,montage_active,hand_l_x,hand_l_y,hand_l_z,hand_r_x,hand_r_y,hand_r_z\n"))
+            || !WriteNew(TEXT("animation-assets.txt"), TEXT("scope=read_only_opportunistic_normal_input_observation\nno_authored_timing_or_gameplay_state_mutations=1\nprocessed_callback_is_not_exact_contact_or_GPU_pixel_time=1\n"))))
+        { FPlatformMisc::RequestExitWithStatus(false, 3); return; }
         Started = Now(); Deadline = Started + Seconds; StageAt = Started;
         Stage = TEXT("main_menu");
         ExitHandle = FCoreDelegates::OnPreExit.AddLambda([Weak = TWeakPtr<FDriver>(AsShared())]
-        { if (auto Self = Weak.Pin()) { Self->ReleaseAll(); Self->FlushFrames(); Self->Summary(TEXT("process_pre_exit")); } });
+        { if (auto Self = Weak.Pin()) { Self->ReleaseAll(); Self->FlushFrames(); Self->StopAnimationObservation(); Self->Summary(TEXT("process_pre_exit")); } });
         FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self = AsShared()](float Delta)
         { return Self->Tick(Delta); }), 0.f);
+        if (bAnimationEvidence)
+        {
+            AnimationTickHandle = FWorldDelegates::OnWorldPostActorTick.AddLambda([Weak=TWeakPtr<FDriver>(AsShared())](UWorld* W,ELevelTick,float)
+            { if (auto Self=Weak.Pin(); Self && !Self->bFinished && W==Self->World.Get()) { Self->ObserveAnimation(); } });
+            AnimationProcessedHandle = FScreenshotRequest::OnScreenshotRequestProcessed().AddLambda([Weak=TWeakPtr<FDriver>(AsShared())]
+            { if (auto Self=Weak.Pin(); Self && !Self->bFinished) { Self->AnimationScreenshotProcessed(); } });
+        }
         Event(TEXT("started"), TEXT("input_only_programmatic; no fixtures; normal 1200-second game rule"));
+        if (bPreparedBossStrategy) { Event(TEXT("prepared_strategy"), TEXT("opt_in_state_aware_input_QA; field_walking; actual_reserve; windup_escape; recovery_input; not_human_fairness_evidence")); }
         Shot(TEXT("main_menu")); Summary(TEXT("running"));
     }
 private:
@@ -243,6 +265,23 @@ private:
     {
         if (!Character.IsValid() || !PC.IsValid()) { return false; }
         const FVector Position = Character->GetActorLocation(); const float Distance = static_cast<float>(FVector::Dist2D(Position, Goal));
+        if (bPreparedBossStrategy && Map() == TEXT("OpenRunMap"))
+        {
+            // Ordinary walking preserves the sprint budget; no speed or resource setter.
+            Sprint = false;
+            float DodgeCost = 0.f, Reserve = 0.f; FRogue10mAttackResourceBudget Light;
+            if (!PreparedCosts(DodgeCost, Reserve, Light)) { Block(TEXT("prepared_costs_missing_invalid_or_reserve_exceeds_maximum")); return false; }
+            const auto* A = Character->GetRogueAttributeSet();
+            if (Stage == TEXT("boss_route") && Waypoint == 6 && A->GetStamina() < Reserve)
+            {
+                StopMove();
+                StuckAt = Now(); LastProgress = Position; // Planned rest is not failed locomotion.
+                if (!bPreparedReserveWaiting) { Event(TEXT("prepared_reserve_wait"), FString::Printf(TEXT("stamina=%.3f reserve=%.3f; normal_world_regeneration_only"), A->GetStamina(), Reserve)); }
+                bPreparedReserveWaiting = true;
+                return false; // Existing stage and 20-minute deadlines remain unchanged.
+            }
+            if (bPreparedReserveWaiting) { Event(TEXT("prepared_reserve_ready"), FString::Printf(TEXT("stamina=%.3f reserve=%.3f"), A->GetStamina(), Reserve)); bPreparedReserveWaiting = false; StuckAt = Now(); LastProgress = Position; }
+        }
         if (Distance <= Radius) { StopMove(); StuckAt = Now(); LastProgress = Position; return true; }
         if (!StreamingReady()) { StopMove(); return false; }
         bool Facing = Face(FVector(Goal.X, Goal.Y, Position.Z), Delta);
@@ -321,10 +360,212 @@ private:
         }
         return Best;
     }
+    // Opt-in QA strategy. Only const observations plus the existing normal Key/Face path.
+    bool PreparedCosts(float& DodgeCost, float& Reserve, FRogue10mAttackResourceBudget& Light) const
+    {
+        if (!Character.IsValid() || !Combat.IsValid()) { return false; }
+        const auto* A = Character->GetRogueAttributeSet();
+        const auto* Dodge = Combat->GetActiveDodgeSkill();
+        const auto* Primary = Combat->GetEquippedSkill(ERogue10mAttackInputSlot::Primary);
+        if (!A || !Dodge || !Primary || !FMath::IsFinite(Dodge->StaminaCost) || Dodge->StaminaCost < 0.f
+            || !FMath::IsFinite(Dodge->Distance) || Dodge->Distance <= 0.f || !FMath::IsFinite(Dodge->Duration) || Dodge->Duration < .05f
+            || !FMath::IsFinite(Dodge->Cooldown) || Dodge->Cooldown < 0.f || !FMath::IsFinite(Primary->AttackRange) || Primary->AttackRange <= 0.f) { return false; }
+        const auto* Traits = Character->GetTraitRuntimeComponent();
+        DodgeCost = Traits ? Traits->GetDodgeStaminaCost(Dodge->StaminaCost) : Dodge->StaminaCost;
+        // No payment/identity sync. Conservatively cover a possible first follow-up too;
+        // BasicBrawler has its own combo latch in addition to Combat's public window.
+        Light = FRogue10mAttackResourceBudget::Build(Primary->ResourceCosts, 1.f);
+        if (const auto* Combo = Primary->NextComboSkill.Get())
+        {
+            const auto Followup = FRogue10mAttackResourceBudget::Build(Combo->ResourceCosts, 1.f);
+            Light.bValid &= Followup.bValid;
+            Light.Health = FMath::Max(Light.Health, Followup.Health); Light.Stamina = FMath::Max(Light.Stamina, Followup.Stamina);
+            Light.Mana = FMath::Max(Light.Mana, Followup.Mana); Light.Energy = FMath::Max(Light.Energy, Followup.Energy);
+        }
+        Reserve = DodgeCost + 2.f * Light.Stamina;
+        return Light.bValid && FMath::IsFinite(DodgeCost) && DodgeCost >= 0.f
+            && FMath::IsFinite(Reserve) && FMath::IsFinite(A->GetStamina())
+            && FMath::IsFinite(A->GetMaxStamina()) && Reserve <= A->GetMaxStamina();
+    }
+    void PreparedMove(const FVector& Goal)
+    {
+        FVector Direction = (Goal - Character->GetActorLocation()).GetSafeNormal2D();
+        const float Forward = static_cast<float>(FVector::DotProduct(Direction, Character->GetActorForwardVector()));
+        const float Right = static_cast<float>(FVector::DotProduct(Direction, Character->GetActorRightVector()));
+        Key(EKeys::LeftShift, false);
+        Key(EKeys::W, Forward > .25f); Key(EKeys::S, Forward < -.25f);
+        Key(EKeys::D, Right > .25f); Key(EKeys::A, Right < -.25f);
+    }
+    bool PreparedInsideShapeAt(const FVector& Position) const
+    {
+        const auto* Capsule = Character->GetCapsuleComponent();
+        const float R = Capsule->GetScaledCapsuleRadius();
+        const FVector Offset = Position - PreparedLockedCenter;
+        if (FMath::Abs(Offset.Z) > PreparedHalfHeight + Capsule->GetScaledCapsuleHalfHeight()) { return false; }
+        if (PreparedType == ERogue10mMonsterAttackType::AbyssZone) { return Offset.SizeSquared2D() <= FMath::Square(PreparedRange + R + 25.f); }
+        if (PreparedType == ERogue10mMonsterAttackType::FrontalWave)
+        {
+            const FVector Right(-PreparedLockedForward.Y, PreparedLockedForward.X, 0.);
+            const float Along = static_cast<float>(FVector::DotProduct(Offset, PreparedLockedForward));
+            return Along >= -25.f && Along <= PreparedRange + R + 25.f
+                && FMath::Abs(FVector::DotProduct(Offset, Right)) <= PreparedHalfWidth + R + 25.f;
+        }
+        const float Distance = static_cast<float>(Offset.Size2D());
+        const float Padding = FMath::Asin(FMath::Clamp((R + 25.f) / FMath::Max(Distance, R + 25.f), 0.f, 1.f));
+        return Distance <= PreparedRange + R + 25.f && FVector::DotProduct(PreparedLockedForward, Offset.GetSafeNormal2D())
+            >= FMath::Cos(FMath::DegreesToRadians(PreparedArc * .5f) + Padding);
+    }
+    bool PreparedGoalSafe(const FVector& Goal, bool RequireOutsideThreat = true) const
+    {
+        const auto* Capsule = Character->GetCapsuleComponent();
+        if (!World.IsValid() || !Capsule || Goal.ContainsNaN()) { return false; }
+        const float R = Capsule->GetScaledCapsuleRadius(), HH = Capsule->GetScaledCapsuleHalfHeight();
+        const float Margin = R + 50.f;
+        if (Goal.X < 9500.f + Margin || Goal.X > 20500.f - Margin
+            || Goal.Y < 62500.f + Margin || Goal.Y > 73500.f - Margin
+            || (RequireOutsideThreat && PreparedInsideShapeAt(Goal))) { return false; }
+        FHitResult Hit; FCollisionQueryParams Query(SCENE_QUERY_STAT(BasicRunPreparedEscape), false, Character.Get());
+        return !World->SweepSingleByChannel(Hit, Capsule->GetComponentLocation(), Goal, FQuat::Identity,
+            ECC_Pawn, FCollisionShape::MakeCapsule(R, HH), Query);
+    }
+    bool PreparedLatchWindup(const URogue10mMonsterAttackPatternComponent& Pattern)
+    {
+        const auto* Profile = Pattern.GetProfile();
+        if (!Profile || !Character->GetCapsuleComponent()) { return false; }
+        PreparedType = Pattern.GetCurrentAttackType();
+        PreparedLockedCenter = Pattern.GetLockedAttackLocation();
+        PreparedLockedForward = Pattern.GetLockedAttackForward().GetSafeNormal2D();
+        PreparedRange = PreparedType == ERogue10mMonsterAttackType::FrontalWave ? Profile->FrontalWaveRange
+            : (PreparedType == ERogue10mMonsterAttackType::AbyssZone ? Profile->AbyssZoneRadius : Profile->AttackRange);
+        PreparedHalfWidth = Profile->FrontalWaveHalfWidth;
+        PreparedHalfHeight = PreparedType == ERogue10mMonsterAttackType::FrontalWave ? Profile->FrontalWaveHalfHeight
+            : (PreparedType == ERogue10mMonsterAttackType::AbyssZone ? Profile->AbyssZoneHalfHeight : Profile->AttackHalfHeight);
+        PreparedArc = Profile->AttackArcDegrees;
+        if (PreparedType != ERogue10mMonsterAttackType::Basic && PreparedType != ERogue10mMonsterAttackType::FrontalWave
+            && PreparedType != ERogue10mMonsterAttackType::AbyssZone) { return false; }
+        if (PreparedLockedCenter.ContainsNaN() || PreparedLockedForward.ContainsNaN() || PreparedLockedForward.IsNearlyZero()
+            || !FMath::IsFinite(PreparedRange) || PreparedRange <= 0.f || !FMath::IsFinite(PreparedHalfWidth) || PreparedHalfWidth <= 0.f
+            || !FMath::IsFinite(PreparedHalfHeight) || PreparedHalfHeight <= 0.f || !FMath::IsFinite(PreparedArc) || PreparedArc < 1.f || PreparedArc > 180.f) { return false; }
+        const float R = Character->GetCapsuleComponent()->GetScaledCapsuleRadius();
+        const FVector P = Character->GetActorLocation();
+        if (!FMath::IsFinite(R) || R <= 0.f) { return false; }
+        if (PreparedType == ERogue10mMonsterAttackType::FrontalWave)
+        {
+            const FVector Right(-PreparedLockedForward.Y, PreparedLockedForward.X, 0.);
+            const float Side = FVector::DotProduct(P - PreparedLockedCenter, Right) < 0.f ? -1.f : 1.f;
+            const float Along = static_cast<float>(FVector::DotProduct(P - PreparedLockedCenter, PreparedLockedForward));
+            PreparedEscapeGoal = PreparedLockedCenter + PreparedLockedForward * Along + Right * Side * (PreparedHalfWidth + R + 60.f);
+        }
+        else
+        {
+            FVector Away = (P - PreparedLockedCenter).GetSafeNormal2D();
+            if (Away.IsNearlyZero()) { Away = FVector(-PreparedLockedForward.Y, PreparedLockedForward.X, 0.); }
+            PreparedEscapeGoal = PreparedLockedCenter + Away * (PreparedRange + R + 60.f);
+        }
+        PreparedEscapeGoal.Z = P.Z;
+        bool SafeGoal = PreparedGoalSafe(PreparedEscapeGoal);
+        if (PreparedType == ERogue10mMonsterAttackType::Basic)
+        {
+            // Compare both expanded-cone sides with radial retreat. A short windup
+            // still gives no arrival guarantee: actual input/collision/damage decides.
+            const double Half = FMath::DegreesToRadians(static_cast<double>(PreparedArc) * .5);
+            const FVector Right(-PreparedLockedForward.Y, PreparedLockedForward.X, 0.);
+            for (const double Sign : {-1., 1.})
+            {
+                const FVector Outward = -PreparedLockedForward * FMath::Sin(Half) + Right * (Sign * FMath::Cos(Half));
+                const double Travel = FMath::Max(0., R + 35. - FVector::DotProduct(P - PreparedLockedCenter, Outward));
+                FVector Candidate = P + Outward * Travel; Candidate.Z = P.Z;
+                if (PreparedGoalSafe(Candidate) && (!SafeGoal || FVector::DistSquared2D(P, Candidate) < FVector::DistSquared2D(P, PreparedEscapeGoal)))
+                { PreparedEscapeGoal = Candidate; SafeGoal = true; }
+            }
+        }
+        if (!SafeGoal) { return false; }
+        PreparedDirectionFrame = GFrameCounter;
+        Event(TEXT("prepared_windup"), FString::Printf(TEXT("count=%d type=%d center=%s forward=%s escape=%s; public_state_QA_not_human_reaction_test"),
+            Pattern.GetStartedAttackCount(), static_cast<int32>(PreparedType), *PreparedLockedCenter.ToString(), *PreparedLockedForward.ToString(), *PreparedEscapeGoal.ToString()));
+        return true;
+    }
+    void PreparedFight(float Delta)
+    {
+        const auto* Pattern = Target.IsValid() ? Target->GetAttackPatternComponent() : nullptr;
+        float DodgeCost = 0.f, Reserve = 0.f; FRogue10mAttackResourceBudget Light;
+        if (!Pattern || !Pattern->GetProfile() || !PreparedCosts(DodgeCost, Reserve, Light))
+        { Block(TEXT("prepared_boss_profile_or_costs_unavailable")); return; }
+        if (!FMath::IsFinite(Pattern->GetProfile()->AttackRange) || Pattern->GetProfile()->AttackRange <= 0.f)
+        { Block(TEXT("prepared_boss_base_range_invalid")); return; }
+        const auto* A = Character->GetRogueAttributeSet();
+        if (PreparedDodgePendingAt >= 0.)
+        {
+            if (Character->IsDodging() || Character->GetDodgeCooldownRemaining() > PreparedDodgeCooldownBefore + .02f)
+            {
+                ++PreparedDodgeAccepted;
+                Event(TEXT("prepared_dodge_accepted"), FString::Printf(TEXT("stamina_before=%.3f after=%.3f velocity=%s"), PreparedDodgeStaminaBefore, A->GetStamina(), *Character->GetVelocity().ToString()));
+                PreparedDodgePendingAt = -1.;
+            }
+            else if (Now() - PreparedDodgePendingAt > .30)
+            { ++PreparedDodgeUnobserved; Event(TEXT("prepared_dodge_not_observed"), TEXT("request_not_counted_as_acceptance")); PreparedDodgePendingAt = -1.; }
+        }
+        const auto Phase = Pattern->GetPatternState();
+        const int32 Count = Pattern->GetStartedAttackCount();
+        const FVector Aim = Target->GetActorLocation();
+        const float Distance = static_cast<float>(FVector::Dist2D(Aim, Character->GetActorLocation()));
+        if (Distance < 1800.f && !bBossReached) { bBossReached = true; Event(TEXT("actual_boss_reached"), Target->GetName()); Shot(TEXT("boss_reached")); }
+        const bool Facing = Face(Aim, Delta);
+        if (bFinishing) { return; }
+        Key(EKeys::LeftShift, false);
+        if (Phase == ERogue10mMonsterPatternState::Windup)
+        {
+            if (PreparedLastWindup != Count)
+            {
+                if (!PreparedLatchWindup(*Pattern)) { Block(TEXT("prepared_windup_geometry_unknown_or_no_safe_arena_goal")); return; }
+                PreparedLastWindup = Count;
+            }
+            if (Pattern->GetCurrentAttackType() != PreparedType || !Pattern->GetLockedAttackLocation().Equals(PreparedLockedCenter, .1)
+                || !Pattern->GetLockedAttackForward().GetSafeNormal2D().Equals(PreparedLockedForward, .001))
+            { Block(TEXT("prepared_locked_geometry_changed_during_windup")); return; }
+            if (!PreparedInsideShapeAt(Character->GetActorLocation())) { StopMove(); return; }
+            PreparedMove(PreparedEscapeGoal);
+            const FVector Desired = (PreparedEscapeGoal - Character->GetActorLocation()).GetSafeNormal2D();
+            const FVector Last = Character->GetLastMovementInputVector().GetSafeNormal2D();
+            if (PreparedDodgeAttemptedAttack != Count && GFrameCounter > PreparedDirectionFrame
+                && FVector::DotProduct(Desired, Last) > .8 && !Character->IsDodging()
+                && Character->GetDodgeCooldownRemaining() <= .001f && A->GetStamina() >= DodgeCost + Light.Stamina)
+            {
+                PreparedDodgeAttemptedAttack = Count; ++PreparedDodgeRequested;
+                PreparedDodgeStaminaBefore = A->GetStamina(); PreparedDodgeCooldownBefore = Character->GetDodgeCooldownRemaining();
+                PreparedDodgePendingAt = Now(); Pulse(EKeys::LeftAlt);
+                Event(TEXT("prepared_dodge_requested"), FString::Printf(TEXT("count=%d cost=%.3f cached_direction=%s desired=%s"), Count, DodgeCost, *Last.ToString(), *Desired.ToString()));
+            }
+            return;
+        }
+        const auto* Skill = Combat->GetEquippedSkill(ERogue10mAttackInputSlot::Primary);
+        const float Reach = Skill ? FMath::Clamp(Skill->AttackRange * .7f, 75.f, 240.f) : 100.f;
+        if (A->GetStamina() < Reserve)
+        {
+            const FVector Away = (Character->GetActorLocation() - Aim).GetSafeNormal2D();
+            FVector RestGoal = Aim + Away * (Pattern->GetProfile()->AttackRange + 250.f);
+            RestGoal.Z = Character->GetActorLocation().Z;
+            if (!PreparedGoalSafe(RestGoal, false))
+            { StopMove(); Block(TEXT("prepared_resource_retreat_has_no_clear_arena_goal")); return; }
+            PreparedMove(RestGoal);
+            return; // Ordinary movement/regen; no hidden recovery or changed timeout.
+        }
+        Key(EKeys::A, false); Key(EKeys::D, false);
+        Key(EKeys::W, Facing && Distance > Reach); Key(EKeys::S, Distance < 55.f);
+        if (Phase == ERogue10mMonsterPatternState::Recovery && PreparedPunishedAttack != Count && Facing
+            && Distance < Reach + 50.f && !Combat->IsWeaponChangeBlocked() && !Combat->IsComboSequenceActive(World->GetTimeSeconds())
+            && Combat->GetAttackCooldownRemaining() <= .02f
+            && Light.CanPay(*A) && A->GetStamina() - Light.Stamina >= DodgeCost)
+        {
+            PreparedPunishedAttack = Count; Pulse(EKeys::LeftMouseButton, .12); NextAttack = Now() + .35;
+            Event(TEXT("prepared_recovery_attack_input"), FString::Printf(TEXT("count=%d; one_normal_primary_request_not_a_forced_hit"), Count));
+        }
+    }
     void Fight(float Delta, bool Boss)
     {
         if (!Target.IsValid() || Target->IsDead()) { Target = Monster(Boss); }
         if (!Target.IsValid()) { StopMove(); return; }
+        if (Boss && bPreparedBossStrategy) { PreparedFight(Delta); return; }
         const FVector Aim = Target->GetActorLocation(); const float Distance = static_cast<float>(FVector::Dist2D(Aim, Character->GetActorLocation()));
         if (Boss && Distance < 1800.f && !bBossReached) { bBossReached = true; Event(TEXT("actual_boss_reached"), Target->GetName()); Shot(TEXT("boss_reached")); }
         const bool Facing = Face(Aim, Delta);
@@ -536,7 +777,7 @@ private:
         if (Now() - LastSample >= 0.25) { Sample(); LastSample = Now(); }
         if (bFinishing)
         {
-            if (Now() >= FinishAt) { ReleaseAll(); FlushFrames(); Summary(Outcome); bFinished = true; FCoreDelegates::OnPreExit.Remove(ExitHandle); FPlatformMisc::RequestExitWithStatus(false, Outcome.StartsWith(TEXT("returned_")) ? 0 : 2); return false; }
+            if (Now() >= FinishAt) { ReleaseAll(); FlushFrames(); Summary(Outcome); StopAnimationObservation(); bFinished = true; FCoreDelegates::OnPreExit.Remove(ExitHandle); FPlatformMisc::RequestExitWithStatus(false, Outcome.StartsWith(TEXT("returned_")) ? 0 : 2); return false; }
             return true;
         }
         if (bIoFailed) { Block(TEXT("evidence_write_failed")); return true; }
@@ -635,6 +876,137 @@ private:
         SampleMovementDiagnostics();
         Summary(bFinishing?Outcome:TEXT("running"));
     }
+    // Optional read-only evidence. It never generates or delays a gameplay input.
+    void StopAnimationObservation()
+    {
+        FWorldDelegates::OnWorldPostActorTick.Remove(AnimationTickHandle); AnimationTickHandle.Reset();
+        FScreenshotRequest::OnScreenshotRequestProcessed().Remove(AnimationProcessedHandle); AnimationProcessedHandle.Reset();
+    }
+    bool AnimationIdle() const
+    {
+        return Character.IsValid() && Combat.IsValid() && PC.IsValid() && !Character->IsDead()
+            && !Character->IsDodging() && !Combat->IsWeaponChangeBlocked() && !Combat->IsAttackChargeHeld()
+            && Combat->GetAttackCooldownRemaining() <= .001f && !Combat->IsComboSequenceActive(World->GetTimeSeconds())
+            && !PC->IsInputKeyDown(EKeys::LeftMouseButton);
+    }
+    int32 AnimationUses() const
+    { return State.IsValid() && AnimationSkill.IsValid() ? State->GetSkillUseCount(AnimationSkill->GetFName()) : -1; }
+    bool AnimationPhaseMatches(const FString& Phase) const
+    {
+        if (!World.IsValid() || !Character.IsValid() || !Combat.IsValid() || !bAnimationContextCaptured || bAnimationContextInvalidated
+            || AnimationProbeWorld.Get()!=World.Get() || AnimationProbePawn.Get()!=Character.Get()) { return false; }
+        const auto* Mesh=Character->GetAnimationPlaybackMesh(); const auto* Anim=Mesh?Mesh->GetAnimInstance():nullptr;
+        if (Phase==TEXT("attack_ready")) { return AnimationIdle() && AnimationUses()==AnimationUsesBefore && Target==AnimationTarget; }
+        if (Phase==TEXT("attack_first_damage"))
+        { const auto* A=AnimationTarget.IsValid()?AnimationTarget->GetRogueAttributeSet():nullptr; return bAnimationDamageSeen && !bAnimationSuperseded && AnimationUses()==AnimationUsesBefore+1 && A && A->GetHealth()<AnimationTargetHPBefore && Combat->IsWeaponChangeBlocked() && Anim && AnimationAttackMontage.IsValid() && Anim->Montage_IsActive(AnimationAttackMontage.Get()); }
+        if (Phase==TEXT("attack_recovered"))
+        { return bAnimationAccepted && !bAnimationSuperseded && AnimationUses()==AnimationUsesBefore+1 && AnimationIdle() && (!Anim || !AnimationAttackMontage.IsValid() || !Anim->Montage_IsActive(AnimationAttackMontage.Get())); }
+        if (Phase==TEXT("dodge_ready")) { return AnimationIdle() && !bAnimationDodgeSeen; }
+        if (Phase==TEXT("dodge_active")) { return bAnimationDodgeSeen && !bAnimationDodgeSuperseded && Character->IsDodging(); }
+        if (Phase==TEXT("dodge_recovered"))
+        { return bAnimationDodgeEnded && !bAnimationDodgeSuperseded && !Character->IsDodging() && !Combat->IsWeaponChangeBlocked() && (!Anim || !AnimationDodgeMontage.IsValid() || !Anim->Montage_IsActive(AnimationDodgeMontage.Get())); }
+        return false;
+    }
+    void AnimationRow(const TCHAR* EventName,const FString& Phase,bool Matches)
+    {
+        const auto* Mesh=Character.IsValid()?Character->GetAnimationPlaybackMesh():nullptr;
+        const auto* Body=Character.IsValid()?Character->GetMesh():nullptr;
+        const auto* Anim=Mesh?Mesh->GetAnimInstance():nullptr;
+        const UAnimMontage* Montage=Phase.StartsWith(TEXT("dodge"))?AnimationDodgeMontage.Get():AnimationAttackMontage.Get();
+        const auto* MI=Anim&&Montage?Anim->GetInstanceForMontage(Montage):nullptr;
+        const auto* A=AnimationTarget.IsValid()?AnimationTarget->GetRogueAttributeSet():nullptr;
+        const FVector L=Mesh?Mesh->GetSocketLocation(TEXT("hand_l")):FVector::ZeroVector;
+        const FVector R=Mesh?Mesh->GetSocketLocation(TEXT("hand_r")):FVector::ZeroVector;
+        TArray<FString> F={Csv(EventName),Csv(Phase),LexToString(GFrameCounter),FString::SanitizeFloat(World.IsValid()?World->GetTimeSeconds():-1.),FString::SanitizeFloat(Now()-Started),Csv(Stage),Matches?TEXT("1"):TEXT("0"),
+            Csv(GetPathNameSafe(AnimationSkill.Get())),Csv(GetPathNameSafe(Montage)),Csv(GetPathNameSafe(Mesh)),Csv(Mesh?GetPathNameSafe(Mesh->GetSkeletalMeshAsset()):FString()),Csv(Body?GetPathNameSafe(Body->GetSkeletalMeshAsset()):FString()),
+            Csv(GetPathNameSafe(AnimationTarget.Get())),FString::SanitizeFloat(A?A->GetHealth():-1.f),LexToString(AnimationUses()),Combat.IsValid()&&Combat->IsWeaponChangeBlocked()?TEXT("1"):TEXT("0"),
+            FString::SanitizeFloat(Combat.IsValid()?Combat->GetAttackCooldownRemaining():-1.f),Combat.IsValid()&&World.IsValid()&&Combat->IsComboSequenceActive(World->GetTimeSeconds())?TEXT("1"):TEXT("0"),
+            Character.IsValid()&&Character->IsDodging()?TEXT("1"):TEXT("0"),FString::SanitizeFloat(Character.IsValid()?Character->GetDodgeCooldownRemaining():-1.f),FString::SanitizeFloat(Anim&&Montage?Anim->Montage_GetPosition(Montage):-1.f),
+            FString::SanitizeFloat(MI?MI->GetPlayRate():-1.f),Anim&&Montage&&Anim->Montage_IsActive(Montage)?TEXT("1"):TEXT("0"),
+            FString::SanitizeFloat(L.X),FString::SanitizeFloat(L.Y),FString::SanitizeFloat(L.Z),FString::SanitizeFloat(R.X),FString::SanitizeFloat(R.Y),FString::SanitizeFloat(R.Z)};
+        Append(TEXT("animation-events.csv"),FString::Join(F,TEXT(","))+TEXT("\n"));
+    }
+    bool TryAnimationShot(const TCHAR* Phase)
+    {
+        // Never steal/overwrite another pending screenshot or alter input cadence for a picture.
+        if (!PendingShot.IsEmpty() || !ShotQueue.IsEmpty() || FScreenshotRequest::IsScreenshotRequested()) { return false; }
+        const int32 Before=ShotCount; Shot(*FString::Printf(TEXT("animation_%s"),Phase));
+        if (ShotCount==Before || ShotQueue.IsEmpty()) { return false; }
+        AnimationPhaseFiles.Add(ShotQueue.Last().Key,Phase); AnimationPhaseState.Add(Phase,TEXT("queued"));
+        AnimationRow(TEXT("queued"),Phase,AnimationPhaseMatches(Phase)); return true;
+    }
+    void AnimationScreenshotProcessed()
+    {
+        const FString* Phase=AnimationPhaseFiles.Find(PendingShot); if (!Phase) { return; }
+        const bool Matches=AnimationPhaseMatches(*Phase); const bool File=IFileManager::Get().FileSize(*PendingShot)>0;
+        AnimationPhaseState.Add(*Phase,Matches&&File?TEXT("processed_phase_and_file_match_decode_pending"):TEXT("processed_phase_or_file_unconfirmed"));
+        AnimationRow(TEXT("processed_not_exact_pixel_or_contact_time"),*Phase,Matches);
+        // Do not reset PendingShot: the existing queue owns file observation/timeout and stage photos.
+    }
+    void AnimationMontageAssets(const TCHAR* Kind,const UAnimMontage* Montage)
+    {
+        Append(TEXT("animation-assets.txt"),FString::Printf(TEXT("%s_montage=%s\n%s_montage_length_s=%.9f\n"),Kind,*GetPathNameSafe(Montage),Kind,Montage?Montage->GetPlayLength():-1.f));
+        if (Montage) for (int32 Slot=0;Slot<Montage->SlotAnimTracks.Num();++Slot)
+        { const auto& Track=Montage->SlotAnimTracks[Slot]; for (int32 Index=0;Index<Track.AnimTrack.AnimSegments.Num();++Index)
+          { const auto& Segment=Track.AnimTrack.AnimSegments[Index]; Append(TEXT("animation-assets.txt"),FString::Printf(TEXT("%s_slot%d_segment%d=%s start=%.9f end=%.9f montage_start=%.9f authored_rate=%.9f\n"),Kind,Slot,Index,*GetPathNameSafe(Segment.GetAnimReference().Get()),Segment.AnimStartTime,Segment.AnimEndTime,Segment.StartPos,Segment.AnimPlayRate)); } }
+    }
+    void ObserveAnimation()
+    {
+        if (!bAnimationEvidence || !bFieldEntered || !World.IsValid() || !Character.IsValid() || !Combat.IsValid() || !State.IsValid()) { return; }
+        const bool CombatStage=Stage==TEXT("growth_combat") || Stage==TEXT("boss_combat");
+        if (!bAnimationContextCaptured && CombatStage) { AnimationProbeWorld=World; AnimationProbePawn=Character; bAnimationContextCaptured=true; }
+        if (!bAnimationContextCaptured) { return; }
+        if (AnimationProbeWorld.Get()!=World.Get() || AnimationProbePawn.Get()!=Character.Get())
+        { if (!bAnimationContextInvalidated) { bAnimationContextInvalidated=true; AnimationRow(TEXT("probe_context_changed_no_cross_world_or_pawn_recovery_claim"),TEXT("context"),false); } return; }
+        if (CombatStage && Target.IsValid() && AnimationIdle())
+        {
+            if (!bAnimationReadyRequested)
+            {
+                AnimationSkill=Combat->ResolveAttackSkill(true,false,false); AnimationTarget=Target;
+                AnimationUsesBefore=AnimationUses(); const auto* A=Target->GetRogueAttributeSet(); AnimationTargetHPBefore=A?A->GetHealth():-1.f;
+                if (AnimationSkill.IsValid() && A && TryAnimationShot(TEXT("attack_ready"))) { bAnimationReadyRequested=true; }
+            }
+            else if (!bAnimationDodgeReadyRequested && TryAnimationShot(TEXT("dodge_ready"))) { bAnimationDodgeReadyRequested=true; }
+        }
+        if (bAnimationReadyRequested && !bAnimationAccepted && AnimationUses()>AnimationUsesBefore)
+        {
+            bAnimationAccepted=true; AnimationAttackMontage=AnimationSkill->AttackMontage.Get(); AnimationAcceptedWorld=World->GetTimeSeconds();
+            bAnimationSuperseded=AnimationUses()!=AnimationUsesBefore+1 || Combat->GetLastAcceptedAttackSkill()!=AnimationSkill.Get();
+            Append(TEXT("animation-assets.txt"),FString::Printf(TEXT("attack_skill=%s\nattack_authored_hit_delay_montage_s=%.9f\nattack_authored_play_rate=%.9f\nattack_authored_cooldown_s=%.9f\nattack_acceptance_observed_world_s=%.9f\nattack_acceptance_is_use_count_plus_actual_skill_observation_not_execution_delegate=1\n"),*AnimationSkill->GetPathName(),AnimationSkill->HitStartDelaySeconds,AnimationSkill->AnimationPlayRate,AnimationSkill->AttackCooldown,AnimationAcceptedWorld));
+            AnimationMontageAssets(TEXT("attack"),AnimationAttackMontage.Get()); AnimationRow(TEXT("accepted_observed"),TEXT("attack"),!bAnimationSuperseded);
+        }
+        if (bAnimationAccepted)
+        {
+            if (AnimationUses()>AnimationUsesBefore+1 && !bAnimationSuperseded)
+            { bAnimationSuperseded=true; AnimationRow(TEXT("next_attack_before_recovery_observation_no_input_delay_added"),TEXT("attack"),false); }
+            const auto* A=AnimationTarget.IsValid()?AnimationTarget->GetRogueAttributeSet():nullptr;
+            if (!bAnimationSuperseded && !bAnimationDamageSeen && A && A->GetHealth()<AnimationTargetHPBefore)
+            {
+                bAnimationDamageSeen=true; AnimationRow(TEXT("first_HP_delta_observed_attribution_not_a_damage_delegate"),TEXT("attack_first_damage"),AnimationPhaseMatches(TEXT("attack_first_damage")));
+                if (!TryAnimationShot(TEXT("attack_first_damage"))) { AnimationPhaseState.Add(TEXT("attack_first_damage"),TEXT("missed_busy_capture_queue")); }
+            }
+            if (!bAnimationAttackRecoveryRequested && AnimationPhaseMatches(TEXT("attack_recovered")))
+            { bAnimationAttackRecoveryRequested=true; if (!TryAnimationShot(TEXT("attack_recovered"))) { AnimationPhaseState.Add(TEXT("attack_recovered"),TEXT("missed_busy_capture_queue")); } }
+        }
+        const bool Dodging=Character->IsDodging();
+        if (Dodging && !bAnimationDodgeWasActive)
+        {
+            if (!bAnimationDodgeSeen)
+            {
+                bAnimationDodgeSeen=true;
+                const auto* Data=Combat->GetActiveDodgeSkill(); const auto* Component=Character->GetCharacterAnimationComponent();
+                const auto* Motion=Component?Component->GetMotionData():nullptr; AnimationDodgeMontage=Motion?Motion->DodgeMontage.Get():nullptr;
+                Append(TEXT("animation-assets.txt"),FString::Printf(TEXT("dodge_skill=%s\ndodge_motion=%s\ndodge_authored_distance_cm=%.9f\ndodge_authored_duration_s=%.9f\ndodge_authored_cooldown_s=%.9f\ndodge_authored_stamina_cost=%.9f\ndodge_distance_is_not_realized_travel=1\n"),*GetPathNameSafe(Data),*GetPathNameSafe(Motion),Data?Data->Distance:-1.f,Data?Data->Duration:-1.f,Data?Data->Cooldown:-1.f,Data?Data->StaminaCost:-1.f));
+                AnimationMontageAssets(TEXT("dodge"),AnimationDodgeMontage.Get()); AnimationRow(TEXT("active_observed"),TEXT("dodge_active"),true);
+                if (!TryAnimationShot(TEXT("dodge_active"))) { AnimationPhaseState.Add(TEXT("dodge_active"),TEXT("missed_busy_capture_queue")); }
+            }
+            else { bAnimationDodgeSuperseded=true; }
+        }
+        if (!Dodging && bAnimationDodgeWasActive && bAnimationDodgeSeen) { bAnimationDodgeEnded=true; AnimationRow(TEXT("movement_end_observed_cooldown_separate"),TEXT("dodge"),true); }
+        if (!bAnimationDodgeRecoveryRequested && AnimationPhaseMatches(TEXT("dodge_recovered")))
+        { bAnimationDodgeRecoveryRequested=true; if (!TryAnimationShot(TEXT("dodge_recovered"))) { AnimationPhaseState.Add(TEXT("dodge_recovered"),TEXT("missed_busy_capture_queue")); } }
+        bAnimationDodgeWasActive=Dodging;
+    }
     void Shot(const TCHAR* Name)
     {
         if (ShotCount >= 64) { return; }
@@ -655,6 +1027,7 @@ private:
         if (PendingShot.IsEmpty() && ShotQueue.Num())
         {
             const auto Next = ShotQueue[0]; ShotQueue.RemoveAt(0); PendingShot = Next.Key; ShotStage = Next.Value; ShotAt = Now();
+            if (bAnimationEvidence) if (const FString* Phase=AnimationPhaseFiles.Find(PendingShot)) { AnimationRow(TEXT("request"),*Phase,AnimationPhaseMatches(*Phase)); }
             FScreenshotRequest::RequestScreenshot(PendingShot, true, false);
         }
     }
@@ -663,7 +1036,14 @@ private:
         FString Text = FString::Printf(TEXT("status=%s\noutcome=%s\nstage=%s\nreason=%s\nnormal_menu_ui=%d\nnpc_dialogue=%d\nfield_entered=%d\nsword_overlap_pickup=%d\nfirst_natural_kill_xp=%d\nnormal_UMG_run_learning=%d\nboss_reached=%d\nreturned_reset_observed=%d\nfull_boss_completion=%d\nphysical_input=not_performed\ninput_driver=Controller_InputKey_DoAim_Slate_chars_UMG_delegates\nno_gameplay_fixtures=1\nwall_seconds=%.3f\nterminal_phase=%s\nprofile=%s\nrender_review=not_performed_by_driver\n"),
             *Status,*Outcome,*Stage,*Reason,bMenuUI,bNpcDialogue,bFieldEntered,bSword,bFirstKill,bLearned,bBossReached,bReturned,
             bReturned && bMenuUI && bNpcDialogue && bBossReached && bFirstKill && bLearned && bSword && Natural == TEXT("victory"),Now()-Started,*TerminalPhase,*ProfileId.ToString(EGuidFormats::Digits));
+        Text += FString::Printf(TEXT("prepared_boss_strategy=%d\nprepared_dodge_requested=%d\nprepared_dodge_accepted=%d\nprepared_dodge_unobserved=%d\n"), bPreparedBossStrategy, PreparedDodgeRequested, PreparedDodgeAccepted, PreparedDodgeUnobserved);
         Text += FString::Printf(TEXT("pending_screenshot=%s\nqueued_screenshot_count=%d\nrequested_or_queued_capture_count=%d\nreset_scope=level_BrawlerXP_selected_learned_node_specific_sword_GUID_profile_phase_only\n"),*PendingShot,ShotQueue.Num(),ShotCount);
+        if (bAnimationEvidence)
+        {
+            Text+=TEXT("animation_evidence=opportunistic_read_only\nanimation_phase_processed_is_not_exact_contact_or_GPU_time=1\nanimation_PNG_decode=not_performed_by_driver\n");
+            for (const TCHAR* Phase:{TEXT("attack_ready"),TEXT("attack_first_damage"),TEXT("attack_recovered"),TEXT("dodge_ready"),TEXT("dodge_active"),TEXT("dodge_recovered")})
+            { const FString* PhaseState=AnimationPhaseState.Find(Phase); Text+=FString::Printf(TEXT("animation_%s=%s\n"),Phase,PhaseState?**PhaseState:TEXT("not_captured_no_gameplay_timing_changed")); }
+        }
         if (!FFileHelper::SaveStringToFile(Text, *(Output / TEXT("summary.txt")), FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM)) { bIoFailed = true; }
     }
     TWeakObjectPtr<UGameInstance> Instance;
@@ -688,7 +1068,29 @@ private:
     FGuid ProfileId,SwordId;
     FVector LastProgress;
     FRotator PreviousControl;
+    bool bPreparedBossStrategy = false, bPreparedReserveWaiting = false;
+    int32 PreparedLastWindup = -1, PreparedPunishedAttack = -1, PreparedDodgeAttemptedAttack = -1;
+    int32 PreparedDodgeRequested = 0, PreparedDodgeAccepted = 0, PreparedDodgeUnobserved = 0;
+    uint64 PreparedDirectionFrame = 0;
+    double PreparedDodgePendingAt = -1.;
+    float PreparedDodgeStaminaBefore = 0.f, PreparedDodgeCooldownBefore = 0.f;
+    float PreparedRange = 0.f, PreparedHalfWidth = 0.f, PreparedHalfHeight = 0.f, PreparedArc = 0.f;
+    FVector PreparedLockedCenter = FVector::ZeroVector, PreparedLockedForward = FVector::ForwardVector, PreparedEscapeGoal = FVector::ZeroVector;
+    ERogue10mMonsterAttackType PreparedType = ERogue10mMonsterAttackType::Basic;
     FDelegateHandle ExitHandle;
+    FDelegateHandle AnimationTickHandle,AnimationProcessedHandle;
+    TWeakObjectPtr<UWorld> AnimationProbeWorld;
+    TWeakObjectPtr<ARogue10mCharacter> AnimationProbePawn;
+    bool bAnimationContextCaptured=false,bAnimationContextInvalidated=false;
+    TWeakObjectPtr<const URogue10mAttackSkillData> AnimationSkill;
+    TWeakObjectPtr<ARogue10mBasicMonster> AnimationTarget;
+    TWeakObjectPtr<UAnimMontage> AnimationAttackMontage,AnimationDodgeMontage;
+    TMap<FString,FString> AnimationPhaseFiles,AnimationPhaseState;
+    int32 AnimationUsesBefore=0;
+    float AnimationTargetHPBefore=-1.f;
+    double AnimationAcceptedWorld=-1.;
+    bool bAnimationEvidence=false,bAnimationReadyRequested=false,bAnimationAccepted=false,bAnimationSuperseded=false,bAnimationDamageSeen=false,bAnimationAttackRecoveryRequested=false;
+    bool bAnimationDodgeReadyRequested=false,bAnimationDodgeSeen=false,bAnimationDodgeWasActive=false,bAnimationDodgeEnded=false,bAnimationDodgeSuperseded=false,bAnimationDodgeRecoveryRequested=false;
     double Started=0,Deadline=0,StageAt=0,StageLimit=180,ActionAt=0,LastSample=0,StuckAt=0,RecoverUntil=0,NextAttack=0,NextDodge=0,FinishAt=0,ShotAt=0,LastInputFlush=0;
     int32 Waypoint=0,RecoveryCount=0,ReturnClicks=0,ShotCount=0,EntryGold=0,InputFrames=0;
     int64 InitialDefeats=0;

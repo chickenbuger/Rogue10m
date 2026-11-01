@@ -2644,3 +2644,17 @@ NPC44검사와 핵심6suite30검사를 모두 통과했다. 정상 E/F/G는 메�
 - 보존: B 정상 exit0/PID41880 종료, 해당 실행 전후340개 세이브 SHA 동일. 전체 작업 종료 뒤 독립 확인에서도 세이브340개·원본31자산·맵 SHA256 동일.
 - 상태: 로컬 UI 표시 묶음 검증 완료. 실제 구매·저장/다음 판 강화/승리/물리 완주 및 옛9포인트 TraitUI fixture 미검증. 원격 push·병합 없음.
 - 문서·증거: `Feature/doc/2026-11-01_lobby-trait-display.md`, `DevLog/20261101_LobbyTraitDisplay_Review/README.md`, `DevLog/LobbyTraitDisplayQA/LobbyDisplay1101B/Driver`, `Feature/doc/evidence/lobby-trait-display-20261101/`.
+
+
+
+### Sprint#9-21 — prepared-run-input-qa
+
+- 브랜치: `Sprint#9-21-prepared-run-input-qa`, 기준 HEAD `1928869d`(parent 제공). 최종 로컬 커밋은 별도 기록하며 원격 push/병합 없음.
+- 상태: QA source/launcher 구현·빌드 완료, 프로그램 입력의 자연 사망/정산/마을 귀환 확인. 정상 보스 승리·물리 완주·애니메이션 시각 품질은 미완료. 문서 초안이며 D 반영 전.
+- 목표: 실제 자원 예산으로 준비된 보스 입력 전략을 검증하고 기존 공격/회피 자산·시간·사진을 정확히 관찰한다.
+- 주요 변경: 기본 OFF `RogueBasicRunPreparedBoss`/`RogueBasicRunAnimationEvidence`, 정상 입력의 자원 예산·Windup 회피·Recovery 공격, 기회 관찰 캡처 및 world 좌표 기록, wrapper 두 옵션 echo 검증. C4458 지역 `State` 이름을 `PhaseState`로만 수정. 제품 규칙/수치/맵/애니메이션 원본/세이브 형식 변경 없음.
+- 검증: 첫 빌드32.58초 실패 보존 후11.45초 성공. wrapper text fixture10/10(UE 아님). BasicRun1101I wall400.675초, 메뉴/NPC F/필드/대검획득/자연처치XP/UMG학습/보스도달/자연사망정산/Hubreset·Discovery gate 통과. 회피요청5/실제수락5/미관측0, 실제 Stamina6 차감과 velocity 관측. 보스HP10000→최저9937.703, 마지막9939.703. +6 로비 정산, full_boss_completion0, 물리입력없음.
+- 보존: 이전340개 저장 SHA 전부 보존, 신규 허용QA2개만 추가해342개. 31개 자산·맵 SHA256 동일, 사진9개 복사·디코딩·해시 확인. 새 에셋/애니메이션 원본 수정 없음.
+- 제한: 사진6개의2개 phase미확정, 나머지4개도 자세품질 PASS 아님. 기본 body 가림·손 미노출·블러를 실패/제약으로 보존. 정상승리·전체20분·물리입력·60초맵·4액티브슬롯/프리셋·전체밸런스·패키징은 미완료.
+- 관련 문서: `Feature/doc/2026-11-01_prepared-run-input-qa.md`, `DevLog/20261101_PreparedRunInput_Diagnostics/README.md`.
+- 실행 근거: `DevLog/BasicRunPlayQA/BasicRun1101I/`의 session/save-comparison 및 Driver CSV/summary/screenshots. 프로그램 입력과 authored 값, post-tick 관측, 실제 시각 판정은 서로 구분한다.

@@ -2,6 +2,8 @@ param(
     [Parameter(Mandatory=$true)][ValidatePattern('^[A-Za-z0-9_]{1,24}$')][string]$Label,
     [ValidateRange(1300,1800)][int]$MaxSeconds=1560,
     [switch]$Visible,
+    [switch]$PreparedBossStrategy,
+    [switch]$AnimationEvidence,
     [string]$ProjectRoot='D:\Project\Rogue10m'
 )
 # DRAFT launcher: integrate/review/build before running. No gameplay-state fixtures.
@@ -43,7 +45,7 @@ function Save-Json([string]$Path,$Value){
     $json=ConvertTo-Json -InputObject $Value -Depth 12
     [IO.File]::WriteAllText($Path,$json,[Text.UTF8Encoding]::new($false))
 }
-function Read-DriverSummary([string]$Path){
+function Read-DriverSummary([string]$Path,[bool]$ExpectPrepared=$false,[bool]$ExpectAnimation=$false){
     $values=[ordered]@{}
     $issues=New-Object 'System.Collections.Generic.List[string]'
     if(-not(Test-Path -LiteralPath $Path -PathType Leaf)){
@@ -61,6 +63,10 @@ function Read-DriverSummary([string]$Path){
         if(-not($values.Contains('full_boss_completion')) -or $values['full_boss_completion'] -notin @('0','1')){$issues.Add('invalid_or_missing_full_boss_completion')}
         if(-not($values.Contains('physical_input')) -or $values['physical_input'] -cne 'not_performed'){$issues.Add('invalid_or_missing_physical_input_disclosure')}
         if($values['full_boss_completion'] -ceq '1' -and $values['outcome'] -cne 'returned_victory'){$issues.Add('boss_completion_contradicts_outcome')}
+        if($ExpectPrepared -and (-not $values.Contains('prepared_boss_strategy') -or $values['prepared_boss_strategy'] -cne '1')){$issues.Add('requested_prepared_strategy_not_confirmed_by_driver')}
+        if($ExpectAnimation -and (-not $values.Contains('animation_evidence') -or $values['animation_evidence'] -cne 'opportunistic_read_only')){$issues.Add('requested_animation_observation_not_confirmed_by_driver')}
+        if(-not $ExpectAnimation -and $values.Contains('animation_evidence')){$issues.Add('unexpected_animation_observation_in_baseline_run')}
+        if(-not $ExpectPrepared -and $values.Contains('prepared_boss_strategy') -and $values['prepared_boss_strategy'] -cne '0'){$issues.Add('unexpected_prepared_strategy_in_baseline_run')}
     }
     return [pscustomobject]@{Values=$values;Issues=@($issues.ToArray());Valid=($issues.Count -eq 0)}
 }
@@ -102,6 +108,8 @@ $arguments=@(('"'+$projectFile+'"'),'/Game/Rogue10m/Maps/L_Menu',
     ('-RogueProfileSaveSlot='+$profile),('-RogueProgressionSavePrefix='+$prefix),('-RogueSkillKeySaveSlot='+$keys),
     ('-RogueBasicRunLabel='+$Label),('-RogueBasicRunOutput="'+$driverOutput+'"'),('-RogueBasicRunMaxSeconds='+$MaxSeconds),
     '-ExecCmds="t.MaxFPS 60,Rogue10m.TestBasicRunPlay"',('-abslog="'+$log+'"'))
+if($PreparedBossStrategy){$arguments+='-RogueBasicRunPreparedBoss'}
+if($AnimationEvidence){$arguments+='-RogueBasicRunAnimationEvidence'}
 $windowStyle='Hidden'
 if($Visible){$windowStyle='Normal'}else{$arguments+='-RenderOffscreen'}
 if(-not(Test-Path -LiteralPath $qaRoot)){New-Item -ItemType Directory -Path $qaRoot|Out-Null}
@@ -114,7 +122,7 @@ $metadata=[ordered]@{
     StartedUtc=[DateTime]::UtcNow.ToString('o'); State='prepared'; Visible=[bool]$Visible
     MaxSeconds=$MaxSeconds; WatchdogSeconds=($MaxSeconds+45); Executable=$exe; Arguments=$arguments
     ProfileSlot=$profile; ProgressionPrefix=$prefix; KeySlot=$keys; DriverOutput=$driverOutput
-    PhysicalInput='not_performed'; GameplayShortcuts='none_added_by_launcher'
+    PhysicalInput='not_performed'; GameplayShortcuts='none_added_by_launcher'; PreparedBossStrategy=[bool]$PreparedBossStrategy; AnimationEvidence=[bool]$AnimationEvidence
     BeforeSaveCount=$before.Count; OwnedProcess=$null; ProcessExitConfirmed=$false; ProcessExitCode=$null
     WatchdogStopAttempted=$false; WatchdogStopVerified=$false; Preservation='pending'; Error=$null
 }
@@ -243,7 +251,7 @@ try{
     }
 
     try{
-        $summary=Read-DriverSummary (Join-Path $driverOutput 'summary.txt')
+        $summary=Read-DriverSummary (Join-Path $driverOutput 'summary.txt') ([bool]$PreparedBossStrategy) ([bool]$AnimationEvidence)
     }catch{
         $summary=[pscustomobject]@{Values=[ordered]@{};Issues=@('driver_summary_read_error:'+ $_.Exception.Message);Valid=$false}
         $metadata.Error=($metadata.Error+'; '+$_.Exception.Message).Trim('; ')
