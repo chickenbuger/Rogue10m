@@ -36,6 +36,8 @@
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
 #include "Rogue10m.h"
+#include "Rogue10mInputKeys.h"
+#include "Rogue10mDodgeDistanceMeasureProbe.h"
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mAttackResourceBudget.h"
 #include "Rogue10mMonsterAttackPatternComponent.h"
@@ -129,7 +131,21 @@ public:
             FPlatformMisc::RequestExitWithStatus(false, 3); return;
         }
         bPreparedBossStrategy = FParse::Param(FCommandLine::Get(), TEXT("RogueBasicRunPreparedBoss"));
+        bOrbitBossStrategy = FParse::Param(FCommandLine::Get(), TEXT("RogueBasicRunOrbitBoss"));
+        if (bOrbitBossStrategy && !bPreparedBossStrategy)
+        {
+            UE_LOG(LogRogue10m, Error, TEXT("BASIC_RUN_REJECTED orbit_boss_requires_prepared_boss"));
+            FPlatformMisc::RequestExitWithStatus(false, 3); return;
+        }
         bGearUiEquipment = FParse::Param(FCommandLine::Get(), TEXT("RogueBasicRunGearUI"));
+        bGreatSwordGrowth = FParse::Param(FCommandLine::Get(), TEXT("RogueBasicRunGreatSwordGrowth"));
+        if (bGreatSwordGrowth && !bGearUiEquipment)
+        {
+            UE_LOG(LogRogue10m, Error, TEXT("BASIC_RUN_REJECTED great_sword_growth_requires_GearUI"));
+            FPlatformMisc::RequestExitWithStatus(false, 3); return;
+        }
+        bDodgeObservationFreshGatePassed = true;
+        bDodgeObservationOptIn = FParse::Param(FCommandLine::Get(), TEXT("RogueBasicRunDodgeObserve"));
         Instance = Initial.GetGameInstance(); World = &Initial;
         if (!IFileManager::Get().MakeDirectory(*(Output / TEXT("screenshots")), true)
             || !WriteNew(TEXT("samples.csv"), TEXT("wall,stage,map,phase,world_time,remaining,x,y,z,speed,hp,max_hp,level,xp,mastery,run_gold,save_ready,target,target_hp,w,a,s,d,shift,lmb,first_kill,sword,learned,boss_reached\n"))
@@ -145,7 +161,7 @@ public:
         Started = Now(); Deadline = Started + Seconds; StageAt = Started;
         Stage = TEXT("main_menu");
         ExitHandle = FCoreDelegates::OnPreExit.AddLambda([Weak = TWeakPtr<FDriver>(AsShared())]
-        { if (auto Self = Weak.Pin()) { Self->ReleaseAll(); Self->FlushFrames(); Self->StopAnimationObservation(); Self->Summary(TEXT("process_pre_exit")); } });
+        { if (auto Self = Weak.Pin()) { Self->ReleaseAll(); Self->FlushFrames(); Self->StopAnimationObservation(); Self->Summary(TEXT("process_pre_exit")); Self->FlushDodgeObservationAfterRun(); } });
         FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self = AsShared()](float Delta)
         { return Self->Tick(Delta); }), 0.f);
         if (bAnimationEvidence)
@@ -157,6 +173,8 @@ public:
         }
         Event(TEXT("started"), TEXT("input_only_programmatic; no fixtures; normal 1200-second game rule"));
         if (bPreparedBossStrategy) { Event(TEXT("prepared_strategy"), TEXT("opt_in_state_aware_input_QA; field_walking; actual_reserve; windup_escape; recovery_input; not_human_fairness_evidence")); }
+        if (bOrbitBossStrategy) { Event(TEXT("orbit_strategy"), TEXT("opt_in_input_QA_only; runtime_capsule_and_range_guard; short_swept_steps; observed_warning_lower_bound_no_ETA; real_HP_loss_observation_not_win_evidence")); }
+        if (bGreatSwordGrowth) { Event(TEXT("great_sword_growth_mode"), TEXT("actual_entry_pickup_then_Slate_RMB_GS_then_natural_forest_M3_LV3_then_manual_ManaEntry_UMG; no_product_rule_or_progression_mutations")); }
         Shot(TEXT("main_menu")); Summary(TEXT("running"));
     }
 private:
@@ -194,6 +212,7 @@ private:
     void Key(const FKey& Input, bool Down)
     {
         if (!PC.IsValid() || Held.FindRef(Input) == Down) { return; }
+        MarkExistingBossDodgeRequest(Input, Down);
         PC->InputKey(FInputKeyEventArgs::CreateSimulated(Input, Down ? IE_Pressed : IE_Released, Down ? 1.f : 0.f));
         Held.FindOrAdd(Input) = Down;
         Event(Down ? TEXT("Controller_key_down") : TEXT("Controller_key_up"), Input.ToString());
@@ -208,6 +227,7 @@ private:
     void StopMove() { Key(EKeys::W, false); Key(EKeys::A, false); Key(EKeys::S, false); Key(EKeys::D, false); Key(EKeys::LeftShift, false); }
     void SetStage(const TCHAR* Next, double Limit = 180.)
     {
+        if (Stage == TEXT("boss_combat") && FCString::Strcmp(Next, TEXT("boss_combat")) != 0) { StopDodgeObservation(TEXT("boss_stage_exit")); }
         ReleaseAll(); Stage = Next; StageAt = Now(); StageLimit = Limit; ActionAt = Now() + 0.4;
         StuckAt = Now(); LastProgress = Character.IsValid() ? Character->GetActorLocation() : FVector::ZeroVector; RecoveryCount = 0;
         Event(TEXT("stage"), Next); Shot(Next); Summary(TEXT("running"));
@@ -215,6 +235,7 @@ private:
     void Block(const FString& Why)
     {
         if (bFinishing) { return; }
+        StopDodgeObservation(TEXT("driver_block"));
         Reason = Why; Outcome = TEXT("blocked"); Event(TEXT("blocked"), Why); ReleaseAll(); Shot(TEXT("failure"));
         bFinishing = true; FinishAt = Now() + 1.5; Summary(TEXT("blocked"));
     }
@@ -223,9 +244,10 @@ private:
         UWorld* Found = nullptr;
         if (GEngine) for (const FWorldContext& Context : GEngine->GetWorldContexts())
         { if (UWorld* W = Context.World(); W && Context.WorldType == EWorldType::Game && W->GetGameInstance() == Instance.Get()) { Found = W; break; } }
-        if (Found != World.Get()) { ReleaseAll(); Held.Empty(); bAimSample = false; World = Found; Event(TEXT("world_change"), Found ? Found->GetName() : TEXT("no_world")); }
+        if (Found != World.Get()) { StopDodgeObservation(TEXT("world_change")); ReleaseAll(); Held.Empty(); bAimSample = false; World = Found; Event(TEXT("world_change"), Found ? Found->GetName() : TEXT("no_world")); }
         PC = Found ? Cast<ARogue10mPlayerController>(Found->GetFirstPlayerController()) : nullptr;
         Character = PC.IsValid() ? Cast<ARogue10mCharacter>(PC->GetPawn()) : nullptr;
+        if (DodgeObservationProbe && (!DodgeObservationPawn.IsValid() || Character.Get() != DodgeObservationPawn.Get())) { StopDodgeObservation(TEXT("pawn_changed")); }
         State = Character.IsValid() ? Character->GetPlayerState<ARogue10mPlayerState>() : nullptr;
         Tree = State.IsValid() ? State->GetSkillTreeProgressionComponent() : nullptr;
         Inventory = Character.IsValid() ? Character->GetInventoryComponent() : nullptr;
@@ -255,9 +277,10 @@ private:
         const float Yaw = static_cast<float>(FMath::FindDeltaAngleDegrees(View.Yaw, Goal.Yaw));
         const float Pitch = static_cast<float>(FMath::FindDeltaAngleDegrees(View.Pitch, FMath::Clamp(Goal.Pitch, -55.0, 55.0)));
         const float Step = 75.f * FMath::Clamp(Delta, 0.001f, 0.05f);
+        const float YawStep = bOrbitBossStrategy && Stage == TEXT("boss_combat") ? 180.f * FMath::Clamp(Delta, 0.001f, 0.05f) : Step;
         // DoAim applies the normal look sensitivity. No control/camera rotation setters.
         PreviousControl = Control;
-        PreviousYawInput = FMath::Clamp(Yaw * 0.25f, -Step, Step) * YawInputSign;
+        PreviousYawInput = FMath::Clamp(Yaw * 0.25f, -YawStep, YawStep) * YawInputSign;
         PreviousPitchInput = FMath::Clamp(Pitch * 0.25f, -Step, Step) * PitchInputSign;
         // DoAim is a protected reflected input function; do not broaden product visibility for QA.
         struct FAimInput { float Yaw; float Pitch; } Input { PreviousYawInput, PreviousPitchInput };
@@ -490,6 +513,187 @@ private:
             Pattern.GetStartedAttackCount(), static_cast<int32>(PreparedType), *PreparedLockedCenter.ToString(), *PreparedLockedForward.ToString(), *PreparedEscapeGoal.ToString()));
         return true;
     }
+    // Same observation-only warning lower-bound method as the separate, unapplied sustained draft.
+    // The private product start time/duration are never read or exposed for this QA strategy.
+    void ObserveOrbitWindup(const URogue10mMonsterAttackPatternComponent& Pattern)
+    {
+        const double Time = World->GetTimeSeconds();
+        const auto Phase = Pattern.GetPatternState(); const int32 Count = Pattern.GetStartedAttackCount();
+        const bool SamePattern = OrbitObservedPattern.Get() == &Pattern;
+        if (!SamePattern || (Phase == ERogue10mMonsterPatternState::Windup && Count != OrbitObservedCount))
+        {
+            OrbitWindupDeadlineLower = -1.; OrbitTimingAttack = -1;
+            const double Gap = Time - OrbitObservedAt;
+            if (SamePattern && OrbitObservedAt >= 0. && Gap >= 0. && Gap <= .10
+                && OrbitObservedPhase != ERogue10mMonsterPatternState::Windup && Count == OrbitObservedCount + 1)
+            {
+                const auto* Profile = Pattern.GetProfile(); const auto Type = Pattern.GetCurrentAttackType();
+                const float Raw = Type == ERogue10mMonsterAttackType::FrontalWave ? Profile->FrontalWaveWindupSeconds
+                    : (Type == ERogue10mMonsterAttackType::AbyssZone ? Profile->AbyssZoneWindupSeconds : Profile->AttackWindupSeconds);
+                const float Fallback = Type == ERogue10mMonsterAttackType::FrontalWave ? 1.1f : (Type == ERogue10mMonsterAttackType::AbyssZone ? 1.4f : .35f);
+                double DurationLower = FMath::IsFinite(Raw) ? FMath::Max(.01f, Raw) : Fallback;
+                if (Type != ERogue10mMonsterAttackType::Basic)
+                {
+                    const float Mult = Profile->EnrageWindupMultiplier;
+                    DurationLower *= FMath::Min(1.f, FMath::IsFinite(Mult) ? FMath::Max(.01f, Mult) : .75f);
+                }
+                OrbitWindupDeadlineLower = OrbitObservedAt + DurationLower; OrbitTimingAttack = Count;
+            }
+        }
+        OrbitObservedPattern = &Pattern; OrbitObservedPhase = Phase;
+        OrbitObservedCount = Count; OrbitObservedAt = Time;
+    }
+    bool OrbitLatchShape(const URogue10mMonsterAttackPatternComponent& Pattern)
+    {
+        const auto* Profile = Pattern.GetProfile();
+        PreparedType = Pattern.GetCurrentAttackType(); PreparedLockedCenter = Pattern.GetLockedAttackLocation();
+        PreparedLockedForward = Pattern.GetLockedAttackForward().GetSafeNormal2D();
+        PreparedRange = PreparedType == ERogue10mMonsterAttackType::FrontalWave ? Profile->FrontalWaveRange
+            : (PreparedType == ERogue10mMonsterAttackType::AbyssZone ? Profile->AbyssZoneRadius : Profile->AttackRange);
+        PreparedHalfWidth = Profile->FrontalWaveHalfWidth;
+        PreparedHalfHeight = PreparedType == ERogue10mMonsterAttackType::FrontalWave ? Profile->FrontalWaveHalfHeight
+            : (PreparedType == ERogue10mMonsterAttackType::AbyssZone ? Profile->AbyssZoneHalfHeight : Profile->AttackHalfHeight);
+        PreparedArc = Profile->AttackArcDegrees;
+        if ((PreparedType != ERogue10mMonsterAttackType::Basic && PreparedType != ERogue10mMonsterAttackType::FrontalWave && PreparedType != ERogue10mMonsterAttackType::AbyssZone)
+            || PreparedLockedCenter.ContainsNaN() || PreparedLockedForward.ContainsNaN() || PreparedLockedForward.IsNearlyZero()
+            || !FMath::IsFinite(PreparedRange) || PreparedRange <= 0.f || !FMath::IsFinite(PreparedHalfWidth) || PreparedHalfWidth <= 0.f
+            || !FMath::IsFinite(PreparedHalfHeight) || PreparedHalfHeight <= 0.f || !FMath::IsFinite(PreparedArc) || PreparedArc < 1.f || PreparedArc > 180.f) { return false; }
+        PreparedDirectionFrame = GFrameCounter; bOrbitInsideSeen = false;
+        return true;
+    }
+    bool OrbitInsideProductShape(const FVector& Position) const
+    {
+        const auto* Capsule = Character->GetCapsuleComponent(); const float R = Capsule->GetScaledCapsuleRadius();
+        const FVector Offset = Position - PreparedLockedCenter;
+        if (FMath::Abs(Offset.Z) > PreparedHalfHeight + Capsule->GetScaledCapsuleHalfHeight()) { return false; }
+        if (PreparedType == ERogue10mMonsterAttackType::FrontalWave)
+        {
+            const FVector Right(-PreparedLockedForward.Y, PreparedLockedForward.X, 0.);
+            const float Along = static_cast<float>(FVector::DotProduct(Offset, PreparedLockedForward));
+            return Along >= 0.f && Along <= PreparedRange + R && FMath::Abs(FVector::DotProduct(Offset, Right)) <= PreparedHalfWidth + R;
+        }
+        if (PreparedType == ERogue10mMonsterAttackType::AbyssZone) { return Offset.SizeSquared2D() <= FMath::Square(PreparedRange + R); }
+        const float Distance = static_cast<float>(Offset.Size2D());
+        const float Padding = FMath::Asin(FMath::Clamp(R / FMath::Max(Distance, R), 0.f, 1.f));
+        return Distance <= PreparedRange + R && FVector::DotProduct(PreparedLockedForward, Offset.GetSafeNormal2D())
+            >= FMath::Cos(FMath::DegreesToRadians(PreparedArc * .5f) + Padding);
+    }
+    bool OrbitStep(const FVector& Center, float Radius, bool Circle, FVector& Desired)
+    {
+        const FVector Position = Character->GetActorLocation();
+        FVector Radial = (Position - Center).GetSafeNormal2D();
+        if (Radial.IsNearlyZero()) { Radial = -Target->GetActorForwardVector().GetSafeNormal2D(); }
+        if (Position.ContainsNaN() || Center.ContainsNaN() || Radial.IsNearlyZero()) { Block(TEXT("orbit_radial_direction_invalid")); return false; }
+        const float Distance = static_cast<float>(FVector::Dist2D(Position, Center));
+        const float Correction = FMath::Clamp((Radius - Distance) / Radius, -1.f, 1.f);
+        const float NormalStep = FMath::Clamp(Character->GetCapsuleComponent()->GetScaledCapsuleRadius() * .75f, 20.f, 45.f);
+        const float Step = Circle ? NormalStep : FMath::Min(NormalStep, FMath::Max(0.f, Distance - Radius));
+        for (int32 Attempt = 0; Attempt < 2; ++Attempt)
+        {
+            const float Side = Attempt == 0 ? OrbitSide : -OrbitSide;
+            const FVector Tangent(-Radial.Y * Side, Radial.X * Side, 0.);
+            Desired = (Circle ? Tangent + Radial * (Correction * 2.f) : -Radial + Tangent * .25f).GetSafeNormal2D();
+            FVector Goal = Position + Desired * Step; Goal.Z = Position.Z;
+            if (Desired.IsNearlyZero() || !PreparedGoalSafe(Goal, false)) { continue; }
+            if (Attempt == 1) { OrbitSide = -OrbitSide; ++OrbitSideReversals; Event(TEXT("orbit_side_reversed"), TEXT("first_short_capsule_sweep_blocked_opposite_step_clear")); }
+            PreparedMove(Goal); return true;
+        }
+        StopMove(); Block(TEXT("orbit_both_short_steps_blocked_or_outside_arena")); return false;
+    }
+    void OrbitFight(float Delta, const URogue10mMonsterAttackPatternComponent& Pattern, float DodgeCost, const FRogue10mAttackResourceBudget& Light)
+    {
+        const auto* A = Character->GetRogueAttributeSet(); const auto* BossA = Target->GetRogueAttributeSet();
+        const auto* PlayerCapsule = Character->GetCapsuleComponent(); const auto* BossCapsule = Target->GetCapsuleComponent();
+        const auto* Primary = Combat->GetEquippedSkill(ERogue10mAttackInputSlot::Primary);
+        const auto* Profile = Pattern.GetProfile();
+        const float PlayerR = PlayerCapsule ? PlayerCapsule->GetScaledCapsuleRadius() : 0.f, BossR = BossCapsule ? BossCapsule->GetScaledCapsuleRadius() : 0.f;
+        if (!A || !BossA || !Primary || !FMath::IsFinite(PlayerR) || PlayerR <= 0.f || !FMath::IsFinite(BossR) || BossR <= 0.f
+            || !FMath::IsFinite(Primary->AttackRange) || Primary->AttackRange <= 0.f || PlayerR + BossR + 15.f > FMath::Min(Primary->AttackRange, Profile->AttackRange))
+        { Block(TEXT("orbit_capsule_clearance_does_not_fit_actual_primary_and_basic_ranges")); return; }
+        const float Radius = FMath::Max(PlayerR + BossR + 15.f, FMath::Min(Primary->AttackRange * .5f, Profile->AttackRange * .5f));
+        const float Reach = FMath::Clamp(Primary->AttackRange * .7f, 75.f, 240.f);
+        if (Radius >= Reach + 50.f) { Block(TEXT("orbit_safe_radius_outside_existing_primary_request_window")); return; }
+        if (!bOrbitGeometryLogged)
+        {
+            bOrbitGeometryLogged = true;
+            Event(TEXT("orbit_geometry"), FString::Printf(TEXT("player_r=%.3f boss_r=%.3f primary_range=%.3f basic_range=%.3f radius=%.3f; no_fixed_150_assumption"), PlayerR, BossR, Primary->AttackRange, Profile->AttackRange, Radius));
+        }
+        const auto Phase = Pattern.GetPatternState(); const int32 Count = Pattern.GetStartedAttackCount();
+        if (OrbitHealthTarget.Get() == Target.Get())
+        {
+            if (A->GetHealth() < OrbitLastPlayerHP - .01f) { ++OrbitPlayerHPLossObservations; Event(TEXT("orbit_player_HP_loss"), FString::Printf(TEXT("before=%.3f after=%.3f count=%d; observed_loss_not_accepted_evade"), OrbitLastPlayerHP, A->GetHealth(), Count)); }
+            if (BossA->GetHealth() < OrbitLastBossHP - .01f) { ++OrbitBossHPLossObservations; Event(TEXT("orbit_boss_HP_loss"), FString::Printf(TEXT("before=%.3f after=%.3f count=%d; observed_loss_not_forced_hit_or_victory"), OrbitLastBossHP, BossA->GetHealth(), Count)); }
+        }
+        OrbitHealthTarget = Target; OrbitLastPlayerHP = A->GetHealth(); OrbitLastBossHP = BossA->GetHealth();
+        if (PreparedDodgePendingAt >= 0.)
+        {
+            if (Character->IsDodging() || Character->GetDodgeCooldownRemaining() > PreparedDodgeCooldownBefore + .02f)
+            { ++PreparedDodgeAccepted; Event(TEXT("prepared_dodge_accepted"), FString::Printf(TEXT("stamina_before=%.3f after=%.3f velocity=%s"), PreparedDodgeStaminaBefore, A->GetStamina(), *Character->GetVelocity().ToString())); PreparedDodgePendingAt = -1.; }
+            else if (Now() - PreparedDodgePendingAt > .30)
+            { ++PreparedDodgeUnobserved; Event(TEXT("prepared_dodge_not_observed"), TEXT("request_not_counted_as_acceptance")); PreparedDodgePendingAt = -1.; }
+        }
+        ObserveOrbitWindup(Pattern);
+        const FVector Aim = Target->GetActorLocation(); const float Distance = static_cast<float>(FVector::Dist2D(Aim, Character->GetActorLocation()));
+        if (Distance < 1800.f && !bBossReached) { bBossReached = true; Event(TEXT("actual_boss_reached"), Target->GetName()); Shot(TEXT("boss_reached")); }
+        const double PreviousControlYaw = PreviousControl.Yaw, CurrentControlYaw = PC->GetControlRotation().Yaw;
+        const float PreviousYawRequest = PreviousYawInput; const bool HadAimSample = bAimSample;
+        const bool Facing = Face(Aim, Delta); if (bFinishing) { return; }
+        if (Count > 0 && OrbitAimLoggedAttack != Count)
+        {
+            OrbitAimLoggedAttack = Count;
+            FVector Eye; FRotator View; PC->GetPlayerViewPoint(Eye, View);
+            const double ViewYawError = FMath::FindDeltaAngleDegrees(View.Yaw, (Aim - Eye).Rotation().Yaw);
+            Event(TEXT("orbit_aim_observation"), FString::Printf(TEXT("count=%d yaw_input_cap_rate=180 sensitivity_x=%.3f previous_control_yaw=%.3f current_control_yaw=%.3f observed_yaw_delta=%.3f supplied_delta=%.6f previous_yaw_request=%.3f current_yaw_request=%.3f view_yaw_error=%.3f facing=%d prior_aim_sample=%d; observed_previous_Face_interval_not_same_frame_application_or_human_difficulty_evidence"), Count, PC->GetLookSensitivityX(), PreviousControlYaw, CurrentControlYaw, FMath::FindDeltaAngleDegrees(PreviousControlYaw, CurrentControlYaw), Delta, PreviousYawRequest, PreviousYawInput, ViewYawError, Facing, HadAimSample));
+        }
+        Key(EKeys::LeftShift, false);
+        if (Phase == ERogue10mMonsterPatternState::Windup)
+        {
+            if (PreparedLastWindup != Count)
+            {
+                if (!OrbitLatchShape(Pattern)) { Block(TEXT("orbit_public_locked_shape_invalid")); return; }
+                PreparedLastWindup = Count;
+                Event(TEXT("orbit_windup"), FString::Printf(TEXT("count=%d type=%d center=%s forward=%s; product_shape_capsule_radius_only_no_QA25_padding"), Count, static_cast<int32>(PreparedType), *PreparedLockedCenter.ToString(), *PreparedLockedForward.ToString()));
+            }
+            if (Pattern.GetCurrentAttackType() != PreparedType || !Pattern.GetLockedAttackLocation().Equals(PreparedLockedCenter, .1)
+                || !Pattern.GetLockedAttackForward().GetSafeNormal2D().Equals(PreparedLockedForward, .001))
+            { Block(TEXT("orbit_locked_geometry_changed_during_windup")); return; }
+            const bool Inside = OrbitInsideProductShape(Character->GetActorLocation());
+            if (Inside) { bOrbitInsideSeen = true; }
+            else if (bOrbitInsideSeen && OrbitShapeExitAttack != Count)
+            { OrbitShapeExitAttack = Count; ++OrbitShapeExitObservations; Event(TEXT("orbit_shape_exit_observed"), FString::Printf(TEXT("count=%d; current_position_outside_product_shape_not_a_future_evade_guarantee"), Count)); }
+            if (Inside != PreparedInsideShapeAt(Character->GetActorLocation()) && OrbitPaddingDifferenceAttack != Count)
+            { OrbitPaddingDifferenceAttack = Count; ++OrbitPaddingDifferences; Event(TEXT("orbit_QA_padding_difference"), FString::Printf(TEXT("count=%d product_inside=%d padded_QA_inside=%d; product_predicate_matches_runtime_formula"), Count, Inside, PreparedInsideShapeAt(Character->GetActorLocation()))); }
+            FVector Desired; if (!OrbitStep(Aim, Radius, true, Desired)) { return; }
+            const double RemainingLower = OrbitWindupDeadlineLower - World->GetTimeSeconds();
+            const bool TimingKnown = OrbitTimingAttack == Count && OrbitWindupDeadlineLower >= 0. && FMath::IsFinite(RemainingLower);
+            const double Margin = FMath::Max(.05, static_cast<double>(FMath::Max(0.f, Delta)) * 3.);
+            const FVector Last = Character->GetLastMovementInputVector().GetSafeNormal2D();
+            if (Inside && (!TimingKnown || RemainingLower <= Margin) && PreparedDodgeAttemptedAttack != Count
+                && GFrameCounter > PreparedDirectionFrame && FVector::DotProduct(Desired, Last) > .8 && !Character->IsDodging()
+                && Character->GetDodgeCooldownRemaining() <= .001f && A->GetStamina() >= DodgeCost + Light.Stamina)
+            {
+                PreparedDodgeAttemptedAttack = Count; ++PreparedDodgeRequested;
+                PreparedDodgeStaminaBefore = A->GetStamina(); PreparedDodgeCooldownBefore = Character->GetDodgeCooldownRemaining();
+                PreparedDodgePendingAt = Now(); Pulse(EKeys::LeftAlt);
+                Event(TEXT("prepared_dodge_requested"), FString::Printf(TEXT("count=%d cost=%.3f timing_known=%d warning_lower_remaining=%.3f margin=%.3f; no_walk_ETA_or_arrival_claim"), Count, DodgeCost, TimingKnown, RemainingLower, Margin));
+            }
+            return;
+        }
+        if (Phase == ERogue10mMonsterPatternState::Recovery)
+        {
+            // Face is unchanged. Stop orbit while aligning instead of assuming the camera can track arbitrary angular speed.
+            StopMove(); if (!Facing) { return; }
+            if (Distance >= Reach + 50.f) { FVector Desired; OrbitStep(Aim, Radius, false, Desired); return; }
+            if (PreparedPunishedAttack != Count && !Combat->IsWeaponChangeBlocked() && !Combat->IsComboSequenceActive(World->GetTimeSeconds())
+                && Combat->GetAttackCooldownRemaining() <= .02f && Light.CanPay(*A) && A->GetStamina() - Light.Stamina >= DodgeCost)
+            {
+                PreparedPunishedAttack = Count; ++OrbitPrimaryRequests; Pulse(EKeys::LeftMouseButton, .12); NextAttack = Now() + .35;
+                Event(TEXT("prepared_recovery_attack_input"), FString::Printf(TEXT("count=%d; orbit_one_normal_primary_request_not_a_forced_hit"), Count));
+            }
+            return;
+        }
+        FVector Desired; OrbitStep(Aim, Radius, true, Desired);
+    }
     void PreparedFight(float Delta)
     {
         const auto* Pattern = Target.IsValid() ? Target->GetAttackPatternComponent() : nullptr;
@@ -498,6 +702,7 @@ private:
         { Block(TEXT("prepared_boss_profile_or_costs_unavailable")); return; }
         if (!FMath::IsFinite(Pattern->GetProfile()->AttackRange) || Pattern->GetProfile()->AttackRange <= 0.f)
         { Block(TEXT("prepared_boss_base_range_invalid")); return; }
+        if (bOrbitBossStrategy) { OrbitFight(Delta, *Pattern, DodgeCost, Light); return; }
         const auto* A = Character->GetRogueAttributeSet();
         if (PreparedDodgePendingAt >= 0.)
         {
@@ -785,15 +990,108 @@ private:
         if (State.IsValid()) { const auto Growth = State->CaptureGrowth(); for (const auto& Row : Growth.MonsterDefeats) { Count += FMath::Max(0, Row.Value); } }
         return Count;
     }
+    FName RequestedLearnNode() const
+    {
+        return bGreatSwordGrowth ? FName(TEXT("I.Mana.Entry")) : FName(TEXT("I.InternalEnergy.Entry"));
+    }
+    const FRogue10mSkillTreeNodeDefinition* ReadGreatSwordGrowthNode()
+    {
+        const auto* GrowthCandidate = Tree.IsValid() ? Tree->FindNode(RequestedLearnNode()) : nullptr;
+        if (!GrowthCandidate || GrowthCandidate->bAutomaticUnlock || GrowthCandidate->PointCost <= 0
+            || GrowthCandidate->NodeType != ERogue10mHybridSkillTreeNodeType::IdentityEntry
+            || GrowthCandidate->Identity != ERogue10mSkillTreeIdentity::Mana || !GrowthCandidate->Choices.IsEmpty()
+            || !URogue10mSkillTreeDataAsset::IsNodeInTrack(*GrowthCandidate, ERogue10mSkillTreeTrack::GreatSword))
+        {
+            Block(TEXT("great_sword_growth_target_not_a_manual_paid_GS_mana_entry")); return nullptr;
+        }
+        GreatSwordGrowthPointCost = GrowthCandidate->PointCost;
+        return GrowthCandidate;
+    }
+    bool CheckGreatSwordGrowthReadiness()
+    {
+        if (!bGearUiEquipped || !VerifyGearEquipped() || Tree->GetActiveTrack() != ERogue10mSkillTreeTrack::GreatSword)
+        { Block(TEXT("great_sword_growth_actual_equipment_or_active_track_changed")); return false; }
+        if (!ReadGreatSwordGrowthNode()) { return false; }
+        if (Tree->IsNodeUnlocked(RequestedLearnNode()))
+        { Block(TEXT("great_sword_growth_target_learned_before_UMG_purchase")); return false; }
+        GreatSwordGrowthMasteryObserved = Tree->GetMasteryLevel(ERogue10mSkillTreeTrack::GreatSword);
+        GreatSwordGrowthLevelObserved = State->GetPlayerLevel();
+        // These are preparation milestones for this QA option, not new product acquisition rules.
+        if (GreatSwordGrowthMasteryObserved < 3 || GreatSwordGrowthLevelObserved < 3
+            || Tree->GetAvailableGrowthPoints() < GreatSwordGrowthPointCost) { return false; }
+        FText GrowthGateReason;
+        if (!Tree->CanUnlockNode(RequestedLearnNode(), ERogue10mSkillTreeUnlockRoute::Points, NAME_None, GrowthGateReason))
+        {
+            if (GreatSwordGrowthLastGateReason != GrowthGateReason.ToString())
+            {
+                GreatSwordGrowthLastGateReason = GrowthGateReason.ToString();
+                Event(TEXT("great_sword_growth_waiting_legal_acquisition"), GreatSwordGrowthLastGateReason);
+            }
+            return false;
+        }
+        bGreatSwordGrowthReadyObserved = true;
+        Event(TEXT("great_sword_growth_ready"), FString::Printf(TEXT("node=%s level=%d GS_mastery=%d available_run_points=%d actual_cost=%d; natural_input_only_not_new_node_rules"),
+            *RequestedLearnNode().ToString(), GreatSwordGrowthLevelObserved, GreatSwordGrowthMasteryObserved,
+            Tree->GetAvailableGrowthPoints(), GreatSwordGrowthPointCost));
+        return true;
+    }
+    bool PrepareGreatSwordGrowthPurchase(const URogue10mHybridSkillTreeWidget& GrowthWidget)
+    {
+        if (!ReadGreatSwordGrowthNode()) { return false; }
+        if (Tree->IsNodeUnlocked(RequestedLearnNode()))
+        { Block(TEXT("great_sword_growth_target_learned_before_UMG_purchase")); return false; }
+        if (!bGreatSwordGrowthReadyObserved || !bGearUiEquipped || !VerifyGearEquipped()
+            || Tree->GetActiveTrack() != ERogue10mSkillTreeTrack::GreatSword
+            || GrowthWidget.GetDisplayedTrack() != ERogue10mSkillTreeTrack::GreatSword
+            || GrowthWidget.GetSelectedNodeId() != RequestedLearnNode()) { return false; }
+        FText GrowthPurchaseReason;
+        if (!Tree->CanUnlockNode(RequestedLearnNode(), ERogue10mSkillTreeUnlockRoute::Points, NAME_None, GrowthPurchaseReason)) { return false; }
+        GreatSwordGrowthPointsBefore = Tree->GetAvailableGrowthPoints();
+        GreatSwordGrowthSpentBefore = Tree->GetSpentSkillTreePoints();
+        return true;
+    }
+    bool ConfirmGreatSwordGrowthPurchase()
+    {
+        if (!bGreatSwordGrowth) { return true; }
+        const auto GrowthPurchasedSnapshot = Tree->Capture();
+        int32 GrowthPurchasedRows = 0; bool GrowthPurchasedRowMatches = false;
+        for (const auto& GrowthInvestment : GrowthPurchasedSnapshot.Investments)
+        {
+            if (GrowthInvestment.NodeId == RequestedLearnNode())
+            {
+                ++GrowthPurchasedRows;
+                GrowthPurchasedRowMatches = GrowthInvestment.Route == ERogue10mSkillTreeUnlockRoute::Points
+                    && GrowthInvestment.SpentPoints == GreatSwordGrowthPointCost;
+            }
+        }
+        GreatSwordGrowthPointsAfter = Tree->GetAvailableGrowthPoints();
+        GreatSwordGrowthSpentAfter = Tree->GetSpentSkillTreePoints();
+        if (!bGreatSwordGrowthUiClickSubmitted || !bGreatSwordGrowthReadyObserved
+            || GreatSwordGrowthPointCost <= 0 || GreatSwordGrowthPointsBefore < GreatSwordGrowthPointCost
+            || GreatSwordGrowthSpentAfter - GreatSwordGrowthSpentBefore != GreatSwordGrowthPointCost
+            || GrowthPurchasedRows != 1 || !GrowthPurchasedRowMatches || !bGearUiEquipped || !VerifyGearEquipped()
+            || Tree->GetActiveTrack() != ERogue10mSkillTreeTrack::GreatSword)
+        { Block(TEXT("great_sword_growth_UMG_purchase_ledger_not_verified")); return false; }
+        if (Tree->GetActiveIdentity(ERogue10mSkillTreeTrack::GreatSword) != ERogue10mSkillTreeIdentity::Mana)
+        { Block(TEXT("great_sword_growth_learned_but_effective_Mana_identity_missing")); return false; }
+        bGreatSwordGrowthLearningVerified = true;
+        Event(TEXT("great_sword_growth_UMG_purchase_verified"), FString::Printf(TEXT("node=%s actual_cost=%d available_before=%d available_after=%d spent_before=%d spent_after=%d route=Points effective_GS_identity=Mana; proc_damage_not_yet_proven; no_progression_setters"),
+            *RequestedLearnNode().ToString(), GreatSwordGrowthPointCost, GreatSwordGrowthPointsBefore,
+            GreatSwordGrowthPointsAfter, GreatSwordGrowthSpentBefore, GreatSwordGrowthSpentAfter));
+        return true;
+    }
+
     bool SelectLearnNode(URogue10mHybridSkillTreeWidget& Widget)
     {
-        auto* Entry = Widget.FindNodeEntry(TEXT("I.InternalEnergy.Entry"));
+        if (bGreatSwordGrowth && Widget.GetDisplayedTrack() != ERogue10mSkillTreeTrack::GreatSword)
+        { Click(&Widget, TEXT("HybridTreeGreatSword")); return false; }
+        auto* Entry = Widget.FindNodeEntry(RequestedLearnNode());
         if (!Entry) { return false; }
         URogue10mHybridSkillTreeButton* Found = nullptr; int32 Count = 0;
         for (TObjectIterator<URogue10mHybridSkillTreeButton> It; It; ++It)
         { if (It->GetTypedOuter<URogue10mHybridSkillTreeEntryWidget>() == Entry && Displayed(*It)) { Found = *It; ++Count; } }
         if (Count != 1) { return false; }
-        Event(TEXT("UMG_node_button_delegate"), TEXT("I.InternalEnergy.Entry")); Found->OnClicked.Broadcast(); return true;
+        Event(TEXT("UMG_node_button_delegate"), RequestedLearnNode().ToString()); Found->OnClicked.Broadcast(); return true;
     }
     void Advance(float Delta)
     {
@@ -897,7 +1195,16 @@ private:
         {
             if (!Sword.IsValid() && !SwordId.IsValid()) for (TActorIterator<ARogue10mDroppedItem> It(World.Get()); It; ++It)
             { if (It->ActorHasTag(TEXT("Rogue10m.EntryGreatSword.Pickup"))) { Sword = *It; SwordId = It->GetItemStack().InstanceId; break; } }
-            if (HasSword()) { bSword = true; Route = { FVector(-25000, -45000, 0), FVector(-45000, -29000, 0), FVector(-47800, -25000, 0) }; Waypoint = 0; SetStage(TEXT("forest_route"), 240.); }
+            if (HasSword())
+            {
+                bSword = true; Route = { FVector(-25000, -45000, 0), FVector(-45000, -29000, 0), FVector(-47800, -25000, 0) }; Waypoint = 0;
+                if (bGreatSwordGrowth)
+                {
+                    if (!PrepareGearTarget()) { Block(TEXT("gear_ui_exact_sword_or_distinct_loaded_profile_unavailable")); return; }
+                    GearReturnStage = TEXT("forest_route"); SetStage(TEXT("gear_open_inventory"), 15.); Pulse(EKeys::I);
+                }
+                else { SetStage(TEXT("forest_route"), 240.); }
+            }
             else if (Sword.IsValid()) { Walk(Sword->GetActorLocation(), 20.f, Delta, false); }
         }
         else if (Stage == TEXT("forest_route"))
@@ -908,7 +1215,9 @@ private:
         else if (Stage == TEXT("growth_combat"))
         {
             if (Defeats() > InitialDefeats && (State->GetCurrentExperience() > 0 || State->GetPlayerLevel() > 1)) { if (!bFirstKill) { bFirstKill = true; Event(TEXT("natural_kill_XP_observed"), TEXT("credited defeat counter and XP increased; no XP/HP setters")); Shot(TEXT("first_kill")); } }
-            if (Tree->GetAvailableGrowthPoints() > 0) { SetStage(TEXT("skill_open"), 30.); Pulse(EKeys::K); }
+            const bool GrowthReadyForUi = bGreatSwordGrowth ? CheckGreatSwordGrowthReadiness() : Tree->GetAvailableGrowthPoints() > 0;
+            if (bFinishing) { return; }
+            if (GrowthReadyForUi) { SetStage(TEXT("skill_open"), 30.); Pulse(EKeys::K); }
             else { Fight(Delta, false); }
         }
         else if (Stage == TEXT("skill_open"))
@@ -916,18 +1225,27 @@ private:
         else if (Stage == TEXT("skill_learn"))
         {
             auto* Widget = VisibleWidget<URogue10mHybridSkillTreeWidget>(false);
-            if (PC->IsSkillTreeVisible() && Widget && Click(Widget, TEXT("HybridTreeLearnPoints"))) { SetStage(TEXT("skill_confirm"), 30.); }
+            if (PC->IsSkillTreeVisible() && Widget)
+            {
+                if (bGreatSwordGrowth && !PrepareGreatSwordGrowthPurchase(*Widget)) { return; }
+                if (Click(Widget, TEXT("HybridTreeLearnPoints")))
+                {
+                    if (bGreatSwordGrowth) { bGreatSwordGrowthUiClickSubmitted = true; }
+                    SetStage(TEXT("skill_confirm"), 30.);
+                }
+            }
         }
         else if (Stage == TEXT("skill_confirm"))
         {
-            if (Tree->IsNodeUnlocked(TEXT("I.InternalEnergy.Entry")))
+            if (Tree->IsNodeUnlocked(RequestedLearnNode()))
             {
-                bLearned = true; LearnedNode = TEXT("I.InternalEnergy.Entry");
+                if (!ConfirmGreatSwordGrowthPurchase()) { return; }
+                bLearned = true; LearnedNode = RequestedLearnNode();
                 Route = { FVector(-44000,-4000,0), FVector(-44000,-1100,0), FVector(-44000,5000,0), FVector(-44000,13500,0),
                     FVector(-35000,42000,0), FVector(-2000,59000,0), FVector(11695,59741,0), FVector(12000,60000,0),
                     FVector(14700,62300,0), FVector(15000,62600,0), FVector(15650,64400,0), FVector(15000,68000,0) };
                 Waypoint = 0;
-                if (bGearUiEquipment) { SetStage(TEXT("gear_close_skill"), 15.); Pulse(EKeys::K); }
+                if (bGearUiEquipment && !bGreatSwordGrowth) { SetStage(TEXT("gear_close_skill"), 15.); Pulse(EKeys::K); }
                 else { SetStage(TEXT("boss_route"), 400.); Pulse(EKeys::K); }
             }
         }
@@ -960,7 +1278,9 @@ private:
         {
             if (!PendingShot.IsEmpty() || ShotQueue.Num() > 0) { return; }
             if (PC->IsInventoryVisible()) { if (Now() > ActionAt) { Pulse(EKeys::I); ActionAt = Now() + .5; } return; }
-            SetStage(TEXT("boss_route"), 400.);
+            if (bGreatSwordGrowth && GearReturnStage == TEXT("forest_route"))
+            { GearReturnStage = TEXT("boss_route"); SetStage(TEXT("forest_route"), 240.); }
+            else { SetStage(TEXT("boss_route"), 400.); }
         }
         else if (Stage == TEXT("boss_route"))
         {
@@ -993,14 +1313,17 @@ private:
     bool Tick(float Delta)
     {
         if (bFinished) { return false; }
-        Refresh(); PumpShots();
+        Refresh();
+        UpdateDodgeObservationWatchdog();
+        PrepareDodgeObservation();
+        PumpShots();
         RecordInputFrame(Delta);
         TArray<FKey> Released; for (const auto& Pair : Releases) { if (Now() >= Pair.Value) { Key(Pair.Key, false); Released.Add(Pair.Key); } }
         for (const FKey& K : Released) { Releases.Remove(K); }
         if (Now() - LastSample >= 0.25) { Sample(); LastSample = Now(); }
         if (bFinishing)
         {
-            if (Now() >= FinishAt) { ReleaseAll(); FlushFrames(); Summary(Outcome); StopAnimationObservation(); bFinished = true; FCoreDelegates::OnPreExit.Remove(ExitHandle); FPlatformMisc::RequestExitWithStatus(false, Outcome.StartsWith(TEXT("returned_")) ? 0 : 2); return false; }
+            if (Now() >= FinishAt) { ReleaseAll(); FlushFrames(); Summary(Outcome); StopAnimationObservation(); bFinished = true; FlushDodgeObservationAfterRun(); FCoreDelegates::OnPreExit.Remove(ExitHandle); FPlatformMisc::RequestExitWithStatus(false, Outcome.StartsWith(TEXT("returned_")) ? 0 : 2); return false; }
             return true;
         }
         if (bIoFailed) { Block(TEXT("evidence_write_failed")); return true; }
@@ -1100,6 +1423,124 @@ private:
         SampleMovementDiagnostics();
         Summary(bFinishing?Outcome:TEXT("running"));
     }
+    // Opt-in evidence only. None of these helpers generates input or changes a game rule.
+    void PrepareDodgeObservation()
+    {
+        if (!bDodgeObservationOptIn || bDodgeObservationPrepareAttempted || bDodgeObservationRequestSeen
+            || bFinishing || Stage != TEXT("boss_combat") || !Character.IsValid() || !World.IsValid()
+            || !ProfileId.IsValid() || Character->IsDead() || Character->IsDodging()
+            || Character->GetDodgeCooldownRemaining() > .001f) { return; }
+        bDodgeObservationPrepareAttempted = true;
+        auto ObservationCandidate = MakeUnique<Rogue10mDodgeDistanceMeasure::FProbe>();
+        Rogue10mDodgeDistanceMeasure::FConfig ObservationConfig;
+        ObservationConfig.Label = Label;
+        ObservationConfig.Context = Rogue10mDodgeDistanceMeasure::EContext::BasicRunReadOnly;
+        ObservationConfig.Case = Rogue10mDodgeDistanceMeasure::ECase::UnclassifiedLiveWorld;
+        ObservationConfig.RequestedHz = 0;
+        ObservationConfig.bBasicRunFreshGatePassed = bDodgeObservationFreshGatePassed;
+        ObservationConfig.BasicRunInstance = Instance;
+        ObservationConfig.BasicRunProfile = ProfileId;
+        ObservationConfig.BasicRunDriverOutput = Output;
+        if (!ObservationCandidate->Begin(*Character, ObservationConfig, DodgeObservationNote)) { return; }
+        DodgeObservationProbe = MoveTemp(ObservationCandidate);
+        DodgeObservationWorld = World; DodgeObservationPawn = Character;
+        DodgeObservationArmedWall = Now();
+        DodgeObservationPreHandle = FWorldDelegates::OnWorldPreActorTick.AddLambda(
+            [ObservationWeak = TWeakPtr<FDriver>(AsShared())](UWorld* ObservationWorld, ELevelTick, float ObservationDelta)
+            { if (!IsInGameThread()) { return; } if (auto ObservationSelf = ObservationWeak.Pin())
+              { ObservationSelf->SampleDodgeObservation(ObservationWorld, Rogue10mDodgeDistanceMeasure::EHook::WorldPreActorTick, ObservationDelta); } });
+        DodgeObservationPostHandle = FWorldDelegates::OnWorldPostActorTick.AddLambda(
+            [ObservationWeak = TWeakPtr<FDriver>(AsShared())](UWorld* ObservationWorld, ELevelTick, float ObservationDelta)
+            { if (!IsInGameThread()) { return; } if (auto ObservationSelf = ObservationWeak.Pin())
+              { ObservationSelf->SampleDodgeObservation(ObservationWorld, Rogue10mDodgeDistanceMeasure::EHook::WorldPostActorTick, ObservationDelta); } });
+        DodgeObservationCleanupHandle = FWorldDelegates::OnWorldCleanup.AddLambda(
+            [ObservationWeak = TWeakPtr<FDriver>(AsShared())](UWorld* ObservationWorld, bool, bool)
+            { if (!IsInGameThread()) { return; } if (auto ObservationSelf = ObservationWeak.Pin(); ObservationSelf
+                && ObservationSelf->DodgeObservationProbe && (!ObservationSelf->DodgeObservationWorld.IsValid()
+                    || ObservationWorld == ObservationSelf->DodgeObservationWorld.Get()))
+              { ObservationSelf->StopDodgeObservation(TEXT("probe_world_cleanup")); } });
+    }
+    void MarkExistingBossDodgeRequest(const FKey& ObservationInput, bool ObservationDown)
+    {
+        if (!bDodgeObservationOptIn || bDodgeObservationRequestSeen || Stage != TEXT("boss_combat")
+            || !ObservationDown || ObservationInput != Rogue10mInput::DodgeKey()) { return; }
+        bDodgeObservationRequestSeen = true; // First actual Key boundary, even if the observer cannot mark it.
+        if (!DodgeObservationProbe || !Character.IsValid())
+        { if (DodgeObservationNote.IsEmpty()) { DodgeObservationNote = TEXT("first_boss_request_not_prearmed"); } return; }
+        DodgeObservationExpectedDirection = Character->GetLastMovementInputVector().GetSafeNormal2D();
+        if (DodgeObservationExpectedDirection.IsNearlyZero()) { DodgeObservationExpectedDirection = Character->GetActorForwardVector().GetSafeNormal2D(); }
+        bDodgeObservationMarked = DodgeObservationProbe->MarkRequest(DodgeObservationExpectedDirection, DodgeObservationNote);
+        if (bDodgeObservationMarked)
+        { DodgeObservationStartedWall = Now(); DodgeObservationStartedWorld = World.IsValid() ? World->GetTimeSeconds() : 0.; }
+        else { bDodgeObservationStopPending = true; } // No cleanup/reflection/disk I/O in the input hot path.
+    }
+    void SampleDodgeObservation(UWorld* ObservationWorld, Rogue10mDodgeDistanceMeasure::EHook ObservationHook, float ObservationDelta)
+    {
+        if (!IsInGameThread() || bFinished || !DodgeObservationProbe || bDodgeObservationSnapshotReady
+            || !bDodgeObservationMarked) { return; }
+        if (!DodgeObservationWorld.IsValid() || !DodgeObservationPawn.IsValid()
+            || Character.Get() != DodgeObservationPawn.Get()) { StopDodgeObservation(TEXT("probe_context_lost")); return; }
+        if (ObservationWorld != DodgeObservationWorld.Get() || ObservationWorld->GetGameInstance() != Instance.Get()) { return; }
+        DodgeObservationProbe->Sample(ObservationHook, ObservationDelta);
+        if (DodgeObservationProbe && !bDodgeObservationStopped && DodgeObservationProbe->Finished())
+        { StopDodgeObservation(TEXT("probe_window_finished")); }
+    }
+    void UpdateDodgeObservationWatchdog()
+    {
+        if (!DodgeObservationProbe || bDodgeObservationSnapshotReady) { return; }
+        if (bDodgeObservationStopPending) { StopDodgeObservation(TEXT("first_request_mark_failed")); return; }
+        if (!DodgeObservationWorld.IsValid() || !DodgeObservationPawn.IsValid()
+            || World.Get() != DodgeObservationWorld.Get() || Character.Get() != DodgeObservationPawn.Get())
+        { StopDodgeObservation(TEXT("probe_context_changed")); return; }
+        if (!bDodgeObservationMarked && Now() - DodgeObservationArmedWall > 10.)
+        {
+            if (DodgeObservationNote.IsEmpty()) { DodgeObservationNote = TEXT("prearm_wait_expired_without_boss_request"); }
+            StopDodgeObservation(TEXT("bounded_prearm_wait")); return;
+        }
+        // About 0.5 s normally: nominal active interval plus the probe's 0.3 s tail. No game clock writes.
+        if (bDodgeObservationMarked && (Now() - DodgeObservationStartedWall > 2.
+            || DodgeObservationWorld->GetTimeSeconds() - DodgeObservationStartedWorld > .60))
+        { StopDodgeObservation(TEXT("bounded_observer_window")); }
+    }
+    void StopDodgeObservation(const TCHAR* ObservationStopCause)
+    {
+        if (bDodgeObservationStopped || (!DodgeObservationProbe && !DodgeObservationPreHandle.IsValid()
+            && !DodgeObservationPostHandle.IsValid() && !DodgeObservationCleanupHandle.IsValid())) { return; }
+        bDodgeObservationStopped = true;
+        FWorldDelegates::OnWorldPreActorTick.Remove(DodgeObservationPreHandle); DodgeObservationPreHandle.Reset();
+        FWorldDelegates::OnWorldPostActorTick.Remove(DodgeObservationPostHandle); DodgeObservationPostHandle.Reset();
+        FWorldDelegates::OnWorldCleanup.Remove(DodgeObservationCleanupHandle); DodgeObservationCleanupHandle.Reset();
+        if (DodgeObservationProbe && !DodgeObservationProbe->Finished()) { DodgeObservationProbe->Finish(ObservationStopCause); }
+        if (DodgeObservationProbe && !bDodgeObservationSnapshotReady)
+        {
+            DodgeObservationFrames = DodgeObservationProbe->FrameCSV();
+            DodgeObservationEvents = DodgeObservationProbe->EventCSV();
+            DodgeObservationSummary = DodgeObservationProbe->Summary();
+            bDodgeObservationSnapshotReady = true;
+        }
+        DodgeObservationProbe.Reset();
+        bDodgeObservationStopPending = false;
+    }
+    void FlushDodgeObservationAfterRun()
+    {
+        if (!bDodgeObservationOptIn || bDodgeObservationFlushed) { return; }
+        bDodgeObservationFlushed = true; StopDodgeObservation(TEXT("run_finished_or_process_pre_exit"));
+        bool ObservationWritesOK = true;
+        if (bDodgeObservationSnapshotReady)
+        {
+            ObservationWritesOK &= WriteNew(TEXT("dodge-observe-01-frames.csv"), DodgeObservationFrames);
+            ObservationWritesOK &= WriteNew(TEXT("dodge-observe-01-events.csv"), DodgeObservationEvents);
+            ObservationWritesOK &= WriteNew(TEXT("dodge-observe-01-summary.txt"), DodgeObservationSummary);
+        }
+        const FString ObservationMetadata = FString::Printf(TEXT("scope=validated_BasicRun_read_only_observation\nrequested=1\nfresh_host_gate=%d\nprepare_attempted=%d\nfirst_boss_request_seen=%d\nrequest_marked=%d\nsnapshot_ready=%d\nprobe_file_io_error=%d\nnote=%s\nexpected_public_direction_x=%.9f\nexpected_public_direction_y=%.9f\nexpected_public_direction_z=%.9f\nexpected_direction_is_not_private_cached_input=1\nextra_inputs=0\nextra_collision_queries=0\nclock_or_save_writes=0\nmovement_or_hit_dynamic_delegates=not_bound\nconsumed_anim_root_motion=unmeasured\nprivate_dodge_end_timer_handle=unmeasured\noriginal_game_outcome_unchanged=1\nnormal_completion=not_assessed_by_observer\nphysical_input=not_assessed_by_observer\n"),
+            bDodgeObservationFreshGatePassed, bDodgeObservationPrepareAttempted, bDodgeObservationRequestSeen,
+            bDodgeObservationMarked, bDodgeObservationSnapshotReady, !ObservationWritesOK, *DodgeObservationNote,
+            DodgeObservationExpectedDirection.X, DodgeObservationExpectedDirection.Y, DodgeObservationExpectedDirection.Z);
+        ObservationWritesOK &= WriteNew(TEXT("dodge-observe-01-host.txt"), ObservationMetadata);
+        if (!ObservationWritesOK)
+        { UE_LOG(LogRogue10m, Warning, TEXT("BASIC_RUN_DODGE_OBSERVATION_IO_UNCONFIRMED no_retry_no_game_outcome_change")); }
+    }
+
     // Optional read-only evidence. It never generates or delays a gameplay input.
     void StopAnimationObservation()
     {
@@ -1260,8 +1701,15 @@ private:
         FString Text = FString::Printf(TEXT("status=%s\noutcome=%s\nstage=%s\nreason=%s\nnormal_menu_ui=%d\nnpc_dialogue=%d\nfield_entered=%d\nsword_overlap_pickup=%d\nfirst_natural_kill_xp=%d\nnormal_UMG_run_learning=%d\nboss_reached=%d\nreturned_reset_observed=%d\nfull_boss_completion=%d\nphysical_input=not_performed\ninput_driver=Controller_InputKey_DoAim_Slate_chars_UMG_delegates\nno_gameplay_fixtures=1\nwall_seconds=%.3f\nterminal_phase=%s\nprofile=%s\nrender_review=not_performed_by_driver\n"),
             *Status,*Outcome,*Stage,*Reason,bMenuUI,bNpcDialogue,bFieldEntered,bSword,bFirstKill,bLearned,bBossReached,bReturned,
             bReturned && bMenuUI && bNpcDialogue && bBossReached && bFirstKill && bLearned && bSword && (!bGearUiEquipment || bGearUiEquipped) && Natural == TEXT("victory"),Now()-Started,*TerminalPhase,*ProfileId.ToString(EGuidFormats::Digits));
+        Text += FString::Printf(TEXT("dodge_observe_requested=%d\n"), bDodgeObservationOptIn);
         Text += FString::Printf(TEXT("gear_ui_requested=%d\ngear_ui_click_routed=%d\ngear_ui_equipped_verified=%d\n"), bGearUiEquipment, bGearUiClickRouted, bGearUiEquipped);
+        Text += FString::Printf(TEXT("great_sword_growth_requested=%d\nrequested_learning_node=%s\nconfirmed_learning_node=%s\ngreat_sword_growth_ready=%d\ngreat_sword_growth_ui_click=%d\ngreat_sword_growth_learning_verified=%d\ngreat_sword_growth_level=%d\ngreat_sword_growth_mastery=%d\ngreat_sword_growth_node_cost=%d\ngreat_sword_growth_points_before=%d\ngreat_sword_growth_points_after=%d\ngreat_sword_growth_spent_before=%d\ngreat_sword_growth_spent_after=%d\n"),
+            bGreatSwordGrowth, *RequestedLearnNode().ToString(), *LearnedNode.ToString(), bGreatSwordGrowthReadyObserved,
+            bGreatSwordGrowthUiClickSubmitted, bGreatSwordGrowthLearningVerified, GreatSwordGrowthLevelObserved,
+            GreatSwordGrowthMasteryObserved, GreatSwordGrowthPointCost, GreatSwordGrowthPointsBefore, GreatSwordGrowthPointsAfter,
+            GreatSwordGrowthSpentBefore, GreatSwordGrowthSpentAfter);
         Text += FString::Printf(TEXT("prepared_boss_strategy=%d\nprepared_dodge_requested=%d\nprepared_dodge_accepted=%d\nprepared_dodge_unobserved=%d\n"), bPreparedBossStrategy, PreparedDodgeRequested, PreparedDodgeAccepted, PreparedDodgeUnobserved);
+        Text += FString::Printf(TEXT("orbit_boss_strategy=%d\norbit_side_reversals=%d\norbit_shape_exit_observations=%d\norbit_padding_differences=%d\norbit_primary_requests=%d\norbit_player_hp_loss_observations=%d\norbit_boss_hp_loss_observations=%d\n"), bOrbitBossStrategy, OrbitSideReversals, OrbitShapeExitObservations, OrbitPaddingDifferences, OrbitPrimaryRequests, OrbitPlayerHPLossObservations, OrbitBossHPLossObservations);
         Text += FString::Printf(TEXT("pending_screenshot=%s\nqueued_screenshot_count=%d\nrequested_or_queued_capture_count=%d\nreset_scope=level_BrawlerXP_selected_learned_node_specific_sword_GUID_profile_phase_only\n"),*PendingShot,ShotQueue.Num(),ShotCount);
         if (bAnimationEvidence)
         {
@@ -1293,6 +1741,10 @@ private:
     FGuid ProfileId,SwordId;
     FVector LastProgress;
     FRotator PreviousControl;
+    bool bGreatSwordGrowth = false, bGreatSwordGrowthReadyObserved = false, bGreatSwordGrowthUiClickSubmitted = false, bGreatSwordGrowthLearningVerified = false;
+    int32 GreatSwordGrowthPointCost = 0, GreatSwordGrowthMasteryObserved = 0, GreatSwordGrowthLevelObserved = 0;
+    int32 GreatSwordGrowthPointsBefore = -1, GreatSwordGrowthPointsAfter = -1, GreatSwordGrowthSpentBefore = -1, GreatSwordGrowthSpentAfter = -1;
+    FString GearReturnStage = TEXT("boss_route"), GreatSwordGrowthLastGateReason;
     bool bGearUiEquipment = false, bGearUiClickRouted = false, bGearUiEquipped = false, bGearBeforeQueued = false;
     int32 GearContainerIndex = INDEX_NONE;
     FString GearGuardLastReason;
@@ -1300,6 +1752,15 @@ private:
     bool bGearHitPathLogged = false;
     FString GearExpectedItemPath, GearExpectedPrimaryPath, GearBeforePrimaryPath;
     bool bPreparedBossStrategy = false, bPreparedReserveWaiting = false;
+    bool bOrbitBossStrategy = false, bOrbitGeometryLogged = false, bOrbitInsideSeen = false;
+    float OrbitSide = 1.f, OrbitLastPlayerHP = -1.f, OrbitLastBossHP = -1.f;
+    int32 OrbitSideReversals = 0, OrbitShapeExitObservations = 0, OrbitPaddingDifferences = 0, OrbitPrimaryRequests = 0;
+    int32 OrbitPlayerHPLossObservations = 0, OrbitBossHPLossObservations = 0, OrbitShapeExitAttack = -1, OrbitPaddingDifferenceAttack = -1;
+    TWeakObjectPtr<ARogue10mBasicMonster> OrbitHealthTarget;
+    TWeakObjectPtr<const URogue10mMonsterAttackPatternComponent> OrbitObservedPattern;
+    ERogue10mMonsterPatternState OrbitObservedPhase = ERogue10mMonsterPatternState::Idle;
+    int32 OrbitObservedCount = -1, OrbitTimingAttack = -1, OrbitAimLoggedAttack = -1;
+    double OrbitObservedAt = -1., OrbitWindupDeadlineLower = -1.;
     int32 PreparedLastWindup = -1, PreparedPunishedAttack = -1, PreparedDodgeAttemptedAttack = -1;
     int32 PreparedDodgeRequested = 0, PreparedDodgeAccepted = 0, PreparedDodgeUnobserved = 0;
     uint64 PreparedDirectionFrame = 0;
@@ -1308,6 +1769,17 @@ private:
     float PreparedRange = 0.f, PreparedHalfWidth = 0.f, PreparedHalfHeight = 0.f, PreparedArc = 0.f;
     FVector PreparedLockedCenter = FVector::ZeroVector, PreparedLockedForward = FVector::ForwardVector, PreparedEscapeGoal = FVector::ZeroVector;
     ERogue10mMonsterAttackType PreparedType = ERogue10mMonsterAttackType::Basic;
+    // Optional one-window observer. Defaults do not install any hook or create evidence files.
+    TUniquePtr<Rogue10mDodgeDistanceMeasure::FProbe> DodgeObservationProbe;
+    TWeakObjectPtr<UWorld> DodgeObservationWorld;
+    TWeakObjectPtr<ARogue10mCharacter> DodgeObservationPawn;
+    FDelegateHandle DodgeObservationPreHandle,DodgeObservationPostHandle,DodgeObservationCleanupHandle;
+    FString DodgeObservationNote,DodgeObservationFrames,DodgeObservationEvents,DodgeObservationSummary;
+    FVector DodgeObservationExpectedDirection = FVector::ZeroVector;
+    double DodgeObservationArmedWall=0.,DodgeObservationStartedWall=0.,DodgeObservationStartedWorld=0.;
+    bool bDodgeObservationOptIn=false,bDodgeObservationFreshGatePassed=false,bDodgeObservationPrepareAttempted=false;
+    bool bDodgeObservationRequestSeen=false,bDodgeObservationMarked=false,bDodgeObservationStopPending=false;
+    bool bDodgeObservationSnapshotReady=false,bDodgeObservationFlushed=false,bDodgeObservationStopped=false;
     FDelegateHandle ExitHandle;
     FDelegateHandle AnimationTickHandle,AnimationProcessedHandle;
     TWeakObjectPtr<UWorld> AnimationProbeWorld;

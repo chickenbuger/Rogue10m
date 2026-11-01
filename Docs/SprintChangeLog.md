@@ -2675,3 +2675,13 @@ NPC44검사와 핵심6suite30검사를 모두 통과했다. 정상 E/F/G는 메�
 - 정상 게임 시간 1200초 후 timeout 정산+6 저장·Hub 복귀·선택 런 값 reset/Discovery 유지, OS/launcher exit0. 보스 승리0/물리 입력 없음.
 - 기존348 SHA 유지→350(QA2개), 원본31에셋/맵 동일, 사진5장 직접 검토·디코딩. CSV120000행 상한·블러·귀환 재질 경고 분리 기록.
 - 실제 BP 연결 데이터에서 보스 HP10000/regen2 및 GS 기본 공격 비용0 확인. 다음 전략 후보의 Idle 공격 기회 차단을 정적 발견하여 미적용 중. 제품 수치/원격 변경 없음.
+
+
+### Sprint#9-23 정상 성장 보스 QA — 진행 중
+
+- 목표: 강제 수치 변경 없이 정상 대검 성장·스킬·보스·결과/귀환 연결 확인.
+- 변경: 기본 OFF QA 성장/궤도 입력 전략, 읽기 전용 Alt 관찰기와 결과 원장 검증.
+- 검증: 실제 Editor compile12.64초, parser26/preflight11 PASS; L은 자연 LV3/GS M3→마나 학습/활성→보스 사망→+13 저장/귀환. FullBoss0이며 완료로 처리하지 않음.
+- 보존: 기존 저장350 SHA 불변, QA2 추가; 에셋31/맵 불변. 사진5장 실제 디코딩/검토.
+- 다음: 원형 경고 재진입과 무료 공격 reserve QA 결함을 수정해 정상 승리 재검증.
+- 문서: Feature/architect/2026-11-01_normal-growth-boss-qa.md, Feature/doc/2026-11-01_normal-growth-boss-qa.md

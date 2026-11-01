@@ -3,13 +3,19 @@ param(
     [ValidateRange(1300,1800)][int]$MaxSeconds=1560,
     [switch]$Visible,
     [switch]$PreparedBossStrategy,
+    [switch]$OrbitBossStrategy,
     [switch]$AnimationEvidence,
+    [switch]$DodgeObserve,
     [switch]$GearUI,
+    [switch]$GreatSwordGrowth,
     [string]$ProjectRoot='D:\Project\Rogue10m'
 )
 # DRAFT launcher: integrate/review/build before running. No gameplay-state fixtures.
 $ErrorActionPreference='Stop'
+if($DodgeObserve -and -not $PreparedBossStrategy){throw 'DodgeObserve requires -PreparedBossStrategy; no launch or profile creation.'}
+if($OrbitBossStrategy -and -not $PreparedBossStrategy){throw 'OrbitBossStrategy requires -PreparedBossStrategy; no launch or profile creation.'}
 if($GearUI -and -not $Visible){throw 'GearUI requires -Visible for the native Slate hit-test path; no offscreen fallback or launch.'}
+if($GreatSwordGrowth -and -not $GearUI){throw 'GreatSwordGrowth requires explicit -GearUI and its -Visible UI path; nothing was started.'}
 
 # Startup observation only. No process is stopped by this function.
 function Wait-OwnedStartupIdentity([Diagnostics.Process]$Process,[int]$ExpectedId,[string]$ExpectedExecutable){
@@ -74,7 +80,7 @@ function Save-Json([string]$Path,$Value){
     $json=ConvertTo-Json -InputObject $Value -Depth 12
     [IO.File]::WriteAllText($Path,$json,[Text.UTF8Encoding]::new($false))
 }
-function Read-DriverSummary([string]$Path,[bool]$ExpectPrepared=$false,[bool]$ExpectAnimation=$false,[bool]$ExpectGear=$false){
+function Read-DriverSummary([string]$Path,[bool]$ExpectPrepared=$false,[bool]$ExpectAnimation=$false,[bool]$ExpectGear=$false,[bool]$ExpectOrbit=$false,[bool]$ExpectGreatSwordGrowth=$false,[bool]$ExpectDodgeObserve=$false){
     $values=[ordered]@{}
     $issues=New-Object 'System.Collections.Generic.List[string]'
     if(-not(Test-Path -LiteralPath $Path -PathType Leaf)){
@@ -93,6 +99,8 @@ function Read-DriverSummary([string]$Path,[bool]$ExpectPrepared=$false,[bool]$Ex
         if(-not($values.Contains('physical_input')) -or $values['physical_input'] -cne 'not_performed'){$issues.Add('invalid_or_missing_physical_input_disclosure')}
         if($values['full_boss_completion'] -ceq '1' -and $values['outcome'] -cne 'returned_victory'){$issues.Add('boss_completion_contradicts_outcome')}
         if($ExpectPrepared -and (-not $values.Contains('prepared_boss_strategy') -or $values['prepared_boss_strategy'] -cne '1')){$issues.Add('requested_prepared_strategy_not_confirmed_by_driver')}
+        if($ExpectOrbit -and (-not $values.Contains('orbit_boss_strategy') -or $values['orbit_boss_strategy'] -cne '1')){$issues.Add('requested_orbit_strategy_not_confirmed_by_driver')}
+        if(-not $ExpectOrbit -and $values.Contains('orbit_boss_strategy') -and $values['orbit_boss_strategy'] -cne '0'){$issues.Add('unexpected_orbit_strategy_in_baseline_run')}
         if($ExpectAnimation -and (-not $values.Contains('animation_evidence') -or $values['animation_evidence'] -cne 'opportunistic_read_only')){$issues.Add('requested_animation_observation_not_confirmed_by_driver')}
         if(-not $ExpectAnimation -and $values.Contains('animation_evidence')){$issues.Add('unexpected_animation_observation_in_baseline_run')}
         if($ExpectGear -and (-not $values.Contains('gear_ui_requested') -or $values['gear_ui_requested'] -cne '1')){$issues.Add('requested_gear_ui_not_confirmed_by_driver')}
@@ -103,9 +111,40 @@ function Read-DriverSummary([string]$Path,[bool]$ExpectPrepared=$false,[bool]$Ex
             if($values['gear_ui_equipped_verified'] -ceq '1' -and $values['gear_ui_click_routed'] -cne '1'){$issues.Add('gear_equipment_without_ui_input_confirmation')}
             if($values['full_boss_completion'] -ceq '1' -and $values['gear_ui_equipped_verified'] -cne '1'){$issues.Add('boss_completion_without_requested_gear_ui_verification')}
         }
+        if($ExpectGreatSwordGrowth){
+            if(-not $ExpectGear -or $values['gear_ui_requested'] -cne '1'){$issues.Add('growth_requires_requested_gear_ui')}
+            if(-not $values.Contains('great_sword_growth_requested') -or $values['great_sword_growth_requested'] -cne '1'){$issues.Add('requested_great_sword_growth_not_confirmed')}
+            if($values['requested_learning_node'] -cne 'I.Mana.Entry'){$issues.Add('growth_wrong_requested_learning_node')}
+            foreach($key in @('great_sword_growth_ready','great_sword_growth_ui_click','great_sword_growth_learning_verified')){
+                if(-not $values.Contains($key) -or $values[$key] -notin @('0','1')){$issues.Add('invalid_or_missing_'+$key)}
+            }
+            if($values['great_sword_growth_ui_click'] -ceq '1' -and $values['great_sword_growth_ready'] -cne '1'){$issues.Add('growth_ui_click_without_preparation')}
+            if($values['normal_UMG_run_learning'] -ceq '1' -and $values['great_sword_growth_learning_verified'] -cne '1'){$issues.Add('growth_normal_learning_without_paid_verification')}
+            if($values['great_sword_growth_learning_verified'] -ceq '1'){
+                foreach($key in @('great_sword_growth_ready','great_sword_growth_ui_click','normal_UMG_run_learning','gear_ui_equipped_verified')){
+                    if($values[$key] -cne '1'){$issues.Add('growth_learning_without_'+$key)}
+                }
+                if($values['confirmed_learning_node'] -cne 'I.Mana.Entry'){$issues.Add('growth_wrong_confirmed_learning_node')}
+                $growthNumbers=[ordered]@{}
+                foreach($key in @('great_sword_growth_level','great_sword_growth_mastery','great_sword_growth_node_cost','great_sword_growth_points_before','great_sword_growth_points_after','great_sword_growth_spent_before','great_sword_growth_spent_after')){
+                    [int]$parsedGrowthValue=0
+                    if(-not $values.Contains($key) -or -not [int]::TryParse([string]$values[$key],[ref]$parsedGrowthValue)){$issues.Add('growth_invalid_integer_'+$key)}
+                    else{$growthNumbers[$key]=$parsedGrowthValue}
+                }
+                if($growthNumbers.Count -eq 7){
+                    if($growthNumbers['great_sword_growth_level'] -lt 3 -or $growthNumbers['great_sword_growth_mastery'] -lt 3){$issues.Add('growth_preparation_milestones_missing')}
+                    $growthActualCost=$growthNumbers['great_sword_growth_node_cost']
+                    if($growthNumbers['great_sword_growth_points_after'] -lt 0 -or $growthNumbers['great_sword_growth_spent_before'] -lt 0 -or $growthNumbers['great_sword_growth_spent_after'] -lt 0){$issues.Add('growth_negative_points_ledger')}
+                    if($growthActualCost -lt 1 -or $growthNumbers['great_sword_growth_points_before'] -lt $growthActualCost -or
+                        $growthNumbers['great_sword_growth_spent_after']-$growthNumbers['great_sword_growth_spent_before'] -ne $growthActualCost){$issues.Add('growth_paid_points_not_verified')}
+                }
+            }
+            if($values['full_boss_completion'] -ceq '1' -and $values['great_sword_growth_learning_verified'] -cne '1'){$issues.Add('boss_completion_without_requested_GS_learning')}
+        }elseif($values.Contains('great_sword_growth_requested') -and $values['great_sword_growth_requested'] -cne '0'){$issues.Add('unexpected_great_sword_growth_mode')}
         if(-not $ExpectGear -and $values.Contains('gear_ui_requested') -and $values['gear_ui_requested'] -cne '0'){$issues.Add('unexpected_gear_ui_in_baseline_run')}
         if(-not $ExpectPrepared -and $values.Contains('prepared_boss_strategy') -and $values['prepared_boss_strategy'] -cne '0'){$issues.Add('unexpected_prepared_strategy_in_baseline_run')}
     }
+    if($ExpectDodgeObserve -and $values['dodge_observe_requested'] -cne '1'){$issues.Add('requested_dodge_observer_not_confirmed_by_driver')}
     return [pscustomobject]@{Values=$values;Issues=@($issues.ToArray());Valid=($issues.Count -eq 0)}
 }
 
@@ -147,8 +186,11 @@ $arguments=@(('"'+$projectFile+'"'),'/Game/Rogue10m/Maps/L_Menu',
     ('-RogueBasicRunLabel='+$Label),('-RogueBasicRunOutput="'+$driverOutput+'"'),('-RogueBasicRunMaxSeconds='+$MaxSeconds),
     '-ExecCmds="t.MaxFPS 60,Rogue10m.TestBasicRunPlay"',('-abslog="'+$log+'"'))
 if($PreparedBossStrategy){$arguments+='-RogueBasicRunPreparedBoss'}
+if($OrbitBossStrategy){$arguments+='-RogueBasicRunOrbitBoss'}
 if($AnimationEvidence){$arguments+='-RogueBasicRunAnimationEvidence'}
+if($DodgeObserve){$arguments+='-RogueBasicRunDodgeObserve'}
 if($GearUI){$arguments+='-RogueBasicRunGearUI'}
+if($GreatSwordGrowth){$arguments+='-RogueBasicRunGreatSwordGrowth'}
 $windowStyle='Hidden'
 if($Visible){$windowStyle='Normal'}else{$arguments+='-RenderOffscreen'}
 if(-not(Test-Path -LiteralPath $qaRoot)){New-Item -ItemType Directory -Path $qaRoot|Out-Null}
@@ -161,7 +203,7 @@ $metadata=[ordered]@{
     StartedUtc=[DateTime]::UtcNow.ToString('o'); State='prepared'; Visible=[bool]$Visible
     MaxSeconds=$MaxSeconds; WatchdogSeconds=($MaxSeconds+45); Executable=$exe; Arguments=$arguments
     ProfileSlot=$profile; ProgressionPrefix=$prefix; KeySlot=$keys; DriverOutput=$driverOutput
-    PhysicalInput='not_performed'; GameplayShortcuts='none_added_by_launcher'; PreparedBossStrategy=[bool]$PreparedBossStrategy; AnimationEvidence=[bool]$AnimationEvidence; GearUI=[bool]$GearUI
+    PhysicalInput='not_performed'; GameplayShortcuts='none_added_by_launcher'; PreparedBossStrategy=[bool]$PreparedBossStrategy; OrbitBossStrategy=[bool]$OrbitBossStrategy; AnimationEvidence=[bool]$AnimationEvidence; DodgeObserve=[bool]$DodgeObserve; GearUI=[bool]$GearUI; GreatSwordGrowth=[bool]$GreatSwordGrowth
     BeforeSaveCount=$before.Count; OwnedProcess=$null; ProcessExitConfirmed=$false; ProcessExitCode=$null
     WatchdogStopAttempted=$false; WatchdogStopVerified=$false; Preservation='pending'; Error=$null
 }
@@ -298,7 +340,7 @@ try{
     }
 
     try{
-        $summary=Read-DriverSummary (Join-Path $driverOutput 'summary.txt') ([bool]$PreparedBossStrategy) ([bool]$AnimationEvidence) ([bool]$GearUI)
+        $summary=Read-DriverSummary (Join-Path $driverOutput 'summary.txt') ([bool]$PreparedBossStrategy) ([bool]$AnimationEvidence) ([bool]$GearUI) ([bool]$OrbitBossStrategy) ([bool]$GreatSwordGrowth) ([bool]$DodgeObserve)
     }catch{
         $summary=[pscustomobject]@{Values=[ordered]@{};Issues=@('driver_summary_read_error:'+ $_.Exception.Message);Valid=$false}
         $metadata.Error=($metadata.Error+'; '+$_.Exception.Message).Trim('; ')
@@ -316,6 +358,7 @@ try{
     Save-Json (Join-Path $session 'session.json') $metadata
     # Do not turn a death/timeout/blocked run or exit code 0 into a boss-completion claim.
     Write-Output ('BASIC_RUN_RECORDED outcome='+$summary.Values['outcome']+' full_boss_completion='+$summary.Values['full_boss_completion']+
+        ' great_sword_growth='+$summary.Values['great_sword_growth_requested']+' learning_node='+$summary.Values['confirmed_learning_node']+
         ' physical_input='+$summary.Values['physical_input']+' preservation='+$metadata.Preservation+' state='+$metadata.State+' evidence='+$session)
 }
 exit $exitStatus
