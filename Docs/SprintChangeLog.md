@@ -2658,3 +2658,12 @@ NPC44검사와 핵심6suite30검사를 모두 통과했다. 정상 E/F/G는 메�
 - 제한: 사진6개의2개 phase미확정, 나머지4개도 자세품질 PASS 아님. 기본 body 가림·손 미노출·블러를 실패/제약으로 보존. 정상승리·전체20분·물리입력·60초맵·4액티브슬롯/프리셋·전체밸런스·패키징은 미완료.
 - 관련 문서: `Feature/doc/2026-11-01_prepared-run-input-qa.md`, `DevLog/20261101_PreparedRunInput_Diagnostics/README.md`.
 - 실행 근거: `DevLog/BasicRunPlayQA/BasicRun1101I/`의 session/save-comparison 및 Driver CSV/summary/screenshots. 프로그램 입력과 authored 값, post-tick 관측, 실제 시각 판정은 서로 구분한다.
+
+
+## Sprint#9-22 — 정상 장착 UI·로비 강화 왕복 QA
+
+- 브랜치 Sprint#9-22-gear-ui-input-qa, 기반3a306c8c. 제품은 식별 getter2개만, editor-only 정상 입력 driver/안전 launcher/개인 증거 제외 규칙 추가.
+- 로비 B 실제 구매·저장·다음 판·포기·귀환27/0(9항목), OSexit0/원본344SHA유지; A 수집오류 원기록·부록 보존.
+- J는 인벤토리 우클릭 전 시간 초과·장착0, wrapper1. 원본346SHA유지→348. 후속 진단 이름 충돌 수정 후11.84초 실제 컴파일 통과. K 보이는 창 검증은 UI재양도 대기.
+- headless6suite30/0, 원본31에셋/맵 해시 유지. 실제 사진/미검증은 기능 문서·DevLog에 구분. push/병합 없음.
+- 관련: Feature/architect/2026-11-01_gear-ui-input-qa.md, Feature/architect/2026-11-01_lobby-upgrade-roundtrip-qa.md, Feature/doc/2026-11-01_gear-ui-input-qa.md, Feature/doc/2026-11-01_lobby-upgrade-roundtrip-qa.md.

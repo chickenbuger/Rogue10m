@@ -4,10 +4,39 @@ param(
     [switch]$Visible,
     [switch]$PreparedBossStrategy,
     [switch]$AnimationEvidence,
+    [switch]$GearUI,
     [string]$ProjectRoot='D:\Project\Rogue10m'
 )
 # DRAFT launcher: integrate/review/build before running. No gameplay-state fixtures.
 $ErrorActionPreference='Stop'
+if($GearUI -and -not $Visible){throw 'GearUI requires -Visible for the native Slate hit-test path; no offscreen fallback or launch.'}
+
+# Startup observation only. No process is stopped by this function.
+function Wait-OwnedStartupIdentity([Diagnostics.Process]$Process,[int]$ExpectedId,[string]$ExpectedExecutable){
+    $expected=[IO.Path]::GetFullPath($ExpectedExecutable)
+    $clock=[Diagnostics.Stopwatch]::StartNew();$lastError='path_or_start_time_not_yet_available'
+    while($clock.Elapsed.TotalMilliseconds -lt 5000){
+        try{
+            $Process.Refresh()
+            if($Process.Id -ne $ExpectedId){throw 'The original process object changed identity.'}
+            if($Process.HasExited){
+                return [pscustomobject]@{Confirmed=$false;PID=$ExpectedId;StartUtcTicks=$null;Path=$null;ExitedDuringStartup=$true;WaitMilliseconds=[int]$clock.Elapsed.TotalMilliseconds;Error='owned_process_exited_before_identity_observed'}
+            }
+            $candidatePath=$Process.Path
+            $candidateTicks=$Process.StartTime.ToUniversalTime().Ticks
+            if(-not [string]::IsNullOrWhiteSpace($candidatePath) -and $candidateTicks -gt 0){
+                $candidatePath=[IO.Path]::GetFullPath($candidatePath)
+                if($candidatePath -ine $expected){
+                    return [pscustomobject]@{Confirmed=$false;PID=$ExpectedId;StartUtcTicks=$candidateTicks;Path=$candidatePath;ExitedDuringStartup=$false;WaitMilliseconds=[int]$clock.Elapsed.TotalMilliseconds;Error='startup_executable_path_mismatch_no_stop_permitted'}
+                }
+                return [pscustomobject]@{Confirmed=$true;PID=$ExpectedId;StartUtcTicks=$candidateTicks;Path=$candidatePath;ExitedDuringStartup=$false;WaitMilliseconds=[int]$clock.Elapsed.TotalMilliseconds;Error=$null}
+            }
+        }catch{$lastError=$_.Exception.Message}
+        $remaining=5000-[int]$clock.Elapsed.TotalMilliseconds
+        if($remaining -gt 0){Start-Sleep -Milliseconds ([Math]::Min(100,$remaining))}
+    }
+    return [pscustomobject]@{Confirmed=$false;PID=$ExpectedId;StartUtcTicks=$null;Path=$null;ExitedDuringStartup=$false;WaitMilliseconds=[int]$clock.Elapsed.TotalMilliseconds;Error=('startup_identity_not_confirmed_no_stop_permitted: '+$lastError)}
+}
 
 function Assert-PhysicalDirectory([string]$Path){
     $entry=Get-Item -LiteralPath $Path -Force
@@ -45,7 +74,7 @@ function Save-Json([string]$Path,$Value){
     $json=ConvertTo-Json -InputObject $Value -Depth 12
     [IO.File]::WriteAllText($Path,$json,[Text.UTF8Encoding]::new($false))
 }
-function Read-DriverSummary([string]$Path,[bool]$ExpectPrepared=$false,[bool]$ExpectAnimation=$false){
+function Read-DriverSummary([string]$Path,[bool]$ExpectPrepared=$false,[bool]$ExpectAnimation=$false,[bool]$ExpectGear=$false){
     $values=[ordered]@{}
     $issues=New-Object 'System.Collections.Generic.List[string]'
     if(-not(Test-Path -LiteralPath $Path -PathType Leaf)){
@@ -66,6 +95,15 @@ function Read-DriverSummary([string]$Path,[bool]$ExpectPrepared=$false,[bool]$Ex
         if($ExpectPrepared -and (-not $values.Contains('prepared_boss_strategy') -or $values['prepared_boss_strategy'] -cne '1')){$issues.Add('requested_prepared_strategy_not_confirmed_by_driver')}
         if($ExpectAnimation -and (-not $values.Contains('animation_evidence') -or $values['animation_evidence'] -cne 'opportunistic_read_only')){$issues.Add('requested_animation_observation_not_confirmed_by_driver')}
         if(-not $ExpectAnimation -and $values.Contains('animation_evidence')){$issues.Add('unexpected_animation_observation_in_baseline_run')}
+        if($ExpectGear -and (-not $values.Contains('gear_ui_requested') -or $values['gear_ui_requested'] -cne '1')){$issues.Add('requested_gear_ui_not_confirmed_by_driver')}
+        if($ExpectGear){
+            foreach($key in @('gear_ui_click_routed','gear_ui_equipped_verified')){
+                if(-not $values.Contains($key) -or $values[$key] -notin @('0','1')){$issues.Add('invalid_or_missing_'+$key)}
+            }
+            if($values['gear_ui_equipped_verified'] -ceq '1' -and $values['gear_ui_click_routed'] -cne '1'){$issues.Add('gear_equipment_without_ui_input_confirmation')}
+            if($values['full_boss_completion'] -ceq '1' -and $values['gear_ui_equipped_verified'] -cne '1'){$issues.Add('boss_completion_without_requested_gear_ui_verification')}
+        }
+        if(-not $ExpectGear -and $values.Contains('gear_ui_requested') -and $values['gear_ui_requested'] -cne '0'){$issues.Add('unexpected_gear_ui_in_baseline_run')}
         if(-not $ExpectPrepared -and $values.Contains('prepared_boss_strategy') -and $values['prepared_boss_strategy'] -cne '0'){$issues.Add('unexpected_prepared_strategy_in_baseline_run')}
     }
     return [pscustomobject]@{Values=$values;Issues=@($issues.ToArray());Valid=($issues.Count -eq 0)}
@@ -110,6 +148,7 @@ $arguments=@(('"'+$projectFile+'"'),'/Game/Rogue10m/Maps/L_Menu',
     '-ExecCmds="t.MaxFPS 60,Rogue10m.TestBasicRunPlay"',('-abslog="'+$log+'"'))
 if($PreparedBossStrategy){$arguments+='-RogueBasicRunPreparedBoss'}
 if($AnimationEvidence){$arguments+='-RogueBasicRunAnimationEvidence'}
+if($GearUI){$arguments+='-RogueBasicRunGearUI'}
 $windowStyle='Hidden'
 if($Visible){$windowStyle='Normal'}else{$arguments+='-RenderOffscreen'}
 if(-not(Test-Path -LiteralPath $qaRoot)){New-Item -ItemType Directory -Path $qaRoot|Out-Null}
@@ -122,7 +161,7 @@ $metadata=[ordered]@{
     StartedUtc=[DateTime]::UtcNow.ToString('o'); State='prepared'; Visible=[bool]$Visible
     MaxSeconds=$MaxSeconds; WatchdogSeconds=($MaxSeconds+45); Executable=$exe; Arguments=$arguments
     ProfileSlot=$profile; ProgressionPrefix=$prefix; KeySlot=$keys; DriverOutput=$driverOutput
-    PhysicalInput='not_performed'; GameplayShortcuts='none_added_by_launcher'; PreparedBossStrategy=[bool]$PreparedBossStrategy; AnimationEvidence=[bool]$AnimationEvidence
+    PhysicalInput='not_performed'; GameplayShortcuts='none_added_by_launcher'; PreparedBossStrategy=[bool]$PreparedBossStrategy; AnimationEvidence=[bool]$AnimationEvidence; GearUI=[bool]$GearUI
     BeforeSaveCount=$before.Count; OwnedProcess=$null; ProcessExitConfirmed=$false; ProcessExitCode=$null
     WatchdogStopAttempted=$false; WatchdogStopVerified=$false; Preservation='pending'; Error=$null
 }
@@ -140,6 +179,7 @@ $launched=$false
 $ownedId=0
 $ownedStartTicks=0L
 $ownedPath=''
+$identityConfirmed=$false
 $timedOut=$false
 $exitStatus=1
 
@@ -150,10 +190,15 @@ try{
     $process=Start-Process -FilePath $exe -ArgumentList $arguments -WindowStyle $windowStyle -PassThru
     $launched=$true
     $ownedId=$process.Id
-    $ownedStartTicks=$process.StartTime.ToUniversalTime().Ticks
-    $ownedPath=[IO.Path]::GetFullPath($process.Path)
-    if($ownedPath -ine [IO.Path]::GetFullPath($exe)){throw 'Owned process path does not match the reviewed UE executable.'}
-    $metadata.OwnedProcess=[ordered]@{PID=$ownedId;StartUtcTicks=$ownedStartTicks;Path=$ownedPath}
+    Write-Output ('BASIC_RUN_STARTED pid='+$ownedId+' identity=pending')
+    $metadata.OwnedProcess=[ordered]@{PID=$ownedId;StartUtcTicks=$null;Path=$null;IdentityConfirmed=$false}
+    $metadata.State='startup_identity_pending';Save-Json (Join-Path $session 'session.json') $metadata
+    $identity=Wait-OwnedStartupIdentity $process $ownedId $exe
+    $metadata.StartupIdentity=$identity
+    Save-Json (Join-Path $session 'session.json') $metadata
+    if(-not $identity.Confirmed){throw $identity.Error}
+    $ownedStartTicks=[long]$identity.StartUtcTicks;$ownedPath=$identity.Path;$identityConfirmed=$true
+    $metadata.OwnedProcess=[ordered]@{PID=$ownedId;StartUtcTicks=$ownedStartTicks;Path=$ownedPath;IdentityConfirmed=$true}
     $metadata.State='running'
     Save-Json (Join-Path $session 'session.json') $metadata
     Write-Output ('BASIC_RUN_LAUNCHED pid='+$ownedId+' evidence='+$session)
@@ -174,6 +219,8 @@ try{
         try{
             $process.Refresh()
             if(-not $process.HasExited){
+                # An unconfirmed startup is an observation/reconciliation case, never permission to stop a PID.
+                if(-not $identityConfirmed){throw 'Startup identity was not confirmed; no process was killed.'}
                 # Never enumerate/kill arbitrary UE workers. Revalidate our exact original process.
                 $live=Get-Process -Id $ownedId -ErrorAction Stop
                 $sameOwner=($live.Id -eq $ownedId -and $live.StartTime.ToUniversalTime().Ticks -eq $ownedStartTicks -and
@@ -251,7 +298,7 @@ try{
     }
 
     try{
-        $summary=Read-DriverSummary (Join-Path $driverOutput 'summary.txt') ([bool]$PreparedBossStrategy) ([bool]$AnimationEvidence)
+        $summary=Read-DriverSummary (Join-Path $driverOutput 'summary.txt') ([bool]$PreparedBossStrategy) ([bool]$AnimationEvidence) ([bool]$GearUI)
     }catch{
         $summary=[pscustomobject]@{Values=[ordered]@{};Issues=@('driver_summary_read_error:'+ $_.Exception.Message);Valid=$false}
         $metadata.Error=($metadata.Error+'; '+$_.Exception.Message).Trim('; ')
@@ -260,7 +307,7 @@ try{
     $metadata.DriverSummary=$summary.Values
     $metadata.DriverSummaryIssues=$summary.Issues
     $metadata.FinishedUtc=[DateTime]::UtcNow.ToString('o')
-    $observed=$launched -and $metadata.ProcessExitConfirmed -and $metadata.ProcessExitCode -eq 0 -and
+    $observed=$launched -and $identityConfirmed -and [string]::IsNullOrEmpty($metadata.Error) -and $metadata.ProcessExitConfirmed -and $metadata.ProcessExitCode -eq 0 -and
         $summary.Valid -and $metadata.Preservation -ceq 'verified' -and -not $timedOut
     if($observed){
         $metadata.State='recorded'

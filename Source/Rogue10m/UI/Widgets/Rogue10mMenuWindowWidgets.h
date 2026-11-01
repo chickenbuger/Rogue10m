@@ -206,6 +206,8 @@ public:
 	void InitializeGridItem(URogue10mInventoryComponent* InInventory, class URogue10mInventoryWindowWidget* InInventoryWindow,
 		int32 InContainerIndex, const struct FRogue10mInventoryGridEntry& InEntry, float InCellSize);
 	void SetPlacementPreview(bool bPreviewing, bool bCanPlace);
+	FGuid GetItemInstanceId() const { return InstanceId; }
+	int32 GetContainerIndex() const { return ContainerIndex; }
 protected:
 	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 	virtual void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent,

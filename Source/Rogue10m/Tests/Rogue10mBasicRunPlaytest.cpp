@@ -12,6 +12,10 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/EditableTextBox.h"
 #include "Components/PanelWidget.h"
+#include "Layout/WidgetPath.h"
+#include "Widgets/SWindow.h"
+#include "Rogue10mMenuWindowWidgets.h"
+#include "Rogue10mCharacterDataAsset.h"
 #include "Engine/Engine.h"
 #include "Engine/SkeletalMesh.h"
 #include "Engine/GameInstance.h"
@@ -125,6 +129,7 @@ public:
             FPlatformMisc::RequestExitWithStatus(false, 3); return;
         }
         bPreparedBossStrategy = FParse::Param(FCommandLine::Get(), TEXT("RogueBasicRunPreparedBoss"));
+        bGearUiEquipment = FParse::Param(FCommandLine::Get(), TEXT("RogueBasicRunGearUI"));
         Instance = Initial.GetGameInstance(); World = &Initial;
         if (!IFileManager::Get().MakeDirectory(*(Output / TEXT("screenshots")), true)
             || !WriteNew(TEXT("samples.csv"), TEXT("wall,stage,map,phase,world_time,remaining,x,y,z,speed,hp,max_hp,level,xp,mastery,run_gold,save_ready,target,target_hp,w,a,s,d,shift,lmb,first_kill,sword,learned,boss_reached\n"))
@@ -582,6 +587,191 @@ private:
         if (Facing && Distance < Reach + 50.f && Now() >= NextAttack && !Combat->IsWeaponChangeBlocked() && Combat->GetAttackCooldownRemaining() <= 0.02f)
         { Pulse(EKeys::LeftMouseButton, 0.12); NextAttack = Now() + 0.35; }
     }
+    int32 GearEquippedGuidCount() const
+    {
+        if (!Inventory.IsValid() || !SwordId.IsValid()) { return 0; }
+        int32 Count = 0;
+        const auto Scan = [&](const TArray<FRogue10mInventorySlot>& Slots)
+        {
+            for (const auto& Slot : Slots)
+            {
+                if (Slot.bHasEquippedItem && Slot.EquippedItem.bOccupied && Slot.EquippedItem.InstanceId == SwordId) { ++Count; }
+            }
+        };
+        Scan(Inventory->GetLeftEquipmentSlots()); Scan(Inventory->GetRightEquipmentSlots());
+        return Count;
+    }
+    bool PrepareGearTarget()
+    {
+        if (!Inventory.IsValid() || !Combat.IsValid() || !State.IsValid() || !SwordId.IsValid()) { return false; }
+        int32 Count = 0; const URogue10mItemDataAsset* Item = nullptr;
+        const auto& Containers = Inventory->GetInventoryContainers();
+        for (int32 Index = 0; Index < Containers.Num(); ++Index)
+        {
+            for (const auto& Entry : Containers[Index].Entries)
+            {
+                if (Entry.InstanceId == SwordId) { ++Count; GearContainerIndex = Index; Item = Entry.ItemData; }
+            }
+        }
+        if (Count != 1 || !Item || Item->WeaponType != ERogue10mWeaponType::GreatSword
+            || Item->EquipSlotType != ERogue10mInventorySlotType::MainWeapon || GearEquippedGuidCount() != 0) { return false; }
+        const auto* CharacterData = Combat->GetCharacterData();
+        const URogue10mWeaponSkillProfileDataAsset* Profile = nullptr; int32 Profiles = 0;
+        if (CharacterData) for (const auto& Candidate : CharacterData->WeaponSkillProfiles)
+        { if (Candidate && Candidate->WeaponType == ERogue10mWeaponType::GreatSword) { Profile = Candidate; ++Profiles; } }
+        const auto* Expected = Profile ? Profile->FindDefaultSkill(ERogue10mAttackInputSlot::Primary) : nullptr;
+        const auto* Before = Combat->GetEquippedSkill(ERogue10mAttackInputSlot::Primary);
+        if (Profiles != 1 || !Expected || !Before || Expected == Before) { return false; }
+        GearExpectedItemPath = Item->GetPathName(); GearExpectedPrimaryPath = Expected->GetPathName(); GearBeforePrimaryPath = Before->GetPathName();
+        Event(TEXT("gear_ui_target"), FString::Printf(TEXT("guid=%s container=%d item=%s before_primary=%s expected_primary=%s"),
+            *SwordId.ToString(EGuidFormats::Digits), GearContainerIndex, *GearExpectedItemPath, *GearBeforePrimaryPath, *GearExpectedPrimaryPath));
+        return true;
+    }
+    bool GearTargetAncestor(const UWidget* Item, const UWidget* Canvas) const
+    {
+        if (!Item || !Canvas) { return false; }
+        for (const UWidget* Cursor = Item; Cursor; Cursor = Cursor->GetParent())
+        {
+            if (!Cursor->IsVisible() || !Cursor->GetIsEnabled() || Cursor->GetVisibility() == ESlateVisibility::HitTestInvisible) { return false; }
+            if (Cursor == Canvas) { return true; }
+        }
+        return false;
+    }
+    bool GearGuardReject(const TCHAR* GuardReason, const FString& Detail = FString(), UWidget* Observed = nullptr, UWidget* Window = nullptr)
+    {
+        if (GearGuardLastReason != GuardReason || Now() - GearGuardLastAt >= 2.)
+        {
+            GearGuardLastReason = GuardReason; GearGuardLastAt = Now();
+            FString Snapshot;
+            if (Observed)
+            {
+                Snapshot += FString::Printf(TEXT(" observed=%s umg_visibility=%s visible=%d enabled=%d cached=%d geometry=%s"),
+                    *Observed->GetPathName(), *UEnum::GetValueAsString(Observed->GetVisibility()), Observed->IsVisible(),
+                    Observed->GetIsEnabled(), Observed->GetCachedWidget().IsValid(), *Observed->GetCachedGeometry().GetLocalSize().ToString());
+                int32 Depth = 0;
+                for (UWidget* Parent = Observed; Parent && Depth++ < 12; Parent = Parent->GetParent())
+                {
+                    Snapshot += FString::Printf(TEXT(" parent[%d]=%s/%s/enabled%d"), Depth, *Parent->GetName(),
+                        *UEnum::GetValueAsString(Parent->GetVisibility()), Parent->GetIsEnabled());
+                }
+                if (FSlateApplication::IsInitialized() && Observed->GetCachedWidget().IsValid())
+                {
+                    FWidgetPath Path;
+                    const bool Found = FSlateApplication::Get().FindPathToWidget(Observed->GetCachedWidget().ToSharedRef(), Path);
+                    Snapshot += FString::Printf(TEXT(" diagnostic_find_path=%d path_valid=%d"), Found, Path.IsValid());
+                    if (Found && Path.IsValid())
+                    {
+                        const auto NativeWindow = Path.GetWindow();
+                        const FVector2D Center = Observed->GetCachedGeometry().LocalToAbsolute(Observed->GetCachedGeometry().GetLocalSize() * .5f);
+                        const FWidgetPath Down = FSlateApplication::Get().LocateWindowUnderMouse(Center, TArray<TSharedRef<SWindow>>{NativeWindow}, false, 0);
+                        Snapshot += FString::Printf(TEXT(" window_visible=%d window_minimized=%d diagnostic_down_valid=%d down_has_observed=%d down_has_window_receiver=%d down_widgets=%d"),
+                            NativeWindow->IsVisible(), NativeWindow->IsWindowMinimized(), Down.IsValid(),
+                            Down.ContainsWidget(Observed->GetCachedWidget().Get()), Window && Window->GetCachedWidget().IsValid() && Down.ContainsWidget(Window->GetCachedWidget().Get()), Down.Widgets.Num());
+                    }
+                }
+            }
+            Event(TEXT("gear_ui_guard_rejected"), FString::Printf(TEXT("guard=%s %s%s; diagnostic_query_only_no_pointer_routing"), GuardReason, *Detail, *Snapshot));
+        }
+        return false;
+    }
+    bool RouteGearRightClick(URogue10mInventoryWindowWidget& Window)
+    {
+        if (!FSlateApplication::IsInitialized() || !PC.IsValid() || !PC->IsLocalController()
+            || !Instance.IsValid() || Instance->GetNumLocalPlayers() != 1 || !Combat.IsValid()
+            || !PC->IsInventoryVisible() || !Window.IsWindowOpen()
+            || Window.GetInventoryComponent() != Inventory.Get() || !Displayed(&Window))
+        {
+            return GearGuardReject(TEXT("route_preconditions"), FString::Printf(TEXT("slate=%d PC=%d local=%d instance=%d local_players=%d combat=%d inventory_flag=%d window_open=%d component_match=%d window_displayed=%d"),
+                FSlateApplication::IsInitialized(), PC.IsValid(), PC.IsValid() && PC->IsLocalController(), Instance.IsValid(),
+                Instance.IsValid() ? Instance->GetNumLocalPlayers() : -1, Combat.IsValid(), PC.IsValid() && PC->IsInventoryVisible(),
+                Window.IsWindowOpen(), Window.GetInventoryComponent() == Inventory.Get(), Displayed(&Window)), &Window, &Window);
+        }
+        UWidget* Canvas = Window.GetWidgetFromName(TEXT("UI_InventoryItemCanvas"));
+        URogue10mInventoryItemWidget* Item = nullptr; URogue10mInventoryItemWidget* RawItem = nullptr; int32 Count = 0, RawCount = 0;
+        for (TObjectIterator<URogue10mInventoryItemWidget> It; It; ++It)
+        {
+            if (It->GetWorld() == World.Get() && It->GetOwningPlayer() == PC.Get()
+                && It->GetItemInstanceId() == SwordId && It->GetContainerIndex() == GearContainerIndex) { RawItem = *It; ++RawCount; }
+            if (It->GetWorld() == World.Get() && It->GetOwningPlayer() == PC.Get()
+                && It->GetItemInstanceId() == SwordId && It->GetContainerIndex() == GearContainerIndex
+                && It->IsVisible() && Displayed(*It) && GearTargetAncestor(*It, Canvas))
+            { Item = *It; ++Count; }
+        }
+        if (Count > 1) { GearGuardReject(TEXT("multiple_visible_GUID_tiles"), FString::Printf(TEXT("count=%d raw_count=%d"), Count, RawCount), Item, &Window); Block(TEXT("gear_ui_target_guid_has_multiple_visible_tiles")); return false; }
+        if (Count != 1 || !Item || !Canvas)
+        {
+            return GearGuardReject(TEXT("canvas_or_unique_tile_filter"), FString::Printf(TEXT("canvas=%s canvas_cached=%d count=%d raw_guid_container_count=%d expected_container=%d raw_ancestor_ok=%d"),
+                *GetPathNameSafe(Canvas), Canvas && Canvas->GetCachedWidget().IsValid(), Count, RawCount, GearContainerIndex,
+                RawItem && GearTargetAncestor(RawItem, Canvas)), RawItem, &Window);
+        }
+        const FGeometry Geometry = Item->GetCachedGeometry();
+        if (Geometry.GetLocalSize().X < 1.f || Geometry.GetLocalSize().Y < 1.f) { return GearGuardReject(TEXT("tile_geometry_zero"), FString(), Item, &Window); }
+        const FVector2D Position = Geometry.LocalToAbsolute(Geometry.GetLocalSize() * .5f);
+        if (!Canvas->GetCachedGeometry().IsUnderLocation(Position) || !Window.GetCachedGeometry().IsUnderLocation(Position))
+        { return GearGuardReject(TEXT("tile_center_outside_canvas_or_window"), FString::Printf(TEXT("center=%s canvas_under=%d window_under=%d canvas_size=%s window_size=%s"), *Position.ToString(), Canvas->GetCachedGeometry().IsUnderLocation(Position), Window.GetCachedGeometry().IsUnderLocation(Position), *Canvas->GetCachedGeometry().GetLocalSize().ToString(), *Window.GetCachedGeometry().GetLocalSize().ToString()), Item, &Window); }
+        FWidgetPath ItemPath;
+        if (!FSlateApplication::Get().FindPathToWidget(Item->GetCachedWidget().ToSharedRef(), ItemPath)
+            || !ItemPath.IsValid()) { return GearGuardReject(TEXT("FindPathToWidget_failed"), FString(), Item, &Window); }
+        // Respect the current local window's hit-test grid, including overlays and all ancestors.
+        FWidgetPath DownPath = FSlateApplication::Get().LocateWindowUnderMouse(Position, TArray<TSharedRef<SWindow>>{ItemPath.GetWindow()}, false, 0);
+        if (!DownPath.IsValid() || !DownPath.ContainsWidget(Item->GetCachedWidget().Get())
+            || !DownPath.ContainsWidget(Window.GetCachedWidget().Get()))
+        { return GearGuardReject(TEXT("native_down_path_or_membership"), FString::Printf(TEXT("window_visible=%d window_minimized=%d down_valid=%d down_has_item=%d down_has_window=%d"), ItemPath.GetWindow()->IsVisible(), ItemPath.GetWindow()->IsWindowMinimized(), DownPath.IsValid(), DownPath.ContainsWidget(Item->GetCachedWidget().Get()), DownPath.ContainsWidget(Window.GetCachedWidget().Get())), Item, &Window); }
+        for (int32 Index = 0; Index < DownPath.Widgets.Num(); ++Index)
+        {
+            const auto& SlateWidget = DownPath.Widgets[Index].Widget;
+            const EVisibility Visibility = SlateWidget->GetVisibility();
+            if (!SlateWidget->IsEnabled() || !Visibility.IsVisible()
+                || (Index + 1 < DownPath.Widgets.Num() && !Visibility.AreChildrenHitTestVisible())
+                || (Index + 1 == DownPath.Widgets.Num() && !Visibility.IsHitTestVisible()))
+            { return GearGuardReject(TEXT("slate_path_visibility_or_enabled"), FString::Printf(TEXT("index=%d path_count=%d enabled=%d visible=%d children_hit=%d self_hit=%d"), Index, DownPath.Widgets.Num(), SlateWidget->IsEnabled(), Visibility.IsVisible(), Visibility.AreChildrenHitTestVisible(), Visibility.IsHitTestVisible()), Item, &Window); }
+        }
+        TArray<FWidgetAndPointer> ReleaseWidgets;
+        for (int32 Index = 0; Index < DownPath.Widgets.Num(); ++Index)
+        {
+            const auto& Arranged = DownPath.Widgets[Index];
+            ReleaseWidgets.Emplace(Arranged, DownPath.GetVirtualPointerPosition(Index));
+            if (Arranged.Widget == Window.GetCachedWidget().ToSharedRef()) { break; }
+        }
+        const FWidgetPath ReleasePath(MakeArrayView(ReleaseWidgets));
+        if (!ReleasePath.IsValid() || !ReleasePath.ContainsWidget(Window.GetCachedWidget().Get())) { return GearGuardReject(TEXT("stable_release_path_invalid"), FString(), Item, &Window); }
+        if (!bGearHitPathLogged)
+        {
+            bGearHitPathLogged = true;
+            Event(TEXT("gear_ui_hit_path_verified"), FString::Printf(TEXT("item_visibility=%s window_visible=%d window_minimized=%d path_count=%d leaf_type=%s item_member=%d window_member=%d; actual_hit_path_before_RMB_not_equip_success"),
+                *UEnum::GetValueAsString(Item->GetVisibility()), ItemPath.GetWindow()->IsVisible(), ItemPath.GetWindow()->IsWindowMinimized(),
+                DownPath.Widgets.Num(), *DownPath.Widgets.Last().Widget->GetTypeAsString(), DownPath.ContainsWidget(Item->GetCachedWidget().Get()), DownPath.ContainsWidget(Window.GetCachedWidget().Get())));
+        }
+        // Local game Slate routing only. No OS cursor/focus or Controller RMB attack input.
+        TSet<FKey> Pressed; Pressed.Add(EKeys::RightMouseButton);
+        const FPointerEvent Down(0, Position, Position, Pressed, EKeys::RightMouseButton, 0.f, FModifierKeysState());
+        const FReply Reply = FSlateApplication::Get().RoutePointerDownEvent(DownPath, Down);
+        // The item may rebuild/disappear synchronously. Release to the stable window path.
+        const FPointerEvent Up(0, Position, Position, TSet<FKey>(), EKeys::RightMouseButton, 0.f, FModifierKeysState());
+        FSlateApplication::Get().RoutePointerUpEvent(ReleasePath, Up);
+        bGearUiClickRouted = true;
+        Event(TEXT("gear_ui_right_pointer_routed"), FString::Printf(TEXT("handled=%d guid=%s cooldown_after=%.3f; reply_is_not_equip_success"),
+            Reply.IsEventHandled(), *SwordId.ToString(EGuidFormats::Digits), Combat->GetAttackCooldownRemaining()));
+        return true;
+    }
+    bool VerifyGearEquipped()
+    {
+        if (!Inventory.IsValid() || !State.IsValid() || !Combat.IsValid() || GearEquippedGuidCount() != 1) { return false; }
+        bool CorrectSlot = false;
+        const auto Scan = [&](const TArray<FRogue10mInventorySlot>& Slots)
+        {
+            for (const auto& Slot : Slots)
+            {
+                if (Slot.SlotType == ERogue10mInventorySlotType::MainWeapon && !Slot.bLocked && Slot.bEquipped && Slot.bHasEquippedItem
+                    && Slot.EquippedItem.bOccupied && Slot.EquippedItem.InstanceId == SwordId && Slot.EquippedItem.ItemData
+                    && Slot.EquippedItem.ItemData->GetPathName() == GearExpectedItemPath) { CorrectSlot = true; }
+            }
+        };
+        Scan(Inventory->GetLeftEquipmentSlots()); Scan(Inventory->GetRightEquipmentSlots());
+        const auto* Primary = Combat->GetEquippedSkill(ERogue10mAttackInputSlot::Primary);
+        return CorrectSlot && !HasSword() && State->GetEquippedWeaponType() == ERogue10mWeaponType::GreatSword
+            && Primary && Primary->GetPathName() == GearExpectedPrimaryPath && Primary->GetPathName() != GearBeforePrimaryPath;
+    }
     bool HasSword() const
     {
         if (!Inventory.IsValid() || !SwordId.IsValid()) { return false; }
@@ -736,8 +926,41 @@ private:
                 Route = { FVector(-44000,-4000,0), FVector(-44000,-1100,0), FVector(-44000,5000,0), FVector(-44000,13500,0),
                     FVector(-35000,42000,0), FVector(-2000,59000,0), FVector(11695,59741,0), FVector(12000,60000,0),
                     FVector(14700,62300,0), FVector(15000,62600,0), FVector(15650,64400,0), FVector(15000,68000,0) };
-                Waypoint = 0; SetStage(TEXT("boss_route"), 400.); Pulse(EKeys::K);
+                Waypoint = 0;
+                if (bGearUiEquipment) { SetStage(TEXT("gear_close_skill"), 15.); Pulse(EKeys::K); }
+                else { SetStage(TEXT("boss_route"), 400.); Pulse(EKeys::K); }
             }
+        }
+        else if (Stage == TEXT("gear_close_skill"))
+        {
+            StopMove();
+            if (PC->IsSkillTreeVisible()) { if (Now() > ActionAt) { Pulse(EKeys::K); ActionAt = Now() + .5; } return; }
+            if (!PrepareGearTarget()) { Block(TEXT("gear_ui_exact_sword_or_distinct_loaded_profile_unavailable")); return; }
+            SetStage(TEXT("gear_open_inventory"), 15.); Pulse(EKeys::I);
+        }
+        else if (Stage == TEXT("gear_open_inventory"))
+        {
+            auto* Window = VisibleWidget<URogue10mInventoryWindowWidget>();
+            if (!Window || !PC->IsInventoryVisible()) { GearGuardReject(TEXT("outer_window_lookup"), FString::Printf(TEXT("window_found=%d inventory_flag=%d"), Window != nullptr, PC->IsInventoryVisible()), Window, Window); return; }
+            if (!bGearBeforeQueued) { bGearBeforeQueued = true; Shot(TEXT("gear_ui_before")); ActionAt = Now() + .6; return; }
+            if (!PendingShot.IsEmpty() || ShotQueue.Num() > 0) { GearGuardReject(TEXT("outer_screenshot_pending"), FString::Printf(TEXT("pending=%s queued=%d"), *PendingShot, ShotQueue.Num()), Window, Window); return; }
+            if (RouteGearRightClick(*Window) && !bFinishing) { SetStage(TEXT("gear_confirm"), 15.); }
+        }
+        else if (Stage == TEXT("gear_confirm"))
+        {
+            if (!VerifyGearEquipped()) { return; } // No repeated RMB on a handled/uncertain outcome.
+            bGearUiEquipped = true;
+            Event(TEXT("gear_ui_equipped_verified"), FString::Printf(TEXT("guid=%s type=GreatSword primary=%s; actual_equipment_and_binding_observed"),
+                *SwordId.ToString(EGuidFormats::Digits), *GearExpectedPrimaryPath));
+            if (const auto* Charged = Combat->GetEquippedSkill(ERogue10mAttackInputSlot::ChargedPrimary))
+            { const auto Budget = FRogue10mAttackResourceBudget::Build(Charged->ResourceCosts, 1.f); Event(TEXT("gear_ui_charge_plan_only"), FString::Printf(TEXT("skill=%s hold=%.3f cost_valid=%d stamina=%.3f; no_charge_input_requested"), *Charged->GetPathName(), Charged->ChargeSeconds, Budget.bValid, Budget.Stamina)); }
+            Shot(TEXT("gear_ui_after")); SetStage(TEXT("gear_close_inventory"), 15.);
+        }
+        else if (Stage == TEXT("gear_close_inventory"))
+        {
+            if (!PendingShot.IsEmpty() || ShotQueue.Num() > 0) { return; }
+            if (PC->IsInventoryVisible()) { if (Now() > ActionAt) { Pulse(EKeys::I); ActionAt = Now() + .5; } return; }
+            SetStage(TEXT("boss_route"), 400.);
         }
         else if (Stage == TEXT("boss_route"))
         {
@@ -794,7 +1017,8 @@ private:
         {
             const bool Reset = Saves->GetAttachedProfileId() == ProfileId && Run.IsValid() && Run->GetRunPhase() == ERogue10mRunPhase::WaitingToStart
                 && !World->URL.HasOption(TEXT("StartRun")) && State->GetPlayerLevel() == 1 && Tree->GetMasteryTotalExperience(ERogue10mSkillTreeTrack::Brawler) == 0
-                && (!bLearned || !Tree->IsNodeUnlocked(LearnedNode)) && !HasSword();
+                && (!bLearned || !Tree->IsNodeUnlocked(LearnedNode)) && !HasSword()
+                && (!bGearUiEquipment || (GearEquippedGuidCount() == 0 && Tree->GetMasteryTotalExperience(ERogue10mSkillTreeTrack::GreatSword) == 0));
             const bool Discovery = !bLearned || Saves->HasDiscoveredNode(LearnedNode);
             if (!Reset || !Discovery) { Block(TEXT("natural_return_did_not_reset_run_or_preserve_discovery")); return true; }
             bReturned = true; Outcome = TEXT("returned_") + Natural; Reason = TEXT("natural terminal and UI return observed; milestone flags remain separate");
@@ -1035,7 +1259,8 @@ private:
     {
         FString Text = FString::Printf(TEXT("status=%s\noutcome=%s\nstage=%s\nreason=%s\nnormal_menu_ui=%d\nnpc_dialogue=%d\nfield_entered=%d\nsword_overlap_pickup=%d\nfirst_natural_kill_xp=%d\nnormal_UMG_run_learning=%d\nboss_reached=%d\nreturned_reset_observed=%d\nfull_boss_completion=%d\nphysical_input=not_performed\ninput_driver=Controller_InputKey_DoAim_Slate_chars_UMG_delegates\nno_gameplay_fixtures=1\nwall_seconds=%.3f\nterminal_phase=%s\nprofile=%s\nrender_review=not_performed_by_driver\n"),
             *Status,*Outcome,*Stage,*Reason,bMenuUI,bNpcDialogue,bFieldEntered,bSword,bFirstKill,bLearned,bBossReached,bReturned,
-            bReturned && bMenuUI && bNpcDialogue && bBossReached && bFirstKill && bLearned && bSword && Natural == TEXT("victory"),Now()-Started,*TerminalPhase,*ProfileId.ToString(EGuidFormats::Digits));
+            bReturned && bMenuUI && bNpcDialogue && bBossReached && bFirstKill && bLearned && bSword && (!bGearUiEquipment || bGearUiEquipped) && Natural == TEXT("victory"),Now()-Started,*TerminalPhase,*ProfileId.ToString(EGuidFormats::Digits));
+        Text += FString::Printf(TEXT("gear_ui_requested=%d\ngear_ui_click_routed=%d\ngear_ui_equipped_verified=%d\n"), bGearUiEquipment, bGearUiClickRouted, bGearUiEquipped);
         Text += FString::Printf(TEXT("prepared_boss_strategy=%d\nprepared_dodge_requested=%d\nprepared_dodge_accepted=%d\nprepared_dodge_unobserved=%d\n"), bPreparedBossStrategy, PreparedDodgeRequested, PreparedDodgeAccepted, PreparedDodgeUnobserved);
         Text += FString::Printf(TEXT("pending_screenshot=%s\nqueued_screenshot_count=%d\nrequested_or_queued_capture_count=%d\nreset_scope=level_BrawlerXP_selected_learned_node_specific_sword_GUID_profile_phase_only\n"),*PendingShot,ShotQueue.Num(),ShotCount);
         if (bAnimationEvidence)
@@ -1068,6 +1293,12 @@ private:
     FGuid ProfileId,SwordId;
     FVector LastProgress;
     FRotator PreviousControl;
+    bool bGearUiEquipment = false, bGearUiClickRouted = false, bGearUiEquipped = false, bGearBeforeQueued = false;
+    int32 GearContainerIndex = INDEX_NONE;
+    FString GearGuardLastReason;
+    double GearGuardLastAt = 0.;
+    bool bGearHitPathLogged = false;
+    FString GearExpectedItemPath, GearExpectedPrimaryPath, GearBeforePrimaryPath;
     bool bPreparedBossStrategy = false, bPreparedReserveWaiting = false;
     int32 PreparedLastWindup = -1, PreparedPunishedAttack = -1, PreparedDodgeAttemptedAttack = -1;
     int32 PreparedDodgeRequested = 0, PreparedDodgeAccepted = 0, PreparedDodgeUnobserved = 0;
