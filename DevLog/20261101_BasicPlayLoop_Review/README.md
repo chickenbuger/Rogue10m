@@ -1,0 +1,1 @@
+기본 플레이 연결 검증 사진과 VERIFICATION.json. BeforeTimer/AfterTimer는 자동 프로그램 QA이며 NativeInput은 CUA OS 입력 뒤 엔진 F9로 저장한 게임 뷰다. 정상 필드 완주·보스 물리 입력 승리는 미검증. 애니메이션 원본 수정이나 새 에셋 제작 없음. 원본 PNG 보존/디코딩/SHA 확인. 상세 Feature/doc/2026-11-01_basic-play-loop.md.

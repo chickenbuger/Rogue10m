@@ -4,9 +4,14 @@
 
 #include "Engine/World.h"
 #include "GameFramework/Pawn.h"
+#include "GameFramework/WorldSettings.h"
 #include "Kismet/GameplayStatics.h"
+#include "Misc/ScopeExit.h"
 #include "NavigationSystemTypes.h"
 #include "Rogue10m.h"
+#include "Rogue10mDroppedItem.h"
+#include "Rogue10mGameState.h"
+#include "Rogue10mItemDataAsset.h"
 #include "TimerManager.h"
 #include "WorldPartition/WorldPartition.h"
 #include "WorldPartition/WorldPartitionSubsystem.h"
@@ -18,7 +23,6 @@
 #include "Editor.h"
 #include "Editor/EditorEngine.h"
 #include "EngineUtils.h"
-#include "GameFramework/WorldSettings.h"
 #include "NavigationData.h"
 #include "NavMesh/RecastNavMesh.h"
 #include "ScopedTransaction.h"
@@ -28,6 +32,12 @@
 #include "UObject/UObjectGlobals.h"
 #include "UObject/UnrealType.h"
 #endif
+
+namespace Rogue10mEntryLoot
+{
+	const FName PlacedTag(TEXT("Rogue10m.EntryGreatSword.Placed"));
+	const FName PickupTag(TEXT("Rogue10m.EntryGreatSword.Pickup"));
+}
 
 void URogue10mOpenWorldNavigationSystem::Configure(const UNavigationSystemConfig& Config)
 {
@@ -69,6 +79,7 @@ void ARogue10mOpenWorldBootstrap::RefreshPlayerNavigationInvoker()
 	{
 		return;
 	}
+	TryPlaceEntryGreatSword();
 	APawn* Pawn = UGameplayStatics::GetPlayerPawn(World, 0);
 	URogue10mOpenWorldNavigationSystem* NavigationSystem =
 		Cast<URogue10mOpenWorldNavigationSystem>(UNavigationSystemV1::GetCurrent(World));
@@ -76,13 +87,25 @@ void ARogue10mOpenWorldBootstrap::RefreshPlayerNavigationInvoker()
 		|| !NavigationSystem->IsActiveTilesGenerationEnabled())
 	{
 		ReleasePlayerNavigationInvoker();
-		if (!bHasRegisteredOnce
-			&& ++InitialRegistrationAttempts >= FMath::Max(1, MaximumInitialRegistrationAttempts))
+		if (!bHasRegisteredOnce)
 		{
-			World->GetTimerManager().ClearTimer(InvokerTimerHandle);
-			UE_LOG(LogRogue10m, Error,
-				TEXT("%s could not register a possessed player with the OpenRun navigation system after %d attempts."),
-				*GetName(), InitialRegistrationAttempts);
+			++InitialRegistrationAttempts;
+			const int32 NavigationBudget = FMath::Max(1, MaximumInitialRegistrationAttempts);
+			if (InitialRegistrationAttempts == NavigationBudget)
+			{
+				UE_LOG(LogRogue10m, Error,
+					TEXT("%s could not register a possessed player with the OpenRun navigation system after %d attempts."),
+					*GetName(), InitialRegistrationAttempts);
+			}
+			const ARogue10mGameState* Run = World->GetGameState<ARogue10mGameState>();
+			const bool bPendingEntryPlacement = bEnableEntryGreatSword && !bEntryGreatSwordFinished
+				&& HasAuthority() && World->GetNetMode() == NM_Standalone && Run && Run->IsRunActive()
+				&& UGameplayStatics::GetCurrentLevelName(this, true) == TEXT("OpenRunMap");
+			// The shared timer must not silently cancel the loot's remaining bounded attempts.
+			if (InitialRegistrationAttempts >= NavigationBudget && !bPendingEntryPlacement)
+			{
+				World->GetTimerManager().ClearTimer(InvokerTimerHandle);
+			}
 		}
 		return;
 	}
@@ -163,6 +186,80 @@ bool ARogue10mOpenWorldBootstrap::IsWorldStreamingReady() const
 	UWorldPartition* Partition = World ? World->GetWorldPartition() : nullptr;
 	UWorldPartitionSubsystem* Streaming = World ? World->GetSubsystem<UWorldPartitionSubsystem>() : nullptr;
 	return Partition && Partition->IsStreamingEnabled() && Streaming && Streaming->IsAllStreamingCompleted();
+}
+
+bool ARogue10mOpenWorldBootstrap::HasPlacedEntryGreatSword() const
+{
+	const UWorld* World = GetWorld();
+	const AWorldSettings* Settings = World ? World->GetWorldSettings() : nullptr;
+	return Settings && Settings->ActorHasTag(Rogue10mEntryLoot::PlacedTag);
+}
+
+void ARogue10mOpenWorldBootstrap::TryPlaceEntryGreatSword()
+{
+	if (bEntryGreatSwordFinished || !bEnableEntryGreatSword) { return; }
+	UWorld* World = GetWorld();
+	if (!World || !World->IsGameWorld() || !HasAuthority() || World->GetNetMode() != NM_Standalone
+		|| UGameplayStatics::GetCurrentLevelName(this, true) != TEXT("OpenRunMap")) { return; }
+	if (HasPlacedEntryGreatSword()) { bEntryGreatSwordFinished = true; return; }
+	const ARogue10mGameState* Run = World->GetGameState<ARogue10mGameState>();
+	if (!Run || !Run->IsRunActive()) { return; }
+	const int32 Budget = FMath::Clamp(MaximumInitialRegistrationAttempts, 1, 600);
+	++EntryGreatSwordAttempts;
+	ON_SCOPE_EXIT
+	{
+		if (!bEntryGreatSwordFinished && EntryGreatSwordAttempts >= Budget)
+		{
+			bEntryGreatSwordFinished = true;
+			UE_LOG(LogRogue10m, Warning, TEXT("%s exhausted %d entry greatsword placement attempts; no airborne fallback was spawned."), *GetName(), EntryGreatSwordAttempts);
+		}
+	};
+	if (!IsWorldStreamingReady() || EntryGreatSwordLocation.ContainsNaN()) { return; }
+	AWorldSettings* Settings = World->GetWorldSettings();
+	const URogue10mItemDataAsset* Item = EntryGreatSwordItem.LoadSynchronous();
+	if (!Settings || !Item || Item->ItemId.IsNone() || Item->Category != ERogue10mItemCategory::Equipment
+		|| Item->WeaponType != ERogue10mWeaponType::GreatSword || Item->MaxStackSize < 1)
+	{
+		bEntryGreatSwordFinished = true;
+		UE_LOG(LogRogue10m, Error, TEXT("%s has invalid entry greatsword item settings; placement stopped."), *GetName());
+		return;
+	}
+	FHitResult Ground;
+	FCollisionQueryParams Query(SCENE_QUERY_STAT(Rogue10mEntryGreatSwordGround), false, this);
+	const FVector TraceTop = EntryGreatSwordLocation + FVector(0.0, 0.0, 20000.0);
+	const FVector TraceBottom = EntryGreatSwordLocation - FVector(0.0, 0.0, 30000.0);
+	if (!World->LineTraceSingleByObjectType(Ground, TraceTop, TraceBottom,
+		FCollisionObjectQueryParams(ECC_WorldStatic), Query) || !Ground.bBlockingHit || Ground.ImpactNormal.Z < 0.65f) { return; }
+
+	FRogue10mItemStack Stack;
+	Stack.ItemData = Item;
+	Stack.InstanceId = FGuid::NewGuid();
+	Stack.Category = Item->Category;
+	Stack.EquipSlotType = Item->EquipSlotType;
+	Stack.WeaponType = Item->WeaponType;
+	Stack.DisplayName = Item->DisplayName;
+	Stack.Description = Item->Description;
+	Stack.Quantity = 1;
+	Stack.ItemColor = Item->InventoryTint;
+	Stack.RestoreHealth = FMath::Max(0.0f, Item->RestoreHealth);
+	Stack.bOccupied = true;
+	const FTransform Placement(FRotator::ZeroRotator, Ground.ImpactPoint + FVector(0.0, 0.0, 35.0));
+	FActorSpawnParameters Parameters;
+	Parameters.Owner = Settings;
+	Parameters.OverrideLevel = World->PersistentLevel;
+	Parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	Parameters.bDeferConstruction = true;
+	ARogue10mDroppedItem* Pickup = World->SpawnActor<ARogue10mDroppedItem>(ARogue10mDroppedItem::StaticClass(), Placement, Parameters);
+	if (!Pickup) { return; }
+	Pickup->Tags.AddUnique(Rogue10mEntryLoot::PickupTag);
+	Pickup->InitializeDroppedItem(Stack);
+	// Commit before BeginPlay/overlap can pick it up or re-enter another bootstrap.
+	// This tag belongs only to the running UWorld's settings actor, never an editor map package.
+	Settings->Tags.AddUnique(Rogue10mEntryLoot::PlacedTag);
+	bEntryGreatSwordFinished = true;
+	Pickup->FinishSpawning(Placement);
+	UE_LOG(LogRogue10m, Log, TEXT("%s placed one entry greatsword at %s (instance %s, ground %s, normal Z %.3f)."),
+		*GetName(), *Placement.GetLocation().ToString(), *Stack.InstanceId.ToString(), *GetNameSafe(Ground.GetActor()), Ground.ImpactNormal.Z);
 }
 
 #if WITH_EDITOR

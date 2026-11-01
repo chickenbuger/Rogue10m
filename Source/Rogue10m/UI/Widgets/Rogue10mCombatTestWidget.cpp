@@ -71,7 +71,8 @@ void URogue10mCombatTestWidget::BuildTree()
 	Hint = AddAction(Canvas, TEXT("CombatTestHint"), TEXT("F6  몬스터 테스트"), ERogue10mCombatTestAction::TogglePanel);
 	auto* HintSlot = CastChecked<UCanvasPanelSlot>(Hint->Slot);
 	HintSlot->SetAnchors(FAnchors(1,0)); HintSlot->SetAlignment(FVector2D(1,0));
-	HintSlot->SetPosition(FVector2D(-20,20)); HintSlot->SetAutoSize(true);
+	// Keep the debug entry below the live run timer at top-right (Y 24..56).
+	HintSlot->SetPosition(FVector2D(-20,76)); HintSlot->SetAutoSize(true);
 	auto* Scale = WidgetTree->ConstructWidget<UScaleBox>(UScaleBox::StaticClass(), TEXT("CombatTestScale"));
 	Scale->SetStretch(EStretch::ScaleToFit); Scale->SetStretchDirection(EStretchDirection::DownOnly);
 	auto* ScaleSlot = Canvas->AddChildToCanvas(Scale);

@@ -16,12 +16,23 @@ elseif ($Suite -eq 'WeaponCooldown') { @('FloorBoundaries','SameTypeAndRestore',
 elseif ($Suite -eq 'RunCurrencyBaseline') { @('PostPaymentRollback','ImmutableCapture','InvalidCaptureIsAtomic','InvalidResolutionIsAtomic','RepeatedRollbackAndRunIsolation','ZeroAndMaximumBalances') }
 elseif ($Suite -eq 'WeaponSwitch') { @('LocomotionAndNoInvulnerability','RejectBeforeMutation','AttackBoundaryAndLongCooldown','SameTypeAndDuplicateInstance','ValidationFailureIsAtomic','ReentrantCommandsRejected','ConservativeBusyStates','AllMutationPathsSucceedAtIdle') }
 else { @('MasteryAlternativesAndLegacy','MasteryAndRewards','SharedLedgerAndValidation') }
+$qaTag = $Suite + '_' + $RunLabel
+$qaProfile = 'Rogue10m_Town_QA_' + $qaTag
+$qaProgression = 'Rogue10m_Progression_QA_' + $qaTag
+$qaKeys = 'Rogue10m_Fighter_QA_' + $qaTag
+$saveDirectory = Join-Path $projectRoot 'Saved\SaveGames'
+if ($qaProfile.Length -gt 80 -or $qaProgression.Length -gt 80 -or $qaKeys.Length -gt 80) { throw 'QA slot override is too long; refuse production-slot fallback.' }
+if ((Test-Path -LiteralPath (Join-Path $saveDirectory ($qaProfile + '.sav'))) -or
+    (Test-Path -LiteralPath (Join-Path $saveDirectory ($qaKeys + '.sav'))) -or
+    (Get-ChildItem -LiteralPath $saveDirectory -Filter ($qaProgression + '_*') -ErrorAction SilentlyContinue | Select-Object -First 1)) {
+    throw 'QA saves already exist. Preserve them and choose a fresh RunLabel.'
+}
 $arguments = @(
     ('"' + (Join-Path $projectRoot 'Rogue10m.uproject') + '"'), '/Engine/Maps/Entry',
     '-nullrhi','-unattended','-nosplash','-nosound','-NoLiveCoding','-NoRemoteShaderCompile',
-    '-RogueProfileSaveSlot=Rogue10m_Town_QA_R11_20261026A',
-    '-RogueProgressionSavePrefix=Rogue10m_Progression_QA_R11_20261026A',
-    '-RogueSkillKeySaveSlot=Rogue10m_Fighter_QA_R11_20261026A',
+    ('-RogueProfileSaveSlot=' + $qaProfile),
+    ('-RogueProgressionSavePrefix=' + $qaProgression),
+    ('-RogueSkillKeySaveSlot=' + $qaKeys),
     ('-ExecCmds="Automation RunTests Rogue10m.' + $Suite + '"'),
     '-TestExit="Automation Test Queue Empty"',
     ('-ReportExportPath="' + $evidence + '\report"'), ('-abslog="' + $evidence + '\automation.log"'))

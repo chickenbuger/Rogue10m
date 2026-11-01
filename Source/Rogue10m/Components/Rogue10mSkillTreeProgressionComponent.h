@@ -9,7 +9,7 @@ class ARogue10mPlayerState;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRogue10mSkillTreeProgressionChanged);
 
-/** PlayerState owns the durable ledger. Combat retains execution and input ownership. */
+/** PlayerState owns the run ledger. Persistence retains discovery separately; combat owns execution/input. */
 UCLASS(ClassGroup=(Rogue10m), meta=(BlueprintSpawnableComponent))
 class ROGUE10M_API URogue10mSkillTreeProgressionComponent : public UActorComponent
 {
@@ -55,6 +55,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree") bool Respec(ERogue10mSkillTreeIdentity Identity = ERogue10mSkillTreeIdentity::None);
 	/** Refund one identity stage and every dependent stage/resonance that loses all valid prerequisite groups. */
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree") bool RefundNode(FName NodeId);
+	/** Acquisition during an owned, save-ready run; does not grant preset/refund/identity-switch access. */
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") bool CanLearnDuringRun() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") bool CanChangeInvestments() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") FRogue10mEquipmentStatModifiers GetMasteryStatModifiers(ERogue10mWeaponType WeaponType) const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") FRogue10mEquipmentStatModifiers GetTrackMasteryStatModifiers(ERogue10mSkillTreeTrack Track) const;

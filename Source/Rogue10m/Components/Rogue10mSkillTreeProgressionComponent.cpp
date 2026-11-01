@@ -1,10 +1,15 @@
 #include "Rogue10mSkillTreeProgressionComponent.h"
 
 #include "Rogue10mAttackSkillData.h"
+#include "Engine/GameInstance.h"
+#include "Engine/World.h"
 #include "EngineUtils.h"
 #include "Misc/PackageName.h"
 #include "Rogue10mCharacter.h"
+#include "Rogue10mCharacterProfileSubsystem.h"
+#include "Rogue10mGameState.h"
 #include "Rogue10mPlayerState.h"
+#include "Rogue10mProgressionSubsystem.h"
 #include "Rogue10mTownProgressionComponent.h"
 #include "Rogue10mTutorialNPC.h"
 
@@ -250,6 +255,28 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 	return FText::FromString(FString::Join(Lines, TEXT("\n")));
 }
 
+bool URogue10mSkillTreeProgressionComponent::CanLearnDuringRun() const
+{
+	const ARogue10mPlayerState* Player = GetPlayerState();
+	const UWorld* World = GetWorld();
+	if (!Player || !Player->HasAuthority() || Player->IsCharacterDead()
+		|| !World || World->GetNetMode() != NM_Standalone) { return false; }
+	const ARogue10mGameState* Run = World->GetGameState<ARogue10mGameState>();
+	const ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(Player->GetPawn());
+	if (!Run || !Run->IsRunActive() || !Character || Character->IsDead()
+		|| !Character->HasAuthority() || !Character->IsLocallyControlled()
+		|| Character->GetWorld() != World || Character->GetPlayerState<ARogue10mPlayerState>() != Player) { return false; }
+	const UGameInstance* Instance = World->GetGameInstance();
+	const URogue10mCharacterProfileSubsystem* Profiles = Instance
+		? Instance->GetSubsystem<URogue10mCharacterProfileSubsystem>() : nullptr;
+	const FRogue10mCharacterProfile* Selected = Profiles ? Profiles->GetSelectedProfile() : nullptr;
+	const URogue10mProgressionSubsystem* Progression = Instance
+		? Instance->GetSubsystem<URogue10mProgressionSubsystem>() : nullptr;
+	return Selected && Selected->IsValid() && Progression
+		&& Progression->IsAttachedTo(*Character) && Progression->IsSaveReady() && Progression->CanRetrySave()
+		&& Progression->GetAttachedProfileId() == Selected->ProfileId;
+}
+
 bool URogue10mSkillTreeProgressionComponent::CanChangeInvestments() const
 {
 	const auto* Player = GetPlayerState();
@@ -269,7 +296,7 @@ bool URogue10mSkillTreeProgressionComponent::CanUnlockNode(FName NodeId, ERogue1
 	OutReason = FText::GetEmpty();
 	const auto* Node = FindNode(NodeId);
 	if (!Node || !GetCatalog()->IsValidCatalog()) { return Fail(TEXT("스킬트리 설정을 확인해 주세요.")); }
-	if (!CanChangeInvestments()) { return Fail(TEXT("마을 안내인 근처에서 살아 있는 상태로 출발 전에만 전수할 수 있습니다.")); }
+	if (!CanChangeInvestments() && !CanLearnDuringRun()) { return Fail(TEXT("학습은 마을 안내원 근처 또는 저장이 준비된 진행 중 탐험에서 가능합니다.")); }
 	if (!URogue10mSkillTreeDataAsset::IsNodeInTrack(*Node, GetActiveTrack())) { return Fail(TEXT("현재 장착 무기의 계열에서 전수할 수 없습니다.")); }
 	if (Node->Identity != ERogue10mSkillTreeIdentity::None && !GetCatalog()->IsIdentityAllowed(GetActiveTrack(), Node->Identity)) { return Fail(TEXT("현재 직업에서 사용할 수 없는 아이덴티티입니다.")); }
 	if (IsNodeUnlocked(NodeId)) { return Fail(TEXT("이미 전수한 노드입니다.")); }

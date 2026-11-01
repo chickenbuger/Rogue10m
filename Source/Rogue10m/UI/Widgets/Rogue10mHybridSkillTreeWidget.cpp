@@ -765,7 +765,8 @@ void URogue10mHybridSkillTreeWidget::RefreshFromData()
 	const int32 CurrentXP = Progression->GetMasteryExperience(DisplayedTrack);
 	const int32 NeededXP = Progression->GetMasteryExperienceToNextLevel(DisplayedTrack);
 	const FString MasteryLabel = FString::Printf(TEXT("%s 숙련 M%d"), DisplayedTrack == ERogue10mSkillTreeTrack::Brawler ? TEXT("격투") : TEXT("대검"), Progression->GetMasteryLevel(DisplayedTrack));
-	MasteryText->SetText(FText::FromString(NeededXP > 0 ? FString::Printf(TEXT("%s    %d / %d"), *MasteryLabel, CurrentXP, NeededXP) : MasteryLabel + TEXT(" · 완성")));
+	const float TrainingProgress = NeededXP > 0 ? FMath::Clamp(100.0f * CurrentXP / NeededXP, 0.0f, 100.0f) : 100.0f;
+	MasteryText->SetText(FText::FromString(NeededXP > 0 ? FString::Printf(TEXT("%s    %.1f / 100"), *MasteryLabel, TrainingProgress) : MasteryLabel + TEXT(" · 완성")));
 	MasteryBar->SetPercent(NeededXP > 0 ? FMath::Clamp(static_cast<float>(CurrentXP) / NeededXP, 0.0f, 1.0f) : 1.0f);
 	const FText StatSummary = RewardText(Progression->GetTrackMasteryStatModifiers(DisplayedTrack));
 	MasteryStatsText->SetText(StatSummary);

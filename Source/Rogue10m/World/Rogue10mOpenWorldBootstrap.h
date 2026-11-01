@@ -9,6 +9,7 @@
 
 class APawn;
 class UNavigationSystemConfig;
+class URogue10mItemDataAsset;
 
 /** Opt-in navigation system selected only by the OpenRunMap WorldSettings. */
 UCLASS()
@@ -39,6 +40,9 @@ public:
 	/** True only in a streaming-enabled partitioned world after its streaming work completes. */
 	UFUNCTION(BlueprintPure, Category="Rogue10m|OpenWorld|Debug")
 	bool IsWorldStreamingReady() const;
+	/** World-lifetime receipt; remains true after pickup and is shared by duplicate bootstraps. */
+	UFUNCTION(BlueprintPure, Category="Rogue10m|OpenWorld|Entry Loot")
+	bool HasPlacedEntryGreatSword() const;
 
 	/** Editor-only operation; returns JSON and leaves saving/reloading to the caller. */
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|OpenWorld|Editor", meta=(DevelopmentOnly))
@@ -63,9 +67,22 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|OpenWorld|Navigation", meta=(ClampMin="1"))
 	int32 MaximumInitialRegistrationAttempts = 120;
 
+	/** Runtime placement only; existing map packages and source item assets are never edited. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|OpenWorld|Entry Loot")
+	bool bEnableEntryGreatSword = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|OpenWorld|Entry Loot")
+	TSoftObjectPtr<URogue10mItemDataAsset> EntryGreatSwordItem = TSoftObjectPtr<URogue10mItemDataAsset>(
+		FSoftObjectPath(TEXT("/Game/DataAsset/Item/Starter/DA_Item_IronLongsword.DA_Item_IronLongsword")));
+
+	/** XY placement and vertical trace origin. The pickup is placed above traced ground, never midair. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|OpenWorld|Entry Loot", meta=(Units="cm"))
+	FVector EntryGreatSwordLocation = FVector(600.0, -62600.0, 3000.0);
+
 private:
 	void RefreshPlayerNavigationInvoker();
 	void ReleasePlayerNavigationInvoker();
+	void TryPlaceEntryGreatSword();
 
 	TWeakObjectPtr<APawn> RegisteredPawn;
 	TWeakObjectPtr<UNavigationSystemV1> RegisteredNavigationSystem;
@@ -75,4 +92,6 @@ private:
 	int32 InitialRegistrationAttempts = 0;
 	bool bRegistrationIssued = false;
 	bool bHasRegisteredOnce = false;
+	int32 EntryGreatSwordAttempts = 0;
+	bool bEntryGreatSwordFinished = false;
 };
