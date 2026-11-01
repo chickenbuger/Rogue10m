@@ -219,8 +219,10 @@ void ARogue10mTutorialNPC::UpdateNearbyPlayer()
 	ARogue10mCharacter* Character = NearbyCharacter.Get();
 	if (!Character || !NearbyController.IsValid()
 		|| Character->GetController() != NearbyController.Get()
-		|| FVector::DistSquared(GetActorLocation(), Character->GetActorLocation())
-			> FMath::Square(FMath::Max(InteractionRadius + 50.0f, DetectionRadius)))
+		// A capsule overlaps the discovery sphere before its actor center enters the radius.
+		// Keep discovery alive throughout that overlap; the smaller interaction range below
+		// still controls prompt visibility, dialogue and all services.
+		|| !DetectionArea || !DetectionArea->IsOverlappingActor(Character))
 	{
 		ReleaseNearbyPlayer();
 		return;

@@ -3,6 +3,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SphereComponent.h"
 #include "Components/TextBlock.h"
 #include "Containers/Ticker.h"
 #include "Dom/JsonObject.h"
@@ -35,6 +36,7 @@
 #include "Serialization/JsonSerializer.h"
 #include "Serialization/JsonWriter.h"
 #include "UnrealClient.h"
+#include "UObject/UObjectIterator.h"
 
 namespace Rogue10mNpcInteractionQA
 {
@@ -133,7 +135,84 @@ private:
         Npc=World->SpawnActor<ARogue10mTutorialNPC>(ARogue10mTutorialNPC::StaticClass(),FTransform(FRotator(0,InitialControl.Yaw+180.f,0),NpcAt),P);
         Check(Npc.IsValid(),TEXT("owned_transient_native_NPC_spawned_without_modifying_map_assets"));if(Failures){Finish();return;}
         SampleHandle=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* W,ELevelTick,float){if(W==Self->World.Get()){Self->Sample();}});
-        Later(.8,[this]{CheckGround();});
+        // Preserve the existing 39-check input/collision suite below. First exercise
+        // a fresh outside -> physical overlap shell -> service-range approach.
+        Later(.8,[this]{BeginOverlapEdge();});
+    }
+    void BeginOverlapEdge()
+    {
+        Detection=Npc->FindComponentByClass<USphereComponent>();
+        Stage=TEXT("overlap_edge_outside_far");MoveTo(Far);
+        Later(.4,[this]
+        {
+            bEdgeFarReleased=Detection.IsValid()&&!Detection->IsOverlappingActor(Character.Get())
+                &&!Npc->GetTutorialWidget()&&!Npc->IsDialogueOpen();
+            if(!bEdgeFarReleased){Check(false,TEXT("overlap_edge_outside_far_releases_proximity_context"));Finish();return;}
+            const float Radius=Detection->GetScaledSphereRadius();
+            const float CapsuleRadius=Character->GetCapsuleComponent()->GetScaledCapsuleRadius();
+            // A sphere touches the capsule before actor centers enter its radius.
+            // Keep the character's normal grounded Z; change only this detached QA fixture.
+            EdgeShell=Detection->GetComponentLocation()-Character->GetActorForwardVector()*(Radius+CapsuleRadius*.5f);
+            EdgeShell.Z=Near.Z;Stage=TEXT("overlap_edge_shell_hold");MoveTo(EdgeShell);
+            Later(.4,[this]{CheckOverlapShell();});
+        });
+    }
+    void CheckOverlapShell()
+    {
+        EdgeRadius=Detection->GetScaledSphereRadius();
+        EdgeCenterDistance=FVector::Distance(Character->GetActorLocation(),Npc->GetActorLocation());
+        bEdgePhysicalOverlap=Detection->IsOverlappingActor(Character.Get());
+        Check(bEdgeFarReleased&&bEdgePhysicalOverlap&&EdgeCenterDistance>EdgeRadius
+            &&!Npc->IsWithinSkillTreeServiceRange(Character.Get()),
+            TEXT("overlap_edge_capsule_overlaps_while_actor_center_is_outside_detection_radius"));
+        EdgeWidget=Npc->GetTutorialWidget();
+        Check(EdgeWidget.IsValid()&&!PromptVisible()&&!Npc->IsDialogueOpen(),
+            TEXT("overlap_edge_outer_shell_retains_context_without_widening_service_prompt"));
+        if(Failures){Finish();return;}
+        Press(EKeys::F,[this]
+        {
+            Check(!Npc->IsDialogueOpen()&&!PromptVisible(),
+                TEXT("overlap_edge_outer_shell_F_still_rejects_dialogue_outside_service_range"));
+            if(Failures){Finish();return;}
+            // Both endpoints remain in the same physical overlap. No second
+            // BeginOverlap or direct BeginDialogue call should be needed.
+            Stage=TEXT("overlap_edge_move_inside_service");MoveTo(Near);
+            Later(.4,[this]
+            {
+                bEdgeSameContextRestored=Detection->IsOverlappingActor(Character.Get())
+                    &&Npc->GetTutorialWidget()==EdgeWidget.Get()
+                    &&Npc->IsWithinSkillTreeServiceRange(Character.Get())
+                    &&PromptVisible()&&ActionText().Contains(TEXT("F"))&&!Npc->IsDialogueOpen();
+                Check(bEdgeSameContextRestored,
+                    TEXT("overlap_edge_same_context_recovers_F_prompt_on_moving_inside_service_range"));
+                if(Failures){Finish();return;}
+                Stage=TEXT("overlap_edge_complete_exit");MoveTo(Far);
+                Later(.4,[this]
+                {
+                    bEdgeReleasedAgain=!Detection->IsOverlappingActor(Character.Get())&&!Npc->GetTutorialWidget()&&!Npc->IsDialogueOpen();
+                    Stage=TEXT("overlap_edge_reenter");MoveTo(Near);
+                    Later(.4,[this]
+                    {
+                        int32 VisibleWidgets=0;
+                        for(TObjectIterator<URogue10mTutorialWidget> It;It;++It)
+                        {if(It->GetWorld()==World.Get()&&It->GetOwningPlayer()==PC.Get()&&It->IsInViewport()&&It->IsVisible()){++VisibleWidgets;}}
+                        bEdgeSingleWidget=bEdgeReleasedAgain&&Detection->IsOverlappingActor(Character.Get())
+                            &&VisibleWidgets==1&&PromptVisible()&&Npc->GetTutorialWidget()!=EdgeWidget.Get();
+                        Press(EKeys::F,[this]
+                        {
+                            bEdgeSingleFOpened=Npc->IsDialogueOpen();
+                            Press(EKeys::F,[this]
+                            {
+                                Check(bEdgeSingleWidget&&bEdgeSingleFOpened&&!Npc->IsDialogueOpen()&&PromptVisible(),
+                                    TEXT("overlap_edge_full_exit_reentry_has_one_widget_and_single_F_open_close"));
+                                if(Failures){Finish();return;}
+                                CheckGround(); // The existing 39-check suite continues unchanged.
+                            });
+                        });
+                    });
+                });
+            });
+        });
     }
     void CheckGround()
     {
@@ -279,6 +358,10 @@ private:
         auto J=MakeShared<FJsonObject>();J->SetStringField(TEXT("label"),Label);J->SetBoolField(TEXT("rendered"),bRendered);J->SetBoolField(TEXT("offscreen"),bOffscreen);J->SetNumberField(TEXT("checks"),Checks);J->SetNumberField(TEXT("failures"),Failures);J->SetBoolField(TEXT("probe_passed"),Failures==0);
         J->SetStringField(TEXT("input"),TEXT("programmatic_Controller_InputKey_actual_legacy_and_enhanced_stack"));J->SetBoolField(TEXT("physical_input_performed"),false);J->SetBoolField(TEXT("manual_field_run"),false);J->SetBoolField(TEXT("f_binding_accepted"),bFBindingAccepted);J->SetBoolField(TEXT("collision_detected"),bCollisionDetected);J->SetStringField(TEXT("f_binding_reason"),FBindingReason);J->SetStringField(TEXT("positive_control_key"),PositiveKey.ToString());J->SetStringField(TEXT("selected_skill"),GetPathNameSafe(Skill.Get()));J->SetStringField(TEXT("prompt_text"),Prompt);J->SetNumberField(TEXT("test_unlock_count"),TestUnlockCount);J->SetArrayField(TEXT("probes"),Probes);
         J->SetArrayField(TEXT("loaded_candidates"),Candidates);
+        J->SetStringField(TEXT("overlap_edge_sequence"),TEXT("outside_far_to_capsule_overlap_shell_to_same_overlap_service_range_then_full_exit_reentry"));
+        J->SetNumberField(TEXT("overlap_edge_radius_cm"),EdgeRadius);J->SetNumberField(TEXT("overlap_edge_shell_actor_distance_cm"),EdgeCenterDistance);
+        J->SetBoolField(TEXT("overlap_edge_physical_overlap"),bEdgePhysicalOverlap);J->SetBoolField(TEXT("overlap_edge_same_context_restored"),bEdgeSameContextRestored);
+        J->SetBoolField(TEXT("overlap_edge_single_widget_after_reentry"),bEdgeSingleWidget);J->SetBoolField(TEXT("overlap_edge_single_F_open"),bEdgeSingleFOpened);
         J->SetStringField(TEXT("fixture_revision"),TEXT("grounded_noncharged_paid_special_preferred_after_B_primary_only_fixture_failure"));
         J->SetStringField(TEXT("evidence_note"),TEXT("Fresh exact FpNpc slots, normal entry then autosave detach. Owned transient native NPC/default no starting item and elevated collision floor, no map assets saved. F uses actual Controller InputKey/InputStack. Previous B failed before F mapping because the fixture incorrectly required a costed Primary; prior asset audits list free Primaries and B found no eligible Primary. This revision follows grounded noncharged CanUseBoundSkill input slots and prefers existing paid DA_Attack_Knuckle_Special, retaining mandatory actual positive resource spend/cooldown and no extra attack/charge checks. Loaded candidate metadata is recorded; no assets are altered. Existing costed active skill is QA-test-unlocked only if required. F remapping must be accepted; rejection fails explicitly with no alternate-key fallback. PNGs are actual viewport UI, not physical input or normal field completion."));
         TArray<TSharedPtr<FJsonValue>> R;for(const FString& S:Reasons){R.Add(MakeShared<FJsonValueString>(S));}J->SetArrayField(TEXT("failure_reasons"),R);
@@ -288,6 +371,8 @@ private:
     }
     TWeakObjectPtr<UWorld> World;TWeakObjectPtr<ARogue10mPlayerController> PC;TWeakObjectPtr<ARogue10mCharacter> Character;TWeakObjectPtr<ARogue10mPlayerState> State;
     TWeakObjectPtr<URogue10mCombatComponent> Combat;TWeakObjectPtr<URogue10mSkillBindingComponent> Bindings;TWeakObjectPtr<URogue10mAttackSkillData> Skill;TWeakObjectPtr<ARogue10mTutorialNPC> Npc;TWeakObjectPtr<AActor> Ground;
+    TWeakObjectPtr<USphereComponent> Detection;TWeakObjectPtr<URogue10mTutorialWidget> EdgeWidget;FVector EdgeShell;double EdgeRadius=0,EdgeCenterDistance=0;
+    bool bEdgeFarReleased=false,bEdgePhysicalOverlap=false,bEdgeSameContextRestored=false,bEdgeReleasedAgain=false,bEdgeSingleWidget=false,bEdgeSingleFOpened=false;
     URogue10mProgressionSubsystem* Saves=nullptr;FDelegateHandle SampleHandle,Cleanup;TFunction<void()> Next,IdleNext;TArray<TSharedPtr<FJsonValue>> Probes,Candidates;TArray<FString> Reasons;
     FString Label,Output,Images,Events,Stage=TEXT("setup"),Prompt,FBindingReason,ProbeName;FTransform OriginalActor;FRotator InitialControl;FVector Near,Far,BeforeResources,MinResources;
     FKey OldBinding,PositiveKey=EKeys::F;double Deadline=0,NextAt=0,IdleDeadline=0;float MaxCooldown=0;int32 Checks=0,Failures=0,Frame=0,BeforeUses=0,TestUnlockCount=0;

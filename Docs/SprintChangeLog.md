@@ -2608,3 +2608,18 @@ NPC가 소비한 F 입력의 중복 공격을 수정하고 실제 비용형 Spec
 
 
 최종 QA 실행기 리뷰 보정: PASS를 세이브 보존 검사 뒤로 옮기고 runtime 완료 영수증(label/namespace/로그 SHA/보존 성공)이 있어야 read를 허용한다. 새 AltGate1101C runtime207/read89 통과, 두 단계 모두 non-QA318개 해시 보존. 현재 실제 세이브321개이며 시작304개 모두 동일하다. 제품 바이너리/규칙 변경 없이 wrapper gate만 강화했다. 기존 failedA 결과 보존.
+
+
+## Sprint#9-18 — 기본 정상 플레이 연결 검증 (진행 중)
+
+- 실제 배치NPC F안내소실복구: discovery수명physical overlap기준,320cm서비스불변.
+- NPC44회귀통과/331세이브SHA보존,정상E의NPC→필드→대검→전투XP→K학습확인. E보스입구자동경로미완료/새F검증중.
+- 맵/원본에셋/애니메이션/게임수치변경없음. DevLog/20261101_NpcDiscovery_Review에전후/fixture6장.
+- 계획Feature/architect/2026-11-01_basic-run-playtest.md, 결과Feature/doc/2026-11-01_npc-overlap.md. 원격push/병합없음.
+
+
+## NPC 기능 체크포인트 및 정상 루프 진단 확정
+
+NPC44검사와 핵심6suite30검사를 모두 통과했다. 정상 E/F/G는 메뉴→캐릭터→마을F대화/보급→도보포털→대검overlap→자연처치XP→K포인트학습을 통과했으나 보스 접근은 미완료다. G의 실제 Pawn 천장 line은Z9500.998에서보호바닥아랫면에start penetration/normalZ=-1을기록했다. 이동모드Walking/MaxWalkSpeed620/CanJump1/RootMotion0이므로입력·스태미나잠금으로해석하지않는다. E의별도위치는보호바닥밖이라같은원인으로합치지않는다.
+
+시작실제세이브321개SHA와원본/팔31패키지SHA는전부같다. 현재실제세이브338개이며새QA만추가했다. 맵·원본자산·저장스키마변경없고원격작업없다. 아직실제보스전종료/결과/마을복귀를일반입력한판에서검증하지못했다. 다음은기존보스추락방지바닥을유지한채좁은남문보행경사로를runtime에만추가하는가역후보이며현재적용하지않았다.
