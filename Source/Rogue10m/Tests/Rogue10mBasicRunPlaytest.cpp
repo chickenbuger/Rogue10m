@@ -245,8 +245,14 @@ private:
         const FVector Position = Character->GetActorLocation(); const float Distance = static_cast<float>(FVector::Dist2D(Position, Goal));
         if (Distance <= Radius) { StopMove(); StuckAt = Now(); LastProgress = Position; return true; }
         if (!StreamingReady()) { StopMove(); return false; }
-        const bool Facing = Face(FVector(Goal.X, Goal.Y, Position.Z), Delta);
+        bool Facing = Face(FVector(Goal.X, Goal.Y, Position.Z), Delta);
         if (bFinishing) { return false; }
+        if (Narrow)
+        {
+            FVector Eye; FRotator View; PC->GetPlayerViewPoint(Eye, View);
+            const float DesiredYaw = (FVector(Goal.X, Goal.Y, Position.Z) - Eye).Rotation().Yaw;
+            Facing &= FMath::Abs(FMath::FindDeltaAngleDegrees(View.Yaw, DesiredYaw)) < 5.f;
+        }
         Key(EKeys::W, Facing); Key(EKeys::S, false); Key(EKeys::LeftShift, Sprint && Facing && Distance > 900.f);
         if (Now() >= RecoverUntil) { Key(EKeys::A, false); Key(EKeys::D, false); }
         if (FVector::Dist2D(Position, LastProgress) > 80.f) { LastProgress = Position; StuckAt = Now(); }
@@ -270,20 +276,20 @@ private:
                 // Queries only: match the real scaled capsule, without moving it or changing collision responses.
                 if (const UCapsuleComponent* Capsule = Character->GetCapsuleComponent(); World.IsValid() && Capsule)
                 {
-                    const float Radius = Capsule->GetScaledCapsuleRadius();
-                    const float HalfHeight = Capsule->GetScaledCapsuleHalfHeight();
+                    const float CapsuleRadius = Capsule->GetScaledCapsuleRadius();
+                    const float CapsuleHalfHeight = Capsule->GetScaledCapsuleHalfHeight();
                     const FVector Start = Capsule->GetComponentLocation();
                     const FQuat Rotation = Capsule->GetComponentQuat();
                     FHitResult CapsuleHit;
                     World->SweepSingleByChannel(CapsuleHit, Start, Start + Toward * 500.f, Rotation,
-                        ECC_Pawn, FCollisionShape::MakeCapsule(Radius, HalfHeight), Query);
+                        ECC_Pawn, FCollisionShape::MakeCapsule(CapsuleRadius, CapsuleHalfHeight), Query);
                     Event(TEXT("stuck_readonly_capsule_pawn_sweep"), FString::Printf(TEXT("blocking=%d start_penetrating=%d penetration_depth=%.3f actor=%s component=%s normal=%s point=%s distance=%.3f start=%s end=%s radius=%.3f half_height=%.3f"),
                         CapsuleHit.bBlockingHit, CapsuleHit.bStartPenetrating, CapsuleHit.PenetrationDepth,
                         *GetPathNameSafe(CapsuleHit.GetActor()), *GetPathNameSafe(CapsuleHit.GetComponent()),
                         *CapsuleHit.ImpactNormal.ToString(), *CapsuleHit.ImpactPoint.ToString(), CapsuleHit.Distance,
-                        *Start.ToString(), *(Start + Toward * 500.f).ToString(), Radius, HalfHeight));
+                        *Start.ToString(), *(Start + Toward * 500.f).ToString(), CapsuleRadius, CapsuleHalfHeight));
                     // Start just above the capsule's current top; this is a line query, not a headroom verdict.
-                    const FVector CeilingStart = Start + Capsule->GetUpVector() * (HalfHeight + 1.f);
+                    const FVector CeilingStart = Start + Capsule->GetUpVector() * (CapsuleHalfHeight + 1.f);
                     const FVector CeilingEnd = CeilingStart + FVector::UpVector * 500.f;
                     FHitResult CeilingHit;
                     World->LineTraceSingleByChannel(CeilingHit, CeilingStart, CeilingEnd, ECC_Pawn, Query);
@@ -487,15 +493,25 @@ private:
             {
                 bLearned = true; LearnedNode = TEXT("I.InternalEnergy.Entry");
                 Route = { FVector(-44000,-4000,0), FVector(-44000,-1100,0), FVector(-44000,5000,0), FVector(-44000,13500,0),
-                    FVector(-35000,42000,0), FVector(-2000,59000,0), FVector(12000,60000,0), FVector(13450,62100,0),
-                    FVector(13800,64000,0), FVector(14700,66000,0), FVector(15000,68000,0) };
+                    FVector(-35000,42000,0), FVector(-2000,59000,0), FVector(11695,59741,0), FVector(12000,60000,0),
+                    FVector(14700,62300,0), FVector(15000,62600,0), FVector(15650,64400,0), FVector(15000,68000,0) };
                 Waypoint = 0; SetStage(TEXT("boss_route"), 400.); Pulse(EKeys::K);
             }
         }
         else if (Stage == TEXT("boss_route"))
         {
             if (PC->IsSkillTreeVisible()) { if (Now() > ActionAt) { Pulse(EKeys::K); ActionAt = Now() + 0.5; } return; }
-            if (Waypoint < Route.Num()) { const bool Bridge = Waypoint >= 1 && Waypoint <= 3; if (Walk(Route[Waypoint], Bridge ? 140.f : 200.f, Delta, !Bridge, Bridge)) { ++Waypoint; } }
+            if (Waypoint < Route.Num())
+            {
+                const bool Bridge = Waypoint >= 1 && Waypoint <= 3;
+                const bool RampLane = Waypoint >= 6 && Waypoint <= 9;
+                if (Walk(Route[Waypoint], RampLane ? 20.f : (Bridge ? 140.f : 200.f), Delta, !Bridge && !RampLane, Bridge || RampLane))
+                {
+                    Event(TEXT("waypoint_reached"), FString::Printf(TEXT("index=%d point=%s narrow=%d"), Waypoint, *Route[Waypoint].ToString(), Bridge || RampLane));
+                    ++Waypoint;
+                    if (RampLane) { StopMove(); ActionAt = Now() + 0.5; } // Release keys; allow normal braking before the next turn.
+                }
+            }
             else { Target = nullptr; SetStage(TEXT("boss_combat"), 1205.); }
         }
         else if (Stage == TEXT("boss_combat")) { Fight(Delta, true); }

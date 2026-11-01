@@ -79,14 +79,39 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|OpenWorld|Entry Loot", meta=(Units="cm"))
 	FVector EntryGreatSwordLocation = FVector(600.0, -62600.0, 3000.0);
 
+	/** One transient south approach; never edits the existing boss fallback platform or map. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|OpenWorld|Boss Approach")
+	bool bEnableBossSouthApproach = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|OpenWorld|Boss Approach", meta=(Units="cm"))
+	FVector2D BossSouthApproachStart = FVector2D(12000.0, 60000.0);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|OpenWorld|Boss Approach", meta=(Units="cm"))
+	FVector2D BossSouthApproachEnd = FVector2D(15000.0, 62550.0);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|OpenWorld|Boss Approach", meta=(ClampMin="100.0", Units="cm"))
+	float BossSouthApproachWidth = 160.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|OpenWorld|Boss Approach", meta=(ClampMin="10.0", Units="cm"))
+	float BossSouthApproachThickness = 60.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|OpenWorld|Boss Approach", meta=(ClampMin="1.0", ClampMax="30.0", Units="deg"))
+	float BossSouthApproachMaximumSlope = 20.0f;
+
+	/** One-second callback budget, independent of navigation registration and distant-cell loading. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|OpenWorld|Boss Approach", meta=(ClampMin="1", ClampMax="1200"))
+	int32 BossSouthApproachMaximumAttempts = 1200;
+
 private:
 	void RefreshPlayerNavigationInvoker();
 	void ReleasePlayerNavigationInvoker();
 	void TryPlaceEntryGreatSword();
+	void TryPlaceBossSouthApproach();
 
 	TWeakObjectPtr<APawn> RegisteredPawn;
 	TWeakObjectPtr<UNavigationSystemV1> RegisteredNavigationSystem;
 	FTimerHandle InvokerTimerHandle;
+	FTimerHandle BossSouthApproachTimerHandle;
 	float RegisteredGenerationRadius = 0.0f;
 	float RegisteredRemovalRadius = 0.0f;
 	int32 InitialRegistrationAttempts = 0;
@@ -94,4 +119,6 @@ private:
 	bool bHasRegisteredOnce = false;
 	int32 EntryGreatSwordAttempts = 0;
 	bool bEntryGreatSwordFinished = false;
+	int32 BossSouthApproachAttempts = 0;
+	bool bBossSouthApproachFinished = false;
 };

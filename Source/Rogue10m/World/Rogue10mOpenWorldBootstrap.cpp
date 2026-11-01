@@ -2,10 +2,15 @@
 
 #include "Rogue10mOpenWorldBootstrap.h"
 
+#include "Components/StaticMeshComponent.h"
+#include "Engine/StaticMesh.h"
+#include "Engine/StaticMeshActor.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/WorldSettings.h"
 #include "Kismet/GameplayStatics.h"
+#include "Math/RotationMatrix.h"
 #include "Misc/ScopeExit.h"
 #include "NavigationSystemTypes.h"
 #include "Rogue10m.h"
@@ -13,8 +18,14 @@
 #include "Rogue10mGameState.h"
 #include "Rogue10mItemDataAsset.h"
 #include "TimerManager.h"
+#include "UObject/Class.h"
+#include "UObject/Package.h"
 #include "WorldPartition/WorldPartition.h"
 #include "WorldPartition/WorldPartitionSubsystem.h"
+#if WITH_DEV_AUTOMATION_TESTS
+#include "Misc/AutomationTest.h"
+#include <limits>
+#endif
 
 #if WITH_EDITOR
 #include "AI/NavigationSystemConfig.h"
@@ -22,13 +33,11 @@
 #include "Dom/JsonValue.h"
 #include "Editor.h"
 #include "Editor/EditorEngine.h"
-#include "EngineUtils.h"
 #include "NavigationData.h"
 #include "NavMesh/RecastNavMesh.h"
 #include "ScopedTransaction.h"
 #include "Serialization/JsonSerializer.h"
 #include "Serialization/JsonWriter.h"
-#include "UObject/Package.h"
 #include "UObject/UObjectGlobals.h"
 #include "UObject/UnrealType.h"
 #endif
@@ -37,6 +46,48 @@ namespace Rogue10mEntryLoot
 {
 	const FName PlacedTag(TEXT("Rogue10m.EntryGreatSword.Placed"));
 	const FName PickupTag(TEXT("Rogue10m.EntryGreatSword.Pickup"));
+}
+
+namespace Rogue10mBossSouthApproach
+{
+	const FName PlatformTag(TEXT("Rogue10m.OpenWorld"));
+	const FName PlacedTag(TEXT("Rogue10m.BossSouthApproach.Placed"));
+	const FName RampTag(TEXT("Rogue10m.BossSouthApproach.Ramp"));
+	const FVector PlatformCenter(15000.0, 68000.0, 9550.0);
+	const FVector PlatformExtent(5500.0, 5500.0, 50.0);
+
+	bool IsRunWorld(const UWorld* World)
+	{
+		return World && UWorld::RemovePIEPrefix(World->GetOutermost()->GetName())
+			== TEXT("/Game/Rogue10m/Maps/OpenRunMap");
+	}
+
+	// Local X follows the slope. Offsetting along its normal keeps both TOP endpoints exact.
+	bool MakeTransform(const FVector& Start, const FVector& End, double Width, double Thickness,
+		double MaximumSlope, FTransform& Out)
+	{
+		if (Start.ContainsNaN() || End.ContainsNaN() || !FMath::IsFinite(Width)
+			|| !FMath::IsFinite(Thickness) || !FMath::IsFinite(MaximumSlope)
+			|| Width < 100.0 || Thickness < 10.0 || MaximumSlope <= 0.0 || MaximumSlope > 30.0) { return false; }
+		const FVector Delta = End - Start;
+		const double Horizontal = Delta.Size2D();
+		const double Slope = FMath::RadiansToDegrees(FMath::Atan2(Delta.Z, Horizontal));
+		if (Horizontal < 100.0 || Delta.Z <= 0.0 || !FMath::IsFinite(Slope) || Slope > MaximumSlope) { return false; }
+		const FQuat Rotation = FRotationMatrix::MakeFromXZ(Delta.GetSafeNormal(), FVector::UpVector).ToQuat();
+		Out = FTransform(Rotation, (Start + End) * 0.5 - Rotation.GetUpVector() * (Thickness * 0.5),
+			FVector(Delta.Size() / 100.0, Width / 100.0, Thickness / 100.0));
+		return !Out.ContainsNaN();
+	}
+
+	bool IsLandscape(const AActor* Actor)
+	{
+		// Reflection avoids adding a new runtime module dependency for one type check.
+		for (const UClass* Class = Actor ? Actor->GetClass() : nullptr; Class; Class = Class->GetSuperClass())
+		{
+			if (Class->GetPathName() == TEXT("/Script/Landscape.LandscapeProxy")) { return true; }
+		}
+		return false;
+	}
 }
 
 void URogue10mOpenWorldNavigationSystem::Configure(const UNavigationSystemConfig& Config)
@@ -59,6 +110,12 @@ void ARogue10mOpenWorldBootstrap::BeginPlay()
 		World->GetTimerManager().SetTimer(
 			InvokerTimerHandle, this, &ARogue10mOpenWorldBootstrap::RefreshPlayerNavigationInvoker,
 			FMath::Max(0.1f, InitialRegistrationIntervalSeconds), true);
+		if (bEnableBossSouthApproach && HasAuthority() && World->GetNetMode() == NM_Standalone
+			&& Rogue10mBossSouthApproach::IsRunWorld(World))
+		{
+			World->GetTimerManager().SetTimer(BossSouthApproachTimerHandle, this,
+				&ARogue10mOpenWorldBootstrap::TryPlaceBossSouthApproach, 1.0f, true);
+		}
 	}
 }
 
@@ -67,6 +124,7 @@ void ARogue10mOpenWorldBootstrap::EndPlay(const EEndPlayReason::Type EndPlayReas
 	if (UWorld* World = GetWorld())
 	{
 		World->GetTimerManager().ClearTimer(InvokerTimerHandle);
+		World->GetTimerManager().ClearTimer(BossSouthApproachTimerHandle);
 	}
 	ReleasePlayerNavigationInvoker();
 	Super::EndPlay(EndPlayReason);
@@ -193,6 +251,117 @@ bool ARogue10mOpenWorldBootstrap::HasPlacedEntryGreatSword() const
 	const UWorld* World = GetWorld();
 	const AWorldSettings* Settings = World ? World->GetWorldSettings() : nullptr;
 	return Settings && Settings->ActorHasTag(Rogue10mEntryLoot::PlacedTag);
+}
+
+void ARogue10mOpenWorldBootstrap::TryPlaceBossSouthApproach()
+{
+	using namespace Rogue10mBossSouthApproach;
+	UWorld* World = GetWorld();
+	if (!World) { return; }
+	const auto Finish = [this, World]()
+	{
+		bBossSouthApproachFinished = true;
+		World->GetTimerManager().ClearTimer(BossSouthApproachTimerHandle);
+	};
+	if (bBossSouthApproachFinished || !bEnableBossSouthApproach || !World->IsGameWorld()
+		|| !HasAuthority() || World->GetNetMode() != NM_Standalone
+		|| !IsRunWorld(World)) { Finish(); return; }
+	AWorldSettings* Settings = World->GetWorldSettings();
+	if (!Settings) { return; }
+	if (Settings->ActorHasTag(PlacedTag)) { Finish(); return; }
+	++BossSouthApproachAttempts;
+	ON_SCOPE_EXIT
+	{
+		if (!bBossSouthApproachFinished && BossSouthApproachAttempts >= FMath::Clamp(BossSouthApproachMaximumAttempts, 1, 1200))
+		{
+			UE_LOG(LogRogue10m, Warning, TEXT("%s stopped south boss approach after %d attempts; no unverified geometry was spawned."),
+				*GetName(), BossSouthApproachAttempts);
+			Finish();
+		}
+	};
+	const ARogue10mGameState* Run = World->GetGameState<ARogue10mGameState>();
+	if (!Run || !Run->IsRunActive() || !IsWorldStreamingReady()) { return; }
+	const APawn* Player = UGameplayStatics::GetPlayerPawn(World, 0);
+	if (!Player || !Player->GetController()) { return; }
+	AStaticMeshActor* Platform = nullptr;
+	for (TActorIterator<AStaticMeshActor> It(World); It; ++It)
+	{
+		if (It->ActorHasTag(RampTag)) { Finish(); return; }
+		if (!It->ActorHasTag(PlatformTag)) { continue; }
+		const UStaticMeshComponent* Component = It->GetStaticMeshComponent();
+		const UStaticMesh* Mesh = Component ? Component->GetStaticMesh() : nullptr;
+		FVector Origin, Extent; It->GetActorBounds(false, Origin, Extent);
+		if (!Mesh || Mesh->GetPathName() != TEXT("/Engine/BasicShapes/Cube.Cube")
+			|| !Origin.Equals(PlatformCenter, 1.0) || !Extent.Equals(PlatformExtent, 1.0)
+			|| !Mesh->GetBounds().Origin.IsNearlyZero(0.1) || !Mesh->GetBounds().BoxExtent.Equals(FVector(50.0), 0.1)) { continue; }
+		if (Platform)
+		{
+			UE_LOG(LogRogue10m, Warning, TEXT("%s found duplicate matching boss platforms; approach disabled."), *GetName());
+			Finish(); return;
+		}
+		Platform = *It;
+	}
+	if (!Platform) { return; }
+	if (BossSouthApproachStart.ContainsNaN() || BossSouthApproachEnd.ContainsNaN()) { Finish(); return; }
+	FHitResult Ground, Top;
+	FCollisionQueryParams Query(SCENE_QUERY_STAT(Rogue10mBossSouthApproachGround), false, this);
+	const auto Trace = [World, &Query](const FVector2D& XY, FHitResult& Hit)
+	{
+		return World->LineTraceSingleByObjectType(Hit, FVector(XY.X, XY.Y, 20000.0), FVector(XY.X, XY.Y, 0.0),
+			FCollisionObjectQueryParams(ECC_WorldStatic), Query) && Hit.bBlockingHit && !Hit.bStartPenetrating;
+	};
+	if (!Trace(BossSouthApproachStart, Ground) || !IsLandscape(Ground.GetActor()) || Ground.ImpactNormal.Z < 0.65
+		|| !Trace(BossSouthApproachEnd, Top) || Top.GetActor() != Platform || Top.ImpactNormal.Z < 0.99
+		|| !FMath::IsNearlyEqual(Top.ImpactPoint.Z, PlatformCenter.Z + PlatformExtent.Z, 1.0)) { return; }
+	FTransform Placement;
+	const FVector Start = Ground.ImpactPoint + FVector(0.0, 0.0, 2.0);
+	const FVector End = Top.ImpactPoint + FVector(0.0, 0.0, 2.0);
+	if (!MakeTransform(Start, End, BossSouthApproachWidth, BossSouthApproachThickness, BossSouthApproachMaximumSlope, Placement))
+	{
+		UE_LOG(LogRogue10m, Warning, TEXT("%s rejected invalid/steep south approach geometry."), *GetName()); Finish(); return;
+	}
+	const FBox Footprint = FBox(FVector(-50.0), FVector(50.0)).TransformBy(Placement.ToMatrixWithScale()).ExpandBy(500.0);
+	for (TActorIterator<APawn> It(World); It; ++It)
+	{
+		FVector PawnOrigin, PawnExtent;
+		It->GetActorBounds(true, PawnOrigin, PawnExtent);
+		if (PawnOrigin.ContainsNaN() || PawnExtent.ContainsNaN()
+			|| Footprint.IntersectXY(FBox(PawnOrigin - PawnExtent, PawnOrigin + PawnExtent)))
+		{
+			if (BossSouthApproachAttempts % 10 == 0)
+			{
+				UE_LOG(LogRogue10m, Warning, TEXT("%s deferred south approach: pawn %s is near the proposed footprint."), *GetName(), *It->GetName());
+			}
+			return;
+		}
+	}
+	FActorSpawnParameters Parameters;
+	Parameters.Owner = Settings; Parameters.OverrideLevel = World->PersistentLevel;
+	Parameters.ObjectFlags |= RF_Transient;
+	Parameters.bDeferConstruction = true;
+	Parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	AStaticMeshActor* Ramp = World->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass(), Placement, Parameters);
+	UStaticMeshComponent* Component = Ramp ? Ramp->GetStaticMeshComponent() : nullptr;
+	if (!Component) { if (Ramp) { Ramp->Destroy(); } return; }
+	Component->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	Component->SetMobility(EComponentMobility::Movable);
+	if (!Component->SetStaticMesh(Platform->GetStaticMeshComponent()->GetStaticMesh()))
+	{
+		Ramp->Destroy(); return; // New transient actor only; no world receipt on failed setup.
+	}
+	for (int32 Index = 0; Index < Platform->GetStaticMeshComponent()->GetNumMaterials(); ++Index)
+	{
+		Component->SetMaterial(Index, Platform->GetStaticMeshComponent()->GetMaterial(Index));
+	}
+	Component->SetMobility(EComponentMobility::Static);
+	Component->SetCollisionProfileName(TEXT("BlockAll"));
+	Component->SetCollisionObjectType(ECC_WorldStatic);
+	Component->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	Ramp->Tags.AddUnique(RampTag);
+	Settings->Tags.AddUnique(PlacedTag); // Commit before FinishSpawning can re-enter a duplicate bootstrap.
+	Finish(); Ramp->FinishSpawning(Placement);
+	UE_LOG(LogRogue10m, Log, TEXT("%s placed transient south approach from %s to %s; platform %s unchanged (attempt %d)."),
+		*GetName(), *Start.ToString(), *End.ToString(), *Platform->GetPathName(), BossSouthApproachAttempts);
 }
 
 void ARogue10mOpenWorldBootstrap::TryPlaceEntryGreatSword()
@@ -371,3 +540,35 @@ FString ARogue10mOpenWorldBootstrap::ConfigureOpenWorldNavigation()
 	return TEXT("{\"success\":false,\"status\":\"unsupported\",\"message\":\"ConfigureOpenWorldNavigation requires an editor build.\"}");
 #endif
 }
+
+
+#if WITH_DEV_AUTOMATION_TESTS
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FRogueBossSouthApproachTransformTest, "Rogue10m.OpenWorld.BossSouthApproach.Transform", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+bool FRogueBossSouthApproachTransformTest::RunTest(const FString& Parameters)
+{
+    const FVector Start(12000,60000,8722), End(15000,62550,9602);
+    FTransform Placement;
+    TestTrue(TEXT("valid authored ramp contract"), Rogue10mBossSouthApproach::MakeTransform(Start,End,160,60,20,Placement));
+    TestTrue(TEXT("lower top endpoint touches ground"), Placement.TransformPosition(FVector(-50,0,50)).Equals(Start,0.001));
+    TestTrue(TEXT("upper top endpoint touches platform"), Placement.TransformPosition(FVector(50,0,50)).Equals(End,0.001));
+    const double TopWidth = FVector::Distance(Placement.TransformPosition(FVector(0,-50,50)), Placement.TransformPosition(FVector(0,50,50)));
+    TestTrue(TEXT("actual top width is160cm"), FMath::IsNearlyEqual(TopWidth,160.0,0.001));
+    TestTrue(TEXT("upward face and positive nonuniform scale"), Placement.GetRotation().GetUpVector().Z > .95 && Placement.GetScale3D().GetMin() > 0);
+    return true;
+}
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FRogueBossSouthApproachInvalidTest, "Rogue10m.OpenWorld.BossSouthApproach.InvalidGeometry", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+bool FRogueBossSouthApproachInvalidTest::RunTest(const FString& Parameters)
+{
+    const FVector Start(12000,60000,8722), End(15000,62550,9602); FTransform Out;
+    const double NaN=std::numeric_limits<double>::quiet_NaN(), Inf=std::numeric_limits<double>::infinity();
+    TestFalse(TEXT("zero horizontal run"), Rogue10mBossSouthApproach::MakeTransform(Start,Start+FVector(0,0,100),160,60,20,Out));
+    TestFalse(TEXT("descending endpoint rejected"), Rogue10mBossSouthApproach::MakeTransform(End,Start,160,60,20,Out));
+    TestFalse(TEXT("too steep for configured maximum"), Rogue10mBossSouthApproach::MakeTransform(Start,End,160,60,5,Out));
+    TestFalse(TEXT("unsupported narrow width rejected"), Rogue10mBossSouthApproach::MakeTransform(Start,End,99,60,20,Out));
+    TestFalse(TEXT("invalid thickness rejected"), Rogue10mBossSouthApproach::MakeTransform(Start,End,160,9,20,Out));
+    TestFalse(TEXT("nonfinite point rejected"), Rogue10mBossSouthApproach::MakeTransform(FVector(NaN,0,0),End,160,60,20,Out));
+    TestFalse(TEXT("nonfinite size rejected"), Rogue10mBossSouthApproach::MakeTransform(Start,End,Inf,60,20,Out));
+    TestFalse(TEXT("nonfinite slope rejected"), Rogue10mBossSouthApproach::MakeTransform(Start,End,160,60,NaN,Out));
+    return true;
+}
+#endif
