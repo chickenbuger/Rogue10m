@@ -110,6 +110,10 @@ public:
         const auto* CurrentCombat = Character->GetCombatComponent();
         if (!CurrentCombat || CurrentCombat->GetActiveDodgeSkill() != Dodge.Get())
         { Error = TEXT("profile_changed_after_prearm_observation_skipped_no_game_input_block"); return false; }
+        const auto* RequestAttributes = Character->GetRogueAttributeSet();
+        if (!RequestAttributes || !FMath::IsFinite(RequestAttributes->GetStamina()))
+        { Error = TEXT("request_stamina_unavailable_observation_skipped_no_game_input_block"); return false; }
+        RequestStamina = RequestAttributes->GetStamina();
         Direction = ExpectedWorldDirection.GetSafeNormal2D(); RequestPosition = Character->GetActorLocation();
         RequestWorld = World->GetTimeSeconds(); RequestWall = FPlatformTime::Seconds(); RequestFrame = GFrameCounter;
         bRequested = true; LastPostPosition = RequestPosition;
@@ -205,14 +209,14 @@ public:
         const FString Context = Normal ? TEXT("scope=validated_BasicRun_read_only_observation\n") : TEXT("scope=synthetic_fixture_observation_only\n");
         const FString Hooks = FString::Printf(TEXT("clearance_queries_enabled=%d\nmovement_updated_callback_bound=%d\nactual_hit_callback_bound=%d\ndropped_events=%d\ntarget_dt_comparison_applicable=%d\n"),
             Config.bClearanceQueries, Config.bMovementUpdatedCallbackBound, Config.bActualHitCallbackBound, DroppedEvents, Config.RequestedHz > 0);
-        return Context + Hooks + TEXT("dodge_asset=") + GetPathNameSafe(Dodge.Get()) + TEXT("\n") + FString::Printf(TEXT("probe_sends_input=0\nprobe_mutates_game_or_time_or_save=0\nphysical_input=not_performed_by_probe\nnormal_run_completion=not_evaluated\nlabel=%s\ncase=%s\nrequested_hz=%d\nfinished=%d\nreason=%s\nrequest_observed=%d\nactive_transitions=%d\nend_observed=%d\ninvalid_observation=%d\ninvalid_floor=%d\nprofile_unchanged=%d\nnominal_distance_cm=%.9f\nnominal_duration_s=%.9f\nnominal_cooldown_s=%.9f\neffective_stamina_cost=%.9f\nrequest_frame=%llu\nfirst_active_frame=%llu\nend_frame=%llu\nrequest_world_s=%.9f\nfirst_active_world_s=%.9f\nend_observed_world_s=%.9f\nfirst_active_dt=%.9f\nend_dt=%.9f\nendpoint_xy_cm=%.9f\nsigned_progress_cm=%.9f\nsampled_post_tick_xy_path_cm=%.9f\nactual_movement_callback_xy_path_cm=%.9f\nactual_movement_callback_count=%d\nactual_hit_callback_count=%d\nzero_hit_callbacks_does_not_prove_no_collision=1\nstamina_before=%.9f\nstamina_end=%.9f\npost_samples=%d\nactual_dt_min=%.9f\nactual_dt_max=%.9f\nactual_dt_mean=%.9f\ntarget_dt_mismatch_count=%d\ndodge_end_timer_handle=unmeasured\nanim_root_params_outside_PerformMovement=not_certified\nnominal_distance_is_not_asserted_as_realized=1\n"),
+        return Context + Hooks + TEXT("dodge_asset=") + GetPathNameSafe(Dodge.Get()) + TEXT("\n") + FString::Printf(TEXT("probe_sends_input=0\nprobe_mutates_game_or_time_or_save=0\nphysical_input=not_performed_by_probe\nnormal_run_completion=not_evaluated\nlabel=%s\ncase=%s\nrequested_hz=%d\nfinished=%d\nreason=%s\nrequest_observed=%d\nactive_transitions=%d\nend_observed=%d\ninvalid_observation=%d\ninvalid_floor=%d\nprofile_unchanged=%d\nnominal_distance_cm=%.9f\nnominal_duration_s=%.9f\nnominal_cooldown_s=%.9f\neffective_stamina_cost=%.9f\nrequest_frame=%llu\nfirst_active_frame=%llu\nend_frame=%llu\nrequest_world_s=%.9f\nfirst_active_world_s=%.9f\nend_observed_world_s=%.9f\nfirst_active_dt=%.9f\nend_dt=%.9f\nendpoint_xy_cm=%.9f\nsigned_progress_cm=%.9f\nsampled_post_tick_xy_path_cm=%.9f\nactual_movement_callback_xy_path_cm=%.9f\nactual_movement_callback_count=%d\nactual_hit_callback_count=%d\nzero_hit_callbacks_does_not_prove_no_collision=1\nstamina_before=%.9f\nstamina_before_scope=prearm_not_request\nstamina_request=%.9f\nstamina_end=%.9f\npost_samples=%d\nactual_dt_min=%.9f\nactual_dt_max=%.9f\nactual_dt_mean=%.9f\ntarget_dt_mismatch_count=%d\ndodge_end_timer_handle=unmeasured\nanim_root_params_outside_PerformMovement=not_certified\nnominal_distance_is_not_asserted_as_realized=1\n"),
             *Config.Label, Config.Case == ECase::FreeFlat ? TEXT("free_flat") : Config.Case == ECase::WallFlat ? TEXT("wall_flat") : TEXT("unclassified_live_world"), Config.RequestedHz,
             bFinished, *Reason, bRequested, Activations, bEndObserved, bInvalid, bInvalidFloor, bProfileStable,
             NominalDistance, NominalDuration, NominalCooldown, EffectiveCost, RequestFrame, FirstActiveFrame, EndFrame,
             RequestWorld, FirstActiveWorld, EndWorld, FirstActiveDT, EndDT,
             bEndObserved ? EndDelta.Size2D() : -1., bEndObserved ? FVector::DotProduct(EndDelta, Direction) : -1.,
             SampledXYPath, Config.bMovementUpdatedCallbackBound ? MovementCallbackXYPath : -1.,
-            Config.bMovementUpdatedCallbackBound ? MovementCallbacks : -1, Config.bActualHitCallbackBound ? ActualHitCallbacks : -1, BeforeStamina, EndStamina,
+            Config.bMovementUpdatedCallbackBound ? MovementCallbacks : -1, Config.bActualHitCallbackBound ? ActualHitCallbacks : -1, BeforeStamina, RequestStamina, EndStamina,
             PostSamples, PostSamples ? MinDT : -1., PostSamples ? MaxDT : -1., PostSamples ? DTTotal / PostSamples : -1., DTMismatches);
     }
 
@@ -296,7 +300,7 @@ private:
     FVector Direction=FVector::ZeroVector, RequestPosition=FVector::ZeroVector, LastPostPosition=FVector::ZeroVector, EndPosition=FVector::ZeroVector;
     double StartedWall=0, RequestWall=0, RequestWorld=-1, FirstActiveWorld=-1, EndWorld=-1, FirstActiveDT=0, EndDT=0;
     double SampledXYPath=0, MovementCallbackXYPath=0, MinDT=DBL_MAX, MaxDT=0, DTTotal=0;
-    float NominalDistance=0, NominalDuration=0, NominalCooldown=0, EffectiveCost=0, BeforeStamina=0, EndStamina=-1;
+    float NominalDistance=0, NominalDuration=0, NominalCooldown=0, EffectiveCost=0, BeforeStamina=0, RequestStamina=-1, EndStamina=-1;
     uint64 RequestFrame=0, FirstActiveFrame=0, EndFrame=0;
     int32 Activations=0, PostSamples=0, DTMismatches=0, MovementCallbacks=0, ActualHitCallbacks=0, DroppedEvents=0;
     bool bStarted=false, bRequested=false, bFinished=false, bPreviousActive=false, bEndObserved=false;

@@ -1,0 +1,102 @@
+{
+  "schema": "Rogue10m.NormalGrowthVictoryVerification.v1",
+  "run": "BasicRun1101M",
+  "branch": "Sprint#9-23-normal-growth-boss-qa",
+  "HEAD_at_launch": "37aa005615b601c398e661a6943b2efb63cdd8de",
+  "runtime_source_CPP_sha256": "49f6a0894e5bd4e2a46f7158553e994e1059880d29edab76fd89f382d64e4d15",
+  "runtime_header_sha256": "164db30109c3e04e5e54655209661a28111d57b1acbf1d679f6f8fdd402be605",
+  "editor_build": "Succeeded;actual CPP compile/link;12.66s",
+  "programmatic_rendered_input": true,
+  "human_physical_play": false,
+  "outcome": "returned_victory",
+  "full_boss_completion": true,
+  "actual_game_duration_limit_s": 1200,
+  "driver_wall_seconds": 1111.005,
+  "last_Running_sample_world_s": 1085.882,
+  "last_Running_sample_remaining_s": 115.0,
+  "last_Running_sample_is_not_exact_terminal_time": true,
+  "growth": {
+    "level_before_learning": 3,
+    "GreatSword_mastery_before_learning": 3,
+    "node": "I.Mana.Entry",
+    "points_before": 2,
+    "points_after": 1,
+    "spent_before": 0,
+    "spent_after": 1,
+    "effective_identity": "Mana",
+    "new_MageRank2_technique": "not_evaluated"
+  },
+  "combat": {
+    "primary_requests": 234,
+    "boss_HP_loss_observations": 233,
+    "player_HP_loss_observations": 0,
+    "player_min_sampled_HP": 135.0,
+    "dodge_requested": 8,
+    "dodge_accepted": 8,
+    "acceptance_is_not_evade_certification": true,
+    "outside_hold_observations": 137,
+    "margin_reacquires": 0,
+    "boss_stats_AI_collision_victory_gate_modified": false,
+    "HP_XP_resource_position_time_fixtures": false,
+    "human_difficulty_or_fairness": "not_evaluated"
+  },
+  "result_UI": {
+    "boss_run_XP_bonus": 3000,
+    "boss_run_gold_bonus": 300,
+    "run_gold_display": 313,
+    "lobby_points_gain": 24,
+    "lobby_available_after_settlement": 24,
+    "save_completed_display": true
+  },
+  "Hub_reset": "selected level/mastery/learned node/sword GUID/profile/phase and Discovery gates passed; not all inventory or legacy skills",
+  "same_profile_next_field": "not_performed_in_M",
+  "legacy_extra_skill_icons": "under_source_review; screenshot difference alone does not establish defect",
+  "process_exit_code": 0,
+  "driver_summary_issues": [],
+  "preservation": {
+    "old_saves": 352,
+    "old_missing_or_changed": 0,
+    "after_saves": 354,
+    "old_package_hashes_checked": 31,
+    "packages_changed": 0,
+    "OpenRunMap_unchanged": true
+  },
+  "media": [
+    {
+      "file": "29_skill_confirm.png",
+      "sha256": "719e22e40754c4294ddd41f0db505e8acae0b5e13adb8480e532db3a476499b2",
+      "decoded_size": [
+        1280,
+        720
+      ],
+      "root_visually_reviewed": true
+    },
+    {
+      "file": "33_result.png",
+      "sha256": "ad4e0299d9823f718cc8c7693e72d734ba5d8740a9323988d93840953450be96",
+      "decoded_size": [
+        1280,
+        720
+      ],
+      "root_visually_reviewed": true
+    },
+    {
+      "file": "34_returned_hub.png",
+      "sha256": "b9fabbaa44d62af4cf2cd26bb87a782adca8bcbd87c8411290d84eb0eb98c0f5",
+      "decoded_size": [
+        1280,
+        720
+      ],
+      "root_visually_reviewed": true
+    }
+  ],
+  "remaining": [
+    "same-profile next field and abandon return",
+    "legacy skill reset scope review",
+    "human manual run",
+    "view occlusion and blur",
+    "GreatSword-specific weapon/motion presentation",
+    "exact contact/recovery animation capture",
+    "packaging"
+  ]
+}

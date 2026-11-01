@@ -559,6 +559,8 @@ private:
             || !FMath::IsFinite(PreparedRange) || PreparedRange <= 0.f || !FMath::IsFinite(PreparedHalfWidth) || PreparedHalfWidth <= 0.f
             || !FMath::IsFinite(PreparedHalfHeight) || PreparedHalfHeight <= 0.f || !FMath::IsFinite(PreparedArc) || PreparedArc < 1.f || PreparedArc > 180.f) { return false; }
         PreparedDirectionFrame = GFrameCounter; bOrbitInsideSeen = false;
+        OrbitWarningPattern = &Pattern;
+        bOrbitWarningExitedMargin = false; bOrbitWarningHolding = false; bOrbitWarningMoveLogged = false;
         return true;
     }
     bool OrbitInsideProductShape(const FVector& Position) const
@@ -600,6 +602,92 @@ private:
         }
         StopMove(); Block(TEXT("orbit_both_short_steps_blocked_or_outside_arena")); return false;
     }
+    bool ReadOrbitWarningClearance(const FVector& WarningPosition, float& WarningClearance, FVector& WarningOutward) const
+    {
+        const auto* WarningCapsule = Character.IsValid() ? Character->GetCapsuleComponent() : nullptr;
+        const float WarningR = WarningCapsule ? WarningCapsule->GetScaledCapsuleRadius() : 0.f;
+        if (!WarningCapsule || WarningPosition.ContainsNaN() || !FMath::IsFinite(WarningR) || WarningR <= 0.f) { return false; }
+        const FVector WarningOffset = WarningPosition - PreparedLockedCenter;
+        if (PreparedType == ERogue10mMonsterAttackType::AbyssZone)
+        {
+            WarningClearance = static_cast<float>(WarningOffset.Size2D()) - (PreparedRange + WarningR);
+            WarningOutward = WarningOffset.GetSafeNormal2D();
+            if (WarningOutward.IsNearlyZero()) { WarningOutward = PreparedLockedForward; }
+        }
+        else if (PreparedType == ERogue10mMonsterAttackType::FrontalWave)
+        {
+            const FVector WarningRight(-PreparedLockedForward.Y, PreparedLockedForward.X, 0.);
+            const float WarningAlong = static_cast<float>(FVector::DotProduct(WarningOffset, PreparedLockedForward));
+            const float WarningSide = static_cast<float>(FVector::DotProduct(WarningOffset, WarningRight));
+            const float WarningPlanes[] = {-WarningAlong, WarningAlong - PreparedRange - WarningR,
+                WarningSide - PreparedHalfWidth - WarningR, -WarningSide - PreparedHalfWidth - WarningR};
+            const FVector WarningNormals[] = {-PreparedLockedForward, PreparedLockedForward, WarningRight, -WarningRight};
+            int32 WarningBestPlane = 0;
+            for (int32 WarningPlaneIndex = 1; WarningPlaneIndex < 4; ++WarningPlaneIndex)
+            { if (WarningPlanes[WarningPlaneIndex] > WarningPlanes[WarningBestPlane]) { WarningBestPlane = WarningPlaneIndex; } }
+            WarningClearance = WarningPlanes[WarningBestPlane]; WarningOutward = WarningNormals[WarningBestPlane];
+        }
+        else { return false; }
+        // XY clearance is conservative: never treat transient vertical separation as a safe hold.
+        return FMath::IsFinite(WarningClearance) && !WarningOutward.ContainsNaN() && !WarningOutward.IsNearlyZero();
+    }
+    bool OrbitEscapeWarningOrHold(const FVector& WarningAim, float WarningOrbitRadius, FVector& WarningDesired)
+    {
+        const FVector WarningPosition = Character->GetActorLocation(), WarningVelocity = Character->GetVelocity();
+        float WarningClearance = 0.f; FVector WarningOutward;
+        if (!ReadOrbitWarningClearance(WarningPosition, WarningClearance, WarningOutward) || WarningVelocity.ContainsNaN())
+        { StopMove(); Block(TEXT("orbit_warning_clearance_or_velocity_invalid")); return false; }
+        const float WarningR = Character->GetCapsuleComponent()->GetScaledCapsuleRadius();
+        const float WarningMargin = FMath::Max(60.f, WarningR * 2.f);
+        const float WarningNormalVelocity = static_cast<float>(FVector::DotProduct(WarningVelocity, WarningOutward));
+        if (!FMath::IsFinite(WarningMargin) || !FMath::IsFinite(WarningNormalVelocity))
+        { StopMove(); Block(TEXT("orbit_warning_margin_or_normal_velocity_invalid")); return false; }
+        if (WarningClearance > WarningMargin)
+        {
+            // Latch this warning's escape even when inward residual velocity still needs correction.
+            bOrbitWarningExitedMargin = true;
+            if (WarningNormalVelocity >= -1.f)
+            {
+                if (!bOrbitWarningHolding)
+                {
+                    ++OrbitWarningHoldObservations;
+                    Event(TEXT("orbit_warning_hold_outside"), FString::Printf(TEXT("count=%d type=%d clearance=%.3f margin=%.3f normal_velocity=%.3f; current_XY_outside_not_future_damage_immunity"),
+                        PreparedLastWindup, static_cast<int32>(PreparedType), WarningClearance, WarningMargin, WarningNormalVelocity));
+                }
+                bOrbitWarningHolding = true; StopMove(); WarningDesired = FVector::ZeroVector; return true;
+            }
+        }
+        if (bOrbitWarningHolding)
+        {
+            bOrbitWarningHolding = false; ++OrbitWarningMarginReacquires;
+            Event(TEXT("orbit_warning_margin_reacquire"), FString::Printf(TEXT("count=%d type=%d clearance=%.3f normal_velocity=%.3f; resume_outward_input_not_orbit"),
+                PreparedLastWindup, static_cast<int32>(PreparedType), WarningClearance, WarningNormalVelocity));
+        }
+        // Preserve the already observed Wave walking escape until its buffered exit.
+        // Once it has exited, never return to orbit during this same warning.
+        if (PreparedType == ERogue10mMonsterAttackType::FrontalWave && !bOrbitWarningExitedMargin)
+        { return OrbitStep(WarningAim, WarningOrbitRadius, true, WarningDesired); }
+        const float WarningStepLength = FMath::Clamp(WarningR * .75f, 20.f, 45.f);
+        const FVector WarningTangent(-WarningOutward.Y, WarningOutward.X, 0.);
+        for (int32 WarningAttempt = 0; WarningAttempt < 3; ++WarningAttempt)
+        {
+            const float WarningSide = WarningAttempt == 0 ? 0.f : (WarningAttempt == 1 ? .75f : -.75f);
+            WarningDesired = (WarningOutward + WarningTangent * WarningSide).GetSafeNormal2D();
+            FVector WarningGoal = WarningPosition + WarningDesired * WarningStepLength; WarningGoal.Z = WarningPosition.Z;
+            float WarningGoalClearance = 0.f; FVector WarningGoalOutward;
+            if (WarningDesired.IsNearlyZero() || !ReadOrbitWarningClearance(WarningGoal, WarningGoalClearance, WarningGoalOutward)
+                || WarningGoalClearance <= WarningClearance + .01f || !PreparedGoalSafe(WarningGoal, false)) { continue; }
+            if (!bOrbitWarningMoveLogged)
+            {
+                bOrbitWarningMoveLogged = true;
+                Event(TEXT("orbit_warning_outward_step"), FString::Printf(TEXT("count=%d type=%d clearance=%.3f goal_clearance=%.3f length=%.3f candidate=%d; short_capsule_sweep_and_input_only_not_arrival_or_ETA"),
+                    PreparedLastWindup, static_cast<int32>(PreparedType), WarningClearance, WarningGoalClearance, WarningStepLength, WarningAttempt));
+            }
+            PreparedMove(WarningGoal); return true;
+        }
+        StopMove(); Block(TEXT("orbit_warning_no_short_outward_swept_step")); return false;
+    }
+
     void OrbitFight(float Delta, const URogue10mMonsterAttackPatternComponent& Pattern, float DodgeCost, const FRogue10mAttackResourceBudget& Light)
     {
         const auto* A = Character->GetRogueAttributeSet(); const auto* BossA = Target->GetRogueAttributeSet();
@@ -648,7 +736,7 @@ private:
         Key(EKeys::LeftShift, false);
         if (Phase == ERogue10mMonsterPatternState::Windup)
         {
-            if (PreparedLastWindup != Count)
+            if (PreparedLastWindup != Count || OrbitWarningPattern.Get() != &Pattern)
             {
                 if (!OrbitLatchShape(Pattern)) { Block(TEXT("orbit_public_locked_shape_invalid")); return; }
                 PreparedLastWindup = Count;
@@ -663,7 +751,10 @@ private:
             { OrbitShapeExitAttack = Count; ++OrbitShapeExitObservations; Event(TEXT("orbit_shape_exit_observed"), FString::Printf(TEXT("count=%d; current_position_outside_product_shape_not_a_future_evade_guarantee"), Count)); }
             if (Inside != PreparedInsideShapeAt(Character->GetActorLocation()) && OrbitPaddingDifferenceAttack != Count)
             { OrbitPaddingDifferenceAttack = Count; ++OrbitPaddingDifferences; Event(TEXT("orbit_QA_padding_difference"), FString::Printf(TEXT("count=%d product_inside=%d padded_QA_inside=%d; product_predicate_matches_runtime_formula"), Count, Inside, PreparedInsideShapeAt(Character->GetActorLocation()))); }
-            FVector Desired; if (!OrbitStep(Aim, Radius, true, Desired)) { return; }
+            FVector Desired;
+            if (PreparedType == ERogue10mMonsterAttackType::Basic)
+            { if (!OrbitStep(Aim, Radius, true, Desired)) { return; } }
+            else if (!OrbitEscapeWarningOrHold(Aim, Radius, Desired)) { return; }
             const double RemainingLower = OrbitWindupDeadlineLower - World->GetTimeSeconds();
             const bool TimingKnown = OrbitTimingAttack == Count && OrbitWindupDeadlineLower >= 0. && FMath::IsFinite(RemainingLower);
             const double Margin = FMath::Max(.05, static_cast<double>(FMath::Max(0.f, Delta)) * 3.);
@@ -681,14 +772,18 @@ private:
         }
         if (Phase == ERogue10mMonsterPatternState::Recovery)
         {
+            const bool OrbitFreeLightBudget = Light.Health == 0.f && Light.Stamina == 0.f && Light.Mana == 0.f && Light.Energy == 0.f;
             // Face is unchanged. Stop orbit while aligning instead of assuming the camera can track arbitrary angular speed.
             StopMove(); if (!Facing) { return; }
             if (Distance >= Reach + 50.f) { FVector Desired; OrbitStep(Aim, Radius, false, Desired); return; }
             if (PreparedPunishedAttack != Count && !Combat->IsWeaponChangeBlocked() && !Combat->IsComboSequenceActive(World->GetTimeSeconds())
-                && Combat->GetAttackCooldownRemaining() <= .02f && Light.CanPay(*A) && A->GetStamina() - Light.Stamina >= DodgeCost)
+                && Combat->GetAttackCooldownRemaining() <= .02f && Light.CanPay(*A)
+                && (OrbitFreeLightBudget || A->GetStamina() - Light.Stamina >= DodgeCost))
             {
                 PreparedPunishedAttack = Count; ++OrbitPrimaryRequests; Pulse(EKeys::LeftMouseButton, .12); NextAttack = Now() + .35;
-                Event(TEXT("prepared_recovery_attack_input"), FString::Printf(TEXT("count=%d; orbit_one_normal_primary_request_not_a_forced_hit"), Count));
+                if (OrbitFreeLightBudget) { ++OrbitFreePrimaryRequests; }
+                Event(TEXT("prepared_recovery_attack_input"), FString::Printf(TEXT("count=%d free_budget=%d H=%.3f S=%.3f M=%.3f E=%.3f; orbit_one_normal_primary_request_not_a_forced_hit_no_reserve_for_exact_zero_budget"),
+                    Count, OrbitFreeLightBudget, Light.Health, Light.Stamina, Light.Mana, Light.Energy));
             }
             return;
         }
@@ -1710,6 +1805,7 @@ private:
             GreatSwordGrowthSpentBefore, GreatSwordGrowthSpentAfter);
         Text += FString::Printf(TEXT("prepared_boss_strategy=%d\nprepared_dodge_requested=%d\nprepared_dodge_accepted=%d\nprepared_dodge_unobserved=%d\n"), bPreparedBossStrategy, PreparedDodgeRequested, PreparedDodgeAccepted, PreparedDodgeUnobserved);
         Text += FString::Printf(TEXT("orbit_boss_strategy=%d\norbit_side_reversals=%d\norbit_shape_exit_observations=%d\norbit_padding_differences=%d\norbit_primary_requests=%d\norbit_player_hp_loss_observations=%d\norbit_boss_hp_loss_observations=%d\n"), bOrbitBossStrategy, OrbitSideReversals, OrbitShapeExitObservations, OrbitPaddingDifferences, OrbitPrimaryRequests, OrbitPlayerHPLossObservations, OrbitBossHPLossObservations);
+        Text += FString::Printf(TEXT("orbit_warning_hold_retry=%d\norbit_warning_hold_observations=%d\norbit_warning_margin_reacquires=%d\norbit_zero_budget_primary_requests=%d\n"), bOrbitBossStrategy, OrbitWarningHoldObservations, OrbitWarningMarginReacquires, OrbitFreePrimaryRequests);
         Text += FString::Printf(TEXT("pending_screenshot=%s\nqueued_screenshot_count=%d\nrequested_or_queued_capture_count=%d\nreset_scope=level_BrawlerXP_selected_learned_node_specific_sword_GUID_profile_phase_only\n"),*PendingShot,ShotQueue.Num(),ShotCount);
         if (bAnimationEvidence)
         {
@@ -1752,6 +1848,9 @@ private:
     bool bGearHitPathLogged = false;
     FString GearExpectedItemPath, GearExpectedPrimaryPath, GearBeforePrimaryPath;
     bool bPreparedBossStrategy = false, bPreparedReserveWaiting = false;
+    TWeakObjectPtr<const URogue10mMonsterAttackPatternComponent> OrbitWarningPattern;
+    bool bOrbitWarningExitedMargin = false, bOrbitWarningHolding = false, bOrbitWarningMoveLogged = false;
+    int32 OrbitWarningHoldObservations = 0, OrbitWarningMarginReacquires = 0, OrbitFreePrimaryRequests = 0;
     bool bOrbitBossStrategy = false, bOrbitGeometryLogged = false, bOrbitInsideSeen = false;
     float OrbitSide = 1.f, OrbitLastPlayerHP = -1.f, OrbitLastBossHP = -1.f;
     int32 OrbitSideReversals = 0, OrbitShapeExitObservations = 0, OrbitPaddingDifferences = 0, OrbitPrimaryRequests = 0;

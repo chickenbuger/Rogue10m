@@ -2685,3 +2685,9 @@ NPC44검사와 핵심6suite30검사를 모두 통과했다. 정상 E/F/G는 메�
 - 보존: 기존 저장350 SHA 불변, QA2 추가; 에셋31/맵 불변. 사진5장 실제 디코딩/검토.
 - 다음: 원형 경고 재진입과 무료 공격 reserve QA 결함을 수정해 정상 승리 재검증.
 - 문서: Feature/architect/2026-11-01_normal-growth-boss-qa.md, Feature/doc/2026-11-01_normal-growth-boss-qa.md
+
+
+9-23 후속: L근거를37aa0056으로보존한뒤 QA장판바깥유지·무료기본공격예산검사를수정,실제Editor12.66초재컴파일성공.352sav변경0. M실제실행은UI반환대기중이며보스승리완료아님.
+
+
+9-23 M결과: 정상성장/마나학습→보스실제처치→승리저장+24→마을귀환 PASS(fullBoss1/exit0). 제품수치/피해판정불변, 기존352sav/31패키지/맵 보존, QA2추가. 다음판/legacy기술초기화범위는계속검증하며 사람직접완주·시야·패키징완료아님. Feature/doc/2026-11-01_normal-growth-boss-qa.md와 M_NormalVictory 기록 참고.

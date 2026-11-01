@@ -11,3 +11,11 @@ A separate opt-in read-only observer records the first boss Alt using weak pre/p
 Build Editor, check launcher syntax/option guards, inspect diff, then obtain explicit YouTube UI return before a fresh visible QA run. Preserve failed attempts. Compare all old save hashes and original asset/map hashes afterward. Separate rendered engine-driven input from physical human input, full field play and packaging. Source-level calculations do not prove runtime victory.
 
 Rollback: only this packet's three QA files and documentation; no reset/deletion/automatic merge/remote push/original asset edit.
+
+## L evidence and M retry scope
+
+L passed natural level3/GreatSword mastery3, paid Mana UMG learning/effective identity, real boss approach and death settlement/Hub return. It did not win. Preserve failed L at local commit37aa0056 and all352 current save copies before changes.
+
+Fix QA strategy only: Abyss escapes radially from its locked center; Wave keeps its initial walking escape. After positive clearance and outward residual velocity, hold outside until that warning finishes; do not orbit back into the zone. Preserve Basic orbit and actual Alt affordability. Only an exactly zero four-resource basic budget skips the artificial QA dodge reserve; actual affordability/state/cooldown/facing/range remain required. No product stats, damage, HP/XP, outcome or victory-gate changes. Geometry math checks do not prove actual sweeps, walking, braking or survival.
+
+Clarify the observer's prearm stamina scope and separately sample stamina at the actual request. Prior L artifacts remain unchanged. Build current source before a fresh M visible run, and reacquire sole UI control from YouTube first.
