@@ -540,7 +540,9 @@ bool ARogue10mTutorialNPC::UpgradeTrait(ERogue10mTownTrait Trait)
 	}
 	const FRogue10mTraitDefinition Definition = Town->GetUpgradeDefinition(Trait, &GetServiceData());
 	return FinishService(Town->TryUpgradeTrait(Trait, &GetServiceData()),
-		FText::Format(NSLOCTEXT("Rogue10mTown", "TraitUpgradeCost", "{0} 강화 완료 · 특성 포인트 {1} 사용"), Definition.DisplayName, FText::AsNumber(Definition.PointCost)),
+		FText::Format(Town->UsesLobbyBudget()
+			? NSLOCTEXT("Rogue10mTown", "LobbyTraitUpgradeCost", "{0} 강화 완료 · 로비 재화 {1} 사용")
+			: NSLOCTEXT("Rogue10mTown", "GrowthTraitUpgradeCost", "{0} 강화 완료 · 성장 포인트 {1} 사용"), Definition.DisplayName, FText::AsNumber(Definition.PointCost)),
 		NSLOCTEXT("Rogue10mTown", "TraitUpgradeFailed", "현재 상태에서 특성을 강화할 수 없습니다."));
 }
 
@@ -601,7 +603,9 @@ bool ARogue10mTutorialNPC::ResetTraits()
 	URogue10mTownProgressionComponent* Town = FindTownProgression();
 	const int32 Refund = Town ? Town->GetSpentTraitPoints() : 0;
 	return FinishService(Town && Town->TryResetTraits(),
-		FText::Format(NSLOCTEXT("Rogue10mTraits", "ResetComplete", "특성 재분배 완료 · {0}포인트 반환"), FText::AsNumber(Refund)),
+		FText::Format(Town && Town->UsesLobbyBudget()
+			? NSLOCTEXT("Rogue10mTraits", "LobbyResetComplete", "특성 재분배 완료 · 로비 재화 {0} 반환")
+			: NSLOCTEXT("Rogue10mTraits", "GrowthResetComplete", "특성 재분배 완료 · 성장 포인트 {0} 반환"), FText::AsNumber(Refund)),
 		NSLOCTEXT("Rogue10mTraits", "ResetFailed", "현재 상태에서는 특성을 재분배할 수 없습니다."));
 }
 
@@ -695,7 +699,7 @@ FText ARogue10mTutorialNPC::BuildServiceText() const
 	Rows.Add(FString::Printf(TEXT("회복 물약 1개 구매 · %d 골드"), Data.PotionGoldCost));
 	Rows.Add(FString::Printf(TEXT("장착 무기 +%d 강화 · %s · 공격 +%g"), WeaponLevel, *CostText(WeaponLevel), Data.EnhancementAttackPerLevel));
 	Rows.Add(FString::Printf(TEXT("장착 방어구 +%d 강화 · %s · 방어 +%g"), ArmorLevel, *CostText(ArmorLevel), Data.EnhancementDefensePerLevel));
-	Rows.Add(FString::Printf(TEXT("특성 강화 창 열기 · 16종 · 보유 %d포인트"), Town ? Town->GetAvailableTraitPoints() : 0));
+	Rows.Add(FString::Printf(TEXT("영구 특성 강화 창 열기 · 16종 · 보유 %d %s"), Town ? Town->GetAvailableTraitPoints() : 0, Town && Town->UsesLobbyBudget() ? TEXT("로비 재화") : TEXT("성장 포인트")));
 	const auto DifficultyRow = [&Rows](const TCHAR* Label, const FRogue10mDifficultyModifiers& Scale)
 	{
 		Rows.Add(FString::Printf(TEXT("%s · 적 HP ×%g / 피해 ×%g / XP ×%g"), Label, Scale.HealthMultiplier, Scale.DamageMultiplier, Scale.ExperienceMultiplier));
@@ -703,11 +707,13 @@ FText ARogue10mTutorialNPC::BuildServiceText() const
 	DifficultyRow(TEXT("쉬움"), Data.Easy);
 	DifficultyRow(TEXT("보통"), Data.Normal);
 	DifficultyRow(TEXT("어려움"), Data.Hard);
-	FString Text = FString::Printf(TEXT("마을 서비스 · %d 골드 · 특성 %d포인트\n다음 탐험: %s\n"), Inventory ? Inventory->GetGold() : 0, Town ? Town->GetAvailableTraitPoints() : 0, *DifficultyName);
+	FString Text = FString::Printf(TEXT("현재 보유 · 이번 판 골드 %d · %s %d\n다음 탐험: %s\n"), Inventory ? Inventory->GetGold() : 0, Town && Town->UsesLobbyBudget() ? TEXT("로비 재화") : TEXT("성장 포인트"), Town ? Town->GetAvailableTraitPoints() : 0, *DifficultyName);
 	for (int32 Index = 0; Index < Rows.Num(); ++Index)
 	{
 		Text += FString::Printf(TEXT("%s %s\n"), Index == SelectedServiceIndex ? TEXT("▶") : TEXT("  "), *Rows[Index]);
 	}
-	Text += TEXT("↑↓ 선택 · Enter 이용 · Esc 닫기\n레벨 상승: 특성 +1 · 몬스터 처치: 골드 획득");
+	Text += Town && Town->UsesLobbyBudget()
+		? TEXT("↑↓ 선택 · Enter 이용 · Esc 닫기\n로비 재화: 판 종료 정산 · 레벨업 성장 포인트와 별개")
+		: TEXT("↑↓ 선택 · Enter 이용 · Esc 닫기\n성장 포인트와 이번 판 골드는 별도입니다.");
 	return FText::FromString(Text);
 }

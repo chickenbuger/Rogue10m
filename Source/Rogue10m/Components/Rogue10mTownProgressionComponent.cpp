@@ -226,7 +226,9 @@ bool URogue10mTownProgressionComponent::CanUpgradeTrait(
 	}
 	if (GetAvailableTraitPoints() < Def.PointCost)
 	{
-		OutReason = NSLOCTEXT("Rogue10mTraits", "NoPoints", "특성 포인트가 부족합니다.");
+		OutReason = UsesLobbyBudget()
+			? NSLOCTEXT("Rogue10mTraits", "NoLobbyCurrency", "로비 재화가 부족합니다.")
+			: NSLOCTEXT("Rogue10mTraits", "NoGrowthPoints", "성장 포인트가 부족합니다.");
 		return false;
 	}
 	return true;

@@ -79,6 +79,14 @@ namespace Rogue10mTraitsUI
 		Style.Disabled.TintColor = FSlateColor(FLinearColor(0.05f, 0.055f, 0.055f));
 		Button->SetStyle(Style);
 	}
+	int32 UnlockLevel(const URogue10mTownProgressionComponent* Town, const ARogue10mPlayerState* State)
+	{
+		return Town && Town->UsesLobbyBudget() ? Town->GetLobbyUnlockLevel() : State ? State->GetPlayerLevel() : 0;
+	}
+	const TCHAR* BudgetName(const URogue10mTownProgressionComponent* Town)
+	{
+		return Town && Town->UsesLobbyBudget() ? TEXT("로비 재화") : TEXT("성장 포인트");
+	}
 	FText Number(float Value)
 	{
 		FNumberFormattingOptions Format;
@@ -154,7 +162,9 @@ void URogue10mTraitWidget::InitializeTraits(URogue10mTownProgressionComponent* T
 	SelectedTrait = ERogue10mTownTrait::CriticalChance;
 	EnsureNativeWidget();
 	RebuildCards();
-	SetMessage(FText::FromString(TEXT("특성은 캐릭터별로 저장됩니다. 레벨이 오를 때 1포인트를 얻습니다.")), false);
+	SetMessage(FText::FromString(TownComponent.IsValid() && TownComponent->UsesLobbyBudget()
+		? TEXT("로비 재화로 영구 특성을 강화합니다. 판 종료 정산으로 얻으며, 현재 판 성장 포인트와 별개입니다.")
+		: TEXT("특성은 캐릭터별로 저장됩니다. 사용 가능한 성장 포인트 안에서 강화합니다.")), false);
 	const UGameInstance* Instance = GetGameInstance();
 	const URogue10mProgressionSubsystem* Save = Instance ? Instance->GetSubsystem<URogue10mProgressionSubsystem>() : nullptr;
 	if (Save && !Save->GetLastError().IsEmpty())
@@ -502,17 +512,17 @@ void URogue10mTraitWidget::RefreshFromData()
 	if (!CardGrid || !TownComponent.IsValid()) { return; }
 	if (Cards.Num() == 0) { RebuildCards(); }
 	const int32 Points = TownComponent->GetAvailableTraitPoints();
-	PointsText->SetText(FText::Format(FText::FromString(TEXT("보유 포인트  {0}")), FText::AsNumber(Points)));
+	PointsText->SetText(FText::Format(FText::FromString(TownComponent->UsesLobbyBudget() ? TEXT("보유 로비 재화  {0}") : TEXT("사용 가능 성장 포인트  {0}")), FText::AsNumber(Points)));
 	if (BoundPlayerState.IsValid())
 	{
-		IdentityText->SetText(FText::Format(FText::FromString(TEXT("{0}  ·  LV {1}")),
-			BoundPlayerState->GetCharacterDisplayName(), FText::AsNumber(BoundPlayerState->GetPlayerLevel())));
+		IdentityText->SetText(FText::Format(FText::FromString(TownComponent->UsesLobbyBudget() ? TEXT("{0}  ·  최고 런 LV {1}") : TEXT("{0}  ·  LV {1}")),
+			BoundPlayerState->GetCharacterDisplayName(), FText::AsNumber(Rogue10mTraitsUI::UnlockLevel(TownComponent.Get(), BoundPlayerState.Get()))));
 	}
 	for (FRogue10mTraitCardView& Card : Cards)
 	{
 		const FRogue10mTraitDefinition Definition = TownComponent->GetUpgradeDefinition(Card.Trait, GetServiceData());
 		const int32 Rank = TownComponent->GetTraitLevel(Card.Trait);
-		const bool bLocked = BoundPlayerState.IsValid() && BoundPlayerState->GetPlayerLevel() < Definition.UnlockLevel;
+		const bool bLocked = Rogue10mTraitsUI::UnlockLevel(TownComponent.Get(), BoundPlayerState.Get()) < Definition.UnlockLevel;
 		Card.Name->SetText(Definition.DisplayName);
 		Card.Rank->SetText(FText::Format(FText::FromString(TEXT("{0} / {1}")), FText::AsNumber(Rank), FText::AsNumber(Definition.MaxRank)));
 		Card.Effect->SetText(Definition.EffectSummary);
@@ -521,9 +531,9 @@ void URogue10mTraitWidget::RefreshFromData()
 			Card.Effect->SetText(FText::Format(FText::FromString(Card.Trait == ERogue10mTownTrait::Vitality
 				? TEXT("최대 체력 +{0}/단계") : TEXT("공격력 +{0}/단계")), Rogue10mTraitsUI::Number(Definition.ValuePerRank)));
 		}
-		Card.State->SetText(bLocked ? FText::Format(FText::FromString(TEXT("잠김 · LV {0}")), FText::AsNumber(Definition.UnlockLevel))
+		Card.State->SetText(bLocked ? FText::Format(FText::FromString(TownComponent->UsesLobbyBudget() ? TEXT("해금 · 최고 런 LV {0}") : TEXT("해금 · LV {0}")), FText::AsNumber(Definition.UnlockLevel))
 			: Rank >= Definition.MaxRank ? FText::FromString(TEXT("최대 단계"))
-			: Points < Definition.PointCost ? FText::FromString(TEXT("포인트 부족")) : FText::GetEmpty());
+			: Points < Definition.PointCost ? FText::FromString(FString::Printf(TEXT("%s 부족"), Rogue10mTraitsUI::BudgetName(TownComponent.Get()))) : FText::GetEmpty());
 		Card.Name->SetColorAndOpacity(FSlateColor(bLocked ? Rogue10mTraitsUI::Muted : Rogue10mTraitsUI::White));
 		Card.Frame->SetBrushColor(Card.Trait == SelectedTrait ? Rogue10mTraitsUI::Gold
 			: bLocked ? FLinearColor(0.19f, 0.20f, 0.20f) : Rogue10mTraitsUI::CategoryColor(static_cast<int32>(Definition.Category)) * 0.65f);
@@ -545,7 +555,9 @@ void URogue10mTraitWidget::RefreshFromData()
 	if (bResetConfirmation)
 	{
 		const int32 Spent = TownComponent->GetSpentTraitPoints();
-		ResetSummary->SetText(FText::Format(FText::FromString(TEXT("투자한 특성을 초기화하고 사용한 포인트를 모두 돌려받습니다.\n\n사용한 포인트  {0}\n돌려받는 포인트  +{0}\n재분배 후 보유  {1} → {2}\n\n재분배 비용 없음\n레벨과 스킬, 아이템은 유지됩니다.")),
+		ResetSummary->SetText(FText::Format(FText::FromString(TownComponent->UsesLobbyBudget()
+			? TEXT("투자한 영구 특성을 초기화하고 사용한 로비 재화를 모두 돌려받습니다.\n\n사용한 재화  {0}\n돌려받는 재화  +{0}\n재분배 후 보유  {1} → {2}\n\n재분배 비용 없음\n현재 판 성장 포인트와 별개입니다.")
+			: TEXT("투자한 특성을 초기화하고 사용한 성장 포인트를 모두 돌려받습니다.\n\n사용한 포인트  {0}\n돌려받는 포인트  +{0}\n재분배 후 보유  {1} → {2}\n\n재분배 비용 없음\n장비와 스킬은 유지됩니다.")),
 			FText::AsNumber(Spent), FText::AsNumber(Points), FText::AsNumber(static_cast<int64>(Points) + Spent)));
 		ConfirmResetButton->SetIsEnabled(bCanInteract && TownComponent->CanChangeTraits() && Spent > 0);
 	}
@@ -602,16 +614,16 @@ void URogue10mTraitWidget::RefreshDetail()
 	FText Reason;
 	bool bAllowed = CanInteract(Reason);
 	if (bAllowed) { bAllowed = TownComponent->CanUpgradeTrait(SelectedTrait, Reason, GetServiceData()); }
-	FString Conditions = FString::Printf(TEXT("단계당 %d포인트 · 최대 %d단계\nLV %d부터 투자 가능"), Definition.PointCost, Definition.MaxRank, Definition.UnlockLevel);
+	FString Conditions = FString::Printf(TEXT("단계당 %d %s · 최대 %d단계\n%sLV %d 달성 시 해금"), Definition.PointCost, Rogue10mTraitsUI::BudgetName(TownComponent.Get()), Definition.MaxRank, TownComponent->UsesLobbyBudget() ? TEXT("최고 런 ") : TEXT(""), Definition.UnlockLevel);
 	if (Definition.DurationSeconds > 0) { Conditions += FString::Printf(TEXT("\n효과 조건 시간 %g초"), Definition.DurationSeconds); }
 	if (Definition.CooldownSeconds > 0) { Conditions += FString::Printf(TEXT("\n재사용 시간 %g초"), Definition.CooldownSeconds); }
 	if (!bAllowed && !Reason.IsEmpty()) { Conditions += TEXT("\n") + Reason.ToString(); }
 	DetailCondition->SetText(FText::FromString(Conditions));
 	DetailCondition->SetColorAndOpacity(FSlateColor(bAllowed ? Rogue10mTraitsUI::Muted : FLinearColor(0.95f, 0.67f, 0.35f)));
-	CostText->SetText(FText::Format(FText::FromString(TEXT("필요 포인트  {0}")), FText::AsNumber(bMax ? 0 : Definition.PointCost)));
+	CostText->SetText(FText::Format(FText::FromString(TownComponent->UsesLobbyBudget() ? TEXT("필요 로비 재화  {0}") : TEXT("필요 성장 포인트  {0}")), FText::AsNumber(bMax ? 0 : Definition.PointCost)));
 	const int32 Available = TownComponent->GetAvailableTraitPoints();
 	RemainingText->SetText(!bMax && Available < Definition.PointCost
-		? FText::Format(FText::FromString(TEXT("포인트 부족  {0} 추가 필요")), FText::AsNumber(Definition.PointCost - Available))
+		? FText::Format(FText::FromString(TownComponent->UsesLobbyBudget() ? TEXT("로비 재화 부족  {0} 추가 필요") : TEXT("성장 포인트 부족  {0} 추가 필요")), FText::AsNumber(Definition.PointCost - Available))
 		: FText::Format(FText::FromString(TEXT("강화 후 잔여  {0}")), FText::AsNumber(bMax ? Available : Available - Definition.PointCost)));
 	UpgradeButton->SetIsEnabled(bAllowed && !bResetConfirmation);
 	SetIconBrush(DetailIcon, SelectedTrait, 88);

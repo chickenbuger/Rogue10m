@@ -2632,3 +2632,15 @@ NPC44검사와 핵심6suite30검사를 모두 통과했다. 정상 E/F/G는 메�
 - 검증: 빌드31.52초·형상2개 PASS. H355.076초 정상 메뉴→성장→실제 보스 바닥→자연 사망→정산+6→마을 귀환.338세이브/31자산/맵 SHA256 동일. 실제 키보드·승리·패키징 미검증.
 - 상태: 남쪽 경로와 사망 귀환 packet 완료; 기본 한 판 전체 승리 기준은 계속 진행. 원격 변경 없음.
 - 문서: Feature/architect/2026-11-01_runtime-boss-south-approach.md, Feature/doc/2026-11-01_boss-south-approach.md, DevLog/20261101_BossSouthApproach_Review/README.md.
+
+
+
+## Sprint#9-20 — 로비 강화 조건·재화 표시
+
+- 목표: 최고 런 레벨 기록과 카드 잠금을 맞추고 로비 재화와 판 내 성장 포인트의 표시를 구분한다.
+- 기준: `9578fa52`, 브랜치 `Sprint#9-20-lobby-trait-display`.
+- 변경: TraitWidget/TutorialNPC 카드·라벨, TownProgression `NoPoints` 현지화 문구. 가격·조건·경제·저장·원본 자산은 무변경.
+- 검증: 제품28.53초/테스트 실제 컴파일9.79초/최종24.24초 빌드 성공. 최초0 action은 컴파일 증거에서 제외. UI A36/0 보존, 최종 B38/0·PNG3장 직접 열기·디코딩·SHA256 확인. `RunCurrencyBaseline_Lobby1101Final`6/0·경고0·미실행0 통과. wrapper 성공 코드 누락으로 자동 연쇄가 실행되지 않은 부분을 보존 후 수정했고6개는 별도로 실행했다.
+- 보존: B 정상 exit0/PID41880 종료, 해당 실행 전후340개 세이브 SHA 동일. 전체 작업 종료 뒤 독립 확인에서도 세이브340개·원본31자산·맵 SHA256 동일.
+- 상태: 로컬 UI 표시 묶음 검증 완료. 실제 구매·저장/다음 판 강화/승리/물리 완주 및 옛9포인트 TraitUI fixture 미검증. 원격 push·병합 없음.
+- 문서·증거: `Feature/doc/2026-11-01_lobby-trait-display.md`, `DevLog/20261101_LobbyTraitDisplay_Review/README.md`, `DevLog/LobbyTraitDisplayQA/LobbyDisplay1101B/Driver`, `Feature/doc/evidence/lobby-trait-display-20261101/`.

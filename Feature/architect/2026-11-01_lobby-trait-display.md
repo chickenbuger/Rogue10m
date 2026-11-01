@@ -1,0 +1,9 @@
+# Lobby trait display consistency
+
+Packet Sprint#9-20, base9578fa52. Read BasicLoopRemainingAudit_1101 and existing TownProgression budget/eligibility. Lobby upgrades persist while current run level resets to1. Card lock indicators must therefore use the same highest-run unlock level as CanUpgradeTrait; spend labels must distinguish lobby currency from current-run growth points.
+
+Change only TraitWidget.cpp and TutorialNPC.cpp presentation. Preserve all definitions, prices, caps, acquisition/persistence, refund behavior, save schema and input rules. No actual/legacy record reset. New display-only runtime fixture must be isolated and must not treat Town-only injected budget as persisted currency. Old XP-only trait purchase fixtures are stale, not current play completion evidence. Actual purchase/save/next-run verification needs real settlement or explicitly labelled QA snapshot seed.
+
+Build, independent static review, fresh-namespace rendered widget checks for currentLV1/highestLV20, lower highest level, insufficient currency and XP separation. Preserve340 actual save files, original31 assets and prior evidence. Root controls all D writes/UE processes; no UI focus, remote operation or new asset. Completion documents must distinguish display fixture, genuine purchase/save, normal internal-input run, and physical play.
+
+Final scoped refinement: the insufficient-budget error in TownProgressionComponent.cpp is localized by budget domain; its conditions and all mutation branches are unchanged. Add the standalone, profile0 display fixture and wrapper. A36 checks exposed the old detail wording; B38 checks include the corrected reason and third photo. RunCurrencyBaseline6 cases passed separately after explicitly fixing the wrapper success exit. All340 original saves,31 assets and map hashes remain identical.
