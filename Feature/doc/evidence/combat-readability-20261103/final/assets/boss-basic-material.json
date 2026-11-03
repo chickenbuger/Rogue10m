@@ -1,0 +1,18 @@
+{
+  "status": "saved_material_only_boss_connection_is_root_owned",
+  "material": "/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/M_Azathor_BasicConeWarning_1103.M_Azathor_BasicConeWarning_1103",
+  "shape": "same_native_capsule_expanded_cone_predicate",
+  "projection": "UV.x_forward_UV.y_right; narrow phase only; physical overlap, LOS and selected-target gates remain",
+  "hlsl_sha256": "92699fa786bf8e2183ab59bc2d2e0dc79d8d20f9107ab7905bcda108cf44bb4d",
+  "source_decision": "Owned existing warning box/circle cannot express this padded cone; engine nodes and same parameter contract reused.",
+  "tuning_candidate_not_automatically_applied": {
+    "attack_windup_seconds": 1.0,
+    "attack_recovery_seconds": 1.380952,
+    "frontal_wave_windup_seconds": 1.6,
+    "frontal_wave_recovery_seconds": 0.945455,
+    "abyss_zone_windup_seconds": 1.9,
+    "abyss_zone_recovery_seconds": 1.085714
+  },
+  "unchanged_by_script": "monster DA, profiles, HP, damage, cooldowns, vendor assets, maps",
+  "visual_validation": "pending_actual_rendered_ready_hit_recovery"
+}

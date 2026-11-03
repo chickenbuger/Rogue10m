@@ -134,6 +134,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Boss|Telegraph")
 	TSoftObjectPtr<UMaterialInterface> FrontalWaveTelegraphMaterial;
 
+	/** Capsule-expanded cone warning for opted-in bosses; ordinary monster profiles are unchanged. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Boss|Telegraph")
+	TSoftObjectPtr<UMaterialInterface> BasicTelegraphMaterial;
+
+	/** Missing required material must prevent this boss's basic attack rather than make it invisible. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Boss|Telegraph")
+	bool bRequireBasicTelegraph = false;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Boss|Telegraph")
 	TSoftObjectPtr<UMaterialInterface> AbyssZoneTelegraphMaterial;
 

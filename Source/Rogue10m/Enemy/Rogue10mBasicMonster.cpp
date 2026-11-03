@@ -22,6 +22,7 @@
 #include "Rogue10mRunCompletionComponent.h"
 #include "Engine/GameInstance.h"
 #include "Rogue10mMonsterDataAsset.h"
+#include "Rogue10mMonsterLootComponent.h"
 #include "Rogue10mMonsterAttackPatternComponent.h"
 #include "AI/Rogue10mMonsterAIController.h"
 #include "Rogue10mVitalRegenerationComponent.h"
@@ -38,6 +39,7 @@ ARogue10mBasicMonster::ARogue10mBasicMonster()
 	AttributeSet = CreateDefaultSubobject<URogue10mAttributeSet>(TEXT("Attribute Set"));
 	VitalRegenerationComponent = CreateDefaultSubobject<URogue10mVitalRegenerationComponent>(TEXT("Vital Regeneration Component"));
 	AttackPatternComponent = CreateDefaultSubobject<URogue10mMonsterAttackPatternComponent>(TEXT("Attack Pattern Component"));
+	MonsterLootComponent = CreateDefaultSubobject<URogue10mMonsterLootComponent>(TEXT("Monster Loot"));
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	AIControllerClass = ARogue10mMonsterAIController::StaticClass();
@@ -333,6 +335,7 @@ void ARogue10mBasicMonster::Die()
 	const bool bRunEnded = Run && Run->IsRunTerminal();
 	if (HasAuthority() && !bCombatTestInstance && !bRunEnded)
 	{
+		if (MonsterLootComponent) { MonsterLootComponent->SpawnDeathLoot(MonsterData ? MonsterData->LootTable.Get() : nullptr); }
 		if (ARogue10mPlayerController* RewardController =
 			Cast<ARogue10mPlayerController>(LastDamageInstigator.Get()))
 		{

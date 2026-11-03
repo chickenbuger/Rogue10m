@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "Engine/TimerHandle.h"
 #include "Rogue10mMonsterAttackPatternProfile.h"
+#include "Rogue10mMonsterAttackGeometry.h"
 #include "Rogue10mMonsterAttackPatternComponent.generated.h"
 
 class ARogue10mBasicMonster;
@@ -63,6 +64,10 @@ public:
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Monster|Boss")
 	bool IsTelegraphVisible() const;
+	/** Authoritative locked shape used by damage, warning projection and test-mode inspection. */
+	FRogue10mMonsterAttackShape GetLockedAttackShape() const;
+    /** Read-only identity/state check; never infers a target from proximity or overlap. */
+    bool IsWindingAgainst(const ARogue10mCharacter& Target) const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Monster|Effects")
 	int32 GetAttackEffectCount() const { return AttackEffectCount; }
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Monster|Effects")
@@ -96,6 +101,7 @@ private:
 	void UnbindHealthDelegate();
 	void CheckAttackValidity();
 	bool CreateTelegraph();
+	void UpdateTelegraphGeometry();
 	void DestroyTelegraph();
 	void ExecuteAttack();
 	void FinishRecovery();
@@ -138,6 +144,9 @@ private:
 	TObjectPtr<UMaterialInterface> FrontalWaveMaterial;
 
 	UPROPERTY(Transient)
+	TObjectPtr<UMaterialInterface> BasicMaterial;
+
+	UPROPERTY(Transient)
 	TObjectPtr<UMaterialInterface> AbyssZoneMaterial;
 
 	TWeakObjectPtr<ARogue10mCharacter> LockedTarget;
@@ -157,6 +166,7 @@ private:
 	double NextFrontalWaveTime = 0.0;
 	double NextAbyssZoneTime = 0.0;
 	double WindupStartedTime = 0.0;
+	float TelegraphGroundZ = 0.0f;
 	float LockedRange = 0.0f;
 	float LockedHalfWidth = 0.0f;
 	float LockedHalfHeight = 0.0f;

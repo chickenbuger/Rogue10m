@@ -11,6 +11,7 @@ class UBehaviorTree;
 class USkeletalMesh;
 class UTexture2D;
 class URogue10mAttackSkillData;
+class URogue10mLootTableDataAsset;
 class URogue10mMonsterAttackPatternProfile;
 
 UENUM(BlueprintType)
@@ -51,6 +52,10 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Rewards", meta=(ClampMin="0"))
 	int32 ExperienceReward = 10;
+
+	/** Optional run-local item loot; unset keeps existing monsters unchanged. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Rewards")
+	TObjectPtr<URogue10mLootTableDataAsset> LootTable;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Vitals", meta=(ClampMin="1.0"))
 	float MaxHealth = 100.0f;

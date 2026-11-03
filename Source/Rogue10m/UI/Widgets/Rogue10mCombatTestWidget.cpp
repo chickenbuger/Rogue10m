@@ -114,6 +114,10 @@ void URogue10mCombatTestWidget::BuildTree()
 	AddAction(UtilityRow,TEXT("CombatTestHeal"),TEXT("플레이어 회복"),ERogue10mCombatTestAction::Heal);
 	ImmunityButton = AddAction(UtilityRow,TEXT("CombatTestImmunity"),TEXT("무적: 꺼짐"),ERogue10mCombatTestAction::Invulnerable);
 	AddAction(Rows,TEXT("CombatTestClear"),TEXT("소환한 테스트 몬스터 모두 정리"),ERogue10mCombatTestAction::Clear);
+    SpatialDebugButton=AddAction(Rows,TEXT("CombatTestSpatialDebug"),TEXT("판정 표시: 꺼짐"),ERogue10mCombatTestAction::ToggleSpatialDebug);
+    CollisionReferenceButton=AddAction(Rows,TEXT("CombatTestCollisionReference"),TEXT("전체 충돌 참고: 꺼짐"),ERogue10mCombatTestAction::ToggleCollisionReference);
+    SpatialDebugText=Text(TEXT("CombatTestSpatialDebugSummary"),TEXT(""),12,FLinearColor(0.75f,0.87f,0.91f,1));
+    Text(TEXT("CombatTestSpatialLegend"),TEXT("보라: 현재 물리장면의 query 활성 단순 도형\n청록: 실제 실행 overlap · 노랑 cone: Actor 각도 필터\n노랑 점: 허용 후보 · 초록 점: 피해 수락 Actor 원점\nconvex/mesh/wrapper와 live body 미확인은 별도 집계\n전체 충돌 참고: 전체 월드 authored 충돌 참고\n(현재 실제 query와 다름, 참고용이며 기본 꺼짐)"),11,FLinearColor(0.68f,0.75f,0.80f,1));
 	StatusText = Text(TEXT("CombatTestStatus"),TEXT(""),15,FLinearColor(0.50f,0.86f,0.73f,1));
 	Text(TEXT("CombatTestRewardHint"),TEXT("테스트 소환: 경험치·금화·토벌 보상 없음\n스킬 사용 수련은 정상 적용 · 일반 몬스터는 유지"),12,FLinearColor(0.62f,0.68f,0.74f,1));
 	AddAction(Rows,TEXT("CombatTestClose"),TEXT("닫기  ·  F6 / ESC"),ERogue10mCombatTestAction::TogglePanel);
@@ -133,9 +137,16 @@ void URogue10mCombatTestWidget::RefreshView(bool bOpen, const FText& Status,
 	Panel->SetVisibility(bOpen ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
 	Hint->SetVisibility(bOpen ? ESlateVisibility::Collapsed : ESlateVisibility::Visible);
 	StatusText->SetText(Status); TargetText->SetText(TargetSummary);
+    const bool bSpatial=Tools.IsValid() && Tools->IsSpatialDebugEnabled();
+    SpatialDebugButton->SetIsEnabled(bHasTarget);
+    CastChecked<UTextBlock>(SpatialDebugButton->GetContent())->SetText(FText::FromString(bSpatial?TEXT("판정 표시: 켜짐"):TEXT("판정 표시: 꺼짐")));
+    CollisionReferenceButton->SetIsEnabled(bSpatial);
+    CastChecked<UTextBlock>(CollisionReferenceButton->GetContent())->SetText(FText::FromString(
+        Tools.IsValid() && Tools->IsCollisionReferenceEnabled()?TEXT("전체 충돌 참고: 켜짐"):TEXT("전체 충돌 참고: 꺼짐")));
+    SpatialDebugText->SetText(Tools.IsValid()?Tools->GetSpatialDebugSummary():FText::GetEmpty());
 	CastChecked<UTextBlock>(ImmunityButton->GetContent())->SetText(FText::FromString(bImmune ? TEXT("무적: 켜짐") : TEXT("무적: 꺼짐")));
 	CastChecked<UTextBlock>(CastChecked<UButton>(Hint)->GetContent())->SetText(FText::FromString(
-		bImmune ? TEXT("F6  테스트 · 무적 켜짐") : TEXT("F6  몬스터 테스트")));
+		bSpatial ? TEXT("F6  테스트 · 판정 표시 켜짐") : bImmune ? TEXT("F6  테스트 · 무적 켜짐") : TEXT("F6  몬스터 테스트")));
 	for (const auto& Button : TargetButtons) Button->SetIsEnabled(bHasTarget);
 	for (const auto& Button : BossButtons) Button->SetIsEnabled(bBoss);
 }

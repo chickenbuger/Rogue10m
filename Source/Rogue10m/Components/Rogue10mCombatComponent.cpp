@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "DrawDebugHelpers.h"
+#include "Rogue10mCombatTestComponent.h"
 #include "Engine/OverlapResult.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/DamageType.h"
@@ -1164,6 +1165,14 @@ void URogue10mCombatComponent::StartAttackHitSequence(const URogue10mAttackSkill
 	}
 }
 
+URogue10mCombatTestComponent* URogue10mCombatComponent::GetSpatialDebugTools() const
+{
+    const auto* OwnerCharacter=GetOwnerCharacter();
+    const auto* PC=OwnerCharacter?Cast<ARogue10mPlayerController>(OwnerCharacter->GetController()):nullptr;
+    auto* Tools=PC?PC->GetCombatTestComponent():nullptr;
+    return Tools && Tools->IsSpatialDebugEnabled()?Tools:nullptr;
+}
+
 void URogue10mCombatComponent::ExecuteAttackHitPulse(uint32 ExecutionId)
 {
 	FRogue10mActiveAttackExecution* Execution = ActiveAttackExecutions.Find(ExecutionId);
@@ -1207,6 +1216,14 @@ void URogue10mCombatComponent::ExecuteAttackHitPulse(uint32 ExecutionId)
 				Targets.Add(Target);
 			}
 		}
+        if (auto* Tools=GetSpatialDebugTools())
+        {
+            FRogue10mAttackDebugQuery Debug;
+            Debug.Origin=Origin; Debug.Forward=Forward; Debug.ExecutionId=ExecutionId; Debug.Pulse=Execution->CompletedPulses;
+            Debug.bLockedTargetReuse=true;
+            for (AActor* Actor:Targets) Debug.EligibleTargets.Add(Actor);
+            Tools->RecordAttackQuery(Debug);
+        }
 	}
 	else
 	{
@@ -1227,6 +1244,9 @@ void URogue10mCombatComponent::ExecuteAttackHitPulse(uint32 ExecutionId)
 	{
 		if (Target && ApplyAttackDamage(*SkillData, *Execution, *Target, Forward, Execution->CompletedPulses))
 		{
+            if (auto* Tools=GetSpatialDebugTools())
+            { Tools->RecordAcceptedTarget(*Target,ExecutionId,Execution->CompletedPulses,
+                SkillData->HitMode==ERogue10mAttackHitMode::MultiHit && Execution->CompletedPulses>1); }
 			if (++AppliedTargetCount >= MaxTargets)
 			{
 				break;
@@ -1333,24 +1353,19 @@ void URogue10mCombatComponent::GatherAttackTargets(
 			< FVector::DistSquared(Origin, Right.GetActorLocation());
 	});
 
-	if (SkillData.bDrawDebugAttack)
-	{
-		const FColor Color = SkillData.DebugColor.ToFColor(true);
-		if (SkillData.AttackShape == ERogue10mAttackShape::Arc)
-		{
-			DrawDebugCone(GetWorld(), Origin, Forward, AttackRange,
-				FMath::DegreesToRadians(SkillData.ArcAngleDegrees * 0.5f),
-				FMath::DegreesToRadians(SkillData.ArcAngleDegrees * 0.5f), 24, Color, false, 1.2f);
-		}
-		else if (SkillData.AttackShape == ERogue10mAttackShape::Circle)
-		{
-			DrawDebugSphere(GetWorld(), QueryCenter, AttackRange, 24, Color, false, 1.2f);
-		}
-		else
-		{
-			DrawDebugBox(GetWorld(), QueryCenter, QueryShape.GetExtent(), QueryRotation, Color, false, 1.2f);
-		}
-	}
+    if (auto* Tools=GetSpatialDebugTools())
+    {
+        FRogue10mAttackDebugQuery Debug;
+        Debug.Origin=Origin; Debug.Forward=Forward; Debug.Center=QueryCenter; Debug.Rotation=QueryRotation;
+        Debug.Shape=SkillData.AttackShape; Debug.Extent=QueryShape.GetExtent(); Debug.Radius=AttackRange;
+        Debug.ArcAngleDegrees=FMath::Clamp(SkillData.ArcAngleDegrees,1.f,180.f);
+        Debug.ExecutionId=Execution.ExecutionId; Debug.Pulse=Execution.CompletedPulses;
+        for (const auto& Overlap:Overlaps) if (auto* Primitive=Overlap.GetComponent()) Debug.OverlapComponents.AddUnique(Primitive);
+        for (AActor* Actor:OutTargets) Debug.EligibleTargets.Add(Actor);
+        Tools->RecordAttackQuery(Debug);
+    }
+    // Per-asset bDrawDebugAttack does not grant a normal-play debug path. Explicit test gate owns all visual output.
+
 }
 
 bool URogue10mCombatComponent::ApplyAttackDamage(
@@ -1831,21 +1846,12 @@ void URogue10mCombatComponent::ResetComboWindow()
 }
 
 void URogue10mCombatComponent::DrawAttackDebug(
-	const FVector& TraceStart, const FVector& TraceEnd, float TraceRadius,
-	const FLinearColor& Color, bool bHit, const FHitResult& Hit) const
+    const FVector&, const FVector&, float,
+    const FLinearColor&, bool, const FHitResult&) const
 {
-	if (!bDrawAttackDebug || !GetWorld())
-	{
-		return;
-	}
-
-	const FColor DrawColor = Color.ToFColor(true);
-	DrawDebugLine(GetWorld(), TraceStart, TraceEnd, DrawColor, false, 1.2f, 0, 2.0f);
-	DrawDebugSphere(GetWorld(), TraceEnd, TraceRadius, 16, DrawColor, false, 1.2f, 0, 1.5f);
-	if (bHit)
-	{
-		DrawDebugSphere(GetWorld(), Hit.ImpactPoint, TraceRadius * 1.25f, 16, FColor::Red, false, 1.2f, 0, 2.5f);
-	}
+    // The historical line/end-sphere approximation has no callers. Actual query
+    // snapshots now use the test component's owned buffer, which clears immediately.
+    // Keep this private compatibility hook inert rather than create global debug lines.
 }
 
 void URogue10mCombatComponent::AddCombatLog(const FString& Message, const FLinearColor& Color) const

@@ -63,7 +63,7 @@ public:
  bool ReadAnimatedHead(FTransform& OutWorldHead, FQuat& OutWorldMotion) const;
  /** Initial local view only; later refreshes never overwrite mouse aim. */
  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Appearance Camera", meta=(ClampMin="-60", ClampMax="0", Units="deg"))
- float InitialViewPitch = -20.0f;
+ float InitialViewPitch = -10.0f;
  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Appearance Camera|Brawler Stability")
  bool bStabilizeBrawlerHeadMotion = true;
  /** Legacy fallback when all-weapon head stability is disabled; never weights mouse input. */

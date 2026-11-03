@@ -1,0 +1,102 @@
+{
+  "status": "confirmed",
+  "engine": "5.8.4-58902052+++UE5+Release-5.8",
+  "pid": 47372,
+  "utc": "2026-11-03T16:13:49.098134+00:00",
+  "packageSha256Before": {
+    "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_VerdantSlime": "7b4d3a514c4cb579bf63ce874f1db5fbc6b62b9198ee8afb6aa25fb1b405385c",
+    "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_VerdantSlime": "0443ba14375a0d47228ecbdee2852b6af0fe197d45586e9512b86463bc788f99",
+    "/Game/DataAsset/Item/Starter/DA_Item_HealthPotion": "4ec252c7dbb6e1e4d1851537ab068444357fdf8260d343ee7940fcbe1047607e",
+    "/Game/World/Loot/BP_HeavyLootBag": "eabe0372ef1f7ae4433934435aa58574bde271500c2860192ba8cb527207b543",
+    "/Game/Rogue10m/World/OpenWorld/Loot/DA_Loot_OW_VerdantSlime_PotionExample": null
+  },
+  "failedEvidenceSha256Before": {
+    "asset-evidence": {
+      "before.json": "01460db839eeacac09d6de838b057fbd90f493f7ebd302ef3438fec2d3787ed0",
+      "journal.json": "ecd6b4e21dc1092855ab69d7d60b4caedceec801348e7b979308ba1a2583aafb",
+      "journal.jsonl": "02b027cc8a5f0c9a9dd616d2a8b3636df0cb20cfb298855aeab054a217313377",
+      "original-binary-backups/Content/DataAsset/Item/Starter/DA_Item_HealthPotion.uasset": "4ec252c7dbb6e1e4d1851537ab068444357fdf8260d343ee7940fcbe1047607e",
+      "original-binary-backups/Content/DataAsset/Monster/Normal/DA_Monster_Normal_VerdantSlime.uasset": "0443ba14375a0d47228ecbdee2852b6af0fe197d45586e9512b86463bc788f99",
+      "original-binary-backups/Content/Rogue10m/World/OpenWorld/Monsters/DA_OW_VerdantSlime.uasset": "7b4d3a514c4cb579bf63ce874f1db5fbc6b62b9198ee8afb6aa25fb1b405385c",
+      "original-binary-backups/Content/World/Loot/BP_HeavyLootBag.uasset": "eabe0372ef1f7ae4433934435aa58574bde271500c2860192ba8cb527207b543"
+    },
+    "asset-evidence-B": {
+      "before.json": "01460db839eeacac09d6de838b057fbd90f493f7ebd302ef3438fec2d3787ed0",
+      "journal.json": "aca413f1f438a0b51a5c748a9b4066066a6f62361d41464711dd92bdf8371bc7",
+      "journal.jsonl": "5ac9fd0bd4a343775c5519cf8c878ef6d29538e9cc17563455c4543057bf0d4f",
+      "original-binary-backups/Content/DataAsset/Item/Starter/DA_Item_HealthPotion.uasset": "4ec252c7dbb6e1e4d1851537ab068444357fdf8260d343ee7940fcbe1047607e",
+      "original-binary-backups/Content/DataAsset/Monster/Normal/DA_Monster_Normal_VerdantSlime.uasset": "0443ba14375a0d47228ecbdee2852b6af0fe197d45586e9512b86463bc788f99",
+      "original-binary-backups/Content/Rogue10m/World/OpenWorld/Monsters/DA_OW_VerdantSlime.uasset": "7b4d3a514c4cb579bf63ce874f1db5fbc6b62b9198ee8afb6aa25fb1b405385c",
+      "original-binary-backups/Content/World/Loot/BP_HeavyLootBag.uasset": "eabe0372ef1f7ae4433934435aa58574bde271500c2860192ba8cb527207b543",
+      "recovery-preflight.json": "a28d11cdcaf6d4ce4c3ce98877b26206f98ae433903157faf2c6519e35c7408f",
+      "recovery-result.json": "6de31bb633ad470a9b6d275a4308babbd85a7afbd99879609fbf37566ff2ad00"
+    }
+  },
+  "cases": {
+    "empty_valid": {
+      "type": "builtins.Text",
+      "repr": "Text(\"\")",
+      "text": "",
+      "isNone": false,
+      "isText": true,
+      "isEmptyText": true
+    },
+    "potion_row_valid": {
+      "type": "builtins.Text",
+      "repr": "Text(\"\")",
+      "text": "",
+      "isNone": false,
+      "isText": true,
+      "isEmptyText": true
+    },
+    "null_item_invalid": {
+      "type": "builtins.NoneType",
+      "repr": "None",
+      "text": null,
+      "isNone": true,
+      "isText": false,
+      "isEmptyText": false
+    }
+  },
+  "sourceContract": "PythonScriptPlugin/Private/PyGenUtil.cpp:1152-1201 PackReturnValues; bool false -> None, true -> remaining single Text output",
+  "memoryOnlyPreparation": "Separate UObjects with native UObject CDO as Outer; no CDO fields modified; notify_mode NEVER; no AssetTools, save or asset registry calls",
+  "nativeMethodDoc": "x.validate_loot_table() -> Text or None\r\nValidate Loot Table\r\n\r\nReturns:\r\n    Text or None: \r\n\r\n    out_reason (Text):",
+  "confirmedContract": "Optional[unreal.Text]: empty Text means native true; None means native false and discards error OutReason",
+  "memoryObjectPaths": [
+    "/Script/CoreUObject.Default__Object:LootValidationProbe_ba923a02824a49b48e0f2f1abd62067d",
+    "/Script/CoreUObject.Default__Object:LootValidationProbe_2a130ba4e1454b5cb64d19f29b58691d",
+    "/Script/CoreUObject.Default__Object:LootValidationProbe_b4986b06d3ee476baa99f86577aef6e0"
+  ],
+  "nativeLootCdoUnchanged": true,
+  "packageSha256After": {
+    "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_VerdantSlime": "7b4d3a514c4cb579bf63ce874f1db5fbc6b62b9198ee8afb6aa25fb1b405385c",
+    "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_VerdantSlime": "0443ba14375a0d47228ecbdee2852b6af0fe197d45586e9512b86463bc788f99",
+    "/Game/DataAsset/Item/Starter/DA_Item_HealthPotion": "4ec252c7dbb6e1e4d1851537ab068444357fdf8260d343ee7940fcbe1047607e",
+    "/Game/World/Loot/BP_HeavyLootBag": "eabe0372ef1f7ae4433934435aa58574bde271500c2860192ba8cb527207b543",
+    "/Game/Rogue10m/World/OpenWorld/Loot/DA_Loot_OW_VerdantSlime_PotionExample": null
+  },
+  "failedEvidenceSha256After": {
+    "asset-evidence": {
+      "before.json": "01460db839eeacac09d6de838b057fbd90f493f7ebd302ef3438fec2d3787ed0",
+      "journal.json": "ecd6b4e21dc1092855ab69d7d60b4caedceec801348e7b979308ba1a2583aafb",
+      "journal.jsonl": "02b027cc8a5f0c9a9dd616d2a8b3636df0cb20cfb298855aeab054a217313377",
+      "original-binary-backups/Content/DataAsset/Item/Starter/DA_Item_HealthPotion.uasset": "4ec252c7dbb6e1e4d1851537ab068444357fdf8260d343ee7940fcbe1047607e",
+      "original-binary-backups/Content/DataAsset/Monster/Normal/DA_Monster_Normal_VerdantSlime.uasset": "0443ba14375a0d47228ecbdee2852b6af0fe197d45586e9512b86463bc788f99",
+      "original-binary-backups/Content/Rogue10m/World/OpenWorld/Monsters/DA_OW_VerdantSlime.uasset": "7b4d3a514c4cb579bf63ce874f1db5fbc6b62b9198ee8afb6aa25fb1b405385c",
+      "original-binary-backups/Content/World/Loot/BP_HeavyLootBag.uasset": "eabe0372ef1f7ae4433934435aa58574bde271500c2860192ba8cb527207b543"
+    },
+    "asset-evidence-B": {
+      "before.json": "01460db839eeacac09d6de838b057fbd90f493f7ebd302ef3438fec2d3787ed0",
+      "journal.json": "aca413f1f438a0b51a5c748a9b4066066a6f62361d41464711dd92bdf8371bc7",
+      "journal.jsonl": "5ac9fd0bd4a343775c5519cf8c878ef6d29538e9cc17563455c4543057bf0d4f",
+      "original-binary-backups/Content/DataAsset/Item/Starter/DA_Item_HealthPotion.uasset": "4ec252c7dbb6e1e4d1851537ab068444357fdf8260d343ee7940fcbe1047607e",
+      "original-binary-backups/Content/DataAsset/Monster/Normal/DA_Monster_Normal_VerdantSlime.uasset": "0443ba14375a0d47228ecbdee2852b6af0fe197d45586e9512b86463bc788f99",
+      "original-binary-backups/Content/Rogue10m/World/OpenWorld/Monsters/DA_OW_VerdantSlime.uasset": "7b4d3a514c4cb579bf63ce874f1db5fbc6b62b9198ee8afb6aa25fb1b405385c",
+      "original-binary-backups/Content/World/Loot/BP_HeavyLootBag.uasset": "eabe0372ef1f7ae4433934435aa58574bde271500c2860192ba8cb527207b543",
+      "recovery-preflight.json": "a28d11cdcaf6d4ce4c3ce98877b26206f98ae433903157faf2c6519e35c7408f",
+      "recovery-result.json": "6de31bb633ad470a9b6d275a4308babbd85a7afbd99879609fbf37566ff2ad00"
+    }
+  },
+  "originalPackagesUnchanged": true,
+  "failedEvidenceUnchanged": true
+}

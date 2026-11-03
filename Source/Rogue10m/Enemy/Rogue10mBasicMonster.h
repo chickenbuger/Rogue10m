@@ -18,6 +18,7 @@ class URogue10mMonsterDataAsset;
 class URogue10mMonsterAttackPatternComponent;
 class URogue10mMonsterAttackPatternProfile;
 class URogue10mVitalRegenerationComponent;
+class URogue10mMonsterLootComponent;
 class ARogue10mBasicMonster;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FRogue10mMonsterDied, ARogue10mBasicMonster*, Monster);
@@ -52,6 +53,8 @@ public:
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Monster")
 	bool IsDead() const { return bIsDead; }
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Loot")
+	URogue10mMonsterLootComponent* GetMonsterLootComponent() const { return MonsterLootComponent; }
 	/** Set before FinishSpawning; development fixtures never grant progression rewards. */
 	void MarkCombatTestInstance();
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat Test")
@@ -93,6 +96,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Monster")
 	TObjectPtr<URogue10mVitalRegenerationComponent> VitalRegenerationComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Loot")
+	TObjectPtr<URogue10mMonsterLootComponent> MonsterLootComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Monster|Pattern")
 	TObjectPtr<URogue10mMonsterAttackPatternComponent> AttackPatternComponent;
@@ -152,6 +158,7 @@ protected:
 	bool bDestroyOnDeath = true;
 
 private:
+	friend struct FRogue10mMonsterLootTestAccess;
 	float DifficultyDamageMultiplier = 1.0f;
 	void TryAttackTarget(float DistanceToTarget);
 	void StartMonsterAttackSequence();

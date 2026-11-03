@@ -2,6 +2,15 @@
 
 #include "AI/Rogue10mMonsterAIController.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/BoxComponent.h"
+#include "Components/SphereComponent.h"
+#include "Components/PrimitiveComponent.h"
+#include "Components/LineBatchComponent.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Engine/GameViewportClient.h"
+#include "Rogue10mLiveCollisionDebug.h"
+#include "Rogue10mGameState.h"
+#include "TimerManager.h"
 #include "Components/InputComponent.h"
 #include "Engine/World.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -48,6 +57,8 @@ void URogue10mCombatTestComponent::InitializeUI()
 	Widget->InitializeTools(this);
 	Widget->AddToPlayerScreen(180);
 	PC->OnPossessedPawnChanged.AddUniqueDynamic(this, &ThisClass::HandlePawnChanged);
+    if (auto* Run=GetWorld()->GetGameState<ARogue10mGameState>())
+    { Run->OnRunPhaseChanged.AddUniqueDynamic(this,&ThisClass::HandleSpatialRunPhaseChanged); }
 	SetStatus(TEXT("몬스터를 골라 현재 위치 앞에 소환하세요. 최대 6마리."));
 }
 
@@ -81,6 +92,185 @@ void URogue10mCombatTestComponent::SetPanelOpen(bool bOpen)
 	}
 	RefreshView();
 	PC->RefreshInputMode();
+}
+
+bool URogue10mCombatTestComponent::IsSpatialDebugEnabled() const
+{
+    const auto* PC=Cast<ARogue10mPlayerController>(GetOwner());
+    const auto* Player=PC?Cast<ARogue10mCharacter>(PC->GetPawn()):nullptr;
+    const auto* Run=GetWorld()?GetWorld()->GetGameState<ARogue10mGameState>():nullptr;
+    return bSpatialDebugEnabled && IsAvailable() && Player && !Player->IsDead()
+        && !PC->IsRunResultVisible() && (!Run || !Run->IsRunTerminal()) && GetTestMonsterCount()>0;
+}
+
+bool URogue10mCombatTestComponent::SetSpatialDebugEnabled(bool bEnabled)
+{
+    if (bEnabled && (!IsAvailable() || GetTestMonsterCount()==0))
+    { SetSpatialDebugEnabled(false); SetStatus(TEXT("판정 표시 전에 살아 있는 테스트 몬스터를 소환하세요.")); return false; }
+    bSpatialDebugEnabled=bEnabled;
+    if (bEnabled && !IsSpatialDebugEnabled())
+    { SetSpatialDebugEnabled(false); SetStatus(TEXT("살아 있는 플레이어의 진행 중 테스트에서만 표시할 수 있습니다.")); return false; }
+    if (GetWorld()) GetWorld()->GetTimerManager().ClearTimer(SpatialDebugTimer);
+    if (!bEnabled)
+    {
+        SetCollisionReferenceEnabled(false);
+        if (SpatialLines) { SpatialLines->Flush(); SpatialLines->DestroyComponent(); SpatialLines=nullptr; }
+        LastAttackQuery=FRogue10mAttackDebugQuery(); AcceptedTargets.Reset(); LastQueryTime=-1.f;
+        SupportedColliderCount=UnsupportedColliderCount=RecordedQueryCount=LiveSkeletalShapeCount=UnresolvedColliderCount=0;
+        bHasFirstLiveSkeletalShape=false;
+    }
+    else
+    {
+        if (!SpatialLines)
+        {
+            SpatialLines=NewObject<ULineBatchComponent>(GetWorld(),NAME_None,RF_Transient);
+            SpatialLines->bCalculateAccurateBounds=false;
+            SpatialLines->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+            SpatialLines->RegisterComponentWithWorld(GetWorld());
+        }
+        RefreshSpatialDebug();
+        GetWorld()->GetTimerManager().SetTimer(SpatialDebugTimer,this,&ThisClass::RefreshSpatialDebug,0.05f,true);
+    }
+    SetStatus(bEnabled?TEXT("판정 표시 켜짐 · 청록=실제 쿼리, 노랑=조건 통과, 초록=피해 성공. F6를 닫고 공격하세요.")
+        :TEXT("판정 표시 꺼짐 · 이 테스트의 도형만 정리했습니다."));
+    return true;
+}
+
+int32 URogue10mCombatTestComponent::GetSpatialDebugLineCount() const
+{ return SpatialLines?SpatialLines->BatchedLines.Num()+SpatialLines->BatchedPoints.Num():0; }
+
+bool URogue10mCombatTestComponent::SetCollisionReferenceEnabled(bool bEnabled)
+{
+    if (!bEnabled)
+    {
+        // Restore only the exact viewport flag acquired here; no global console command.
+        if (bOwnCollisionReference)
+            if (auto* Viewport=CollisionReferenceViewport.Get()) Viewport->EngineShowFlags.SetCollision(bSavedViewportCollision);
+        bOwnCollisionReference=false; CollisionReferenceViewport.Reset(); RefreshView(); return true;
+    }
+    if (!IsSpatialDebugEnabled() || !GetWorld() || !GetWorld()->GetGameViewport()) return false;
+    auto* Viewport=GetWorld()->GetGameViewport();
+    if (bOwnCollisionReference && CollisionReferenceViewport.Get()!=Viewport) SetCollisionReferenceEnabled(false);
+    if (!bOwnCollisionReference)
+    {
+        CollisionReferenceViewport=Viewport; bSavedViewportCollision=Viewport->EngineShowFlags.Collision;
+        bOwnCollisionReference=true;
+    }
+    Viewport->EngineShowFlags.SetCollision(true); RefreshView(); return true;
+}
+
+bool URogue10mCombatTestComponent::IsCollisionReferenceEnabled() const
+{
+    const auto* Viewport=CollisionReferenceViewport.Get();
+    return bOwnCollisionReference && Viewport && Viewport->EngineShowFlags.Collision;
+}
+
+bool URogue10mCombatTestComponent::TryGetFirstLiveSkeletalShapeCenter(FVector& OutCenter) const
+{
+    if (!IsSpatialDebugEnabled() || !bHasFirstLiveSkeletalShape) return false;
+    OutCenter=FirstLiveSkeletalShapeCenter; return true;
+}
+
+FText URogue10mCombatTestComponent::GetSpatialDebugSummary() const
+{
+    if (!IsSpatialDebugEnabled()) return FText::FromString(TEXT("판정 표시 꺼짐"));
+    const FString PulseKind=RecordedQueryCount==0?TEXT("공격 실행 대기 · 실제 판정 시점의 쿼리만 표시합니다.")
+        :LastAttackQuery.bLockedTargetReuse?TEXT("고정 대상 재사용 · 새 범위 쿼리 없음")
+        :FString::Printf(TEXT("실행 쿼리 %d · pulse %d · 후보 component %d / 조건 통과 %d / 피해 성공 %d"),
+            RecordedQueryCount,LastAttackQuery.Pulse,LastAttackQuery.OverlapComponents.Num(),LastAttackQuery.EligibleTargets.Num(),AcceptedTargets.Num());
+    FString ComponentNames;
+    int32 NameCount=0;
+    for (const auto& Weak:LastAttackQuery.OverlapComponents)
+    {
+        if (const auto* Primitive=Weak.Get())
+        {
+            if (NameCount++) ComponentNames+=TEXT(", ");
+            ComponentNames+=Primitive->GetName();
+            if (NameCount>=3) break;
+        }
+    }
+    if (ComponentNames.IsEmpty()) ComponentNames=TEXT("없음");
+    return FText::FromString(FString::Printf(TEXT("live query 도형 %d (skeletal %d) · convex/mesh/wrapper 미표시 %d · live body 미확인 %d\n%s\n최근 실제 overlap component: %s\nArc: 구체 query + Actor 원점 각도 필터 · 벽 가림 검사 없음"),
+        SupportedColliderCount,LiveSkeletalShapeCount,UnsupportedColliderCount,UnresolvedColliderCount,*PulseKind,*ComponentNames));
+}
+
+void URogue10mCombatTestComponent::RecordAttackQuery(const FRogue10mAttackDebugQuery& Query)
+{
+    if (!IsSpatialDebugEnabled()) return;
+    LastAttackQuery=Query; AcceptedTargets.Reset(); ++RecordedQueryCount;
+    LastQueryTime=GetWorld()->GetTimeSeconds(); RefreshSpatialDebug();
+}
+
+void URogue10mCombatTestComponent::RecordAcceptedTarget(AActor& Actor,uint32 ExecutionId,int32 Pulse,bool bLockedReuse)
+{
+    if (!IsSpatialDebugEnabled()) { if (bSpatialDebugEnabled) SetSpatialDebugEnabled(false); return; }
+    if (LastAttackQuery.ExecutionId!=ExecutionId || LastAttackQuery.Pulse!=Pulse) return;
+    LastAttackQuery.bLockedTargetReuse=bLockedReuse;
+    AcceptedTargets.AddUnique(&Actor); RefreshSpatialDebug();
+}
+
+bool URogue10mCombatTestComponent::DrawQueryCollider(UPrimitiveComponent& Primitive,const FLinearColor& Color)
+{
+    if (!SpatialLines) return false;
+    TArray<FRogue10mLiveQueryShape> Shapes;
+    Rogue10mLiveCollisionDebug::ReadQueryPrimitives(Primitive,Shapes,UnsupportedColliderCount,UnresolvedColliderCount);
+    for (const auto& Shape:Shapes)
+    {
+        switch (Shape.Type)
+        {
+        case ERogue10mLiveQueryShape::Sphere: SpatialLines->DrawSphere(Shape.Center,Shape.Radius,24,Color,0.08f,0,1.8f); break;
+        case ERogue10mLiveQueryShape::Box: SpatialLines->DrawBox(Shape.Center,Shape.Extent,Shape.Rotation,Color,0.08f,0,1.8f); break;
+        case ERogue10mLiveQueryShape::Capsule: SpatialLines->DrawCapsule(Shape.Center,Shape.HalfHeight,Shape.Radius,Shape.Rotation,Color,0.08f,0,1.8f); break;
+        }
+        ++SupportedColliderCount;
+        if (Primitive.IsA<USkeletalMeshComponent>())
+        {
+            ++LiveSkeletalShapeCount;
+            if (!bHasFirstLiveSkeletalShape) { bHasFirstLiveSkeletalShape=true; FirstLiveSkeletalShapeCenter=Shape.Center; }
+        }
+    }
+    return !Shapes.IsEmpty();
+}
+
+void URogue10mCombatTestComponent::RefreshSpatialDebug()
+{
+    if (!IsSpatialDebugEnabled()) { if (bSpatialDebugEnabled) SetSpatialDebugEnabled(false); return; }
+    if (!SpatialLines) return;
+    SpatialLines->Flush(); SupportedColliderCount=UnsupportedColliderCount=LiveSkeletalShapeCount=UnresolvedColliderCount=0;
+    bHasFirstLiveSkeletalShape=false;
+    const FLinearColor ColliderColor(0.72f,0.32f,1.f), QueryColor(0.f,0.9f,1.f), EligibleColor(1.f,0.75f,0.05f), AcceptedColor(0.1f,1.f,0.2f);
+    for (const auto& Weak:TestMonsters)
+    {
+        auto* Monster=Weak.Get(); if (!Monster || Monster->IsDead()) continue;
+        TInlineComponentArray<UPrimitiveComponent*> Primitives(Monster);
+        for (UPrimitiveComponent* Primitive:Primitives) if (Primitive) DrawQueryCollider(*Primitive,ColliderColor);
+    }
+    if (LastQueryTime>=0.f && GetWorld()->GetTimeSeconds()-LastQueryTime<=0.6f)
+    {
+        if (!LastAttackQuery.bLockedTargetReuse)
+        {
+            if (LastAttackQuery.Shape==ERogue10mAttackShape::Arc || LastAttackQuery.Shape==ERogue10mAttackShape::Circle)
+            { SpatialLines->DrawSphere(LastAttackQuery.Center,LastAttackQuery.Radius,32,QueryColor,0.08f,0,2.f); }
+            else SpatialLines->DrawBox(LastAttackQuery.Center,LastAttackQuery.Extent,LastAttackQuery.Rotation,QueryColor,0.08f,0,2.f);
+            if (LastAttackQuery.Shape==ERogue10mAttackShape::Arc)
+            {
+                // Only a filter illustration; cyan sphere above is the actual overlap geometry.
+                SpatialLines->DrawCone(LastAttackQuery.Origin,LastAttackQuery.Forward,LastAttackQuery.Radius,
+                    FMath::DegreesToRadians(LastAttackQuery.ArcAngleDegrees*0.5f),FMath::DegreesToRadians(LastAttackQuery.ArcAngleDegrees*0.5f),24,EligibleColor,0.08f,0,1.f);
+            }
+        }
+        for (const auto& Weak:LastAttackQuery.EligibleTargets)
+            if (const auto* Actor=Weak.Get()) SpatialLines->DrawPoint(Actor->GetActorLocation(),EligibleColor,12.f,0,0.08f);
+        for (const auto& Weak:AcceptedTargets)
+            if (const auto* Actor=Weak.Get()) SpatialLines->DrawPoint(Actor->GetActorLocation(),AcceptedColor,20.f,0,0.08f);
+    }
+    if (Widget) RefreshView();
+}
+
+void URogue10mCombatTestComponent::HandleSpatialRunPhaseChanged(ERogue10mRunPhase Phase)
+{
+    if (Phase==ERogue10mRunPhase::Victory || Phase==ERogue10mRunPhase::Defeat || Phase==ERogue10mRunPhase::Abandoned)
+    { SetSpatialDebugEnabled(false); }
 }
 
 void URogue10mCombatTestComponent::SelectCreature(int32 Index)
@@ -164,6 +354,7 @@ bool URogue10mCombatTestComponent::SpawnMonster()
 
 void URogue10mCombatTestComponent::ClearMonsters()
 {
+    SetSpatialDebugEnabled(false);
 	for (const auto& Weak : TestMonsters)
 	{
 		if (auto* Monster = Weak.Get())
@@ -202,6 +393,8 @@ bool URogue10mCombatTestComponent::ExecuteAction(ERogue10mCombatTestAction Actio
 {
 	if (!IsAvailable()) return false;
 	if (Action == ERogue10mCombatTestAction::TogglePanel) { TogglePanel(); return true; }
+    if (Action == ERogue10mCombatTestAction::ToggleSpatialDebug) return SetSpatialDebugEnabled(!IsSpatialDebugEnabled());
+    if (Action == ERogue10mCombatTestAction::ToggleCollisionReference) return SetCollisionReferenceEnabled(!IsCollisionReferenceEnabled());
 	if (Action == ERogue10mCombatTestAction::Spawn) return SpawnMonster();
 	if (Action == ERogue10mCombatTestAction::Clear) { ClearMonsters(); SetStatus(TEXT("이 창에서 소환한 테스트 몬스터를 모두 정리했습니다.")); return true; }
 	if (Action == ERogue10mCombatTestAction::Basic) return StartPattern(ERogue10mMonsterAttackType::Basic);
@@ -245,6 +438,7 @@ bool URogue10mCombatTestComponent::ExecuteAction(ERogue10mCombatTestAction Actio
 	if (Action == ERogue10mCombatTestAction::Reset)
 	{
 		// Reset only the current target, keeping the original species even if the picker changed.
+		SetSpatialDebugEnabled(false);
 		const int32 PickerSelection = SelectedIndex;
 		for (int32 Index = 0; Index < Creatures.Num(); ++Index)
 			if (Creatures[Index].MonsterClass.Get() == Monster->GetClass()) { SelectedIndex = Index; break; }
@@ -294,6 +488,9 @@ void URogue10mCombatTestComponent::HandlePawnChanged(APawn* OldPawn, APawn* NewP
 
 void URogue10mCombatTestComponent::EndPlay(const EEndPlayReason::Type Reason)
 {
+    SetSpatialDebugEnabled(false);
+    if (auto* Run=GetWorld()?GetWorld()->GetGameState<ARogue10mGameState>():nullptr)
+    { Run->OnRunPhaseChanged.RemoveDynamic(this,&ThisClass::HandleSpatialRunPhaseChanged); }
 	if (auto* PC = Cast<ARogue10mPlayerController>(GetOwner())) PC->OnPossessedPawnChanged.RemoveDynamic(this, &ThisClass::HandlePawnChanged);
 	RestoreDamageFlag();
 	if (bOwnsPause) if (auto* PC = Cast<ARogue10mPlayerController>(GetOwner())) PC->SetPause(false);

@@ -26,6 +26,8 @@ public class Rogue10m : ModuleRules
 			"AnimationCore",
 			"Niagara"
 		});
+        // Live query debug reads current BodyInstance primitive geometry/filter data.
+        PrivateDependencyModuleNames.AddRange(new string[] { "PhysicsCore", "Chaos" });
 		if (Target.bBuildEditor)
 		{
 			PrivateDependencyModuleNames.AddRange(new string[] { "MeshDescription", "SkeletalMeshDescription", "UnrealEd", "Landscape", "Json", "AnimGraph", "AnimGraphRuntime", "BlueprintGraph", "KismetCompiler" });

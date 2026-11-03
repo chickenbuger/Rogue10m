@@ -15,6 +15,7 @@ class UNiagaraComponent;
 class UNiagaraSystem;
 class URogue10mAttributeSet;
 class URogue10mBasicBrawlerComponent;
+class URogue10mCombatTestComponent;
 class URogue10mCharacterDataAsset;
 class URogue10mDodgeSkillDataAsset;
 class URogue10mWeaponSkillProfileDataAsset;
@@ -161,6 +162,9 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
+#if WITH_EDITOR
+    friend struct FRogue10mSpatialDebugTestAccess;
+#endif
 	friend class URogue10mBasicBrawlerComponent;
 	friend struct FRogue10mHybridCombatTestAccess;
 	friend struct FRogue10mAttackCostTestAccess;
@@ -170,6 +174,7 @@ private:
 	bool bAcceptingAttack = false;
 	double AttackActionEndTime = 0.0;
 	ARogue10mCharacter* GetOwnerCharacter() const;
+    URogue10mCombatTestComponent* GetSpatialDebugTools() const;
 	URogue10mAttributeSet* GetOwnerAttributes() const;
 	float GetAttackSpeedMultiplier() const;
 	bool CanUseCombatInput() const;

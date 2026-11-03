@@ -47,6 +47,9 @@ private:
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> StatusText;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> TargetText;
 	UPROPERTY(Transient) TObjectPtr<UButton> ImmunityButton;
+    UPROPERTY(Transient) TObjectPtr<UButton> SpatialDebugButton;
+    UPROPERTY(Transient) TObjectPtr<UButton> CollisionReferenceButton;
+    UPROPERTY(Transient) TObjectPtr<UTextBlock> SpatialDebugText;
 	UPROPERTY(Transient) TArray<TObjectPtr<UButton>> TargetButtons;
 	UPROPERTY(Transient) TArray<TObjectPtr<UButton>> BossButtons;
 };

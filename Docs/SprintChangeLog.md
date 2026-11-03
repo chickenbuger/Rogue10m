@@ -2711,3 +2711,12 @@ NPC44검사와 핵심6suite30검사를 모두 통과했다. 정상 E/F/G는 메�
 - 범위: 첫 `returned_victory`/`Victory` 상태 고정, 실제 취소 동작1, 필드/귀환 슬롯 비교1. 공개 유효 슬롯 비교이며 모든 private legacy 원장 초기화 인증은 아니다. P의 저장 실패 재시도·사람 물리 입력·20분 시간초과·패키징은 미실행이다.
 - 상태: #9-24의 실제 동일 프로필 다음 판 미검증은 이번 #9-26으로 해소. 이번 기록에서 develop/test/main 병합은 하지 않았다. 보스 속도/지상형 후보·Fab·정면 시야/크로스헤어·테스트 판정 표시·처치 드롭은 최신 사용자 요청의 다음 packet이다.
 - 문서: `Feature/architect/2026-11-03_next-run-validation.md`, `Feature/doc/2026-11-03_next-run-validation.md`, `DevLog/BasicRunPlayQA/BasicRun1103O/`, `DevLog/BasicRunPlayQA/BasicRun1103P/`, `Feature/doc/evidence/next-run-validation-20261103/NativeIO1103A/`.
+
+
+## Sprint#9-27 — Combat readability and monster loot (2026-11-03)
+
+- Goal: readable boss anticipation, forward initial framing/crosshair, opt-in actual query debug, data-driven death loot with existing atomic pickup/persistence.
+- Changes: owned boss profile variant/basic warning and actual-target windup HUD; normal pitch -10; live physics query shapes/executed pulses/accepted hits with owned cleanup; provisional world Slime potion25%×1.
+- Validation: UE5.8.4 Editor build77.82s; native40/40; Boss551/0 across18 cases/HUD/menu; Spatial85/0 with37skeletal+1capsule; camera5×49/0 and25PNG pixel checks; loot26+9/0 across disk restart;54PNG decoded/hashed.364existing saves unchanged,22ownedQA adds.
+- Status: implemented/validated work checkpoint. Actual physical-input feel, all terrain/animation quality, ground-boss asset application, expanded loot balance and packaging/full20min QA remain. Fab paid Golem not acquired; account ownership unverified.
+- Docs: Feature/architect/2026-11-03_combat-readability-and-monster-loot.md; Feature/architect/2026-11-03_remaining-development-roadmap.md; Feature/doc/2026-11-03_combat-readability-and-monster-loot.md; Feature/doc/evidence/combat-readability-20261103/final/verification.json.

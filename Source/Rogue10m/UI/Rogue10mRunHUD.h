@@ -8,9 +8,11 @@
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mIdentityTypes.h"
 #include "Rogue10mWeaponTypes.h"
+#include "Rogue10mMonsterAttackPatternProfile.h"
 #include "Rogue10mRunHUD.generated.h"
 
 class ARogue10mPlayerController;
+class ARogue10mBasicMonster;
 class UTexture2D;
 
 USTRUCT(BlueprintType)
@@ -175,6 +177,19 @@ struct FRogue10mHudAttackCooldownView
 };
 
 /** Widget Blueprint가 C++ 게임 상태를 읽는 메인 HUD 기반 클래스입니다. */
+/** Actual tracked boss windup against the local pawn; independent of floor visibility. */
+USTRUCT(BlueprintType)
+struct FRogue10mHudBossWindupView
+{
+    GENERATED_BODY()
+    UPROPERTY(BlueprintReadOnly, Category="Rogue10m|HUD|Boss") bool bVisible=false;
+    UPROPERTY(BlueprintReadOnly, Category="Rogue10m|HUD|Boss") ERogue10mMonsterAttackType AttackType=ERogue10mMonsterAttackType::Basic;
+    UPROPERTY(BlueprintReadOnly, Category="Rogue10m|HUD|Boss") FText AttackName;
+    UPROPERTY(BlueprintReadOnly, Category="Rogue10m|HUD|Boss") float RemainingSeconds=0.f;
+    UPROPERTY(BlueprintReadOnly, Category="Rogue10m|HUD|Boss") float TotalSeconds=0.f;
+    UPROPERTY(BlueprintReadOnly, Category="Rogue10m|HUD|Boss") float ProgressAlpha=0.f;
+};
+
 UCLASS(abstract)
 class ROGUE10M_API URogue10mRunHUD : public UUserWidget
 {
@@ -182,6 +197,9 @@ class ROGUE10M_API URogue10mRunHUD : public UUserWidget
 
 public:
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+	virtual int32 NativePaint(const FPaintArgs& Args, const FGeometry& AllottedGeometry,
+		const FSlateRect& MyCullingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId,
+		const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const override;
 
 	UFUNCTION(BlueprintImplementableEvent, Category="Rogue10m|HUD", meta=(DisplayName="Update Run Timer"))
 	void BP_UpdateRunTimer(float RemainingSeconds, float TotalSeconds, float ProgressAlpha);
@@ -210,6 +228,9 @@ public:
 	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Run") FRogue10mHudRunTimerView GetRunTimerView() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Run") FRogue10mHudRunResultView GetRunResultView() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Aim") FRogue10mHudAimCrossLineView GetAimCrossLineView() const;
+    UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Boss") FRogue10mHudBossWindupView GetBossWindupView() const;
+    /** Same actor last returned to the existing HP bar; no search is performed here. */
+    ARogue10mBasicMonster* GetTrackedMonsterForHUD() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Combat") FRogue10mHudDamageFeedbackView GetDamageFeedbackView() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Combat") FRogue10mHudAttackCooldownView GetAttackCooldownView() const;
 
@@ -223,5 +244,7 @@ protected:
 	bool bBroadcastHudDataUpdatedEveryTick = true;
 
 private:
+    // Weak cache of the HP bar's real look-query result, retained only through its own local-target windup.
+    mutable TWeakObjectPtr<ARogue10mBasicMonster> TrackedMonster;
 	FRogue10mHudVitalView MakeVitalView(float Current, float Max, bool bVisible, const FLinearColor& FillColor) const;
 };
