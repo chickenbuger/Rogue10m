@@ -1,0 +1,35 @@
+{
+  "succeeded": 1,
+  "failed": 0,
+  "succeededWithWarnings": 0,
+  "notRun": 0,
+  "tests": [
+    {
+      "testDisplayName": "SharedReaderAppend",
+      "fullTestPath": "Rogue10m.BasicRunEvidence.SharedReaderAppend",
+      "tags": [],
+      "state": "Success",
+      "deviceInstance": [
+        "32979BED434C9EDFD7BD49A2A6C9A89A"
+      ],
+      "duration": 0.5056458115577698,
+      "dateTime": "2026.11.03-14.21.32",
+      "entries": [
+        {
+          "event": {
+            "type": "Info",
+            "message": "Owned temporary evidence retained: C:/Users/PC/AppData/Local/Temp/Rogue10mEvidenceIO/3B6635C34849FA9CC2B80B806B68AC65/shared-evidence.csv",
+            "context": "",
+            "artifact": "00000000000000000000000000000000"
+          },
+          "filename": "",
+          "lineNumber": -1,
+          "timestamp": "2026.11.03-14.21.32"
+        }
+      ],
+      "warnings": 0,
+      "errors": 0,
+      "artifacts": []
+    }
+  ]
+}

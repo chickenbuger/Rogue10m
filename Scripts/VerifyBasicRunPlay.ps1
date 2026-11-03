@@ -8,6 +8,8 @@ param(
     [switch]$DodgeObserve,
     [switch]$GearUI,
     [switch]$GreatSwordGrowth,
+    [switch]$NextRunConnection,
+    [switch]$RecordWindowVideo,
     [string]$ProjectRoot='D:\Project\Rogue10m'
 )
 # DRAFT launcher: integrate/review/build before running. No gameplay-state fixtures.
@@ -16,6 +18,8 @@ if($DodgeObserve -and -not $PreparedBossStrategy){throw 'DodgeObserve requires -
 if($OrbitBossStrategy -and -not $PreparedBossStrategy){throw 'OrbitBossStrategy requires -PreparedBossStrategy; no launch or profile creation.'}
 if($GearUI -and -not $Visible){throw 'GearUI requires -Visible for the native Slate hit-test path; no offscreen fallback or launch.'}
 if($GreatSwordGrowth -and -not $GearUI){throw 'GreatSwordGrowth requires explicit -GearUI and its -Visible UI path; nothing was started.'}
+if($NextRunConnection -and -not $Visible){throw 'NextRunConnection requires explicit -Visible; no launch or profile creation.'}
+if($RecordWindowVideo -and -not $Visible){throw 'RecordWindowVideo requires explicit -Visible; no launch or profile creation.'}
 
 # Startup observation only. No process is stopped by this function.
 function Wait-OwnedStartupIdentity([Diagnostics.Process]$Process,[int]$ExpectedId,[string]$ExpectedExecutable){
@@ -80,7 +84,7 @@ function Save-Json([string]$Path,$Value){
     $json=ConvertTo-Json -InputObject $Value -Depth 12
     [IO.File]::WriteAllText($Path,$json,[Text.UTF8Encoding]::new($false))
 }
-function Read-DriverSummary([string]$Path,[bool]$ExpectPrepared=$false,[bool]$ExpectAnimation=$false,[bool]$ExpectGear=$false,[bool]$ExpectOrbit=$false,[bool]$ExpectGreatSwordGrowth=$false,[bool]$ExpectDodgeObserve=$false){
+function Read-DriverSummary([string]$Path,[bool]$ExpectPrepared=$false,[bool]$ExpectAnimation=$false,[bool]$ExpectGear=$false,[bool]$ExpectOrbit=$false,[bool]$ExpectGreatSwordGrowth=$false,[bool]$ExpectDodgeObserve=$false,[bool]$ExpectNextRun=$false,[bool]$ExpectRecording=$false){
     $values=[ordered]@{}
     $issues=New-Object 'System.Collections.Generic.List[string]'
     if(-not(Test-Path -LiteralPath $Path -PathType Leaf)){
@@ -145,6 +149,52 @@ function Read-DriverSummary([string]$Path,[bool]$ExpectPrepared=$false,[bool]$Ex
         if(-not $ExpectPrepared -and $values.Contains('prepared_boss_strategy') -and $values['prepared_boss_strategy'] -cne '0'){$issues.Add('unexpected_prepared_strategy_in_baseline_run')}
     }
     if($ExpectDodgeObserve -and $values['dodge_observe_requested'] -cne '1'){$issues.Add('requested_dodge_observer_not_confirmed_by_driver')}
+    if($ExpectNextRun){
+        if($values['next_run_connection_requested'] -cne '1'){$issues.Add('requested_next_run_connection_not_confirmed')}
+        $nextBooleanKeys=@('first_run_full_gate_frozen','next_run_hub_verified','next_run_field_verified','next_run_timer_verified','next_run_cancel_focus_observed','next_run_cancel_action_verified','next_run_abandon_ui_submitted','next_run_saved_receipt_observed','next_run_returned_hub','next_run_same_profile_verified','next_run_connection_complete','next_run_returned_slot_reset_verified')
+        foreach($key in $nextBooleanKeys){if(-not $values.Contains($key) -or $values[$key] -notin @('0','1')){$issues.Add('invalid_or_missing_'+$key)}}
+        if($values['first_run_full_gate_frozen'] -ceq '1'){
+            if($values['outcome'] -cne 'returned_victory' -or $values['full_boss_completion'] -cne '1' -or $values['first_run_frozen_outcome'] -cne 'returned_victory' -or $values['first_run_frozen_terminal'] -cne 'Victory'){$issues.Add('next_run_without_preserved_first_full_victory')}
+            if($values['next_run_connection_complete'] -cne '1'){$issues.Add('next_run_connection_incomplete_after_first_victory')}
+        }else{
+            foreach($key in $nextBooleanKeys | Where-Object {$_ -cne 'first_run_full_gate_frozen'}){if($values[$key] -ceq '1'){$issues.Add('next_run_milestone_without_first_victory:'+ $key)}}
+            if($values['full_boss_completion'] -ceq '1'){$issues.Add('first_full_victory_not_frozen_for_requested_next_run')}
+        }
+        foreach($key in @('next_run_slot_initial_baseline_recorded','next_run_slot_reset_verified')){
+            if(-not $values.Contains($key) -or $values[$key] -notin @('0','1')){$issues.Add('invalid_or_missing_'+$key)}
+        }
+        if($values['next_run_slot_comparison_scope'] -cne 'four_effective_stable_asset_or_null_and_IsAttackSkillUnlocked'){$issues.Add('next_run_slot_comparison_scope_missing')}
+        if($values['next_run_slot_reset_verified'] -ceq '1' -and ($values['next_run_slot_initial_baseline_recorded'] -cne '1' -or $values['first_run_full_gate_frozen'] -cne '1')){$issues.Add('next_run_slot_verification_without_initial_baseline_or_first_victory')}
+        if($values['next_run_field_verified'] -ceq '1' -and $values['next_run_slot_reset_verified'] -cne '1'){$issues.Add('next_run_field_without_slot_reset_verification')}
+        $nextDependencies=@{
+            next_run_field_verified=@('next_run_hub_verified')
+            next_run_timer_verified=@('next_run_field_verified')
+            next_run_cancel_action_verified=@('next_run_timer_verified','next_run_cancel_focus_observed')
+            next_run_abandon_ui_submitted=@('next_run_timer_verified','next_run_cancel_focus_observed','next_run_cancel_action_verified')
+            next_run_saved_receipt_observed=@('next_run_abandon_ui_submitted')
+            next_run_returned_slot_reset_verified=@('next_run_slot_reset_verified','next_run_saved_receipt_observed')
+            next_run_returned_hub=@('next_run_saved_receipt_observed','next_run_returned_slot_reset_verified')
+            next_run_connection_complete=@('first_run_full_gate_frozen','next_run_hub_verified','next_run_field_verified','next_run_timer_verified','next_run_cancel_focus_observed','next_run_cancel_action_verified','next_run_abandon_ui_submitted','next_run_saved_receipt_observed','next_run_returned_hub','next_run_same_profile_verified','next_run_slot_initial_baseline_recorded','next_run_slot_reset_verified','next_run_returned_slot_reset_verified')
+        }
+        foreach($key in $nextDependencies.Keys){if($values[$key] -ceq '1'){foreach($needed in $nextDependencies[$key]){if($values[$needed] -cne '1'){$issues.Add('next_run_dependency_missing:'+ $key+':'+$needed)}}}}
+        if($values['next_run_connection_complete'] -ceq '1'){
+            if($values['next_run_status'] -cne 'complete'){$issues.Add('next_run_completed_with_wrong_status')}
+            $nextParsedIds=@{}
+            foreach($key in @('next_run_first_id','next_run_id','next_run_after_return_id')){
+                $nextParsedGuid=[guid]::Empty
+                if(-not [guid]::TryParseExact([string]$values[$key],'N',[ref]$nextParsedGuid) -or $nextParsedGuid -eq [guid]::Empty){$issues.Add('next_run_invalid_RunId:'+ $key)}
+                else{$nextParsedIds[$key]=$nextParsedGuid}
+            }
+            if($nextParsedIds.Count -eq 3 -and @($nextParsedIds.Values | Select-Object -Unique).Count -ne 3){$issues.Add('next_run_RunIds_not_distinct_at_Hub_boundaries')}
+        }
+    }elseif($values.Contains('next_run_connection_requested') -and $values['next_run_connection_requested'] -cne '0'){$issues.Add('unexpected_next_run_connection_in_baseline_run')}
+    if($ExpectRecording){
+        if($values['recording_required'] -cne '1'){$issues.Add('requested_recording_gate_not_confirmed')}
+        if(-not $values.Contains('recording_ready_observed') -or $values['recording_ready_observed'] -notin @('0','1')){$issues.Add('invalid_or_missing_recording_ready_observed')}
+        if($values['recording_ready_observed'] -ceq '1' -and $values['recording_ready_source_scope'] -cne 'ready_JSON_window_zero_audio_first_chunk_fields_validated'){$issues.Add('recording_ready_scope_not_confirmed')}
+        if($values['full_boss_completion'] -ceq '1' -and $values['recording_ready_observed'] -cne '1'){$issues.Add('boss_completion_without_requested_recording_ready')}
+    }elseif($values.Contains('recording_required') -and $values['recording_required'] -cne '0'){$issues.Add('unexpected_recording_gate_in_baseline_run')}
+    if($values['recording_ready_observed'] -ceq '1' -and $values['recording_required'] -cne '1'){$issues.Add('recording_ready_without_recording_required')}
     return [pscustomobject]@{Values=$values;Issues=@($issues.ToArray());Valid=($issues.Count -eq 0)}
 }
 
@@ -168,6 +218,9 @@ $qaRoot=Join-Path $ProjectRoot 'DevLog\BasicRunPlayQA'
 if(Test-Path -LiteralPath $qaRoot){$null=Assert-PhysicalDirectory $qaRoot}
 $session=Join-Path $qaRoot $Label
 $driverOutput=Join-Path $session 'Driver'
+$RecordingToken=$null
+if($RecordWindowVideo){$RecordingToken=[guid]::NewGuid().ToString('N').ToLowerInvariant()}
+$RecordingReadyFile=Join-Path $driverOutput 'window-recording-ready.json'
 $log=Join-Path $session 'game.log'
 if(Test-Path -LiteralPath $session){throw 'Existing session evidence must be preserved; choose a fresh Label.'}
 $before=@(Get-SaveInventory $saveDirectory)
@@ -191,6 +244,8 @@ if($AnimationEvidence){$arguments+='-RogueBasicRunAnimationEvidence'}
 if($DodgeObserve){$arguments+='-RogueBasicRunDodgeObserve'}
 if($GearUI){$arguments+='-RogueBasicRunGearUI'}
 if($GreatSwordGrowth){$arguments+='-RogueBasicRunGreatSwordGrowth'}
+if($NextRunConnection){$arguments+='-RogueBasicRunNextRunConnection'}
+if($RecordWindowVideo){$arguments+='-RogueBasicRunRequireRecording';$arguments+=('-RogueBasicRunRecordingToken='+$RecordingToken)}
 $windowStyle='Hidden'
 if($Visible){$windowStyle='Normal'}else{$arguments+='-RenderOffscreen'}
 if(-not(Test-Path -LiteralPath $qaRoot)){New-Item -ItemType Directory -Path $qaRoot|Out-Null}
@@ -203,7 +258,8 @@ $metadata=[ordered]@{
     StartedUtc=[DateTime]::UtcNow.ToString('o'); State='prepared'; Visible=[bool]$Visible
     MaxSeconds=$MaxSeconds; WatchdogSeconds=($MaxSeconds+45); Executable=$exe; Arguments=$arguments
     ProfileSlot=$profile; ProgressionPrefix=$prefix; KeySlot=$keys; DriverOutput=$driverOutput
-    PhysicalInput='not_performed'; GameplayShortcuts='none_added_by_launcher'; PreparedBossStrategy=[bool]$PreparedBossStrategy; OrbitBossStrategy=[bool]$OrbitBossStrategy; AnimationEvidence=[bool]$AnimationEvidence; DodgeObserve=[bool]$DodgeObserve; GearUI=[bool]$GearUI; GreatSwordGrowth=[bool]$GreatSwordGrowth
+    RecordWindowVideo=[bool]$RecordWindowVideo;RecordingToken=$RecordingToken;RecordingReadyFile=$RecordingReadyFile
+    PhysicalInput='not_performed'; GameplayShortcuts='none_added_by_launcher'; PreparedBossStrategy=[bool]$PreparedBossStrategy; OrbitBossStrategy=[bool]$OrbitBossStrategy; AnimationEvidence=[bool]$AnimationEvidence; DodgeObserve=[bool]$DodgeObserve; GearUI=[bool]$GearUI; GreatSwordGrowth=[bool]$GreatSwordGrowth; NextRunConnection=[bool]$NextRunConnection
     BeforeSaveCount=$before.Count; OwnedProcess=$null; ProcessExitConfirmed=$false; ProcessExitCode=$null
     WatchdogStopAttempted=$false; WatchdogStopVerified=$false; Preservation='pending'; Error=$null
 }
@@ -213,6 +269,7 @@ Save-Json (Join-Path $session 'manifest.json') ([ordered]@{
     ProjectFileSHA256=(Get-FileHash -LiteralPath $projectFile -Algorithm SHA256).Hash
     Executable=$exe;Arguments=$arguments;MaxSeconds=$MaxSeconds;WatchdogSeconds=($MaxSeconds+45)
     ProfileSlot=$profile;ProgressionPrefix=$prefix;KeySlot=$keys;DriverOutput=$driverOutput
+    RecordWindowVideo=[bool]$RecordWindowVideo;RecordingToken=$RecordingToken;RecordingReadyFile=$RecordingReadyFile
     SaveInventoryBefore='before-saves.json';SaveInventoryAfter='after-saves.json';Log='game.log'
     PhysicalInput='not_performed';NormalRoutePolicy='UI and driver-generated gameplay input only; no state injection or direct progression/pickup/travel APIs'
 })
@@ -340,7 +397,7 @@ try{
     }
 
     try{
-        $summary=Read-DriverSummary (Join-Path $driverOutput 'summary.txt') ([bool]$PreparedBossStrategy) ([bool]$AnimationEvidence) ([bool]$GearUI) ([bool]$OrbitBossStrategy) ([bool]$GreatSwordGrowth) ([bool]$DodgeObserve)
+        $summary=Read-DriverSummary (Join-Path $driverOutput 'summary.txt') ([bool]$PreparedBossStrategy) ([bool]$AnimationEvidence) ([bool]$GearUI) ([bool]$OrbitBossStrategy) ([bool]$GreatSwordGrowth) ([bool]$DodgeObserve) ([bool]$NextRunConnection) ([bool]$RecordWindowVideo)
     }catch{
         $summary=[pscustomobject]@{Values=[ordered]@{};Issues=@('driver_summary_read_error:'+ $_.Exception.Message);Valid=$false}
         $metadata.Error=($metadata.Error+'; '+$_.Exception.Message).Trim('; ')
@@ -359,6 +416,8 @@ try{
     # Do not turn a death/timeout/blocked run or exit code 0 into a boss-completion claim.
     Write-Output ('BASIC_RUN_RECORDED outcome='+$summary.Values['outcome']+' full_boss_completion='+$summary.Values['full_boss_completion']+
         ' great_sword_growth='+$summary.Values['great_sword_growth_requested']+' learning_node='+$summary.Values['confirmed_learning_node']+
+        ' next_run_connection='+$summary.Values['next_run_connection_complete']+' next_run_status='+$summary.Values['next_run_status']+
+        ' recording_ready='+$summary.Values['recording_ready_observed']+' recording_scope='+$summary.Values['recording_ready_source_scope']+
         ' physical_input='+$summary.Values['physical_input']+' preservation='+$metadata.Preservation+' state='+$metadata.State+' evidence='+$session)
 }
 exit $exitStatus

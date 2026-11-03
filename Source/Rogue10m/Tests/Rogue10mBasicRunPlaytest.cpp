@@ -3,6 +3,9 @@
 #if WITH_EDITOR
 #include "CoreMinimal.h"
 #include "Containers/Ticker.h"
+#include "Dom/JsonObject.h"
+#include "Serialization/JsonReader.h"
+#include "Serialization/JsonSerializer.h"
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
 #include "Components/Button.h"
@@ -71,6 +74,8 @@
 #include "Rogue10mSkillTreeProgressionComponent.h"
 #include "Rogue10mTutorialNPC.h"
 #include "Rogue10mTutorialWidget.h"
+#include "Rogue10mAbandonMenuWidget.h"
+#include "Rogue10mTownProgressionComponent.h"
 #include "UnrealClient.h"
 #include "UObject/Class.h"
 #include "UObject/UObjectIterator.h"
@@ -146,6 +151,30 @@ public:
         }
         bDodgeObservationFreshGatePassed = true;
         bDodgeObservationOptIn = FParse::Param(FCommandLine::Get(), TEXT("RogueBasicRunDodgeObserve"));
+        bNextRunConnection = FParse::Param(FCommandLine::Get(), TEXT("RogueBasicRunNextRunConnection"));
+        if (bNextRunConnection && FParse::Param(FCommandLine::Get(), TEXT("RenderOffscreen")))
+        {
+            UE_LOG(LogRogue10m, Error, TEXT("BASIC_RUN_REJECTED next_run_connection_requires_visible_UI"));
+            FPlatformMisc::RequestExitWithStatus(false,3); return;
+        }
+        if (bNextRunConnection) { NextRunStatus = TEXT("waiting_first_run"); }
+        bRecordingRequired = FParse::Param(FCommandLine::Get(),TEXT("RogueBasicRunRequireRecording"));
+        if (bRecordingRequired)
+        {
+            int32 CaptureGateFlagCount = 0;
+            for (const FString& CaptureGateOption : Options)
+            { if (CaptureGateOption.Equals(TEXT("RogueBasicRunRequireRecording"),ESearchCase::IgnoreCase)) { ++CaptureGateFlagCount; } }
+            bool bCaptureGateTokenValid = CaptureGateFlagCount == 1 && OneOption(Options,TEXT("RogueBasicRunRecordingToken"),RecordingToken)
+                && RecordingToken.Len() == 32 && !FParse::Param(FCommandLine::Get(),TEXT("RenderOffscreen"));
+            for (TCHAR CaptureGateCharacter : RecordingToken)
+            { bCaptureGateTokenValid &= (CaptureGateCharacter >= TEXT('0') && CaptureGateCharacter <= TEXT('9'))
+                || (CaptureGateCharacter >= TEXT('a') && CaptureGateCharacter <= TEXT('f')); }
+            if (!bCaptureGateTokenValid)
+            {
+                UE_LOG(LogRogue10m,Error,TEXT("BASIC_RUN_REJECTED recording_requires_one_exact_32_lower_hex_token_and_visible_UI"));
+                FPlatformMisc::RequestExitWithStatus(false,3); return;
+            }
+        }
         Instance = Initial.GetGameInstance(); World = &Initial;
         if (!IFileManager::Get().MakeDirectory(*(Output / TEXT("screenshots")), true)
             || !WriteNew(TEXT("samples.csv"), TEXT("wall,stage,map,phase,world_time,remaining,x,y,z,speed,hp,max_hp,level,xp,mastery,run_gold,save_ready,target,target_hp,w,a,s,d,shift,lmb,first_kill,sword,learned,boss_reached\n"))
@@ -154,6 +183,8 @@ public:
             || !WriteNew(TEXT("screenshots.csv"), TEXT("wall,event,file,request_stage,observed_stage,bytes\n"))
             || !WriteNew(TEXT("input-frames.csv"), TEXT("frame,wall,stage,map,dt,world_dt,x,y,z,yaw,pitch,desired_w,actual_w,desired_a,actual_a,desired_s,actual_s,desired_d,actual_d,desired_shift,actual_shift,actual_alt,actual_lmb,last_input_x,last_input_y,move_ignored,look_ignored,paused,streaming_ready,waypoint,remaining\n")))
         { FPlatformMisc::RequestExitWithStatus(false, 3); return; }
+        if ((bNextRunConnection || bRecordingRequired) && !WriteNew(TEXT("next-run-skill-state.csv"),TEXT("wall,stage,map,boundary,detail\n")))
+        { FPlatformMisc::RequestExitWithStatus(false,3); return; }
         bAnimationEvidence = FParse::Param(FCommandLine::Get(), TEXT("RogueBasicRunAnimationEvidence"));
         if (bAnimationEvidence && (!WriteNew(TEXT("animation-events.csv"), TEXT("event,phase,frame,world_s,wall_s,stage,phase_matches,skill,montage,source_mesh,source_asset,body_asset,target,target_hp,skill_uses,attack_busy,attack_cd,combo,dodging,dodge_cd,montage_s,montage_rate,montage_active,hand_l_x,hand_l_y,hand_l_z,hand_r_x,hand_r_y,hand_r_z\n"))
             || !WriteNew(TEXT("animation-assets.txt"), TEXT("scope=read_only_opportunistic_normal_input_observation\nno_authored_timing_or_gameplay_state_mutations=1\nprocessed_callback_is_not_exact_contact_or_GPU_pixel_time=1\n"))))
@@ -183,7 +214,12 @@ private:
     { return FFileHelper::SaveStringToFile(Text, *(Output / Name), FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM, &IFileManager::Get(), FILEWRITE_NoReplaceExisting); }
     void Append(const TCHAR* Name, const FString& Text)
     {
-        if (!FFileHelper::SaveStringToFile(Text, *(Output / Name), FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM, &IFileManager::Get(), FILEWRITE_Append)) { bIoFailed = true; }
+        if (!FFileHelper::SaveStringToFile(Text, *(Output / Name), FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM, &IFileManager::Get(), FILEWRITE_Append | FILEWRITE_AllowRead))
+        {
+            const uint32 EvidenceWriteError = FPlatformMisc::GetLastError();
+            bIoFailed = true;
+            UE_LOG(LogRogue10m, Error, TEXT("BASIC_RUN evidence_append_failed file=%s platform_error=%u"), Name, EvidenceWriteError);
+        }
     }
     void Event(const TCHAR* Kind, const FString& Detail)
     {
@@ -206,7 +242,7 @@ private:
     bool Click(UUserWidget* Widget, const TCHAR* Name)
     {
         UButton* Button = Widget ? Cast<UButton>(Widget->GetWidgetFromName(Name)) : nullptr;
-        if (!Displayed(Widget) || !Displayed(Button)) { return false; }
+        if (!Displayed(Widget) || !Displayed(Button) || !Button->GetIsEnabled()) { return false; }
         Event(TEXT("UMG_button_delegate"), Name); Button->OnClicked.Broadcast(); return true;
     }
     void Key(const FKey& Input, bool Down)
@@ -235,6 +271,7 @@ private:
     void Block(const FString& Why)
     {
         if (bFinishing) { return; }
+        if (bNextRunActive) { FailNextRunConnection(Why); return; }
         StopDodgeObservation(TEXT("driver_block"));
         Reason = Why; Outcome = TEXT("blocked"); Event(TEXT("blocked"), Why); ReleaseAll(); Shot(TEXT("failure"));
         bFinishing = true; FinishAt = Now() + 1.5; Summary(TEXT("blocked"));
@@ -1188,6 +1225,380 @@ private:
         if (Count != 1) { return false; }
         Event(TEXT("UMG_node_button_delegate"), RequestedLearnNode().ToString()); Found->OnClicked.Broadcast(); return true;
     }
+    void WaitForWindowRecordingReady()
+    {
+        StopMove(); ActionAt = Now() + .25; // QA polling/input scheduling only; no game clock mutation.
+        if (bRecordingReadyObserved) { Block(TEXT("recording_gate_unexpected_reentry")); return; }
+        const FString CaptureReadyPath = Output / TEXT("window-recording-ready.json");
+        if (IFileManager::Get().DirectoryExists(*CaptureReadyPath))
+        { Block(TEXT("recording_ready_path_is_directory")); return; }
+        if (!IFileManager::Get().FileExists(*CaptureReadyPath)) { return; }
+        const int64 CaptureReadySize = IFileManager::Get().FileSize(*CaptureReadyPath);
+        if (CaptureReadySize <= 0 || CaptureReadySize > 65536)
+        { Block(TEXT("recording_ready_file_size_invalid")); return; }
+        FString CaptureReadyText;
+        if (!FFileHelper::LoadFileToString(CaptureReadyText,*CaptureReadyPath))
+        { Block(TEXT("recording_ready_file_read_failed")); return; }
+        TSharedPtr<FJsonObject> CaptureReadyRoot;
+        const auto CaptureReadyReader = TJsonReaderFactory<>::Create(CaptureReadyText);
+        if (!FJsonSerializer::Deserialize(CaptureReadyReader,CaptureReadyRoot) || !CaptureReadyRoot.IsValid())
+        { Block(TEXT("recording_ready_JSON_invalid")); return; }
+        // TryGet alone permits JSON scalar coercion in UE; reject the wrong JSON types first.
+        if (!CaptureReadyRoot->HasTypedField<EJson::String>(TEXT("schema"))
+            || !CaptureReadyRoot->HasTypedField<EJson::String>(TEXT("label"))
+            || !CaptureReadyRoot->HasTypedField<EJson::String>(TEXT("token"))
+            || !CaptureReadyRoot->HasTypedField<EJson::Boolean>(TEXT("window_only"))
+            || !CaptureReadyRoot->HasTypedField<EJson::Number>(TEXT("audio_tracks"))
+            || !CaptureReadyRoot->HasTypedField<EJson::String>(TEXT("source_label"))
+            || !CaptureReadyRoot->HasTypedField<EJson::Number>(TEXT("first_chunk_bytes")))
+        { Block(TEXT("recording_ready_JSON_field_type_invalid")); return; }
+        FString CaptureSchema,CaptureLabel,CaptureToken,CaptureSourceLabel;
+        bool bCaptureWindowOnly = false; double CaptureAudioTracks = -1.,CaptureFirstChunkBytes = 0.;
+        if (!CaptureReadyRoot->TryGetStringField(TEXT("schema"),CaptureSchema)
+            || !CaptureReadyRoot->TryGetStringField(TEXT("label"),CaptureLabel)
+            || !CaptureReadyRoot->TryGetStringField(TEXT("token"),CaptureToken)
+            || !CaptureReadyRoot->TryGetBoolField(TEXT("window_only"),bCaptureWindowOnly)
+            || !CaptureReadyRoot->TryGetNumberField(TEXT("audio_tracks"),CaptureAudioTracks)
+            || !CaptureReadyRoot->TryGetStringField(TEXT("source_label"),CaptureSourceLabel)
+            || !CaptureReadyRoot->TryGetNumberField(TEXT("first_chunk_bytes"),CaptureFirstChunkBytes))
+        { Block(TEXT("recording_ready_JSON_fields_unreadable")); return; }
+        if (!CaptureSchema.Equals(TEXT("Rogue10m.WindowRecordReady.v1"),ESearchCase::CaseSensitive))
+        { Block(TEXT("recording_ready_schema_mismatch")); return; }
+        if (!CaptureLabel.Equals(Label,ESearchCase::CaseSensitive))
+        { Block(TEXT("recording_ready_label_mismatch")); return; }
+        if (!CaptureToken.Equals(RecordingToken,ESearchCase::CaseSensitive))
+        { Block(TEXT("recording_ready_token_mismatch")); return; }
+        if (!bCaptureWindowOnly) { Block(TEXT("recording_ready_surface_not_window")); return; }
+        if (!FMath::IsFinite(CaptureAudioTracks) || CaptureAudioTracks != 0.)
+        { Block(TEXT("recording_ready_audio_tracks_not_zero")); return; }
+        if (!CaptureSourceLabel.Contains(TEXT("Rogue10m"),ESearchCase::IgnoreCase))
+        { Block(TEXT("recording_ready_source_label_not_Rogue10m")); return; }
+        if (!FMath::IsFinite(CaptureFirstChunkBytes) || CaptureFirstChunkBytes <= 0. || FMath::Fmod(CaptureFirstChunkBytes,1.) != 0.)
+        { Block(TEXT("recording_ready_first_chunk_bytes_invalid")); return; }
+        bRecordingReadyObserved = true;
+        RecordingReadySourceScope = TEXT("ready_JSON_window_zero_audio_first_chunk_fields_validated");
+        Event(TEXT("recording_ready_observed"),TEXT("fixed_local_ready_JSON_validated; producer_first_chunk_claim_not_independent_video_decode; no_raw_JSON_or_token_in_this_event"));
+        SetStage(TEXT("npc_approach"));
+    }
+
+    bool ReadNextRunSkillState(TArray<FString>& SkillStateSlots, TArray<FString>& SkillStateDetails,
+        bool& bSkillStateStableAssets, FString& SkillStateUnobservable) const
+    {
+        if (!Combat.IsValid() || !State.IsValid() || !Character.IsValid() || !Tree.IsValid()) { return false; }
+        SkillStateSlots.Reset(); SkillStateDetails.Reset(); bSkillStateStableAssets = true; SkillStateUnobservable.Empty();
+        SkillStateDetails.Add(TEXT("pawn_weapon=") + UEnum::GetValueAsString(Character->GetEquippedWeaponType()));
+        SkillStateDetails.Add(TEXT("state_weapon=") + UEnum::GetValueAsString(State->GetEquippedWeaponType()));
+        SkillStateDetails.Add(TEXT("combat_active_tree_weapon=") + UEnum::GetValueAsString(Combat->GetActiveSkillTreeWeaponType()));
+        const auto* SkillStateData = Combat->GetCharacterData();
+        SkillStateDetails.Add(TEXT("character_data=") + GetPathNameSafe(SkillStateData));
+        const URogue10mWeaponSkillProfileDataAsset* SkillStateFirstProfile = nullptr;
+        int32 SkillStateMatches = 0;
+        if (SkillStateData)
+        {
+            for (int32 SkillStateProfileIndex = 0; SkillStateProfileIndex < SkillStateData->WeaponSkillProfiles.Num(); ++SkillStateProfileIndex)
+            {
+                const auto* SkillStateCandidate = SkillStateData->WeaponSkillProfiles[SkillStateProfileIndex].Get();
+                SkillStateDetails.Add(FString::Printf(TEXT("character_data_profile[%d]=%s"), SkillStateProfileIndex, *GetPathNameSafe(SkillStateCandidate)));
+                if (SkillStateCandidate && SkillStateCandidate->WeaponType == Character->GetEquippedWeaponType())
+                { if (!SkillStateFirstProfile) { SkillStateFirstProfile = SkillStateCandidate; } ++SkillStateMatches; }
+            }
+        }
+        SkillStateDetails.Add(TEXT("selected_profile_inferred_first_character_data_match=") + GetPathNameSafe(SkillStateFirstProfile));
+        SkillStateDetails.Add(FString::Printf(TEXT("profile_matches=%d; source=%s; private_AppliedProfile_not_observed; paths_diagnostic_only"),
+            SkillStateMatches, SkillStateData && !SkillStateData->WeaponSkillProfiles.IsEmpty() ? TEXT("public_CharacterData_order") : TEXT("private_fallback_unobservable")));
+        const ERogue10mAttackInputSlot SkillStateInputSlots[] = {ERogue10mAttackInputSlot::Primary,ERogue10mAttackInputSlot::Special,
+            ERogue10mAttackInputSlot::ChargedPrimary,ERogue10mAttackInputSlot::ChargedSpecial};
+        const TCHAR* SkillStateNames[] = {TEXT("Primary"),TEXT("Special"),TEXT("ChargedPrimary"),TEXT("ChargedSpecial")};
+        for (int32 SkillStateIndex = 0; SkillStateIndex < 4; ++SkillStateIndex)
+        {
+            const auto* SkillStateSkill = Combat->GetEquippedSkill(SkillStateInputSlots[SkillStateIndex]);
+            const FString SkillStatePath = SkillStateSkill ? SkillStateSkill->GetPathName() : TEXT("<none>");
+            const bool bSkillStateUnlocked = SkillStateSkill && Combat->IsAttackSkillUnlocked(SkillStateSkill);
+            const bool bSkillStateStable = !SkillStateSkill || (SkillStateSkill->IsAsset() && !SkillStateSkill->HasAnyFlags(RF_Transient));
+            SkillStateSlots.Add(FString::Printf(TEXT("%s.asset=%s; unlocked=%d"), SkillStateNames[SkillStateIndex], *SkillStatePath, bSkillStateUnlocked));
+            SkillStateDetails.Add(FString::Printf(TEXT("slot=%s; asset=%s; IsAttackSkillUnlocked=%d; stable_content_asset_or_null=%d"),
+                SkillStateNames[SkillStateIndex], *SkillStatePath, bSkillStateUnlocked, bSkillStateStable));
+            bSkillStateStableAssets &= bSkillStateStable;
+            if (!bSkillStateStable && SkillStateUnobservable.IsEmpty())
+            { SkillStateUnobservable = FString::Printf(TEXT("slot=%s actual_runtime_path=%s isAsset=%d transient=%d"),
+                SkillStateNames[SkillStateIndex], *SkillStatePath, SkillStateSkill->IsAsset(), SkillStateSkill->HasAnyFlags(RF_Transient)); }
+        }
+        const auto SkillStateCombat = Combat->CaptureCombat();
+        TArray<FString> SkillStateUnlockedPaths, SkillStateBindings, SkillStateInvestments;
+        for (const auto& SkillStateUnlocked : SkillStateCombat.UnlockedSkills)
+        { SkillStateUnlockedPaths.Add(SkillStateUnlocked.ToSoftObjectPath().ToString()); }
+        for (const auto& SkillStateBinding : SkillStateCombat.SkillBindings)
+        { SkillStateBindings.Add(UEnum::GetValueAsString(SkillStateBinding.Key) + TEXT("=") + SkillStateBinding.Value.ToSoftObjectPath().ToString()); }
+        const auto SkillStateTree = Tree->Capture();
+        for (const auto& SkillStateInvestment : SkillStateTree.Investments)
+        { SkillStateInvestments.Add(FString::Printf(TEXT("%s route=%d spent=%d"), *SkillStateInvestment.NodeId.ToString(), static_cast<int32>(SkillStateInvestment.Route), SkillStateInvestment.SpentPoints)); }
+        SkillStateUnlockedPaths.Sort(); SkillStateBindings.Sort(); SkillStateInvestments.Sort();
+        SkillStateDetails.Add(TEXT("CaptureCombat.UnlockedSkills=") + FString::Join(SkillStateUnlockedPaths,TEXT("|")));
+        SkillStateDetails.Add(TEXT("CaptureCombat.SkillBindings=") + FString::Join(SkillStateBindings,TEXT("|")));
+        SkillStateDetails.Add(TEXT("Tree.Capture.Investments=") + FString::Join(SkillStateInvestments,TEXT("|")));
+        SkillStateDetails.Add(TEXT("scope=CaptureCombat_effective_durable_snapshot_not_raw_private_legacy_cache; Discovery_not_compared"));
+        return true;
+    }
+    void WriteNextRunSkillDetails(const TCHAR* SkillStateBoundary, const TArray<FString>& SkillStateDetails)
+    {
+        for (const auto& SkillStateDetail : SkillStateDetails)
+        { Append(TEXT("next-run-skill-state.csv"), FString::Printf(TEXT("%.3f,%s,%s,%s,%s\n"),Now()-Started,*Csv(Stage),*Csv(Map()),*Csv(SkillStateBoundary),*Csv(SkillStateDetail))); }
+        Event(TEXT("next_run_skill_state_recorded"), FString::Printf(TEXT("boundary=%s rows=%d; public_read_only_no_cache_or_ledger_mutation"),SkillStateBoundary,SkillStateDetails.Num()));
+    }
+    void RecordNextRunCurrentSkills(const TCHAR* SkillStateBoundary)
+    {
+        TArray<FString> SkillStateSlots, SkillStateDetails; bool bSkillStateStable = false; FString SkillStateUnknown;
+        if (ReadNextRunSkillState(SkillStateSlots,SkillStateDetails,bSkillStateStable,SkillStateUnknown))
+        { WriteNextRunSkillDetails(SkillStateBoundary,SkillStateDetails); }
+        else { Event(TEXT("next_run_skill_state_unavailable"),SkillStateBoundary); }
+    }
+    bool ObserveNextRunInitialSkills()
+    {
+        if (bNextRunInitialSlotBaselineRecorded) { return true; }
+        TArray<FString> SkillStateSlots, SkillStateDetails; bool bSkillStateStable = false; FString SkillStateUnknown;
+        if (!ReadNextRunSkillState(SkillStateSlots,SkillStateDetails,bSkillStateStable,SkillStateUnknown)) { return false; }
+        if (NextRunPendingInitialSlots != SkillStateSlots)
+        { NextRunPendingInitialSlots = SkillStateSlots; NextRunInitialSlotSampleTime = World->GetTimeSeconds(); return false; }
+        if (World->GetTimeSeconds() - NextRunInitialSlotSampleTime < .25) { return false; }
+        NextRunInitialSlotBaseline = SkillStateSlots; bNextRunInitialSlotsStableAssets = bSkillStateStable;
+        NextRunInitialSlotUnknown = SkillStateUnknown; bNextRunInitialSlotBaselineRecorded = true;
+        WriteNextRunSkillDetails(TEXT("initial_hub_stable_before_NPC"),SkillStateDetails);
+        return true;
+    }
+    bool VerifyStableNextRunFieldSkills(bool bAfterAbandonReturn = false)
+    {
+        bool& bBoundaryVerified = bAfterAbandonReturn ? bNextRunReturnedSlotResetVerified : bNextRunSlotResetVerified;
+        TArray<FString>& PendingBoundarySlots = bAfterAbandonReturn ? NextRunPendingReturnSlots : NextRunPendingFieldSlots;
+        double& BoundarySlotSampleTime = bAfterAbandonReturn ? NextRunReturnSlotSampleTime : NextRunFieldSlotSampleTime;
+        if (bBoundaryVerified) { return true; }
+        TArray<FString> SkillStateSlots, SkillStateDetails; bool bSkillStateStable = false; FString SkillStateUnknown;
+        if (!ReadNextRunSkillState(SkillStateSlots,SkillStateDetails,bSkillStateStable,SkillStateUnknown)) { return false; }
+        if (PendingBoundarySlots != SkillStateSlots)
+        { PendingBoundarySlots = SkillStateSlots; BoundarySlotSampleTime = World->GetTimeSeconds(); return false; }
+        if (World->GetTimeSeconds() - BoundarySlotSampleTime < .25) { return false; }
+        if (!bNextRunInitialSlotBaselineRecorded || !bNextRunInitialSlotsStableAssets || !bSkillStateStable)
+        {
+            WriteNextRunSkillDetails(bAfterAbandonReturn ? TEXT("abandon_return_Hub_slot_comparison_unobservable") : TEXT("next_field_slot_comparison_unobservable"),SkillStateDetails);
+            FailNextRunConnection(TEXT("next_run_slot_comparison_unobservable; expected=")+NextRunInitialSlotUnknown+TEXT("; actual=")+SkillStateUnknown); return false;
+        }
+        WriteNextRunSkillDetails(bAfterAbandonReturn ? TEXT("abandon_return_Hub_stable_slot_comparison") : TEXT("next_field_stable_slot_comparison"),SkillStateDetails);
+        if (NextRunInitialSlotBaseline != SkillStateSlots)
+        {
+            FString SkillStateDifference;
+            for (int32 SkillStateIndex = 0; SkillStateIndex < FMath::Max(NextRunInitialSlotBaseline.Num(),SkillStateSlots.Num()); ++SkillStateIndex)
+            {
+                const FString SkillStateExpected = NextRunInitialSlotBaseline.IsValidIndex(SkillStateIndex) ? NextRunInitialSlotBaseline[SkillStateIndex] : TEXT("<missing>");
+                const FString SkillStateActual = SkillStateSlots.IsValidIndex(SkillStateIndex) ? SkillStateSlots[SkillStateIndex] : TEXT("<missing>");
+                if (SkillStateExpected != SkillStateActual)
+                { SkillStateDifference = TEXT("expected=[")+SkillStateExpected+TEXT("] actual=[")+SkillStateActual+TEXT("]"); break; }
+            }
+            FailNextRunConnection(TEXT("next_run_starter_slot_reset_mismatch; ")+SkillStateDifference); return false;
+        }
+        bBoundaryVerified = true;
+        Event(bAfterAbandonReturn ? TEXT("next_run_returned_slots_reset_verified") : TEXT("next_run_starter_slots_reset_verified"),TEXT("four_effective_content_assets_or_null_and_IsAttackSkillUnlocked_match_initial_stable_Hub; metadata_paths_and_private_legacy_not_certified"));
+        return true;
+    }
+
+    void FailNextRunConnection(const FString& ContinuationFailure)
+    {
+        if (bFinishing) { return; }
+        NextRunStatus = TEXT("blocked"); NextRunFailure = ContinuationFailure;
+        Event(TEXT("next_run_blocked"), ContinuationFailure); StopDodgeObservation(TEXT("next_run_blocked"));
+        ReleaseAll(); Shot(TEXT("next_run_failure")); bFinishing = true; FinishAt = Now() + 1.5; Summary(Outcome);
+        // Outcome/Natural/TerminalPhase and the original first-run milestone flags remain unchanged.
+    }
+    bool NextRunOwnedReady(bool ContinuationRequireSaved = true)
+    {
+        if (!Instance.IsValid() || !World.IsValid() || !PC.IsValid() || !Character.IsValid()
+            || !State.IsValid() || !Inventory.IsValid() || !Tree.IsValid() || !Run.IsValid()
+            || !Saves || (ContinuationRequireSaved && !Saves->IsSaveReady()) || !Saves->CanRetrySave()) { return false; }
+        auto* ContinuationProfiles = Instance->GetSubsystem<URogue10mCharacterProfileSubsystem>();
+        const auto* ContinuationProfile = ContinuationProfiles ? ContinuationProfiles->GetSelectedProfile() : nullptr;
+        if (World->GetGameInstance() != Instance.Get() || World->GetNetMode() != NM_Standalone
+            || PC->GetWorld() != World.Get() || !PC->IsLocalController() || PC->GetPawn() != Character.Get()
+            || !Character->HasAuthority() || Character->GetPlayerState<ARogue10mPlayerState>() != State.Get()
+            || !ContinuationProfile || ContinuationProfile->ProfileId != ProfileId || ContinuationProfiles->GetProfileCount() != 1
+            || !Saves->IsAttachedTo(*Character) || Saves->GetAttachedProfileId() != ProfileId)
+        { FailNextRunConnection(TEXT("next_run_owned_profile_context_changed")); return false; }
+        return true;
+    }
+    bool NextRunStarterAndDiscovery() const
+    {
+        return !Character->IsDead() && State->GetPlayerLevel() == 1 && State->GetCurrentExperience() == 0
+            && State->GetEquippedWeaponType() == ERogue10mWeaponType::Knuckle
+            && Tree->GetMasteryTotalExperience(ERogue10mSkillTreeTrack::Brawler) == 0
+            && Tree->GetMasteryTotalExperience(ERogue10mSkillTreeTrack::GreatSword) == 0
+            && Tree->GetSpentSkillTreePoints() == 0 && !NextRunFirstLearnedNode.IsNone()
+            && !Tree->IsNodeUnlocked(NextRunFirstLearnedNode) && Saves->HasDiscoveredNode(NextRunFirstLearnedNode)
+            && !HasSword() && GearEquippedGuidCount() == 0;
+    }
+    void BeginNextRunConnection()
+    {
+        bFirstVictoryFrozenForNextRun = true; bNextRunActive = true;
+        NextRunFirstOutcome = Outcome; NextRunFirstTerminal = TerminalPhase; NextRunFirstLearnedNode = LearnedNode;
+        NextRunStatus = TEXT("in_progress");
+        RecordNextRunCurrentSkills(TEXT("first_victory_return_Hub_diagnostic_only"));
+        if (Deadline - Now() < 240.) { FailNextRunConnection(TEXT("next_run_insufficient_existing_wall_budget")); return; }
+        if (!NextRunOwnedReady()) { if (!bFinishing) { FailNextRunConnection(TEXT("next_run_hub_not_ready")); } return; }
+        NextRunId = Saves->GetAttachedRunId();
+        const auto* ContinuationTown = State->GetTownProgressionComponent();
+        if (Map() != TEXT("StartHub") || Run->GetRunPhase() != ERogue10mRunPhase::WaitingToStart
+            || World->URL.HasOption(TEXT("StartRun")) || !NextRunFirstId.IsValid() || !NextRunId.IsValid()
+            || NextRunId == NextRunFirstId || !NextRunStarterAndDiscovery() || !ContinuationTown || !ContinuationTown->UsesLobbyBudget())
+        { FailNextRunConnection(TEXT("next_run_initial_hub_reset_or_new_RunId_missing")); return; }
+        NextRunEntryGold = Inventory->GetGold(); NextRunEntryCrystals = Inventory->GetCrystals();
+        NextRunEntryLobbyEarned = ContinuationTown->GetLobbyEarnedBudget(); NextRunEntryLobbyAvailable = Saves->GetLobbyAvailablePoints();
+        bNextRunHubVerified = true;
+        Portal.Reset(); NPC.Reset(); Target.Reset(); Sword.Reset(); // QA references only; retain first SwordId for reset checks.
+        Route = {FVector(650,-1100,0),FVector(650,950,0),FVector(0,1800,0)}; Waypoint = 0;
+        Event(TEXT("next_run_hub_verified"), TEXT("same_selected_and_attached_profile; Hub_generated_new_RunId; first_run_flags_frozen"));
+        SetStage(TEXT("next_hub_route"),45.);
+    }
+    void TickNextRunConnection(float Delta)
+    {
+        if (Now() - StageAt > StageLimit) { FailNextRunConnection(TEXT("next_run_stage_timeout_") + Stage); return; }
+        if (Now() < ActionAt || !NextRunOwnedReady(Stage != TEXT("next_result"))) { return; }
+        if (Map() == TEXT("OpenRunMap") && Run->IsRunTerminal() && Run->GetRunPhase() != ERogue10mRunPhase::Abandoned)
+        { FailNextRunConnection(TEXT("next_run_unexpected_natural_terminal")); return; }
+        if (Stage == TEXT("next_hub_route") || Stage == TEXT("next_portal_walk"))
+        {
+            if (Map() == TEXT("OpenRunMap"))
+            { SetStage(TEXT("next_field_ready"),30.); return; }
+            if (Map() != TEXT("StartHub") || Run->GetRunPhase() != ERogue10mRunPhase::WaitingToStart
+                || Saves->GetAttachedRunId() != NextRunId)
+            { FailNextRunConnection(TEXT("next_run_hub_route_context_changed")); return; }
+            if (Stage == TEXT("next_hub_route"))
+            {
+                if (Waypoint < Route.Num()) { if (Walk(Route[Waypoint],120.f,Delta,false)) { ++Waypoint; } }
+                else { SetStage(TEXT("next_portal_walk"),45.); }
+                return;
+            }
+            if (!Portal.IsValid())
+            {
+                int32 ContinuationPortalCount = 0;
+                for (TActorIterator<ARogue10mRunPortal> It(World.Get()); It; ++It)
+                { Portal = *It; ++ContinuationPortalCount; }
+                if (ContinuationPortalCount != 1) { FailNextRunConnection(TEXT("next_run_combat_portal_not_unique")); return; }
+            }
+            const auto* ContinuationTown = State->GetTownProgressionComponent();
+            if (!ContinuationTown || Inventory->GetGold() != NextRunEntryGold || Inventory->GetCrystals() != NextRunEntryCrystals
+                || ContinuationTown->GetLobbyEarnedBudget() != NextRunEntryLobbyEarned || Saves->GetLobbyAvailablePoints() != NextRunEntryLobbyAvailable)
+            { FailNextRunConnection(TEXT("next_run_unrequested_hub_currency_change")); return; }
+            Walk(Portal->GetActorLocation(),15.f,Delta,false); return; // Only actual overlap performs entry save/travel.
+        }
+        if (Stage == TEXT("next_field_ready"))
+        {
+            if (Map() != TEXT("OpenRunMap") || !StreamingReady()) { return; }
+            if (!Run->IsRunActive() || !World->URL.HasOption(TEXT("StartRun"))
+                || !FMath::IsNearlyEqual(Run->GetRunDurationSeconds(),1200.f)
+                || Saves->GetAttachedRunId() != NextRunId || !NextRunStarterAndDiscovery())
+            { FailNextRunConnection(TEXT("next_run_fresh_field_state_or_same_RunId_missing")); return; }
+            int32 ContinuationGold=0,ContinuationCrystals=0,ContinuationLobbyEarned=0;
+            if (!Saves->TryResolveAbandonCurrencyBalances(ContinuationGold,ContinuationCrystals,ContinuationLobbyEarned)
+                || ContinuationGold != NextRunEntryGold || ContinuationCrystals != NextRunEntryCrystals
+                || ContinuationLobbyEarned != NextRunEntryLobbyEarned)
+            { FailNextRunConnection(TEXT("next_run_entry_currency_baseline_missing_or_wrong_RunId")); return; }
+            const float ContinuationRemaining = Run->GetRemainingRunSeconds();
+            if (!FMath::IsFinite(ContinuationRemaining) || ContinuationRemaining <= 0.f || ContinuationRemaining > 1200.f)
+            { FailNextRunConnection(TEXT("next_run_timer_bounds_invalid")); return; }
+            if (!VerifyStableNextRunFieldSkills()) { return; }
+            if (!bNextRunFieldVerified)
+            {
+                bNextRunFieldVerified = true; NextRunInitialRemaining = ContinuationRemaining;
+                NextRunInitialWorldTime = World->GetTimeSeconds();
+                Event(TEXT("next_run_field_verified"), TEXT("same_profile_and_Hub_RunId; fresh_knuckle_level_masteries_learning; Discovery_and_entry_baseline_retained"));
+                Shot(TEXT("next_run_field")); return;
+            }
+            if (World->GetTimeSeconds() - NextRunInitialWorldTime > 1.1 && ContinuationRemaining < NextRunInitialRemaining - .5f)
+            {
+                bNextRunTimerVerified = true; SetStage(TEXT("next_abandon_menu"),15.); Pulse(EKeys::O);
+            }
+            return;
+        }
+        if (Stage == TEXT("next_abandon_menu") || Stage == TEXT("next_abandon_confirm"))
+        {
+            if (Map() != TEXT("OpenRunMap") || !Run->IsRunActive() || Saves->GetAttachedRunId() != NextRunId)
+            { FailNextRunConnection(TEXT("next_run_abandon_context_changed")); return; }
+            auto* ContinuationMenu = PC->GetAbandonMenuWidget();
+            if (!PC->IsSettingsVisible() || !ContinuationMenu || ContinuationMenu->GetWorld() != World.Get()
+                || ContinuationMenu->GetOwningPlayer() != PC.Get() || !Displayed(ContinuationMenu)) { return; }
+            if (Stage == TEXT("next_abandon_menu"))
+            {
+                if (Click(ContinuationMenu,TEXT("AbandonMenuButton"))) { SetStage(TEXT("next_abandon_confirm"),15.); }
+                return;
+            }
+            auto* ContinuationCancel = Cast<UButton>(ContinuationMenu->GetWidgetFromName(TEXT("AbandonCancelButton")));
+            if (!ContinuationMenu->IsConfirmationOpen() || !Displayed(ContinuationCancel)) { return; }
+            if (!ContinuationCancel->HasKeyboardFocus() && !ContinuationCancel->HasUserFocus(PC.Get())) { return; }
+            bNextRunCancelFocusObserved = true;
+            if (!bNextRunCancelActionVerified)
+            {
+                if (!Click(ContinuationMenu,TEXT("AbandonCancelButton"))) { return; }
+                const auto* ContinuationCancelTown = State->GetTownProgressionComponent();
+                const auto* ContinuationCancelMode = World->GetAuthGameMode<ARogue10mGameMode>();
+                const auto* ContinuationCancelCompletion = ContinuationCancelMode ? ContinuationCancelMode->GetRunCompletionComponent() : nullptr;
+                if (ContinuationMenu->IsConfirmationOpen() || !PC->IsSettingsVisible() || !Run->IsRunActive()
+                    || Saves->GetAttachedRunId() != NextRunId || !NextRunStarterAndDiscovery()
+                    || !ContinuationCancelTown || !ContinuationCancelCompletion || ContinuationCancelCompletion->IsSettled()
+                    || Inventory->GetGold() != NextRunEntryGold || Inventory->GetCrystals() != NextRunEntryCrystals
+                    || ContinuationCancelTown->GetLobbyEarnedBudget() != NextRunEntryLobbyEarned
+                    || Saves->GetLobbyAvailablePoints() != NextRunEntryLobbyAvailable)
+                { FailNextRunConnection(TEXT("next_run_cancel_mutated_run_or_currency_context")); return; }
+                bNextRunCancelActionVerified = true;
+                Event(TEXT("next_run_abandon_cancelled"),TEXT("actual_enabled_UMG_cancel_delegate; confirmation_closed; active_run_profile_Discovery_and_currency_retained"));
+                Shot(TEXT("next_run_abandon_cancelled"));
+                SetStage(TEXT("next_abandon_menu"),15.); ActionAt = Now() + .5;
+                return;
+            }
+            if (!bNextRunAbandonSubmitted && Click(ContinuationMenu,TEXT("AbandonConfirmButton")))
+            { bNextRunAbandonSubmitted = true; SetStage(TEXT("next_result"),60.); }
+            return;
+        }
+        if (Stage == TEXT("next_result"))
+        {
+            if (Map() == TEXT("StartHub"))
+            {
+                if (!Saves->IsSaveReady() || !VerifyStableNextRunFieldSkills(true)) { return; }
+                RecordNextRunCurrentSkills(TEXT("next_abandon_return_Hub_verified"));
+                NextRunAfterReturnId = Saves->GetAttachedRunId();
+                const auto* ContinuationTown = State->GetTownProgressionComponent();
+                if (!bNextRunCancelActionVerified || !bNextRunAbandonSubmitted || !bNextRunSavedReceiptObserved || !NextRunAfterReturnId.IsValid()
+                    || NextRunAfterReturnId == NextRunId || NextRunAfterReturnId == NextRunFirstId
+                    || Run->GetRunPhase() != ERogue10mRunPhase::WaitingToStart || World->URL.HasOption(TEXT("StartRun"))
+                    || !NextRunStarterAndDiscovery() || !ContinuationTown || Inventory->GetGold() != NextRunEntryGold
+                    || Inventory->GetCrystals() != NextRunEntryCrystals || ContinuationTown->GetLobbyEarnedBudget() != NextRunEntryLobbyEarned
+                    || Saves->GetLobbyAvailablePoints() != NextRunEntryLobbyAvailable)
+                { FailNextRunConnection(TEXT("next_run_abandon_return_reset_Discovery_or_currency_failed")); return; }
+                bNextRunSameProfileVerified = true; bNextRunReturnedHub = true; bNextRunConnectionComplete = true; NextRunStatus = TEXT("complete"); bNextRunActive = false;
+                Event(TEXT("next_run_connection_complete"), TEXT("first_victory_preserved; same_profile_normal_portal_entry_and_UI_abandon_return_observed"));
+                ReleaseAll(); Shot(TEXT("next_run_returned_hub")); bFinishing = true; FinishAt = Now() + 1.5; Summary(Outcome); return;
+            }
+            if (Map() != TEXT("OpenRunMap") || Saves->GetAttachedRunId() != NextRunId || !bNextRunAbandonSubmitted) { return; }
+            if (Run->GetRunPhase() != ERogue10mRunPhase::Abandoned) { return; }
+            auto* ContinuationMode = World->GetAuthGameMode<ARogue10mGameMode>();
+            auto* ContinuationCompletion = ContinuationMode ? ContinuationMode->GetRunCompletionComponent() : nullptr;
+            if (!ContinuationCompletion || !ContinuationCompletion->IsSettled() || !ContinuationCompletion->IsAbandoned()) { return; }
+            const auto ContinuationEconomy = ContinuationCompletion->GetEconomySummary();
+            if (!ContinuationEconomy.bAvailable) { return; }
+            if (!ContinuationEconomy.bAbandoned || ContinuationEconomy.LobbyAward != 0 || ContinuationEconomy.LobbyAvailable != NextRunEntryLobbyAvailable)
+            { FailNextRunConnection(TEXT("next_run_abandon_reward_or_available_lobby_mismatch")); return; }
+            auto* ContinuationResult = PC->GetRunResultWidget();
+            if (PC->IsRunResultVisible() && ContinuationResult && Now() > ActionAt)
+            {
+                const TWeakObjectPtr<URogue10mRunCompletionComponent> ContinuationSavedProbe = ContinuationCompletion;
+                if (Click(ContinuationResult,TEXT("RunResultReturnToTown")))
+                {
+                    ++NextRunReturnClicks; ActionAt = Now() + 2.;
+                    if (ContinuationSavedProbe.IsValid() && ContinuationSavedProbe->IsProgressionSaved()
+                        && ContinuationSavedProbe->GetEconomySummary().bSaved) { bNextRunSavedReceiptObserved = true; }
+                }
+                if (NextRunReturnClicks > 5) { FailNextRunConnection(TEXT("next_run_result_save_retries_exhausted")); }
+            }
+            return;
+        }
+        FailNextRunConnection(TEXT("next_run_unknown_followup_stage"));
+    }
+
     void Advance(float Delta)
     {
         if (Stage == TEXT("main_menu"))
@@ -1227,9 +1638,21 @@ private:
                 auto* Profiles = Instance->GetSubsystem<URogue10mCharacterProfileSubsystem>(); const auto* Profile = Profiles ? Profiles->GetSelectedProfile() : nullptr;
                 if (!Profile || !Profile->IsValid()) { Block(TEXT("normal_character_UI_did_not_select_profile")); return; }
                 ProfileId = Profile->ProfileId; EntryGold = Inventory->GetGold();
+                if (bNextRunConnection)
+                {
+                    NextRunFirstId = Saves->GetAttachedRunId();
+                    if (!NextRunFirstId.IsValid()) { Block(TEXT("next_run_initial_RunId_missing")); return; }
+                    if (!ObserveNextRunInitialSkills()) { return; }
+                }
+                if (bRecordingRequired && !bRecordingReadyObserved)
+                {
+                    if (!bNextRunConnection && !ObserveNextRunInitialSkills()) { return; }
+                    SetStage(TEXT("recording_wait"),90.); StopMove(); return;
+                }
                 SetStage(TEXT("npc_approach"));
             }
         }
+        else if (Stage == TEXT("recording_wait")) { WaitForWindowRecordingReady(); }
         else if (Stage == TEXT("npc_approach"))
         {
             if (!NPC.IsValid()) for (TActorIterator<ARogue10mTutorialNPC> It(World.Get()); It; ++It) { NPC = *It; break; }
@@ -1363,6 +1786,7 @@ private:
         {
             if (!VerifyGearEquipped()) { return; } // No repeated RMB on a handled/uncertain outcome.
             bGearUiEquipped = true;
+            if (bNextRunConnection) { RecordNextRunCurrentSkills(TEXT("actual_GreatSword_UI_equipped")); }
             Event(TEXT("gear_ui_equipped_verified"), FString::Printf(TEXT("guid=%s type=GreatSword primary=%s; actual_equipment_and_binding_observed"),
                 *SwordId.ToString(EGuidFormats::Digits), *GearExpectedPrimaryPath));
             if (const auto* Charged = Combat->GetEquippedSkill(ERogue10mAttackInputSlot::ChargedPrimary))
@@ -1423,6 +1847,7 @@ private:
         }
         if (bIoFailed) { Block(TEXT("evidence_write_failed")); return true; }
         if (Now() >= Deadline) { Block(TEXT("bounded_wall_watchdog")); return true; }
+        if (bNextRunActive) { TickNextRunConnection(Delta); return true; }
         if (World.IsValid() && bFieldEntered && Run.IsValid() && Run->IsRunTerminal() && Stage != TEXT("result"))
         {
             const auto Phase = Run->GetRunPhase(); TerminalPhase = StaticEnum<ERogue10mRunPhase>()->GetNameStringByValue(static_cast<int64>(Phase));
@@ -1440,9 +1865,17 @@ private:
             const bool Discovery = !bLearned || Saves->HasDiscoveredNode(LearnedNode);
             if (!Reset || !Discovery) { Block(TEXT("natural_return_did_not_reset_run_or_preserve_discovery")); return true; }
             bReturned = true; Outcome = TEXT("returned_") + Natural; Reason = TEXT("natural terminal and UI return observed; milestone flags remain separate");
-            Event(TEXT("returned"), Outcome); ReleaseAll(); Shot(TEXT("returned_hub")); bFinishing = true; FinishAt = Now() + 1.5; Summary(Outcome); return true;
+            Event(TEXT("returned"), Outcome); ReleaseAll(); Shot(TEXT("returned_hub"));
+            if (bNextRunConnection)
+            {
+                if (bReturned && bMenuUI && bNpcDialogue && bBossReached && bFirstKill && bLearned && bSword
+                    && (!bGearUiEquipment || bGearUiEquipped) && Natural == TEXT("victory"))
+                { BeginNextRunConnection(); return true; }
+                NextRunStatus = Natural == TEXT("victory") ? TEXT("not_attempted_first_full_gate_missing") : TEXT("not_attempted_first_no_victory");
+            }
+            bFinishing = true; FinishAt = Now() + 1.5; Summary(Outcome); return true;
         }
-        if (Now() - StageAt > StageLimit) { Block(TEXT("stage_timeout_") + Stage); return true; }
+        if (Now() - StageAt > StageLimit) { Block(Stage == TEXT("recording_wait") ? FString(TEXT("recording_ready_timeout_90_wall_seconds")) : TEXT("stage_timeout_") + Stage); return true; }
         if (Now() >= ActionAt && World.IsValid() && PC.IsValid()) { Advance(Delta); }
         return true;
     }
@@ -1797,6 +2230,15 @@ private:
             *Status,*Outcome,*Stage,*Reason,bMenuUI,bNpcDialogue,bFieldEntered,bSword,bFirstKill,bLearned,bBossReached,bReturned,
             bReturned && bMenuUI && bNpcDialogue && bBossReached && bFirstKill && bLearned && bSword && (!bGearUiEquipment || bGearUiEquipped) && Natural == TEXT("victory"),Now()-Started,*TerminalPhase,*ProfileId.ToString(EGuidFormats::Digits));
         Text += FString::Printf(TEXT("dodge_observe_requested=%d\n"), bDodgeObservationOptIn);
+        Text += FString::Printf(TEXT("recording_required=%d\nrecording_ready_observed=%d\nrecording_ready_source_scope=%s\n"),
+            bRecordingRequired,bRecordingReadyObserved,*RecordingReadySourceScope);
+        Text += FString::Printf(TEXT("next_run_slot_initial_baseline_recorded=%d\nnext_run_slot_reset_verified=%d\nnext_run_returned_slot_reset_verified=%d\nnext_run_slot_comparison_scope=four_effective_stable_asset_or_null_and_IsAttackSkillUnlocked\nnext_run_legacy_cache_scope=public_CaptureCombat_diagnostic_only_not_raw_private_ledger_certification\n"),
+            bNextRunInitialSlotBaselineRecorded,bNextRunSlotResetVerified,bNextRunReturnedSlotResetVerified);
+        Text += FString::Printf(TEXT("next_run_connection_requested=%d\nfirst_run_full_gate_frozen=%d\nfirst_run_frozen_outcome=%s\nfirst_run_frozen_terminal=%s\nnext_run_status=%s\nnext_run_reason=%s\nnext_run_hub_verified=%d\nnext_run_field_verified=%d\nnext_run_timer_verified=%d\nnext_run_cancel_focus_observed=%d\nnext_run_cancel_action_verified=%d\nnext_run_abandon_ui_submitted=%d\nnext_run_saved_receipt_observed=%d\nnext_run_returned_hub=%d\nnext_run_same_profile_verified=%d\nnext_run_connection_complete=%d\nnext_run_first_id=%s\nnext_run_id=%s\nnext_run_after_return_id=%s\n"),
+            bNextRunConnection,bFirstVictoryFrozenForNextRun,*NextRunFirstOutcome,*NextRunFirstTerminal,*NextRunStatus,*NextRunFailure,
+            bNextRunHubVerified,bNextRunFieldVerified,bNextRunTimerVerified,bNextRunCancelFocusObserved,bNextRunCancelActionVerified,bNextRunAbandonSubmitted,
+            bNextRunSavedReceiptObserved,bNextRunReturnedHub,bNextRunSameProfileVerified,bNextRunConnectionComplete,
+            *NextRunFirstId.ToString(EGuidFormats::Digits),*NextRunId.ToString(EGuidFormats::Digits),*NextRunAfterReturnId.ToString(EGuidFormats::Digits));
         Text += FString::Printf(TEXT("gear_ui_requested=%d\ngear_ui_click_routed=%d\ngear_ui_equipped_verified=%d\n"), bGearUiEquipment, bGearUiClickRouted, bGearUiEquipped);
         Text += FString::Printf(TEXT("great_sword_growth_requested=%d\nrequested_learning_node=%s\nconfirmed_learning_node=%s\ngreat_sword_growth_ready=%d\ngreat_sword_growth_ui_click=%d\ngreat_sword_growth_learning_verified=%d\ngreat_sword_growth_level=%d\ngreat_sword_growth_mastery=%d\ngreat_sword_growth_node_cost=%d\ngreat_sword_growth_points_before=%d\ngreat_sword_growth_points_after=%d\ngreat_sword_growth_spent_before=%d\ngreat_sword_growth_spent_after=%d\n"),
             bGreatSwordGrowth, *RequestedLearnNode().ToString(), *LearnedNode.ToString(), bGreatSwordGrowthReadyObserved,
@@ -1897,6 +2339,21 @@ private:
     int32 Waypoint=0,RecoveryCount=0,ReturnClicks=0,ShotCount=0,EntryGold=0,InputFrames=0;
     int64 InitialDefeats=0;
     FName LearnedNode;
+    bool bRecordingRequired=false,bRecordingReadyObserved=false;
+    FString RecordingToken,RecordingReadySourceScope=TEXT("not_observed");
+    bool bNextRunConnection=false,bNextRunActive=false,bFirstVictoryFrozenForNextRun=false;
+    bool bNextRunHubVerified=false,bNextRunFieldVerified=false,bNextRunTimerVerified=false,bNextRunCancelFocusObserved=false,bNextRunCancelActionVerified=false;
+    bool bNextRunAbandonSubmitted=false,bNextRunSavedReceiptObserved=false,bNextRunReturnedHub=false,bNextRunSameProfileVerified=false,bNextRunConnectionComplete=false;
+    FGuid NextRunFirstId,NextRunId,NextRunAfterReturnId;
+    FName NextRunFirstLearnedNode;
+    TArray<FString> NextRunInitialSlotBaseline,NextRunPendingInitialSlots,NextRunPendingFieldSlots,NextRunPendingReturnSlots;
+    FString NextRunInitialSlotUnknown;
+    double NextRunInitialSlotSampleTime=-1.,NextRunFieldSlotSampleTime=-1.,NextRunReturnSlotSampleTime=-1.;
+    bool bNextRunInitialSlotBaselineRecorded=false,bNextRunInitialSlotsStableAssets=false,bNextRunSlotResetVerified=false,bNextRunReturnedSlotResetVerified=false;
+    FString NextRunStatus=TEXT("not_requested"),NextRunFailure,NextRunFirstOutcome,NextRunFirstTerminal;
+    int32 NextRunEntryGold=0,NextRunEntryCrystals=0,NextRunEntryLobbyEarned=0,NextRunEntryLobbyAvailable=0,NextRunReturnClicks=0;
+    float NextRunInitialRemaining=0.f;
+    double NextRunInitialWorldTime=-1.;
     float PreviousYawInput=0.f,PreviousPitchInput=0.f,YawInputSign=1.f,PitchInputSign=1.f;
     bool bNameFocused=false,bNameTyped=false,bAimSample=false,bMenuUI=false,bFinished=false,bFinishing=false,bIoFailed=false,bFieldEntered=false,bNpcDialogue=false,bSword=false,bFirstKill=false,bLearned=false,bBossReached=false,bReturned=false;
 };

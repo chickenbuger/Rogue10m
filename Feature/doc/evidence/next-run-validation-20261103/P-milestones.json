@@ -1,0 +1,290 @@
+[
+  {
+    "wall": "0.013",
+    "event": "great_sword_growth_mode",
+    "stage": "main_menu",
+    "detail": "actual_entry_pickup_then_Slate_RMB_GS_then_natural_forest_M3_LV3_then_manual_ManaEntry_UMG; no_product_rule_or_progression_mutations"
+  },
+  {
+    "wall": "0.027",
+    "event": "stage",
+    "stage": "character_create",
+    "detail": "character_create"
+  },
+  {
+    "wall": "0.754",
+    "event": "stage",
+    "stage": "character_name",
+    "detail": "character_name"
+  },
+  {
+    "wall": "1.803",
+    "event": "stage",
+    "stage": "character_enter",
+    "detail": "character_enter"
+  },
+  {
+    "wall": "2.207",
+    "event": "stage",
+    "stage": "wait_hub",
+    "detail": "wait_hub"
+  },
+  {
+    "wall": "8.556",
+    "event": "next_run_skill_state_recorded",
+    "stage": "wait_hub",
+    "detail": "boundary=initial_hub_stable_before_NPC rows=26; public_read_only_no_cache_or_ledger_mutation"
+  },
+  {
+    "wall": "8.557",
+    "event": "stage",
+    "stage": "npc_approach",
+    "detail": "npc_approach"
+  },
+  {
+    "wall": "10.237",
+    "event": "stage",
+    "stage": "npc_open",
+    "detail": "npc_open"
+  },
+  {
+    "wall": "11.253",
+    "event": "stage",
+    "stage": "npc_supplies",
+    "detail": "npc_supplies"
+  },
+  {
+    "wall": "11.655",
+    "event": "stage",
+    "stage": "npc_close",
+    "detail": "npc_close"
+  },
+  {
+    "wall": "12.669",
+    "event": "stage",
+    "stage": "hub_route",
+    "detail": "hub_route"
+  },
+  {
+    "wall": "19.495",
+    "event": "stage",
+    "stage": "portal_walk",
+    "detail": "portal_walk"
+  },
+  {
+    "wall": "30.664",
+    "event": "stage",
+    "stage": "field_ready",
+    "detail": "field_ready"
+  },
+  {
+    "wall": "31.067",
+    "event": "stage",
+    "stage": "sword_overlap",
+    "detail": "sword_overlap"
+  },
+  {
+    "wall": "35.565",
+    "event": "stage",
+    "stage": "gear_open_inventory",
+    "detail": "gear_open_inventory"
+  },
+  {
+    "wall": "36.591",
+    "event": "stage",
+    "stage": "gear_confirm",
+    "detail": "gear_confirm"
+  },
+  {
+    "wall": "37.136",
+    "event": "next_run_skill_state_recorded",
+    "stage": "gear_confirm",
+    "detail": "boundary=actual_GreatSword_UI_equipped rows=26; public_read_only_no_cache_or_ledger_mutation"
+  },
+  {
+    "wall": "37.136",
+    "event": "gear_ui_equipped_verified",
+    "stage": "gear_confirm",
+    "detail": "guid=7DD59E8741B9FD8D87A21C9ACF860056 type=GreatSword primary=/Game/DataAsset/AttackSkill/ClassCombat/GreatSword/DA_Attack_GreatSword_Primary01.DA_Attack_GreatSword_Primary01; actual_equipment_and_binding_observed"
+  },
+  {
+    "wall": "37.147",
+    "event": "stage",
+    "stage": "gear_close_inventory",
+    "detail": "gear_close_inventory"
+  },
+  {
+    "wall": "38.059",
+    "event": "stage",
+    "stage": "forest_route",
+    "detail": "forest_route"
+  },
+  {
+    "wall": "138.819",
+    "event": "stage",
+    "stage": "growth_combat",
+    "detail": "growth_combat"
+  },
+  {
+    "wall": "263.146",
+    "event": "great_sword_growth_ready",
+    "stage": "growth_combat",
+    "detail": "node=I.Mana.Entry level=3 GS_mastery=3 available_run_points=2 actual_cost=1; natural_input_only_not_new_node_rules"
+  },
+  {
+    "wall": "263.159",
+    "event": "stage",
+    "stage": "skill_open",
+    "detail": "skill_open"
+  },
+  {
+    "wall": "263.575",
+    "event": "stage",
+    "stage": "skill_learn",
+    "detail": "skill_learn"
+  },
+  {
+    "wall": "263.977",
+    "event": "stage",
+    "stage": "skill_confirm",
+    "detail": "skill_confirm"
+  },
+  {
+    "wall": "264.383",
+    "event": "great_sword_growth_UMG_purchase_verified",
+    "stage": "skill_confirm",
+    "detail": "node=I.Mana.Entry actual_cost=1 available_before=2 available_after=1 spent_before=0 spent_after=1 route=Points effective_GS_identity=Mana; proc_damage_not_yet_proven; no_progression_setters"
+  },
+  {
+    "wall": "264.384",
+    "event": "stage",
+    "stage": "boss_route",
+    "detail": "boss_route"
+  },
+  {
+    "wall": "478.236",
+    "event": "stage",
+    "stage": "boss_combat",
+    "detail": "boss_combat"
+  },
+  {
+    "wall": "1104.086",
+    "event": "natural_terminal",
+    "stage": "boss_combat",
+    "detail": "victory reached_boss=1"
+  },
+  {
+    "wall": "1104.087",
+    "event": "stage",
+    "stage": "result",
+    "detail": "result"
+  },
+  {
+    "wall": "1106.580",
+    "event": "next_run_skill_state_recorded",
+    "stage": "result",
+    "detail": "boundary=first_victory_return_Hub_diagnostic_only rows=26; public_read_only_no_cache_or_ledger_mutation"
+  },
+  {
+    "wall": "1106.581",
+    "event": "next_run_hub_verified",
+    "stage": "result",
+    "detail": "same_selected_and_attached_profile; Hub_generated_new_RunId; first_run_flags_frozen"
+  },
+  {
+    "wall": "1106.595",
+    "event": "stage",
+    "stage": "next_hub_route",
+    "detail": "next_hub_route"
+  },
+  {
+    "wall": "1114.403",
+    "event": "stage",
+    "stage": "next_portal_walk",
+    "detail": "next_portal_walk"
+  },
+  {
+    "wall": "1121.540",
+    "event": "stage",
+    "stage": "next_field_ready",
+    "detail": "next_field_ready"
+  },
+  {
+    "wall": "1122.343",
+    "event": "next_run_skill_state_recorded",
+    "stage": "next_field_ready",
+    "detail": "boundary=next_field_stable_slot_comparison rows=26; public_read_only_no_cache_or_ledger_mutation"
+  },
+  {
+    "wall": "1122.344",
+    "event": "next_run_starter_slots_reset_verified",
+    "stage": "next_field_ready",
+    "detail": "four_effective_content_assets_or_null_and_IsAttackSkillUnlocked_match_initial_stable_Hub; metadata_paths_and_private_legacy_not_certified"
+  },
+  {
+    "wall": "1122.350",
+    "event": "next_run_field_verified",
+    "stage": "next_field_ready",
+    "detail": "same_profile_and_Hub_RunId; fresh_knuckle_level_masteries_learning; Discovery_and_entry_baseline_retained"
+  },
+  {
+    "wall": "1123.297",
+    "event": "stage",
+    "stage": "next_abandon_menu",
+    "detail": "next_abandon_menu"
+  },
+  {
+    "wall": "1123.700",
+    "event": "stage",
+    "stage": "next_abandon_confirm",
+    "detail": "next_abandon_confirm"
+  },
+  {
+    "wall": "1124.102",
+    "event": "next_run_abandon_cancelled",
+    "stage": "next_abandon_confirm",
+    "detail": "actual_enabled_UMG_cancel_delegate; confirmation_closed; active_run_profile_Discovery_and_currency_retained"
+  },
+  {
+    "wall": "1124.110",
+    "event": "stage",
+    "stage": "next_abandon_menu",
+    "detail": "next_abandon_menu"
+  },
+  {
+    "wall": "1124.621",
+    "event": "stage",
+    "stage": "next_abandon_confirm",
+    "detail": "next_abandon_confirm"
+  },
+  {
+    "wall": "1125.024",
+    "event": "stage",
+    "stage": "next_result",
+    "detail": "next_result"
+  },
+  {
+    "wall": "1127.880",
+    "event": "next_run_skill_state_recorded",
+    "stage": "next_result",
+    "detail": "boundary=abandon_return_Hub_stable_slot_comparison rows=26; public_read_only_no_cache_or_ledger_mutation"
+  },
+  {
+    "wall": "1127.880",
+    "event": "next_run_returned_slots_reset_verified",
+    "stage": "next_result",
+    "detail": "four_effective_content_assets_or_null_and_IsAttackSkillUnlocked_match_initial_stable_Hub; metadata_paths_and_private_legacy_not_certified"
+  },
+  {
+    "wall": "1128.030",
+    "event": "next_run_skill_state_recorded",
+    "stage": "next_result",
+    "detail": "boundary=next_abandon_return_Hub_verified rows=26; public_read_only_no_cache_or_ledger_mutation"
+  },
+  {
+    "wall": "1128.030",
+    "event": "next_run_connection_complete",
+    "stage": "next_result",
+    "detail": "first_victory_preserved; same_profile_normal_portal_entry_and_UI_abandon_return_observed"
+  }
+]

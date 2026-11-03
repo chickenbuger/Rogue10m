@@ -2700,3 +2700,14 @@ NPC44검사와 핵심6suite30검사를 모두 통과했다. 정상 E/F/G는 메�
 - 검증: 최종 Editor CPP 컴파일·링크47.69초 성공. NullRHI71/0, D3D11 RenderOffscreen71/0, 기존6suite30/0, 런처 사전 파일 거부2개·AST 통과. 실제 PNG3개 디코딩·SHA·시각 검토, 원본356저장 보존/QA4개 추가.
 - 상태: 기능 검증 완료. 작업 브랜치 기록 대상이며 develop/test/main 승격은 기존 #9-24 연속 플레이 미검증과 분리한다. 사람 물리 입력·실제 다음 판·20분·패키징은 미완료다.
 - 관련: Feature/architect/2026-11-03_safe-menu-pause-and-roadmap.md, Feature/doc/2026-11-03_safe-menu-pause.md, DevLog/20261103.txt, Feature/doc/evidence/safe-menu-pause-20261103/VERIFICATION.json.
+
+## Sprint#9-26 — 동일 프로필 다음 판·포기 왕복 검증 (2026-11-03)
+
+- 목표: #9-24에서 남은 실제 다음 판 연결을 녹화 없이 완료하고 기존 첫 승리 결과를 보존한다.
+- 변경: 기본 OFF QA의 실제 UMG 포기 취소 확인, 다음 필드/포기 귀환의 기존 4개 유효 공격 슬롯 비교, 취소/슬롯 요약 gate. QA append 읽기 공유와 공유 reader 관찰기, 실제 UE NativeIO 회귀를 추가했다. 맵/원본 에셋/제품 밸런스/저장 스키마는 변경하지 않는다.
+- 실행: O389.908초는 `evidence_write_failed`로 보스 이동 중 blocked(엔진0/실행기1), 실패 원본 보존. P1129.537초는 실제 정상 보스 승리→같은 프로필 다음 필드→UMG 포기 취소·확정→저장귀환 완료(엔진0/실행기0, fullBoss1/nextComplete1). A→B→C 서로 다른 RunId와 단일 프로필, 1200초 타이머·너클·선택 성장 초기화/Discovery 보존을 확인했다.
+- 검증: Editor 빌드42.00/18.73/7.77초 성공. Windows 파일 공유 충돌 별도 재현 후 append100회 무손실, NativeIO 자동화1/0, 합성 파서28/28·AST0은 별도 집계. Alt 요청/수락8/8, HP 감소 관측1회는 인간 회피 난이도 판정이 아니다.
+- 보존: O360→362, P362→364. 각 기존 세이브 SHA256 변경/누락0·허용 QA2개씩 추가. P45장/O31장 전체 디코딩·SHA256, P 주요5장 Root 시각 검토와 기능별 원본 보존을 완료했다.
+- 범위: 첫 `returned_victory`/`Victory` 상태 고정, 실제 취소 동작1, 필드/귀환 슬롯 비교1. 공개 유효 슬롯 비교이며 모든 private legacy 원장 초기화 인증은 아니다. P의 저장 실패 재시도·사람 물리 입력·20분 시간초과·패키징은 미실행이다.
+- 상태: #9-24의 실제 동일 프로필 다음 판 미검증은 이번 #9-26으로 해소. 이번 기록에서 develop/test/main 병합은 하지 않았다. 보스 속도/지상형 후보·Fab·정면 시야/크로스헤어·테스트 판정 표시·처치 드롭은 최신 사용자 요청의 다음 packet이다.
+- 문서: `Feature/architect/2026-11-03_next-run-validation.md`, `Feature/doc/2026-11-03_next-run-validation.md`, `DevLog/BasicRunPlayQA/BasicRun1103O/`, `DevLog/BasicRunPlayQA/BasicRun1103P/`, `Feature/doc/evidence/next-run-validation-20261103/NativeIO1103A/`.
