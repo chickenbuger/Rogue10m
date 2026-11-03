@@ -36,3 +36,8 @@ I/P/K/O/Esc/F10은 pause 중에도 실행된다. 메뉴 진입 전에 기본 좌
 작업 시작의 실제 저장356개가 모두 같은 SHA256으로 남아 있다. native QA4파일만 추가되어 현재360개이며, 원래 next-run WIP5파일의 바이트도 동일하다. 이전 SprintChangeLog 미커밋 항목은 그대로 두고 새 항목만 덧붙였다. 원본 에셋/맵 변경은 없다.
 
 원격 fetch 결과 원격 main/develop/test는 e32e5abe, 현재 기준 e5ec1703는 main보다24커밋 앞서고 뒤진 커밋은0이었다. 이번 기능은 별도 작업 브랜치에만 기록하며, 기존 #9-24 다음 판 연속 QA가 미검증이므로 그 변경을 섞거나 develop/test/main을 자동 승격하지 않는다. 실제 커밋·push 결과는 DevLog의 최종 기록을 따른다.
+## 작업 브랜치 기록 완료
+
+제품/QA/계획/사진21파일의 기능 커밋은90d6b82874de92970b9f93a8ad65d2f72a6fc9ef이며 GitHub chickenbuger/Rogue10m의 Sprint#9-25-safe-menu-pause에 정상 push했다. ls-remote의 동일 전체 해시를 확인했다. 최초 push는 게시 승인 근거 부족으로 자동검토에서 실행 전 거절됐으나, 2026-10-27 사용자의 큰 기능 완료 후 GitHub commit/push 요청을 대화 원문에서 확인한 뒤 허용된1회 재시도로 성공했다. 추가 권한이나 재승인은 요청하지 않았다.
+
+기존 next-run 소스·실행기·11월1일 로그·Sprint#9-24 항목은 작업폴더에 그대로 남아 있다. develop/test/main과 원본 세이브·에셋은 변경하지 않았다. 다음 판 연속 플레이 QA가 아직 미검증이므로 통합 승격은 후속으로 남긴다.
