@@ -115,6 +115,12 @@ void ARogue10mPlayerController::UpdateRotation(float DeltaTime)
 bool ARogue10mPlayerController::SetPause(bool bPause, FCanUnpause CanUnpauseDelegate)
 {
 	if (bPause && SkillBindingComponent) { SkillBindingComponent->CancelHeldInput(); }
+	if (bPause)
+	{
+		ARogue10mGameMode* Mode = GetWorld() ? GetWorld()->GetAuthGameMode<ARogue10mGameMode>() : nullptr;
+		// An independent request during a menu pause must survive closing that menu.
+		if (Mode && Mode->HasMenuPause(this)) { return Mode->SetPause(this, CanUnpauseDelegate); }
+	}
 	return Super::SetPause(bPause, CanUnpauseDelegate);
 }
 
@@ -144,6 +150,8 @@ void ARogue10mPlayerController::BeginPlay()
 		}
 	}
 
+	if (ARogue10mGameState* Run = GetWorld()->GetGameState<ARogue10mGameState>())
+	{ Run->OnRunPhaseChanged.AddUniqueDynamic(this, &ARogue10mPlayerController::HandleMenuPauseRunPhaseChanged); }
 	InitializeRunHUD();
 	InitializeMenuWindows();
 	InitializeDamageIndicatorPool();
@@ -167,14 +175,14 @@ void ARogue10mPlayerController::SetupInputComponent()
 		return;
 	}
 
-	InputComponent->BindKey(EKeys::I, IE_Pressed, this, &ARogue10mPlayerController::ToggleInventory);
+	InputComponent->BindKey(EKeys::I, IE_Pressed, this, &ARogue10mPlayerController::ToggleInventory).bExecuteWhenPaused = true;
 	if (CombatTestComponent) CombatTestComponent->BindInput(InputComponent);
 	if (SkillBindingComponent) { SkillBindingComponent->InitializeBindings(InputComponent); }
-	InputComponent->BindKey(EKeys::P, IE_Pressed, this, &ARogue10mPlayerController::ToggleItemWindow);
-	InputComponent->BindKey(EKeys::K, IE_Pressed, this, &ARogue10mPlayerController::ToggleSkillTree);
-	InputComponent->BindKey(EKeys::O, IE_Pressed, this, &ARogue10mPlayerController::ToggleSettings);
-	InputComponent->BindKey(EKeys::Escape, IE_Pressed, this, &ARogue10mPlayerController::ToggleSettings);
-	InputComponent->BindKey(EKeys::F10, IE_Pressed, this, &ARogue10mPlayerController::ToggleSettings);
+	InputComponent->BindKey(EKeys::P, IE_Pressed, this, &ARogue10mPlayerController::ToggleItemWindow).bExecuteWhenPaused = true;
+	InputComponent->BindKey(EKeys::K, IE_Pressed, this, &ARogue10mPlayerController::ToggleSkillTree).bExecuteWhenPaused = true;
+	InputComponent->BindKey(EKeys::O, IE_Pressed, this, &ARogue10mPlayerController::ToggleSettings).bExecuteWhenPaused = true;
+	InputComponent->BindKey(EKeys::Escape, IE_Pressed, this, &ARogue10mPlayerController::ToggleSettings).bExecuteWhenPaused = true;
+	InputComponent->BindKey(EKeys::F10, IE_Pressed, this, &ARogue10mPlayerController::ToggleSettings).bExecuteWhenPaused = true;
 	InputComponent->BindKey(EKeys::L, IE_Pressed, this, &ARogue10mPlayerController::HandleToggleCombatLog);
 	InputComponent->BindKey(EKeys::V, IE_Pressed, this, &ARogue10mPlayerController::ToggleInspectionCamera);
 
@@ -203,6 +211,11 @@ void ARogue10mPlayerController::SetupInputComponent()
 
 void ARogue10mPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	bMenuPauseEndingPlay = true;
+	if (ARogue10mGameState* Run = GetWorld() ? GetWorld()->GetGameState<ARogue10mGameState>() : nullptr)
+	{ Run->OnRunPhaseChanged.RemoveDynamic(this, &ARogue10mPlayerController::HandleMenuPauseRunPhaseChanged); }
+	if (ARogue10mGameMode* Mode = GetWorld() ? GetWorld()->GetAuthGameMode<ARogue10mGameMode>() : nullptr)
+	{ Mode->ReleaseMenuPause(this); }
 	ResetAbandonMenuContext();
 	if (AbandonMenuWidget) { AbandonMenuWidget->SetMenuOpen(false); AbandonMenuWidget->RemoveFromParent(); AbandonMenuWidget = nullptr; }
 	ClearAbandonConfirmation();
@@ -1247,9 +1260,33 @@ void ARogue10mPlayerController::InitializeMainMenu()
 	}
 	UGameplayStatics::SetGamePaused(this, true);
 }
+void ARogue10mPlayerController::UpdateSafeMenuPause()
+{
+	ARogue10mGameMode* Mode = GetWorld() ? GetWorld()->GetAuthGameMode<ARogue10mGameMode>() : nullptr;
+	if (!Mode) { return; }
+	const bool bMenuOpen = bInventoryVisible || bItemWindowVisible || bSkillTreeVisible || bSettingsVisible || bTraitWindowVisible;
+	const bool bNeedsPause = !bMenuPauseEndingPlay && IsLocalPlayerController() && !bMainMenuVisible
+		&& !bCharacterLobbyVisible && !bRunResultVisible && bMenuOpen && Mode->IsSafeMenuContext();
+	if (bNeedsPause) { Mode->AcquireMenuPause(this); }
+	else { Mode->ReleaseMenuPause(this); }
+}
+
+void ARogue10mPlayerController::HandleMenuPauseRunPhaseChanged(ERogue10mRunPhase NewPhase)
+{
+	RefreshInputMode();
+}
+
 void ARogue10mPlayerController::RefreshInputMode()
 {
-	if (IsAnyBlockingWindowVisible() && SkillBindingComponent) { SkillBindingComponent->CancelHeldInput(); }
+	if (IsAnyBlockingWindowVisible())
+	{
+		if (SkillBindingComponent) { SkillBindingComponent->CancelHeldInput(); }
+		if (ARogue10mCharacter* MenuCharacter = Cast<ARogue10mCharacter>(GetPawn()))
+		{
+			if (URogue10mCombatComponent* Combat = MenuCharacter->GetCombatComponent()) { Combat->CancelHeldAttackInput(); }
+		}
+	}
+	UpdateSafeMenuPause();
 	if (bRunResultVisible && RunResultWidget)
 	{
 		bShowMouseCursor = true;

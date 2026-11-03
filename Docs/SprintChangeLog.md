@@ -2691,3 +2691,12 @@ NPC44검사와 핵심6suite30검사를 모두 통과했다. 정상 E/F/G는 메�
 
 
 9-23 M결과: 정상성장/마나학습→보스실제처치→승리저장+24→마을귀환 PASS(fullBoss1/exit0). 제품수치/피해판정불변, 기존352sav/31패키지/맵 보존, QA2추가. 다음판/legacy기술초기화범위는계속검증하며 사람직접완주·시야·패키징완료아님. Feature/doc/2026-11-01_normal-growth-boss-qa.md와 M_NormalVictory 기록 참고.
+
+
+## Sprint#9-25 — 안전 문맥 메뉴 정지와 남은 개발 계획 (2026-11-03)
+
+- 목표: 기존 미완료 next-run QA를 보존하면서 확정된 출발 전 마을 메뉴 정지 계약을 구현한다.
+- 변경: 정확한 StartHub/WaitingToStart provider, 컨트롤러별 pause handle 소유권, I/P/K/O/Esc/F10 pause 중 닫기, 중첩 창/phase/EndPlay 정리, 미래 공격 입력만 취소하는 Combat/BasicBrawler API. 맵/에셋/저장 스키마/밸런스는 변경하지 않는다.
+- 검증: 최종 Editor CPP 컴파일·링크47.69초 성공. NullRHI71/0, D3D11 RenderOffscreen71/0, 기존6suite30/0, 런처 사전 파일 거부2개·AST 통과. 실제 PNG3개 디코딩·SHA·시각 검토, 원본356저장 보존/QA4개 추가.
+- 상태: 기능 검증 완료. 작업 브랜치 기록 대상이며 develop/test/main 승격은 기존 #9-24 연속 플레이 미검증과 분리한다. 사람 물리 입력·실제 다음 판·20분·패키징은 미완료다.
+- 관련: Feature/architect/2026-11-03_safe-menu-pause-and-roadmap.md, Feature/doc/2026-11-03_safe-menu-pause.md, DevLog/20261103.txt, Feature/doc/evidence/safe-menu-pause-20261103/VERIFICATION.json.

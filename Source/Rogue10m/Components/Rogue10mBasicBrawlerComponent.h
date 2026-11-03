@@ -54,6 +54,9 @@ public:
 	void HandleAttackPressed(bool bPrimary);
 	void HandleAttackReleased(bool bPrimary);
 	void NotifySkillAccepted(const URogue10mAttackSkillData& Skill);
+	/** Clears only future input; accepted attacks keep their timing, damage and cooldown. */
+	void CancelHeldInput();
+	bool HasHeldInput() const { return bPrimaryHeld || bSecondaryHeld || bCharging || bBufferedPrimary; }
 	void CancelInput();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Basic Brawler", meta=(ClampMin="0.0", ClampMax="0.25", Units="s"))

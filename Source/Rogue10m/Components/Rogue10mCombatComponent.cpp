@@ -171,6 +171,26 @@ void URogue10mCombatComponent::HandleAttackPressed(bool bPrimaryAttack)
 		FLinearColor(0.72f, 0.84f, 1.0f, 1.0f));
 }
 
+bool URogue10mCombatComponent::IsAnyAttackInputHeld() const
+{
+	const ARogue10mCharacter* OwnerCharacter = GetOwnerCharacter();
+	const URogue10mBasicBrawlerComponent* Basic = OwnerCharacter ? OwnerCharacter->GetBasicBrawlerComponent() : nullptr;
+	return LeftAttackPressedTime >= 0.0f || RightAttackPressedTime >= 0.0f || HeldBoundSkill.IsValid()
+		|| (Basic && Basic->HasHeldInput());
+}
+
+void URogue10mCombatComponent::CancelHeldAttackInput()
+{
+	LeftAttackPressedTime = RightAttackPressedTime = -1.0f;
+	CancelBoundSkillInput();
+	StopChargeEffect();
+	if (ARogue10mCharacter* Character = GetOwnerCharacter())
+	{
+		if (URogue10mBasicBrawlerComponent* Basic = Character->GetBasicBrawlerComponent())
+		{ Basic->CancelHeldInput(); }
+	}
+}
+
 void URogue10mCombatComponent::HandleAttackReleased(bool bPrimaryAttack)
 {
 	if (ARogue10mCharacter* Character = GetOwnerCharacter())

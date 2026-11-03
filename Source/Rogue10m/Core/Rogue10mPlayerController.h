@@ -29,6 +29,7 @@ class URogue10mItemDataAsset;
 class UTexture2D;
 class UUserWidget;
 class UWorld;
+enum class ERogue10mRunPhase : uint8;
 
 struct FRogue10mRuntimeLogEntry
 {
@@ -337,6 +338,9 @@ private:
 	void InitializeCharacterLobby();
 	void InitializeMainMenu();
 	void RefreshInputMode();
+	void UpdateSafeMenuPause();
+	UFUNCTION() void HandleMenuPauseRunPhaseChanged(ERogue10mRunPhase NewPhase);
+	bool bMenuPauseEndingPlay = false;
 	bool IsMenuWorld() const;
 	bool TravelToGameplayMap();
 	void SetPanelVisible(bool& PanelState, bool bVisible, URogue10mMenuWindowWidget* ActivatedWindow);

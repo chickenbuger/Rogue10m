@@ -63,6 +63,9 @@ public:
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Weapon Change")
 	bool IsWeaponChangeBlocked() const;
 	void HandleAttackReleased(bool bPrimaryAttack);
+	/** Drops pending button/charge/buffer input without cancelling an already accepted hit. */
+	void CancelHeldAttackInput();
+	bool IsAnyAttackInputHeld() const;
 	void CancelCombatVisuals();
 	bool ExecutePendingAttackSkillFromAbility();
 
