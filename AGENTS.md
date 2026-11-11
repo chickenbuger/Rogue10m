@@ -120,6 +120,13 @@ Before committing, run:
 
 ## Feature Artifact Locations
 
+### World Map Production Reference
+
+- Before actual world-map, village, outpost, hunting-ground, class-NPC, weapon/book placement, or related encounter work, read `Docs/WorldMapProductionGuide.md` and `Docs/References/WorldMap/README.md` together with the two referenced JSON catalogs and the retained map PNG.
+- These files preserve the latest user decisions from the map-planning chat. New explicit user instructions take priority. Treat older five-village drafts and the generated image as supporting references, not permission to restore superseded input, reward, or progression rules.
+- Keep ordinary monsters (minimum 15), four midbosses, and one final boss separate. Mid/high books are found during exploration; only introductory/lower books may be explicitly promised for simple quests/training. Weapon-specific chord/charge support and the Ctrl -> first-Q deadline -> QQQ magic-missile flow must be preserved.
+- The retained image is a concept map, not an Unreal capture or measured layout. Verify local-to-world anchors, collision, routes, gameplay, and asset ownership/compatibility before applying it. Record deviations in the feature plan and update the reference catalogs after approved changes.
+
 - Architecture plans: `Feature/architect/YYYY-MM-DD_feature-name.md`
 - Development summaries: `Feature/doc/YYYY-MM-DD_feature-name.md`
 - Harness documentation: `Docs/HarnessPipeline.md`, `Docs/UnrealEngineeringRules.md`, `Docs/LazyCodexHarness.md`

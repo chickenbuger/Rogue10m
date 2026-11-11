@@ -2720,3 +2720,12 @@ NPC44검사와 핵심6suite30검사를 모두 통과했다. 정상 E/F/G는 메�
 - Validation: UE5.8.4 Editor build77.82s; native40/40; Boss551/0 across18 cases/HUD/menu; Spatial85/0 with37skeletal+1capsule; camera5×49/0 and25PNG pixel checks; loot26+9/0 across disk restart;54PNG decoded/hashed.364existing saves unchanged,22ownedQA adds.
 - Status: implemented/validated work checkpoint. Actual physical-input feel, all terrain/animation quality, ground-boss asset application, expanded loot balance and packaging/full20min QA remain. Fab paid Golem not acquired; account ownership unverified.
 - Docs: Feature/architect/2026-11-03_combat-readability-and-monster-loot.md; Feature/architect/2026-11-03_remaining-development-roadmap.md; Feature/doc/2026-11-03_combat-readability-and-monster-loot.md; Feature/doc/evidence/combat-readability-20261103/final/verification.json.
+
+## Sprint#9-31 — 월드맵 실제 제작 참조 통합 (2026-11-12)
+- 브랜치: Sprint#9-31-world-map-production-reference
+- 목표: 대화의 최신 기획과 생성 지도를 실제 맵 제작자가 함께 참조하도록 프로젝트에 보존한다.
+- 주요 변경: 제작 기준·이미지/생성기록·배치/획득처 JSON, 시작 마을/3거점/5초소/15일반+4중간+1최종·직업 경로·NPC 대사·최신 입력/비급 정책 통합. AGENTS와 기존 제작 가이드 진입 링크 추가.
+- 검증: JSON/참조/거리/이미지해시·로컬링크·생성경로 검사. 최종 결과는 Feature/doc/evidence/world-map-production-reference-20261112/validation.json 참조. UE 빌드/PIE/실제 맵 적용은 문서 범위 밖이다.
+- 상태: 제작 참조 문서화. 실제 맵/신규AI/비급 제작은 계획 단계이며 기존 WIP를 완료로 승격하지 않는다.
+- 관련 문서: Docs/WorldMapProductionGuide.md; Docs/References/WorldMap/README.md; Feature/architect/2026-11-12_world-map-production-reference.md; Feature/doc/2026-11-12_world-map-production-reference.md.
+- 최종 검증 추가: 정적584/링크36 통과, PNG 원본SHA 일치, 기존 WIP67개 해시 보존. 독립검토2건 반영. 원격 통합 기준보다 기존28커밋이 앞서 문서 작업 브랜치 체크포인트만 공유하고 통합 승격은 별도 검증까지 보류한다.

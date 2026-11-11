@@ -1,5 +1,7 @@
 # World Map Maker 사용 가이드
 
+실제 배치 작업 전 [월드맵 제작 기준](WorldMapProductionGuide.md)과 [전체 지도·배치/획득처 참조](References/WorldMap/README.md)를 함께 읽는다. 최신 큰 마을·초소·15종 일반 몬스터·별도 보스·NPC·무기/비급 경로는 해당 문서가 기준이다. 아래는 기존 편집 도구의 사용법이며, 생성 지도 픽셀이나 과거 좌표를 그대로 적용하는 지시가 아니다.
+
 현재 플레이맵 `/Game/Rogue10m/Maps/OpenRunMap`을 Unreal Editor 안에서 구역별로 편집하는 도구다.
 
 ## 채택 방식

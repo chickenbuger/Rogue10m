@@ -1,5 +1,7 @@
 # Rogue10m World Structure
 
+2026-11-12 실제 제작 기준: [WorldMapProductionGuide](WorldMapProductionGuide.md)와 [지도·계획 데이터 묶음](References/WorldMap/README.md)을 우선 참조한다. 큰 거점3·전문초소5·사냥터5, 일반15종과 별도 중간4/최종1, 직업 NPC·현장 무기/비급 동선 및 최신 마법 입력을 통합했다. 아래의 1인칭·과거 크기·초기 배치 설명은 당시 구조 기록이며 최신 설계를 덮어쓰지 않는다. 실제 적용 상태는 Editor와 해당 feature 검증 기록에서 확인한다.
+
 ## Overview
 
 Rogue10m uses two main map types:
