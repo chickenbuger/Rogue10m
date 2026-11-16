@@ -2410,3 +2410,12 @@
 - 검증: 이전 실제 startup429/429·Error0·ko/ko-KR 복원·정상 종료 증거를 보존한다. 이번에는 독립 Python 회귀·구문 검사와 PowerShell parser, generated/path·diff 검사·독립 리뷰를 다시 수행한다.
 - 상태: 독립 범위 게시 검증 중. 검증 후 작업 브랜치 push와 develop→test→main 순서의 fast-forward를 진행한다. 지형 도로 저장/cold QA 및 다른 누적 기능의 완료를 의미하지 않는다.
 - 관련: Feature/architect/2026-11-16_output-log-error-triage.md, Feature/doc/2026-11-16_output-log-error-triage.md, Docs/OutputLogErrorWorkflow.md.
+
+
+### Sprint#9-33 출력 로그 도구 게시 완료
+
+- 기능 커밋: 7d4d30489b20953d68cbc54a75859339fc7b4351. 기능별 즉시 commit·push 규칙과 독립 로그 도구 38파일을 게시했다.
+- 검증: Python 14통과·Windows hardlink권한1skip, AST3·PowerShell parser2·generated/path·staged diff 통과, 독립 리뷰 잔여 문제0. 보관 startup429/429·Error0 증거를 유지했다.
+- 원격: 작업 브랜치 push 후 develop→test→main fast-forward 및 일반 atomic push 성공. 직접 ls-remote로 네 브랜치의 위 SHA 일치를 확인했다. 완료 기록은 별도 문서 체크포인트로 동일 브랜치들에 반영한다.
+- 보존·한계: 원래 Sprint#9-32 checkout의 누적 C++·Config·Content·지형/전투 WIP는 포함하거나 전환하지 않았다. 본 기능 완료는 지형 도로 저장/cold QA나 다른 기능의 완료를 뜻하지 않는다.
+- 관련: Feature/doc/2026-11-16_output-log-error-triage.md, Feature/doc/evidence/output-log-errors-20261116/publication-20261117.json.

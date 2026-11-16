@@ -52,5 +52,25 @@
     "Feature/doc/evidence/output-log-errors-20261116/verification-summary.json": "391b8aacf585ae048c9307942b50a27bd57143554d2936cbef9eb0c5dede54ae"
   },
   "original_working_branch": "Sprint#9-32-landscape-world-blockout",
-  "unfinished_features": "Landscape and other accumulated WIP remain in original checkout and are outside this commit"
+  "unfinished_features": "Landscape and other accumulated WIP remain in original checkout and are outside this commit",
+  "publication": {
+    "feature_commit": "7d4d30489b20953d68cbc54a75859339fc7b4351",
+    "work_branch": "Sprint#9-33-output-log-workflow",
+    "work_branch_push_exit_code": 0,
+    "promotion_order": [
+      "develop",
+      "test",
+      "main"
+    ],
+    "promotion_mode": "fast-forward only",
+    "integration_atomic_push_exit_code": 0,
+    "direct_remote_refs_after_feature_push": {
+      "refs/heads/Sprint#9-33-output-log-workflow": "7d4d30489b20953d68cbc54a75859339fc7b4351",
+      "refs/heads/develop": "7d4d30489b20953d68cbc54a75859339fc7b4351",
+      "refs/heads/main": "7d4d30489b20953d68cbc54a75859339fc7b4351",
+      "refs/heads/test": "7d4d30489b20953d68cbc54a75859339fc7b4351"
+    },
+    "direct_remote_refs_all_match_feature_commit": true,
+    "completion_record": "This is a subsequent documentation-only checkpoint; the snapshot above records the already published feature commit."
+  }
 }

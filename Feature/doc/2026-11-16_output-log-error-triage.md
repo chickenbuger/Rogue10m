@@ -61,3 +61,14 @@
 이번 공개 문서는 미게시 scanner 결과 링크와 미게시 Landscape 맵 의존 예시를 제외한다. 원문 후속 기록은 원래 작업 폴더에 유지한다. 11/16의 정상/실패 진단 원문은 보존하며 11/17에는 엔진 진단을 다시 실행하지 않고 독립 도구 검증만 재실행한다.
 
 11/17 독립 checkout 재검증: 검사기15개 중14통과·hardlink권한1skip, Python AST3·PowerShell parser2통과, 보관된 최종 startup 로그 검사 Error0. 신규 Unreal 실행·기존 에디터 변경0. 게시 검증 기록은 Feature/doc/evidence/output-log-errors-20261116/publication-20261117.json에 보관한다.
+
+## 2026-11-17 독립 기능 게시 완료
+
+
+### Sprint#9-33 출력 로그 도구 게시 완료
+
+- 기능 커밋: 7d4d30489b20953d68cbc54a75859339fc7b4351. 기능별 즉시 commit·push 규칙과 독립 로그 도구 38파일을 게시했다.
+- 검증: Python 14통과·Windows hardlink권한1skip, AST3·PowerShell parser2·generated/path·staged diff 통과, 독립 리뷰 잔여 문제0. 보관 startup429/429·Error0 증거를 유지했다.
+- 원격: 작업 브랜치 push 후 develop→test→main fast-forward 및 일반 atomic push 성공. 직접 ls-remote로 네 브랜치의 위 SHA 일치를 확인했다. 완료 기록은 별도 문서 체크포인트로 동일 브랜치들에 반영한다.
+- 보존·한계: 원래 Sprint#9-32 checkout의 누적 C++·Config·Content·지형/전투 WIP는 포함하거나 전환하지 않았다. 본 기능 완료는 지형 도로 저장/cold QA나 다른 기능의 완료를 뜻하지 않는다.
+- 관련: Feature/doc/2026-11-16_output-log-error-triage.md, Feature/doc/evidence/output-log-errors-20261116/publication-20261117.json.
