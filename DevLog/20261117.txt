@@ -33,3 +33,15 @@ Unreal 개발 오류를 실제 세션 로그와 시간·줄 구간으로 분리�
 
 [Notion 요약 후보]
 마법 입력의 순서와 수명을 관리하는 독립 C++ 버퍼를 두 작업 폴더에서 같은 1,701검사로 검증했다. 게임 입력 연결과 구분해 완성된 기반 기능부터 GitHub에 반영할 수 있도록 코드·검사·증거를 분리했다.
+
+
+### Sprint#11-1 — Landscape 검사 도구 독립 검증
+
+- 목표: 누적 변경에서 Landscape 검사 도구를 기능별로 게시한다.
+- 변경: 전용 코드·시험·계획·결과·증거만 선별했다.
+- 검증: main 기반 UHT/Editor 113.28초·exit0, transient5/5·failed0/notRun0, 실제 AbsLog Error/Fatal/ensure0, 독립 리뷰 잔여 문제0. Content/Config/Build.cs 변경0.
+- 상태: 기능 범위 검증 완료·commit/push 및 develop→test→main 반영 대상.
+- 한계: 미게시 지형 맵과 NPC는 포함하지 않으며, 기존 지형 Undo/Redo·point-ray 실패를 해결한 것으로 확대하지 않는다.
+- 관련: Feature/doc/2026-11-17_reference-scanner-publication.md.
+
+[Notion 요약 후보] Landscape 검사 도구를 main 기준 독립 checkout에서 검증했다. main 기반 UHT/Editor 113.28초·exit0, transient5/5·failed0/notRun0, 실제 AbsLog Error/Fatal/ensure0, 독립 리뷰 잔여 문제0. Content/Config/Build.cs 변경0.

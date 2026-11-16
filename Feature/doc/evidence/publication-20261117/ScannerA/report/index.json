@@ -1,0 +1,104 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "JINSOO",
+			"instance": "DF2D745D4CC167E74FD28EB31A773C34",
+			"instanceName": "JINSOO-6132",
+			"platform": "WindowsEditor",
+			"oSVersion": "Windows 11 (26H2) [10.0.26300.9974] ",
+			"model": "Default",
+			"gPU": "NVIDIA GeForce RTX 3070",
+			"cPUModel": "AMD Ryzen 7 5800X 8-Core Processor             ",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.11.16-17.40.42",
+	"succeeded": 5,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.32768800854682922,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "DynamicStorageAndOrdinaryLookalike",
+			"fullTestPath": "Rogue10m.Editor.ReferenceScan.DynamicStorageAndOrdinaryLookalike",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"DF2D745D4CC167E74FD28EB31A773C34"
+			],
+			"duration": 0.065796896815299988,
+			"dateTime": "2026.11.16-17.40.42",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "EmptyStorageAndUnresolvedGuid",
+			"fullTestPath": "Rogue10m.Editor.ReferenceScan.EmptyStorageAndUnresolvedGuid",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"DF2D745D4CC167E74FD28EB31A773C34"
+			],
+			"duration": 0.06928589940071106,
+			"dateTime": "2026.11.16-17.40.42",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "PointersAndOptionalReadOnly",
+			"fullTestPath": "Rogue10m.Editor.ReferenceScan.PointersAndOptionalReadOnly",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"DF2D745D4CC167E74FD28EB31A773C34"
+			],
+			"duration": 0.071855396032333374,
+			"dateTime": "2026.11.16-17.40.42",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SharedCycleAndAliasPaths",
+			"fullTestPath": "Rogue10m.Editor.ReferenceScan.SharedCycleAndAliasPaths",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"DF2D745D4CC167E74FD28EB31A773C34"
+			],
+			"duration": 0.064925804734230042,
+			"dateTime": "2026.11.16-17.40.42",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "TraversalLimitsRemainFailClosed",
+			"fullTestPath": "Rogue10m.Editor.ReferenceScan.TraversalLimitsRemainFailClosed",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"DF2D745D4CC167E74FD28EB31A773C34"
+			],
+			"duration": 0.055824000388383865,
+			"dateTime": "2026.11.16-17.40.42",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

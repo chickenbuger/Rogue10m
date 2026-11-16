@@ -2427,3 +2427,13 @@
 - 검증: 원래 Publish1117A와 게시용 Pub1117B 각각 clang++19.1.5·6사례·1,701검사·exit0. API/수명 검토 완료, UObject·UE·Config·Content 의존 없음.
 - 상태: 버퍼 구현·회귀 완료, 게시 인계. Ctrl→첫Q 기한→QQQ 및 실제 시전 연결은 후속 범위다.
 - 관련: Feature/architect/2026-11-17_magic-command-buffer.md, Feature/doc/2026-11-17_magic-command-buffer.md, Feature/doc/evidence/magic-command-buffer-20261117/.
+
+
+### Sprint#11-1 — Landscape 검사 도구 독립 검증
+
+- 목표: 누적 변경에서 Landscape 검사 도구를 기능별로 게시한다.
+- 변경: 전용 코드·시험·계획·결과·증거만 선별했다.
+- 검증: main 기반 UHT/Editor 113.28초·exit0, transient5/5·failed0/notRun0, 실제 AbsLog Error/Fatal/ensure0, 독립 리뷰 잔여 문제0. Content/Config/Build.cs 변경0.
+- 상태: 기능 범위 검증 완료·commit/push 및 develop→test→main 반영 대상.
+- 한계: 미게시 지형 맵과 NPC는 포함하지 않으며, 기존 지형 Undo/Redo·point-ray 실패를 해결한 것으로 확대하지 않는다.
+- 관련: Feature/doc/2026-11-17_reference-scanner-publication.md.
