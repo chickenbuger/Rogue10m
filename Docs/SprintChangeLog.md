@@ -2401,3 +2401,12 @@
 - 관련: [최종 결과와 검증표](../Feature/doc/2026-10-25_map-maker-live-qa.md), [자동화](../Feature/doc/evidence/map-maker-live-qa-20261025/automation-final/result.json), [최종 증거 검사](../Feature/doc/evidence/map-maker-live-qa-20261025/final-checks.json), [최종 GUI 상태](../Feature/doc/evidence/map-maker-live-qa-20261025/live-final.json), [외곽 화면](../Feature/doc/evidence/map-maker-live-qa-20261025/focus-edge-final.png), [개발 일지](../DevLog/20261025.txt).
 
 - Sprint#9-1 게시 완료: 기능 `8ca0523309866aed5aa48fc4b435c02845241d8a`, 명시 94파일·생성 경로·공백·JSON/Python/문서 링크·DevLog 추가 전용 검사 통과. 최신 원격 변경 재확인 뒤 develop→test→main fast-forward 및 작업/통합 네 브랜치 일반 atomic push 성공, [직접 원격 SHA](../Feature/doc/evidence/map-maker-live-qa-20261025/publication.json) 전부 일치. 원본 Content 변경 0·QA dirty 0. 이 완료 기록은 소스/콘텐츠 변경 없는 후속 문서 체크포인트로 동일하게 게시한다.
+
+
+### Sprint#9-33 — 기능별 즉시 commit·push와 출력 로그 도구 독립 게시
+
+- 목표: 완료·검증한 기능을 기능별로 바로 commit·push하고 미완료 작업과 분리한다. 사용자의 상시 지시를 AGENTS.md에 기록했다.
+- 변경: 실제 로그 severity·구간·watch 검사기와 회귀 테스트, 영어 startup 후 한국어 세션 복원 실행기, 계획·결과·사용법·정상/실패 증거를 원격 main 기준 독립 물리 checkout에 선별했다. C++·Config·Content 변경은 포함하지 않는다.
+- 검증: 이전 실제 startup429/429·Error0·ko/ko-KR 복원·정상 종료 증거를 보존한다. 이번에는 독립 Python 회귀·구문 검사와 PowerShell parser, generated/path·diff 검사·독립 리뷰를 다시 수행한다.
+- 상태: 독립 범위 게시 검증 중. 검증 후 작업 브랜치 push와 develop→test→main 순서의 fast-forward를 진행한다. 지형 도로 저장/cold QA 및 다른 누적 기능의 완료를 의미하지 않는다.
+- 관련: Feature/architect/2026-11-16_output-log-error-triage.md, Feature/doc/2026-11-16_output-log-error-triage.md, Docs/OutputLogErrorWorkflow.md.

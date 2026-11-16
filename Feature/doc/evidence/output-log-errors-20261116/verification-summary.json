@@ -1,0 +1,133 @@
+{
+  "runs": {
+    "startup-ko-host-v2": {
+      "test_count": 429,
+      "failed_tests": [
+        "FUnifiedErrorTest_CreateErrorMessage",
+        "FUnifiedErrorTest_CreateErrorMessageWithContext",
+        "FStructuredLogFormatTest"
+      ],
+      "error_line_count": 15,
+      "process": {
+        "pid": 45676,
+        "culture": "ko",
+        "finished": true,
+        "exitCode": 0,
+        "logExists": true,
+        "elapsedSeconds": 28.7563278
+      },
+      "culture_restore": []
+    },
+    "startup-en-host-v2": {
+      "test_count": 429,
+      "failed_tests": [],
+      "error_line_count": 0,
+      "process": {
+        "pid": 13308,
+        "culture": "en",
+        "finished": true,
+        "exitCode": 0,
+        "logExists": true,
+        "elapsedSeconds": 33.4066921
+      },
+      "culture_restore": []
+    },
+    "startup-en-restore-ko": {
+      "test_count": 429,
+      "failed_tests": [],
+      "error_line_count": 0,
+      "process": {
+        "pid": 23672,
+        "culture": "en",
+        "finished": true,
+        "exitCode": 0,
+        "logExists": true,
+        "elapsedSeconds": 29.05714
+      },
+      "culture_restore": [
+        {
+          "after": {
+            "language": "ko",
+            "locale": "ko-KR"
+          },
+          "before": {
+            "language": "en",
+            "locale": "en"
+          },
+          "requested": {
+            "language": "ko",
+            "locale": "ko-KR"
+          },
+          "save_to_config": false,
+          "setter_results": {
+            "language": true,
+            "locale": true
+          },
+          "ui_visual_verified": false
+        }
+      ]
+    },
+    "startup-en-restore-ko-final": {
+      "test_count": 429,
+      "failed_tests": [],
+      "error_line_count": 0,
+      "process": {
+        "pid": 3564,
+        "culture": "en",
+        "finished": true,
+        "exitCode": 0,
+        "logExists": true,
+        "elapsedSeconds": 30.9358946
+      },
+      "culture_restore": [
+        {
+          "after": {
+            "language": "ko",
+            "locale": "ko-KR"
+          },
+          "before": {
+            "language": "en",
+            "locale": "en"
+          },
+          "requested": {
+            "language": "ko",
+            "locale": "ko-KR"
+          },
+          "save_to_config": false,
+          "setter_results": {
+            "language": true,
+            "locale": true
+          },
+          "ui_visual_verified": false
+        }
+      ]
+    }
+  },
+  "live_watch": {
+    "seconds": 30,
+    "existing_errors": 52,
+    "new_errors": 0,
+    "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\landscape-production-20261116\\editor-recovery\\normal-editor.log"
+  },
+  "landscape_native_refresh": {
+    "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\landscape-production-20261116\\after-native-refresh\\comparison.json",
+    "passed": true,
+    "global_dependency_inspection_success": false
+  },
+  "earlier_failed_probes_preserved": [
+    "startup-en (sandbox produced no log)",
+    "startup-en-host (incorrect override caused port bind error and timeout; own PID terminated)"
+  ],
+  "harness_checks": {
+    "log_checker_tests_run": 15,
+    "passed": 14,
+    "skipped": 1,
+    "skip_reason": "OS hardlink creation denied; samefile mock branch passed",
+    "python_syntax": 3,
+    "powershell_syntax": 2,
+    "duplicate_session_fixtures": 5,
+    "generated_change_check_exit_code": 0,
+    "diff_check_exit_code": 0,
+    "review": "Two launcher findings fixed and independently re-reviewed; no outstanding actionable findings"
+  }
+}

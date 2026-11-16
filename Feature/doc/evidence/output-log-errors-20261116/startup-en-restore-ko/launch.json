@@ -1,0 +1,27 @@
+{
+  "pid": 23672,
+  "startedUtc": "2026-11-16T12:48:45.2315864Z",
+  "executable": "D:\\Program Files\\UE_5.8\\Engine\\Binaries\\Win64\\UnrealEditor-Cmd.exe",
+  "arguments": [
+    "\"D:\\Project\\Rogue10m\\Rogue10m.uproject\"",
+    "/Engine/Maps/Entry",
+    "-unattended",
+    "-nullrhi",
+    "-nosound",
+    "-nosplash",
+    "-nop4",
+    "-NoLiveCoding",
+    "-NoHotReload",
+    "-NoAutoSave",
+    "-language=en",
+    "-locale=en",
+    "\"-LogCmds=LogAutomationTest Log\"",
+    "\"-ExecCmds=py D:/Project/Rogue10m/Scripts/Editor/RestoreEditorCultureAfterSmoke.py,QUIT_EDITOR\"",
+    "-ini:EditorPerProjectUserSettings:[/Script/ModelContextProtocolEngine.ModelContextProtocolSettings]:bAutoStartServer=False",
+    "\"-UserDir=D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\output-log-errors-20261116\\startup-en-restore-ko\\User\"",
+    "\"-AbsLog=D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\output-log-errors-20261116\\startup-en-restore-ko\\startup.log\"",
+    "-RogueEditorLanguage=ko",
+    "-RogueEditorLocale=ko-KR"
+  ],
+  "timeoutSeconds": 60
+}

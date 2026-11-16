@@ -1,0 +1,12 @@
+
+
+### Sprint#9-33 — 기능별 즉시 commit·push와 출력 로그 도구 독립 게시
+
+- 목표: 완료·검증한 기능을 기능별로 바로 commit·push하고 미완료 작업과 분리한다. 사용자의 상시 지시를 AGENTS.md에 기록했다.
+- 변경: 실제 로그 severity·구간·watch 검사기와 회귀 테스트, 영어 startup 후 한국어 세션 복원 실행기, 계획·결과·사용법·정상/실패 증거를 원격 main 기준 독립 물리 checkout에 선별했다. C++·Config·Content 변경은 포함하지 않는다.
+- 검증: 이전 실제 startup429/429·Error0·ko/ko-KR 복원·정상 종료 증거를 보존한다. 이번에는 독립 Python 회귀·구문 검사와 PowerShell parser, generated/path·diff 검사·독립 리뷰를 다시 수행한다.
+- 상태: 독립 범위 게시 검증 중. 검증 후 작업 브랜치 push와 develop→test→main 순서의 fast-forward를 진행한다. 지형 도로 저장/cold QA 및 다른 누적 기능의 완료를 의미하지 않는다.
+- 관련: Feature/architect/2026-11-16_output-log-error-triage.md, Feature/doc/2026-11-16_output-log-error-triage.md, Docs/OutputLogErrorWorkflow.md.
+
+[Notion 요약 후보]
+Unreal 개발 오류를 실제 세션 로그와 시간·줄 구간으로 분리하고, 한국어 엔진 startup 테스트의 언어 기대값 문제는 영어 검사 후 한국어 세션 복원으로 대응했다. 완료한 도구는 다른 기능의 진행 상태와 분리해 GitHub에 즉시 기록하는 흐름을 적용한다.

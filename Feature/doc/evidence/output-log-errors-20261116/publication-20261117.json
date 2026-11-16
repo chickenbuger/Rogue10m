@@ -1,0 +1,56 @@
+{
+  "date_kst": "2026-11-17",
+  "base": "e32e5abe",
+  "work_branch": "Sprint#9-33-output-log-workflow",
+  "scope": "Output log tools, docs, archived diagnosis only; no Source/Config/Content changes",
+  "offline_tests": {
+    "run": 15,
+    "passed": 14,
+    "skipped": 1,
+    "exit_code": 0,
+    "skip": "Windows hardlink privilege; mocked samefile branch passes"
+  },
+  "syntax": {
+    "python_ast_pass": 3,
+    "powershell_parser_pass": 2
+  },
+  "archived_final_startup_log_check": {
+    "new_error_count": 0,
+    "exit_code": 0
+  },
+  "unreal_editor_operations_today": 0,
+  "unchanged_copied_source_and_evidence_sha256": {
+    "Scripts/CheckUnrealOutputLog.py": "7885d5e5ae7c05cac8a4c0a71fd24c04886177f7fc04305c068b576929dc3767",
+    "Scripts/Tests/TestUnrealOutputLog.py": "942c31260bd15f8179095ad63c84e7f0ba2b5bc8a6d84310ada7797b1cf9d47e",
+    "Scripts/OpenCheckedEditor.ps1": "752eafa28c3b6ede87698302b2867d12e7fd09e3251c6c5b33392bb254c40186",
+    "Scripts/Editor/RestoreEditorCultureAfterSmoke.py": "38017574766ccd83310264559f703da47cc76120b9d35849eff8e5caecd51489",
+    "Feature/implementation/output-log-errors-20261116/ProbeStartup.ps1": "5020b9a3e8ed88687306920546ba9ad13fc7c126a90107bcb5ee8a4adf555ecb",
+    "Feature/doc/evidence/output-log-errors-20261116/.gitignore": "22904d5263007b7f3afd149ccd1573204fe0921412707f035196146e45da769f",
+    "Feature/doc/evidence/output-log-errors-20261116/live-watch-01.json": "90fb1769b6adbb24c1747002ea5f46cfbe8b27c7f3e3b2d673f806731f35605d",
+    "Feature/doc/evidence/output-log-errors-20261116/review.md": "403343eca95ba2535acb2e9297cfe99fcc0347b9ba78cdd9d805bdd017a698d4",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-host-v2/error-scan.json": "2f583e2a70c3adfc0d54180ecaeece9e721163ae6893d53e710eb63b5f18708a",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-host-v2/launch.json": "f852f83c20429e00c491a7a425176b6a0c91d49555bef3952f41103b695e9992",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-host-v2/result.json": "9a9d88f1d6a5260c3a355bdf6e6ef6f74c22727c4b56d3aa96fffbfb60a4d8ba",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-host-v2/startup.log": "cca4f1f199dea0c787e50969abef859faee510b355a98fb52608ffe11d3fdbaa",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-host/launch.json": "3b03cb102f4b7f2f150bdceadd6052d2563642ae0df2a964c70717ffda521a17",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-host/result.json": "4949aa36061d986b43c44fcc92baf1f996064bf6a56a0063764dac0425d6a7cc",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-host/startup.log": "8c0650966bed191ab83ec6a515b0a0af14b95f46940571762a19cc867108a09a",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-restore-ko-final/error-scan.json": "4413919273d1d0cf01a5c84172101c093b183b43bc8e4a3b0c16e7d686b35ee9",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-restore-ko-final/launch.json": "8ef4211aae7c78c8ca4a14e1b4f172e8f6806cdef9fcaf2d98d46255fb565484",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-restore-ko-final/result.json": "f6ac39b7faa591bb06d347c7e769588df62fce52a30d96660d61a0a5979d1fe4",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-restore-ko-final/startup.log": "dfbed0805178c6729be0d979af310a3c3000c4f25a5003c10942cc66c5854f17",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-restore-ko/error-scan.json": "b6b3018a9faf69b0065c9303c07955dc18695e413e00997316e5213e09a0d1a3",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-restore-ko/launch.json": "eafea3f2359fd7d8dba596a4a752f02f3059c6c0f677b5aaf45bbd624c055bba",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-restore-ko/result.json": "347230447d4ccc193863674dba3753725364bf2fa8fdf30d860123175a29533d",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en-restore-ko/startup.log": "4d55911f320993149342b1ff4cb66ca823a79fda5f03a49357a87479f4eeb3cd",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en/launch.json": "8e4516211da46e1c6f87f0a5ffc4ae7b831feba996bacc3c834d05f5da651333",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-en/result.json": "9c4d9ec62f14329991dfc09d87b757987f58ad0b537d24c35fa00f3021e359d3",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-ko-host-v2/error-scan.json": "f640db149c7d44d591666b45e3d5e4bf36bc8f6408262f67a38cfdd14c63afe5",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-ko-host-v2/launch.json": "5e6af00b5a4d4d64b2eaf64a5c1c59b581e79e7e0062350dfc8a1cf5d2b66429",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-ko-host-v2/result.json": "fbda1f7a7261ff58b77beda62ea2ab67ffa2fb377a19fc060f44b1ca19769e88",
+    "Feature/doc/evidence/output-log-errors-20261116/startup-ko-host-v2/startup.log": "1fffd5412cbe6440d178e12e10cbdf6f9fd6b4ce416783c698aeddae2b36a9ec",
+    "Feature/doc/evidence/output-log-errors-20261116/verification-summary.json": "391b8aacf585ae048c9307942b50a27bd57143554d2936cbef9eb0c5dede54ae"
+  },
+  "original_working_branch": "Sprint#9-32-landscape-world-blockout",
+  "unfinished_features": "Landscape and other accumulated WIP remain in original checkout and are outside this commit"
+}
