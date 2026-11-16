@@ -2419,3 +2419,11 @@
 - 원격: 작업 브랜치 push 후 develop→test→main fast-forward 및 일반 atomic push 성공. 직접 ls-remote로 네 브랜치의 위 SHA 일치를 확인했다. 완료 기록은 별도 문서 체크포인트로 동일 브랜치들에 반영한다.
 - 보존·한계: 원래 Sprint#9-32 checkout의 누적 C++·Config·Content·지형/전투 WIP는 포함하거나 전환하지 않았다. 본 기능 완료는 지형 도로 저장/cold QA나 다른 기능의 완료를 뜻하지 않는다.
 - 관련: Feature/doc/2026-11-16_output-log-error-triage.md, Feature/doc/evidence/output-log-errors-20261116/publication-20261117.json.
+
+### Sprint#10-1 — 마법 명령 입력 버퍼
+
+- 목표: 완료·검증 가능한 전투 기반 기능부터 각각 commit·push한다.
+- 주요 변경: 독립 Q/E/R 명령 버퍼, 실제 헤더를 사용하는 C++ 회귀, standalone 실행기, paired 문서·두 실행 증거를 선별했다.
+- 검증: 원래 Publish1117A와 게시용 Pub1117B 각각 clang++19.1.5·6사례·1,701검사·exit0. API/수명 검토 완료, UObject·UE·Config·Content 의존 없음.
+- 상태: 버퍼 구현·회귀 완료, 게시 인계. Ctrl→첫Q 기한→QQQ 및 실제 시전 연결은 후속 범위다.
+- 관련: Feature/architect/2026-11-17_magic-command-buffer.md, Feature/doc/2026-11-17_magic-command-buffer.md, Feature/doc/evidence/magic-command-buffer-20261117/.
