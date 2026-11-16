@@ -26,6 +26,7 @@
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerFeedbackComponent.h"
 #include "Rogue10mPlayerState.h"
+#include "Rogue10mCharacterProfileSubsystem.h"
 #include "Rogue10mProgressionSubsystem.h"
 #include "Rogue10mGameState.h"
 #include "Engine/World.h"
@@ -95,6 +96,17 @@ UAbilitySystemComponent* ARogue10mCharacter::GetAbilitySystemComponent() const
 void ARogue10mCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
+	// Initial map entry only resolves the selected Pawn class. Apply its profile
+	// now that possession has supplied PlayerState, before progression attaches.
+	if (UGameInstance* Instance = GetGameInstance())
+	{
+		const URogue10mCharacterProfileSubsystem* Profiles =
+			Instance->GetSubsystem<URogue10mCharacterProfileSubsystem>();
+		if (const FRogue10mCharacterProfile* Profile = Profiles ? Profiles->GetSelectedProfile() : nullptr)
+		{
+			ApplyCharacterProfile(*Profile);
+		}
+	}
 	InitializeAbilityActorInfo();
 	if (FirstPersonPresentationComponent)
 	{

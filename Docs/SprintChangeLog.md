@@ -2441,3 +2441,7 @@
 ### Sprint#12-1 — 전리품 스택 계산 독립 검증
 
 완료 범위는 독립 수량 계산 헤더·C++시험·실행기다. 기존 스택과 신규 스택/초과분의 정수 보존을 검증했으며 9사례·50,000무작위·2,103,255검사를 통과했다. 독립 리뷰·parser·해시 통과. 게임 자동 획득/재시도는 선행 런상태·loot 기능이 없어 별도로 남긴다. 관련: Feature/doc/2026-11-17_loot-stack-transfer.md. 상태: 계산 범위 완료·검증 후 즉시 게시.
+
+### Sprint#13-1 — 선택 프로필 초기화
+
+선택한 프로필 이름·GUID가 possession 이후 적용되도록 Character의 include1개와11행만 분리했다. fixture2개와 함께 main기준 정규UHT/Editor빌드44.35초·회귀1/1·Error/Fatal/ensure0을 확인했다. 빈 QA 저장 첫읽기와 무기 미설정 경고15개를 보존한다. 정확슬롯 메모리 저장격리로 사용자 세이브는 수정하지 않는다. 관련: Feature/doc/2026-11-17_profile-initialization-publication.md. 상태: 검증완료.

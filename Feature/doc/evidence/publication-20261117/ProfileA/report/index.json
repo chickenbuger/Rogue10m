@@ -1,0 +1,225 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "JINSOO",
+			"instance": "26746D304523006F3C2F03BB0F635FD5",
+			"instanceName": "JINSOO-51760",
+			"platform": "WindowsEditor",
+			"oSVersion": "Windows 11 (26H2) [10.0.26300.9974] ",
+			"model": "Default",
+			"gPU": "NVIDIA GeForce RTX 3070",
+			"cPUModel": "AMD Ryzen 7 5800X 8-Core Processor             ",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.11.16-17.46.14",
+	"succeeded": 0,
+	"succeededWithWarnings": 1,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.091047793626785278,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "PossessionInitialization",
+			"fullTestPath": "Rogue10m.CharacterProfile.PossessionInitialization",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"26746D304523006F3C2F03BB0F635FD5"
+			],
+			"duration": 0.091047793626785278,
+			"dateTime": "2026.11.16-17.46.14",
+			"entries": [
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogStreaming: Failed to read file 'D:/Project/Rogue10m/tmp/feature-publication-20261117/Feature/doc/evidence/publication-20261117/ProfileA/User/Saved/SaveGames/Rogue10m_Town_QA_ProfileInit_ADCA9597428BA39A0E16DC8FAF098DA8.sav' error.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogRogue10m: Rogue10mProfileInitializationTestCharacter_0 장착 무기 ERogue10mWeaponType::Unarmed에 연결된 스킬 프로필이 없습니다.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogRogue10m: Rogue10mProfileInitializationTestCharacter_0 스폰 로드아웃에 좌클릭 Primary 공격이 없습니다.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogRogue10m: Rogue10mProfileInitializationTestCharacter_1 장착 무기 ERogue10mWeaponType::Unarmed에 연결된 스킬 프로필이 없습니다.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogRogue10m: Rogue10mProfileInitializationTestCharacter_1 스폰 로드아웃에 좌클릭 Primary 공격이 없습니다.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogRogue10m: Rogue10mProfileInitializationTestCharacter_1 장착 무기 ERogue10mWeaponType::GreatSword에 연결된 스킬 프로필이 없습니다.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogRogue10m: Rogue10mProfileInitializationTestCharacter_1 장착 무기 ERogue10mWeaponType::GreatSword에 연결된 스킬 프로필이 없습니다.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogRogue10m: Rogue10mProfileInitializationTestCharacter_1 스폰 로드아웃에 좌클릭 Primary 공격이 없습니다.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogRogue10m: Rogue10mProfileInitializationTestCharacter_1 장착 무기 ERogue10mWeaponType::GreatSword에 연결된 스킬 프로필이 없습니다.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogRogue10m: Rogue10mProfileInitializationTestCharacter_2 장착 무기 ERogue10mWeaponType::GreatSword에 연결된 스킬 프로필이 없습니다.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogRogue10m: Rogue10mProfileInitializationTestCharacter_2 스폰 로드아웃에 좌클릭 Primary 공격이 없습니다.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogRogue10m: Rogue10mProfileInitializationTestCharacter_2 장착 무기 ERogue10mWeaponType::GreatSword에 연결된 스킬 프로필이 없습니다.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogRogue10m: Rogue10mProfileInitializationTestCharacter_2 장착 무기 ERogue10mWeaponType::GreatSword에 연결된 스킬 프로필이 없습니다.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogRogue10m: Rogue10mProfileInitializationTestCharacter_2 스폰 로드아웃에 좌클릭 Primary 공격이 없습니다.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				},
+				{
+					"event":
+					{
+						"type": "Warning",
+						"message": "LogRogue10m: Rogue10mProfileInitializationTestCharacter_2 장착 무기 ERogue10mWeaponType::GreatSword에 연결된 스킬 프로필이 없습니다.",
+						"context": "log",
+						"artifact": "00000000000000000000000000000000"
+					},
+					"filename": "",
+					"lineNumber": -1,
+					"timestamp": "2026.11.16-17.46.14"
+				}
+			],
+			"warnings": 15,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}
