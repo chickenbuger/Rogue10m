@@ -22,7 +22,7 @@
 ## 실제로 남아 있는 과거 증거
 
 - [NpcRegF9/results.json](../../doc/evidence/npc-interaction-20261029/NpcRegF9/results.json): 92 checks, failures0, F binding rejected, 기존 Q loadout 보존, collision_detected=false. Q 유료 비차징 기술 positive control, settings/dialogue 중 Q 차단, F 대화·중복 공격 차단, Q/E/R bare·LeftShift·menu-close release-only·overlap 경계가 기록되어 있다.
-- 같은 폴더의 [run-envelope.json](../../doc/evidence/npc-interaction-20261029/NpcRegF9/run-envelope.json)과 `events.csv`: D3D11 rendered/offscreen, Controller InputKey 프로그램 입력, `PhysicalInput=false`, `ManualFieldRun=false`. 당시 화면은 `DevLog/20261029_NpcInteraction_NpcRegF9/01_f_prompt.png`, `02_f_dialogue.png`, `03_f_collision_probe.png`에 남아 있다.
+- 같은 폴더의 run-envelope.json〔중간·보조 자료 정리로 삭제됨; [보존 목록](../../doc/evidence/README.md)〕과 `events.csv`: D3D11 rendered/offscreen, Controller InputKey 프로그램 입력, `PhysicalInput=false`, `ManualFieldRun=false`. 당시 화면은 `DevLog/20261029_NpcInteraction_NpcRegF9/01_f_prompt.png`, `02_f_dialogue.png`, `03_f_collision_probe.png`에 남아 있다.
 - [ResumeF3/final-summary.json](../../doc/evidence/npc-dialogue-20261110/ResumeF3/final-summary.json): 당시 F9 DLL `DF2F590B…CBE597`에서 NpcInput92/NpcDialogue58 등의 단계 성공을 기록한다. 현재 seal/DLL의 재검증으로 사용할 수 없다. 같은 폴더의 `npc-input-F9-launcher.txt`, `npc-dialogue-F9-launcher.txt`와 `DevLog/20261110_NpcDialogue/NpcResumeF9/results.txt`, `01_proximity_prompt.png`~`06_death_boundary.png`가 실제 보존 위치다. PhysicalInput/FullFieldRun은 false이고 FirstPersonDevelopment는 paused다.
 - `Source/Rogue10m/Tests/Rogue10mNpcInteractionRuntimeTest.cpp:2–581`에 당시 fixture가 남아 있다. `:323–329`는 F 할당 거부/전체 Q loadout 보존, `:396–516`은 메뉴·대화·F collision probes다. `Scripts/VerifyNpcInteraction.ps1`이 이를 검사한다.
 - `Rogue10mNpcDialogueRuntimeTest.cpp:2–222`와 `Scripts/VerifyNpcDialogue.ps1`도 존재한다. 이 fixture의 `:74–89`는 Slate key/pointer routing과 Controller InputKey를 사용한다. **둘 다 현재 GUI/입력 우회 금지에서 실행하면 안 된다.** NullRHI나 프로그램 API라는 이유로 예외가 되지 않는다.
@@ -41,3 +41,6 @@
 4. 대화·서비스·사망·거리 이탈·맵 전환 뒤 포커스와 이동/시점 소유권이 복구되는가. 실제 물리 패널 조작·입력은 현 금지 상태에서 미검증으로 남긴다.
 
 이 항목은 필요한 회귀 범위를 보존한 목록이며 새 실행이나 승인 기록이 아니다. Source 변경, 기존 캡처 재라벨, 이전 결과의 현재 DLL 증거 전환, 1인칭 재개는 하지 않는다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](../../doc/evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

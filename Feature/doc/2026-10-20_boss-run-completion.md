@@ -52,7 +52,7 @@
 
 검사는 일반/테스트 몬스터의 승리 제외, 중복 피해와 사망 통지의 보상 불변, 종료 결과 변경·재시작 거절, 승리 후 치명적 피해 차단을 포함한다. Growth의 XP·레벨·처치 기록, 아이템 GUID와 골드를 포함한 Inventory, Combat 해금·바인딩, Town 특성·난이도의 전체 스냅샷을 하드 트래블과 별도 프로세스 재시작 후 정확히 비교했다. 저장 실패 사례는 기존 QA `.sav`에 Windows 읽기 공유 핸들을 열어 실제 쓰기를 막았으며 Saved 파일 바이트를 직접 편집하거나 파일/디렉터리를 교체하지 않았다. 핸들을 닫은 뒤 같은 보상 상태를 저장해 귀환했다.
 
-[승리 화면](evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_victory/run-result.png), [저장 실패 화면](evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_failure/run-result.png), [시간 초과 화면](evidence/boss-run-completion-20261020/Rogue10m_Town_QA_RunCompletion_frozen1_timeout/run-result.png)을 직접 열어 결과·보상·저장 상태·귀환 안내의 가독성을 확인했다. [독립 코드 검토](evidence/boss-run-completion-20261020/review.md)는 종료 순서, 저장 실패, 입력, 피해 경계를 확인했으며 발견한 배경 정렬과 기존 fixture의 종료 계약 문제를 수정했다.
+승리 화면〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕, 저장 실패 화면〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕, 시간 초과 화면〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕을 직접 열어 결과·보상·저장 상태·귀환 안내의 가독성을 확인했다. [독립 코드 검토](evidence/boss-run-completion-20261020/review.md)는 종료 순서, 저장 실패, 입력, 피해 경계를 확인했으며 발견한 배경 정렬과 기존 fixture의 종료 계약 문제를 수정했다.
 
 기존 Trait Effects 회귀도 101개 검사, 실패 0, exit 0으로 통과했다. [회귀 결과](evidence/trait16-runtime-20261011/Rogue10m_Town_QA_boss_completion_frozen1/effects-results.txt)에 최종 기록이 있다. 따라서 이번 검증은 렌더된 핵심 검사 200개와 기존 특성 회귀 101개, 총 301개다.
 
@@ -85,3 +85,6 @@
 후속 `Sprint#7-2-boss-integration-validation`에서 종료 phase·피해 차단은 즉시 유지하고, 원래 Pawn/프로필을 고정한 다음 틱에 전투 취소·저장·UI를 확정하도록 보완했다. 대기 중 귀환을 거절하고 EndPlay에서 예약을 정리한다. 수정 후 빌드180.25초와 렌더된 여섯 프로세스285개·기존 특성 효과101개, 총386개 검사에서 실패0을 확인했다. 자동저장·귀환 전에 마지막 명중 숙련을 포함한 최초 Save v3 원장의 정확한 디스크 복원도 통과했다.
 
 이 후속은 검증·기록 완료 후 커밋·통합·공개 게시 준비 단계다. 새 결과와 검증 범위는 [보스 정산 Save v3 통합 보완](2026-10-20_boss-save-v3-integration.md)을 따른다. 기존 전체20분·Shipping·D3D12·네트워크·장시간 성능의 한계는 유지한다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

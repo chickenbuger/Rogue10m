@@ -28,7 +28,7 @@ Native51B DLL 그대로 UnrealEditor.exe -game PID51220을 실행했다. **패�
 
 프로필 DF1401B94FFEEBF376824BA86AC0E2C8, 첫 RunId A3C6878A4FDD458EEC2E899E1136627E, 새 RunId FF9142314C7E305992A965929D7D97DF다. 조회마다 활성 SaveData 참조를 먼저 확인했으며 마지막 정확한 객체 /Engine/Transient.Rogue10mProgressionSaveGame_4에서 같은 프로필/새 GUID를 대조했다. PNG만으로 잔액·RunId를 증명했다고 하지 않는다.
 
-실제 F9 캡처6장: [수락0/2](evidence/npc-intro-compact20261113B/Visual/01-accepted-0of2.png), [재접촉1/2](evidence/npc-intro-compact20261113B/Visual/02-revisit-duplicate-first-1of2.png), [완료2/2](evidence/npc-intro-compact20261113B/Visual/03-ready-2of2.png), [보상+40](evidence/npc-intro-compact20261113B/Visual/04-reward-40.png), [중복 거부](evidence/npc-intro-compact20261113B/Visual/05-duplicate-reward-denied.png), [새 런0/2](evidence/npc-intro-compact20261113B/Visual/07-new-run-available-0of2.png). 별도 Work가6장의 직접 보이는 상태를 읽기 검토했다. 정산 UI는 CUA로 관찰했으나 F9 PNG는 생성되지 않아06번 파일은 없다.
+실제 F9 캡처6장: 수락0/2〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕, 재접촉1/2〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕, 완료2/2〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕, [보상+40](evidence/npc-intro-compact20261113B/Visual/04-reward-40.png), [중복 거부](evidence/npc-intro-compact20261113B/Visual/05-duplicate-reward-denied.png), [새 런0/2](evidence/npc-intro-compact20261113B/Visual/07-new-run-available-0of2.png). 별도 Work가6장의 직접 보이는 상태를 읽기 검토했다. 정산 UI는 CUA로 관찰했으나 F9 PNG는 생성되지 않아06번 파일은 없다.
 
 ## 개발 설정과 남은 검증
 
@@ -47,3 +47,6 @@ NPC/목표 접근에 BugItGo 위치 설정을 사용했다. native Ghost를 동�
 [계획](../architect/2026-11-13_compact-intro-quest-vertical-slice.md), [물리 백업](evidence/npc-intro-compact20261113B/physical-checkpoint.json), [live inventory](evidence/npc-intro-compact20261113B/live-inventory-A.json), [authoring](evidence/npc-intro-compact20261113B/authoring-result.json), [저장 목록](evidence/npc-intro-compact20261113B/authoring-save-intent.json), [cold reload](evidence/npc-intro-compact20261113B/cold-reload-result.json), [실제 Hub 포털](evidence/npc-intro-compact20261113B/hub-portals-live.json), [게임 로그](evidence/npc-intro-compact20261113B/game-D1.log), [QA 저장 routing](evidence/npc-intro-compact20261113B/game-D1-profile-routing.json), [정상 종료 후 프로세스0](evidence/npc-intro-compact20261113B/processes-after-game.json).
 
 [최종 보존 검사](evidence/npc-intro-compact20261113B/post-game-preservation.json)가 통과했다. 기존 입력10460개·보호 저장2루트·이전 E5 payload50파일의 SHA가 모두 일치했다. Content는 신규5개로9526개, 전체 입력은 생성 Scripts 캐시1개를 포함해10466개다. 캐시는 authoring import와 source timestamp/size/code object가 일치해 삭제·수정 없이 별도 명시했다. 보존 검사기의 첫 bytes/size 비교 실패와 예상 밖 캐시 발견 기록도 유지했다. 이번 content 패킷에서는 Source/Config 수정·재빌드가 없었다. 최신 Computer Use 허용 후 UI를 조작했으며 과거 금지 기간 입력0 기록은 유지한다. 거절된 Root 승인 파일 생성과 의존 metadata-only/Temp clone QA는 중단·추가 실행0·우회0이다. 일반 NPC 제작/게임 검증이 그 승인을 대신하지 않는다. 사용자 WIP를 섞는 commit/push는 하지 않았다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

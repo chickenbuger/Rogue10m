@@ -24,7 +24,7 @@ NPC는 피해를 받지 않고 플레이어를 막지 않으며 Actor Tick을 �
 
 실제 화면 검증에서 NativeConstruct 이후에 WidgetTree를 만드는 방식은 최초 Slate 재구축에 반영되지 않는 문제를 확인했다. RebuildWidget에서 먼저 트리를 준비하도록 수정한 뒤 `guide-dialogue-play.png`의 실제 플레이 화면에서 한글 대화 카드가 보이는 것을 확인했다. `guide-reward-play.png`는 실제 F 키로 수령한 보급품의 안내 화면이다. 표시 검증은 이 실제 화면과 입력 결과를 사용하며, 화면이 보이는 상태에서도 0을 반환했던 UUserWidget 캐시 크기를 완료 조건으로 사용하지 않는다.
 
-![시작마을 안내 NPC와 한글 대화 카드](D:/Project/Rogue10m/Feature/doc/evidence/open-world-monsters-20261005/guide-dialogue-play.png)
+시작마을 안내 NPC와 한글 대화 카드〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕
 
 ![실제 보급품 수령 안내](D:/Project/Rogue10m/Feature/doc/evidence/open-world-monsters-20261005/guide-reward-play.png)
 
@@ -41,3 +41,6 @@ NPC는 피해를 받지 않고 플레이어를 막지 않으며 Actor Tick을 �
 시각 콘셉트 제작과 문서 기록만 추가했다. Unreal 에셋·C++·설정 변경은 없으며 3D 모델 생성과 게임 내 메시 교체는 수행하지 않았다. 기존 기능 검사 결과를 유지하며 이번 이미지 작업에 빌드와 PIE를 다시 실행하지 않았다.
 
 ![길잡이 아린 전신 콘셉트](D:/Project/Rogue10m/Feature/doc/evidence/start-hub-tutorial-npc-image-20261005/arin-concept-v1.png)
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

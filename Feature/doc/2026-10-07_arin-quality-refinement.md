@@ -4,7 +4,7 @@
 
 2026-10-07 기준으로 Refined v2의 Blender 제작, PBR bake, BLEND·FBX·GLB 독립 재수입 검사와 최종 FBX 22개 실제 렌더 검토를 완료했다. UE5.8 안내인에 전용 외형·PBR·Idle을 적용했고 최종 GUI 재로드, 별도 Cmd 프로세스 저장 상태, 실제 PIE **67/67** 검사를 통과했다. Blender LOD0는 **51,634삼각형**, 제작 리그는 **23본**, Idle은 **30fps·2초**다. UE LOD0~2는 최종 1/.85/.65 설정으로 재생성했고 **최종 9개 실제 엔진 화면의 독립 시각 검토도 승인됐다**. 완료 범위는 현재 정지형 시작마을 안내 NPC이며 [최종 독립 검토](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/final-unreal-review.json)에 근거와 한계가 있다.
 
-![최종 FBX를 독립 재수입한 실제 Blender 렌더](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/imported-pose-final/idle-oblique.png)
+최종 FBX를 독립 재수입한 실제 Blender 렌더〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕
 
 ## 범위와 기준선
 
@@ -14,7 +14,7 @@
 
 ## 실제 수치 변화
 
-비교 근거는 [v1 독립 검사](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/baseline/fresh-metrics.json), [최종 빌드](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/model-build.json), [최종 BLEND 검사](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/fresh-blend.json)다. v1은 새 품질 계약의 UV/PBR 요구사항을 충족하지 않았으며, 기존 v1의 튜토리얼 동작 통과와는 별개다.
+비교 근거는 v1 독립 검사〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕, [최종 빌드](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/model-build.json), [최종 BLEND 검사](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/fresh-blend.json)다. v1은 새 품질 계약의 UV/PBR 요구사항을 충족하지 않았으며, 기존 v1의 튜토리얼 동작 통과와는 별개다.
 
 | 항목 | v1 | Refined v2 |
 |---|---:|---:|
@@ -76,7 +76,7 @@ Blender 단계의 판정은 `accepted_as_a_stylized_gameplay_candidate_pending_u
 
 [최초 적용 보고서](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-refined-application.json)는 `imported_and_applied`이며 `/Game/Rogue10m/Characters/Arin/RefinedV2`의 mesh·Skeleton·Idle, 16 texture와 4 material을 안내인에 연결했다. 이 보고서의 LOD 항목은 재조정 전 기록이다. 최종 LOD·재질·참조는 [GUI 재로드](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-refined-reload.json)의 `reload_verified`와 [별도 Cmd 프로세스](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-fresh-process.json)의 `passed`를 기준으로 읽는다. 세 보고서의 FBX SHA는 `aa4298d51a6917f245f4be4f9c1dca3ae739ec80d7d4fb44b3157a0a2b8979c3`로 최종 파일과 일치한다.
 
-![UE StartHub에서 최종 LOD0를 표시한 실제 editor capture](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-0/village-oblique.png)
+UE StartHub에서 최종 LOD0를 표시한 실제 editor capture〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕
 
 | 항목 | 최종 확인 결과 |
 |---|---|
@@ -104,7 +104,7 @@ FBX에는 LOD 체인이 없다. 처음 생성된 native LOD의 실제 retained r
 
 현재 SkeletalMeshEditorSubsystem은 정확한 runtime triangle count를 노출하지 않아 보고서의 `triangles`는 null이다. 위 target이나 정점 수에서 삼각형을 추정하지 않는다. Blender source의 51,634삼각형도 UE 각 LOD의 측정값으로 바꿔 쓰지 않는다. 최종 보수적 LOD는 검증된 의상·얼굴 형태를 유지하는 대신 처음 목표보다 정점 비용이 크다. 군중 규모 frame-time/memory와 자동 screen-size LOD 전환은 별도 검증하지 않았다.
 
-최종 엔진 증거는 [LOD0 manifest](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-0/manifest.json), [LOD1 manifest](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-1/manifest.json), [LOD2 manifest](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/unreal-captures/refined/lod-2/manifest.json)의 front·face·oblique **총 9장**이다. 실제 forced/predicted LOD index를 확인하고 camera를 고정한 뒤 2초 동안 실제 editor frame을 진행해 capture했다. [capture 소스 검토](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/lod-capture-source-review.json)의 초기 noisy 증거와 첫 LOD 실패 자료는 보존했다. 캡처 중 임시 background throttle·component·camera 변경은 복원했고 자산을 저장하지 않았다.
+최종 엔진 증거는 LOD0 manifest〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕, LOD1 manifest〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕, LOD2 manifest〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕의 front·face·oblique **총 9장**이다. 실제 forced/predicted LOD index를 확인하고 camera를 고정한 뒤 2초 동안 실제 editor frame을 진행해 capture했다. [capture 소스 검토](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/lod-capture-source-review.json)의 초기 noisy 증거와 첫 LOD 실패 자료는 보존했다. 캡처 중 임시 background throttle·component·camera 변경은 복원했고 자산을 저장하지 않았다.
 
 [final-unreal-review.json](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/final-unreal-review.json)은 2026-10-07 13:23:49 UTC에 `accepted_for_current_stationary_tutorial_npc_scope_with_documented_limits`로 기록됐다. 독립 reviewer가 실제 9장을 모두 열어 최종 LOD1/2의 하얀 의복 파편이 사라졌고 LOD2 양쪽 홍채·눈꺼풀 형태가 유지됨을 확인했다. 최종 FBX 22뷰 해시, GUI 재로드, 새 Cmd PID 113212, 최종 PIE 67개 검사와 Content 감사도 함께 확인했다. 문서 작성 담당은 최종 UE LOD0 oblique를 추가로 열었다. 눈에 띄는 새 관통·붕괴는 발견되지 않았지만 얼굴·ribbon hair·손·mantle의 근접 단순성과 정적 editor capture의 증거 범위는 유지한다.
 
@@ -125,3 +125,6 @@ FBX에는 LOD 체인이 없다. 처음 생성된 native LOD의 실제 retained r
 골격은 아린 전용 23본이며 Manny/Quinn 자동 호환을 제공하지 않는다. 손은 whole-hand 본으로 움직이고 개별 손가락·표정·lip-sync용 본/모프가 없다. mantle·strap·braid는 뻣뻣한 단순 변형을 유지하며, 보행·전투·양다리 연속 주기와 cloth/hair simulation은 구현·검증하지 않았다. 원본 콘셉트와 동일한 얼굴이나 출시용 캐릭터 완성도를 주장하지 않는다.
 
 복구 기준은 보존된 v1 산출물·소스와 적용 전 안내인 참조 checkpoint다. 직전 후보는 [export-candidate-1](D:/Project/Rogue10m/Feature/doc/evidence/arin-quality-20261007/export-candidate-1)에 보존했다. v1/v2의 전용 Skeleton·재질 참조를 섞지 않는다. 커밋·푸시는 수행하지 않았다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

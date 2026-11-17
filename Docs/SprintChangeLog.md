@@ -2330,7 +2330,7 @@
 - 주요 변경: 53노드 카탈로그, PlayerState 숙련·공유 실제 지출 원장, Save v3/legacy 이전, 명중 실행당1XP, 격투가 내공·투지/대검 투지·마나, 성질·공명·MP 소비·부분 환급, 대검 파생5개, native 원형 UI·조건·키 지정. 기존 기본 공격·프로필 입력·몽타주 보존.
 - 검증: 최종 Editor 빌드 성공(83.55초), Automation3개 Success, 실제 게임50개/새 프로세스 저장 복원14개 확인에서 실패0·exit0. 원본 공격19개·초기 계약 보존, 1080p/720p 실제 화면 검토. 생성 경로·스테이징 목록/공백·스크립트 구문·문서 링크 검사 통과.
 - 상태: 구현·통합 QA·독립 리뷰·기록 완료. 기능 커밋 `a2a1db8b`와 로컬 develop→test→main fast-forward 승격 완료, 최종 통합 기록은 후속 문서 커밋으로 확정한다. 공개 푸시는 선행 체크포인트의 공개 자료 전송 승인 대기를 존중하며 우회하지 않는다. 전용 무기 애니메이션·무기별 archive·20분 전체 플레이·Shipping·멀티는 별도 범위다.
-- 관련: [계획](../Feature/architect/2026-10-20_hybrid-skill-tree-runtime.md), [결과](../Feature/doc/2026-10-20_hybrid-skill-tree-runtime.md), [설계](HybridSkillTreeDesign.md), [실제 격투가 화면](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/brawler-1080p.png), [실제 대검 화면](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/greatsword-720p.png), [검토](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/review.md).
+- 관련: [계획](../Feature/architect/2026-10-20_hybrid-skill-tree-runtime.md), [결과](../Feature/doc/2026-10-20_hybrid-skill-tree-runtime.md), [설계](HybridSkillTreeDesign.md), [실제 격투가 화면](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/brawler-1080p.png), 실제 대검 화면〔중간·보조 자료 정리로 삭제됨; [보존 목록](../Feature/doc/evidence/README.md)〕, [검토](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/review.md).
 
 ### 공개 GitHub 게시 승인과 통합 게시 재개 (2026-10-20)
 
@@ -2437,7 +2437,7 @@
 - 실제 GUI: 좁은 창 양 끝 스크롤, 외곽/야영지 -80° 포커스, Engine Cube Height125/Yaw45/Scale20 배치, 실제 Ctrl+Z/ Ctrl+Y 제거·복원, `OW_MM_Cube` 필터 선택 1개, 목적지 `(1,-3)` 이동 후 Z/yaw/scale 유지, native Landscape/WP 열기, Simulate 편집 차단·종료 복귀, 다른 맵 거절·원본 복귀, clean 맵 저장 버튼 성공을 확인했다.
 - 보존/한계: 임시 액터·폴더 dirty 2개만 확인 후 저장 없이 폐기·원본 reload. 최종 로드 액터 1,243개·maker 0·dirty map/content 0, Editor 정상 종료·Content 변경 0이다. 실제 변경 저장/재로드는 격리 WP fixture에서 검증했다. 전체 20분/Shipping/실제 지형 sculpt·paint는 미검증이며 네이티브 경고 4개를 보존한다.
 - 상태: GUI·빌드·회귀·독립 코드 리뷰 완료. GUI 종료 후 최종 증거 검사도 원본 1,260파일 SHA 변경 0·Content 변경 0·임시 소품/dirty 0으로 통과했다. 명시 변경 범위·문서 경로 검사 뒤 커밋·develop→test→main·일반 push 예정이며 이번 QA 수정의 게시 성공 SHA는 아직 기록하지 않는다.
-- 관련: [최종 결과와 검증표](../Feature/doc/2026-10-25_map-maker-live-qa.md), [자동화](../Feature/doc/evidence/map-maker-live-qa-20261025/automation-final/result.json), [최종 증거 검사](../Feature/doc/evidence/map-maker-live-qa-20261025/final-checks.json), [최종 GUI 상태](../Feature/doc/evidence/map-maker-live-qa-20261025/live-final.json), [외곽 화면](../Feature/doc/evidence/map-maker-live-qa-20261025/focus-edge-final.png), [개발 일지](../DevLog/20261025.txt).
+- 관련: [최종 결과와 검증표](../Feature/doc/2026-10-25_map-maker-live-qa.md), [자동화](../Feature/doc/evidence/map-maker-live-qa-20261025/automation-final/result.json), [최종 증거 검사](../Feature/doc/evidence/map-maker-live-qa-20261025/final-checks.json), [최종 GUI 상태](../Feature/doc/evidence/map-maker-live-qa-20261025/live-final.json), 외곽 화면〔중간·보조 자료 정리로 삭제됨; [보존 목록](../Feature/doc/evidence/README.md)〕, [개발 일지](../DevLog/20261025.txt).
 
 - Sprint#9-1 게시 완료: 기능 `8ca0523309866aed5aa48fc4b435c02845241d8a`, 명시 94파일·생성 경로·공백·JSON/Python/문서 링크·DevLog 추가 전용 검사 통과. 최신 원격 변경 재확인 뒤 develop→test→main fast-forward 및 작업/통합 네 브랜치 일반 atomic push 성공, [직접 원격 SHA](../Feature/doc/evidence/map-maker-live-qa-20261025/publication.json) 전부 일치. 원본 Content 변경 0·QA dirty 0. 이 완료 기록은 소스/콘텐츠 변경 없는 후속 문서 체크포인트로 동일하게 게시한다.
 
@@ -3357,3 +3357,15 @@ G2 동시작업 경계: stage 후 자연경계 소유 작업이 디스크709개�
 - 검증: 내부경로/파일종류/SHA 사전확인, 보관해시·JSON파싱·삭제부재·사진·비JSON존재·링크검사.
 - 상태: 기록정리완료. 작업브랜치만게시하고 main병합은보류한다.
 - 관련: DevLog/Records.md, Feature/doc/2026-11-18_devlog-record-curation.md.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](../Feature/doc/evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.
+
+### Sprint#9-32 — Feature 검증 자료 선별 정리
+
+- 목표: 최종 결과와 중요한 실패를 유지하면서 반복 사진·중간 JSON을 줄인다.
+- 변경: 사진 621장·JSON 3,293개, 총 3,914개 / 810,622,927바이트 삭제. 자료 보존 목록·파일별 manifest·문서 링크·보관 규칙을 정리했다.
+- 보존: 사진 289장·JSON 2,762개, 코드 입력 339개, 원본 텍스처·고유 실패 전후·대표 동작·활성 자연 경계/동굴 전체. 기존 JSON 형식 오류 두 건도 그대로 남겼다.
+- 검증: 전체 삭제 경로·일반 파일·크기/SHA 사전 확인, 비활성 보존 해시·코드 입력·비대상 파일·JSON·Markdown 링크 검사, generated 경로 및 staged diff 검사.
+- 상태: 자료 정리 완료. 게임 기능의 새 통과 판정은 아니며 작업 브랜치만 게시한다. main/develop/test 통합은 보류한다.
+- 관련: Feature/architect/2026-11-18_evidence-curation.md, Feature/doc/2026-11-18_evidence-curation.md, Feature/doc/evidence/README.md.

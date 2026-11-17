@@ -51,7 +51,7 @@ QA 전용 프로필·진행·키 저장 접두사를 모두 지정한 격리 검
 
 ![격투가 실제 화면](evidence/hybrid-skill-tree-runtime-20261020/brawler-1080p.png)
 
-![대검술사 실제 720p 화면](evidence/hybrid-skill-tree-runtime-20261020/greatsword-720p.png)
+대검술사 실제 720p 화면〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕
 
 검증 실행기는 `Scripts/VerifyHybridSkillTree.ps1`이다. `assets`, `automation`, `runtime`, `read` 단계를 제공한다. `runtime`은 매번 새 `TestId`를 사용하고 `read`는 직전 `runtime`과 같은 ID를 사용한다. 세 QA 저장 접두사가 없으면 실행 테스트를 거절한다.
 
@@ -68,3 +68,6 @@ QA 전용 프로필·진행·키 저장 접두사를 모두 지정한 격리 검
 이후 사용자가 현재 상태와 향후 완료 기능의 공개 GitHub 푸시를 명시 승인했다. 체크포인트 게시 작업에서 이 기능의 `77a52b6a`와 완료된 선행 보스 정산까지 함께 게시한다. 최신 승인·게시 결과는 [체크포인트 통합 결과](2026-10-20_main-checkpoint.md)를 따른다.
 
 공개 게시 완료: 사용자 명시 승인 후 원격 main/develop/test `b57985e1`과 기능 작업 브랜치의 실제 SHA를 직접 확인했다. 이 기능은 최초 체크포인트와 함께 공개 저장소에 반영됐다. [최종 게시 결과와 검증 증거](2026-10-20_main-checkpoint.md)를 참조한다. 이전 승인 대기 문단은 당시 상태를 기록한 이력이다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

@@ -31,7 +31,7 @@
 
 ## 2026-11-16 Landscape 제작 세부안
 
-[1차 제작 기획서](../../../Feature/architect/2026-11-16_landscape-production-plan.md)와 [지형 좌표 보충 JSON](landscape-production-20261116.json)에 기존21노드·29간선의 1,012.5×562.5m Landscape 범위, 대지·도로 폭, 원점·컴포넌트 인덱스, 단계별 검증을 기록했다. 기존 두 카탈로그의 배치·획득 규칙은 유지한다. 배치도는 실제 좌표로 그린 설계도이며 Unreal 캡처와 구분한다. 11/16 체크포인트에서는 **1차 기획 제시 후 2차 native 외곽211개 정리·45개 저장·cold 보존 검증 완료, 통행 QA 미인수**이다. Undo/Redo 즉시 composite 보존과 도로 격자선 레이 실패는 [제작 결과서](../../../Feature/doc/2026-11-16_landscape-production-result.md)에 별도 기록한다. [실제 에디터 캡처](../../../Feature/doc/evidence/landscape-production-20261116/cold-crop-editor.png)도 보존했다.
+[1차 제작 기획서](../../../Feature/architect/2026-11-16_landscape-production-plan.md)와 [지형 좌표 보충 JSON](landscape-production-20261116.json)에 기존21노드·29간선의 1,012.5×562.5m Landscape 범위, 대지·도로 폭, 원점·컴포넌트 인덱스, 단계별 검증을 기록했다. 기존 두 카탈로그의 배치·획득 규칙은 유지한다. 배치도는 실제 좌표로 그린 설계도이며 Unreal 캡처와 구분한다. 11/16 체크포인트에서는 **1차 기획 제시 후 2차 native 외곽211개 정리·45개 저장·cold 보존 검증 완료, 통행 QA 미인수**이다. Undo/Redo 즉시 composite 보존과 도로 격자선 레이 실패는 [제작 결과서](../../../Feature/doc/2026-11-16_landscape-production-result.md)에 별도 기록한다. 실제 에디터 캡처〔중간·보조 자료 정리로 삭제됨; [보존 목록](../../../Feature/doc/evidence/README.md)〕도 보존했다.
 
 ## 2026-11-17 도로 표면·보행 체크포인트
 
@@ -42,3 +42,6 @@
 최신 사용자 지시에 따라 내부를Z9600cm 평면으로 정리하고 외곽에 닫힌 능선과 Pawn 차단을 저작했다. 첫 능선의 평탄한 정상을 실제 화면 검토 후 둥근 단면으로 보완했다. H/M/T 울타리·석벽, 열린 출입구13곳, 도로 양옆 잔디 전이와 울타리 안 갈색 흙바닥3개를 적용했다. [최신 제작 결과](../../../Feature/doc/2026-11-17_natural-world-boundaries.md), [기획 보완](../../../Feature/architect/2026-11-17_natural-world-boundaries.md), [보충 카탈로그](landscape-natural-boundary20261117.json), [저장 후 실제 전체 화면](../../../Feature/doc/evidence/landscape-natural-boundary20261117/visual/final-overview.png)을 따른다.
 
 이 보충본은 앞선 S50m→B96m 상승을 평탄한 내부로 바꾼다. 원래 두 카탈로그의XY·연결·획득·입력 규칙은 유지한다. Q/Z 지하 공간은 기획이며 천장·내부 통로가 있는 동굴은 아직 제작하지 않았다. 자연 경계와 마을을 갖춘 블록아웃의 검증 결과를 전체 게임플레이·최종 미술·cook/Shipping 인수로 확대하지 않는다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](../../../Feature/doc/evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

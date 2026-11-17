@@ -51,7 +51,7 @@ Editor Preferences > General > Live Coding의 기능 활성값은 꺼져 있어 
 
 현재 Codex 채팅에는 native Unreal meta-tool이 노출되지 않아 기존 `Scripts/InvokeUnrealMCP.py`로 같은 공식 HTTP 서버를 initialize → discovery/schema → read-only call 순서로 검증했다. Codex의 기본 도구 목록이 갱신되지 않은 경우 기존 MCP 연결을 재연결하면 된다. 별도 서버나 프록시를 추가하지 않았다.
 
-검증 자료: [설정 결과](../Feature/doc/2026-10-19_unreal-plugin-setup.md), [재시작 MCP 설정](../Feature/doc/evidence/unreal-plugin-setup-20261019/restart-mcp-values.json), [재시작 Live Coding](../Feature/doc/evidence/unreal-plugin-setup-20261019/restart-livecoding-values.json).
+검증 자료: [설정 결과](../Feature/doc/2026-10-19_unreal-plugin-setup.md), 재시작 MCP 설정〔중간·보조 자료 정리로 삭제됨; [보존 목록](../Feature/doc/evidence/README.md)〕, 재시작 Live Coding〔중간·보조 자료 정리로 삭제됨; [보존 목록](../Feature/doc/evidence/README.md)〕.
 
 ## Rogue10m에서 우선 활용할 작업
 
@@ -69,3 +69,6 @@ Editor Preferences > General > Live Coding의 기능 활성값은 꺼져 있어 
 - `CheckGeneratedChanges.ps1`: 통과
 - 참고 경고: Android SDK 설정이 없어 프로젝트 파일 생성 중 Android 플랫폼이 스킵되었다.
 - 참고 경고: Variant 템플릿 삭제분에 대한 바이너리 에셋 경고가 표시되었으나, 이전 최적화 작업의 의도된 삭제 항목이다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](../Feature/doc/evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

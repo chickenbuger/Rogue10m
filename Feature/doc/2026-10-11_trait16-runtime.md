@@ -33,7 +33,7 @@ StartHub에서 아린 가까이 이동해 **F → 특성 강화 창 선택 → E
 
 검증 명령은 `Scripts/ValidateTraits.ps1 -Mode Effects -Label <새라벨>`, 같은 스크립트의 `-Mode UI`, `Scripts/ValidateTraitPersistence.ps1 -Label <새라벨>`이다. 모두 별도 QA 프로필/저장 슬롯을 사용하고 기존 증거·저장을 삭제하지 않는다. `CheckGeneratedChanges.ps1`와 범위 내 diff/28개 소스의 공백 검사도 통과했다.
 
-[독립 저장·효과 검토](evidence/trait16-runtime-20261011/review.md)에서 미해결 P0/P1/P2를 발견하지 못했다. [UI 검사 독립 리뷰](evidence/trait16-runtime-20261011/ui-review.md) 후 실제 QA도 통과했다. 실제 [720p 마지막 행](evidence/trait16-runtime-20261011/Rogue10m_Town_QA_trait16_ui04/traits-bottom-720p.png)과 [재분배 확인창](evidence/trait16-runtime-20261011/Rogue10m_Town_QA_trait16_ui04/traits-refund-720p.png)을 확인했다.
+[독립 저장·효과 검토](evidence/trait16-runtime-20261011/review.md)에서 미해결 P0/P1/P2를 발견하지 못했다. [UI 검사 독립 리뷰](evidence/trait16-runtime-20261011/ui-review.md) 후 실제 QA도 통과했다. 실제 720p 마지막 행〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕과 [재분배 확인창](evidence/trait16-runtime-20261011/Rogue10m_Town_QA_trait16_ui04/traits-refund-720p.png)을 확인했다.
 
 ## 수정 이력과 작업 경계
 
@@ -44,3 +44,6 @@ StartHub에서 아린 가까이 이동해 **F → 특성 강화 창 선택 → E
 기존 에디터는 미저장 패키지0을 확인한 후 정상 종료해 DLL 잠금을 해제했다. 최종 빌드 뒤 이전 OpenRunMap으로 다시 열었고 새 네이티브 클래스3개·기본16종·UI Texture 재로드와 콘텐츠/맵 dirty0을 [실제 에디터에서 확인했다](evidence/trait16-runtime-20261011/editor-final-reload.json). 마지막 PIE는 종료 상태다. 현재 검증 범위는 로컬 단일 플레이와 Editor Development 실행이다. Shipping cook/패키징·멀티플레이 저장·장기 밸런스는 별도 검증이다.
 
 [설계·ULW 패킷](../architect/2026-10-11_trait16-runtime.md), [마을 서비스·저장 가이드](../../Docs/TownServicesPersistenceGuide.md), [일일 로그](../../DevLog/20261011.txt).
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

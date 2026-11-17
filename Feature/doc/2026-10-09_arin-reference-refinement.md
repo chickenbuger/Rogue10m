@@ -56,7 +56,7 @@ FBX에 LOD 체인은 포함되지 않는다. UE imported LOD0를 보존하고 LO
 
 정확한 UE runtime 삼각형 수는 해당 Python API가 노출하지 않아 null이다. 목표 비율이나 정점 수로 추정하지 않는다. 기존 detection sphere와 non-colliding guide mesh를 유지하고 새 PhysicsAsset은 만들지 않았다.
 
-[LOD0](D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/unreal-captures/refined/lod-0/manifest.json), [LOD1](D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/unreal-captures/refined/lod-1/manifest.json), [LOD2](D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/unreal-captures/refined/lod-2/manifest.json)의 front·face·oblique **총 9개 실제 엔진 화면**을 확인했다. 카메라 적용 이후 실제 editor tick과 forced/predicted LOD를 확인하고 camera·component·animation·background throttle과 소유 callback을 복구했다. [독립 엔진 검토](D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/critic/unreal-engine-review.json)는 참조에 가까워진 외형과 샘플 LOD 연속성을 승인했다. baseline v2는 automatic predicted LOD1, v3는 각각 forced LOD이므로 같은 카메라 비교를 동일 LOD 성능 비교라고 해석하지 않는다.
+LOD0〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕, LOD1〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕, LOD2〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕의 front·face·oblique **총 9개 실제 엔진 화면**을 확인했다. 카메라 적용 이후 실제 editor tick과 forced/predicted LOD를 확인하고 camera·component·animation·background throttle과 소유 callback을 복구했다. [독립 엔진 검토](D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/critic/unreal-engine-review.json)는 참조에 가까워진 외형과 샘플 LOD 연속성을 승인했다. baseline v2는 automatic predicted LOD1, v3는 각각 forced LOD이므로 같은 카메라 비교를 동일 LOD 성능 비교라고 해석하지 않는다.
 
 ## 최종 검증·보존
 
@@ -82,3 +82,6 @@ FBX에 LOD 체인은 포함되지 않는다. UE imported LOD0를 보존하고 LO
 형상·weight·shader 변경은 [BuildReferenceArin.py](D:/Project/Rogue10m/Scripts/Blender/BuildReferenceArin.py)와 편집 원본에서 시작하고 bake/export·독립 재수입·실제 자세·Unreal 검증을 다시 수행한다. engine 작업은 [ApplyReferenceArin.py](D:/Project/Rogue10m/Scripts/Editor/ApplyReferenceArin.py), [RecoverReferenceArinPreparation.py](D:/Project/Rogue10m/Scripts/Editor/RecoverReferenceArinPreparation.py), [ValidateReferenceArinFresh.py](D:/Project/Rogue10m/Scripts/Editor/ValidateReferenceArinFresh.py), [ValidateReferenceArinPIE.py](D:/Project/Rogue10m/Scripts/Editor/ValidateReferenceArinPIE.py), [CaptureReferenceArin.py](D:/Project/Rogue10m/Scripts/CaptureReferenceArin.py), [ReviewReferenceArinLOD.py](D:/Project/Rogue10m/Scripts/Editor/ReviewReferenceArinLOD.py), [AuditReferenceArinContent.py](D:/Project/Rogue10m/Scripts/AuditReferenceArinContent.py)로 범위를 분리했다.
 
 롤백은 [보존된 v2](D:/Project/Rogue10m/Art/NPC/Arin/Refined/README.md)의 전용 mesh·Skeleton·Idle 참조를 기존 guide에 복원하는 방식이다. 버전 사이의 Skeleton·material 참조를 섞지 않는다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

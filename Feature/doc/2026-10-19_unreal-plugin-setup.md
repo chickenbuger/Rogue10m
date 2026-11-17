@@ -51,9 +51,12 @@ API 저장 성공만으로 지속성을 확정하지 않았다. Saved 비교에�
 - [계획](../architect/2026-10-19_unreal-plugin-setup.md)
 - [설정 가이드](../../Docs/UE58MCPSetup.md)
 - [독립 검토](evidence/unreal-plugin-setup-20261019/review.md)
-- [도구 목록](evidence/unreal-plugin-setup-20261019/toolsets.json)
-- [MCP 재시작 설정](evidence/unreal-plugin-setup-20261019/restart-mcp-values.json)
-- [Live Coding 재시작 설정](evidence/unreal-plugin-setup-20261019/restart-livecoding-values.json)
+- 도구 목록〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕
+- MCP 재시작 설정〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕
+- Live Coding 재시작 설정〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕
 - [정상 재시작](evidence/unreal-plugin-setup-20261019/editor-restart.json)
 - [최종 연결](evidence/unreal-plugin-setup-20261019/connection-final.json)
 - [일일 로그](../../DevLog/20261019.txt)
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

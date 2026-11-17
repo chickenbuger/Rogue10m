@@ -44,9 +44,9 @@ StartHub를 최종 빌드로 다시 열었다. 여섯 Blueprint 기본값 `(8,0,
 - [실제 카메라 비교](evidence/camera-forward-attacks-20261009/final-runtime/camera-height.csv)
 - [실제 공격별 결과](evidence/camera-forward-attacks-20261009/final-runtime/results.csv)
 - [낮춘 1인칭 화면](evidence/camera-forward-attacks-20261009/visual/idle_current_eye_minus3.png)
-- [전방 스트레이트 화면](evidence/camera-forward-attacks-20261009/visual/contact_02_DA_BasicBrawler_RightStraight.png)
-- [최종 에디터 상태](evidence/camera-forward-attacks-20261009/final-editor-state.json)
-- [콘텐츠 보존 검사](evidence/camera-forward-attacks-20261009/content-after.json)
+- 전방 스트레이트 화면〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕
+- 최종 에디터 상태〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕
+- 콘텐츠 보존 검사〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕
 - [독립 리뷰](evidence/camera-forward-attacks-20261009/review.json)
 
 ```powershell
@@ -56,3 +56,6 @@ StartHub를 최종 빌드로 다시 열었다. 여섯 Blueprint 기본값 `(8,0,
 ```
 
 다른 무기 프로필은 인벤토리·참조·타이밍을 조사했으며 이번 실제 손 방향/전투 검증은 현재 맨손·너클·무투가 경로다. QA 몬스터는 판정용 임시 대상이며 저장되지 않는다. 화면의 기본 회색 팔 재질과 일부 빠른 기술의 모션 블러는 기존 표현이고 이번 작업에서 변경하지 않았다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

@@ -41,13 +41,13 @@
 
 첫 재질 생성은 Texture 속성에 package 경로를 전달해 실패했다. [원래 실패](evidence/landscape-resume-20261117/road-material.json)를 보존하고, 생성된5개 노드를 관측한 뒤 정확한 전체 object 경로로 재개했다. [재개 결과](evidence/landscape-resume-20261117/road-material-resume.json)는 기존 노드를 삭제하거나 자동 재시도하지 않고 노드9개·연결·컴파일을 확인했다. 초기 검은 캡처는 비동기 shader/viewport 안정화 전 화면으로 보존했으며, opacity0 진단 뒤 원래0.9를 복원하고 안정화된 화면으로 검토했다.
 
-시각 근거는 [E04 근접](evidence/landscape-resume-20261117/E04-prototype-camera-warmed.png), [E11 근접](evidence/landscape-resume-20261117/E11-prototype-settled.png), [전체 도로 원거리](evidence/landscape-resume-20261117/road-full-overview.png) · [최종 사선 화면](evidence/landscape-resume-20261117/final-oblique.png) · [저장 후 열린 에디터](evidence/landscape-resume-20261117/final-editor.png)다. [두 구간 저작](evidence/landscape-resume-20261117/road-prototype.json)과 [27개 확장](evidence/landscape-resume-20261117/road-extend.json)도 보존했다.
+시각 근거는 [E04 근접](evidence/landscape-resume-20261117/E04-prototype-camera-warmed.png), [E11 근접](evidence/landscape-resume-20261117/E11-prototype-settled.png), [전체 도로 원거리](evidence/landscape-resume-20261117/road-full-overview.png) · [최종 사선 화면](evidence/landscape-resume-20261117/final-oblique.png) · 저장 후 열린 에디터〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕다. [두 구간 저작](evidence/landscape-resume-20261117/road-prototype.json)과 [27개 확장](evidence/landscape-resume-20261117/road-extend.json)도 보존했다.
 
 첫 액터별 저장은 새 external actor package를 기존 asset으로 찾지 못해 중단됐다. 이어 후보맵·새 재질의 명시적 저장은 true를 반환했지만, [중간 파일 비교](evidence/landscape-resume-20261117/road-save-interim-files.json)에서 액터 패키지 변경0개를 확인해 전체 저장 성공으로 처리하지 않았다. [첫 실패](evidence/landscape-resume-20261117/road-save.json)는 그대로 보존했다.
 
 전체 dirty 저장 호출은 자동 승인 검토에서 거절되어 실행하지 않았고, 이후 사용자의 명시적 승인을 받아 후보 소유 범위를 확인한 뒤 저장했다. [완료 후 파일 비교](evidence/landscape-resume-20261117/road-save-completed-files.json)에서 기존 도로 external actor663개 변경, 새 도로 external actor29개와 폴더 external object1개 추가, 삭제0개를 확인했다. 후보 패키지 수는1,423개에서1,453개로 늘었고, 별도 새 재질1개가 디스크에 존재한다. 후보 `.umap`과 기존16개 지형 external actor는 기준 바이트를 유지했다. 이후 독립 cold 검증에서692개 액터와 새 폴더의 native 패키지를 실제 파일 변경 목록에 대조했다.
 
-사전 근거: [29개 투영 범위와 기존663개 도로](evidence/landscape-road-surface20261117/preflight.json), [보정 전 E11](evidence/landscape-resume-20261117/E11-before-near.png), [보정 전 E04](evidence/landscape-resume-20261117/E04-before-near.png), [원거리 기준 화면](evidence/landscape-resume-20261117/before-far.png).
+사전 근거: [29개 투영 범위와 기존663개 도로](evidence/landscape-road-surface20261117/preflight.json), [보정 전 E11](evidence/landscape-resume-20261117/E11-before-near.png), [보정 전 E04](evidence/landscape-resume-20261117/E04-before-near.png), 원거리 기준 화면〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕.
 
 ## 독립 cold 검증과 최종 변경 범위
 
@@ -68,3 +68,6 @@
 - [게시 의존성 감사](evidence/landscape-road-surface20261117/publication-dependency-audit.json)에서 main/origin/main `fdbe8c8c`에 Crop 기반1,423개·최종1,453개 패키지와 실제 맵의 Director/DataAsset 정의가 없음을 확인했다. 기존 Source·Config·Content의 누적 미완료 변경과 미추적 의존성이 많다. 이번 도로 자산만 분리 커밋하면 검증한 작업 트리의 필수 맵·도구가 누락될 수 있어 독립적으로 완결된 의존성 범위와 남은 통합 조건을 확인하기 전 전체 WIP를 stage하거나 `develop→test→main`으로 승격하지 않는다. 지형·도로 체크포인트의 검증 성공과 Git 통합 완료는 구분한다.
 
 식생·마을 내부 환경·세부 조형·모든 NPC 서비스·비급 획득·일반15종/중간보스4종/최종보스1종의 실제 배치는 이번 보행 성공의 범위가 아니다. 현재 기획의 개수·획득·입력·진행 규칙은 그대로 유지한다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

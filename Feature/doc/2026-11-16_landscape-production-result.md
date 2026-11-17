@@ -77,7 +77,7 @@ QA 도구는 SaveGame의 비노출/보호 속성 접근2회와 Python에 없는 
 
 캡처는 +Y가 위, +X가 왼쪽인 에디터 카메라 방향이다. 기획도의 좌표 표기와 구분한다. 현재 산출물은 native 지형 범위 정리와 기존 블록아웃 보존이며 세부 환경 미술·전체 콘텐츠 완성이 아니다.
 
-최종 상부·사선 캡처에서 도로 표현이 여러 구간 끊겨 보이는 시각적 한계도 남았다. 높이 투영·가림·페인트 중 원인을 확정하지 않았고, 29개 도로의 시각적 연속성 합격으로 보고하지 않는다. [사선 캡처](evidence/landscape-production-20261116/landscape-crop-oblique.png)를 함께 보존한다.
+최종 상부·사선 캡처에서 도로 표현이 여러 구간 끊겨 보이는 시각적 한계도 남았다. 높이 투영·가림·페인트 중 원인을 확정하지 않았고, 29개 도로의 시각적 연속성 합격으로 보고하지 않는다. 사선 캡처〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕를 함께 보존한다.
 
 마지막 정적 검사는 소유 Python13개 parse/compile, PowerShell2개 parse, 범위 diff 공백 검사 통과다. CheckGeneratedChanges도 통과했고 기존 바이너리 변경·줄바꿈 경고는 별도 유지했다. 새 C++ 수정이 없어 복구 때 성공한 정규 Editor 빌드 이후 추가 빌드는 수행하지 않았다.
 
@@ -96,3 +96,6 @@ QA 도구는 SaveGame의 비노출/보호 속성 접근2회와 Python에 없는 
 새 검사 정책에 맞춰 이쪽 `VerifyLandscapeProduction20261116.py`에서 과거 미지원 오류를 허용하던 예외를 제거했다. 다음 실행은 `success is True`와 `loaded_reflection_walk_complete is True`를 모두 요구하며 잘림 검사·기존9개 보존·높이/페인트/원시B/A 비교도 그대로 유지한다. 보고서에 정책 식별자와 loaded walk 결과를 명시한다. [저장된 신규·과거 결과 및 실패 변형6개에 대한 AST 표현식 검사](evidence/landscape-production-20261116/scanner-policy-update-check.json)에서 신규 기록만 통과하고 과거 미지원·실패·완료 필드 누락·잘림은 거부함을 확인했다. 독립 리뷰에서도 판정 강화와 범위 한계를 확인했다. 이 보완에서 에디터·빌드·지형·타일 export를 실행하지 않았다.
 
 기존 `cold-reload/comparison.json` 등의26항목 통과는 당시 retained 보존 정책의 역사적 결과이며 새 strict 정책의 재실행 결과로 소급하지 않는다. 기존 baseline5,370개·보호3,947개 불변 대조도 지형 저장 체크포인트 당시의 결과다. 이후 두 C++와 fixture가 별도 소유 작업에서 바뀌었으므로 그 과거 해시를 현재 Source 전체 불변으로 해석하지 않는다. 신규 loaded walk 통과도 native ARO/custom Serialize·미로드 package·문자열 경로·전체 전이 참조나 삭제 안전성을 인증하지 않는다. `project_wide_dependency_complete=false`·`crop_reference_safety_verified=false`는 유지된다. 새 세션에서 실제 새 DLL을 사용할 때 위 정책을 적용하며 현재 작업 전체의 커밋·승격은 미완료다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.
