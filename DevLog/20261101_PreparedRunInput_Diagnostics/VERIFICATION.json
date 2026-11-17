@@ -1,0 +1,192 @@
+{
+  "packet": "Sprint#9-21-prepared-run-input-qa",
+  "base": "1928869d5d713f8c62712e4cfbdbbb7fcf95dce7",
+  "source_commit": "3a306c8cfdf68bef5c79ac64acae13e623ec7e9b",
+  "verified_utc": "2026-11-01T05:18:22.461503+00:00",
+  "driver_summary": {
+    "status": "returned_death",
+    "outcome": "returned_death",
+    "stage": "result",
+    "reason": "natural terminal and UI return observed; milestone flags remain separate",
+    "normal_menu_ui": "1",
+    "npc_dialogue": "1",
+    "field_entered": "1",
+    "sword_overlap_pickup": "1",
+    "first_natural_kill_xp": "1",
+    "normal_UMG_run_learning": "1",
+    "boss_reached": "1",
+    "returned_reset_observed": "1",
+    "full_boss_completion": "0",
+    "physical_input": "not_performed",
+    "input_driver": "Controller_InputKey_DoAim_Slate_chars_UMG_delegates",
+    "no_gameplay_fixtures": "1",
+    "wall_seconds": "400.675",
+    "terminal_phase": "Defeat",
+    "profile": "A76E3E60414F23F030287DB1123C6BB4",
+    "render_review": "not_performed_by_driver",
+    "prepared_boss_strategy": "1",
+    "prepared_dodge_requested": "5",
+    "prepared_dodge_accepted": "5",
+    "prepared_dodge_unobserved": "0",
+    "pending_screenshot": "",
+    "queued_screenshot_count": "0",
+    "requested_or_queued_capture_count": "30",
+    "reset_scope": "level_BrawlerXP_selected_learned_node_specific_sword_GUID_profile_phase_only",
+    "animation_evidence": "opportunistic_read_only",
+    "animation_phase_processed_is_not_exact_contact_or_GPU_time": "1",
+    "animation_PNG_decode": "not_performed_by_driver",
+    "animation_attack_ready": "processed_phase_and_file_match_decode_pending",
+    "animation_attack_first_damage": "processed_phase_or_file_unconfirmed",
+    "animation_attack_recovered": "processed_phase_or_file_unconfirmed",
+    "animation_dodge_ready": "processed_phase_and_file_match_decode_pending",
+    "animation_dodge_active": "processed_phase_and_file_match_decode_pending",
+    "animation_dodge_recovered": "processed_phase_and_file_match_decode_pending"
+  },
+  "process_exit": 0,
+  "original_saves": 340,
+  "after_saves": 342,
+  "originals_sha256_unchanged": true,
+  "original_asset_count": 31,
+  "original_asset_hashes_unchanged": true,
+  "map_hash_unchanged": true,
+  "boss": {
+    "initial_hp": 10000.0,
+    "minimum_observed_hp": 9937.703,
+    "last_observed_hp": 9939.703,
+    "last_stage": "result",
+    "last_phase": "Defeat",
+    "net_drop_is_not_total_damage": true,
+    "victory_verified": false
+  },
+  "dodge_requests": 5,
+  "dodge_accepted": 5,
+  "accepted_is_not_damage_avoidance": true,
+  "phases": {
+    "animation_evidence": "opportunistic_read_only",
+    "animation_phase_processed_is_not_exact_contact_or_GPU_time": "1",
+    "animation_PNG_decode": "not_performed_by_driver",
+    "animation_attack_ready": "processed_phase_and_file_match_decode_pending",
+    "animation_attack_first_damage": "processed_phase_or_file_unconfirmed",
+    "animation_attack_recovered": "processed_phase_or_file_unconfirmed",
+    "animation_dodge_ready": "processed_phase_and_file_match_decode_pending",
+    "animation_dodge_active": "processed_phase_and_file_match_decode_pending",
+    "animation_dodge_recovered": "processed_phase_and_file_match_decode_pending"
+  },
+  "visual_pose_certification": false,
+  "visual_failures": [
+    "ready images have blur and hands outside frame",
+    "dodge-active legacy torso substantially obscures viewport",
+    "first-damage and attack-recovery processed phase unconfirmed",
+    "first-damage screenshot HUD still70/70"
+  ],
+  "screenshot_decoded_count": 9,
+  "images": [
+    {
+      "file": "16_animation_attack_ready.png",
+      "source": "DevLog\\BasicRunPlayQA\\BasicRun1101I\\Driver\\screenshots\\16_animation_attack_ready.png",
+      "sha256": "a222d9fd661633833aae2b08dc8d7cbc833cd57e990cf53ff89e045cb5fa3e3c",
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "17_animation_dodge_ready.png",
+      "source": "DevLog\\BasicRunPlayQA\\BasicRun1101I\\Driver\\screenshots\\17_animation_dodge_ready.png",
+      "sha256": "0e18921cadd0e95b3a129eb0fc84b6aa8f24d74b95cd071c153ac31d39be75ff",
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "18_animation_dodge_active.png",
+      "source": "DevLog\\BasicRunPlayQA\\BasicRun1101I\\Driver\\screenshots\\18_animation_dodge_active.png",
+      "sha256": "1f9b7bb8fc3c2575ec95a8ffa08bfe59da9d34c4fe345b4cb22d40105e320731",
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "19_animation_attack_first_damage.png",
+      "source": "DevLog\\BasicRunPlayQA\\BasicRun1101I\\Driver\\screenshots\\19_animation_attack_first_damage.png",
+      "sha256": "b47e829b7e758ca19ae195cc3f06b70967501af89497f7fb10c7baba27e7913c",
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "20_animation_dodge_recovered.png",
+      "source": "DevLog\\BasicRunPlayQA\\BasicRun1101I\\Driver\\screenshots\\20_animation_dodge_recovered.png",
+      "sha256": "9d68ea250dec457351a6a97715f13059309f1a744dc672138c40de60110d6f30",
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "21_animation_attack_recovered.png",
+      "source": "DevLog\\BasicRunPlayQA\\BasicRun1101I\\Driver\\screenshots\\21_animation_attack_recovered.png",
+      "sha256": "7bba8b63622a03054d3cd6bb574f9a0770566d8f074e8800a98790ab9e5a0f9e",
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "28_boss_reached.png",
+      "source": "DevLog\\BasicRunPlayQA\\BasicRun1101I\\Driver\\screenshots\\28_boss_reached.png",
+      "sha256": "8f269a8ac1c8ec4fd63c34ee2c918cb3857997523b5e6fcfa4934a65e46d975d",
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "29_result.png",
+      "source": "DevLog\\BasicRunPlayQA\\BasicRun1101I\\Driver\\screenshots\\29_result.png",
+      "sha256": "b0e46773dad2af9de7b731b389eb11fda7bc102c870eba9febd69b01071f6e84",
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "30_returned_hub.png",
+      "source": "DevLog\\BasicRunPlayQA\\BasicRun1101I\\Driver\\screenshots\\30_returned_hub.png",
+      "sha256": "c54e57e30395444221667a62e5aa08a1c1682e8ad76e89ebf51c93ff5fe7de60",
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "input_frame_rows": 45660,
+  "input_frame_cap": 120000,
+  "input_cap_reached": false,
+  "pure_summary_gate_tests": {
+    "passed": 10,
+    "total": 10,
+    "scope": "text_only_no_UE_or_save"
+  },
+  "build": {
+    "initial_failed_C4458_seconds": 32.58,
+    "fix": "local State renamed PhaseState only",
+    "final_succeeded_seconds": 11.45
+  },
+  "no_animation_asset_or_authored_timing_change": true,
+  "physical_input": "not_performed",
+  "human_full_run": "not_performed",
+  "remote_changed": false
+}

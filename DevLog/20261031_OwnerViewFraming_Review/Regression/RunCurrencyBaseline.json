@@ -1,0 +1,119 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "JINSOO",
+			"instance": "B5E6CADC4907D11B9A1896B215165E17",
+			"instanceName": "JINSOO-25040",
+			"platform": "WindowsEditor",
+			"oSVersion": "Windows 11 (26H2) [10.0.26300.9818] ",
+			"model": "Default",
+			"gPU": "NVIDIA GeForce RTX 3070",
+			"cPUModel": "AMD Ryzen 7 5800X 8-Core Processor             ",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.10.31-17.42.55",
+	"succeeded": 6,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.047211602330207825,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "ImmutableCapture",
+			"fullTestPath": "Rogue10m.RunCurrencyBaseline.ImmutableCapture",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"B5E6CADC4907D11B9A1896B215165E17"
+			],
+			"duration": 0.0081648975610733032,
+			"dateTime": "2026.10.31-17.42.55",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "InvalidCaptureIsAtomic",
+			"fullTestPath": "Rogue10m.RunCurrencyBaseline.InvalidCaptureIsAtomic",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"B5E6CADC4907D11B9A1896B215165E17"
+			],
+			"duration": 0.0072548016905784607,
+			"dateTime": "2026.10.31-17.42.55",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "InvalidResolutionIsAtomic",
+			"fullTestPath": "Rogue10m.RunCurrencyBaseline.InvalidResolutionIsAtomic",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"B5E6CADC4907D11B9A1896B215165E17"
+			],
+			"duration": 0.0072217993438243866,
+			"dateTime": "2026.10.31-17.42.55",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "PostPaymentRollback",
+			"fullTestPath": "Rogue10m.RunCurrencyBaseline.PostPaymentRollback",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"B5E6CADC4907D11B9A1896B215165E17"
+			],
+			"duration": 0.0082299001514911652,
+			"dateTime": "2026.10.31-17.42.55",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "RepeatedRollbackAndRunIsolation",
+			"fullTestPath": "Rogue10m.RunCurrencyBaseline.RepeatedRollbackAndRunIsolation",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"B5E6CADC4907D11B9A1896B215165E17"
+			],
+			"duration": 0.0081639029085636139,
+			"dateTime": "2026.10.31-17.42.55",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "ZeroAndMaximumBalances",
+			"fullTestPath": "Rogue10m.RunCurrencyBaseline.ZeroAndMaximumBalances",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"B5E6CADC4907D11B9A1896B215165E17"
+			],
+			"duration": 0.0081763006746768951,
+			"dateTime": "2026.10.31-17.42.55",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

@@ -1,0 +1,123 @@
+{
+  "created_utc": "2026-10-29T17:03:59.654425+00:00",
+  "project": "D:\\Project\\Rogue10m",
+  "branch": "Sprint#9-13-look-dash-interaction",
+  "head": "9cdf86220775270a2a5f371b0418a0ca65460ff1",
+  "base_head": "4676fdadd95d16dbaca832c76e6c6a561837809e",
+  "status": "NPC_INPUT_FIX_COMPLETE_CAMERA_VISUAL_ISSUE_UNRESOLVED",
+  "tracked_worktree_clean": true,
+  "changed_files": [
+    "DevLog/20261029.txt",
+    "Docs/SprintChangeLog.md",
+    "Feature/architect/2026-10-29_look-dash-interaction.md",
+    "Feature/doc/2026-10-29_look-dash-interaction.md",
+    "Scripts/VerifyLookDash.ps1",
+    "Scripts/VerifyNpcInteraction.ps1",
+    "Source/Rogue10m/Character/Rogue10mCharacter.cpp",
+    "Source/Rogue10m/Character/Rogue10mCharacter.h",
+    "Source/Rogue10m/Components/Rogue10mSkillBindingComponent.cpp",
+    "Source/Rogue10m/Tests/Rogue10mLookDashRuntimeTest.cpp",
+    "Source/Rogue10m/Tests/Rogue10mNpcInteractionRuntimeTest.cpp"
+  ],
+  "untracked_evidence_retained": true,
+  "build": {
+    "result": "PASS",
+    "target": "Rogue10mEditor Win64 Development",
+    "engine": "5.8.3 CL58210709",
+    "seconds": 33.01,
+    "log": "C:\\Users\\PC\\Documents\\Codex\\2026-10-27\\task\\look-dash-build-final-20261029.log"
+  },
+  "npc_final": {
+    "label": "NpcFinalD1029",
+    "checks": 39,
+    "failures": 0,
+    "input": "programmatic Controller InputKey",
+    "renderer": "D3D11 Offscreen",
+    "positive_cost": 7,
+    "dialogue_extra_attack": false
+  },
+  "look_dash_final": {
+    "label": "LDWeightFinal1029",
+    "checks": 528,
+    "failures": 0,
+    "visual": "FAIL_BODY_OCCLUSION_UNRESOLVED",
+    "camera_candidate_promoted": false,
+    "profile": "Weighted",
+    "data_asset": "DA_Dodge_StoneFist",
+    "observed_free_travel_cm": [
+      47.110607695,
+      51.000281659
+    ],
+    "wall_travel_cm": 7.59542557,
+    "authored_distance_cm": 250,
+    "authored_duration_s": 0.16,
+    "authored_cooldown_s": 0.55
+  },
+  "regression": [
+    {
+      "suite": "AttackResources",
+      "passed": 4
+    },
+    {
+      "suite": "WeaponCooldown",
+      "passed": 5
+    },
+    {
+      "suite": "WeaponSwitch",
+      "passed": 8
+    }
+  ],
+  "media_decoded": 51,
+  "preservation": {
+    "baseline": "C:\\Users\\PC\\Documents\\Codex\\2026-10-27\\task\\preservation-20261029-155835\\manifest.json",
+    "checked": 747,
+    "baseline_saves": 238,
+    "original_changed_or_missing": [],
+    "backup_changed_or_missing": [],
+    "current_save_count": 259
+  },
+  "source_hashes": [
+    {
+      "path": "Scripts/VerifyLookDash.ps1",
+      "sha256": "a79f47ab1c0216eaa3f1cb3edea403f174e380e1b4bd523eb75afc72be5a9b7e"
+    },
+    {
+      "path": "Scripts/VerifyNpcInteraction.ps1",
+      "sha256": "ae821819246feb951763d8dc7b4fd19e7fc0489081d328990e52f06ac5e24df1"
+    },
+    {
+      "path": "Source/Rogue10m/Character/Rogue10mCharacter.cpp",
+      "sha256": "500ca4c04cd35565d553bd526843e8c05491e7b708f5bc65c33981f0037c29a1"
+    },
+    {
+      "path": "Source/Rogue10m/Character/Rogue10mCharacter.h",
+      "sha256": "55244ae3a972c09001b9f44f45951cdb990bc36533c19fc1c6adc04d1e045317"
+    },
+    {
+      "path": "Source/Rogue10m/Components/Rogue10mSkillBindingComponent.cpp",
+      "sha256": "f1d1718bececf68fbf53fe2a7e2b892d5bce1b917e9f2bceccbc6d055794c437"
+    },
+    {
+      "path": "Source/Rogue10m/Tests/Rogue10mLookDashRuntimeTest.cpp",
+      "sha256": "250c2a788960d4d4e430148d2e4c1e8a8bad1b09a64ce143f62663f8cd4dbf69"
+    },
+    {
+      "path": "Source/Rogue10m/Tests/Rogue10mNpcInteractionRuntimeTest.cpp",
+      "sha256": "25c9e2a19851cd9e4860702e589ebe674bfd9bf3cc638a7722ab728a65570a85"
+    }
+  ],
+  "remaining_project_processes": [],
+  "physical_input_performed": false,
+  "manual_field_completion": false,
+  "remote_operations_performed": false,
+  "content_or_map_modified": false,
+  "save_schema_modified": false,
+  "pending_user_input_or_approval": null,
+  "next_work": [
+    "Read-only audit of full-body material/arm separation and existing first-person meshes",
+    "Design and validate owner first-person body/dodge presentation; rejected eye-offset-only candidate is retained",
+    "Actual near/wall/downward attack and physical-input playtest after camera candidate passes visual gate"
+  ],
+  "report": "D:\\Project\\Rogue10m\\Feature\\doc\\2026-10-29_look-dash-interaction.md",
+  "evidence_review": "D:\\Project\\Rogue10m\\DevLog\\20261029_LookDash_Review"
+}

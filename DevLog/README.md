@@ -1,6 +1,6 @@
 # 개발 기록 대표 사진
 
-사진 1,618장 중 최종 기능 대표와 최소 동작 기록 **35장**만 남겼다. 보조 사진 1,583장(2,037,221,100바이트)은 사용자 요청에 따라 삭제했다. 영상·로그·수치 결과·세이브는 정리 대상이 아니다.
+사진 1,618장 중 최종 기능 대표와 최소 동작 기록 **35장**만 남겼다. 보조 사진 1,583장(2,037,221,100바이트)은 사용자 요청에 따라 삭제했다. 사진 정리에서는 영상·로그·수치 결과·세이브를 제외했다.
 
 과거 문서의 촬영 수와 JSON의 파일명·해시는 당시 실행 기록이다. 현재 보관 여부는 [정리 manifest](../Feature/doc/evidence/devlog-photo-curation-20261117/photo-manifest.csv)를 따른다. 사진 선별은 기능 전체의 시각 품질이나 게임 검증 완료를 뜻하지 않는다.
 
@@ -29,3 +29,7 @@
 | 지팡이 사격 동작 | [대표](20261110_StaffPresentation/StaffNativeResumeC/07_StaffShot_action_9D1532A24B72E4515986C09E0FA2F0BA.png) | [장면1](20261110_StaffPresentation/StaffNativeResumeC/05_StaffShot_ready_9D1532A24B72E4515986C09E0FA2F0BA.png) · [장면2](20261110_StaffPresentation/StaffNativeResumeC/07_StaffShot_action_9D1532A24B72E4515986C09E0FA2F0BA.png) · [장면3](20261110_StaffPresentation/StaffNativeResumeC/08_StaffShot_recovery_9D1532A24B72E4515986C09E0FA2F0BA.png) |
 
 장면1/2/3은 각 실행의 준비·피해/동작·회복 순서다. 지팡이 action 사진은 접촉 판정 증거가 아니다. 최초 피해 사진 역시 실제 접촉점이나 모든 애니메이션의 완성도를 뜻하지 않는다.
+
+## 검증 기록 정리
+
+후속 정리로 중복·중간 JSON271개를 삭제하고 핵심55개를 남겼다. [핵심 기록 목록](Records.md)을 확인한다. 대표 사진35장은 그대로 보존했다.

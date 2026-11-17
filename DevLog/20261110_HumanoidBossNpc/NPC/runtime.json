@@ -1,0 +1,167 @@
+{
+  "started": 3223.062,
+  "phase": "return",
+  "checks": [
+    {
+      "name": "real_configured_Arin",
+      "passed": true
+    },
+    {
+      "name": "new_idle_active",
+      "passed": true
+    },
+    {
+      "name": "real_begin_dialogue",
+      "passed": true
+    },
+    {
+      "name": "dialogue_open",
+      "passed": true
+    },
+    {
+      "name": "talk_selected",
+      "passed": true
+    },
+    {
+      "name": "dialogue_closed",
+      "passed": true
+    },
+    {
+      "name": "returned_new_idle",
+      "passed": true
+    },
+    {
+      "name": "planted_root",
+      "passed": true
+    },
+    {
+      "name": "planted_foot_l",
+      "passed": true
+    },
+    {
+      "name": "planted_foot_r",
+      "passed": true
+    }
+  ],
+  "samples": [
+    {
+      "label": "idle_before_dialogue",
+      "animation": "/Game/Rogue10m/Characters/Arin/Standing20261110/A_Arin_BreathingIdle.A_Arin_BreathingIdle",
+      "state": "<Rogue10mTutorialAnimationState.IDLE: 0>",
+      "position": 3.9056684970855713,
+      "bones": {
+        "root": [
+          440.0,
+          -1610.0,
+          2.0
+        ],
+        "head": [
+          440.4332330788883,
+          -1610.9855185448705,
+          146.48296877874262
+        ],
+        "hand_l": [
+          412.60118563187115,
+          -1617.8470833407712,
+          86.18131037263684
+        ],
+        "hand_r": [
+          467.6270721716442,
+          -1619.2037372770912,
+          86.78503280748235
+        ],
+        "foot_l": [
+          422.9997549171009,
+          -1606.0000115508353,
+          12.500020549715302
+        ],
+        "foot_r": [
+          457.0002450828991,
+          -1606.0000115508353,
+          12.500020549715302
+        ]
+      }
+    },
+    {
+      "label": "talk",
+      "animation": "/Game/Rogue10m/Characters/Arin/RefinedV3/Animations/A_Arin_Talk.A_Arin_Talk",
+      "state": "<Rogue10mTutorialAnimationState.TALK: 2>",
+      "position": 1.3333394527435303,
+      "bones": {
+        "root": [
+          440.0,
+          -1610.0,
+          2.0
+        ],
+        "head": [
+          440.00272266295406,
+          -1609.745933507521,
+          146.49842421144325
+        ],
+        "hand_l": [
+          405.14944640528006,
+          -1613.6914198243971,
+          87.3466419216243
+        ],
+        "hand_r": [
+          472.89431009434844,
+          -1610.843926376406,
+          86.40784317199088
+        ],
+        "foot_l": [
+          422.9997549171009,
+          -1606.0000115508353,
+          12.500020549715302
+        ],
+        "foot_r": [
+          457.0002450828991,
+          -1606.0000115508353,
+          12.500020549715302
+        ]
+      }
+    },
+    {
+      "label": "idle_after_dialogue",
+      "animation": "/Game/Rogue10m/Characters/Arin/Standing20261110/A_Arin_BreathingIdle.A_Arin_BreathingIdle",
+      "state": "<Rogue10mTutorialAnimationState.IDLE: 0>",
+      "position": 2.333334445953369,
+      "bones": {
+        "root": [
+          440.0,
+          -1610.0,
+          2.0
+        ],
+        "head": [
+          440.26289360875126,
+          -1610.9128531090446,
+          146.48685997507664
+        ],
+        "hand_l": [
+          412.67411370134374,
+          -1618.2847977002402,
+          86.30802112681089
+        ],
+        "hand_r": [
+          467.1976124875841,
+          -1619.1927901577783,
+          87.0455505315814
+        ],
+        "foot_l": [
+          422.9997549171009,
+          -1606.0000115508353,
+          12.500020549715302
+        ],
+        "foot_r": [
+          457.0002450828991,
+          -1606.0000115508353,
+          12.500020549715302
+        ]
+      }
+    }
+  ],
+  "physical_input": false,
+  "save_mutations_requested": false,
+  "at": 3229.468,
+  "finished": true,
+  "status": "passed"
+}

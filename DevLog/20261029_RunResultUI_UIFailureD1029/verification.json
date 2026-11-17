@@ -1,0 +1,37 @@
+{
+  "date_utc": "2026-10-29T11:20:32.149595+00:00",
+  "project": "D:\\Project\\Rogue10m",
+  "branch": "Sprint#9-8-result-lobby-ui",
+  "commit": "4cfa8f7e13894c9d3e695e50365bebbac75e249e",
+  "assertions_passed": 91,
+  "manual_play": false,
+  "save_format": 5,
+  "media": [
+    {
+      "path": "DevLog/20261029_RunResultUI_UIFailureD1029/01_initial_result.png",
+      "sha256": "c963efd65847e194ef276ab12783a6d9550e746227f6f35ee090d81ab7b4d1d2",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog/20261029_RunResultUI_UIFailureD1029/02_repeat_result.png",
+      "sha256": "4a5833bd5024f3463294f90225e4fb0a0af20784ad28c61e121339e0d93ab4ae",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog/20261029_RunResultUI_UIFailureD1029/03_saved_result.png",
+      "sha256": "10796ce323c4262f8a01cc1892a7a9eeb2a267ccfbba81652ebf07f0d824d190",
+      "dimensions": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "reproduction": "Scripts/VerifyRunResultUI.ps1 -Label <fresh> -Mode <mode> -Rendered",
+  "note": "Actual UE viewport; programmatic console/API and QA fixtures, not a manual full run."
+}

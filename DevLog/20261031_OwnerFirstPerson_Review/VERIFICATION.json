@@ -1,0 +1,51 @@
+{
+  "utc": "2026-10-31T16:45:27.426709+00:00",
+  "baseline": {
+    "manifest": "C:\\Users\\PC\\Documents\\Codex\\2026-10-27\\task\\owner-view-resume-preservation-20261031-162456\\manifest.json",
+    "saves": 259,
+    "files": 925,
+    "prior_files_unchanged": 905
+  },
+  "baseline_total_checked": 925,
+  "allowed_changed_wip": [
+    "Scripts/Editor/CreateOwnerArms.py",
+    "Scripts/VerifyOwnerView.ps1",
+    "Source/Rogue10m/Editor/Rogue10mOwnerArmsAuthoring.cpp",
+    "Source/Rogue10m/Tests/Rogue10mOwnerViewRuntimeTest.cpp"
+  ],
+  "unexpected_changed": [],
+  "damaged_backup": [],
+  "preexisting_saves_preserved": 259,
+  "current_saves": 270,
+  "original_packages": 25,
+  "existing_arms_preserved": 5,
+  "created_missing_arms": 1,
+  "regression": {
+    "AttackResources": 4,
+    "WeaponCooldown": 5,
+    "WeaponSwitch": 8,
+    "ProgressionRequirements": 4,
+    "HybridSkillTree": 3,
+    "RunCurrencyBaseline": 6
+  },
+  "render_runs": {
+    "Weighted": {
+      "label": "OVWeightA1031",
+      "checks": 4552,
+      "failures": 0
+    },
+    "Original": {
+      "label": "OVOrigA1031",
+      "checks": 4664,
+      "failures": 0
+    }
+  },
+  "npc_checks": 39,
+  "menu_normal_checks": 89,
+  "menu_failure_checks": 97,
+  "default_owner_view": false,
+  "visual_gate": "PARTIAL_FAIL",
+  "manual_input": "not performed",
+  "full_field_run": "not performed",
+  "remote_changed": false
+}

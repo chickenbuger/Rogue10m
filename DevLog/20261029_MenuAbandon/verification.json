@@ -1,0 +1,143 @@
+{
+  "at_utc": "2026-10-29T12:09:53.135740+00:00",
+  "project": "D:\\Project\\Rogue10m",
+  "branch": "Sprint#9-9-abandon-menu",
+  "baseline_sha": "4cfa8f7e13894c9d3e695e50365bebbac75e249e",
+  "build": {
+    "result": "PASS",
+    "log": "abandon-menu-build-f-20261029.log",
+    "seconds": 44.41
+  },
+  "regressions": [
+    {
+      "suite": "RunCurrencyBaseline",
+      "passed": 6
+    },
+    {
+      "suite": "AttackResources",
+      "passed": 4
+    },
+    {
+      "suite": "HybridSkillTree",
+      "passed": 3
+    },
+    {
+      "suite": "ProgressionRequirements",
+      "passed": 4
+    },
+    {
+      "suite": "WeaponCooldown",
+      "passed": 5
+    },
+    {
+      "suite": "WeaponSwitch",
+      "passed": 8
+    }
+  ],
+  "menu_scenarios": {
+    "MenuPolishN1029": {
+      "mode": "Normal",
+      "checks": 95,
+      "failures": 0,
+      "rendered": true
+    },
+    "MenuLayoutF1029": {
+      "mode": "SaveFailure",
+      "checks": 103,
+      "failures": 0,
+      "rendered": true
+    }
+  },
+  "preservation": {
+    "files": 438,
+    "saves": 190,
+    "existing_evidence": 248,
+    "mismatches": []
+  },
+  "save_count": 204,
+  "photos": [
+    {
+      "path": "DevLog/20261029_MenuAbandon_MenuPolishN1029/01_settings_menu.png",
+      "sha256": "ddfe881de9d802f4e0dc0b6ec9e1fcea109fa7c7f94af588135a01d5630ae596",
+      "bytes": 1615851,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog/20261029_MenuAbandon_MenuPolishN1029/02_confirmation_policy.png",
+      "sha256": "09c5b51af2921088d16645cb5fe222d3ced3e7ffe9299c0efe6d474dc22b9af6",
+      "bytes": 837692,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog/20261029_MenuAbandon_MenuPolishN1029/03_cancelled_settings.png",
+      "sha256": "ed02cace2ee62e411c0f97830e856f50e52fbbd26c27e0b2d730f936ceb79e55",
+      "bytes": 1629380,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog/20261029_MenuAbandon_MenuPolishN1029/04_abandon_result.png",
+      "sha256": "673a37f86fcff2e9508548925ac87157e7c31e82a86439aeabfade6e32abc11f",
+      "bytes": 783576,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog/20261029_MenuAbandon_MenuPolishN1029/05_retry_boundary.png",
+      "sha256": "fae0b7e554dca375ecb47650239243a9c501f56b9adedfc392adc8d1673632b6",
+      "bytes": 789908,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog/20261029_MenuAbandon_MenuPolishN1029/06_returned_hub.png",
+      "sha256": "b6d02d1cb52d95242a13473cc42cecf1bcf36f869dc1537cc47a1b964ba01caf",
+      "bytes": 1408007,
+      "size": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "rendering": {
+    "status": "PASS",
+    "renderer": "D3D11 RTX3070",
+    "Slate_escape": "PASS",
+    "physical_mouse_keyboard": "not_performed",
+    "manual_full_run": "not_performed",
+    "forced_exit": "not_performed"
+  },
+  "connection": "Recovered with parent confirmation; prior PID17972 absent and incomplete result preserved.",
+  "local_commit": "a426d95f8f0fe6b2da3aa849680ff2fc27e9f4a5",
+  "remote_mutations": false,
+  "approval_pending": false,
+  "denied_actions": [],
+  "sealed_at_utc": "2026-10-29T12:12:46.476755+00:00",
+  "tracked_worktree_clean": true,
+  "active_ue_processes": [],
+  "save_failure_photos": [
+    {
+      "path": "DevLog/20261029_MenuAbandon_MenuLayoutF1029/04_abandon_result.png",
+      "sha256": "76b63303056e43c52e91cf46b64470c9c0836bdf9e13a38b17de7fbd735aa14f",
+      "bytes": 787087
+    },
+    {
+      "path": "DevLog/20261029_MenuAbandon_MenuLayoutF1029/05_retry_boundary.png",
+      "sha256": "c539e598d1948552c557e339f5f80eb20c98646b624d29a87179097c8e81e203",
+      "bytes": 786810
+    }
+  ],
+  "remaining_blockers": []
+}

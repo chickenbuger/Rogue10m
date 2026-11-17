@@ -3348,3 +3348,12 @@ G2 동시작업 경계: stage 후 자연경계 소유 작업이 디스크709개�
 - 보존: 원본 지형층·paint,45지형/충돌, 기존 소유7자산, 공유 재질5개, 비선택 저장458개. 백업1468+7개 예상 집합 오류와 콜백 재진입 실패는 수정 후 별도 재검증하고 원문을 유지했다.
 - 상태: 요청한 지형·마을 시각 보완의 로컬 저장·검증 완료, 작업 브랜치 게시 대상. 맵 제작 중 main 통합 보류. 기존 벤더Humanoid 참조 오류, 실제 동굴·전체 게임플레이·최종 미술·패키징 인수는 별도다.
 - 관련: Feature/architect/2026-11-17_natural-world-boundaries.md, Feature/doc/2026-11-17_natural-world-boundaries.md, Docs/References/WorldMap/landscape-natural-boundary20261117.json, DevLog/20261118.txt.
+
+### Sprint#9-32 — DevLog 핵심 JSON 정리
+
+- 목표: 불필요한 개발 검증 기록을 선별해 줄인다.
+- 변경: JSON326개→55개, 중간·중복271개와 약8.02MB삭제. 핵심목록·보관규칙·문서 보관상태를 정리했다.
+- 보존: 최종 판정·최근 회귀·주요 실패·고유출처, 로컬 전용 QA7개. JSON원본값과 대표사진35장·비JSON파일을 유지한다.
+- 검증: 내부경로/파일종류/SHA 사전확인, 보관해시·JSON파싱·삭제부재·사진·비JSON존재·링크검사.
+- 상태: 기록정리완료. 작업브랜치만게시하고 main병합은보류한다.
+- 관련: DevLog/Records.md, Feature/doc/2026-11-18_devlog-record-curation.md.
