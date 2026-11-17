@@ -25,6 +25,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Editor|Natural Boundary", meta=(DevelopmentOnly))
 	static FString ApplyHeightPlan(const FString& HeightPlanJson, bool bConfirm = false);
 
+	/** Revises only the existing named additive layer; validates the full grid against the original raw layer first. */
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Editor|Natural Boundary", meta=(DevelopmentOnly))
+	static FString ReviseHeightPlan(const FString& HeightRevisionJson, bool bConfirm = false);
+
 	/** Saves only the supplied, loaded candidate/owned packages after exact dirty-set and height-hash guards. */
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Editor|Natural Boundary", meta=(DevelopmentOnly))
 	static FString SaveCandidatePackages(const FString& SavePlanJson);

@@ -1,0 +1,6 @@
+{
+  "phase": "original_settle",
+  "traceback": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/AuthorNaturalWorld20261117.py\", line 220, in tick\n    if state['phase']=='original_settle' and state['ticks']>=30:native_apply();return\n                                                                ^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/AuthorNaturalWorld20261117.py\", line 79, in native_apply\n    before=inspect(True);write('native-before',before)\n           ^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/AuthorNaturalWorld20261117.py\", line 65, in inspect\n    require(d.get('success') and d.get('dirty_package_names_unchanged'),'Native inspection failed: '+str(d.get('error')))\n  File \"D:/Project/Rogue10m/Scripts/Editor/AuthorNaturalWorld20261117.py\", line 30, in require\n    if not value: raise RuntimeError(message)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Native inspection failed: LandscapeInfo component/collision mapping mismatch.\n",
+  "dirty": [],
+  "partial_content": null
+}

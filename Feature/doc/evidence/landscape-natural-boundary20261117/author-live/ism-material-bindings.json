@@ -1,0 +1,52 @@
+{
+  "read_only": true,
+  "methods": {
+    "EditorAssetLibrary": {
+      "duplicate_asset": true,
+      "does_asset_exist": true
+    },
+    "EditorLoadingAndSavingUtils": {
+      "reload_packages": true,
+      "get_dirty_map_packages": true,
+      "get_dirty_content_packages": true
+    },
+    "MaterialEditingLibrary": {
+      "get_material_expressions": true,
+      "get_material_expression_input_names": true,
+      "get_inputs_for_material_expression": true,
+      "get_input_node_output_name_for_material_expression": true,
+      "get_material_property_input_node": true,
+      "get_material_property_input_node_output_name": true,
+      "recompile_material": true
+    },
+    "InstancedStaticMeshComponent": {
+      "set_material": true,
+      "get_material": true,
+      "get_num_materials": true,
+      "get_instance_count": true
+    }
+  },
+  "source_properties": [
+    {
+      "source_package": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_DarkTimber",
+      "used_with_instanced_static_meshes": true
+    },
+    {
+      "source_package": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_WarmStone",
+      "used_with_instanced_static_meshes": true
+    },
+    {
+      "source_package": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Teal",
+      "used_with_instanced_static_meshes": true
+    },
+    {
+      "source_package": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Ochre",
+      "used_with_instanced_static_meshes": true
+    },
+    {
+      "source_package": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Blue",
+      "used_with_instanced_static_meshes": true
+    }
+  ],
+  "dirty_set_unchanged": true
+}

@@ -1,0 +1,197 @@
+{
+  "schema": "Rogue10m.NaturalBossThresholdPlan.20261118.v1",
+  "map": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A",
+  "status": "immutable_visual_refinement_plan_not_authored",
+  "base_actor_count": 1400,
+  "required_preflight_stage": "height_only",
+  "actor_label": "NW18_BossThreshold",
+  "folder": "NaturalWorld20261117/BossThreshold",
+  "tags": [
+    "Rogue10m.WorldLayout20261112",
+    "Rogue10m.NaturalBoundary20261117",
+    "Rogue10m.NaturalWorldSetDressing20261117",
+    "Rogue10m.NaturalWorldSetDressing20261117.BossThreshold"
+  ],
+  "spatially_loaded": false,
+  "ground_z_cm": 9600,
+  "entrance_xy_cm": [
+    15000,
+    62550
+  ],
+  "clear_width_cm": 1400,
+  "lintel_bottom_z_cm": 10600,
+  "instances": [
+    {
+      "label": "BossThreshold_Post_W",
+      "mesh": "/Engine/BasicShapes/Cube",
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_WarmStone",
+      "location_cm": [
+        14240,
+        62550,
+        10100
+      ],
+      "dimensions_cm": [
+        120,
+        300,
+        1000
+      ],
+      "rotation_pitch_yaw_roll": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale_for_verified_100cm_mesh": [
+        1.2,
+        3.0,
+        10.0
+      ],
+      "collision_role": "visual_only",
+      "hidden_in_game": false
+    },
+    {
+      "label": "BossThreshold_Post_E",
+      "mesh": "/Engine/BasicShapes/Cube",
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_WarmStone",
+      "location_cm": [
+        15760,
+        62550,
+        10100
+      ],
+      "dimensions_cm": [
+        120,
+        300,
+        1000
+      ],
+      "rotation_pitch_yaw_roll": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale_for_verified_100cm_mesh": [
+        1.2,
+        3.0,
+        10.0
+      ],
+      "collision_role": "visual_only",
+      "hidden_in_game": false
+    },
+    {
+      "label": "BossThreshold_Lintel",
+      "mesh": "/Engine/BasicShapes/Cube",
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_WarmStone",
+      "location_cm": [
+        15000,
+        62550,
+        10680
+      ],
+      "dimensions_cm": [
+        1640,
+        300,
+        160
+      ],
+      "rotation_pitch_yaw_roll": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale_for_verified_100cm_mesh": [
+        16.4,
+        3.0,
+        1.6
+      ],
+      "collision_role": "visual_only",
+      "hidden_in_game": false
+    },
+    {
+      "label": "BossThreshold_Banner_W",
+      "mesh": "/Engine/BasicShapes/Cube",
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Blue",
+      "location_cm": [
+        14240,
+        62394,
+        10350
+      ],
+      "dimensions_cm": [
+        100,
+        10,
+        380
+      ],
+      "rotation_pitch_yaw_roll": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale_for_verified_100cm_mesh": [
+        1.0,
+        0.1,
+        3.8
+      ],
+      "collision_role": "visual_only",
+      "hidden_in_game": false
+    },
+    {
+      "label": "BossThreshold_Banner_E",
+      "mesh": "/Engine/BasicShapes/Cube",
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Blue",
+      "location_cm": [
+        15760,
+        62394,
+        10350
+      ],
+      "dimensions_cm": [
+        100,
+        10,
+        380
+      ],
+      "rotation_pitch_yaw_roll": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale_for_verified_100cm_mesh": [
+        1.0,
+        0.1,
+        3.8
+      ],
+      "collision_role": "visual_only",
+      "hidden_in_game": false
+    }
+  ],
+  "instance_count": 5,
+  "material_disk_sha256": {
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Blue": "6fc20831af16c13521265ed7acad068e11ad9bf42409d3b32324d84454432557",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_WarmStone": "f678eaf12dfee042c520f8348a8b8634f55015bbda407ccdabededf36efe83ba"
+  },
+  "boss_ground": {
+    "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.StaticMeshActor_UAID_244BFE8DA9DF091403_2009222874",
+    "actor_label": "WL26_PersistentBossGround",
+    "expected_location_cm": [
+      15000.0,
+      68000.0,
+      9551.0
+    ],
+    "expected_rotation_pitch_yaw_roll": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "expected_scale": [
+      110.0,
+      110.0,
+      1.0
+    ],
+    "mesh": "/Engine/BasicShapes/Cube.Cube",
+    "materials": [
+      "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial"
+    ],
+    "collision_profile": "BlockAll",
+    "all_properties_preserved": true
+  },
+  "preservation_contract": "All1400 existing actors and every observed component/ISM transform, material, collision and render setting remain identical. Add only one actor with five visual-only primitives. Keep the14m entrance open.",
+  "new_assets": [],
+  "landscape_mutation": false,
+  "packages_saved": [],
+  "revision": "B",
+  "supersedes": "boss-threshold-plan20261118.json",
+  "scope_change": "Existing boss support is already hidden in game; preserve all its render/collision/transform/material flags. Only new visual threshold actor is authorized."
+}

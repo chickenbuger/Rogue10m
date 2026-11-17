@@ -1,8 +1,102 @@
 {
   "schemaVersion": 1,
   "documentId": "rogue10m-landscape-natural-boundary-20261117",
-  "status": "numeric_checkpoint_saved_visual_cold_and_full_acceptance_pending",
+  "updatedKstDate": "2026-11-18",
+  "status": "landscape_blockout_checkpoint_verified_full_gameplay_and_main_promotion_pending",
+  "verificationAppliesTo": "saved_20261118_rounded_ridge_boss_threshold_three_village_earth_decals",
+  "refinement20261118": {
+    "imageTransmissionApproved": true,
+    "observedRoadEdgeAndHunterFenceReadable": true,
+    "hunterEarthFloorVisualReview": {
+      "passed": true,
+      "observed": [
+        "brown_inside_fence",
+        "narrow_green_fringe",
+        "building_colors_preserved",
+        "road_connections"
+      ],
+      "image": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/village-earth-hunter.png",
+      "scope": "one_of_three_final_villages_all_three_now_reviewed"
+    },
+    "roundedHeightPlan": "Feature/doc/evidence/landscape-natural-boundary20261117/target-height-plan-rounded-ridge.json",
+    "roundedProfileRevision": "20261118-rounded-sine-profile",
+    "heightOnlyCheckpoint": {
+      "structuralPassed": true,
+      "structuralChecks": 49,
+      "capsuleCasesPassed": 544,
+      "nativeSaveCalled": true,
+      "nativeSaveSuccess": true,
+      "originalLayerPreserved": true,
+      "changedHeightSamples": 30426,
+      "gridSamples": 179488,
+      "targetCompositeBlake3": "aa46fdffb12bf6604e9d416b9185d6cc801801e01cd47b3d7be0209f9f1858cc",
+      "targetUint16LESha256": "a7f20b232a14f887ba96387c828ed717c0b02f3065bb6e39ba1a3b60a2d37154",
+      "gridZRangeCm": [
+        9600,
+        12894
+      ],
+      "polygon551SampleZRangeCm": [
+        11169.488,
+        12788.672
+      ],
+      "road2076SampleZRangeCm": [
+        9600,
+        9600
+      ],
+      "report": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/validation-height_only.json",
+      "saveReport": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/height-save-result.json"
+    },
+    "bossPlan": "Feature/doc/evidence/landscape-natural-boundary20261117/boss-threshold-plan20261118B.json",
+    "bossOldActorFlagsPreserved": true,
+    "villageEarthPlan": "Feature/doc/evidence/landscape-natural-boundary20261117/village-earth-plan20261118.json",
+    "contentAuthoring": {
+      "bossHelperSuccess": true,
+      "bossAddedActors": 1,
+      "bossAddedInstances": 5,
+      "bossOld1400SnapshotsEqual": true,
+      "villageEarthHelperSuccess": true,
+      "villageEarthAddedActors": 3,
+      "villageEarthMaterialNodes": 16,
+      "floorOld1401SnapshotsEqual": true,
+      "observedFinalActors": 1404,
+      "helpersSavedAssets": false,
+      "completeStructuralQAPassed": true,
+      "completeStructuralChecks": 59,
+      "finalSaveAndColdPending": false,
+      "completeStructuralReport": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/validation-complete.json",
+      "bossReport": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/boss-threshold.json",
+      "villageEarthReport": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/village-earth.json"
+    },
+    "newSaveAndColdVerified": true,
+    "AAAVisualQualityCertified": false,
+    "finalFileScopeVerified": true,
+    "finalActors": 1404,
+    "finalISMInstances": 713,
+    "finalOwnedAssets": 8,
+    "finalSave": {
+      "passed": true,
+      "requestedPackages": 6,
+      "dirtyAfter": [],
+      "report": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/final-save-result.json"
+    },
+    "visualImages": {
+      "overview": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/final-overview.png",
+      "hunter": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/village-earth-hunter.png",
+      "market": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/village-earth-market.png",
+      "archive": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/village-earth-archive.png",
+      "roadEdge": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/road-edge.png"
+    },
+    "initialFlatRidgeCrestRequiredRefinement": true,
+    "roundedRidgeVisualReviewPassedAsBlockout": true
+  },
   "runtimeImplementationComplete": false,
+  "undergroundScope": {
+    "plannedReferenceNodes": [
+      "Q",
+      "Z"
+    ],
+    "physicalCaveImplemented": false
+  },
   "candidateMap": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A",
   "architect": "Feature/architect/2026-11-17_natural-world-boundaries.md",
   "implementationResult": "Feature/doc/2026-11-17_natural-world-boundaries.md",
@@ -22,64 +116,250 @@
   "terrain": {
     "landscapeComponents": 45,
     "collisionComponents": 45,
-    "componentLattice": [9, 5],
-    "extentM": [1012.5, 562.5],
-    "worldXYBoundsCm": [-33750, 67500, 22500, 78750],
-    "gridShape": [568, 316],
+    "componentLattice": [
+      9,
+      5
+    ],
+    "extentM": [
+      1012.5,
+      562.5
+    ],
+    "worldXYBoundsCm": [
+      -33750,
+      67500,
+      22500,
+      78750
+    ],
+    "gridShape": [
+      568,
+      316
+    ],
     "uniqueHeightSamples": 179488,
-    "vertexBounds": [315, 630, 882, 945],
+    "vertexBounds": [
+      315,
+      630,
+      882,
+      945
+    ],
     "landscapeGuid": "147B73D247543E06FDA1A7AF9D467458",
     "originalLayerGuid": "9C4488BD4196BCC81051B5A001047577",
     "newAdditiveLayer": "NaturalBoundary20261117",
     "editLayerCount": 2,
     "playablePlaneZCm": 9600,
-    "targetGridZRangeCm": [9600, 12900],
-    "targetCompositeBlake3": "1fa4f2c33df67f184bf962b9a792cae5b46c7326ecb8604789d85baccba7d143",
-    "targetUint16LESha256": "90003d3cea808922f12e56a16eda8439662c8c7e53fad2833996ec48d24143ed",
+    "targetGridZRangeCm": [
+      9600,
+      12894
+    ],
+    "targetCompositeBlake3": "aa46fdffb12bf6604e9d416b9185d6cc801801e01cd47b3d7be0209f9f1858cc",
+    "targetUint16LESha256": "a7f20b232a14f887ba96387c828ed717c0b02f3065bb6e39ba1a3b60a2d37154",
     "originalLayerBlake3": "7b30bb0271250f6f4b2d4164c72940c83a3e49b13078ef91e9316992816a0955",
     "originalRawHeightPaintAndBAPreserved": true,
     "componentsCreatedOrDeleted": 0,
-    "targetHeightPlan": "Feature/doc/evidence/landscape-natural-boundary20261117/target-height-plan.json",
-    "compositeHeightUnchangedClaim": false
+    "targetHeightPlan": "Feature/doc/evidence/landscape-natural-boundary20261117/target-height-plan-rounded-ridge.json",
+    "compositeHeightUnchangedClaim": false,
+    "profileRevision": "20261118-rounded-sine-profile",
+    "originalLayerPreservedAfterRevision": true
   },
   "outerBoundary": {
     "method": "closed_irregular_ridge_with_hidden_Pawn_only_backup",
-    "worldAnchorXYCm": [15000, 32550],
-    "closedPolygonLocalM": [[-455, -65], [-455, 270], [-430, 350], [-250, 428], [-70, 438], [75, 438], [260, 425], [455, 380], [485, 320], [485, 30], [370, -65], [120, -75], [-200, -75]],
+    "worldAnchorXYCm": [
+      15000,
+      32550
+    ],
+    "closedPolygonLocalM": [
+      [
+        -455,
+        -65
+      ],
+      [
+        -455,
+        270
+      ],
+      [
+        -430,
+        350
+      ],
+      [
+        -250,
+        428
+      ],
+      [
+        -70,
+        438
+      ],
+      [
+        75,
+        438
+      ],
+      [
+        260,
+        425
+      ],
+      [
+        455,
+        380
+      ],
+      [
+        485,
+        320
+      ],
+      [
+        485,
+        30
+      ],
+      [
+        370,
+        -65
+      ],
+      [
+        120,
+        -75
+      ],
+      [
+        -200,
+        -75
+      ]
+    ],
     "hiddenBackupSegments": 13,
-    "plannedRidgeIntentAbovePlaneCm": [2400, 3300],
+    "plannedRidgeIntentAbovePlaneCm": [
+      2400,
+      3300
+    ],
     "closedPolygonGridSamples": 551,
-    "closedPolygonSampleZRangeCm": [11498.576, 12893.184],
+    "closedPolygonSampleZRangeCm": [
+      11169.488,
+      12788.672
+    ],
     "ridgeIntentDeviationRecorded": true,
     "hiddenBackupBottomZCm": 9000,
     "hiddenBackupTopZCm": 15000,
-    "backupCollision": {"Pawn": "Block", "otherChannelsIntent": "Ignore"},
+    "backupCollision": {
+      "Pawn": "Block",
+      "otherChannelsIntent": "Ignore"
+    },
     "waterRiverOrCaveSystemImplemented": false,
-    "actualPlayerBoundaryJumpCertified": false
+    "profile": "rounded_sine_squared_no_flat_crest",
+    "polygon551SampleZRangeCm": [
+      11169.488,
+      12788.672
+    ],
+    "riseAbovePlaneM": [
+      15.69488,
+      31.88672
+    ],
+    "initialPlanRiseM": [
+      24,
+      33
+    ],
+    "initialPlanMinimumRiseDeviationPreserved": true,
+    "visualReviewPassed": true,
+    "visualReviewScope": "readable_blockout_boundary_not_AAA_final_art",
+    "allDirectionsActualBoundaryJumpCertified": false,
+    "representativeSouthTwoJumpApproachPassed": true
   },
   "roads": {
     "projectors": 29,
     "widthCm": 800,
     "minimumBrownCoreWidthCm": 600,
-    "edgeTransitionWidthEachSideCm": [70, 100],
+    "edgeTransitionWidthEachSideCm": [
+      70,
+      100
+    ],
     "lengthEndFadeAdded": false,
     "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather",
     "originalHiddenNoCollisionPieces": 663,
-    "visualReviewPassed": false
+    "visualReviewPassed": true,
+    "visualImage": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/road-edge.png",
+    "materialByteUnchangedSinceRoadEdgeCapture": true
   },
   "dressing": {
-    "groupActors": 10,
-    "ISMComponents": 22,
-    "instances": 708,
-    "primitiveMeshes": ["/Engine/BasicShapes/Cube", "/Engine/BasicShapes/Cylinder"],
+    "groupActors": 11,
+    "ISMComponents": 24,
+    "instances": 713,
+    "primitiveMeshes": [
+      "/Engine/BasicShapes/Cube",
+      "/Engine/BasicShapes/Cylinder"
+    ],
     "newFabImports": 0,
     "settlements": [
-      {"node": "H", "radiusCm": 3800, "gates": 4, "gateClearWidthCm": 1400, "identity": "timber_and_teal"},
-      {"node": "M", "radiusCm": 3800, "gates": 4, "gateClearWidthCm": 1400, "identity": "low_timber_and_ochre"},
-      {"node": "T", "radiusCm": 3700, "gates": 5, "gateClearWidthCm": 1400, "identity": "stone_and_blue"}
+      {
+        "node": "H",
+        "radiusCm": 3800,
+        "gates": 4,
+        "gateClearWidthCm": 1400,
+        "identity": "timber_and_teal"
+      },
+      {
+        "node": "M",
+        "radiusCm": 3800,
+        "gates": 4,
+        "gateClearWidthCm": 1400,
+        "identity": "low_timber_and_ochre"
+      },
+      {
+        "node": "T",
+        "radiusCm": 3700,
+        "gates": 5,
+        "gateClearWidthCm": 1400,
+        "identity": "stone_and_blue"
+      }
     ],
-    "optionalPropLocations": ["W_AbandonedCamp", "A_OverturnedTransport", "R_RuinFragments"],
-    "newPropRewardsPickupsOrPuzzles": false
+    "optionalPropLocations": [
+      "W_AbandonedCamp",
+      "A_OverturnedTransport",
+      "R_RuinFragments"
+    ],
+    "newPropRewardsPickupsOrPuzzles": false,
+    "totalNewActorsIncludingDecals": 14,
+    "villageEarthDecalActors": 3,
+    "bossThreshold": {
+      "actorLabel": "NW18_BossThreshold",
+      "visualOnlyInstances": 5,
+      "ISMComponents": 2,
+      "clearWidthCm": 1400,
+      "lintelBottomZCm": 10600,
+      "existingBossAllFlagsCollisionTransformsPreserved": true,
+      "report": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/boss-threshold.json"
+    },
+    "villageEarth": {
+      "centersCm": [
+        [
+          1000,
+          42550,
+          9600
+        ],
+        [
+          29000,
+          42550,
+          9600
+        ],
+        [
+          22000,
+          55550,
+          9600
+        ]
+      ],
+      "radiiCm": [
+        3750,
+        3750,
+        3650
+      ],
+      "projectionHalfDepthCm": 16,
+      "gapToFenceCm": 50,
+      "material": "M_VillageEarth",
+      "materialNodeCount": 16,
+      "tintRGBA": [
+        0.7,
+        0.54,
+        0.34,
+        1
+      ],
+      "opacity": 0.97,
+      "sortOrder": 1,
+      "noGameplayCollision": true,
+      "terrainPaintUnchanged": true,
+      "report": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/village-earth.json"
+    }
   },
   "existingActorChanges": {
     "originalActorPathsPreserved": 1390,
@@ -89,7 +369,10 @@
     "horizontalException": {
       "group": "WorldLayout20261112/Architecture/WL26_T_OpenLibrary",
       "actors": 8,
-      "offsetXYCm": [-200, 0],
+      "offsetXYCm": [
+        -200,
+        0
+      ],
       "relativeLayoutAndZPreserved": true,
       "reason": "Six unchanged T/E17 capsule approach cases initially overlapped the existing Post11; r34 penetration was 8.2cm.",
       "originalPlan": "Feature/doc/evidence/landscape-natural-boundary20261117/author-plan.json",
@@ -98,38 +381,323 @@
   },
   "ownedAssets": {
     "root": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117",
-    "assetNames": ["M_RoadFeather", "DA_IntroSupply_Flat", "M_Natural_DarkTimber", "M_Natural_WarmStone", "M_Natural_Banner_Teal", "M_Natural_Banner_Ochre", "M_Natural_Banner_Blue"],
+    "assetNames": [
+      "M_RoadFeather",
+      "DA_IntroSupply_Flat",
+      "M_Natural_DarkTimber",
+      "M_Natural_WarmStone",
+      "M_Natural_Banner_Teal",
+      "M_Natural_Banner_Ochre",
+      "M_Natural_Banner_Blue",
+      "M_VillageEarth"
+    ],
     "ISMUsageDerivatives": 5,
     "ISMComponentsRetargeted": 22,
     "original5MaterialFilesGraphsAndCleanStatePreserved": true,
-    "questOnlyChanges": ["candidate_director_definition_binding", "clone_layout_origin_Z_to_9600cm"],
-    "questSupportedWorldRowsRotationAndOptionalStoryPreserved": true
+    "questOnlyChanges": [
+      "candidate_director_definition_binding",
+      "clone_layout_origin_Z_to_9600cm"
+    ],
+    "questSupportedWorldRowsRotationAndOptionalStoryPreserved": true,
+    "totalAssets": 8,
+    "totalCurrentISMComponents": 24,
+    "preexistingSevenBytePreserved": true,
+    "newAssetInRefinement": "M_VillageEarth"
   },
   "verification": {
-    "structural": {"passed": true, "checks": 49, "report": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/validation-owned-materials.json"},
-    "staticCapsules": {"passed": true, "cases": 544, "radiiCm": [34, 42], "halfHeightCm": 96, "referenceJumpPeaksCm": [90, 180], "gravityReferenceCmS2": 980, "actualJumpExecuted": false, "physicalInput": false, "report": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/capsule-validation-gate-reflow.json"},
-    "centralWalks": {"completed": 3, "required": 3, "passed": true, "passedTimesSeconds": [48.53452419862151, 48.54465759918094, 48.539485801011324], "wallSeconds": [48.531, 48.547, 48.531], "contentSavedBeforeEachWalk": [false, false, true], "input": "AddMovementInput_in_rendered_PIE", "physicalInput": false, "normalHubPortalVerified": false},
-    "runtimeKinematics": {"capsuleRadiusCm": 34, "capsuleHalfHeightCm": 96, "jumpZVelocityCmS": 420, "jumpMaxCount": 2, "jumpMaxHoldTimeSeconds": 0, "worldGravityZCmS2": -980, "actualJumpExecuted": false, "report": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/kinematics-3.json"},
-    "optionalRouteWalk": {"completed": false},
-    "nativeSave": {"passed": true, "requestedPackages": 741, "saveAllDirtyCalled": false, "report": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/save-result.json"},
-    "coldReload": {"passed": false, "status": "pending"},
-    "finalFileScope": {"passed": false, "status": "pending"},
-    "visualReview": {"passed": false, "status": "awaiting_explicit_image_transmission_approval_after_auto_review_rejection"},
+    "structural": {
+      "passed": true,
+      "checks": 59,
+      "report": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/validation-complete.json"
+    },
+    "staticCapsules": {
+      "passed": true,
+      "cases": 544,
+      "radiiCm": [
+        34,
+        42
+      ],
+      "halfHeightCm": 96,
+      "referenceJumpPeaksCm": [
+        90,
+        180
+      ],
+      "profile": "rounded_height_stage_before_NoCollision_visual_additions",
+      "report": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/height-capsules.json"
+    },
+    "nativeSave": {
+      "passed": true,
+      "requestedPackages": 6,
+      "saveAllDirtyCalled": false,
+      "dirtyAfter": [],
+      "report": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/final-save-result.json"
+    },
+    "coldReload": {
+      "passed": true,
+      "checks": 60,
+      "assetsSavedByValidator": false,
+      "dirtyAfter": [],
+      "processExitCodeObserved": true,
+      "processExitCode": 0,
+      "elapsedSeconds": 38.2784694,
+      "logErrorLines": 0,
+      "logScannedLines": 2388,
+      "report": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-cold/validation.json",
+      "processReport": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-cold-host/process-exit.json",
+      "logReport": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-cold-host/log-check.json"
+    },
+    "finalFileScope": {
+      "passed": true,
+      "checks": 32,
+      "candidateFilesBefore": 1453,
+      "candidateFilesAfter": 1473,
+      "changed": 709,
+      "added": 20,
+      "removed": 0,
+      "candidateMapBytesUnchanged": true,
+      "protectedInputs": 3952,
+      "protectedByteUnchanged": 3951,
+      "onlyProtectedChange": "editor_only_Foliage_dependency_in_Build.cs",
+      "declaredNewNativeSources": 2,
+      "ownedAssets": 8,
+      "preexistingOwned7BytePreserved": true,
+      "freshPhysicalBackupCandidateFiles": 1468,
+      "freshPhysicalBackupOwnedFiles": 7,
+      "freshPhysicalBackupFilesVerified": 1475,
+      "additionalOriginalMaterialFilesUnchanged": 5,
+      "nonSelectedQASavesUnchanged": 458,
+      "report": "Feature/doc/evidence/landscape-natural-boundary20261117/final-scope-refinement-verified.json",
+      "failedContractReportPreserved": "Feature/doc/evidence/landscape-natural-boundary20261117/final-scope-refinement.json"
+    },
+    "runtimeSouthBoundaryJump": {
+      "passed": true,
+      "publicJumpRequests": 2,
+      "observedMaximumJumpCurrentCount": 2,
+      "samples": 146,
+      "airborneObservations": 79,
+      "maximumSignedPerimeterDistanceCm": -1218.7107109873214,
+      "minimumWorldYCm": 26268.71071098732,
+      "physicalInput": false,
+      "teleports": 0,
+      "speedOverrides": 0,
+      "scope": "One representative south approach using normal CharacterMovement and two public Jump requests; other segments use544staticcapsules",
+      "report": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-boundary-jump-refinement.json"
+    },
+    "visualReview": {
+      "passed": true,
+      "imageTransmissionApproved": true,
+      "scope": "final_blockout_overview_three_brown_village_interiors_and_unchanged_road_edge",
+      "AAAVisualQualityCertified": false,
+      "images": {
+        "overview": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/final-overview.png",
+        "hunter": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/village-earth-hunter.png",
+        "market": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/village-earth-market.png",
+        "archive": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/village-earth-archive.png",
+        "roadEdge": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/road-edge.png"
+      }
+    },
+    "earlierCentralAndOptionalWalks": "previousNumericCheckpoint.verification: not rerun as three final-profile walks",
     "fullGameplayAccepted": false,
-    "publicPublicationCompleted": false,
-    "publicationDependencyCheck": "Feature/doc/evidence/landscape-natural-boundary20261117/publication-dependency-check.json",
-    "materialRepairAndSaveNewErrorLines": 0,
-    "previousErrorLinesPreservedAtSave": 11
+    "mainPromotionCompleted": false,
+    "publicationDependencyCheckHistorical": "Feature/doc/evidence/landscape-natural-boundary20261117/publication-dependency-check.json",
+    "liveLog": {
+      "resolvedControllerRecursionErrors": 1,
+      "knownVendorHumanoidLoadErrorsAfterRecovery": 1,
+      "wholeLogErrorZeroClaim": false,
+      "triage": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-host/final-log-triage.json",
+      "postRecoveryReport": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-host/post-recovery-log-check.json"
+    }
   },
   "retainedLimitations": [
     "Earlier failed attempts and the six initial gate approach failures remain preserved.",
     "Prior Undo/Redo composite seam and E19/E27 exact-grid point-ray failures are not reclassified by this work.",
     "Legacy vendor Humanoid dependency LoadErrors recurred; vendor originals were not changed.",
-    "No AAA visual quality, physical player jump, normal Hub portal, NavMesh, full combat, fifteen-minute growth route or twenty-minute completion certification.",
-    "Loaded reflection and CPU data checks do not certify native/custom serializers or unloaded/transitive project-wide references."
+    "Loaded reflection and CPU data checks do not certify native/custom serializers or unloaded/transitive project-wide references.",
+    "No AAA final-art, physical keyboard, all-direction actual boundary jump, normal Hub portal, NavMesh, full combat, fifteen-minute growth or twenty-minute completion certification.",
+    "Q/Z are planned underground reference locations; no physical cave rooms/tunnels were authored.",
+    "Initial scope report failed because it omitted the separate seven-owned-file physical backup manifest; the strict merged 1475-file rerun passed without ignoring extras."
   ],
   "artDirectionSources": [
-    {"title": "Crafting the world of Tsushima", "url": "https://blog.playstation.com/2020/07/09/crafting-the-world-of-tsushima/", "adaptation": "Regional nature/color identity and environmental framing; no wind or animal guidance system implemented."},
-    {"title": "Horizon Forbidden West: An authentic world", "url": "https://blog.playstation.com/2021/11/22/horizon-forbidden-west-an-authentic-world/", "adaptation": "Purposeful materials/props and settlement identity; no copied progression or reward mechanics."}
-  ]
+    {
+      "title": "Crafting the world of Tsushima",
+      "url": "https://blog.playstation.com/2020/07/09/crafting-the-world-of-tsushima/",
+      "adaptation": "Regional nature/color identity and environmental framing; no wind or animal guidance system implemented."
+    },
+    {
+      "title": "Horizon Forbidden West: An authentic world",
+      "url": "https://blog.playstation.com/2021/11/22/horizon-forbidden-west-an-authentic-world/",
+      "adaptation": "Purposeful materials/props and settlement identity; no copied progression or reward mechanics."
+    }
+  ],
+  "previousNumericCheckpoint": {
+    "profile": "initial_20261117_before_rounded_ridge_and_village_earth",
+    "terrainTargetGridZRangeCm": [
+      9600,
+      12900
+    ],
+    "targetCompositeBlake3": "1fa4f2c33df67f184bf962b9a792cae5b46c7326ecb8604789d85baccba7d143",
+    "targetUint16LESha256": "90003d3cea808922f12e56a16eda8439662c8c7e53fad2833996ec48d24143ed",
+    "dressingCounts": {
+      "groupActors": 10,
+      "ISMComponents": 22,
+      "instances": 708
+    },
+    "ownedAssets": 7,
+    "verification": {
+      "structural": {
+        "passed": true,
+        "checks": 49,
+        "report": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/validation-owned-materials.json"
+      },
+      "staticCapsules": {
+        "passed": true,
+        "cases": 544,
+        "radiiCm": [
+          34,
+          42
+        ],
+        "halfHeightCm": 96,
+        "referenceJumpPeaksCm": [
+          90,
+          180
+        ],
+        "gravityReferenceCmS2": 980,
+        "actualJumpExecuted": false,
+        "physicalInput": false,
+        "report": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/capsule-validation-gate-reflow.json"
+      },
+      "centralWalks": {
+        "completed": 3,
+        "required": 3,
+        "passed": true,
+        "passedTimesSeconds": [
+          48.53452419862151,
+          48.54465759918094,
+          48.539485801011324
+        ],
+        "wallSeconds": [
+          48.531,
+          48.547,
+          48.531
+        ],
+        "contentSavedBeforeEachWalk": [
+          false,
+          false,
+          true
+        ],
+        "input": "AddMovementInput_in_rendered_PIE",
+        "physicalInput": false,
+        "normalHubPortalVerified": false
+      },
+      "runtimeKinematics": {
+        "capsuleRadiusCm": 34,
+        "capsuleHalfHeightCm": 96,
+        "jumpZVelocityCmS": 420,
+        "jumpMaxCount": 2,
+        "jumpMaxHoldTimeSeconds": 0,
+        "worldGravityZCmS2": -980,
+        "actualJumpExecuted": false,
+        "report": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/kinematics-3.json"
+      },
+      "optionalRouteWalk": {
+        "completed": true,
+        "passed": true,
+        "route": [
+          "S",
+          "J100",
+          "M",
+          "A",
+          "G",
+          "F",
+          "Z",
+          "O",
+          "BE"
+        ],
+        "edges": [
+          "E01",
+          "E08",
+          "E15",
+          "E16",
+          "E19",
+          "E20",
+          "E21",
+          "E27"
+        ],
+        "approximateLengthM": 885.89,
+        "simSeconds": 142.91303749755025,
+        "wallSeconds": 142.906,
+        "groundedObservations": 8666,
+        "airborneObservations": 0,
+        "maximumLateralErrorCm": 51.24039380563045,
+        "physicalInput": false,
+        "jumpInputs": 0,
+        "report": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-optional-walk.json"
+      },
+      "nativeSave": {
+        "passed": true,
+        "requestedPackages": 741,
+        "saveAllDirtyCalled": false,
+        "report": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/save-result.json"
+      },
+      "coldReload": {
+        "passed": true,
+        "checks": 50,
+        "assetsSavedByValidator": false,
+        "dirtyAfter": [],
+        "processSelfQuitAndLogClosedObserved": true,
+        "processExitCodeObserved": false,
+        "logErrorLines": 0,
+        "logScannedLines": 2387,
+        "report": "Feature/doc/evidence/landscape-natural-boundary20261117/cold-live/validation.json",
+        "logReport": "Feature/doc/evidence/landscape-natural-boundary20261117/cold-host/log-check.json"
+      },
+      "finalFileScope": {
+        "passed": true,
+        "checks": 19,
+        "candidateFilesBefore": 1453,
+        "candidateFilesAfter": 1468,
+        "changed": 709,
+        "added": 15,
+        "removed": 0,
+        "candidateMapBytesUnchanged": true,
+        "protectedInputs": 3952,
+        "protectedByteUnchanged": 3951,
+        "onlyProtectedChange": "editor_only_Foliage_dependency_in_Build.cs",
+        "declaredNewNativeSources": 2,
+        "ownedAssets": 7,
+        "additionalOriginalMaterialFilesUnchanged": 5,
+        "nonSelectedQASavesUnchanged": 458,
+        "report": "Feature/doc/evidence/landscape-natural-boundary20261117/final-scope-report.json"
+      },
+      "runtimeSouthBoundaryJump": {
+        "passed": true,
+        "publicJumpRequests": 2,
+        "observedMaximumJumpCurrentCount": 2,
+        "airborneObservations": 217,
+        "maximumSignedPerimeterDistanceCm": -1343.2117500781314,
+        "physicalInput": false,
+        "teleports": 0,
+        "speedOverrides": 0,
+        "scope": "one_representative_south_approach_other_directions_use_static_capsules",
+        "report": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-boundary-jump.json"
+      }
+    },
+    "oldColdProcessExitCodeObserved": false,
+    "notReusedAsFinalProfilePass": true,
+    "closedPolygonSampleZRangeCm": [
+      11498.576,
+      12893.184
+    ]
+  },
+  "publication": {
+    "priorWorkBranchWIPPushes": [
+      "65a0bf5a",
+      "9a2305a4"
+    ],
+    "finalRefinementCheckpointCommit": "recorded_separately_by_parent_after_this_doc_freeze",
+    "workBranchOnly": true,
+    "mainPromotionCompleted": false,
+    "mainPromotionGate": "local AGENTS MapMergeGate",
+    "noGlobalUnpublishedClaim": true
+  }
 }

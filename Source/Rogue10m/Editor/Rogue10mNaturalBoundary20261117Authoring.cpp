@@ -445,6 +445,99 @@ FString URogue10mNaturalBoundary20261117Authoring::ApplyHeightPlan(const FString
 #endif
 }
 
+FString URogue10mNaturalBoundary20261117Authoring::ReviseHeightPlan(const FString& HeightRevisionJson, bool bConfirm)
+{
+#if WITH_EDITOR
+	using namespace Rogue10mNaturalBoundary20261117;
+	const TSharedRef<FJsonObject> Result = MakeShared<FJsonObject>();
+	Result->SetBoolField(TEXT("mutation_started"), false);
+	Result->SetBoolField(TEXT("packages_saved"), false);
+	Result->SetNumberField(TEXT("layers_created"), 0);
+	FState State; FString Error, Original; TArray<uint16> Current; TSharedPtr<FJsonObject> Json;
+	if (!bConfirm || !Resolve(State, Error) || !FApp::CanEverRender() || IsRunningCommandlet() || GEditor->IsTransactionActive() ||
+		!DirtyNames().IsEmpty() || State.Main->GetEditLayersConst().Num() != 2 || !State.Main->IsUpToDate())
+	{ return Finish(Result, false, Error.IsEmpty() ? TEXT("Revision requires confirmation, rendered/settled exact two-layer editor, clean packages and no active transaction.") : Error); }
+	const ULandscapeEditLayerBase* Base = State.Main->GetEditLayerConst(OriginalGuid);
+	ULandscapeEditLayerBase* Layer = State.Main->GetEditLayer(NewLayerName);
+	if (!Base || Base->GetClass() != ULandscapeEditLayer::StaticClass() || !Base->IsVisible() ||
+		Base->GetAlphaForTargetType(ELandscapeToolTargetType::Heightmap) != 1.0f || Base->GetAlphaForTargetType(ELandscapeToolTargetType::Weightmap) != 1.0f ||
+		!Layer || Layer->GetClass() != ULandscapeEditLayer::StaticClass() || !Layer->IsVisible() || Layer->IsLocked() ||
+		Layer->GetAlphaForTargetType(ELandscapeToolTargetType::Heightmap) != 1.0f || Layer->GetAlphaForTargetType(ELandscapeToolTargetType::Weightmap) != 0.0f)
+	{ return Finish(Result, false, TEXT("Exact visible standard layers required: original alpha1/1; unlocked named boundary alpha1/0.")); }
+	if (!Parse(HeightRevisionJson, TEXT("Rogue10m.NaturalBoundaryHeightRevision.20261118.v1"), Json, Error) ||
+		!ExpectedHashes(Json, State, Current, Original, Error)) { return Finish(Result, false, Error); }
+	const TArray<TSharedPtr<FJsonValue>>* Bounds = nullptr;
+	const TArray<TSharedPtr<FJsonValue>>* Values = nullptr;
+	FString Guid, SourceGuid, ExpectedLayerGuid, Name; double W = 0, H = 0, Plateau = 0;
+	if (!Json->TryGetStringField(TEXT("landscape_guid"), Guid) || Guid != LandscapeGuid.ToString() ||
+		!Json->TryGetStringField(TEXT("source_layer_guid"), SourceGuid) || SourceGuid != OriginalGuid.ToString() ||
+		!Json->TryGetStringField(TEXT("expected_new_layer_guid"), ExpectedLayerGuid) || ExpectedLayerGuid != Layer->GetGuid().ToString() ||
+		!Json->TryGetStringField(TEXT("new_layer_name"), Name) || Name != NewLayerName.ToString() ||
+		!Json->TryGetNumberField(TEXT("width"), W) || W != Width || !Json->TryGetNumberField(TEXT("height"), H) || H != Height ||
+		!Json->TryGetNumberField(TEXT("plateau_z_cm"), Plateau) || Plateau != 9600 ||
+		!Json->TryGetArrayField(TEXT("vertex_bounds"), Bounds) || Bounds->Num() != 4 ||
+		!Json->TryGetArrayField(TEXT("target_heights"), Values) || Values->Num() != Samples)
+	{ return Finish(Result, false, TEXT("Revision GUIDs/name/bounds/dimensions/9600cm plateau and complete target grid must match the saved candidate.")); }
+	const int32 ExpectedBounds[] = {MinX, MinY, MaxX, MaxY};
+	for (int32 I = 0; I < 4; ++I)
+	{ double Value = 0; if (!(*Bounds)[I]->TryGetNumber(Value) || Value != ExpectedBounds[I]) { return Finish(Result, false, TEXT("Revision vertex bounds mismatch.")); } }
+	TArray<uint16> OriginalHeights, ExistingDelta;
+	if (!ReadHeights(State, OriginalGuid, OriginalHeights, Error) || !ReadHeights(State, Layer->GetGuid(), ExistingDelta, Error))
+	{ return Finish(Result, false, Error); }
+	TArray<uint16> Target, Delta; Target.Reserve(Samples); Delta.Reserve(Samples);
+	int32 ChangedSamples = 0;
+	for (int32 I = 0; I < Samples; ++I)
+	{
+		const int32 ExistingComposite = int32(OriginalHeights[I]) + int32(ExistingDelta[I]) - 32768;
+		if (ExistingComposite < 0 || ExistingComposite > 65535 || ExistingComposite != int32(Current[I]))
+		{ return Finish(Result, false, TEXT("Current composite is not the exact unit-alpha sum of the two raw layers; no revision was performed.")); }
+		double Value = 0;
+		if (!(*Values)[I]->TryGetNumber(Value) || !FMath::IsFinite(Value) || Value < 0 || Value > 65535 || FMath::FloorToDouble(Value) != Value)
+		{ return Finish(Result, false, TEXT("Revision target sample is not a finite uint16 integer.")); }
+		// Replacement content is relative to ORIGINAL RAW data, not to the
+		// already-composited old boundary. Subtracting Current would be wrong.
+		const int32 Difference = 32768 + int32(Value) - int32(OriginalHeights[I]);
+		if (Difference < 0 || Difference > 65535)
+		{ return Finish(Result, false, TEXT("Revision additive delta overflows uint16; nothing was modified.")); }
+		Target.Add(uint16(Value)); Delta.Add(uint16(Difference));
+		ChangedSamples += uint16(Value) != Current[I] ? 1 : 0;
+	}
+	if (ChangedSamples == 0 || !DirtyNames().IsEmpty())
+	{ return Finish(Result, false, TEXT("Revision is a no-op or a package became dirty during preflight; nothing was modified.")); }
+	Result->SetStringField(TEXT("previous_composite_blake3"), HeightHash(Current));
+	Result->SetStringField(TEXT("target_composite_blake3"), HeightHash(Target));
+	Result->SetStringField(TEXT("original_raw_height_blake3"), HeightHash(OriginalHeights));
+	Result->SetStringField(TEXT("expected_original_layer_blake3"), Original);
+	Result->SetStringField(TEXT("new_layer_guid"), Layer->GetGuid().ToString());
+	Result->SetNumberField(TEXT("changed_samples"), ChangedSamples);
+	// The complete target/delta and current raw composition were checked
+	// before any transaction, Modify, source write or update request.
+	Result->SetBoolField(TEXT("mutation_started"), true);
+	const FScopedTransaction Transaction(NSLOCTEXT("Rogue10m", "NaturalBoundaryHeightRevision20261118", "Revise Natural Boundary Height 20261118"));
+	Layer->Modify();
+	for (ALandscapeProxy* Proxy : State.Proxies) { Proxy->Modify(); }
+	{
+		FLandscapeEditDataInterface Edit(State.Info, Layer->GetGuid());
+		Edit.SetHeightData(MinX, MinY, MaxX, MaxY, Delta.GetData(), Width, false, nullptr, nullptr, nullptr, false, nullptr, nullptr, true, true, true);
+		Edit.Flush();
+	}
+	State.Main->ForceLayersFullUpdate();
+	FString OriginalAfter;
+	if (!OriginalHash(State, OriginalAfter, Error) || OriginalAfter != Original)
+	{ UE_LOG(LogRogue10m, Error, TEXT("NaturalBoundary20261118 revision changed original layer data; unsaved partial state retained.")); return Finish(Result, false, TEXT("Revision original-layer preservation failed; do not save or retry.")); }
+	Result->SetBoolField(TEXT("original_layer_preserved"), true);
+	Result->SetBoolField(TEXT("existing_layer_revised"), true);
+	Result->SetBoolField(TEXT("unsaved"), true);
+	Result->SetBoolField(TEXT("full_update_requested"), true);
+	Result->SetBoolField(TEXT("settled_and_verified"), false);
+	Result->SetStringField(TEXT("status"), TEXT("height_revision_unsaved_requires_settle_and_verification"));
+	UE_LOG(LogRogue10m, Log, TEXT("NaturalBoundary20261118 revised %d height samples in the existing layer; no layer created and no packages saved; verify settled composite/collision."), ChangedSamples);
+	return Finish(Result, true);
+#else
+	return TEXT("{\"success\":false,\"error\":\"Editor build required\"}");
+#endif
+}
+
 FString URogue10mNaturalBoundary20261117Authoring::SaveCandidatePackages(const FString& SavePlanJson)
 {
 #if WITH_EDITOR

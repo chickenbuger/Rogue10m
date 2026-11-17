@@ -1,0 +1,528 @@
+{
+  "schema": "Rogue10m.NaturalBossThresholdAuthor.20261118.v1",
+  "success": true,
+  "started_utc": "2026-11-17T15:22:51.221417+00:00",
+  "assets_saved": false,
+  "existing_actor_changes": [],
+  "landscape_mutated": false,
+  "materials_created": [],
+  "created_actor_paths": [
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.Actor_UAID_244BFE8DA9DFE51503_1094448311"
+  ],
+  "components": [
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.Actor_UAID_244BFE8DA9DFE51503_1094448311.NW18_BossThreshold_ISM_00",
+      "name": "NW18_BossThreshold_ISM_00",
+      "mesh": "/Engine/BasicShapes/Cube.Cube",
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_WarmStone.M_Natural_WarmStone",
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "instances": [
+        {
+          "index": 0,
+          "label": "BossThreshold_Post_W",
+          "planned_world_transform": {
+            "p": [
+              14240.0,
+              62550.0,
+              10100.0
+            ],
+            "q": [
+              0.0,
+              -0.0,
+              0.0,
+              1.0
+            ],
+            "s": [
+              1.2,
+              3.0,
+              10.0
+            ]
+          },
+          "observed_world_transform": {
+            "p": [
+              14240.0,
+              62550.0,
+              10100.0
+            ],
+            "q": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "s": [
+              1.2,
+              3.0,
+              10.0
+            ]
+          }
+        },
+        {
+          "index": 1,
+          "label": "BossThreshold_Post_E",
+          "planned_world_transform": {
+            "p": [
+              15760.0,
+              62550.0,
+              10100.0
+            ],
+            "q": [
+              0.0,
+              -0.0,
+              0.0,
+              1.0
+            ],
+            "s": [
+              1.2,
+              3.0,
+              10.0
+            ]
+          },
+          "observed_world_transform": {
+            "p": [
+              15760.0,
+              62550.0,
+              10100.0
+            ],
+            "q": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "s": [
+              1.2,
+              3.0,
+              10.0
+            ]
+          }
+        },
+        {
+          "index": 2,
+          "label": "BossThreshold_Lintel",
+          "planned_world_transform": {
+            "p": [
+              15000.0,
+              62550.0,
+              10680.0
+            ],
+            "q": [
+              0.0,
+              -0.0,
+              0.0,
+              1.0
+            ],
+            "s": [
+              16.4,
+              3.0,
+              1.6
+            ]
+          },
+          "observed_world_transform": {
+            "p": [
+              15000.0,
+              62550.0,
+              10680.0
+            ],
+            "q": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "s": [
+              16.4,
+              3.0,
+              1.6
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.Actor_UAID_244BFE8DA9DFE51503_1094448311.NW18_BossThreshold_ISM_01",
+      "name": "NW18_BossThreshold_ISM_01",
+      "mesh": "/Engine/BasicShapes/Cube.Cube",
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Blue.M_Natural_Banner_Blue",
+      "collision_profile": "NoCollision",
+      "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>",
+      "instances": [
+        {
+          "index": 0,
+          "label": "BossThreshold_Banner_W",
+          "planned_world_transform": {
+            "p": [
+              14240.0,
+              62394.0,
+              10350.0
+            ],
+            "q": [
+              0.0,
+              -0.0,
+              0.0,
+              1.0
+            ],
+            "s": [
+              1.0,
+              0.1,
+              3.8
+            ]
+          },
+          "observed_world_transform": {
+            "p": [
+              14240.0,
+              62394.0,
+              10350.0
+            ],
+            "q": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "s": [
+              1.0,
+              0.1,
+              3.8
+            ]
+          }
+        },
+        {
+          "index": 1,
+          "label": "BossThreshold_Banner_E",
+          "planned_world_transform": {
+            "p": [
+              15760.0,
+              62394.0,
+              10350.0
+            ],
+            "q": [
+              0.0,
+              -0.0,
+              0.0,
+              1.0
+            ],
+            "s": [
+              1.0,
+              0.1,
+              3.8
+            ]
+          },
+          "observed_world_transform": {
+            "p": [
+              15760.0,
+              62394.0,
+              10350.0
+            ],
+            "q": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "s": [
+              1.0,
+              0.1,
+              3.8
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "packages": [
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/XE/I951DLEFCGMJPJH2WJPILZ"
+  ],
+  "binding_preflight": {
+    "read_only": true,
+    "method_bindings": {
+      "Actor": {
+        "get_actor_label": true,
+        "get_actor_transform": true,
+        "get_class": true,
+        "get_editor_property": true,
+        "get_folder_path": true,
+        "get_package": true,
+        "set_actor_hidden_in_game": true,
+        "set_actor_label": true,
+        "set_actor_transform": true,
+        "set_editor_property": true,
+        "set_folder_path": true
+      },
+      "SceneComponent": {
+        "set_mobility": true,
+        "get_class": true,
+        "get_editor_property": true
+      },
+      "InstancedStaticMeshComponent": {
+        "add_instance": true,
+        "get_collision_enabled": true,
+        "get_collision_profile_name": true,
+        "get_collision_response_to_channel": true,
+        "get_editor_property": true,
+        "get_instance_count": true,
+        "get_instance_transform": true,
+        "get_material": true,
+        "get_name": true,
+        "get_path_name": true,
+        "set_cast_shadow": true,
+        "set_collision_enabled": true,
+        "set_collision_object_type": true,
+        "set_collision_profile_name": true,
+        "set_collision_response_to_all_channels": true,
+        "set_collision_response_to_channel": true,
+        "set_editor_property": true,
+        "set_hidden_in_game": true,
+        "set_material": true,
+        "set_mobility": true,
+        "set_static_mesh": true,
+        "set_visibility": true
+      },
+      "EditorActorSubsystem": {
+        "get_all_level_actors": true,
+        "spawn_actor_from_class": true
+      },
+      "UnrealEditorSubsystem": {
+        "get_editor_world": true
+      },
+      "LevelEditorSubsystem": {
+        "is_in_play_in_editor": true
+      },
+      "SubobjectDataSubsystem": {
+        "add_new_subobject": true,
+        "rename_subobject": true,
+        "k2_gather_subobject_data_for_instance": true
+      },
+      "SubobjectDataBlueprintFunctionLibrary": {
+        "get_data": true,
+        "get_associated_object": true,
+        "is_handle_valid": true,
+        "is_root_component": true,
+        "is_actor": true
+      },
+      "EditorLoadingAndSavingUtils": {
+        "get_dirty_map_packages": true,
+        "get_dirty_content_packages": true
+      },
+      "StaticMesh": {
+        "get_bounding_box": true
+      },
+      "Rotator": {
+        "quaternion": true
+      },
+      "Text": {
+        "is_empty": true
+      }
+    },
+    "properties": [
+      "generate_overlap_events",
+      "cast_shadow",
+      "visible",
+      "hidden_in_game",
+      "can_ever_affect_navigation",
+      "component_tags",
+      "static_mesh"
+    ],
+    "generate_overlap_events_access": "set_editor_property; native BlueprintSetter is not a Python method",
+    "dirty_set_unchanged": true
+  },
+  "baseline_qa": {
+    "passed": true,
+    "stage": "height_only",
+    "checks": {
+      "owned_ISM_material_repair_receipt": true,
+      "exact5_owned_ISM_materials_and_source_preservation": true,
+      "original5_material_packages_reloaded": true,
+      "independent_raw_plan_checks": true,
+      "native_exact45_registered_and_settled": true,
+      "native_read_only": true,
+      "full_target_grid_exact": true,
+      "independent_target_SHA256": true,
+      "original_layer_native_hash_preserved": true,
+      "height_mutation_exact_apply_target": true,
+      "crop_exact_lattice": true,
+      "terrain_identity_and_layout": true,
+      "original_raw_RG_paint_preserved": true,
+      "original_raw_BA_preserved": true,
+      "composite_paint_preserved": true,
+      "new_snapshot_complete": true,
+      "strict_loaded_reference_walk": true,
+      "dependency_limits_retained": true,
+      "unique_actor_paths": true,
+      "all_original_actors_preserved": true,
+      "original_actor_exact_allowed_changes": true,
+      "twenty_building_groups_rigid_vertical": true,
+      "twenty_building_groups_exact_declared_horizontal": true,
+      "roads29_flat_8m_new_material": true,
+      "new_actors_exact_declared_stage": true,
+      "group_identity_H_Enclosure": true,
+      "group_components_H_Enclosure": true,
+      "group_identity_H_Identity": true,
+      "group_components_H_Identity": true,
+      "group_identity_M_Enclosure": true,
+      "group_components_M_Enclosure": true,
+      "group_identity_M_Identity": true,
+      "group_components_M_Identity": true,
+      "group_identity_T_Enclosure": true,
+      "group_components_T_Enclosure": true,
+      "group_identity_T_Identity": true,
+      "group_components_T_Identity": true,
+      "group_identity_W_AbandonedCamp": true,
+      "group_components_W_AbandonedCamp": true,
+      "group_identity_A_OverturnedTransport": true,
+      "group_components_A_OverturnedTransport": true,
+      "group_identity_R_RuinFragments": true,
+      "group_components_R_RuinFragments": true,
+      "group_identity_ClosedBoundaryBackup": true,
+      "group_components_ClosedBoundaryBackup": true,
+      "exact_declared_instance_transforms_and_settings": true,
+      "thirteen_actual_gate_inner_bounds_14m": true,
+      "quest_clone_only_originZ_and_binding": true,
+      "read_only_dirty_set": true,
+      "saved_clean_state": true
+    }
+  },
+  "baseline_actor_count": 1400,
+  "existing_actor_snapshot_sha256_before": "fed5b33d8ffac160c6a426723872f7609e8896cb3213732d35540ba4e9592b93",
+  "boss_ground_before": {
+    "class": "/Script/Engine.StaticMeshActor",
+    "label": "WL26_PersistentBossGround",
+    "transform": {
+      "p": [
+        15000.0,
+        68000.0,
+        9551.0
+      ],
+      "q": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "s": [
+        110.0,
+        110.0,
+        1.0
+      ]
+    },
+    "tags": [
+      "Rogue10m.WorldLayout20261112",
+      "Rogue10m.WorldLayout20261112.Scene"
+    ],
+    "folder": "WorldLayout20261112/Gameplay/Support",
+    "hidden_in_game": true,
+    "spatially_loaded": false,
+    "primitives": [
+      {
+        "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.StaticMeshActor_UAID_244BFE8DA9DF091403_2009222874.StaticMeshComponent0",
+        "class": "/Script/Engine.StaticMeshComponent",
+        "materials": [
+          "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial"
+        ],
+        "visible": true,
+        "hidden_in_game": false,
+        "cast_shadow": true,
+        "collision_profile": "BlockAll",
+        "collision_enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+        "pawn_response": "<CollisionResponseType.ECR_BLOCK: 2>",
+        "mesh": "/Engine/BasicShapes/Cube.Cube"
+      }
+    ]
+  },
+  "plan_sha256": "7a267a6eecfc961a551215bc635a43e0efc4aedfd8018a973764f1bb624d09a0",
+  "plan_file": "Feature/doc/evidence/landscape-natural-boundary20261117/boss-threshold-plan20261118B.json",
+  "dirty_before": [],
+  "existing_actor_snapshot_sha256_after": "fed5b33d8ffac160c6a426723872f7609e8896cb3213732d35540ba4e9592b93",
+  "existing1400_actor_snapshots_equal": true,
+  "boss_ground_after": {
+    "class": "/Script/Engine.StaticMeshActor",
+    "label": "WL26_PersistentBossGround",
+    "transform": {
+      "p": [
+        15000.0,
+        68000.0,
+        9551.0
+      ],
+      "q": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "s": [
+        110.0,
+        110.0,
+        1.0
+      ]
+    },
+    "tags": [
+      "Rogue10m.WorldLayout20261112",
+      "Rogue10m.WorldLayout20261112.Scene"
+    ],
+    "folder": "WorldLayout20261112/Gameplay/Support",
+    "hidden_in_game": true,
+    "spatially_loaded": false,
+    "primitives": [
+      {
+        "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.StaticMeshActor_UAID_244BFE8DA9DF091403_2009222874.StaticMeshComponent0",
+        "class": "/Script/Engine.StaticMeshComponent",
+        "materials": [
+          "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial"
+        ],
+        "visible": true,
+        "hidden_in_game": false,
+        "cast_shadow": true,
+        "collision_profile": "BlockAll",
+        "collision_enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+        "pawn_response": "<CollisionResponseType.ECR_BLOCK: 2>",
+        "mesh": "/Engine/BasicShapes/Cube.Cube"
+      }
+    ]
+  },
+  "actor": {
+    "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.Actor_UAID_244BFE8DA9DFE51503_1094448311",
+    "label": "NW18_BossThreshold",
+    "class": "/Script/Engine.Actor",
+    "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/XE/I951DLEFCGMJPJH2WJPILZ",
+    "root_component": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.Actor_UAID_244BFE8DA9DFE51503_1094448311.NW17_Root",
+    "transform": {
+      "p": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "q": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "s": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "folder": "NaturalWorld20261117/BossThreshold",
+    "tags": [
+      "Rogue10m.WorldLayout20261112",
+      "Rogue10m.NaturalBoundary20261117",
+      "Rogue10m.NaturalWorldSetDressing20261117",
+      "Rogue10m.NaturalWorldSetDressing20261117.BossThreshold"
+    ],
+    "spatially_loaded": false
+  },
+  "dirty_after": [
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/XE/I951DLEFCGMJPJH2WJPILZ",
+    "/Game/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/C/VU/W5CXFK5HI354A0W9YHFKU9"
+  ],
+  "actor_count_after": 1401,
+  "instance_count": 5,
+  "finished_utc": "2026-11-17T15:22:56.341429+00:00",
+  "validation_pending": [
+    "independent threshold gate/settings QA",
+    "rendered Game View",
+    "bounded save and cold reload"
+  ]
+}

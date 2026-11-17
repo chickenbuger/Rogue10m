@@ -1,0 +1,34 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" Rogue10mEditor Win64 Development -Project=D:\Project\Rogue10m\Rogue10m.uproject -WaitMutex -NoLiveCoding -NoHotReload
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (D:\Project\Rogue10m).
+Waiting for 'git status' command to complete
+UHT compiled-in object format Default
+UHT processed Rogue10mEditor in 6.1607415 seconds (3 generated files written)
+Building Rogue10mEditor...
+===== Toolchain Information =====
+Using ISPC compiler (D:\Program Files\UE_5.8\Engine\Source\ThirdParty\Intel\ISPC\bin\Windows\ispc.exe)
+  Intel(r) Implicit SPMD Program Compiler (Intel(r) ISPC), 1.24.0 (build commit  @ 20250404, LLVM 18.1.2) 
+Using Visual Studio 14.44.35228 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207) and Windows 10.0.22621.0 SDK (C:\Program Files (x86)\Windows Kits\10).
+[Adaptive Build] Excluded from Rogue10m unity file: Rogue10mCharacter.cpp, Rogue10mFighterCombatStanceAnimInstance.cpp, Rogue10mAppearanceCameraComponent.cpp, Rogue10mBasicBrawlerComponent.cpp, Rogue10mCombatComponent.cpp, Rogue10mFirstPersonPresentationComponent.cpp, Rogue10mFiveVillageProgressComponent.cpp, Rogue10mInventoryComponent.cpp, Rogue10mInventoryPersistence.cpp, Rogue10mMonsterLootComponent.cpp, Rogue10mMouseCombatInputComponent.cpp, Rogue10mSkillBindingComponent.cpp, Rogue10mTechniqueMotionComponent.cpp, Rogue10mVillageQuestComponent.cpp, Rogue10mWeaponIdentityComponent.cpp, Rogue10mWeaponVisualComponent.cpp, Rogue10mCameraManager.cpp, Rogue10mFiveVillageGameMode.cpp, Rogue10mPlayerController.cpp, Rogue10mPlayerControllerQuit.cpp, Rogue10mAttackSkillData.cpp, Rogue10mSkillLoadoutDataAsset.cpp, Rogue10mSkillTreeData.cpp, Rogue10mVillageQuestDataAsset.cpp, Rogue10mCompactWorldAuthoring.cpp, Rogue10mCrop20261114WorldAuthoring.cpp, Rogue10mG08SequenceAuthoring.cpp, Rogue10mNaturalBoundary20261117Authoring.cpp, Rogue10mWeaponAnimationAuthoring.cpp, Rogue10mWorldLayoutAuthoring.cpp, Rogue10mBasicMonster.cpp, Rogue10mHumanoidAnimInstance.cpp, Rogue10mMonsterAttackPatternComponent.cpp, Rogue10mMonsterAIController.cpp, Rogue10mActiveTechniqueCatalogTests.cpp, Rogue10mAuthoredContactSequenceTests.cpp, Rogue10mBossReadabilityRuntimeTest.cpp, Rogue10mCatalogConsumptionTests.cpp, Rogue10mCombatVfxPlacementTests.cpp, Rogue10mFiveVillageRuntimeTests.cpp, Rogue10mFiveVillageTravelRuntimeTest.cpp, Rogue10mGreatSwordLocomotionRuntimeTest.cpp, Rogue10mHitInterruptionTests.cpp, Rogue10mHumanoidAnimationTests.cpp, Rogue10mHybridSkillTreeTests.cpp, Rogue10mMonsterAITargetLifecycleTests.cpp, Rogue10mMonsterChaseEffectsRuntimeTest.cpp, Rogue10mMonsterLootRuntimeTest.cpp, Rogue10mMonsterLootTests.cpp, Rogue10mNpcDialogueRuntimeTest.cpp, Rogue10mNpcInteractionRuntimeTest.cpp, Rogue10mProfileInitializationTests.cpp, Rogue10mQuitMenuRuntimeTest.cpp, Rogue10mSkillLoadoutTests.cpp, Rogue10mStaffPresentationRuntimeTest.cpp, Rogue10mStaffUprightTests.cpp, Rogue10mStaffVfxRuntimeTest.cpp, Rogue10mStaffVisualTests.cpp, Rogue10mTechniqueInterruptionTests.cpp, Rogue10mThirdPersonGameplayRuntimeTest.cpp, Rogue10mTownServicesRuntimeTest.cpp, Rogue10mVillageQuestCombatCreditTests.cpp, Rogue10mVillageQuestLifecycleTests.cpp, Rogue10mVillageQuestRewardTests.cpp, Rogue10mVillageQuestRuntimeTest.cpp, Rogue10mVillageQuestSelectionTests.cpp, Rogue10mVillageQuestTests.cpp, Rogue10mVillageQuestTuningTests.cpp, Rogue10mWeaponIdentityRuntimeTest.cpp, Rogue10mWeaponVisualRuntimeTest.cpp, Rogue10mWeaponVisualTests.cpp, Rogue10mRunHUD.cpp, Rogue10mHudWidgetParts.cpp, Rogue10mHybridSkillTreeWidget.cpp, Rogue10mMainMenuWidget.cpp, Rogue10mMenuWindowWidgets.cpp, Rogue10mQuitMenuWidget.cpp, Rogue10mTutorialWidget.cpp, Rogue10mDroppedItem.cpp, Rogue10mFiveVillageRouteDataAsset.cpp, Rogue10mFiveVillageRunPortal.cpp, Rogue10mLootDeliverySubsystem.cpp, Rogue10mTutorialNPC.cpp, Rogue10mVillageQuestDirector.cpp, Rogue10mVillageQuestNPC.cpp, Rogue10mVillageQuestObjective.cpp
+===== End Toolchain Information =====
+Determining max actions to execute in parallel (8 physical cores, 16 logical cores)
+  Executing up to 8 processes, one per physical core
+Using Unreal Build Accelerator local executor to run 5 action(s)
+UbaServer - Listening on 0.0.0.0:1345
+  CPU 8 physical cores, 16 logical cores
+  Memory 31.91 GB physical, 28.15 GB/79.91 GB committed
+  UBA Storage capacity 40 GB
+[1/5] Compile [x64] Rogue10mNaturalBoundary20261117Authoring.cpp
+[2/5] Compile [x64] Module.Rogue10m.1.cpp
+[3/5] Link [x64] UnrealEditor-Rogue10m.lib
+   D:/Project/Rogue10m/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.lib 라이브러리 및 D:/Project/Rogue10m/Intermediate/Build/Win64/x64/UnrealEditor/Development/Rogue10m/UnrealEditor-Rogue10m.exp 개체를 생성하고 있습니다.
+[4/5] Link [x64] UnrealEditor-Rogue10m.dll
+[5/5] WriteMetadata Rogue10mEditor.target [NoUba]
+
+Total time in Unreal Build Accelerator local executor: 19.61 seconds
+Output binary: D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe
+
+Result: Succeeded
+Total execution time: 28.99 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 7.9kb

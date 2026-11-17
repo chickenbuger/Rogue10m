@@ -1,0 +1,1436 @@
+{
+  "operation": "snapshot_retained_terrain_data",
+  "expected_map_package": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A",
+  "map_package": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A",
+  "success": true,
+  "selection_performed": false,
+  "crop_performed": false,
+  "packages_saved": false,
+  "requires_save": false,
+  "persistent_terrain_data_written": false,
+  "validation_boundary": "Inspection/editor selection only. Dirty-set equality does not prove package bytes, latest editing preservation, crop completion, or runtime validation.",
+  "digest_algorithm": "BLAKE3",
+  "read_only_inspection": true,
+  "sample_order": "Y630..945 rows; X315..882 fastest; height uint16 little-endian; paint uint8",
+  "data_boundary": "Current settled CPU Texture.Source RG height and paint channels. Texture packing and height B/A are excluded; no GPU export or gameplay certification.",
+  "world_partition": true,
+  "streaming_enabled": true,
+  "runtime_hash_class": "/Script/Engine.WorldPartitionRuntimeHashSet",
+  "proxies": [
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.Landscape_UAID_244BFE8DA9DF091403_1308582536",
+      "class": "/Script/Landscape.Landscape",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/6/07/BJOVGSJNSG38C92ONIQ1FV",
+      "actor_guid": "DA6904BF83483ED0A8EC4CD186D535F5",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": false,
+      "component_count": 0,
+      "collision_component_count": 0,
+      "origin_cm": {
+        "finite": true,
+        "x": -90000,
+        "y": -90000,
+        "z": 0
+      },
+      "bounds": {
+        "valid": false
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_0_0_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/4/H0/HDSAW95KB8W4KIQGO7LCLZ",
+      "actor_guid": "EAF045BA48EC96FFC7DC91BDEAE9EB47",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 0,
+      "collision_component_count": 0,
+      "origin_cm": {
+        "finite": true,
+        "x": -90000,
+        "y": -90000,
+        "z": 0
+      },
+      "bounds": {
+        "valid": false
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_0_1_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/1/NB/MCE82ISOFTSZ4X6NYS59OS",
+      "actor_guid": "50E1FA164904B128D55A3AB70A8120A1",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 0,
+      "collision_component_count": 0,
+      "origin_cm": {
+        "finite": true,
+        "x": -90000,
+        "y": -45000,
+        "z": 0
+      },
+      "bounds": {
+        "valid": false
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_0_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/0/XT/O5N67KQ56EFMCNYPLH4A9K",
+      "actor_guid": "52757BC64901D09A1C7BD3B32C7C8C2F",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 0,
+      "collision_component_count": 0,
+      "origin_cm": {
+        "finite": true,
+        "x": -45000,
+        "y": -90000,
+        "z": 0
+      },
+      "bounds": {
+        "valid": false
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_1_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/D/I5/LUV6K94B7088CTTMNP5QAM",
+      "actor_guid": "4791B5E94B2E1C92B43E7F9E7D0B5B12",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 0,
+      "collision_component_count": 0,
+      "origin_cm": {
+        "finite": true,
+        "x": -45000,
+        "y": -45000,
+        "z": 0
+      },
+      "bounds": {
+        "valid": false
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_0_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/8/8H/1TS1J7SPRTSB29HY8N6OVS",
+      "actor_guid": "5DB7F7DE48040A8F5AA4D6BEAA7A7571",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 0,
+      "collision_component_count": 0,
+      "origin_cm": {
+        "finite": true,
+        "x": 0,
+        "y": -90000,
+        "z": 0
+      },
+      "bounds": {
+        "valid": false
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_0_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/A/SI/Q73PU4UVN7VZEBFT770BFR",
+      "actor_guid": "5FEFB6A14AEA48CFDDDE9A9B352AE343",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 0,
+      "collision_component_count": 0,
+      "origin_cm": {
+        "finite": true,
+        "x": 45000,
+        "y": -90000,
+        "z": 0
+      },
+      "bounds": {
+        "valid": false
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_1_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/PU/KC1ED7XNAH9AAXICI45DB5",
+      "actor_guid": "A85BE56541F17B995D7BEA8091FCEE3C",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 0,
+      "collision_component_count": 0,
+      "origin_cm": {
+        "finite": true,
+        "x": 0,
+        "y": -45000,
+        "z": 0
+      },
+      "bounds": {
+        "valid": false
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_1_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/E/O9/T0S02D43S43BFII2NHH50W",
+      "actor_guid": "35E855874306EDB07D47129858CA4B27",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 0,
+      "collision_component_count": 0,
+      "origin_cm": {
+        "finite": true,
+        "x": 45000,
+        "y": -45000,
+        "z": 0
+      },
+      "bounds": {
+        "valid": false
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_0_2_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/F5/ZZ4G2UBUAC0YP7HE5NQN5K",
+      "actor_guid": "D225F3BB4D2E552E2CF191915C67846E",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 0,
+      "collision_component_count": 0,
+      "origin_cm": {
+        "finite": true,
+        "x": -90000,
+        "y": 0,
+        "z": 0
+      },
+      "bounds": {
+        "valid": false
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_0_3_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/6/CX/4OKE4IU5PRT9PT9IEBCQJE",
+      "actor_guid": "82B88FCC4F4BAB131A90CABA68B8A373",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 0,
+      "collision_component_count": 0,
+      "origin_cm": {
+        "finite": true,
+        "x": -90000,
+        "y": 45000,
+        "z": 0
+      },
+      "bounds": {
+        "valid": false
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_2_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/1/S2/SNMFR6G92UWR7JNALFZ3ID",
+      "actor_guid": "964848664FBDA2AA04BBAEA534CF423D",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 6,
+      "collision_component_count": 6,
+      "origin_cm": {
+        "finite": true,
+        "x": -45000,
+        "y": 0,
+        "z": 0
+      },
+      "bounds": {
+        "valid": true,
+        "min": {
+          "finite": true,
+          "x": -33749.99999999999,
+          "y": 22500.000000000015,
+          "z": 4900
+        },
+        "max": {
+          "finite": true,
+          "x": 0,
+          "y": 45000.000000000015,
+          "z": 7272
+        },
+        "size": {
+          "finite": true,
+          "x": 33749.99999999999,
+          "y": 22500,
+          "z": 2372
+        }
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/T7/AAKXBAAJ48M6RIB9TWCIJD",
+      "actor_guid": "6425064B47A57E12AD603FADB2A09E7B",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 9,
+      "collision_component_count": 9,
+      "origin_cm": {
+        "finite": true,
+        "x": -45000,
+        "y": 45000,
+        "z": 0
+      },
+      "bounds": {
+        "valid": true,
+        "min": {
+          "finite": true,
+          "x": -33749.99999999999,
+          "y": 45000,
+          "z": 6390
+        },
+        "max": {
+          "finite": true,
+          "x": 0,
+          "y": 78750,
+          "z": 9632
+        },
+        "size": {
+          "finite": true,
+          "x": 33749.99999999999,
+          "y": 33750,
+          "z": 3242
+        }
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_3_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/5N/2QCZFO1QZEVPLRNWWQAEU9",
+      "actor_guid": "9B760E914A09431F6C1C14B1628EC904",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 6,
+      "collision_component_count": 6,
+      "origin_cm": {
+        "finite": true,
+        "x": 45000,
+        "y": 45000,
+        "z": 0
+      },
+      "bounds": {
+        "valid": true,
+        "min": {
+          "finite": true,
+          "x": 45000,
+          "y": 45000,
+          "z": 6126
+        },
+        "max": {
+          "finite": true,
+          "x": 67500,
+          "y": 78750,
+          "z": 9648
+        },
+        "size": {
+          "finite": true,
+          "x": 22500,
+          "y": 33750,
+          "z": 3522
+        }
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_2_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/MX/901N9FSMWQT8HGVSYW4Y54",
+      "actor_guid": "2444FF834D8E01341CD2E983476AFFEC",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 4,
+      "collision_component_count": 4,
+      "origin_cm": {
+        "finite": true,
+        "x": 45000,
+        "y": 0,
+        "z": 0
+      },
+      "bounds": {
+        "valid": true,
+        "min": {
+          "finite": true,
+          "x": 45000,
+          "y": 22500.000000000015,
+          "z": 4440
+        },
+        "max": {
+          "finite": true,
+          "x": 67500,
+          "y": 45000.000000000015,
+          "z": 6908
+        },
+        "size": {
+          "finite": true,
+          "x": 22500,
+          "y": 22500,
+          "z": 2468
+        }
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/5/M0/6G94JGZ2U5KIQB4T0SVBSO",
+      "actor_guid": "B29A8FA64C6796A35CBAA0947E0C1B16",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 8,
+      "collision_component_count": 8,
+      "origin_cm": {
+        "finite": true,
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "bounds": {
+        "valid": true,
+        "min": {
+          "finite": true,
+          "x": 0,
+          "y": 22500.000000000015,
+          "z": 4812
+        },
+        "max": {
+          "finite": true,
+          "x": 45000.000000000015,
+          "y": 45000.000000000015,
+          "z": 7118
+        },
+        "size": {
+          "finite": true,
+          "x": 45000.000000000015,
+          "y": 22500,
+          "z": 2306
+        }
+      }
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0",
+      "class": "/Script/Landscape.LandscapeStreamingProxy",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/E/KB/YSSONCL958619NZG0FJTP5",
+      "actor_guid": "1A4B5B3C4D4850C3386DD3B2F8251AE9",
+      "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+      "spatially_loaded": true,
+      "component_count": 12,
+      "collision_component_count": 12,
+      "origin_cm": {
+        "finite": true,
+        "x": 0,
+        "y": 45000,
+        "z": 0
+      },
+      "bounds": {
+        "valid": true,
+        "min": {
+          "finite": true,
+          "x": 0,
+          "y": 45000,
+          "z": 6390
+        },
+        "max": {
+          "finite": true,
+          "x": 45000.000000000015,
+          "y": 78750,
+          "z": 9654
+        },
+        "size": {
+          "finite": true,
+          "x": 45000.000000000015,
+          "y": 33750,
+          "z": 3264
+        }
+      }
+    }
+  ],
+  "components": [
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_2_0.LandscapeComponent_165",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_2_0",
+      "section_base": {
+        "x": 315,
+        "y": 630
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_2_0.LandscapeComponent_181",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_2_0",
+      "section_base": {
+        "x": 315,
+        "y": 693
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_2_0.LandscapeComponent_166",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_2_0",
+      "section_base": {
+        "x": 378,
+        "y": 630
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_2_0.LandscapeComponent_182",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_2_0",
+      "section_base": {
+        "x": 378,
+        "y": 693
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_2_0.LandscapeComponent_167",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_2_0",
+      "section_base": {
+        "x": 441,
+        "y": 630
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_2_0.LandscapeComponent_183",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_2_0",
+      "section_base": {
+        "x": 441,
+        "y": 693
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0.LandscapeComponent_197",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0",
+      "section_base": {
+        "x": 315,
+        "y": 756
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0.LandscapeComponent_213",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0",
+      "section_base": {
+        "x": 315,
+        "y": 819
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0.LandscapeComponent_229",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0",
+      "section_base": {
+        "x": 315,
+        "y": 882
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0.LandscapeComponent_198",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0",
+      "section_base": {
+        "x": 378,
+        "y": 756
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0.LandscapeComponent_214",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0",
+      "section_base": {
+        "x": 378,
+        "y": 819
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0.LandscapeComponent_230",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0",
+      "section_base": {
+        "x": 378,
+        "y": 882
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0.LandscapeComponent_199",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0",
+      "section_base": {
+        "x": 441,
+        "y": 756
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0.LandscapeComponent_215",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0",
+      "section_base": {
+        "x": 441,
+        "y": 819
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0.LandscapeComponent_231",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0",
+      "section_base": {
+        "x": 441,
+        "y": 882
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_3_0.LandscapeComponent_204",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_3_0",
+      "section_base": {
+        "x": 756,
+        "y": 756
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_3_0.LandscapeComponent_220",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_3_0",
+      "section_base": {
+        "x": 756,
+        "y": 819
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_3_0.LandscapeComponent_236",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_3_0",
+      "section_base": {
+        "x": 756,
+        "y": 882
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_3_0.LandscapeComponent_205",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_3_0",
+      "section_base": {
+        "x": 819,
+        "y": 756
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_3_0.LandscapeComponent_221",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_3_0",
+      "section_base": {
+        "x": 819,
+        "y": 819
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_3_0.LandscapeComponent_237",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_3_0",
+      "section_base": {
+        "x": 819,
+        "y": 882
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_2_0.LandscapeComponent_172",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_2_0",
+      "section_base": {
+        "x": 756,
+        "y": 630
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_2_0.LandscapeComponent_188",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_2_0",
+      "section_base": {
+        "x": 756,
+        "y": 693
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_2_0.LandscapeComponent_173",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_2_0",
+      "section_base": {
+        "x": 819,
+        "y": 630
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_2_0.LandscapeComponent_189",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_2_0",
+      "section_base": {
+        "x": 819,
+        "y": 693
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0.LandscapeComponent_168",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0",
+      "section_base": {
+        "x": 504,
+        "y": 630
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0.LandscapeComponent_184",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0",
+      "section_base": {
+        "x": 504,
+        "y": 693
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0.LandscapeComponent_169",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0",
+      "section_base": {
+        "x": 567,
+        "y": 630
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0.LandscapeComponent_185",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0",
+      "section_base": {
+        "x": 567,
+        "y": 693
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0.LandscapeComponent_170",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0",
+      "section_base": {
+        "x": 630,
+        "y": 630
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0.LandscapeComponent_186",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0",
+      "section_base": {
+        "x": 630,
+        "y": 693
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0.LandscapeComponent_171",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0",
+      "section_base": {
+        "x": 693,
+        "y": 630
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0.LandscapeComponent_187",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0",
+      "section_base": {
+        "x": 693,
+        "y": 693
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0.LandscapeComponent_200",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0",
+      "section_base": {
+        "x": 504,
+        "y": 756
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0.LandscapeComponent_216",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0",
+      "section_base": {
+        "x": 504,
+        "y": 819
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0.LandscapeComponent_232",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0",
+      "section_base": {
+        "x": 504,
+        "y": 882
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0.LandscapeComponent_201",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0",
+      "section_base": {
+        "x": 567,
+        "y": 756
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0.LandscapeComponent_217",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0",
+      "section_base": {
+        "x": 567,
+        "y": 819
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0.LandscapeComponent_233",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0",
+      "section_base": {
+        "x": 567,
+        "y": 882
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0.LandscapeComponent_202",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0",
+      "section_base": {
+        "x": 630,
+        "y": 756
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0.LandscapeComponent_218",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0",
+      "section_base": {
+        "x": 630,
+        "y": 819
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0.LandscapeComponent_234",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0",
+      "section_base": {
+        "x": 630,
+        "y": 882
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0.LandscapeComponent_203",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0",
+      "section_base": {
+        "x": 693,
+        "y": 756
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0.LandscapeComponent_219",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0",
+      "section_base": {
+        "x": 693,
+        "y": 819
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0.LandscapeComponent_235",
+      "proxy": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0",
+      "section_base": {
+        "x": 693,
+        "y": 882
+      },
+      "quads": 63,
+      "subsections": 1,
+      "subsection_quads": 63,
+      "registered": true,
+      "keep_in_9_by_5": true,
+      "has_collision": true
+    }
+  ],
+  "landscape_descriptors": [
+    {
+      "actor_guid": "52757BC64901D09A1C7BD3B32C7C8C2F",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_0_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/0/XT/O5N67KQ56EFMCNYPLH4A9K",
+      "loaded": true
+    },
+    {
+      "actor_guid": "50E1FA164904B128D55A3AB70A8120A1",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_0_1_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/1/NB/MCE82ISOFTSZ4X6NYS59OS",
+      "loaded": true
+    },
+    {
+      "actor_guid": "964848664FBDA2AA04BBAEA534CF423D",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_2_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/1/S2/SNMFR6G92UWR7JNALFZ3ID",
+      "loaded": true
+    },
+    {
+      "actor_guid": "9B760E914A09431F6C1C14B1628EC904",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_3_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/5N/2QCZFO1QZEVPLRNWWQAEU9",
+      "loaded": true
+    },
+    {
+      "actor_guid": "2444FF834D8E01341CD2E983476AFFEC",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_2_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/MX/901N9FSMWQT8HGVSYW4Y54",
+      "loaded": true
+    },
+    {
+      "actor_guid": "A85BE56541F17B995D7BEA8091FCEE3C",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_1_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/PU/KC1ED7XNAH9AAXICI45DB5",
+      "loaded": true
+    },
+    {
+      "actor_guid": "6425064B47A57E12AD603FADB2A09E7B",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_3_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/T7/AAKXBAAJ48M6RIB9TWCIJD",
+      "loaded": true
+    },
+    {
+      "actor_guid": "EAF045BA48EC96FFC7DC91BDEAE9EB47",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_0_0_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/4/H0/HDSAW95KB8W4KIQGO7LCLZ",
+      "loaded": true
+    },
+    {
+      "actor_guid": "B29A8FA64C6796A35CBAA0947E0C1B16",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_2_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/5/M0/6G94JGZ2U5KIQB4T0SVBSO",
+      "loaded": true
+    },
+    {
+      "actor_guid": "DA6904BF83483ED0A8EC4CD186D535F5",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.Landscape_UAID_244BFE8DA9DF091403_1308582536",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/6/07/BJOVGSJNSG38C92ONIQ1FV",
+      "loaded": true
+    },
+    {
+      "actor_guid": "82B88FCC4F4BAB131A90CABA68B8A373",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_0_3_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/6/CX/4OKE4IU5PRT9PT9IEBCQJE",
+      "loaded": true
+    },
+    {
+      "actor_guid": "D225F3BB4D2E552E2CF191915C67846E",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_0_2_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/F5/ZZ4G2UBUAC0YP7HE5NQN5K",
+      "loaded": true
+    },
+    {
+      "actor_guid": "5DB7F7DE48040A8F5AA4D6BEAA7A7571",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_0_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/8/8H/1TS1J7SPRTSB29HY8N6OVS",
+      "loaded": true
+    },
+    {
+      "actor_guid": "5FEFB6A14AEA48CFDDDE9A9B352AE343",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_0_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/A/SI/Q73PU4UVN7VZEBFT770BFR",
+      "loaded": true
+    },
+    {
+      "actor_guid": "4791B5E94B2E1C92B43E7F9E7D0B5B12",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_1_1_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/D/I5/LUV6K94B7088CTTMNP5QAM",
+      "loaded": true
+    },
+    {
+      "actor_guid": "1A4B5B3C4D4850C3386DD3B2F8251AE9",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_2_3_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/E/KB/YSSONCL958619NZG0FJTP5",
+      "loaded": true
+    },
+    {
+      "actor_guid": "35E855874306EDB07D47129858CA4B27",
+      "actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.LandscapeStreamingProxy_17NIYWSAT3KRAN44IRABFX5CO_252_3_1_0",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/E/O9/T0S02D43S43BFII2NHH50W",
+      "loaded": true
+    }
+  ],
+  "main_landscape_count": 1,
+  "streaming_proxy_count": 16,
+  "nonempty_streaming_proxy_count": 6,
+  "empty_streaming_proxy_count": 10,
+  "component_count": 45,
+  "collision_component_count": 45,
+  "unique_component_count": 45,
+  "unique_collision_component_count": 45,
+  "landscape_descriptor_count": 17,
+  "all_landscape_descriptors_loaded": true,
+  "observed_loaded_bounds": {
+    "valid": true,
+    "min": {
+      "finite": true,
+      "x": -33749.99999999999,
+      "y": 22500.000000000015,
+      "z": 4440
+    },
+    "max": {
+      "finite": true,
+      "x": 67500,
+      "y": 78750,
+      "z": 9654
+    },
+    "size": {
+      "finite": true,
+      "x": 101250,
+      "y": 56249.999999999985,
+      "z": 5214
+    }
+  },
+  "landscape_actor_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.Landscape_UAID_244BFE8DA9DF091403_1308582536",
+  "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+  "actor_origin_cm": {
+    "finite": true,
+    "x": -90000,
+    "y": -90000,
+    "z": 0
+  },
+  "actor_scale": {
+    "finite": true,
+    "x": 178.57142857142858,
+    "y": 178.57142857142858,
+    "z": 256
+  },
+  "actor_rotation_pitch_yaw_roll": {
+    "finite": true,
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "material_path": "/Game/Stylized_Village/Assets/Terrain/Material_Landscape/MI_Terrain.MI_Terrain",
+  "edit_layer_count": 1,
+  "edit_layers": [
+    {
+      "index": 0,
+      "valid": true,
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.Landscape_UAID_244BFE8DA9DF091403_1308582536.LandscapeEditLayer_0",
+      "class": "/Script/Landscape.LandscapeEditLayer",
+      "name": "Layer",
+      "guid": "9C4488BD4196BCC81051B5A001047577",
+      "visible": true,
+      "locked": false,
+      "persistent_textures": true,
+      "editing_tools": true,
+      "height_alpha": 1,
+      "weight_alpha": 1
+    }
+  ],
+  "landscape_info_path": "/Engine/Transient.LandscapeInfo_0",
+  "selected_component_count": 0,
+  "selected_component_count_before": 0,
+  "selected_component_count_after": 0,
+  "layout": {
+    "component_size_quads": 63,
+    "subsection_size_quads": 63,
+    "subsections_per_component_axis": 1,
+    "observed_draw_scale": {
+      "finite": true,
+      "x": 178.57142857142858,
+      "y": 178.57142857142858,
+      "z": 256
+    }
+  },
+  "all_components_registered": true,
+  "landscape_extent": {
+    "valid": true,
+    "units": "inclusive_landscape_sample_coordinates",
+    "min": {
+      "x": 315,
+      "y": 630
+    },
+    "max": {
+      "x": 882,
+      "y": 945
+    },
+    "samples_x": 568,
+    "samples_y": 316
+  },
+  "complete_bounds": {
+    "valid": true,
+    "min": {
+      "finite": true,
+      "x": -33749.99999999999,
+      "y": 22500.000000000015,
+      "z": 4440
+    },
+    "max": {
+      "finite": true,
+      "x": 67500,
+      "y": 78750,
+      "z": 9654
+    },
+    "size": {
+      "finite": true,
+      "x": 101250,
+      "y": 56249.999999999985,
+      "z": 5214
+    }
+  },
+  "loaded_bounds": {
+    "valid": true,
+    "min": {
+      "finite": true,
+      "x": -33749.99999999999,
+      "y": 22500.000000000015,
+      "z": 4440
+    },
+    "max": {
+      "finite": true,
+      "x": 67500,
+      "y": 78750,
+      "z": 9654
+    },
+    "size": {
+      "finite": true,
+      "x": 101250,
+      "y": 56249.999999999985,
+      "z": 5214
+    }
+  },
+  "paint_layers": [
+    {
+      "name": "Auto Layer",
+      "layer_info_path": "/Game/Stylized_Village/Assets/Terrain/TerrainLayerWeights/AutoLayer_LayerInfo.AutoLayer_LayerInfo",
+      "layer_info_class": "/Script/Landscape.LandscapeLayerInfoObject"
+    },
+    {
+      "name": "__LANDSCAPE_VISIBILITY__",
+      "layer_info_path": "/Engine/EngineResources/LandscapeVisibilityLayerInfo.LandscapeVisibilityLayerInfo",
+      "layer_info_class": "/Script/Landscape.LandscapeLayerInfoObject"
+    }
+  ],
+  "metadata_digest": "6c10d91dca2d7995e6aae578e04e79ddc494c7a4ec632f1395fc9ea142f57017",
+  "retained_sample_count": 179488,
+  "height_byte_count": 358976,
+  "paint_bytes_per_layer": 179488,
+  "composite": {
+    "label": "composite",
+    "edit_layer_guid": "00000000000000000000000000000000",
+    "height": {
+      "digest": "ebdc9b9b9e0df3e98d5bf8cfe1938a09d1b79df18e15cda945db2d1e8f605e09",
+      "metadata_linked_digest": "cf2f794411b4ae2e6fbb2123874f9f2181b9c0412cb5bf656044fd41f339ec7e",
+      "encoding": "uint16_little_endian_RG_height",
+      "sample_count": 179488,
+      "byte_count": 358976,
+      "matching_seam_duplicates": 4832
+    },
+    "paint_weights": [
+      {
+        "layer_info_path": "/Engine/EngineResources/LandscapeVisibilityLayerInfo.LandscapeVisibilityLayerInfo",
+        "layer_name": "__LANDSCAPE_VISIBILITY__",
+        "digest": "a42b2b031cb051044c48c09b20e3cadc08b0b11d7ff2111ab7a407172b9a8d42",
+        "metadata_linked_digest": "8418a30baa70ef1096b06e6c4542a5ab85c287f1e942335dc8b08b8c6b4b2e26",
+        "encoding": "uint8_paint_weight",
+        "sample_count": 179488,
+        "byte_count": 179488,
+        "matching_seam_duplicates": 4832
+      },
+      {
+        "layer_info_path": "/Game/Stylized_Village/Assets/Terrain/TerrainLayerWeights/AutoLayer_LayerInfo.AutoLayer_LayerInfo",
+        "layer_name": "Auto Layer",
+        "digest": "3aa59dff248eb84e4a77c6882db1a89d2c3d2a302a9542b0f555b17810001aa8",
+        "metadata_linked_digest": "1c7e6fdd7721d921ecffc80782d7463959504319331c75bfeee305be20ad80da",
+        "encoding": "uint8_paint_weight",
+        "sample_count": 179488,
+        "byte_count": 179488,
+        "matching_seam_duplicates": 4832
+      }
+    ],
+    "complete": true
+  },
+  "raw_edit_layers": [
+    {
+      "name": "Layer",
+      "edit_layer_guid": "9C4488BD4196BCC81051B5A001047577",
+      "label": "edit-layer/9C4488BD4196BCC81051B5A001047577",
+      "height": {
+        "digest": "ebdc9b9b9e0df3e98d5bf8cfe1938a09d1b79df18e15cda945db2d1e8f605e09",
+        "metadata_linked_digest": "71ed31c068673352a1b78615466b42f36f0a88fd1218415a96025b86b0cc7471",
+        "encoding": "uint16_little_endian_RG_height",
+        "sample_count": 179488,
+        "byte_count": 358976,
+        "matching_seam_duplicates": 4832
+      },
+      "paint_weights": [
+        {
+          "layer_info_path": "/Engine/EngineResources/LandscapeVisibilityLayerInfo.LandscapeVisibilityLayerInfo",
+          "layer_name": "__LANDSCAPE_VISIBILITY__",
+          "digest": "a42b2b031cb051044c48c09b20e3cadc08b0b11d7ff2111ab7a407172b9a8d42",
+          "metadata_linked_digest": "958c153a1e331edfe01eb9789f68ae21cc0a966c9096df8f25c4f8a991a64696",
+          "encoding": "uint8_paint_weight",
+          "sample_count": 179488,
+          "byte_count": 179488,
+          "matching_seam_duplicates": 4832
+        },
+        {
+          "layer_info_path": "/Game/Stylized_Village/Assets/Terrain/TerrainLayerWeights/AutoLayer_LayerInfo.AutoLayer_LayerInfo",
+          "layer_name": "Auto Layer",
+          "digest": "3aa59dff248eb84e4a77c6882db1a89d2c3d2a302a9542b0f555b17810001aa8",
+          "metadata_linked_digest": "7770ea9f5bf0c8e2e3216fbce22657b3aeafb272a518223dd049e5aa55775c87",
+          "encoding": "uint8_paint_weight",
+          "sample_count": 179488,
+          "byte_count": 179488,
+          "matching_seam_duplicates": 4832
+        }
+      ],
+      "complete": true
+    }
+  ],
+  "texture_sources_unchanged": true,
+  "metadata_unchanged": true,
+  "selection_unchanged": true,
+  "editing_layer_unchanged": true,
+  "composite_settled_after_read": true,
+  "cached_texture_count": 123,
+  "all_requested_data_complete": true,
+  "snapshot_errors": [],
+  "semantic_snapshot_digest": "623961bac1faadd4138952f15694b5c54ae2226f51afba9acd5b7fd5857a9e1c",
+  "dirty_before": {
+    "maps": [],
+    "content": []
+  },
+  "dirty_after": {
+    "maps": [],
+    "content": []
+  },
+  "dirty_package_names_unchanged": true
+}

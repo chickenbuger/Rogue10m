@@ -1,0 +1,30 @@
+{
+  "schema": "Rogue10m.NaturalRefinementLogTriage.20261118.v1",
+  "actual_log": "refinement-host/engine.log",
+  "selected_boundary": "refinement-host/post-recovery-boundary.json",
+  "scan_result": "refinement-host/post-recovery-log-check.json",
+  "scan_exit_code": 1,
+  "existing_error_count": 1,
+  "new_error_count": 1,
+  "authored_controller_failure": {
+    "line": 2672,
+    "diagnosis": "Material compilation pumped Slate events and reentered the content phase. Recursive clean guard rejected before mutation; outer authors completed once.",
+    "resolution": "Busy guard and early authoring phase; QA-only recovery, full59 check, bounded save, independent cold60 passed.",
+    "failure_preserved": "refinement-live/failure.json",
+    "recovery": "refinement-live/qa-recovery-preflight.json"
+  },
+  "selected_new_error": {
+    "line": 2991,
+    "category": "LoadErrors",
+    "source_asset": "/Game/StylizedCharacter/Meshes/Character/Human/Male/SKEL_Hu_M",
+    "missing_legacy_dependency": "/Engine/EngineMeshes/Humanoid",
+    "dependency_id": "698EF88627D84FC7",
+    "earlier_same_error": "Feature/doc/evidence/landscape-resume-20261117/editor.log:3492",
+    "classification": "Preexisting vendor dependency reproduced during final representative PIE. Source asset was not edited.",
+    "resolved": false
+  },
+  "independent_cold_log_check": "refinement-cold-host/log-check.json",
+  "independent_cold_error_count": 0,
+  "whole_live_log_error_free": false,
+  "verbosity_or_test_suppression": false
+}

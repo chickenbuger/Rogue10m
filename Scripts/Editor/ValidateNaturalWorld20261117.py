@@ -12,6 +12,7 @@ from collections import OrderedDict
 import copy
 from datetime import datetime, timezone
 import hashlib
+import importlib.util
 import json
 import math
 from pathlib import Path
@@ -179,7 +180,8 @@ def planned_checks(height_plan, author_plan):
             "boundary": "CPU planned grid checks; not collision or traversal evidence"}
 
 
-def validate_editor(*, native_before=None, apply_report=None, author_report=None, material_repair_report=None, require_saved=False):
+def validate_editor(*, native_before=None, apply_report=None, author_report=None, material_repair_report=None,
+                    require_saved=False, refinement_stage="auto"):
     """Return JSON-compatible structural QA; failures retain diagnostics, no edits."""
     import unreal as u
     report = {"schema": "Rogue10m.NaturalWorldStructuralQA.20261117.v1", "passed": False,
@@ -204,13 +206,21 @@ def validate_editor(*, native_before=None, apply_report=None, author_report=None
             raise RuntimeError("Exact loaded idle Crop candidate required")
         dirty_before = dirty()
         plan, selection = selected_author_plan()
-        height = read(OUT/"target-height-plan.json")
+        refinement_spec = importlib.util.spec_from_file_location("NaturalWorldRefinementQA20261118",
+            ROOT/"Scripts/Editor/NaturalWorldRefinementQA20261118.py")
+        refinement = importlib.util.module_from_spec(refinement_spec)
+        refinement_spec.loader.exec_module(refinement)
+        selected_stage = refinement.stage(refinement_stage)
+        height, height_selection = refinement.select_height(selected_stage)
+        report["refinement_stage"] = selected_stage
+        report["height_plan_selection"] = height_selection
         report["author_plan_selection"] = selection
         old = read(OUT/"baseline-live/snapshot.json")
         old_dependencies = read(OUT/"baseline-live/dependencies.json")
         baseline = read(OUT/"baseline-live/actors.json")
         before = read(native_before or OUT/"author-live/native-before.json")
-        applied = read(apply_report or OUT/"author-live/apply-height.json")
+        applied = read(apply_report or OUT/("author-live/apply-height.json" if selected_stage == "baseline"
+                                           else "refinement-live/apply-height.json"))
         authored = read(author_report or OUT/"author-live/author-content.json")
         report["author_report_schema"] = authored.get("schema")
         repair = read(material_repair_report or OUT/"author-live/ism-material-repair.json")
@@ -353,10 +363,21 @@ def validate_editor(*, native_before=None, apply_report=None, author_report=None
         check("roads29_flat_8m_new_material", len(roads) == 29 and not road_failures, road_failures)
 
         dressing = plan["dressing"]
-        groups = dressing["groups"]
+        groups = list(dressing["groups"])
+        has_boss = selected_stage in ("boss_only", "complete")
+        has_floors = selected_stage == "complete"
+        if has_boss:
+            boss_group, boss_plan = refinement.boss_group()
+            groups.append(boss_group)
+            report["boss_plan_file"] = str(refinement.BOSS_PLAN.relative_to(ROOT))
         wanted_labels = {g["actor_label"] for g in groups}
+        if has_floors:
+            wanted_labels |= refinement.FLOOR_LABELS
         new_actors = [a for p, a in actual.items() if p not in old_by_path]
-        check("new_actors_exact10_dressing", len(new_actors) == 10 and {a.get_actor_label() for a in new_actors} == wanted_labels)
+        expected_new_count = 14 if has_floors else 11 if has_boss else 10
+        check("new_actors_exact_declared_stage", len(new_actors) == expected_new_count
+              and {a.get_actor_label() for a in new_actors} == wanted_labels,
+              {"expected": expected_new_count, "observed": len(new_actors), "stage": selected_stage})
         by_label = {a.get_actor_label(): a for a in new_actors}
         instances, component_rows, instance_failures = {}, [], []
         editor_visualizers = []
@@ -366,13 +387,15 @@ def validate_editor(*, native_before=None, apply_report=None, author_report=None
                 instance_failures.append(group["id"]+":missing actor")
                 continue
             hidden_actor = group["id"] == "ClosedBoundaryBackup"
+            is_boss = group["id"] == "BossThreshold"
+            bin_prefix = "NW18" if is_boss else "NW17"
             actor_rotation = actor.get_actor_rotation()
             check("group_identity_"+group["id"], path(actor.get_class()) == "/Script/Engine.Actor"
                   and set(map(str, actor.tags)) == {BASE_TAG, SCOPE_TAG, *group["tags"]}
                   and str(actor.get_folder_path()) == group["folder"] and close(xyz(actor.get_actor_location()), [0, 0, 0])
                   and close(xyz(actor.get_actor_scale3d()), [1, 1, 1], .0001)
                   and close(basis([actor_rotation.pitch, actor_rotation.yaw, actor_rotation.roll]), basis([0, 0, 0]), .0001)
-                  and bool(actor.get_editor_property("is_spatially_loaded")) is not hidden_actor
+                  and bool(actor.get_editor_property("is_spatially_loaded")) == (not hidden_actor and not is_boss)
                   and bool(actor.get_editor_property("hidden")) is hidden_actor)
             components = list(actor.get_components_by_class(u.InstancedStaticMeshComponent))
             # ActorFactoryEmptyActor's native DefaultSceneRoot can create one
@@ -395,18 +418,19 @@ def validate_editor(*, native_before=None, apply_report=None, author_report=None
             check("group_components_"+group["id"], len(components) == len(bins) and allowed_sprites,
                   {"ism_count": len(components), "planned_bins": len(bins), "extra_primitives": sprite_rows})
             for index, ((mesh, material, role, hidden), rows) in enumerate(bins.items()):
-                selected = [c for c in components if "NW17.Bin."+str(index).zfill(2) in map(str, c.get_editor_property("component_tags"))]
+                selected = [c for c in components if bin_prefix+".Bin."+str(index).zfill(2) in map(str, c.get_editor_property("component_tags"))]
                 if len(selected) != 1:
                     instance_failures.append(group["id"]+":missing/duplicate bin "+str(index))
                     continue
                 c = selected[0]
                 mesh_object = c.get_editor_property("static_mesh")
                 box = mesh_object.get_bounding_box() if mesh_object else None
-                valid = (material in MATERIAL_DERIVATIVES and package(c.get_editor_property("static_mesh")) == mesh
-                         and package(c.get_material(0)) == MATERIAL_DERIVATIVES[material]
+                expected_material = material if is_boss else MATERIAL_DERIVATIVES.get(material)
+                valid = (expected_material is not None and package(c.get_editor_property("static_mesh")) == mesh
+                         and package(c.get_material(0)) == expected_material
                          and c.get_instance_count() == len(rows) and bool(c.get_editor_property("visible")) is not hidden
                          and bool(c.get_editor_property("hidden_in_game")) is hidden
-                         and set(map(str, c.get_editor_property("component_tags"))) == {DRESS_TAG, SCOPE_TAG, "NW17.Role."+role, "NW17.Bin."+str(index).zfill(2)})
+                         and set(map(str, c.get_editor_property("component_tags"))) == {DRESS_TAG, SCOPE_TAG, bin_prefix+".Role."+role, bin_prefix+".Bin."+str(index).zfill(2)})
                 valid &= box is not None and close(xyz(box.min), [-50, -50, -50], .01) and close(xyz(box.max), [50, 50, 50], .01)
                 visual = role == "visual_only"
                 valid &= c.get_collision_enabled() == (u.CollisionEnabled.NO_COLLISION if visual else u.CollisionEnabled.QUERY_AND_PHYSICS)
@@ -438,7 +462,18 @@ def validate_editor(*, native_before=None, apply_report=None, author_report=None
                     instance_failures.append(group["id"]+":bin settings "+str(index))
         report["dressing_components"] = component_rows
         report["native_editor_visualizers"] = editor_visualizers
-        check("exact708_instance_transforms_and_settings", len(instances) == 708 and not instance_failures, instance_failures[:30])
+        expected_instances = 713 if has_boss else 708
+        check("exact_declared_instance_transforms_and_settings", len(instances) == expected_instances
+              and len(component_rows) == (24 if has_boss else 22) and not instance_failures, instance_failures[:30])
+        if has_boss:
+            west, east, lintel = (instances.get("BossThreshold_"+suffix) for suffix in ("Post_W", "Post_E", "Lintel"))
+            check("boss_threshold_actual_inner_bounds", all((west,east,lintel))
+                and abs((east["center"][0]-east["dimensions"][0]/2)
+                        -(west["center"][0]+west["dimensions"][0]/2)-1400)<.1
+                and abs(lintel["center"][2]-lintel["dimensions"][2]/2-10600)<.1)
+        if has_floors:
+            report["village_earth"] = refinement.validate_floor(u, new_actors,
+                [actual[p] for p in roads], check)
         gate_rows = []
         for enclosure in dressing["enclosures"]:
             for gate in enclosure["gates"]:

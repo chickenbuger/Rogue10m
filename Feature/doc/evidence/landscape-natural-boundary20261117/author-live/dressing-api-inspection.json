@@ -1,0 +1,68 @@
+{
+  "pid": 7684,
+  "read_only": true,
+  "actors_created": 0,
+  "saved": false,
+  "methods": {
+    "component": {
+      "add_instance": true,
+      "get_collision_enabled": true,
+      "get_collision_profile_name": true,
+      "get_collision_response_to_channel": true,
+      "get_editor_property": true,
+      "get_instance_count": true,
+      "get_instance_transform": true,
+      "get_material": true,
+      "get_name": true,
+      "set_cast_shadow": true,
+      "set_collision_enabled": true,
+      "set_collision_object_type": true,
+      "set_collision_profile_name": true,
+      "set_collision_response_to_all_channels": true,
+      "set_collision_response_to_channel": true,
+      "set_editor_property": true,
+      "set_generate_overlap_events": false,
+      "set_hidden_in_game": true,
+      "set_material": true,
+      "set_mobility": true,
+      "set_static_mesh": true,
+      "set_visibility": true
+    },
+    "actor": {
+      "get_actor_label": true,
+      "get_actor_transform": true,
+      "get_class": true,
+      "get_editor_property": true,
+      "get_folder_path": true,
+      "get_package": true,
+      "set_actor_hidden_in_game": true,
+      "set_actor_label": true,
+      "set_actor_transform": true,
+      "set_editor_property": true,
+      "set_folder_path": true
+    }
+  },
+  "properties": {
+    "generate_overlap_events": {
+      "readable": true,
+      "value": "True"
+    },
+    "cast_shadow": {
+      "readable": true,
+      "value": "True"
+    },
+    "visible": {
+      "readable": true,
+      "value": "True"
+    },
+    "hidden_in_game": {
+      "readable": true,
+      "value": "False"
+    },
+    "can_ever_affect_navigation": {
+      "readable": true,
+      "value": "True"
+    }
+  },
+  "dirty_set_unchanged": true
+}

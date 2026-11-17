@@ -243,3 +243,9 @@
 사용자의 기획 선공개→Landscape 제작 지시에 따라 [1차 기획서](../Feature/architect/2026-11-16_landscape-production-plan.md)와 [지형 좌표 보충 JSON](References/WorldMap/landscape-production-20261116.json)을 추가했다. 기존 좌표와 중앙300m·3큰마을·5초소·29도로를 유지하는9×5컴포넌트(1,012.5×562.5m) 안이다. 에디터 복구 후 사용자가 외곽211개 삭제를 승인해 독립 Crop 후보를 native Landscape 도구로 편집·저장했다. 새 에디터에서45개 지형/충돌과 높이·페인트·레이어·액터 보존26항목이 통과했다. Undo/Redo 직후 composite 오류와 도로 격자선 레이2점의 실패를 보존하며, 상세 검증·보행 상태는 [제작 결과서](../Feature/doc/2026-11-16_landscape-production-result.md)를 따른다. 최종 지형·콘텐츠 인수 완료와 구분한다. 기존 두 카탈로그는 그대로다.
 
 후속 [참조 검사·프로필 초기화 C++ 수정](../Feature/doc/2026-11-16_reference-scanner-compatibility.md)은 새 DLL의 별도 검증으로 loaded reflection 미지원0·보존9항목/이전cold7항목과 native 프로필 회귀를 통과했다. 향후 지형 검증은 새 DLL에서 success와 loaded_reflection_walk_complete를 모두 요구하며 과거 미지원 허용 예외는 제거했다. 이는 실제 보행·도로 시각 연속성·native/custom/미로드/전이 참조 전체 인수와 별도다. 과거 실패 증거는 수정하지 않는다.
+
+## 2026-11-18 사용자 지시를 반영한 지형·마을 보완
+
+Crop 후보의 내부는Z9600cm로 평탄하게 정리했다. 기존 S50m→B96m의 상승 설계는 이번 평지 지시로 대체한다. XY의21지점·29도로·중앙300m는 유지한다. 외곽은 최대32.94m 높은 둥근 능선과 숨김 Pawn 차단13개로 구획하고, H/M/T에는 목재 울타리·낮은 목책·석벽과 열린 출입구13곳을 적용했다. 울타리 안은 갈색 흙, 바깥은 잔디로 읽히게 하며 도로 가장자리도 잔디로 전이한다.
+
+현재 완성 범위와 검증은 [자연 경계·마을 제작 결과](../Feature/doc/2026-11-17_natural-world-boundaries.md)와 [보충 카탈로그](References/WorldMap/landscape-natural-boundary20261117.json)를 따른다. 새 배치는 지역 표식·환경 소품과 보스 입구의 시각 문주이며 NPC·퀘스트·보상·적15종의 신규 기능을 설치한 결과가 아니다. 기존 Q의 지하 훈련실과Z의 지하 보관 공간은 여전히 계획 단계다. 실제 천장·갈림길·복층 동굴은 별도 제작과 통행 검증이 필요하다.
