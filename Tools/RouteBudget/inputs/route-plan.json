@@ -1,0 +1,414 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "design_static_only",
+  "created_utc": "2026-11-10",
+  "baseline_branch": "Sprint#9-29-humanoid-boss-npc",
+  "baseline_commit": "51f2def0",
+  "runtime_measured": false,
+  "coordinates": {
+    "space": "proposed_local_plane",
+    "units": "meters",
+    "north": "+Y",
+    "world_anchor_applied": false
+  },
+  "timing": {
+    "walk_speed_mps_assumed": 6,
+    "sprint_used": false,
+    "direct_entry_target_seconds": 60,
+    "content_entry_target_seconds": 900,
+    "boss_combat_budget_seconds": 180,
+    "contingency_budget_seconds": 120,
+    "run_cap_seconds": 1200,
+    "clock": "active_run_time",
+    "endpoint": "boss_entrance_crossing"
+  },
+  "nodes": [
+    {
+      "id": "S",
+      "kind": "entry",
+      "xy": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "J80",
+      "kind": "junction",
+      "xy": [
+        0,
+        80
+      ]
+    },
+    {
+      "id": "J185",
+      "kind": "junction",
+      "xy": [
+        0,
+        185
+      ]
+    },
+    {
+      "id": "J230",
+      "kind": "junction",
+      "xy": [
+        0,
+        230
+      ]
+    },
+    {
+      "id": "V1",
+      "kind": "village",
+      "xy": [
+        -140,
+        80
+      ],
+      "name_ko": "낙엽촌"
+    },
+    {
+      "id": "V2",
+      "kind": "village",
+      "xy": [
+        140,
+        80
+      ],
+      "name_ko": "풍차장터"
+    },
+    {
+      "id": "V3",
+      "kind": "village",
+      "xy": [
+        -300,
+        230
+      ],
+      "name_ko": "돌샘촌"
+    },
+    {
+      "id": "V4",
+      "kind": "village",
+      "xy": [
+        60,
+        230
+      ],
+      "name_ko": "기록촌"
+    },
+    {
+      "id": "V5",
+      "kind": "village",
+      "xy": [
+        300,
+        230
+      ],
+      "name_ko": "잔불촌"
+    },
+    {
+      "id": "B",
+      "kind": "boss_entrance",
+      "xy": [
+        0,
+        300
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "a": "S",
+      "b": "J80",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "J80",
+      "b": "J185",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "J185",
+      "b": "J230",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "J230",
+      "b": "B",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "S",
+      "b": "V1",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "S",
+      "b": "V2",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "V1",
+      "b": "J80",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "J80",
+      "b": "V2",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "V1",
+      "b": "V3",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "V1",
+      "b": "J185",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "J185",
+      "b": "V4",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "V2",
+      "b": "V4",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "V2",
+      "b": "V5",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "V3",
+      "b": "J230",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "J230",
+      "b": "V4",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "V4",
+      "b": "V5",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "V3",
+      "b": "B",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "V4",
+      "b": "B",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    },
+    {
+      "a": "V5",
+      "b": "B",
+      "bidirectional": true,
+      "required_quests": [],
+      "transition": "walk_same_world"
+    }
+  ],
+  "routes": [
+    {
+      "id": "direct",
+      "nodes": [
+        "S",
+        "J80",
+        "J185",
+        "J230",
+        "B"
+      ],
+      "expected_length_m": 300,
+      "expected_walk_seconds": 50,
+      "entry_budget_seconds": 60
+    },
+    {
+      "id": "revisit",
+      "nodes": [
+        "S",
+        "V1",
+        "V3",
+        "J230",
+        "V4",
+        "J185",
+        "V1",
+        "J185",
+        "V4",
+        "B"
+      ],
+      "expected_length_m": 1332.758,
+      "expected_walk_seconds": 222.126,
+      "entry_budget_seconds": 900
+    },
+    {
+      "id": "east",
+      "nodes": [
+        "S",
+        "V2",
+        "V5",
+        "V4",
+        "B"
+      ],
+      "expected_length_m": 712.758,
+      "expected_walk_seconds": 118.793,
+      "entry_budget_seconds": 900
+    },
+    {
+      "id": "five_visits",
+      "nodes": [
+        "S",
+        "V1",
+        "V3",
+        "J230",
+        "V4",
+        "V2",
+        "V5",
+        "V4",
+        "B"
+      ],
+      "expected_length_m": 1462.075,
+      "expected_walk_seconds": 243.679,
+      "entry_budget_seconds": null
+    },
+    {
+      "id": "skip_west",
+      "nodes": [
+        "S",
+        "V2",
+        "V4",
+        "B"
+      ],
+      "expected_length_m": 423.441,
+      "expected_walk_seconds": 70.573,
+      "entry_budget_seconds": null
+    }
+  ],
+  "activity_budgets": [
+    {
+      "route": "revisit",
+      "seconds": 900,
+      "activities": [
+        {
+          "id": "between_villages",
+          "seconds": 255,
+          "kind": "travel"
+        },
+        {
+          "id": "Q_V1_supply",
+          "seconds": 105,
+          "kind": "quest"
+        },
+        {
+          "id": "D_V3_quarry",
+          "seconds": 180,
+          "kind": "dungeon"
+        },
+        {
+          "id": "Q_V4_record",
+          "seconds": 165,
+          "kind": "quest"
+        },
+        {
+          "id": "E_V3_north_patrol",
+          "seconds": 120,
+          "kind": "encounter"
+        },
+        {
+          "id": "active_purchase_and_report",
+          "seconds": 30,
+          "kind": "interaction"
+        },
+        {
+          "id": "local_approach_and_variance",
+          "seconds": 45,
+          "kind": "local_travel_and_variance"
+        }
+      ]
+    },
+    {
+      "route": "east",
+      "seconds": 900,
+      "activities": [
+        {
+          "id": "between_villages",
+          "seconds": 165,
+          "kind": "travel"
+        },
+        {
+          "id": "Q_V2_stolen_grain",
+          "seconds": 150,
+          "kind": "quest"
+        },
+        {
+          "id": "D_V5_furnace",
+          "seconds": 270,
+          "kind": "dungeon"
+        },
+        {
+          "id": "Q_V4_record",
+          "seconds": 165,
+          "kind": "quest"
+        },
+        {
+          "id": "active_purchase_and_report",
+          "seconds": 45,
+          "kind": "interaction"
+        },
+        {
+          "id": "local_approach_and_variance",
+          "seconds": 105,
+          "kind": "local_travel_and_variance"
+        }
+      ]
+    }
+  ],
+  "state_contracts": {
+    "village_visit_required_for_boss": false,
+    "quests_required_for_travel": false,
+    "return_before_boss_engagement": true,
+    "quest_progress_same_run_survives_streaming": true,
+    "reward_receipt_fields": [
+      "RunId",
+      "QuestId",
+      "RewardStage"
+    ],
+    "cross_process_resume_promised": false,
+    "boss_disengagement_policy": "unresolved"
+  }
+}

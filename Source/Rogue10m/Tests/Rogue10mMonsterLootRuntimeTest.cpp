@@ -1,4 +1,4 @@
-// Controlled standalone collision/persistence fixture. No authored asset mutation.
+// Controlled standalone automatic loot/persistence fixture. No authored asset mutation.
 #if WITH_EDITOR
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
@@ -17,8 +17,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "Misc/CommandLine.h"
 #include "Misc/FileHelper.h"
-#include "Misc/OutputDevice.h"
-#include "Misc/OutputDeviceRedirector.h"
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
 #include "Rogue10m.h"
@@ -32,6 +30,7 @@
 #include "Rogue10mLootTableDataAsset.h"
 #include "Rogue10mMonsterDataAsset.h"
 #include "Rogue10mMonsterLootComponent.h"
+#include "Rogue10mLootDeliverySubsystem.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
 #include "Rogue10mProgressionSaveGame.h"
@@ -52,16 +51,6 @@ static bool OneOption(const TArray<FString>& Options, const TCHAR* Name, FString
     }
     return Count == 1 && !Value.IsEmpty();
 }
-
-struct FGroundWarningCapture : FOutputDevice
-{
-    int32 Count = 0;
-    virtual void Serialize(const TCHAR* Text, ELogVerbosity::Type Verbosity, const FName& Category) override
-    {
-        if (Verbosity == ELogVerbosity::Warning && Category == FName(TEXT("LogRogue10m"))
-            && FString(Text).Contains(TEXT("no supported ground was found"))) { ++Count; }
-    }
-};
 
 class FRun : public TSharedFromThis<FRun>
 {
@@ -210,6 +199,14 @@ private:
     }
     void CreateDrop()
     {
+        // This fresh QA profile starts with a known empty grid so the death award
+        // creates a persistent GUID rather than merging into a starter stack.
+        auto Baseline = Inventory->CaptureInventory();
+        Check(!Baseline.Containers.IsEmpty(), TEXT("QA_inventory_has_base_grid"));
+        if (Failures) { Finish(); return; }
+        Baseline.Containers.SetNum(1); Baseline.Containers[0].Entries.Reset();
+        Baseline.Containers[0].GridSize = FIntPoint(1,1); Baseline.Containers[0].BagAsset.Reset();
+        Check(Inventory->RestoreInventory(Baseline), TEXT("QA_grid_normalized_without_changing_production_assets"));
         Check(Saves->SaveNow(), TEXT("baseline_QA_inventory_saved_before_death"));
         FHitResult Ground; const FVector Probe = Character->GetActorLocation() + Character->GetActorForwardVector() * 600.0f + FVector(0,0,300);
         const bool Supported = World->LineTraceSingleByObjectType(Ground, Probe, Probe - FVector(0,0,5000), FCollisionObjectQueryParams(ECC_WorldStatic), FCollisionQueryParams(SCENE_QUERY_STAT(LootRuntimeGround), false, Character.Get()));
@@ -220,26 +217,25 @@ private:
         Check(Target.IsValid() && !Target->IsCombatTestInstance(), TEXT("QA_normal_monster_clones_live_slime_without_mutating_asset"));
         if (Failures) { Finish(); return; }
         Target->TakeDamage(1000.0f, FDamageEvent(), PC.Get(), Character.Get());
-        Check(Target->IsDead() && Target->GetMonsterLootComponent()->GetCommittedDropCount() == 1, TEXT("actual_lethal_damage_commits_one_drop"));
-        for (TActorIterator<ARogue10mDroppedItem> It(World.Get()); It; ++It)
-        { if (It->GetOwner() == Target.Get() && !It->IsActorBeingDestroyed()) { Pickup = *It; break; } }
-        Check(Pickup.IsValid(), TEXT("death_created_real_world_pickup_away_from_player"));
+        Check(Target->IsDead() && Target->GetMonsterLootComponent()->GetAutomaticallyReceivedQuantity() == 1
+            && Target->GetMonsterLootComponent()->GetCommittedDropCount() == 0, TEXT("actual_lethal_damage_auto_deposits_one_without_world_actor"));
+        for (const auto& Container : Inventory->GetInventoryContainers())
+        { for (const auto& Entry : Container.Entries) { if (Entry.ItemData == Potion.Get()) { LootId = Entry.InstanceId; break; } } }
+        Check(LootId.IsValid() && FindOwned(LootId) && FindOwned(LootId)->Quantity == 1, TEXT("automatic_inventory_instance_identity_recorded"));
         if (Failures) { Finish(); return; }
-        LootId = Pickup->GetItemStack().InstanceId;
-        Check(LootId.IsValid() && Pickup->GetItemStack().Quantity == 1 && !FindOwned(LootId), TEXT("uncollected_instance_identity_recorded"));
-        const FVector Destination = Pickup->GetActorLocation() + FVector(0,0,Character->GetCapsuleComponent()->GetScaledCapsuleHalfHeight()-35.0f);
-        // Collision overlap is the only acquisition trigger. No direct TryPickup call is used.
-        Character->SetActorLocation(Destination, false, nullptr, ETeleportType::TeleportPhysics);
-        Character->GetCapsuleComponent()->UpdateOverlaps();
+        // No TryPickup call or movement is needed for automatic kill rewards.
         Later(0.25, [this]{ VerifyOverlap(); });
     }
     void VerifyOverlap()
     {
         const auto* Entry = FindOwned(LootId);
-        Check(Entry && Entry->Quantity == 1 && Entry->ItemData == Potion.Get(), TEXT("actual_collision_auto_overlap_added_exact_GUID_and_quantity"));
-        Check(!Pickup.IsValid() || Pickup->IsActorBeingDestroyed(), TEXT("successful_auto_overlap_consumed_world_actor"));
+        Check(Entry && Entry->Quantity == 1 && Entry->ItemData == Potion.Get(), TEXT("actual_kill_auto_deposit_kept_exact_GUID_and_quantity"));
+        int32 TargetDrops = 0;
+        for (TActorIterator<ARogue10mDroppedItem> It(World.Get()); It; ++It)
+        { if (It->GetOwner() == Target.Get() && !It->IsActorBeingDestroyed()) { ++TargetDrops; } }
+        Check(TargetDrops == 0, TEXT("automatic_reward_required_no_world_pickup"));
         Target->TakeDamage(1000.0f, FDamageEvent(), PC.Get(), Character.Get());
-        Check(Target->GetMonsterLootComponent()->GetCommittedDropCount() == 1, TEXT("repeated_lethal_damage_does_not_duplicate"));
+        Check(Target->GetMonsterLootComponent()->GetCommittedDropCount() == 0 && Target->GetMonsterLootComponent()->GetAutomaticallyReceivedQuantity() == 1, TEXT("repeated_lethal_damage_does_not_duplicate"));
         if (Failures) { Finish(); return; }
         Later(1.6, [this]{ VerifyPersistence(); });
     }
@@ -269,14 +265,20 @@ private:
         auto* Unsupported = SpawnFixture(GroundPoint + FVector(0,0,100000));
         Check(Unsupported != nullptr, TEXT("unsupported_ground_fixture_spawned"));
         if (!Unsupported) { Finish(); return; }
-        FGroundWarningCapture Capture; if (GLog) { GLog->AddOutputDevice(&Capture); }
+        auto* Delivery = World->GetSubsystem<URogue10mLootDeliverySubsystem>();
+        Check(Delivery != nullptr, TEXT("world_overflow_custody_available"));
+        if (!Delivery) { Finish(); return; }
+        const int32 BeforePending = Delivery->GetPendingStackCount();
         Unsupported->TakeDamage(1000.0f, FDamageEvent(), nullptr, nullptr);
-        if (GLog) { GLog->RemoveOutputDevice(&Capture); }
         auto* Loot = Unsupported->GetMonsterLootComponent();
-        Check(Capture.Count == 1 && Unsupported->IsDead() && Loot->HasProcessedDeathLoot() && Loot->GetCommittedDropCount() == 0, TEXT("no_supported_ground_emits_one_warning_and_consumes_roll_without_drop"));
-        Unsupported->SetActorLocation(GroundPoint+FVector(0,0,100),false,nullptr,ETeleportType::TeleportPhysics);
-        Check(Loot->SpawnDeathLoot(Unsupported->GetMonsterData()->LootTable.Get()) == 0 && Loot->GetCommittedDropCount() == 0, TEXT("failed_ground_drop_is_not_rerolled_after_corpse_moves"));
-        Finish();
+        Check(Unsupported->IsDead() && Loot->HasProcessedDeathLoot() && Loot->GetCommittedDropCount() == 0
+            && Delivery->GetPendingStackCount() == BeforePending+1, TEXT("unsupported_overflow_retained_without_reroll_or_loss"));
+        if (Failures || Delivery->GetPendingStackCount() <= BeforePending) { Finish(); return; }
+        const FGuid PendingId = Delivery->GetPendingLoot().Last().Stack.InstanceId;
+        Unsupported->Destroy();
+        Delivery->RetryPendingLoot();
+        Check(Delivery->GetPendingStackCount() == BeforePending+1
+            && Delivery->GetPendingLoot().Last().Stack.InstanceId == PendingId, TEXT("same_pending_GUID_survives_corpse_destruction_and_retry"));        Finish();
     }
     void Read()
     {
@@ -307,7 +309,6 @@ private:
     TWeakObjectPtr<ARogue10mCharacter> Character;
     TWeakObjectPtr<URogue10mInventoryComponent> Inventory;
     TWeakObjectPtr<ARogue10mBasicMonster> Target;
-    TWeakObjectPtr<ARogue10mDroppedItem> Pickup;
     TStrongObjectPtr<URogue10mItemDataAsset> Potion;
     URogue10mCharacterProfileSubsystem* Profiles=nullptr;
     URogue10mProgressionSubsystem* Saves=nullptr;
@@ -327,7 +328,7 @@ static void Run(bool Read)
     for (const auto& Context:GEngine->GetWorldContexts())
     { if (auto* W=Context.World();W&&W->WorldType==EWorldType::Game) { Active=MakeShared<FRun>();Active->Start(*W,Read);return; } }
 }
-static FAutoConsoleCommand WriteCommand(TEXT("Rogue10m.TestMonsterLootWrite"),TEXT("Controlled real overlap and debounce/disk loot QA; exact fresh MonsterLoot QA namespaces required."),FConsoleCommandDelegate::CreateLambda([]{Run(false);}));
+static FAutoConsoleCommand WriteCommand(TEXT("Rogue10m.TestMonsterLootWrite"),TEXT("Controlled automatic kill reward and debounce/disk QA; exact fresh MonsterLoot QA namespaces required."),FConsoleCommandDelegate::CreateLambda([]{Run(false);}));
 static FAutoConsoleCommand ReadCommand(TEXT("Rogue10m.TestMonsterLootRead"),TEXT("Second-process verification of isolated monster loot GUID/quantity."),FConsoleCommandDelegate::CreateLambda([]{Run(true);}));
 }
 #endif

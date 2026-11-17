@@ -1,5 +1,17 @@
 // Opt-in standalone editor-build fixture. Programmatic input; no physical-input or full-run claim.
 #if WITH_EDITOR
+#include "Animation/AnimMontage.h"
+#include "Animation/AnimSequence.h"
+#include "NiagaraSystem.h"
+#include "AssetCompilingManager.h"
+#include "ShaderCompiler.h"
+#include "GameFramework/DamageType.h"
+#include "AI/Rogue10mMonsterAIController.h"
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BehaviorTreeComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Rogue10mHumanoidAnimInstance.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -65,6 +77,7 @@ public:
         Output = FPaths::ProjectDir()/TEXT("Feature/doc/evidence/boss-readability-20261103")/Label;
         Images = FPaths::ProjectDir()/TEXT("DevLog")/(TEXT("20261103_BossReadability_")+Label);
         bRendered = !FParse::Param(Args, TEXT("nullrhi"));
+        bThirdPerson = FParse::Param(Args, TEXT("RogueBossThirdPersonQA"));
         if (IFileManager::Get().DirectoryExists(*Output) || IFileManager::Get().DirectoryExists(*Images))
         { UE_LOG(LogRogue10m, Error, TEXT("RESULT=BOSS_READABILITY_FAILED fresh_evidence_required")); FPlatformMisc::RequestExitWithStatus(false, 1); return; }
         IFileManager::Get().MakeDirectory(*Output, true);
@@ -72,6 +85,7 @@ public:
         Frames = TEXT("frame,world_s,dt,case,elapsed_s,state,warning,health,hit_count,player_x,player_y,player_z,speed,dodging,dodge_cd,inside_narrow,boss_move_cm,locked_move_cm,locked_forward_error,windup_remaining\n");
         Captures = TEXT("name,event,frame,world_s,case,elapsed_s,state,health,hud_visible,hud_tracked_boss,hud_remaining,hud_duration,hud_progress\n");
         HudFrames = TEXT("frame,world_s,case,elapsed_s,pattern_state,locked_local,tracked_boss,hud_visible,hud_remaining,hud_duration,hud_progress,blocking_ui,inspection\n");
+        AnimationFrames=TEXT("frame,world_s,case,elapsed_s,state,montage,position,rate,left_x,left_y,left_z,right_x,right_y,right_z,foot_l_x,foot_l_y,foot_l_z,foot_r_x,foot_r_y,foot_r_z\n");
         Deadline = FPlatformTime::Seconds()+240.0;
         FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self=AsShared()](float)
         {
@@ -108,13 +122,14 @@ private:
             World->GetTimeSeconds(), *CaseName, World->GetTimeSeconds()-StartTime,
             Pattern.IsValid()?int32(Pattern->GetPatternState()):-1, Player.IsValid()?Player->GetRogueAttributeSet()->GetHealth():-1.f,
             V.bVisible,Tracked,V.RemainingSeconds,V.TotalSeconds,V.ProgressAlpha);
-        const bool Expected=PendingPhoto.EndsWith(TEXT("_ready.png"));
-        Check(V.bVisible==Expected,TEXT("actual_capture_HUD_visibility_matches_ready_or_resolved_phase"));
+        const bool Expected=!bThirdPerson && PendingPhoto.EndsWith(TEXT("_ready.png"));
+        if (!bThirdPerson) Check(V.bVisible==Expected,TEXT("actual_capture_HUD_visibility_matches_ready_or_resolved_phase"));
         if (Expected) CheckHudWindup(TEXT("capture"));
         if (FString(Event)==TEXT("captured") && Case==0 && Expected && !bHudVisibilityProbed) RunHudVisibilityProbes();
     }
     void CheckHudWindup(const TCHAR* Where)
     {
+        if (bThirdPerson) { Check(Player.IsValid() && Player->IsThirdPersonGameplayActive(), TEXT("actual_third_person_gameplay_camera_active")); return; }
         if (!HUD.IsValid() || !Pattern.IsValid() || !Player.IsValid()) { Check(false,TEXT("actual_owned_viewport_HUD_available")); return; }
         const auto V=HUD->GetBossWindupView();
         const auto Shape=Pattern->GetLockedAttackShape();
@@ -132,6 +147,7 @@ private:
     }
     void RunHudVisibilityProbes()
     {
+        if (bThirdPerson) return;
         bHudVisibilityProbed=true;
         Check(HUD.IsValid() && PC.IsValid() && Player.IsValid() && Pattern.IsValid()
             && Pattern->IsWindingAgainst(*Player.Get()) && !UGameplayStatics::IsGamePaused(World.Get()),
@@ -252,11 +268,11 @@ private:
     }
     void BeginCase()
     {
-        if (Case>=18) { Finish(); return; }
+        if (Case>=18) { if (bThirdPerson) HitAndDeath(); else Finish(); return; }
         StopInput(); bTrial=false; bHudLeadChecked=false;
         Tools->SetPanelOpen(false); Tools->ExecuteAction(ERogue10mCombatTestAction::Clear);
         Player->SetActorTransform(Fixture, false, nullptr, ETeleportType::TeleportPhysics);
-        Player->GetCharacterMovement()->StopMovementImmediately(); PC->SetControlRotation(FRotator(0, Fixture.Rotator().Yaw, 0));
+        Player->GetCharacterMovement()->StopMovementImmediately(); PC->SetControlRotation(FRotator(bThirdPerson?PC->GetControlRotation().Pitch:0.f, Fixture.Rotator().Yaw, 0));
         Player->GetRogueAttributeSet()->SetMaxHealth(50000); Player->GetRogueAttributeSet()->RestoreVitals();
         Type=ERogue10mMonsterAttackType((Case/3)%3); Mode=Case%3; bEnraged=Case>=9;
         CaseName=FString::Printf(TEXT("%s_%s_%s"), Type==ERogue10mMonsterAttackType::Basic?TEXT("basic"):Type==ERogue10mMonsterAttackType::FrontalWave?TEXT("instant_wave"):TEXT("zone"), bEnraged?TEXT("enraged"):TEXT("normal"), Mode==0?TEXT("stand"):Mode==1?TEXT("walk"):TEXT("walk_alt"));
@@ -268,7 +284,43 @@ private:
         Check(LiveData && Boss->GetMonsterData()==LiveData && Pattern->GetProfile()==LiveData->AttackPatternProfile,
             TEXT("fixture_resolves_actual_live_monster_DA_profile_not_old_hardcoded_profile"));
         if (Failures) { Finish(); return; }
-        if (Case==0) { MissingRequiredBasicMaterialProbes(); if (Failures) { Finish(); return; } }
+        if (Case==0)
+        {
+            if (bThirdPerson)
+            {
+                FAssetCompilingManager::Get().FinishAllCompilation();
+                const auto* P=Pattern->GetProfile();
+                for (const TSoftObjectPtr<UNiagaraSystem>& Ref : {P->AttackEffect,P->ImpactEffect,P->FrontalWaveEffect,P->AbyssZoneEffect})
+                    if (UNiagaraSystem* FX=Ref.LoadSynchronous())
+                    {
+                        FX->RequestCompile(false); FX->WaitForCompilationComplete(true,false);
+                        Check(FX->IsReadyToRun(),TEXT("first_capture_waits_for_loaded_Niagara_system"));
+                        Results+=FString::Printf(TEXT("NIAGARA_WARM %s ready=%d\n"),*FX->GetPathName(),FX->IsReadyToRun());
+                    }
+                if (GShaderCompilingManager) GShaderCompilingManager->FinishAllCompilation();
+                Check(!GShaderCompilingManager || !GShaderCompilingManager->IsCompiling(),TEXT("first_capture_waits_for_loaded_material_shaders"));
+            }
+            if (bThirdPerson)
+            {
+                auto* AI=Cast<ARogue10mMonsterAIController>(Boss->GetController());
+                Check(AI!=nullptr,TEXT("humanoid_live_AI_controller_exists"));
+                if (AI)
+                {
+                    AI->InitializeMonsterAI();
+                    const auto* Tree=Cast<UBehaviorTreeComponent>(AI->GetBrainComponent());
+                    const auto* BB=AI->GetBlackboardComponent();
+                    Check(AI->IsMonsterAIEnabled() && Tree && Tree->IsRunning(),TEXT("actual_UE58_behavior_tree_running"));
+                    Check(BB && BB->GetBlackboardAsset() && BB->GetKeyID(ARogue10mMonsterAIController::TargetActorKey)!=FBlackboard::InvalidKey,
+                        TEXT("actual_UE58_blackboard_target_key_initialized"));
+                    AI->NotifyDamageStimulus(Player.Get(),0.f);
+                    Check(AI->GetCombatTarget()==Player.Get() && BB && BB->GetValueAsBool(ARogue10mMonsterAIController::HasTargetKey),
+                        TEXT("actual_AI_target_updates_blackboard"));
+                    Results+=FString::Printf(TEXT("AI tree=%s blackboard=%s enabled=%d\n"),Tree?*GetPathNameSafe(Tree->GetRootTree()):TEXT("none"),BB?*GetPathNameSafe(BB->GetBlackboardAsset()):TEXT("none"),AI->IsMonsterAIEnabled());
+                    AI->StopMonsterAI(); Pattern->CancelAttack(); Pattern->ConfigureProfile(Pattern->GetProfile());
+                }
+            }
+            MissingRequiredBasicMaterialProbes(); if (Failures) { Finish(); return; }
+        }
         if (bEnraged) Check(Tools->ExecuteAction(ERogue10mCombatTestAction::Enrage), TEXT("existing_HP40_enrage_fixture"));
         Later(.3, [this] { StartCase(); });
     }
@@ -309,6 +361,12 @@ private:
             Type==ERogue10mMonsterAttackType::FrontalWave?ERogue10mCombatTestAction::FrontalWave:ERogue10mCombatTestAction::AbyssZone;
         Check(Tools->ExecuteAction(Action), TEXT("production_warning_damage_pipeline_started"));
         if (Failures) { Finish(); return; }
+        if (Pattern->GetProfile()->bUseHumanoidAnimInstance)
+        {
+            auto* Anim=Cast<URogue10mHumanoidAnimInstance>(Boss->GetMesh()->GetAnimInstance());
+            Check(Anim && Anim->GetCurrentActiveMontage(), TEXT("humanoid_native_instance_and_attack_montage_running"));
+            Check(Anim && Anim->GetIdleSequence() && Anim->GetMovementSequence(), TEXT("humanoid_locomotion_sequences_loaded"));
+        }
         Locked=Pattern->GetLockedAttackShape(); BossStart=Boss->GetActorLocation(); StartLocation=Player->GetActorLocation();
         StartTime=World->GetTimeSeconds(); Health=Player->GetRogueAttributeSet()->GetHealth(); Hits=Pattern->GetSuccessfulHitCount();
         bMoved=bAlt=bSawDodge=bContact=bRecoveryPhoto=false; MaxBossMove=0; ObservedLead=-1; bTrial=true;
@@ -325,6 +383,15 @@ private:
         const double Elapsed=World->GetTimeSeconds()-StartTime;
         const auto S=Pattern->GetLockedAttackShape();
         const float Move=FVector::Dist(BossStart, Boss->GetActorLocation()); MaxBossMove=FMath::Max(MaxBossMove, Move);
+        if (bThirdPerson && Pattern->GetProfile()->bUseHumanoidAnimInstance)
+        {
+            auto* A=Boss->GetMesh()->GetAnimInstance(); auto* M=A?A->GetCurrentActiveMontage():nullptr;
+            const FVector L=Boss->GetMesh()->GetBoneLocation(TEXT("hand_l")), R=Boss->GetMesh()->GetBoneLocation(TEXT("hand_r"));
+            const FVector FL=Boss->GetMesh()->GetBoneLocation(TEXT("foot_l")), FR=Boss->GetMesh()->GetBoneLocation(TEXT("foot_r"));
+            AnimationFrames+=FString::Printf(TEXT("%llu,%.9f,%s,%.9f,%d,%s,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f\n"),
+                GFrameCounter,World->GetTimeSeconds(),*CaseName,Elapsed,int32(S.State),*GetNameSafe(M),M?A->Montage_GetPosition(M):0,M?A->Montage_GetPlayRate(M):0,
+                L.X,L.Y,L.Z,R.X,R.Y,R.Z,FL.X,FL.Y,FL.Z,FR.X,FR.Y,FR.Z);
+        }
         const auto* Capsule=Player->GetCapsuleComponent();
         const bool Inside=Rogue10mMonsterAttackGeometry::ContainsCapsule(S, Player->GetActorLocation(), Capsule->GetScaledCapsuleRadius(), Capsule->GetScaledCapsuleHalfHeight());
         const FVector P=Player->GetActorLocation();
@@ -340,7 +407,7 @@ private:
         if (!bHudLeadChecked && Elapsed>=.1 && S.bWindup)
         {
             bHudLeadChecked=true; CheckHudWindup(TEXT("before_reaction_input")); ++HudCasesChecked;
-            if (!bRendered && Case==0 && !bHudVisibilityProbed) RunHudVisibilityProbes();
+            if (!bThirdPerson && !bRendered && Case==0 && !bHudVisibilityProbed) RunHudVisibilityProbes();
         }
         bSawDodge|=Player->IsDodging();
         if (Mode==0 && Elapsed>=.1 && !bMoved) { bMoved=true; Photo(TEXT("ready")); }
@@ -349,6 +416,25 @@ private:
         if (!bContact && S.State==ERogue10mMonsterPatternState::Recovery)
         {
             bContact=true; ObservedLead=Elapsed; StopInput();
+            if (Pattern->GetProfile()->bUseHumanoidAnimInstance)
+            {
+                auto* Anim=Cast<URogue10mHumanoidAnimInstance>(Boss->GetMesh()->GetAnimInstance());
+                UAnimMontage* Montage=Anim?Anim->GetCurrentActiveMontage():nullptr;
+                Check(Anim && Montage, TEXT("humanoid_attack_montage_survives_to_authoritative_contact"));
+                if (Anim && Montage)
+                {
+                    const auto* Profile=Pattern->GetProfile();
+                    const float Contact=Type==ERogue10mMonsterAttackType::Basic?Profile->AttackContactTimeSeconds:
+                        Type==ERogue10mMonsterAttackType::FrontalWave?Profile->FrontalWaveContactTimeSeconds:Profile->AbyssZoneContactTimeSeconds;
+                    const float Position=Anim->Montage_GetPosition(Montage);
+                    Check(FMath::Abs(Position-Contact)<=FMath::Max(.15f,DT*Anim->Montage_GetPlayRate(Montage)*2.f),
+                        TEXT("humanoid_montage_contact_matches_damage_event"));
+                    Results+=FString::Printf(TEXT("HUMANOID %s anim=%s montage=%s authored_contact=%.6f observed_position=%.6f hand_l=%s hand_r=%s foot_l=%s foot_r=%s\n"),
+                        *CaseName,*Anim->GetClass()->GetPathName(),*Montage->GetName(),Contact,Position,
+                        *Boss->GetMesh()->GetBoneLocation(TEXT("hand_l")).ToString(),*Boss->GetMesh()->GetBoneLocation(TEXT("hand_r")).ToString(),
+                        *Boss->GetMesh()->GetBoneLocation(TEXT("foot_l")).ToString(),*Boss->GetMesh()->GetBoneLocation(TEXT("foot_r")).ToString());
+                }
+            }
             Check(FMath::Abs(ObservedLead-ExpectedLead)<=FMath::Max(.09, double(DT)*2), TEXT("observed_activation_matches_authored_lead_with_frame_tolerance"));
             Check(!Pattern->IsTelegraphVisible(), TEXT("warning_removed_at_resolution"));
             Check(HUD.IsValid() && !HUD->GetBossWindupView().bVisible,TEXT("HUD_warning_hidden_immediately_at_resolution"));
@@ -363,12 +449,56 @@ private:
         if (bContact && S.State==ERogue10mMonsterPatternState::Idle)
         {
             Check(MaxBossMove<5, TEXT("boss_position_frozen_through_windup_recovery"));
-            Check(bHudLeadChecked && HUD.IsValid() && !HUD->GetBossWindupView().bVisible,TEXT("case_observed_visible_windup_and_hidden_idle_HUD"));
+            if (!bThirdPerson) Check(bHudLeadChecked && HUD.IsValid() && !HUD->GetBossWindupView().bVisible,TEXT("case_observed_visible_windup_and_hidden_idle_HUD"));
             Check(FVector::Dist(Locked.Location,S.Location)<.1 && FVector::DotProduct(Locked.Forward,S.Forward)>.99999, TEXT("warning_geometry_not_retargeted_during_attack"));
             Results+=FString::Printf(TEXT("OBSERVED %s lead=%.9f health_drop=%.3f travel_cm=%.6f boss_move_cm=%.6f dodge_seen=%d\n"), *CaseName, ObservedLead, Health-Player->GetRogueAttributeSet()->GetHealth(), FVector::Dist2D(StartLocation,P), MaxBossMove, bSawDodge);
             bTrial=false; ++Case; Later(.45, [this] { BeginCase(); });
         }
         if (Elapsed>8 && bTrial) { Check(false, TEXT("attack_case_timeout")); bTrial=false; Finish(); }
+    }
+    void HitAndDeath()
+    {
+        Check(Boss.IsValid() && Pattern.IsValid() && !Boss->IsDead(),TEXT("lifecycle_uses_last_real_reward_free_boss"));
+        if (Failures) { Finish(); return; }
+        StopInput(); CaseName=TEXT("lifecycle");
+        Check(!Pattern->IsAttackActive(),TEXT("lifecycle_close_view_staged_only_after_all_attacks"));
+        FVector CloseView=Boss->GetActorLocation()+Boss->GetActorForwardVector()*220.f;
+        CloseView.Z=Fixture.GetLocation().Z;
+        Player->SetActorLocation(CloseView,false,nullptr,ETeleportType::TeleportPhysics);
+        Player->GetCharacterMovement()->StopMovementImmediately();
+        Player->GetCharacterMovement()->bForceNextFloorCheck=true;
+        PC->SetControlRotation((Boss->GetActorLocation()-Player->GetActorLocation()).Rotation()+FRotator(-12.f,0,0));
+        const float HealthBefore=Boss->GetRogueAttributeSet()->GetHealth();
+        UGameplayStatics::ApplyDamage(Boss.Get(),1.f,PC.Get(),Player.Get(),UDamageType::StaticClass());
+        Check(Boss->GetRogueAttributeSet()->GetHealth()<HealthBefore && !Boss->IsDead(),TEXT("actual_nonlethal_damage_enters_hit_presentation"));
+        auto* Anim=Cast<URogue10mHumanoidAnimInstance>(Boss->GetMesh()->GetAnimInstance());
+        Check(Anim && Anim->GetCurrentActiveMontage(),TEXT("actual_hit_montage_active"));
+        Later(.12,[this]
+        {
+            Photo(TEXT("hit_active"));
+            Later(.45,[this]
+            {
+                auto* A=Boss.IsValid()?Cast<URogue10mHumanoidAnimInstance>(Boss->GetMesh()->GetAnimInstance()):nullptr;
+                Check(A && !A->GetCurrentActiveMontage(),TEXT("hit_montage_returns_to_native_locomotion"));
+                Photo(TEXT("hit_recovered"));
+                Later(.15,[this]
+                {
+                    UGameplayStatics::ApplyDamage(Boss.Get(),Boss->GetRogueAttributeSet()->GetHealth()+100.f,PC.Get(),Player.Get(),UDamageType::StaticClass());
+                    auto* A=Boss.IsValid()?Cast<URogue10mHumanoidAnimInstance>(Boss->GetMesh()->GetAnimInstance()):nullptr;
+                    Check(Boss.IsValid() && Boss->IsDead() && A && A->GetCurrentActiveMontage(),TEXT("actual_lethal_damage_plays_held_death_montage"));
+                    Later(.18,[this]
+                    {
+                        Photo(TEXT("death_active"));
+                        const float Duration=Pattern->GetProfile()->DeathAnimation.LoadSynchronous()->GetPlayLength();
+                        Later(FMath::Max(.02f,Duration-.33f),[this]
+                        {
+                            if (Boss.IsValid()) Photo(TEXT("death_end")); else Check(false,TEXT("death_actor_retained_until_presentation_finishes"));
+                            Later(.45,[this] { Check(!Boss.IsValid(),TEXT("death_actor_cleaned_after_presentation")); Finish(); });
+                        });
+                    });
+                });
+            });
+        });
     }
     void Finish(bool Exit=true)
     {
@@ -392,9 +522,11 @@ private:
         if (!Output.IsEmpty())
         {
             Check(FFileHelper::SaveStringToFile(Frames,*(Output/TEXT("frames.csv"))), TEXT("frames_written_at_finish_no_live_append"));
+            if (bThirdPerson) Check(FFileHelper::SaveStringToFile(AnimationFrames,*(Output/TEXT("animation-frames.csv"))), TEXT("actual_montage_hand_and_foot_trajectory_written"));
             Check(FFileHelper::SaveStringToFile(Captures,*(Output/TEXT("captures.csv"))), TEXT("capture_metadata_written"));
             Check(FFileHelper::SaveStringToFile(HudFrames,*(Output/TEXT("hud-frames.csv"))),TEXT("actual_HUD_frame_data_written"));
-            Check(HudCasesChecked==18 && HudVisibilityProbeCount==1,TEXT("all_18_cases_and_one_menu_inspection_probe_completed"));
+            Check(HudCasesChecked==18 && (bThirdPerson || HudVisibilityProbeCount==1),TEXT("all_18_cases_and_applicable_camera_checks_completed"));
+            Results+=FString::Printf(TEXT("third_person_gameplay_QA=%d\nfirst_person_QA_executed=%d\n"),bThirdPerson,!bThirdPerson);
             Results+=FString::Printf(TEXT("checks=%d\nfailures=%d\ncases_completed=%d\nrendered=%d\ninput=programmatic_Controller_InputKey\nreaction_delay_s=.25\nAlt_s=.32_after_warning_with_movement_key_held\nstandalone_owned_floor_and_reward_free_boss_only=1\nno_teleport_during_attack=1\nHP_damage_cooldown_assets_unchanged=1\nhud_windup_cases_checked=%d\nhud_menu_inspection_probes=%d\nhud_target_source=normal_HP_widget_refresh_not_seeded\nhud_pixels=requires_actual_NativePaint_PNG_review\nhud_death_and_wrong_locked_actor=source_review_only_no_extra_HP_or_actor_fixture\nphysical_input_and_full_field_run=not_performed\ngeometry=expanded_narrow_shape_plus_actual_overlap_selected_target_height_and_LOS_gates\nwave=instant_locked_rectangle_no_travelling_projectile\nvisual_acceptance=requires_actual_ready_resolution_recovery_PNG_review\n"), Checks,Failures,Case,bRendered,HudCasesChecked,HudVisibilityProbeCount);
             if (!FFileHelper::SaveStringToFile(Results,*(Output/TEXT("results.txt")))) ++Failures;
         }
@@ -407,12 +539,12 @@ private:
     TWeakObjectPtr<URogue10mRunHUD> HUD;
     TWeakObjectPtr<URogue10mProgressionSubsystem> Saves; TWeakObjectPtr<AActor> Ground;
     FDelegateHandle CaptureHandle,SampleHandle,Cleanup; TFunction<void()> Next; TArray<FPhoto> Photos;
-    FString Label,Output,Images,Results,Frames,Captures,HudFrames,CaseName,PendingPhoto;
+    FString Label,Output,Images,Results,Frames,Captures,HudFrames,AnimationFrames,CaseName,PendingPhoto;
     FTransform Initial,Fixture; FRotator InitialControl; FRogue10mMonsterAttackShape Locked;
     FVector BossStart,StartLocation; ERogue10mMonsterAttackType Type=ERogue10mMonsterAttackType::Basic;
     double Deadline=0,NextAt=0,Surface=0,StartTime=0,ExpectedLead=0,ObservedLead=-1;
     float Health=0,MaxBossMove=0; int32 Case=0,Mode=0,Hits=0,Checks=0,Failures=0,Requested=0,Completed=0,HudCasesChecked=0,HudVisibilityProbeCount=0;
-    bool bHudLeadChecked=false,bHudVisibilityProbed=false,bHudProbeOwnsPause=false;
+    bool bHudLeadChecked=false,bHudVisibilityProbed=false,bHudProbeOwnsPause=false,bThirdPerson=false;
     bool bFinished=false,bRendered=false,bTrial=false,bEnraged=false,bMoved=false,bAlt=false,bSawDodge=false,bContact=false,bRecoveryPhoto=false,bOwnFixture=false;
 };
 static TSharedPtr<FRun> Active;

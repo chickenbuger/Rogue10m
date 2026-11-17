@@ -431,6 +431,7 @@ void URogue10mFirstPersonPresentationComponent::RefreshPresentation()
 		return;
 	}
 	ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner());
+	if (Character && Character->IsThirdPersonGameplayActive()) { RestorePresentation(); return; }
 	if (Character && Character->GetAppearanceCameraComponent())
  {
   auto* Appearance = Character->GetAppearanceCameraComponent();

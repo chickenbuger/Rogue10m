@@ -87,6 +87,9 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	/** Death is final here; subclasses may record custody before reward callbacks. */
+	virtual void OnDeathStarted() {}
+	virtual bool ShouldGrantDeathRewards() const { return true; }
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|GAS")
 	TObjectPtr<URogue10mAbilitySystemComponent> AbilitySystemComponent;

@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "Rogue10mInventoryComponent.h"
+#include "Rogue10mLootStackTransfer.h"
 
 #include "Rogue10m.h"
 
@@ -183,6 +184,10 @@ void URogue10mInventoryComponent::BeginPlay()
 				if (ItemSlots.IsValidIndex(ItemSlotIndex)
 					&& ItemSlots[ItemSlotIndex].Category == ERogue10mItemCategory::Equipment)
 				{
+					// Fresh characters begin as unarmed novices. Starter weapons stay in inventory.
+					const auto EquipType = ItemSlots[ItemSlotIndex].EquipSlotType;
+					if (EquipType == ERogue10mInventorySlotType::MainWeapon || EquipType == ERogue10mInventorySlotType::SecondaryWeapon
+						|| EquipType == ERogue10mInventorySlotType::Weapon) { continue; }
 					const FRogue10mInventorySlot* TargetEquipmentSlot =
 						FindEquipmentSlot(ItemSlots[ItemSlotIndex].EquipSlotType);
 					if (TargetEquipmentSlot && TargetEquipmentSlot->bHasEquippedItem)
@@ -743,6 +748,115 @@ bool URogue10mInventoryComponent::TryAddItemStack(const FRogue10mItemStack& Stac
 		return true;
 	}
 	return false;
+}
+
+bool URogue10mInventoryComponent::TryReceiveMonsterLoot(const FRogue10mItemStack& Stack,
+	FRogue10mItemStack& OutRemainder, int32& OutAcceptedQuantity)
+{
+	// Output may alias the caller's input. Keep an immutable copy before writing it.
+	const FRogue10mItemStack IncomingStack = Stack;
+	OutRemainder = IncomingStack;
+	OutAcceptedQuantity = 0;
+	if (!GetOwner() || !GetOwner()->HasAuthority() || !IncomingStack.bOccupied || !IncomingStack.ItemData
+		|| !IncomingStack.InstanceId.IsValid() || IncomingStack.Quantity <= 0
+		|| IncomingStack.Quantity > FMath::Max(1, IncomingStack.ItemData->MaxStackSize)
+		|| IncomingStack.EnhancementLevel < 0 || IncomingStack.EnhancementLevel > 5
+		|| !FMath::IsFinite(IncomingStack.EnhancementAttackBonus)
+		|| !FMath::IsFinite(IncomingStack.EnhancementDefenseBonus)
+		|| IncomingStack.EnhancementAttackBonus < 0.0f || IncomingStack.EnhancementDefenseBonus < 0.0f
+		|| IncomingStack.EnhancementAttackBonus > 200000.0f * IncomingStack.EnhancementLevel
+		|| IncomingStack.EnhancementDefenseBonus > 200000.0f * IncomingStack.EnhancementLevel)
+	{
+		return false;
+	}
+
+	// Reject an already-owned instance before merging, including full or incompatible entries.
+	for (const FRogue10mInventoryContainer& Container : InventoryContainers)
+	{
+		if (Container.Entries.ContainsByPredicate([&IncomingStack](const FRogue10mInventoryGridEntry& Entry)
+			{ return Entry.InstanceId == IncomingStack.InstanceId; })) { return false; }
+	}
+	for (const auto* Slots : { &LeftEquipmentSlots, &RightEquipmentSlots })
+	{
+		for (const FRogue10mInventorySlot& Slot : *Slots)
+		{
+			if (Slot.bHasEquippedItem && Slot.EquippedItem.InstanceId == IncomingStack.InstanceId) { return false; }
+		}
+	}
+	if (ItemSlots.ContainsByPredicate([&IncomingStack](const FRogue10mItemStack& Item)
+		{ return Item.bOccupied && Item.InstanceId == IncomingStack.InstanceId; })) { return false; }
+
+	const int32 MaxStackSize = FMath::Max(1, IncomingStack.ItemData->MaxStackSize);
+	TArray<FIntPoint> MergeTargets;
+	std::vector<std::int32_t> ExistingQuantities;
+	for (int32 ContainerIndex = 0; ContainerIndex < InventoryContainers.Num(); ++ContainerIndex)
+	{
+		const TArray<FRogue10mInventoryGridEntry>& Entries = InventoryContainers[ContainerIndex].Entries;
+		for (int32 EntryIndex = 0; EntryIndex < Entries.Num(); ++EntryIndex)
+		{
+			const FRogue10mInventoryGridEntry& Entry = Entries[EntryIndex];
+			if (Entry.ItemData == IncomingStack.ItemData && Entry.EnhancementLevel == IncomingStack.EnhancementLevel
+				&& Entry.EnhancementAttackBonus == IncomingStack.EnhancementAttackBonus
+				&& Entry.EnhancementDefenseBonus == IncomingStack.EnhancementDefenseBonus
+				&& Entry.Quantity > 0 && Entry.Quantity < MaxStackSize)
+			{
+				MergeTargets.Emplace(ContainerIndex, EntryIndex);
+				ExistingQuantities.push_back(Entry.Quantity);
+			}
+		}
+	}
+
+	int32 NewEntryContainerIndex = INDEX_NONE;
+	FIntPoint NewEntryPosition = FIntPoint::ZeroValue;
+	for (int32 ContainerIndex = 0; ContainerIndex < InventoryContainers.Num(); ++ContainerIndex)
+	{
+		if (FindFirstGridPosition(ContainerIndex, IncomingStack.ItemData, NewEntryPosition))
+		{
+			NewEntryContainerIndex = ContainerIndex;
+			break;
+		}
+	}
+	const Rogue10m::LootStackTransfer::FPlan Plan = Rogue10m::LootStackTransfer::PlanTransfer(
+		IncomingStack.Quantity, MaxStackSize, ExistingQuantities, NewEntryContainerIndex != INDEX_NONE);
+	if (!Plan.bValidInput)
+	{
+		return false;
+	}
+
+	for (int32 TargetIndex = 0; TargetIndex < MergeTargets.Num(); ++TargetIndex)
+	{
+		const FIntPoint& Target = MergeTargets[TargetIndex];
+		InventoryContainers[Target.X].Entries[Target.Y].Quantity += Plan.StackIncrements[TargetIndex];
+	}
+	if (Plan.NewEntryQuantity > 0)
+	{
+		FRogue10mInventoryGridEntry Entry;
+		Entry.InstanceId = IncomingStack.InstanceId;
+		Entry.ItemData = IncomingStack.ItemData;
+		Entry.Quantity = Plan.NewEntryQuantity;
+		Entry.Position = NewEntryPosition;
+		Entry.EnhancementLevel = IncomingStack.EnhancementLevel;
+		Entry.EnhancementAttackBonus = IncomingStack.EnhancementAttackBonus;
+		Entry.EnhancementDefenseBonus = IncomingStack.EnhancementDefenseBonus;
+		InventoryContainers[NewEntryContainerIndex].Entries.Add(MoveTemp(Entry));
+	}
+
+	// Observers may immediately mutate inventory; finish outputs and never restore a snapshot afterward.
+	OutRemainder.Quantity = Plan.RemainderQuantity;
+	OutRemainder.bOccupied = Plan.RemainderQuantity > 0;
+	OutAcceptedQuantity = Plan.AcceptedQuantity;
+	if (Plan.AcceptedQuantity > 0)
+	{
+		NotifyGridChanged();
+		if (const ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner()))
+		{
+			if (ARogue10mPlayerController* Controller = Cast<ARogue10mPlayerController>(Character->GetController()))
+			{
+				Controller->AddItemAcquisitionItem(IncomingStack.ItemData, Plan.AcceptedQuantity);
+			}
+		}
+	}
+	return true;
 }
 
 const URogue10mItemDataAsset* URogue10mInventoryComponent::GetEquippedItemData(

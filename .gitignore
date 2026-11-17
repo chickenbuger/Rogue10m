@@ -6,6 +6,8 @@
 *.lo
 *.o
 *.obj
+!/Art/Weapons/Starter20261110/SM_StarterGreatSword.obj
+!/Art/Weapons/Starter20261110/SM_StarterKnuckle.obj
 
 # Precompiled Headers
 *.gch
@@ -24,6 +26,10 @@
 *.la
 *.a
 *.lib
+
+# Keep reproducible diagnostic symbols locally; preserve their hash manifests.
+/Feature/doc/evidence/npc-combat-credit-20261113A/before-editor-products/*.pdb
+/Feature/doc/evidence/npc-combat-credit-20261113A/FixtureDerivativeB/before-editor-products/*.pdb
 
 # Executables
 *.exe

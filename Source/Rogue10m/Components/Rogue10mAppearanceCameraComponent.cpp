@@ -85,7 +85,7 @@ void URogue10mAppearanceCameraComponent::RefreshAppearanceCamera()
  USkeletalMeshComponent* Mesh = Character ? Character->GetMesh() : nullptr;
  UCameraComponent* Camera = Character ? Character->GetFirstPersonCameraComponent() : nullptr;
  const APlayerController* Controller = Character ? Cast<APlayerController>(Character->GetController()) : nullptr;
- if (!bEnableAppearanceCamera || !Character || !Character->IsLocallyControlled() || Character->IsDead() || !Controller
+ if (!bEnableAppearanceCamera || !Character || Character->IsThirdPersonGameplayActive() || !Character->IsLocallyControlled() || Character->IsDead() || !Controller
   || Controller->GetViewTarget() != Character || !Mesh || !Camera)
  {
   Restore();

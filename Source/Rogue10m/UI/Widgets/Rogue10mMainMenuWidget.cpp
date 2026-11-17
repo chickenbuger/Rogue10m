@@ -3,7 +3,6 @@
 #include "Rogue10mMainMenuWidget.h"
 
 #include "Components/Button.h"
-#include "Kismet/KismetSystemLibrary.h"
 #include "Rogue10mPlayerController.h"
 
 void URogue10mMainMenuWidget::NativeConstruct()
@@ -32,9 +31,8 @@ void URogue10mMainMenuWidget::HandleStartGameClicked()
 
 void URogue10mMainMenuWidget::HandleQuitGameClicked()
 {
-	UKismetSystemLibrary::QuitGame(
-		this,
-		GetOwningPlayer(),
-		EQuitPreference::Quit,
-		false);
+	if (auto* Controller = GetOwningPlayer<ARogue10mPlayerController>())
+	{
+		Controller->OpenQuitGameConfirmation();
+	}
 }

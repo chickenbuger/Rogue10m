@@ -9,6 +9,8 @@
 #include "AIController.h"
 #include "AbilitySystemComponent.h"
 #include "Animation/AnimSequence.h"
+#include "Animation/AnimMontage.h"
+#include "Rogue10mHumanoidAnimInstance.h"
 #include "Animation/AnimSingleNodeInstance.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/DecalComponent.h"
@@ -93,7 +95,22 @@ void URogue10mMonsterAttackPatternComponent::ConfigureProfile(URogue10mMonsterAt
 	CancelAttack();
 	UnbindHealthDelegate();
 	if (GetWorld()) GetWorld()->GetTimerManager().ClearTimer(LocomotionTimer);
+	const bool bLeavingHumanoid = Profile && Profile->bUseHumanoidAnimInstance && (!InProfile || !InProfile->bUseHumanoidAnimInstance);
 	Profile = InProfile;
+	if (bLeavingHumanoid)
+	{
+		if (auto* Monster=GetMonster(); Monster && Monster->GetMesh())
+		{
+			Monster->GetMesh()->SetReceivesDecals(bSavedReceivesDecals);
+			if (bSavedAnimationMode)
+			{
+				Monster->GetMesh()->SetAnimationMode(static_cast<EAnimationMode::Type>(SavedAnimationMode));
+				if (SavedAnimationMode == static_cast<uint8>(EAnimationMode::AnimationBlueprint))
+					Monster->GetMesh()->SetAnimInstanceClass(SavedAnimationClass);
+			}
+		}
+		bSavedAnimationMode = false;
+	}
 	const bool bRender = GetWorld() && GetWorld()->GetNetMode() != NM_DedicatedServer;
 	AttackEffect = Profile && bRender ? Profile->AttackEffect.LoadSynchronous() : nullptr;
 	ImpactEffect = Profile && bRender ? Profile->ImpactEffect.LoadSynchronous() : nullptr;
@@ -133,8 +150,17 @@ void URogue10mMonsterAttackPatternComponent::ConfigureProfile(URogue10mMonsterAt
 	}
 	if (IsEnabled() && GetWorld())
 	{
-		SaveAnimationMode();
-		UpdateLocomotionPresentation();
+  SaveAnimationMode();
+  if (Profile->bUseHumanoidAnimInstance)
+  {
+   if (ARogue10mBasicMonster* Monster = GetMonster())
+   {
+    Monster->GetMesh()->SetReceivesDecals(false); // Floor warnings must not paint the humanoid body.
+    Monster->GetMesh()->SetAnimInstanceClass(URogue10mHumanoidAnimInstance::StaticClass());
+    if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance())) Anim->Configure(Profile);
+   }
+  }
+  UpdateLocomotionPresentation();
 		GetWorld()->GetTimerManager().SetTimer(LocomotionTimer, this,
 			&ThisClass::UpdateLocomotionPresentation, 0.15f, true);
 	}
@@ -514,6 +540,8 @@ void URogue10mMonsterAttackPatternComponent::ExecuteAttack()
 	// Hide at the actual hit, never retain a stale danger warning during recovery.
 	DestroyTelegraph();
 	if (!Profile || PatternState != ERogue10mMonsterPatternState::Windup || Monster->IsDead()) return;
+ if (Profile->bUseHumanoidAnimInstance)
+  if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance())) Anim->BeginRecovery(LockedRecoverySeconds);
 	PatternState = ERogue10mMonsterPatternState::Recovery;
 	GetWorld()->GetTimerManager().SetTimer(StateTimer, this, &ThisClass::FinishRecovery,
 		LockedRecoverySeconds, false);
@@ -619,6 +647,7 @@ void URogue10mMonsterAttackPatternComponent::SaveAnimationMode()
 	{
 		SavedAnimationMode = static_cast<uint8>(Monster->GetMesh()->GetAnimationMode());
 		SavedAnimationClass = Monster->GetMesh()->GetAnimClass();
+		bSavedReceivesDecals = Monster->GetMesh()->bReceivesDecals;
 		bSavedAnimationMode = true;
 	}
 }
@@ -627,8 +656,23 @@ void URogue10mMonsterAttackPatternComponent::PlayAttackPresentation()
 {
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Profile || !Monster || !Monster->GetMesh()) return;
-	SaveAnimationMode();
-	UAnimSequence* Animation = nullptr;
+ SaveAnimationMode();
+ if (Profile->bUseHumanoidAnimInstance)
+ {
+  if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance()))
+  {
+   UAnimMontage* Montage = Profile->AttackMontage.LoadSynchronous();
+   UAnimSequence* Sequence = Profile->AttackAnimation.LoadSynchronous();
+   float Contact = Profile->AttackContactTimeSeconds;
+   if (CurrentAttackType == ERogue10mMonsterAttackType::FrontalWave)
+   { Montage = Profile->FrontalWaveMontage.LoadSynchronous(); Sequence = Profile->FrontalWaveAnimation.LoadSynchronous(); Contact = Profile->FrontalWaveContactTimeSeconds; }
+   else if (CurrentAttackType == ERogue10mMonsterAttackType::AbyssZone)
+   { Montage = Profile->AbyssZoneMontage.LoadSynchronous(); Sequence = Profile->AbyssZoneAnimation.LoadSynchronous(); Contact = Profile->AbyssZoneContactTimeSeconds; }
+   Anim->PlayPresentation(Montage, Sequence, Contact, LockedWindupSeconds);
+  }
+  return;
+ }
+ UAnimSequence* Animation = nullptr;
 	if (CurrentAttackType == ERogue10mMonsterAttackType::FrontalWave) Animation = Profile->FrontalWaveAnimation.LoadSynchronous();
 	if (CurrentAttackType == ERogue10mMonsterAttackType::AbyssZone) Animation = Profile->AbyssZoneAnimation.LoadSynchronous();
 	if (!Animation) Animation = Profile->AttackAnimation.LoadSynchronous();
@@ -642,6 +686,7 @@ void URogue10mMonsterAttackPatternComponent::PlayAttackPresentation()
 
 void URogue10mMonsterAttackPatternComponent::UpdateLocomotionPresentation()
 {
+ if (Profile && Profile->bUseHumanoidAnimInstance) return;
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Profile || !Monster || Monster->IsDead() || IsAttackActive() || !GetWorld()
 		|| GetWorld()->GetTimerManager().IsTimerActive(HitReactionTimer)) return;
@@ -661,6 +706,11 @@ void URogue10mMonsterAttackPatternComponent::RestoreAnimation()
 	if (GetWorld()) GetWorld()->GetTimerManager().ClearTimer(HitReactionTimer);
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Monster || !Monster->GetMesh()) return;
+ if (Profile && Profile->bUseHumanoidAnimInstance)
+ {
+  if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance())) Anim->StopPresentation();
+  return;
+ }
 	if (Profile && !Monster->IsDead())
 	{
 		UpdateLocomotionPresentation();
@@ -669,7 +719,7 @@ void URogue10mMonsterAttackPatternComponent::RestoreAnimation()
 	if (bSavedAnimationMode)
 	{
 		Monster->GetMesh()->SetAnimationMode(static_cast<EAnimationMode::Type>(SavedAnimationMode));
-		if (SavedAnimationClass && SavedAnimationMode == static_cast<uint8>(EAnimationMode::AnimationBlueprint))
+		if (SavedAnimationMode == static_cast<uint8>(EAnimationMode::AnimationBlueprint))
 			Monster->GetMesh()->SetAnimInstanceClass(SavedAnimationClass);
 	}
 }
@@ -679,6 +729,15 @@ void URogue10mMonsterAttackPatternComponent::PlayHitReaction()
 	RefreshEnrage();
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Profile || !Monster || Monster->IsDead() || IsAttackActive() || !GetWorld()) return;
+ if (Profile->bUseHumanoidAnimInstance)
+ {
+  if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance()))
+  {
+   const float Duration = Anim->PlayPresentation(Profile->HitMontage.LoadSynchronous(), Profile->HitAnimation.LoadSynchronous());
+   if (Duration > 0.f) GetWorld()->GetTimerManager().SetTimer(HitReactionTimer, this, &ThisClass::RestoreAnimation, Duration, false);
+  }
+  return;
+ }
 	if (UAnimSequence* Animation = Profile->HitAnimation.LoadSynchronous())
 	{
 		Monster->GetMesh()->PlayAnimation(Animation, false);
@@ -694,6 +753,12 @@ float URogue10mMonsterAttackPatternComponent::PlayDeathPresentation()
 	if (GetWorld()) GetWorld()->GetTimerManager().ClearTimer(LocomotionTimer);
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Profile || !Monster) return 0.0f;
+ if (Profile->bUseHumanoidAnimInstance)
+ {
+  if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance()))
+   return Anim->PlayPresentation(Profile->DeathMontage.LoadSynchronous(), Profile->DeathAnimation.LoadSynchronous(), 0.f, 0.f, true) + 0.05f;
+  return 0.f;
+ }
 	if (UAnimSequence* Animation = Profile->DeathAnimation.LoadSynchronous())
 	{
 		Monster->GetMesh()->PlayAnimation(Animation, false);

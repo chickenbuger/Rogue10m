@@ -111,6 +111,13 @@ private:
 		{
 			bCapturePending=true; Deadline=FPlatformTime::Seconds()+.1;
 		}
+		// Observe a real burst as it appears, rather than sampling before a tuned windup ends.
+		if ((Stage==7 || Stage==9) && Monster.IsValid())
+		{
+			auto* Pattern=Monster->GetAttackPatternComponent();
+			if (Pattern->GetAttackEffectCount()>AttackBefore && Pattern->GetActiveEffectCount()>0)
+				Deadline=FPlatformTime::Seconds();
+		}
 		if (FPlatformTime::Seconds()<Deadline) return true;
 		if (Stage==0) Setup();
 		else if (Stage==1) Spawn();
@@ -181,7 +188,7 @@ private:
 			{
 				AttackBefore=Pattern->GetAttackEffectCount();
 				Check(Tools->ExecuteAction(ERogue10mCombatTestAction::FrontalWave),TEXT("boss_wave_starts"));
-				SetBossView(); Stage=7; Deadline=FPlatformTime::Seconds()+1.3;
+				SetBossView(); Stage=7; ArmBossFXDeadline();
 			}
 		}
 		else if (Stage==7)
@@ -197,7 +204,7 @@ private:
 			Check(Monster->GetAttackPatternComponent()->GetActiveEffectCount()==0,TEXT("boss_wave_FX_finishes"));
 			AttackBefore=Monster->GetAttackPatternComponent()->GetAttackEffectCount();
 			Check(Tools->ExecuteAction(ERogue10mCombatTestAction::AbyssZone),TEXT("boss_zone_starts"));
-			SetBossView(); Stage=9; Deadline=FPlatformTime::Seconds()+1.6;
+			SetBossView(); Stage=9; ArmBossFXDeadline();
 		}
 		else if (Stage==9)
 		{
@@ -213,6 +220,16 @@ private:
 			Finish();
 		}
 		return !bFinished;
+	}
+	void ArmBossFXDeadline()
+	{
+		auto* Pattern=Monster->GetAttackPatternComponent();
+		const float Windup=Pattern->GetLockedAttackShape().WindupDuration;
+		Check(FMath::IsFinite(Windup) && Windup>0.f && Windup<=30.f,TEXT("boss_windup_has_bounded_timeout"));
+		// Timers run on game time; allow limited wall-clock slack, but never wait forever.
+		const double Wait=FMath::IsFinite(Windup) ? FMath::Clamp(static_cast<double>(Windup),0.0,30.0)+5.0 : 5.0;
+		Deadline=FPlatformTime::Seconds()+Wait;
+		UE_LOG(LogRogue10m,Display,TEXT("MONSTER_FX_WAIT stage=%d windup=%.3f timeout=%.3f attacks_before=%d"),Stage,Windup,Wait,AttackBefore);
 	}
 	void SetBossView()
 	{

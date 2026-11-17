@@ -25,6 +25,8 @@ class URogue10mCombatTestComponent;
 class URogue10mRunHUD;
 class URogue10mRunResultWidget;
 class URogue10mAbandonMenuWidget;
+class URogue10mQuitMenuWidget;
+class ARogue10mCharacter;
 class URogue10mItemDataAsset;
 class UTexture2D;
 class UUserWidget;
@@ -87,6 +89,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|UI")
 	void ToggleSettings();
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|UI|Quit") bool OpenQuitGameConfirmation();
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|UI|Quit") void CancelQuitGameConfirmation();
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|UI|Quit") bool ConfirmQuitGame();
+	UFUNCTION(BlueprintPure, Category="Rogue10m|UI|Quit") bool IsQuitGameConfirmationOpen() const { return bQuitGameConfirmationOpen; }
+	URogue10mQuitMenuWidget* GetQuitMenuWidget() const { return QuitMenuWidget; }
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|UI")
 	void CloseAllBlockingPanels();
@@ -118,6 +125,10 @@ public:
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Traits")
 	URogue10mTraitWidget* GetTraitWidget() const { return TraitWidget; }
 	ARogue10mTutorialNPC* GetTraitServiceNPC() const { return TraitServiceNPC.Get(); }
+	void BeginNpcDialogueInput(ARogue10mTutorialNPC* NPC);
+	void EndNpcDialogueInput(ARogue10mTutorialNPC* NPC);
+	bool IsNpcDialogueVisible() const;
+	ARogue10mTutorialNPC* GetDialogueNPC() const { return DialogueNPC.Get(); }
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Character Lobby")
 	void EnterSelectedCharacter();
@@ -338,6 +349,16 @@ private:
 	void InitializeCharacterLobby();
 	void InitializeMainMenu();
 	void RefreshInputMode();
+	void RefreshQuitMenu();
+	void ResetQuitGameConfirmation();
+	UPROPERTY(Transient) TObjectPtr<URogue10mQuitMenuWidget> QuitMenuWidget;
+	TWeakObjectPtr<UWorld> QuitGameWorld;
+	TWeakObjectPtr<ARogue10mCharacter> QuitGameCharacter;
+	FGuid QuitGameProfile;
+	FGuid QuitGameRun;
+	FGuid QuitGameSelectedProfile;
+	bool bQuitGameConfirmationOpen = false;
+	bool bQuitGameSubmitting = false;
 	void UpdateSafeMenuPause();
 	UFUNCTION() void HandleMenuPauseRunPhaseChanged(ERogue10mRunPhase NewPhase);
 	bool bMenuPauseEndingPlay = false;
@@ -382,6 +403,9 @@ private:
 	bool bTraitAddedMoveIgnore = false;
 	bool bTraitAddedLookIgnore = false;
 	TWeakObjectPtr<ARogue10mTutorialNPC> TraitServiceNPC;
+	TWeakObjectPtr<ARogue10mTutorialNPC> DialogueNPC;
+	bool bDialogueAddedMoveIgnore = false;
+	bool bDialogueAddedLookIgnore = false;
 	bool bShowCombatLog = true;
 	float LookSensitivityX = 1.0f;
 	float LookSensitivityY = 1.0f;

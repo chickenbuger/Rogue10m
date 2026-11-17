@@ -1896,8 +1896,9 @@ void URogue10mSkillTreeEntryWidget::SetSkillData(
 {
 	SkillData = InSkillData;
 	bUnlocked = bInUnlocked;
-	bCanDrag = bUnlocked && SkillData
-		&& SkillData->SkillTreeNodeType == ERogue10mSkillTreeNodeType::ActiveTechnique;
+	const auto* Character = Cast<ARogue10mCharacter>(GetOwningPlayerPawn());
+	const auto* Combat = Character ? Character->GetCombatComponent() : nullptr;
+	bCanDrag = bUnlocked && Combat && Combat->IsSelectableActiveTechnique(SkillData);
 	SetIsEnabled(true);
 	SetRenderOpacity(bUnlocked ? 1.0f : (bInAvailable ? 0.78f : 0.42f));
 	SetToolTipText(SkillData ? SkillData->SkillDescription : FText::GetEmpty());
@@ -1913,7 +1914,9 @@ void URogue10mSkillTreeEntryWidget::SetSkillData(
 	if (UI_SkillLockText)
 	{
 		const FText StatusText = bUnlocked
-			? (bCanDrag ? FText::FromString(TEXT("해금 · 장착 가능")) : FText::FromString(TEXT("해금 · 상시 발동")))
+			? (bCanDrag ? FText::FromString(TEXT("해금 · 장착 가능"))
+				: FText::FromString(SkillData && SkillData->SkillTreeNodeType == ERogue10mSkillTreeNodeType::PassiveTechnique
+					? TEXT("해금 · 상시 발동") : TEXT("해금 · 장착 대상 아님")))
 			: (bInAvailable ? FText::FromString(TEXT("수련 완료 · 해금 대기")) : FText::FromString(TEXT("잠김")));
 		UI_SkillLockText->SetText(StatusText);
 	}
@@ -2358,7 +2361,8 @@ void URogue10mSkillTreeWindowWidget::RefreshKeyControls()
 	const bool bActive = Combat && SelectedSkill && Combat->GetActiveSkillTreeSkills().Contains(SelectedSkill);
 	const bool bUnlocked = bActive && Combat->IsAttackSkillUnlocked(SelectedSkill);
 	const bool bAttack = SelectedSkill && SelectedSkill->SkillTreeNodeType == ERogue10mSkillTreeNodeType::ActiveTechnique;
-	const bool bCanBind = bUnlocked && bAttack && Bindings;
+	const bool bCanBind = bUnlocked && bAttack && Bindings
+		&& Combat->CanEquipSkillInSlot(SelectedSkill, ERogue10mAttackInputSlot::QSkill);
 	const FKey Key = Bindings && SelectedSkill ? Bindings->GetSkillKey(SelectedSkill) : EKeys::Invalid;
 	if (UI_SkillKeySelector)
 	{
@@ -2387,6 +2391,12 @@ void URogue10mSkillTreeWindowWidget::RefreshKeyControls()
 			Hint = TEXT("공중에서 지정한 키로 사용합니다. 단일 키만 지정 · Esc로 선택 취소.");
 		}
 		else { Hint = TEXT("단일 키를 지정해 사용합니다. 이동·메뉴 키와 중복할 수 없습니다. Esc로 선택 취소."); }
+		if (bActive && bAttack && bUnlocked && SelectedSkill)
+		{
+			Hint = Combat->IsSelectableActiveTechnique(SelectedSkill)
+				? SelectedSkill->GetAllowedSlotText().ToString() + TEXT(". 공용은 Q/E/R 지정 또는 HUD 드래그, 전용은 해당 HUD 슬롯. 최대 6개, 기본공격·Ctrl 별도.")
+				: TEXT("기본공격 또는 현재 무기의 장착 후보 목록에 포함되지 않은 기술입니다.");
+		}
 		UI_SkillKeyHintText->SetText(FText::FromString(Hint));
 	}
 }

@@ -72,11 +72,21 @@ struct FRogue10mGrowthSnapshot
 };
 
 USTRUCT()
+struct FRogue10mSavedWeaponSkillPreset
+{
+	GENERATED_BODY()
+	UPROPERTY(SaveGame) ERogue10mWeaponType WeaponType = ERogue10mWeaponType::Unarmed;
+	UPROPERTY(SaveGame) TMap<ERogue10mAttackInputSlot, TSoftObjectPtr<URogue10mAttackSkillData>> Slots;
+};
+
+USTRUCT()
 struct FRogue10mCombatSnapshot
 {
 	GENERATED_BODY()
 	UPROPERTY(SaveGame) TArray<TSoftObjectPtr<URogue10mAttackSkillData>> UnlockedSkills;
 	UPROPERTY(SaveGame) TMap<ERogue10mAttackInputSlot, TSoftObjectPtr<URogue10mAttackSkillData>> SkillBindings;
+	/** Additive optional field. Missing in old v5 saves. */
+	UPROPERTY(SaveGame) TArray<FRogue10mSavedWeaponSkillPreset> WeaponPresets;
 };
 
 UCLASS()

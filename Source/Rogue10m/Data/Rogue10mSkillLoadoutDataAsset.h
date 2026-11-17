@@ -43,6 +43,21 @@ public:
 	float StaminaCost = 0.0f;
 };
 
+/** Stable identity for a selectable technique, separate from basic/passive progression nodes.
+ * Released TechniqueIds must remain stable. This does not migrate existing soft-path saves.
+ */
+USTRUCT(BlueprintType)
+struct FRogue10mActiveTechniqueCatalogEntry
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Skill Loadout|Catalog")
+	FName TechniqueId;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Skill Loadout|Catalog")
+	TObjectPtr<URogue10mAttackSkillData> Skill;
+};
+
 UCLASS(BlueprintType)
 class ROGUE10M_API URogue10mWeaponSkillProfileDataAsset : public UPrimaryDataAsset
 {
@@ -53,6 +68,27 @@ public:
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Loadout")
 	URogue10mAttackSkillData* FindDefaultSkill(ERogue10mAttackInputSlot InputSlot) const;
+
+	static constexpr int32 RequiredActiveTechniqueCount = 10;
+
+	/** Empty is an optional legacy catalog, not a replacement for SkillTreeSkills. */
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Loadout|Catalog")
+	bool HasExplicitActiveTechniqueCatalog() const { return !ActiveTechniqueCatalog.IsEmpty(); }
+
+	/** Validates the complete optional catalog without changing bindings, unlocks or progression. */
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Loadout|Catalog")
+	bool ValidateActiveTechniqueCatalog(FText& OutReason) const;
+
+	/** Explicit validated entries only. Absent/invalid catalogs return empty; no legacy tree fallback. */
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Loadout|Catalog")
+	TArray<URogue10mAttackSkillData*> GetValidatedActiveTechniqueCatalog() const;
+
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Loadout|Catalog")
+	URogue10mAttackSkillData* FindActiveTechniqueById(FName TechniqueId) const;
+
+	/** Catalog gate only; callers still own unlock, fixed-basic and slot checks. */
+	bool CatalogAllowsLoadoutSkill(const URogue10mAttackSkillData* Skill) const;
+
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Skill Loadout")
 	FName ProfileId;
@@ -74,6 +110,14 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Skill Tree")
 	TArray<TObjectPtr<URogue10mAttackSkillData>> SkillTreeSkills;
+
+	/** Opt-in melee candidate catalog. Keep the full basic/passive/legacy SkillTreeSkills intact.
+	 * Empty preserves legacy behavior. Populated catalogs require exactly ten explicit-policy
+	 * techniques already present in the full tree. Mage command/instant rules are separate.
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Skill Loadout|Catalog", meta=(TitleProperty="TechniqueId"))
+	TArray<FRogue10mActiveTechniqueCatalogEntry> ActiveTechniqueCatalog;
+
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Skill Tree")
 	TArray<TObjectPtr<URogue10mAttackSkillData>> InitiallyUnlockedSkills;

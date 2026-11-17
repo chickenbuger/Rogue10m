@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "Rogue10mRunHUD.h"
+#include "Rogue10mWeaponIdentityComponent.h"
 #include "Rogue10mInputKeys.h"
 #include "Camera/PlayerCameraManager.h"
 #include "Rendering/DrawElements.h"
@@ -252,6 +253,20 @@ FRogue10mHudIdentityView URogue10mRunHUD::GetIdentityView() const
 		View.Normalized = View.Max > 0.0f ? View.Current / View.Max : 0.0f;
 		View.bHasIdentityResource = Identity != ERogue10mSkillTreeIdentity::None;
 	}
+	if (WeaponType == ERogue10mWeaponType::Unarmed)
+	{
+		View.Label = FText::FromString(TEXT("뉴비")); View.ResourceLabel = FText::FromString(TEXT("무기를 장착해 직업 획득"));
+		View.IdentityType = ERogue10mIdentityType::None; View.bHasIdentityResource = false; View.Current = View.Max = View.Normalized = 0.f;
+	}
+	else if (WeaponType == ERogue10mWeaponType::Knuckle)
+	{
+		const auto* Burst = Character ? Character->FindComponentByClass<URogue10mWeaponIdentityComponent>() : nullptr;
+		const bool bActive = Burst && Burst->IsIdentityActive();
+		View.ResourceLabel = FText::FromString(bActive ? TEXT("Ctrl · 질풍투기 활성") : TEXT("Ctrl · 질풍투기"));
+		View.Current = Burst ? (bActive ? Burst->GetRemainingSeconds() : Burst->GetCooldownRemaining()) : 0.f;
+		View.Max = Burst ? (bActive ? Burst->DurationSeconds : Burst->CooldownSeconds) : 1.f;
+		View.Normalized = View.Max > 0.f ? View.Current / View.Max : 0.f; View.bHasIdentityResource = true;
+	}
 	return View;
 }
 
@@ -300,13 +315,15 @@ TArray<FRogue10mHudQuickSlotView> URogue10mRunHUD::GetSkillQuickSlotViews() cons
 		const TCHAR* InputLabel;
 	};
 	const FSkillSlotDefinition Definitions[] = {
-		{ ERogue10mAttackInputSlot::Primary, TEXT("좌클릭") },
+		{ ERogue10mAttackInputSlot::QSkill, TEXT("Q") },
+		{ ERogue10mAttackInputSlot::ESkill, TEXT("E") },
+		{ ERogue10mAttackInputSlot::RSkill, TEXT("R") },
 		{ ERogue10mAttackInputSlot::Special, TEXT("우클릭") },
-		{ ERogue10mAttackInputSlot::ChargedPrimary, TEXT("좌클릭 차징") },
+		{ ERogue10mAttackInputSlot::MouseChord, TEXT("좌+우") },
 		{ ERogue10mAttackInputSlot::ChargedSpecial, TEXT("우클릭 차징") }
 	};
 
-	Views.Reserve(5);
+	Views.Reserve(6);
 	for (int32 Index = 0; Index < UE_ARRAY_COUNT(Definitions); ++Index)
 	{
 		const FSkillSlotDefinition& Definition = Definitions[Index];
@@ -340,23 +357,6 @@ TArray<FRogue10mHudQuickSlotView> URogue10mRunHUD::GetSkillQuickSlotViews() cons
 		Views.Add(View);
 	}
 
-	FRogue10mHudQuickSlotView DodgeView;
-	DodgeView.SlotNumber = 5;
-	DodgeView.InputText = Rogue10mInput::DodgeKeyLabel();
-	DodgeView.bDodgeSlot = true;
-	DodgeView.bUnlocked = true;
-	if (const URogue10mDodgeSkillDataAsset* DodgeSkill = Combat->GetActiveDodgeSkill())
-	{
-		DodgeView.DisplayName = DodgeSkill->DisplayName;
-		DodgeView.SkillIcon = DodgeSkill->Icon;
-		DodgeView.IconColor = FLinearColor(0.32f, 0.68f, 1.0f, 1.0f);
-	}
-	else
-	{
-		DodgeView.DisplayName = FText::FromString(TEXT("기본 회피"));
-		DodgeView.IconColor = FLinearColor(0.32f, 0.68f, 1.0f, 1.0f);
-	}
-	Views.Add(DodgeView);
 	return Views;
 }
 TArray<FRogue10mHudQuickSlotView> URogue10mRunHUD::GetItemQuickSlotViews() const

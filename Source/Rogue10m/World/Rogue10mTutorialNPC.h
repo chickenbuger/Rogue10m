@@ -51,6 +51,10 @@ public:
 	/** Skill-tree browsing does not require dialogue; investment still requires this service range. */
 	bool IsWithinSkillTreeServiceRange(const ARogue10mCharacter* Character) const;
 	void ResumeAfterTraitWindow();
+	void NavigateService(int32 Delta);
+	void ActivateService(int32 Index);
+	void Interact() { HandleInteract(); }
+	int32 GetSelectedServiceIndex() const { return SelectedServiceIndex; }
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Town")
 	bool SelectDifficulty(ERogue10mDifficulty Difficulty);
 
@@ -94,26 +98,29 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	// Shared dialogue/input lifecycle; field quest NPCs provide their own actions and copy.
+	virtual void HandleInteract();
+	virtual void RefreshDialogueView();
+	virtual void ExecuteSelectedService();
+	virtual FText BuildServiceText() const;
+	virtual TArray<FText> BuildServiceChoices() const;
+	ARogue10mCharacter* GetDialogueCharacter() const { return NearbyCharacter.Get(); }
+	bool IsPlayerAvailable(ARogue10mCharacter* Character, float Radius) const;
+	bool FinishService(bool bSucceeded, const FText& Success, const FText& Failure);
 
 private:
 	const URogue10mTutorialDataAsset& GetDialogueData() const;
 	const URogue10mTownServiceDataAsset& GetServiceData() const;
 	bool CanUseTownServices();
 	bool IsProgressionSaveAvailable();
-	bool FinishService(bool bSucceeded, const FText& Success, const FText& Failure);
 	URogue10mTownProgressionComponent* FindTownProgression() const;
 	void SetServiceInputEnabled(bool bEnabled);
 	void SelectPreviousService();
 	void SelectNextService();
-	void ExecuteSelectedService();
-	FText BuildServiceText() const;
-	bool IsPlayerAvailable(ARogue10mCharacter* Character, float Radius) const;
 	void FindOverlappingPlayer();
 	void ActivateNearbyPlayer(ARogue10mCharacter& Character);
 	void ReleaseNearbyPlayer();
 	void UpdateNearbyPlayer();
-	void HandleInteract();
-	void RefreshDialogueView();
 	URogue10mTutorialRewardComponent* FindReceipts(ARogue10mCharacter* Character, bool bCreate) const;
 
 	UFUNCTION()

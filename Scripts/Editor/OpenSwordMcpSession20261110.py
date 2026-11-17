@@ -1,0 +1,3 @@
+import unreal
+unreal.EditorPythonScripting.set_keep_python_script_alive(True)
+print("RESULT=SWORD_MCP_SESSION_READY no_asset_changes=true")

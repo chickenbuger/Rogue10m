@@ -9,6 +9,7 @@
 
 class UAnimMontage;
 class UAnimSequence;
+class UBlendSpace;
 class URogue10mCharacterAnimationComponent;
 class FRogue10mViewAlignedUpperBodyProxy;
 
@@ -100,6 +101,13 @@ public:
 	UPROPERTY(BlueprintReadOnly, Transient, Category="Rogue10m|Animation|Fighter Stance")
 	TObjectPtr<UAnimSequence> FighterCombatStanceAnimation;
 
+	UPROPERTY(BlueprintReadOnly, Transient, Category="Rogue10m|Animation|Weapon")
+	TObjectPtr<UBlendSpace> GroundLocomotionBlendSpace;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Weapon")
+	TSoftObjectPtr<UAnimSequence> GreatSwordIdleSequence;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Weapon")
+	TSoftObjectPtr<UBlendSpace> GreatSwordLocomotion;
+
 	/** Fixed provenance of the sequence player configured in ABP_Common_Unarmed. */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Fighter Stance")
 	TSoftObjectPtr<UAnimSequence> FighterCombatStanceSequence;
@@ -124,5 +132,9 @@ private:
 	TWeakObjectPtr<UAnimMontage> CachedDodgeMontage;
 	FSoftObjectPath CachedDodgeMontagePath;
 	bool bDodgeMontageCacheAttempted = false;
+	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedFighterIdle;
+	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedGreatSwordIdle;
+	UPROPERTY(Transient) TObjectPtr<UBlendSpace> CachedUnarmedLocomotion;
+	UPROPERTY(Transient) TObjectPtr<UBlendSpace> CachedGreatSwordLocomotion;
 	float FighterCombatBlendProgress = 0.0f;
 };

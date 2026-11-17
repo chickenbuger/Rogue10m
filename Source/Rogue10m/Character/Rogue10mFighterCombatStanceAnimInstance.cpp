@@ -4,6 +4,7 @@
 
 #include "Animation/AnimMontage.h"
 #include "Animation/AnimSequence.h"
+#include "Animation/BlendSpace.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mAppearanceCameraComponent.h"
@@ -19,12 +20,19 @@ URogue10mFighterCombatStanceAnimInstance::URogue10mFighterCombatStanceAnimInstan
 {
 	FighterCombatStanceSequence = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT(
 		"/Game/Rogue10m/Animation/Combat/FighterStance/A_Fighter_CombatIdle.A_Fighter_CombatIdle")));
+	GreatSwordIdleSequence = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT("/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle")));
+	GreatSwordLocomotion = TSoftObjectPtr<UBlendSpace>(FSoftObjectPath(TEXT("/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground")));
 }
 
 void URogue10mFighterCombatStanceAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
-	FighterCombatStanceAnimation = FighterCombatStanceSequence.LoadSynchronous();
+	CachedFighterIdle = FighterCombatStanceSequence.LoadSynchronous();
+	CachedGreatSwordIdle = GreatSwordIdleSequence.LoadSynchronous();
+	CachedUnarmedLocomotion = LoadObject<UBlendSpace>(nullptr, TEXT("/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference"));
+	CachedGreatSwordLocomotion = GreatSwordLocomotion.LoadSynchronous();
+	FighterCombatStanceAnimation = CachedFighterIdle;
+	GroundLocomotionBlendSpace = CachedUnarmedLocomotion;
 	FighterCombatBlendProgress = FighterCombatStanceAlpha = 0.0f;
 	MovingAttackUpperBodyAlpha = 0.0f;
 	WeightedHandPitch = FVector2D::ZeroVector;
@@ -147,7 +155,10 @@ void URogue10mFighterCombatStanceAnimInstance::NativeUpdateAnimation(float Delta
 	}
 
 	const ERogue10mWeaponType Weapon = Character ? Character->GetEquippedWeaponType() : ERogue10mWeaponType::Unarmed;
-	const bool bFighterWeapon = Weapon == ERogue10mWeaponType::Unarmed || Weapon == ERogue10mWeaponType::Knuckle;
+	const bool bGreatSword = Weapon == ERogue10mWeaponType::GreatSword;
+	FighterCombatStanceAnimation = bGreatSword && CachedGreatSwordIdle ? CachedGreatSwordIdle : CachedFighterIdle;
+	GroundLocomotionBlendSpace = bGreatSword && CachedGreatSwordLocomotion ? CachedGreatSwordLocomotion : CachedUnarmedLocomotion;
+	const bool bFighterWeapon = bGreatSword || Weapon == ERogue10mWeaponType::Unarmed || Weapon == ERogue10mWeaponType::Knuckle;
 	const bool bContextValid = Character && Animation && Movement && Character->GetController()
 		&& !Character->IsDead() && bFighterWeapon && !(Controller && Controller->IsAnyBlockingWindowVisible());
 	if (!bContextValid)
@@ -170,7 +181,7 @@ void URogue10mFighterCombatStanceAnimInstance::NativeUpdateAnimation(float Delta
 	}
 	const bool bStanding = bContextValid && Movement->IsMovingOnGround() && !Character->IsSprinting()
 		&& !Animation->HasMovementInput() && GroundSpeed <= FMath::Max(0.0f, FighterCombatStationarySpeed);
-	const bool bRaise = FighterCombatStanceAnimation && bStanding && Animation->IsFighterCombatStanceRequested();
+	const bool bRaise = FighterCombatStanceAnimation && bStanding && (bGreatSword || Animation->IsFighterCombatStanceRequested());
 	const auto* Appearance = Character ? Character->GetAppearanceCameraComponent() : nullptr;
 	const bool bWeightedGuard = bContextValid && !bAnyMontageContributes && Appearance && Appearance->IsWeightedFirstPersonActive();
 	const FRogue10mWeightedFirstPersonSettings WeightedSettings = bWeightedGuard

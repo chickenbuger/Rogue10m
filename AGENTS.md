@@ -61,12 +61,15 @@ Check this list on every user command before finishing:
 - When a feature is developed, add a clearly marked Notion summary candidate inside the DevLog.
 - When a Sprint work item is completed or materially changed, update Docs/SprintChangeLog.md with its goal, major changes, validation, status, and related documents.
 - Before any GitHub commit or push summary, list the changed files and a short explanation.
+- Immediate feature publication (2026-11-17): commit and push each completed, validated feature promptly as its own scoped change. Keep unfinished work separate; do not batch unrelated features into one commit or postpone independent validated work because another feature is still in progress.
+- Map-production merge gate (2026-11-17): commit and push map work and its dependent gameplay checkpoints to the work branch during production. Defer develop/test/main promotion until map production is finished. This overrides automatic promotion for the current map-production work; an in-progress checkpoint is not feature completion.
 - Standing user authorization (2026-10-20): commit and push the current checkpoint, and after each future feature is completed and validated, commit it and promote it through `develop` -> `test` -> `main`, then push the work and integration branches. This instruction is explicit confirmation; do not ask again for routine feature completion.
 - Public publishing authorization (2026-10-20): the user explicitly approved publishing the current code, Unreal assets, source artwork, and validation evidence to the public GitHub repository `https://github.com/chickenbuger/Rogue10m`, and publishing future completed and validated features to that same public repository. This resolves the earlier public-destination approval block; do not request the same approval again for routine completion.
 - Keep feature development on a work branch. Before promotion, fetch and inspect remote changes, run relevant checks, review the diff, and update the feature documents, Sprint changelog, and daily DevLog. Prefer fast-forward promotion when possible; never force-push or discard unrelated work under this authorization. If validation fails or integration is blocked, record the reason instead of claiming completion.
 - Write every new DevLog entry in Korean.
 - Always switch to an appropriate work branch before feature development.
 - For large or unclear work, apply `Docs/LazyCodexHarness.md` and record the selected Ultrawork Packets.
+- During development, inspect the active Unreal session's actual output log before and after meaningful editor/build/test operations. Honor `-AbsLog` instead of assuming `Saved/Logs/Rogue10m.log` is current. Use `Scripts/CheckUnrealOutputLog.py --log <actual-log>` with a recorded line/UTC boundary or bounded watch; preserve existing failures and investigate new Error/Fatal/ensure entries immediately. Do not hide errors by lowering verbosity or disabling tests. See `Docs/OutputLogErrorWorkflow.md`.
 
 ## Unreal Engineering Rules
 

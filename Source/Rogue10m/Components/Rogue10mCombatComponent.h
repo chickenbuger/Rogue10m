@@ -7,6 +7,7 @@
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mWeaponTypes.h"
 #include "Rogue10mSkillTreeCombatComponent.h"
+#include "Rogue10mAuthoredContactTimeline.h"
 #include "Rogue10mCombatComponent.generated.h"
 
 class ARogue10mCharacter;
@@ -19,6 +20,8 @@ class URogue10mCombatTestComponent;
 class URogue10mCharacterDataAsset;
 class URogue10mDodgeSkillDataAsset;
 class URogue10mWeaponSkillProfileDataAsset;
+class URogue10mTechniqueMotionComponent;
+class UAnimInstance;
 class USkeletalMeshComponent;
 struct FRogue10mCombatSnapshot;
 
@@ -40,6 +43,27 @@ struct FRogue10mActiveAttackExecution
 	int32 CompletedPulses = 0;
 	bool bConfirmedCameraFeedbackSent = false;
 	bool bBrawlerPresentation = false;
+	bool bAdvanceEndpointContact = false;
+	bool bAuthoredContactSequence = false;
+	ERogue10mAttackHitMode AcceptedHitMode = ERogue10mAttackHitMode::Single;
+	ERogue10mWeaponType AcceptedWeaponType = ERogue10mWeaponType::Unarmed;
+	FRogue10mAuthoredContactTimeline AuthoredTimeline;
+	float AcceptedMontagePlayRate = 1.0f;
+	float AcceptedMontageRateScale = 1.0f;
+	double AuthoredOwnedActionEndTime = 0.0;
+	double AuthoredPreviousActionEndTime = 0.0;
+	uint64 AdvanceEpoch = 0;
+	FQuat AcceptedCombatRotation = FQuat::Identity;
+	TWeakObjectPtr<UAnimInstance> AdvanceAnimInstance;
+	TWeakObjectPtr<UAnimMontage> AdvanceMontage;
+	int32 AdvanceMontageInstanceId = INDEX_NONE;
+};
+
+USTRUCT()
+struct FRogue10mRuntimeWeaponSkillPreset
+{
+	GENERATED_BODY()
+	UPROPERTY(Transient) TMap<ERogue10mAttackInputSlot, TObjectPtr<URogue10mAttackSkillData>> Slots;
 };
 
 UCLASS(ClassGroup=(Rogue10m), meta=(BlueprintSpawnableComponent))
@@ -55,6 +79,14 @@ public:
 
 	void InitializeAbilitySystem();
 	void InitializeSpawnedLoadout();
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Combat|Identity") bool TryActivateWeaponIdentity();
+	friend struct FRogue10mSkillLoadoutTestAccess;
+	friend struct FRogue10mCatalogConsumptionTestAccess;
+	friend struct FRogue10mTechniqueInterruptionTestAccess;
+	friend struct FRogue10mHitInterruptionTestAccess;
+	friend struct FRogue10mAuthoredContactSequenceTestAccess;
+	friend struct FRogue10mWeaponIdentityTestAccess;
+	friend struct FRogue10mMouseCombatTestAccess;
 	void HandleAttackPressed(bool bPrimaryAttack);
 
 	/** Actual input charge ownership, independent of the fighter-only guard state. */
@@ -66,8 +98,10 @@ public:
 	void HandleAttackReleased(bool bPrimaryAttack);
 	/** Drops pending button/charge/buffer input without cancelling an already accepted hit. */
 	void CancelHeldAttackInput();
+	/** Called only after Character confirms finite positive applied damage; no immunity is granted. */
+	void InterruptAttacksOnHit();
 	bool IsAnyAttackInputHeld() const;
-	void CancelCombatVisuals();
+	void CancelCombatVisuals(bool bStopBasicMontage = true);
 	bool ExecutePendingAttackSkillFromAbility();
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Combat")
@@ -83,6 +117,18 @@ public:
 	bool ActivateTreeSkill(URogue10mAttackSkillData* SkillData);
 
 	void HandleBoundSkillPressed(URogue10mAttackSkillData* SkillData);
+	void HandleEquippedSkillPressed(ERogue10mAttackInputSlot Slot);
+	void HandleEquippedSkillReleased(ERogue10mAttackInputSlot Slot);
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Loadout")
+	int32 GetEquippedLoadoutSkillCount() const;
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Loadout")
+	bool CanEquipSkillInSlot(const URogue10mAttackSkillData* Skill, ERogue10mAttackInputSlot Slot) const;
+	bool IsTechniqueMovementActive() const;
+	/** Selectable candidates only; full progression/basic/passive queries remain independent. */
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Loadout")
+	TArray<URogue10mAttackSkillData*> GetSelectableActiveTechniques() const;
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Loadout")
+	bool IsSelectableActiveTechnique(const URogue10mAttackSkillData* Skill) const;
 	void HandleBoundSkillReleased(URogue10mAttackSkillData* SkillData);
 	void CancelBoundSkillInput();
 
@@ -183,7 +229,17 @@ private:
 	void ExecuteCombatAttack(bool bPrimaryAttack, bool bChargedAttack);
 	bool ExecuteAttackSkill(const URogue10mAttackSkillData& SkillData, bool bComboAttack);
 	bool TryActivateAttackAbility(const URogue10mAttackSkillData& SkillData, bool bComboAttack);
-	void StartAttackHitSequence(const URogue10mAttackSkillData& SkillData);
+	void StartAttackHitSequence(const URogue10mAttackSkillData& SkillData, float AcceptedAnimationRate = 0.0f,
+		UAnimInstance* AcceptedAdvanceAnim = nullptr, int32 AcceptedMontageId = INDEX_NONE,
+		const TArray<float>* AcceptedContactTimes = nullptr, double AcceptedMontageStartedAt = -1.0,
+		float AcceptedRecoveryEndTime = -1.0f);
+	void HandleAuthoredContactTimer(uint32 ExecutionId, uint64 ArmGeneration, int32 ExpectedContact);
+	void ReleaseAuthoredRecoveryAction(const FRogue10mActiveAttackExecution& Execution);
+	bool HasActiveAuthoredContacts() const;
+	bool CanContinueAuthoredContacts(const FRogue10mActiveAttackExecution& Execution) const;
+	void ScheduleNextAuthoredContact(uint32 ExecutionId);
+	void MonitorAuthoredContacts();
+	void HandleTechniqueAdvanceFinished(uint32 ExecutionId, bool bCommitContact);
 	void ExecuteAttackHitPulse(uint32 ExecutionId);
 	void GatherAttackTargets(const URogue10mAttackSkillData& SkillData, FRogue10mActiveAttackExecution& Execution,
 		const FVector& Origin, const FVector& Forward, const FQuat& Rotation, TArray<AActor*>& OutTargets) const;
@@ -193,7 +249,7 @@ private:
 	void CancelPendingAttackHits(const URogue10mAttackSkillData* SkillData = nullptr);
 	bool TryPayResourceCosts(const URogue10mAttackSkillData& SkillData, bool bComboAttack = false);
 	bool CanPayResourceCosts(const URogue10mAttackSkillData& SkillData, bool bComboAttack = false) const;
-	void StartSharedAttackCooldown(const URogue10mAttackSkillData& SkillData, bool bComboAttack);
+	void StartSharedAttackCooldown(const URogue10mAttackSkillData& SkillData, bool bComboAttack, bool bPreserveLongerCooldown = false);
 	void OpenComboWindow(const URogue10mAttackSkillData& SkillData);
 	void ResetComboWindow();
 	void DrawAttackDebug(const FVector& TraceStart, const FVector& TraceEnd, float TraceRadius, const FLinearColor& Color, bool bHit, const FHitResult& Hit) const;
@@ -202,6 +258,10 @@ private:
 	const URogue10mWeaponSkillProfileDataAsset* FindActiveWeaponProfile() const;
 	void ApplyCharacterData();
 	void ApplyActiveWeaponProfile();
+	void RememberActiveWeaponPreset();
+	TMap<ERogue10mAttackInputSlot, TObjectPtr<URogue10mAttackSkillData>> BuildDurableSkillBindings() const;
+	UPROPERTY(Transient) TMap<ERogue10mWeaponType, FRogue10mRuntimeWeaponSkillPreset> WeaponSkillPresets;
+	bool bWeaponPresetApplied = false;
 	void BindProgressionState();
 
 	UFUNCTION()
@@ -285,6 +345,9 @@ private:
 	TWeakObjectPtr<const URogue10mAttackSkillData> ActiveComboRootSkill;
 	TWeakObjectPtr<const URogue10mAttackSkillData> AttackCooldownSourceSkill;
 	TWeakObjectPtr<const URogue10mAttackSkillData> LastAcceptedAttackSkill;
+	TWeakObjectPtr<UAnimInstance> LastAcceptedAnimInstance;
+	TWeakObjectPtr<UAnimMontage> LastAcceptedMontage;
+	int32 LastAcceptedMontageId = INDEX_NONE;
 	TWeakObjectPtr<const URogue10mAttackSkillData> PendingAbilityAttackSkill;
 	TWeakObjectPtr<ARogue10mPlayerState> BoundProgressionState;
 	float ActiveComboWindowOpenTime = -1.0f;
@@ -299,7 +362,15 @@ private:
 	TWeakObjectPtr<URogue10mAttackSkillData> HeldBoundSkill;
 	float BoundSkillPressedTime = -1.0f;
 	FTimerHandle BoundSkillMonitorTimer;
+	FTimerHandle AuthoredContactMonitorTimer;
 	uint32 NextAttackExecutionId = 1;
 	TMap<uint32, FRogue10mActiveAttackExecution> ActiveAttackExecutions;
+	UPROPERTY(Transient)
+	TObjectPtr<URogue10mTechniqueMotionComponent> TechniqueMotion;
+	FQuat AcceptedAdvanceRotation = FQuat::Identity;
+	uint64 AdvanceCancellationEpoch = 0;
+	uint64 DamageInterruptionEpoch = 0;
+	bool bInterruptingAttacks = false;
+	uint32 ResolvingAttackExecutionId = 0;
 	FRogue10mSkillTreeAttackEffect AcceptedIdentityEffect;
 };

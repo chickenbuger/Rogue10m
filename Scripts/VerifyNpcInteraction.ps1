@@ -48,7 +48,7 @@ $before=@(Get-SaveInventory $saveDirectory)
 New-Item -ItemType Directory -Force -Path $evidence | Out-Null
 $before | Export-Csv -LiteralPath $beforeCsv -NoTypeInformation -Encoding utf8
 $arguments=@(('"'+$project+'"'),'/Game/Rogue10m/Maps/StartHub','-game','-unattended','-nosplash','-nosound',
-    '-NoLiveCoding','-NoRemoteShaderCompile',('-RogueProfileSaveSlot='+$town),('-RogueProgressionSavePrefix='+$prefix),
+    '-DisablePython','-language=en','-locale=en-US','-NoLiveCoding','-NoRemoteShaderCompile',('-RogueProfileSaveSlot='+$town),('-RogueProgressionSavePrefix='+$prefix),
     ('-RogueSkillKeySaveSlot='+$keys),('-RogueNpcInteractionLabel='+$Label),
     '-ExecCmds="t.MaxFPS 60,Rogue10m.TestNpcInteraction"',('-abslog="'+$log+'"'))
 if($Rendered){$arguments+=@(('-'+$Renderer.ToLowerInvariant()),'-windowed','-ForceRes','-ResX=1280','-ResY=720')}else{$arguments+='-nullrhi'}
@@ -72,7 +72,7 @@ try {
     Write-Output $resultText
     $data=$resultText | ConvertFrom-Json
     $required=@('label','rendered','offscreen','input','physical_input_performed','manual_field_run',
-        'checks','failures','probe_passed','f_binding_accepted','collision_detected','evidence_note')
+        'checks','failures','probe_passed','f_binding_accepted','collision_detected','evidence_note','fixture_revision','q_binding_accepted','f_rejection_preserved_bindings','positive_control_key','selected_skill','f_binding_reason','probes')
     foreach($field in $required){if($data.PSObject.Properties.Name -notcontains $field){throw ('Missing NPC QA field: '+$field)}}
     if($data.label -ne $Label -or [bool]$data.rendered -ne [bool]$Rendered -or [bool]$data.offscreen -ne [bool]$Offscreen -or
         $data.input -ne 'programmatic_Controller_InputKey_actual_legacy_and_enhanced_stack' -or
@@ -86,6 +86,50 @@ try {
     }
     if($process.ExitCode -ne 0 -or -not $engineText.Contains('RESULT=NPC_INTERACTION_PASSED')) {
         throw ('NPC QA JSON success lacks a matching engine success/exit; exit='+$process.ExitCode+' log='+$log)
+    }
+    if($data.fixture_revision -ne 'equipped_knuckle_reserved_F_paid_QER_LeftShift_sprint_bound_20261111' -or
+        $data.f_binding_accepted -ne $false -or $data.q_binding_accepted -ne $true -or
+        $data.f_rejection_preserved_bindings -ne $true -or $data.positive_control_key -ne 'Q' -or
+        [string]::IsNullOrWhiteSpace($data.selected_skill) -or [string]::IsNullOrWhiteSpace($data.f_binding_reason)) {
+        throw 'Expected reserved-F rejection with preserved loadout and a real accepted common-Q binding.'
+    }
+    foreach($positiveName in @('outside_binding_positive_control','fixed_Q_bare_positive','fixed_E_bare_positive','fixed_R_bare_positive')) {
+    $positive=@($data.probes | Where-Object name -eq $positiveName)
+    if($positive.Count -ne 1){throw 'Exactly one actual Q positive-control observation required.'}
+    $p=$positive[0]
+    if($positiveName -match '^fixed_[QER]_bare_positive$') {
+        if($p.selected_body_montage_observed -ne $true -or $p.inactive_FP_montage_observed -ne $false -or
+            $p.busy_weapon_change_violation -ne $false -or $p.body_finished_weapon_change_recovered -ne $true) {
+            throw ('Missing actual body montage, inactive-FP safety or natural weapon-change recovery: '+$positiveName)
+        }
+    }
+    if($p.uses_after -ne ($p.uses_before+1) -or $p.total_uses_after -ne ($p.total_uses_before+1) -or
+        $p.last_accepted_skill -ne $data.selected_skill -or $p.max_cooldown_s -le 0.001 -or
+        -not ($p.stamina_min -lt ($p.stamina_before-0.001) -or $p.mana_min -lt ($p.mana_before-0.001) -or $p.identity_min -lt ($p.identity_before-0.001))) {
+        throw 'Real Q execution lacks exact-one skill, cooldown or positive resource-spend evidence.'
+    }
+    }
+    foreach($name in @('fixed_Q_LeftShift_blocked','fixed_E_LeftShift_blocked','fixed_R_LeftShift_blocked','fixed_Q_menu_blocked','fixed_E_menu_blocked','fixed_R_menu_blocked','fixed_Q_menu_close_release_only','fixed_E_menu_close_release_only','fixed_R_menu_close_release_only','common_Q_menu_must_not_cast','reserved_F_menu_must_not_cast_or_talk','inside_NPC_F_must_not_cast','common_Q_dialogue_must_not_cast','reserved_F_closes_without_attack')) {
+        $rows=@($data.probes | Where-Object name -eq $name)
+        if($rows.Count -ne 1){throw ('Missing unique combat-blocking probe: '+$name)}
+        $p=$rows[0]
+        $staminaAllowance=0.0
+        if($name -match '^fixed_[QER]_LeftShift_blocked$') {
+            foreach($field in @('accepted_skill_before','last_accepted_skill','sprint_cost_per_second','sprint_tick_interval_s','sprint_observed_duration_s','allowed_sprint_stamina_drain')) {
+                if($p.PSObject.Properties.Name -notcontains $field){throw ('Missing sprint guard evidence '+$field)}
+            }
+            $rate=[double]$p.sprint_cost_per_second;$interval=[double]$p.sprint_tick_interval_s;$duration=[double]$p.sprint_observed_duration_s
+            foreach($value in @($rate,$interval,$duration,[double]$p.allowed_sprint_stamina_drain)) {
+                if([double]::IsNaN($value)-or [double]::IsInfinity($value)){throw 'Non-finite sprint guard metadata.'}
+            }
+            if($rate -lt 0 -or $interval -le 0 -or $duration -lt 0 -or $p.last_accepted_skill -ne $p.accepted_skill_before){throw 'Invalid sprint guard or accepted skill changed.'}
+            $staminaAllowance=$rate*($duration+$interval)
+            if([Math]::Abs([double]$p.allowed_sprint_stamina_drain-$staminaAllowance) -gt 0.00001){throw 'Sprint allowance does not match reflected rate and observed duration plus one tick.'}
+        }
+        if($p.uses_after -ne $p.uses_before -or $p.total_uses_after -ne $p.total_uses_before -or $p.max_cooldown_s -gt 0.001 -or $p.saw_charge_held -ne $false -or
+            $p.stamina_min -lt ($p.stamina_before-$staminaAllowance-0.001) -or $p.mana_min -lt ($p.mana_before-0.001) -or $p.identity_min -lt ($p.identity_before-0.001)) {
+            throw ('Unexpected combat during guarded probe: '+$name)
+        }
     }
     if(-not(Test-Path -LiteralPath $events)){throw 'NPC QA did not produce event observations.'}
     $eventRows=@((Read-BomText $events) | ConvertFrom-Csv)

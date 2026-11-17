@@ -12,10 +12,14 @@
 
 class UAbilitySystemComponent;
 class UCameraComponent;
+class USpringArmComponent;
+class URogue10mMouseCombatInputComponent;
+class APlayerController;
 class UInputAction;
 class URogue10mAttackSkillData;
 class URogue10mAttributeSet;
 class URogue10mCharacterAnimationComponent;
+class URogue10mWeaponVisualComponent;
 class URogue10mCombatComponent;
 class URogue10mSkillTreeCombatComponent;
 class URogue10mBasicBrawlerComponent;
@@ -27,6 +31,7 @@ class URogue10mVitalRegenerationComponent;
 class URogue10mTraitRuntimeComponent;
 class USkeletalMeshComponent;
 struct FInputActionValue;
+struct FKey;
 
 /** 1인칭 이동과 입력 전달, 캐릭터 생명주기를 담당합니다. */
 UCLASS(abstract)
@@ -98,6 +103,16 @@ public:
 	URogue10mAppearanceCameraComponent* GetAppearanceCameraComponent() const { return AppearanceCameraComponent; }
 	USkeletalMeshComponent* GetFirstPersonMesh() const { return FirstPersonMesh; }
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Camera")
+	bool IsThirdPersonGameplayActive() const { return bUseThirdPersonGameplay; }
+	UCameraComponent* GetGameplayCameraComponent() const;
+	USpringArmComponent* GetThirdPersonCameraBoom() const { return ThirdPersonCameraBoom; }
+	/** Body-origin attack range converges on the active screen-center aim, never starts behind the player. */
+	FTransform GetCombatViewTransform();
+	/** Reset-only cancellation hook; Combat owns cancellation of accepted/held gameplay actions. */
+	void CancelPendingMouseAttackInput();
+	bool HasPendingMouseAttackInput() const;
+	void ApplyInitialThirdPersonViewPitchOnce(APlayerController& PlayerController);
 	URogue10mFirstPersonPresentationComponent* GetFirstPersonPresentationComponent() const { return FirstPersonPresentationComponent; }
 	URogue10mInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
 	URogue10mCombatComponent* GetCombatComponent() const { return CombatComponent; }
@@ -160,6 +175,9 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Combat")
 	virtual void DoSpecialAttackReleased();
+	void DoEquippedSkillPressed(FKey Key);
+	void DoEquippedSkillReleased(FKey Key);
+	void DoWeaponIdentity();
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Combat")
 	virtual void DoUnarmedAttack();
@@ -203,6 +221,16 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<UCameraComponent> FirstPersonCameraComponent;
 
+	/** Production default. Legacy first-person features remain preserved and inactive. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Camera")
+	bool bUseThirdPersonGameplay = true;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Camera")
+	TObjectPtr<USpringArmComponent> ThirdPersonCameraBoom;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Camera")
+	TObjectPtr<UCameraComponent> ThirdPersonCameraComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Input")
+	TObjectPtr<URogue10mMouseCombatInputComponent> MouseCombatInputComponent;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<URogue10mInventoryComponent> InventoryComponent;
 
@@ -217,6 +245,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<URogue10mCharacterAnimationComponent> CharacterAnimationComponent;
+
+ UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
+ TObjectPtr<URogue10mWeaponVisualComponent> WeaponVisualComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	TObjectPtr<URogue10mFirstPersonPresentationComponent> FirstPersonPresentationComponent;
@@ -276,12 +307,14 @@ private:
 	bool IsBlockingWindowVisible() const;
 	void ActivateQuickSlot(int32 SlotNumber);
 	void InitializeAbilityActorInfo();
+	void RefreshThirdPersonPresentation();
 
 	FTimerHandle SprintStaminaTimerHandle;
 	FTimerHandle DodgeTimerHandle;
 	FVector2D CachedMovementInput = FVector2D::ZeroVector;
 	float NormalWalkSpeed = 600.0f;
 	float NextDodgeAllowedTime = 0.0f;
+	bool bThirdPersonInitialViewHandled = false;
 	bool bIsSprinting = false;
 	bool bIsDodging = false;
 };

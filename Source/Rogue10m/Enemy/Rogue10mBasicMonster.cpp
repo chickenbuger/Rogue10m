@@ -328,14 +328,18 @@ void ARogue10mBasicMonster::Die()
 	}
 
 	bIsDead = true;
+	OnDeathStarted();
 	if (AttackPatternComponent) AttackPatternComponent->CancelAttack();
 	int32 AwardedExperience = 0;
 	int32 AwardedGold = 0;
 	const ARogue10mGameState* Run = GetWorld() ? GetWorld()->GetGameState<ARogue10mGameState>() : nullptr;
 	const bool bRunEnded = Run && Run->IsRunTerminal();
-	if (HasAuthority() && !bCombatTestInstance && !bRunEnded)
+	if (HasAuthority() && !bCombatTestInstance && !bRunEnded && ShouldGrantDeathRewards())
 	{
-		if (MonsterLootComponent) { MonsterLootComponent->SpawnDeathLoot(MonsterData ? MonsterData->LootTable.Get() : nullptr); }
+		// Item custody follows the actual damage instigator, independently of XP.
+		ARogue10mPlayerController* LootController = Cast<ARogue10mPlayerController>(LastDamageInstigator.Get());
+		ARogue10mCharacter* LootRecipient = LootController ? Cast<ARogue10mCharacter>(LootController->GetPawn()) : nullptr;
+		if (MonsterLootComponent) { MonsterLootComponent->SpawnDeathLoot(MonsterData ? MonsterData->LootTable.Get() : nullptr, LootRecipient); }
 		if (ARogue10mPlayerController* RewardController =
 			Cast<ARogue10mPlayerController>(LastDamageInstigator.Get()))
 		{

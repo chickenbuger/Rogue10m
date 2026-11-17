@@ -12,7 +12,7 @@ const FRogue10mSkillTreeNodeDefinition* URogue10mSkillTreeDataAsset::FindNode(FN
 
 ERogue10mSkillTreeTrack URogue10mSkillTreeDataAsset::ResolveTrack(ERogue10mWeaponType WeaponType)
 {
-	if (WeaponType == ERogue10mWeaponType::Unarmed || WeaponType == ERogue10mWeaponType::Knuckle) { return ERogue10mSkillTreeTrack::Brawler; }
+	if (WeaponType == ERogue10mWeaponType::Knuckle) { return ERogue10mSkillTreeTrack::Brawler; }
 	return WeaponType == ERogue10mWeaponType::GreatSword ? ERogue10mSkillTreeTrack::GreatSword : ERogue10mSkillTreeTrack::None;
 }
 

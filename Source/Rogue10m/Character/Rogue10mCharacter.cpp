@@ -10,12 +10,17 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "EnhancedInputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Rogue10mMouseCombatInputComponent.h"
+#include "Rogue10mWeaponIdentityComponent.h"
+#include "CollisionQueryParams.h"
 #include "InputActionValue.h"
 #include "InputCoreTypes.h"
 #include "Rogue10m.h"
 #include "Rogue10mInputKeys.h"
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mCharacterAnimationComponent.h"
+#include "Rogue10mWeaponVisualComponent.h"
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mSkillTreeCombatComponent.h"
 #include "Rogue10mSkillTreeProgressionComponent.h"
@@ -27,6 +32,7 @@
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerFeedbackComponent.h"
 #include "Rogue10mPlayerState.h"
+#include "Rogue10mCharacterProfileSubsystem.h"
 #include "Rogue10mProgressionSubsystem.h"
 #include "Rogue10mGameState.h"
 #include "Engine/World.h"
@@ -42,6 +48,7 @@ ARogue10mCharacter::ARogue10mCharacter()
 	GetCapsuleComponent()->InitCapsuleSize(34.0f, 96.0f);
 
 	AppearanceCameraComponent = CreateDefaultSubobject<URogue10mAppearanceCameraComponent>(TEXT("Appearance Camera Component"));
+	MouseCombatInputComponent = CreateDefaultSubobject<URogue10mMouseCombatInputComponent>(TEXT("Mouse Combat Input Component"));
 	FirstPersonMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("First Person Mesh"));
 	InventoryComponent = CreateDefaultSubobject<URogue10mInventoryComponent>(TEXT("Inventory Component"));
 	CombatComponent = CreateDefaultSubobject<URogue10mCombatComponent>(TEXT("Combat Component"));
@@ -49,6 +56,7 @@ ARogue10mCharacter::ARogue10mCharacter()
 	BasicBrawlerComponent = CreateDefaultSubobject<URogue10mBasicBrawlerComponent>(TEXT("Basic Brawler Component"));
 	CharacterAnimationComponent = CreateDefaultSubobject<URogue10mCharacterAnimationComponent>(
 		TEXT("Character Animation Component"));
+ WeaponVisualComponent = CreateDefaultSubobject<URogue10mWeaponVisualComponent>(TEXT("Weapon Visual Component"));
 
 	FirstPersonPresentationComponent = CreateDefaultSubobject<URogue10mFirstPersonPresentationComponent>(TEXT("First Person Presentation Component"));
 
@@ -68,6 +76,22 @@ ARogue10mCharacter::ARogue10mCharacter()
 	FirstPersonCameraComponent->FirstPersonFieldOfView = 70.0f;
 	FirstPersonCameraComponent->FirstPersonScale = 0.6f;
 
+	ThirdPersonCameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("Third Person Camera Boom"));
+	ThirdPersonCameraBoom->SetupAttachment(GetCapsuleComponent());
+	ThirdPersonCameraBoom->TargetArmLength = 320.0f;
+	ThirdPersonCameraBoom->TargetOffset = FVector(0.0f, 0.0f, 58.0f);
+	ThirdPersonCameraBoom->SocketOffset = FVector(0.0f, 85.0f, 10.0f);
+	ThirdPersonCameraBoom->bUsePawnControlRotation = true;
+	ThirdPersonCameraBoom->bDoCollisionTest = true;
+	ThirdPersonCameraBoom->ProbeChannel = ECC_Camera;
+	ThirdPersonCameraBoom->ProbeSize = 14.0f;
+	ThirdPersonCameraBoom->bEnableCameraLag = false;
+	ThirdPersonCameraBoom->bEnableCameraRotationLag = false;
+	ThirdPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Third Person Camera"));
+	ThirdPersonCameraComponent->SetupAttachment(ThirdPersonCameraBoom, USpringArmComponent::SocketName);
+	ThirdPersonCameraComponent->bUsePawnControlRotation = false;
+	ThirdPersonCameraComponent->FieldOfView = 90.0f;
+
 	PlayerFeedbackComponent = CreateDefaultSubobject<URogue10mPlayerFeedbackComponent>(TEXT("Player Feedback Component"));
 	VitalRegenerationComponent = CreateDefaultSubobject<URogue10mVitalRegenerationComponent>(TEXT("Vital Regeneration Component"));
 	TraitRuntimeComponent = CreateDefaultSubobject<URogue10mTraitRuntimeComponent>(TEXT("Trait Runtime Component"));
@@ -81,6 +105,11 @@ ARogue10mCharacter::ARogue10mCharacter()
 
 void ARogue10mCharacter::CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult)
 {
+	if (bUseThirdPersonGameplay && ThirdPersonCameraComponent)
+	{
+		ThirdPersonCameraComponent->GetCameraView(DeltaTime, OutResult);
+		return;
+	}
 	if (AppearanceCameraComponent) { AppearanceCameraComponent->UpdateCameraFromAppearance(); }
 	Super::CalcCamera(DeltaTime, OutResult);
 	if (AppearanceCameraComponent && AppearanceCameraComponent->IsWeightedFirstPersonActive())
@@ -89,6 +118,93 @@ void ARogue10mCharacter::CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult
 	}
 	// Inspection only overrides the rendered POV; the head camera remains the combat origin.
 	if (AppearanceCameraComponent) { AppearanceCameraComponent->ApplyInspectionView(OutResult); }
+}
+
+UCameraComponent* ARogue10mCharacter::GetGameplayCameraComponent() const
+{
+	return bUseThirdPersonGameplay ? ThirdPersonCameraComponent.Get() : FirstPersonCameraComponent.Get();
+}
+
+FTransform ARogue10mCharacter::GetCombatViewTransform()
+{
+	if (!bUseThirdPersonGameplay)
+	{
+		if (AppearanceCameraComponent) { AppearanceCameraComponent->UpdateCameraFromAppearance(); }
+		return FirstPersonCameraComponent ? FirstPersonCameraComponent->GetComponentTransform() : GetActorTransform();
+	}
+	const FVector Origin = GetCapsuleComponent()->GetComponentLocation() + FVector(0.0f, 0.0f, BaseEyeHeight);
+	const UCameraComponent* Camera = GetGameplayCameraComponent();
+	const FVector ViewOrigin = Camera ? Camera->GetComponentLocation() : Origin;
+	const FVector ViewDirection = Camera ? Camera->GetForwardVector() : GetControlRotation().Vector();
+	FVector AimPoint = ViewOrigin + ViewDirection * 10000.0f;
+	if (UWorld* World = GetWorld())
+	{
+		FHitResult Hit;
+		FCollisionQueryParams Query(SCENE_QUERY_STAT(Rogue10mThirdPersonAim), true, this);
+		if (World->LineTraceSingleByChannel(Hit, ViewOrigin, AimPoint, ECC_Visibility, Query)
+			&& FVector::DotProduct(Hit.ImpactPoint - Origin, ViewDirection) > 10.0f)
+		{
+			AimPoint = Hit.ImpactPoint;
+		}
+	}
+	const FVector Direction = (AimPoint - Origin).GetSafeNormal(SMALL_NUMBER, ViewDirection);
+	return FTransform(Direction.Rotation(), Origin);
+}
+
+void ARogue10mCharacter::CancelPendingMouseAttackInput()
+{
+	if (MouseCombatInputComponent) { MouseCombatInputComponent->CancelInput(false); }
+}
+
+bool ARogue10mCharacter::HasPendingMouseAttackInput() const
+{
+	return MouseCombatInputComponent && MouseCombatInputComponent->IsInputHeld();
+}
+
+void ARogue10mCharacter::ApplyInitialThirdPersonViewPitchOnce(APlayerController& PlayerController)
+{
+	if (!bUseThirdPersonGameplay || bThirdPersonInitialViewHandled || !HasActorBegunPlay()
+		|| !PlayerController.IsLocalController() || PlayerController.GetPawn() != this) { return; }
+	bThirdPersonInitialViewHandled = true;
+	FRotator Rotation = PlayerController.GetControlRotation();
+	if (!Rotation.ContainsNaN() && FMath::IsNearlyZero(FRotator::NormalizeAxis(Rotation.Pitch), 0.01f))
+	{
+		Rotation.Pitch = -12.0f;
+		PlayerController.SetControlRotation(Rotation);
+	}
+}
+
+void ARogue10mCharacter::RefreshThirdPersonPresentation()
+{
+	if (!bUseThirdPersonGameplay) { return; }
+	if (AppearanceCameraComponent) { AppearanceCameraComponent->RefreshAppearanceCamera(); }
+	if (FirstPersonPresentationComponent) { FirstPersonPresentationComponent->RefreshPresentation(); }
+	FirstPersonCameraComponent->SetActive(false);
+	ThirdPersonCameraComponent->SetActive(true);
+	FirstPersonMesh->SetVisibility(false, false);
+	FirstPersonMesh->SetHiddenInGame(true, false);
+	FirstPersonMesh->bPauseAnims = true;
+	FirstPersonMesh->SetComponentTickEnabled(false);
+	USkeletalMeshComponent* Body = GetMesh();
+	Body->SetOwnerNoSee(false);
+	Body->SetOnlyOwnerSee(false);
+	Body->SetVisibility(true, false);
+	Body->SetHiddenInGame(false, false);
+	Body->SetFirstPersonPrimitiveType(EFirstPersonPrimitiveType::None);
+    Body->SetReceivesDecals(false);
+	Body->UnHideBoneByName(TEXT("head"));
+	for (USceneComponent* Child : Body->GetAttachChildren())
+	{
+		if (auto* Part = Cast<USkeletalMeshComponent>(Child); Part && Part != FirstPersonMesh)
+		{
+			Part->SetOwnerNoSee(false);
+			Part->SetOnlyOwnerSee(false);
+			Part->SetFirstPersonPrimitiveType(EFirstPersonPrimitiveType::None);
+            Part->SetReceivesDecals(false);
+		}
+	}
+	bUseControllerRotationYaw = true;
+	GetCharacterMovement()->bOrientRotationToMovement = false;
 }
 
 UAbilitySystemComponent* ARogue10mCharacter::GetAbilitySystemComponent() const
@@ -100,6 +216,17 @@ UAbilitySystemComponent* ARogue10mCharacter::GetAbilitySystemComponent() const
 void ARogue10mCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
+	// Initial map entry only resolves the selected Pawn class. Apply its profile
+	// now that possession has supplied PlayerState, before progression attaches.
+	if (UGameInstance* Instance = GetGameInstance())
+	{
+		const URogue10mCharacterProfileSubsystem* Profiles =
+			Instance->GetSubsystem<URogue10mCharacterProfileSubsystem>();
+		if (const FRogue10mCharacterProfile* Profile = Profiles ? Profiles->GetSelectedProfile() : nullptr)
+		{
+			ApplyCharacterProfile(*Profile);
+		}
+	}
 	InitializeAbilityActorInfo();
 	if (FirstPersonPresentationComponent)
 	{
@@ -122,6 +249,8 @@ void ARogue10mCharacter::PossessedBy(AController* NewController)
 void ARogue10mCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	RefreshThirdPersonPresentation();
+ if (WeaponVisualComponent) { WeaponVisualComponent->RefreshWeaponVisuals(); }
 	if (GetGameInstance())
 	{
 		GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>()->AttachCharacter(*this);
@@ -134,11 +263,13 @@ void ARogue10mCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	{
 		GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>()->DetachCharacter(*this);
 	}
+	if (MouseCombatInputComponent) { MouseCombatInputComponent->CancelInput(); }
 	Super::EndPlay(EndPlayReason);
 }
 
 void ARogue10mCharacter::UnPossessed()
 {
+	if (MouseCombatInputComponent) { MouseCombatInputComponent->CancelInput(); }
 	if (GetGameInstance())
 	{
 		GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>()->DetachCharacter(*this);
@@ -188,6 +319,8 @@ float ARogue10mCharacter::TakeDamage(
 	{
 		return AppliedDamage;
 	}
+	// A confirmed hit interrupts owned attacks; health costs/healing and rejected damage do not.
+	if (CombatComponent) { CombatComponent->InterruptAttacksOnHit(); }
 
 	if (!TraitRuntimeComponent || !TraitRuntimeComponent->TryPreventLethalDamage(AppliedDamage, DamageCauser))
 	{
@@ -236,6 +369,13 @@ void ARogue10mCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindKey(EKeys::LeftMouseButton, IE_Released, this, &ARogue10mCharacter::DoPrimaryAttackReleased);
 	PlayerInputComponent->BindKey(EKeys::RightMouseButton, IE_Pressed, this, &ARogue10mCharacter::DoSpecialAttackPressed);
 	PlayerInputComponent->BindKey(EKeys::RightMouseButton, IE_Released, this, &ARogue10mCharacter::DoSpecialAttackReleased);
+	// Fixed skill slots are dispatched here, never through saved arbitrary key mappings.
+	for (const FKey Key : {EKeys::Q, EKeys::E, EKeys::R})
+	{
+		PlayerInputComponent->BindKey(Key, IE_Pressed, this, &ARogue10mCharacter::DoEquippedSkillPressed);
+		PlayerInputComponent->BindKey(Key, IE_Released, this, &ARogue10mCharacter::DoEquippedSkillReleased);
+	}
+	PlayerInputComponent->BindKey(EKeys::LeftControl, IE_Pressed, this, &ARogue10mCharacter::DoWeaponIdentity);
 	PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Pressed, this, &ARogue10mCharacter::DoSprintStart);
 	PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Released, this, &ARogue10mCharacter::DoSprintEnd);
 	PlayerInputComponent->BindKey(Rogue10mInput::DodgeKey(), IE_Pressed, this, &ARogue10mCharacter::DoDodge);
@@ -345,6 +485,7 @@ void ARogue10mCharacter::DoDodge()
 {
 	UWorld* World = GetWorld();
 	if (!World || IsDead() || IsBlockingWindowVisible() || GetCharacterMovement()->IsFalling()
+		|| (CombatComponent && CombatComponent->IsTechniqueMovementActive())
 		|| bIsDodging || World->GetTimeSeconds() < NextDodgeAllowedTime)
 	{
 		return;
@@ -430,7 +571,9 @@ void ARogue10mCharacter::SetSprinting(bool bNewSprinting)
 	}
 
 	bIsSprinting = bNewSprinting;
-	GetCharacterMovement()->MaxWalkSpeed = bIsSprinting ? SprintWalkSpeed : NormalWalkSpeed;
+	const auto* Identity = FindComponentByClass<URogue10mWeaponIdentityComponent>();
+	GetCharacterMovement()->MaxWalkSpeed = (bIsSprinting ? SprintWalkSpeed : NormalWalkSpeed)
+		* (Identity ? Identity->GetMovementMultiplier() : 1.0f);
 	if (PlayerFeedbackComponent)
 	{
 		PlayerFeedbackComponent->SetSprinting(bIsSprinting);
@@ -477,34 +620,52 @@ void ARogue10mCharacter::ConsumeSprintStamina()
 
 void ARogue10mCharacter::DoPrimaryAttackPressed()
 {
-	if (CombatComponent)
-	{
-		CombatComponent->HandleAttackPressed(true);
-	}
+	if (MouseCombatInputComponent) { MouseCombatInputComponent->Press(true); }
 }
 
 void ARogue10mCharacter::DoPrimaryAttackReleased()
 {
-	if (CombatComponent)
-	{
-		CombatComponent->HandleAttackReleased(true);
-	}
+	if (MouseCombatInputComponent) { MouseCombatInputComponent->Release(true); }
 }
 
 void ARogue10mCharacter::DoSpecialAttackPressed()
 {
-	if (CombatComponent)
-	{
-		CombatComponent->HandleAttackPressed(false);
-	}
+	if (MouseCombatInputComponent) { MouseCombatInputComponent->Press(false); }
 }
 
 void ARogue10mCharacter::DoSpecialAttackReleased()
 {
-	if (CombatComponent)
+	if (MouseCombatInputComponent) { MouseCombatInputComponent->Release(false); }
+}
+
+void ARogue10mCharacter::DoEquippedSkillPressed(FKey Key)
+{
+	if (!CombatComponent || (Key != EKeys::Q && Key != EKeys::E && Key != EKeys::R)) { return; }
+	const auto* PlayerController = Cast<APlayerController>(GetController());
+	if (!PlayerController) { return; }
+	// Preserve the legacy skill-binding contract: modifier chords cannot start skills.
+	for (const FKey Modifier : {EKeys::LeftShift, EKeys::RightShift, EKeys::LeftControl, EKeys::RightControl,
+		EKeys::LeftAlt, EKeys::RightAlt, EKeys::LeftCommand, EKeys::RightCommand})
 	{
-		CombatComponent->HandleAttackReleased(false);
+		if (PlayerController->IsInputKeyDown(Modifier)) { return; }
 	}
+	const auto Slot = Key == EKeys::Q ? ERogue10mAttackInputSlot::QSkill
+		: Key == EKeys::E ? ERogue10mAttackInputSlot::ESkill : ERogue10mAttackInputSlot::RSkill;
+	CombatComponent->HandleEquippedSkillPressed(Slot);
+}
+
+void ARogue10mCharacter::DoEquippedSkillReleased(FKey Key)
+{
+	if (!CombatComponent || (Key != EKeys::Q && Key != EKeys::E && Key != EKeys::R)) { return; }
+	// Always deliver release, including when a modifier was pressed after the skill key.
+	const auto Slot = Key == EKeys::Q ? ERogue10mAttackInputSlot::QSkill
+		: Key == EKeys::E ? ERogue10mAttackInputSlot::ESkill : ERogue10mAttackInputSlot::RSkill;
+	CombatComponent->HandleEquippedSkillReleased(Slot);
+}
+
+void ARogue10mCharacter::DoWeaponIdentity()
+{
+	if (CombatComponent && !IsDead() && !IsBlockingWindowVisible()) { CombatComponent->TryActivateWeaponIdentity(); }
 }
 
 void ARogue10mCharacter::DoUnarmedAttack()
@@ -658,6 +819,8 @@ bool ARogue10mCharacter::CanChangeWeapon() const
 	// conservative busy signal; combat stance duration is deliberately not one.
 	for (const USkeletalMeshComponent* PlaybackComponent : {GetAnimationPlaybackMesh(), GetFirstPersonMesh()})
 	{
+		// Inactive first-person presentation must not block third-person gameplay.
+		if (bUseThirdPersonGameplay && PlaybackComponent == FirstPersonMesh) { continue; }
 		if (const UAnimInstance* Anim = PlaybackComponent ? PlaybackComponent->GetAnimInstance() : nullptr;
 			Anim && Anim->IsAnyMontagePlaying()) { return false; }
 	}
@@ -675,6 +838,7 @@ void ARogue10mCharacter::ApplyEquippedWeaponType(ERogue10mWeaponType NewWeaponTy
 	{
 		const bool bWeaponTypeChanged = State->GetEquippedWeaponType() != NewWeaponType;
 		State->SetEquippedWeaponType(NewWeaponType);
+  if (WeaponVisualComponent) { WeaponVisualComponent->RefreshWeaponVisuals(); }
 		if (CombatComponent)
 		{
 			CombatComponent->HandleEquippedWeaponChanged(bApplySwapCooldown && (bWeaponTypeChanged || bItemChanged));
@@ -729,7 +893,9 @@ bool ARogue10mCharacter::ApplyCharacterProfile(const FRogue10mCharacterProfile& 
 	}
 
 	CharacterAppearance = Profile.Appearance;
+ if (WeaponVisualComponent) { WeaponVisualComponent->RefreshWeaponVisuals(); }
 	if (FirstPersonPresentationComponent) { FirstPersonPresentationComponent->RefreshPresentation(); }
+	RefreshThirdPersonPresentation();
 	if (ARogue10mPlayerState* State = GetPlayerState<ARogue10mPlayerState>())
 	{
 		FText JobName = NSLOCTEXT("Rogue10mCharacter", "DefaultAdventurerJob", "모험가");
@@ -783,7 +949,9 @@ void ARogue10mCharacter::RefreshCharacterStats(bool bRestoreVitals)
 	SprintWalkSpeed = Snapshot.SprintSpeed;
 	if (UCharacterMovementComponent* Movement = GetCharacterMovement())
 	{
-		Movement->MaxWalkSpeed = bIsSprinting ? SprintWalkSpeed : NormalWalkSpeed;
+		const auto* Identity = FindComponentByClass<URogue10mWeaponIdentityComponent>();
+		Movement->MaxWalkSpeed = (bIsSprinting ? SprintWalkSpeed : NormalWalkSpeed)
+			* (Identity ? Identity->GetMovementMultiplier() : 1.0f);
 	}
 }
 
@@ -829,8 +997,10 @@ bool ARogue10mCharacter::PlayCommonMontage(UAnimMontage* Montage, float PlayRate
 	}
 
 	bool bPlayed = false;
-	auto TryPlay = [&bPlayed, Montage, PlayRate](USkeletalMeshComponent* MeshComponent)
+	auto TryPlay = [this, &bPlayed, Montage, PlayRate](USkeletalMeshComponent* MeshComponent)
 	{
+		// This mesh is paused with ticking disabled in third-person gameplay.
+		if (bUseThirdPersonGameplay && MeshComponent == FirstPersonMesh) { return; }
 		if (UAnimInstance* AnimInstance = MeshComponent ? MeshComponent->GetAnimInstance() : nullptr)
 		{
 			bPlayed |= AnimInstance->Montage_Play(Montage, FMath::Max(0.01f, PlayRate)) > 0.0f;

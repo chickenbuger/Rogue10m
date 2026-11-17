@@ -131,7 +131,11 @@ bool ARogue10mMonsterAIController::ExecuteBehaviorDecision()
 	}
 
 	ARogue10mCharacter* Target = GetBlackboardTarget();
-	if (Target && !IsValidCombatTarget(Target))
+	// Blackboard object keys are weak: destroying the target can clear the
+	// pointer while leaving HasTarget set. Reconcile only a previously held
+	// target; clearing every empty decision would repeatedly abort patrols.
+	if ((Target || MonsterBlackboardComponent->GetValueAsBool(HasTargetKey))
+		&& !IsValidCombatTarget(Target))
 	{
 		ClearTarget();
 		Target = nullptr;

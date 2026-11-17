@@ -207,6 +207,12 @@ public:
 		float AttackPerLevel, float DefensePerLevel);
 	/** Re-acquires a dropped instance without discarding its enhancement state. */
 	bool TryAddItemStack(const FRogue10mItemStack& Stack, int32& OutContainerIndex, FGuid& OutInstanceId);
+	/**
+	 * Merges compatible grid stacks and returns overflow; true includes zero acceptance when full.
+	 * Rejects invalid or currently owned GUIDs. The caller owns replay protection for fully merged IDs.
+	 */
+	bool TryReceiveMonsterLoot(const FRogue10mItemStack& Stack, FRogue10mItemStack& OutRemainder,
+		int32& OutAcceptedQuantity);
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Inventory|Currency")
 	bool TryPurchaseGridItem(const URogue10mItemDataAsset* ItemData, int32 Quantity, int32 GoldCost);
 

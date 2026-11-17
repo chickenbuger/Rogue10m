@@ -180,5 +180,6 @@ private:
 	int32 SuccessfulHitCount = 0;
 	bool bEnraged = false;
 	bool bSavedAnimationMode = false;
+	bool bSavedReceivesDecals = true;
 	uint8 SavedAnimationMode = 0;
 };
