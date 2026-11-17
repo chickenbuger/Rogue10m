@@ -1,0 +1,18 @@
+{
+  "schema": "Rogue10m.CaveExposureSourceReviewClarification.20261118.v1",
+  "utc": "2026-11-17T17:32:50.836056+00:00",
+  "supersedes_narrow_claim_in": "exposure-source-review.json",
+  "original_review_sha256": "523a53eccb8b3546033e56acef47bf8c1a2335a55914051fe549566767233fa7",
+  "engine_source": "D:\\Program Files\\UE_5.8\\Engine\\Source\\Runtime\\Engine\\Private\\Components\\PrimitiveComponent.cpp",
+  "engine_source_sha256": "5ce231cfef144d2263883a495290108fa7fee0162ed4ed99912c4e34377b39ee",
+  "lines": [
+    2124,
+    2149,
+    2153,
+    2155
+  ],
+  "clarification": "The default NoCollision exclusion has a WITH_EDITOR exception: a world with bEnableTraceCollision and nonzero component scale may still create physics state. Thus a valid Editor-only NoCollision body does not establish that the PIE game-world volume has a body. QueryOnly explicitly requests a valid body in both contexts and remains nonblocking when every collision channel ignores.",
+  "root_observation": "Parent reported successful current Editor QueryOnly center distance0 and outside distance500cm; the previous Editor NoCollision center query was also0. Fresh actual PIE query/readability acceptance remains pending.",
+  "editor_operations": false,
+  "original_record_modified": false
+}

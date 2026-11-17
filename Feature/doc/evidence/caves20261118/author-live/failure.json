@@ -1,0 +1,9 @@
+{
+  "phase": "authoring_materials",
+  "traceback": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/BuildCaves20261118.py\", line 94, in tick\n    except m.CaveMaterialError as e:write('material-failure',e.report);raise RuntimeError('Material author stopped; see original receipt') from None\n                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Material author stopped; see original receipt\n",
+  "dirty": [
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveGrass",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface"
+  ],
+  "automatic_retry": false
+}

@@ -1,0 +1,7 @@
+{
+  "passed": false,
+  "pid": 22604,
+  "assets_saved": false,
+  "phase": "validating",
+  "traceback": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/ColdCaves20261118.py\", line 125, in tick\n    write(\"terrain-actor-packages\",terrain_actor_inventory())\n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/ColdCaves20261118.py\", line 76, in terrain_actor_inventory\n    \"actor_guid\":guid_string(actor.get_editor_property(\"actor_guid\")),\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/ColdCaves20261118.py\", line 66, in guid_string\n    return \"\".join(f\"{int(getattr(value,name)) & 0xffffffff:08X}\" for name in \"abcd\")\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/ColdCaves20261118.py\", line 66, in <genexpr>\n    return \"\".join(f\"{int(getattr(value,name)) & 0xffffffff:08X}\" for name in \"abcd\")\n                          ^^^^^^^^^^^^^^^^^^^\nAttributeError: 'Guid' object has no attribute 'a'\n"
+}

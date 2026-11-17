@@ -1,0 +1,16 @@
+{
+  "schema": "Rogue10m.MaterialSetterSourceReview.20261118.v1",
+  "source": "D:/Program Files/UE_5.8/Engine/Source/Editor/MaterialEditor/Private/MaterialEditingLibrary.cpp",
+  "observed_functions": [
+    {"name": "SetMaterialInstanceScalarParameterValue", "line": 1485},
+    {"name": "SetMaterialInstanceTextureParameterValue", "line": 1507},
+    {"name": "SetMaterialInstanceVectorParameterValue", "line": 1573}
+  ],
+  "installed_implementation": "Each initializes bResult=false, invokes the native instance setter and UpdateMaterialInstance, then returns bResult without setting it true.",
+  "consequence": "A false return does not establish that the parameter mutation failed in this installed engine.",
+  "required_validation": "Require the named parameter to exist, invoke only when its current value differs, then compare the public getter with the requested value. Preserve actual setter return values in the receipt.",
+  "partial_mutation": "The first failed texture-setter guard occurred after the duplicate's BaseColorTexture had already changed. Reuse only those diagnosed two unsaved derivatives; do not rerun duplication.",
+  "engine_source_edited": false,
+  "editor_or_git_actions_by_reviewer": false,
+  "review_limitation": "The earlier declaration review confirmed the bool API shape but missed this implementation behavior. This source review corrects that interpretation."
+}

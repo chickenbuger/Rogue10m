@@ -1,0 +1,7 @@
+{
+  "passed": false,
+  "pid": 29764,
+  "assets_saved": false,
+  "phase": "validating",
+  "traceback": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/ColdCaves20261118.py\", line 129, in tick\n    write(\"terrain-actor-packages\",terrain_actor_inventory())\n                                   ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/ColdCaves20261118.py\", line 81, in terrain_actor_inventory\n    \"landscape_guid\":guid_string(actor.get_editor_property(\"landscape_guid\")),\n                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nException: Landscape: Failed to find property 'landscape_guid' for attribute 'landscape_guid' on 'Landscape'\n"
+}

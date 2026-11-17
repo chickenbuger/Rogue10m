@@ -5,3 +5,9 @@
 Feature/doc/evidence/**/*.log -text -whitespace
 Feature/doc/evidence/**/*.txt -text -whitespace
 Feature/doc/evidence/**/*.patch -text -whitespace
+
+# Frozen cave recipes and authoring scripts contain exact byte SHA256 guards.
+Feature/doc/evidence/caves20261118/** -text -whitespace
+Scripts/*Cave*20261118.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+Scripts/Editor/*Cave*20261118.py -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+Scripts/StartCaveCold20261118.ps1 -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

@@ -1,0 +1,43 @@
+{
+  "schema": "Rogue10m.CaveQAInputPolicyReview.20261118.v1",
+  "status": "REVIEWED_QA_CONTROLLER_TIMING_FIX_NOT_GAME_CAMERA_ACCEPTANCE",
+  "predecessor_observer_sha256": "689e5aaa10194639b271523a329f46fa7007ef3f607151be1904ebc38d31f70e",
+  "revised_observer_sha256": "806d2bca47505dc9da5f99dd8ec4d92c952155e5f74231177fb0a601962d47ae",
+  "policy": {
+    "schema": "Rogue10m.CaveQAAnalogApproach.20261118.v1",
+    "predecessor_observer_sha256": "689e5aaa10194639b271523a329f46fa7007ef3f607151be1904ebc38d31f70e",
+    "formula": "scale=min(1,distance_cm/max(120,620*raw_sim_frame_seconds*1.1))",
+    "reason": "Use normal analog input to approach the same waypoint at low frame rates without a stale120cm stopping window.",
+    "normal_walk_cap_cm_s": 620,
+    "arrival_radius_cm": 35.0,
+    "route_camera_ground_thresholds_changed": false,
+    "max_walk_speed_velocity_time_or_camera_setters": false,
+    "independent_known_geometry_repair_and_original_failure_ray_acceptance_required": true
+  },
+  "actual_failed_runtime_sha256": "71a7e0959a7f5bba1e49afaf65cb18fa0cb0d9900b3d8485f05b454dd6c028c1",
+  "actual_observed_sample_time_intervals": {
+    "unique_samples": 1345,
+    "median_sim_seconds": 0.33333349227905273,
+    "p95_sim_seconds": 0.33333370089530945,
+    "median_full_input_frame_travel_cm_at620": 206.6667652130127,
+    "p95_full_input_frame_travel_cm_at620": 206.66689455509186,
+    "previous_fixed_lookahead_cm": 120
+  },
+  "independent_reviewer_conclusion": "The old fixed120cm analog-approach denominator is shorter than a normal movement step at observed low frame rates. Scaling the existing AddMovementInput request by the raw observed game-frame interval is legitimate waypoint-controller timing, while preserving normal620cm/s maximum,35cm actual arrival and all original route/camera/ground checks. The known world geometry defect still needs its independent exact two-rock correction and original failure ray/arc proof.",
+  "pure_verification": {
+    "AST": "passed",
+    "inert_import": "passed",
+    "analog_step_bound_cases": 42,
+    "unchanged_waypoints": 276,
+    "unchanged_capture_count": 6,
+    "old45deg_stale_PCM_capture_rejected": true,
+    "camera_gate_distance140_and_pull180_unchanged": true
+  },
+  "limitations": [
+    "The one-frame distance bound assumes a comparable next frame interval and does not bypass actual physics, acceleration,35cm arrival or stall checks.",
+    "Programmatic analog input is not a physical-keyboard playtest.",
+    "This policy alone does not fix or certify the camera obstruction; the original actual failure and diagnosed Item120 remain failed evidence."
+  ],
+  "editor_operations": false,
+  "asset_mutations": false
+}

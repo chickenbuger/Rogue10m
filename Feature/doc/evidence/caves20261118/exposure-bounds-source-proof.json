@@ -1,0 +1,16 @@
+{
+  "schema": "Rogue10m.CaveExposureBoundsDiagnosis.20261118.v1",
+  "observed_failure": "runtime-camera/captures/01_Q_entrance_under_roof.png is too dark; visual review rejected, preserved result false",
+  "observed_components": "runtime-camera/exposure-diagnosis.json confirms bounded local PP components, EV3/settings and camera inside box; source camera exposure overrides false",
+  "primary_sources": [
+    {"file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/PrimitiveComponentPhysics.cpp", "line": 1613, "fact": "GetAllPhysicsObjects returns an array containing GetPhysicsObjectById(INDEX_NONE), even when that pointer is null"},
+    {"file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/Components/PrimitiveComponent.cpp", "line": 2124, "fact": "ShouldCreatePhysicsState requires always-create or collision other than NoCollision; primitive always-create defaults false"},
+    {"file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/Components/PostProcessComponent.cpp", "line": 198, "fact": "EncompassesPoint enters for a nonempty parent physics-object array and returns false when no valid queried object is found; the Shape CalcBounds fallback is in the else branch"}
+  ],
+  "inference": "A NoCollision Box can yield a nonempty array containing a null physics object. PostProcess rejects the point before reaching the geometric Shape fallback. Correct component settings alone do not prove exposure is applied.",
+  "correction_candidate": "Two new Box components to QueryOnly, every channel Ignore, overlap and navigation false; restore temporary unsaved EV0 to EV3. This supplies volume geometry without blocking Pawn or Camera.",
+  "required_verification": ["Actual closest-point body queries", "Same 2016 Pawn queries", "Runtime PP flags and body queries", "Fixed actual PCM screenshot visual review", "Independent cold reload and exact scope"],
+  "not_acceptance": true,
+  "temporary_EV0_candidate": "author-live/exposure.json is unsaved and never a visual pass",
+  "original_failed_reports_modified": false
+}

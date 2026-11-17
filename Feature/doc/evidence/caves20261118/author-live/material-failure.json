@@ -1,0 +1,16 @@
+{
+  "schema": "Rogue10m.CaveMaterials.20261118.v1",
+  "success": false,
+  "created_assets": [
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveGrass"
+  ],
+  "assets_saved": false,
+  "automatic_retry": false,
+  "utc": "2026-11-17T16:18:32.282456+00:00",
+  "traceback": "Traceback (most recent call last):\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\CaveMaterials20261118.py\", line 144, in create_cave_materials\n    texture(grass, 'BaseColorTexture', terrain['texture_values']['Grass Base Color'])\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\CaveMaterials20261118.py\", line 114, in texture\n    require(lib.set_material_instance_texture_parameter_value(obj, name, tex), 'Texture setter '+name)\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\CaveMaterials20261118.py\", line 29, in require\n    raise RuntimeError(message)\nRuntimeError: Texture setter BaseColorTexture\n",
+  "dirty": [
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveGrass",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface"
+  ]
+}

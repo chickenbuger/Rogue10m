@@ -1,0 +1,330 @@
+{
+  "schema": "Rogue10m.CaveTraversalCamera.20261118.v1",
+  "passed": false,
+  "status": "failed",
+  "phase_before_finish": "await_visual_review",
+  "error": "Traceback (most recent call last):\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ObserveCaveTraversalCamera20261118.py\", line 350, in tick\n    self.step()\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ObserveCaveTraversalCamera20261118.py\", line 567, in step\n    self.capture_step(sim, movement, dt)\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ObserveCaveTraversalCamera20261118.py\", line 516, in capture_step\n    require(json.loads(ackfile.read_text(encoding=\"utf-8-sig\")) == cap[\"ack\"], \"Camera visual review rejected or acknowledgment mismatched\")\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ObserveCaveTraversalCamera20261118.py\", line 50, in require\n    raise RuntimeError(message)\nRuntimeError: Camera visual review rejected or acknowledgment mismatched\n",
+  "finished_utc": "2026-11-17T17:20:39.929741+00:00",
+  "elapsed_wall_seconds": 195.57800000000134,
+  "elapsed_sim_seconds": 149.00215123966336,
+  "cleanup_errors": [],
+  "waypoints_planned": 276,
+  "waypoints_arrived": 11,
+  "height_guard": {
+    "source_v1_uint16le_sha256": "ef9d5119c138e680001442fac76499e2e0ff40e9f51e428a33bd834aa3b4ffc1",
+    "source_v1_native_blake3": "b9f28e82d7661e83555d5f72942ea999ca6aea9554969753a889ea50f87e1970",
+    "target_uint16le_sha256": "a2c8846963f7d08f7df561b6c800f2f389255e6f52c14a1453a6e5e3f7674726",
+    "target_native_blake3": "67d6682a3bad4b9b480d0b4e264903e9665846b562d7b72fa5cd8ff10e0252fc",
+    "original_layer_blake3": "7b30bb0271250f6f4b2d4164c72940c83a3e49b13078ef91e9316992816a0955",
+    "collar_changed_samples": 447,
+    "full_changed_from_rounded_samples": 3300,
+    "guarded_input_sha256": {
+      "target-height-plan.json": "96abbc526da80ba3637341261a57892ade0078b8fc08df55fd3bbe3a14b3a898",
+      "author-live/apply-height-confirmed.json": "c4d5b5024ff1389c2bc8879730f546f639111445c9bd3304163176a7f0b0c93f",
+      "collar-spec.json": "4f3d5dacfdee8af8e00e32c6db3597208061e2593e488f74cdd88de334a3696a",
+      "collar-preflight.json": "2fd5f9dd3c8d57eb723d215ac724724b54234e8b23389971fe4e91f67a8e84ca",
+      "target-height-plan-collar.json": "cd7928198b0f9c3cfc0d2ad5944a49cca4debc3d1b3ca69b63c946b35873752c",
+      "author-live/apply-height-collar.json": "0281fd7a04e02ee21dc67b27d02fa9a5f6070036945111e4cde26a269889ef2e"
+    }
+  },
+  "route_keys_per_site": [
+    "main_forward_ground_cm",
+    "main_reverse_ground_cm",
+    "secret_from_surface_ground_cm",
+    "secret_to_surface_ground_cm",
+    "shortcut_reverse_ground_cm",
+    "shortcut_return_ground_cm"
+  ],
+  "arrivals": [
+    {
+      "waypoint_index": 0,
+      "label": "field_to_Q:0",
+      "ground_cm": [
+        15000,
+        32550,
+        9600
+      ],
+      "site": null,
+      "chain": null,
+      "point_index": 0,
+      "capture": null,
+      "observed_pawn_cm": [
+        15000.0,
+        32550.0,
+        9698.150251940384
+      ],
+      "arrival_error_xy_cm": 0.0,
+      "observed_ground_z_cm": 9602.150251940384,
+      "sim_seconds": 0.0
+    },
+    {
+      "waypoint_index": 1,
+      "label": "field_to_Q:1",
+      "ground_cm": [
+        15000,
+        42550,
+        9600
+      ],
+      "site": null,
+      "chain": null,
+      "point_index": 1,
+      "capture": null,
+      "observed_pawn_cm": [
+        15000.0,
+        42517.91743751938,
+        9698.150251940384
+      ],
+      "arrival_error_xy_cm": 32.082562480616616,
+      "observed_ground_z_cm": 9602.150251940384,
+      "sim_seconds": 16.56424844637513
+    },
+    {
+      "waypoint_index": 2,
+      "label": "field_to_Q:2",
+      "ground_cm": [
+        15000,
+        50550,
+        9600
+      ],
+      "site": null,
+      "chain": null,
+      "point_index": 2,
+      "capture": null,
+      "observed_pawn_cm": [
+        15000.0,
+        50547.68150239128,
+        9698.150251940384
+      ],
+      "arrival_error_xy_cm": 2.3184976087213727,
+      "observed_ground_z_cm": 9602.150251940384,
+      "sim_seconds": 31.565598104149103
+    },
+    {
+      "waypoint_index": 3,
+      "label": "field_to_Q:3",
+      "ground_cm": [
+        15000,
+        56550,
+        9600
+      ],
+      "site": null,
+      "chain": null,
+      "point_index": 3,
+      "capture": null,
+      "observed_pawn_cm": [
+        15000.0,
+        56547.15976989742,
+        9698.150251940384
+      ],
+      "arrival_error_xy_cm": 2.8402301025780616,
+      "observed_ground_z_cm": 9602.150251940384,
+      "sim_seconds": 44.2766647785902
+    },
+    {
+      "waypoint_index": 4,
+      "label": "field_to_Q:4",
+      "ground_cm": [
+        -13000,
+        54550,
+        9600
+      ],
+      "site": null,
+      "chain": null,
+      "point_index": 4,
+      "capture": null,
+      "observed_pawn_cm": [
+        -12997.55041328494,
+        54550.17472200142,
+        9698.150251940384
+      ],
+      "arrival_error_xy_cm": 2.455810019602298,
+      "observed_ground_z_cm": 9602.150251940384,
+      "sim_seconds": 91.92806227877736
+    },
+    {
+      "waypoint_index": 5,
+      "label": "Q:main_forward_ground_cm:0",
+      "ground_cm": [
+        -9750.0,
+        58050.0,
+        9600.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 0,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9753.311031434705,
+        58046.43176239419,
+        9697.962610992883
+      ],
+      "arrival_error_xy_cm": 4.867776573870595,
+      "observed_ground_z_cm": 9601.962610992883,
+      "sim_seconds": 101.59473745897412
+    },
+    {
+      "waypoint_index": 6,
+      "label": "Q:main_forward_ground_cm:1",
+      "ground_cm": [
+        -9750.0,
+        59050.0,
+        9350.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 1,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9750.012889809097,
+        59047.61493119933,
+        9449.792657936232
+      ],
+      "arrival_error_xy_cm": 2.3851036311059586,
+      "observed_ground_z_cm": 9353.792657936232,
+      "sim_seconds": 105.92811276391149
+    },
+    {
+      "waypoint_index": 7,
+      "label": "Q:main_forward_ground_cm:2",
+      "ground_cm": [
+        -9750.0,
+        60050.0,
+        9100.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 2,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999552397037,
+        60084.80815883884,
+        9190.494358984004
+      ],
+      "arrival_error_xy_cm": 34.808158841715596,
+      "observed_ground_z_cm": 9094.494358984004,
+      "sim_seconds": 109.26144765689969
+    },
+    {
+      "waypoint_index": 8,
+      "label": "Q:main_forward_ground_cm:3",
+      "ground_cm": [
+        -9750.0,
+        61050.0,
+        8850.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 3,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999994897682,
+        61038.99757595166,
+        8951.947012600085
+      ],
+      "arrival_error_xy_cm": 11.002424048341073,
+      "observed_ground_z_cm": 8855.947012600085,
+      "sim_seconds": 111.26144864037633
+    },
+    {
+      "waypoint_index": 9,
+      "label": "Q:main_forward_ground_cm:4",
+      "ground_cm": [
+        -9750.0,
+        62050.0,
+        8600.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 4,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999999995835,
+        62047.71464842223,
+        8708.149997015738
+      ],
+      "arrival_error_xy_cm": 2.2853515777678695,
+      "observed_ground_z_cm": 8612.149997015738,
+      "sim_seconds": 114.92812376096845
+    },
+    {
+      "waypoint_index": 10,
+      "label": "Q:main_forward_ground_cm:5",
+      "ground_cm": [
+        -9750.0,
+        62300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 5,
+      "capture": "entrance_under_roof",
+      "observed_pawn_cm": [
+        -9749.999999999907,
+        62294.42295421475,
+        8708.149997015738
+      ],
+      "arrival_error_xy_cm": 5.577045785248629,
+      "observed_ground_z_cm": 8612.149997015738,
+      "sim_seconds": 118.26145939901471
+    }
+  ],
+  "captures": [],
+  "all_six_images_reviewed": false,
+  "sample_count": 453,
+  "min_camera_to_pivot_cm": 175.32842048150752,
+  "max_camera_pull_in_cm": 155.91922103520415,
+  "worst_camera_sample": {
+    "sim_seconds": 117.59479250386357,
+    "phase": "walking",
+    "waypoint_index": 10,
+    "waypoint": "Q:main_forward_ground_cm:5",
+    "pawn_cm": [
+      -9750.000000001475,
+      62388.96789588208,
+      8708.149997015738
+    ],
+    "velocity_cm_s": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "grounded": true,
+    "camera_cm": [
+      -9914.573353932945,
+      62433.95815052266,
+      8806.542362527842
+    ],
+    "camera_rotation_pitch_yaw_roll": [
+      -12.000000000000002,
+      0.0,
+      -0.0
+    ],
+    "camera_FOV": 90.0,
+    "pivot_cm": [
+      -9750.000000001475,
+      62388.96789588208,
+      8766.149997015738
+    ],
+    "unfixed_camera_cm": [
+      -10060.928115343986,
+      62473.96789588208,
+      8842.463214088131
+    ],
+    "camera_to_pivot_cm": 175.32842048150752,
+    "pull_in_cm": 155.91922103520415,
+    "collision_fix_applied": true,
+    "remaining_run_seconds": 1081.0,
+    "planned_core_box_embeddings": []
+  },
+  "grounded_observations": 453,
+  "airborne_observations": 0,
+  "physical_input": false,
+  "teleports": 0,
+  "speed_overrides": 0,
+  "run_timer_overrides": 0,
+  "camera_component_changes": 0,
+  "jump_inputs": 0,
+  "sprint_inputs": 0,
+  "input": "normal AddMovementInput + public control-rotation aim bounded180deg/s; no offset setters",
+  "scope": "One prepared normal-profile PIE route, every planned cave chain both directions; no full combat/NavMesh/physical-keyboard acceptance"
+}

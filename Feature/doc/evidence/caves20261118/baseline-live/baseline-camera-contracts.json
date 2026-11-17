@@ -1,0 +1,38 @@
+{
+  "native_character_cdo": "/Script/Rogue10m.Default__Rogue10mCharacter",
+  "public_third_person_getter_available": true,
+  "third_person_default": true,
+  "spring_arms": [
+    {
+      "path": "/Script/Rogue10m.Default__Rogue10mCharacter:Third Person Camera Boom",
+      "properties": {
+        "target_arm_length": 320.0,
+        "target_offset": "<Struct 'Vector' (0x00000217791EA6B0) {x: 0.000000, y: 0.000000, z: 58.000000}>",
+        "socket_offset": "<Struct 'Vector' (0x00000217791EA698) {x: 0.000000, y: 85.000000, z: 10.000000}>",
+        "do_collision_test": true,
+        "probe_channel": "<CollisionChannel.ECC_CAMERA: 4>",
+        "probe_size": 14.0,
+        "enable_camera_lag": false,
+        "enable_camera_rotation_lag": false,
+        "use_pawn_control_rotation": true
+      }
+    }
+  ],
+  "cameras": [
+    {
+      "path": "/Script/Rogue10m.Default__Rogue10mCharacter:First Person Camera",
+      "properties": {
+        "field_of_view": 90.0,
+        "use_pawn_control_rotation": true
+      }
+    },
+    {
+      "path": "/Script/Rogue10m.Default__Rogue10mCharacter:Third Person Camera",
+      "properties": {
+        "field_of_view": 90.0,
+        "use_pawn_control_rotation": false
+      }
+    }
+  ],
+  "runtime_observation": false
+}
