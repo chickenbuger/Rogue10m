@@ -3308,3 +3308,11 @@ Headless 로그 Error0, loader complete와 제한시간 전 프로세스 부재�
 
 사용자의 최신 지시에 따라 현재 코드·설정·도구, 디스크저장 맵·자산, 계획·결과문서를 묶음별 commit·push한다. main/develop/test 승격은 맵제작 완료 전 중단한다. 현재 에디터 PID7684의 자연경계·장식 작업은 미저장 상태이고 후보1453개는 이전 저장본과 SHA가 같다. 이번 Git 작업은 에디터 저장·재시작·빌드를 실행하지 않는다. 실제로그2906줄 경계의 기존Error10행을 보존하고 성공으로바꾸지 않는다. 코드구문검사/원격확인/generated/diff 검사와 기능인수를구분한다. 생성fixture·PDB·비QA저장·큰원본백업은선별에서제외하고 로컬보존한다. 정확목록은 Feature/doc/evidence/git-checkpoint-20261117의manifest로남긴다. 관련계획/결과: 2026-11-17_map-production-git-checkpoint.md.
 
+
+### Sprint#9-32 — 저장 자산 체크포인트
+
+코드·도구 d2779c76을 작업브랜치에 push했다. 다음 범위는 Content4537개와 직접 제작한 무기OBJ2개·MTL1개다. 고정목록4540파일/104,531,736바이트를 재해시해 선택 이후 변경0을 확인했다. 현재 자연경계 편집은 미저장으로, 이 커밋은 이전 디스크저장 맵·도로·자산을 보관한다. 에디터저장·바이너리직접편집0, main/develop/test변경0. 관련: content-manifest.csv, content-stability-check.json.
+
+
+G2 동시작업 경계: stage 후 자연경계 소유 작업이 디스크709개를 갱신했다. Git index의4540개를 선택시점 manifest와 별도로 대조해 Content오차0, 무기원본3개는 LF정규화만 있음을 확인했다. 이 커밋은 일관된 이전 저장본이며 이후 저장분은 남은변경으로 보존하고 별도체크포인트로 나눈다.
+
