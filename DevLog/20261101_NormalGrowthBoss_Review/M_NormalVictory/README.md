@@ -9,3 +9,8 @@ BasicRun1101M은 정상 메뉴 → NPC F 보급품 → 필드 → 실제 대검 
 기존 저장352개 SHA 불변, 새QA2개만 추가돼354개다. 보존 에셋31개와 맵도 불변이다. 이번 확인의 초기화 범위는 선택한 런 값/학습/특정검GUID/Discovery이며 모든 legacy기술이나 인벤토리 전도메인을 검증했다고 확대하지 않는다. 귀환 후 스킬아이콘 차이는 소스 검토 중이다. 같은프로필 다음field진입은 M에서 하지 않았다.
 
 재현은 Scripts/VerifyBasicRunPlay.ps1에서 새Label과 -PreparedBossStrategy -OrbitBossStrategy -GreatSwordGrowth -DodgeObserve -AnimationEvidence -GearUI -Visible 사용. 기존Label 재사용/사용자세이브 초기화 금지, 전역UI단독제어 인계를 먼저 확인한다. 실패한 L은 별도폴더와37aa0056에 보존했다.
+
+
+## 대표 사진 보관 상태
+
+사용자 요청에 따라 중복·이전·보조 사진을 정리했다. 현재 `20261101_NormalGrowthBoss_Review` 묶음에는 대표 1장을 보관한다. 이 문서의 촬영 개수·파일명·시각 판정은 당시 실행 이력이며, 현재 사진 목록은 [대표 사진 목록](../../README.md)을 따른다. 수치 결과·텍스트 실패 기록은 그대로 유지했다.

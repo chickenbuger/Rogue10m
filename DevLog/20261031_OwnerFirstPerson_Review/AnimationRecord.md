@@ -35,10 +35,10 @@
 
 공격 각도 0°:
 
-- 준비: [15_level_ready_before_LMB.png](Weighted/15_level_ready_before_LMB.png) — world 17.768416s, montage 0.000000s; 요청→촬영 1프레임 / 0.173623s.
-- 수락 직후: [09_level_actual_LMB.png](Weighted/09_level_actual_LMB.png) — world 18.278386s, montage 0.023227s; 요청→촬영 0프레임 / 0.000000s.
-- 최초 피해 관측: [16_level_first_damage_observed.png](Weighted/16_level_first_damage_observed.png) — world 18.388438s, montage 0.176596s; 요청→촬영 0프레임 / 0.000000s.
-- 회복: [17_level_action_recovered.png](Weighted/17_level_action_recovered.png) — world 19.155047s, montage 0.000000s; 요청→촬영 1프레임 / 0.016667s.
+- 준비: 15_level_ready_before_LMB.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 17.768416s, montage 0.000000s; 요청→촬영 1프레임 / 0.173623s.
+- 수락 직후: 09_level_actual_LMB.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 18.278386s, montage 0.023227s; 요청→촬영 0프레임 / 0.000000s.
+- 최초 피해 관측: 16_level_first_damage_observed.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 18.388438s, montage 0.176596s; 요청→촬영 0프레임 / 0.000000s.
+- 회복: 17_level_action_recovered.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 19.155047s, montage 0.000000s; 요청→촬영 1프레임 / 0.016667s.
 
 | 손 | 좌표계 | 표본 수 | 표본 간 총 궤적(cm) | 시작→끝(cm) |
 |---|---|---:|---:|---:|
@@ -49,10 +49,10 @@
 
 공격 각도 -30°:
 
-- 준비: [18_downlook_ready_before_LMB.png](Weighted/18_downlook_ready_before_LMB.png) — world 20.273859s, montage 0.000000s; 요청→촬영 1프레임 / 0.016667s.
-- 수락 직후: [10_downlook_actual_LMB.png](Weighted/10_downlook_actual_LMB.png) — world 20.774771s, montage 0.023227s; 요청→촬영 0프레임 / 0.000000s.
-- 최초 피해 관측: [19_downlook_first_damage_observed.png](Weighted/19_downlook_first_damage_observed.png) — world 20.896657s, montage 0.193087s; 요청→촬영 0프레임 / 0.000000s.
-- 회복: [20_downlook_action_recovered.png](Weighted/20_downlook_action_recovered.png) — world 21.648441s, montage 0.000000s; 요청→촬영 1프레임 / 0.016667s.
+- 준비: 18_downlook_ready_before_LMB.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 20.273859s, montage 0.000000s; 요청→촬영 1프레임 / 0.016667s.
+- 수락 직후: 10_downlook_actual_LMB.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 20.774771s, montage 0.023227s; 요청→촬영 0프레임 / 0.000000s.
+- 최초 피해 관측: 19_downlook_first_damage_observed.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 20.896657s, montage 0.193087s; 요청→촬영 0프레임 / 0.000000s.
+- 회복: 20_downlook_action_recovered.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 21.648441s, montage 0.000000s; 요청→촬영 1프레임 / 0.016667s.
 
 | 손 | 좌표계 | 표본 수 | 표본 간 총 궤적(cm) | 시작→끝(cm) |
 |---|---|---:|---:|---:|
@@ -67,10 +67,10 @@
 
 공격 각도 0°:
 
-- 준비: [15_level_ready_before_LMB.png](Original/15_level_ready_before_LMB.png) — world 17.360896s, montage 0.000000s; 요청→촬영 1프레임 / 0.053523s.
-- 수락 직후: [09_level_actual_LMB.png](Original/09_level_actual_LMB.png) — world 17.866457s, montage 0.023227s; 요청→촬영 0프레임 / 0.000000s.
-- 최초 피해 관측: [16_level_first_damage_observed.png](Original/16_level_first_damage_observed.png) — world 17.986629s, montage 0.190698s; 요청→촬영 0프레임 / 0.000000s.
-- 회복: [17_level_action_recovered.png](Original/17_level_action_recovered.png) — world 18.760005s, montage 0.000000s; 요청→촬영 1프레임 / 0.016667s.
+- 준비: 15_level_ready_before_LMB.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 17.360896s, montage 0.000000s; 요청→촬영 1프레임 / 0.053523s.
+- 수락 직후: 09_level_actual_LMB.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 17.866457s, montage 0.023227s; 요청→촬영 0프레임 / 0.000000s.
+- 최초 피해 관측: 16_level_first_damage_observed.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 17.986629s, montage 0.190698s; 요청→촬영 0프레임 / 0.000000s.
+- 회복: 17_level_action_recovered.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 18.760005s, montage 0.000000s; 요청→촬영 1프레임 / 0.016667s.
 
 | 손 | 좌표계 | 표본 수 | 표본 간 총 궤적(cm) | 시작→끝(cm) |
 |---|---|---:|---:|---:|
@@ -81,10 +81,10 @@
 
 공격 각도 -30°:
 
-- 준비: [18_downlook_ready_before_LMB.png](Original/18_downlook_ready_before_LMB.png) — world 19.877555s, montage 0.000000s; 요청→촬영 1프레임 / 0.016667s.
-- 수락 직후: [10_downlook_actual_LMB.png](Original/10_downlook_actual_LMB.png) — world 20.377558s, montage 0.023227s; 요청→촬영 0프레임 / 0.000000s.
-- 최초 피해 관측: [19_downlook_first_damage_observed.png](Original/19_downlook_first_damage_observed.png) — world 20.495310s, montage 0.187326s; 요청→촬영 0프레임 / 0.000000s.
-- 회복: [20_downlook_action_recovered.png](Original/20_downlook_action_recovered.png) — world 21.296769s, montage 0.000000s; 요청→촬영 1프레임 / 0.016667s.
+- 준비: 18_downlook_ready_before_LMB.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 19.877555s, montage 0.000000s; 요청→촬영 1프레임 / 0.016667s.
+- 수락 직후: 10_downlook_actual_LMB.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 20.377558s, montage 0.023227s; 요청→촬영 0프레임 / 0.000000s.
+- 최초 피해 관측: 19_downlook_first_damage_observed.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 20.495310s, montage 0.187326s; 요청→촬영 0프레임 / 0.000000s.
+- 회복: 20_downlook_action_recovered.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 — world 21.296769s, montage 0.000000s; 요청→촬영 1프레임 / 0.016667s.
 
 | 손 | 좌표계 | 표본 수 | 표본 간 총 궤적(cm) | 시작→끝(cm) |
 |---|---|---:|---:|---:|
@@ -98,3 +98,11 @@
 ## 다음 수정의 첫 단계
 
 현재 6개 팔 메시와 실패 캡처를 보존한다. 먼저 몸체 그림자와 실제 스킨 정점의 근평면 투영을 격리 측정한 뒤 소유자 표현만의 포즈·프레이밍을 검증한다. 단순 카메라 후퇴, 본체/공격 소스 포즈 변경, 눈대중 팔 전진으로 해결됐다고 처리하지 않는다.
+
+
+대표 사진 정리: 위 촬영·수치·실패 서술은 당시 검증 기록이다. 현재 사진은 [대표 목록](../README.md)만 보관하며, 삭제된 보조 사진을 성공 이미지로 대신 표시하지 않는다.
+
+
+## 대표 사진 보관 상태
+
+사용자 요청에 따라 중복·이전·보조 사진을 정리했다. 현재 `20261031_OwnerFirstPerson_Review` 묶음에는 대표 0장을 보관한다. 이 문서의 촬영 개수·파일명·시각 판정은 당시 실행 이력이며, 현재 사진 목록은 [대표 사진 목록](../README.md)을 따른다. 수치 결과·텍스트 실패 기록은 그대로 유지했다.

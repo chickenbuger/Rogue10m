@@ -14,11 +14,11 @@
 
 입력 전 준비: world 17.452303s / montage 0.000000s / 요청→촬영 1프레임, 0.075427s.
 
-![Weighted 입력 전 준비 0도](Weighted/15_level_ready_before_LMB.png)
+Weighted 입력 전 준비 0도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 
 실제 수락 직후: world 17.934285s / montage 0.025244s / 요청→촬영 0프레임, 0.000000s.
 
-![Weighted 실제 수락 직후 0도](Weighted/09_level_actual_LMB.png)
+Weighted 실제 수락 직후 0도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 
 최초 피해 관측: world 18.056612s / montage 0.195720s / 요청→촬영 0프레임, 0.000000s.
 
@@ -26,7 +26,7 @@
 
 action·쿨타임·combo 회복: world 18.802346s / montage 0.000000s / 요청→촬영 1프레임, 0.016667s.
 
-![Weighted action·쿨타임·combo 회복 0도](Weighted/17_level_action_recovered.png)
+Weighted action·쿨타임·combo 회복 0도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 
 ### 공격 각도 -30°
 
@@ -34,19 +34,19 @@ action·쿨타임·combo 회복: world 18.802346s / montage 0.000000s / 요청�
 
 입력 전 준비: world 19.935275s / montage 0.000000s / 요청→촬영 1프레임, 0.032339s.
 
-![Weighted 입력 전 준비 -30도](Weighted/18_downlook_ready_before_LMB.png)
+Weighted 입력 전 준비 -30도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 
 실제 수락 직후: world 20.443471s / montage 0.034564s / 요청→촬영 0프레임, 0.000000s.
 
-![Weighted 실제 수락 직후 -30도](Weighted/10_downlook_actual_LMB.png)
+Weighted 실제 수락 직후 -30도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 
 최초 피해 관측: world 20.554133s / montage 0.188782s / 요청→촬영 0프레임, 0.000000s.
 
-![Weighted 최초 피해 관측 -30도](Weighted/19_downlook_first_damage_observed.png)
+Weighted 최초 피해 관측 -30도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 
 action·쿨타임·combo 회복: world 21.336484s / montage 0.000000s / 요청→촬영 1프레임, 0.016667s.
 
-![Weighted action·쿨타임·combo 회복 -30도](Weighted/20_downlook_action_recovered.png)
+Weighted action·쿨타임·combo 회복 -30도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 
 ## Original — OFOrigB1031
 
@@ -56,19 +56,19 @@ action·쿨타임·combo 회복: world 21.336484s / montage 0.000000s / 요청�
 
 입력 전 준비: world 17.408935s / montage 0.000000s / 요청→촬영 1프레임, 0.084217s.
 
-![Original 입력 전 준비 0도](Original/15_level_ready_before_LMB.png)
+Original 입력 전 준비 0도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 
 실제 수락 직후: world 17.907296s / montage 0.023227s / 요청→촬영 0프레임, 0.000000s.
 
-![Original 실제 수락 직후 0도](Original/09_level_actual_LMB.png)
+Original 실제 수락 직후 0도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 
 최초 피해 관측: world 18.022645s / montage 0.183977s / 요청→촬영 0프레임, 0.000000s.
 
-![Original 최초 피해 관측 0도](Original/16_level_first_damage_observed.png)
+Original 최초 피해 관측 0도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 
 action·쿨타임·combo 회복: world 18.796706s / montage 0.000000s / 요청→촬영 1프레임, 0.016667s.
 
-![Original action·쿨타임·combo 회복 0도](Original/17_level_action_recovered.png)
+Original action·쿨타임·combo 회복 0도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 
 ### 공격 각도 -30°
 
@@ -76,16 +76,24 @@ action·쿨타임·combo 회복: world 18.796706s / montage 0.000000s / 요청�
 
 입력 전 준비: world 19.920783s / montage 0.000000s / 요청→촬영 1프레임, 0.016667s.
 
-![Original 입력 전 준비 -30도](Original/18_downlook_ready_before_LMB.png)
+Original 입력 전 준비 -30도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 
 실제 수락 직후: world 20.419188s / montage 0.023227s / 요청→촬영 0프레임, 0.000000s.
 
-![Original 실제 수락 직후 -30도](Original/10_downlook_actual_LMB.png)
+Original 실제 수락 직후 -30도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 
 최초 피해 관측: world 20.531408s / montage 0.179616s / 요청→촬영 0프레임, 0.000000s.
 
-![Original 최초 피해 관측 -30도](Original/19_downlook_first_damage_observed.png)
+Original 최초 피해 관측 -30도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 
 action·쿨타임·combo 회복: world 21.316865s / montage 0.000000s / 요청→촬영 1프레임, 0.016667s.
 
-![Original action·쿨타임·combo 회복 -30도](Original/20_downlook_action_recovered.png)
+Original action·쿨타임·combo 회복 -30도〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
+
+
+대표 사진 정리: 위 촬영·수치·실패 서술은 당시 검증 기록이다. 현재 사진은 [대표 목록](../README.md)만 보관하며, 삭제된 보조 사진을 성공 이미지로 대신 표시하지 않는다.
+
+
+## 대표 사진 보관 상태
+
+사용자 요청에 따라 중복·이전·보조 사진을 정리했다. 현재 `20261031_OwnerViewFraming_Review` 묶음에는 대표 1장을 보관한다. 이 문서의 촬영 개수·파일명·시각 판정은 당시 실행 이력이며, 현재 사진 목록은 [대표 사진 목록](../README.md)을 따른다. 수치 결과·텍스트 실패 기록은 그대로 유지했다.

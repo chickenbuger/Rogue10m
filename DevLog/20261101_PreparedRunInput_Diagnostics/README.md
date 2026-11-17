@@ -26,15 +26,15 @@ BasicRun1101I는 실제 메뉴 → 캐릭터 생성 → NPC F 대화/보급 → 
 
 | 파일 | 기록 목적 | 실제 판정 |
 |---|---|---|
-| [16_animation_attack_ready.png](16_animation_attack_ready.png) | 공격 전 준비 | processed phase/file match. 직접 이미지 관찰: 손이 보이지 않음/블러. 준비 자세 가독성 PASS 아님. |
-| [19_animation_attack_first_damage.png](19_animation_attack_first_damage.png) | 첫 HP 변화 근처 | phase_unconfirmed. 직접 이미지 관찰: HUD 70/70과 블러. 접촉 사진으로 인증하지 않음. |
-| [21_animation_attack_recovered.png](21_animation_attack_recovered.png) | 공격 회복 | processed 시 다음 공격 상태로 phase_unconfirmed. 회복 자세 인증 불가. |
-| [17_animation_dodge_ready.png](17_animation_dodge_ready.png) | Alt 전 준비 | processed phase/file match이나 손 준비 자세 시각 PASS 아님. |
-| [18_animation_dodge_active.png](18_animation_dodge_active.png) | 회피 이동 중 | processed에서 dodging=1. 직접 이미지 관찰: 기존 몸통이 화면 대부분을 가림. 가독성 실패를 보존. |
-| [20_animation_dodge_recovered.png](20_animation_dodge_recovered.png) | 회피 종료 | processed dodging=0/phase match. 회복 손 자세·품질 PASS와 구분. |
-| [28_boss_reached.png](28_boss_reached.png) | 실제 보스 도달 | 보스 승리 사진이 아님. |
-| [29_result.png](29_result.png) | 자연 사망 정산 | +6 로비 정산을 직접 화면에서 확인. 승리/시간초과 정산 검증으로 확대하지 않음. |
-| [30_returned_hub.png](30_returned_hub.png) | 저장 후 마을 귀환 | reset/Discovery gate 통과. 다른 프로필·기존 세이브 이행 증거 아님. |
+| 16_animation_attack_ready.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 | 공격 전 준비 | processed phase/file match. 직접 이미지 관찰: 손이 보이지 않음/블러. 준비 자세 가독성 PASS 아님. |
+| 19_animation_attack_first_damage.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 | 첫 HP 변화 근처 | phase_unconfirmed. 직접 이미지 관찰: HUD 70/70과 블러. 접촉 사진으로 인증하지 않음. |
+| 21_animation_attack_recovered.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 | 공격 회복 | processed 시 다음 공격 상태로 phase_unconfirmed. 회복 자세 인증 불가. |
+| 17_animation_dodge_ready.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 | Alt 전 준비 | processed phase/file match이나 손 준비 자세 시각 PASS 아님. |
+| 18_animation_dodge_active.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 | 회피 이동 중 | processed에서 dodging=1. 직접 이미지 관찰: 기존 몸통이 화면 대부분을 가림. 가독성 실패를 보존. |
+| 20_animation_dodge_recovered.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 | 회피 종료 | processed dodging=0/phase match. 회복 손 자세·품질 PASS와 구분. |
+| 28_boss_reached.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 | 실제 보스 도달 | 보스 승리 사진이 아님. |
+| 29_result.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 | 자연 사망 정산 | +6 로비 정산을 직접 화면에서 확인. 승리/시간초과 정산 검증으로 확대하지 않음. |
+| 30_returned_hub.png〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕 | 저장 후 마을 귀환 | reset/Discovery gate 통과. 다른 프로필·기존 세이브 이행 증거 아님. |
 
 Driver summary의 `processed_phase_and_file_match_decode_pending`는 사후 디코딩 이전 드라이버 상태를 그대로 보존한다. 사후 PNG 디코딩이 성공해도 phase_unconfirmed나 시각 가림을 PASS로 바꾸지 않는다. `shots`의 빈 pending/queue는 요청 큐 종료이며 자세 품질 완료가 아니다.
 
@@ -90,3 +90,11 @@ StoneFist authored distance `250cm`, duration `0.159999996초`, cooldown `0.5500
 완료: 두 옵션 source/launcher 연결, C4458 지역 이름 수정 후 11.45초 빌드, wrapper 순수 텍스트 gate 10/10(순수 텍스트 검사), 정상 입력 I 자연 사망 경로, +6 저장 정산/마을 복귀/선택 런 상태 reset 및 Discovery 유지, 기존 저장 340개 SHA 보존.
 
 미완료: 애니메이션 준비·접촉·회복 자세의 유효한 시각 증명, 기본 body 가림/블러/손 가독성, 정상 보스 승리, 실제 물리 입력, 전체 20분 시간초과, 대검 UI 장착·충전·물약 전략, 60초 맵 목표, 4액티브 슬롯/프리셋, 일반 밸런스·패키징. 원본31개 자산·맵 해시 동일과 사진9개 복사·디코딩·해시는 최종 확인했다. 자세 품질과는 별개다. 다음 실제 UI 실행은 제어 인계 확인 후 진행하며  push/병합/업로드 없음.
+
+
+대표 사진 정리: 위 촬영·수치·실패 서술은 당시 검증 기록이다. 현재 사진은 [대표 목록](../README.md)만 보관하며, 삭제된 보조 사진을 성공 이미지로 대신 표시하지 않는다.
+
+
+## 대표 사진 보관 상태
+
+사용자 요청에 따라 중복·이전·보조 사진을 정리했다. 현재 `20261101_PreparedRunInput_Diagnostics` 묶음에는 대표 0장을 보관한다. 이 문서의 촬영 개수·파일명·시각 판정은 당시 실행 이력이며, 현재 사진 목록은 [대표 사진 목록](../README.md)을 따른다. 수치 결과·텍스트 실패 기록은 그대로 유지했다.

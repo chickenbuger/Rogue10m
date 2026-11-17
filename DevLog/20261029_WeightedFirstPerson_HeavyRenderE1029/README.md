@@ -13,3 +13,8 @@ PNG9장은 실제 UE D3D11 viewport이며 1280×720 열기·디코딩을 확인�
 재현: Scripts/VerifyWeightedFirstPerson.ps1 -Label <새값> -Rendered. 빠른공격은 -AttackSpeed 2 -MaxFPS 30. 세 종류 QA 슬롯과 전체 기존 저장 해시 감시를 사용한다. 기록516파일(원본세이브204+기존증거312) 해시 불변. 원시 로그/실패 기록은 Feature/doc/evidence/weighted-first-person-20261029/에 별도로 보존한다.
 
 봉인된 로컬 커밋 `021921ffda2f100d1d14bbdb5dd10666c2e07e21`. 추적 파일 clean, UE QA 프로세스 없음. 원격 변경 없음.
+
+
+## 대표 사진 보관 상태
+
+사용자 요청에 따라 중복·이전·보조 사진을 정리했다. 현재 `20261029_WeightedFirstPerson_HeavyRenderE1029` 묶음에는 대표 0장을 보관한다. 이 문서의 촬영 개수·파일명·시각 판정은 당시 실행 이력이며, 현재 사진 목록은 [대표 사진 목록](../README.md)을 따른다. 수치 결과·텍스트 실패 기록은 그대로 유지했다.

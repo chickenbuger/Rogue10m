@@ -3331,3 +3331,11 @@ G2 동시작업 경계: stage 후 자연경계 소유 작업이 디스크709개�
 - main/develop/test는024ecfb7 기준을유지한다. 맵제작이끝나기전통합하지않는사용자지시를AGENTS에기록했다. 이번마지막계획·결과·참조·개발일지와고정manifest는문서커밋으로같은작업브랜치에게시한다.
 - raw캡처·큰백업·PDB·비QA저장은로컬보존하며이번선별게시에서제외한다. 후속에디터변경은새체크포인트의대상이며현재맵전체완료로해석하지않는다.
 - 관련: Feature/doc/2026-11-17_map-production-git-checkpoint.md, Feature/doc/evidence/git-checkpoint-20261117/publication-summary.json.
+
+### Sprint#9-32 — DevLog 대표 사진 정리
+
+- 목표: 메인 사진만 남겨 반복 캡처를 줄인다.
+- 변경: 1,618장→35장, 보조1,583장·약2.04GB삭제. 대표목록·보관규칙·55문서/57링크정리.
+- 검증: 내부경로/파일/SHA선확인, 대표35해시동일, 비사진누락0, 삭제파일잔존0, 삭제사진활성링크0, 갤러리링크모두존재.
+- 상태: 사진정리완료. 작업브랜치만게시하며main병합보류.
+- 관련: DevLog/README.md, Feature/doc/2026-11-18_devlog-photo-curation.md, Feature/architect/2026-11-18_devlog-photo-curation.md.

@@ -29,3 +29,8 @@ BaselineB와최종CandidateB각15사진,진단검사252506/0. 최종WeightedB103
 물리키보드/마우스입력·일반필드완주·패키징·six-appearance실제플레이·실제대검/너클무기메시socket부착·일시정지중재질교체는완전검증하지않았다. 13_owned_greatsword는메시없는QA인벤/트랙전환검사다. 모션블러와첫공격큰frameDT가관측돼60fps무정지/성능향상률보장으로해석하지않는다. 기존engine toolset Python/NTFS/XGE관련환경경고를시스템설정변경으로우회하지않았다.
 
 다음은실제입력·일반필드에서human맨손동작을확인하고,실제장착무기및나머지외형을검증하는것이다. 현재요청대로기본OFF를유지한다. 테스트는새label로 Scripts/VerifyOwnerFraming.ps1 -Mode Candidate -Rendered -Offscreen 또는 Scripts/VerifyOwnerView.ps1 -Profile Weighted -Framed -Rendered -Offscreen을사용한다. 사용자세이브를QA슬롯으로지정하지않는다.
+
+
+## 대표 사진 보관 상태
+
+사용자 요청에 따라 중복·이전·보조 사진을 정리했다. 현재 `20261031_OwnerViewFraming_Review` 묶음에는 대표 1장을 보관한다. 이 문서의 촬영 개수·파일명·시각 판정은 당시 실행 이력이며, 현재 사진 목록은 [대표 사진 목록](../README.md)을 따른다. 수치 결과·텍스트 실패 기록은 그대로 유지했다.
