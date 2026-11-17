@@ -1,0 +1,34 @@
+{
+  "schema": "Rogue10m.OrganicCaveRuntimeFirstTwoArtReview.20261118.v1",
+  "status": "two_Q_PCM_images_accepted_full_runtime_pending",
+  "images": [
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/captures/01_Q_entrance_under_roof.png",
+      "sha256": "259e772e8a6d075ce61b0dba7d1688a3345094bf1f8baa671355dd8994b86787",
+      "directly_viewed": true,
+      "accepted_for_continued_runtime_review": true
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/captures/02_Q_narrow_right_angle_turn.png",
+      "sha256": "d956aed506a51d63116abea7705e7576369b85f4218d1ea0237fdf5ad3af7924",
+      "directly_viewed": true,
+      "accepted_for_continued_runtime_review": true
+    }
+  ],
+  "observations_ko": [
+    "두 화면 모두 기본 삼인칭 캐릭터 전신과 진행 방향이 읽힌다.",
+    "벽과 천장이 연속된 암반 곡면이며, 기존 사각 벽 앞의 반복 타원형 돌이 지배적인 외형으로 남지 않았다.",
+    "Q 직각 통로의 어두운 천장 굴곡은 열린 진행 통로 위에 머물고 캐릭터나 길을 가리지 않는다. 이전 editor Q보관실의 큰 검은 띠가 이 두 PCM 화면에서 같은 가림 문제로 재현되지는 않았다.",
+    "입구의 가까운 돌은 밝고 옅게 보이지만 석재 질감이 남아 있다. 전체6장 검토에서 색·명암의 일관성은 계속 확인한다."
+  ],
+  "limits": {
+    "independently_reviewed_images": 2,
+    "required_images": 6,
+    "Q_only": true,
+    "whole_art_accepted": false,
+    "full_276_waypoint_run_passed": false,
+    "physical_keyboard_control_claimed": false
+  },
+  "previous_single_editor_view_gate": "Feature/doc/evidence/cave-organic20261118/pre-runtime-artgate.json",
+  "no_Editor_or_Git_operations_by_reviewer": true
+}

@@ -1,0 +1,56 @@
+{
+  "bindings": {
+    "AssetImportTask": {
+      "class_available": true,
+      "methods": {}
+    },
+    "FbxImportUI": {
+      "class_available": true,
+      "methods": {}
+    },
+    "FbxFactory": {
+      "class_available": true,
+      "methods": {}
+    },
+    "StaticMeshEditorSubsystem": {
+      "class_available": true,
+      "methods": {
+        "get_collision_complexity": true
+      }
+    },
+    "GeometryScript_AssetUtils": {
+      "class_available": true,
+      "methods": {
+        "copy_mesh_from_static_mesh_v2": true
+      }
+    },
+    "GeometryScript_MeshQueries": {
+      "class_available": true,
+      "methods": {
+        "get_all_vertex_positions": true,
+        "get_all_triangle_indices": true
+      }
+    },
+    "GeometryScript_List": {
+      "class_available": true,
+      "methods": {
+        "convert_vector_list_to_array": true,
+        "convert_triangle_list_to_array": true
+      }
+    },
+    "DynamicMesh": {
+      "class_available": true,
+      "methods": {}
+    },
+    "GeometryScriptCopyMeshFromAssetOptions": {
+      "class_available": true,
+      "methods": {}
+    },
+    "GeometryScriptMeshReadLOD": {
+      "class_available": true,
+      "methods": {}
+    }
+  },
+  "assets_or_properties_changed": false,
+  "all_available": true
+}

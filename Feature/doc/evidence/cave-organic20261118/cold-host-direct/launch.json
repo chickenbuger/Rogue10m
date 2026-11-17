@@ -1,0 +1,33 @@
+{
+  "pid": 30776,
+  "exe": "D:\\Program Files\\UE_5.8\\Engine\\Binaries\\Win64\\UnrealEditor-Cmd.exe",
+  "arguments": [
+    "\"D:\\Project\\Rogue10m\\Rogue10m.uproject\"",
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A",
+    "-NoLiveCoding",
+    "-NoSplash",
+    "-NoSound",
+    "-unattended",
+    "-nullrhi",
+    "-language=en",
+    "-locale=en",
+    "-RogueOrganicCaveStage=cold",
+    "-RogueOrganicCaveRun=cold-direct",
+    "-RogueOrganicCaveConfigSHA256=d6eed04d51fe439b46c6092d06696634ecfa1ee8e330697347a044a186690d4f",
+    "-ini:EditorPerProjectUserSettings:[/Script/UnrealEd.EditorLoadingSavingSettings]:bAutoSaveEnable=False",
+    "-ini:EditorPerProjectUserSettings:[/Script/ModelContextProtocolEngine.ModelContextProtocolSettings]:bAutoStartServer=False",
+    "\"-AbsLog=D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\cave-organic20261118\\cold-host-direct\\engine.log\"",
+    "\"-ExecCmds=py D:/Project/Rogue10m/Scripts/Editor/OrganicCaves20261118Cold.py\""
+  ],
+  "startedUtc": "2026-11-17T20:17:11.7525720Z",
+  "dllSha256": "0d2a0c2622e982b93e6d7744a69d09b4d5bce8553a9563430601ada91c901b38",
+  "script_hashes": {
+    "Scripts/Editor/OrganicCaves20261118QA.py": "c04b6d0a91709283aa76af4e50942399563094ab1ff470258c8417761bca77d8",
+    "Scripts/Editor/OrganicCaves20261118Cold.py": "7acb50c0b282962f72094a80a72c078cce0a61d30115858331914bad7668a1b5"
+  },
+  "validation_config_file_sha256": "d6eed04d51fe439b46c6092d06696634ecfa1ee8e330697347a044a186690d4f",
+  "bounded_save_file_sha256": "c7b17d6774c0c71db845bebd336b9ab76e785ad052c6fce53b6d76a8d9c21478",
+  "host_directory": "cold-host-direct",
+  "semantic_run_directory": "cold-direct",
+  "assets_saved_by_launcher": false
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "Rogue10m.OrganicCaveFloat32ComparatorDiagnosis.20261118.v1",
+  "utc": "2026-11-17T19:59:13.982391+00:00",
+  "passed": true,
+  "checks": {
+    "actualQ_float32_oriented_material_counter_exact": true,
+    "zero_missing_and_added_multiplicity": true,
+    "actualQ_fixed_comparator_passed": true,
+    "old_raw_lex_comparator_reproduces_false_large_difference": true,
+    "synthetic_missing_face_rejects": true,
+    "synthetic_reversed_winding_rejects": true,
+    "synthetic_changed_material_rejects": true,
+    "synthetic_face_reorder_accepts": true
+  },
+  "independent_proof": "Standalone Counter over cyclically oriented triangle vertex coordinates explicitly cast to IEEE754float32 on BOTH inputs, paired with each triangle material ID. Does not use patched comparator for this equality.",
+  "source": {
+    "path": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Q_20261118.mesh.json",
+    "sha256": "101ff97a5d3cf1659f2d1e4aa1c4f7169ef3e3625efcfcba0c3bf1870b176488"
+  },
+  "actual_native_dump": {
+    "path": "tmp/OrganicCaves20261118/Q-native-before-settings.json",
+    "sha256": "0c9987bf7a716e3aa3df64975610847cc351cd5105fd198303bf7de997ef94b0"
+  },
+  "expected_counter_sha256": "1740ce017f060b0f54ee357627eaebc5e3894a829cfddad9a932a3c037f99b72",
+  "actual_counter_sha256": "1740ce017f060b0f54ee357627eaebc5e3894a829cfddad9a932a3c037f99b72",
+  "source_triangles": 125980,
+  "actual_triangles": 125980,
+  "source_material_counts": {
+    "0": 121818,
+    "1": 4162
+  },
+  "actual_material_counts": {
+    "0": 121818,
+    "1": 4162
+  },
+  "old_raw_lex_false_maximum_distance_cm": 6158.875520492714,
+  "fixed_comparator": {
+    "passed": true,
+    "expected_triangles": 125980,
+    "actual_triangles": 125980,
+    "position_comparison_precision": "Both meshes explicitly converted to FVector3f/IEEE754float32 before cyclic triangle keys",
+    "exact_oriented_triangle_material_multiset_equal": true,
+    "expected_oriented_multiset_sha256": "1740ce017f060b0f54ee357627eaebc5e3894a829cfddad9a932a3c037f99b72",
+    "actual_oriented_multiset_sha256": "1740ce017f060b0f54ee357627eaebc5e3894a829cfddad9a932a3c037f99b72",
+    "missing_triangle_multiplicity": 0,
+    "unexpected_triangle_multiplicity": 0,
+    "missing_keys_first20": [],
+    "unexpected_keys_first20": [],
+    "maximum_corresponding_original_position_distance_cm": 0.00032209491314295186,
+    "position_error_over_tolerance_count": 0,
+    "tolerance_cm": 0.05,
+    "source_float32_minimum_face_area_cm2": 2.8915091847290048e-05,
+    "actual_float32_minimum_face_area_cm2": 2.8915091847290048e-05,
+    "source_float32_degenerate_faces_first20": [],
+    "actual_float32_degenerate_faces_first20": [],
+    "orientation_preserved": true,
+    "triangle_material_ids_compared": true
+  },
+  "editor_operations": false,
+  "asset_mutations": false,
+  "git_operations": false,
+  "patched_qa_sha256": "15f88e8e573041415d0aec08de576f048f3ba119c1db1773b0ed89b75e3f524e"
+}

@@ -1,0 +1,50 @@
+{
+  "schema": "Rogue10m.OrganicCaveFixtureAdapterPreflight.20261118.v1",
+  "utc": "2026-11-17T20:05:50.447511+00:00",
+  "passed": true,
+  "checks": {
+    "actual_scene_matches_exact_approved_overlay_with_only_two_Custom_profiles": true,
+    "UE_reverse_cross_preserves_artist_physical_normal": true,
+    "native_expected_orientation_accepts": true,
+    "old_wrong_native_orientation_rejects": true,
+    "source_artist_triangles_remain_unchanged": true,
+    "original2016_queries_unchanged": true
+  },
+  "scripts": [
+    {
+      "path": "Scripts/Editor/OrganicCaves20261118QA.py",
+      "sha256": "c04b6d0a91709283aa76af4e50942399563094ab1ff470258c8417761bca77d8",
+      "AST_passed": true
+    },
+    {
+      "path": "Scripts/Editor/OrganicCaves20261118RenderQA.py",
+      "sha256": "a9ed5339d04cb012e3e446f8896475fdf6dd66c7f055aa04157755363fa9773f",
+      "AST_passed": true
+    },
+    {
+      "path": "Scripts/Editor/OrganicCaves20261118Cold.py",
+      "sha256": "7acb50c0b282962f72094a80a72c078cce0a61d30115858331914bad7668a1b5",
+      "AST_passed": true
+    },
+    {
+      "path": "Scripts/CheckOrganicCaveScope20261118.py",
+      "sha256": "0728f1b38d810e9eb2961c3e83503e3bea7ee80b76102854608b073ad4f66ecf",
+      "AST_passed": true
+    }
+  ],
+  "editor_operations": false,
+  "asset_mutations": false,
+  "native_winding_adapter": {
+    "source_convention": "Artist CCW with outward mathematical cross-product normals",
+    "native_convention": "UE CW; TriangleNormal=(V2-V0) cross (V1-V0)",
+    "triangle_index_mapping": [
+      0,
+      2,
+      1
+    ],
+    "positions_changed": false,
+    "authored_normals_changed": false,
+    "source_artwork_changed": false
+  },
+  "remaining_actual_requirement": "Native repaired mesh collision, rendered geometry, original2016 queries and camera acceptance must still be run by root."
+}

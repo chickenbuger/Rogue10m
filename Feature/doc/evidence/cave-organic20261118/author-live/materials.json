@@ -1,0 +1,1964 @@
+{
+  "schema": "Rogue10m.OrganicCaveMaterials.20261118.v1",
+  "success": true,
+  "started_utc": "2026-11-17T19:48:44.567153+00:00",
+  "mutation_started": true,
+  "assets_saved": false,
+  "save_called": false,
+  "created_assets": [
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock"
+  ],
+  "created_actors": [],
+  "created_components": [],
+  "actors_assigned": [],
+  "automatic_retry": false,
+  "automatic_rollback": false,
+  "partial_work_deleted": false,
+  "spec_sha256": "a2498735c25b9c878c2b2de522702e48119ebf66da7cad04e75e40f753804366",
+  "baseline_materials_sha256": "de2e85d4b23ae4ad014d88bcd0bf54d248722ee854e19f808744e5bf71a77afb",
+  "source47_states_sha256": "34cbb2e4971c2a388db34f43764885e47096345b29c46c1169953b6138286c70",
+  "source_graph_sha256": "8ece65cd367aa9855e7d061cad2501924290afb2ab918115120f628f9c316669",
+  "source_side_tint_linear_rgba": [
+    0.75,
+    0.7200000286102295,
+    0.6499999761581421,
+    1.0
+  ],
+  "dirty_before": [],
+  "setter_receipts": {
+    "scalar_return": false,
+    "vector_return": false,
+    "getter_verified": true,
+    "Roughness": 0.9200000166893005,
+    "OrganicTint": [
+      0.30000001192092896,
+      0.3199999928474426,
+      0.2800000011920929,
+      1.0
+    ]
+  },
+  "finished_utc": "2026-11-17T19:48:47.788369+00:00",
+  "source47_states_after_sha256": "34cbb2e4971c2a388db34f43764885e47096345b29c46c1169953b6138286c70",
+  "old47_preserved": true,
+  "source_surface_preserved": true,
+  "all1408_actors_preserved": true,
+  "terrain_preserved": true,
+  "only_struct_repr_process_address_normalized": true,
+  "lighting_exposure_camera_preserved": true,
+  "dirty_after": [
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock"
+  ],
+  "created_material_states": {
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock.M_OrganicRock": {
+      "path": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock.M_OrganicRock",
+      "class": "/Script/Engine.Material",
+      "disk": {
+        "package": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock",
+        "file": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock.uasset",
+        "unsaved": true,
+        "exists": false
+      },
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock.M_OrganicRock",
+      "base_disk": {
+        "package": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock",
+        "file": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock.uasset",
+        "unsaved": true,
+        "exists": false
+      },
+      "used_with_instanced_static_meshes": true,
+      "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+      "material_domain": "<MaterialDomain.MD_SURFACE: 0>",
+      "two_sided": false,
+      "scalar_parameter_names": [
+        "TileSizeCm",
+        "Roughness"
+      ],
+      "vector_parameter_names": [
+        "ColorTint",
+        "OrganicTint"
+      ],
+      "texture_parameter_names": [
+        "BaseColorTexture",
+        "NormalTexture"
+      ],
+      "graph": {
+        "domain": "<MaterialDomain.MD_SURFACE: 0>",
+        "blend": "<BlendMode.BLEND_OPAQUE: 0>",
+        "nodes": {
+          "MaterialExpressionWorldPosition_1": {
+            "class": "MaterialExpressionWorldPosition",
+            "properties": {
+              "world_position_shader_offset": "<WorldPositionIncludedOffsets.WPT_DEFAULT: 0>"
+            },
+            "inputs": []
+          },
+          "MaterialExpressionScalarParameter_1": {
+            "class": "MaterialExpressionScalarParameter",
+            "properties": {
+              "parameter_name": "TileSizeCm",
+              "default_value": 180.0
+            },
+            "inputs": []
+          },
+          "MaterialExpressionDivide_1": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionWorldPosition_1",
+                "output": "XY"
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionScalarParameter_1",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionTextureSampleParameter2D_0": {
+            "class": "MaterialExpressionTextureSampleParameter2D",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "UVs",
+                "node": "MaterialExpressionDivide_1",
+                "output": ""
+              },
+              {
+                "pin": "Apply View MipBias",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionTextureSampleParameter2D_1": {
+            "class": "MaterialExpressionTextureSampleParameter2D",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "UVs",
+                "node": "MaterialExpressionDivide_1",
+                "output": ""
+              },
+              {
+                "pin": "Apply View MipBias",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionVectorParameter_0": {
+            "class": "MaterialExpressionVectorParameter",
+            "properties": {
+              "parameter_name": "ColorTint",
+              "default_value": [
+                0.7200000286102295,
+                0.8600000143051147,
+                0.6499999761581421,
+                1.0
+              ]
+            },
+            "inputs": []
+          },
+          "MaterialExpressionMultiply_0": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 1.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionTextureSampleParameter2D_0",
+                "output": "RGB"
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionVectorParameter_0",
+                "output": "RGB"
+              }
+            ]
+          },
+          "MaterialExpressionDivide_2": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionWorldPosition_1",
+                "output": "XY"
+              },
+              {
+                "pin": "B",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionTextureSample_0": {
+            "class": "MaterialExpressionTextureSample",
+            "properties": {
+              "texture": "/Game/StarterContent/Textures/T_MacroVariation.T_MacroVariation",
+              "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_COLOR: 0>",
+              "sampler_source": "<SamplerSourceMode.SSM_FROM_TEXTURE_ASSET: 0>"
+            },
+            "inputs": [
+              {
+                "pin": "UVs",
+                "node": "MaterialExpressionDivide_2",
+                "output": ""
+              },
+              {
+                "pin": "Tex",
+                "node": null,
+                "output": ""
+              },
+              {
+                "pin": "Apply View MipBias",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionMultiply_1": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 0.15000000596046448
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionTextureSample_0",
+                "output": "R"
+              },
+              {
+                "pin": "B",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionAdd_0": {
+            "class": "MaterialExpressionAdd",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 0.8500000238418579
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionMultiply_1",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionMultiply_2": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 1.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionMultiply_0",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionAdd_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionScalarParameter_2": {
+            "class": "MaterialExpressionScalarParameter",
+            "properties": {
+              "parameter_name": "Roughness",
+              "default_value": 0.8999999761581421
+            },
+            "inputs": []
+          },
+          "MaterialExpressionPixelNormalWS_0": {
+            "class": "MaterialExpressionPixelNormalWS",
+            "properties": {},
+            "inputs": []
+          },
+          "MaterialExpressionComponentMask_0": {
+            "class": "MaterialExpressionComponentMask",
+            "properties": {
+              "r": false,
+              "g": false,
+              "b": true,
+              "a": false
+            },
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionPixelNormalWS_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionSmoothStep_0": {
+            "class": "MaterialExpressionSmoothStep",
+            "properties": {
+              "const_min": 0.5,
+              "const_max": 0.8999999761581421,
+              "const_value": 0.0
+            },
+            "inputs": [
+              {
+                "pin": "Min",
+                "node": null,
+                "output": ""
+              },
+              {
+                "pin": "Max",
+                "node": null,
+                "output": ""
+              },
+              {
+                "pin": "Value",
+                "node": "MaterialExpressionComponentMask_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionConstant3Vector_0": {
+            "class": "MaterialExpressionConstant3Vector",
+            "properties": {},
+            "inputs": []
+          },
+          "MaterialExpressionLinearInterpolate_0": {
+            "class": "MaterialExpressionLinearInterpolate",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionMultiply_6",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionMultiply_2",
+                "output": ""
+              },
+              {
+                "pin": "Alpha",
+                "node": "MaterialExpressionSmoothStep_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionConstant_0": {
+            "class": "MaterialExpressionConstant",
+            "properties": {},
+            "inputs": []
+          },
+          "MaterialExpressionComponentMask_1": {
+            "class": "MaterialExpressionComponentMask",
+            "properties": {
+              "r": true,
+              "g": true,
+              "b": false,
+              "a": false
+            },
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionWorldPosition_1",
+                "output": "XYZ"
+              }
+            ]
+          },
+          "MaterialExpressionDivide_0": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionComponentMask_1",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionConstant_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionTextureSample_1": {
+            "class": "MaterialExpressionTextureSample",
+            "properties": {
+              "texture": "/Game/Stylized_Village/Assets/Terrain/Rock/T_GroundRock_01_basecolor.T_GroundRock_01_basecolor",
+              "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_COLOR: 0>",
+              "sampler_source": "<SamplerSourceMode.SSM_FROM_TEXTURE_ASSET: 0>"
+            },
+            "inputs": [
+              {
+                "pin": "UVs",
+                "node": "MaterialExpressionDivide_0",
+                "output": ""
+              },
+              {
+                "pin": "Tex",
+                "node": null,
+                "output": ""
+              },
+              {
+                "pin": "Apply View MipBias",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionComponentMask_2": {
+            "class": "MaterialExpressionComponentMask",
+            "properties": {
+              "r": true,
+              "g": false,
+              "b": true,
+              "a": false
+            },
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionWorldPosition_1",
+                "output": "XYZ"
+              }
+            ]
+          },
+          "MaterialExpressionDivide_3": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionComponentMask_2",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionConstant_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionTextureSample_2": {
+            "class": "MaterialExpressionTextureSample",
+            "properties": {
+              "texture": "/Game/Stylized_Village/Assets/Terrain/Rock/T_GroundRock_01_basecolor.T_GroundRock_01_basecolor",
+              "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_COLOR: 0>",
+              "sampler_source": "<SamplerSourceMode.SSM_FROM_TEXTURE_ASSET: 0>"
+            },
+            "inputs": [
+              {
+                "pin": "UVs",
+                "node": "MaterialExpressionDivide_3",
+                "output": ""
+              },
+              {
+                "pin": "Tex",
+                "node": null,
+                "output": ""
+              },
+              {
+                "pin": "Apply View MipBias",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionComponentMask_3": {
+            "class": "MaterialExpressionComponentMask",
+            "properties": {
+              "r": false,
+              "g": true,
+              "b": true,
+              "a": false
+            },
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionWorldPosition_1",
+                "output": "XYZ"
+              }
+            ]
+          },
+          "MaterialExpressionDivide_4": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionComponentMask_3",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionConstant_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionTextureSample_3": {
+            "class": "MaterialExpressionTextureSample",
+            "properties": {
+              "texture": "/Game/Stylized_Village/Assets/Terrain/Rock/T_GroundRock_01_basecolor.T_GroundRock_01_basecolor",
+              "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_COLOR: 0>",
+              "sampler_source": "<SamplerSourceMode.SSM_FROM_TEXTURE_ASSET: 0>"
+            },
+            "inputs": [
+              {
+                "pin": "UVs",
+                "node": "MaterialExpressionDivide_4",
+                "output": ""
+              },
+              {
+                "pin": "Tex",
+                "node": null,
+                "output": ""
+              },
+              {
+                "pin": "Apply View MipBias",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionAbs_0": {
+            "class": "MaterialExpressionAbs",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionPixelNormalWS_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionComponentMask_4": {
+            "class": "MaterialExpressionComponentMask",
+            "properties": {
+              "r": true,
+              "g": false,
+              "b": false,
+              "a": false
+            },
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionAbs_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionComponentMask_5": {
+            "class": "MaterialExpressionComponentMask",
+            "properties": {
+              "r": false,
+              "g": true,
+              "b": false,
+              "a": false
+            },
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionAbs_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionComponentMask_6": {
+            "class": "MaterialExpressionComponentMask",
+            "properties": {
+              "r": false,
+              "g": false,
+              "b": true,
+              "a": false
+            },
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionAbs_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionAdd_1": {
+            "class": "MaterialExpressionAdd",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 0.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionComponentMask_4",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionComponentMask_5",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionAdd_2": {
+            "class": "MaterialExpressionAdd",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 0.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionAdd_1",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionComponentMask_6",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionDivide_5": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionComponentMask_4",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionAdd_2",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionMultiply_3": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 1.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionTextureSample_3",
+                "output": "RGB"
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionDivide_5",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionDivide_6": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionComponentMask_5",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionAdd_2",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionMultiply_4": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 1.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionTextureSample_2",
+                "output": "RGB"
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionDivide_6",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionDivide_7": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionComponentMask_6",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionAdd_2",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionMultiply_5": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 1.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionTextureSample_1",
+                "output": "RGB"
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionDivide_7",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionAdd_3": {
+            "class": "MaterialExpressionAdd",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 0.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionMultiply_3",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionMultiply_4",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionAdd_4": {
+            "class": "MaterialExpressionAdd",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 0.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionAdd_3",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionMultiply_5",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionMultiply_6": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 1.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionAdd_4",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionConstant3Vector_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionVectorParameter_1": {
+            "class": "MaterialExpressionVectorParameter",
+            "properties": {
+              "parameter_name": "OrganicTint",
+              "default_value": [
+                0.30000001192092896,
+                0.3199999928474426,
+                0.2800000011920929,
+                1.0
+              ]
+            },
+            "inputs": []
+          },
+          "MaterialExpressionMultiply_7": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 1.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionAdd_4",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionVectorParameter_1",
+                "output": "RGB"
+              }
+            ]
+          },
+          "MaterialExpressionConstant3Vector_1": {
+            "class": "MaterialExpressionConstant3Vector",
+            "properties": {},
+            "inputs": []
+          }
+        },
+        "outputs": {
+          "18": {
+            "node": null,
+            "output": ""
+          },
+          "9": {
+            "node": null,
+            "output": ""
+          },
+          "5": {
+            "node": "MaterialExpressionMultiply_7",
+            "output": ""
+          },
+          "0": {
+            "node": null,
+            "output": ""
+          },
+          "30": {
+            "node": null,
+            "output": ""
+          },
+          "27": {
+            "node": null,
+            "output": ""
+          },
+          "33": {
+            "node": null,
+            "output": ""
+          },
+          "6": {
+            "node": null,
+            "output": ""
+          },
+          "10": {
+            "node": "MaterialExpressionConstant3Vector_1",
+            "output": ""
+          },
+          "1": {
+            "node": null,
+            "output": ""
+          },
+          "2": {
+            "node": null,
+            "output": ""
+          },
+          "19": {
+            "node": null,
+            "output": ""
+          },
+          "8": {
+            "node": "MaterialExpressionScalarParameter_2",
+            "output": ""
+          },
+          "7": {
+            "node": null,
+            "output": ""
+          },
+          "15": {
+            "node": null,
+            "output": ""
+          },
+          "11": {
+            "node": null,
+            "output": ""
+          },
+          "12": {
+            "node": null,
+            "output": ""
+          }
+        }
+      },
+      "graph_sha256": "b6a5f821dbc5945456442d81182125fbc64ccf76a1c16e0c806b43bc51ef09e2",
+      "expression_classes": {
+        "MaterialExpressionWorldPosition": 1,
+        "MaterialExpressionScalarParameter": 2,
+        "MaterialExpressionDivide": 8,
+        "MaterialExpressionTextureSampleParameter2D": 2,
+        "MaterialExpressionVectorParameter": 2,
+        "MaterialExpressionMultiply": 8,
+        "MaterialExpressionTextureSample": 4,
+        "MaterialExpressionAdd": 5,
+        "MaterialExpressionPixelNormalWS": 1,
+        "MaterialExpressionComponentMask": 7,
+        "MaterialExpressionSmoothStep": 1,
+        "MaterialExpressionConstant3Vector": 2,
+        "MaterialExpressionLinearInterpolate": 1,
+        "MaterialExpressionConstant": 1,
+        "MaterialExpressionAbs": 1
+      }
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock.MI_OrganicRock": {
+      "path": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock.MI_OrganicRock",
+      "class": "/Script/Engine.MaterialInstanceConstant",
+      "disk": {
+        "package": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock",
+        "file": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock.uasset",
+        "unsaved": true,
+        "exists": false
+      },
+      "parent_chain": [
+        "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock.M_OrganicRock"
+      ],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock.M_OrganicRock",
+      "base_disk": {
+        "package": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock",
+        "file": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock.uasset",
+        "unsaved": true,
+        "exists": false
+      },
+      "used_with_instanced_static_meshes": true,
+      "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+      "material_domain": "<MaterialDomain.MD_SURFACE: 0>",
+      "two_sided": false,
+      "scalar_parameter_names": [
+        "TileSizeCm",
+        "Roughness"
+      ],
+      "vector_parameter_names": [
+        "ColorTint",
+        "OrganicTint"
+      ],
+      "texture_parameter_names": [
+        "BaseColorTexture",
+        "NormalTexture"
+      ],
+      "scalar_values": {
+        "TileSizeCm": 240.0,
+        "Roughness": 0.9200000166893005
+      },
+      "vector_values": {
+        "ColorTint": [
+          0.75,
+          0.7200000286102295,
+          0.6499999761581421,
+          1.0
+        ],
+        "OrganicTint": [
+          0.30000001192092896,
+          0.3199999928474426,
+          0.2800000011920929,
+          1.0
+        ]
+      },
+      "texture_values": {
+        "BaseColorTexture": "/Game/Stylized_Village/Assets/Terrain/Rock/T_GroundRock_01_basecolor.T_GroundRock_01_basecolor",
+        "NormalTexture": "/Game/Stylized_Village/Assets/Terrain/Rock/T_GroundRock_01_normal.T_GroundRock_01_normal"
+      },
+      "graph": {
+        "domain": "<MaterialDomain.MD_SURFACE: 0>",
+        "blend": "<BlendMode.BLEND_OPAQUE: 0>",
+        "nodes": {
+          "MaterialExpressionWorldPosition_1": {
+            "class": "MaterialExpressionWorldPosition",
+            "properties": {
+              "world_position_shader_offset": "<WorldPositionIncludedOffsets.WPT_DEFAULT: 0>"
+            },
+            "inputs": []
+          },
+          "MaterialExpressionScalarParameter_1": {
+            "class": "MaterialExpressionScalarParameter",
+            "properties": {
+              "parameter_name": "TileSizeCm",
+              "default_value": 180.0
+            },
+            "inputs": []
+          },
+          "MaterialExpressionDivide_1": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionWorldPosition_1",
+                "output": "XY"
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionScalarParameter_1",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionTextureSampleParameter2D_0": {
+            "class": "MaterialExpressionTextureSampleParameter2D",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "UVs",
+                "node": "MaterialExpressionDivide_1",
+                "output": ""
+              },
+              {
+                "pin": "Apply View MipBias",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionTextureSampleParameter2D_1": {
+            "class": "MaterialExpressionTextureSampleParameter2D",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "UVs",
+                "node": "MaterialExpressionDivide_1",
+                "output": ""
+              },
+              {
+                "pin": "Apply View MipBias",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionVectorParameter_0": {
+            "class": "MaterialExpressionVectorParameter",
+            "properties": {
+              "parameter_name": "ColorTint",
+              "default_value": [
+                0.7200000286102295,
+                0.8600000143051147,
+                0.6499999761581421,
+                1.0
+              ]
+            },
+            "inputs": []
+          },
+          "MaterialExpressionMultiply_0": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 1.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionTextureSampleParameter2D_0",
+                "output": "RGB"
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionVectorParameter_0",
+                "output": "RGB"
+              }
+            ]
+          },
+          "MaterialExpressionDivide_2": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionWorldPosition_1",
+                "output": "XY"
+              },
+              {
+                "pin": "B",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionTextureSample_0": {
+            "class": "MaterialExpressionTextureSample",
+            "properties": {
+              "texture": "/Game/StarterContent/Textures/T_MacroVariation.T_MacroVariation",
+              "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_COLOR: 0>",
+              "sampler_source": "<SamplerSourceMode.SSM_FROM_TEXTURE_ASSET: 0>"
+            },
+            "inputs": [
+              {
+                "pin": "UVs",
+                "node": "MaterialExpressionDivide_2",
+                "output": ""
+              },
+              {
+                "pin": "Tex",
+                "node": null,
+                "output": ""
+              },
+              {
+                "pin": "Apply View MipBias",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionMultiply_1": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 0.15000000596046448
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionTextureSample_0",
+                "output": "R"
+              },
+              {
+                "pin": "B",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionAdd_0": {
+            "class": "MaterialExpressionAdd",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 0.8500000238418579
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionMultiply_1",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionMultiply_2": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 1.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionMultiply_0",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionAdd_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionScalarParameter_2": {
+            "class": "MaterialExpressionScalarParameter",
+            "properties": {
+              "parameter_name": "Roughness",
+              "default_value": 0.8999999761581421
+            },
+            "inputs": []
+          },
+          "MaterialExpressionPixelNormalWS_0": {
+            "class": "MaterialExpressionPixelNormalWS",
+            "properties": {},
+            "inputs": []
+          },
+          "MaterialExpressionComponentMask_0": {
+            "class": "MaterialExpressionComponentMask",
+            "properties": {
+              "r": false,
+              "g": false,
+              "b": true,
+              "a": false
+            },
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionPixelNormalWS_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionSmoothStep_0": {
+            "class": "MaterialExpressionSmoothStep",
+            "properties": {
+              "const_min": 0.5,
+              "const_max": 0.8999999761581421,
+              "const_value": 0.0
+            },
+            "inputs": [
+              {
+                "pin": "Min",
+                "node": null,
+                "output": ""
+              },
+              {
+                "pin": "Max",
+                "node": null,
+                "output": ""
+              },
+              {
+                "pin": "Value",
+                "node": "MaterialExpressionComponentMask_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionConstant3Vector_0": {
+            "class": "MaterialExpressionConstant3Vector",
+            "properties": {},
+            "inputs": []
+          },
+          "MaterialExpressionLinearInterpolate_0": {
+            "class": "MaterialExpressionLinearInterpolate",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionMultiply_6",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionMultiply_2",
+                "output": ""
+              },
+              {
+                "pin": "Alpha",
+                "node": "MaterialExpressionSmoothStep_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionConstant_0": {
+            "class": "MaterialExpressionConstant",
+            "properties": {},
+            "inputs": []
+          },
+          "MaterialExpressionComponentMask_1": {
+            "class": "MaterialExpressionComponentMask",
+            "properties": {
+              "r": true,
+              "g": true,
+              "b": false,
+              "a": false
+            },
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionWorldPosition_1",
+                "output": "XYZ"
+              }
+            ]
+          },
+          "MaterialExpressionDivide_0": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionComponentMask_1",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionConstant_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionTextureSample_1": {
+            "class": "MaterialExpressionTextureSample",
+            "properties": {
+              "texture": "/Game/Stylized_Village/Assets/Terrain/Rock/T_GroundRock_01_basecolor.T_GroundRock_01_basecolor",
+              "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_COLOR: 0>",
+              "sampler_source": "<SamplerSourceMode.SSM_FROM_TEXTURE_ASSET: 0>"
+            },
+            "inputs": [
+              {
+                "pin": "UVs",
+                "node": "MaterialExpressionDivide_0",
+                "output": ""
+              },
+              {
+                "pin": "Tex",
+                "node": null,
+                "output": ""
+              },
+              {
+                "pin": "Apply View MipBias",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionComponentMask_2": {
+            "class": "MaterialExpressionComponentMask",
+            "properties": {
+              "r": true,
+              "g": false,
+              "b": true,
+              "a": false
+            },
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionWorldPosition_1",
+                "output": "XYZ"
+              }
+            ]
+          },
+          "MaterialExpressionDivide_3": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionComponentMask_2",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionConstant_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionTextureSample_2": {
+            "class": "MaterialExpressionTextureSample",
+            "properties": {
+              "texture": "/Game/Stylized_Village/Assets/Terrain/Rock/T_GroundRock_01_basecolor.T_GroundRock_01_basecolor",
+              "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_COLOR: 0>",
+              "sampler_source": "<SamplerSourceMode.SSM_FROM_TEXTURE_ASSET: 0>"
+            },
+            "inputs": [
+              {
+                "pin": "UVs",
+                "node": "MaterialExpressionDivide_3",
+                "output": ""
+              },
+              {
+                "pin": "Tex",
+                "node": null,
+                "output": ""
+              },
+              {
+                "pin": "Apply View MipBias",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionComponentMask_3": {
+            "class": "MaterialExpressionComponentMask",
+            "properties": {
+              "r": false,
+              "g": true,
+              "b": true,
+              "a": false
+            },
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionWorldPosition_1",
+                "output": "XYZ"
+              }
+            ]
+          },
+          "MaterialExpressionDivide_4": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionComponentMask_3",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionConstant_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionTextureSample_3": {
+            "class": "MaterialExpressionTextureSample",
+            "properties": {
+              "texture": "/Game/Stylized_Village/Assets/Terrain/Rock/T_GroundRock_01_basecolor.T_GroundRock_01_basecolor",
+              "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_COLOR: 0>",
+              "sampler_source": "<SamplerSourceMode.SSM_FROM_TEXTURE_ASSET: 0>"
+            },
+            "inputs": [
+              {
+                "pin": "UVs",
+                "node": "MaterialExpressionDivide_4",
+                "output": ""
+              },
+              {
+                "pin": "Tex",
+                "node": null,
+                "output": ""
+              },
+              {
+                "pin": "Apply View MipBias",
+                "node": null,
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionAbs_0": {
+            "class": "MaterialExpressionAbs",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionPixelNormalWS_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionComponentMask_4": {
+            "class": "MaterialExpressionComponentMask",
+            "properties": {
+              "r": true,
+              "g": false,
+              "b": false,
+              "a": false
+            },
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionAbs_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionComponentMask_5": {
+            "class": "MaterialExpressionComponentMask",
+            "properties": {
+              "r": false,
+              "g": true,
+              "b": false,
+              "a": false
+            },
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionAbs_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionComponentMask_6": {
+            "class": "MaterialExpressionComponentMask",
+            "properties": {
+              "r": false,
+              "g": false,
+              "b": true,
+              "a": false
+            },
+            "inputs": [
+              {
+                "pin": "None",
+                "node": "MaterialExpressionAbs_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionAdd_1": {
+            "class": "MaterialExpressionAdd",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 0.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionComponentMask_4",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionComponentMask_5",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionAdd_2": {
+            "class": "MaterialExpressionAdd",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 0.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionAdd_1",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionComponentMask_6",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionDivide_5": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionComponentMask_4",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionAdd_2",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionMultiply_3": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 1.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionTextureSample_3",
+                "output": "RGB"
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionDivide_5",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionDivide_6": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionComponentMask_5",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionAdd_2",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionMultiply_4": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 1.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionTextureSample_2",
+                "output": "RGB"
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionDivide_6",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionDivide_7": {
+            "class": "MaterialExpressionDivide",
+            "properties": {},
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionComponentMask_6",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionAdd_2",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionMultiply_5": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 1.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionTextureSample_1",
+                "output": "RGB"
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionDivide_7",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionAdd_3": {
+            "class": "MaterialExpressionAdd",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 0.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionMultiply_3",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionMultiply_4",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionAdd_4": {
+            "class": "MaterialExpressionAdd",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 0.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionAdd_3",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionMultiply_5",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionMultiply_6": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 1.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionAdd_4",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionConstant3Vector_0",
+                "output": ""
+              }
+            ]
+          },
+          "MaterialExpressionVectorParameter_1": {
+            "class": "MaterialExpressionVectorParameter",
+            "properties": {
+              "parameter_name": "OrganicTint",
+              "default_value": [
+                0.30000001192092896,
+                0.3199999928474426,
+                0.2800000011920929,
+                1.0
+              ]
+            },
+            "inputs": []
+          },
+          "MaterialExpressionMultiply_7": {
+            "class": "MaterialExpressionMultiply",
+            "properties": {
+              "const_a": 0.0,
+              "const_b": 1.0
+            },
+            "inputs": [
+              {
+                "pin": "A",
+                "node": "MaterialExpressionAdd_4",
+                "output": ""
+              },
+              {
+                "pin": "B",
+                "node": "MaterialExpressionVectorParameter_1",
+                "output": "RGB"
+              }
+            ]
+          },
+          "MaterialExpressionConstant3Vector_1": {
+            "class": "MaterialExpressionConstant3Vector",
+            "properties": {},
+            "inputs": []
+          }
+        },
+        "outputs": {
+          "18": {
+            "node": null,
+            "output": ""
+          },
+          "9": {
+            "node": null,
+            "output": ""
+          },
+          "5": {
+            "node": "MaterialExpressionMultiply_7",
+            "output": ""
+          },
+          "0": {
+            "node": null,
+            "output": ""
+          },
+          "30": {
+            "node": null,
+            "output": ""
+          },
+          "27": {
+            "node": null,
+            "output": ""
+          },
+          "33": {
+            "node": null,
+            "output": ""
+          },
+          "6": {
+            "node": null,
+            "output": ""
+          },
+          "10": {
+            "node": "MaterialExpressionConstant3Vector_1",
+            "output": ""
+          },
+          "1": {
+            "node": null,
+            "output": ""
+          },
+          "2": {
+            "node": null,
+            "output": ""
+          },
+          "19": {
+            "node": null,
+            "output": ""
+          },
+          "8": {
+            "node": "MaterialExpressionScalarParameter_2",
+            "output": ""
+          },
+          "7": {
+            "node": null,
+            "output": ""
+          },
+          "15": {
+            "node": null,
+            "output": ""
+          },
+          "11": {
+            "node": null,
+            "output": ""
+          },
+          "12": {
+            "node": null,
+            "output": ""
+          }
+        }
+      },
+      "graph_sha256": "b6a5f821dbc5945456442d81182125fbc64ccf76a1c16e0c806b43bc51ef09e2",
+      "expression_classes": {
+        "MaterialExpressionWorldPosition": 1,
+        "MaterialExpressionScalarParameter": 2,
+        "MaterialExpressionDivide": 8,
+        "MaterialExpressionTextureSampleParameter2D": 2,
+        "MaterialExpressionVectorParameter": 2,
+        "MaterialExpressionMultiply": 8,
+        "MaterialExpressionTextureSample": 4,
+        "MaterialExpressionAdd": 5,
+        "MaterialExpressionPixelNormalWS": 1,
+        "MaterialExpressionComponentMask": 7,
+        "MaterialExpressionSmoothStep": 1,
+        "MaterialExpressionConstant3Vector": 2,
+        "MaterialExpressionLinearInterpolate": 1,
+        "MaterialExpressionConstant": 1,
+        "MaterialExpressionAbs": 1
+      }
+    }
+  },
+  "edit_recipe": {
+    "schema": "Rogue10m.OrganicCaveMaterialSpec.20261118.v1",
+    "map": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A",
+    "baseline_checkpoint": "3a33ee21",
+    "frozen_inputs": {
+      "Feature/doc/evidence/cave-organic20261118/baseline-live/materials.json": "de2e85d4b23ae4ad014d88bcd0bf54d248722ee854e19f808744e5bf71a77afb",
+      "Feature/doc/evidence/cave-organic20261118/baseline-live/cave-actors.json": "fff169e2b9fc5ce1993cd0fa8372c038917fb87ee247179761d578a2a8f11ccb",
+      "Feature/doc/evidence/cave-organic20261118/baseline-live/terrain.json": "a9a87d9ed7aa94c1366d0a9d802a262c598e319c56d188bae64a7c43dfe7be2f",
+      "Feature/doc/evidence/cave-organic20261118/baseline-live/result.json": "e81bca59acc743213e58880b1a115c78e6a7338768a14238944c727ae3cfd28d",
+      "Feature/doc/evidence/caves20261118/baseline-live/baseline-actors.json": "f5390322017e3a501811a105f72686c11e90a8c0ed662484aee43404569eacf5",
+      "Feature/doc/evidence/caves20261118/triplanar-spec.json": "0d24c669a60f9c998401afcc7f7c75e74f6fe1f72c499496fda3139e5c47353f"
+    },
+    "helper_sha256": {
+      "inspector": "55c01c8ab8ec453ac2454242a1db3998c6518120eeb225828e87741854fa5ace",
+      "reader": "66ebc1c58cd9abddf14739c7624e302b09466a4b2702d5ba63fb98daedf7fb03",
+      "api": "10bfccf425157cd1676b2c75a0347e815b3426dfa77815ec5c98edb7cdaaf280",
+      "actors": "62fc86c81de9b997fc741cc73510321164a35a4bc94cb1e44242cd663a9f43cc"
+    },
+    "editor_pid": 49456,
+    "expected_dirty_packages": [],
+    "actor_count": 1408,
+    "old_material_count": 47,
+    "source": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface",
+    "source_instance": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveStoneFloor",
+    "source_graph_sha256": "8ece65cd367aa9855e7d061cad2501924290afb2ab918115120f628f9c316669",
+    "source_nodes": 43,
+    "source_sum_node": "MaterialExpressionAdd_4",
+    "source_roughness_node": "MaterialExpressionScalarParameter_2",
+    "fixed_stone_texture": "/Game/Stylized_Village/Assets/Terrain/Rock/T_GroundRock_01_basecolor.T_GroundRock_01_basecolor",
+    "world_tile_cm": 240.0,
+    "source_side_tint_linear_rgba": [
+      0.75,
+      0.72,
+      0.65,
+      1.0
+    ],
+    "destination_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock",
+    "destination_instance": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock",
+    "new_assets": 2,
+    "new_nodes": 3,
+    "destination_nodes": 46,
+    "new_expressions": [
+      {
+        "key": "tint",
+        "class": "MaterialExpressionVectorParameter",
+        "parameter_name": "OrganicTint",
+        "default_linear_rgba": [
+          0.3,
+          0.32,
+          0.28,
+          1.0
+        ]
+      },
+      {
+        "key": "tinted_stone",
+        "class": "MaterialExpressionMultiply",
+        "const_a": 0.0,
+        "const_b": 1.0
+      },
+      {
+        "key": "neutral_normal",
+        "class": "MaterialExpressionConstant3Vector",
+        "constant_linear_rgba": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      }
+    ],
+    "links": [
+      {
+        "source": "source_sum_node",
+        "output": "",
+        "destination": "tinted_stone",
+        "pin": "A"
+      },
+      {
+        "source": "tint",
+        "output": "RGB",
+        "destination": "tinted_stone",
+        "pin": "B"
+      }
+    ],
+    "outputs_changed": {
+      "MP_BASE_COLOR": "tinted_stone",
+      "MP_NORMAL": "neutral_normal"
+    },
+    "instance_values": {
+      "OrganicTint": [
+        0.3,
+        0.32,
+        0.28,
+        1.0
+      ],
+      "Roughness": 0.92
+    },
+    "preserve_all_source43_nodes_exactly": true,
+    "preserve_other_material_outputs": true,
+    "two_sided": false,
+    "used_with_instanced_static_meshes": true,
+    "old47_full_material_states_and_disk_files_preserved": true,
+    "setter_success_verified_by_getter_not_boolean": true,
+    "assets_saved": false,
+    "actors_assigned": false,
+    "lights_or_exposure_changed": false,
+    "actual_runtime_render_acceptance_required": true,
+    "api_source": "D:/Program Files/UE_5.8/Engine/Source/Editor/MaterialEditor/Private/MaterialEditingLibrary.cpp",
+    "api_source_lines": {
+      "create_material_expression": 634,
+      "connect_material_property": 905,
+      "set_material_instance_parent": 1457,
+      "scalar_setter": 1485,
+      "vector_setter": 1573
+    }
+  },
+  "new_node_names": {
+    "tint": "MaterialExpressionVectorParameter_1",
+    "tinted_stone": "MaterialExpressionMultiply_7",
+    "neutral_normal": "MaterialExpressionConstant3Vector_1"
+  },
+  "explicit_node_readbacks": {
+    "neutral_normal_linear_rgba": [
+      0.0,
+      0.0,
+      1.0,
+      1.0
+    ],
+    "world_tile_cm": 240.0,
+    "fixed_stone_texture": "/Game/Stylized_Village/Assets/Terrain/Rock/T_GroundRock_01_basecolor.T_GroundRock_01_basecolor"
+  },
+  "material_path": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock",
+  "instance_path": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock",
+  "validation_pending": [
+    "actual curved mesh render",
+    "actual camera routes",
+    "bounded save",
+    "independent cold"
+  ]
+}

@@ -1,0 +1,1063 @@
+{
+  "schema": "Rogue10m.OrganicCavePublicationManifest.20261118.v1",
+  "prepared_utc": "2026-11-17T20:34:38.958579+00:00",
+  "repository": "https://github.com/chickenbuger/Rogue10m",
+  "branch": "Sprint#9-32-landscape-world-blockout",
+  "promote_integration_branches": false,
+  "map_production_gate": "전체 맵 제작 중: 검증한 동굴 체크포인트만 작업 브랜치 게시",
+  "self_hash_excluded_to_avoid_recursive_manifest": true,
+  "raw_host_logs_selected": false,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "purpose_ko": "고정 소스·검증 파일의 Git 바이트 보존",
+      "bytes": 1141,
+      "workspace_sha256": "ff3629c7ec88336a22136824ce051043af228dffc98c20a61a0222c51ef14d94"
+    },
+    {
+      "path": "Art/World/CavesOrganic20261118/V2/.gitignore",
+      "purpose_ko": "원본 저작 암반 형상·법선·슬롯과 소스 OBJ 추적 예외",
+      "bytes": 74,
+      "workspace_sha256": "3b6d56763edf35931195b06ce76ef0ea813f65350e2e5bc731efa8a761f19e7a"
+    },
+    {
+      "path": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Q_20261118.mesh.json",
+      "purpose_ko": "원본 저작 암반 형상·법선·슬롯과 소스 OBJ 추적 예외",
+      "bytes": 4300418,
+      "workspace_sha256": "101ff97a5d3cf1659f2d1e4aa1c4f7169ef3e3625efcfcba0c3bf1870b176488"
+    },
+    {
+      "path": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Q_20261118.obj",
+      "purpose_ko": "원본 저작 암반 형상·법선·슬롯과 소스 OBJ 추적 예외",
+      "bytes": 9661028,
+      "workspace_sha256": "7b50223a0c59bdb2ce583863459d49e95a38863cb6a340ca02c63e363f3c3e3b"
+    },
+    {
+      "path": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Z_20261118.mesh.json",
+      "purpose_ko": "원본 저작 암반 형상·법선·슬롯과 소스 OBJ 추적 예외",
+      "bytes": 4320687,
+      "workspace_sha256": "60acce5f7dc6f53720602c3abb66dd3df84090f832f3ca74fbba16c024e7baa3"
+    },
+    {
+      "path": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Z_20261118.obj",
+      "purpose_ko": "원본 저작 암반 형상·법선·슬롯과 소스 OBJ 추적 예외",
+      "bytes": 9656313,
+      "workspace_sha256": "07970b578f2f2f0f98b934a7ee9259ff0e177eacdd643bbd2e8e88320647c45e"
+    },
+    {
+      "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock.uasset",
+      "purpose_ko": "Unreal Editor에서 한정 저장한 동굴 액터4개 또는 신규 재질2·암반 메시2",
+      "bytes": 11607,
+      "workspace_sha256": "aa7be3b3c45238e030139cc33f3bd87eb0772c74d0454bcc46c075dccd00f898"
+    },
+    {
+      "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock.uasset",
+      "purpose_ko": "Unreal Editor에서 한정 저장한 동굴 액터4개 또는 신규 재질2·암반 메시2",
+      "bytes": 32991,
+      "workspace_sha256": "1fa13c80da486e9bceeecba1586b69a1eee4508ba62b4d0e0cbfbebd2c1beec3"
+    },
+    {
+      "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Q.uasset",
+      "purpose_ko": "Unreal Editor에서 한정 저장한 동굴 액터4개 또는 신규 재질2·암반 메시2",
+      "bytes": 3379617,
+      "workspace_sha256": "b000a3cd4a7a3ccd2c0cf769b8128d937019407bde0b35da57af2f0c26ae8968"
+    },
+    {
+      "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Z.uasset",
+      "purpose_ko": "Unreal Editor에서 한정 저장한 동굴 액터4개 또는 신규 재질2·암반 메시2",
+      "bytes": 3368441,
+      "workspace_sha256": "433b8876aad3d0d59fd926ca04f6d1d9f471911e00b10192d5364159963a47c4"
+    },
+    {
+      "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/VQ/PYZIJL655JALHJM6PS58A8.uasset",
+      "purpose_ko": "Unreal Editor에서 한정 저장한 동굴 액터4개 또는 신규 재질2·암반 메시2",
+      "bytes": 81574,
+      "workspace_sha256": "a0b7f9075e34d0f6462c2641c2fb295c748c4b20e22536b9773221ca87dc161e"
+    },
+    {
+      "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/BY/2CW0JPTDIEMKKD1T5LATX6.uasset",
+      "purpose_ko": "Unreal Editor에서 한정 저장한 동굴 액터4개 또는 신규 재질2·암반 메시2",
+      "bytes": 29332,
+      "workspace_sha256": "adc34b75abcb57671706828fbc68f571790d881b0a55b1e03c582e909b42d368"
+    },
+    {
+      "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/0E/NL2M3149WONPRWLKFKVP6Y.uasset",
+      "purpose_ko": "Unreal Editor에서 한정 저장한 동굴 액터4개 또는 신규 재질2·암반 메시2",
+      "bytes": 80806,
+      "workspace_sha256": "ace2fe0db6457b82d7b1ab3939b707cd2cd3213fa0da89deb982617fe3687f93"
+    },
+    {
+      "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/9/EE/NR3SMNORZ57AQ1FV26VAFO.uasset",
+      "purpose_ko": "Unreal Editor에서 한정 저장한 동굴 액터4개 또는 신규 재질2·암반 메시2",
+      "bytes": 28820,
+      "workspace_sha256": "8da989b2abd72643d595551817d77ed177d1f49d4842703912e17cecd2897d91"
+    },
+    {
+      "path": "DevLog/20261118.txt",
+      "purpose_ko": "동굴 미술·동선 보존 기획, 실제 검증 결과와 개발 기록",
+      "bytes": 26370,
+      "workspace_sha256": "08e25abdc0bc554664901cbdccb59fef19cfdb917b30d2987d91f37bcf96578c"
+    },
+    {
+      "path": "Docs/References/WorldMap/README.md",
+      "purpose_ko": "동굴 미술·동선 보존 기획, 실제 검증 결과와 개발 기록",
+      "bytes": 8128,
+      "workspace_sha256": "6e167b97650e4fa3272ec6442edd6840079a78081a311c42bb1642ff559c06e8"
+    },
+    {
+      "path": "Docs/References/WorldMap/cave-organic20261118.json",
+      "purpose_ko": "동굴 미술·동선 보존 기획, 실제 검증 결과와 개발 기록",
+      "bytes": 12657,
+      "workspace_sha256": "c2ea2d3929a24fdd95532577be86962395f775f5af5d4eac28975619cfc8ba43"
+    },
+    {
+      "path": "Docs/SprintChangeLog.md",
+      "purpose_ko": "동굴 미술·동선 보존 기획, 실제 검증 결과와 개발 기록",
+      "bytes": 355002,
+      "workspace_sha256": "c976f4530db00314bdc6f56b8773186f25e7aa490238103a8a2bafd7f6b96a3e"
+    },
+    {
+      "path": "Docs/WorldMapProductionGuide.md",
+      "purpose_ko": "동굴 미술·동선 보존 기획, 실제 검증 결과와 개발 기록",
+      "bytes": 33614,
+      "workspace_sha256": "af0ea5a40de0ff721cab41946adfd9d911bd71629f4ab0dbe61faea42d7e5d92"
+    },
+    {
+      "path": "Feature/architect/2026-11-18_organic-cave-refinement.md",
+      "purpose_ko": "동굴 미술·동선 보존 기획, 실제 검증 결과와 개발 기록",
+      "bytes": 17005,
+      "workspace_sha256": "da6ed9e13228f837171147e4e691e0aa4a8bb658e34cd8118d642ff784924d27"
+    },
+    {
+      "path": "Feature/doc/2026-11-18_organic-cave-refinement.md",
+      "purpose_ko": "동굴 미술·동선 보존 기획, 실제 검증 결과와 개발 기록",
+      "bytes": 22527,
+      "workspace_sha256": "d26b65fb43a4d65829321f86a044aba55186dc88813e7ada014f85714d52cc45"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/Q-native-comparator-diagnosis.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3005,
+      "workspace_sha256": "5a8f4fdd0be80bad7d3d7ee95fa8e8efc2e9d4b6ddfb54f000aa0d1a0ea7cbb3"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/api-preflight.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1264,
+      "workspace_sha256": "04b41c52851de3cef13d8b5139d380832f1b81bed7784e7ff2c89fdf7951561f"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/art-direction-reference.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3764,
+      "workspace_sha256": "196bb8601874ce598594278a88726b98eba84fa6c9c8f328759ae88cfcc4645c"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/author-live/final-save-plan.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1418,
+      "workspace_sha256": "ddaf83d19891e56ec5faaf9aeeeb6ecd9714de1d9dc8151a1216703d0a479c2d"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/author-live/final-save-result.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 2372,
+      "workspace_sha256": "c7b17d6774c0c71db845bebd336b9ab76e785ad052c6fce53b6d76a8d9c21478"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/author-live/materials.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 61827,
+      "workspace_sha256": "114fc9368c2d409241a6691ac6bbbe29cf9baafb18e893c39a5c9bab0cec90d5"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/author-live/mesh-Q.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3503,
+      "workspace_sha256": "6fa65f146571881cd8ede76849bd3dddcd40043e75245ea2267cd74c39c9fa1a"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/author-live/mesh-Z.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 5995,
+      "workspace_sha256": "d4fa81762a722432b37b461b53dc9f9654ff916330356eccd6024ad156282921"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/author-live/meshes-failure-2.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1989,
+      "workspace_sha256": "188b0a19b13446e656baf8cb5598f9192258d3f87e9a3495034c0b824b276e52"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/author-live/meshes-failure.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1704,
+      "workspace_sha256": "cf6eb1cb263bc4e2e75f8defa3f2f4b16478ffc456984a6eb941af092efde36b"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/author-live/meshes.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 10955,
+      "workspace_sha256": "c7766203e4e0d5251e44cf9204f602a2d047c1ee777ff7552b14947ebdcd875d"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/author-live/scene.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3112,
+      "workspace_sha256": "206d304a042394cd708d4e2dc9f9c8b84369c9291b9fd6cabe303fc3bffa6849"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/author-live/winding-repair.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 16696,
+      "workspace_sha256": "1928ff6206ebd4191e46c6d3009ad66fda0621bff06848aa1fae3bdf7b4ff7ff"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/baseline-files.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1639480,
+      "workspace_sha256": "738b20cd1ad806d56b881c6a61cec88f0c63f8a0f656544d695f73a5ebcf8bbf"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/baseline-live/cave-actors.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 358523,
+      "workspace_sha256": "fff169e2b9fc5ce1993cd0fa8372c038917fb87ee247179761d578a2a8f11ccb"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/baseline-live/component-inventory.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 16960,
+      "workspace_sha256": "921ee126a5ab74b2b1cd9339694122b6f04b5497bdd4061c2e7c942ac04075c4"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/baseline-live/materials.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 2368412,
+      "workspace_sha256": "de2e85d4b23ae4ad014d88bcd0bf54d248722ee854e19f808744e5bf71a77afb"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/baseline-live/result.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1850,
+      "workspace_sha256": "e81bca59acc743213e58880b1a115c78e6a7338768a14238944c727ae3cfd28d"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/baseline-live/terrain.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 625,
+      "workspace_sha256": "a9a87d9ed7aa94c1366d0a9d802a262c598e319c56d188bae64a7c43dfe7be2f"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/checkpoint-count-correction.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 260,
+      "workspace_sha256": "51bec8edf55cb682c9ec97ccc7c7cf2f122c52e2247ca4c6521846c1fc5cc9dd"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-direct/culture-restoration.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 691,
+      "workspace_sha256": "9f13d7bd9a37a0de537dcd2679df2ab7374b798ac5c68551fa1af6500d95ae7f"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-direct/package-inventory.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1468616,
+      "workspace_sha256": "98bc64ee6e0a9d76a7b2cf14d2a849aad7f152d5cb371b7ccd632502d22205c7"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-direct/region-load.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 58180,
+      "workspace_sha256": "3dbb3823fed780a45a2f3f35b89421bdf23bf309f1b05700155bc7559dae1a17"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-direct/result.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 483,
+      "workspace_sha256": "17d0a1e093b8574b2983ce08ad14e316171c2c6376c6a2c2b9183be5e5b3903f"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-direct/startup.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1243,
+      "workspace_sha256": "ded07b99fc9fe439ed37153de98797c069f805b8228f657cab62045f1b4c674f"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-direct/terrain-actor-packages.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 10438,
+      "workspace_sha256": "433f468d681e110791e81bb9df3786972fda9c7d8bf67de699ae613a53e8ce00"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-direct/validation.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 2016999,
+      "workspace_sha256": "355b4a7a5c65c2dd9dc4c2f65f11db60bfee2f0055bb538f7fc9a37ccdac6db7"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-host-direct/acceptance.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 330,
+      "workspace_sha256": "bed6db2d912771eedf2f3ef6b9b64192762e6e84be7d16b80f69b8ad7d92525b"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-host-direct/launch.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1739,
+      "workspace_sha256": "cedf2426728ce84ac6edc2b068678287f7ef09839d4e18bb82bd9d0ae336301e"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-host-direct/log-check.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 355,
+      "workspace_sha256": "da14d9f6f0831c96efd71eede5d22fd4017d8ac30693fc06b03679c74432962d"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-host-direct/process-exit.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 238,
+      "workspace_sha256": "af9594c41e17ff0f78f3d1a2edfaed9ff47ac705193adbf281dd12a5b0e40ab5"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-host/launch.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1725,
+      "workspace_sha256": "23cc98da3e7c0103dfc4b3be21f0d88b1434bd818d8a1f43249c58dfedc4fb6a"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-host/process-exit.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 239,
+      "workspace_sha256": "e23e5e4a436bcb4c62e94d9bdb92bb8f2778deb8a698630fbdbd9a009a9d00d2"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/exit-gate.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 912,
+      "workspace_sha256": "dba68e0f24adda705c7169e556015e3d73d28fc7bd3f418acb241b9a9cfa12d3"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/final-editor-state.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 738,
+      "workspace_sha256": "a77abdf74a3c7b329b54021e92908f49181d5b574a9abad071e3e385b8854a6a"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/final-runtime-log-check.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 24142,
+      "workspace_sha256": "ebd5f71d148fb6de1b0a51fd4b07619f431c5bf8ec75393ff8baaf92a9f27e39"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/fixture-adapter-preflight.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1881,
+      "workspace_sha256": "cc2889c19748af15f03a4c5c3b5baa0f018a35543ae8dea45925f312a6cf5c47"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/generated-check.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 180,
+      "workspace_sha256": "1e8e9c055b6d1c2d44a9d90c592a9766b434fc3696e368d5ef915c368617648d"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/generated-check.txt",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 963,
+      "workspace_sha256": "0a4810204296c6f5daaee9e72e77b9419bc9cc90c6db4ded1c356f777b96e062"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/geometryspec-v2.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 13946,
+      "workspace_sha256": "05ea056abbf5dd5c09b2365367237fb3753bac48786e6de6af68adcf928b3b7e"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/geometryspec.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 13973,
+      "workspace_sha256": "061fa689d89f16181583164e9772405de38f40fbac247db363e8977560404b52"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/independent-implementation-review.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 4650,
+      "workspace_sha256": "a500526ed94b91045167de5540d343dcc1eb7601f946d39dce17decaca4e3aa2"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/material-helper-preflight-v2.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 774,
+      "workspace_sha256": "7cb8829232fee33c99aa8ca471be412bf6693bd269c11e69471f62feea5d8e21"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/material-helper-preflight.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 763,
+      "workspace_sha256": "354391499c1caa4e424ec6cd9f8ec2ec7cb4ce5ab95f4320e41e760d70d748a8"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/materialspec.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 4524,
+      "workspace_sha256": "a2498735c25b9c878c2b2de522702e48119ebf66da7cad04e75e40f753804366"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/mesh-build-api.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 2502,
+      "workspace_sha256": "7d44e087506ce7c57b3c4dce6864e5b8bb045178527530635f3b7fbdf778675c"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/mesh-failures-log-check.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 16376,
+      "workspace_sha256": "6f5c70f916650783293ac4a04296097050bf7b3e91939b93218ee5a3e40898bc"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/native-adapter.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 2806,
+      "workspace_sha256": "8de88b657c5ed710d8df484622c345e25e40461febe8bc29253770660609250b"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/native-buffer-api.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 11076,
+      "workspace_sha256": "a27f0f611ae8318af0c85e0f10af242d74073ac3f2a44d530b9c78e67b6006a3"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/native-mesh-diagnostic.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 4225,
+      "workspace_sha256": "e1460056df0e606d4d0fa4a8265493210f01a035a30c512dd21b426053ef5271"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/native-repair-api.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 4925,
+      "workspace_sha256": "b9fb37523178ca73e433b75f3bdf45d27ba415a11efa1d6ae4fe84872327e3f7"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/output-error-resolutions.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 2448,
+      "workspace_sha256": "3e26db201b5688423af9a905752740386f9c1547a86c2287a19c95dbb9b92d80"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/pre-author-log-check.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 5590,
+      "workspace_sha256": "b171dd6db9543a2a152ce8eeeb238eecbfba48520ac6b8e2ba5be3a80580d817"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/pre-runtime-artgate.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 2378,
+      "workspace_sha256": "16bfa68032b8485394b4139f8f308d1e83caa8e37180b23174bc17fe2dc4876d"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/pre-runtime-log-check.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 24126,
+      "workspace_sha256": "3b2a580725e91b8204ba38563f5c4256a40d8f47b6d0a42f84a64c1bb123d9fb"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/python-syntax-check-partial.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 4553,
+      "workspace_sha256": "47fb1e5694bede8149d5784a3ebd96eb96c0640609fc20e76e4133b1449faa81"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/python-syntax-check.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 5583,
+      "workspace_sha256": "a92f8961760dd46c3a7902d8464340e8c9e2e338d5f8a06ce04c4fc5d5751729"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/qa-final-live/camera-arc.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1473564,
+      "workspace_sha256": "6ea4bc6ff662fa3ba28457069478388aefcb99ccd062ab18bb06ec6813d493c4"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/qa-final-live/render-geometry.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 7743,
+      "workspace_sha256": "8479db43b802da4a2476bea6650c0aeace789693252f34f978e056d9cb833bbd"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/qa-final-live/result.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 179,
+      "workspace_sha256": "03b0072c50bb647a35e7f279bad705eb05eef7c65d91bcbecfd73958c9d3c6bb"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/qa-final-live/validation.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1949083,
+      "workspace_sha256": "90cbf74917852b29c00953e6d82dbae7cb899b34f7027b1370e492211f73bccf"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/qa-live/result.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3675,
+      "workspace_sha256": "827405645e1e0351321206612aa0e5cfba4419899bfa40426f309734bef1c3ed"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/qa-live/validation.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1870248,
+      "workspace_sha256": "ec2ee7ecf23b81e170ce4b2ebc83f7eb6845d74523178d4a155f90a50a7e72b6"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/qa-pure-preflight.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1857,
+      "workspace_sha256": "50268202c3d7667b7e1ce8820bee4ee858109af765e935648c57ffd852405c4b"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/retained-source-previews.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1923,
+      "workspace_sha256": "8ab665fc668fa21865fc880277014eb1ba9daf403ad1e09c442e359c617d2d0e"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/armed.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3505,
+      "workspace_sha256": "93771101dd27ac07c1d0ea8b9eab1982c5953940de0f0b73d3ad99ebbdd82b10"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-done-1.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 146,
+      "workspace_sha256": "03efd6a51426fa5254d8618fd18f89adf2fea5be83c01173ee8649e148a90c4b"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-done-2.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 146,
+      "workspace_sha256": "2ba9db7706dfa94c6830add7123b6ecf2c8dd86153653b3ac00e6169420c1560"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-done-3.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 146,
+      "workspace_sha256": "53572f4933b93dbacc8a81efcf28657f4acf6843aee52d4c3ef26e944171e3fa"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-done-4.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 146,
+      "workspace_sha256": "6803cd3a77c12da0e01ef79f69e80ef4fcf8b23d36b35880ef526cecaf23ec79"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-done-5.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 146,
+      "workspace_sha256": "61b89320b80aa47b21fa89970fd6d0fedc4b7ca671cf3e01d8738090a80075be"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-done-6.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 146,
+      "workspace_sha256": "c59722e3153f6379edb1c315abd1788dce24de891a222c93f380453765faef5a"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-pose-1.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 311,
+      "workspace_sha256": "3c2b5b4e7a20628238c187aaf3570f70f22c810d0bdb3decd9db0533d0330dc4"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-pose-2.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 312,
+      "workspace_sha256": "896d1b18daca183449b10ac2199ced2815ab1377fdcac7621e121151e380dffc"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-pose-3.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 311,
+      "workspace_sha256": "189dd99036d2284c6de87f90b53e031976763afaa5ba5d6f075842bf626900b6"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-pose-4.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 312,
+      "workspace_sha256": "37cddd5c4400cdec6af4251f55274065c77748d77abf7e78530aae08838499de"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-pose-5.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 313,
+      "workspace_sha256": "f13fb225f3c51a951c545528f49d23b6d590035efb02224ef306e4df9d9f4380"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-pose-6.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 310,
+      "workspace_sha256": "f527343ed5e92f357a5bb6efb90d5632ef64910cd108963e77479ed1950ceb32"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-request-1.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3641,
+      "workspace_sha256": "6f8aace52b85c735561cce8b97bd7809897e62e65bf380d7d8e1c371f6c23dd9"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-request-2.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3691,
+      "workspace_sha256": "8b55de2e8fe858146fcf2bf4fbf8c2dfb50a32eefe4f284cd130a5677416bf32"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-request-3.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3664,
+      "workspace_sha256": "70617b73b2e8e62b86fb2d9657d308361c87790366801e1c01b251f0be42fa40"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-request-4.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3601,
+      "workspace_sha256": "8bf09d5dd4caebbf15799ba99a4a78a2b35efa28716b76c73eb964b3999c37be"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-request-5.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3646,
+      "workspace_sha256": "badc97f2af8080c44078cc821f270d290cf5b8f2f53169c215bae8114e4dac55"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/camera-request-6.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3652,
+      "workspace_sha256": "d9f59b06c4c303ee7b8c5781b78bc4397d6358b5b7ef574aa249f741ef66f2f4"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/captures/01_Q_entrance_under_roof.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1336994,
+      "workspace_sha256": "259e772e8a6d075ce61b0dba7d1688a3345094bf1f8baa671355dd8994b86787"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/captures/02_Q_narrow_right_angle_turn.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1188954,
+      "workspace_sha256": "d956aed506a51d63116abea7705e7576369b85f4218d1ea0237fdf5ad3af7924"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/captures/03_Q_secret_dogleg_room.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1202294,
+      "workspace_sha256": "50eb3a4a34efc9e4cec28068d5e17dd4006adc1f2fd0099223d1c2066bab56c0"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/captures/04_Z_entrance_under_roof.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1349354,
+      "workspace_sha256": "7c16a36f7294dcf84311126371f7d331ed6a90ff110546435ecd0dda4ae21733"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/captures/05_Z_narrow_right_angle_turn.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1269868,
+      "workspace_sha256": "3a18f38806a28c43ef21c91461c31d499e15978ec3e014a26a8ba6d10135a6ec"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/captures/06_Z_secret_dogleg_room.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1264600,
+      "workspace_sha256": "b037207292c2087e409e888d0efb0ea1cad77486711e285e975c119236d8da53"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/progress.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1296,
+      "workspace_sha256": "2145e888a78d706e0f31c512071094636cb3e9a3ac759ce533c5cab0bdc4f98a"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/result.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 160276,
+      "workspace_sha256": "3bb8c27ca188a68fe194e38c90d6842fddb3bc2a79d3d0039910092edb925030"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/runtime-start.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1036,
+      "workspace_sha256": "321697a53ea82378c305e699d838e7f9829b991097e5fcba49f81ecfd7d976ce"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/samples.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3272670,
+      "workspace_sha256": "c63747b1f22fdc04417333c6e980390bca5e2023b050b1b92628a3854372e24d"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-first-two-artreview.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1867,
+      "workspace_sha256": "64a37ca6dd9ceb3d52d4ee9079ce7425fea7d13adf22c43950f0a1ee0d79840a"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-six-artreview.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 4344,
+      "workspace_sha256": "245f832bb0e5e0042b00de95b39fe0be582d9f9b3432b0a1720826d1585efaff"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/runtime-start-log-check.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 24142,
+      "workspace_sha256": "bdc8a85c61751556f39d5a3d3746f83c2834f12adfb003b7fb02af18a926715a"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/scope-final.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 11435,
+      "workspace_sha256": "fa3333aaceb9ff70ed399a394a4f863a034593def4e139a50a00d4caf508f8b8"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/scope-helper-preflight.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1053,
+      "workspace_sha256": "6d67ac36ba5513f0a7e93756044a5c21fd4a9275fb9742f0a3b8ff236662797b"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/source-gate.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 2781,
+      "workspace_sha256": "9825a679c92eca87ff903fd2e184dcbc25b41a9a418f1614c0761f9007ae0527"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/source-generation-review-v2.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 2977,
+      "workspace_sha256": "48e2bf46ca7eecf40932200dd08b61ffa983ba914404cf95089bab2e3f16d2ee"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/source-generation-review.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1897,
+      "workspace_sha256": "b4da5c0781a157319aec32cd9596a07059d8439c073f6dc6f8bbd5e88b1b21b7"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/source-mesh-v1-audit.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 2403,
+      "workspace_sha256": "e3e6eba2f167f121d663fbf063e44b87165ce2e043bd1d3b46cc4ecf14928712"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/source-mesh-v2-audit.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3037,
+      "workspace_sha256": "f887dd47bb1fd90ed68599b22bd98fb22603b88add9254d90999316e7214d72f"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/source-mesh-v2-floor-snap-audit.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 3070,
+      "workspace_sha256": "297f790dc2029a1b51d93b3c5a1d930f590130ffaae0abbed3ece65216903caf"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/source-previews/rejected-v1-Q_turn.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 46003,
+      "workspace_sha256": "e4400d240febd58bbc67b986c33148a357a326ea6d49fdddd88f662ba6fed489"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/source-previews/rejected-v1-Q_vault.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 43972,
+      "workspace_sha256": "04cb7412f4ac29e4c4662a6bf0884b71f3e461b6c4f2baba094822fa6cb45c94"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/source-previews/rejected-v1-Z_turn.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 42436,
+      "workspace_sha256": "2b40b4a0b40e086e83f730826b370c1def3607e3767a595262620b2229988550"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/source-previews/reviewed-v2-Q_turn.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 118175,
+      "workspace_sha256": "7ada6baa3677d93695a958abef56f8cd90e25bf51960e641db62a8d03696ff55"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/source-previews/reviewed-v2-Q_vault.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 137688,
+      "workspace_sha256": "cf705977fd893504b51085a995ac488340fcb80b908d91cf29c2221b42e152e5"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/source-previews/reviewed-v2-Z_turn.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 105349,
+      "workspace_sha256": "94ca1909251c125f246cdac976d19780443543a5e5759c3a2394161112ab71f1"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/validation-config.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 819,
+      "workspace_sha256": "d6eed04d51fe439b46c6092d06696634ecfa1ee8e330697347a044a186690d4f"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/viewport-api.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1385,
+      "workspace_sha256": "65c098d49db5d370a8452cc60bd0a0c5c60933d2cd194804da6e493eda215f25"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/visual/accepted-Q-entry.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 664505,
+      "workspace_sha256": "7258f8209e7e03bf6b0b58d82cf45f5cf67ff0b6498a4fc0753f75b2071a45ec"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/visual/after-Q-entry.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 1521951,
+      "workspace_sha256": "33fb4d0816bc748b99b4205e8203bb708d07ab72b162f7f6e3c683d41def4b38"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/visual/after-Q-vault.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 787443,
+      "workspace_sha256": "e1f0146c385a047bfa8d2b18e3db09d12492c0893d2bf9c8d656998f30332b6f"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/visual/before-Q-entry.png",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 908751,
+      "workspace_sha256": "a815a2ace64dfd707c77f7b9304063f0d9ee9592b0cd9056b0fb848e3cde5e5b"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/visual/editor-capture-stopped.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 69,
+      "workspace_sha256": "7bf4ba993412376dde6f260a9d4b85ecf959ed3bd10defb12ffa3337dedde80b"
+    },
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/whole-task-log-check.json",
+      "purpose_ko": "기준·실패·수정·실제 화면·카메라·cold·보존 검증 증거",
+      "bytes": 24126,
+      "workspace_sha256": "458a627fb5956ebae4a9e38a61184739a090f76a977851a574932e68ee1b9dfd"
+    },
+    {
+      "path": "Scripts/CheckOrganicCaveScope20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 28333,
+      "workspace_sha256": "4ac609554834a37f63b8825df5b84879495c3c9eaa506d7224d8b3175c2317af"
+    },
+    {
+      "path": "Scripts/CheckpointOrganicCaves20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 9598,
+      "workspace_sha256": "771930f64aa8a84251e79bd441251114e5d18f97e599e9d1317aa8655f4809f6"
+    },
+    {
+      "path": "Scripts/Editor/ArmOrganicCaveArt20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 416,
+      "workspace_sha256": "3951f455e6a0b387f8bcedd271d667d8b7904f76c2823533f92298c297de1046"
+    },
+    {
+      "path": "Scripts/Editor/ArmOrganicCaveCamera20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 987,
+      "workspace_sha256": "3521a3c8160f1dea1d1d1db777a84dd144fd131004d40ed35fb18c0956955fad"
+    },
+    {
+      "path": "Scripts/Editor/AuthorOrganicCaveScene20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 5377,
+      "workspace_sha256": "62f63a2d14ac37376ac7c08ea5b8f0f3c5be478c2ccc53914535c9e6ec955994"
+    },
+    {
+      "path": "Scripts/Editor/CaptureOrganicCaveArt20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 2538,
+      "workspace_sha256": "1e879ff3880401386987dd4c9fea7cfa3e80bea24e7d369b8dbbfdea97f39b45"
+    },
+    {
+      "path": "Scripts/Editor/DiagnoseOrganicMeshPhysics20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 1524,
+      "workspace_sha256": "2fc8a99f93301984f0513a3b8e7bb10013e4ed5b2fa5565c5862be3db35e1791"
+    },
+    {
+      "path": "Scripts/Editor/InspectFinalOrganicCaves20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 3273,
+      "workspace_sha256": "31b8c768e06df7d6c0a9ada84383ff0c922e559fc769792f374cd5a2dfa56d8f"
+    },
+    {
+      "path": "Scripts/Editor/InspectOrganicCaves20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 3913,
+      "workspace_sha256": "37f86f548388ec2f9092e29f68f19753e1bf73718a7036ed48455bb53cb8c2b1"
+    },
+    {
+      "path": "Scripts/Editor/InspectOrganicSceneDiff20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 858,
+      "workspace_sha256": "2475670fdd566dcf7d010f2859bd8dc1a144ce3dfdc80a1b1d9b220549a9ffcb"
+    },
+    {
+      "path": "Scripts/Editor/InspectPartialOrganicMesh20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 1002,
+      "workspace_sha256": "2e398c88472bde075386c4afbd1700e86de68ec0ee47ac123c580579c824bd23"
+    },
+    {
+      "path": "Scripts/Editor/OrganicCaves20261118Camera.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 8457,
+      "workspace_sha256": "2cc8c94a15dbad7330b0ba46ce64150d8c5eedd7b7068e98120f8e002d47d2d6"
+    },
+    {
+      "path": "Scripts/Editor/OrganicCaves20261118Cold.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 8259,
+      "workspace_sha256": "7acb50c0b282962f72094a80a72c078cce0a61d30115858331914bad7668a1b5"
+    },
+    {
+      "path": "Scripts/Editor/OrganicCaves20261118Materials.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 26660,
+      "workspace_sha256": "c07b375c71ca68fefdf07f7b1417fc1c290cdeb0d00d98f622c7402935715ac6"
+    },
+    {
+      "path": "Scripts/Editor/OrganicCaves20261118Mesh.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 17307,
+      "workspace_sha256": "63a2d4d789fe1d138d8616432e2948244af6ca16c929c77dbe1f99ae5a5946d8"
+    },
+    {
+      "path": "Scripts/Editor/OrganicCaves20261118QA.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 52082,
+      "workspace_sha256": "c04b6d0a91709283aa76af4e50942399563094ab1ff470258c8417761bca77d8"
+    },
+    {
+      "path": "Scripts/Editor/OrganicCaves20261118RenderQA.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 6828,
+      "workspace_sha256": "a9ed5339d04cb012e3e446f8896475fdf6dd66c7f055aa04157755363fa9773f"
+    },
+    {
+      "path": "Scripts/Editor/PreflightOrganicCaves20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 1216,
+      "workspace_sha256": "c9a20614cf0634e954c68bcd0deb3d2ff7beb3a3a22b3d26112da92d805ef164"
+    },
+    {
+      "path": "Scripts/Editor/PreflightOrganicMeshBuild20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 838,
+      "workspace_sha256": "783add088ffbb9478e6b8511f4de0525f52a90949770d1cc83bb25d63a1b98ad"
+    },
+    {
+      "path": "Scripts/Editor/PreflightOrganicNativeBuffers20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 1723,
+      "workspace_sha256": "7e67c7427297566fe391dbea5343d6b9aafb4456ffeeba042795fa15c29f8c8b"
+    },
+    {
+      "path": "Scripts/Editor/PreflightOrganicNativeRepair20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 1175,
+      "workspace_sha256": "11dc1132bf1ebf7a34bc2c03e21abd9b1088a6f92d918325c7b695c0631ae088"
+    },
+    {
+      "path": "Scripts/Editor/PreflightOrganicViewport20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 597,
+      "workspace_sha256": "dc5a90bba0a5fe3e935bff2a9741cde0641e1476de292aa178d56b2d5a6c085c"
+    },
+    {
+      "path": "Scripts/Editor/RepairOrganicCaveWinding20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 1436,
+      "workspace_sha256": "8c1e54f4d6389555d7b44d59ed9da60bd55083d833203256171255101137ad93"
+    },
+    {
+      "path": "Scripts/Editor/ResumeOrganicCaveMeshes20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 2164,
+      "workspace_sha256": "e7c5d6972a9a6b9f4346e55de5159ea264c17d33d344372963db4c170eef407b"
+    },
+    {
+      "path": "Scripts/Editor/RunOrganicCaveMaterials20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 1448,
+      "workspace_sha256": "e96138166125f1383322d5ad23c7dc37fe1c677f48c3b03272b5943b97b55c42"
+    },
+    {
+      "path": "Scripts/Editor/RunOrganicCaveMeshes20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 2062,
+      "workspace_sha256": "2606751c4f81f7d0e19b783a7601c061f4709c6b4ffba63aa33b019561ccf86e"
+    },
+    {
+      "path": "Scripts/Editor/RunOrganicCaveQA20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 1520,
+      "workspace_sha256": "4ff181b86bba36cc1e6c3f243c076875b3412066ab0a5b4b7dfb72614d64981f"
+    },
+    {
+      "path": "Scripts/Editor/RunOrganicCaveRenderQA20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 816,
+      "workspace_sha256": "1ed2c92942df33f0c6a6520800a506faa2fa233fce4c805cd9f6371147662a23"
+    },
+    {
+      "path": "Scripts/Editor/SaveOrganicCaves20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 2117,
+      "workspace_sha256": "c0b6d14fa84be6d2337544ed82d70b112830533a358b1ebb2e19ca744cc88ab8"
+    },
+    {
+      "path": "Scripts/Editor/StopOrganicArtCapture20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 1093,
+      "workspace_sha256": "caa5670eff7dd456e1eaeef005307d82434861494cb26b0064330e620fa3628f"
+    },
+    {
+      "path": "Scripts/OrganicCaveMesh20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 15159,
+      "workspace_sha256": "da99854354c290c7c808bcef49cf8ee2d81ab9035745d9d8a93ce8893ceb27df"
+    },
+    {
+      "path": "Scripts/OrganicCaveMeshSculpt20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 16414,
+      "workspace_sha256": "76c1fe018b095c27c5a9fd15e7edf7464f08a8f44b279aafb0648a44377f5824"
+    },
+    {
+      "path": "Scripts/PrepareOrganicCavePublication20261118.py",
+      "purpose_ko": "명시 호출형 저작·읽기 전용 검사·진단·재현 도구",
+      "bytes": 4310,
+      "workspace_sha256": "d3243bd19c3e5b3b59877aef9a0996c86ad72334cadfce9bc9d934b3dcb5bdf4"
+    },
+    {
+      "path": "Scripts/StartOrganicCaveCold20261118.ps1",
+      "purpose_ko": "소유한 숨김 Cmd 프로세스의 저장본 재로드·실제 종료 검증",
+      "bytes": 7874,
+      "workspace_sha256": "7381589455a956aa72b5fc99f3a1a8910b1e3480e95ec8557ab5236a370c9497"
+    }
+  ],
+  "source_art_CRLF_policy": "Preserve frozen OBJ/indexed JSON bytes; recognize Windows CR at EOL during whitespace checks.",
+  "non_recursive_followup_files": [
+    {
+      "path": "Feature/doc/evidence/cave-organic20261118/publication-verification.json",
+      "purpose_ko": "명시된 스테이징 범위·원본/검증 바이트와 실제 Git 저장 바이트 대조. 자체 해시는 순환을 피하기 위해 생략한다."
+    }
+  ]
+}

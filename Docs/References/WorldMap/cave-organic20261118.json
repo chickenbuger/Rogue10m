@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "documentId": "rogue10m-cave-organic-20261118",
+  "updatedKstDate": "2026-11-18",
+  "status": "validated_requested_organic_cave_refinement_complete_work_branch_checkpoint",
+  "featureComplete": true,
+  "wholeMapProductionComplete": false,
+  "candidateMap": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A",
+  "baselineCheckpoint": "3a33ee21",
+  "architect": "Feature/architect/2026-11-18_organic-cave-refinement.md",
+  "implementationResult": "Feature/doc/2026-11-18_organic-cave-refinement.md",
+  "predecessor": "Docs/References/WorldMap/caves20261118.json",
+  "sourceCatalogs": [
+    "Docs/References/WorldMap/world-layout-20261112.json",
+    "Docs/References/WorldMap/acquisition-catalog-20261112.json"
+  ],
+  "authorityKorean": "최신 지시에 따른 Q/Z 연속 암반 보충본이다. 원래 배치·획득·입력·성장 규칙과 중앙·마을 평지를 보존한다. 이전 동굴의 통행 합격을 새 형상의 전체 런타임 합격으로 사용하지 않는다.",
+  "geometry": {
+    "sourceSpec": "Feature/doc/evidence/cave-organic20261118/geometryspec-v2.json",
+    "sourceSpecSha256": "05ea056abbf5dd5c09b2365367237fb3753bac48786e6de6af68adcf928b3b7e",
+    "generator": "Scripts/OrganicCaveMeshSculpt20261118.py",
+    "engineCreation": "Indexed source -> GeometryScript DynamicMesh -> native StaticMesh. OBJ retained for source/interchange, not FbxFactory import.",
+    "V1VisuallyRejectedBeforeSceneAuthoring": true,
+    "nativeWindingAdapter": "Feature/doc/evidence/cave-organic20261118/native-adapter.json",
+    "nativeTriangleIndexMapping": [
+      0,
+      2,
+      1
+    ],
+    "artistSourcePositionsTrianglesNormalsUnchanged": true,
+    "visibleFloorZCm": 8609,
+    "existingFloorCollisionZCm": 8610,
+    "floorCollisionTransformInstancesPreserved": true,
+    "grassRoofTopZCm": 9602,
+    "newShellComponents": 2,
+    "newNoCollisionRampVisualComponents": 2,
+    "existingRampCollisionAndTransformsPreserved": true,
+    "existingActorCount": 1408,
+    "sites": [
+      {
+        "id": "Q",
+        "worldPivotCm": [
+          -11000.0,
+          62050.0,
+          8610.0
+        ],
+        "sourceObj": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Q_20261118.obj",
+        "sourceObjSha256": "7b50223a0c59bdb2ce583863459d49e95a38863cb6a340ca02c63e363f3c3e3b",
+        "sourceIndexedMesh": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Q_20261118.mesh.json",
+        "sourceIndexedMeshSha256": "101ff97a5d3cf1659f2d1e4aa1c4f7169ef3e3625efcfcba0c3bf1870b176488",
+        "vertices": 62990,
+        "triangles": 125980,
+        "staticMesh": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Q.SM_CaveOrganic_Q",
+        "materialSlots": [
+          "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock.MI_OrganicRock",
+          "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveStoneFloor.MI_CaveStoneFloor"
+        ],
+        "mainRouteMetres": 110,
+        "returnRouteMetres": 80,
+        "routesAndSecretDoglegPartitionsPreserved": true
+      },
+      {
+        "id": "Z",
+        "worldPivotCm": [
+          52000.0,
+          47650.0,
+          8610.0
+        ],
+        "sourceObj": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Z_20261118.obj",
+        "sourceObjSha256": "07970b578f2f2f0f98b934a7ee9259ff0e177eacdd643bbd2e8e88320647c45e",
+        "sourceIndexedMesh": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Z_20261118.mesh.json",
+        "sourceIndexedMeshSha256": "60acce5f7dc6f53720602c3abb66dd3df84090f832f3ca74fbba16c024e7baa3",
+        "vertices": 62988,
+        "triangles": 125976,
+        "staticMesh": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Z.SM_CaveOrganic_Z",
+        "materialSlots": [
+          "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock.MI_OrganicRock",
+          "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveStoneFloor.MI_CaveStoneFloor"
+        ],
+        "mainRouteMetres": 115,
+        "returnRouteMetres": 65,
+        "routesAndSecretDoglegPartitionsPreserved": true
+      }
+    ]
+  },
+  "materials": {
+    "newAssets": [
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock"
+    ],
+    "newParentNodes": 46,
+    "originalSourceNodesPreserved": 43,
+    "worldTriplanarTileCm": 240,
+    "neutralTangentNormal": [
+      0,
+      0,
+      1
+    ],
+    "organicTintLinearRgba": [
+      0.3,
+      0.32,
+      0.28,
+      1.0
+    ],
+    "roughness": 0.92,
+    "stoneTexture": "/Game/Stylized_Village/Assets/Terrain/Rock/T_GroundRock_01_basecolor.T_GroundRock_01_basecolor",
+    "existing47MaterialStatesAndFilesPreserved": true,
+    "oldFloorMaterial": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveStoneFloor.MI_CaveStoneFloor",
+    "originalCaveMaterialsPreserved": 7,
+    "lightCountPreserved": 12,
+    "globalEV100Preserved": 11.5,
+    "localEV100Preserved": 3
+  },
+  "preservation": {
+    "LandscapeHeightSamplesBitExact": 179488,
+    "LandscapeRenderAndCollisionComponents": 45,
+    "originalLayerBlake3": "7b30bb0271250f6f4b2d4164c72940c83a3e49b13078ef91e9316992816a0955",
+    "compositeBlake3": "67d6682a3bad4b9b480d0b4e264903e9665846b562d7b72fa5cd8ff10e0252fc",
+    "compositeUint16LeSha256": "a2c8846963f7d08f7df561b6c800f2f389255e6f52c14a1453a6e5e3f7674726",
+    "original1404ActorsAndInstancesPreserved": true,
+    "central300mAnd29RoadsPreserved": true,
+    "villageFlats": [
+      "H",
+      "M",
+      "T"
+    ],
+    "noNewAccessLocks": true,
+    "Q_K08_Z_G07AcquisitionRulesUnchanged": true,
+    "weaponSpecificChordChargeAndMageCtrlFirstQDeadlineQQQAutofireUnchanged": true,
+    "bookPickupLearningEquipmentNotImplementedByGeometry": true,
+    "rosterRequirementPreserved": {
+      "ordinaryMonsterMinimum": 15,
+      "midBossesSeparate": 4,
+      "finalBossesSeparate": 1,
+      "newMonsterRuntimeCertificationClaimed": false
+    }
+  },
+  "verification": {
+    "static": "Feature/doc/evidence/cave-organic20261118/qa-final-live/validation.json",
+    "staticPassed": true,
+    "staticChecks": 19,
+    "capsuleQueriesPassed": 2016,
+    "renderData": "Feature/doc/evidence/cave-organic20261118/qa-final-live/render-geometry.json",
+    "renderDataOrientedTriangleMaterialCountersExact": true,
+    "singlePivotCameraArc": "Feature/doc/evidence/cave-organic20261118/qa-final-live/camera-arc.json",
+    "singlePivotAngles": 1440,
+    "singlePivotSweeps": 2880,
+    "singlePivotMinCameraDistanceCm": 200.18568420410156,
+    "save": "Feature/doc/evidence/cave-organic20261118/author-live/final-save-result.json",
+    "savedPackages": 8,
+    "cleanAfterSave": true,
+    "cold": "Feature/doc/evidence/cave-organic20261118/cold-direct/result.json",
+    "coldPassed": true,
+    "coldPid": 30776,
+    "coldChecks": 20,
+    "coldCapsuleQueriesPassed": 2016,
+    "coldProcessExit": "Feature/doc/evidence/cave-organic20261118/cold-host-direct/process-exit.json",
+    "coldExitCode": 0,
+    "coldLogCheck": "Feature/doc/evidence/cave-organic20261118/cold-host-direct/log-check.json",
+    "coldLogErrors": 0,
+    "runtime": {
+      "status": "passed",
+      "complete": true,
+      "requiredWaypoints": 276,
+      "requiredBidirectionalChains": 12,
+      "requiredPCMImages": 6,
+      "imagesReviewedAtCatalogWrite": 6,
+      "partialImageReview": "Feature/doc/evidence/cave-organic20261118/runtime-first-two-artreview.json",
+      "fullRuntimeCameraCertified": true,
+      "visualReviewAccepted": 6,
+      "sixImageArtReview": "Feature/doc/evidence/cave-organic20261118/runtime-six-artreview.json",
+      "result": "Feature/doc/evidence/cave-organic20261118/runtime-camera-verified/result.json",
+      "resultSha256": "3bb8c27ca188a68fe194e38c90d6842fddb3bc2a79d3d0039910092edb925030",
+      "waypointsArrived": 276,
+      "bidirectionalChainsCompleted": 12,
+      "PCMImagesReviewed": 6,
+      "elapsedSimSeconds": 883.368962470442,
+      "elapsedWallSeconds": 894.6090000000004,
+      "observations": 2689,
+      "groundedObservations": 2689,
+      "airborneObservations": 0,
+      "minimumCameraDistanceCm": 231.90367139814293,
+      "maximumCameraPullInCm": 99.34396962990144,
+      "teleports": 0,
+      "speedOverrides": 0,
+      "runTimerOverrides": 0,
+      "cameraComponentChanges": 0,
+      "cleanupErrors": [],
+      "physicalInput": false
+    },
+    "fileScope": "Feature/doc/evidence/cave-organic20261118/scope-final.json",
+    "physicalInputFullCombatNavMeshCookShippingCertified": false,
+    "fileScopePassed": true,
+    "fileScopeChecks": 24,
+    "finalEditorState": "Feature/doc/evidence/cave-organic20261118/final-editor-state.json",
+    "editorPid": 49456,
+    "PIEEnded": true,
+    "dirtyAfterPIE": [],
+    "final1408ActorsOriginal1404And47Materials45TerrainPreserved": true,
+    "sourcePreviewRetentionMapping": "Feature/doc/evidence/cave-organic20261118/retained-source-previews.json",
+    "sixImageVisualScopeAccepted": true,
+    "logHistory": {
+      "wholeTask": "Feature/doc/evidence/cave-organic20261118/whole-task-log-check.json",
+      "preexistingErrorEntries": 13,
+      "newTaskErrorEntries": 45,
+      "totalEditorErrorEntries": 58,
+      "wholeTaskErrorZeroClaimed": false,
+      "runtimeStartBoundary": "2026-11-17T20:13:40+00:00",
+      "runtimeStartBoundaryCheck": "Feature/doc/evidence/cave-organic20261118/runtime-start-log-check.json",
+      "newRuntimeStartErrors": 0,
+      "finalRuntimeBoundaryCheck": "Feature/doc/evidence/cave-organic20261118/final-runtime-log-check.json",
+      "newFinalRuntimeErrors": 0
+    }
+  },
+  "importantFailures": [
+    {
+      "kind": "V1_source_visual_reject",
+      "retained": "Feature/doc/evidence/cave-organic20261118/source-generation-review-v2.json"
+    },
+    {
+      "kind": "V2_floor_drift",
+      "retained": "Feature/doc/evidence/cave-organic20261118/source-mesh-v2-audit.json",
+      "corrected": "Feature/doc/evidence/cave-organic20261118/source-mesh-v2-floor-snap-audit.json"
+    },
+    {
+      "kind": "float32_lexical_comparator_false_mismatch",
+      "retained": "Feature/doc/evidence/cave-organic20261118/Q-native-comparator-diagnosis.json"
+    },
+    {
+      "kind": "wrong_native_winding132_wall_ceiling_misses",
+      "retained": "Feature/doc/evidence/cave-organic20261118/qa-live/validation.json",
+      "corrected": "Feature/doc/evidence/cave-organic20261118/author-live/winding-repair.json"
+    },
+    {
+      "kind": "first_cold_exit0_without_result_not_accepted",
+      "retained": "Feature/doc/evidence/cave-organic20261118/cold-host/process-exit.json",
+      "new_accepted": "Feature/doc/evidence/cave-organic20261118/cold-host-direct/acceptance.json"
+    },
+    {
+      "kind": "stale_pre_winding_editor_capture",
+      "retained": "Feature/doc/evidence/cave-organic20261118/visual/after-Q-entry.png",
+      "newEditorEntry": "Feature/doc/evidence/cave-organic20261118/visual/accepted-Q-entry.png"
+    }
+  ],
+  "assetReuse": {
+    "existingProjectResourcesReused": true,
+    "newFabPurchaseOrImport": false,
+    "currentFabAccountOwnershipReverified": false,
+    "ValheimAssetsCopiedOrImported": false,
+    "artReferences": "Feature/doc/evidence/cave-organic20261118/art-direction-reference.json"
+  },
+  "publication": {
+    "status": "validated_work_branch_checkpoint",
+    "developTestMainPromoted": false,
+    "promotionHoldReason": "Whole map production remains in progress; no develop/test/main promotion.",
+    "proof": "The Git commit and remote work-branch head identify publication; no recursive commit ID is embedded."
+  },
+  "mapProductionComplete": false,
+  "featureScopeKorean": "Q/Z 연속 암벽·천장 형상 보완, 기존 동선·중앙/마을 평지 보존, 실제 기본 카메라·저장·cold 검증. 전체 맵 제작·전투·Shipping 인수는 별도다."
+}

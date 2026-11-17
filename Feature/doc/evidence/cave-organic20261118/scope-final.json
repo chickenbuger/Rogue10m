@@ -1,0 +1,230 @@
+{
+  "schema": "Rogue10m.OrganicCaveFileScope.20261118.v1",
+  "passed": true,
+  "utc": "2026-11-17T20:18:34.784921+00:00",
+  "checks": {
+    "immutable1497_physical_checkpoint_3969_protected458_saves_and_baseline_observations_pinned": true,
+    "new_cold_saved_clean_all20_required_semantic_checks": true,
+    "all2016_original_capsule_queries_with_geometry_specific_acceptance_completed": true,
+    "owned_cold_same_PID_semantic_pass_and_observed_exit0": true,
+    "cold_launch_owned_unattended_english_startup_no_autosave_no_MCP": true,
+    "cold_restores_exact_ko_koKR_without_saving_settings": true,
+    "cold_executed_current_new_scripts_and_exact_config": true,
+    "cold_observed17_native_public_terrain_actors_and45_render_collision_unchanged": true,
+    "four_existing_cave_packages_independently_contain_the_same_native_Actor_paths": true,
+    "four_new_packages_are_only_two_Materials_and_two_StaticMeshes": true,
+    "bounded_save_covers_exact_four_existing_actors_four_new_assets_no_foreign_dirty": true,
+    "candidate_inventory_exact1482_no_additions_or_removals": true,
+    "exactly_four_existing_cave_EA_files_changed_no_other_actor_or_Landscape_changes": true,
+    "map_and_all73_external_objects_byte_preserved": true,
+    "all15_existing_owned_assets_byte_preserved": true,
+    "owned_namespace_exact_old15_plus_two_new_Materials_two_new_StaticMeshes": true,
+    "all3969_protected_Source_Config_original_maps_assets_byte_preserved_no_exceptions": true,
+    "protected_inventory_adds_exactly_four_declared_owned_assets": true,
+    "all47_preexisting_materials51_distinct_files_byte_preserved": true,
+    "both_reused_vendor_boulder_meshes_byte_preserved": true,
+    "all1497_physical_backup_files_exact_inventory_and_original_hashes": true,
+    "all458_non_selected_saves_byte_preserved": true,
+    "non_selected_save_inventory_exact458_only_named_QA_exclusions": true,
+    "owned_cold_loaded_current_unchanged_project_DLL": true
+  },
+  "violations": [],
+  "asset_writes": false,
+  "unreal_imports": false,
+  "editor_operations": false,
+  "process_state_changes": false,
+  "git_operations": false,
+  "baseline_manifest": {
+    "path": "Feature/doc/evidence/cave-organic20261118/baseline-files.json",
+    "size": 1639480,
+    "sha256": "738b20cd1ad806d56b881c6a61cec88f0c63f8a0f656544d695f73a5ebcf8bbf"
+  },
+  "evidence": {
+    "config": {
+      "path": "Feature/doc/evidence/cave-organic20261118/validation-config.json",
+      "size": 819,
+      "sha256": "d6eed04d51fe439b46c6092d06696634ecfa1ee8e330697347a044a186690d4f"
+    },
+    "geometry_spec": {
+      "path": "Feature/doc/evidence/cave-organic20261118/geometryspec-v2.json",
+      "size": 13946,
+      "sha256": "05ea056abbf5dd5c09b2365367237fb3753bac48786e6de6af68adcf928b3b7e"
+    },
+    "cold_result": {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-direct/result.json",
+      "size": 483,
+      "sha256": "17d0a1e093b8574b2983ce08ad14e316171c2c6376c6a2c2b9183be5e5b3903f"
+    },
+    "cold_validation": {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-direct/validation.json",
+      "size": 2016999,
+      "sha256": "355b4a7a5c65c2dd9dc4c2f65f11db60bfee2f0055bb538f7fc9a37ccdac6db7"
+    },
+    "cold_startup": {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-direct/startup.json",
+      "size": 1243,
+      "sha256": "ded07b99fc9fe439ed37153de98797c069f805b8228f657cab62045f1b4c674f"
+    },
+    "cold_culture": {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-direct/culture-restoration.json",
+      "size": 691,
+      "sha256": "9f13d7bd9a37a0de537dcd2679df2ab7374b798ac5c68551fa1af6500d95ae7f"
+    },
+    "cold_terrain": {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-direct/terrain-actor-packages.json",
+      "size": 10438,
+      "sha256": "433f468d681e110791e81bb9df3786972fda9c7d8bf67de699ae613a53e8ce00"
+    },
+    "cold_package_inventory": {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-direct/package-inventory.json",
+      "size": 1468616,
+      "sha256": "98bc64ee6e0a9d76a7b2cf14d2a849aad7f152d5cb371b7ccd632502d22205c7"
+    },
+    "cold_exit": {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-host-direct/process-exit.json",
+      "size": 238,
+      "sha256": "af9594c41e17ff0f78f3d1a2edfaed9ff47ac705193adbf281dd12a5b0e40ab5"
+    },
+    "cold_launch": {
+      "path": "Feature/doc/evidence/cave-organic20261118/cold-host-direct/launch.json",
+      "size": 1739,
+      "sha256": "cedf2426728ce84ac6edc2b068678287f7ef09839d4e18bb82bd9d0ae336301e"
+    },
+    "bounded_save": {
+      "path": "Feature/doc/evidence/cave-organic20261118/author-live/final-save-result.json",
+      "size": 2372,
+      "sha256": "c7b17d6774c0c71db845bebd336b9ab76e785ad052c6fce53b6d76a8d9c21478"
+    }
+  },
+  "candidate": {
+    "before_count": 1482,
+    "after_count": 1482,
+    "changed": [
+      {
+        "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/VQ/PYZIJL655JALHJM6PS58A8.uasset",
+        "before": {
+          "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/VQ/PYZIJL655JALHJM6PS58A8.uasset",
+          "size": 79121,
+          "sha256": "A64859673BA028B38877F6EC1F69AF6CC3B2FC2F95D5A52654C8567FCEA76F02",
+          "mtime_ns": 1794936916171730400
+        },
+        "after": {
+          "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/VQ/PYZIJL655JALHJM6PS58A8.uasset",
+          "size": 81574,
+          "sha256": "a0b7f9075e34d0f6462c2641c2fb295c748c4b20e22536b9773221ca87dc161e"
+        }
+      },
+      {
+        "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/BY/2CW0JPTDIEMKKD1T5LATX6.uasset",
+        "before": {
+          "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/BY/2CW0JPTDIEMKKD1T5LATX6.uasset",
+          "size": 29031,
+          "sha256": "D5C02E2B90F734FE6167A865B9245C14FDBFCEB20F5B08D4E828FB947F99CDE4",
+          "mtime_ns": 1794935394174744000
+        },
+        "after": {
+          "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/BY/2CW0JPTDIEMKKD1T5LATX6.uasset",
+          "size": 29332,
+          "sha256": "adc34b75abcb57671706828fbc68f571790d881b0a55b1e03c582e909b42d368"
+        }
+      },
+      {
+        "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/0E/NL2M3149WONPRWLKFKVP6Y.uasset",
+        "before": {
+          "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/0E/NL2M3149WONPRWLKFKVP6Y.uasset",
+          "size": 78353,
+          "sha256": "091E3681FE732ECAA0C47D2959FF499E9D414C4D7A2A35F52A4828EC1BD425D5",
+          "mtime_ns": 1794938103143779800
+        },
+        "after": {
+          "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/0E/NL2M3149WONPRWLKFKVP6Y.uasset",
+          "size": 80806,
+          "sha256": "ace2fe0db6457b82d7b1ab3939b707cd2cd3213fa0da89deb982617fe3687f93"
+        }
+      },
+      {
+        "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/9/EE/NR3SMNORZ57AQ1FV26VAFO.uasset",
+        "before": {
+          "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/9/EE/NR3SMNORZ57AQ1FV26VAFO.uasset",
+          "size": 28519,
+          "sha256": "03BBFEF0CDA46D2388AF6EEC33A943B222F0FF273B895E09427B7A0B3B303DB2",
+          "mtime_ns": 1794935394398347800
+        },
+        "after": {
+          "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/9/EE/NR3SMNORZ57AQ1FV26VAFO.uasset",
+          "size": 28820,
+          "sha256": "8da989b2abd72643d595551817d77ed177d1f49d4842703912e17cecd2897d91"
+        }
+      }
+    ],
+    "added": [],
+    "removed": [],
+    "allowed_actor_packages": [
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/VQ/PYZIJL655JALHJM6PS58A8",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/BY/2CW0JPTDIEMKKD1T5LATX6",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/0E/NL2M3149WONPRWLKFKVP6Y",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/9/EE/NR3SMNORZ57AQ1FV26VAFO"
+    ]
+  },
+  "protected": {
+    "baseline_count": 3969,
+    "current_count": 3973,
+    "changed": [],
+    "missing": [],
+    "new_assets": [
+      {
+        "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock.uasset",
+        "size": 11607,
+        "sha256": "aa7be3b3c45238e030139cc33f3bd87eb0772c74d0454bcc46c075dccd00f898"
+      },
+      {
+        "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock.uasset",
+        "size": 32991,
+        "sha256": "1fa13c80da486e9bceeecba1586b69a1eee4508ba62b4d0e0cbfbebd2c1beec3"
+      },
+      {
+        "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Q.uasset",
+        "size": 3379617,
+        "sha256": "b000a3cd4a7a3ccd2c0cf769b8128d937019407bde0b35da57af2f0c26ae8968"
+      },
+      {
+        "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Z.uasset",
+        "size": 3368441,
+        "sha256": "433b8876aad3d0d59fd926ca04f6d1d9f471911e00b10192d5364159963a47c4"
+      }
+    ]
+  },
+  "source_artwork": [
+    {
+      "path": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Q_20261118.mesh.json",
+      "size": 4300418,
+      "sha256": "101ff97a5d3cf1659f2d1e4aa1c4f7169ef3e3625efcfcba0c3bf1870b176488"
+    },
+    {
+      "path": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Q_20261118.obj",
+      "size": 9661028,
+      "sha256": "7b50223a0c59bdb2ce583863459d49e95a38863cb6a340ca02c63e363f3c3e3b"
+    },
+    {
+      "path": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Z_20261118.mesh.json",
+      "size": 4320687,
+      "sha256": "60acce5f7dc6f53720602c3abb66dd3df84090f832f3ca74fbba16c024e7baa3"
+    },
+    {
+      "path": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Z_20261118.obj",
+      "size": 9656313,
+      "sha256": "07970b578f2f2f0f98b934a7ee9259ff0e177eacdd643bbd2e8e88320647c45e"
+    }
+  ],
+  "non_selected_saves": {
+    "count": 458,
+    "changed": [],
+    "missing": []
+  },
+  "check_count": 24,
+  "scope": "Exact1482 candidate files; four existing cave EA changes only; old15+new4 owned assets;3969 protected inputs;1497 backups;458 non-selected saves.",
+  "limitations": [
+    "No atomic multi-file snapshot or whole-project/all-vendor/generated-cache audit.",
+    "Fresh cold scene/collision and file hashes do not certify rendered camera traversal; the276-point normal-game camera walk and six visually reviewed captures remain separate requirements."
+  ]
+}

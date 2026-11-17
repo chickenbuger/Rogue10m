@@ -1,0 +1,81 @@
+{
+  "schema": "Rogue10m.OrganicCaveIndependentImplementationReview.20261118.v1",
+  "utc": "2026-11-17T20:23:43.855584+00:00",
+  "passed": true,
+  "checks": {
+    "save_wrapper_no_longer_overwrites_native_report_fields": true,
+    "retained_native_successful_exact8_save_report": true,
+    "existing_save_receipt_bytes_unchanged": true,
+    "scope_exactly24_conditions_all_passed": true,
+    "cold_semantics20_checks2016_queries_same_PID_exit0": true,
+    "current_QA_and_cold_pins_unchanged_since_cold": true
+  },
+  "review_scope": [
+    "new scene overlay",
+    "native mesh creation and explicit winding repair",
+    "camera movement and geometry observer",
+    "bounded save wrapper",
+    "cold validation and filesystem scope receipt"
+  ],
+  "actionable_findings_remaining": [],
+  "resolved_finding": {
+    "file": "Scripts/Editor/SaveOrganicCaves20261118.py",
+    "issue": "The wrapper unconditionally replaced native save_called/native_save_returned facts withtrue.",
+    "resolution": "Removed factual-field overrides; native report retained, exact pre-save identities asserted.",
+    "current_wrapper_sha256": "c0b6d14fa84be6d2337544ed82d70b112830533a358b1ebb2e19ca744cc88ab8",
+    "existing_receipt_preserved": true,
+    "save_reexecuted": false
+  },
+  "filesystem_scope": {
+    "path": "Feature/doc/evidence/cave-organic20261118/scope-final.json",
+    "sha256": "fa3333aaceb9ff70ed399a394a4f863a034593def4e139a50a00d4caf508f8b8",
+    "reported_condition_count": 24,
+    "observed_condition_count": 24,
+    "conditions": {
+      "immutable1497_physical_checkpoint_3969_protected458_saves_and_baseline_observations_pinned": true,
+      "new_cold_saved_clean_all20_required_semantic_checks": true,
+      "all2016_original_capsule_queries_with_geometry_specific_acceptance_completed": true,
+      "owned_cold_same_PID_semantic_pass_and_observed_exit0": true,
+      "cold_launch_owned_unattended_english_startup_no_autosave_no_MCP": true,
+      "cold_restores_exact_ko_koKR_without_saving_settings": true,
+      "cold_executed_current_new_scripts_and_exact_config": true,
+      "cold_observed17_native_public_terrain_actors_and45_render_collision_unchanged": true,
+      "four_existing_cave_packages_independently_contain_the_same_native_Actor_paths": true,
+      "four_new_packages_are_only_two_Materials_and_two_StaticMeshes": true,
+      "bounded_save_covers_exact_four_existing_actors_four_new_assets_no_foreign_dirty": true,
+      "candidate_inventory_exact1482_no_additions_or_removals": true,
+      "exactly_four_existing_cave_EA_files_changed_no_other_actor_or_Landscape_changes": true,
+      "map_and_all73_external_objects_byte_preserved": true,
+      "all15_existing_owned_assets_byte_preserved": true,
+      "owned_namespace_exact_old15_plus_two_new_Materials_two_new_StaticMeshes": true,
+      "all3969_protected_Source_Config_original_maps_assets_byte_preserved_no_exceptions": true,
+      "protected_inventory_adds_exactly_four_declared_owned_assets": true,
+      "all47_preexisting_materials51_distinct_files_byte_preserved": true,
+      "both_reused_vendor_boulder_meshes_byte_preserved": true,
+      "all1497_physical_backup_files_exact_inventory_and_original_hashes": true,
+      "all458_non_selected_saves_byte_preserved": true,
+      "non_selected_save_inventory_exact458_only_named_QA_exclusions": true,
+      "owned_cold_loaded_current_unchanged_project_DLL": true
+    },
+    "inspection_method": "Reviewed the completed authoritative scope report and its linked semantic/save receipts. No duplicate filesystem hash job launched."
+  },
+  "cold_source_pins": {
+    "Scripts/Editor/OrganicCaves20261118QA.py": {
+      "recorded_sha256": "c04b6d0a91709283aa76af4e50942399563094ab1ff470258c8417761bca77d8",
+      "current_sha256": "c04b6d0a91709283aa76af4e50942399563094ab1ff470258c8417761bca77d8"
+    },
+    "Scripts/Editor/OrganicCaves20261118Cold.py": {
+      "recorded_sha256": "7acb50c0b282962f72094a80a72c078cce0a61d30115858331914bad7668a1b5",
+      "current_sha256": "7acb50c0b282962f72094a80a72c078cce0a61d30115858331914bad7668a1b5"
+    }
+  },
+  "editor_operations": false,
+  "asset_mutations": false,
+  "git_operations": false,
+  "process_launches": false,
+  "runtime_camera_acceptance_complete": false,
+  "limitations": [
+    "Current normal-game camera traversal and all six visual ACKs are still owned by root; this receipt does not certify unfinished runtime acceptance.",
+    "Source-only Save wrapper correction does not require rerunning the already verified native save. Root will include its final source parsing check."
+  ]
+}

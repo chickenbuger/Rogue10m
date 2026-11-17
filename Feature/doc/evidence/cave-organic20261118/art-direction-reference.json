@@ -1,0 +1,70 @@
+{
+  "schema": "Rogue10m.OrganicCaveArtDirectionReference.20261118.v1",
+  "status": "architect_and_material_recipe_only_actual_organic_render_pending",
+  "baseline_checkpoint": "3a33ee21",
+  "local_date": "2026-11-18",
+  "timezone": "Asia/Seoul",
+  "before_screenshots": [
+    {
+      "path": "Feature/doc/evidence/caves20261118/runtime-camera-verified/captures/02_Q_narrow_right_angle_turn.png",
+      "sha256": "9e3dadb0dc6626f04f7f9f0b13eb62362ecf26772e2db7ac0998355271cbbadf",
+      "directly_viewed": true,
+      "purpose": "Before visual baseline; previous traversal accepted, natural art direction now requires refinement."
+    },
+    {
+      "path": "Feature/doc/evidence/caves20261118/runtime-camera-verified/captures/05_Z_narrow_right_angle_turn.png",
+      "sha256": "6f4371c2da566c6a25de36a15420bcc95a7fedbd7329732e69beea97c7a81e52",
+      "directly_viewed": true,
+      "purpose": "Before visual baseline; previous traversal accepted, natural art direction now requires refinement."
+    }
+  ],
+  "primary_sources": [
+    {
+      "title": "Valheim official FAQ",
+      "url": "https://www.valheimgame.com/faq/",
+      "observed": "FAQ describes stylized low-resolution textures and sparse polygons combined with modern materials, lighting and post effects."
+    },
+    {
+      "title": "Valheim official Press",
+      "url": "https://www.valheimgame.com/press/",
+      "used_for": "Source provenance for the two directly inspected Frost Caves screenshots."
+    }
+  ],
+  "directly_viewed_official_images": [
+    {
+      "url": "https://img2.storyblok.com/fit-in/600x400/f/157036/1612x907/fb77538d7c/frostcave1.png",
+      "observed": "Irregular rough rock ceiling arch over constructed supports, localized warm light and receding shadows."
+    },
+    {
+      "url": "https://img2.storyblok.com/fit-in/600x400/f/157036/2560x1440/c9c74fadd3/frostcave6.png",
+      "observed": "Tall continuous rock cavern, uneven rock ledges, dark cool surrounding mass."
+    }
+  ],
+  "project_adaptations_are_design_inferences": true,
+  "adaptations": [
+    "Continuous connected wall/ceiling shell replaces dominant rectangular planes and separate repeated oval boulders.",
+    "Neutral dark gray-brown matte rock uses existing project GroundRock color through three-axis world projection.",
+    "Preserve Q warm/Z cool identity and test with unchanged lights first; local adjustment only if actual render requires it."
+  ],
+  "material_recipe": "Feature/doc/evidence/cave-organic20261118/materialspec.json",
+  "material_risks": [
+    "Old ColorTint affects original top branch; the old side triplanar branch uses hardcoded .75/.72/.65, so MI ColorTint alone does not darken all rock.",
+    "Old XY Normal is unsuitable as an unverified normal projection for the new curved shell; new parent uses neutral tangent normal.",
+    "Large calm wall planes remain a visual risk even when topology and routes pass."
+  ],
+  "actual_source_only_preview_review": {
+    "paths": [
+      "tmp/cave-organic-preview20261118/Q_turn.png",
+      "tmp/cave-organic-preview20261118/Q_vault.png",
+      "tmp/cave-organic-preview20261118/Z_turn.png"
+    ],
+    "unreal_evidence": false,
+    "initial_observation": "Continuous arch silhouette improves continuity, but initial room wall remains broadly rectangular and calm; regular smooth tunnel bands need stronger large-scale rock shape.",
+    "art_accepted": false
+  },
+  "new_Fab_purchase_or_import": false,
+  "Valheim_assets_copied_or_imported": false,
+  "current_Fab_account_ownership_reverified": false,
+  "old_references_modified": false,
+  "artifact_retention": "Reference links and hashes only; no duplicate before pictures or whole raw report batches copied."
+}
