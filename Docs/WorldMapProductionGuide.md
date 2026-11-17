@@ -1,6 +1,6 @@
 # 월드맵 실제 제작 기준
 
-작성: 2026-11-12, 한국 시간. 상태: **제작 참조 통합 완료 / 실제 맵·콘텐츠 적용 및 플레이 검증 전**.
+작성: 2026-11-12, 한국 시간. 당시 상태는 제작 참조 통합 완료·실제 적용 전이었다. 2026-11-16에는 독립 Crop 후보의 Landscape 정리·저장을 검증했고, 11/17에는 중앙3회 보행·29개 도로 표면 보정·독립 cold 보존47항목을 통과했다. 현재 구현 범위와 남은 인수 항목은 [11/17 결과서](../Feature/doc/2026-11-17_landscape-traversal-resume.md), 앞선 실패·복구 이력은 [11/16 결과서](../Feature/doc/2026-11-16_landscape-production-result.md)를 따른다.
 
 사용자 요청에 따라 이 채팅에서 정리한 시작 마을, 큰 마을, 전문 거점, 사냥터, NPC 대화, 직업별 무기·비급 획득 경로와 생성 지도 이미지를 실제 제작용 기준으로 묶는다. 이 문서는 기존 맵이 이미 아래 모습으로 완성됐다는 보고가 아니다.
 
@@ -233,3 +233,13 @@
 - [Fab 재사용](FabAssetReuseGuide.md), [맵 편집 도구](WorldMapMakerGuide.md), [애니메이션 기록](AnimationRecordingGuide.md), [하네스](LazyCodexHarness.md).
 
 이 목록 일부는 공유 작업 사본에만 있는 미커밋 선행 자료다. 실제 제작자는 현재 checkout에서 파일과 적용 상태를 확인한다. 핵심 제작 규칙·좌표·획득처·이미지는 이 참조 묶음 안에 자체 보존해 과거 미커밋 자료를 유일한 근거로 삼지 않는다.
+
+## 2026-11-13 Source 제작 체크포인트
+
+정상 Source StartHub에 기존세포털을유지한 Compact 후보용추가입구1개와표시Actor5개를저장하고새프로세스정밀재로드를확인했다. 실제일반여행/사용자입력/새Windows반영은미검증이다. 기존D는이번추가전버전으로보존하며맵1800m의축소완료를뜻하지않는다. 자세한범위와원본보존증거는 Feature/doc/2026-11-13_hub-compact-entry.md를참조한다. 배치/획득처JSON의설계규칙은변경하지않았다.
+
+## 2026-11-16 Landscape 기획과 다음 제작 단계
+
+사용자의 기획 선공개→Landscape 제작 지시에 따라 [1차 기획서](../Feature/architect/2026-11-16_landscape-production-plan.md)와 [지형 좌표 보충 JSON](References/WorldMap/landscape-production-20261116.json)을 추가했다. 기존 좌표와 중앙300m·3큰마을·5초소·29도로를 유지하는9×5컴포넌트(1,012.5×562.5m) 안이다. 에디터 복구 후 사용자가 외곽211개 삭제를 승인해 독립 Crop 후보를 native Landscape 도구로 편집·저장했다. 새 에디터에서45개 지형/충돌과 높이·페인트·레이어·액터 보존26항목이 통과했다. Undo/Redo 직후 composite 오류와 도로 격자선 레이2점의 실패를 보존하며, 상세 검증·보행 상태는 [제작 결과서](../Feature/doc/2026-11-16_landscape-production-result.md)를 따른다. 최종 지형·콘텐츠 인수 완료와 구분한다. 기존 두 카탈로그는 그대로다.
+
+후속 [참조 검사·프로필 초기화 C++ 수정](../Feature/doc/2026-11-16_reference-scanner-compatibility.md)은 새 DLL의 별도 검증으로 loaded reflection 미지원0·보존9항목/이전cold7항목과 native 프로필 회귀를 통과했다. 향후 지형 검증은 새 DLL에서 success와 loaded_reflection_walk_complete를 모두 요구하며 과거 미지원 허용 예외는 제거했다. 이는 실제 보행·도로 시각 연속성·native/custom/미로드/전이 참조 전체 인수와 별도다. 과거 실패 증거는 수정하지 않는다.
