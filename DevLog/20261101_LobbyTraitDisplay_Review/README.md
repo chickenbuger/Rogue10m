@@ -8,7 +8,7 @@
 
 - 최고20·예산20〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
 - 최고1·예산20〔보조 사진 정리로 삭제됨; [대표 사진 목록](../README.md)〕
-- [최고20·예산0](03_highest20_budget0.png)
+- [최고20·예산0 당시 촬영본](https://github.com/chickenbuger/Rogue10m/blob/084865cdddc968aa6513f7ed0c5d0072fe4aa6a9/DevLog/20261101_LobbyTraitDisplay_Review/03_highest20_budget0.png)
 
 재현: 프로젝트 PowerShell에서 `Scripts/VerifyLobbyTraitDisplay.ps1 -Label <새 영숫자·밑줄20자이내>`를 실행하고 위 세 상태의 실제 카드·텍스트·버튼·backend 결과를 대조한다. 사용자 프로필에 seed/XP fixture를 적용하거나 기존 label의 증거를 덮어쓰지 않는다. 다른 UE 실행을 먼저 조율하고 실행기의 격리·보존 gate를 따른다.
 

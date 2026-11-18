@@ -22,7 +22,7 @@ Weighted 실제 수락 직후 0도〔보조 사진 정리로 삭제됨; [대표 
 
 최초 피해 관측: world 18.056612s / montage 0.195720s / 요청→촬영 0프레임, 0.000000s.
 
-![Weighted 최초 피해 관측 0도](Weighted/16_level_first_damage_observed.png)
+[Weighted 최초 피해 관측 0도 당시 촬영본](https://github.com/chickenbuger/Rogue10m/blob/084865cdddc968aa6513f7ed0c5d0072fe4aa6a9/DevLog/20261031_OwnerViewFraming_Review/Weighted/16_level_first_damage_observed.png)
 
 action·쿨타임·combo 회복: world 18.802346s / montage 0.000000s / 요청→촬영 1프레임, 0.016667s.
 

@@ -3442,3 +3442,10 @@ G2 동시작업 경계: stage 후 자연경계 소유 작업이 디스크709개�
 - 초기 맵 메타데이터와 미니맵 샘플, 호출 없는 전투·인벤토리 헬퍼, 폐기 FiveVillage 도구와 구형 HUD 도구를 정리했다. 중복·중간 JSON 5개를 모두 합쳐 4,204,023바이트 줄였다.
 - Unreal 패키지 6,386개와 실행 참조를 점검했다. Python·PowerShell 구문 검사, 오프라인 테스트 85개, 보존 JSON 대조와 격리 UE 5.8 Development Editor 빌드 228개 작업을 통과했다.
 - 검증한 레거시 정리와 관련 기록을 현재 작업 브랜치에 별도 커밋으로 게시한다. 관련 문서는 Feature/architect/2026-11-19_legacy-cleanup.md, Feature/doc/2026-11-19_legacy-cleanup.md, DevLog/20261119.txt다.
+
+### Sprint#9-32 — DevLog 대표 사진 정리 후속
+
+- 완성·검증된 주요 기능의 최종 화면을 기능당 한 장씩 남기는 기준을 기존 사진에 적용했다.
+- DevLog PNG 35장 중 대표 6장을 남기고 중간·보조 장면과 소규모 개선 사진 29장을 제거했다.
+- 남긴 사진의 SHA-256, 삭제 대상 잔존 여부, 현재 사진 목록의 링크 6개와 기존 글·검증 파일의 보존을 확인했다. 사진 정리를 완료했다.
+- 관련 기록은 DevLog/README.md, DevLog/20261119.txt, Feature/doc/evidence/devlog-photo-curation-20261119/photo-manifest.csv에 있다.
