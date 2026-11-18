@@ -6,7 +6,7 @@
 
 [월드맵 실제 제작 기준](../../WorldMapProductionGuide.md)을 먼저 읽는다. 이후 사용자 결정이 언제나 우선하며, 본문·JSON·이미지·과거 자료 순으로 해석한다. 제작자는 이 묶음을 읽은 뒤 실제 에디터 상태와 대조한다.
 
-현재 프로젝트의 오픈 월드 제작 대상은 `/Game/Rogue10m/Maps/OpenRunMap`이다. 이 문서 아래의 구체 배치와 동굴 자료는 보관된 후보에서 검증한 기록이며, 실제 플레이 맵에 배치할 때 기존 스폰·경로·보스 위치와 다시 대조한다. [현재 맵 운영](../../../Feature/doc/2026-11-18_playable-map-consolidation.md)
+현재 프로젝트의 오픈 월드 제작 대상은 `/Game/Rogue10m/Maps/OpenRunMap`이다. 아래의 후보 배치와 동굴 자료는 제작 원본과 검증 이력을 설명한다. 2026-11-19에는 이 보관본을 소스로 삼아 기존 `OpenRunMap`의 북쪽 지형과 Q/Z 동굴을 적용하고 저장했다. [현재 맵 운영](../../../Feature/doc/2026-11-18_playable-map-consolidation.md) · [기존 맵 적용 계획](../../../Feature/architect/2026-11-19_openrun-recovered-terrain-caves.md)
 
 | 파일 | 용도 |
 | --- | --- |
@@ -59,3 +59,7 @@
 [연속 암반 보충 카탈로그](cave-organic20261118.json), [최종 보완 결과](../../../Feature/doc/2026-11-18_organic-cave-refinement.md), [설계·완료 대조](../../../Feature/architect/2026-11-18_organic-cave-refinement.md)를 추가했다. 기존 격자 동선·비밀방·귀환로를 유지하면서 반복 부착 바위·사각 벽 외형을 연속 암벽·불규칙 천장으로 보완했다. 원래 배치·획득JSON과 기존 동굴 카탈로그는 수정하지 않았다. V1거절·V2소스 선택 화면은 [보존 소스 미리보기 매핑](../../../Feature/doc/evidence/cave-organic20261118/retained-source-previews.json)을 따르며 실제 Unreal화면과 구분한다.
 
 새 기본 삼인칭276/276경유점·12왕복 체인·6PCM화면과19정적조건·2,016질의,8패키지 저장·독립cold20조건/2,016질의·exit0·파일 범위24조건·PIE종료 후clean상태를 확인했다. 최소 카메라 거리231.904cm·최대 수축99.344cm였다. 이는 요청한 동굴 형상 보완의 인수이며 전체 맵 제작·전체 전투·NPC/보상 통합·Shipping의 완료가 아니다. 중앙·마을 평지와 입력·성장·K08/G07규칙은 그대로다.
+
+## 2026-11-19 기존 `OpenRunMap` 지형·동굴 통합
+
+후보의 높이 표본을 기존 Landscape 격자에 맞춰 북쪽에 반영했다. 보관한 Q/Z 출입 경사로와 방·통로의 높이를 재사용하고, 남쪽과 서쪽에서 들어오는 길을 기존 지형에 접속했다. 중앙 300m와 H·M·T 마을 터의 지면 충돌을 45점에서 확인했다. 두 동굴의 구조·장식 액터 4개와 전용 자산 13개를 기존 `OpenRunMap`에 배치하고 저장했다. 복구한 맵의 기본 3인칭 카메라 48시야를 다시 검사했다. [통합 결과와 검증 수치](../../../Feature/doc/2026-11-19_openrun-recovered-terrain-caves.md)

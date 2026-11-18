@@ -1,5 +1,13 @@
 # Sprint 변경 이력
 
+### Sprint#9-32 — OpenRunMap의 지형·동굴 복구
+
+- 목표는 기존 `OpenRunMap`에 보관 지형과 지하 훈련고·작업함을 반영하고 지상 이동과 런을 다시 확인하는 것이다.
+- Landscape 편집 레이어로 높이 177,014개를 복구했다. 중앙로와 마을 세 곳, 보스 바닥 연결을 정리하고 두 동굴과 도로·마을 데칼 39개를 같은 World Partition에 저장했다.
+- UE 5.8 Editor 빌드 성공. 재로드 지형 45지점, 동굴 카메라 48시야, 시작 마을 포탈 17항목, 승리와 귀환 77항목, 저장 재로드 17항목을 통과했다.
+- 상태는 QA 완료이며 맵 제작 작업 브랜치에 적용한다. 테스트 전투는 자동화가 위치를 준비했다.
+- [설계](../Feature/architect/2026-11-19_openrun-recovered-terrain-caves.md) · [개발 결과](../Feature/doc/2026-11-19_openrun-recovered-terrain-caves.md)
+
 ### Sprint#9-32 — 정상 에디터 복구·Landscape 외곽 선택 완료
 
 - 결과:정상후보맵·공식MCP·PIE정지·dirty0확인.256지형/충돌·16proxy·1layer,유지179488표본의height/paint/layer기준확보.

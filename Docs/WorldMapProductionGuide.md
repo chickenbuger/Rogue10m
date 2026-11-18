@@ -6,7 +6,9 @@
 
 ## 현재 맵과 제작 위치
 
-`/Game/Rogue10m/Maps/StartHub`는 시작 메뉴와 마을 플레이에 사용한다. `/Game/Rogue10m/Maps/OpenRunMap`은 정상 출발 포탈, 전투, 보스 클리어에 사용한다. 이후 오픈 월드 작업은 기존 `OpenRunMap`을 열고 Map Maker에서 필요한 World Partition 작업 구역을 골라 진행한다. 지난 지형·도로·동굴 후보는 복구본과 설계 기록으로 참조하며, 배치가 필요한 요소를 기존 레벨에 작은 단위로 적용한다. [두 맵 통합 결과](../Feature/doc/2026-11-18_playable-map-consolidation.md)
+`/Game/Rogue10m/Maps/StartHub`는 시작 메뉴와 마을 플레이에 사용한다. `/Game/Rogue10m/Maps/OpenRunMap`은 출발 포탈 이후의 전투와 보스 클리어에 사용한다. 오픈 월드 작업은 기존 `OpenRunMap`에서 Map Maker로 필요한 World Partition 구역을 골라 진행한다. [두 맵 통합 결과](../Feature/doc/2026-11-18_playable-map-consolidation.md)
+
+2026-11-19에는 보관한 후보의 높이와 Q/Z 동굴을 기존 `OpenRunMap` 북쪽에 적용했다. `RecoveredTerrain20261119` 편집 레이어에서 기존 지형과 남쪽·서쪽 연결부를 잇고, 중앙 직행로 300m와 H·M·T 마을 터를 Z 9,600cm로 맞췄다. 해당 구역의 지면 충돌 45점은 9,599.99~9,600.00cm였다. 두 동굴의 바위 표면, 보행 바닥, 경사로와 조명은 보관본의 위치와 구성을 따라 같은 레벨에 저장했다. 후보 레벨은 제작 자료로 보관하고 실제 배치는 `OpenRunMap`을 기준으로 한다. [적용 결과와 검증 범위](../Feature/doc/2026-11-19_openrun-recovered-terrain-caves.md)
 
 ## 제작 전 반드시 함께 읽을 자료
 

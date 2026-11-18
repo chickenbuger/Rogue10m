@@ -1,0 +1,68 @@
+{
+  "date": "2026-11-19",
+  "active_maps": [
+    "/Game/Rogue10m/Maps/StartHub",
+    "/Game/Rogue10m/Maps/OpenRunMap"
+  ],
+  "cold_read": {
+    "archive_mounted": false,
+    "archive_dependencies_from_recovered_assets": 0,
+    "saved_package_count": 0,
+    "terrain": {
+      "edit_layer": "RecoveredTerrain20261119",
+      "collision_components": 256,
+      "landscape_components": 256,
+      "streaming_proxies": 16,
+      "changed_height_samples": 177014,
+      "target_composite_blake3": "1cb31468db46a4dbb1887b0f1094d05066f041250ab1db2f5da7e59b27789716",
+      "r16_sha256": "16730e04bf1d040a78a6840cbb8b5ff5a5d67744569f5681b6dbceace7922b35",
+      "plateau_traces": 45,
+      "plateau_height_cm": 9600,
+      "minimum_observed_height_cm": 9599.989623865109,
+      "maximum_observed_height_cm": 9600.0,
+      "south_connector_max_grade_deg": 11.517,
+      "west_connector_max_grade_deg": 11.371
+    },
+    "caves": {
+      "actors": [
+        "CV18_Q_Dressing",
+        "CV18_Q_Structure",
+        "CV18_Z_Dressing",
+        "CV18_Z_Structure"
+      ],
+      "assets": 13,
+      "components": 54,
+      "instances": 712,
+      "archive_transform_and_component_parity": true
+    },
+    "surfaces": {
+      "roads": 29,
+      "south_connector": 7,
+      "village_ground": 3
+    }
+  },
+  "rendered_cave_camera": {
+    "method": "rendered standalone, default possessed camera, grounded viewpoints placed by QA fixture",
+    "waypoint_count": 16,
+    "view_count": 48,
+    "blocked_paths": 0,
+    "overlap_or_placement_failures": 0,
+    "minimum_camera_distance_cm": 235.69,
+    "maximum_camera_pull_in_cm": 95.55,
+    "sample_minimum_distance_cm": {
+      "Q_": 267.31,
+      "Z_": 235.69
+    }
+  },
+  "run": {
+    "start_hub_authored_portal_by_qa_walk": 17,
+    "authored_boss_player_final_hit_settlement_and_return_checks": 77,
+    "fresh_process_saved_progress_checks": 17,
+    "continuous_overworld_walk": false
+  },
+  "investigated_before_final_verification": [
+    "Cave export and cold verification require full editor subsystems. The final runs supplied these services.",
+    "The first camera fixture hit the Z ramp endpoint seam. The final fixture samples both natural ground outside and the ramp 10 cm inside each entrance.",
+    "Legacy StylizedCharacter SKEL_Hu_M references the removed EngineMeshes/Humanoid package in the portal and run completion logs. The same reference is documented on the previous map checkpoint."
+  ]
+}
