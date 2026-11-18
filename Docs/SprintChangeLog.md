@@ -8,6 +8,29 @@
 - 상태는 QA 완료이며 맵 제작 작업 브랜치에 적용한다. 테스트 전투는 자동화가 위치를 준비했다.
 - [설계](../Feature/architect/2026-11-19_openrun-recovered-terrain-caves.md) · [개발 결과](../Feature/doc/2026-11-19_openrun-recovered-terrain-caves.md)
 
+### Sprint#9-35 — 캐릭터 선택창 외형 호환성 복구
+
+- 목표는 캐릭터의 회색 재질과 구형 Humanoid 참조 오류를 제거하는 것이다.
+- 몸체와 1인칭 팔에 종족별 재질을 적용했고, 드워프 얼굴과 디버그 눈·장식 슬롯을 수정했다. 구형 참조가 있던 스켈레톤 6개는 원본 복구본을 남기고 기존 경로에서 다시 저장했다. 셰이더 준비 후 선택창 프리뷰가 갱신된다.
+- 새 에디터에서 6종 외형·리타깃 연결과 문신 8개를 확인했다. 빌드와 실제 게임 검사 238개를 통과했고, 게임 로그 오류 0건과 기존 세이브 499개 보존을 확인했다.
+- 작업 브랜치에 게시한다. 관련 기록은 Feature/architect/2026-11-19_character-lobby-asset-compatibility.md, Feature/doc/2026-11-19_character-lobby-asset-compatibility.md, DevLog/20261119.txt에 있다.
+
+### Sprint#9-35 — 캐릭터 선택창 시안 실제 적용
+
+- 목표: 승인된 이미지 시안을 실제 선택창 배치·선택 상태·입력으로 적용한다.
+- 변경: 기존 WBP를 비파괴 갱신하는 도구, 남색·금색 테마·선택 배지·빈 슬롯 버튼, 창 좌표에 맞는 장식, 화면비/대기 포즈 프리뷰 보완, 전용 QA와 대표 사진.
+- 검증: 최종 Editor 빌드6작업/27.93초 성공, 자산4검사/Editor 오류0, 실제1920×1080 UI238검사/실패0, 별도 OS 마우스 선택·접속 확인. 기존493세이브와 보호6입력 보존.
+- 상태: UI 구현·시각/기능 검증 완료. 기존 vendor Humanoid 참조5오류로 전체 런타임 로그 QA는 보류한다. 작업 브랜치 체크포인트만 게시하며 맵 제작 완료 전 develop/test/main 승격은 보류한다.
+- 관련: Feature/architect/2026-11-19_character-select-implementation.md, Feature/doc/2026-11-19_character-select-implementation.md, DevLog/20261119_CharacterSelect/character-selection-final.png, DevLog/20261119.txt.
+
+### Sprint#9-34 — 캐릭터 선택창 ImageGen 시안
+
+- 목표: 기존 3슬롯 프로필 선택 구조와 성채 테라스 방향을 유지한 수정 시안을 제작한다.
+- 변경: 내장 이미지 생성 시안 1장·최종 프롬프트·짝 기획/결과 문서·최종 검수 기록. 선택 PNG 하나만 ignore 예외를 등록했다.
+- 검증: PNG 디코딩·1672×941 치수·SHA256 확인, 별도 검토자를 포함한 한글 문구/3슬롯/전신/선택 강조 검수 통과. 런타임 변경이 없어 UE 빌드/PIE는 실행하지 않았다.
+- 상태: 디자인 시안 완료, 실제 선택창 적용 전. 작업 브랜치 `Sprint#9-34-character-select-concept`에 한정 게시하며 맵 제작 게이트에 따라 develop/test/main 승격은 보류한다.
+- 관련: Feature/architect/2026-11-19_character-select-concept.md, Feature/doc/2026-11-19_character-select-concept.md, SourceArt/UI/CharacterLobby/2026-11-19/character-select-v1.prompt.txt, DevLog/20261119.txt.
+
 ### Sprint#9-32 — 정상 에디터 복구·Landscape 외곽 선택 완료
 
 - 결과:정상후보맵·공식MCP·PIE정지·dirty0확인.256지형/충돌·16proxy·1layer,유지179488표본의height/paint/layer기준확보.
@@ -3435,3 +3458,23 @@ G2 동시작업 경계: stage 후 자연경계 소유 작업이 디스크709개�
 - 폐기 맵 33개와 관련 패키지 4,529개를 정리했다. `StartHub`의 후보행 포탈 3개·장식 10개, FiveVillage 전용 런타임과 실행기도 정리했다. 최신 후보 지형·동굴과 로컬 변경은 복구본으로 보관했다.
 - Asset Registry에 레벨 2개와 폐기 경로 참조 0개를 확인했다. 정규 빌드, 메뉴 36조건, 공용 의뢰 26개, 실제 보스 승리·귀환 77조건과 독립 저장 재로드 17조건이 통과했다.
 - 검증한 두 맵 통합을 맵 제작 작업 브랜치에 게시한다. 상세 범위와 복구 경계는 Feature/doc/2026-11-18_playable-map-consolidation.md에 기록했다.
+
+### Sprint#9-35 — GitHub 게시 전 레거시 코드와 JSON 정리
+
+- 목표는 사용처가 확인되지 않는 이전 코드와 중복 기록을 정리해 게시 범위를 줄이는 것이다.
+- 초기 맵 메타데이터와 미니맵 샘플, 호출 없는 전투·인벤토리 헬퍼, 폐기 FiveVillage 도구와 구형 HUD 도구를 정리했다. 중복·중간 JSON 5개를 모두 합쳐 4,204,023바이트 줄였다.
+- Unreal 패키지 6,386개와 실행 참조를 점검했다. Python·PowerShell 구문 검사, 오프라인 테스트 85개, 보존 JSON 대조와 격리 UE 5.8 Development Editor 빌드 228개 작업을 통과했다.
+- 검증한 레거시 정리와 관련 기록을 현재 작업 브랜치에 별도 커밋으로 게시한다. 관련 문서는 Feature/architect/2026-11-19_legacy-cleanup.md, Feature/doc/2026-11-19_legacy-cleanup.md, DevLog/20261119.txt다.
+
+### Sprint#9-32 — DevLog 대표 사진 정리 후속
+
+- 완성·검증된 주요 기능의 최종 화면을 기능당 한 장씩 남기는 기준을 기존 사진에 적용했다.
+- DevLog PNG 35장 중 대표 6장을 남기고 중간·보조 장면과 소규모 개선 사진 29장을 제거했다.
+- 남긴 사진의 SHA-256, 삭제 대상 잔존 여부, 현재 사진 목록의 링크 6개와 기존 글·검증 파일의 보존을 확인했다. 사진 정리를 완료했다.
+- 관련 기록은 DevLog/README.md, DevLog/20261119.txt, Feature/doc/evidence/devlog-photo-curation-20261119/photo-manifest.csv에 있다.
+
+### Sprint#9-35 — 이전 맵 검증 자료와 중복 복구 사본 정리
+
+- 이전 맵의 중복 복구본과 최종 보고서로 대체된 중간 자료를 조사하고 미추적 파일 4,584개, 47,432,798바이트를 삭제했다.
+- 파일별 경로·해시와 로컬 보관본 또는 이전 Git 원본을 대조했다. 복구에 필요한 고유 파일, 최종 검증 및 별도 실패 기록을 보관했다.
+- 로컬 정리와 검증을 완료했다. 정리 기록과 삭제 목록을 현재 작업 브랜치에 게시한다. 관련 문서는 Feature/doc/2026-11-19_older-map-evidence-cleanup.md다.

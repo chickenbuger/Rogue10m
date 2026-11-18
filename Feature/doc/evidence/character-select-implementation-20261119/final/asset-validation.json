@@ -1,0 +1,36 @@
+{
+  "success": true,
+  "scope": "character lobby only",
+  "checks": [
+    {
+      "name": "selection_stage",
+      "passed": true
+    },
+    {
+      "name": "customization",
+      "passed": true
+    },
+    {
+      "name": "inherited_appearance",
+      "passed": true
+    },
+    {
+      "name": "widget_flow",
+      "passed": true
+    }
+  ],
+  "protected_before": {
+    "Content/Texture/UI/CharacterLobby/T_CharacterLobby_Background.uasset": "54112D0DF9E5C6B9A9C3FDE72C9818A5CAB821734553754E58D01FD2C4D3170C",
+    "Content/DataAsset/Character/Customization/DA_CharacterCustomizationCatalog.uasset": "C2F406A78C0E1B0CB417D7B82CF8060B4FEB5235065E0324CE08E0334D3DD9C6",
+    "Content/Material/UI/M_CharacterPreviewTransparent.uasset": "21571C89864C4C67419CFB76DE929AC859F473815A52A84904CBC3EDF281248E"
+  },
+  "saved_assets": [
+    "/Game/Widget/Lobby/WBP_CharacterLobby"
+  ],
+  "protected_after": {
+    "Content/Texture/UI/CharacterLobby/T_CharacterLobby_Background.uasset": "54112D0DF9E5C6B9A9C3FDE72C9818A5CAB821734553754E58D01FD2C4D3170C",
+    "Content/DataAsset/Character/Customization/DA_CharacterCustomizationCatalog.uasset": "C2F406A78C0E1B0CB417D7B82CF8060B4FEB5235065E0324CE08E0334D3DD9C6",
+    "Content/Material/UI/M_CharacterPreviewTransparent.uasset": "21571C89864C4C67419CFB76DE929AC859F473815A52A84904CBC3EDF281248E"
+  },
+  "widget_sha256": "F2A6A69FE8696F20FF5D29509708EADD52C77562C8BA7B518CF96EDA7DAE23C5"
+}

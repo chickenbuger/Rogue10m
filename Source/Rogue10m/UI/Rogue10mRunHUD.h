@@ -224,7 +224,6 @@ public:
 	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Log") TArray<FRogue10mHudLogEntryView> GetSystemLogEntries() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Log") TArray<FRogue10mHudLogEntryView> GetItemAcquisitionEntries() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Panel") FRogue10mHudPanelStateView GetPanelStateView() const;
-	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Minimap") TArray<FRogue10mHudMinimapMarkerView> GetPrototypeMinimapMarkers() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Run") FRogue10mHudRunTimerView GetRunTimerView() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Run") FRogue10mHudRunResultView GetRunResultView() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|HUD|Aim") FRogue10mHudAimCrossLineView GetAimCrossLineView() const;

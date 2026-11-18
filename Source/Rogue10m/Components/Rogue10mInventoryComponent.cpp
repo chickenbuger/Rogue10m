@@ -280,14 +280,6 @@ FRogue10mItemStack URogue10mInventoryComponent::MakeItemFromDataAsset(const URog
 	return Item;
 }
 
-
-FRogue10mItemStack URogue10mInventoryComponent::MakeWeaponItem(ERogue10mWeaponType WeaponType, const TCHAR* DisplayName, const TCHAR* Description, const FLinearColor& ItemColor, ERogue10mInventorySlotType EquipSlotType, bool bLocked)
-{
-	FRogue10mItemStack Item = MakeItem(ERogue10mItemCategory::Equipment, EquipSlotType, DisplayName, Description, 1, ItemColor, bLocked);
-	Item.WeaponType = WeaponType;
-	return Item;
-}
-
 FRogue10mItemStack URogue10mInventoryComponent::MakeEmptyItem()
 {
 	FRogue10mItemStack Item;

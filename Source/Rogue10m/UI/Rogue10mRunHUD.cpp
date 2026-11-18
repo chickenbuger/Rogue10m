@@ -440,16 +440,6 @@ FRogue10mHudPanelStateView URogue10mRunHUD::GetPanelStateView() const
 	return View;
 }
 
-TArray<FRogue10mHudMinimapMarkerView> URogue10mRunHUD::GetPrototypeMinimapMarkers() const
-{
-	TArray<FRogue10mHudMinimapMarkerView> Views;
-	Views.Add({ FVector2D(0.5f, 0.5f), FLinearColor(0.28f, 0.86f, 1.0f, 1.0f), FText::FromString(TEXT("플레이어")) });
-	Views.Add({ FVector2D(0.23f, 0.32f), FLinearColor(0.92f, 0.18f, 0.12f, 1.0f), FText::FromString(TEXT("적")) });
-	Views.Add({ FVector2D(0.81f, 0.44f), FLinearColor(0.35f, 0.9f, 0.42f, 1.0f), FText::FromString(TEXT("NPC")) });
-	Views.Add({ FVector2D(0.38f, 0.78f), FLinearColor(0.96f, 0.78f, 0.28f, 1.0f), FText::FromString(TEXT("목표")) });
-	return Views;
-}
-
 FRogue10mHudRunTimerView URogue10mRunHUD::GetRunTimerView() const
 {
 	FRogue10mHudRunTimerView View;

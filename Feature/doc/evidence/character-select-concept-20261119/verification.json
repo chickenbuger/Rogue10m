@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-19",
+  "scope": "imagegen UI design mockup only; no runtime integration",
+  "mode": "built-in image_gen",
+  "output": {
+    "path": "SourceArt/UI/CharacterLobby/2026-11-19/character-select-v1.png",
+    "width": 1672,
+    "height": 941,
+    "format": "RGB PNG",
+    "bytes": 2361160,
+    "sha256": "2A76FA197CE616EEAD7901CA72523E4E3DDF631B8963FDF780B06F0DF273DAA6",
+    "prompt": "SourceArt/UI/CharacterLobby/2026-11-19/character-select-v1.prompt.txt"
+  },
+  "inputs": [
+    {
+      "role": "clean background scene and style reference",
+      "path": "SourceArt/UI/CharacterLobby/T_CharacterLobby_Background.png",
+      "sha256": "EA259A459ED8FCE74D9388F5C63F17A0CBBE19879205132C81777DABA1D26954"
+    },
+    {
+      "role": "existing UI structure reference",
+      "path": "Feature/doc/evidence/quit-menu-20261111/TwoMapsMenu1118/02_lobby_launcher.png",
+      "sha256": "17471542D0CF207110009F885A4D07DFFDBB5BE052E76B5247E0B648F14BC21C"
+    }
+  ],
+  "visual_review": {
+    "reviewers": ["primary agent", "independent character_select_context agent"],
+    "three_saved_profile_slots": "pass",
+    "full_body_front_previews": "pass",
+    "readable_korean_copy": "pass",
+    "selected_character_and_primary_action": "pass",
+    "existing_bright_castle_direction": "pass",
+    "no_unsupported_class_level_or_combat_stats": "pass",
+    "note": "Illustrative character models. Top-right exit references the existing launcher capture and shared QuitMenu, not an established Lobby Widget binding. Avoid duplicate quit controls during later integration."
+  },
+  "runtime_build_editor_pie": "not run; no runtime changes",
+  "retention": "One final image in SourceArt and one final verification record here. Existing inputs and default generated original preserved. No duplicate screenshots or intermediate RPC batches copied."
+}

@@ -2,6 +2,7 @@
 
 #include "Rogue10mCharacterLobbyWidget.h"
 
+#include "Brushes/SlateRoundedBoxBrush.h"
 #include "Components/Border.h"
 #include "Components/Button.h"
 #include "Components/CanvasPanelSlot.h"
@@ -15,6 +16,7 @@
 #include "InputCoreTypes.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Materials/MaterialInterface.h"
+#include "Rendering/DrawElementTypes.h"
 #include "Rogue10m.h"
 #include "Rogue10mCharacterCustomizationDataAsset.h"
 #include "Rogue10mCharacterCustomizationPreviewActor.h"
@@ -23,6 +25,44 @@
 
 namespace
 {
+	const FLinearColor LobbyGold(0.63f, 0.39f, 0.13f, 1.0f);
+	const FLinearColor LobbyPaleGold(0.98f, 0.75f, 0.31f, 1.0f);
+	const FLinearColor LobbyIvory(0.94f, 0.91f, 0.80f, 1.0f);
+
+	FButtonStyle LobbyButtonStyle(bool bSelected = false, bool bPrimary = false)
+	{
+		const FLinearColor Fill = bPrimary ? FLinearColor(0.42f, 0.22f, 0.038f, 0.98f)
+			: bSelected ? FLinearColor(0.045f, 0.036f, 0.021f, 0.96f)
+			: FLinearColor(0.012f, 0.028f, 0.047f, 0.94f);
+		const FLinearColor Edge = bPrimary || bSelected ? LobbyPaleGold : LobbyGold;
+		FButtonStyle Style;
+		Style.Normal = FSlateRoundedBoxBrush(Fill, 9.0f, Edge, bPrimary || bSelected ? 2.0f : 1.0f);
+		Style.Hovered = FSlateRoundedBoxBrush(Fill * 1.3f, 9.0f, LobbyPaleGold, 2.0f);
+		Style.Pressed = FSlateRoundedBoxBrush(Fill * 0.72f, 9.0f, LobbyPaleGold, 2.0f);
+		Style.Disabled = FSlateRoundedBoxBrush(FLinearColor(0.012f, 0.022f, 0.033f, 0.8f),
+			9.0f, FLinearColor(0.16f, 0.13f, 0.08f), 1.0f);
+		Style.NormalPadding = FMargin(0.0f);
+		Style.PressedPadding = Style.NormalPadding;
+		return Style;
+	}
+
+	FButtonStyle EmptyLobbyButtonStyle()
+	{
+		FButtonStyle Style;
+		Style.Normal = FSlateRoundedBoxBrush(FLinearColor(0.018f, 0.034f, 0.055f, 0.12f), 18.0f);
+		Style.Hovered = FSlateRoundedBoxBrush(FLinearColor(0.035f, 0.065f, 0.10f, 0.32f), 18.0f);
+		Style.Pressed = FSlateRoundedBoxBrush(FLinearColor(0.065f, 0.052f, 0.024f, 0.4f), 18.0f);
+		Style.Disabled = Style.Normal;
+		Style.NormalPadding = FMargin(0.0f);
+		Style.PressedPadding = Style.NormalPadding;
+		return Style;
+	}
+
+	FName SlotWidgetName(int32 Index, const TCHAR* Suffix)
+	{
+		return FName(*FString::Printf(TEXT("UI_Slot%d%s"), Index + 1, Suffix));
+	}
+
 	FText IndexedLabel(const TCHAR* Label, int32 Index, bool bOptional)
 	{
 		return bOptional && Index == INDEX_NONE
@@ -107,6 +147,18 @@ void URogue10mCharacterLobbyWidget::NativeConstruct()
 	UI_Slot1Button->OnClicked.AddDynamic(this, &ThisClass::HandleSlot1Clicked);
 	UI_Slot2Button->OnClicked.AddDynamic(this, &ThisClass::HandleSlot2Clicked);
 	UI_Slot3Button->OnClicked.AddDynamic(this, &ThisClass::HandleSlot3Clicked);
+	if (UButton* Empty = Cast<UButton>(GetWidgetFromName(TEXT("UI_Slot1EmptyButton"))))
+	{
+		Empty->OnClicked.AddUniqueDynamic(this, &ThisClass::HandleSlot1Clicked);
+	}
+	if (UButton* Empty = Cast<UButton>(GetWidgetFromName(TEXT("UI_Slot2EmptyButton"))))
+	{
+		Empty->OnClicked.AddUniqueDynamic(this, &ThisClass::HandleSlot2Clicked);
+	}
+	if (UButton* Empty = Cast<UButton>(GetWidgetFromName(TEXT("UI_Slot3EmptyButton"))))
+	{
+		Empty->OnClicked.AddUniqueDynamic(this, &ThisClass::HandleSlot3Clicked);
+	}
 	UI_NewCharacterButton->OnClicked.AddDynamic(this, &ThisClass::HandleNewCharacterClicked);
 	UI_DeleteCharacterButton->OnClicked.AddDynamic(this, &ThisClass::HandleDeleteCharacterClicked);
 	UI_EnterGameButton->OnClicked.AddDynamic(this, &ThisClass::HandleEnterGameClicked);
@@ -132,6 +184,21 @@ void URogue10mCharacterLobbyWidget::NativeConstruct()
 	UI_EyeNextButton->OnClicked.AddDynamic(this, &ThisClass::HandleEyeNextClicked);
 	UI_BodyDetailPreviousButton->OnClicked.AddDynamic(this, &ThisClass::HandleBodyDetailPreviousClicked);
 	UI_BodyDetailNextButton->OnClicked.AddDynamic(this, &ThisClass::HandleBodyDetailNextClicked);
+	for (UButton* Button : {UI_NewCharacterButton.Get(), UI_DeleteCharacterButton.Get(),
+		UI_EnterGameButton.Get(), UI_CreateCharacterButton.Get(), UI_CancelCreationButton.Get(),
+		UI_RandomizeButton.Get(), UI_HumanRaceButton.Get(), UI_DwarfRaceButton.Get(),
+		UI_OrcRaceButton.Get(), UI_MaleGenderButton.Get(), UI_FemaleGenderButton.Get(),
+		UI_HeadPreviousButton.Get(), UI_HeadNextButton.Get(), UI_SkinPreviousButton.Get(),
+		UI_SkinNextButton.Get(), UI_HairPreviousButton.Get(), UI_HairNextButton.Get(),
+		UI_HairColorPreviousButton.Get(), UI_HairColorNextButton.Get(), UI_FacialPreviousButton.Get(),
+		UI_FacialNextButton.Get(), UI_EyePreviousButton.Get(), UI_EyeNextButton.Get(),
+		UI_BodyDetailPreviousButton.Get(), UI_BodyDetailNextButton.Get()})
+	{
+		Button->SetStyle(LobbyButtonStyle(false,
+			Button == UI_EnterGameButton || Button == UI_CreateCharacterButton));
+		Button->SetBackgroundColor(FLinearColor::White);
+		Button->SetColorAndOpacity(LobbyIvory);
+	}
 
 	if (GetWorld() && Catalog)
 	{
@@ -200,7 +267,7 @@ void URogue10mCharacterLobbyWidget::NativeConstruct()
 		{
 			CreatedMaterial = nullptr;
 			SlotPreviewActors.Add(CreatePreview(
-				SlotImage, FIntPoint(520, 760), CreatedMaterial));
+				SlotImage, FIntPoint(480, 800), CreatedMaterial));
 			SlotPreviewMaterials.Add(CreatedMaterial);
 		}
 	}
@@ -225,6 +292,96 @@ void URogue10mCharacterLobbyWidget::NativeDestruct()
 	DraftPreviewMaterial = nullptr;
 	SlotPreviewMaterials.Reset();
 	Super::NativeDestruct();
+}
+
+int32 URogue10mCharacterLobbyWidget::NativePaint(const FPaintArgs& Args,
+	const FGeometry& AllottedGeometry, const FSlateRect& MyCullingRect,
+	FSlateWindowElementList& OutDrawElements, int32 LayerId,
+	const FWidgetStyle& InWidgetStyle, bool bParentEnabled) const
+{
+	int32 LastLayer = Super::NativePaint(Args, AllottedGeometry, MyCullingRect,
+		OutDrawElements, LayerId, InWidgetStyle, bParentEnabled);
+	const FLinearColor Tint = InWidgetStyle.GetColorAndOpacityTint();
+	const FGeometry& RootGeometry = GetCachedGeometry();
+	const FVector2D RootSize = RootGeometry.GetLocalSize();
+	if (RootSize.X < 10.0 || RootSize.Y < 10.0) { return LastLayer; }
+	// These outlines only paint around existing hit-test widgets. Their cached
+	// geometries share desktop space. Convert through the cached root, rather
+	// than the paint geometry whose window origin may differ in windowed play.
+	const auto Outline = [&](const UWidget* Widget, FLinearColor Color,
+		float Inset, float Thickness, bool bDashed = false, const UWidget* BottomGap = nullptr)
+	{
+		if (!Widget || !Widget->IsVisible()) { return; }
+		const FGeometry& Geometry = Widget->GetCachedGeometry();
+		const FVector2D LocalSize = Geometry.GetLocalSize();
+		if (LocalSize.X < 10.0 || LocalSize.Y < 10.0) { return; }
+		const FVector2f Origin(RootGeometry.AbsoluteToLocal(
+			Geometry.LocalToAbsolute(FVector2D::ZeroVector)));
+		const FVector2f Extent(RootGeometry.AbsoluteToLocal(
+			Geometry.LocalToAbsolute(LocalSize)));
+		const float L = Origin.X + Inset, T = Origin.Y + Inset;
+		const float R = Extent.X - Inset, B = Extent.Y - Inset;
+		const float C = FMath::Min(12.0f, FMath::Min(R - L, B - T) * 0.2f);
+		TArray<FVector2f> Points = {{L+C,T},{R-C,T},{R,T+C},{R,B-C},
+			{R-C,B},{L+C,B},{L,B-C},{L,T+C},{L+C,T}};
+		if (BottomGap && BottomGap->IsVisible())
+		{
+			const FGeometry& GapGeometry = BottomGap->GetCachedGeometry();
+			const FVector2D GapSize = GapGeometry.GetLocalSize();
+			const FVector2f GapOrigin(RootGeometry.AbsoluteToLocal(
+				GapGeometry.LocalToAbsolute(FVector2D::ZeroVector)));
+			const FVector2f GapExtent(RootGeometry.AbsoluteToLocal(
+				GapGeometry.LocalToAbsolute(GapSize)));
+			const float GapMargin = FMath::Max(3.0f, Thickness + 1.0f);
+			const float GapLeft = FMath::Clamp(GapOrigin.X - GapMargin, L+C, R-C);
+			const float GapRight = FMath::Clamp(GapExtent.X + GapMargin, L+C, R-C);
+			if (GapSize.X > 0.0 && GapSize.Y > 0.0 && GapLeft < GapRight
+				&& B >= GapOrigin.Y - GapMargin && B <= GapExtent.Y + GapMargin)
+			{
+				// Follow the perimeter from one badge edge to the other, leaving
+				// its fill and label clear even though these strokes paint last.
+				Points = {{GapLeft,B},{L+C,B},{L,B-C},{L,T+C},{L+C,T},
+					{R-C,T},{R,T+C},{R,B-C},{R-C,B},{GapRight,B}};
+			}
+		}
+		const ESlateDrawEffect Effect = bParentEnabled && Widget->GetIsEnabled()
+			? ESlateDrawEffect::None : ESlateDrawEffect::DisabledEffect;
+		if (bDashed)
+		{
+			FSlateDrawElement::MakeDashedLines(OutDrawElements, ++LastLayer,
+				AllottedGeometry.ToPaintGeometry(), MoveTemp(Points), Effect,
+				Color * Tint, Thickness, 8.0f);
+		}
+		else
+		{
+			FSlateDrawElement::MakeLines(OutDrawElements, ++LastLayer,
+				AllottedGeometry.ToPaintGeometry(), MoveTemp(Points), Effect,
+				Color * Tint, true, Thickness);
+		}
+	};
+	if (!bCreationMode)
+	{
+		const UButton* SlotButtons[] = {UI_Slot1Button, UI_Slot2Button, UI_Slot3Button};
+		for (int32 Index = 0; Index < UE_ARRAY_COUNT(SlotButtons); ++Index)
+		{
+			const bool bSelected = SlotProfileIds.IsValidIndex(Index)
+				&& SlotProfileIds[Index].IsValid() && SlotProfileIds[Index] == SelectedProfileId;
+			const UWidget* Badge = GetWidgetFromName(SlotWidgetName(Index, TEXT("SelectedBadge")));
+			Outline(SlotButtons[Index], bSelected ? LobbyGold : LobbyGold * 0.72f,
+				2.0f, bSelected ? 3.0f : 1.2f, false, bSelected ? Badge : nullptr);
+			Outline(SlotButtons[Index], bSelected ? FLinearColor(0.95f, 0.76f, 0.34f) : LobbyGold,
+				6.0f, 1.0f, false, bSelected ? Badge : nullptr);
+			Outline(GetWidgetFromName(SlotWidgetName(Index, TEXT("EmptyButton"))),
+				FLinearColor(0.85f, 0.76f, 0.52f, 0.85f), 3.0f, 1.4f, true);
+			Outline(Badge,
+				FLinearColor(0.97f, 0.78f, 0.35f), 1.0f, 1.2f);
+		}
+		Outline(UI_NewCharacterButton, LobbyGold, 2.0f, 1.0f);
+		Outline(UI_DeleteCharacterButton, LobbyGold, 2.0f, 1.0f);
+		Outline(UI_EnterGameButton, FLinearColor(0.92f, 0.68f, 0.24f), 2.0f, 3.0f);
+		Outline(UI_EnterGameButton, FLinearColor(1.0f, 0.86f, 0.48f), 7.0f, 1.0f);
+	}
+	return LastLayer;
 }
 
 FReply URogue10mCharacterLobbyWidget::NativeOnMouseButtonDown(
@@ -290,21 +447,41 @@ void URogue10mCharacterLobbyWidget::RefreshSlotButtons()
 	UButton* Buttons[] = { UI_Slot1Button, UI_Slot2Button, UI_Slot3Button };
 	for (int32 Index = 0; Index < URogue10mCharacterProfileSubsystem::MaximumProfileCount; ++Index)
 	{
+		UTextBlock* Detail = Cast<UTextBlock>(GetWidgetFromName(SlotWidgetName(Index, TEXT("DetailText"))));
 		if (Profiles && Profiles->IsValidIndex(Index))
 		{
 			const FRogue10mCharacterProfile& Profile = (*Profiles)[Index];
 			SlotProfileIds[Index] = Profile.ProfileId;
-			Texts[Index]->SetText(FText::Format(
-				NSLOCTEXT("Rogue10mCharacterLobby", "OccupiedSlot", "{0}\n{1} · {2}"),
-				FText::FromString(Profile.CharacterName),
-				RaceLabel(Profile.Appearance.Race),
-				GenderLabel(Profile.Appearance.Gender)));
+			if (Detail)
+			{
+				Texts[Index]->SetText(FText::FromString(Profile.CharacterName));
+				Detail->SetText(FText::Format(
+					NSLOCTEXT("Rogue10mCharacterLobby", "SlotDetails", "{0} · {1}"),
+					RaceLabel(Profile.Appearance.Race), GenderLabel(Profile.Appearance.Gender)));
+			}
+			else
+			{
+				Texts[Index]->SetText(FText::Format(
+					NSLOCTEXT("Rogue10mCharacterLobby", "OccupiedSlot", "{0}\n{1} · {2}"),
+					FText::FromString(Profile.CharacterName),
+					RaceLabel(Profile.Appearance.Race), GenderLabel(Profile.Appearance.Gender)));
+			}
 		}
 		else
 		{
-			Texts[Index]->SetText(FText::Format(
-				NSLOCTEXT("Rogue10mCharacterLobby", "EmptySlot", "슬롯 {0}\n캐릭터 생성하기"),
-				FText::AsNumber(Index + 1)));
+			if (Detail)
+			{
+				Texts[Index]->SetText(FText::Format(
+					NSLOCTEXT("Rogue10mCharacterLobby", "EmptySlotTitle", "슬롯 {0}"),
+					FText::AsNumber(Index + 1)));
+				Detail->SetText(NSLOCTEXT("Rogue10mCharacterLobby", "EmptySlotDetail", "캐릭터 생성하기"));
+			}
+			else
+			{
+				Texts[Index]->SetText(FText::Format(
+					NSLOCTEXT("Rogue10mCharacterLobby", "EmptySlot", "슬롯 {0}\n캐릭터 생성하기"),
+					FText::AsNumber(Index + 1)));
+			}
 		}
 		Buttons[Index]->SetIsEnabled(!bCreationMode);
 	}
@@ -328,6 +505,14 @@ void URogue10mCharacterLobbyWidget::RefreshMode()
 		!bCreationMode && ProfileSubsystem
 		&& ProfileSubsystem->GetProfileCount() < URogue10mCharacterProfileSubsystem::MaximumProfileCount
 			? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
+	for (const FName HintName : {FName(TEXT("UI_SelectionHintText")),
+		FName(TEXT("UI_SelectionHintRule")), FName(TEXT("UI_SelectionHintDiamond"))})
+	{
+		if (UWidget* Hint = GetWidgetFromName(HintName))
+		{
+			Hint->SetVisibility(bCreationMode ? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible);
+		}
+	}
 
 	if (bCreationMode)
 	{
@@ -417,6 +602,21 @@ void URogue10mCharacterLobbyWidget::RefreshStagePreviews()
 		ARogue10mCharacterCustomizationPreviewActor* SlotActor =
 			SlotPreviewActors.IsValidIndex(Index) ? SlotPreviewActors[Index].Get() : nullptr;
 		const bool bHasProfile = !bCreationMode && Profiles && Profiles->IsValidIndex(Index);
+		const bool bSelected = bHasProfile && (*Profiles)[Index].ProfileId == SelectedProfileId;
+		SlotButtons[Index]->SetVisibility(bCreationMode ? ESlateVisibility::Collapsed : ESlateVisibility::Visible);
+		SlotButtons[Index]->SetStyle(LobbyButtonStyle(bSelected));
+		SlotButtons[Index]->SetBackgroundColor(FLinearColor::White);
+		SlotButtons[Index]->SetColorAndOpacity(LobbyIvory);
+		if (UButton* Empty = Cast<UButton>(GetWidgetFromName(SlotWidgetName(Index, TEXT("EmptyButton")))))
+		{
+			Empty->SetStyle(EmptyLobbyButtonStyle());
+			Empty->SetBackgroundColor(FLinearColor::White);
+			Empty->SetVisibility(!bCreationMode && !bHasProfile ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
+		}
+		if (UWidget* Badge = GetWidgetFromName(SlotWidgetName(Index, TEXT("SelectedBadge"))))
+		{
+			Badge->SetVisibility(bSelected ? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
+		}
 		SlotImages[Index]->SetVisibility(
 			bHasProfile ? ESlateVisibility::SelfHitTestInvisible : ESlateVisibility::Collapsed);
 
@@ -435,15 +635,10 @@ void URogue10mCharacterLobbyWidget::RefreshStagePreviews()
 		{
 			SlotActor->SetPreviewActive(true);
 		}
-		const bool bSelected = Profile.ProfileId == SelectedProfileId;
 		SlotImages[Index]->SetColorAndOpacity(
 			bSelected
 				? FLinearColor::White
-				: FLinearColor(0.55f, 0.62f, 0.72f, 0.88f));
-		SlotButtons[Index]->SetBackgroundColor(
-			bSelected
-				? FLinearColor(0.2f, 0.62f, 0.9f, 1.0f)
-				: FLinearColor(0.035f, 0.055f, 0.08f, 0.92f));
+				: FLinearColor(0.78f, 0.83f, 0.91f, 1.0f));
 	}
 }
 

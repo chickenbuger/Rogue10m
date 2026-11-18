@@ -21,18 +21,26 @@ namespace
 	void ApplyMaterial(
 		USkeletalMeshComponent* MeshComponent, FName SlotName, UMaterialInterface* Material)
 	{
-		if (!MeshComponent || !Material)
+		if (!MeshComponent)
 		{
 			return;
 		}
 
 		int32 MaterialIndex = MeshComponent->GetMaterialIndex(SlotName);
-		if (MaterialIndex == INDEX_NONE && SlotName == TEXT("M_Eyes"))
+		if (MaterialIndex == INDEX_NONE)
 		{
-			MaterialIndex = MeshComponent->GetMaterialIndex(TEXT("M_Eye"));
+			if (SlotName == TEXT("M_Eyes"))
+			{
+				MaterialIndex = MeshComponent->GetMaterialIndex(TEXT("M_Eye"));
+			}
+			else if (SlotName == TEXT("M_Eye"))
+			{
+				MaterialIndex = MeshComponent->GetMaterialIndex(TEXT("M_Eyes"));
+			}
 		}
-		if (MaterialIndex != INDEX_NONE)
+		if (MaterialIndex != INDEX_NONE && (Material || MaterialIndex < MeshComponent->GetNumOverrideMaterials()))
 		{
+			// No variant means the current mesh should supply this slot's material.
 			MeshComponent->SetMaterial(MaterialIndex, Material);
 		}
 	}

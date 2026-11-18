@@ -37,6 +37,6 @@ native Landscape Manage/Delete는 현재 GUI 금지로 보류한다. private EdM
 - [원본/후보 해시](evidence/map-resume-20261113/LiveEditorA/protected-hash-post-recovery.json)
 - [정규 helper 빌드](evidence/map-resume-20261113/RetainedSnapshotBuildA/result.json)
 - [실제 commandlet](evidence/map-resume-20261113/terrain-snapshot-a-exit.json)
-- [현재 지형](evidence/map-resume-20261113/TerrainSnapshotA/terrain.json)
-- [샘플 기준값](evidence/map-resume-20261113/TerrainSnapshotA/retained-data.json)
-- [저장/선택/GUI 경계](evidence/map-resume-20261113/TerrainSnapshotA/result.json)
+- 지형 데이터, 샘플 기준값, 저장·선택·GUI 경계는 로컬 `evidence/map-resume-20261113/TerrainSnapshotReloadA/`의 `terrain.json`, `retained-data.json`, `result.json`에 보관했다.
+
+11월 19일에 최초 추출 JSON과 독립 재로드 JSON의 바이트가 일치함을 확인했다. 대조 결과는 같은 폴더의 `comparison.json`에 있다. [정리 기록](2026-11-19_older-map-evidence-cleanup.md)
