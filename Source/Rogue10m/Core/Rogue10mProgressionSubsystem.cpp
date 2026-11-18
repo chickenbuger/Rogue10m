@@ -16,6 +16,8 @@
 #include "Rogue10mProgressionSaveGame.h"
 #include "Rogue10mTownProgressionComponent.h"
 #include "Rogue10mSkillTreeProgressionComponent.h"
+#include "Serialization/MemoryReader.h"
+#include "Serialization/ObjectAndNameAsStringProxyArchive.h"
 #include "TimerManager.h"
 #include "UObject/StrongObjectPtr.h"
 
@@ -48,6 +50,52 @@ static bool HasCanonicalTraitMirrors(const FRogue10mTownProgressionSnapshot& Tow
 	}
 	return Town.VitalityLevel == VitalityRank && Town.PowerLevel == PowerRank
 		&& Town.TraitMaxHealthBonus == VitalityBonus && Town.TraitAttackBonus == PowerBonus;
+}
+
+static bool ResolveOmittedVersion(URogue10mProgressionSaveGame& Save, const TArray<uint8>& Bytes, bool bVersion4Slot)
+{
+	// UE saved only fields that differed from the class defaults. A missing
+	// SaveVersion now reads as 5, regardless of the defaults used to write it.
+	// Read the same native payload with a different initial value. This also
+	// distinguishes an omitted tag from an explicit 5 in an older slot.
+	URogue10mProgressionSaveGame* Probe = NewObject<URogue10mProgressionSaveGame>();
+	Probe->SaveVersion = 0;
+	FMemoryReader Reader = UGameplayStatics::StripSaveGameHeader(Bytes);
+	FObjectAndNameAsStringProxyArchive Archive(Reader, true);
+	Probe->Serialize(Archive);
+	if (Archive.IsError() || Reader.IsError()) { return false; }
+	if (Probe->SaveVersion == Save.SaveVersion) { return true; }
+	if (Probe->SaveVersion != 0) { return false; }
+
+	if (bVersion4Slot)
+	{
+		// v4 did not write the field-entry marker added in v5.
+		if (Save.bEnteredRun) { return false; }
+		Save.SaveVersion = 4;
+		return true;
+	}
+
+	// The unnumbered slot predates run IDs and the separate lobby ledger.
+	// Never reinterpret data from those domains as an earlier save.
+	if (Save.RunId.IsValid() || Save.LastSettledRunId.IsValid() || Save.bRunCompleted || Save.bAbandoned
+		|| Save.bEnteredRun || Save.EntryCurrencies.bCaptured || Save.EntryCurrencies.RunId.IsValid()
+		|| Save.EntryCurrencies.Gold != 0 || Save.EntryCurrencies.Crystals != 0 || Save.EntryCurrencies.LobbyEarnedPoints != 0
+		|| Save.LobbyEarnedPoints != 0 || Save.HighestRunLevel != 1 || Save.RewardDefeatBaseline != 0
+		|| !Save.DiscoveredNodes.IsEmpty())
+	{
+		return false;
+	}
+	const FRogue10mSkillTreeSnapshot& Tree = Save.SkillTree;
+	if (!Tree.Masteries.IsEmpty() || !Tree.Investments.IsEmpty() || !Tree.LegacyGrantedSkills.IsEmpty()
+		|| Tree.ActiveIdentity != ERogue10mSkillTreeIdentity::None)
+	{
+		Save.SaveVersion = 3;
+	}
+	else
+	{
+		Save.SaveVersion = Save.Town.TraitInvestments.IsEmpty() ? 1 : 2;
+	}
+	return true;
 }
 
 static bool Validate(const URogue10mProgressionSaveGame& Save, const FGuid& ProfileId)
@@ -121,16 +169,20 @@ void URogue10mProgressionSubsystem::SetError(const FText& Error) const
 URogue10mProgressionSaveGame* URogue10mProgressionSubsystem::LoadSnapshot(
 	const FGuid& ProfileId, bool& bOutExists) const
 {
-	FString Slot = GetSaveSlotForProfile(ProfileId);
+	const FString CurrentSlot = GetSaveSlotForProfile(ProfileId);
+	const FString LegacySlot = GetLegacySaveSlotForProfile(ProfileId);
+	const FString Version4Slot = LegacySlot + TEXT("_v4");
+	FString Slot = CurrentSlot;
 	// Each newer format wins even when invalid; do not resurrect an older balance after a rejected load.
 	if (!UGameplayStatics::DoesSaveGameExist(Slot, 0))
 	{
-		const FString Version4Slot = GetLegacySaveSlotForProfile(ProfileId) + TEXT("_v4");
-		Slot = UGameplayStatics::DoesSaveGameExist(Version4Slot, 0) ? Version4Slot : GetLegacySaveSlotForProfile(ProfileId);
+		Slot = UGameplayStatics::DoesSaveGameExist(Version4Slot, 0) ? Version4Slot : LegacySlot;
 	}
 	bOutExists = UGameplayStatics::DoesSaveGameExist(Slot, 0);
+	TArray<uint8> Bytes;
 	URogue10mProgressionSaveGame* Loaded = bOutExists
-		? Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(Slot, 0))
+		? (UGameplayStatics::LoadDataFromSlot(Bytes, Slot, 0)
+			? Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromMemory(Bytes)) : nullptr)
 		: NewObject<URogue10mProgressionSaveGame>(const_cast<URogue10mProgressionSubsystem*>(this));
 	if (!Loaded)
 	{
@@ -138,7 +190,11 @@ URogue10mProgressionSaveGame* URogue10mProgressionSubsystem::LoadSnapshot(
 		return nullptr;
 	}
 	if (!bOutExists) { Loaded->ProfileId = ProfileId; Loaded->RunId = FGuid::NewGuid(); }
-	if (!Rogue10mProgressionPersistence::Validate(*Loaded, ProfileId))
+	const bool bCheckOmittedVersion = bOutExists && Slot != CurrentSlot
+		&& Loaded->GetClass() == URogue10mProgressionSaveGame::StaticClass()
+		&& Loaded->SaveVersion == URogue10mProgressionSaveGame::CurrentVersion;
+	if ((bCheckOmittedVersion && !Rogue10mProgressionPersistence::ResolveOmittedVersion(*Loaded, Bytes, Slot == Version4Slot))
+		|| !Rogue10mProgressionPersistence::Validate(*Loaded, ProfileId))
 	{
 		SetError(NSLOCTEXT("Rogue10mSave", "Incompatible", "진행 저장 버전 또는 캐릭터 데이터가 맞지 않습니다. 기존 파일은 보존됩니다."));
 		return nullptr;

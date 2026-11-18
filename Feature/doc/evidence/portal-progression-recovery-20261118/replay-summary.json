@@ -1,0 +1,196 @@
+{
+  "passed": true,
+  "scope": "LiveCoding Development editor module and separate engine -game null RHI processes, authored Pawn port overlap",
+  "active_editor": {
+    "live_coding_result": "Success",
+    "clean_log_after_line": 3529,
+    "new_errors_after_that_line": 0,
+    "older_error_entries_including_one_fixed_QA_build_failure": 27,
+    "previous_unsaved_edit_count": 2,
+    "previous_unsaved_edits_still_present": true,
+    "full_normal_development_dll_rebuilt": false
+  },
+  "prior_reproduction": {
+    "engine_log": "Saved/Logs/Rogue10m.log",
+    "progression_reject_line": 2687,
+    "portal_reject_lines": [
+      2699,
+      2700,
+      2701,
+      2702,
+      2716
+    ],
+    "destination_load_attempted": false,
+    "omitted_save_version_and_run_id_in_original_legacy_slot": true
+  },
+  "actual_copy": {
+    "scenario": "CopiedLegacy",
+    "pid": 44512,
+    "exit_code": 0,
+    "checks": 17,
+    "actual_authored_portal_travel": true,
+    "actual_overlap_uses_programmatic_movement": true,
+    "elapsed_seconds": 53.1799885,
+    "error_kinds": {
+      "known_vendor_humanoid": 2,
+      "expected_rejected_save": 1,
+      "unclassified": 0
+    },
+    "checked_log_lines": 1695,
+    "patch_confirmation_line": 1564,
+    "private_original_inputs_preserved": true,
+    "real_map": "/Game/Rogue10m/Maps/OpenRunMap",
+    "travel_options": "StartRun=1",
+    "timer_seconds": 1200,
+    "same_profile_and_run_id": true,
+    "arrival_item_slot_equipment_grid_currency_growth_mastery_verified": true,
+    "saved_entry_baseline_verified": true,
+    "equivalent_ftext_fields": 64,
+    "inventory_field_differences": 0
+  },
+  "isolated_version_cases": [
+    {
+      "scenario": "Legacy1",
+      "pid": 48216,
+      "exit_code": 0,
+      "checks": 10,
+      "actual_authored_portal_travel": true,
+      "actual_overlap_uses_programmatic_movement": true,
+      "elapsed_seconds": 40.2704051,
+      "error_kinds": {
+        "known_vendor_humanoid": 2,
+        "expected_rejected_save": 0,
+        "unclassified": 0
+      },
+      "checked_log_lines": 1698,
+      "patch_confirmation_line": 1541
+    },
+    {
+      "scenario": "Legacy2",
+      "pid": 44564,
+      "exit_code": 0,
+      "checks": 6,
+      "actual_authored_portal_travel": false,
+      "actual_overlap_uses_programmatic_movement": false,
+      "elapsed_seconds": 26.8593146,
+      "error_kinds": {
+        "known_vendor_humanoid": 1,
+        "expected_rejected_save": 0,
+        "unclassified": 0
+      },
+      "checked_log_lines": 1619,
+      "patch_confirmation_line": 1549
+    },
+    {
+      "scenario": "Legacy3",
+      "pid": 6576,
+      "exit_code": 0,
+      "checks": 17,
+      "actual_authored_portal_travel": true,
+      "actual_overlap_uses_programmatic_movement": true,
+      "elapsed_seconds": 35.3960731,
+      "error_kinds": {
+        "known_vendor_humanoid": 2,
+        "expected_rejected_save": 0,
+        "unclassified": 0
+      },
+      "checked_log_lines": 1690,
+      "patch_confirmation_line": 1561
+    },
+    {
+      "scenario": "Omitted4",
+      "pid": 39788,
+      "exit_code": 0,
+      "checks": 5,
+      "actual_authored_portal_travel": false,
+      "actual_overlap_uses_programmatic_movement": false,
+      "elapsed_seconds": 27.4595504,
+      "error_kinds": {
+        "known_vendor_humanoid": 1,
+        "expected_rejected_save": 0,
+        "unclassified": 0
+      },
+      "checked_log_lines": 1614,
+      "patch_confirmation_line": 1545
+    },
+    {
+      "scenario": "Omitted5",
+      "pid": 40008,
+      "exit_code": 0,
+      "checks": 5,
+      "actual_authored_portal_travel": false,
+      "actual_overlap_uses_programmatic_movement": false,
+      "elapsed_seconds": 25.2655699,
+      "error_kinds": {
+        "known_vendor_humanoid": 1,
+        "expected_rejected_save": 0,
+        "unclassified": 0
+      },
+      "checked_log_lines": 1610,
+      "patch_confirmation_line": 1541
+    },
+    {
+      "scenario": "Invalid0",
+      "pid": 22260,
+      "exit_code": 0,
+      "checks": 5,
+      "actual_authored_portal_travel": false,
+      "actual_overlap_uses_programmatic_movement": false,
+      "elapsed_seconds": 24.8967334,
+      "error_kinds": {
+        "known_vendor_humanoid": 1,
+        "expected_rejected_save": 1,
+        "unclassified": 0
+      },
+      "checked_log_lines": 1608,
+      "patch_confirmation_line": 1541
+    },
+    {
+      "scenario": "Future999",
+      "pid": 49440,
+      "exit_code": 0,
+      "checks": 5,
+      "actual_authored_portal_travel": false,
+      "actual_overlap_uses_programmatic_movement": false,
+      "elapsed_seconds": 24.3877537,
+      "error_kinds": {
+        "known_vendor_humanoid": 1,
+        "expected_rejected_save": 1,
+        "unclassified": 0
+      },
+      "checked_log_lines": 1616,
+      "patch_confirmation_line": 1549
+    }
+  ],
+  "existing_user_saves": {
+    "count": 460,
+    "bytes_changed": 0,
+    "new_scoped_test_saves": 23
+  },
+  "important_prior_trials": [
+    {
+      "kind": "initial_ExecCmds_before_live_patch",
+      "owned_probe_stopped": true
+    },
+    {
+      "kind": "actual copied legacy trial A",
+      "portal_and_timer_passed": true,
+      "object_identity_inventory_fixture_rejected": true,
+      "kept_private": true
+    },
+    {
+      "kind": "legacy3 parallel trial A",
+      "portal_checks_passed": true,
+      "own_process_exit_timed_out": true,
+      "clean_fresh_trial_passed": true
+    },
+    {
+      "kind": "verification source C2662",
+      "fixed_nonconst_array_helper_readback": true,
+      "final_live_compile_passed": true
+    }
+  ],
+  "raw_save_data_and_logs_included": false,
+  "harness_path_check_passed": true,
+  "powershell_parser_passed": true
+}
