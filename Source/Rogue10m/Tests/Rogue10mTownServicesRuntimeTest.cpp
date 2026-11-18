@@ -5,6 +5,7 @@
 #include "Engine/GameInstance.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "HAL/FileManager.h"
 #include "HAL/IConsoleManager.h"
 #include "HAL/PlatformMisc.h"
@@ -27,6 +28,7 @@
 #include "Rogue10mProgressionSaveGame.h"
 #include "Rogue10mProgressionSubsystem.h"
 #include "Rogue10mTownProgressionComponent.h"
+#include "Rogue10mSkillTreeProgressionComponent.h"
 #include "Rogue10mTownServiceDataAsset.h"
 #include "Rogue10mTutorialDataAsset.h"
 #include "Rogue10mTutorialNPC.h"
@@ -124,18 +126,18 @@ private:
 			const FRogue10mInventorySnapshot FreshInventory = Inventory->CaptureInventory();
 			const FRogue10mCombatSnapshot FreshCombat = Combat->CaptureCombat();
 			const FRogue10mTownProgressionSnapshot FreshTown = Town->CaptureProgression();
-			bool bWeaponConsistent = true;
+			bool bHasEquippedWeapon = false;
 			for (const auto* Slots : { &FreshInventory.LeftEquipment, &FreshInventory.RightEquipment })
 			{
 				for (const FRogue10mSavedEquipmentSlot& Slot : *Slots)
 				{
-					if (Slot.Values.SlotType == ERogue10mInventorySlotType::MainWeapon && Slot.Values.bHasEquippedItem)
+					if (Slot.Values.bHasEquippedItem && (Slot.Values.SlotType == ERogue10mInventorySlotType::MainWeapon || Slot.Values.SlotType == ERogue10mInventorySlotType::SecondaryWeapon || Slot.Values.SlotType == ERogue10mInventorySlotType::Weapon))
 					{
-						bWeaponConsistent = Slot.Values.EquippedItem.WeaponType == FreshGrowth.WeaponType;
+						bHasEquippedWeapon = true;
 					}
 				}
 			}
-			Check(bWeaponConsistent, TEXT("fresh_spawn_active_weapon_matches_actual_equipped_starter_item"));
+			Check(!bHasEquippedWeapon && FreshGrowth.WeaponType == ERogue10mWeaponType::Unarmed && Character->GetEquippedWeaponType() == ERogue10mWeaponType::Unarmed, TEXT("fresh_spawn_is_unarmed_without_equipped_weapon"));
 			Check(Persistence->SaveNow(), TEXT("fresh_spawn_unmodified_progression_save_succeeds"));
 			Persistence->DetachCharacter(*Character, false);
 			Check(Persistence->AttachCharacter(*Character) && Persistence->IsSaveReady()
@@ -152,16 +154,62 @@ private:
 		Check(NPC->GetTutorialWidget() && !NPC->GetTutorialWidget()->GetDisplayedServices().IsEmpty(),
 			TEXT("actual_dialogue_widget_displays_town_services"));
 		if (Failures) { Finish(); return; }
-		if (bRead) { Read(); } else { Write(); }
+		if (bRead) { Read(); } else { WaitForWriteGround(); }
 	}
 
+    void WaitForWriteGround()
+    {
+        if (Character.IsValid() && Character->CanChangeWeapon())
+        {
+            Check(Character->GetCharacterMovement()->IsMovingOnGround(), TEXT("write_fixture_reaches_real_grounded_weapon_change_state"));
+            if (Failures) { Finish(); return; }
+            Write(); return;
+        }
+        if (++GroundWaitPolls >= 100 || !Character.IsValid())
+        {
+            UE_LOG(LogRogue10m, Error, TEXT("TOWN_SERVICES fixture grounding timeout polls=%d movement=%d can_change=%d"),
+                GroundWaitPolls, Character.IsValid() ? static_cast<int32>(Character->GetCharacterMovement()->MovementMode) : -1,
+                Character.IsValid() && Character->CanChangeWeapon());
+            Check(false, TEXT("write_fixture_grounded_before_bounded_deadline")); Finish(); return;
+        }
+        World->GetTimerManager().SetTimer(PrepareTimer,
+            FTimerDelegate::CreateLambda([Self = AsShared()] { Self->WaitForWriteGround(); }), 0.1f, false);
+    }
 	void Write()
 	{
 		const URogue10mTownServiceDataAsset& Tuning = NPC->ServiceData ? *NPC->ServiceData : *GetDefault<URogue10mTownServiceDataAsset>();
 		Check(!NPC->PurchasePotion() && Inventory->GetGold() == 0, TEXT("potion_insufficient_gold_rejected_without_charge"));
-		Check(!NPC->EnhanceEquippedItem(ERogue10mInventorySlotType::MainWeapon), TEXT("enhancement_insufficient_gold_rejected"));
+		Check(!NPC->EnhanceEquippedItem(ERogue10mInventorySlotType::MainWeapon)
+            && Inventory->GetGold() == 0 && !NPC->GetDialogueStatus().IsEmpty(), TEXT("unarmed_enhancement_rejected_without_charge"));
+        // Explicit QA setup after the untouched fresh-character save roundtrip.
+        // Equip the existing starter instance; do not grant a replacement weapon.
+        const URogue10mItemDataAsset* StarterData = nullptr;
+        int32 StarterContainer = INDEX_NONE;
+        FGuid StarterId;
+        for (int32 Index = 0; Index < Inventory->GetInventoryContainers().Num() && !StarterId.IsValid(); ++Index)
+        {
+            for (const FRogue10mInventoryGridEntry& Entry : Inventory->GetInventoryContainers()[Index].Entries)
+            {
+                if (Entry.ItemData && Entry.Quantity == 1
+                    && Entry.ItemData->Category == ERogue10mItemCategory::Equipment
+                    && Entry.ItemData->EquipSlotType == ERogue10mInventorySlotType::MainWeapon
+                    && Entry.ItemData->WeaponType == ERogue10mWeaponType::Knuckle)
+                {
+                    StarterData = Entry.ItemData.Get(); StarterContainer = Index; StarterId = Entry.InstanceId; break;
+                }
+            }
+        }
+        Check(StarterId.IsValid() && Inventory->TryEquipGridItem(StarterContainer, StarterId)
+            && Inventory->GetEquippedItemData(ERogue10mInventorySlotType::MainWeapon) == StarterData
+            && Character->GetEquippedWeaponType() == ERogue10mWeaponType::Knuckle
+            && Inventory->GetEquippedItemEnhancementLevel(ERogue10mInventorySlotType::MainWeapon) == 0,
+            TEXT("QA_explicitly_equips_existing_starter_knuckle_through_grid_API"));
+        if (Failures) { Finish(); return; }
+        const FRogue10mInventorySnapshot BeforeUnfundedEnhance = Inventory->CaptureInventory();
+        Check(!NPC->EnhanceEquippedItem(ERogue10mInventorySlotType::MainWeapon)
+            && Same(BeforeUnfundedEnhance, Inventory->CaptureInventory()), TEXT("enhancement_insufficient_gold_rejected"));
 		Check(!NPC->UpgradeTrait(ERogue10mTownTrait::Vitality) && Town->GetAvailableTraitPoints() == 0,
-			TEXT("trait_without_level_points_rejected"));
+			TEXT("trait_without_lobby_currency_rejected"));
 		Inventory->AddGold(10000);
 		const int32 GoldBeforePotion = Inventory->GetGold();
 		const int32 PotionsBefore = CountItem(NPC->TutorialData->StartingItem);
@@ -179,7 +227,7 @@ private:
 			TEXT("full_bag_purchase_rejected_without_charge"));
 		Check(Inventory->RestoreInventory(BeforeFull), TEXT("temporary_full_bag_state_restored"));
 
-		Check(Inventory->GetEquippedItemData(ERogue10mInventorySlotType::MainWeapon) != nullptr, TEXT("real_starter_weapon_equipped"));
+		Check(Inventory->GetEquippedItemData(ERogue10mInventorySlotType::MainWeapon) != nullptr, TEXT("QA_explicitly_equipped_starter_ready_for_enhancement"));
 		const float AttackBeforeEnhance = State->GetRogueAttributeSet()->GetAttackPower();
 		const int32 GoldBeforeEnhance = Inventory->GetGold();
 		for (int32 Level = 1; Level <= Tuning.MaximumEnhancementLevel; ++Level)
@@ -229,72 +277,94 @@ private:
 			&& Inventory->GetEquippedItemEnhancementLevel(ERogue10mInventorySlotType::MainWeapon) == Tuning.MaximumEnhancementLevel,
 			TEXT("enhanced_weapon_re_equips_without_loss"));
 
-		State->AddExperience(1500);
-		Check(State->GetPlayerLevel() > 2 && State->GetCurrentExperience() > 0.0f, TEXT("growth_level_and_partial_XP_progress"));
-		const float MaxHealthBefore = State->GetRogueAttributeSet()->GetMaxHealth();
-		const float AttackBeforeTrait = State->GetRogueAttributeSet()->GetAttackPower();
-		const int32 PointsBefore = Town->GetAvailableTraitPoints();
-		Check(NPC->UpgradeTrait(ERogue10mTownTrait::Vitality) && NPC->UpgradeTrait(ERogue10mTownTrait::Power),
-			TEXT("NPC_vitality_and_power_traits_upgrade"));
-		Check(Town->GetAvailableTraitPoints() == PointsBefore - 2, TEXT("trait_points_consumed_once"));
-		Check(FMath::IsNearlyEqual(State->GetRogueAttributeSet()->GetMaxHealth(), MaxHealthBefore + Tuning.VitalityHealthPerLevel)
-			&& FMath::IsNearlyEqual(State->GetRogueAttributeSet()->GetAttackPower(), AttackBeforeTrait + Tuning.PowerAttackPerLevel),
-			TEXT("traits_change_actual_GAS_max_health_and_attack"));
-		for (int32 Level = 1; Level < Tuning.MaximumTraitLevel; ++Level)
-		{
-			Check(NPC->UpgradeTrait(ERogue10mTownTrait::Vitality), TEXT("vitality_can_reach_authored_cap"));
-		}
-		const int32 PointsAtCap = Town->GetAvailableTraitPoints();
-		Check(!NPC->UpgradeTrait(ERogue10mTownTrait::Vitality) && Town->GetAvailableTraitPoints() == PointsAtCap,
-			TEXT("max_trait_rejected_without_point_loss"));
+        auto* Tree = State->GetSkillTreeProgressionComponent();
+        Check(Tree && Town->UsesLobbyBudget(), TEXT("attached_profile_uses_separate_lobby_budget"));
+        if (!Tree) { Finish(); return; }
+        State->AddExperience(1500);
+        Check(State->GetPlayerLevel() > 2 && State->GetCurrentExperience() > 0.0f, TEXT("growth_level_and_partial_XP_progress"));
+        const int32 RunPoints = Tree->GetAvailableGrowthPoints();
+        const auto Unfunded = Town->CaptureProgression();
+        Check(RunPoints > 0 && Town->GetAvailableTraitPoints() == 0
+            && !NPC->UpgradeTrait(ERogue10mTownTrait::Vitality) && Same(Unfunded, Town->CaptureProgression())
+            && Tree->GetAvailableGrowthPoints() == RunPoints, TEXT("run_growth_points_cannot_fund_lobby_traits"));
+        const auto Vitality = Town->GetUpgradeDefinition(ERogue10mTownTrait::Vitality, NPC->ServiceData);
+        const auto Power = Town->GetUpgradeDefinition(ERogue10mTownTrait::Power, NPC->ServiceData);
+        const int32 Budget = Vitality.PointCost * Vitality.MaxRank + Power.PointCost;
+        Check(Vitality.IsTuningValid() && Power.IsTuningValid() && Budget > 0, TEXT("live_trait_cost_cap_and_bonus_are_valid"));
+        Check(Persistence->SaveNow(), TEXT("pre_budget_fixture_snapshot_saved"));
+        if (Failures) { Finish(); return; }
+        // Isolated save seed, not earned currency. A transient SetLobbyBudget is overwritten by SaveNow.
+        const FString Slot = Persistence->GetSaveSlotForProfile(ProfileId);
+        Persistence->DetachCharacter(*Character, false);
+        auto* Seed = Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(Slot, 0));
+        Check(Seed && Seed->ProfileId == ProfileId, TEXT("budget_seed_targets_isolated_profile_only"));
+        if (!Seed) { Finish(); return; }
+        Seed->LobbyEarnedPoints = Budget;
+        Seed->HighestRunLevel = FMath::Max(State->GetPlayerLevel(), FMath::Max(Vitality.UnlockLevel, Power.UnlockLevel));
+        Check(UGameplayStatics::SaveGameToSlot(Seed, Slot, 0) && Persistence->AttachCharacter(*Character)
+            && Persistence->IsSaveReady() && Town->GetLobbyEarnedBudget() == Budget,
+            TEXT("QA_budget_seed_restores_through_production_save_attachment"));
+        Results += FString::Printf(TEXT("fixture_lobby=isolated_save_seed_not_run_earnings budget=%d vitality_cost=%d vitality_cap=%d power_cost=%d\n"), Budget, Vitality.PointCost, Vitality.MaxRank, Power.PointCost);
+        if (Failures) { Finish(); return; }
+        const float HealthBefore = State->GetRogueAttributeSet()->GetMaxHealth();
+        const float AttackBefore = State->GetRogueAttributeSet()->GetAttackPower();
+        Check(NPC->UpgradeTrait(ERogue10mTownTrait::Vitality) && NPC->UpgradeTrait(ERogue10mTownTrait::Power), TEXT("NPC_vitality_and_power_traits_upgrade"));
+        Check(Town->GetAvailableTraitPoints() == Budget - Vitality.PointCost - Power.PointCost
+            && Tree->GetAvailableGrowthPoints() == RunPoints, TEXT("exact_lobby_trait_cost_preserves_run_points"));
+        Check(FMath::IsNearlyEqual(State->GetRogueAttributeSet()->GetMaxHealth(), HealthBefore + Vitality.ValuePerRank)
+            && FMath::IsNearlyEqual(State->GetRogueAttributeSet()->GetAttackPower(), AttackBefore + Power.ValuePerRank), TEXT("traits_change_actual_GAS_max_health_and_attack"));
+        for (int32 Rank = 1; Rank < Vitality.MaxRank; ++Rank)
+        {
+            const int32 Before = Town->GetAvailableTraitPoints();
+            Check(NPC->UpgradeTrait(ERogue10mTownTrait::Vitality) && Town->GetTraitLevel(ERogue10mTownTrait::Vitality) == Rank + 1
+                && Town->GetAvailableTraitPoints() == Before - Vitality.PointCost, TEXT("vitality_reaches_live_cap_at_exact_rank_cost"));
+        }
+        const auto Capped = Town->CaptureProgression();
+        Check(!NPC->UpgradeTrait(ERogue10mTownTrait::Vitality) && Same(Capped, Town->CaptureProgression())
+            && Town->GetAvailableTraitPoints() == 0 && Tree->GetAvailableGrowthPoints() == RunPoints
+            && FMath::IsNearlyEqual(State->GetRogueAttributeSet()->GetMaxHealth(), HealthBefore + Vitality.ValuePerRank * Vitality.MaxRank), TEXT("max_trait_rejected_without_charge_and_GAS_cap_bonus_matches"));
 		Check(NPC->SelectDifficulty(ERogue10mDifficulty::Easy) && Town->GetDifficulty() == ERogue10mDifficulty::Easy
 			&& NPC->SelectDifficulty(ERogue10mDifficulty::Hard) && Town->GetDifficulty() == ERogue10mDifficulty::Hard,
 			TEXT("NPC_difficulty_selection_changes_next_run"));
 
-		int32 KnuckleSlot = INDEX_NONE;
-		for (int32 Index = 0; Index < Inventory->GetItemSlots().Num(); ++Index)
-		{
-			const FRogue10mItemStack& Item = Inventory->GetItemSlots()[Index];
-			if (Item.bOccupied && Item.Category == ERogue10mItemCategory::Equipment
-				&& Item.EquipSlotType == ERogue10mInventorySlotType::MainWeapon && Item.WeaponType == ERogue10mWeaponType::Knuckle)
-			{
-				KnuckleSlot = Index; break;
-			}
-		}
-		Check(KnuckleSlot != INDEX_NONE && Inventory->TryEquipItemFromSlot(KnuckleSlot)
-			&& Character->GetEquippedWeaponType() == ERogue10mWeaponType::Knuckle,
-			TEXT("real_knuckle_item_equipped_before_martial_progression"));
+        // Preserve the same enhanced instance for martial progression and persistence.
+        Check(WeaponId == StarterId && Character->GetEquippedWeaponType() == ERogue10mWeaponType::Knuckle
+            && Inventory->GetEquippedItemData(ERogue10mInventorySlotType::MainWeapon) == StarterData
+            && Inventory->GetEquippedItemEnhancementLevel(ERogue10mInventorySlotType::MainWeapon) == Tuning.MaximumEnhancementLevel,
+            TEXT("QA_equipped_starter_knuckle_keeps_enhancement_before_martial_progression"));
 		State->RecordSkillUse(TEXT("TownQaSkill"), 17);
 		State->RecordMonsterDefeat(TEXT("TownQaMonster"), 9);
-		const TArray<URogue10mAttackSkillData*> Skills = Combat->GetActiveSkillTreeSkills();
-		const int32 UnlocksBefore = Combat->GetUnlockedWeaponSkills().Num();
-		for (const URogue10mAttackSkillData* Skill : Skills)
-		{
-			if (!Skill) { continue; }
-			for (const FRogue10mSkillUnlockCondition& Condition : Skill->UnlockConditions)
-			{
-				if (Condition.ConditionType == ERogue10mSkillUnlockConditionType::SkillUseCount && Condition.RequiredSkill)
-				{
-					State->RecordSkillUse(Condition.RequiredSkill->GetFName(), Condition.RequiredCount);
-				}
-				else if (Condition.ConditionType == ERogue10mSkillUnlockConditionType::MonsterDefeatCount)
-				{
-					State->RecordMonsterDefeat(Condition.RequiredMonsterId, Condition.RequiredCount);
-				}
-			}
-		}
-		Combat->EvaluateActiveSkillUnlocks();
-		Check(Combat->GetUnlockedWeaponSkills().Num() > UnlocksBefore, TEXT("real_skill_conditions_unlock_new_martial_skills"));
-		bool bAssigned = false;
-		for (URogue10mAttackSkillData* Skill : Skills)
-		{
-			if (Skill && Skill->SkillTreeTier > 1 && Skill->SkillTreeNodeType == ERogue10mSkillTreeNodeType::ActiveTechnique)
-			{
-				bAssigned = Combat->AssignSkillToInputSlot(Skill, ERogue10mAttackInputSlot::Special);
-				if (bAssigned) { break; }
-			}
-		}
-		Check(bAssigned, TEXT("unlocked_nondefault_skill_bound_to_special_input"));
+        const int32 UnlocksBefore = Combat->GetUnlockedWeaponSkills().Num();
+        const FName TechniqueId(TEXT("F.Bengquan")), IdentityId(TEXT("I.InternalEnergy.Entry"));
+        const auto* Technique = Tree->FindNode(TechniqueId);
+        const auto* Identity = Tree->FindNode(IdentityId);
+        auto* LearnedSkill = Technique ? Technique->Skill.LoadSynchronous() : nullptr;
+        Check(Technique && Identity && LearnedSkill && Technique->bAutomaticUnlock
+            && LearnedSkill->IsAllowedInLoadoutSlot(ERogue10mAttackInputSlot::QSkill)
+            && !Tree->IsNodeUnlocked(TechniqueId) && !Combat->IsAttackSkillUnlocked(LearnedSkill), TEXT("authored_nondefault_common_technique_starts_locked"));
+        if (Failures) { Finish(); return; }
+        const int32 BeforeIdentity = Tree->GetAvailableGrowthPoints();
+        Check(Tree->TryUnlockNode(IdentityId, ERogue10mSkillTreeUnlockRoute::Points, NAME_None)
+            && Tree->GetActiveIdentity() == ERogue10mSkillTreeIdentity::InternalEnergy
+            && Tree->GetAvailableGrowthPoints() == BeforeIdentity - Identity->PointCost
+            && Town->GetAvailableTraitPoints() == 0, TEXT("inner_energy_entry_spends_exact_run_points_only"));
+        // Synthetic mastery events are fixture preparation, not physical hits or full-run play.
+        int32 Events = 0;
+        while (!Tree->IsNodeUnlocked(TechniqueId) && Events < 2000)
+        {
+            const int32 Before = Tree->GetMasteryTotalExperience(ERogue10mSkillTreeTrack::Brawler);
+            Tree->NotifyConfirmedAttack(ERogue10mSkillTreeTrack::Brawler);
+            ++Events;
+            if (Tree->GetMasteryTotalExperience(ERogue10mSkillTreeTrack::Brawler) == Before) { break; }
+        }
+        Combat->EvaluateActiveSkillUnlocks();
+        Results += FString::Printf(TEXT("fixture_mastery=synthetic_NotifyConfirmedAttack_not_physical_hits events=%d mastery=%d target=%s requirements=%s\n"), Events,
+            Tree->GetMasteryLevel(ERogue10mSkillTreeTrack::Brawler), *TechniqueId.ToString(), *Tree->GetNodeRequirementsText(TechniqueId).ToString());
+        Check(Tree->IsNodeUnlocked(TechniqueId) && Tree->EvaluateNodeEligibility(TechniqueId).RequiredAll.bSatisfied
+            && Tree->IsSkillGranted(LearnedSkill) && Combat->IsAttackSkillUnlocked(LearnedSkill)
+            && Combat->GetUnlockedWeaponSkills().Num() > UnlocksBefore, TEXT("real_skill_conditions_unlock_new_martial_skills"));
+        Check(Combat->AssignSkillToInputSlot(LearnedSkill, ERogue10mAttackInputSlot::QSkill)
+            && Combat->GetEquippedSkill(ERogue10mAttackInputSlot::QSkill) == LearnedSkill, TEXT("unlocked_nondefault_common_skill_bound_to_Q_input"));
 		int32 ConsumableSlot = INDEX_NONE;
 		for (int32 Index = 0; Index < Inventory->GetItemSlots().Num(); ++Index)
 		{
@@ -320,6 +390,9 @@ private:
 		Expected->Inventory = Inventory->CaptureInventory();
 		Expected->Combat = Combat->CaptureCombat();
 		Expected->Town = Town->CaptureProgression();
+        Expected->SkillTree = Tree->Capture();
+        Expected->LobbyEarnedPoints = Town->GetLobbyEarnedBudget();
+        Expected->HighestRunLevel = Town->GetLobbyUnlockLevel();
 		Expected->ClaimedRewards.Add(NPC->TutorialData->RewardId);
 		TArray<uint8> ExpectedBytes;
 		Check(UGameplayStatics::SaveGameToMemory(Expected, ExpectedBytes)
@@ -343,6 +416,8 @@ private:
 				&& Same(Saved->Inventory, Self->Inventory->CaptureInventory())
 				&& Same(Saved->Combat, Self->Combat->CaptureCombat())
 				&& Same(Saved->Town, Self->Town->CaptureProgression())
+                && Same(Saved->SkillTree, Self->State->GetSkillTreeProgressionComponent()->Capture())
+                && Saved->LobbyEarnedPoints == Self->Town->GetLobbyEarnedBudget()
 				&& Saved->ClaimedRewards.Contains(Self->NPC->TutorialData->RewardId),
 				TEXT("event_driven_autosave_writes_complete_progression_without_explicit_save"));
 			Self->Check(Self->Persistence->SaveNow(), TEXT("profile_progression_explicit_save_succeeds"));
@@ -379,6 +454,12 @@ private:
 		if (!Expected) { Finish(); return; }
 		Check(Same(Expected->Growth, State->CaptureGrowth()), TEXT("restart_restores_level_XP_weapon_and_skill_monster_counters"));
 		Check(Same(Expected->Inventory, Inventory->CaptureInventory()), TEXT("restart_restores_gold_grid_positions_instance_IDs_equipment_enhancements_quick_slots"));
+        const URogue10mItemDataAsset* RestoredWeapon = Inventory->GetEquippedItemData(ERogue10mInventorySlotType::MainWeapon);
+        const URogue10mTownServiceDataAsset& Tuning = NPC->ServiceData ? *NPC->ServiceData : *GetDefault<URogue10mTownServiceDataAsset>();
+        Check(RestoredWeapon && RestoredWeapon->WeaponType == ERogue10mWeaponType::Knuckle
+            && Character->GetEquippedWeaponType() == ERogue10mWeaponType::Knuckle
+            && Inventory->GetEquippedItemEnhancementLevel(ERogue10mInventorySlotType::MainWeapon) == Tuning.MaximumEnhancementLevel,
+            TEXT("restart_restores_enhanced_knuckle_without_QA_reequip"));
 		const FRogue10mItemStack RestoredQuickItem = Inventory->GetConsumableQuickSlotItem(2);
 		Check(Expected->Inventory.ConsumableQuickSlots.IsValidIndex(2)
 			&& Expected->Inventory.ConsumableQuickSlots[2] != INDEX_NONE
@@ -389,6 +470,9 @@ private:
 			TEXT("restart_restores_nonempty_moved_health_potion_quick_slot"));
 		Check(Same(Expected->Combat, Combat->CaptureCombat()), TEXT("restart_restores_unlocked_skills_and_input_bindings"));
 		Check(Same(Expected->Town, Town->CaptureProgression()), TEXT("restart_restores_traits_difficulty_and_authored_modifiers"));
+        Check(Same(Expected->SkillTree, State->GetSkillTreeProgressionComponent()->Capture())
+            && Expected->LobbyEarnedPoints == Town->GetLobbyEarnedBudget()
+            && Expected->HighestRunLevel == Town->GetLobbyUnlockLevel(), TEXT("restart_restores_skill_tree_and_lobby_budget"));
 		Check(State->GetSkillUseCount(TEXT("TownQaSkill")) == 17 && State->GetMonsterDefeatCount(TEXT("TownQaMonster")) == 9,
 			TEXT("named_progression_counters_survive_independent_process"));
 		const FRogue10mInventorySnapshot BeforeClaim = Inventory->CaptureInventory();
@@ -424,6 +508,8 @@ private:
 		Check(State && Inventory && Combat && Town && Persistence->GetAttachedProfileId() == ProfileId
 			&& Same(Expected->Growth, State->CaptureGrowth()) && Same(Expected->Inventory, Inventory->CaptureInventory())
 			&& Same(Expected->Combat, Combat->CaptureCombat()) && Same(Expected->Town, Town->CaptureProgression())
+            && Same(Expected->SkillTree, State->GetSkillTreeProgressionComponent()->Capture())
+            && Expected->LobbyEarnedPoints == Town->GetLobbyEarnedBudget()
 			&& Persistence->HasClaimedReward(NPC->TutorialData->RewardId), TEXT("switching_back_restores_original_profile_without_other_profile_state"));
 		Finish();
 	}
@@ -468,6 +554,7 @@ private:
 	FTimerHandle PrepareTimer;
 	FString Output, Results;
 	int32 Failures = 0;
+    int32 GroundWaitPolls = 0;
 	bool bRead = false;
 };
 

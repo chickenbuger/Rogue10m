@@ -1,0 +1,115 @@
+{
+  "GeometryScriptSimpleMeshBuffers": {
+    "doc": "Geometry Script Simple Mesh Buffers\r\n\r\n**C++ Source:**\r\n\r\n- **Plugin**: GeometryScripting\r\n- **Module**: GeometryScriptingCore\r\n- **File**: MeshBasicEditFunctions.h\r\n\r\n**Editor Properties:** (see get_editor_property/set_editor_property)\r\n\r\n- ``normals`` (Array[Vector]):  [Read-Write]\r\n- ``tri_group_i_ds`` (Array[int32]):  [Read-Write]\r\n- ``triangles`` (Array[IntVector]):  [Read-Write]\r\n- ``uv0`` (Array[Vector2D]):  [Read-Write]\r\n- ``uv1`` (Array[Vector2D]):  [Read-Write]\r\n- ``uv2`` (Array[Vector2D]):  [Read-Write]\r\n- ``uv3`` (Array[Vector2D]):  [Read-Write]\r\n- ``uv4`` (Array[Vector2D]):  [Read-Write]\r\n- ``uv5`` (Array[Vector2D]):  [Read-Write]\r\n- ``uv6`` (Array[Vector2D]):  [Read-Write]\r\n- ``uv7`` (Array[Vector2D]):  [Read-Write]\r\n- ``vertex_colors`` (Array[LinearColor]):  [Read-Write]\r\n- ``vertices`` (Array[Vector]):  [Read-Write]",
+    "members": [
+      "assign",
+      "cast",
+      "copy",
+      "export_text",
+      "get_editor_property",
+      "import_text",
+      "normals",
+      "set_editor_properties",
+      "set_editor_property",
+      "static_struct",
+      "to_dict",
+      "to_tuple",
+      "tri_group_i_ds",
+      "triangles",
+      "uv0",
+      "uv1",
+      "uv2",
+      "uv3",
+      "uv4",
+      "uv5",
+      "uv6",
+      "uv7",
+      "vertex_colors",
+      "vertices"
+    ]
+  },
+  "GeometryScriptCreateNewStaticMeshAssetOptions": {
+    "doc": "Geometry Script Create New Static Mesh Asset Options\r\n\r\n**C++ Source:**\r\n\r\n- **Plugin**: GeometryScripting\r\n- **Module**: GeometryScriptingEditor\r\n- **File**: CreateNewAssetUtilityFunctions.h\r\n\r\n**Editor Properties:** (see get_editor_property/set_editor_property)\r\n\r\n- ``collision_mode`` (CollisionTraceFlag):  [Read-Write]\r\n- ``enable_collision`` (bool):  [Read-Write]\r\n- ``enable_nanite`` (bool):  [Read-Write]\r\n- ``enable_recompute_normals`` (bool):  [Read-Write]\r\n- ``enable_recompute_tangents`` (bool):  [Read-Write]\r\n- ``nanite_proxy_triangle_percent`` (float):  [Read-Write] Replaced NaniteProxyTrianglePercent with usage of Engine FMeshNaniteSettings, use NaniteSettings property instead\r\n- ``nanite_settings`` (MeshNaniteSettings):  [Read-Write] Nanite settings to set on new StaticMesh Asset\r\n- ``use_original_vertex_order`` (bool):  [Read-Write] Use the original vertex order found in the source data. This is useful if the inbound mesh was originally non-manifold, and needs to keep\r\n  the non-manifold structure when re-created.",
+    "members": [
+      "assign",
+      "cast",
+      "collision_mode",
+      "copy",
+      "enable_collision",
+      "enable_nanite",
+      "enable_recompute_normals",
+      "enable_recompute_tangents",
+      "export_text",
+      "get_editor_property",
+      "import_text",
+      "nanite_proxy_triangle_percent",
+      "nanite_settings",
+      "set_editor_properties",
+      "set_editor_property",
+      "static_struct",
+      "to_dict",
+      "to_tuple",
+      "use_original_vertex_order"
+    ]
+  },
+  "GeometryScriptGroupLayer": {
+    "doc": "FGeometryScriptGroupLayer identifies a PolyGroup Layer of a Mesh.\nThe Default Layer always exists, Extended layers may or may not exist.\r\n\r\n**C++ Source:**\r\n\r\n- **Plugin**: GeometryScripting\r\n- **Module**: GeometryScriptingCore\r\n- **File**: GeometryScriptTypes.h\r\n\r\n**Editor Properties:** (see get_editor_property/set_editor_property)\r\n\r\n- ``default_layer`` (bool):  [Read-Write] If true,the default/standard PolyGroup Layer is used\r\n- ``extended_layer_index`` (int32):  [Read-Write] Index of an extended PolyGroup Layer (which may or may not exist on any given Mesh)",
+    "members": [
+      "assign",
+      "cast",
+      "copy",
+      "default_layer",
+      "export_text",
+      "extended_layer_index",
+      "get_editor_property",
+      "import_text",
+      "set_editor_properties",
+      "set_editor_property",
+      "static_struct",
+      "to_dict",
+      "to_tuple"
+    ]
+  },
+  "GeometryScriptMeshSelection": {
+    "doc": "FGeometryScriptMeshSelection is a container for a Mesh Selection used in Geometry Script.\nThe actual selection representation is not exposed to BP,\nuse functions in MeshSelectionFunctions/etc to manipulate the selection.\n\nInternally the selection is stored as a SharedPtr to a FGeometrySelection, which\nstores a TSet (so unique add and remove are efficient, but the selection cannot\nbe directly indexed without converting to an Array).\n\nNote that the Selection storage is not a UProperty, and is not\nserialized. FGeometryScriptMeshSelection instances *cannot* be serialized,\nthey are only transient data structures, that can be created and used Blueprint instances.\r\n\r\n**C++ Source:**\r\n\r\n- **Plugin**: GeometryScripting\r\n- **Module**: GeometryScriptingCore\r\n- **File**: GeometryScriptSelectionTypes.h\r\n",
+    "members": [
+      "assign",
+      "cast",
+      "combine_mesh_selections",
+      "copy",
+      "debug_print_mesh_selection",
+      "export_text",
+      "get_editor_property",
+      "get_mesh_selection_info",
+      "import_text",
+      "set_editor_properties",
+      "set_editor_property",
+      "static_struct",
+      "to_dict",
+      "to_tuple"
+    ]
+  },
+  "GeometryScript_UVs": {
+    "set_mesh_u_vs_from_box_projection": "X.set_mesh_u_vs_from_box_projection(target_mesh, uv_set_index, box_transform, selection, min_island_tri_count=2, debug=None) -> DynamicMesh\r\nUsing Box Projection, update the UVs in the UV Channel for an entire mesh or a subset defined by a non-empty Selection.\r\n\r\nArgs:\r\n    target_mesh (DynamicMesh): \r\n    uv_set_index (int32): \r\n    box_transform (Transform): \r\n    selection (GeometryScriptMeshSelection): \r\n    min_island_tri_count (int32): \r\n    debug (GeometryScriptDebug): \r\n\r\nReturns:\r\n    DynamicMesh:",
+    "set_mesh_u_vs_from_cylinder_projection": "X.set_mesh_u_vs_from_cylinder_projection(target_mesh, uv_set_index, cylinder_transform, selection, split_angle=45.000000, debug=None) -> DynamicMesh\r\nUsing Cylinder Projection, update the UVs in the UV Channel for an entire mesh or a subset defined by a non-empty Selection.\r\n\r\nArgs:\r\n    target_mesh (DynamicMesh): \r\n    uv_set_index (int32): \r\n    cylinder_transform (Transform): \r\n    selection (GeometryScriptMeshSelection): \r\n    split_angle (float): \r\n    debug (GeometryScriptDebug): \r\n\r\nReturns:\r\n    DynamicMesh:",
+    "set_mesh_u_vs_from_planar_projection": "X.set_mesh_u_vs_from_planar_projection(target_mesh, uv_set_index, plane_transform, selection, debug=None) -> DynamicMesh\r\nScale of PlaneTransform defines world-space dimension that maps to 1 UV dimension\r\n\r\nArgs:\r\n    target_mesh (DynamicMesh): \r\n    uv_set_index (int32): \r\n    plane_transform (Transform): \r\n    selection (GeometryScriptMeshSelection): \r\n    debug (GeometryScriptDebug): \r\n\r\nReturns:\r\n    DynamicMesh:",
+    "transfer_mesh_u_vs_by_projection": "X.transfer_mesh_u_vs_by_projection(target_mesh, target_uv_channel, target_selection, target_transform, source_mesh, source_mesh_optional_bvh, source_uv_channel, source_selection, source_transform, settings, projection_direction=[0.000000, 0.000000, -1.000000], projection_offset=0.000000, debug=None) -> DynamicMesh\r\nCopy UVs from one mesh to another, by projecting along the requested direction.\nNote: This does not transfer UV seams; it assigns a single UV coordinate per vertex in the target mesh selection.\nBy default, also searches in -ProjectionDirection and picks the closest source mesh position to copy from --\nset ProjectionRangeMin in Settings to a value >= 0 to only search in +ProjectionDirection.\r\n\r\nArgs:\r\n    target_mesh (DynamicMesh): Mesh to assign new UVs\r\n    target_uv_channel (int32): UV channel to update on target mesh\r\n    target_selection (GeometryScriptMeshSelection): Triangles to update on the target mesh\r\n    target_transform (Transform): Transform of target mesh\r\n    source_mesh (DynamicMesh): Mesh to transfer UVs from\r\n    source_mesh_optional_bvh (GeometryScriptDynamicMeshBVH): Optional BVH for the source mesh\r\n    source_uv_channel (int32): UV channel to read from on the source mesh\r\n    source_selection (GeometryScriptMeshSelection): Triangles to read from on the source mesh\r\n    source_transform (Transform): Transform of the source mesh\r\n    settings (GeometryScriptMeshProjectionSettings): Additional settings\r\n    projection_direction (Vector): Direction to project (in the space where TargetMesh is transformed by TargetTransform, and SourceMesh is transformed by SourceTransform)\r\n    projection_offset (double): Projection will start offset by this amount from the TargetMesh vertices\r\n    debug (GeometryScriptDebug): \r\n\r\nReturns:\r\n    DynamicMesh:"
+  },
+  "GeometryScript_Materials": {
+    "set_polygroup_material_id": "X.set_polygroup_material_id(target_mesh, group_layer, polygroup_id, material_id, defer_change_notifications=False, debug=None) -> (DynamicMesh, is_valid_polygroup_id=bool)\r\nSet a new MaterialID on all the triangles of TargetMesh with the given PolyGroup.\r\n\r\nArgs:\r\n    target_mesh (DynamicMesh): \r\n    group_layer (GeometryScriptGroupLayer): PolyGroup Layer to use as basis for PolyGroups\r\n    polygroup_id (int32): PolyGroup ID that specifies Triangles to set to new MaterialID\r\n    material_id (int32): explicit new MaterialID to set\r\n    defer_change_notifications (bool): if true, the UDynamicMesh does not emit a change event/signal for this modification\r\n    debug (GeometryScriptDebug): \r\n\r\nReturns:\r\n    bool: \r\n\r\n    is_valid_polygroup_id (bool):"
+  },
+  "build_settings": {
+    "get_lod_build_settings": "x.get_lod_build_settings(static_mesh, lod_index) -> MeshBuildSettings\r\nCopy the build options with the specified LOD build settings.\r\n\r\nArgs:\r\n    static_mesh (StaticMesh): Mesh to process.\r\n    lod_index (int32): The LOD we get the reduction settings.\r\n\r\nReturns:\r\n    MeshBuildSettings: \r\n\r\n    out_build_options (MeshBuildSettings): The build settings where we copy the build options.",
+    "set_lod_build_settings": "x.set_lod_build_settings(static_mesh, lod_index, build_options) -> None\r\nSet the LOD build options for the specified LOD index.\r\n\r\nArgs:\r\n    static_mesh (StaticMesh): Mesh to process.\r\n    lod_index (int32): The LOD we will apply the build settings.\r\n    build_options (MeshBuildSettings): The build settings we want to apply to the LOD."
+  },
+  "transient_tetra": {
+    "group_property": "tri_group_i_ds",
+    "triangles": 4,
+    "append_tuple": "<class 'tuple'>",
+    "material_result": "(<Object '/Engine/Transient.DynamicMesh_0' (0x000002197CF6E540) Class 'DynamicMesh'>, True)",
+    "dirty": [
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock"
+    ]
+  }
+}

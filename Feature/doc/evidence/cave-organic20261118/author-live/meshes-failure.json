@@ -1,0 +1,11 @@
+{
+  "passed": false,
+  "pid": 49456,
+  "assets_saved": false,
+  "sites": {},
+  "traceback": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/RunOrganicCaveMeshes20261118.py\", line 22, in <module>\n    mesh,report=m.create_organic_cave_mesh(u,site,config['expected_mesh_paths'][sid].split('.')[0],\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\OrganicCaves20261118Mesh.py\", line 136, in create_organic_cave_mesh\n    dynamic, source, transient_report = prepare_organic_dynamic_mesh(u, source_site_spec)\n                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\OrganicCaves20261118Mesh.py\", line 113, in prepare_organic_dynamic_mesh\n    box = u.Transform(location=u.Vector(0, 0, 0), rotation=u.Quat(0, 0, 0, 1), scale=u.Vector(240, 240, 240))\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: Transform: Failed to convert parameter 'rotation' when calling function 'KismetMathLibrary.MakeTransform' on 'Default__KismetMathLibrary'\n  TypeError: NativizeProperty: Cannot nativize 'Quat' as 'Rotation' (StructProperty)\n    TypeError: NativizeStructInstance: Cannot nativize 'Quat' as 'Rotator'\n",
+  "dirty_packages_after": [
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock"
+  ]
+}

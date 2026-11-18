@@ -74,7 +74,7 @@
 | 생성 출력 검사 | 원본 `CheckGeneratedChanges.ps1` 통과 | [검사 로그](evidence/town-services-persistence-20261011/generated-check.log), 기존 다른 작업의 바이너리 변경 경고는 구분 |
 | 원본 최종 빌드 통합 서비스 검사 | `integrated01` Write 60개/Read 25개 통과, failures=0 | [원본 Write 결과](evidence/town-services-persistence-20261011/Rogue10m_Town_QA_integrated01/write-results.txt), [원본 Read 결과](evidence/town-services-persistence-20261011/Rogue10m_Town_QA_integrated01/read-results.txt) |
 | 원본 최종 빌드 통합 포탈/런 검사 | `integratedrun01` Write 42개/Read 15개 통과, failures=0 | [원본 런 Write 결과](evidence/town-run-persistence-20261011/Rogue10m_Town_QA_Run_integratedrun01/write-results.txt), [원본 런 Read 결과](evidence/town-run-persistence-20261011/Rogue10m_Town_QA_Run_integratedrun01/read-results.txt) |
-| 원본 최신 F8 입력과의 추가 화면 검사 | `integratedvisual720` 9개 통과, failures=0 | [원본 화면 결과](evidence/town-services-persistence-20261011/Rogue10m_Town_QA_integratedvisual720/visual-results.txt), [원본 화면](evidence/town-services-persistence-20261011/Rogue10m_Town_QA_integratedvisual720/town-services.png) |
+| 원본 최신 F8 입력과의 추가 화면 검사 | `integratedvisual720` 9개 통과, failures=0 | [원본 화면 결과](evidence/town-services-persistence-20261011/Rogue10m_Town_QA_integratedvisual720/visual-results.txt), 원본 화면〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕 |
 
 실제 게임 검증은 사용자 저장과 분리된 `RogueProfileSaveSlot`, `RogueProgressionSavePrefix`, `RogueSkillKeySaveSlot` 옵션을 사용한다. 최신 `final01`에는 몸통 방어구의 실제 GAS Defense +2와 25골드 차감, 비어 있지 않은 회복 물약 퀵슬롯의 0→2 이동·재접속 및 기존 0번 칸 비움 검사를 포함했다. 이벤트 자동 저장과 프로필 격리도 동일 코드로 다시 통과했다.
 
@@ -92,7 +92,7 @@
 
 화면 검증은 D3D11의 1280×720과 1920×1080에서 실제 대화를 렌더링했다. 두 해상도 모두 8개 서비스와 요약/최종 조작 안내가 화면 안에 들어오며, 실제 입력 스택의 Enter 구매, Down 선택 이동과 Esc 닫기가 통과했다. PNG 해상도를 확인했고 셰이더 준비 오버레이가 없는 화면을 증거로 남겼다. 첫 `finalvisual720`은 차가운 SM5 셰이더 준비로 240초 제한에 도달했으며 로그를 보존했다. `finalvisual720warm`은 600초 제한으로 다시 실행해 통과했다.
 
-[720p 화면](evidence/town-services-persistence-20261011/Rogue10m_Town_QA_finalvisual720warm/town-services.png)과 [1080p 화면](evidence/town-services-persistence-20261011/Rogue10m_Town_QA_finalvisual1080/town-services.png)에 최종 레이아웃을 보존했다.
+720p 화면〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕과 [1080p 화면](evidence/town-services-persistence-20261011/Rogue10m_Town_QA_finalvisual1080/town-services.png)에 최종 레이아웃을 보존했다.
 
 최종 원본 `integratedvisual720`도 9개 검사와 렌더링을 통과해 현재 PlayerController의 F8 입력 변경과 NPC 서비스 입력이 함께 동작하는 것을 확인했다. 확정 검사 수는 원본 서비스/런 142개, 오류 복원 27개, 두 해상도 화면 18개로 합계 187개이며, 원본 720p의 9개 검사를 추가로 반복 확인했다.
 
@@ -101,3 +101,6 @@
 ## 후속 범위
 
 향후에는 저장 버전 마이그레이션, 백업/복구와 수동 저장 UI, 멀티플레이어 서버 저장 정책을 설계한다. 실제 플레이 결과를 기준으로 골드 수급과 강화/특성 비용을 조정하고, 추가 NPC·아이템 카탈로그와 디자이너 Data Asset을 확장한다. 이번 기능은 기존 ServiceData가 비어 있으면 C++ 기본값으로 동작하므로 새 에셋 생성이나 기존 .uasset/.umap 수정은 필요하지 않았다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

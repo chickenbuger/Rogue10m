@@ -1,0 +1,148 @@
+PASS fresh_isolated_profile_and_real_local_viewport
+PASS QA_profile_created_and_selected
+PASS normal_QA_profile_entry_attaches_actual_player
+PASS ordinary_gameplay_debug_and_reference_requests_default_OFF
+PASS spatial_debug_refuses_no_live_owned_test_monster
+PASS normal_F6_action_spawns_real_test_boss
+PASS owned_reward_disabled_live_test_target
+PASS owned_test_target_actual_regeneration_properties_available
+owned_target_regen_before_health_per_s=2.000000000
+owned_target_regen_before_stamina_per_s=0.100000001
+owned_target_regen_before_mana_per_s=0.100000001
+owned_target_regen_interval_s=1.000000000
+PASS owned_test_target_regeneration_disabled_without_HP_write
+PASS wide_spawn_reference_uses_actual_live_colliders
+PASS QA_pause_starts_from_unpaused_world
+PASS QA_owned_pause_acquired
+VIEW 00_spawned_target_wide.png actor_to_attack_camera_cm=619.001 mesh_bounds_origin=X=2.678 Y=-1610.654 Z=343.967 mesh_bounds_extent=X=206.896 Y=156.006 Z=205.486 render_camera=X=-0.067 Y=-2254.611 Z=169.737 attack_camera=X=-0.067 Y=-2254.611 Z=169.737 camera_inside_mesh_bounds_aabb=0 capsule_radius_cm=34.000 capsule_half_height_cm=88.000 mesh_visible_flag=1 actor_hidden=0 inspection=0
+PASS OFF_fixture_executes_actual_query_and_applied_damage
+PASS asset_debug_true_cannot_emit_or_record_ordinary_play_debug
+PASS explicit_spatial_enable_with_live_owned_target
+PASS actual_query_enabled_supported_colliders_draw_in_owned_buffer
+PASS QA_pause_starts_from_unpaused_world
+PASS QA_owned_pause_acquired
+PASS pose_fixture_owns_a_live_kinematic_test_mesh
+PASS owned_mesh_parallel_pose_completed_before_scene_baseline
+owned_mesh_pose_fixture_before_parallel=0 task_drained=0 bones=46 original_pause_anims=0 original_tick=1 sync=UpdateKinematicBonesToAnim_TeleportPhysics_DisallowDeferral
+SCENE_POSE baseline_synced frame=264 paused=1 actor=Rotation: Pitch 0.587261 Yaw -90.000000 Roll -0.000000
+Translation: -3.131191 -2107.576208 140.218003
+Scale3D: 1.000000 1.000000 1.000000
+ mesh=Rotation: Pitch 0.000000 Yaw -180.000000 Roll -0.587261
+Translation: -3.131191 -2108.498659 50.222731
+Scale3D: 2.400000 2.400000 2.400000
+ shape_center=X=6.210 Y=-2003.494 Z=442.709 first_body_index=0 first_body_pose=Rotation: Pitch -56.962942 Yaw -82.039075 Roll -75.326600
+Translation: 6.357748 -2001.555321 439.532960
+Scale3D: 1.000000 1.000000 1.000000
+ native_probe_components=1 native_probe_hits_owned_mesh=1 parallel_running=0 pose_bones=46
+PASS sampled_live_skeletal_center_agrees_with_independent_native_scene_overlap
+SCENE_POSE translated_synced frame=264 paused=1 actor=Rotation: Pitch 0.587261 Yaw -90.000000 Roll -0.000000
+Translation: -3.131191 -2067.576208 140.218003
+Scale3D: 1.000000 1.000000 1.000000
+ mesh=Rotation: Pitch 0.000000 Yaw -180.000000 Roll -0.587261
+Translation: -3.131191 -2068.498659 50.222731
+Scale3D: 2.400000 2.400000 2.400000
+ shape_center=X=6.210 Y=-1963.494 Z=442.709 first_body_index=0 first_body_pose=Rotation: Pitch -56.962942 Yaw -82.039075 Roll -75.326600
+Translation: 6.357748 -1961.555321 439.532960
+Scale3D: 1.000000 1.000000 1.000000
+ native_probe_components=1 native_probe_hits_owned_mesh=1 parallel_running=0 pose_bones=46
+PASS sampled_live_skeletal_center_agrees_with_independent_native_scene_overlap
+PASS owned_actor_and_mesh_move_exactly_the_requested_translation
+PASS paused_owned_mesh_component_pose_stays_identical_during_translation
+LIVE_SHAPE_TRANSLATION before=X=6.210 Y=-2003.494 Z=442.709 after=X=6.210 Y=-1963.494 Z=442.709 measured_delta=X=0.000 Y=40.000 Z=0.000 expected_delta=X=0.000 Y=40.000 Z=0.000 delta_error_cm=0.000000000
+PASS live_skeletal_scene_shape_follows_owned_actor_transform_while_pose_paused
+SCENE_POSE restored_synced frame=264 paused=1 actor=Rotation: Pitch 0.587261 Yaw -90.000000 Roll -0.000000
+Translation: -3.131191 -2107.576208 140.218003
+Scale3D: 1.000000 1.000000 1.000000
+ mesh=Rotation: Pitch 0.000000 Yaw -180.000000 Roll -0.587261
+Translation: -3.131191 -2108.498659 50.222731
+Scale3D: 2.400000 2.400000 2.400000
+ shape_center=X=6.210 Y=-2003.494 Z=442.709 first_body_index=0 first_body_pose=Rotation: Pitch -56.962942 Yaw -82.039075 Roll -75.326600
+Translation: 6.357748 -2001.555321 439.532960
+Scale3D: 1.000000 1.000000 1.000000
+ native_probe_components=1 native_probe_hits_owned_mesh=1 parallel_running=0 pose_bones=46
+PASS sampled_live_skeletal_center_agrees_with_independent_native_scene_overlap
+PASS owned_scene_shape_restores_to_original_physics_location
+PASS owned_mesh_pause_and_tick_flags_restored
+VIEW 01_live_colliders.png actor_to_attack_camera_cm=149.998 mesh_bounds_origin=X=15.750 Y=-2042.834 Z=449.359 mesh_bounds_extent=X=175.153 Y=165.721 Z=158.753 render_camera=X=-0.047 Y=-2254.607 Z=169.743 attack_camera=X=-0.047 Y=-2254.607 Z=169.743 camera_inside_mesh_bounds_aabb=0 capsule_radius_cm=34.000 capsule_half_height_cm=88.000 mesh_visible_flag=1 actor_hidden=0 inspection=0
+PASS real_single_pulse_records_query_and_applied_damage_once
+PASS snapshot_is_actual_executed_pulse_and_lock_kind
+PASS owned_target_eligible_and_green_only_after_actual_applied_damage
+PASS snapshot_keeps_real_overlapped_hit_component
+PASS linear_capture_matches_actual_oriented_query_box
+PASS QA_pause_starts_from_unpaused_world
+PASS QA_owned_pause_acquired
+VIEW 02_linear_query_hit.png actor_to_attack_camera_cm=150.000 mesh_bounds_origin=X=16.109 Y=-2042.809 Z=449.440 mesh_bounds_extent=X=175.153 Y=165.721 Z=158.753 render_camera=X=-0.047 Y=-2254.607 Z=169.743 attack_camera=X=-0.047 Y=-2254.607 Z=169.743 camera_inside_mesh_bounds_aabb=0 capsule_radius_cm=34.000 capsule_half_height_cm=88.000 mesh_visible_flag=1 actor_hidden=0 inspection=0
+PASS actual_inspection_reference_starts_from_normal_unpaused_first_person
+PASS actual_controller_inspection_reference_enabled
+PASS QA_pause_starts_from_unpaused_world
+PASS QA_owned_pause_acquired
+VIEW 02b_actual_query_inspection_reference.png actor_to_attack_camera_cm=150.006 mesh_bounds_origin=X=25.215 Y=-2035.179 Z=440.114 mesh_bounds_extent=X=188.014 Y=177.772 Z=148.493 render_camera=X=-0.000 Y=-2535.442 Z=156.244 attack_camera=X=-0.029 Y=-2254.617 Z=169.728 camera_inside_mesh_bounds_aabb=0 capsule_radius_cm=34.000 capsule_half_height_cm=88.000 mesh_visible_flag=1 actor_hidden=0 inspection=1
+PASS inspection_reference_restores_first_person_aim_without_new_query
+PASS real_single_pulse_records_query_and_applied_damage_once
+PASS snapshot_is_actual_executed_pulse_and_lock_kind
+PASS owned_target_eligible_and_green_only_after_actual_applied_damage
+PASS snapshot_keeps_real_overlapped_hit_component
+PASS circle_capture_uses_actual_sphere_and_forward_offset
+PASS QA_pause_starts_from_unpaused_world
+PASS QA_owned_pause_acquired
+VIEW 03_circle_query_hit.png actor_to_attack_camera_cm=150.000 mesh_bounds_origin=X=25.454 Y=-2035.222 Z=439.909 mesh_bounds_extent=X=188.014 Y=177.772 Z=148.493 render_camera=X=-0.000 Y=-2535.442 Z=156.244 attack_camera=X=-0.028 Y=-2254.617 Z=169.727 camera_inside_mesh_bounds_aabb=0 capsule_radius_cm=34.000 capsule_half_height_cm=88.000 mesh_visible_flag=1 actor_hidden=0 inspection=0
+PASS real_single_pulse_records_query_and_applied_damage_once
+PASS snapshot_is_actual_executed_pulse_and_lock_kind
+PASS owned_target_eligible_and_green_only_after_actual_applied_damage
+PASS snapshot_keeps_real_overlapped_hit_component
+PASS arc_capture_distinguishes_sphere_query_from_actor_angle_filter
+PASS QA_pause_starts_from_unpaused_world
+PASS QA_owned_pause_acquired
+VIEW 04_arc_sphere_query_and_filter.png actor_to_attack_camera_cm=150.000 mesh_bounds_origin=X=25.455 Y=-2035.223 Z=439.908 mesh_bounds_extent=X=188.014 Y=177.772 Z=148.493 render_camera=X=-0.000 Y=-2535.442 Z=156.244 attack_camera=X=-0.027 Y=-2254.617 Z=169.726 camera_inside_mesh_bounds_aabb=0 capsule_radius_cm=34.000 capsule_half_height_cm=88.000 mesh_visible_flag=1 actor_hidden=0 inspection=0
+PASS projectile_two_actual_timer_pulses_recorded
+PASS snapshot_is_actual_executed_pulse_and_lock_kind
+PASS owned_target_eligible_and_green_only_after_actual_applied_damage
+PASS snapshot_keeps_real_overlapped_hit_component
+PASS projectile_second_pulse_is_actual_incremental_segment_not_whole_range
+PASS QA_pause_starts_from_unpaused_world
+PASS QA_owned_pause_acquired
+VIEW 05_projectile_segment.png actor_to_attack_camera_cm=150.026 mesh_bounds_origin=X=3.059 Y=-2038.891 Z=442.713 mesh_bounds_extent=X=171.117 Y=162.311 Z=161.781 render_camera=X=0.026 Y=-2254.655 Z=169.667 attack_camera=X=0.026 Y=-2254.655 Z=169.667 camera_inside_mesh_bounds_aabb=0 capsule_radius_cm=34.000 capsule_half_height_cm=88.000 mesh_visible_flag=1 actor_hidden=0 inspection=0
+PASS snapshot_is_actual_executed_pulse_and_lock_kind
+PASS owned_target_eligible_and_green_only_after_actual_applied_damage
+PASS snapshot_keeps_real_overlapped_hit_component
+PASS linear_capture_matches_actual_oriented_query_box
+MULTIHIT expected_records=7 actual_records=7 health_before_second=9999.901367188 health_after_second=9999.886718750 execution=6 pulse=2 locked=1 accepted=1
+PASS actual_MultiHit_exactly_two_pulse_records
+PASS actual_MultiHit_second_locked_pulse_decreases_HP_with_owned_regeneration_disabled
+PASS snapshot_is_actual_executed_pulse_and_lock_kind
+PASS owned_target_eligible_and_green_only_after_actual_applied_damage
+PASS later_MultiHit_snapshot_has_no_new_raw_overlap_geometry
+PASS QA_pause_starts_from_unpaused_world
+PASS QA_owned_pause_acquired
+VIEW 06_locked_reuse_no_new_query.png actor_to_attack_camera_cm=2003.402 mesh_bounds_origin=X=2002.254 Y=-2038.867 Z=440.641 mesh_bounds_extent=X=171.077 Y=161.772 Z=161.793 render_camera=X=0.071 Y=-2254.668 Z=169.651 attack_camera=X=0.071 Y=-2254.668 Z=169.651 camera_inside_mesh_bounds_aabb=0 capsule_radius_cm=34.000 capsule_half_height_cm=88.000 mesh_visible_flag=1 actor_hidden=0 inspection=0
+PASS authored_reference_sets_only_this_local_viewport_flag
+PASS reference_toggle_does_not_execute_query_or_mutate_physical_collision
+PASS QA_pause_starts_from_unpaused_world
+PASS QA_owned_pause_acquired
+VIEW 07_authored_reference_on.png actor_to_attack_camera_cm=150.000 mesh_bounds_origin=X=2.677 Y=-2038.932 Z=440.352 mesh_bounds_extent=X=171.077 Y=161.772 Z=161.793 render_camera=X=0.071 Y=-2254.668 Z=169.651 attack_camera=X=0.071 Y=-2254.668 Z=169.651 camera_inside_mesh_bounds_aabb=0 capsule_radius_cm=34.000 capsule_half_height_cm=88.000 mesh_visible_flag=1 actor_hidden=0 inspection=0
+PASS reference_OFF_restores_preexisting_viewport_flag
+PASS reference_preserves_an_already_enabled_local_viewport_flag
+PASS QA_pause_starts_from_unpaused_world
+PASS QA_owned_pause_acquired
+PASS OFF_while_paused_immediately_flushes_owned_lines_snapshots_and_reference
+VIEW 08_debug_disabled_paused.png actor_to_attack_camera_cm=150.000 mesh_bounds_origin=X=2.677 Y=-2038.932 Z=440.352 mesh_bounds_extent=X=171.077 Y=161.772 Z=161.793 render_camera=X=0.071 Y=-2254.668 Z=169.651 attack_camera=X=0.071 Y=-2254.668 Z=169.651 camera_inside_mesh_bounds_aabb=0 capsule_radius_cm=34.000 capsule_half_height_cm=88.000 mesh_visible_flag=1 actor_hidden=0 inspection=0
+PASS explicit_debug_can_reenable_for_live_owned_target
+PASS QA_pause_starts_from_unpaused_world
+PASS QA_owned_pause_acquired
+PASS clear_while_paused_deletes_only_owned_targets_and_immediately_flushes_debug
+checks=85
+failures=0
+rendered=1
+live_skeletal_exercised=1
+wall_seconds=16.436
+fixture=isolated_StartHub_profile_transient_lowdamage_skill_and_owned_F6_target_position
+entrypoint=real_StartAttackHitSequence_ExecuteAttackHitPulse_GatherAttackTargets_ApplyAttackDamage
+input_and_cost_acceptance=not_tested
+stat_and_HP_seeding=none
+owned_target_regeneration_fixture=all_rates_zero_no_HP_write
+owned_mesh_pose_fixture=temporary_pause_tick_off_parallel_completion_and_immediate_live_kinematic_sync
+wide_reference_fixture=actual_F6_spawn_and_actual_inspection_no_camera_setting_override
+rewards=disabled_by_F6_test_instance
+physical_input=not_performed
+visual_pixels=external_review_required
+NOTE=Owned_target_movement_is_disabled_and_target_is_placed_at_observed_attack_camera_forward150cm._MultiHit_target_moves_outside_range_after_first_pulse._No_asset_or_production_save_edits._Authored_viewport_reference_is_not_actual_filtered_scene_query_geometry.

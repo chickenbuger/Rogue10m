@@ -1,0 +1,13 @@
+{
+  "passed": false,
+  "pid": 49456,
+  "elapsed_wall_seconds": 4.358999999998559,
+  "assets_saved": false,
+  "diagnostics": [
+    {
+      "check": "validation_exception",
+      "detail": "Traceback (most recent call last):\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ValidateCaves20261118.py\", line 362, in validate_caves\n    require(near(xyz(c.get_editor_property(\"relative_location\")),expected[\"location_cm\"])\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ValidateCaves20261118.py\", line 38, in require\n    raise RuntimeError(message)\nRuntimeError: Point light differs: Q_Lantern0_PointLight\n"
+    }
+  ],
+  "traceback": "Traceback (most recent call last):\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ValidateCaves20261118.py\", line 362, in validate_caves\n    require(near(xyz(c.get_editor_property(\"relative_location\")),expected[\"location_cm\"])\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ValidateCaves20261118.py\", line 38, in require\n    raise RuntimeError(message)\nRuntimeError: Point light differs: Q_Lantern0_PointLight\n"
+}

@@ -7,6 +7,7 @@
 #include "Rogue10mMonsterAttackPatternProfile.generated.h"
 
 class UAnimSequence;
+class UAnimMontage;
 class UMaterialInterface;
 class UNiagaraSystem;
 
@@ -33,6 +34,29 @@ class ROGUE10M_API URogue10mMonsterAttackPatternProfile : public UDataAsset
 	GENERATED_BODY()
 
 public:
+
+ /** Opt-in native locomotion graph and full-body DefaultSlot montages. Legacy profiles remain single-node. */
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Animation")
+ bool bUseHumanoidAnimInstance = false;
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Animation")
+ TSoftObjectPtr<UAnimMontage> AttackMontage;
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Animation")
+ TSoftObjectPtr<UAnimMontage> FrontalWaveMontage;
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Animation")
+ TSoftObjectPtr<UAnimMontage> AbyssZoneMontage;
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Animation")
+ TSoftObjectPtr<UAnimMontage> HitMontage;
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Animation")
+ TSoftObjectPtr<UAnimMontage> DeathMontage;
+ /** Authored source contact time; playback maps this to the locked gameplay windup. */
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Animation", meta=(ClampMin="0.001", Units="s"))
+ float AttackContactTimeSeconds = 0.35f;
+ /** Authored source contact time; playback maps this to the locked gameplay windup. */
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Animation", meta=(ClampMin="0.001", Units="s"))
+ float FrontalWaveContactTimeSeconds = 1.1f;
+ /** Authored source contact time; playback maps this to the locked gameplay windup. */
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Animation", meta=(ClampMin="0.001", Units="s"))
+ float AbyssZoneContactTimeSeconds = 1.4f;
 	/** Finite CPU burst systems authored for this species; cosmetic only. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Effects")
 	TSoftObjectPtr<UNiagaraSystem> AttackEffect;
@@ -133,6 +157,14 @@ public:
 	/** Deferred Decal materials: rectangle for the wave, an inscribed circular mask for the zone. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Boss|Telegraph")
 	TSoftObjectPtr<UMaterialInterface> FrontalWaveTelegraphMaterial;
+
+	/** Capsule-expanded cone warning for opted-in bosses; ordinary monster profiles are unchanged. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Boss|Telegraph")
+	TSoftObjectPtr<UMaterialInterface> BasicTelegraphMaterial;
+
+	/** Missing required material must prevent this boss's basic attack rather than make it invisible. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Boss|Telegraph")
+	bool bRequireBasicTelegraph = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Boss|Telegraph")
 	TSoftObjectPtr<UMaterialInterface> AbyssZoneTelegraphMaterial;

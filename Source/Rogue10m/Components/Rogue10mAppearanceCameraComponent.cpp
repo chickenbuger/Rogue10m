@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 #include "Rogue10mAppearanceCameraComponent.h"
 #include "Rogue10mAppearanceShadowComponent.h"
+#include "Rogue10mOwnerArmsComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Camera/CameraTypes.h"
 #include "CollisionQueryParams.h"
@@ -22,6 +23,28 @@
 URogue10mAppearanceCameraComponent::URogue10mAppearanceCameraComponent()
 {
  PrimaryComponentTick.bCanEverTick = false;
+}
+USkinnedMeshComponent* URogue10mAppearanceCameraComponent::GetOwnerArmsMesh() const
+{
+ return IsOwnerArmsViewActive() ? OwnerArmsComponent->GetOwnerArmsMesh() : nullptr;
+}
+bool URogue10mAppearanceCameraComponent::IsOwnerArmsViewActive() const
+{
+ return bApplied && OwnerArmsComponent && OwnerArmsComponent->IsActive();
+}
+bool URogue10mAppearanceCameraComponent::IsWeightedFirstPersonActive() const
+{
+ const auto* Character = Cast<ARogue10mCharacter>(GetOwner());
+ return Rogue10mWeightedFirstPerson::IsRequested() && bApplied && bEnableAppearanceCamera && !bThirdPersonInspection
+  && Character && Character->IsLocallyControlled() && !Character->IsDead();
+}
+FRogue10mWeightedFirstPersonSettings URogue10mAppearanceCameraComponent::GetWeightedFirstPersonSettings() const
+{
+ auto Settings = WeightedFirstPersonSettings.Sanitized();
+ const float Scale = Rogue10mWeightedFirstPerson::ConsoleMotionScale();
+ Settings.HeadMotionScale *= Scale; Settings.HandMotionScale *= Scale;
+ Settings.WorldFieldOfView = Rogue10mWeightedFirstPerson::ResolveFieldOfView(Settings.WorldFieldOfView);
+ return Settings;
 }
 void URogue10mAppearanceCameraComponent::BeginPlay()
 {
@@ -62,7 +85,7 @@ void URogue10mAppearanceCameraComponent::RefreshAppearanceCamera()
  USkeletalMeshComponent* Mesh = Character ? Character->GetMesh() : nullptr;
  UCameraComponent* Camera = Character ? Character->GetFirstPersonCameraComponent() : nullptr;
  const APlayerController* Controller = Character ? Cast<APlayerController>(Character->GetController()) : nullptr;
- if (!bEnableAppearanceCamera || !Character || !Character->IsLocallyControlled() || Character->IsDead() || !Controller
+ if (!bEnableAppearanceCamera || !Character || Character->IsThirdPersonGameplayActive() || !Character->IsLocallyControlled() || Character->IsDead() || !Controller
   || Controller->GetViewTarget() != Character || !Mesh || !Camera)
  {
   Restore();
@@ -96,12 +119,24 @@ void URogue10mAppearanceCameraComponent::RefreshAppearanceCamera()
   HeadPoseFinalizedHandle = Mesh->RegisterOnBoneTransformsFinalizedDelegate(
    FOnBoneTransformsFinalizedMultiCast::FDelegate::CreateUObject(this, &URogue10mAppearanceCameraComponent::CaptureEvaluatedHeadBasis));
  }
- Mesh->SetOwnerNoSee(false); Mesh->SetOnlyOwnerSee(false);
+ // The separate arms mesh shares the evaluated appearance pose without running
+ // a second animation/notify clock. The world body remains intact for other views.
+ if (bEnableOwnerArms && !bThirdPersonInspection && !OwnerArmsComponent)
+ {
+  OwnerArmsComponent = NewObject<URogue10mOwnerArmsComponent>(Character, NAME_None, RF_Transient);
+  Character->AddInstanceComponent(OwnerArmsComponent);
+  OwnerArmsComponent->RegisterComponent();
+ }
+ const bool bOwnerArmsView = OwnerArmsComponent
+  && OwnerArmsComponent->Refresh(Mesh, bEnableOwnerArms && !bThirdPersonInspection);
+ Mesh->SetOwnerNoSee(bOwnerArmsView); Mesh->SetOnlyOwnerSee(false);
  Mesh->SetVisibility(true, false); Mesh->SetHiddenInGame(false, false);
  Mesh->SetFirstPersonPrimitiveType(EFirstPersonPrimitiveType::None);
  // Hidden bones must still be evaluated; only rendering hides the head, never the camera source pose.
  Mesh->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
- const bool bShouldHideHead = bHideHeadForOwner && !bThirdPersonInspection;
+ // OwnerNoSee removes the whole world body only from its owner's view. Do not
+ // collapse the world head when arms-only rendering is active (inspection/other views/shadows need it).
+ const bool bShouldHideHead = bHideHeadForOwner && !bThirdPersonInspection && !bOwnerArmsView;
  if (bShouldHideHead && !Mesh->IsBoneHiddenByName(HeadBone))
  {
   Mesh->HideBoneByName(HeadBone, EPhysBodyOp::PBO_None); HiddenHeadBone = HeadBone; bHidHead = true;
@@ -214,6 +249,17 @@ FRogue10mHeadMotionSettings URogue10mAppearanceCameraComponent::GetHeadMotionSet
   Settings.MaxRotationDegrees = Safe(WalkingHeadMaxRotationDegrees, 2.0f, 2.0f);
   Settings.MaxPositionOffsetCm = Safe(WalkingHeadMaxPositionOffset, 1.0f, 5.0f);
  }
+ if (IsWeightedFirstPersonActive())
+ {
+  const auto Feel = GetWeightedFirstPersonSettings();
+  Settings.RotationWeight = FMath::Min(Settings.RotationWeight, Feel.HeadRotationWeight);
+  Settings.InterpolationSpeed = Feel.HeadFollowSpeed;
+  const bool bAction = bAttackContributes || bCharging || bDodgeContributes || bAirborne;
+  const float RotationLimit = bAction ? Feel.AttackingRotationDegrees : bRunning ? Feel.RunningRotationDegrees : Feel.WalkingRotationDegrees;
+  const float PositionLimit = bAction ? Feel.AttackingPositionCm : bRunning ? Feel.RunningPositionCm : Feel.WalkingPositionCm;
+  Settings.MaxRotationDegrees = FMath::Min(Settings.MaxRotationDegrees, RotationLimit * Feel.HeadMotionScale);
+  Settings.MaxPositionOffsetCm = FMath::Min(Settings.MaxPositionOffsetCm, PositionLimit * Feel.HeadMotionScale);
+ }
  return Settings;
 }
 
@@ -266,7 +312,7 @@ bool URogue10mAppearanceCameraComponent::ReadCameraTransform(FTransform& OutCame
   const FQuat CurrentPoseAim = (Transport * PoseWorldAim * Transport.Inverse()).GetNormalized();
   Motion = (Motion * CurrentPoseAim.Inverse()).GetNormalized();
  }
- if (bStabilizeAllHeadMotion)
+ if (bStabilizeAllHeadMotion || IsWeightedFirstPersonActive())
  {
   const FRogue10mHeadMotionSettings Settings = GetHeadMotionSettings();
   const USkeletalMeshComponent* Mesh = AppliedMesh.Get();
@@ -309,9 +355,11 @@ void URogue10mAppearanceCameraComponent::UpdateCameraFromAppearance()
  FTransform View;
  if (!Character || !ReadCameraTransform(View)) { return; }
  Character->GetFirstPersonCameraComponent()->SetWorldLocationAndRotation(View.GetLocation(), View.GetRotation());
+ if (OwnerArmsComponent && IsOwnerArmsViewActive()) { OwnerArmsComponent->UpdatePresentation(View); }
 }
 void URogue10mAppearanceCameraComponent::Restore()
 {
+ if (OwnerArmsComponent) { OwnerArmsComponent->Deactivate(); }
  if (USkeletalMeshComponent* Mesh = AppliedMesh.Get(); Mesh && HeadPoseFinalizedHandle.IsValid())
  {
   Mesh->UnregisterOnBoneTransformsFinalizedDelegate(HeadPoseFinalizedHandle);

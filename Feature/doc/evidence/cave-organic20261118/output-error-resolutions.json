@@ -1,0 +1,66 @@
+{
+  "schema": "Rogue10m.OrganicCaveOutputLogResolutions.20261118.v1",
+  "original_historical_error_lines": 13,
+  "task_error_lines_retained": 45,
+  "not_a_whole_task_zero_error_claim": true,
+  "final_runtime_new_errors": 0,
+  "successful_cold_errors": 0,
+  "resolutions": [
+    {
+      "lines": [
+        4884,
+        4896
+      ],
+      "cause": "Transform constructor requires Rotator, not Quat",
+      "resolution": "Correct public constructor; actual native creation completed",
+      "proof": "author-live/meshes.json"
+    },
+    {
+      "lines": [
+        4913,
+        4924
+      ],
+      "cause": "Raw double lexical ordering mismatches nominally tied float32 coordinates",
+      "resolution": "Exact cyclic oriented float32 triangle/material multiset, actual readback and nonzero area checks",
+      "proof": "Q-native-comparator-diagnosis.json"
+    },
+    {
+      "lines": [
+        5004,
+        5004
+      ],
+      "cause": "Artist CCW front faces differ from Unreal CW; wall/ceiling collision failed",
+      "resolution": "Explicit index-only native adapter; immutable artist sources/normals; original2016 queries and actual RenderData pass",
+      "proof": "author-live/winding-repair.json"
+    },
+    {
+      "lines": [
+        5027,
+        5031
+      ],
+      "cause": "Editor-art capture callback exceeded180 seconds during synchronous mesh work",
+      "resolution": "Callback unregisters on failure; stale image excluded; actual six stable advancing PCM image proofs separately reviewed",
+      "proof": "runtime-six-artreview.json"
+    },
+    {
+      "lines": [
+        5079,
+        5087
+      ],
+      "cause": "Fresh capture guard rejected overwrite of prior PNG",
+      "resolution": "Preserved failed request; no overwrite; use six independently reviewed actual runtime captures",
+      "proof": "runtime-camera-verified/result.json"
+    },
+    {
+      "lines": [
+        5126,
+        5130
+      ],
+      "cause": "Failed arm left a module without state",
+      "resolution": "Optional-state stop guard corrected; no active art callback or scene edits; normal full PIE passed and returnedclean",
+      "proof": "final-editor-state.json"
+    }
+  ],
+  "log_preservation": "No log suppression, removal or severity changes",
+  "failed_cold": "cold-host exit0 without engine log was not accepted; cold-host-direct semantic pass and same-PID exit0 required"
+}

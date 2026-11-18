@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Engine/TimerHandle.h"
 #include "Rogue10mInventoryComponent.h"
 #include "Rogue10mDroppedItem.generated.h"
 
@@ -29,9 +30,21 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	UFUNCTION()
 	void HandlePickupOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+	void HandlePickupEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+		UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex);
+	UFUNCTION()
+	void HandlePickupInventoryChanged();
+	void WatchPickupRetry(ARogue10mCharacter* Character);
+	void RetryOverlappingPickup();
+	void ClearPickupRetry();
+	TWeakObjectPtr<ARogue10mCharacter> PickupRetryCharacter;
+	TWeakObjectPtr<URogue10mInventoryComponent> PickupRetryInventory;
+	FTimerHandle PickupRetryTimer;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Rogue10m|Items")
 	TObjectPtr<USceneComponent> SceneRoot;
 

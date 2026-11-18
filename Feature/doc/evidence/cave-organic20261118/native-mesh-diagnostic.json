@@ -1,0 +1,47 @@
+{
+  "Q": {
+    "render_triangle_count": 125980,
+    "body_setup": "<Object '/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Q.SM_CaveOrganic_Q:BodySetup_0' (0x0000021760591800) Class 'BodySetup'>"
+  },
+  "Z": {
+    "render_triangle_count": 125976,
+    "body_setup": "<Object '/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Z.SM_CaveOrganic_Z:BodySetup_0' (0x00000219C7974C00) Class 'BodySetup'>"
+  },
+  "render_validation": {
+    "schema": "Rogue10m.OrganicCaveRenderLODValidation.20261118.v1",
+    "passed": false,
+    "read_only": true,
+    "assets_saved": false,
+    "sites": {},
+    "config": {
+      "geometry_spec_sha256": "05ea056abbf5dd5c09b2365367237fb3753bac48786e6de6af68adcf928b3b7e",
+      "expected_mesh_paths": {
+        "Q": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Q.SM_CaveOrganic_Q",
+        "Z": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Z.SM_CaveOrganic_Z"
+      },
+      "expected_material_path": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock.MI_OrganicRock",
+      "expected_floor_material_path": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveStoneFloor.MI_CaveStoneFloor"
+    },
+    "dirty_before": [
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Q",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Z",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/VQ/PYZIJL655JALHJM6PS58A8",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/BY/2CW0JPTDIEMKKD1T5LATX6",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/0E/NL2M3149WONPRWLKFKVP6Y",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/9/EE/NR3SMNORZ57AQ1FV26VAFO"
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\OrganicCaves20261118RenderQA.py\", line 63, in validate_render_geometry\n    require(isinstance(availability, tuple) and len(availability) == 2 and availability[0] is True\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\OrganicCaves20261118QA.py\", line 43, in require\n    raise RuntimeError(message)\nRuntimeError: Actual RenderData LOD0 unavailable\n",
+    "dirty_after": [
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Q",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Z",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/VQ/PYZIJL655JALHJM6PS58A8",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/BY/2CW0JPTDIEMKKD1T5LATX6",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/0E/NL2M3149WONPRWLKFKVP6Y",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/9/EE/NR3SMNORZ57AQ1FV26VAFO"
+    ]
+  }
+}

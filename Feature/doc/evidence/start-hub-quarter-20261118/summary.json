@@ -1,0 +1,118 @@
+{
+  "map": "/Game/Rogue10m/Maps/StartHub",
+  "previous_terrain_m": [
+    120,
+    120
+  ],
+  "previous_inside_m": [
+    116.4,
+    116.4
+  ],
+  "verified_saved_geometry": {
+    "actor_count": 691,
+    "terrain_dimensions_m": [
+      60,
+      60
+    ],
+    "inside_dimensions_m": [
+      58.2,
+      58.2
+    ],
+    "area_ratio": 0.25,
+    "ground_queries": 121,
+    "outside_ground_queries": 4,
+    "wall_queries": 28,
+    "capsule_segments": 13,
+    "portals": [
+      {
+        "label": "CompactCandidate20261113A_RunPortal",
+        "loc": [
+          -1440.0,
+          2135.0,
+          180.0
+        ],
+        "portal_target": "/Game/Rogue10m/Maps/Production/WorldLayoutCompact20261113A",
+        "portal_start": true,
+        "portal_options": ""
+      },
+      {
+        "label": "SV_FiveVillageRunPortal",
+        "loc": [
+          600.0,
+          2135.0,
+          180.0
+        ],
+        "portal_target": "/Game/Rogue10m/Maps/Prototypes/FiveVillageGraybox20261110",
+        "portal_start": true,
+        "portal_options": "game=/Script/Rogue10m.Rogue10mFiveVillageGameMode"
+      },
+      {
+        "label": "SV_RunPortal_ToOpenWorld",
+        "loc": [
+          0.0,
+          2135.0,
+          200.0
+        ],
+        "portal_target": "/Game/Rogue10m/Maps/OpenRunMap",
+        "portal_start": true,
+        "portal_options": ""
+      },
+      {
+        "label": "WL20261112_RunPortal",
+        "loc": [
+          -720.0,
+          2135.0,
+          180.0
+        ],
+        "portal_target": "/Game/Rogue10m/Maps/Production/WorldLayout20261112",
+        "portal_start": true,
+        "portal_options": ""
+      }
+    ],
+    "spawn": [
+      -2.842170943040401e-14,
+      -2040.0,
+      112.0
+    ],
+    "guide": [
+      440.0,
+      -1510.0,
+      2.0
+    ],
+    "descriptor_count": 691,
+    "dirty_packages": []
+  },
+  "unreal_authoring_exit_code": 0,
+  "cold_reload_exit_code": 0,
+  "packages": {
+    "backed_up": 726,
+    "changed_start_hub_external_actors": 660,
+    "same": 66,
+    "added": 0,
+    "deleted": 0
+  },
+  "portal_replay": {
+    "passed": true,
+    "scenario": "CopiedLegacy",
+    "exit_code": 0,
+    "checks": 17,
+    "elapsed_seconds": 52.5252872,
+    "actual_authored_portal_travel": true,
+    "actual_overlap_uses_programmatic_movement": true,
+    "physical_input": false,
+    "live_coding_requested": false,
+    "private_user_dir": true,
+    "copied_input_files_preserved": true
+  },
+  "portal_replay_start_run_seconds": 1200,
+  "earlier_authoring_stops_without_saves": [
+    "No free decorative site in the original quadrant",
+    "Text render bounds did not follow the pivot linearly",
+    "Outside-floor probe precedes initialization of the ignore list"
+  ],
+  "log_observations": {
+    "author_and_cold": "LoadErrors New Page: Loading map (page header only)",
+    "game": "Two known missing engine Humanoid references for StylizedCharacter SKEL_Hu_M",
+    "active_editor": "No new errors"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "passed": false,
+  "pid": 49456,
+  "assets_saved": false,
+  "sites": {},
+  "traceback": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/RunOrganicCaveMeshes20261118.py\", line 22, in <module>\n    mesh,report=m.create_organic_cave_mesh(u,site,config['expected_mesh_paths'][sid].split('.')[0],\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\OrganicCaves20261118Mesh.py\", line 156, in create_organic_cave_mesh\n    initial_comparison = _compare(qa, source, qa.extract_static_mesh_geometry(u, mesh))\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\OrganicCaves20261118Mesh.py\", line 86, in _compare\n    require(result[\"passed\"], \"Oriented triangle positions/material IDs differ: \" + json.dumps(result))\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\OrganicCaves20261118Mesh.py\", line 21, in require\n    raise RuntimeError(message)\nRuntimeError: Oriented triangle positions/material IDs differ: {\"passed\": false, \"expected_triangles\": 125980, \"actual_triangles\": 125980, \"maximum_corresponding_vertex_distance_cm\": 6158.875520492714, \"failed_triangle_rows\": [2198, 2199, 2200, 2201, 2202, 2203, 2204, 9041, 9042, 9043, 9147, 9148, 9606, 9607, 9608, 9609, 9610, 9611, 9612, 9613], \"orientation_preserved\": false, \"triangle_material_ids_compared\": true, \"tolerance_cm\": 0.05}\n",
+  "dirty_packages_after": [
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Q"
+  ]
+}

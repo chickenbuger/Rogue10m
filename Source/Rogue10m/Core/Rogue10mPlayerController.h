@@ -8,6 +8,8 @@
 #include "Rogue10mPlayerController.generated.h"
 
 class ARogue10mBasicMonster;
+class ARogue10mGameState;
+class URogue10mProgressionSubsystem;
 class ARogue10mTutorialNPC;
 class UInputMappingContext;
 class URogue10mCharacterLobbyWidget;
@@ -22,10 +24,14 @@ class URogue10mSkillBindingComponent;
 class URogue10mCombatTestComponent;
 class URogue10mRunHUD;
 class URogue10mRunResultWidget;
+class URogue10mAbandonMenuWidget;
+class URogue10mQuitMenuWidget;
+class ARogue10mCharacter;
 class URogue10mItemDataAsset;
 class UTexture2D;
 class UUserWidget;
 class UWorld;
+enum class ERogue10mRunPhase : uint8;
 
 struct FRogue10mRuntimeLogEntry
 {
@@ -83,12 +89,28 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|UI")
 	void ToggleSettings();
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|UI|Quit") bool OpenQuitGameConfirmation();
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|UI|Quit") void CancelQuitGameConfirmation();
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|UI|Quit") bool ConfirmQuitGame();
+	UFUNCTION(BlueprintPure, Category="Rogue10m|UI|Quit") bool IsQuitGameConfirmationOpen() const { return bQuitGameConfirmationOpen; }
+	URogue10mQuitMenuWidget* GetQuitMenuWidget() const { return QuitMenuWidget; }
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|UI")
 	void CloseAllBlockingPanels();
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Run")
 	void ShowRunResult();
+	/** Explicit user action. Requires an active owned run and a recorded entry checkpoint. */
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Run")
+	bool RequestAbandonCurrentRun();
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Run|Menu") bool OpenAbandonMenuConfirmation();
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Run|Menu") void CancelAbandonMenuConfirmation();
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Run|Menu") bool ConfirmAbandonMenu();
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Run|Menu") bool CanOpenAbandonMenuConfirmation(FText& OutReason) const;
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Run|Menu") URogue10mAbandonMenuWidget* GetAbandonMenuWidget() const { return AbandonMenuWidget; }
+	/** Prototype entry without reserving or replacing any gameplay key. Run twice within three seconds. */
+	UFUNCTION(Exec)
+	void AbandonRun();
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Run")
 	bool IsRunResultVisible() const { return bRunResultVisible; }
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Run")
@@ -103,6 +125,10 @@ public:
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Traits")
 	URogue10mTraitWidget* GetTraitWidget() const { return TraitWidget; }
 	ARogue10mTutorialNPC* GetTraitServiceNPC() const { return TraitServiceNPC.Get(); }
+	void BeginNpcDialogueInput(ARogue10mTutorialNPC* NPC);
+	void EndNpcDialogueInput(ARogue10mTutorialNPC* NPC);
+	bool IsNpcDialogueVisible() const;
+	ARogue10mTutorialNPC* GetDialogueNPC() const { return DialogueNPC.Get(); }
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Character Lobby")
 	void EnterSelectedCharacter();
@@ -145,6 +171,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Settings")
 	void SetLookSensitivity(float NewSensitivityX, float NewSensitivityY);
+	/** Session-only presentation preferences. Both modes retain the existing first-person camera. */
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Settings|First Person") bool IsWeightedFirstPersonEnabled() const;
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Settings|First Person") float GetWeightedFirstPersonMotionScale() const;
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Settings|First Person") bool SetWeightedFirstPersonEnabled(bool bEnabled);
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Settings|First Person") bool SetWeightedFirstPersonMotionScale(float Scale);
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Settings|First Person") bool RestoreOriginalFirstPersonPresentation();
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Settings")
 	int32 GetCurrentFpsLimit() const { return CurrentFpsLimit; }
@@ -317,11 +349,35 @@ private:
 	void InitializeCharacterLobby();
 	void InitializeMainMenu();
 	void RefreshInputMode();
+	void RefreshQuitMenu();
+	void ResetQuitGameConfirmation();
+	UPROPERTY(Transient) TObjectPtr<URogue10mQuitMenuWidget> QuitMenuWidget;
+	TWeakObjectPtr<UWorld> QuitGameWorld;
+	TWeakObjectPtr<ARogue10mCharacter> QuitGameCharacter;
+	FGuid QuitGameProfile;
+	FGuid QuitGameRun;
+	FGuid QuitGameSelectedProfile;
+	bool bQuitGameConfirmationOpen = false;
+	bool bQuitGameSubmitting = false;
+	void UpdateSafeMenuPause();
+	UFUNCTION() void HandleMenuPauseRunPhaseChanged(ERogue10mRunPhase NewPhase);
+	bool bMenuPauseEndingPlay = false;
 	bool IsMenuWorld() const;
 	bool TravelToGameplayMap();
 	void SetPanelVisible(bool& PanelState, bool bVisible, URogue10mMenuWindowWidget* ActivatedWindow);
 	void SetInventoryEquipmentPanelVisible(bool& PanelState, bool bVisible, URogue10mMenuWindowWidget* ActivatedWindow);
 	void HandleToggleCombatLog();
+	void HandleAbandonConfirmation();
+	void ClearAbandonConfirmation();
+	void ResetAbandonMenuContext();
+	bool CanEditFirstPersonPresentation() const;
+	UPROPERTY(Transient) TObjectPtr<URogue10mAbandonMenuWidget> AbandonMenuWidget;
+	TWeakObjectPtr<UWorld> AbandonMenuWorld;
+	FGuid AbandonMenuProfile;
+	FGuid AbandonMenuRun;
+	bool bAbandonMenuConfirmOpen = false;
+	bool bAbandonMenuSubmitting = false;
+	bool ResolveAbandonContext(URogue10mProgressionSubsystem*& OutProgression, ARogue10mGameState*& OutRun) const;
 	void InitializeDamageIndicatorPool();
 	URogue10mDamageIndicatorWidget* AcquireDamageIndicator();
 	void ShowDamageIndicatorAtLocation(const FVector& WorldLocation, float DamageAmount, bool bCriticalHit);
@@ -340,9 +396,16 @@ private:
 	bool bSettingsVisible = false;
 	bool bTraitWindowVisible = false;
 	bool bRunResultVisible = false;
+	TWeakObjectPtr<UWorld> AbandonConfirmationWorld;
+	FGuid AbandonConfirmationProfile;
+	FGuid AbandonConfirmationRun;
+	double AbandonConfirmationDeadline = 0.0;
 	bool bTraitAddedMoveIgnore = false;
 	bool bTraitAddedLookIgnore = false;
 	TWeakObjectPtr<ARogue10mTutorialNPC> TraitServiceNPC;
+	TWeakObjectPtr<ARogue10mTutorialNPC> DialogueNPC;
+	bool bDialogueAddedMoveIgnore = false;
+	bool bDialogueAddedLookIgnore = false;
 	bool bShowCombatLog = true;
 	float LookSensitivityX = 1.0f;
 	float LookSensitivityY = 1.0f;

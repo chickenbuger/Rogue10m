@@ -4,7 +4,7 @@
 
 - 사용자 요청: 개발과 동시에 빨간 Error를 분석하고 해결한다.
 - 기존 `Sprint#9-32-landscape-world-blockout` 작업 브랜치를 유지한다. 같은 checkout의 별도 Landscape 작업이 진행 중이므로 브랜치 전환·통합·전체 WIP 커밋·에디터 재시작·지형/선택 변경은 하지 않는다.
-- 실제 live 로그는 `Feature/doc/evidence/landscape-production-20261116/editor-recovery/normal-editor.log`다. `Saved/Logs/Rogue10m.log`는 이전 `-game` 세션이다.
+- 당시 live 로그는 `Feature/doc/evidence/landscape-production-20261116/editor-recovery/normal-editor.log`에 기록됐다. 당시 `Saved/Logs/Rogue10m.log`는 앞선 `-game` 세션 로그였다.
 - Source/Config/Content 및 기존 지형 검사기는 이번 작업의 수정 대상에서 제외한다. 엔진 설치 원본과 실패 로그는 보존한다.
 
 ## Ultrawork Packets

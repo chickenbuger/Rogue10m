@@ -1,0 +1,195 @@
+{
+  "schema": "Rogue10m.CaveColdMetadataSourceProof.20261118.v1",
+  "source_review_complete": true,
+  "live_preflight_passed": false,
+  "failed_runs_retained": [
+    "cold-live",
+    "cold-final-live"
+  ],
+  "guid_serialization": "FGuid word fields are not Python attributes. Public Guid.to_string is supplied by KismetGuidLibrary Conv_GuidToString ScriptMethod=ToString; normalize hyphens then require exactly32 hexadecimal digits.",
+  "landscape_guid_alias": "LandscapeGuid has UPROPERTY metadata but lacks Edit or BlueprintVisible/BlueprintAssignable, so Python snake-case alias landscape_guid is absent.",
+  "raw_case_correction": "Raw LandscapeGuid would be found by FindPropertyByName, but PyUtil GetPropertyValue calls PropertyAccessUtil::CanGetPropertyValue. The missing Edit/Blueprint flags cause PermissionDenied|AccessProtected. Earlier raw-case recommendation was corrected before execution; no protected-property probe was performed.",
+  "getter_visibility": "ALandscapeProxy::GetLandscapeGuid is native C++ with no UFUNCTION and supplies no Python getter.",
+  "accepted_path": "Existing BlueprintCallable InspectCandidateTerrain returns each loaded native proxy real GetLandscapeGuid value. Cold helper cross-matches all17 rows independently against Python actor path/package/class/public actor_guid and both component counts before using the observed native value.",
+  "preflight_requirement": "After current PIE ends, run PreflightCaveColdMetadata20261118.main once. It imports Cold helper inertly, invokes the exact terrain_actor_inventory function without bootstrap/callback/save/quit, and requires exact candidate editor world, all17 matched actors and45+45 components, unchanged dirty set. Launch cold-verified-live only if passed=true and script hash remains current.",
+  "assets_saved": false,
+  "editor_mutations": false,
+  "sources": [
+    {
+      "path": "D:\\Program Files\\UE_5.8\\Engine\\Source\\Runtime\\Landscape\\Classes\\LandscapeProxy.h",
+      "sha256": "09ff51b3b097c21d908e854ebd48a6fa242f61d24dc79c2712c4497c2b64d2a8",
+      "lines": [
+        {
+          "line": 459,
+          "text": "protected:"
+        },
+        {
+          "line": 480,
+          "text": "UPROPERTY(meta = (LandscapeInherited))"
+        },
+        {
+          "line": 481,
+          "text": "FGuid LandscapeGuid;"
+        },
+        {
+          "line": 1111,
+          "text": "virtual FGuid GetLandscapeGuid() const override { return LandscapeGuid; }"
+        },
+        {
+          "line": 1131,
+          "text": "UFUNCTION(BlueprintCallable, Category = \"Landscape|Runtime\")"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Program Files\\UE_5.8\\Engine\\Plugins\\Experimental\\PythonScriptPlugin\\Source\\PythonScriptPlugin\\Private\\PyWrapperObject.cpp",
+      "sha256": "8516139c8bdbab783e9fae1167321d85b4520bb1c0a2ac6b19f54b5458c8e619",
+      "lines": [
+        {
+          "line": 754,
+          "text": "const FName ResolvedName = FPyWrapperObjectMetaData::ResolvePropertyName(InSelf, InPythonPropName);"
+        },
+        {
+          "line": 756,
+          "text": "const FProperty* ResolvedProp = Class->FindPropertyByName(ResolvedName);"
+        },
+        {
+          "line": 801,
+          "text": "static PyObject* GetEditorProperty(FPyWrapperObject* InSelf, PyObject* InArgs, PyObject* InKwds)"
+        },
+        {
+          "line": 1223,
+          "text": "FName FPyWrapperObjectMetaData::ResolvePropertyName(PyTypeObject* PyType, const FName InPythonPropertyName)"
+        },
+        {
+          "line": 1240,
+          "text": "}"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Program Files\\UE_5.8\\Engine\\Plugins\\Experimental\\PythonScriptPlugin\\Source\\PythonScriptPlugin\\Private\\PyGenUtil.cpp",
+      "sha256": "252a0b06b77abd07c8dbb5972b47dc430a6d7f889eee2d5ae50a6d114b528e58",
+      "lines": [
+        {
+          "line": 1805,
+          "text": "bool ShouldExportProperty(const FProperty* InProp)"
+        },
+        {
+          "line": 1811,
+          "text": "bool ShouldExportEditorOnlyProperty(const FProperty* InProp)"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Program Files\\UE_5.8\\Engine\\Plugins\\Experimental\\PythonScriptPlugin\\Source\\PythonScriptPlugin\\Private\\PyUtil.cpp",
+      "sha256": "87f923173ada88b25a39c2e500af4104500bbfb32e4cb6a3d9aa20d890ce298d",
+      "lines": [
+        {
+          "line": 888,
+          "text": "PyObject* GetPropertyValue(const UStruct* InStruct, const void* InStructData, const FProperty* InProp, const char *InAttributeName, PyObject* InOwnerPyObject, const TCHAR* InErrorCtxt)"
+        },
+        {
+          "line": 892,
+          "text": "const EPropertyAccessResultFlags AccessResult = PropertyAccessUtil::CanGetPropertyValue(InProp);"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Program Files\\UE_5.8\\Engine\\Source\\Runtime\\CoreUObject\\Private\\UObject\\PropertyAccessUtil.cpp",
+      "sha256": "0936055dbf24d17e85ba7f60c990f302c8581b352786ec8af12e444a9d7e1c43",
+      "lines": [
+        {
+          "line": 425,
+          "text": "EPropertyAccessResultFlags CanGetPropertyValue(const FProperty* InProp)"
+        },
+        {
+          "line": 427,
+          "text": "if (!InProp->HasAnyPropertyFlags(CPF_Edit | CPF_BlueprintVisible | CPF_BlueprintAssignable))"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Program Files\\UE_5.8\\Engine\\Source\\Runtime\\Engine\\Classes\\Kismet\\KismetGuidLibrary.h",
+      "sha256": "2eca7b0a641c2927428cb975d40269d9990ea8a202344e9721ee9838622fa9b2",
+      "lines": [
+        {
+          "line": 39,
+          "text": "UFUNCTION(BlueprintPure, meta=(DisplayName=\"To String (Guid)\", CompactNodeTitle=\"->\", ScriptMethod=\"ToString\", BlueprintThreadSafe), Category=\"Guid\")"
+        },
+        {
+          "line": 40,
+          "text": "static ENGINE_API FString Conv_GuidToString( const FGuid& InGuid );"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\Source\\Rogue10m\\Editor\\Rogue10mCrop20261114WorldAuthoring.cpp",
+      "sha256": "08845bffb11060f9c19fde1a3e3624b5706e0f7903ae60e9883b13c580404e97",
+      "lines": [
+        {
+          "line": 236,
+          "text": "if (!GEditor || GEditor->PlayWorld || GEditor->IsPlaySessionInProgress())"
+        },
+        {
+          "line": 305,
+          "text": "const TSharedRef<FJsonObject> Row = MakeShared<FJsonObject>();"
+        },
+        {
+          "line": 306,
+          "text": "Row->SetStringField(TEXT(\"path\"), Proxy->GetPathName());"
+        },
+        {
+          "line": 307,
+          "text": "Row->SetStringField(TEXT(\"class\"), Proxy->GetClass()->GetPathName());"
+        },
+        {
+          "line": 308,
+          "text": "Row->SetStringField(TEXT(\"package\"), Proxy->GetPackage()->GetName());"
+        },
+        {
+          "line": 309,
+          "text": "Row->SetStringField(TEXT(\"actor_guid\"), Proxy->GetActorGuid().ToString());"
+        },
+        {
+          "line": 310,
+          "text": "Row->SetStringField(TEXT(\"landscape_guid\"), Proxy->GetLandscapeGuid().ToString());"
+        },
+        {
+          "line": 372,
+          "text": "Result->SetArrayField(TEXT(\"proxies\"), ProxyRows);"
+        },
+        {
+          "line": 600,
+          "text": "FString Inspect(const TCHAR* ExpectedMap, const TCHAR* Operation)"
+        },
+        {
+          "line": 604,
+          "text": "Result->SetBoolField(TEXT(\"read_only_inspection\"), true);"
+        },
+        {
+          "line": 644,
+          "text": "FString URogue10mCrop20261114WorldAuthoring::InspectCandidateTerrain()"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\Source\\Rogue10m\\Editor\\Rogue10mCrop20261114WorldAuthoring.h",
+      "sha256": "785d53a492e08843b33706dedb89c1d3a304e6e578076dd5b10575b36a6b6fc3",
+      "lines": [
+        {
+          "line": 20,
+          "text": "/** Inspects the exact compact candidate. Reports both the original and retained component layouts. */"
+        },
+        {
+          "line": 21,
+          "text": "UFUNCTION(BlueprintCallable, Category=\"Rogue10m|Editor|Compact World\", meta=(DevelopmentOnly))"
+        },
+        {
+          "line": 22,
+          "text": "static FString InspectCandidateTerrain();"
+        }
+      ]
+    }
+  ]
+}

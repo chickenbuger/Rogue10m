@@ -31,13 +31,13 @@
 | final01 Read | 25 PASS, failures=0 | [read-results.txt](Rogue10m_Town_QA_final01/read-results.txt), [read.log](Rogue10m_Town_QA_final01/read.log) |
 | finalrun01 Write | 42 PASS, failures=0 | [write-results.txt](../town-run-persistence-20261011/Rogue10m_Town_QA_Run_finalrun01/write-results.txt), [write.log](../town-run-persistence-20261011/Rogue10m_Town_QA_Run_finalrun01/write.log) |
 | finalrun01 Read | 15 PASS, failures=0 | [read-results.txt](../town-run-persistence-20261011/Rogue10m_Town_QA_Run_finalrun01/read-results.txt), [read.log](../town-run-persistence-20261011/Rogue10m_Town_QA_Run_finalrun01/read.log) |
-| finalvisual720warm | 9 PASS, failures=0 · 원본 PNG 1280×720 | [visual-results.txt](Rogue10m_Town_QA_finalvisual720warm/visual-results.txt), [town-services.png](Rogue10m_Town_QA_finalvisual720warm/town-services.png) |
+| finalvisual720warm | 9 PASS, failures=0 · 원본 PNG 1280×720 | [visual-results.txt](Rogue10m_Town_QA_finalvisual720warm/visual-results.txt), town-services.png〔중간·보조 자료 정리로 삭제됨; [보존 목록](../README.md)〕 |
 | finalvisual1080 | 9 PASS, failures=0 · 원본 PNG 1920×1080 | [visual-results.txt](Rogue10m_Town_QA_finalvisual1080/visual-results.txt), [town-services.png](Rogue10m_Town_QA_finalvisual1080/town-services.png) |
 | 원본 integrated01 Write | 60 PASS, failures=0 | [write-results.txt](Rogue10m_Town_QA_integrated01/write-results.txt), [write.log](Rogue10m_Town_QA_integrated01/write.log) |
 | 원본 integrated01 Read | 25 PASS, failures=0 | [read-results.txt](Rogue10m_Town_QA_integrated01/read-results.txt), [read.log](Rogue10m_Town_QA_integrated01/read.log) |
 | 원본 integratedrun01 Write | 42 PASS, failures=0 | [write-results.txt](../town-run-persistence-20261011/Rogue10m_Town_QA_Run_integratedrun01/write-results.txt), [write.log](../town-run-persistence-20261011/Rogue10m_Town_QA_Run_integratedrun01/write.log) |
 | 원본 integratedrun01 Read | 15 PASS, failures=0 | [read-results.txt](../town-run-persistence-20261011/Rogue10m_Town_QA_Run_integratedrun01/read-results.txt), [read.log](../town-run-persistence-20261011/Rogue10m_Town_QA_Run_integratedrun01/read.log) |
-| 원본 integratedvisual720 | 9 PASS, failures=0 · F8 UI 추가 후 입력 공존 | [visual-results.txt](Rogue10m_Town_QA_integratedvisual720/visual-results.txt), [town-services.png](Rogue10m_Town_QA_integratedvisual720/town-services.png) |
+| 원본 integratedvisual720 | 9 PASS, failures=0 · F8 UI 추가 후 입력 공존 | [visual-results.txt](Rogue10m_Town_QA_integratedvisual720/visual-results.txt), town-services.png〔중간·보조 자료 정리로 삭제됨; [보존 목록](../README.md)〕 |
 
 native02는 실제 NPC 구매·강화·특성·난이도, 조건 기반 스킬 해금과 바인딩, 이벤트 자동 저장, 독립 프로세스 재시작, 동일 클래스 프로필 분리와 보급 중복 방지를 확인했다. failure01은 실제 QA 저장 파일의 잘못된 버전과 성장 복원 후 누락 에셋 실패를 주입하여 네 상태의 롤백, NPC 서비스 차단, SaveNow/Detach 이후 파일 바이트 보존을 확인했다.
 
@@ -64,3 +64,6 @@ native02는 실제 NPC 구매·강화·특성·난이도, 조건 기반 스킬 �
 [source-integration.json](source-integration.json)의 34개 소스 항목을 확인했다. 32개는 통합 기능 SHA-256과 원본 폴더의 최종 SHA-256이 일치하고, BasicMonster.h/.cpp 2개만 `PreservedConcurrentAddition=true`로 기록된 동시 추가 차이가 있다. 실제 원본 파일을 다시 해시해 기록의 FinalRootSha256과 비교한 결과 34개 모두 일치했다.
 
 BasicMonster의 `bCombatTestInstance`는 기본 false이며 명시적으로 표시한 테스트 배우에만 보상 억제를 적용한다. 일반 배우의 난이도·보상 경로가 유지됨을 소스와 원본 integratedrun01의 실제 처치 보상으로 확인했다. 원본 브랜치는 다른 작업이 소유한 `Sprint#5-26-monster-test-ui`를 유지하며 Reviewer는 브랜치나 소스를 변경하지 않았다. 원본 작업 폴더의 [generated-check.log](generated-check.log)는 `Harness path check passed.`로 끝난다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](../README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

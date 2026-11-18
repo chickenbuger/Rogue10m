@@ -69,3 +69,10 @@ Sci-Fi 연구실·정거장, 스포츠 장비, 큐브 월드 등도 보유 목�
 - [아린 사용자 제공 모델 개선 기록](../Art/NPC/Arin/ReferenceRefined/README.md)
 
 이번 작업은 UI 열람·로컬 문서/파일명 조사·개발 지침 저장이다. 구매·다운로드·팩 설치·에셋 import·라이선스 판정·UE 빌드·PIE는 실행하지 않았다. Portal 추가 검색 시 사용자 창 입력이 감지되어 상태를 다시 읽은 뒤 추가 UI 조작을 멈췄으며, 미완료 검색을 보유 확인으로 기록하지 않았다.
+
+## 2026-11-10 지팡이 소유 자산 추가 확인
+- 현재 로그인된 Fab에서 Wizard for Battle Polyart(Dungeon Mason), Standard, UE5.8 지원과 보유 상태를 다시 확인했다. https://www.fab.com/listings/f17e8f86-b7b2-4840-9e77-5c57bfa30764
+- 로컬 VaultCache의 MagicStaffs/Staff01SM·Staff02SM·Staff03SM과 공통 StandardPolyartMat·StandardBaseColorTex 5개를 원본 바이트 그대로 최소 설치했다. Editor AssetRegistry에서도 이5개로 프로젝트 의존성이 닫혔다. Staff01 프로젝트 파생 /Game/Weapons/Staff20261110/SM_BattleWizardStaff01은 공식 MCP로 복제·저장했다.
+- Combat Magic Animations 역시 현재 로그인 페이지에서 보유·Standard·UE5.6~5.8을 확인했다. StaffStrike/StaffShot의 새 Manny/Human 파생4개는 StaffResumeC에 있다. 현재 이것은 원본 보존·실제 렌더 검수 근거이지 모든 마법 스킬의 런타임 장착/애니메이션 완성 근거는 아니다.
+- 특정 지팡이 모델을 사용자가 지정했다는 근거는 찾지 못했다. 새 구매/다운로드/약관 수락은 하지 않았다. 원본/재사용 가능한 파생 에셋의 공개 재배포 권리는 별도 미확인이다.
+- 근거: Feature/doc/evidence/staff-equipment-20261110/StaffProvenanceA, BattleWizardStaffInstallA, StaffMeshDerivativeA; Feature/doc/evidence/staff-animation-stage-20261110/StaffResumeC.

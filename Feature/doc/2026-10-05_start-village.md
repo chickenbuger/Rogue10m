@@ -92,10 +92,13 @@
 
 기존 `RunEditorRemote.py`와 `CheckGeneratedChanges.ps1`는 실행에 사용한 도구다. 최종 캡처는 생성 이미지가 아닌 Unreal Editor의 실제 렌더다.
 
-![시작 마을 전체](evidence/start-village-20261005/village-overview-clean.png)
+시작 마을 전체〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕
 
 ![남쪽 시작 위치에서 본 마을](evidence/start-village-20261005/village-player-view.png)
 
 ## Notion 요약 후보
 
 기본 전투맵을 복제해 보유 Stylized Village 에셋으로 120m 시작 마을을 제작했다. 집 외관 10채, 우물 광장과 길, 네 준비 구역, 실제 전투 포탈을 저장했다. 메뉴에서 마을로 이동하면 20분 타이머가 대기하고 포탈 진입 후 시작된다. 실제 착지·보행·포탈·타이머와 50개 검증 항목을 통과했으며 기존 Content 4,302개의 크기·수정 시각 및 선정 70개 해시를 보존했다. 최종 화면 검토와 MCP 재기동·자동 연결·저장도 확인했다. NPC 서비스와 실내는 후속 작업이다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

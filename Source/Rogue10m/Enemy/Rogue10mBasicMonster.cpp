@@ -1,4 +1,4 @@
-﻿// Copyright Epic Games, Inc. All Rights Reserved.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "Rogue10mBasicMonster.h"
 
@@ -22,6 +22,7 @@
 #include "Rogue10mRunCompletionComponent.h"
 #include "Engine/GameInstance.h"
 #include "Rogue10mMonsterDataAsset.h"
+#include "Rogue10mMonsterLootComponent.h"
 #include "Rogue10mMonsterAttackPatternComponent.h"
 #include "AI/Rogue10mMonsterAIController.h"
 #include "Rogue10mVitalRegenerationComponent.h"
@@ -38,6 +39,7 @@ ARogue10mBasicMonster::ARogue10mBasicMonster()
 	AttributeSet = CreateDefaultSubobject<URogue10mAttributeSet>(TEXT("Attribute Set"));
 	VitalRegenerationComponent = CreateDefaultSubobject<URogue10mVitalRegenerationComponent>(TEXT("Vital Regeneration Component"));
 	AttackPatternComponent = CreateDefaultSubobject<URogue10mMonsterAttackPatternComponent>(TEXT("Attack Pattern Component"));
+	MonsterLootComponent = CreateDefaultSubobject<URogue10mMonsterLootComponent>(TEXT("Monster Loot"));
 
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	AIControllerClass = ARogue10mMonsterAIController::StaticClass();
@@ -133,7 +135,7 @@ float ARogue10mBasicMonster::TakeDamage(
 {
 	if (!HasAuthority() || !FMath::IsFinite(DamageAmount)) { return 0.0f; }
 	const ARogue10mGameState* Run = GetWorld() ? GetWorld()->GetGameState<ARogue10mGameState>() : nullptr;
-	if (Run && (Run->GetRunPhase() == ERogue10mRunPhase::Victory || Run->GetRunPhase() == ERogue10mRunPhase::Defeat)) { return 0.0f; }
+	if (Run && Run->IsRunTerminal()) { return 0.0f; }
 	const float AppliedDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	if (bIsDead || !AttributeSet || !FMath::IsFinite(AppliedDamage) || AppliedDamage <= 0.0f)
 	{
@@ -326,13 +328,18 @@ void ARogue10mBasicMonster::Die()
 	}
 
 	bIsDead = true;
+	OnDeathStarted();
 	if (AttackPatternComponent) AttackPatternComponent->CancelAttack();
 	int32 AwardedExperience = 0;
 	int32 AwardedGold = 0;
 	const ARogue10mGameState* Run = GetWorld() ? GetWorld()->GetGameState<ARogue10mGameState>() : nullptr;
-	const bool bRunEnded = Run && (Run->GetRunPhase() == ERogue10mRunPhase::Victory || Run->GetRunPhase() == ERogue10mRunPhase::Defeat);
-	if (HasAuthority() && !bCombatTestInstance && !bRunEnded)
+	const bool bRunEnded = Run && Run->IsRunTerminal();
+	if (HasAuthority() && !bCombatTestInstance && !bRunEnded && ShouldGrantDeathRewards())
 	{
+		// Item custody follows the actual damage instigator, independently of XP.
+		ARogue10mPlayerController* LootController = Cast<ARogue10mPlayerController>(LastDamageInstigator.Get());
+		ARogue10mCharacter* LootRecipient = LootController ? Cast<ARogue10mCharacter>(LootController->GetPawn()) : nullptr;
+		if (MonsterLootComponent) { MonsterLootComponent->SpawnDeathLoot(MonsterData ? MonsterData->LootTable.Get() : nullptr, LootRecipient); }
 		if (ARogue10mPlayerController* RewardController =
 			Cast<ARogue10mPlayerController>(LastDamageInstigator.Get()))
 		{

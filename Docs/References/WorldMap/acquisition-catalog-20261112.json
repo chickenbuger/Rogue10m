@@ -1,0 +1,1416 @@
+{
+  "schemaVersion": "stageplan.world-map.acquisition/1",
+  "catalogId": "stageplan.catalog.world-map-acquisition-20261112",
+  "titleKorean": "월드 맵 직업·특정 무기·비급 획득 참조",
+  "authoredLocalDate": "2026-11-12",
+  "timezone": "Asia/Seoul",
+  "documentStatus": "제작용 기획 참조",
+  "identifierPolicyKorean": "stageplan. 접두어 ID는 이 기획 카탈로그의 참조키다. 기존 런타임 ItemId·SkillId·에셋 경로로 취급하지 않는다.",
+  "runtimeIntegrationConfirmed": false,
+  "newNamesStatusKorean": "NPC·특정 무기·비급 아이템명과 세부 배치는 기획 제안이다. 파일·시스템·에셋의 실제 존재를 의미하지 않는다.",
+  "coordinateSystem": {
+    "units": "meters",
+    "space": "2D planning map",
+    "originMapRef": "S",
+    "descriptionKorean": "개념 맵의 기획 좌표이며 Unreal 월드 변환값이 아니다. 공개되지 않은 세부 장소 좌표는 null로 둔다."
+  },
+  "mapAnchors": [
+    {
+      "mapRef": "S",
+      "nameKorean": "필드 진입점",
+      "planPosition": {
+        "xMeters": 0,
+        "yMeters": 0
+      }
+    },
+    {
+      "mapRef": "B",
+      "nameKorean": "최종 보스 입구",
+      "planPosition": {
+        "xMeters": 0,
+        "yMeters": 300
+      }
+    },
+    {
+      "mapRef": "H",
+      "nameKorean": "낙엽 수렵촌",
+      "planPosition": {
+        "xMeters": -140,
+        "yMeters": 100
+      }
+    },
+    {
+      "mapRef": "Q",
+      "nameKorean": "돌샘 수련초소",
+      "planPosition": {
+        "xMeters": -280,
+        "yMeters": 220
+      }
+    },
+    {
+      "mapRef": "G",
+      "nameKorean": "무너진 수비초소",
+      "planPosition": {
+        "xMeters": 180,
+        "yMeters": 180
+      }
+    },
+    {
+      "mapRef": "O",
+      "nameKorean": "옛 관측초소",
+      "planPosition": {
+        "xMeters": 210,
+        "yMeters": 250
+      }
+    },
+    {
+      "mapRef": "T",
+      "nameKorean": "기록촌 마탑",
+      "planPosition": {
+        "xMeters": 70,
+        "yMeters": 230
+      }
+    },
+    {
+      "mapRef": "W",
+      "nameKorean": "뿌리숲",
+      "planPosition": {
+        "xMeters": -315,
+        "yMeters": 150
+      }
+    },
+    {
+      "mapRef": "P",
+      "nameKorean": "산림초소",
+      "planPosition": {
+        "xMeters": -250,
+        "yMeters": 100
+      }
+    },
+    {
+      "mapRef": "A",
+      "nameKorean": "동쪽 운송길",
+      "planPosition": {
+        "xMeters": 220,
+        "yMeters": 90
+      }
+    },
+    {
+      "mapRef": "F",
+      "nameKorean": "잔불 대장간",
+      "planPosition": {
+        "xMeters": 310,
+        "yMeters": 230
+      }
+    },
+    {
+      "mapRef": "Z",
+      "nameKorean": "제련로 잔해",
+      "planPosition": {
+        "xMeters": 370,
+        "yMeters": 275
+      }
+    }
+  ],
+  "rules": {
+    "jobAcquisitionKorean": "해당 무기를 직접 장착하면 직업을 얻는다. 전문가 연속 의뢰 완료를 직업·보스 입장 허가로 사용하지 않는다.",
+    "starterWeaponPolicyKorean": "공통 기초 무기 접근과 특정 무기의 현장 획득은 별개다.",
+    "skillSlotPolicy": {
+      "mode": "weapon_specific_optional",
+      "descriptionKorean": "동시클릭·차징 기술을 모든 무기에 일반화하지 않는다. 기술별 정상 장착 정책을 따르며 모든 무기에 해당 입력을 강제로 채우지 않는다."
+    },
+    "learning": {
+      "normalPrerequisitesRequired": true,
+      "requiredAllMeansAll": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnSuccessOnly": true,
+      "conditionFailurePreservesBook": true,
+      "descriptionKorean": "비급 획득과 학습·장착은 별개다. 정상 무기·숙련·선행·자원 조건을 모두 검사하고, 성공했을 때만 책을 소비한다."
+    },
+    "fieldBooks": {
+      "contentsPolicy": "fixed",
+      "midOrHighNpcCompletionChoice": false,
+      "descriptionKorean": "중·상급 비급은 의뢰 현장의 고정함·기록·유품에서 직접 발견한다. NPC 완료창 지급·선택 보상으로 다시 주지 않는다. 현재 표는 고정 배치이며 사전 시드 후보군은 향후 명시 결정이 있을 때만 도입한다."
+    },
+    "beginnerTraining": {
+      "allowed": true,
+      "rewardBooks": [
+        "stageplan.book.knuckle.k01",
+        "stageplan.book.greatsword.g01",
+        "stageplan.book.mage.magic_missile"
+      ],
+      "descriptionKorean": "각 우선 직업의 첫 초급 수련 보수만 명시한다. 붕권은 무건의 두 번째 수련 보상이 아니라 뿌리숲 유품 획득이다."
+    },
+    "optionalDropsKorean": "추가 확률 드롭은 별도 후속 설계다. 이 표의 고정 비급·필수 의뢰 물품을 확률 드롭으로 대체하지 않는다.",
+    "duplicates": {
+      "forceForget": false,
+      "mandatoryCrafting": false,
+      "autoConvert": false,
+      "descriptionKorean": "이미 배운 책은 강제 망각·합성 없이 보관·매각·선택 교환할 수 있다. 자동 판매·변환하지 않는다."
+    },
+    "persistence": {
+      "runLocal": [
+        "특정 무기",
+        "보유 비급",
+        "숙련",
+        "배운 기술",
+        "장착",
+        "이번 런 주문 페널티"
+      ],
+      "discoveryRecordTrigger": "actual_successful_learning",
+      "permanentDiscoveryInfoOnly": true,
+      "descriptionKorean": "Discovery는 최초 실제 학습 뒤 공개한 정보만 영구 보존한다. 책을 줍는 것만으로 기록을 완료하거나 다음 런 자동학습·영구사용권·조건 우회를 허용하지 않는다."
+    },
+    "resourcesKorean": "무기·비급 획득이 내공·투지·마나의 일괄 해금은 아니다. 허용 계열과 정상 RequiredAll·조합 호환성을 지키며 미정 자원·랭크·손실 수치를 새로 확정하지 않는다.",
+    "routeFreedomKorean": "어느 전문가·마을·의뢰·중간보스도 최종보스 입장 조건이 아니다. 모든 비급을 한 런에 순회할 필요가 없으며 보상 기술을 이미 써야 그 비급을 얻는 역전 조건은 금지한다."
+  },
+  "magicInput": {
+    "status": "사용자 확정 입력과 미정 수치 분리",
+    "modeEntry": {
+      "physicalKey": "Ctrl",
+      "pressCount": 1,
+      "mode": "single_press_enter"
+    },
+    "exitPolicy": {
+      "exitMode": null,
+      "cancelInput": null,
+      "status": "undecided",
+      "descriptionKorean": "주문 후 상태 유지·해제와 취소 입력은 미정이다. Ctrl을 다시 누르면 종료된다는 규칙을 임의 확정하지 않는다."
+    },
+    "deadline": {
+      "startsAt": "command_state_first_Q_press",
+      "durationSeconds": null,
+      "fixedFromFirstPress": true,
+      "resetOnAdditionalQ": false
+    },
+    "sequence": "QQQ",
+    "resultSpellNameKorean": "마력미사일",
+    "activation": "automatic_on_sequence_completion",
+    "additionalConfirmKey": null,
+    "timeoutPenalty": {
+      "status": "undecided",
+      "descriptionKorean": "시간초과의 실패·페널티 규칙과 수치는 미정이다."
+    },
+    "futureSpellSequences": null,
+    "descriptionKorean": "Ctrl 한 번으로 명령 상태에 진입하고 첫 Q부터 고정 제한시간이 시작된다. QQQ 완성 즉시 마력미사일이 자동발동한다. 제한시간 초 수치·시간초과 페널티를 임의 확정하지 않는다."
+  },
+  "classes": [
+    {
+      "catalogId": "stageplan.class.knuckle",
+      "nameKorean": "너클",
+      "phase": "priority",
+      "mentorId": "stageplan.npc.mugeon",
+      "bookCount": 10
+    },
+    {
+      "catalogId": "stageplan.class.greatsword",
+      "nameKorean": "대검",
+      "phase": "priority",
+      "mentorId": "stageplan.npc.dogyeom",
+      "bookCount": 10
+    },
+    {
+      "catalogId": "stageplan.class.mage",
+      "nameKorean": "마법사",
+      "phase": "priority",
+      "mentorId": "stageplan.npc.seran",
+      "bookCount": 3
+    },
+    {
+      "catalogId": "stageplan.class.dagger",
+      "nameKorean": "단검",
+      "phase": "planned_future",
+      "mentorId": "stageplan.npc.narin",
+      "reservationOnly": true,
+      "bookLocationsFinalized": false
+    },
+    {
+      "catalogId": "stageplan.class.dual_swords",
+      "nameKorean": "쌍검",
+      "phase": "planned_future",
+      "mentorId": "stageplan.npc.seoyul",
+      "reservationOnly": true,
+      "bookLocationsFinalized": false
+    },
+    {
+      "catalogId": "stageplan.class.bow",
+      "nameKorean": "활",
+      "phase": "planned_future",
+      "mentorId": "stageplan.npc.yungyeol",
+      "reservationOnly": true,
+      "bookLocationsFinalized": false
+    },
+    {
+      "catalogId": "stageplan.class.shuriken",
+      "nameKorean": "표창",
+      "phase": "planned_future",
+      "mentorId": "stageplan.npc.soha",
+      "reservationOnly": true,
+      "bookLocationsFinalized": false
+    },
+    {
+      "catalogId": "stageplan.class.dual_daggers",
+      "nameKorean": "쌍단검",
+      "phase": "planned_future",
+      "mentorId": "stageplan.npc.doha",
+      "reservationOnly": true,
+      "bookLocationsFinalized": false
+    },
+    {
+      "catalogId": "stageplan.class.longsword",
+      "nameKorean": "장검",
+      "phase": "planned_future",
+      "mentorId": "stageplan.npc.ihyeon",
+      "reservationOnly": true,
+      "bookLocationsFinalized": false
+    },
+    {
+      "catalogId": "stageplan.class.greatshield",
+      "nameKorean": "대방패",
+      "phase": "planned_future",
+      "mentorId": "stageplan.npc.taegeon",
+      "reservationOnly": true,
+      "bookLocationsFinalized": false
+    },
+    {
+      "catalogId": "stageplan.class.sword_buckler",
+      "nameKorean": "검버클러",
+      "phase": "planned_future",
+      "mentorId": "stageplan.npc.roan",
+      "reservationOnly": true,
+      "bookLocationsFinalized": false
+    }
+  ],
+  "npcs": [
+    {
+      "catalogId": "stageplan.npc.mugeon",
+      "nameKorean": "무건",
+      "classId": "stageplan.class.knuckle",
+      "roleKorean": "너클 전문가",
+      "phase": "priority",
+      "location": {
+        "parentMapRef": "Q",
+        "siteKorean": "돌샘 수련초소",
+        "planPosition": {
+          "xMeters": -280,
+          "yMeters": 220
+        },
+        "coordinateStatus": "공개된 기획 좌표"
+      }
+    },
+    {
+      "catalogId": "stageplan.npc.dogyeom",
+      "nameKorean": "도겸",
+      "classId": "stageplan.class.greatsword",
+      "roleKorean": "대검 전문가",
+      "phase": "priority",
+      "location": {
+        "parentMapRef": "G",
+        "siteKorean": "무너진 수비초소",
+        "planPosition": {
+          "xMeters": 180,
+          "yMeters": 180
+        },
+        "coordinateStatus": "공개된 기획 좌표"
+      }
+    },
+    {
+      "catalogId": "stageplan.npc.seran",
+      "nameKorean": "세란",
+      "classId": "stageplan.class.mage",
+      "roleKorean": "마법 입문·현장 실험 전문가",
+      "phase": "priority",
+      "location": {
+        "parentMapRef": "O",
+        "siteKorean": "옛 관측초소",
+        "planPosition": {
+          "xMeters": 210,
+          "yMeters": 250
+        },
+        "coordinateStatus": "공개된 기획 좌표"
+      }
+    },
+    {
+      "catalogId": "stageplan.npc.yuha",
+      "nameKorean": "유하",
+      "classId": null,
+      "roleKorean": "기록·마법 정보 안내; 세란과 별개 인물",
+      "phase": "information",
+      "location": {
+        "parentMapRef": "T",
+        "siteKorean": "기록촌 마탑",
+        "planPosition": {
+          "xMeters": 70,
+          "yMeters": 230
+        },
+        "coordinateStatus": "공개된 기획 좌표"
+      }
+    },
+    {
+      "catalogId": "stageplan.npc.narin",
+      "nameKorean": "나린",
+      "classId": "stageplan.class.dagger",
+      "roleKorean": "단검 전문가 예약",
+      "phase": "planned_future",
+      "location": {
+        "parentMapRef": "H",
+        "siteKorean": "낙엽 수렵촌 외곽 폐작업장",
+        "planPosition": null,
+        "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+      },
+      "reservationOnly": true
+    },
+    {
+      "catalogId": "stageplan.npc.seoyul",
+      "nameKorean": "서율",
+      "classId": "stageplan.class.dual_swords",
+      "roleKorean": "쌍검 전문가 예약",
+      "phase": "planned_future",
+      "location": {
+        "parentMapRef": null,
+        "siteKorean": "잡화·훈련 거점 밖 교량 초소",
+        "planPosition": null,
+        "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+      },
+      "reservationOnly": true
+    },
+    {
+      "catalogId": "stageplan.npc.yungyeol",
+      "nameKorean": "윤결",
+      "classId": "stageplan.class.bow",
+      "roleKorean": "활 전문가 예약",
+      "phase": "planned_future",
+      "location": {
+        "parentMapRef": "P",
+        "siteKorean": "산림초소",
+        "planPosition": null,
+        "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+      },
+      "reservationOnly": true
+    },
+    {
+      "catalogId": "stageplan.npc.soha",
+      "nameKorean": "소하",
+      "classId": "stageplan.class.shuriken",
+      "roleKorean": "표창 전문가 예약",
+      "phase": "planned_future",
+      "location": {
+        "parentMapRef": null,
+        "siteKorean": "서쪽 능선 연락소",
+        "planPosition": null,
+        "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+      },
+      "reservationOnly": true
+    },
+    {
+      "catalogId": "stageplan.npc.doha",
+      "nameKorean": "도하",
+      "classId": "stageplan.class.dual_daggers",
+      "roleKorean": "쌍단검 전문가 예약",
+      "phase": "planned_future",
+      "location": {
+        "parentMapRef": "A",
+        "siteKorean": "동쪽 운송길 배수로 쉼터",
+        "planPosition": null,
+        "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+      },
+      "reservationOnly": true
+    },
+    {
+      "catalogId": "stageplan.npc.ihyeon",
+      "nameKorean": "이현",
+      "classId": "stageplan.class.longsword",
+      "roleKorean": "장검 전문가 예약",
+      "phase": "planned_future",
+      "location": {
+        "parentMapRef": "T",
+        "siteKorean": "기록촌 마탑 남쪽 옛 예배당",
+        "planPosition": null,
+        "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+      },
+      "reservationOnly": true
+    },
+    {
+      "catalogId": "stageplan.npc.taegeon",
+      "nameKorean": "태건",
+      "classId": "stageplan.class.greatshield",
+      "roleKorean": "대방패 전문가 예약",
+      "phase": "planned_future",
+      "location": {
+        "parentMapRef": null,
+        "siteKorean": "북서쪽 옛 성문 초소",
+        "planPosition": null,
+        "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+      },
+      "reservationOnly": true
+    },
+    {
+      "catalogId": "stageplan.npc.roan",
+      "nameKorean": "로안",
+      "classId": "stageplan.class.sword_buckler",
+      "roleKorean": "검버클러 전문가 예약",
+      "phase": "planned_future",
+      "location": {
+        "parentMapRef": null,
+        "siteKorean": "남쪽 교량 검사소",
+        "planPosition": null,
+        "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+      },
+      "reservationOnly": true
+    }
+  ],
+  "weapons": [
+    {
+      "catalogId": "stageplan.weapon.stonewell_training_knuckles",
+      "proposedItemNameKorean": "돌샘 수련너클",
+      "classId": "stageplan.class.knuckle",
+      "location": {
+        "parentMapRef": "Q",
+        "siteKorean": "공용 수련함",
+        "planPosition": {
+          "xMeters": -275,
+          "yMeters": 220
+        },
+        "coordinateStatus": "세부 오프셋 기획 제안; 실제 월드 배치·실측 전"
+      },
+      "phase": "priority",
+      "sourceKind": "fixed_world_pickup",
+      "proposalStatus": "새 아이템명·배치 제안",
+      "runtimeItemId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "autoEquip": false,
+      "persistence": "current_run",
+      "requiresOwningThisWeaponToObtain": false
+    },
+    {
+      "catalogId": "stageplan.weapon.gatekeeper_greatsword",
+      "proposedItemNameKorean": "성문지기 대검",
+      "classId": "stageplan.class.greatsword",
+      "location": {
+        "parentMapRef": "G",
+        "siteKorean": "남쪽 병기함",
+        "planPosition": {
+          "xMeters": 185,
+          "yMeters": 175
+        },
+        "coordinateStatus": "세부 오프셋 기획 제안; 실제 월드 배치·실측 전"
+      },
+      "phase": "priority",
+      "sourceKind": "fixed_world_pickup",
+      "proposalStatus": "새 아이템명·배치 제안",
+      "runtimeItemId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "autoEquip": false,
+      "persistence": "current_run",
+      "requiresOwningThisWeaponToObtain": false
+    },
+    {
+      "catalogId": "stageplan.weapon.starbranch_staff",
+      "proposedItemNameKorean": "별가지 지팡이",
+      "classId": "stageplan.class.mage",
+      "location": {
+        "parentMapRef": "O",
+        "siteKorean": "폐기 관측장비함",
+        "planPosition": {
+          "xMeters": 215,
+          "yMeters": 250
+        },
+        "coordinateStatus": "세부 오프셋 기획 제안; 실제 월드 배치·실측 전"
+      },
+      "phase": "priority",
+      "sourceKind": "fixed_world_pickup",
+      "proposalStatus": "새 아이템명·배치 제안",
+      "runtimeItemId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "autoEquip": false,
+      "persistence": "current_run",
+      "requiresOwningThisWeaponToObtain": false
+    }
+  ],
+  "books": [
+    {
+      "catalogId": "stageplan.book.knuckle.k01",
+      "classId": "stageplan.class.knuckle",
+      "designTechniqueId": "K01",
+      "techniqueNameKorean": "연환권",
+      "proposedItemNameKorean": "연환권 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "explicit_beginner_training_reward",
+        "location": {
+          "parentMapRef": "Q",
+          "siteKorean": "무건의 초급 선택 수련",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": "stageplan.npc.mugeon",
+        "questContextKorean": "기본공격과 독립된 기술을 익히는 초급 수련의 명시적 보수",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.knuckle.k02",
+      "classId": "stageplan.class.knuckle",
+      "designTechniqueId": "K02",
+      "techniqueNameKorean": "붕권",
+      "proposedItemNameKorean": "붕권 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "W",
+          "siteKorean": "뿌리숲 수련자의 유품 가방",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "숲 수련자의 흔적을 조사하는 도중 현장에서 발견",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.knuckle.k03",
+      "classId": "stageplan.class.knuckle",
+      "designTechniqueId": "K03",
+      "techniqueNameKorean": "금강쇄",
+      "proposedItemNameKorean": "금강쇄 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "Q",
+          "siteKorean": "배수 작업실의 낡은 훈련기록",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "끊어진 배수로 현장 조사",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.knuckle.k04",
+      "classId": "stageplan.class.knuckle",
+      "designTechniqueId": "K04",
+      "techniqueNameKorean": "유운수",
+      "proposedItemNameKorean": "유운수 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "Q",
+          "siteKorean": "옛 대련장 벽 틈의 얇은 비급함",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "닳은 돌에 관한 단서로 찾는 은닉함",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.knuckle.k05",
+      "classId": "stageplan.class.knuckle",
+      "designTechniqueId": "K05",
+      "techniqueNameKorean": "철산고",
+      "proposedItemNameKorean": "철산고 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "Q",
+          "siteKorean": "운반장 쉼터 작업대 아래 상자",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "운반꾼의 흔적 현장 조사",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.knuckle.k06",
+      "classId": "stageplan.class.knuckle",
+      "designTechniqueId": "K06",
+      "techniqueNameKorean": "파진각",
+      "proposedItemNameKorean": "파진각 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "P",
+          "siteKorean": "산림초소 너머 쓰러진 나무 공터의 수련막",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "일반 보행으로 접근하는 옛 연습터",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.knuckle.k07",
+      "classId": "stageplan.class.knuckle",
+      "designTechniqueId": "K07",
+      "techniqueNameKorean": "백열난무",
+      "proposedItemNameKorean": "백열난무 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "W",
+          "siteKorean": "뿌리숲 절벽 아래 보급고의 비급함",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "선택 정예 주변 보급고 탐색; 중간보스 처치를 요구하지 않음",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.knuckle.k08",
+      "classId": "stageplan.class.knuckle",
+      "designTechniqueId": "K08",
+      "techniqueNameKorean": "무극패왕권",
+      "proposedItemNameKorean": "무극패왕권 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "Q",
+          "siteKorean": "지하 훈련고 깊은 보관함",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "닫힌 훈련고 현장 조사",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.knuckle.k09",
+      "classId": "stageplan.class.knuckle",
+      "designTechniqueId": "K09",
+      "techniqueNameKorean": "태산압정",
+      "proposedItemNameKorean": "태산압정 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "Q",
+          "siteKorean": "고원 아래 움푹한 연습장의 보호함",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "도약 기술 없이 일반 경사로로 내려가는 현장 보상",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.knuckle.k10",
+      "classId": "stageplan.class.knuckle",
+      "designTechniqueId": "K10",
+      "techniqueNameKorean": "천붕권",
+      "proposedItemNameKorean": "천붕권 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "Q",
+          "siteKorean": "뒤편 절벽 바위틈의 숨은 비급함",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "발자국·주먹 자국을 따라 찾는 히든 피스",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.greatsword.g01",
+      "classId": "stageplan.class.greatsword",
+      "designTechniqueId": "G01",
+      "techniqueNameKorean": "분쇄참",
+      "proposedItemNameKorean": "분쇄참 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "explicit_beginner_training_reward",
+        "location": {
+          "parentMapRef": "G",
+          "siteKorean": "도겸의 초급 선택 수련",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": "stageplan.npc.dogyeom",
+        "questContextKorean": "강타 후 검 회수까지 익히는 초급 수련의 명시적 보수",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.greatsword.g02",
+      "classId": "stageplan.class.greatsword",
+      "designTechniqueId": "G02",
+      "techniqueNameKorean": "회전참",
+      "proposedItemNameKorean": "회전참 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "G",
+          "siteKorean": "폐경비소 안뜰의 병법서함",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "비어 버린 경비소 현장 조사",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.greatsword.g03",
+      "classId": "stageplan.class.greatsword",
+      "designTechniqueId": "G03",
+      "techniqueNameKorean": "파쇄참",
+      "proposedItemNameKorean": "파쇄참 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "F",
+          "siteKorean": "고철 수거장의 버려진 운송함",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "철갑수 사냥터의 수송품 조사; 방어파괴 기술을 요구하지 않음",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.greatsword.g04",
+      "classId": "stageplan.class.greatsword",
+      "designTechniqueId": "G04",
+      "techniqueNameKorean": "돌진참",
+      "proposedItemNameKorean": "돌진참 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "A",
+          "siteKorean": "동쪽 운송길 전복 수레",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "끊어진 운송 기록 현장 조사",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.greatsword.g05",
+      "classId": "stageplan.class.greatsword",
+      "designTechniqueId": "G05",
+      "techniqueNameKorean": "반격참",
+      "proposedItemNameKorean": "반격참 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "G",
+          "siteKorean": "초소 뒤 병기실의 방패 기록함",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "오래된 방패·훈련기록 조사",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.greatsword.g06",
+      "classId": "stageplan.class.greatsword",
+      "designTechniqueId": "G06",
+      "techniqueNameKorean": "올려베기",
+      "proposedItemNameKorean": "올려베기 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "G",
+          "siteKorean": "동쪽 돌계단 쉼터의 경비병 기록",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "돌계단 순찰 현장 보상; 띄우기·공중 진입 불필요",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.greatsword.g07",
+      "classId": "stageplan.class.greatsword",
+      "designTechniqueId": "G07",
+      "techniqueNameKorean": "대지파쇄",
+      "proposedItemNameKorean": "대지파쇄 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "Z",
+          "siteKorean": "제련로 잔해 지하 작업함",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "식은 화덕 현장 조사; 화염마법 불필요",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.greatsword.g08",
+      "classId": "stageplan.class.greatsword",
+      "designTechniqueId": "G08",
+      "techniqueNameKorean": "섬멸연참",
+      "proposedItemNameKorean": "섬멸연참 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "F",
+          "siteKorean": "폐병영 마지막 훈련기록함",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "일반 혼합전투 구역의 선택 탐험 보상",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.greatsword.g09",
+      "classId": "stageplan.class.greatsword",
+      "designTechniqueId": "G09",
+      "techniqueNameKorean": "패왕참",
+      "proposedItemNameKorean": "패왕참 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "Z",
+          "siteKorean": "북쪽 병기고의 비급함",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "샛길 병기고 탐험 보상; 최종보스 처치 불필요",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.greatsword.g10",
+      "classId": "stageplan.class.greatsword",
+      "designTechniqueId": "G10",
+      "techniqueNameKorean": "단공참",
+      "proposedItemNameKorean": "단공참 비급",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "F",
+          "siteKorean": "바람골 협곡 정찰수 은닉함",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "일반 보행로로 접근; 돌진·차징 기술로 틈을 넘을 필요 없음",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.mage.magic_missile",
+      "classId": "stageplan.class.mage",
+      "designTechniqueId": "MAGIC_MISSILE",
+      "techniqueNameKorean": "마력미사일",
+      "proposedItemNameKorean": "기초 명령서: 마력미사일",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "explicit_beginner_training_reward",
+        "location": {
+          "parentMapRef": "O",
+          "siteKorean": "세란의 입문 문양 미니게임",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": "stageplan.npc.seran",
+        "questContextKorean": "해당 주문을 이미 알지 않아도 참여할 수 있는 초급 문양 수련의 명시적 보수",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false,
+        "minigame": {
+          "kind": "beginner_pattern_training",
+          "requiresPriorKnowledgeOfRewardSpell": false,
+          "descriptionKorean": "주문 습득 전 입문 문양을 연습하는 미니게임. 이미 마력미사일을 실행해야 하는 역전 조건을 두지 않음."
+        }
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.mage.fireball",
+      "classId": "stageplan.class.mage",
+      "designTechniqueId": "FIREBALL",
+      "techniqueNameKorean": "화염탄",
+      "proposedItemNameKorean": "화염탄 주문서",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "F",
+          "siteKorean": "잔불 대장간과 옛 관측초소 사이 불탄 실험실의 내열 서류함",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정",
+          "relatedMapRefs": [
+            "F",
+            "O"
+          ]
+        },
+        "mentorId": null,
+        "questContextKorean": "불탄 실험실 현장 조사",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    },
+    {
+      "catalogId": "stageplan.book.mage.cold_wave",
+      "classId": "stageplan.class.mage",
+      "designTechniqueId": "COLD_WAVE",
+      "techniqueNameKorean": "냉기파",
+      "proposedItemNameKorean": "냉기파 주문서",
+      "phase": "priority",
+      "runtimeItemId": null,
+      "runtimeSkillId": null,
+      "runtimeAssetPath": null,
+      "runtimeExistence": "미확인",
+      "source": {
+        "kind": "fixed_world_pickup",
+        "location": {
+          "parentMapRef": "O",
+          "siteKorean": "물길 기록실의 보존 기록함",
+          "planPosition": null,
+          "coordinateStatus": "부모 구역 상대 위치; 세부 좌표 미확정"
+        },
+        "mentorId": null,
+        "questContextKorean": "관측초소 물길 기록 조사",
+        "contentsPolicy": "fixed",
+        "questCompletionChoice": false
+      },
+      "requiresOwningRewardTechniqueToObtain": false,
+      "requiresNormalLearningPrerequisites": true,
+      "autoLearn": false,
+      "autoEquip": false,
+      "consumeOnLearningSuccessOnly": true,
+      "persistence": "current_run",
+      "discovery": {
+        "recordAfter": "actual_successful_learning",
+        "persistsAcrossRuns": true,
+        "grantsPermanentUse": false,
+        "meaningKorean": "최초 실제 학습 후 정보 공개만 영구 보존"
+      }
+    }
+  ],
+  "counts": {
+    "priorityClasses": 3,
+    "plannedFutureClasses": 8,
+    "priorityMentors": 3,
+    "informationNpcs": 1,
+    "reservedFutureMentors": 8,
+    "specificWeapons": 3,
+    "knuckleBooks": 10,
+    "greatswordBooks": 10,
+    "mageBooks": 3,
+    "totalBooks": 23,
+    "explicitBeginnerTrainingBooks": 3,
+    "fixedFieldBooks": 20
+  },
+  "auditNotesKorean": [
+    "붕권의 최신 출처는 W 뿌리숲 수련자 유품이다. 과거 두 번째 초급 수련 보수안으로 되돌리지 않는다.",
+    "유하는 T 기록촌 마탑의 정보 NPC이고 세란은 O 옛 관측초소의 마법 전문가다.",
+    "F 잔불 대장간과 Z 제련로 잔해를 구분한다.",
+    "후속 8직업의 NPC는 장소 예약이며 실제 개발·무기 자산·고급 비급 배치 확정을 뜻하지 않는다."
+  ]
+}

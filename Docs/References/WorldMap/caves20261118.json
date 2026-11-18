@@ -1,0 +1,1209 @@
+{
+  "schemaVersion": 1,
+  "documentId": "rogue10m-underground-caves-20261118",
+  "updatedKstDate": "2026-11-18",
+  "status": "validated_cave_space_complete_work_branch_checkpoint_map_production_in_progress",
+  "runtimeImplementationComplete": true,
+  "spaceGeometryAuthored": true,
+  "finalSavedStateVerified": true,
+  "candidateMap": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A",
+  "architect": "Feature/architect/2026-11-18_underground-caves.md",
+  "implementationResult": "Feature/doc/2026-11-18_underground-caves.md",
+  "sourceCatalogs": [
+    "Docs/References/WorldMap/world-layout-20261112.json",
+    "Docs/References/WorldMap/acquisition-catalog-20261112.json"
+  ],
+  "authorityKorean": "기존 배치·획득 규칙을 유지하는 실제 동굴 공간 보충본. 이후 사용자 지시가 우선하며 stageplan ID를 새 런타임 ID로 취급하지 않는다.",
+  "preservedContracts": {
+    "sameFieldWorld": true,
+    "runTimerRefillOnEntry": false,
+    "centralRouteInitiallyOpen": true,
+    "newQuestSkillKeyGates": false,
+    "allHubsOptional": true,
+    "allMidBossesOptional": true,
+    "centralRouteM": 300,
+    "protectedRoads": 29,
+    "roadProtectedHalfWidthCm": 1900,
+    "protectedVillages": [
+      "H",
+      "M",
+      "T"
+    ],
+    "villageBrownFloorsAndFencesPreserved": true,
+    "landscapeRenderComponents": 45,
+    "landscapeCollisionComponents": 45,
+    "editLayers": 2,
+    "originalHeightPaintLayerPreserved": true,
+    "original1404ActorTransformsAndCapturedComponentPropertiesPreserved": true,
+    "scopeKorean": "원래 actor의 transform·관측한 component·재질 참조를 보존한다. 사용자 요청한 기존 추가 높이 레이어의 국소 수정은 별도 지형 검증 대상이다."
+  },
+  "geometry": {
+    "tileCm": 500,
+    "wallThicknessCm": 80,
+    "floorCubeCenterZCm": 8600,
+    "floorWalkTopZCm": 8610,
+    "ceilingUndersideZCm": 9200,
+    "roofTopZCm": 9602,
+    "interiorHeadroomCm": 590,
+    "physicalStraightClearWidthCm": 420,
+    "rampPlanarLengthCm": 4000,
+    "rampWidthCm": 800,
+    "rampDropCm": 1000,
+    "rampGrade": 0.25,
+    "rampAngleDegrees": 14.036243467926479,
+    "headroomAtRoofBorderCm": 475,
+    "sites": [
+      {
+        "mapRef": "Q",
+        "labelKorean": "돌샘 지하 훈련고",
+        "parentAnchorWorldCm": [
+          -13000,
+          54550,
+          9600
+        ],
+        "surfaceEntryWorldCm": [
+          -9750.0,
+          58050.0,
+          9600
+        ],
+        "rampBottomWorldCm": [
+          -9750.0,
+          62050.0,
+          8600
+        ],
+        "pitOriginWorldCm": [
+          -11000.0,
+          62050.0
+        ],
+        "pitRectWorldCm": [
+          -11000.0,
+          62050.0,
+          -5000.0,
+          68050.0
+        ],
+        "roofRectWorldCm": [
+          -11500.0,
+          61550.0,
+          -4500.0,
+          68550.0
+        ],
+        "gridSizeCells": [
+          12,
+          12
+        ],
+        "entryCell": [
+          2,
+          0
+        ],
+        "roomsCellRectInclusive": {
+          "secret": [
+            0,
+            1,
+            8,
+            10
+          ],
+          "training": [
+            5,
+            8,
+            1,
+            3
+          ],
+          "vault": [
+            8,
+            10,
+            8,
+            10
+          ]
+        },
+        "mainRouteCells": [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            8,
+            2
+          ],
+          [
+            8,
+            5
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            5,
+            9
+          ],
+          [
+            9,
+            9
+          ]
+        ],
+        "shortcutRouteCells": [
+          [
+            9,
+            9
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "secretRouteCells": [
+          [
+            2,
+            6
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            0,
+            9
+          ]
+        ],
+        "forcedClosedCellEdges": [
+          [
+            [
+              1,
+              8
+            ],
+            [
+              2,
+              8
+            ]
+          ],
+          [
+            [
+              1,
+              9
+            ],
+            [
+              2,
+              9
+            ]
+          ],
+          [
+            [
+              1,
+              10
+            ],
+            [
+              2,
+              10
+            ]
+          ]
+        ],
+        "secretOpenInterfaces": [
+          [
+            [
+              2,
+              6
+            ],
+            [
+              1,
+              6
+            ]
+          ]
+        ],
+        "routeDistances": {
+          "kind": "planned_cell_centerline_not_runtime_timing",
+          "mainM": 110.0,
+          "shortcutReturnM": 80.0,
+          "openFromFirstVisit": true,
+          "allCellsConnected": true,
+          "secretHasOneDoglegEntry": true
+        },
+        "structure": {
+          "actorLabel": "CV18_Q_Structure",
+          "floorCells": 55,
+          "wallInstances": 83,
+          "roofAndCeilingInstances": 2,
+          "rampInstances": 1,
+          "totalInstances": 141,
+          "alwaysLoaded": true,
+          "collision": "QueryAndPhysics; Pawn/Camera/Visibility block"
+        },
+        "dressing": {
+          "actorLabel": "CV18_Q_Dressing",
+          "instances": 210,
+          "pointLights": 6,
+          "minimumPlannedVisualPassageCm": 342.7694052496177,
+          "minimumCeilingRockBottomZCm": 9065.0,
+          "alwaysLoaded": true,
+          "collision": "QueryOnly; Camera/Visibility block; Pawn/other channels ignore; no navigation"
+        },
+        "acquisitionReference": {
+          "existingCatalogId": "stageplan.book.knuckle.k08",
+          "techniqueNameKorean": "무극패왕권",
+          "siteKorean": "지하 훈련고 깊은 보관함",
+          "visualReservationWorldCm": [
+            -6250.0,
+            66800.0,
+            8610.0
+          ],
+          "sourceKind": "fixed_world_pickup_planning_reference",
+          "runtimeItemId": null,
+          "runtimeSkillId": null,
+          "runtimeAssetPath": null,
+          "implementedPickup": false,
+          "currentChestIsVisualOnly": true,
+          "autoLearn": false,
+          "autoEquip": false,
+          "normalLearningPrerequisitesRequired": true,
+          "requiresRewardTechniqueToReach": false,
+          "npcGuaranteedCompletionReward": false,
+          "fireMagicRequired": false
+        }
+      },
+      {
+        "mapRef": "Z",
+        "labelKorean": "제련로 잔해 지하 작업장",
+        "parentAnchorWorldCm": [
+          52000,
+          60050,
+          9600
+        ],
+        "surfaceEntryWorldCm": [
+          55750.0,
+          57650.0,
+          9600
+        ],
+        "rampBottomWorldCm": [
+          55750.0,
+          53650.0,
+          8600
+        ],
+        "pitOriginWorldCm": [
+          52000.0,
+          47650.0
+        ],
+        "pitRectWorldCm": [
+          52000.0,
+          47650.0,
+          59000.0,
+          53650.0
+        ],
+        "roofRectWorldCm": [
+          51500.0,
+          47150.0,
+          59500.0,
+          54150.0
+        ],
+        "gridSizeCells": [
+          14,
+          12
+        ],
+        "entryCell": [
+          7,
+          11
+        ],
+        "roomsCellRectInclusive": {
+          "forge": [
+            1,
+            4,
+            4,
+            6
+          ],
+          "secret": [
+            12,
+            13,
+            4,
+            6
+          ],
+          "workshop": [
+            10,
+            12,
+            1,
+            3
+          ]
+        },
+        "mainRouteCells": [
+          [
+            7,
+            11
+          ],
+          [
+            7,
+            9
+          ],
+          [
+            2,
+            9
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            11,
+            2
+          ]
+        ],
+        "shortcutRouteCells": [
+          [
+            11,
+            2
+          ],
+          [
+            11,
+            9
+          ],
+          [
+            7,
+            9
+          ],
+          [
+            7,
+            11
+          ]
+        ],
+        "secretRouteCells": [
+          [
+            11,
+            8
+          ],
+          [
+            13,
+            8
+          ],
+          [
+            13,
+            5
+          ]
+        ],
+        "forcedClosedCellEdges": [
+          [
+            [
+              11,
+              4
+            ],
+            [
+              12,
+              4
+            ]
+          ],
+          [
+            [
+              11,
+              5
+            ],
+            [
+              12,
+              5
+            ]
+          ],
+          [
+            [
+              11,
+              6
+            ],
+            [
+              12,
+              6
+            ]
+          ],
+          [
+            [
+              12,
+              3
+            ],
+            [
+              12,
+              4
+            ]
+          ]
+        ],
+        "secretOpenInterfaces": [
+          [
+            [
+              11,
+              8
+            ],
+            [
+              12,
+              8
+            ]
+          ]
+        ],
+        "routeDistances": {
+          "kind": "planned_cell_centerline_not_runtime_timing",
+          "mainM": 115.0,
+          "shortcutReturnM": 65.0,
+          "openFromFirstVisit": true,
+          "allCellsConnected": true,
+          "secretHasOneDoglegEntry": true
+        },
+        "structure": {
+          "actorLabel": "CV18_Z_Structure",
+          "floorCells": 57,
+          "wallInstances": 85,
+          "roofAndCeilingInstances": 2,
+          "rampInstances": 1,
+          "totalInstances": 145,
+          "alwaysLoaded": true,
+          "collision": "QueryAndPhysics; Pawn/Camera/Visibility block"
+        },
+        "dressing": {
+          "actorLabel": "CV18_Z_Dressing",
+          "instances": 216,
+          "pointLights": 6,
+          "minimumPlannedVisualPassageCm": 342.77953368057484,
+          "minimumCeilingRockBottomZCm": 9065.0,
+          "alwaysLoaded": true,
+          "collision": "QueryOnly; Camera/Visibility block; Pawn/other channels ignore; no navigation"
+        },
+        "acquisitionReference": {
+          "existingCatalogId": "stageplan.book.greatsword.g07",
+          "techniqueNameKorean": "대지파쇄",
+          "siteKorean": "제련로 잔해 지하 작업함",
+          "visualReservationWorldCm": [
+            57750.0,
+            48900.0,
+            8610.0
+          ],
+          "sourceKind": "fixed_world_pickup_planning_reference",
+          "runtimeItemId": null,
+          "runtimeSkillId": null,
+          "runtimeAssetPath": null,
+          "implementedPickup": false,
+          "currentChestIsVisualOnly": true,
+          "autoLearn": false,
+          "autoEquip": false,
+          "normalLearningPrerequisitesRequired": true,
+          "requiresRewardTechniqueToReach": false,
+          "npcGuaranteedCompletionReward": false,
+          "fireMagicRequired": false
+        }
+      }
+    ]
+  },
+  "observedCounts": {
+    "actors": 1408,
+    "newStructureActors": 2,
+    "newDressingActors": 2,
+    "structureInstances": 286,
+    "dressingInstances": 426,
+    "allISMComponents": 38,
+    "allISMInstances": 1425,
+    "pointLightsAdded": 12,
+    "newOwnedAssets": 7,
+    "newActorsAlwaysLoaded": true,
+    "newRuntimeTickEnabled": false
+  },
+  "ownedAssets": {
+    "namespace": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118",
+    "packages": [
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveGrass",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveStoneFloor",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveRock",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveLamp",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveLampWarm",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveLampCool"
+    ],
+    "source40MaterialsPreserved": true,
+    "newMaterialParametersAndParentagePreserved": true,
+    "currentSurfaceGraphNodes": 43,
+    "currentStoneProjection": "Fixed240cm absolute-world XY/XZ/YZ, normalized abs PixelNormalWS XYZ weights, existing Stone Base Color texture.",
+    "stoneTexture": "/Game/Stylized_Village/Assets/Terrain/Rock/T_GroundRock_01_basecolor",
+    "currentCoreWallAndCeilingMaterial": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveStoneFloor",
+    "dressingBoulderMaterial": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveRock",
+    "priorWallAtlasCandidate": {
+      "semanticAuthoringSuccess": true,
+      "visualAccepted": false,
+      "reason": "CubeUV0 differs from Boulder unwrap; angular patches and bright ceiling strips.",
+      "retainedReceipt": "Feature/doc/evidence/caves20261118/author-live/wall-texture.json"
+    },
+    "latestTriplanarAuthoring": {
+      "success": true,
+      "newNodes": 25,
+      "totalSurfaceNodes": 43,
+      "newAssets": 0,
+      "materialBindingsChanged": 2,
+      "receipt": "Feature/doc/evidence/caves20261118/author-live/triplanar.json",
+      "finalVisualCameraAcceptancePending": true
+    }
+  },
+  "localExposure": {
+    "globalMinMaxEV100Preserved": 11.5,
+    "localMinMaxEV100": 3,
+    "boundedBoxes": 2,
+    "postProcessComponents": 2,
+    "boxZRangeCm": [
+      8400,
+      9200
+    ],
+    "blendRadiusCm": 200,
+    "priority": 100,
+    "blendWeight": 1,
+    "highestBlendZCm": 9400,
+    "outdoorCameraReferenceZCm": 9880,
+    "boxCollision": "QueryOnly/all channels ignore; no overlap/navigation/tick",
+    "unbound": false,
+    "actualRuntimeInsideOutsideRenderingPending": false,
+    "receipt": "Feature/doc/evidence/caves20261118/author-live/visibility.json",
+    "initialNoCollisionHypothesisAccepted": false,
+    "sourceDiagnosis": "NoCollision GetAllPhysicsObjects can return nonempty{nullptr}; PostProcess rejects before Shape fallback.",
+    "sourceReview": "Feature/doc/evidence/caves20261118/exposure-source-review.json",
+    "EV0Attempt": {
+      "semanticSuccess": true,
+      "visualAccepted": false,
+      "current": false,
+      "receipt": "Feature/doc/evidence/caves20261118/author-live/exposure.json"
+    },
+    "currentLocalMinMaxEV100": 3,
+    "boundsRepair": {
+      "success": true,
+      "newActors": 0,
+      "newComponents": 0,
+      "boxCollision": "QueryOnly/all ignore",
+      "localEV100Change": [
+        0,
+        3
+      ],
+      "beforeCenterDistanceCm": [
+        0,
+        0
+      ],
+      "afterCenterDistanceCm": [
+        0,
+        0
+      ],
+      "afterOutsideDistanceCm": [
+        500,
+        500
+      ],
+      "publicDistanceAloneProvesPriorPhysicsHandle": false,
+      "receipt": "Feature/doc/evidence/caves20261118/author-live/exposure-bounds.json",
+      "actualRuntimeRenderingPending": false,
+      "actualRuntimeFirstEntranceRenderingAccepted": true,
+      "fullRuntimeRenderingAcceptancePending": false,
+      "actualRuntimeAllSixFramesAccepted": true
+    },
+    "receiptChain": [
+      "Feature/doc/evidence/caves20261118/author-live/visibility.json",
+      "Feature/doc/evidence/caves20261118/author-live/exposure.json",
+      "Feature/doc/evidence/caves20261118/author-live/exposure-bounds.json"
+    ]
+  },
+  "terrainStages": {
+    "gridSamples": 179488,
+    "originalLayerBlake3": "7b30bb0271250f6f4b2d4164c72940c83a3e49b13078ef91e9316992816a0955",
+    "initialExcavation": {
+      "changedSamples": 3300,
+      "compositeBlake3": "b9f28e82d7661e83555d5f72942ea999ca6aea9554969753a889ea50f87e1970",
+      "uint16LESha256": "ef9d5119c138e680001442fac76499e2e0ff40e9f51e428a33bd834aa3b4ffc1",
+      "receipt": "Feature/doc/evidence/caves20261118/author-live/apply-height-confirmed.json",
+      "isLatestFinalAcceptance": false
+    },
+    "floorCollarRefinement": {
+      "status": "applied_saved_strict_cold_verified",
+      "flatCollarCm": 150,
+      "remainingBlendCm": 150,
+      "originalOuterMaskCm": 300,
+      "newOuterMaskCm": 300,
+      "wallsAndProbeExpectationsChanged": false,
+      "reason": "Z_wall_09 hit interpolated Landscape atX58950.75/Z8636.26 before the wall inner faceX58960.",
+      "newHeightTargetApplied": true,
+      "same2016QueriesRerunPassed": true,
+      "changedFromInitialCaveValues": 447,
+      "changedIndicesFromRoundedSource": 3300,
+      "compositeBlake3": "67d6682a3bad4b9b480d0b4e264903e9665846b562d7b72fa5cd8ff10e0252fc",
+      "uint16LESha256": "a2c8846963f7d08f7df561b6c800f2f389255e6f52c14a1453a6e5e3f7674726",
+      "preflight": "Feature/doc/evidence/caves20261118/collar-preflight.json",
+      "applied": "Feature/doc/evidence/caves20261118/author-live/apply-height-collar.json",
+      "settled": "Feature/doc/evidence/caves20261118/author-live/collar-settled.json",
+      "finalHeightSavePending": false,
+      "diagnosedWallCase": {
+        "caseId": "Z_wall_09",
+        "caseParametersUnchanged": true,
+        "passedAfter": true,
+        "expectedActorLabel": "CV18_Z_Structure",
+        "hitComponentName": "CV18_Z_ISM_01",
+        "impactPointCm": [
+          58960,
+          51900,
+          8778
+        ]
+      },
+      "heightSaveReceipt": "Feature/doc/evidence/caves20261118/author-live/final-save-result.json"
+    }
+  },
+  "verification": {
+    "latestCompletedStaticRun": {
+      "stage": "two_Q_rock_worldX_plus50_after_query_only_EV3",
+      "passed": true,
+      "queriesCompleted": 2016,
+      "queriesPassed": 2016,
+      "aggregateChecks": 31,
+      "aggregateChecksPassed": 31,
+      "elapsedWallSeconds": 13.375,
+      "assetsSavedByQA": false,
+      "report": "Feature/doc/evidence/caves20261118/qa-camera-final-live/validation.json",
+      "result": "Feature/doc/evidence/caves20261118/qa-camera-final-live/result.json",
+      "diagnostics": []
+    },
+    "plannedRuntimeCamera": {
+      "status": "completed_passed",
+      "normalWalkSpeedCmS": 620,
+      "thirdPerson": true,
+      "springArmCm": 320,
+      "cameraProbeRadiusCm": 14,
+      "FOVDegrees": 90,
+      "caveChainsBothDirections": 12,
+      "caveWaypoints": 266,
+      "fieldWaypoints": 10,
+      "totalWaypoints": 276,
+      "representativeGameViewportCaptures": 6,
+      "teleportsOrMovementCameraOverrides": false
+    },
+    "finalNativeSave": {
+      "passed": true,
+      "pending": false,
+      "stage": "collar_terrain_before_exposure_bounds_repair",
+      "requestedPackages": 17,
+      "dirtyAfter": 0,
+      "report": "Feature/doc/evidence/caves20261118/author-live/final-save-result.json",
+      "isLatestCompleteFeatureSave": false
+    },
+    "independentCold": {
+      "passed": true,
+      "pending": false,
+      "pid": 11016,
+      "checksPassed": 32,
+      "checksTotal": 32,
+      "capsuleQueriesPassed": 2016,
+      "terrainActorMetadataCrossmatched": 17,
+      "dirtyPackagesAfter": [],
+      "assetsSaved": false,
+      "diagnostics": [],
+      "traceback": null,
+      "validationSeconds": 10.18800000000192,
+      "processElapsedSeconds": 32.2586677,
+      "observedProcessExitCode": 0,
+      "report": "Feature/doc/evidence/caves20261118/cold-final-validated-live/validation.json",
+      "result": "Feature/doc/evidence/caves20261118/cold-final-validated-live/result.json",
+      "hostExit": "Feature/doc/evidence/caves20261118/cold-host-validated/process-exit.json",
+      "startupLanguageAndLocale": [
+        "en",
+        "en"
+      ],
+      "validationLanguageAndLocale": [
+        "ko",
+        "ko-KR"
+      ],
+      "cultureSavedToConfig": false,
+      "allOriginalMaterialComparisonsKept": true
+    },
+    "finalFileScope": {
+      "passed": true,
+      "pending": false,
+      "checksPassed": 46,
+      "checksTotal": 46,
+      "report": "Feature/doc/evidence/caves20261118/final-scope.json",
+      "protectedFilesBytePreserved": 3962,
+      "nonSelectedSavedFilesBytePreserved": 458,
+      "physicalBackupFilesVerified": 1481,
+      "oldOwnedAssetsBytePreserved": 8,
+      "sourceMaterialFilesBytePreserved": 44,
+      "finalCandidateFiles": 1482,
+      "newOwnedAssets": 7,
+      "boundedSaveStages": 5,
+      "uniqueSavedPackageUnion": 33,
+      "originalTerrainPackageAllowlist": 17,
+      "actuallyChangedOriginalTerrainFiles": 2,
+      "newExternalActorFiles": 4,
+      "newExternalObjectFolderFiles": 5,
+      "candidateRemovals": 0
+    },
+    "physicalKeyboardFullRun": false,
+    "fullGameplayCertified": false,
+    "cookShippingCertified": false,
+    "navigationCertified": false,
+    "AAAArtCertified": false,
+    "preCollarCheckpointSave": {
+      "passed": true,
+      "requestedPackages": 24,
+      "dirtyAfter": 0,
+      "includesNew447HeightValues": false,
+      "report": "Feature/doc/evidence/caves20261118/author-live/collar-pre-save-result.json"
+    },
+    "preCollarStaticFailure": {
+      "passed": false,
+      "queriesCompleted": 2016,
+      "queriesPassed": 2015,
+      "failedCaseIds": [
+        "Z_wall_09"
+      ],
+      "aggregateChecks": 29,
+      "aggregateChecksPassed": 27,
+      "failedAggregateChecks": [
+        "all20_wall_crossings_hit_exact_structure",
+        "all_planned_capsule_queries_completed_without_failures"
+      ],
+      "report": "Feature/doc/evidence/caves20261118/qa-final-live/validation.json",
+      "stage": "pre_collar_failure_retained_not_reclassified"
+    },
+    "initialRuntimeCameraFailure": {
+      "passed": false,
+      "status": "first_entrance_visual_rejected",
+      "waypointsArrived": 11,
+      "waypointsPlanned": 276,
+      "acceptedCaptures": 0,
+      "elapsedSimSeconds": 149.00215123966336,
+      "elapsedWallSeconds": 195.578,
+      "partialRunMinCameraToPivotCm": 175.32842048150752,
+      "partialRunMaxCameraPullInCm": 155.91922103520415,
+      "singleStableEntranceSampleCameraDistanceCm": 331.2476405393876,
+      "singleStableEntranceSamplePullInCm": 0,
+      "captureYawBeforeAfterDegrees": [
+        135,
+        90
+      ],
+      "fullCameraAcceptance": false,
+      "report": "Feature/doc/evidence/caves20261118/runtime-camera/result.json"
+    },
+    "latestBoundsOverlayStaticQA": {
+      "passed": true,
+      "pending": false,
+      "queriesPassed": 2016,
+      "sameQueriesRequired": 2016
+    },
+    "initialColdFailure": {
+      "passed": false,
+      "kind": "unreflected_Guid_a_field_in_metadata_inventory",
+      "report": "Feature/doc/evidence/caves20261118/cold-live/result.json",
+      "sourceDataCorruptionClaimed": false,
+      "publicGuidStringRepairPendingRetest": false,
+      "additionalMetadataFailure": "private LandscapeGuid alias; public native proxy crossmatch fix under review",
+      "resolvedByFinalPublicNativeCrossmatchedCold": true
+    },
+    "collarStaticPassBeforeBoundsOverlay": {
+      "stage": "collar_before_exposure_bounds_overlay",
+      "passed": true,
+      "queriesCompleted": 2016,
+      "queriesPassed": 2016,
+      "failedCaseIds": [],
+      "aggregateChecks": 30,
+      "aggregateChecksPassed": 30,
+      "elapsedWallSeconds": 14.984,
+      "assetsSavedByQA": false,
+      "requireSavedClean": false,
+      "report": "Feature/doc/evidence/caves20261118/qa-collar-final-live/validation.json",
+      "result": "Feature/doc/evidence/caves20261118/qa-collar-final-live/result.json",
+      "diagnostics": []
+    },
+    "latestExposureSave": {
+      "passed": true,
+      "requestedPackages": 2,
+      "dirtyAfter": 0,
+      "report": "Feature/doc/evidence/caves20261118/author-live/exposure-save-result.json"
+    },
+    "runtimeCameraProgress": {
+      "status": "completed_passed",
+      "representativeCapturesAccepted": 6,
+      "representativeCapturesRequired": 6,
+      "totalWaypointsRequired": 276,
+      "fullRoutePassed": true,
+      "firstFrame": "01_Q_entrance_under_roof",
+      "firstFrameReadabilityAccepted": true,
+      "firstFrameCharacterAndPassageVisible": true,
+      "PCMStableUpdatedFrames": 2,
+      "beforeAfterCameraTranslationDeltaCm": 0,
+      "beforeAfterCameraRotationDeltaDegrees": 0,
+      "beforeAfterFOVDeltaDegrees": 0,
+      "actualRuntimeExposureDiagnosisPassed": true,
+      "runtimeFolder": "Feature/doc/evidence/caves20261118/runtime-camera-verified",
+      "acceptedCaptureNames": [
+        "01_Q_entrance_under_roof",
+        "02_Q_narrow_right_angle_turn",
+        "03_Q_secret_dogleg_room",
+        "04_Z_entrance_under_roof",
+        "05_Z_narrow_right_angle_turn",
+        "06_Z_secret_dogleg_room"
+      ],
+      "waypointsArrivedAtLatestParentUpdate": 276,
+      "allAcceptedCapturePCMPosesPassed": true,
+      "partialRouteCameraSummaryIsFinal": false
+    },
+    "latestRuntimeCameraFailure": {
+      "passed": false,
+      "status": "failed",
+      "elapsed_wall_seconds": 465.7350000000006,
+      "elapsed_sim_seconds": 447.1069402694702,
+      "waypoints_planned": 276,
+      "waypoints_arrived": 83,
+      "sample_count": 1356,
+      "min_camera_to_pivot_cm": 139.55699926620633,
+      "max_camera_pull_in_cm": 191.69064371651018,
+      "worst_camera_sample": {
+        "sim_seconds": 447.1069402694702,
+        "phase": "walking",
+        "waypoint_index": 83,
+        "waypoint": "Q:secret_to_surface_ground_cm:5",
+        "pawn_cm": [
+          -9705.083644477621,
+          65299.99848173119,
+          8708.149996129272
+        ],
+        "velocity_cm_s": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "grounded": true,
+        "camera_cm": [
+          -9587.130763179255,
+          65367.30054340944,
+          8798.301299858034
+        ],
+        "camera_rotation_pitch_yaw_roll": [
+          -11.999999999999996,
+          -135.0019378662109,
+          -0.0
+        ],
+        "camera_FOV": 90.0,
+        "pivot_cm": [
+          -9705.083644477621,
+          65299.99848173119,
+          8766.149996129272
+        ],
+        "unfixed_camera_cm": [
+          -9425.114785025615,
+          65459.74431616455,
+          8842.463213201665
+        ],
+        "camera_to_pivot_cm": 139.55699926620633,
+        "pull_in_cm": 191.69064371651018,
+        "collision_fix_applied": true,
+        "remaining_run_seconds": 751.0
+      },
+      "grounded_observations": 1356,
+      "airborne_observations": 0,
+      "physical_input": false,
+      "teleports": 0,
+      "speed_overrides": 0,
+      "run_timer_overrides": 0,
+      "camera_component_changes": 0,
+      "acceptedRepresentativeCaptures": 3,
+      "gate": "camera_to_pivot_cm >= 140",
+      "allSixImagesReviewed": false,
+      "report": "Feature/doc/evidence/caves20261118/runtime-camera-final/result.json",
+      "repairPendingExactComponentDiagnosis": false,
+      "resolvedByTwoRockReliefAndFreshFullRuntime": true
+    },
+    "preCameraReliefStaticRun": {
+      "stage": "query_only_exposure_bounds_EV3",
+      "passed": true,
+      "queriesCompleted": 2016,
+      "queriesPassed": 2016,
+      "aggregateChecks": 30,
+      "aggregateChecksPassed": 30,
+      "elapsedWallSeconds": 13.14,
+      "assetsSavedByQA": false,
+      "report": "Feature/doc/evidence/caves20261118/qa-exposure-final-live/validation.json",
+      "result": "Feature/doc/evidence/caves20261118/qa-exposure-final-live/result.json",
+      "diagnostics": []
+    },
+    "runtimeCamera": {
+      "passed": true,
+      "status": "passed",
+      "elapsed_wall_seconds": 817.9689999999973,
+      "elapsed_sim_seconds": 801.7407758533955,
+      "waypoints_planned": 276,
+      "waypoints_arrived": 276,
+      "all_six_images_reviewed": true,
+      "sample_count": 2442,
+      "min_camera_to_pivot_cm": 176.8705779105907,
+      "max_camera_pull_in_cm": 154.37706556076094,
+      "grounded_observations": 2442,
+      "airborne_observations": 0,
+      "physical_input": false,
+      "teleports": 0,
+      "speed_overrides": 0,
+      "run_timer_overrides": 0,
+      "camera_component_changes": 0,
+      "jump_inputs": 0,
+      "sprint_inputs": 0,
+      "input_policy": {
+        "schema": "Rogue10m.CaveQAAnalogApproach.20261118.v1",
+        "predecessor_observer_sha256": "689e5aaa10194639b271523a329f46fa7007ef3f607151be1904ebc38d31f70e",
+        "formula": "scale=min(1,distance_cm/max(120,620*raw_sim_frame_seconds*1.1))",
+        "reason": "Use normal analog input to approach the same waypoint at low frame rates without a stale120cm stopping window.",
+        "normal_walk_cap_cm_s": 620,
+        "arrival_radius_cm": 35.0,
+        "route_camera_ground_thresholds_changed": false,
+        "max_walk_speed_velocity_time_or_camera_setters": false,
+        "independent_known_geometry_repair_and_original_failure_ray_acceptance_required": true
+      },
+      "cleanup_errors": [],
+      "report": "Feature/doc/evidence/caves20261118/runtime-camera-verified/result.json",
+      "caveChainsBothDirections": 12,
+      "reviewedCaptures": [
+        {
+          "site": "Q",
+          "label": "entrance_under_roof",
+          "image": "Feature/doc/evidence/caves20261118/runtime-camera-verified/captures/01_Q_entrance_under_roof.png",
+          "visualReviewPassed": true,
+          "imageSha256": "ca88192006d815f6c0815ae6539cb75a5f58c0c50226714555b03437a7c064fd"
+        },
+        {
+          "site": "Q",
+          "label": "narrow_right_angle_turn",
+          "image": "Feature/doc/evidence/caves20261118/runtime-camera-verified/captures/02_Q_narrow_right_angle_turn.png",
+          "visualReviewPassed": true,
+          "imageSha256": "9e3dadb0dc6626f04f7f9f0b13eb62362ecf26772e2db7ac0998355271cbbadf"
+        },
+        {
+          "site": "Q",
+          "label": "secret_dogleg_room",
+          "image": "Feature/doc/evidence/caves20261118/runtime-camera-verified/captures/03_Q_secret_dogleg_room.png",
+          "visualReviewPassed": true,
+          "imageSha256": "425626aeee4ff2a140032be529bef7d02470e53de35bde5307cc1273ccee0844"
+        },
+        {
+          "site": "Z",
+          "label": "entrance_under_roof",
+          "image": "Feature/doc/evidence/caves20261118/runtime-camera-verified/captures/04_Z_entrance_under_roof.png",
+          "visualReviewPassed": true,
+          "imageSha256": "7593c512dc8e82c6542c0ea4bd292c198b77fd5384c661491fd061ca62fa7c97"
+        },
+        {
+          "site": "Z",
+          "label": "narrow_right_angle_turn",
+          "image": "Feature/doc/evidence/caves20261118/runtime-camera-verified/captures/05_Z_narrow_right_angle_turn.png",
+          "visualReviewPassed": true,
+          "imageSha256": "6f4371c2da566c6a25de36a15420bcc95a7fedbd7329732e69beea97c7a81e52"
+        },
+        {
+          "site": "Z",
+          "label": "secret_dogleg_room",
+          "image": "Feature/doc/evidence/caves20261118/runtime-camera-verified/captures/06_Z_secret_dogleg_room.png",
+          "visualReviewPassed": true,
+          "imageSha256": "46840ff5321e89073ab4b9ce3b597e45b0b3dbded76da88df9e46f1a0a59054a"
+        }
+      ]
+    },
+    "finalEditorAfterPIE": {
+      "passed": true,
+      "pid": 49456,
+      "dirtyPackages": [],
+      "actors": 1408,
+      "renderAndCollisionComponents": 45,
+      "compositeBlake3": "67d6682a3bad4b9b480d0b4e264903e9665846b562d7b72fa5cd8ff10e0252fc",
+      "originalLayerBlake3": "7b30bb0271250f6f4b2d4164c72940c83a3e49b13078ef91e9316992816a0955",
+      "report": "Feature/doc/evidence/caves20261118/final-editor-state.json"
+    },
+    "failedNullRhiMaterialCold": {
+      "passed": false,
+      "pending": false,
+      "status": "exact_localized_pin_name_difference_proven_same_locale_fresh_strict_cold_pending",
+      "capsuleQueriesPassed": 2016,
+      "checksPassed": 30,
+      "checksTotal": 32,
+      "terrainActorMetadataCrossmatched": 17,
+      "failedChecks": [
+        "all40_source_material_graphs_parameters_files_unchanged",
+        "all_seven_new_material_graphs_parameters_parentage_match_authored_state"
+      ],
+      "sourceMaterialComparisonsDifferent": 21,
+      "ownedMaterialComparisonsDifferent": [
+        "MI_CaveRock"
+      ],
+      "report": "Feature/doc/evidence/caves20261118/cold-verified-live/result.json",
+      "gatesRelaxed": false,
+      "actualFieldDiffProofPending": false,
+      "actualFieldDiffCause": "Localized Korean/English material input display labels and derived graph hashes only",
+      "observedFieldDifferences": 55,
+      "localizedPinLabelDifferences": 34,
+      "derivedGraphHashDifferences": 21,
+      "rendererOrUsageFlagDifferenceObserved": false,
+      "diagnosisSummary": "Feature/doc/evidence/caves20261118/cold-material-diagnosis-summary.json",
+      "nextStrictColdProfile": "Same NullRHI and all exact comparisons; restore owned-process ko/ko-KR observation locale after en/en startup",
+      "resolvedByFreshSameLocaleStrictCold": true
+    },
+    "latestCameraReliefSave": {
+      "passed": true,
+      "requestedPackages": 1,
+      "dirtyAfter": 0,
+      "report": "Feature/doc/evidence/caves20261118/author-live/camera-relief-save-result.json"
+    }
+  },
+  "importantFailures": [
+    {
+      "kind": "material_setter_false_return",
+      "resolvedBy": "UE5.8 source proof and actual getter validation; no duplicate partial assets",
+      "source": "Feature/doc/evidence/caves20261118/material-setter-source-proof.json"
+    },
+    {
+      "kind": "height_dirty_guard",
+      "mutationStarted": false,
+      "resolvedBy": "Bounded twelve-package structural/material checkpoint before guarded native height revision"
+    },
+    {
+      "kind": "light_RGB_BGR_constructor",
+      "resolvedBy": "Named r/g/b/a arguments and actual RGB readback; original strict RGB gate retained",
+      "retained": "Feature/doc/evidence/caves20261118/qa-live/result.json"
+    },
+    {
+      "kind": "cube_boulder_UV_visual_rejection",
+      "resolvedBy": "New240cm world-projected stone graph; prior semantic success retained as visually rejected"
+    },
+    {
+      "kind": "Z_wall_09_landscape_interpolation",
+      "resolved": true,
+      "nextStep": "150cm flat collar plus150cm blend within unchanged300cm mask, then unchanged exact wall query",
+      "resolvedBy": "150cm flat collar plus150cm blend; unchanged exact wall query now hits CV18_Z_ISM_01; all2016 queries passed."
+    },
+    {
+      "kind": "actual_runtime_entrance_too_dark_and_capture_pose_changed",
+      "resolved": false,
+      "retained": "Feature/doc/evidence/caves20261118/runtime-camera/result.json",
+      "nextStep": "Complete all276 waypoints/six fixed-pose captures after current first entrance approval.",
+      "resolvedForFirstFrame": true,
+      "fullRouteStillPending": true
+    },
+    {
+      "kind": "NoCollision_postprocess_bounds_null_physics_array",
+      "sourceDiagnosisConfirmed": true,
+      "repairApplied": true,
+      "finalVisualAcceptance": false,
+      "retained": "Feature/doc/evidence/caves20261118/exposure-source-review.json",
+      "firstRuntimeFrameAcceptedAfterRepair": true
+    },
+    {
+      "kind": "cold_Guid_attribute_a_unavailable",
+      "resolved": false,
+      "retained": "Feature/doc/evidence/caves20261118/cold-live/result.json"
+    },
+    {
+      "kind": "runtime_Q_secret_return_camera_collapse_below140cm",
+      "status": "failed_retained",
+      "waypointsArrived": 83,
+      "cameraToPivotMinCm": 139.55699926620633,
+      "maxCameraPullInCm": 191.69064371651018,
+      "retained": "Feature/doc/evidence/caves20261118/runtime-camera-final/result.json"
+    },
+    {
+      "kind": "nullrhi_cold_exact_material_equality_failed",
+      "status": "retained_under_diagnosis",
+      "sourceMIsDifferent": 21,
+      "ownedMaterialDifferent": "MI_CaveRock",
+      "allCapsuleQueriesPassed": 2016,
+      "actualFieldDifferencesConfirmed": true,
+      "retained": "Feature/doc/evidence/caves20261118/cold-verified-live/result.json",
+      "onlyDifferences": "34 localized input pin names +21 derived graph hashes; no material state/file/usage flag differences"
+    }
+  ],
+  "frozenInputs": {
+    "corePlanSha256": "39b0150690e02a6edb453f91d0362603d9063dc3771dce9977d870fe184e6a74",
+    "dressingPlanSha256": "4177a9e1b8544e16cd61217cf64fd01a5c47da8e6ef3ee84dea25228107449db",
+    "visibilitySpecSha256": "5509ec2f171704b4b963cb82726c9660f4e2c5b05ac883394ef63e72de644d81",
+    "rejectedWallSpecSha256": "a4127f8ca450c50c114001d60c92e05da98c380c9597c22715f382c3827b3cd8",
+    "triplanarSpecSha256": "0d24c669a60f9c998401afcc7f7c75e74f6fe1f72c499496fda3139e5c47353f",
+    "floorCollarSpecSha256": "4f3d5dacfdee8af8e00e32c6db3597208061e2593e488f74cdd88de334a3696a",
+    "EV0SpecSha256": "bc58e611db30ae46e604be7b3c72a3af02a94a57a6eef288faf23eb5feea8627",
+    "exposureBoundsSpecSha256": "fb2cb4bd5e9108507dee21d16af499c1ef19679ebbe029244705b2d55586fc70",
+    "cameraReliefSpecSha256": "92e2464e246528952718203c7e82ed7455c20102fa7b8c5586835229f02fb92f"
+  },
+  "artReferences": [
+    {
+      "title": "Valheim officialFAQ",
+      "url": "https://www.valheimgame.com/faq/"
+    },
+    {
+      "title": "Valheim officialPress",
+      "url": "https://www.valheimgame.com/press/",
+      "officialImagesActuallyViewedByRoot": 3,
+      "interpretation": "Rough rock continuity, timber support and local light; boulders and trees framing outdoor sites. Project-specific interpretation, not copied game assets."
+    }
+  ],
+  "assetReuse": {
+    "newFabPurchaseOrImport": false,
+    "currentFabAccountOwnershipReverified": false,
+    "existingProjectAssetsUsed": true,
+    "historicalFabOwnershipLocalAvailabilityAndCurrentRuntimeUseDistinguished": true
+  },
+  "publication": {
+    "workBranch": "Sprint#9-32-landscape-world-blockout",
+    "featureValidationComplete": true,
+    "wholeMapProductionComplete": false,
+    "developTestMainPromoted": false,
+    "promotionHoldReason": "Map-production merge gate; whole map is still in production.",
+    "gitDeliveryRecordedIn": [
+      "DevLog/20261118.txt",
+      "Docs/SprintChangeLog.md"
+    ],
+    "recordScopeKorean": "이 문서는 검증 완료한 동굴 기능의 작업 브랜치 체크포인트를 기록한다. 실제 커밋·푸시 식별자는 게시 후 일일 로그와 Sprint 변경 기록에 남긴다."
+  },
+  "cameraJunctionRelief": {
+    "status": "applied_saved_actual_arc_full_route_and_strict_cold_passed",
+    "spec": "Feature/doc/evidence/caves20261118/camera-relief-spec.json",
+    "specSha256": "92e2464e246528952718203c7e82ed7455c20102fa7b8c5586835229f02fb92f",
+    "actualFailureCameraTraceItem": 120,
+    "pairedInstanceIndices": [
+      120,
+      121
+    ],
+    "worldTranslationCm": [
+      50,
+      0,
+      0
+    ],
+    "allCore286AndTerrainPreserved": true,
+    "allCapsuleCasesAndRuntimeRoutesAndThresholdsUnchanged": true,
+    "actualPostRepairFullRuntimeAccepted": true,
+    "receipt": "Feature/doc/evidence/caves20261118/author-live/camera-relief.json",
+    "receiptSha256": "e718d352f102417e29cacb6d3f8cec2964ee4bae7f9e60b2e6b2b9c13595623a",
+    "changedInstances": 2,
+    "actualPostRepairArc": {
+      "angles": 1440,
+      "stepDegrees": 0.25,
+      "probeRadiusCm": 14,
+      "minDistanceCm": 155.26011657714844,
+      "maxPullInCm": 175.98752640556802,
+      "failedAngles": 0,
+      "passed": true,
+      "report": "Feature/doc/evidence/caves20261118/camera-arc-after.json",
+      "singlePivotNotFullRuntime": true
+    }
+  },
+  "coldMaterialDiagnosis": {
+    "summary": "Feature/doc/evidence/caves20261118/cold-material-diagnosis-summary.json",
+    "sha256": "843b29eb6d661923531d34722b9c303022721849e53e3d46beffc06ef19e1c65",
+    "sourceCount": 40,
+    "ownedCount": 7,
+    "observedDiskFiles": 51,
+    "dirtyBefore": [],
+    "dirtyAfter": [],
+    "propertiesSet": false,
+    "gatesRelaxed": false,
+    "fullGraphsCopiedToPublishedSummary": false,
+    "freshSameLocaleStrictColdPassed": true
+  },
+  "runtimeImplementationScopeKorean": "실제 동굴 공간·통행·카메라 제작 완료. 비급 픽업·학습·장착 시스템 구현은 포함하지 않는다."
+}

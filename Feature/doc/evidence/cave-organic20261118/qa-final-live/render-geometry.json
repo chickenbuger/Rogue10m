@@ -1,0 +1,137 @@
+{
+  "schema": "Rogue10m.OrganicCaveRenderLODValidation.20261118.v1",
+  "passed": true,
+  "read_only": true,
+  "assets_saved": false,
+  "sites": {
+    "Q": {
+      "passed": true,
+      "mesh": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Q.SM_CaveOrganic_Q",
+      "requested_LOD_type": "RenderData",
+      "requested_LOD_index": 0,
+      "availability_public_enum": "<GeometryScriptSearchOutcomePins.FOUND: 0>",
+      "native_render_triangle_count": 125980,
+      "extracted_triangles": 125980,
+      "source_triangles": 125980,
+      "build_flags": {
+        "remove_degenerates": false,
+        "recompute_normals": false,
+        "recompute_tangents": false,
+        "generate_lightmap_u_vs": false
+      },
+      "comparison": {
+        "passed": true,
+        "expected_triangles": 125980,
+        "actual_triangles": 125980,
+        "position_comparison_precision": "Both meshes explicitly converted to FVector3f/IEEE754float32 before cyclic triangle keys",
+        "exact_oriented_triangle_material_multiset_equal": true,
+        "expected_oriented_multiset_sha256": "c6f457718e365ab7e2923c87d25922ef07960de153a21c4594dd00dfd230cb10",
+        "actual_oriented_multiset_sha256": "c6f457718e365ab7e2923c87d25922ef07960de153a21c4594dd00dfd230cb10",
+        "missing_triangle_multiplicity": 0,
+        "unexpected_triangle_multiplicity": 0,
+        "missing_keys_first20": [],
+        "unexpected_keys_first20": [],
+        "maximum_corresponding_original_position_distance_cm": 0.00032209491314295186,
+        "position_error_over_tolerance_count": 0,
+        "tolerance_cm": 0.05,
+        "source_float32_minimum_face_area_cm2": 2.8915091847290048e-05,
+        "actual_float32_minimum_face_area_cm2": 2.8915091847290048e-05,
+        "source_float32_degenerate_faces_first20": [],
+        "actual_float32_degenerate_faces_first20": [],
+        "orientation_preserved": true,
+        "triangle_material_ids_compared": true,
+        "native_winding_adapter": {
+          "source_convention": "Artist CCW with outward mathematical cross-product normals",
+          "native_convention": "UE CW; TriangleNormal=(V2-V0) cross (V1-V0)",
+          "triangle_index_mapping": [
+            0,
+            2,
+            1
+          ],
+          "positions_changed": false,
+          "authored_normals_changed": false,
+          "source_artwork_changed": false
+        }
+      }
+    },
+    "Z": {
+      "passed": true,
+      "mesh": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Z.SM_CaveOrganic_Z",
+      "requested_LOD_type": "RenderData",
+      "requested_LOD_index": 0,
+      "availability_public_enum": "<GeometryScriptSearchOutcomePins.FOUND: 0>",
+      "native_render_triangle_count": 125976,
+      "extracted_triangles": 125976,
+      "source_triangles": 125976,
+      "build_flags": {
+        "remove_degenerates": false,
+        "recompute_normals": false,
+        "recompute_tangents": false,
+        "generate_lightmap_u_vs": false
+      },
+      "comparison": {
+        "passed": true,
+        "expected_triangles": 125976,
+        "actual_triangles": 125976,
+        "position_comparison_precision": "Both meshes explicitly converted to FVector3f/IEEE754float32 before cyclic triangle keys",
+        "exact_oriented_triangle_material_multiset_equal": true,
+        "expected_oriented_multiset_sha256": "f218fecfe8d7c1e315ce688f04b374e9caa2d19ea70fc265dbc1e5f4966d9aeb",
+        "actual_oriented_multiset_sha256": "f218fecfe8d7c1e315ce688f04b374e9caa2d19ea70fc265dbc1e5f4966d9aeb",
+        "missing_triangle_multiplicity": 0,
+        "unexpected_triangle_multiplicity": 0,
+        "missing_keys_first20": [],
+        "unexpected_keys_first20": [],
+        "maximum_corresponding_original_position_distance_cm": 0.0003087565947869177,
+        "position_error_over_tolerance_count": 0,
+        "tolerance_cm": 0.05,
+        "source_float32_minimum_face_area_cm2": 0.00010253094338094634,
+        "actual_float32_minimum_face_area_cm2": 0.00010253094338094634,
+        "source_float32_degenerate_faces_first20": [],
+        "actual_float32_degenerate_faces_first20": [],
+        "orientation_preserved": true,
+        "triangle_material_ids_compared": true,
+        "native_winding_adapter": {
+          "source_convention": "Artist CCW with outward mathematical cross-product normals",
+          "native_convention": "UE CW; TriangleNormal=(V2-V0) cross (V1-V0)",
+          "triangle_index_mapping": [
+            0,
+            2,
+            1
+          ],
+          "positions_changed": false,
+          "authored_normals_changed": false,
+          "source_artwork_changed": false
+        }
+      }
+    }
+  },
+  "config": {
+    "geometry_spec_sha256": "05ea056abbf5dd5c09b2365367237fb3753bac48786e6de6af68adcf928b3b7e",
+    "expected_mesh_paths": {
+      "Q": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Q.SM_CaveOrganic_Q",
+      "Z": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Z.SM_CaveOrganic_Z"
+    },
+    "expected_material_path": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock.MI_OrganicRock",
+    "expected_floor_material_path": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveStoneFloor.MI_CaveStoneFloor"
+  },
+  "dirty_before": [
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Q",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Z",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/VQ/PYZIJL655JALHJM6PS58A8",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/BY/2CW0JPTDIEMKKD1T5LATX6",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/0E/NL2M3149WONPRWLKFKVP6Y",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/9/EE/NR3SMNORZ57AQ1FV26VAFO"
+  ],
+  "dirty_after": [
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Q",
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/SM_CaveOrganic_Z",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/VQ/PYZIJL655JALHJM6PS58A8",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/BY/2CW0JPTDIEMKKD1T5LATX6",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/0E/NL2M3149WONPRWLKFKVP6Y",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/9/EE/NR3SMNORZ57AQ1FV26VAFO"
+  ]
+}

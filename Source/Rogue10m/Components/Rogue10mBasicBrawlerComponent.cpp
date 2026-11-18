@@ -251,7 +251,15 @@ void URogue10mBasicBrawlerComponent::MonitorActiveInput()
 	}
 }
 
-void URogue10mBasicBrawlerComponent::CancelInput()
+void URogue10mBasicBrawlerComponent::CancelHeldInput()
+{
+	bPrimaryHeld = bSecondaryHeld = bCharging = bBufferedPrimary = false;
+	ChargeStartedAt = BufferedExpiry = -1.0f;
+	RequestedChargeAlpha = 0.0f;
+	if (GetWorld()) { GetWorld()->GetTimerManager().ClearTimer(BufferTimer); }
+}
+
+void URogue10mBasicBrawlerComponent::CancelInput(bool bStopMontage)
 {
 	if (ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner()))
 	{
@@ -271,7 +279,7 @@ void URogue10mBasicBrawlerComponent::CancelInput()
 				Combat->ResetComboWindow();
 			}
 		}
-		if (UAnimMontage* Montage = OwnedMontage.Get())
+		if (UAnimMontage* Montage = OwnedMontage.Get(); bStopMontage && Montage)
 		{
 			USkeletalMeshComponent* Source = Character->GetAnimationPlaybackMesh();
 			USkeletalMeshComponent* Arms = Character->GetFirstPersonMesh();

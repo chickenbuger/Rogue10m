@@ -22,6 +22,7 @@
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "Rogue10m.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mBasicMonster.h"
 #include "Rogue10mPlayerController.h"
@@ -315,7 +316,7 @@ private:
                     const FRogue10mHudQuickSlotView V = Slot->GetQuickSlotView();
                     if (bSkills && ChildIndex == 4)
                     {
-                        Check(V.bDodgeSlot && V.InputText.ToString() == TEXT("E"), TEXT("dodge_input_changed"));
+                        Check(V.bDodgeSlot && V.InputText.ToString() == TEXT("Alt"), TEXT("dodge_input_changed"));
                     }
                     if (bSkills) { Check(V.SkillIcon != nullptr, TEXT("skill_art_missing")); }
                     if (!bSkills) { Check(!V.bUnlocked, TEXT("placeholder_item_became_usable")); }
@@ -600,7 +601,7 @@ private:
             auto* Key = Cast<UTextBlock>(Slot->GetWidgetFromName(TEXT("UI_KeyText")));
             if (bSkills)
             {
-                const TCHAR* Keys[] = {TEXT("LMB"), TEXT("RMB"), TEXT("HOLD\nLMB"), TEXT("HOLD\nRMB"), TEXT("E")};
+                const FString Keys[] = {TEXT("LMB"), TEXT("RMB"), TEXT("HOLD\nLMB"), TEXT("HOLD\nRMB"), Rogue10mInput::DodgeKeyLabel().ToString()};
                 Check(Key && Key->GetText().ToString() == Keys[ChildIndex], TEXT("compact_input_label_changed"));
                 Check(Key && B.Contains(Bounds(Key, Root)), TEXT("input_label_clipped"));
                 if (Key && (ChildIndex == 2 || ChildIndex == 3))

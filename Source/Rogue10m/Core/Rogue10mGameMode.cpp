@@ -4,6 +4,8 @@
 
 #include "Engine/GameInstance.h"
 #include "GameFramework/HUD.h"
+#include "GameFramework/PlayerController.h"
+#include "GameFramework/WorldSettings.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "Rogue10m.h"
@@ -38,6 +40,45 @@ ARogue10mGameMode::ARogue10mGameMode()
 	CustomizationCatalog =
 		TSoftObjectPtr<URogue10mCharacterCustomizationDataAsset>(
 			FSoftObjectPath(TEXT("/Game/DataAsset/Character/Customization/DA_CharacterCustomizationCatalog")));
+}
+
+bool ARogue10mGameMode::IsSafeMenuContext() const
+{
+	const UWorld* World = GetWorld();
+	const ARogue10mGameState* Run = World ? World->GetGameState<ARogue10mGameState>() : nullptr;
+	return World && World->GetNetMode() == NM_Standalone && Run
+		&& UWorld::RemovePIEPrefix(World->GetOutermost()->GetName()) == TEXT("/Game/Rogue10m/Maps/StartHub")
+		&& Run->GetRunPhase() == ERogue10mRunPhase::WaitingToStart;
+}
+
+bool ARogue10mGameMode::HasMenuPause(APlayerController* Controller) const
+{
+	const FDelegateHandle* Handle = MenuPauseHandles.Find(Controller);
+	return Handle && Pausers.ContainsByPredicate([Handle](const FCanUnpause& Entry)
+	{ return Entry.GetHandle() == *Handle; });
+}
+
+bool ARogue10mGameMode::AcquireMenuPause(APlayerController* Controller)
+{
+	if (!Controller || Controller->GetWorld() != GetWorld() || !Controller->PlayerState || !IsSafeMenuContext())
+	{ return false; }
+	if (HasMenuPause(Controller)) { return true; }
+	const FCanUnpause Hold = FCanUnpause::CreateWeakLambda(Controller, [] { return false; });
+	// Call GameMode directly: PlayerController skips new owners when already paused.
+	if (!SetPause(Controller, Hold)) { return false; }
+	MenuPauseHandles.Add(Controller, Hold.GetHandle());
+	GetWorldSettings()->ForceNetUpdate();
+	return true;
+}
+
+void ARogue10mGameMode::ReleaseMenuPause(APlayerController* Controller)
+{
+	FDelegateHandle Handle;
+	if (!MenuPauseHandles.RemoveAndCopyValue(Controller, Handle)) { return; }
+	Pausers.RemoveAll([Handle](const FCanUnpause& Entry) { return Entry.GetHandle() == Handle; });
+	// ClearPause would also remove unrelated unbound/ready delegates. Leave them to their owners.
+	if (Pausers.IsEmpty()) { GetWorldSettings()->SetPauserPlayerState(nullptr); }
+	GetWorldSettings()->ForceNetUpdate();
 }
 
 void ARogue10mGameMode::StartPlay()

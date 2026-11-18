@@ -1,4 +1,5 @@
 #include "Rogue10mSkillBindingComponent.h"
+#include "Rogue10mInputKeys.h"
 
 #include "Components/InputComponent.h"
 #include "EnhancedInputComponent.h"
@@ -10,6 +11,8 @@
 #include "InputMappingContext.h"
 #include "InputMappingQuery.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameFramework/PlayerInput.h"
+#include "KeyState.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
 #include "Rogue10mAttackSkillData.h"
@@ -117,60 +120,30 @@ void URogue10mSkillBindingComponent::EndPlay(const EEndPlayReason::Type Reason)
 
 bool URogue10mSkillBindingComponent::IsUsableKey(FKey Key) const
 {
-	return Key.IsValid() && Key != EKeys::AnyKey && Key.IsBindableToActions() && Key.IsDigital()
-		&& Key.GetMenuCategory() == EKeys::NAME_KeyboardCategory && !Key.IsModifierKey()
-		&& !Key.IsGamepadKey() && !Key.IsMouseButton() && !Key.IsTouch() && !Key.IsVirtual();
+	return Key == EKeys::Q || Key == EKeys::E || Key == EKeys::R;
 }
 
 bool URogue10mSkillBindingComponent::IsReservedKey(FKey Key) const
 {
-	// Reserve legacy controls even before possession has created the pawn input component.
-	static const TSet<FKey> Legacy = {EKeys::W,EKeys::A,EKeys::S,EKeys::D,EKeys::SpaceBar,EKeys::E,
-		EKeys::One,EKeys::Two,EKeys::Three,EKeys::Four,EKeys::Five,EKeys::I,EKeys::P,EKeys::K,
-		EKeys::O,EKeys::Escape,EKeys::F10,EKeys::L,EKeys::V,EKeys::Tilde};
-	if (Legacy.Contains(Key)) { return true; }
-	const auto* PC = Cast<ARogue10mPlayerController>(GetOwner());
-	if (!PC) { return true; }
-	const auto HasLegacy = [Key](const UInputComponent* Input)
-	{
-		if (Input) { for (const FInputKeyBinding& Binding : Input->KeyBindings) { if (Binding.Chord.Key == Key) { return true; } } }
-		return false;
-	};
-	if (HasLegacy(PC->InputComponent) || HasLegacy(PC->GetPawn() ? PC->GetPawn()->InputComponent : nullptr)) { return true; }
-	if (auto* Subsystem = BoundSubsystem.Get(); Subsystem && MappingContext && Subsystem->HasMappingContext(MappingContext))
-	{
-		TArray<FMappingQueryIssue> Issues;
-		Subsystem->QueryMapKeyInActiveContextSet(MappingContext, GetDefault<UInputAction>(), Key,
-			Issues, EMappingQueryIssue::NoIssue);
-		for (const FMappingQueryIssue& Issue : Issues)
-		{
-			if (Issue.BlockingContext && Issue.BlockingContext != MappingContext) { return true; }
-		}
-	}
-	if (const auto* Input = Cast<UEnhancedPlayerInput>(PC->PlayerInput))
-	{
-		for (const FEnhancedActionKeyMapping& Mapping : Input->GetEnhancedActionMappingsView())
-		{
-			// The engine rebuilds mappings at frame end. Old generations of our actions
-			// can remain in this view after Actions.Reset during same-frame edits.
-			if (Mapping.Key == Key && Mapping.Action && Mapping.Action->GetOuter() != this) { return true; }
-		}
-	}
-	return false;
+	return !IsUsableKey(Key);
 }
 
 bool URogue10mSkillBindingComponent::IsAllowedSkill(const URogue10mAttackSkillData* Skill) const
 {
 	const auto* PC = Cast<ARogue10mPlayerController>(GetOwner());
 	const auto* Combat = GetCombat();
-	return PC && PC->IsLocalPlayerController() && Combat && Skill && Combat->IsSkillInActiveTree(Skill)
-		&& Combat->IsAttackSkillUnlocked(Skill) && Skill->SkillTreeNodeType == ERogue10mSkillTreeNodeType::ActiveTechnique;
+	return PC && PC->IsLocalPlayerController() && Combat
+		&& Combat->CanEquipSkillInSlot(Skill, ERogue10mAttackInputSlot::QSkill);
 }
 
 FKey URogue10mSkillBindingComponent::GetSkillKey(const URogue10mAttackSkillData* Skill) const
 {
-	const FKey* Key = Settings && Skill ? Settings->SkillKeys.Find(Skill->GetPathName()) : nullptr;
-	return Key ? *Key : FKey();
+	const auto* Combat = GetCombat();
+	if (!Combat || !Skill) { return FKey(); }
+	if (Combat->GetEquippedSkill(ERogue10mAttackInputSlot::QSkill) == Skill) { return EKeys::Q; }
+	if (Combat->GetEquippedSkill(ERogue10mAttackInputSlot::ESkill) == Skill) { return EKeys::E; }
+	if (Combat->GetEquippedSkill(ERogue10mAttackInputSlot::RSkill) == Skill) { return EKeys::R; }
+	return FKey();
 }
 
 bool URogue10mSkillBindingComponent::StoreKeys(const TMap<FString,FKey>& Keys, FText& OutError)
@@ -190,39 +163,24 @@ bool URogue10mSkillBindingComponent::StoreKeys(const TMap<FString,FKey>& Keys, F
 
 bool URogue10mSkillBindingComponent::SetSkillKey(URogue10mAttackSkillData* Skill, FKey Key, FText& OutError)
 {
-	if (!IsAllowedSkill(Skill) || !Settings || !BoundInput.IsValid())
+	auto* Combat = GetCombat();
+	const auto Slot = Key == EKeys::Q ? ERogue10mAttackInputSlot::QSkill
+		: Key == EKeys::E ? ERogue10mAttackInputSlot::ESkill : ERogue10mAttackInputSlot::RSkill;
+	if (!Combat || !IsUsableKey(Key) || !IsAllowedSkill(Skill) || !Combat->AssignSkillToInputSlot(Skill, Slot))
 	{
-		OutError = FText::FromString(TEXT("현재 트리에서 해금한 공격 기술만 지정할 수 있습니다.")); return false;
+		OutError = FText::FromString(TEXT("공용 기술은 Q/E/R 또는 우클릭 슬롯에만 장착합니다. 동시/차징 전용은 해당 HUD 슬롯으로 드래그하세요."));
+		return false;
 	}
-	if (!IsUsableKey(Key))
-	{
-		OutError = FText::FromString(TEXT("보조키 조합 없이 키보드 키 하나만 지정하세요.")); return false;
-	}
-	if (IsReservedKey(Key))
-	{
-		OutError = FText::FromString(TEXT("이 키는 이동·메뉴 등 기존 조작에서 사용 중입니다.")); return false;
-	}
-	for (const auto* Other : GetCombat()->GetActiveSkillTreeSkills())
-	{
-		if (Other && Other != Skill && GetSkillKey(Other) == Key)
-		{
-			OutError = FText::FromString(TEXT("현재 트리의 다른 기술에 지정된 키입니다.")); return false;
-		}
-	}
-	TMap<FString,FKey> Keys = Settings->SkillKeys;
-	Keys.Add(Skill->GetPathName(), Key);
-	return StoreKeys(Keys, OutError);
+	OnSkillBindingsChanged.Broadcast(); OutError = FText::GetEmpty(); return true;
 }
-
 bool URogue10mSkillBindingComponent::ClearSkillKey(URogue10mAttackSkillData* Skill, FText& OutError)
 {
-	if (!Settings || !GetCombat() || !Skill || !GetCombat()->IsSkillInActiveTree(Skill))
-	{
-		OutError = FText::FromString(TEXT("현재 스킬트리의 기술을 선택하세요.")); return false;
-	}
-	TMap<FString,FKey> Keys = Settings->SkillKeys;
-	Keys.Remove(Skill->GetPathName());
-	return StoreKeys(Keys, OutError);
+	auto* Combat = GetCombat();
+	if (!Combat || !Skill) { OutError = FText::FromString(TEXT("현재 무기의 기술을 선택하세요.")); return false; }
+	bool bChanged = false;
+	for (auto Slot : {ERogue10mAttackInputSlot::QSkill, ERogue10mAttackInputSlot::ESkill, ERogue10mAttackInputSlot::RSkill})
+		{ if (Combat->GetEquippedSkill(Slot) == Skill) { bChanged |= Combat->UnassignSkillFromInputSlot(Slot); } }
+	OutError = FText::GetEmpty(); if (bChanged) { OnSkillBindingsChanged.Broadcast(); } return bChanged;
 }
 
 void URogue10mSkillBindingComponent::CancelHeldInput()
@@ -246,55 +204,14 @@ void URogue10mSkillBindingComponent::RefreshBindings()
 	if (bRefreshing) { return; }
 	TGuardValue<bool> Guard(bRefreshing, true);
 	auto* Combat = GetCombat();
-	TArray<URogue10mAttackSkillData*> DesiredSkills;
-	FString Layout;
-	if (Combat && Settings)
-	{
-		Layout = FString::FromInt(static_cast<int32>(Combat->GetActiveSkillTreeWeaponType()));
-		const auto Skills = Combat->GetActiveSkillTreeSkills();
-		TMap<FKey,int32> Counts;
-		for (const auto* Skill : Skills) { const FKey Key = GetSkillKey(Skill); if (Key.IsValid()) { ++Counts.FindOrAdd(Key); } }
-		for (auto* Skill : Skills)
-		{
-			const FKey Key = GetSkillKey(Skill);
-			if (IsAllowedSkill(Skill) && IsUsableKey(Key) && !IsReservedKey(Key) && Counts.FindRef(Key) == 1)
-			{
-				DesiredSkills.Add(Skill);
-				Layout += TEXT("|") + Skill->GetPathName() + TEXT("=") + Key.ToString();
-			}
-		}
-	}
-	// Progression broadcasts after every accepted attack; counters alone must not cancel a held key.
-	if (Combat == BoundCombat.Get() && Layout == CurrentLayout) { return; }
-	RemoveOwnBindings();
 	if (BoundCombat.Get() != Combat)
 	{
+		RemoveOwnBindings();
 		if (auto* Previous = BoundCombat.Get()) { Previous->OnSkillTreeChanged.RemoveDynamic(this, &ThisClass::ScheduleRefresh); }
 		BoundCombat = Combat;
 		if (Combat) { Combat->OnSkillTreeChanged.AddUniqueDynamic(this, &ThisClass::ScheduleRefresh); }
 	}
-	auto* Input = BoundInput.Get();
-	auto* Subsystem = BoundSubsystem.Get();
-	if (Input && Subsystem && Combat && Settings)
-	{
-		if (!MappingContext) { MappingContext = NewObject<UInputMappingContext>(this); }
-		for (auto* Skill : DesiredSkills)
-		{
-			const FKey Key = GetSkillKey(Skill);
-			auto* Action = NewObject<UInputAction>(this);
-			Action->ValueType = EInputActionValueType::Boolean;
-			Action->bTriggerWhenPaused = false;
-			Actions.Add(Action);
-			MappingContext->MapKey(Action, Key);
-			BindingHandles.Add(Input->BindAction(Action, ETriggerEvent::Started, this, &ThisClass::SkillPressed, Skill).GetHandle());
-			BindingHandles.Add(Input->BindAction(Action, ETriggerEvent::Completed, this, &ThisClass::SkillReleased, Skill).GetHandle());
-			BindingHandles.Add(Input->BindAction(Action, ETriggerEvent::Canceled, this, &ThisClass::SkillCanceled, Skill).GetHandle());
-		}
-		FModifyContextOptions Options;
-		Options.bIgnoreAllPressedKeysUntilRelease = true;
-		Subsystem->AddMappingContext(MappingContext, 1, Options);
-		CurrentLayout = Layout;
-	}
+	// Physical fixed slots are owned by Character. Never rebuild arbitrary saved key mappings.
 	OnSkillBindingsChanged.Broadcast();
 }
 
@@ -303,6 +220,11 @@ void URogue10mSkillBindingComponent::SkillPressed(URogue10mAttackSkillData* Skil
 	auto* PC = Cast<ARogue10mPlayerController>(GetOwner());
 	const FKey Key = GetSkillKey(Skill);
 	if (!PC || !IsAllowedSkill(Skill) || IsReservedKey(Key)) { return; }
+	// A higher-priority legacy interaction (for example NPC dialogue) may have
+	// consumed this key before Enhanced Input dispatches the skill callback.
+	// Keep release/cancel delivery intact so an already-held skill can clean up.
+	const FKeyState* KeyState = PC->PlayerInput ? PC->PlayerInput->GetKeyState(Key) : nullptr;
+	if (KeyState && KeyState->bConsumed) { return; }
 	// Modifier chords are intentionally unsupported even if the bare key was saved.
 	for (FKey Modifier : {EKeys::LeftShift,EKeys::RightShift,EKeys::LeftControl,EKeys::RightControl,EKeys::LeftAlt,EKeys::RightAlt,EKeys::LeftCommand,EKeys::RightCommand})
 	{

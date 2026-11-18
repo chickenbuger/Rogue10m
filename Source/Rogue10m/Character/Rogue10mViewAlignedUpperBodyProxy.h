@@ -8,6 +8,7 @@
 struct FBoneContainer;
 struct FCompactPose;
 class ARogue10mCharacter;
+class URogue10mFighterCombatStanceAnimInstance;
 
 class FRogue10mViewAlignedUpperBodyProxy final : public FAnimInstanceProxy
 {
@@ -22,8 +23,11 @@ public:
 private:
 	void RebuildBoneCache(const FBoneContainer& Bones);
 	void ApplyViewAim(FCompactPose& Pose);
+	void ApplyWeightedHandMotion(FCompactPose& Pose);
+	void SyncHandIKHelpers(FCompactPose& Pose);
 	void ApplyMouseDrivenHead(FCompactPose& Pose);
 	void CaptureHeadMotionSettings(const ARogue10mCharacter* Character, float DeltaSeconds);
+	void CaptureWeightedHandMotion(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
 
 	// Only plain values copied on the game thread are read during parallel evaluation.
 	FQuat ActorInMesh = FQuat::Identity;
@@ -42,10 +46,20 @@ private:
 	float HeadNeckAimWeight = 0.35f;
 	float AimPitch = 0.0f;
 	float AimYaw = 0.0f;
+	// Keep the opt-out response current even while the optional slower arm aim is selected.
+	float BaselineAimPitch = 0.0f;
+	float BaselineAimYaw = 0.0f;
+	float WeightedArmPitchDegrees[2] = { 0.0f, 0.0f };
+	FVector2D EvaluatedWeightedHandPitch = FVector2D::ZeroVector;
+	int32 SkippedWeightedAttackInstanceId = INDEX_NONE;
 	float TorsoWeight = 0.25f;
 	uint16 BoneCacheSerial = 0;
 	bool bBoneCacheValid = false;
 	bool bApplyAim = false;
+	bool bApplyWeightedHandMotion = false;
+	bool bWeightedHandContextValid = false;
+	bool bUseWeightedAimFollow = false;
+	bool bWeightedHandMotionEvaluated = false;
 	bool bApplyMouseHead = false;
 	bool bMouseHeadEvaluated = false;
 	FCompactPoseBoneIndex Spine[3] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };

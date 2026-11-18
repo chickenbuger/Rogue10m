@@ -62,6 +62,10 @@ Check this list on every user command before finishing:
 - When a Sprint work item is completed or materially changed, update Docs/SprintChangeLog.md with its goal, major changes, validation, status, and related documents.
 - Before any GitHub commit or push summary, list the changed files and a short explanation.
 - Immediate feature publication (2026-11-17): commit and push each completed, validated feature promptly as its own scoped change. Keep unfinished work separate; do not batch unrelated features into one commit or postpone independent validated work because another feature is still in progress.
+- Map-production merge gate (2026-11-17): commit and push map work and its dependent gameplay checkpoints to the work branch during production. Defer develop/test/main promotion until map production is finished. This overrides automatic promotion for the current map-production work; an in-progress checkpoint is not feature completion.
+- DevLog photo retention: keep only feature main images and a minimum meaningful ready/contact/recovery set for representative animations. Under the user's photo cleanup instruction, duplicate, superseded, intermediate and failed photos may be deleted while textual and numeric failure records remain. Keep temporary capture batches outside DevLog and copy only the selected main images into it.
+- DevLog record retention: keep canonical final verification results, important failures and unique asset provenance. Remove duplicate/intermediate sessions, capture/RPC metadata and save inventories when final summaries already retain the relevant result. Preserve retained records unchanged and respect existing private-file ignore rules; do not copy whole raw report batches into DevLog.
+- Feature evidence retention: keep final results, distinct important failures, required script inputs, source/reference artwork, and meaningful animation evidence under `Feature/doc/evidence`. Curate duplicate/superseded screenshots and successful intermediate RPC JSON after checking their replacements and references. Protect active work folders, preserve retained bytes/statuses, and document removals in a compact manifest; do not publish ignored private report bodies or bulk-add unrelated evidence.
 - Standing user authorization (2026-10-20): commit and push the current checkpoint, and after each future feature is completed and validated, commit it and promote it through `develop` -> `test` -> `main`, then push the work and integration branches. This instruction is explicit confirmation; do not ask again for routine feature completion.
 - Public publishing authorization (2026-10-20): the user explicitly approved publishing the current code, Unreal assets, source artwork, and validation evidence to the public GitHub repository `https://github.com/chickenbuger/Rogue10m`, and publishing future completed and validated features to that same public repository. This resolves the earlier public-destination approval block; do not request the same approval again for routine completion.
 - Keep feature development on a work branch. Before promotion, fetch and inspect remote changes, run relevant checks, review the diff, and update the feature documents, Sprint changelog, and daily DevLog. Prefer fast-forward promotion when possible; never force-push or discard unrelated work under this authorization. If validation fails or integration is blocked, record the reason instead of claiming completion.
@@ -122,6 +126,14 @@ Before committing, run:
 
 ## Feature Artifact Locations
 
+### World Map Production Reference
+
+- The two active project levels are `/Game/Rogue10m/Maps/StartHub` and `/Game/Rogue10m/Maps/OpenRunMap`. Author future open-world changes in the existing `OpenRunMap` with the World Partition Map Maker. Keep previous layout candidates in recoverable archives and avoid adding a playable map to implement a revision.
+- Before actual world-map, village, outpost, hunting-ground, class-NPC, weapon/book placement, or related encounter work, read `Docs/WorldMapProductionGuide.md` and `Docs/References/WorldMap/README.md` together with the two referenced JSON catalogs and the retained map PNG.
+- These files preserve the latest user decisions from the map-planning chat. New explicit user instructions take priority. Treat older five-village drafts and the generated image as supporting references, not permission to restore superseded input, reward, or progression rules.
+- Keep ordinary monsters (minimum 15), four midbosses, and one final boss separate. Mid/high books are found during exploration; only introductory/lower books may be explicitly promised for simple quests/training. Weapon-specific chord/charge support and the Ctrl -> first-Q deadline -> QQQ magic-missile flow must be preserved.
+- The retained image is a concept map, not an Unreal capture or measured layout. Verify local-to-world anchors, collision, routes, gameplay, and asset ownership/compatibility before applying it. Record deviations in the feature plan and update the reference catalogs after approved changes.
+
 - Architecture plans: `Feature/architect/YYYY-MM-DD_feature-name.md`
 - Development summaries: `Feature/doc/YYYY-MM-DD_feature-name.md`
 - Harness documentation: `Docs/HarnessPipeline.md`, `Docs/UnrealEngineeringRules.md`, `Docs/LazyCodexHarness.md`
@@ -135,3 +147,9 @@ Create a paired feature document set:
 ## Worktree Content Isolation
 
 - Never junction or symlink a Git-tracked Content directory to another checkout's Content. Git sparse-checkout/checkout/merge can remove tracked files through that link. Use an independent physical checkout and verify the resolved project/content paths before Git mutations.
+
+## Animation Evidence Records
+
+- Follow `Docs/AnimationRecordingGuide.md` when creating or changing animation, or validating an existing animation in a feature.
+- Keep actual ready/contact-or-first-damage/recovery captures, asset provenance and paths, authored versus observed timing, and hand/weapon trajectory evidence in that feature's DevLog folder.
+- Distinguish numeric tests, programmatic rendered input, physical input and full-run play. Preserve failed candidates and state visual failures separately from numeric passes.

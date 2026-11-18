@@ -1,0 +1,199 @@
+
+[월드맵·공유 통합 재개 첫 체크포인트 / UTC2026-11-13]
+재개와 소유권
+- 사용자 개발재개 및 Work병렬화 지시에 따라 Sprint#9-32-landscape-world-blockout에서 이어갔다. 공유 Source/Config/Content·에디터/빌드는 이 Work만 사용하고 나머지 검토·기능 Work는 격리/읽기전용으로 제한했다. 외부Codex 변경을 보호하고 checkout/reset/타인프로세스종료는 하지 않았다.
+- 기하·API 검토와 통합준비감사를 GPT-6.1-Sol ultra로 각각 실행했다. Fast 인자/적용은 확인할수없어 적용됐다고 주장하지 않는다. 프로젝트 .agents/skills는 없으며 현재AGENTS·하네스·최신월드참조·마비노기밀도기획과 설치UnrealMCP스킬을 읽었다.
+실제 변경과 검증
+- 최초 tracked dirty68개를 보존했다. Source/Config·원본월드/외부패키지·StartHub 등을2478파일 물리백업하고 복제전후SHA변화0을 확인했다. 더늦은자동저장9개도별도보관했으며 원본에복원/병합하지 않았다.
+- 기준 정규Editor/UHT빌드 성공,exit0·134.95초. Source/Config339개 기존파일해시변화0. 기존종료UI7파일은이미설치됐으므로 재적용하지않고 이번빌드로컴파일했다. 개별종료기능회귀는미실행이다.
+- 정식WorldPartitionRenameDuplicateBuilder를 Rename없이 실행해 /Game/Rogue10m/Maps/Production/WorldLayoutCompact20261113A를신규저장했다. 외부Actor1360/Object58,exit0이며원본2478파일변화0이다. 기존대상이있으면실행거부·소유rootPID/start/path검증·종료확인·partial재실행거부를구현/독립검토했다.
+- map QA입력20개 SHA와 Quit ARTIFACTS목록SHA가현재전달본과일치했다. 외부정적75/29와종료254/31을이번Work가재실행한것으로표현하지않는다.
+축소와 다음 작업
+- 사본은아직축소전이다.900×562.5검토안은기존component격자와맞지않으며900×450동일중심은보스장pad를14.5m넘는다. 원본경계9×5(1012.5×562.5m)45keep/211outside도비교하며 원점/액터를이동하지않는다.
+- 후보전용 지형조회/영역load/선택준비helper2파일을격리에작성하고독립API/의존성/가드리뷰를통과했다. 공유Source설치·UHT/컴파일·라이브선택/삭제/재로드는미실행이다. public선택API만사용하며private삭제함수나DestroyComponent우회는없다.
+- 다음은신규helper2개선별통합·빌드→원본/사본live층/높이/페인트/현재범위확인→선택preview→후보nativeLandscapeManage도구→저장재로드·충돌/직행검증이다. 새허브입구·기본맵·카탈로그·전투Source/Config는이번에변경하지않았다.
+- 후보/입력동결후supplement/필요패킷·최종Editor빌드→동일DLL회귀→전체입력seal→Game/cook/package→실제종료·저장재시작순서로진행한다.3인칭·피격취소·면역보류·사용자편집가능성은유지한다. 현재커밋/푸시없음.
+관련문서
+- Feature/architect/2026-11-13_compact-world-resume.md
+- Feature/doc/2026-11-13_map-integration-checkpoint-a.md
+- Feature/doc/evidence/map-resume-20261113/BaselineA/checkpoint.json
+- Feature/doc/evidence/map-resume-20261113/DuplicateA/result.json
+[Notion 요약 후보]
+- 재개첫체크포인트에서 기존2478파일과자동저장9개를보존하고134.95초정규빌드·독립WP사본저장을마쳤다. 원본해시는유지했고 새사본은아직축소/플레이전이다. 다음은사용자편집레이어를보존하는후보선택·native지형관리와실제검증이다.
+
+
+## 2026-11-13 맵 통합 체크포인트 B — Computer Use 중단과 비GUI 지형 검증
+
+사용자의 화면조작 금지 이후 추가 GUI 입력은 0회다. 원본 2478개·후보1419개 SHA가 모두 보존됐고 dirty0인 소유 UE는 공식 API로 정상 종료했다. 소유 helper2개를 백업 후 v2로 교체하고 정규 UHT/Editor 빌드 exit0(30.55초), NullRHI Python commandlet exit0(21.67초)를 확인했다. 후보 A는 여전히1800×1800m이며 지형256/충돌256/프록시16/레이어1을 실제 로드했다. 유지 예정179488샘플의 높이·페인트·GUID별 레이어 기준값과 이음새4832개 일치를 확보했다. 저장·선택·축소는0이다. native Manage/Delete는 GUI금지로 보류하고 Import의 GUID/브러시/raw B/A 보존 차이 검토 전 억지 대체하지 않는다. 물리3회·성장15분·시각·Windows 실제 종료 검증은 미완료다.
+
+### Notion 정리 후보
+- 목표: 사용자 편집 데이터와 동시 Codex 변경을 지키면서 작은 맵 후보의 실제 기준값 확보
+- 구현: 읽기 전용 BLAKE3 높이/페인트/메타데이터 helper, guarded NullRHI commandlet
+- 검증: 정규빌드와 실제 데이터 snapshot 통과, 원본·후보 파일 해시 보존
+- 미완료: 실제 지형 축소와 저장/재로드·플레이·패키징; 다음은 검토된 전투/VFX/NPC 소스 통합
+- 문서: Feature/doc/2026-11-13_map-integration-checkpoint-b.md
+
+
+## 2026-11-13 맵 통합 체크포인트 C — G08·VFX·NPC 실제 통합 검증
+
+검토된 G08+VFX 누적29파일과 NPC full30파일을 물리 백업·사전해시 후 실제 통합했다. 패킷33 raw/NPC30 정규화 postimage가 일치했다. 첫 UHT에서 배열 Units2곳 오류가 발생하여 해당 메타데이터만 제거하고 단위 설명을 남겼다. 정상 재빌드 exit0·104.31초, 최종 DLL180DA46E...56CB76D를 확인했다. 같은 DLL의 숨김 NullRHI Editor CLI에서 native43개를 실제 실행했고43/43 성공, 이름 집합 일치, 실패/미실행0이었다. 엔진 보고서는37 clean+6 warning cases이며 transient fixture 경고12개를 보존했다. NPC 작성 도구 오프라인30개도 통과했다.
+
+새 DLL의 후보 cold reload commandlet exit0·25.67초에서179488샘플 기준값과 layer metadata BLAKE3가 이전과 같았고 dirty0이었다. 후보는1800×1800m·1360액터 그대로이며 지형256/충돌256/프록시16이다. GameMode/Pawn은 FirstPerson 이름을 유지하지만 실제 Rogue10m native 클래스를 상속함을 CDO로 확인했다. 카메라 코드 변경0이며 실제3인칭 검수와 NPC Director/DA 배치는 미완료다.
+
+Computer Use 금지 이후 GUI 입력0을 유지했다. native Manage/Delete와 실제 Windows UI gate는 보류하고 입력 API로 우회하지 않았다. public Import의 raw B/A·GUID·brush·PCG/foliage/spline/참조 보존 공백을 문서화했다. Windows44파일은 UNSEALED 도구이며 새 게임 패키지가 아니다. 기존 Content2139·Config9 및 패킷 외2471 baseline파일을 보존했다. 기존 미귀속사망 전투목표 문제, 실제접촉/VFX/직행물리3회/성장15분/완주/패키징은 남아 있다. 커밋·푸시·승격0.
+
+### Notion 정리 후보
+- 구현: G08 접촉/회복 시간표와 취소 보호, 편집형 VFX 도구, NPC 선택형 초급 의뢰 소스 통합
+- 검증: 정규 UHT/Editor 성공; native43/43 및 오프라인30 통과; 같은DLL·Source/Config 내용/집합 보존; 후보 재로드 데이터 일치
+- 한계: native 몽타주/겹침 모델과 실제 입력/영상/런타임을 구분; 경고6사례12개 보존
+- 다음: 비GUI raw B/A·참조 인벤토리와 안전한 축소 경로, 후보 동결 뒤 실제NPC 연결 및 Windows 입력 봉인
+- 문서: Feature/doc/2026-11-13_map-integration-checkpoint-c.md
+
+
+## 2026-11-13 체크포인트 D 진행 — 비GUI 보존 조사·내부 Windows 준비
+
+체크포인트C의366 Source/Config·DLL불변과독점실행상태를재확인했다. 실제actor bounds대조에서StaticMesh1282/TargetPoint53/PlayerStart가9×5유지영역안에완전히있었다. 공식AssetRegistry commandlet은후보1419패키지등록, 원본world/private패키지향참조0·외부incoming참조0·shareddependency39를관찰했고SHA불변dirty0이었다. 이는packagegraph이며live/softsubobject/native참조안전인증은아니다. Turnkey VerifySdk actualexit0·8.50초, Win64SDK10.0.22621.0 Valid; 설치/업데이트/빌드/Cook요청0. Content/Build/uproject9524SHA와기존SaveGames458의privateTemp보호기준을확보했다. rawBA/의존성helper v3는staged준비중이며sharedSource설치/실행전이다. 후보1800m·NPC미배치·releaseUNSEALED·GUI입력0은유지한다. 새별도미검증내부Development smoke package를준비하며기존B/B2/release봉인은건드리지않는다.
+
+### Notion 정리 후보
+- 실제진행: actor유지영역대조, package참조그래프, SDK검증, 콘텐츠/저장보호기준
+- 진행중: rawEditLayerBA·객체/참조조사helper와공개crop매핑; 독립내부빌드경로
+- 미완료: 축소/저장검증/실제콘텐츠배치/WindowsGame·Cook·archive·UI/플레이
+- 문서: Feature/doc/2026-11-13_map-integration-checkpoint-d-progress.md
+
+
+## 2026-11-13 D 실제실행 — raw360타일과시작오류정정
+
+v3/v4 helper 실제설치·빌드(최종21.63초exit0)와공식commandlet자료수집을완료했다. rawBA는기본상수가아닌2065종으로보존필요를확인했고전체descriptor1360로드·dirty0·object/selection/transaction/source불변을확인했다. native/lazy/opaque14미지원은미해결이다. 8채널360BIN(1843200B),실제Source/DLL/패키지SHA를확보해독립QA에넣었고실패0·미확인39→19·종료3을확인했다. 실제crop0을유지한다.
+
+앞선NativeTestsA의선택43성공과별개로시작엔진smoke오류15줄의집계누락을정정했다. 원래오류는승인/무시하지않았다. 같은DLL영어시작probe는전체Error0이었고영어18인수와startupRED0을강제하는별도Culture-D사본을검토했다. 최종v4 DLL92CB...49490의freshNativeTestsC 실제43/43·37clean/6warning12개·전체RED0·Source/Config366불변을확인했다.
+
+독립실제Temp에최종입력·선택5맵/외부패키지·Editor6·보호save를캡처하고내부Development전용seal을만들어소유세션plan검증중이다. 아직Game/Cook실행전이며기본맵/지형1800m/NPC미배치/GUI입력0/release불가상태를유지한다.
+
+### Notion 정리 후보
+- 구현: readonly rawBA·의존성조사와8채널tile수송API
+- 실제검증: 원시360타일·독립QA실패0/pending19; 최종native43·전체오류0
+- 정정: 이전43결과와별개시작오류15줄보존·새영어증거로해결; 원래오류허용아님
+- 미완료: crop보존19항목·실제콘텐츠/시각/물리플레이/WindowsGame·Cook·archive
+- 문서: Feature/doc/2026-11-13_map-integration-checkpoint-d-progress.md
+
+
+## 2026-11-13 내부빌드 UTC검증 차단·수정
+
+첫실행은PowerShell7.6.9의UTC JSON자동변환→+09재해석으로owner-window만료오판이발생하여UAT0/lease0/출력0에서멈췄다. 실제원인과새DateKind String 보존을재현했다. 원본실행기·실패seal/release/로그를보존한별도사본에서최소버전7.5와파서옵션두줄만수정했고34반례/독립리뷰통과로시간/소유guard유지를확인했다. 새내부seal774C...B263B1/run02/livePSrelease로전체입력·보호save재검증후실행을재개했다. 아직Game/Cook완료로표시하지않는다. Landscape CollapseAllLayers0, raw/composite8채널구분·보존pending19·실제crop0/GUI0도유지한다.
+
+
+[추가 작업] 실제 Windows Game 컴파일 실패 수정과 재검증
+실제 내부 Development 빌드의 run02는 G08 Editor 전용 montage fixture가 Game에 컴파일되어 UAT 종료 코드 6으로 중단됐다. Cook은 시작되지 않았다. 실패 뒤 프로젝트 입력 10,456개와 Editor 바이너리 6개, 보호 저장 2개 루트의 해시가 그대로임을 확인했다.
+설치 엔진의 AddAnimCompositeSection 선언이 WITH_EDITOR 내부인 점과 독립 검토 결과에 따라 테스트 CPP 첫 줄에 WITH_EDITOR 조건을 추가했다. EditorContext 테스트 23개의 내용은 바꾸지 않았다. 수정 후 정규 Editor 빌드는 12.2146초, 종료 코드 0이다. 새 DLL로 native 43개를 재검증 중이며, 이전 실패 및 출력은 보관했다.
+지형 후보는 아직 1800m이며 축소와 NPC 배치는 하지 않았다. 레이어별 raw와 합성 결과를 구분하고, Collapse All Layers 없이 편집 구조 및 참조 보존을 먼저 입증한다. Computer Use 추가 실행은 0회다.
+[Notion 요약 후보] 실제 Game 컴파일 오류를 Editor fixture 범위 문제로 특정하고 1행 guard로 수정했다. Editor 재빌드는 성공했으며 native 재검증과 새 봉인 후 내부 빌드가 남았다. 지형 전체 보존과 UI/물리 입력 검증은 미완료다.
+
+
+[추가 검증] 새 DLL native 43개 및 내부 Windows run04
+Editor guard 수정 후 새 DLL에서 정확한 native 43개가 110.922초에 모두 성공했다. 경고 6사례 12개는 보존했고 전체 오류 로그는 0개다. Source/Config 366개와 DLL도 그대로다. 전체 입력 10,456개 중 이전 봉인 대비 변경은 검토한 guard와 출력 이름 두 파일뿐이다. Content 전체 9,521개와 보호 저장 2개 루트는 일치한다.
+최종 동결된 준비기로 새 run04 입력을 봉인한 뒤 내부 Windows 빌드 절차를 시작했다. 아직 빌드 전 검증 단계이므로 Game/Cook 성공으로 기록하지 않는다. provisional run03와 기존 실패 출력은 그대로 보관했다.
+World Map Maker 코드 실존과 선택 의존을 확인하여 패널 검수와 공식 Actor API 부분 검증을 분리했다. F 상호작용은 과거 92검사와 현재 코드 방어 경로만 확인했고 현재 물리 입력 회귀는 미검증이다. 1인칭 보류·3인칭 유지, Computer Use 추가 0회다.
+[Notion 요약 후보] G08 Editor 전용 fixture guard 수정 후 native43 회귀 통과. 전체 입력과 저장 보존 확인 뒤 내부 Windows run04 실행 중이다. 지형 보존 pending19, World Map Maker 비GUI 저장/재로드와 현재 F 입력 검증은 별도 미완료로 관리한다.
+
+
+[실제 빌드 결과] Game·Cook 완료, staging 경로 오류로 중단
+run04는 Game fresh link/metadata를 성공하고 Cook 2,323개를 완료했다. 그러나 CookOutputDir와 staging의 Windows 하위 경로 해석 차이로 package-store manifest를 찾지 못해 UAT 종료 코드 1로 중단됐다. 새 Windows 패키지 완료로 표시하지 않았다.
+실패 뒤 전체 입력 비교에서 Build/Windows/FileOpenOrder/EditorOpenOrder.log 한 개의 생성 로그 갱신을 발견했다. 이 파일을 되돌리거나 무시하지 않고 현재 값을 보관한다. Source·Config·Content·Editor6·보호 저장은 별도 전체 검사 중이며 기존 full-input seal은 실패 상태다.
+설치 UE 5.8의 정규 옵션을 확인하여 새 내부 derivative에 CookOutputDir의 Windows 경로와 FOOBASEDIR 격리를 준비한다. UAT 최상위 clean은 Saved/Cooked를 삭제하므로 사용하지 않고, 정규 Game UBT Rebuild 경로와 실제 Editor6 해시 보존을 검토한다. strict/B/B2와 사용자 원본은 변경하지 않는다.
+[Notion 요약 후보] 실제 Game/Cook는 통과했으나 staging manifest 경로 문제로 Windows 아카이브는 미완료다. 단일 생성 Build 로그 변경을 숨기지 않고 새 봉인과 출력 격리 수정으로 이어간다. Computer Use 추가 실행은 0회다.
+
+
+[실제 배포 준비 결과] 내부 Windows E5 빌드 및 전체 해시 보존 완료
+정규 Game99작업 재빌드와 Cook·IoStore Stage·Package·Archive가 모두 성공했다. UAT 종료 코드는 0, BuildCookRun은317.48초다. Source/Config/Content/Build/Scripts/uproject 전체10456입력과 Editor6·보호저장2root가 새 봉인과 일치하며 파일 접근 로그도 별도 cook_user로 격리됐다. 공식 UnrealPak 목록에서 요구5맵의 실제 포함과 WorldPartition identity를 확인했다.
+Windows 새 사본을 D:/Project/Rogue10m/tmp/InternalWindows20261113E5_UNVERIFIED/Windows에 보관했다.50파일/1,948,283,459B이며 원본 아카이브와 전체 payload SHA가 같다. Game을 실행하지 않았고 UI7·시각·DX12·실제 저장 라우팅·물리 입력·완주는 미검증이다. release_eligible=false를 유지한다.
+World Map Maker QA를 위한 완전 물리 사본도9896파일/5,089,364,691B로 생성하고 원본·Editor6·저장 보존을 확인했다. 이동/저장/cold실행과 패널 검수는 아직 하지 않았다. 지형은1800m/crop미실행이며19개 보존pending이 남았다. Computer Use 추가입력0,commit/push0이다.
+[Notion 요약 후보] 내부 Windows E5가 정규 UAT와 IoStore 검증을 통과해 별도 폴더에 보존됐다. 현재 지형과 NPC 미구현·UI/플레이 미검증을 manifest에 유지했고, 독립 맵 저장 QA 사본까지 준비했다.
+
+
+[후속 QA 차단] 내부 승인 파일 생성 자동 심사 거절
+Windows E5 아카이브와 IoStore 검증은 완료된 상태다. 독립 맵 QA는 물리사본/원본보호검증/고유 map이름 예약까지 끝냈지만, metadata-only commandlet용 내부 Root 승인 JSON 생성을 자동 심사가 실제승인전제우회위험으로 거절했다. 명령은CreateProcess에서실행되지않았고 승인파일·startup단계·QA map도없다. 사용자history를확인했으나이대상에대한새명시승인은없어재시도/다른경로우회를하지않았다.
+QA용UE/Actor이동/저장/cold는0회, Computer Use 입력도0회다.16:19:31UTC의UE/UBT/UAT/Game/UnrealPak active는0개다. 기존사용자파일과완성된Windows사본을그대로보존했다.
+[Notion 요약 후보] 내부Windows50파일/1.95GB는완성·보존됐다. 독립맵QA는Root승인JSON생성의자동심사거절로metadata실행전중단됐으며구체대상/사유/미실행을기록했다. crop19pending·NPC미배치·UI/실제F/플레이미검증은유지한다.
+
+
+[NPC 독립 패킷 재개] 처치 귀속 코드 통합 범위 확정
+최신 지시로 NPC commit7c31084의 runtime9+tests3 작은 delta 통합·정규 Editor 빌드·비GUI C++회귀만 재개한다. metadata 승인 JSON/clone QA는 계속 중단이며 Computer Use도 사용하지 않는다. 현재8기존대상의raw/normalized기준일치와4신규부재,관련20파일불변,combined12=runtime9+tests3를확인했다. 공유UE/빌드프로세스는없고기존Work브랜치를유지한다.
+기존 Windows E5와 NativeD43/NPC18은 수정 전 증거로 보존하며 새 변경의 검증으로 계산하지 않는다. 대상백업 뒤한경로만적용하고새evidence에빌드·회귀를기록할계획이다.
+[Notion 요약 후보] NPC 처치 귀속 버그의 별도 소스 통합을 재개했다. 기존파일을 보존하는 사전검사까지 완료했으며 metadata 승인 차단과 기존 Windows 산출물은 그대로 유지한다.
+
+
+[NPC 실제 회귀] 첫51검사의8실패 원인과fixture수정
+정규Editor/UHT빌드는102.097초에성공했고통합된현재소스의standalone도202871검사를통과했다. 실제UE Native51A는기존43성공·신규8실패였다. UE프로세스exit0만성공으로세지않고보고서와RED57을보존해runnerexit1로판정했다.
+신규8의공통TakeDamage0은APawn이AuthGameMode없는fixture월드의피해를거부하는조건에서발생했다. 공개API로nativeMode와실제Run을연결하도록test CPP만보강하고상호authority관계positive검사를추가했다. 런타임9파일과피해guard·기존assertion은바꾸지않았다. NoGI·NoWorldBegin·프로필저장없음도유지한다. 실패소스/DLL백업뒤새빌드및Native51B를준비했다.
+[Notion 요약 후보] NPC 코드통합과빌드는성공했지만첫UE회귀8개가fixture의GameMode미초기화로실패했다. 성공으로숨기지않고공개framework초기화로fixture만고친뒤다시검증한다. metadataQA중단과기존WindowsE5고정은유지한다.
+
+
+[NPC 처치 귀속 최종 검증] 새 DLL 51개 회귀와 전체 보존 확인
+fixture만 보강한 정규 Editor 빌드는 41.881초에 종료 코드 0으로 끝났다. 새 DLL CA647B1E…2CB9175에서 Native51B를 실행해 120.187초에 51개 모두 성공했다. 구성은 신규 처치 귀속 8개와 기존 NPC 18개, G08/VFX 25개다. 정확한 이름·완료 로그·Queue 51과 전체 오류 0을 확인했다. 경고는 11개 사례에 19건이며 WorldContext 없는 Actor 파괴 9건과 Unarmed profile 미설정 10건이다. 독립 Work도 같은 결과를 확인했다. 실패 A의 기존 43 성공·신규 8 실패 기록은 그대로 보존했다.
+전체 입력 10,460개를 이전 E5 기준과 대조했다. 지정한 기존 8개 변경과 신규 4개 외에는 그대로이며 Content 9,521개, 보호 저장 2개 루트, 기존 Windows E5 payload 및 Game 실행 파일도 일치한다. 런타임 9개는 전달 패킷의 정규화 postimage와 일치한다. E5는 이번 NPC 수정 전 패키지이므로 수정 포함 빌드로 표시하거나 봉인을 갱신하지 않았다.
+사용자의 최신 지시로 이번 Rogue10m 작업의 Computer Use 금지는 해제됐다. 해제 전과 이번 NPC 작업의 추가 GUI 입력은 0회다. 별도 거절된 Root 승인 파일 생성과 metadata-only commandlet/clone QA는 계속 중단하며 재시도·우회 0회다. 실제 Director·충돌·loot·production GUID·F 입력과 새 런/저장/재시작은 미검증으로 남긴다. 지형 축소와 NPC 배치도 이 소스 패킷에서 수행하지 않았다.
+[Notion 요약 후보] NPC 처치 귀속 소스 통합과 새 DLL의 C++ 51개 회귀를 완료했다. 경고 19건과 실제 맵 검증 한계를 명시하고, 원본 Content·저장·기존 Windows 산출물 보존을 확인했다. Computer Use 재허용은 반영하되 별도 승인 차단은 유지한다.
+
+
+[Compact 초급 의뢰 실제 제작] 새 DA·Director 저장과 cold reload
+정상 공유 후보 WorldLayoutCompact20261113A의 WP descriptor 1,360개를 확인해 기존 Director가 없음을 확인했다. 후보 1,419개 파일 18,234,465B를 물리 백업하고 전체 입력 10,460개와 보호 저장 2개 루트의 사전 해시를 대조했다.
+H 수렵촌의 NPC·목표 3곳을 공식 MCP 충돌 trace로 확인한 뒤 초급 DataAsset과 Director를 실제 저장했다. 서린 1명·회수 목표 2개·골드40이며 전투와 비급 보상은 없다. 기존 사용자 아린 메시/Idle을 임시 외형으로 재사용하고 위치·외형·반경·보상은 DA에서 편집하게 했다. 추가 파일은 DA1·Director 외부 액터1·폴더 외부 오브젝트3, 총5개다. 기존 후보 1,419파일·Source/Config368·Native51B DLL은 그대로다.
+PID50968의 정상 종료 뒤 새 PID51996에서 같은 후보를 다시 열어 DA 값과 Director 참조가 일치함을 확인했다. Transient validation은 재검증으로 통과했다. 읽기 도구의 Python 별칭 오류만 수정했고 런타임 guard는 바꾸지 않았다. Zen 대기 안내는 준비 상태 확인 뒤 GUI로 계속했으며 캐시 삭제나 타 프로세스 종료는 없었다.
+허브 실제 포털은 기존3경로이며 Compact 후보 연결은 없다. 허브 원본을 바꾸지 않고 별도 QA 슬롯3개와 Temp UserDir로 정상 프로필/런 진입 및 실제 F 흐름 검증을 진행한다. 지형은 아직1800m이고 asset cold 성공과 퀘스트 진행의 종료 후 복원은 별개다. 거절된 Root 승인 파일·metadata clone QA 중단도 유지한다.
+[Notion 요약 후보] Compact 후보에 편집 가능한 초급 NPC/회수 의뢰를 실제 연결하고 저장·새 프로세스 reload를 검증했다. 기존 패키지를 보존한 신규5파일이며, 일반 허브→후보 경로와 실제 퀘스트 플레이 검증은 별도 남겨 둔다.
+
+[Compact 초급 의뢰 실제 플레이] 수락·회수·중복 보상·새 탐험 초기화
+격리 QA 슬롯3개와 Temp UserDir로 정상 메뉴에서 QAIntroB01 프로필을 만들고 허브에 들어갔다. 현재 DLL의 UnrealEditor -game에서 F 열기/닫기/재열기와 Enter 수락0/2, 실제 목표 overlap1/2·재접촉 후1/2·두 번째2/2, NPC 재보고 보상40을 확인했다. 실제 inventory 로그는0→40→중복 보고 후40, native reward 로그는1건이다.
+일반 탐험 포기 확인과 보상+0/재화 복원 저장 완료 UI를 거쳐 허브로 돌아갔다. 같은 프로필의 활성 SaveData를 정확한 객체 경로로 조회해 RunId A3C6878A…36627E에서 FF914231…7D97DF로 달라졌고 새 후보 의뢰가 수락 전0/2·Gold0임을 확인했다. 실제 캡처6장은 독립 Work도 확인했다. 정산 UI는 관찰했으나 F9 파일은 없으므로06번 캡처는 없다.
+후보 접근은 실제 기존 Hub 포털 baseline 이후 추가 개발용 open을 사용했고, NPC·목표 위치는 BugItGo 뒤 Walk로 collision을 복원해 준비했다. 일반 Hub→Compact 연결은 없고 물리 주행·15분 플레이 인증은 아니다. 빠른 연속 위치 이동 때 F 안내 소실이 있었으며 감지 밖으로 나갔다 별도 재진입하면 복구됐다. 활성 무기 스킬과 F 충돌 전체는 미검증이다.
+월드 한글 표식 네모와 기존 플레이어 회색 재질, skeleton 의존 누락이 남아 전체 게임 RED0/시각 통과로 표시하지 않는다. 지형은1800m 그대로다. 정상 게임 종료 UI로 저장·RequestExit·Exiting을 확인하고 엔진/빌드/게임 프로세스0을 확인했다. 보호 저장과 전체 입력/E5 최종 해시 대조는 별도 진행한다.
+보존 검사에서 두 번 멈춘 뒤 Reviewer로 복귀했다. 첫 비교의 bytes/size 필드 차이와 Editor import가 생성한 Scripts 캐시1개를 분리했다. 별도 Work가 원본과 pyc code object 일치를 확인해 캐시를 삭제/수정하지 않고 정확한6번째 추가 입력으로 포함한다. Content 추가분은5개 그대로다.
+[Notion 요약 후보] 편집 가능한 초급 NPC 의뢰가 실제 게임에서 수락·회수·40골드1회·중복차단·새런0/2까지 동작했다. 프로그램 위치 준비와 정상 UI 입력을 구분하고, 일반 후보 진입·시각 오류·패키지 플레이·진행 영구저장은 남겨 둔다. 기존 승인 차단과 사용자 변경 보호는 유지한다.
+
+
+[Compact 보존 최종 확인] 기존 입력과 저장·이전 패키지 불변
+최종 전체 해시 검사는 기존10460개 입력이 모두 그대로이고 신규Content5개와 정상 Editor import 생성 캐시1개만 추가됐음을 확인했다. Content9526/전체입력10466이며 SourceConfig368·Editor DLL CA647…9175도 불변이다. 보호 SaveGames는 프로젝트 루트458파일과 기본 LocalAppData 경로0파일 그대로이고, 이전 E5의50파일/1,948,283,459B payload SHA431968…079C 및 기존 Game EXE도 일치했다.
+캐시를 삭제·수정하지 않고 exact SHA로 분리했으며 검사 실패2회 뒤 Architect/Reviewer로 돌아간 기록을 보존했다. 정상 종료 뒤 엔진/빌드/게임0이다. 새 Windows 내부 빌드는 일반 Hub의 기존 WorldLayout 포털 목적지까지 포함한 명시적6맵으로 fresh capture를 시작했고 아직 Game/Cook 실행은 없다.
+[Notion 요약 후보] 초급 의뢰 실제 플레이와 저장/cold 검증에 이어 기존10460입력·사용자 저장·E5패키지 보존을 확정했다. 신규5콘텐츠와 생성 캐시1개를 분리하고, 원본6맵 목적지를 포함한 별도 내부 Windows 입력을 준비한다.
+
+
+[Windows 내부 빌드 실제 완료와 시작 실패] 바이너리·심볼로 원인 확인
+Native51B 같은 DLL/Source와 새 콘텐츠를 묶어 정규 Game/Cook/Stage/Archive를 실행했다. UAT0/418.71초, source/stage/archive EXE99E843…15969 일치, payload50파일1,951,832,646B를 별도 물리 폴더에 보존했다. 공식 IoStore와 봉인 validator는6맵+새의뢰DA, Export2252/WP셀158 및 입력/Editor/저장 보존을 통과했다.
+그러나 실제 Game 첫 실행은 창/로그0, 두 번째는777006으로 종료됐다. 빌드 성공과 플레이 가능을 분리해 실행 실패로 기록하고 일반 재시도를 멈췄다. Epic 분류는 정적 초기화 크래시이며 초기라 crashlog도 없었다. 정상 프로필 생성과 저장routing/UI7에는 도달하지 못했다.
+소유 Game1개를 표준 Win32 debug API로0.297초 관찰해 쓰기AV0xc0000005와 실제 레지스터를 확보했다. 일치PDB와 캡처메모리/로컬PE만으로7프레임을 복원했다. 원본ScriptStruct 등록배열40바이트를 설치엔진이48바이트로 읽는 실제 machine code/포인터 불일치를 확인했다. UBT compile의-NoLiveCoding이WITH_RELOAD를다르게만드는옵션이었다. sourceResourceCost/NPC/맵/세이브를 추측 수정하지 않는다.
+기존strict/B/B2/E5와 실패Native51IntroB를 보존하고 새FixF도구에서compile옵션만분리해맞추는중이다. runtime/cooker-NoLiveCoding과 모든기존검증guard는유지한다. 신규빌드후실제ABI/시작성공은아직미검증이다. generated파일은읽기증거복사만했고원본직접수정0,강제프로세스종료0,메타데이터승인QA0이다.
+[Notion 요약 후보] Windows 빌드·Cook·IoStore는통과했지만실제시작에서구조체등록ABI불일치를발견했다. 정확한바이너리/PDB로원인을확정하고빌드옵션을별도파생에서고친다. 실패아티팩트와원본·저장을보존하며실행검증완료로과장하지않는다.
+
+
+[FixF 동결과 중단 체크포인트]
+별도FixF는원본도구33개를보존하고compile-NoLiveCoding제거·재주입차단만추가했다. Root가현재manifest47개해시와실제diff를확인했고합성49/49·PSparse0이다. Source/Config/Content와EditorDLL은바꾸지않았다. Cfreshcapture10466입력은동일SHA로일치했고새C입력6762A669…488174C를봉인했다.
+C소유세션이SDK전불변검사에있던중대기호출이aborted by user로중단됐다. 이후해당session/cell과소유PS/validator가없었고journal은running/pre_sdk에남았다. SDK/UAT/Game빌드미시작이며원문·출력·lease를보존하고재실행/삭제하지않았다. 현재Game은실패B99E843…15969이며FixF실제ABI/시작통과는미검증이다.
+중단뒤Editor6·보호저장2루트는불변을다시확인했다. UE/UBT/Game0·강제종료0·commit/push0이다. 전체10466입력의중단후재해시는미수행이며마지막Ccapture/plan일치근거와구분한다. 재개시외부변경/프로세스확인후새출력소유세션이필요하다. root-startup승인/metadata cloneQA는별도STOP·추가실행0유지다.
+[Notion 요약 후보] 편집형NPC의실제Editor-game수직흐름을완료하고Windows내부빌드를만들었으나실제startupABI오류를발견했다. 정확원인과FixF49검사를확정했고, C빌드는SDK전외부대기중단으로미실행상태를정직하게보존했다. 원본·저장·기존실패증거를유지해후속재개가능하게정리했다.
+
+
+[D 새 출력에서 명시 재개]
+중단 C의 소유 PID11792와 UE/UBT/Game 부재를 재확인했다. C 출력·lease·실패 B·이전 E5를 보존하고 새 D 전용 캡처/실행기를 준비했다. 전체10466 입력은 기존 SHA C4BDCE58…CD61CD로 다시 일치했고 Content9526·Source/Config368·Editor DLL을 보존했다.
+D 입력 봉인707AADD5…01A01F 뒤 실제 소유 PS7 PID55740에서 동결 FixF의 정규 Game/Cook/Archive를 시작했다. 지금은 사전 검사 중이며 새 빌드·ABI48/48·startup·routing·실제 UI 성공으로 계산하지 않는다. 별도 승인 거절 대상은 변경·재시도하지 않는다.
+[Notion 요약 후보] Windows 시작 실패의 실제 ABI 원인에 맞춘 FixF를 새 독립 D 출력에서 재개했다. 중단된 C와 기존 실패 증거를 보존하고 전체 콘텐츠 일치를 다시 확인했으며, 최종 바이너리와 실제 게임 검증을 다음 단계로 분리했다.
+
+[D 정규 Windows 빌드와 실제 ABI 일치]
+SDK와 정규 Game/Cook/Stage/Archive가 모두 종료0, BCR431.85초였다. 사후 strict 검사도0이며10466 입력·Editor6·보호 저장2루트를 보존했다. 새 EXE BA992042…AAB4443은 Source/Stage/Archive가 동일하고 PDB919BDF07…919BC5도 세 위치가 같다.
+실제 native PDB 타입 연결과 디스어셈블리를 추가 확인했다. 두행 배열96B/요소48B, 두Info32B, VersionInfo16B가 실제동일PDB에있으며 initializer의정확배열/count2와consumer의같은행/+48/backedge를확인했다. 단순byte fingerprint양성만으로수락하지않았다.14native질의0이며독립읽기리뷰가샘플연결을확인했다.
+범위는AttackSkillData두행/두목적지다.전체ABI·CRT전체·startup/UI·저장routing은별도미검증으로유지한다. 공식IoStore목록은0으로반환됐고봉인identity검사는진행중이다.실제Game실행은아직0이다. 이전B/C/E5와거절승인/metadataQA차단을보존한다.
+[Notion 요약 후보] 시작 실패 원인이었던 실제40/48 등록ABI가 새Windows에서48/48로정합됨을 typed PDB·루프명령·호출연결로확인했다. 빌드·보존검사통과와실제실행검증을구분해이어서메뉴·NPC·안전한저장검증을진행한다.
+
+[D 실제 패키지 시작과 접근 승인 시간 초과]
+실제새Windows의6맵+의뢰DA/IoStore2252exports·158WP셀검증을통과했다. 별도D전달본50파일/1,957,690,950B/SHA CF46302D…C137FA를보존했다. 실제bootstrap14384→Game54244가시작됐고게임원본PNG에서시작메뉴를확인했다. GameEngine의실제ScreenshotSaveDirectory와QA폴더가일치하며genericbackend설정fallback을확인했다. 프로필생성전probe이고실제save IO는미검증이다.
+ComputerUse의게임창getApp요청이301초뒤앱접근승인시간초과로끝났다. GUI입력0/재시도0/GUI우회0이며권한메시지조회도user abort로반환결과가없었다. 현재게임을강제종료하지않고살아있는PID를기록했다. 새패키지의프로필·NPC·F·보상·종료취소/확인·재시작은미실행이다.
+마지막재해시10466입력변경0,Editor6·보호저장2루트·E5/B/Dpayload모두불변이다. C원문/복사6쌍SHA일치/lease보존·재사용0이다. AST9/9·범위diff0·GeneratedChanges0이며기존WIP경고를보존했다. 별도root-startup/metadata승인차단은재시도0,commit/push0이다.
+[Notion 요약 후보] Windows의실제시작실패ABI를새D에서고치고동일EXE/PDB의샘플48/32/16및실제메뉴렌더까지확인했다. 앱접근승인시간초과때문에UI플레이검증은멈췄으며기존데이터와실패증거를모두보존한재개가능한체크포인트를남겼다.
+
+[Hub→Compact 추가 입구 제작 준비]
+현재 D bootstrap14384/Game54244는독립payload·QA UserDir에서살아있음을읽기로확인했다. 접근승인시간초과된게임창에는추가입력/재시도/우회를하지않는다. 공유Editor/빌드는없다. 일반Hub의기존3포털을보존하고별도기본RunPortal1개를Compact후보로추가하는정상콘텐츠패킷을작성했다.
+Source/Config·Hub/후보의2512파일을별도물리백업했고,전체입력10466개는이전D입력과일치했다. 보호저장두루트도백업했으며기존Darchive/전달본두물리payload해시가같음을확인했다. C++나가드를변경하지않고새외부Actor6개만저장하는정식API도구를준비중이다. 신규map/Actor변경은아직0이며일반포털travel은미실행이다.
+[Notion 요약 후보] 기존허브출구를바꾸지않고Compact후보에정상진입할수있는추가입구를작은패킷으로분리했다. 실행중인D와현재게임창승인차단을보존하고원본/저장물리백업및정적계약검토를완료했다.
+
+[Hub 입구 API 검사와 저장 전 교정]
+inspect01은StaticMesh준비전query None으로중단,inspect02는HitResult Python속성이름오류로중단했다. 각각실패증거를보존하고설치엔진의공식compilation완료barrier·native-break to_tuple API로고쳤다. inspect03은exit0/RED0이며Hub685Actor전부로드,접지3점Z0/normalZ1,Visibility capsule42/96접근무충돌을확인했다. 실제이동/travel통과는아니다.
+첫author01은메모리Actor6개생성후첫저장전descriptor등록을요구한검사에서save호출전중단했다. 엔진OnObjectPreSave lifecycle을확인해Actor의직접외부Package소유권과정확dirty집합으로검증을교정했다. 기존파일불허·map저장불허·강제external전환불허를유지하며전체10466입력재대조후author02를준비한다. D게임창입력/재승인요청/새Game/빌드/거절QA는0이다.

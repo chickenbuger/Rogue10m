@@ -1,0 +1,3055 @@
+{
+  "schema": "Rogue10m.VillageEarthFloorAuthor.20261118.v1",
+  "success": true,
+  "started_utc": "2026-11-17T15:22:56.352430+00:00",
+  "step": "complete",
+  "assets_saved": false,
+  "save_called": false,
+  "terrain_mutated": false,
+  "existing_actor_changes": [],
+  "source_materials_mutated": [],
+  "created_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth.M_VillageEarth",
+  "created_actor_paths": [
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DFE51503_1095190312",
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DFE51503_1095197313",
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DFE51503_1095202314"
+  ],
+  "actors": [
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DFE51503_1095190312",
+      "label": "NW18_VillageEarth_H",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/D/BG/ICJPM5I5P7728IZMG6R3V7",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        1000.0,
+        42550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        0.0,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.0,
+        0.7071067811865476,
+        0.0,
+        0.7071067811865477
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        16.0,
+        3750.0,
+        3750.0
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth.M_VillageEarth",
+      "sort_order": 1,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "NaturalWorld20261117/VillageIdentity",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.NaturalBoundary20261117",
+        "Rogue10m.VillageEarthFloor20261118",
+        "Rogue10m.VillageEarthFloor20261118.H"
+      ],
+      "spatially_loaded": false,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DFE51503_1095197313",
+      "label": "NW18_VillageEarth_M",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/A/H5/71VDIXCEQZX40HEW3S3WJW",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        29000.0,
+        42550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        0.0,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.0,
+        0.7071067811865476,
+        0.0,
+        0.7071067811865477
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        16.0,
+        3750.0,
+        3750.0
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth.M_VillageEarth",
+      "sort_order": 1,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "NaturalWorld20261117/VillageIdentity",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.NaturalBoundary20261117",
+        "Rogue10m.VillageEarthFloor20261118",
+        "Rogue10m.VillageEarthFloor20261118.M"
+      ],
+      "spatially_loaded": false,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DFE51503_1095202314",
+      "label": "NW18_VillageEarth_T",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/4/6L/FS4BX21C3C56YFAPTBMHUK",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        22000.0,
+        55550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        0.0,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.0,
+        0.7071067811865476,
+        0.0,
+        0.7071067811865477
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        16.0,
+        3650.0,
+        3650.0
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth.M_VillageEarth",
+      "sort_order": 1,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "NaturalWorld20261117/VillageIdentity",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.NaturalBoundary20261117",
+        "Rogue10m.VillageEarthFloor20261118",
+        "Rogue10m.VillageEarthFloor20261118.T"
+      ],
+      "spatially_loaded": false,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    }
+  ],
+  "automatic_retry": false,
+  "automatic_rollback": false,
+  "partial_work_deleted": false,
+  "visual_validation_passed": false,
+  "render_settle_pending": true,
+  "binding_preflight": {
+    "read_only": true,
+    "methods": {
+      "MaterialEditingLibrary": {
+        "get_material_expressions": true,
+        "get_material_expression_input_names": true,
+        "get_material_expression_output_names": true,
+        "get_inputs_for_material_expression": true,
+        "get_input_node_output_name_for_material_expression": true,
+        "get_material_property_input_node": true,
+        "get_material_property_input_node_output_name": true,
+        "create_material_expression": true,
+        "connect_material_expressions": true,
+        "connect_material_property": true,
+        "recompile_material": true
+      },
+      "EditorAssetLibrary": {
+        "does_asset_exist": true,
+        "duplicate_asset": true
+      },
+      "EditorActorSubsystem": {
+        "get_all_level_actors": true,
+        "spawn_actor_from_class": true
+      },
+      "Actor": {
+        "get_actor_transform": true,
+        "get_actor_rotation": true,
+        "get_actor_location": true,
+        "get_actor_scale3d": true,
+        "get_components_by_class": true,
+        "get_component_by_class": true,
+        "get_folder_path": true,
+        "get_package": true,
+        "get_actor_label": true,
+        "get_editor_property": true,
+        "set_editor_property": true,
+        "set_actor_label": true,
+        "set_folder_path": true
+      },
+      "DecalComponent": {
+        "set_decal_material": true,
+        "get_decal_material": true,
+        "set_fade_screen_size": true,
+        "set_sort_order": true
+      },
+      "PrimitiveComponent": {
+        "get_collision_enabled": true,
+        "get_collision_profile_name": true
+      },
+      "Rogue10mNaturalBoundary20261117Authoring": {
+        "inspect_candidate": true
+      }
+    },
+    "properties": {
+      "coord": [
+        "coordinate_index",
+        "u_tiling",
+        "v_tiling"
+      ],
+      "center": [
+        "r",
+        "g"
+      ],
+      "distance": [],
+      "diameter": [
+        "const_b"
+      ],
+      "falloff": [
+        "const_min",
+        "const_max"
+      ],
+      "inside": [],
+      "opacity": [],
+      "DecalComponent": [
+        "decal_size",
+        "sort_order",
+        "fade_screen_size",
+        "visible",
+        "fade_start_delay",
+        "fade_duration",
+        "fade_in_duration",
+        "fade_in_start_delay"
+      ],
+      "Actor": [
+        "tags",
+        "hidden",
+        "is_spatially_loaded"
+      ],
+      "ArrowComponent": [
+        "bIsEditorOnly"
+      ],
+      "BillboardComponent": [
+        "bIsEditorOnly"
+      ]
+    },
+    "pin_names": {
+      "coord": [],
+      "center": [],
+      "distance": [
+        "A",
+        "B"
+      ],
+      "diameter": [
+        "A",
+        "B"
+      ],
+      "falloff": [
+        "Min",
+        "Max",
+        "Value"
+      ],
+      "inside": [
+        "None"
+      ],
+      "opacity": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  "native_before": {
+    "component_count": 45,
+    "collision_count": 45,
+    "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+    "source_layer_guid": "9C4488BD4196BCC81051B5A001047577",
+    "layer_count": 2,
+    "width": 568,
+    "height": 316,
+    "composite_blake3": "aa46fdffb12bf6604e9d416b9185d6cc801801e01cd47b3d7be0209f9f1858cc",
+    "original_layer_blake3": "7b30bb0271250f6f4b2d4164c72940c83a3e49b13078ef91e9316992816a0955",
+    "landscape_reports_up_to_date": true,
+    "read_only": true,
+    "dirty_package_names_unchanged": true,
+    "success": true,
+    "map": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A",
+    "dirty_packages": [
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/XE/I951DLEFCGMJPJH2WJPILZ",
+      "/Game/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/C/VU/W5CXFK5HI354A0W9YHFKU9"
+    ]
+  },
+  "plan_file": "Feature/doc/evidence/landscape-natural-boundary20261117/village-earth-plan20261118.json",
+  "plan_sha256": "e6af4032bdf2d1a12aa1a2f6a9a752842457c0c8de086e4dcb020718e0ca5e90",
+  "dirty_before": [
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/XE/I951DLEFCGMJPJH2WJPILZ",
+    "/Game/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/C/VU/W5CXFK5HI354A0W9YHFKU9"
+  ],
+  "actor_count_before": 1401,
+  "source_before": {
+    "domain": "<MaterialDomain.MD_DEFERRED_DECAL: 1>",
+    "blend": "<BlendMode.BLEND_TRANSLUCENT: 2>",
+    "nodes": {
+      "MaterialExpressionWorldPosition_0": {
+        "class": "MaterialExpressionWorldPosition",
+        "properties": {
+          "world_position_shader_offset": "<WorldPositionIncludedOffsets.WPT_DEFAULT: 0>"
+        },
+        "inputs": []
+      },
+      "MaterialExpressionComponentMask_0": {
+        "class": "MaterialExpressionComponentMask",
+        "properties": {
+          "r": true,
+          "g": true,
+          "b": false,
+          "a": false
+        },
+        "inputs": [
+          {
+            "pin": "None",
+            "node": "MaterialExpressionWorldPosition_0",
+            "output": "XYZ"
+          }
+        ]
+      },
+      "MaterialExpressionScalarParameter_0": {
+        "class": "MaterialExpressionScalarParameter",
+        "properties": {
+          "parameter_name": "WorldUVScale",
+          "default_value": 0.0020000000949949026
+        },
+        "inputs": []
+      },
+      "MaterialExpressionMultiply_0": {
+        "class": "MaterialExpressionMultiply",
+        "properties": {
+          "const_a": 0.0,
+          "const_b": 1.0
+        },
+        "inputs": [
+          {
+            "pin": "A",
+            "node": "MaterialExpressionComponentMask_0",
+            "output": ""
+          },
+          {
+            "pin": "B",
+            "node": "MaterialExpressionScalarParameter_0",
+            "output": ""
+          }
+        ]
+      },
+      "MaterialExpressionTextureSample_0": {
+        "class": "MaterialExpressionTextureSample",
+        "properties": {
+          "texture": "/Game/StarterContent/Textures/T_Ground_Gravel_D.T_Ground_Gravel_D",
+          "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_COLOR: 0>",
+          "sampler_source": "<SamplerSourceMode.SSM_WRAP_WORLD_GROUP_SETTINGS: 1>"
+        },
+        "inputs": [
+          {
+            "pin": "UVs",
+            "node": "MaterialExpressionMultiply_0",
+            "output": ""
+          },
+          {
+            "pin": "Tex",
+            "node": null,
+            "output": ""
+          },
+          {
+            "pin": "Apply View MipBias",
+            "node": null,
+            "output": ""
+          }
+        ]
+      },
+      "MaterialExpressionVectorParameter_0": {
+        "class": "MaterialExpressionVectorParameter",
+        "properties": {
+          "parameter_name": "RoadTint",
+          "default_value": [
+            0.8600000143051147,
+            0.7799999713897705,
+            0.6499999761581421,
+            1.0
+          ]
+        },
+        "inputs": []
+      },
+      "MaterialExpressionMultiply_1": {
+        "class": "MaterialExpressionMultiply",
+        "properties": {
+          "const_a": 0.0,
+          "const_b": 1.0
+        },
+        "inputs": [
+          {
+            "pin": "A",
+            "node": "MaterialExpressionTextureSample_0",
+            "output": "RGB"
+          },
+          {
+            "pin": "B",
+            "node": "MaterialExpressionVectorParameter_0",
+            "output": "RGB"
+          }
+        ]
+      },
+      "MaterialExpressionScalarParameter_1": {
+        "class": "MaterialExpressionScalarParameter",
+        "properties": {
+          "parameter_name": "RoadOpacity",
+          "default_value": 0.8999999761581421
+        },
+        "inputs": []
+      },
+      "MaterialExpressionScalarParameter_2": {
+        "class": "MaterialExpressionScalarParameter",
+        "properties": {
+          "parameter_name": "RoadRoughness",
+          "default_value": 0.8999999761581421
+        },
+        "inputs": []
+      }
+    },
+    "outputs": {
+      "18": {
+        "node": null,
+        "output": ""
+      },
+      "9": {
+        "node": null,
+        "output": ""
+      },
+      "5": {
+        "node": "MaterialExpressionMultiply_1",
+        "output": ""
+      },
+      "0": {
+        "node": null,
+        "output": ""
+      },
+      "30": {
+        "node": null,
+        "output": ""
+      },
+      "27": {
+        "node": null,
+        "output": ""
+      },
+      "33": {
+        "node": null,
+        "output": ""
+      },
+      "6": {
+        "node": null,
+        "output": ""
+      },
+      "10": {
+        "node": null,
+        "output": ""
+      },
+      "1": {
+        "node": "MaterialExpressionScalarParameter_1",
+        "output": ""
+      },
+      "2": {
+        "node": null,
+        "output": ""
+      },
+      "19": {
+        "node": null,
+        "output": ""
+      },
+      "8": {
+        "node": "MaterialExpressionScalarParameter_2",
+        "output": ""
+      },
+      "7": {
+        "node": null,
+        "output": ""
+      },
+      "15": {
+        "node": null,
+        "output": ""
+      },
+      "11": {
+        "node": null,
+        "output": ""
+      },
+      "12": {
+        "node": null,
+        "output": ""
+      }
+    }
+  },
+  "source_sha256_before": "e3b35613ecc86fa27152739bf2dd7684f7d384902ac99a8b1b879e0b13cbd7cb",
+  "original_village_material_sha256_before": {
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_DarkTimber": "ba9bb11db595fa839394290bbfdd311adb4c57b15489f1662d32b0c91e4b8c8a",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_WarmStone": "1769c775f8ae554f9eca53bf4ba7360d7900fc94c1c67b2945346356fd2e6e25",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Teal": "f07497d04dbdd931dafa2d599da172b7c11844b583b0f0a7bb7197a0b1808b07",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Ochre": "583ea4e263287cb82df1c9a880c749bcf8f3cee1a7a08c75660f45e0f2337cee",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Blue": "f1887d932c09981f4f834e20d3b1f330ce47bb850a6841c01b9db9e359ccd02f"
+  },
+  "original_village_material_usage_before": {
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_DarkTimber": false,
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_WarmStone": false,
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Teal": false,
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Ochre": false,
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Blue": false
+  },
+  "existing_actor_snapshot_sha256_before": "45a12497f80fe8c9bcf15f604688499bfbf5e9f5217ec30ad5b24996a68f1853",
+  "road_decals_before": {
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228974135": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228974135",
+      "label": "WL26_RoadSurface20261117_E25",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/4/UG/N6JDW8VG8M8OK9JTZWGLWH",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        -18250.0,
+        49550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        131.1859251657096,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.643914708612196,
+        0.2921880354033523,
+        0.6439147086121961,
+        0.29218803540335236
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        2657.536453183662
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227955122": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227955122",
+      "label": "WL26_RoadSurface20261117_E12",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/9/6O/1C5NF1EB1YKWSEE7EOESPR",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        -13250.0,
+        45050.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        142.43140797117252,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.6694445438392564,
+        0.22769278144870997,
+        0.6694445438392564,
+        0.22769278144871
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        4100.304866714181
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228024123": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228024123",
+      "label": "WL26_RoadSurface20261117_E13",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/B/X8/J1G9DBVCKXFUYFDB52MMOI",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        -14750.0,
+        51050.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        63.43494882292201,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.37174803446018445,
+        0.6015009550075456,
+        0.3717480344601845,
+        0.6015009550075457
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        3913.118960624632
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF991503_1805915936": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF991503_1805915936",
+      "label": "WL26_RoadSurface20261117_E11",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/4/X8/KSHTHLOGVWMNH47GUGXJ1D",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        -4500.0,
+        42550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        180.0,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.7071067811865475,
+        4.329780281177467e-17,
+        0.7071067811865476,
+        4.3297802811774677e-17
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        5500.0
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228115124": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228115124",
+      "label": "WL26_RoadSurface20261117_E14",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/P6/606YRJVEUQ3OVZMSAE09XL",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        1000.0,
+        55550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        4.085616779974873,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.025205654967015816,
+        0.706657395742579,
+        0.025205654967015823,
+        0.7066573957425791
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        14035.668847618199
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1229071136": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1229071136",
+      "label": "WL26_RoadSurface20261117_E26",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/1/2J/DOX0II1UW3LCFCVM9MCKF5",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        -14500.0,
+        58550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        110.55604521958348,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.5811891778045235,
+        0.40276437231078666,
+        0.5811891778045236,
+        0.4027643723107867
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        4272.001872658766
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227867121": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227867121",
+      "label": "WL26_RoadSurface20261117_E10",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/A8/ZNYII7PJ10WQE2HGPUKOE0",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        22000.0,
+        46550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        150.25511870305778,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.6834184556559143,
+        0.181491637462681,
+        0.6834184556559144,
+        0.18149163746268102
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        8062.25774829855
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227796120": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227796120",
+      "label": "WL26_RoadSurface20261117_E09",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/IV/2EP7ZVVV5E3APML2LSYQL4",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        8000.0,
+        46550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        29.74488129694222,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.18149163746268093,
+        0.6834184556559143,
+        0.18149163746268096,
+        0.6834184556559144
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        8062.25774829855
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227663118": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227663118",
+      "label": "WL26_RoadSurface20261117_E07",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/IY/YOWGOJNB24ICWVWK4CCC09",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        8000.0,
+        42550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        180.0,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.7071067811865475,
+        4.329780281177467e-17,
+        0.7071067811865476,
+        4.3297802811774677e-17
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        7000.0
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227544116": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227544116",
+      "label": "WL26_RoadSurface20261117_E05",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/NI/MS88Y0TATAMPU2GQJCUSFL",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        8000.0,
+        37550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        144.46232220802563,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.6733746117887753,
+        0.21579303093083493,
+        0.6733746117887754,
+        0.215793030930835
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        8602.325267042626
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227740119": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227740119",
+      "label": "WL26_RoadSurface20261117_E08",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/6/ZI/AUXFGW7G0UHMW1SZZWAGLY",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        22000.0,
+        42550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        0.0,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.0,
+        0.7071067811865476,
+        0.0,
+        0.7071067811865477
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        7000.0
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227601117": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227601117",
+      "label": "WL26_RoadSurface20261117_E06",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/B/7P/IPZWWYE32IEJ7J3FX6IY4C",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        22000.0,
+        37550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        35.537677791974374,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.2157930309308349,
+        0.6733746117887753,
+        0.21579303093083493,
+        0.6733746117887754
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        8602.325267042626
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227311113": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227311113",
+      "label": "WL26_RoadSurface20261117_E01",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/1/LR/ZD0RV9J7EZBIID3D7RXN7Z",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        15000.0,
+        37550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        89.99999999999997,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.4999999999999999,
+        0.5000000000000002,
+        0.5,
+        0.5000000000000003
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        5000.0
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227464115": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227464115",
+      "label": "WL26_RoadSurface20261117_E03",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/1/Q0/DYGR36PR12PS4CF6U43Q7M",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        15000.0,
+        53550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        89.99999999999997,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.4999999999999999,
+        0.5000000000000002,
+        0.5,
+        0.5000000000000003
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        3000.0
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228365127": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228365127",
+      "label": "WL26_RoadSurface20261117_E17",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/6/NA/FNUJDSRW6N13TBPAMGWRLI",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        27500.0,
+        53050.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        155.55604521958347,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.6910800383209251,
+        0.14969429058701214,
+        0.6910800383209252,
+        0.14969429058701217
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        6041.522986797286
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227378114": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1227378114",
+      "label": "WL26_RoadSurface20261117_E02",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/6/VX/CY22Q634U4MO604008EDUW",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        15000.0,
+        46550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        89.99999999999997,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.4999999999999999,
+        0.5000000000000002,
+        0.5,
+        0.5000000000000003
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        4000.0
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1229264139": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1229264139",
+      "label": "WL26_RoadSurface20261117_E29",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/F/3D/CPCKB0C14NM311P49JCXFY",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        18500.0,
+        53050.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        35.537677791974374,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.2157930309308349,
+        0.6733746117887753,
+        0.21579303093083493,
+        0.6733746117887754
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        4301.162633521313
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228496129": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228496129",
+      "label": "WL26_RoadSurface20261117_E19",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/C/0E/Z41BJB5ZENM5JLC8DZGJ35",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        39500.0,
+        53050.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        21.037511025421814,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.12908756117161374,
+        0.6952239937967942,
+        0.12908756117161377,
+        0.6952239937967943
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        6964.19413859206
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228279126": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228279126",
+      "label": "WL26_RoadSurface20261117_E16",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/8/K4/0UBOM5YBRJPQMS5ER5CJQL",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        35000.0,
+        46050.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        113.96248897457819,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.5929035473948203,
+        0.3853120598769756,
+        0.5929035473948204,
+        0.3853120598769757
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        4924.428900898052
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228202125": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228202125",
+      "label": "WL26_RoadSurface20261117_E15",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/9/LX/5DGQ3SJ4VP2FVJUG8LLLGH",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        33000.0,
+        42050.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        -7.125016348901795,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        0.043937806290062845,
+        0.705740369525803,
+        -0.04393780629006285,
+        0.7057403695258031
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        4031.128874149275
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228743132": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228743132",
+      "label": "WL26_RoadSurface20261117_E22",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/4/AM/IUQBZKYYZW8D5CRO4LWOD5",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        29000.0,
+        56550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        -171.86989764584402,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        0.7053278481779176,
+        0.05012610681778882,
+        -0.7053278481779177,
+        0.050126106817788826
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        7071.067811865475
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228829133": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228829133",
+      "label": "WL26_RoadSurface20261117_E23",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/1/SJ/I4TD3Z4YBZNXRG0KMJGXN4",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        26000.0,
+        59050.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        41.18592516570965,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.24870831575015856,
+        0.6619245981807289,
+        0.24870831575015862,
+        0.661924598180729
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        5315.072906367324
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF991503_1803917935": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF991503_1803917935",
+      "label": "WL26_RoadSurface20261117_E04",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/4/UU/YDF89A6AUJOMTY6KLZ9I8A",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        15000.0,
+        59550.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        89.99999999999997,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.4999999999999999,
+        0.5000000000000002,
+        0.5,
+        0.5000000000000003
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        3000.0
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228438128": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228438128",
+      "label": "WL26_RoadSurface20261117_E18",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/B/IJ/MPBR4EGJOYXIKO3D2V0HY1",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        18500.0,
+        56050.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        171.86989764584402,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.7053278481779176,
+        0.05012610681778882,
+        0.7053278481779177,
+        0.050126106817788826
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        3535.5339059327375
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228643131": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228643131",
+      "label": "WL26_RoadSurface20261117_E21",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/0/M6/AW7XUK7ZAX0WSV9OER6IOD",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        44000.0,
+        58800.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        -171.1193408494798,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        0.7049844029748286,
+        0.05474478570808911,
+        -0.7049844029748287,
+        0.05474478570808912
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        8097.067370350824
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1229143137": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1229143137",
+      "label": "WL26_RoadSurface20261117_E27",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/1/Q9/IN4VTBDTNPBUJ02X0D531C",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        35500.0,
+        62050.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        96.3401917459099,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.5268850742986669,
+        0.47158468855687885,
+        0.5268850742986669,
+        0.4715846885568789
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        4527.6925690687085
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228901134": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228901134",
+      "label": "WL26_RoadSurface20261117_E24",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/ML/3RCP4MMR340QYF4DWC3S2T",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        33000.0,
+        60050.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        -39.80557109226521,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        0.24071701248697835,
+        0.664872408736702,
+        -0.2407170124869784,
+        0.664872408736702
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        3905.124837953327
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228589130": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1228589130",
+      "label": "WL26_RoadSurface20261117_E20",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/G8/UAHVGHWSHNMWS7WMKLDEFG",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        49000.0,
+        57800.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        36.86989764584402,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.22360679774997902,
+        0.6708203932499369,
+        0.22360679774997907,
+        0.670820393249937
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        3750.0
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    },
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1229178138": {
+      "path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.DecalActor_UAID_244BFE8DA9DF9A1503_1229178138",
+      "label": "WL26_RoadSurface20261117_E28",
+      "package": "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/0H/QSELXR037SUPBI5OTEDRP3",
+      "class": "/Script/Engine.DecalActor",
+      "location_cm": [
+        54000.0,
+        62300.0,
+        9600.0
+      ],
+      "rotation_pitch_yaw_roll": [
+        -90.0,
+        48.36646066342982,
+        0.0
+      ],
+      "quaternion_xyzw": [
+        -0.2896705720167655,
+        0.645051129529652,
+        0.28967057201676555,
+        0.645051129529652
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "half_extents_cm": [
+        500.0,
+        400.0,
+        3010.398644698074
+      ],
+      "material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "sort_order": 0,
+      "fade_screen_size": 0.0,
+      "fade_times": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "visible": true,
+      "hidden": false,
+      "folder": "RoadSurface20261117",
+      "tags": [
+        "Rogue10m.WorldLayout20261112",
+        "Rogue10m.LandscapeRoadSurface20261117"
+      ],
+      "spatially_loaded": true,
+      "editor_primitives": [
+        {
+          "name": "ArrowComponent0",
+          "class": "/Script/Engine.ArrowComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        },
+        {
+          "name": "Sprite",
+          "class": "/Script/Engine.BillboardComponent",
+          "editor_only": true,
+          "collision_profile": "NoCollision",
+          "collision_enabled": "<CollisionEnabled.NO_COLLISION: 0>"
+        }
+      ]
+    }
+  },
+  "road_max_sort_order": 0,
+  "floor_sort_order": 1,
+  "compile_errors": [],
+  "material": {
+    "path": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth.M_VillageEarth",
+    "package": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth",
+    "graph": {
+      "domain": "<MaterialDomain.MD_DEFERRED_DECAL: 1>",
+      "blend": "<BlendMode.BLEND_TRANSLUCENT: 2>",
+      "nodes": {
+        "MaterialExpressionWorldPosition_0": {
+          "class": "MaterialExpressionWorldPosition",
+          "properties": {
+            "world_position_shader_offset": "<WorldPositionIncludedOffsets.WPT_DEFAULT: 0>"
+          },
+          "inputs": []
+        },
+        "MaterialExpressionComponentMask_0": {
+          "class": "MaterialExpressionComponentMask",
+          "properties": {
+            "r": true,
+            "g": true,
+            "b": false,
+            "a": false
+          },
+          "inputs": [
+            {
+              "pin": "None",
+              "node": "MaterialExpressionWorldPosition_0",
+              "output": "XYZ"
+            }
+          ]
+        },
+        "MaterialExpressionScalarParameter_0": {
+          "class": "MaterialExpressionScalarParameter",
+          "properties": {
+            "parameter_name": "WorldUVScale",
+            "default_value": 0.0020000000949949026
+          },
+          "inputs": []
+        },
+        "MaterialExpressionMultiply_0": {
+          "class": "MaterialExpressionMultiply",
+          "properties": {
+            "const_a": 0.0,
+            "const_b": 1.0
+          },
+          "inputs": [
+            {
+              "pin": "A",
+              "node": "MaterialExpressionComponentMask_0",
+              "output": ""
+            },
+            {
+              "pin": "B",
+              "node": "MaterialExpressionScalarParameter_0",
+              "output": ""
+            }
+          ]
+        },
+        "MaterialExpressionTextureSample_0": {
+          "class": "MaterialExpressionTextureSample",
+          "properties": {
+            "texture": "/Game/StarterContent/Textures/T_Ground_Gravel_D.T_Ground_Gravel_D",
+            "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_COLOR: 0>",
+            "sampler_source": "<SamplerSourceMode.SSM_WRAP_WORLD_GROUP_SETTINGS: 1>"
+          },
+          "inputs": [
+            {
+              "pin": "UVs",
+              "node": "MaterialExpressionMultiply_0",
+              "output": ""
+            },
+            {
+              "pin": "Tex",
+              "node": null,
+              "output": ""
+            },
+            {
+              "pin": "Apply View MipBias",
+              "node": null,
+              "output": ""
+            }
+          ]
+        },
+        "MaterialExpressionVectorParameter_0": {
+          "class": "MaterialExpressionVectorParameter",
+          "properties": {
+            "parameter_name": "RoadTint",
+            "default_value": [
+              0.699999988079071,
+              0.5400000214576721,
+              0.3400000035762787,
+              1.0
+            ]
+          },
+          "inputs": []
+        },
+        "MaterialExpressionMultiply_1": {
+          "class": "MaterialExpressionMultiply",
+          "properties": {
+            "const_a": 0.0,
+            "const_b": 1.0
+          },
+          "inputs": [
+            {
+              "pin": "A",
+              "node": "MaterialExpressionTextureSample_0",
+              "output": "RGB"
+            },
+            {
+              "pin": "B",
+              "node": "MaterialExpressionVectorParameter_0",
+              "output": "RGB"
+            }
+          ]
+        },
+        "MaterialExpressionScalarParameter_1": {
+          "class": "MaterialExpressionScalarParameter",
+          "properties": {
+            "parameter_name": "RoadOpacity",
+            "default_value": 0.9700000286102295
+          },
+          "inputs": []
+        },
+        "MaterialExpressionScalarParameter_2": {
+          "class": "MaterialExpressionScalarParameter",
+          "properties": {
+            "parameter_name": "RoadRoughness",
+            "default_value": 0.8999999761581421
+          },
+          "inputs": []
+        },
+        "MaterialExpressionTextureCoordinate_0": {
+          "class": "MaterialExpressionTextureCoordinate",
+          "properties": {
+            "coordinate_index": 0,
+            "u_tiling": 1.0,
+            "v_tiling": 1.0
+          },
+          "inputs": []
+        },
+        "MaterialExpressionConstant2Vector_0": {
+          "class": "MaterialExpressionConstant2Vector",
+          "properties": {
+            "r": 0.5,
+            "g": 0.5
+          },
+          "inputs": []
+        },
+        "MaterialExpressionDistance_0": {
+          "class": "MaterialExpressionDistance",
+          "properties": {},
+          "inputs": [
+            {
+              "pin": "A",
+              "node": "MaterialExpressionTextureCoordinate_0",
+              "output": ""
+            },
+            {
+              "pin": "B",
+              "node": "MaterialExpressionConstant2Vector_0",
+              "output": ""
+            }
+          ]
+        },
+        "MaterialExpressionMultiply_2": {
+          "class": "MaterialExpressionMultiply",
+          "properties": {
+            "const_a": 0.0,
+            "const_b": 2.0
+          },
+          "inputs": [
+            {
+              "pin": "A",
+              "node": "MaterialExpressionDistance_0",
+              "output": ""
+            },
+            {
+              "pin": "B",
+              "node": null,
+              "output": ""
+            }
+          ]
+        },
+        "MaterialExpressionSmoothStep_0": {
+          "class": "MaterialExpressionSmoothStep",
+          "properties": {
+            "const_min": 0.9750000238418579,
+            "const_max": 1.0,
+            "const_value": 0.0
+          },
+          "inputs": [
+            {
+              "pin": "Min",
+              "node": null,
+              "output": ""
+            },
+            {
+              "pin": "Max",
+              "node": null,
+              "output": ""
+            },
+            {
+              "pin": "Value",
+              "node": "MaterialExpressionMultiply_2",
+              "output": ""
+            }
+          ]
+        },
+        "MaterialExpressionOneMinus_0": {
+          "class": "MaterialExpressionOneMinus",
+          "properties": {},
+          "inputs": [
+            {
+              "pin": "None",
+              "node": "MaterialExpressionSmoothStep_0",
+              "output": ""
+            }
+          ]
+        },
+        "MaterialExpressionMultiply_3": {
+          "class": "MaterialExpressionMultiply",
+          "properties": {
+            "const_a": 0.0,
+            "const_b": 1.0
+          },
+          "inputs": [
+            {
+              "pin": "A",
+              "node": "MaterialExpressionScalarParameter_1",
+              "output": ""
+            },
+            {
+              "pin": "B",
+              "node": "MaterialExpressionOneMinus_0",
+              "output": ""
+            }
+          ]
+        }
+      },
+      "outputs": {
+        "18": {
+          "node": null,
+          "output": ""
+        },
+        "9": {
+          "node": null,
+          "output": ""
+        },
+        "5": {
+          "node": "MaterialExpressionMultiply_1",
+          "output": ""
+        },
+        "0": {
+          "node": null,
+          "output": ""
+        },
+        "30": {
+          "node": null,
+          "output": ""
+        },
+        "27": {
+          "node": null,
+          "output": ""
+        },
+        "33": {
+          "node": null,
+          "output": ""
+        },
+        "6": {
+          "node": null,
+          "output": ""
+        },
+        "10": {
+          "node": null,
+          "output": ""
+        },
+        "1": {
+          "node": "MaterialExpressionMultiply_3",
+          "output": ""
+        },
+        "2": {
+          "node": null,
+          "output": ""
+        },
+        "19": {
+          "node": null,
+          "output": ""
+        },
+        "8": {
+          "node": "MaterialExpressionScalarParameter_2",
+          "output": ""
+        },
+        "7": {
+          "node": null,
+          "output": ""
+        },
+        "15": {
+          "node": null,
+          "output": ""
+        },
+        "11": {
+          "node": null,
+          "output": ""
+        },
+        "12": {
+          "node": null,
+          "output": ""
+        }
+      }
+    },
+    "node_count": 16,
+    "original_node_count": 9,
+    "new_node_count": 7,
+    "formula": "RoadOpacity*(1-smoothstep(.975,1,2*distance(TexCoord.xy,float2(.5,.5))))",
+    "tint_rgba": [
+      0.7,
+      0.54,
+      0.34,
+      1.0
+    ],
+    "opacity": 0.97
+  },
+  "native_after": {
+    "component_count": 45,
+    "collision_count": 45,
+    "landscape_guid": "147B73D247543E06FDA1A7AF9D467458",
+    "source_layer_guid": "9C4488BD4196BCC81051B5A001047577",
+    "layer_count": 2,
+    "width": 568,
+    "height": 316,
+    "composite_blake3": "aa46fdffb12bf6604e9d416b9185d6cc801801e01cd47b3d7be0209f9f1858cc",
+    "original_layer_blake3": "7b30bb0271250f6f4b2d4164c72940c83a3e49b13078ef91e9316992816a0955",
+    "landscape_reports_up_to_date": true,
+    "read_only": true,
+    "dirty_package_names_unchanged": true,
+    "success": true,
+    "map": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A",
+    "dirty_packages": [
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/4/6L/FS4BX21C3C56YFAPTBMHUK",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/XE/I951DLEFCGMJPJH2WJPILZ",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/A/H5/71VDIXCEQZX40HEW3S3WJW",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/D/BG/ICJPM5I5P7728IZMG6R3V7",
+      "/Game/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/C/VU/W5CXFK5HI354A0W9YHFKU9",
+      "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth"
+    ]
+  },
+  "status": "unsaved_floor_material_and_three_decals_requires_visual_save_cold_qa",
+  "actor_count_after": 1404,
+  "packages": [
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/4/6L/FS4BX21C3C56YFAPTBMHUK",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/A/H5/71VDIXCEQZX40HEW3S3WJW",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/D/BG/ICJPM5I5P7728IZMG6R3V7"
+  ],
+  "dirty_after": [
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/4/6L/FS4BX21C3C56YFAPTBMHUK",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/XE/I951DLEFCGMJPJH2WJPILZ",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/A/H5/71VDIXCEQZX40HEW3S3WJW",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/D/BG/ICJPM5I5P7728IZMG6R3V7",
+    "/Game/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/C/VU/W5CXFK5HI354A0W9YHFKU9"
+  ],
+  "source_sha256_after": "e3b35613ecc86fa27152739bf2dd7684f7d384902ac99a8b1b879e0b13cbd7cb",
+  "source_after": {
+    "domain": "<MaterialDomain.MD_DEFERRED_DECAL: 1>",
+    "blend": "<BlendMode.BLEND_TRANSLUCENT: 2>",
+    "nodes": {
+      "MaterialExpressionWorldPosition_0": {
+        "class": "MaterialExpressionWorldPosition",
+        "properties": {
+          "world_position_shader_offset": "<WorldPositionIncludedOffsets.WPT_DEFAULT: 0>"
+        },
+        "inputs": []
+      },
+      "MaterialExpressionComponentMask_0": {
+        "class": "MaterialExpressionComponentMask",
+        "properties": {
+          "r": true,
+          "g": true,
+          "b": false,
+          "a": false
+        },
+        "inputs": [
+          {
+            "pin": "None",
+            "node": "MaterialExpressionWorldPosition_0",
+            "output": "XYZ"
+          }
+        ]
+      },
+      "MaterialExpressionScalarParameter_0": {
+        "class": "MaterialExpressionScalarParameter",
+        "properties": {
+          "parameter_name": "WorldUVScale",
+          "default_value": 0.0020000000949949026
+        },
+        "inputs": []
+      },
+      "MaterialExpressionMultiply_0": {
+        "class": "MaterialExpressionMultiply",
+        "properties": {
+          "const_a": 0.0,
+          "const_b": 1.0
+        },
+        "inputs": [
+          {
+            "pin": "A",
+            "node": "MaterialExpressionComponentMask_0",
+            "output": ""
+          },
+          {
+            "pin": "B",
+            "node": "MaterialExpressionScalarParameter_0",
+            "output": ""
+          }
+        ]
+      },
+      "MaterialExpressionTextureSample_0": {
+        "class": "MaterialExpressionTextureSample",
+        "properties": {
+          "texture": "/Game/StarterContent/Textures/T_Ground_Gravel_D.T_Ground_Gravel_D",
+          "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_COLOR: 0>",
+          "sampler_source": "<SamplerSourceMode.SSM_WRAP_WORLD_GROUP_SETTINGS: 1>"
+        },
+        "inputs": [
+          {
+            "pin": "UVs",
+            "node": "MaterialExpressionMultiply_0",
+            "output": ""
+          },
+          {
+            "pin": "Tex",
+            "node": null,
+            "output": ""
+          },
+          {
+            "pin": "Apply View MipBias",
+            "node": null,
+            "output": ""
+          }
+        ]
+      },
+      "MaterialExpressionVectorParameter_0": {
+        "class": "MaterialExpressionVectorParameter",
+        "properties": {
+          "parameter_name": "RoadTint",
+          "default_value": [
+            0.8600000143051147,
+            0.7799999713897705,
+            0.6499999761581421,
+            1.0
+          ]
+        },
+        "inputs": []
+      },
+      "MaterialExpressionMultiply_1": {
+        "class": "MaterialExpressionMultiply",
+        "properties": {
+          "const_a": 0.0,
+          "const_b": 1.0
+        },
+        "inputs": [
+          {
+            "pin": "A",
+            "node": "MaterialExpressionTextureSample_0",
+            "output": "RGB"
+          },
+          {
+            "pin": "B",
+            "node": "MaterialExpressionVectorParameter_0",
+            "output": "RGB"
+          }
+        ]
+      },
+      "MaterialExpressionScalarParameter_1": {
+        "class": "MaterialExpressionScalarParameter",
+        "properties": {
+          "parameter_name": "RoadOpacity",
+          "default_value": 0.8999999761581421
+        },
+        "inputs": []
+      },
+      "MaterialExpressionScalarParameter_2": {
+        "class": "MaterialExpressionScalarParameter",
+        "properties": {
+          "parameter_name": "RoadRoughness",
+          "default_value": 0.8999999761581421
+        },
+        "inputs": []
+      }
+    },
+    "outputs": {
+      "18": {
+        "node": null,
+        "output": ""
+      },
+      "9": {
+        "node": null,
+        "output": ""
+      },
+      "5": {
+        "node": "MaterialExpressionMultiply_1",
+        "output": ""
+      },
+      "0": {
+        "node": null,
+        "output": ""
+      },
+      "30": {
+        "node": null,
+        "output": ""
+      },
+      "27": {
+        "node": null,
+        "output": ""
+      },
+      "33": {
+        "node": null,
+        "output": ""
+      },
+      "6": {
+        "node": null,
+        "output": ""
+      },
+      "10": {
+        "node": null,
+        "output": ""
+      },
+      "1": {
+        "node": "MaterialExpressionScalarParameter_1",
+        "output": ""
+      },
+      "2": {
+        "node": null,
+        "output": ""
+      },
+      "19": {
+        "node": null,
+        "output": ""
+      },
+      "8": {
+        "node": "MaterialExpressionScalarParameter_2",
+        "output": ""
+      },
+      "7": {
+        "node": null,
+        "output": ""
+      },
+      "15": {
+        "node": null,
+        "output": ""
+      },
+      "11": {
+        "node": null,
+        "output": ""
+      },
+      "12": {
+        "node": null,
+        "output": ""
+      }
+    }
+  },
+  "original_village_material_sha256_after": {
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_DarkTimber": "ba9bb11db595fa839394290bbfdd311adb4c57b15489f1662d32b0c91e4b8c8a",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_WarmStone": "1769c775f8ae554f9eca53bf4ba7360d7900fc94c1c67b2945346356fd2e6e25",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Teal": "f07497d04dbdd931dafa2d599da172b7c11844b583b0f0a7bb7197a0b1808b07",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Ochre": "583ea4e263287cb82df1c9a880c749bcf8f3cee1a7a08c75660f45e0f2337cee",
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Blue": "f1887d932c09981f4f834e20d3b1f330ce47bb850a6841c01b9db9e359ccd02f"
+  },
+  "existing1401_actor_snapshots_equal": true,
+  "existing_actor_snapshot_sha256_after": "45a12497f80fe8c9bcf15f604688499bfbf5e9f5217ec30ad5b24996a68f1853",
+  "native_height_hashes_equal": true,
+  "finished_utc": "2026-11-17T15:22:57.085279+00:00",
+  "validation_pending": [
+    "render settle and actual village/road-edge Game View",
+    "bounded save",
+    "cold reload validation"
+  ],
+  "render_scope": "Shallow decal projection can tint any receiver within +/-16cm; not a mesh-ground replacement"
+}

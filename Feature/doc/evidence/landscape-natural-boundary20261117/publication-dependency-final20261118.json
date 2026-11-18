@@ -1,0 +1,24 @@
+{
+  "utc": "2026-11-17T15:45:12.926386+00:00",
+  "origin_main": "024ecfb7d279a3122d3715550b5ef320860dde94",
+  "work_branch": "Sprint#9-32-landscape-world-blockout",
+  "dependency_paths": [
+    {
+      "path": "Content/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.umap",
+      "present_on_origin_main": false
+    },
+    {
+      "path": "Source/Rogue10m/World/Rogue10mVillageQuestDirector.cpp",
+      "present_on_origin_main": false
+    },
+    {
+      "path": "Source/Rogue10m/Data/Rogue10mVillageQuestDataAsset.h",
+      "present_on_origin_main": false
+    },
+    {
+      "path": "Source/Rogue10m/Editor/Rogue10mCrop20261114WorldAuthoring.cpp",
+      "present_on_origin_main": true
+    }
+  ],
+  "promotion": "Deferred by map-production merge gate and missing base dependencies."
+}

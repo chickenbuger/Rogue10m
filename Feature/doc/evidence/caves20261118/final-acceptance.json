@@ -1,0 +1,175 @@
+{
+  "schema": "Rogue10m.CaveFinalAcceptanceReview.20261118.v1",
+  "status": "SCOPED_VALIDATION_PASSED_PUBLICATION_NOT_PERFORMED_BY_REVIEWER",
+  "utc": "2026-11-17T18:16:36.328582+00:00",
+  "reviewer": "independent cave_tool_audit filesystem/JSON/hash/path review",
+  "passed": true,
+  "parent_verified_git_base": {
+    "head": "56de8c626d1b399d9b7667888369828c212676f6",
+    "child_git_queries": false,
+    "parent_reported_remote_ahead": 0,
+    "parent_reported_remote_behind": 0
+  },
+  "checks": {
+    "all46_scope_checks_true_and_evidence_hashes_current": true,
+    "all276_arrival_rows_equal_frozen_pure_route_plan": true,
+    "all2442_samples_grounded_camera_gates_and_normal_speed": true,
+    "all6_PNG_hashes_requests_ACKs_and_stable_PCM_pose_proofs_match": true,
+    "cold32_checks_2016_queries_clean_and_samePID_exit0": true,
+    "owned_cold_language_locale_restored_without_config_or_field_normalization": true,
+    "actual1440_original_failure_pivot_camera_arc_after_repair_passed": true,
+    "final_editor1408actors45render45collision_idle_saved_clean": true,
+    "final_live_log13_historic_zero_new_and_cold_zero_errors": true,
+    "all45_python_AST_records_match_current_source_hashes_no_CPlusPlus_build_needed": true
+  },
+  "runtime": {
+    "result": {
+      "path": "Feature/doc/evidence/caves20261118/runtime-camera-verified/result.json",
+      "size": 159374,
+      "sha256": "e67a6f3dc7a1b4ab8975aebac179e808ed6a46892c3edbd96575d655b45f2924"
+    },
+    "sample_stream_locally_retained_not_publication_selected": {
+      "path": "Feature/doc/evidence/caves20261118/runtime-camera-verified/samples.json",
+      "size": 2695086,
+      "sha256": "ce822d77e83d156ab12eee9983f6e82329230b73d4b25a9998e44d7c6855ce74"
+    },
+    "waypoints": 276,
+    "chains": 12,
+    "samples": 2442,
+    "elapsed_sim_seconds": 801.7407758533955,
+    "min_camera_to_pivot_cm": 176.8705779105907,
+    "max_camera_pull_in_cm": 154.37706556076094,
+    "airborne_observations": 0,
+    "physical_input": false,
+    "all_override_flags_zero": true,
+    "input_policy": {
+      "schema": "Rogue10m.CaveQAAnalogApproach.20261118.v1",
+      "predecessor_observer_sha256": "689e5aaa10194639b271523a329f46fa7007ef3f607151be1904ebc38d31f70e",
+      "formula": "scale=min(1,distance_cm/max(120,620*raw_sim_frame_seconds*1.1))",
+      "reason": "Use normal analog input to approach the same waypoint at low frame rates without a stale120cm stopping window.",
+      "normal_walk_cap_cm_s": 620,
+      "arrival_radius_cm": 35.0,
+      "route_camera_ground_thresholds_changed": false,
+      "max_walk_speed_velocity_time_or_camera_setters": false,
+      "independent_known_geometry_repair_and_original_failure_ray_acceptance_required": true
+    }
+  },
+  "photos": [
+    {
+      "path": "Feature/doc/evidence/caves20261118/runtime-camera-verified/captures/01_Q_entrance_under_roof.png",
+      "size": 1368018,
+      "sha256": "ca88192006d815f6c0815ae6539cb75a5f58c0c50226714555b03437a7c064fd",
+      "site": "Q",
+      "label": "entrance_under_roof",
+      "visual_review_passed_by_parent": true,
+      "actual_PCM_pose_proof_passed": true
+    },
+    {
+      "path": "Feature/doc/evidence/caves20261118/runtime-camera-verified/captures/02_Q_narrow_right_angle_turn.png",
+      "size": 1414996,
+      "sha256": "9e3dadb0dc6626f04f7f9f0b13eb62362ecf26772e2db7ac0998355271cbbadf",
+      "site": "Q",
+      "label": "narrow_right_angle_turn",
+      "visual_review_passed_by_parent": true,
+      "actual_PCM_pose_proof_passed": true
+    },
+    {
+      "path": "Feature/doc/evidence/caves20261118/runtime-camera-verified/captures/03_Q_secret_dogleg_room.png",
+      "size": 1416299,
+      "sha256": "425626aeee4ff2a140032be529bef7d02470e53de35bde5307cc1273ccee0844",
+      "site": "Q",
+      "label": "secret_dogleg_room",
+      "visual_review_passed_by_parent": true,
+      "actual_PCM_pose_proof_passed": true
+    },
+    {
+      "path": "Feature/doc/evidence/caves20261118/runtime-camera-verified/captures/04_Z_entrance_under_roof.png",
+      "size": 1244194,
+      "sha256": "7593c512dc8e82c6542c0ea4bd292c198b77fd5384c661491fd061ca62fa7c97",
+      "site": "Z",
+      "label": "entrance_under_roof",
+      "visual_review_passed_by_parent": true,
+      "actual_PCM_pose_proof_passed": true
+    },
+    {
+      "path": "Feature/doc/evidence/caves20261118/runtime-camera-verified/captures/05_Z_narrow_right_angle_turn.png",
+      "size": 1508209,
+      "sha256": "6f4371c2da566c6a25de36a15420bcc95a7fedbd7329732e69beea97c7a81e52",
+      "site": "Z",
+      "label": "narrow_right_angle_turn",
+      "visual_review_passed_by_parent": true,
+      "actual_PCM_pose_proof_passed": true
+    },
+    {
+      "path": "Feature/doc/evidence/caves20261118/runtime-camera-verified/captures/06_Z_secret_dogleg_room.png",
+      "size": 1457687,
+      "sha256": "46840ff5321e89073ab4b9ce3b597e45b0b3dbded76da88df9e46f1a0a59054a",
+      "site": "Z",
+      "label": "secret_dogleg_room",
+      "visual_review_passed_by_parent": true,
+      "actual_PCM_pose_proof_passed": true
+    }
+  ],
+  "cold": {
+    "result": {
+      "path": "Feature/doc/evidence/caves20261118/cold-final-validated-live/result.json",
+      "size": 474,
+      "sha256": "f72a7dd9fe5e471e5f670721c0beb1a9d2cf0faa38d2d91cfca751170acc5da6"
+    },
+    "validation": {
+      "path": "Feature/doc/evidence/caves20261118/cold-final-validated-live/validation.json",
+      "size": 2918515,
+      "sha256": "007323b1908fc1d36350430384a348bfba68b9afd3c77298fdd7ad97b42a1bd6"
+    },
+    "process_exit": {
+      "path": "Feature/doc/evidence/caves20261118/cold-host-validated/process-exit.json",
+      "size": 217,
+      "sha256": "cfe659a7d9717a7e9995915678322442865ca6da9d88862d1f25b01dd451d8af"
+    },
+    "culture": {
+      "path": "Feature/doc/evidence/caves20261118/cold-final-validated-live/culture-restoration.json",
+      "size": 691,
+      "sha256": "9f13d7bd9a37a0de537dcd2679df2ab7374b798ac5c68551fa1af6500d95ae7f"
+    },
+    "pid": 11016,
+    "checks": 32,
+    "capsule_cases": 2016
+  },
+  "scope": {
+    "path": "Feature/doc/evidence/caves20261118/final-scope.json",
+    "size": 33391,
+    "sha256": "5d25636823a65687ab07b0e6a3ab61adc0a8192731516f5aa7229c356cec8411"
+  },
+  "final_editor": {
+    "path": "Feature/doc/evidence/caves20261118/final-editor-state.json",
+    "size": 372,
+    "sha256": "16061301d95e82c48ee1975cdc6d31040eef1551b79f1cf64cb871832bc439b8"
+  },
+  "preserved_failure_records": [
+    "runtime-camera/result.json",
+    "runtime-camera/captures/01_Q_entrance_under_roof.png",
+    "runtime-camera-final/result.json",
+    "runtime-camera-final/camera-collision-diagnosis.json",
+    "runtime-camera-final/captures/07_Q_camera_collision_failure.png",
+    "cold-live/result.json",
+    "cold-final-live/result.json",
+    "cold-verified-live/result.json"
+  ],
+  "limitations": [
+    "Actual existing game camera was visually reviewed by parent; this reviewer crosschecked file identity and numeric pose/ACK records without recapturing images.",
+    "One prepared normal-profile AddMovementInput route with frame-adaptive analog approach; no physical-keyboard/full-combat/NavMesh/Shipping acceptance.",
+    "Fixed-junction1440sphere arc is independent world-geometry proof; conservative hypothetical future50cmovershoot audit is not a global all-positions camera guarantee.",
+    "Two older unrelated SprintChangeLog links remain missing in the existing history; no new cave link is missing or omitted from final publication selection."
+  ],
+  "editor_operations": false,
+  "asset_mutations": false,
+  "git_operations": false,
+  "parent_reported_PowerShell_parse": {
+    "path": "Scripts/StartCaveCold20261118.ps1",
+    "size": 3841,
+    "sha256": "e7f8eb37924f0be7bc8a8f87432e6a13959e769508d47f85025a0706f74ba8a8",
+    "passed": true,
+    "source": "Parent actual tool-check report",
+    "independently_reexecuted_by_reviewer": false
+  }
+}

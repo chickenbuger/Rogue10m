@@ -6,6 +6,8 @@
 *.lo
 *.o
 *.obj
+!/Art/Weapons/Starter20261110/SM_StarterGreatSword.obj
+!/Art/Weapons/Starter20261110/SM_StarterKnuckle.obj
 
 # Precompiled Headers
 *.gch
@@ -115,3 +117,36 @@ __pycache__/
 
 # Empty local Obsidian scratch canvas
 /무제.canvas
+
+# Local manual QA contains save/profile hash inventories and local captures.
+/DevLog/ManualPlayQA/
+
+# Preserve QA save inventories/snapshots locally; never add them as evidence uploads.
+/Feature/doc/evidence/**/*.saves-before.csv
+/Feature/doc/evidence/**/*.saves-after.csv
+/Feature/doc/evidence/**/*.sav
+
+# Isolated full-run QA includes private save inventories, process metadata and captures.
+/DevLog/BasicRunPlayQA/
+
+# Private isolated UI fixture logs and save inventories
+/DevLog/LobbyTraitDisplayQA/
+
+/DevLog/LobbyUpgradeRoundTripQA/
+/DevLog/20261101_LobbyUpgradeRoundTrip_Review/*
+!/DevLog/20261101_LobbyUpgradeRoundTrip_Review/README.md
+/DevLog/20261101_GearUi_Review/*
+!/DevLog/20261101_GearUi_Review/README.md
+
+# Private raw automation reports; keep sanitized summaries separate.
+/Feature/doc/evidence/normal-ui-roundtrip-20261101/*_UI1101Core/
+
+# Local normal-growth QA captures; reviewed README and sanitized summary are tracked.
+/DevLog/20261101_NormalGrowthBoss_Review/L_GrowthAndDeath/*.png
+/DevLog/20261101_NormalGrowthBoss_Review/L_GrowthAndDeath/*.private.json
+
+/DevLog/20261101_NormalGrowthBoss_Review/L_GrowthAndDeath/AnimationObservation/evidence/
+
+/DevLog/20261101_NormalGrowthBoss_Review/M_NormalVictory/*.png
+!/DevLog/20261101_NormalGrowthBoss_Review/M_NormalVictory/33_result.png
+/DevLog/20261101_NormalGrowthBoss_Review/M_NormalVictory/*.private.json

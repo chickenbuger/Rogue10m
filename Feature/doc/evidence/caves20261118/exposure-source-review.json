@@ -1,0 +1,93 @@
+{
+  "schema": "Rogue10m.CaveExposureSourceReview.20261118.v1",
+  "reviewer": "independent cave_tool_audit child; filesystem-only installed-source review",
+  "utc": "2026-11-17T17:28:24.258804+00:00",
+  "editor_operations": false,
+  "asset_or_source_mutations": false,
+  "files": [
+    {
+      "path": "D:\\Program Files\\UE_5.8\\Engine\\Source\\Runtime\\Engine\\Private\\PrimitiveComponentPhysics.cpp",
+      "size": 52455,
+      "sha256": "d78f691187b05f5856e82bbb4e1825b867aff3aa436766970d040a6f5268a912"
+    },
+    {
+      "path": "D:\\Program Files\\UE_5.8\\Engine\\Source\\Runtime\\Engine\\Private\\Components\\PrimitiveComponent.cpp",
+      "size": 189961,
+      "sha256": "5ce231cfef144d2263883a495290108fa7fee0162ed4ed99912c4e34377b39ee"
+    },
+    {
+      "path": "D:\\Program Files\\UE_5.8\\Engine\\Source\\Runtime\\Engine\\Private\\Components\\PostProcessComponent.cpp",
+      "size": 8185,
+      "sha256": "e59e1e8f29e8cb76cb46764d981b51f7d23d14997e13a3bed4332fb8756e942f"
+    },
+    {
+      "path": "D:\\Program Files\\UE_5.8\\Engine\\Source\\Runtime\\Renderer\\Private\\PostProcess\\PostProcessEyeAdaptation.cpp",
+      "size": 66613,
+      "sha256": "df1475d2550cff0b97a66fe8daa2a1ef746784df1a20631495321e0efe8f1113"
+    }
+  ],
+  "findings": [
+    {
+      "source": "primitive_physics",
+      "lines": [
+        1599,
+        1613
+      ],
+      "finding": "Invalid BodyInstance returns a null physics object; GetAllPhysicsObjects still returns an array containing that null entry."
+    },
+    {
+      "source": "post_process_component",
+      "lines": [
+        198,
+        202,
+        207,
+        221
+      ],
+      "finding": "The nonempty array enters the physics-query branch. A null query result returns false before reaching the shape fallback. NoCollision box bounds therefore do not reliably encompass the camera in installed UE5.8."
+    },
+    {
+      "source": "primitive_component",
+      "lines": [
+        2124
+      ],
+      "finding": "A registered ordinary component with NoCollision does not create physics state unless AlwaysCreatePhysicsState is separately enabled."
+    },
+    {
+      "source": "primitive_physics",
+      "lines": [
+        1376,
+        1382,
+        1384
+      ],
+      "finding": "SetCollisionEnabled changes the body mode then ensures physics state is created; QueryOnly permits a shape while all channel responses can remain Ignore."
+    },
+    {
+      "source": "eye_adaptation",
+      "lines": [
+        659,
+        661,
+        722,
+        723
+      ],
+      "finding": "Extended luminance mode interprets min/max as EV100; equal limits force target exposure immediately. Waiting longer does not repair an inactive local volume."
+    }
+  ],
+  "recommended_bounded_repair": {
+    "existing_components": 2,
+    "boxes_collision": "QueryOnly",
+    "all_channels": "Ignore",
+    "generate_overlap_events": false,
+    "affect_navigation": false,
+    "local_EV100": 3,
+    "global_EV100": 11.5,
+    "camera_or_geometry_changes": 0,
+    "acceptance_pending": [
+      "fresh static semantic QA",
+      "exact two-package save",
+      "fresh independent cold QA",
+      "stable-pose actual game-camera visual review and full traversal"
+    ]
+  },
+  "corrected_prior_inference": "Earlier review assumed a NoCollision shape would reach CalcBounds fallback. Installed-source null-entry control flow disproves that assumption. Original records remain historical; this review supersedes that inference.",
+  "observed_failure_not_acceptance": "First actual game-camera PNG was visually rejected; normal ground/camera metrics do not establish readability. EV0 was an unsaved tuning candidate before this root cause was found."
+}

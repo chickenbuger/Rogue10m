@@ -1,0 +1,9 @@
+# Gear through the actual inventory UI
+
+Packet Sprint#9-22, base3a306c8c. Prior normal runs picked up a GreatSword but continued fighting with Knuckle. Verify the existing equipment path through the actual visible inventory tile instead of using direct equip/type setters. Do not change combat difficulty to make the bot win.
+
+Product change is two const C++ identity getters on InventoryItemWidget only; no property/schema, price, input or equip mutation behavior changes. Default-OFF GearUI test mode presses I, finds exactly one displayed tile belonging to the local player's real inventory window with the actual acquired GUID/container, constructs a verified Slate hit path and routes a right-click. A handled click alone is insufficient: require the same GUID in MainWeapon exactly once, removal from grid, GreatSword type and the actual configured Primary skill binding, then close through normal UI. No direct TryEquip/SetWeaponType, resource or position setter, created item, skipped travel, forced win or invulnerability.
+
+Preserve342 original primary saves, prior source/evidence and original31 assets/map; exact fresh three-slot namespace and bounded owned process remain. New wrapper flag must echo from the actual driver; requested gear completion cannot contribute to a boss-completion claim unless verified. Build/static review and later fresh rendered runtime are separate. Physical keyboard/full human play, charged attack and potion strategy remain unverified. YouTube has been offered sole global UI control; no new UE UI execution before its return acknowledgement.
+
+Root follow-up after failed J: native window hit-testing requires -Visible; retain native visible/leaf/ancestor guards. Correct only the UUserWidget bubbling receiver role and add bounded rejection/positive-path diagnostics. J remains blocked, K remains unexecuted pending UI return. Compile final11.84s; no gameplay/save/asset mutation.

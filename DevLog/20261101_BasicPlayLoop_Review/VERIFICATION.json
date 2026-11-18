@@ -1,0 +1,164 @@
+{
+  "utc": "2026-11-01T01:52:45.197789+00:00",
+  "project": "D:\\Project\\Rogue10m",
+  "branch": "Sprint#9-16-basic-play-loop",
+  "baseline_sha": "c35aecf4758bb5a3b9f9d52ab487f91fd286ed88",
+  "baseline_saves": 284,
+  "baseline_saves_unchanged": true,
+  "current_saves": 304,
+  "manual_preexisting_saves": 302,
+  "manual_preexisting_saves_unchanged": true,
+  "original_and_arm_packages_unchanged": 31,
+  "run_learning": {
+    "LearnN1101A": {
+      "checks": 87,
+      "failures": 0,
+      "path": "Feature/doc/evidence/run-learning-20261101/LearnN1101A/results.txt"
+    },
+    "LearnA1101R": {
+      "checks": 88,
+      "failures": 0,
+      "path": "Feature/doc/evidence/run-learning-20261101/LearnA1101R/results.txt"
+    },
+    "LearnD1101A": {
+      "checks": 87,
+      "failures": 0,
+      "path": "Feature/doc/evidence/run-learning-20261101/LearnD1101A/results.txt"
+    },
+    "LearnN1101R2": {
+      "checks": 90,
+      "failures": 0,
+      "path": "Feature/doc/evidence/run-learning-20261101/LearnN1101R2/results.txt"
+    }
+  },
+  "unit_suites": [
+    {
+      "suite": "ProgressionRequirements",
+      "passed": 4,
+      "path": "Feature/doc/evidence/basic-play-regression-20261101/ProgressionRequirements_BP1101Final/report/index.json"
+    },
+    {
+      "suite": "HybridSkillTree",
+      "passed": 3,
+      "path": "Feature/doc/evidence/basic-play-regression-20261101/HybridSkillTree_BP1101Final/report/index.json"
+    },
+    {
+      "suite": "AttackResources",
+      "passed": 4,
+      "path": "Feature/doc/evidence/basic-play-regression-20261101/AttackResources_BP1101Final/report/index.json"
+    },
+    {
+      "suite": "WeaponCooldown",
+      "passed": 5,
+      "path": "Feature/doc/evidence/basic-play-regression-20261101/WeaponCooldown_BP1101Final/report/index.json"
+    },
+    {
+      "suite": "WeaponSwitch",
+      "passed": 8,
+      "path": "Feature/doc/evidence/basic-play-regression-20261101/WeaponSwitch_BP1101Final/report/index.json"
+    },
+    {
+      "suite": "RunCurrencyBaseline",
+      "passed": 6,
+      "path": "Feature/doc/evidence/basic-play-regression-20261101/RunCurrencyBaseline_BP1101Final/report/index.json"
+    }
+  ],
+  "photos": [
+    {
+      "path": "DevLog/20261101_BasicPlayLoop_Review/BeforeTimer/00_entry_sword_before_pickup.png",
+      "sha256": "ecc8e4c09d61b9629db5ce00291d29f1bf526a34582f5cbd17c6d7b7d46d15b3",
+      "kind": "D3D11_rendered_programmatic_QA_not_OS_full_run"
+    },
+    {
+      "path": "DevLog/20261101_BasicPlayLoop_Review/BeforeTimer/01_field_learning.png",
+      "sha256": "78a2abc99a11b3fb3523a221753514d5bb9807fc3233dbe9721ef0e01d84f354",
+      "kind": "D3D11_rendered_programmatic_QA_not_OS_full_run"
+    },
+    {
+      "path": "DevLog/20261101_BasicPlayLoop_Review/BeforeTimer/02_learning_result.png",
+      "sha256": "b8f42442650e3ff60a84295be41c6cfcc51e6e69e8f1d6b1f7757bfb0674ed92",
+      "kind": "D3D11_rendered_programmatic_QA_not_OS_full_run"
+    },
+    {
+      "path": "DevLog/20261101_BasicPlayLoop_Review/BeforeTimer/03_learning_reset_town.png",
+      "sha256": "d203cc9d294064acbdb4ba40b36f521512823c3c3c6d6564efd1b2b2dc0bf93e",
+      "kind": "D3D11_rendered_programmatic_QA_not_OS_full_run"
+    },
+    {
+      "path": "DevLog/20261101_BasicPlayLoop_Review/AfterTimer/00_entry_sword_before_pickup.png",
+      "sha256": "98b9710f6616518cb9c59e4049db22d327b8967ae14548b0927dfad67f227fb4",
+      "kind": "D3D11_rendered_programmatic_QA_not_OS_full_run"
+    },
+    {
+      "path": "DevLog/20261101_BasicPlayLoop_Review/AfterTimer/01_field_learning.png",
+      "sha256": "42925484be08d4bbac515cbd8c59853a5b8072f6dcf6fd2fdb01fd10a873c830",
+      "kind": "D3D11_rendered_programmatic_QA_not_OS_full_run"
+    },
+    {
+      "path": "DevLog/20261101_BasicPlayLoop_Review/AfterTimer/02_learning_result.png",
+      "sha256": "450d2c69aa156af641b6bf3e2671b3871a139147e6b9c7b4bef35c5efff583d3",
+      "kind": "D3D11_rendered_programmatic_QA_not_OS_full_run"
+    },
+    {
+      "path": "DevLog/20261101_BasicPlayLoop_Review/AfterTimer/03_learning_reset_town.png",
+      "sha256": "4bba604fcf8b5bbd50a29807a6d8e8b89df84f0c3fc3dd4d0df4cfa0cfe928e8",
+      "kind": "D3D11_rendered_programmatic_QA_not_OS_full_run"
+    },
+    {
+      "path": "DevLog/20261101_BasicPlayLoop_Review/NativeInput/settings_O.png",
+      "sha256": "d11eed832c3fa5a8e7590e72e8c839245873618c74ce44f27fc0a8ea6b8a21c9",
+      "kind": "engine_F9_showui_after_CUA_native_OS_input_not_full_run"
+    },
+    {
+      "path": "DevLog/20261101_BasicPlayLoop_Review/NativeInput/LMB_after_click.png",
+      "sha256": "126d96c0ad40efe2e0fa80413bf8d611d0f76c1b9c565fd7aa7b94e52aa821ba",
+      "kind": "engine_F9_showui_after_CUA_native_OS_input_not_full_run"
+    }
+  ],
+  "native_input": {
+    "session": "D:\\Project\\Rogue10m\\DevLog\\ManualPlayQA\\BPManual1101A",
+    "maps": [
+      "L_Menu",
+      "StartHub"
+    ],
+    "menu_profile_creation_and_town_entry": true,
+    "settings_O_open_close": true,
+    "LMB_cooldown_observed": true,
+    "NPC_F_in_range": "not_performed",
+    "normal_field_full_run": "not_performed",
+    "W_presses": 5,
+    "W_pressed_and_released_same_frame": true,
+    "Y_displacement_cm": 0.7111399999998866,
+    "move_ignored": false,
+    "blocking_window_during_W": false,
+    "native_hold_duration": "not_supported_by_current_Windows_CUA_API",
+    "observer_status": "evidence_io_error_game_continues",
+    "input_frames_sampled": 11323,
+    "input_frames_flushed": 11292,
+    "unflushed_frames": 31,
+    "observer_stopped_utc": "2026-11-01T01:44:25.640Z",
+    "game_normal_exit_utc": "2026-11-01T01:48:06.030Z",
+    "IO_cause": "not_proven; concurrent live CSV read was occurring near failure; preserve partial evidence, inspect only after exit next time"
+  },
+  "limitations": [
+    "No normal keyboard-hold field completion, boss combat victory, packaging or performance certification.",
+    "Alt dodge is confirmed by user but next packet draft only at this checkpoint.",
+    "Four active presets, noncombat edit rules, safe-menu pause and field shops/quests remain incomplete.",
+    "Existing map direct route remains about 1357m/226s design estimate; not the requested 60s measured route.",
+    "No animation source assets modified. Existing c35 animation phase records remain the separate reference.",
+    "New owner-arms/framing defaults remain OFF."
+  ],
+  "remote_operations": "none",
+  "baseline_preserved_save_files_total": 311,
+  "baseline_evidence_save_snapshots_elsewhere": 27,
+  "save_count_clarification": {
+    "original_manifest": "C:\\Users\\PC\\Documents\\Codex\\2026-10-27\\task\\basic-play-preservation-20261101-010432\\manifest.json",
+    "preserved_save_files_total": 311,
+    "primary_save_directory_baseline": 284,
+    "evidence_save_snapshots_elsewhere": 27,
+    "primary_save_directory_current": 304,
+    "new_QA_primary_saves": 20,
+    "all_311_preserved_hashes_unchanged": true,
+    "note": "Initial saves=311 counted every .sav in preserved paths, including 27 evidence snapshots outside Saved/SaveGames. No files disappeared."
+  }
+}

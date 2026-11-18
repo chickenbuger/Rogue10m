@@ -1,0 +1,661 @@
+{
+  "schema": "Rogue10m.CaveFileScope.20261118.v1",
+  "passed": true,
+  "utc": "2026-11-17T18:11:40.467806+00:00",
+  "checks": {
+    "immutable_checkpoint_exact1473_candidate8_owned3962_protected458_saves": true,
+    "original_material_actor_native_observation_artifacts_sha256_pinned": true,
+    "reviewed_plans_target_grid_and_original_layer_receipts": true,
+    "latest150cm_collar_exact_pinned_grid_chain_not_arbitrary_fresh_hash": true,
+    "independent_cold_saved_clean_all_semantic_checks": true,
+    "all2016_original_capsule_case_bytes_unchanged_after_camera_repair": true,
+    "cold_full179488_target_and_original1404_semantics": true,
+    "visibility_refinement_bounded_new_components_only_global_camera_preserved": true,
+    "final_triplanar43_shader_and_two_material_bindings_follow_recipe": true,
+    "unsaved_EV0_predecessor_exact_recipe_and_no_other_effect_state_change": true,
+    "final_QueryOnly_ignore_all_bounds_and_restored_EV3_exact_recipe_chain": true,
+    "final_two_diagnosed_Q_rock_X50_repair_exact_receipt_chain_no_gate_relaxation": true,
+    "observed_independent_cold_exit0_exact_pid": true,
+    "cold_launch_owned_unattended_no_autosave_no_MCP": true,
+    "cold_owned_process_restores_exact_baseline_Korean_culture_without_config_or_field_changes": true,
+    "cold_validator_and_launcher_hashes_match_current_sources": true,
+    "successful_bounded_author_receipts_exact_four_actors_seven_assets": true,
+    "collar_native_dirty_allowlist_same17_original_terrain_as_v1": true,
+    "final_native_bounded_save_success_no_foreign_dirty": true,
+    "initial_structure_checkpoint_save_success_no_foreign_dirty": true,
+    "pre_collar_WIP_save_success_no_foreign_dirty": true,
+    "latest_exposure_bounded_save_exact_two_dressing_packages_no_foreign_dirty": true,
+    "latest_camera_relief_bounded_save_exact_one_Q_dressing_package_no_foreign_dirty": true,
+    "five_save_receipts_cover_exact33_allowed_packages": true,
+    "all17_existing_changed_allowlist_packages_are_observed_terrain_only": true,
+    "final_candidate_exact1482_files": true,
+    "no_candidate_removals": true,
+    "new_external_actors_exact_four_declared": true,
+    "new_external_objects_exact_five_declared_folders": true,
+    "no_other_candidate_additions": true,
+    "existing_candidate_changes_only_native17_terrain_packages": true,
+    "map_and_all_original_external_objects_byte_preserved": true,
+    "all_five_new_external_objects_are_only_native_actor_folders": true,
+    "four_new_external_actor_packages_contain_native_actors": true,
+    "cold_package_metadata_contains_all17_terrain_classes": true,
+    "all_eight_old_owned_assets_byte_preserved": true,
+    "owned_namespace_exact_old8_plus_new7": true,
+    "all3962_protected_inputs_byte_preserved_no_source_or_build_exceptions": true,
+    "protected_inventory_only_seven_declared_owned_additions": true,
+    "all40_source_materials_and44_distinct_base_files_unchanged": true,
+    "two_reused_vendor_boulder_mesh_files_unchanged": true,
+    "physical_backup_exact1481_files_and_every_original_hash": true,
+    "compiled_three_native_sources_still_match_successful_build": true,
+    "cold_loaded_dll_hash_matches_live_launch_and_current_binary": true,
+    "all458_non_selected_saves_byte_preserved": true,
+    "non_selected_save_inventory_exact458_with_only_named_QA_exclusions": true
+  },
+  "violations": [],
+  "baseline_manifest": {
+    "path": "Feature/doc/evidence/caves20261118/baseline-files.json",
+    "size": 1632669,
+    "sha256": "19b2df14473db127464c5aceb74e59d1f399a35fb1cab0e190377400bb0a8dfd"
+  },
+  "baseline_observations": {
+    "baseline-live/baseline-materials.json": {
+      "path": "Feature/doc/evidence/caves20261118/baseline-live/baseline-materials.json",
+      "size": 2671535,
+      "sha256": "7d4b2504a5588097cecb803c7637756809a53a2391e09fc4e576f047662984ba"
+    },
+    "baseline-live/baseline-actors.json": {
+      "path": "Feature/doc/evidence/caves20261118/baseline-live/baseline-actors.json",
+      "size": 4868670,
+      "sha256": "f5390322017e3a501811a105f72686c11e90a8c0ed662484aee43404569eacf5"
+    },
+    "baseline-live/baseline-native.json": {
+      "path": "Feature/doc/evidence/caves20261118/baseline-live/baseline-native.json",
+      "size": 2154537,
+      "sha256": "4da5cf558a5a7b4471bffc8cb04ce43399d6b41edb10149378f80b0724792ec9"
+    }
+  },
+  "asset_writes": false,
+  "unreal_imports": false,
+  "editor_operations": false,
+  "process_state_changes": false,
+  "git_operations": false,
+  "evidence": {
+    "cold_result": {
+      "path": "Feature/doc/evidence/caves20261118/cold-final-validated-live/result.json",
+      "size": 474,
+      "sha256": "f72a7dd9fe5e471e5f670721c0beb1a9d2cf0faa38d2d91cfca751170acc5da6"
+    },
+    "cold_validation": {
+      "path": "Feature/doc/evidence/caves20261118/cold-final-validated-live/validation.json",
+      "size": 2918515,
+      "sha256": "007323b1908fc1d36350430384a348bfba68b9afd3c77298fdd7ad97b42a1bd6"
+    },
+    "cold_startup": {
+      "path": "Feature/doc/evidence/caves20261118/cold-final-validated-live/startup.json",
+      "size": 999,
+      "sha256": "8107d82aa78da89059d41554d18ba967eea5a37f42188e8a0940f3ba2110d002"
+    },
+    "cold_culture_restoration": {
+      "path": "Feature/doc/evidence/caves20261118/cold-final-validated-live/culture-restoration.json",
+      "size": 691,
+      "sha256": "9f13d7bd9a37a0de537dcd2679df2ab7374b798ac5c68551fa1af6500d95ae7f"
+    },
+    "observed_cold_exit": {
+      "path": "Feature/doc/evidence/caves20261118/cold-host-validated/process-exit.json",
+      "size": 217,
+      "sha256": "cfe659a7d9717a7e9995915678322442865ca6da9d88862d1f25b01dd451d8af"
+    },
+    "terrain_packages": {
+      "path": "Feature/doc/evidence/caves20261118/cold-final-validated-live/terrain-actor-packages.json",
+      "size": 10438,
+      "sha256": "433f468d681e110791e81bb9df3786972fda9c7d8bf67de699ae613a53e8ce00"
+    },
+    "package_inventory": {
+      "path": "Feature/doc/evidence/caves20261118/cold-final-validated-live/package-inventory.json",
+      "size": 1452097,
+      "sha256": "7c9e1038cd65c13f821741c68d8a80849849578057c022fbf04222dad7e27c0a"
+    },
+    "final_save": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/final-save-result.json",
+      "size": 4334,
+      "sha256": "de18dd9f6fc4848a9adcc0da4457daf9a44f981f9e12639736e2e33b33552977"
+    },
+    "checkpoint_save": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/structure-checkpoint-save-result.json",
+      "size": 3248,
+      "sha256": "ba61e6284872406706df91ea65b63c4879be83c103d3f3038c8c0bfbb70dd439"
+    },
+    "pre_collar_save": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/collar-pre-save-result.json",
+      "size": 6002,
+      "sha256": "eaf2558fb76ad7456576bd23e7ec6c942aaea16bba27069d78d9e06134979091"
+    },
+    "exposure_save": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/exposure-save-result.json",
+      "size": 794,
+      "sha256": "e67ed87362f3382adb1adc042f32485c58bbe7ef1dce078f0e2877e770663ceb"
+    },
+    "camera_relief_save": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/camera-relief-save-result.json",
+      "size": 558,
+      "sha256": "54d9a8a007957a6f3083c04f579efcec17280cd0ab5fac05025f49ca7777e547"
+    },
+    "height_revision_v1": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/apply-height-confirmed.json",
+      "size": 2936,
+      "sha256": "c4d5b5024ff1389c2bc8879730f546f639111445c9bd3304163176a7f0b0c93f"
+    },
+    "height_revision_final_collar": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/apply-height-collar.json",
+      "size": 2935,
+      "sha256": "0281fd7a04e02ee21dc67b27d02fa9a5f6070036945111e4cde26a269889ef2e"
+    },
+    "collar_target": {
+      "path": "Feature/doc/evidence/caves20261118/target-height-plan-collar.json",
+      "size": 1078055,
+      "sha256": "cd7928198b0f9c3cfc0d2ad5944a49cca4debc3d1b3ca69b63c946b35873752c"
+    },
+    "collar_spec": {
+      "path": "Feature/doc/evidence/caves20261118/collar-spec.json",
+      "size": 1727,
+      "sha256": "4f3d5dacfdee8af8e00e32c6db3597208061e2593e488f74cdd88de334a3696a"
+    },
+    "collar_preflight": {
+      "path": "Feature/doc/evidence/caves20261118/collar-preflight.json",
+      "size": 4173,
+      "sha256": "2fd5f9dd3c8d57eb723d215ac724724b54234e8b23389971fe4e91f67a8e84ca"
+    },
+    "structures": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/structures.json",
+      "size": 298686,
+      "sha256": "e0cc6a270fe941b5a29f90433185fddd8e84c3146a7105b23f8aecbad9b1a497"
+    },
+    "dressing": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/dressing.json",
+      "size": 291457,
+      "sha256": "f938a675dfb74019eff712d6437946174a4dc58c5cb8aaa25953bda56bdd9dbd"
+    },
+    "materials": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/materials.json",
+      "size": 145845,
+      "sha256": "c25447d13701e54ad906e9d7d4e65efd2c52b87b407792714de8918a41888c54"
+    },
+    "visibility": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/visibility.json",
+      "size": 482240,
+      "sha256": "ad6cd1efe5e64a29ba3d311df890d861819238379748f4be3d31379c886183f9"
+    },
+    "triplanar": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/triplanar.json",
+      "size": 385080,
+      "sha256": "cd3b1e386c2fba6f0d939b515be421bca5227ac0112cdf86c16fcd01f039d65e"
+    },
+    "exposure": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/exposure.json",
+      "size": 470377,
+      "sha256": "89c6924c0f886c4d7b7367d37af1c9c67972973128030c9473b06bcbaf56667a"
+    },
+    "exposure_spec": {
+      "path": "Feature/doc/evidence/caves20261118/exposure-spec.json",
+      "size": 39373,
+      "sha256": "bc58e611db30ae46e604be7b3c72a3af02a94a57a6eef288faf23eb5feea8627"
+    },
+    "exposure_bounds": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/exposure-bounds.json",
+      "size": 510680,
+      "sha256": "f8f002c576404a05c9686ef83d16b027c939f5422b81bdd67837c55d27ced349"
+    },
+    "exposure_bounds_spec": {
+      "path": "Feature/doc/evidence/caves20261118/exposure-bounds-spec.json",
+      "size": 77607,
+      "sha256": "fb2cb4bd5e9108507dee21d16af499c1ef19679ebbe029244705b2d55586fc70"
+    },
+    "camera_relief": {
+      "path": "Feature/doc/evidence/caves20261118/author-live/camera-relief.json",
+      "size": 216134,
+      "sha256": "e718d352f102417e29cacb6d3f8cec2964ee4bae7f9e60b2e6b2b9c13595623a"
+    },
+    "camera_relief_spec": {
+      "path": "Feature/doc/evidence/caves20261118/camera-relief-spec.json",
+      "size": 3924,
+      "sha256": "92e2464e246528952718203c7e82ed7455c20102fa7b8c5586835229f02fb92f"
+    }
+  },
+  "candidate": {
+    "before_count": 1473,
+    "after_count": 1482,
+    "changed_count": 2,
+    "added_count": 9,
+    "removed_count": 0,
+    "changed": [
+      {
+        "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/5N/2QCZFO1QZEVPLRNWWQAEU9.uasset",
+        "before": {
+          "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/5N/2QCZFO1QZEVPLRNWWQAEU9.uasset",
+          "size": 295042,
+          "sha256": "602A8CE4E43ABF0D174B0D73BD7EC3D79E49F295F37532780AFE23160EDFBAA7",
+          "mtime_ns": 1794928870786873200
+        },
+        "after": {
+          "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/5N/2QCZFO1QZEVPLRNWWQAEU9.uasset",
+          "size": 297364,
+          "sha256": "5df2622b0d2d993a06723943425cefc56fe4257152a51210beeaf355407710ab"
+        }
+      },
+      {
+        "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/T7/AAKXBAAJ48M6RIB9TWCIJD.uasset",
+        "before": {
+          "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/T7/AAKXBAAJ48M6RIB9TWCIJD.uasset",
+          "size": 436698,
+          "sha256": "C5A5EBACAE9794E99B4973EBDD95527B1D21372493D685FD93FB6C541C5D6F38",
+          "mtime_ns": 1794928870942061200
+        },
+        "after": {
+          "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/T7/AAKXBAAJ48M6RIB9TWCIJD.uasset",
+          "size": 438970,
+          "sha256": "b010fec42d179b57f61ba7ba6ff6b641485ab61003f9bdd063d289b38f9c0aab"
+        }
+      }
+    ],
+    "added": [
+      {
+        "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/VQ/PYZIJL655JALHJM6PS58A8.uasset",
+        "size": 79121,
+        "sha256": "a64859673ba028b38877f6ec1f69af6cc3b2fc2f95d5a52654c8567fcea76f02"
+      },
+      {
+        "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/BY/2CW0JPTDIEMKKD1T5LATX6.uasset",
+        "size": 29031,
+        "sha256": "d5c02e2b90f734fe6167a865b9245c14fdbfceb20f5b08d4e828fb947f99cde4"
+      },
+      {
+        "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/0E/NL2M3149WONPRWLKFKVP6Y.uasset",
+        "size": 78353,
+        "sha256": "091e3681fe732ecaa0c47d2959ff499e9d414c4d7a2a35f52a4828ec1bd425d5"
+      },
+      {
+        "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/9/EE/NR3SMNORZ57AQ1FV26VAFO.uasset",
+        "size": 28519,
+        "sha256": "03bbfef0cda46d2388af6eec33a943b222f0ff273b895e09427b7a0b3b303db2"
+      },
+      {
+        "path": "Content/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/0/4Q/WXJ9YRW9XM7OSJQHKUOE6M.uasset",
+        "size": 2095,
+        "sha256": "05e5f9444b72d78ab1b4b7713abb96982183f8dd9f75f59a8888b779d7328228"
+      },
+      {
+        "path": "Content/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/A/KH/HUO4ZNNSJYEK8XBUBVY3Z7.uasset",
+        "size": 2029,
+        "sha256": "ad69d66dd9f8da60b81f9cbdaecc2f4661135ffa3d4646fedb1438f9c53d21f8"
+      },
+      {
+        "path": "Content/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/A/XU/O59IHJKZGG939COOIBX3NT.uasset",
+        "size": 2095,
+        "sha256": "c6506696d57ca88185b1dc4e8b812b037eb95dfeb090660e7d8b89603d56a489"
+      },
+      {
+        "path": "Content/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/B/22/5Q8MB00W7A481PXWG2KFSL.uasset",
+        "size": 2109,
+        "sha256": "16445cd91636c49cf8536be234d2afc4f41a1331f5741d4f4bb8b6e210cdb500"
+      },
+      {
+        "path": "Content/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/C/0X/D8LZY53ZZ3L4G4KEUTQOEN.uasset",
+        "size": 2109,
+        "sha256": "b8156771bb9beaf2444335c63ad3a6ee672bb720d332b6700b65ba844705aa77"
+      }
+    ],
+    "removed": [],
+    "terrain_allowed_packages": [
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/0/XT/O5N67KQ56EFMCNYPLH4A9K",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/1/NB/MCE82ISOFTSZ4X6NYS59OS",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/1/S2/SNMFR6G92UWR7JNALFZ3ID",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/5N/2QCZFO1QZEVPLRNWWQAEU9",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/MX/901N9FSMWQT8HGVSYW4Y54",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/PU/KC1ED7XNAH9AAXICI45DB5",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/T7/AAKXBAAJ48M6RIB9TWCIJD",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/4/H0/HDSAW95KB8W4KIQGO7LCLZ",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/5/M0/6G94JGZ2U5KIQB4T0SVBSO",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/6/07/BJOVGSJNSG38C92ONIQ1FV",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/6/CX/4OKE4IU5PRT9PT9IEBCQJE",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/F5/ZZ4G2UBUAC0YP7HE5NQN5K",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/8/8H/1TS1J7SPRTSB29HY8N6OVS",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/A/SI/Q73PU4UVN7VZEBFT770BFR",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/D/I5/LUV6K94B7088CTTMNP5QAM",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/E/KB/YSSONCL958619NZG0FJTP5",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/E/O9/T0S02D43S43BFII2NHH50W"
+    ],
+    "new_actor_packages": [
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/VQ/PYZIJL655JALHJM6PS58A8",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/BY/2CW0JPTDIEMKKD1T5LATX6",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/0E/NL2M3149WONPRWLKFKVP6Y",
+      "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/9/EE/NR3SMNORZ57AQ1FV26VAFO"
+    ],
+    "new_folder_packages": [
+      "/Game/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/0/4Q/WXJ9YRW9XM7OSJQHKUOE6M",
+      "/Game/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/A/KH/HUO4ZNNSJYEK8XBUBVY3Z7",
+      "/Game/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/A/XU/O59IHJKZGG939COOIBX3NT",
+      "/Game/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/B/22/5Q8MB00W7A481PXWG2KFSL",
+      "/Game/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/C/0X/D8LZY53ZZ3L4G4KEUTQOEN"
+    ]
+  },
+  "save_receipt_roles": {
+    "initial": "Structure/material checkpoint only",
+    "pre_collar": "WIP clean prerequisite for native revision; not QA acceptance",
+    "final": "Latest collar terrain saved; require all independent cold semantic checks",
+    "exposure": "Bounded two-Dressing bounds/EV3 repair; EV0 predecessor was not saved",
+    "camera_relief": "Final bounded one-Q-Dressing two-rock X50 repair; require fresh independent cold semantic checks and actual-camera visual review separately"
+  },
+  "protected": {
+    "baseline_count": 3962,
+    "current_count": 3969,
+    "byte_unchanged_count": 3962,
+    "new_allowed": [
+      {
+        "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveGrass.uasset",
+        "size": 14345,
+        "sha256": "dfe2057f5b4971e44e58a52894578d46dce8ce58c9b55c1e5760e9cf75433a34"
+      },
+      {
+        "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveLampCool.uasset",
+        "size": 10882,
+        "sha256": "ecefcfb88f138751ec0b720c68e55f61c50e20cf401cfdf446e3d09ef91d077e"
+      },
+      {
+        "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveLampWarm.uasset",
+        "size": 10934,
+        "sha256": "694456d79be0f05d2422204e19cc9cbaa53921805e6f945b9b2ba99c4a2d74a7"
+      },
+      {
+        "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveRock.uasset",
+        "size": 11894,
+        "sha256": "ade58a84b43b0b38662160f582c176403b248a4508eea95a4e31217bfc52a1aa"
+      },
+      {
+        "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveStoneFloor.uasset",
+        "size": 12422,
+        "sha256": "3d1b385149d05e33748138c41d8ceb0d590bbfd647d9c093ca98fad0bf9eccd0"
+      },
+      {
+        "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveLamp.uasset",
+        "size": 11444,
+        "sha256": "40c97ddbf2c48f19cb5934c4b815c1bc9a17d6f5e4f920b65d2d33a7fb85e13c"
+      },
+      {
+        "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface.uasset",
+        "size": 33954,
+        "sha256": "521c40787d98b4ffebec6733d8c461819174aaf6df67f8a6e253b0aec8bbd61c"
+      }
+    ]
+  },
+  "source_material_files": [
+    {
+      "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Blue.uasset",
+      "size": 10383,
+      "sha256": "6fc20831af16c13521265ed7acad068e11ad9bf42409d3b32324d84454432557"
+    },
+    {
+      "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Ochre.uasset",
+      "size": 10454,
+      "sha256": "8d44404599d1ed94e712784575f1c2989bb1f96a9da4d4b57298c1ecca8ac10a"
+    },
+    {
+      "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Teal.uasset",
+      "size": 10467,
+      "sha256": "4cc729743dafa8b3db479578320d6c9007ddeae23bdbdfa4008c120056e8a42a"
+    },
+    {
+      "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_DarkTimber.uasset",
+      "size": 9633,
+      "sha256": "260933f4b7771d0fd04d448c88bb424b4c44565a481e2ef395ff7b3f4c6d60af"
+    },
+    {
+      "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_WarmStone.uasset",
+      "size": 10252,
+      "sha256": "f678eaf12dfee042c520f8348a8b8634f55015bbda407ccdabededf36efe83ba"
+    },
+    {
+      "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.uasset",
+      "size": 22038,
+      "sha256": "1f8be0616fc563a8d5759be2ee60657782cdeb220a6d09d1d6dc5aad10ce3995"
+    },
+    {
+      "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth.uasset",
+      "size": 19939,
+      "sha256": "c0e8b461a55fd47e401d09502da05efa5e63afecb9a1206b9fc46113a76c628f"
+    },
+    {
+      "path": "Content/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Cobblestone.uasset",
+      "size": 15403,
+      "sha256": "cde32178039addb8339d57d81316a783323b96bd9f15659d70860f13f25baf3f"
+    },
+    {
+      "path": "Content/Rogue10m/World/StartVillage/Materials/MI_StartVillage_EarthPath.uasset",
+      "size": 12180,
+      "sha256": "2d6b12a64b768b9c6753e3106915f3743d16d235260b3262c2a15b382d6f3971"
+    },
+    {
+      "path": "Content/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Grass.uasset",
+      "size": 14113,
+      "sha256": "17ee5a87377d63797959e05ea66673b380a96f10c80a0827217bd0f6d19aa3d8"
+    },
+    {
+      "path": "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Blue.uasset",
+      "size": 10247,
+      "sha256": "f1887d932c09981f4f834e20d3b1f330ce47bb850a6841c01b9db9e359ccd02f"
+    },
+    {
+      "path": "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Burgundy.uasset",
+      "size": 9754,
+      "sha256": "5f24134fe3688a05fc35bdc91fe5cca7a3ce53d071ff638fffde500f5abc0622"
+    },
+    {
+      "path": "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Ochre.uasset",
+      "size": 10370,
+      "sha256": "583ea4e263287cb82df1c9a880c749bcf8f3cee1a7a08c75660f45e0f2337cee"
+    },
+    {
+      "path": "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Teal.uasset",
+      "size": 10343,
+      "sha256": "f07497d04dbdd931dafa2d599da172b7c11844b583b0f0a7bb7197a0b1808b07"
+    },
+    {
+      "path": "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.uasset",
+      "size": 20845,
+      "sha256": "91d412246c7239a46ed33be8b22a6b346379d72e3e596242d56abba1e3bda2b8"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Architecture/Doors/_Materials/MI_Door.uasset",
+      "size": 123437,
+      "sha256": "14c955ef0bed9b972e166f26579e864495212bf7646c5b1b5151ee20cc38f70e"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_Corners.uasset",
+      "size": 127608,
+      "sha256": "7fac0262911d9e596d6ecf7b90a0c5ee67d35298d2b880b3be5f4db2770da546"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_FullxFull.uasset",
+      "size": 133234,
+      "sha256": "6338350a0a9400406fdf10540b8c0ddbdaecb3dfc666fabbd2e0ed0540764669"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_Trims.uasset",
+      "size": 123234,
+      "sha256": "036173e0820f0743094ff4d0fb37b834245154bf732b61215cc97f9b7d50df6a"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Architecture/Plaster/_Materials/MI_Plaster_Architecture.uasset",
+      "size": 24458,
+      "sha256": "f8490f30f204ff19d35e7a8cf4acc29bbdb01727c05cd110f1ff70489fb861fa"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Architecture/RoofTiles/Round/_Materials/MI_RoofTiles_Round_Full.uasset",
+      "size": 19503,
+      "sha256": "ba1331212be8adbd8821b782983eb8acc1307fb3fee0889ae6d94abd39f1bd69"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Architecture/StoneFloor/_Materials/MI_StonePath_01.uasset",
+      "size": 117465,
+      "sha256": "06f6105282af529bfaa1c21cb1bbf7029423538d239fdc931de5f6ffff0f5f68"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Architecture/Windows/_Materials/MI_Windows_Brown.uasset",
+      "size": 127749,
+      "sha256": "71037097fbf3c4124e49bcb4b440c86470044a51a1e3732a19c0f0b4d0decf74"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_Floors.uasset",
+      "size": 132609,
+      "sha256": "26d78c6eb04e1b5ee23063e1f2e4c96f3ad3507e7bfdd274e182adbad7ec341c"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_PiecesBeams_Large.uasset",
+      "size": 128407,
+      "sha256": "3bbfdf0b361894388a389967ec775b715b9cc3663eecdec8f46f5441c1e8ef56"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_Roof.uasset",
+      "size": 131249,
+      "sha256": "8de4f202f1aaec193c96878ce3e7e4303fef48b20139e5002b77dcc7410a5678"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Foliage/Bushes/_Materials/MI_Bush.uasset",
+      "size": 144474,
+      "sha256": "0386d69e3e39f01278b4334bf1ac004852c9ae9e5b9d8c1faf9b645191d9ee9b"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Foliage/Grass/_Materials/M_StylizedFoliage.uasset",
+      "size": 134264,
+      "sha256": "2eaaae15e9ad807b747968a6a2185428cbc67802613261f341cbab6fba482388"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Material/M_Impostor_SimpleOffset.uasset",
+      "size": 40854,
+      "sha256": "bb865778551f272b9aa18c154ffdebc21ca7f4ce51d85bfd41a1232ce2d0ecf7"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Tree_Large_Green/MI_Impostor_Tree_Large_Green.uasset",
+      "size": 90584,
+      "sha256": "200d64c71ed4c821fcfc6c0b56cb8867b819a7db65d4afa3046955a9c605293a"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Tree_Medium_Green/MI_Impostor_Tree_Medium_Green.uasset",
+      "size": 89811,
+      "sha256": "eaa5187ef73ac04cc0bbf7afb620d77cdac9fef1da4ccc25f6f168359b68c189"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Foliage/Trees/_Materials/MI_Bark.uasset",
+      "size": 142876,
+      "sha256": "12f695b9df37ceccd092de3ef222bfaadfe7bc5a8460f62228e091aeeb1fdc4c"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Foliage/Trees/_Materials/MI_Bark_Tiling.uasset",
+      "size": 138521,
+      "sha256": "1077b70006993925cccf264a556e99f27a3f4f90ed5410f35011f687863d321a"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Foliage/Trees/_Materials/MI_TreeLeaves.uasset",
+      "size": 123694,
+      "sha256": "0e7758f39f55c1017a4e9a2f9b17778a4930e5f53c784606e85fd813b48d1fdc"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Foliage/Trees/_Materials/M_Trunk.uasset",
+      "size": 102758,
+      "sha256": "19decf9ac4ec4358f8d0845d2afd6ef2e8d82586f5b171fd9eb71056ffb32adf"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Props/Furniture/_Materials/MI_Furniture_Crate.uasset",
+      "size": 158584,
+      "sha256": "a6c69dea66fdd36bb828f0ca322a99b9d12d9486a3c38584afe6f267344c54d6"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Props/Lanterns/Materials/MI_Lanterns_On.uasset",
+      "size": 152520,
+      "sha256": "93c596c32b0813c4304bf233ef2f5d953c2735230658d072520da7caf8503d79"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Props/Pots/_Materials/MI_Pots_01.uasset",
+      "size": 137440,
+      "sha256": "ee88f36145597c2b1a9dea745b829d610fec248077ca0f6c2bd91e04a44f26fc"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Proxy/M_PROXY_WindMill.uasset",
+      "size": 154149,
+      "sha256": "ebeb0b14a54e8bd25e8458ad4d26f12a07961a48fad1528b00b53393294db38b"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Stones/Boulder/_Materials/MI_Boulder_Large.uasset",
+      "size": 107216,
+      "sha256": "f6afb762ee129677a5ca00f5ae67fbcdbe72d25b23b85d0c5a2cdc6f13059a6f"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Stones/Boulder/_Materials/MI_Boulder_Med.uasset",
+      "size": 111323,
+      "sha256": "3ac84e31ec2dd665733a46cf26fc04142127ff383aab55d1659bd066ce3a58a1"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Terrain/Material_Landscape/MI_Terrain.uasset",
+      "size": 100280,
+      "sha256": "5e01f145bcc9f9fb25c3c48e96b9d24e28f285db10f14d1ad6076ce2bb1264ac"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Terrain/Material_Landscape/M_Terrain.uasset",
+      "size": 54745,
+      "sha256": "93be5f3fbaaa153221c65fc1351bcf2b8af9d01a730fcb4357e61d83d477cc16"
+    },
+    {
+      "path": "Content/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.uasset",
+      "size": 171307,
+      "sha256": "ce0ad2af2a9b22271f0df0b843b3d4b2941857f9dbd1f54cf7882ee70455345b"
+    }
+  ],
+  "source_mesh_files": [
+    {
+      "path": "Content/Stylized_Village/Assets/Stones/Boulder/SM_Boulder_Large_01.uasset",
+      "size": 365505,
+      "sha256": "932c730f3c558d9ab808bdf948e7f54e9f6e9c7a8ed53a0eb900d2bcebec9a33"
+    },
+    {
+      "path": "Content/Stylized_Village/Assets/Stones/Boulder/SM_Boulder_Medium_01.uasset",
+      "size": 210291,
+      "sha256": "eca12a00c0797340eb890680a234a8930803311b842aee8f7a86b4c0249e0dfb"
+    }
+  ],
+  "native_build": {
+    "source_manifest": {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/build/source-hashes-refinement.json",
+      "size": 586,
+      "sha256": "bf543bd07a4f2dbd264516e7b9aa7a9e35d5e6290d9cfbc256d607936453b20b"
+    },
+    "build_result": {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/build/result-refinement.json",
+      "size": 150,
+      "sha256": "b4844a8551fcce5b6500820ecb8576104ce6313a34458734ecf414013bdc25ba"
+    },
+    "current_dll": {
+      "path": "Binaries/Win64/UnrealEditor-Rogue10m.dll",
+      "size": 9949696,
+      "sha256": "0d2a0c2622e982b93e6d7744a69d09b4d5bce8553a9563430601ada91c901b38"
+    },
+    "cold_loaded_dll": {
+      "path": "Binaries/Win64/UnrealEditor-Rogue10m.dll",
+      "sha256": "0d2a0c2622e982b93e6d7744a69d09b4d5bce8553a9563430601ada91c901b38",
+      "source": "Current process GetModuleHandleW/GetModuleFileNameW; read-only metadata"
+    }
+  },
+  "non_selected_saves": {
+    "count": 458,
+    "changed": [],
+    "missing": [],
+    "allowed_QA_names_only": [
+      "Saved/SaveGames/Rogue10m_Progression_QA_Landscape20261116A_AC920A0E4D79EBE2C1F3EEBE945FD67A_v5.sav",
+      "Saved/SaveGames/Rogue10m_Town_QA_Landscape20261116A.sav"
+    ]
+  },
+  "check_count": 46,
+  "scope": "Exact candidate map/EA/EO; old8+new7 OWN; immutable3962 inputs;44source-material files/two Boulder meshes;1481 physical backups;458non-selected saves.",
+  "limitations": [
+    "No whole-project/all-vendor/generated-cache audit or atomic multi-file filesystem snapshot.",
+    "File hashes/class metadata complement independent cold structure/collision QA; this report does not certify rendered camera traversal, full combat, physical input or Shipping.",
+    "Only original Landscape/proxy package changes are permitted; no Build.cs or source exceptions."
+  ]
+}

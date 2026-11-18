@@ -23,6 +23,7 @@
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
 #include "Rogue10m.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mBasicMonster.h"
 #include "Rogue10mCharacter.h"
@@ -30,6 +31,7 @@
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mHybridSkillTreeWidget.h"
 #include "Rogue10mInventoryComponent.h"
+#include "Rogue10mItemDataAsset.h"
 #include "Rogue10mMonsterDataAsset.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
@@ -81,6 +83,20 @@ public:
 		Output = FPaths::Combine(FPaths::ProjectDir(), bInputQA
 			? TEXT("Feature/doc/evidence/hybrid-tree-input-polish-20261020")
 			: TEXT("Feature/doc/evidence/hybrid-skill-tree-runtime-20261020"));
+		// Optional isolated evidence packet. Older wrappers only varied save/log names;
+		// their fixed result/PNG directory must not be reused for this Alt input QA.
+		FString EvidenceLabel;
+		if (FParse::Value(FCommandLine::Get(), TEXT("RogueHybridEvidenceLabel="), EvidenceLabel))
+		{
+			bool bSafeLabel = !EvidenceLabel.IsEmpty() && EvidenceLabel.Len() <= 24;
+			for (TCHAR C : EvidenceLabel) { bSafeLabel &= FChar::IsAlnum(C) || C == TEXT('_'); }
+			Output = FPaths::Combine(Output, EvidenceLabel, bRead ? TEXT("read") : TEXT("runtime"));
+			if (!bSafeLabel || IFileManager::Get().DirectoryExists(*Output) || IFileManager::Get().FileExists(*Output))
+			{
+				UE_LOG(LogRogue10m, Error, TEXT("HYBRID INPUT FAILED: fresh, safe evidence label required."));
+				FPlatformMisc::RequestExitWithStatus(false, 1); return;
+			}
+		}
 		IFileManager::Get().MakeDirectory(*Output, true);
 		Later(3.0, [this] { Prepare(); });
 		FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self = AsShared()](float)
@@ -360,8 +376,14 @@ private:
 		SelectKeyByInput(EKeys::Escape);
 		Check(Keys && Keys->GetSkillKey(InputSkill.Get()) == InputKey && PC->IsAnyBlockingWindowVisible(),
 			TEXT("input_Esc_cancels_selection_preserves_key_and_menu"));
+		Check(Rogue10mInput::DodgeKey() == EKeys::LeftAlt, TEXT("input_contract_independently_requires_LeftAlt_dodge"));
+		SelectKeyByInput(EKeys::W);
+		Check(Keys && Keys->GetSkillKey(InputSkill.Get()) == InputKey, TEXT("input_reserved_movement_key_rejected_preserves_binding"));
+		FText DodgeReason;
+		Check(Keys && !Keys->SetSkillKey(InputSkill.Get(), Rogue10mInput::DodgeKey(), DodgeReason)
+			&& Keys->GetSkillKey(InputSkill.Get()) == InputKey, TEXT("input_LeftAlt_dodge_cannot_be_assigned_as_active_skill"));
 		SelectKeyByInput(EKeys::E);
-		Check(Keys && Keys->GetSkillKey(InputSkill.Get()) == InputKey, TEXT("input_reserved_E_key_rejected_preserves_binding"));
+		Check(Keys && Keys->GetSkillKey(InputSkill.Get()) == EKeys::E, TEXT("input_freed_E_selected_through_real_key_selector"));
 		Click(TEXT("HybridTreeClearKey"));
 		Check(Keys && !Keys->GetSkillKey(InputSkill.Get()).IsValid(), TEXT("input_real_clear_button_removes_binding"));
 		SelectKeyByInput(InputKey);
@@ -377,6 +399,17 @@ private:
 	}
 	void InputAttack()
 	{
+		auto* Keys = PC->GetSkillBindingComponent();
+		FText Reason;
+		Check(Keys && Keys->GetSkillKey(InputSkill.Get()) == InputKey, TEXT("input_saved_F_key_fixture_is_retained_before_temporary_E_probe"));
+		Check(Keys && Keys->SetSkillKey(InputSkill.Get(), EKeys::E, Reason), TEXT("input_freed_E_binding_accepted_for_actual_cast_no_fallback"));
+		if (Failures) { Finish(); return; }
+		GameKey(EKeys::E, false);
+		// Mapping rebuild ignores pressed keys until released; give the real input stack two ticks.
+		Later(0.2, [this] { InputAttackUsingE(); });
+	}
+	void InputAttackUsingE()
+	{
 		// A hitless real cast validates binding/input/presentation without changing the exact saved mastery fixture.
 		Player->GetCharacterMovement()->StopMovementImmediately();
 		auto* Attributes = State->GetRogueAttributeSet();
@@ -385,21 +418,34 @@ private:
 		InputStaminaBefore = Attributes->GetStamina();
 		Check(Player->GetCombatComponent()->GetAttackCooldownRemaining() <= 0,
 			TEXT("input_cast_starts_after_shared_cooldown"));
-		GameKey(InputKey, true);
+		bSawDodgeDuringE = false;
+		FWorldDelegates::OnWorldPostActorTick.Remove(EProbeHandle);
+		EProbeHandle = FWorldDelegates::OnWorldPostActorTick.AddLambda([Self = AsShared()](UWorld* InWorld, ELevelTick, float)
+		{
+			if (InWorld == Self->World.Get() && Self->Player.IsValid()) { Self->bSawDodgeDuringE |= Self->Player->IsDodging(); }
+		});
+		GameKey(EKeys::E, true);
 		Later(0.15, [this]
 		{
-			GameKey(InputKey, false);
+			GameKey(EKeys::E, false);
 			auto* Combat = Player->GetCombatComponent();
 			Check(State->GetSkillUseCount(InputSkill->GetFName()) == InputUseBefore + 1
 				&& Combat->GetLastAcceptedAttackSkill() == InputSkill.Get() && Combat->GetAttackCooldownRemaining() > 0
 				&& State->GetRogueAttributeSet()->GetStamina() <= InputStaminaBefore,
 				TEXT("input_bound_key_executes_exact_skill_use_and_cooldown_once"));
+			Check(!Player->IsDodging() && Player->GetDodgeCooldownRemaining() <= 0.0f,
+				TEXT("input_E_skill_cast_does_not_start_dodge_or_dodge_cooldown"));
 			InputCompletedTracks.Add(InputTrack);
 			Shot(InputTrack == ETrack::Brawler ? TEXT("input-brawler-key-cast.png") : TEXT("input-greatsword-key-cast.png"));
 			Later(1.5, [this]
 			{
 				const bool bExactlyOnce = State->GetSkillUseCount(InputSkill->GetFName()) == InputUseBefore + 1;
 				Check(bExactlyOnce, TEXT("input_key_release_does_not_duplicate_cast"));
+				FWorldDelegates::OnWorldPostActorTick.Remove(EProbeHandle);
+				Check(!bSawDodgeDuringE, TEXT("input_E_positive_cast_has_zero_dodge_in_all_observed_actor_tick_frames"));
+				auto* Keys = PC->GetSkillBindingComponent(); FText Reason;
+				Check(Keys && Keys->SetSkillKey(InputSkill.Get(), InputKey, Reason)
+					&& Keys->GetSkillKey(InputSkill.Get()) == InputKey, TEXT("input_original_F7_F8_QA_binding_restored_for_existing_disk_roundtrip"));
 				auto Continuation = MoveTemp(InputContinuation); if (Continuation) { Continuation(); }
 			});
 		});
@@ -424,30 +470,93 @@ private:
 		if (Failures) { Finish(); return; }
 		Check(Player->GetCombatComponent()->GetEquippedSkill(ERogue10mAttackInputSlot::Primary) != nullptr,
 			TEXT("new_profile_keeps_playable_primary_binding"));
-		// The selected appearance's inventory may start with a greatsword. Select
-		// the fighter explicitly so this fixture does not depend on that content.
-		Player->SetEquippedWeaponType(ERogue10mWeaponType::Unarmed);
-		Check(Tree->GetActiveTrack() == ETrack::Brawler, TEXT("fighter_fixture_selects_unarmed_track"));
+		// Keep the real, authored Knuckle starter inventory/character/combat domains aligned.
+		const auto* StarterItem = Player->GetInventoryComponent()->GetEquippedItemData(ERogue10mInventorySlotType::MainWeapon);
+		Check(StarterItem && StarterItem->WeaponType == ERogue10mWeaponType::Knuckle
+			&& Player->GetEquippedWeaponType() == ERogue10mWeaponType::Knuckle
+			&& Player->GetCombatComponent()->GetActiveSkillTreeWeaponType() == ERogue10mWeaponType::Knuckle
+			&& Tree->GetActiveTrack() == ETrack::Brawler, TEXT("fighter_fixture_retains_real_knuckle_starter_across_all_domains"));
 		Check(Tree->GetMasteryLevel(ETrack::Brawler) == 1 && Player->GetCombatComponent()->GetUnlockedWeaponSkills().Num() == 5,
 			TEXT("initial_M1_five_basic_skills"));
 		ExerciseTemporaryBindings();
 		Player->SetCanBeDamaged(false);
 		Player->SetActorLocation(NPC->GetActorLocation() + FVector(100, 0, 100), false, nullptr, ETeleportType::TeleportPhysics);
 		FRogue10mGrowthSnapshot Growth = State->CaptureGrowth(); Growth.Level = 5; Growth.Experience = 0;
-		Check(State->RestoreGrowth(Growth), TEXT("level5_four_shared_points_fixture"));
+		Check(State->RestoreGrowth(Growth) && State->GetPlayerLevel() == 5
+			&& Tree->GetAvailableGrowthPoints() == 4 && Tree->GetSpentSkillTreePoints() == 0,
+			TEXT("level5_exactly_four_run_points_with_empty_paid_tree_ledger"));
 		Check(Tree->CanChangeInvestments(), TEXT("near_npc_allows_tree_investment"));
 		ExerciseDamage();
-		Check(State->GetTownProgressionComponent()->TryUpgradeTrait(ERogue10mTownTrait::Power), TEXT("trait_spends_one_shared_point"));
-		Check(Tree->GetAvailableGrowthPoints() == 3, TEXT("tree_balance_reflects_trait_spending"));
+		auto* Town = State->GetTownProgressionComponent();
+		auto* Persistence = World->GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>();
+		Check(Town && Persistence && Town->UsesLobbyBudget() && Town->CanChangeTraits()
+			&& Town->GetLobbyEarnedBudget() == 0 && Town->GetAvailableTraitPoints() == 0
+			&& Town->GetSpentTraitPoints() == 0 && Town->GetRunSharedTraitSpent() == 0
+			&& Persistence->GetLobbyAvailablePoints() == 0 && Tree->GetAvailableGrowthPoints() == 4,
+			TEXT("attached_fresh_profile_has_four_run_points_and_zero_independent_lobby_budget"));
+		if (Failures) { Finish(); return; }
+		const auto PowerDefinition = Town->GetUpgradeDefinition(ERogue10mTownTrait::Power);
+		Check(PowerDefinition.IsTuningValid() && PowerDefinition.PointCost == 1
+			&& PowerDefinition.UnlockLevel <= Town->GetLobbyUnlockLevel()
+			&& Town->GetTraitLevel(ERogue10mTownTrait::Power) < PowerDefinition.MaxRank,
+			TEXT("power_purchase_fixture_satisfies_nonbudget_prerequisites"));
+		const auto TownBeforeRejectedPurchase = Town->CaptureProgression();
+		const auto TreeBeforeRejectedPurchase = Tree->Capture();
+		const int32 GoldBeforeRejectedPurchase = Player->GetInventoryComponent()->GetGold();
+		const int32 CrystalsBeforeRejectedPurchase = Player->GetInventoryComponent()->GetCrystals();
+		FText TraitReason;
+		Check(!Town->CanUpgradeTrait(ERogue10mTownTrait::Power, TraitReason) && !TraitReason.IsEmpty()
+			&& !Town->TryUpgradeTrait(ERogue10mTownTrait::Power),
+			TEXT("run_level_points_cannot_fund_lobby_power_purchase"));
+		const auto TownAfterRejectedPurchase = Town->CaptureProgression();
+		const auto TreeAfterRejectedPurchase = Tree->Capture();
+		Check(FRogue10mTownProgressionSnapshot::StaticStruct()->CompareScriptStruct(&TownBeforeRejectedPurchase, &TownAfterRejectedPurchase, 0)
+			&& FRogue10mSkillTreeSnapshot::StaticStruct()->CompareScriptStruct(&TreeBeforeRejectedPurchase, &TreeAfterRejectedPurchase, 0)
+			&& Tree->GetAvailableGrowthPoints() == 4 && Tree->GetSpentSkillTreePoints() == 0
+			&& Town->GetLobbyEarnedBudget() == 0 && Town->GetAvailableTraitPoints() == 0 && Town->GetSpentTraitPoints() == 0
+			&& Persistence->GetLobbyAvailablePoints() == 0
+			&& Player->GetInventoryComponent()->GetGold() == GoldBeforeRejectedPurchase
+			&& Player->GetInventoryComponent()->GetCrystals() == CrystalsBeforeRejectedPurchase,
+			TEXT("rejected_lobby_purchase_preserves_full_run_and_town_ledgers_and_all_currency"));
+		if (Failures) { Finish(); return; }
 		for (int32 I = 0; I < 385 && Tree->GetMasteryTotalExperience(ETrack::Brawler) < 385; ++I) { Tree->NotifyConfirmedAttack(ETrack::Brawler); }
 		Check(Tree->GetMasteryLevel(ETrack::Brawler) == 12 && Tree->IsNodeUnlocked(TEXT("F.DiamondStrike")), TEXT("actual_M12_auto_technique_unlock"));
-		Check(Tree->TryUnlockNode(TEXT("I.InternalEnergy.Entry"), ERoute::Points, NAME_None), TEXT("inner_entry_one_point"));
-		Check(!Tree->TryUnlockNode(TEXT("I.Mana.Entry"), ERoute::Points, NAME_None), TEXT("brawler_mana_purchase_rejected"));
-		Check(Tree->TryUnlockNode(TEXT("I.InternalEnergy.Advanced"), ERoute::Points, NAME_None)
-			&& Tree->GetAvailableGrowthPoints() == 0
-			&& Tree->RefundNode(TEXT("I.InternalEnergy.Advanced"))
-			&& Tree->GetAvailableGrowthPoints() == 2 && Tree->IsIdentityLearned(EIdentity::InternalEnergy),
-			TEXT("paid_inner_deepening_refund_returns_two_points_keeps_entry"));
+		const int32 BeforeEntryPoints = Tree->GetAvailableGrowthPoints();
+		const bool bEntryLearned = Tree->TryUnlockNode(TEXT("I.InternalEnergy.Entry"), ERoute::Points, NAME_None);
+		const auto EntryState = Tree->Capture();
+		const auto* Entry = EntryState.Investments.FindByPredicate([](const auto& Row) { return Row.NodeId == TEXT("I.InternalEnergy.Entry"); });
+		Check(bEntryLearned && BeforeEntryPoints == 4 && Tree->GetAvailableGrowthPoints() == 3
+			&& Tree->GetAvailableGrowthPoints() == BeforeEntryPoints - 1 && Tree->GetSpentSkillTreePoints() == 1
+			&& Entry && Entry->Route == ERoute::Points && Entry->SpentPoints == 1 && Entry->ChoiceId.IsNone(),
+			TEXT("inner_entry_debits_exactly_one_run_point_four_to_three"));
+		Check(!Tree->TryUnlockNode(TEXT("I.Mana.Entry"), ERoute::Points, NAME_None)
+			&& Tree->GetAvailableGrowthPoints() == 3 && Tree->GetSpentSkillTreePoints() == 1, TEXT("brawler_mana_purchase_rejected_without_spending"));
+		if (Failures) { Finish(); return; }
+		const int32 BeforeAdvancedPoints = Tree->GetAvailableGrowthPoints();
+		const bool bAdvancedLearned = Tree->TryUnlockNode(TEXT("I.InternalEnergy.Advanced"), ERoute::Points, NAME_None);
+		const auto AdvancedState = Tree->Capture();
+		const auto* Advanced = AdvancedState.Investments.FindByPredicate([](const auto& Row) { return Row.NodeId == TEXT("I.InternalEnergy.Advanced"); });
+		Check(bAdvancedLearned && BeforeAdvancedPoints == 3 && Tree->GetAvailableGrowthPoints() == 1
+			&& Tree->GetAvailableGrowthPoints() == BeforeAdvancedPoints - 2 && Tree->GetSpentSkillTreePoints() == 3
+			&& Advanced && Advanced->Route == ERoute::Points && Advanced->SpentPoints == 2 && Tree->IsIdentityDeepened(EIdentity::InternalEnergy),
+			TEXT("paid_inner_deepening_debits_exactly_two_run_points_three_to_one"));
+		if (Failures) { Finish(); return; }
+		const int32 BeforeRefundPoints = Tree->GetAvailableGrowthPoints();
+		const int32 BeforeRefundMastery = Tree->GetMasteryTotalExperience(ETrack::Brawler);
+		const bool bAdvancedRefunded = Tree->RefundNode(TEXT("I.InternalEnergy.Advanced"));
+		const auto RefundedState = Tree->Capture();
+		const auto* KeptEntry = RefundedState.Investments.FindByPredicate([](const auto& Row) { return Row.NodeId == TEXT("I.InternalEnergy.Entry"); });
+		Check(bAdvancedRefunded && BeforeRefundPoints == 1 && Tree->GetAvailableGrowthPoints() == 3
+			&& Tree->GetAvailableGrowthPoints() == BeforeRefundPoints + 2 && Tree->GetSpentSkillTreePoints() == 1
+			&& KeptEntry && KeptEntry->Route == ERoute::Points && KeptEntry->SpentPoints == 1 && KeptEntry->ChoiceId.IsNone()
+			&& Tree->IsIdentityLearned(EIdentity::InternalEnergy) && !Tree->IsIdentityDeepened(EIdentity::InternalEnergy)
+			&& !Tree->IsNodeUnlocked(TEXT("I.InternalEnergy.Advanced")) && Tree->GetMasteryTotalExperience(ETrack::Brawler) == BeforeRefundMastery,
+			TEXT("paid_inner_deepening_refund_returns_exact_two_points_one_to_three_keeps_entry_and_mastery"));
+		const auto TownAfterRunInvestments = Town->CaptureProgression();
+		Check(FRogue10mTownProgressionSnapshot::StaticStruct()->CompareScriptStruct(&TownBeforeRejectedPurchase, &TownAfterRunInvestments, 0)
+			&& Town->GetLobbyEarnedBudget() == 0 && Town->GetAvailableTraitPoints() == 0 && Town->GetSpentTraitPoints() == 0
+			&& Persistence->GetLobbyAvailablePoints() == 0, TEXT("run_learning_and_refund_do_not_touch_zero_lobby_budget_or_town_ledger"));
+		if (Failures) { Finish(); return; }
 		PC->ToggleSkillTree();
 		for (TObjectIterator<URogue10mHybridSkillTreeWidget> It; It; ++It)
 		{ if (It->GetWorld() == World && It->GetOwningPlayer() == PC) { Widget = *It; break; } }
@@ -457,16 +566,24 @@ private:
 		Widget->HandleAction(100, TEXT("I.InternalEnergy.Advanced"));
 		Later(0.7, [this]
 		{
+			const int32 BeforeFreeDeepening = Tree->GetAvailableGrowthPoints();
 			Click(TEXT("HybridTreeLearnMastery"));
-			Check(Tree->IsIdentityDeepened(EIdentity::InternalEnergy) && Tree->GetSpentSkillTreePoints() == 1,
-				TEXT("real_UI_free_mastery_deepening"));
+			const auto FreeState = Tree->Capture();
+			const auto* FreeAdvanced = FreeState.Investments.FindByPredicate([](const auto& Row) { return Row.NodeId == TEXT("I.InternalEnergy.Advanced"); });
+			Check(BeforeFreeDeepening == 3 && Tree->IsIdentityDeepened(EIdentity::InternalEnergy)
+				&& Tree->GetSpentSkillTreePoints() == 1 && Tree->GetAvailableGrowthPoints() == BeforeFreeDeepening
+				&& FreeAdvanced && FreeAdvanced->Route == ERoute::Mastery && FreeAdvanced->SpentPoints == 0,
+				TEXT("real_UI_free_mastery_deepening_keeps_exact_three_run_points"));
 			Widget->HandleAction(100, TEXT("I.InternalEnergy.Choice"));
 			Widget->HandleAction(6, NAME_None, TEXT("InternalEnergy.Release"));
 			Later(0.35, [this]
 			{
+				const int32 BeforeChoicePoints = Tree->GetAvailableGrowthPoints();
 				Click(TEXT("HybridTreeLearnPoints"));
-				Check(Tree->GetSelectedProperty(EIdentity::InternalEnergy) == TEXT("InternalEnergy.Release")
-					&& Tree->GetAvailableGrowthPoints() == 0, TEXT("UI_property_spends_remaining_two_points"));
+				Check(BeforeChoicePoints == 3 && Tree->GetSelectedProperty(EIdentity::InternalEnergy) == TEXT("InternalEnergy.Release")
+					&& Tree->GetAvailableGrowthPoints() == BeforeChoicePoints - 2 && Tree->GetAvailableGrowthPoints() == 1
+					&& Tree->GetSpentSkillTreePoints() == 3 && State->GetTownProgressionComponent()->GetAvailableTraitPoints() == 0,
+					TEXT("UI_property_debits_exact_two_run_points_three_to_one_lobby_stays_zero"));
 				if (bInputQA)
 				{
 					Shot(TEXT("brawler-1080p.png"));
@@ -516,22 +633,42 @@ private:
 		Check(Slot.StartsWith(TEXT("Rogue10m_Progression_QA_")), TEXT("read_disk_comparison_stays_in_QA_namespace"));
 		if (Failures) { Finish(); return; }
 		const auto* Saved = Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(Slot, 0));
-		Check(Saved && Saved->ProfileId == ReadProfileId && Saved->SaveVersion == 3, TEXT("read_disk_profile_guid_and_v3_match"));
+		Check(Saved && Saved->ProfileId == ReadProfileId && URogue10mProgressionSaveGame::CurrentVersion == 5
+			&& Saved->SaveVersion == 5 && Saved->RunId.IsValid() && Saved->RunId == Persistence->GetAttachedRunId()
+			&& Saved->LobbyEarnedPoints == 0 && Saved->Town.TraitInvestments.IsEmpty(),
+			TEXT("read_current_v5_same_profile_valid_run_identity_and_zero_independent_lobby_budget"));
 		if (Failures) { Finish(); return; }
 		Check(State->GetPlayerLevel() == 15 && State->GetPlayerLevel() == Saved->Growth.Level
-			&& Player->GetEquippedWeaponType() == ERogue10mWeaponType::GreatSword, TEXT("read_growth_LV15_and_greatsword_restored"));
+			&& Player->GetEquippedWeaponType() == ERogue10mWeaponType::GreatSword
+			&& Player->GetCombatComponent()->GetActiveSkillTreeWeaponType() == ERogue10mWeaponType::GreatSword, TEXT("read_growth_LV15_and_greatsword_combat_restored"));
 		const auto Inventory = Player->GetInventoryComponent()->CaptureInventory();
 		Check(Inventory.Gold == Saved->Inventory.Gold && Inventory.Crystals == Saved->Inventory.Crystals
 			&& Inventory.LeftEquipment.Num() == Saved->Inventory.LeftEquipment.Num()
 			&& Inventory.RightEquipment.Num() == Saved->Inventory.RightEquipment.Num()
 			&& Inventory.Containers.Num() == Saved->Inventory.Containers.Num(), TEXT("read_inventory_currency_and_equipment_container_domains_restored"));
-		Check(State->GetTownProgressionComponent()->GetTraitLevel(ERogue10mTownTrait::Power) == 1
-			&& State->GetTownProgressionComponent()->GetSpentTraitPoints() == 1, TEXT("read_trait_power_rank1_actual_cost1_restored"));
+		const auto* ActualMain = Inventory.LeftEquipment.FindByPredicate([](const auto& Row) { return Row.Values.SlotType == ERogue10mInventorySlotType::MainWeapon; });
+		const auto* SavedMain = Saved->Inventory.LeftEquipment.FindByPredicate([](const auto& Row) { return Row.Values.SlotType == ERogue10mInventorySlotType::MainWeapon; });
+		const auto* RestoredSword = Player->GetInventoryComponent()->GetEquippedItemData(ERogue10mInventorySlotType::MainWeapon);
+		Check(ActualMain && SavedMain && RestoredSword && ActualMain->Values.bHasEquippedItem && SavedMain->Values.bHasEquippedItem
+			&& RestoredSword->WeaponType == ERogue10mWeaponType::GreatSword
+			&& ActualMain->Values.EquippedItem.WeaponType == ERogue10mWeaponType::GreatSword
+			&& SavedMain->Values.EquippedItem.WeaponType == ERogue10mWeaponType::GreatSword
+			&& ActualMain->Values.EquippedItem.InstanceId.IsValid()
+			&& ActualMain->Values.EquippedItem.InstanceId == SavedMain->Values.EquippedItem.InstanceId
+			&& ActualMain->ItemAsset.ToSoftObjectPath() == SavedMain->ItemAsset.ToSoftObjectPath()
+			&& SavedMain->ItemAsset.ToString() == RestoredSword->GetPathName(),
+			TEXT("read_restores_exact_saved_greatsword_item_instance_without_adding_another"));
+		const auto* Town = State->GetTownProgressionComponent();
+		Check(Town && Town->UsesLobbyBudget() && Town->GetTraitLevel(ERogue10mTownTrait::Power) == 0
+			&& Town->GetSpentTraitPoints() == 0 && Town->GetAvailableTraitPoints() == 0 && Town->GetRunSharedTraitSpent() == 0
+			&& Saved->LobbyEarnedPoints == 0 && Saved->Town.PowerLevel == 0 && Saved->Town.TraitInvestments.IsEmpty(),
+			TEXT("read_zero_lobby_budget_and_empty_town_ledger_restore_without_converting_run_points"));
 		Check(Tree->GetMasteryLevel(ETrack::Brawler) == 12 && Tree->GetMasteryTotalExperience(ETrack::Brawler) == 385
 			&& Tree->GetMasteryLevel(ETrack::GreatSword) == 20 && Tree->GetMasteryTotalExperience(ETrack::GreatSword) == 1045,
 			TEXT("read_brawler_M12_and_greatsword_M20_with_exact_XP_restored"));
-		Check(Tree->GetSpentSkillTreePoints() == 8 && Tree->GetAvailableGrowthPoints() == 5,
-			TEXT("read_tree_actual_cost8_and_shared_balance5_restored"));
+		Check(Tree->GetSpentSkillTreePoints() == 8 && Tree->GetAvailableGrowthPoints() == 6
+			&& State->GetPlayerLevel() - 1 == Tree->GetSpentSkillTreePoints() + Tree->GetAvailableGrowthPoints(),
+			TEXT("read_LV15_run_budget_fourteen_equals_exact_eight_spent_plus_six_available"));
 		Check(Tree->GetActiveIdentity() == EIdentity::Mana && Tree->GetSelectedProperty(EIdentity::Mana) == TEXT("Mana.Spread")
 			&& Tree->HasResonance(ETrack::GreatSword, EIdentity::Mana), TEXT("read_active_mana_spread_and_ultimate_resonance_restored"));
 		auto* Combat = Player->GetCombatComponent();
@@ -624,12 +761,34 @@ private:
 	void GreatSword()
 	{
 		Widget->HandleAction(2);
-		Check(Player->GetEquippedWeaponType() == ERogue10mWeaponType::Unarmed, TEXT("browsing_greatsword_never_equips_weapon"));
+		const auto* BrowsingMainItem = Player->GetInventoryComponent()->GetEquippedItemData(ERogue10mInventorySlotType::MainWeapon);
+		Check(BrowsingMainItem && BrowsingMainItem->WeaponType == ERogue10mWeaponType::Knuckle
+			&& Player->GetEquippedWeaponType() == ERogue10mWeaponType::Knuckle
+			&& Player->GetCombatComponent()->GetActiveSkillTreeWeaponType() == ERogue10mWeaponType::Knuckle,
+			TEXT("browsing_greatsword_keeps_real_knuckle_inventory_character_and_combat"));
 		Shot(TEXT("greatsword-locked-1080p.png"));
 		Later(0.6, [this]
 		{
 			PC->CloseAllBlockingPanels();
-			Player->SetEquippedWeaponType(ERogue10mWeaponType::GreatSword);
+			auto* Inventory = Player->GetInventoryComponent();
+			auto* Sword = LoadObject<URogue10mItemDataAsset>(nullptr, TEXT("/Game/DataAsset/Item/Starter/DA_Item_IronLongsword.DA_Item_IronLongsword"));
+			Check(Inventory && Sword && Sword->WeaponType == ERogue10mWeaponType::GreatSword
+				&& Sword->EquipSlotType == ERogue10mInventorySlotType::MainWeapon, TEXT("existing_greatsword_item_asset_is_valid_main_weapon_fixture"));
+			if (Failures) { Finish(); return; }
+			// Runtime fixture only. The read phase never adds/equips a weapon; it must restore the saved instance.
+			if (Inventory->GetEquippedItemData(ERogue10mInventorySlotType::MainWeapon) != Sword)
+			{
+				Check(Player->CanChangeWeapon(), TEXT("actual_greatsword_fixture_waited_for_legal_weapon_change_state"));
+				int32 ContainerIndex = INDEX_NONE; FGuid SwordInstance;
+				Check(Inventory->TryAddGridItem(Sword, 1, ContainerIndex, SwordInstance) && SwordInstance.IsValid(), TEXT("one_existing_greatsword_QA_instance_added_through_inventory_API"));
+				if (Failures) { Finish(); return; }
+				Check(Inventory->TryEquipGridItem(ContainerIndex, SwordInstance), TEXT("actual_inventory_equip_commits_greatsword_fixture"));
+			}
+			Check(Inventory->GetEquippedItemData(ERogue10mInventorySlotType::MainWeapon) == Sword
+				&& Player->GetEquippedWeaponType() == ERogue10mWeaponType::GreatSword
+				&& Player->GetCombatComponent()->GetActiveSkillTreeWeaponType() == ERogue10mWeaponType::GreatSword
+				&& Tree->GetActiveTrack() == ETrack::GreatSword, TEXT("greatsword_inventory_character_combat_and_mastery_track_are_consistent"));
+			if (Failures) { Finish(); return; }
 			Check(Player->GetCombatComponent()->GetActiveSkillTreeSkills().Num() == 10
 				&& Player->GetCombatComponent()->GetUnlockedWeaponSkills().Num() == 5, TEXT("greatsword_five_basics_five_locked_techniques"));
 			Check(Tree->GetMasteryLevel(ETrack::GreatSword) == 1 && Tree->GetMasteryLevel(ETrack::Brawler) == 12,
@@ -690,8 +849,11 @@ private:
 		Check(Persistence->SaveNow(), TEXT("actual_isolated_profile_save"));
 		auto* Saved = Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(
 			Persistence->GetSaveSlotForProfile(Persistence->GetAttachedProfileId()), 0));
-		Check(Saved && Saved->SaveVersion == 3 && Saved->SkillTree.Masteries.Num() == 2
-			&& Saved->SkillTree.ActiveIdentity == EIdentity::Mana, TEXT("disk_roundtrip_v3_mastery_identity_ledger"));
+		Check(Saved && URogue10mProgressionSaveGame::CurrentVersion == 5 && Saved->SaveVersion == 5
+			&& Saved->RunId.IsValid() && Saved->RunId == Persistence->GetAttachedRunId()
+			&& Saved->LobbyEarnedPoints == 0 && Saved->Town.TraitInvestments.IsEmpty()
+			&& Saved->SkillTree.Masteries.Num() == 2 && Saved->SkillTree.ActiveIdentity == EIdentity::Mana,
+			TEXT("disk_current_v5_roundtrip_preserves_run_mastery_identity_and_zero_lobby_ledger"));
 		const float Health = State->GetRogueAttributeSet()->GetHealth();
 		Check(Tree->Respec(EIdentity::Mana) && Tree->GetMasteryLevel(ETrack::GreatSword) == 20
 			&& !Tree->IsIdentityLearned(EIdentity::Mana) && !Tree->HasResonance(ETrack::GreatSword, EIdentity::Mana)
@@ -708,6 +870,8 @@ private:
 	void Finish()
 	{
 		if (Done) { return; }
+		FWorldDelegates::OnWorldPostActorTick.Remove(EProbeHandle);
+		if (PC.IsValid()) { GameKey(EKeys::E, false); }
 		if (bInputQA)
 		{
 			Check(InputCompletedTracks.Contains(ETrack::GreatSword) && (bRead || InputCompletedTracks.Contains(ETrack::Brawler)),
@@ -747,6 +911,8 @@ private:
 	bool bInputQA = false;
 	ETrack InputTrack = ETrack::None;
 	FName InputNode;
+	FDelegateHandle EProbeHandle;
+	bool bSawDodgeDuringE = false;
 	FKey InputKey;
 	TWeakObjectPtr<URogue10mAttackSkillData> InputSkill;
 	TSet<ETrack> InputCompletedTracks;

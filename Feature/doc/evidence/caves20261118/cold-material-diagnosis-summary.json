@@ -1,0 +1,1373 @@
+{
+  "schema": "Rogue10m.CaveColdMaterialDiagnosisSummary.20261118.v1",
+  "diagnostic_completed": true,
+  "diagnostic_read_only_passed": true,
+  "cave_acceptance_claimed": false,
+  "pid": 41176,
+  "observed_source_count": 40,
+  "observed_owned_count": 7,
+  "changed_source_count": 21,
+  "changed_owned_count": 1,
+  "exact_difference_count": 55,
+  "localized_input_pin_difference_count": 34,
+  "derived_graph_sha_difference_count": 21,
+  "source_field_differences": {
+    "/Game/Stylized_Village/Assets/Architecture/Doors/_Materials/MI_Door.MI_Door": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_Corners.MI_Flagstone_Wall_Corners": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_FullxFull.MI_Flagstone_Wall_FullxFull": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_Trims.MI_Flagstone_Wall_Trims": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Architecture/Plaster/_Materials/MI_Plaster_Architecture.MI_Plaster_Architecture": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Architecture/RoofTiles/Round/_Materials/MI_RoofTiles_Round_Full.MI_RoofTiles_Round_Full": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Architecture/StoneFloor/_Materials/MI_StonePath_01.MI_StonePath_01": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Architecture/Windows/_Materials/MI_Windows_Brown.MI_Windows_Brown": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_Floors.MI_Wood_Floors": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_PiecesBeams_Large.MI_Wood_PiecesBeams_Large": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_Roof.MI_Wood_Roof": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Tree_Large_Green/MI_Impostor_Tree_Large_Green.MI_Impostor_Tree_Large_Green": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionSetMaterialAttributes_2.inputs[0].pin",
+        "expected": "머티리얼 어트리뷰트",
+        "actual": "MaterialAttributes",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph.nodes.MaterialExpressionSetMaterialAttributes_2.inputs[1].pin",
+        "expected": "베이스 컬러",
+        "actual": "Base Color",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "aab33d9ea53f89867a06674309a2077ef27ff62ee558d916abe7f7cac5ce5d8c",
+        "actual": "b2424a47888cad6f6801b8e6dcb1f0e538c2ed2a7b33ea8686e63fc153887b8f",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Tree_Medium_Green/MI_Impostor_Tree_Medium_Green.MI_Impostor_Tree_Medium_Green": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionSetMaterialAttributes_2.inputs[0].pin",
+        "expected": "머티리얼 어트리뷰트",
+        "actual": "MaterialAttributes",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph.nodes.MaterialExpressionSetMaterialAttributes_2.inputs[1].pin",
+        "expected": "베이스 컬러",
+        "actual": "Base Color",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "aab33d9ea53f89867a06674309a2077ef27ff62ee558d916abe7f7cac5ce5d8c",
+        "actual": "b2424a47888cad6f6801b8e6dcb1f0e538c2ed2a7b33ea8686e63fc153887b8f",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Foliage/Trees/_Materials/MI_Bark.MI_Bark": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_1.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_2.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "af9b1826bdf3786ec846f00919350d97cc9175b657767c6a2ce1d9d926d03c7e",
+        "actual": "d8260788dd0217e7ed240884d2c1f33302d368184767a6a221ac008ccac5cc0d",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Foliage/Trees/_Materials/MI_Bark_Tiling.MI_Bark_Tiling": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_1.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_2.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "af9b1826bdf3786ec846f00919350d97cc9175b657767c6a2ce1d9d926d03c7e",
+        "actual": "d8260788dd0217e7ed240884d2c1f33302d368184767a6a221ac008ccac5cc0d",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Props/Furniture/_Materials/MI_Furniture_Crate.MI_Furniture_Crate": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Props/Lanterns/Materials/MI_Lanterns_On.MI_Lanterns_On": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Props/Pots/_Materials/MI_Pots_01.MI_Pots_01": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Stones/Boulder/_Materials/MI_Boulder_Large.MI_Boulder_Large": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Stones/Boulder/_Materials/MI_Boulder_Med.MI_Boulder_Med": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "864a494aba7dd4abb3a7366255d489312653c3e66527a8428926c9ff38d2ad34",
+        "actual": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+        "kind": "value"
+      }
+    ],
+    "/Game/Stylized_Village/Assets/Terrain/Material_Landscape/MI_Terrain.MI_Terrain": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_10.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_11.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_5.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_6.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_7.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_8.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_9.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      },
+      {
+        "field": "$.graph_sha256",
+        "expected": "fc398107b7eb9c92da59bea2af16c60c63db5d28d59ba010e13ec6184566d38a",
+        "actual": "a0d72e92a6546bf7f664bde69b9090ce0e2328da92659af5c4ade411bc82cbd4",
+        "kind": "value"
+      }
+    ]
+  },
+  "owned_field_differences": {
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveRock.MI_CaveRock": [
+      {
+        "field": "$.graph.nodes.MaterialExpressionBreakMaterialAttributes_0.inputs[0].pin",
+        "expected": "어트리뷰트",
+        "actual": "Attr",
+        "kind": "value"
+      }
+    ]
+  },
+  "all_differences_limited_to_localized_pin_display_names_and_derived_hashes": true,
+  "all_source_graph_sha_values_verified_from_exact_observed_graphs": true,
+  "disk_parentage_parameters_node_properties_connections_outputs_usage_flags_have_no_field_differences": true,
+  "renderer_or_ISM_usage_flag_cause_confirmed": false,
+  "material_identities": {
+    "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial": {
+      "parent_chain": [],
+      "base_material": "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial",
+      "used_with_instanced_static_meshes_expected": false,
+      "used_with_instanced_static_meshes_actual": false,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Blue.M_Natural_Banner_Blue": {
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Blue.M_Natural_Banner_Blue",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Ochre.M_Natural_Banner_Ochre": {
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Ochre.M_Natural_Banner_Ochre",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Teal.M_Natural_Banner_Teal": {
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Teal.M_Natural_Banner_Teal",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_DarkTimber.M_Natural_DarkTimber": {
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_DarkTimber.M_Natural_DarkTimber",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_WarmStone.M_Natural_WarmStone": {
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_WarmStone.M_Natural_WarmStone",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather": {
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "used_with_instanced_static_meshes_expected": false,
+      "used_with_instanced_static_meshes_actual": false,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth.M_VillageEarth": {
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth.M_VillageEarth",
+      "used_with_instanced_static_meshes_expected": false,
+      "used_with_instanced_static_meshes_actual": false,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Cobblestone.MI_StartVillage_Cobblestone": {
+      "parent_chain": [
+        "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail"
+      ],
+      "base_material": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail",
+      "used_with_instanced_static_meshes_expected": false,
+      "used_with_instanced_static_meshes_actual": false,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_EarthPath.MI_StartVillage_EarthPath": {
+      "parent_chain": [
+        "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail"
+      ],
+      "base_material": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail",
+      "used_with_instanced_static_meshes_expected": false,
+      "used_with_instanced_static_meshes_actual": false,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Grass": {
+      "parent_chain": [
+        "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail"
+      ],
+      "base_material": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail",
+      "used_with_instanced_static_meshes_expected": false,
+      "used_with_instanced_static_meshes_actual": false,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Blue.M_StartVillage_Banner_Blue": {
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Blue.M_StartVillage_Banner_Blue",
+      "used_with_instanced_static_meshes_expected": false,
+      "used_with_instanced_static_meshes_actual": false,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Burgundy.M_StartVillage_Banner_Burgundy": {
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Burgundy.M_StartVillage_Banner_Burgundy",
+      "used_with_instanced_static_meshes_expected": false,
+      "used_with_instanced_static_meshes_actual": false,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Ochre.M_StartVillage_Banner_Ochre": {
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Ochre.M_StartVillage_Banner_Ochre",
+      "used_with_instanced_static_meshes_expected": false,
+      "used_with_instanced_static_meshes_actual": false,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Teal.M_StartVillage_Banner_Teal": {
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Teal.M_StartVillage_Banner_Teal",
+      "used_with_instanced_static_meshes_expected": false,
+      "used_with_instanced_static_meshes_actual": false,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail": {
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail",
+      "used_with_instanced_static_meshes_expected": false,
+      "used_with_instanced_static_meshes_actual": false,
+      "field_difference_count": 0
+    },
+    "/Game/Stylized_Village/Assets/Architecture/Doors/_Materials/MI_Door.MI_Door": {
+      "parent_chain": [
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_Corners.MI_Flagstone_Wall_Corners": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MIM_Flagstone.MIM_Flagstone",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_FullxFull.MI_Flagstone_Wall_FullxFull": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MIM_Flagstone.MIM_Flagstone",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_Trims.MI_Flagstone_Wall_Trims": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MIM_Flagstone.MIM_Flagstone",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Architecture/Plaster/_Materials/MI_Plaster_Architecture.MI_Plaster_Architecture": {
+      "parent_chain": [
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Architecture/RoofTiles/Round/_Materials/MI_RoofTiles_Round_Full.MI_RoofTiles_Round_Full": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Architecture/RoofTiles/Round/_Materials/MIM_RoofTiles.MIM_RoofTiles",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Architecture/StoneFloor/_Materials/MI_StonePath_01.MI_StonePath_01": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Architecture/StoneFloor/_Materials/MIM_StonePath.MIM_StonePath",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Architecture/Windows/_Materials/MI_Windows_Brown.MI_Windows_Brown": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Architecture/Windows/_Materials/MIM_Window.MIM_Window",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_Floors.MI_Wood_Floors": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Architecture/Wood/_Materials/MIM_Wood.MIM_Wood",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_PiecesBeams_Large.MI_Wood_PiecesBeams_Large": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Architecture/Wood/_Materials/MIM_Wood.MIM_Wood",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_Roof.MI_Wood_Roof": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Architecture/Wood/_Materials/MIM_Wood.MIM_Wood",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Foliage/Bushes/_Materials/MI_Bush.MI_Bush": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Foliage/Grass/_Materials/M_StylizedFoliage.M_StylizedFoliage"
+      ],
+      "base_material": "/Game/Stylized_Village/Assets/Foliage/Grass/_Materials/M_StylizedFoliage.M_StylizedFoliage",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 0
+    },
+    "/Game/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Tree_Large_Green/MI_Impostor_Tree_Large_Green.MI_Impostor_Tree_Large_Green": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Material/M_Impostor_SimpleOffset.M_Impostor_SimpleOffset"
+      ],
+      "base_material": "/Game/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Material/M_Impostor_SimpleOffset.M_Impostor_SimpleOffset",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 3
+    },
+    "/Game/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Tree_Medium_Green/MI_Impostor_Tree_Medium_Green.MI_Impostor_Tree_Medium_Green": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Material/M_Impostor_SimpleOffset.M_Impostor_SimpleOffset"
+      ],
+      "base_material": "/Game/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Material/M_Impostor_SimpleOffset.M_Impostor_SimpleOffset",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 3
+    },
+    "/Game/Stylized_Village/Assets/Foliage/Trees/_Materials/MI_Bark.MI_Bark": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Foliage/Trees/_Materials/M_Trunk.M_Trunk"
+      ],
+      "base_material": "/Game/Stylized_Village/Assets/Foliage/Trees/_Materials/M_Trunk.M_Trunk",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 4
+    },
+    "/Game/Stylized_Village/Assets/Foliage/Trees/_Materials/MI_Bark_Tiling.MI_Bark_Tiling": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Foliage/Trees/_Materials/M_Trunk.M_Trunk"
+      ],
+      "base_material": "/Game/Stylized_Village/Assets/Foliage/Trees/_Materials/M_Trunk.M_Trunk",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 4
+    },
+    "/Game/Stylized_Village/Assets/Foliage/Trees/_Materials/MI_TreeLeaves.MI_TreeLeaves": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Foliage/Grass/_Materials/M_StylizedFoliage.M_StylizedFoliage"
+      ],
+      "base_material": "/Game/Stylized_Village/Assets/Foliage/Grass/_Materials/M_StylizedFoliage.M_StylizedFoliage",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 0
+    },
+    "/Game/Stylized_Village/Assets/Props/Furniture/_Materials/MI_Furniture_Crate.MI_Furniture_Crate": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Props/Furniture/_Materials/MIM_Furniture.MIM_Furniture",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Props/Lanterns/Materials/MI_Lanterns_On.MI_Lanterns_On": {
+      "parent_chain": [
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Props/Pots/_Materials/MI_Pots_01.MI_Pots_01": {
+      "parent_chain": [
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Proxy/M_PROXY_WindMill.M_PROXY_WindMill": {
+      "parent_chain": [
+        "/Engine/EngineMaterials/BaseFlattenMaterial.BaseFlattenMaterial"
+      ],
+      "base_material": "/Engine/EngineMaterials/BaseFlattenMaterial.BaseFlattenMaterial",
+      "used_with_instanced_static_meshes_expected": false,
+      "used_with_instanced_static_meshes_actual": false,
+      "field_difference_count": 0
+    },
+    "/Game/Stylized_Village/Assets/Stones/Boulder/_Materials/MI_Boulder_Large.MI_Boulder_Large": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Stones/Boulder/_Materials/MIM_Stone.MIM_Stone",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Stones/Boulder/_Materials/MI_Boulder_Med.MI_Boulder_Med": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Stones/Boulder/_Materials/MIM_Stone.MIM_Stone",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 2
+    },
+    "/Game/Stylized_Village/Assets/Terrain/Material_Landscape/MI_Terrain.MI_Terrain": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Terrain/Material_Landscape/M_Terrain.M_Terrain"
+      ],
+      "base_material": "/Game/Stylized_Village/Assets/Terrain/Material_Landscape/M_Terrain.M_Terrain",
+      "used_with_instanced_static_meshes_expected": false,
+      "used_with_instanced_static_meshes_actual": false,
+      "field_difference_count": 8
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface.M_CaveSurface": {
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface.M_CaveSurface",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveGrass.MI_CaveGrass": {
+      "parent_chain": [
+        "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface.M_CaveSurface"
+      ],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface.M_CaveSurface",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveStoneFloor.MI_CaveStoneFloor": {
+      "parent_chain": [
+        "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface.M_CaveSurface"
+      ],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface.M_CaveSurface",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveRock.MI_CaveRock": {
+      "parent_chain": [
+        "/Game/Stylized_Village/Assets/Stones/Boulder/_Materials/MIM_Stone.MIM_Stone",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MIM_Props_Snow.MIM_Props_Snow",
+        "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial"
+      ],
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 1
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveLamp.M_CaveLamp": {
+      "parent_chain": [],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveLamp.M_CaveLamp",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveLampWarm.MI_CaveLampWarm": {
+      "parent_chain": [
+        "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveLamp.M_CaveLamp"
+      ],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveLamp.M_CaveLamp",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 0
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveLampCool.MI_CaveLampCool": {
+      "parent_chain": [
+        "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveLamp.M_CaveLamp"
+      ],
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveLamp.M_CaveLamp",
+      "used_with_instanced_static_meshes_expected": true,
+      "used_with_instanced_static_meshes_actual": true,
+      "field_difference_count": 0
+    }
+  },
+  "parent_identities": {
+    "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial": {
+      "base_material": "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Engine/EngineMaterials/WorldGridMaterial",
+        "engine_asset": true
+      },
+      "used_with_instanced_static_meshes": false,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "92ed2b6c0684c93a243af51a215be19819430b5da2fe7f32afd08a2fade6a208",
+      "expression_count": 36
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Blue.M_Natural_Banner_Blue": {
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Blue.M_Natural_Banner_Blue",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Blue",
+        "file": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Blue.uasset",
+        "size": 10383,
+        "sha256": "6fc20831af16c13521265ed7acad068e11ad9bf42409d3b32324d84454432557"
+      },
+      "used_with_instanced_static_meshes": true,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "c372388b14398dc7f64eb588cd158528549a80d7cf93f155ebc99f0624ae9351",
+      "expression_count": 2
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Ochre.M_Natural_Banner_Ochre": {
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Ochre.M_Natural_Banner_Ochre",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Ochre",
+        "file": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Ochre.uasset",
+        "size": 10454,
+        "sha256": "8d44404599d1ed94e712784575f1c2989bb1f96a9da4d4b57298c1ecca8ac10a"
+      },
+      "used_with_instanced_static_meshes": true,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "b6bd8aad95360889b35f9def3b3c3190b482defa67e86d2438a5b5e3ceb1b22c",
+      "expression_count": 2
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Teal.M_Natural_Banner_Teal": {
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Teal.M_Natural_Banner_Teal",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Teal",
+        "file": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Teal.uasset",
+        "size": 10467,
+        "sha256": "4cc729743dafa8b3db479578320d6c9007ddeae23bdbdfa4008c120056e8a42a"
+      },
+      "used_with_instanced_static_meshes": true,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "494009b31364edcecd569742579439479d3dc8ecc7c2b06f7826bafddeb95ade",
+      "expression_count": 2
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_DarkTimber.M_Natural_DarkTimber": {
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_DarkTimber.M_Natural_DarkTimber",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_DarkTimber",
+        "file": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_DarkTimber.uasset",
+        "size": 9633,
+        "sha256": "260933f4b7771d0fd04d448c88bb424b4c44565a481e2ef395ff7b3f4c6d60af"
+      },
+      "used_with_instanced_static_meshes": true,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "25b1971a0d813a3838c9cbe0f8efde214a5e1ed6d93574703ddb9d49b0851103",
+      "expression_count": 2
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_WarmStone.M_Natural_WarmStone": {
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_WarmStone.M_Natural_WarmStone",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_WarmStone",
+        "file": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_WarmStone.uasset",
+        "size": 10252,
+        "sha256": "f678eaf12dfee042c520f8348a8b8634f55015bbda407ccdabededf36efe83ba"
+      },
+      "used_with_instanced_static_meshes": true,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "cf8e120b1e8041b0e55cbca270eb89f013884482e96451f65bfc022742d2fa0f",
+      "expression_count": 2
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather": {
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.M_RoadFeather",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather",
+        "file": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.uasset",
+        "size": 22038,
+        "sha256": "1f8be0616fc563a8d5759be2ee60657782cdeb220a6d09d1d6dc5aad10ce3995"
+      },
+      "used_with_instanced_static_meshes": false,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "6bcac1065b4f2d5a789d30bb9cbd8e04d50de319dae06585dd225e25cfb0a410",
+      "expression_count": 20
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth.M_VillageEarth": {
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth.M_VillageEarth",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth",
+        "file": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth.uasset",
+        "size": 19939,
+        "sha256": "c0e8b461a55fd47e401d09502da05efa5e63afecb9a1206b9fc46113a76c628f"
+      },
+      "used_with_instanced_static_meshes": false,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "1967afbdbbfe5f69e0c4742248a8fc33bb8f7eb21e017b3e72d55d172d8ded91",
+      "expression_count": 16
+    },
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail": {
+      "base_material": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.M_StartVillage_GroundDetail",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail",
+        "file": "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.uasset",
+        "size": 20845,
+        "sha256": "91d412246c7239a46ed33be8b22a6b346379d72e3e596242d56abba1e3bda2b8"
+      },
+      "used_with_instanced_static_meshes": false,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "0e894893c8d0e8db8176d378a2269b757e6c74e3685d1cb2c28d24992b04f552",
+      "expression_count": 13
+    },
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Blue.M_StartVillage_Banner_Blue": {
+      "base_material": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Blue.M_StartVillage_Banner_Blue",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Blue",
+        "file": "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Blue.uasset",
+        "size": 10247,
+        "sha256": "f1887d932c09981f4f834e20d3b1f330ce47bb850a6841c01b9db9e359ccd02f"
+      },
+      "used_with_instanced_static_meshes": false,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "c372388b14398dc7f64eb588cd158528549a80d7cf93f155ebc99f0624ae9351",
+      "expression_count": 2
+    },
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Burgundy.M_StartVillage_Banner_Burgundy": {
+      "base_material": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Burgundy.M_StartVillage_Banner_Burgundy",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Burgundy",
+        "file": "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Burgundy.uasset",
+        "size": 9754,
+        "sha256": "5f24134fe3688a05fc35bdc91fe5cca7a3ce53d071ff638fffde500f5abc0622"
+      },
+      "used_with_instanced_static_meshes": false,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "4c4e6e0e55b22efc83e58dace49b8350fead1296dad077c4f0065e6c3219ed03",
+      "expression_count": 2
+    },
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Ochre.M_StartVillage_Banner_Ochre": {
+      "base_material": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Ochre.M_StartVillage_Banner_Ochre",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Ochre",
+        "file": "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Ochre.uasset",
+        "size": 10370,
+        "sha256": "583ea4e263287cb82df1c9a880c749bcf8f3cee1a7a08c75660f45e0f2337cee"
+      },
+      "used_with_instanced_static_meshes": false,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "b6bd8aad95360889b35f9def3b3c3190b482defa67e86d2438a5b5e3ceb1b22c",
+      "expression_count": 2
+    },
+    "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Teal.M_StartVillage_Banner_Teal": {
+      "base_material": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Teal.M_StartVillage_Banner_Teal",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Teal",
+        "file": "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Teal.uasset",
+        "size": 10343,
+        "sha256": "f07497d04dbdd931dafa2d599da172b7c11844b583b0f0a7bb7197a0b1808b07"
+      },
+      "used_with_instanced_static_meshes": false,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "494009b31364edcecd569742579439479d3dc8ecc7c2b06f7826bafddeb95ade",
+      "expression_count": 2
+    },
+    "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial": {
+      "base_material": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.MM_MasterMaterial",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial",
+        "file": "Content/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.uasset",
+        "size": 171307,
+        "sha256": "ce0ad2af2a9b22271f0df0b843b3d4b2941857f9dbd1f54cf7882ee70455345b"
+      },
+      "used_with_instanced_static_meshes": true,
+      "automatically_set_usage_in_editor": false,
+      "graph_sha256": "5cabd5301cf65b164c2ed1e72ebddf9b8955619d1b2159016be25bf1dfffdca3",
+      "expression_count": 167
+    },
+    "/Game/Stylized_Village/Assets/Foliage/Grass/_Materials/M_StylizedFoliage.M_StylizedFoliage": {
+      "base_material": "/Game/Stylized_Village/Assets/Foliage/Grass/_Materials/M_StylizedFoliage.M_StylizedFoliage",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Stylized_Village/Assets/Foliage/Grass/_Materials/M_StylizedFoliage",
+        "file": "Content/Stylized_Village/Assets/Foliage/Grass/_Materials/M_StylizedFoliage.uasset",
+        "size": 134264,
+        "sha256": "2eaaae15e9ad807b747968a6a2185428cbc67802613261f341cbab6fba482388"
+      },
+      "used_with_instanced_static_meshes": true,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "8f087fc2415458ee454f8b533cbdf1a3e4760e93b54aebddcd2c30a924eb098f",
+      "expression_count": 176
+    },
+    "/Game/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Material/M_Impostor_SimpleOffset.M_Impostor_SimpleOffset": {
+      "base_material": "/Game/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Material/M_Impostor_SimpleOffset.M_Impostor_SimpleOffset",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Material/M_Impostor_SimpleOffset",
+        "file": "Content/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Material/M_Impostor_SimpleOffset.uasset",
+        "size": 40854,
+        "sha256": "bb865778551f272b9aa18c154ffdebc21ca7f4ce51d85bfd41a1232ce2d0ecf7"
+      },
+      "used_with_instanced_static_meshes": true,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "b2424a47888cad6f6801b8e6dcb1f0e538c2ed2a7b33ea8686e63fc153887b8f",
+      "expression_count": 42
+    },
+    "/Game/Stylized_Village/Assets/Foliage/Trees/_Materials/M_Trunk.M_Trunk": {
+      "base_material": "/Game/Stylized_Village/Assets/Foliage/Trees/_Materials/M_Trunk.M_Trunk",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Stylized_Village/Assets/Foliage/Trees/_Materials/M_Trunk",
+        "file": "Content/Stylized_Village/Assets/Foliage/Trees/_Materials/M_Trunk.uasset",
+        "size": 102758,
+        "sha256": "19decf9ac4ec4358f8d0845d2afd6ef2e8d82586f5b171fd9eb71056ffb32adf"
+      },
+      "used_with_instanced_static_meshes": true,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "d8260788dd0217e7ed240884d2c1f33302d368184767a6a221ac008ccac5cc0d",
+      "expression_count": 109
+    },
+    "/Engine/EngineMaterials/BaseFlattenMaterial.BaseFlattenMaterial": {
+      "base_material": "/Engine/EngineMaterials/BaseFlattenMaterial.BaseFlattenMaterial",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Engine/EngineMaterials/BaseFlattenMaterial",
+        "engine_asset": true
+      },
+      "used_with_instanced_static_meshes": false,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "9e536783471ce1c12ad565deb041ecb45a9602a27089056ddc2f9279a2d22bc2",
+      "expression_count": 50
+    },
+    "/Game/Stylized_Village/Assets/Terrain/Material_Landscape/M_Terrain.M_Terrain": {
+      "base_material": "/Game/Stylized_Village/Assets/Terrain/Material_Landscape/M_Terrain.M_Terrain",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Stylized_Village/Assets/Terrain/Material_Landscape/M_Terrain",
+        "file": "Content/Stylized_Village/Assets/Terrain/Material_Landscape/M_Terrain.uasset",
+        "size": 54745,
+        "sha256": "93be5f3fbaaa153221c65fc1351bcf2b8af9d01a730fcb4357e61d83d477cc16"
+      },
+      "used_with_instanced_static_meshes": false,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "a0d72e92a6546bf7f664bde69b9090ce0e2328da92659af5c4ade411bc82cbd4",
+      "expression_count": 33
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface.M_CaveSurface": {
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface.M_CaveSurface",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface",
+        "file": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface.uasset",
+        "size": 33954,
+        "sha256": "521c40787d98b4ffebec6733d8c461819174aaf6df67f8a6e253b0aec8bbd61c"
+      },
+      "used_with_instanced_static_meshes": true,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "8ece65cd367aa9855e7d061cad2501924290afb2ab918115120f628f9c316669",
+      "expression_count": 43
+    },
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveLamp.M_CaveLamp": {
+      "base_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveLamp.M_CaveLamp",
+      "parent_chain": [],
+      "disk": {
+        "package": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveLamp",
+        "file": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveLamp.uasset",
+        "size": 11444,
+        "sha256": "40c97ddbf2c48f19cb5934c4b815c1bc9a17d6f5e4f920b65d2d33a7fb85e13c"
+      },
+      "used_with_instanced_static_meshes": true,
+      "automatically_set_usage_in_editor": true,
+      "graph_sha256": "87c162be7ea0637ca40f4ea371d9ed2d83865cf5d2d019bb8df13908a8415144",
+      "expression_count": 4
+    }
+  },
+  "observed_disk_files": {
+    "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveGrass.uasset": {
+      "sha256": "dfe2057f5b4971e44e58a52894578d46dce8ce58c9b55c1e5760e9cf75433a34",
+      "size": 14345
+    },
+    "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveLampCool.uasset": {
+      "sha256": "ecefcfb88f138751ec0b720c68e55f61c50e20cf401cfdf446e3d09ef91d077e",
+      "size": 10882
+    },
+    "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveLampWarm.uasset": {
+      "sha256": "694456d79be0f05d2422204e19cc9cbaa53921805e6f945b9b2ba99c4a2d74a7",
+      "size": 10934
+    },
+    "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveRock.uasset": {
+      "sha256": "ade58a84b43b0b38662160f582c176403b248a4508eea95a4e31217bfc52a1aa",
+      "size": 11894
+    },
+    "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveStoneFloor.uasset": {
+      "sha256": "3d1b385149d05e33748138c41d8ceb0d590bbfd647d9c093ca98fad0bf9eccd0",
+      "size": 12422
+    },
+    "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveLamp.uasset": {
+      "sha256": "40c97ddbf2c48f19cb5934c4b815c1bc9a17d6f5e4f920b65d2d33a7fb85e13c",
+      "size": 11444
+    },
+    "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface.uasset": {
+      "sha256": "521c40787d98b4ffebec6733d8c461819174aaf6df67f8a6e253b0aec8bbd61c",
+      "size": 33954
+    },
+    "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Blue.uasset": {
+      "sha256": "6fc20831af16c13521265ed7acad068e11ad9bf42409d3b32324d84454432557",
+      "size": 10383
+    },
+    "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Ochre.uasset": {
+      "sha256": "8d44404599d1ed94e712784575f1c2989bb1f96a9da4d4b57298c1ecca8ac10a",
+      "size": 10454
+    },
+    "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_Banner_Teal.uasset": {
+      "sha256": "4cc729743dafa8b3db479578320d6c9007ddeae23bdbdfa4008c120056e8a42a",
+      "size": 10467
+    },
+    "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_DarkTimber.uasset": {
+      "sha256": "260933f4b7771d0fd04d448c88bb424b4c44565a481e2ef395ff7b3f4c6d60af",
+      "size": 9633
+    },
+    "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_Natural_WarmStone.uasset": {
+      "sha256": "f678eaf12dfee042c520f8348a8b8634f55015bbda407ccdabededf36efe83ba",
+      "size": 10252
+    },
+    "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_RoadFeather.uasset": {
+      "sha256": "1f8be0616fc563a8d5759be2ee60657782cdeb220a6d09d1d6dc5aad10ce3995",
+      "size": 22038
+    },
+    "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth.uasset": {
+      "sha256": "c0e8b461a55fd47e401d09502da05efa5e63afecb9a1206b9fc46113a76c628f",
+      "size": 19939
+    },
+    "Content/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Cobblestone.uasset": {
+      "sha256": "cde32178039addb8339d57d81316a783323b96bd9f15659d70860f13f25baf3f",
+      "size": 15403
+    },
+    "Content/Rogue10m/World/StartVillage/Materials/MI_StartVillage_EarthPath.uasset": {
+      "sha256": "2d6b12a64b768b9c6753e3106915f3743d16d235260b3262c2a15b382d6f3971",
+      "size": 12180
+    },
+    "Content/Rogue10m/World/StartVillage/Materials/MI_StartVillage_Grass.uasset": {
+      "sha256": "17ee5a87377d63797959e05ea66673b380a96f10c80a0827217bd0f6d19aa3d8",
+      "size": 14113
+    },
+    "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Blue.uasset": {
+      "sha256": "f1887d932c09981f4f834e20d3b1f330ce47bb850a6841c01b9db9e359ccd02f",
+      "size": 10247
+    },
+    "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Burgundy.uasset": {
+      "sha256": "5f24134fe3688a05fc35bdc91fe5cca7a3ce53d071ff638fffde500f5abc0622",
+      "size": 9754
+    },
+    "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Ochre.uasset": {
+      "sha256": "583ea4e263287cb82df1c9a880c749bcf8f3cee1a7a08c75660f45e0f2337cee",
+      "size": 10370
+    },
+    "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_Banner_Teal.uasset": {
+      "sha256": "f07497d04dbdd931dafa2d599da172b7c11844b583b0f0a7bb7197a0b1808b07",
+      "size": 10343
+    },
+    "Content/Rogue10m/World/StartVillage/Materials/M_StartVillage_GroundDetail.uasset": {
+      "sha256": "91d412246c7239a46ed33be8b22a6b346379d72e3e596242d56abba1e3bda2b8",
+      "size": 20845
+    },
+    "Content/Stylized_Village/Assets/Architecture/Doors/_Materials/MI_Door.uasset": {
+      "sha256": "14c955ef0bed9b972e166f26579e864495212bf7646c5b1b5151ee20cc38f70e",
+      "size": 123437
+    },
+    "Content/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_Corners.uasset": {
+      "sha256": "7fac0262911d9e596d6ecf7b90a0c5ee67d35298d2b880b3be5f4db2770da546",
+      "size": 127608
+    },
+    "Content/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_FullxFull.uasset": {
+      "sha256": "6338350a0a9400406fdf10540b8c0ddbdaecb3dfc666fabbd2e0ed0540764669",
+      "size": 133234
+    },
+    "Content/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_Trims.uasset": {
+      "sha256": "036173e0820f0743094ff4d0fb37b834245154bf732b61215cc97f9b7d50df6a",
+      "size": 123234
+    },
+    "Content/Stylized_Village/Assets/Architecture/Plaster/_Materials/MI_Plaster_Architecture.uasset": {
+      "sha256": "f8490f30f204ff19d35e7a8cf4acc29bbdb01727c05cd110f1ff70489fb861fa",
+      "size": 24458
+    },
+    "Content/Stylized_Village/Assets/Architecture/RoofTiles/Round/_Materials/MI_RoofTiles_Round_Full.uasset": {
+      "sha256": "ba1331212be8adbd8821b782983eb8acc1307fb3fee0889ae6d94abd39f1bd69",
+      "size": 19503
+    },
+    "Content/Stylized_Village/Assets/Architecture/StoneFloor/_Materials/MI_StonePath_01.uasset": {
+      "sha256": "06f6105282af529bfaa1c21cb1bbf7029423538d239fdc931de5f6ffff0f5f68",
+      "size": 117465
+    },
+    "Content/Stylized_Village/Assets/Architecture/Windows/_Materials/MI_Windows_Brown.uasset": {
+      "sha256": "71037097fbf3c4124e49bcb4b440c86470044a51a1e3732a19c0f0b4d0decf74",
+      "size": 127749
+    },
+    "Content/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_Floors.uasset": {
+      "sha256": "26d78c6eb04e1b5ee23063e1f2e4c96f3ad3507e7bfdd274e182adbad7ec341c",
+      "size": 132609
+    },
+    "Content/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_PiecesBeams_Large.uasset": {
+      "sha256": "3bbfdf0b361894388a389967ec775b715b9cc3663eecdec8f46f5441c1e8ef56",
+      "size": 128407
+    },
+    "Content/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_Roof.uasset": {
+      "sha256": "8de4f202f1aaec193c96878ce3e7e4303fef48b20139e5002b77dcc7410a5678",
+      "size": 131249
+    },
+    "Content/Stylized_Village/Assets/Foliage/Bushes/_Materials/MI_Bush.uasset": {
+      "sha256": "0386d69e3e39f01278b4334bf1ac004852c9ae9e5b9d8c1faf9b645191d9ee9b",
+      "size": 144474
+    },
+    "Content/Stylized_Village/Assets/Foliage/Grass/_Materials/M_StylizedFoliage.uasset": {
+      "sha256": "2eaaae15e9ad807b747968a6a2185428cbc67802613261f341cbab6fba482388",
+      "size": 134264
+    },
+    "Content/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Material/M_Impostor_SimpleOffset.uasset": {
+      "sha256": "bb865778551f272b9aa18c154ffdebc21ca7f4ce51d85bfd41a1232ce2d0ecf7",
+      "size": 40854
+    },
+    "Content/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Tree_Large_Green/MI_Impostor_Tree_Large_Green.uasset": {
+      "sha256": "200d64c71ed4c821fcfc6c0b56cb8867b819a7db65d4afa3046955a9c605293a",
+      "size": 90584
+    },
+    "Content/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Tree_Medium_Green/MI_Impostor_Tree_Medium_Green.uasset": {
+      "sha256": "eaa5187ef73ac04cc0bbf7afb620d77cdac9fef1da4ccc25f6f168359b68c189",
+      "size": 89811
+    },
+    "Content/Stylized_Village/Assets/Foliage/Trees/_Materials/MI_Bark.uasset": {
+      "sha256": "12f695b9df37ceccd092de3ef222bfaadfe7bc5a8460f62228e091aeeb1fdc4c",
+      "size": 142876
+    },
+    "Content/Stylized_Village/Assets/Foliage/Trees/_Materials/MI_Bark_Tiling.uasset": {
+      "sha256": "1077b70006993925cccf264a556e99f27a3f4f90ed5410f35011f687863d321a",
+      "size": 138521
+    },
+    "Content/Stylized_Village/Assets/Foliage/Trees/_Materials/MI_TreeLeaves.uasset": {
+      "sha256": "0e7758f39f55c1017a4e9a2f9b17778a4930e5f53c784606e85fd813b48d1fdc",
+      "size": 123694
+    },
+    "Content/Stylized_Village/Assets/Foliage/Trees/_Materials/M_Trunk.uasset": {
+      "sha256": "19decf9ac4ec4358f8d0845d2afd6ef2e8d82586f5b171fd9eb71056ffb32adf",
+      "size": 102758
+    },
+    "Content/Stylized_Village/Assets/Props/Furniture/_Materials/MI_Furniture_Crate.uasset": {
+      "sha256": "a6c69dea66fdd36bb828f0ca322a99b9d12d9486a3c38584afe6f267344c54d6",
+      "size": 158584
+    },
+    "Content/Stylized_Village/Assets/Props/Lanterns/Materials/MI_Lanterns_On.uasset": {
+      "sha256": "93c596c32b0813c4304bf233ef2f5d953c2735230658d072520da7caf8503d79",
+      "size": 152520
+    },
+    "Content/Stylized_Village/Assets/Props/Pots/_Materials/MI_Pots_01.uasset": {
+      "sha256": "ee88f36145597c2b1a9dea745b829d610fec248077ca0f6c2bd91e04a44f26fc",
+      "size": 137440
+    },
+    "Content/Stylized_Village/Assets/Proxy/M_PROXY_WindMill.uasset": {
+      "sha256": "ebeb0b14a54e8bd25e8458ad4d26f12a07961a48fad1528b00b53393294db38b",
+      "size": 154149
+    },
+    "Content/Stylized_Village/Assets/Stones/Boulder/_Materials/MI_Boulder_Large.uasset": {
+      "sha256": "f6afb762ee129677a5ca00f5ae67fbcdbe72d25b23b85d0c5a2cdc6f13059a6f",
+      "size": 107216
+    },
+    "Content/Stylized_Village/Assets/Stones/Boulder/_Materials/MI_Boulder_Med.uasset": {
+      "sha256": "3ac84e31ec2dd665733a46cf26fc04142127ff383aab55d1659bd066ce3a58a1",
+      "size": 111323
+    },
+    "Content/Stylized_Village/Assets/Terrain/Material_Landscape/MI_Terrain.uasset": {
+      "sha256": "5e01f145bcc9f9fb25c3c48e96b9d24e28f285db10f14d1ad6076ce2bb1264ac",
+      "size": 100280
+    },
+    "Content/Stylized_Village/Assets/Terrain/Material_Landscape/M_Terrain.uasset": {
+      "sha256": "93be5f3fbaaa153221c65fc1351bcf2b8af9d01a730fcb4357e61d83d477cc16",
+      "size": 54745
+    },
+    "Content/Stylized_Village/MasterMaterials/MM_Props/Material/MM_MasterMaterial.uasset": {
+      "sha256": "ce0ad2af2a9b22271f0df0b843b3d4b2941857f9dbd1f54cf7882ee70455345b",
+      "size": 171307
+    }
+  },
+  "dirty_before": [],
+  "dirty_after": [],
+  "assets_saved": false,
+  "properties_set": false,
+  "validation_gates_changed": false,
+  "input_sha256": {
+    "baseline-live/baseline-materials.json": "7d4b2504a5588097cecb803c7637756809a53a2391e09fc4e576f047662984ba",
+    "author-live/triplanar.json": "cd3b1e386c2fba6f0d939b515be421bca5227ac0112cdf86c16fcd01f039d65e"
+  },
+  "diagnostic_helper_sha256": "7dd6ea0a16914d93d839898929f256e8aa56bace9bea20861a814240a4c336f1",
+  "reader_script_sha256": {
+    "Scripts/Editor/ValidateCaves20261118.py": "58b6d50a67b52822000f8a778b0ae120096405264056155cea745774720106fd",
+    "Scripts/Editor/InspectCaveSites20261118.py": "55c01c8ab8ec453ac2454242a1db3998c6518120eeb225828e87741854fa5ace",
+    "Scripts/Editor/NaturalRoadMaterial20261117.py": "66ebc1c58cd9abddf14739c7624e302b09466a4b2702d5ba63fb98daedf7fb03"
+  },
+  "raw_result_local_retained": "Feature/doc/evidence/caves20261118/cold-material-state/result.json",
+  "raw_result_sha256": "2615623d34ca68f66bf4f7287fa1875394c75c214f1ede6a362bb26c1dd7b7f3",
+  "startup_sha256": "948bd3eb91dd955ea04a55a18825ebaeda58920387a8bc90a60791a2ac913a43",
+  "installed_source_proof": [
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/Materials/MaterialExpressions.cpp",
+      "sha256": "66909943c30bdcea8f8bc47bd3b719093eeed4d11715b94cb120fb4f4330d815",
+      "lines": [
+        6350,
+        6354,
+        6778,
+        6784,
+        6788
+      ],
+      "finding": "Break/Set material input names call NSLOCTEXT.ToString; attribute names call localized display names."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Editor/MaterialEditor/Private/MaterialEditingLibrary.cpp",
+      "sha256": "96051980458dad86719f195072da4bd34eebd07a80d647ebb50bbbb0626e5565",
+      "lines": [
+        1203,
+        1217,
+        1222
+      ],
+      "finding": "Public Python input-name reader obtains Expression.GetInputName and returns Name.ToString."
+    },
+    {
+      "file": "D:/Program Files/UE_5.8/Engine/Source/Runtime/Engine/Private/Materials/MaterialAttributeDefinitionMap.cpp",
+      "sha256": "29517c81e702d9d571f8e907e9a2a9e921233b24c28ffcc6dbf8077bd69dc27f",
+      "lines": [
+        183,
+        521
+      ],
+      "finding": "Material attribute BaseColor display name uses LOCTEXT(BaseColor, Base Color)."
+    }
+  ],
+  "conclusion_ko": "차이는 한글/영문 입력 핀 표시 이름과 그 문자열을 포함한 파생 graph SHA뿐이다. renderer·ISM 사용 플래그·파라미터·파일·parent·노드 속성·연결 차이는 관측되지 않았다. 기존 비교 조건은 유지하고 cold 프로세스의 언어·로캘을 기준 관측과 맞춘 새 실행으로 재검증한다.",
+  "full_expected_actual_graphs_copied": false,
+  "full_route_cold_scope_acceptance_pending": true
+}

@@ -50,7 +50,7 @@ private:
         auto* Appearance=Character->GetAppearanceCameraComponent();
         const bool bAppearance=Appearance && Appearance->IsAppearanceCameraActive();
         const float InitialPitch=bAppearance ? Appearance->InitialViewPitch : Presentation->InitialFullBodyViewPitch;
-        Check(Presentation->bEnableInitialFullBodyViewPitch && FMath::IsNearlyEqual(InitialPitch,bAppearance ? -20.f : -30.f,.01f),TEXT("initial_view_defaults_incorrect"));
+        Check(Presentation->bEnableInitialFullBodyViewPitch && FMath::IsNearlyEqual(InitialPitch,bAppearance ? -10.f : -30.f,.01f),TEXT("initial_view_defaults_incorrect"));
         Check((Presentation->IsFullBodyPresentationActive() || bAppearance) && Presentation->HasHandledInitialFullBodyViewPitch(),TEXT("fresh_initialization_not_handled"));
         Check(FMath::Abs(FRotator::NormalizeAxis(OriginalControl.Pitch)-InitialPitch)<.1f,TEXT("fresh_spawn_control_pitch_incorrect"));
         CheckCameraComposition();

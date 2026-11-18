@@ -1,0 +1,119 @@
+{
+  "status": "numeric_pass_requires_rendered_review",
+  "source": "/Game/Rogue10m/Characters/Arin/Standing20261110/A_Breathing_Arin_Raw.A_Breathing_Arin_Raw",
+  "baseline": "/Game/Rogue10m/Characters/Arin/RefinedV3/ArinIdle",
+  "target": "/Game/Rogue10m/Characters/Arin/Standing20261110/A_Arin_BreathingIdle",
+  "lower_body": "existing accepted Arin idle pose, zero drift",
+  "preserved_bones": [
+    "Arin_Rig",
+    "ball_r",
+    "calf_r",
+    "pelvis",
+    "neck",
+    "root",
+    "foot_l",
+    "calf_l",
+    "thigh_l",
+    "ball_l",
+    "thigh_r",
+    "foot_r"
+  ],
+  "upper_body_source_weights": {
+    "spine_01": 0.35,
+    "spine_02": 0.4,
+    "spine_03": 0.4,
+    "neck_01": 0.35,
+    "head": 0.35,
+    "clavicle_l": 0.7,
+    "clavicle_r": 0.7,
+    "upperarm_l": 0.85,
+    "upperarm_r": 0.85,
+    "lowerarm_l": 0.85,
+    "lowerarm_r": 0.85,
+    "hand_l": 0.7,
+    "hand_r": 0.7
+  },
+  "duration": 9.933333396911621,
+  "validation": {
+    "asset": "/Game/Rogue10m/Characters/Arin/Standing20261110/A_Arin_BreathingIdle.A_Arin_BreathingIdle",
+    "mesh": "/Game/Rogue10m/Characters/Arin/RefinedV3/SK_Arin.SK_Arin",
+    "duration": 9.933333396911621,
+    "ranges_cm": {
+      "root": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "pelvis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "head": [
+        1.0035270793185778,
+        1.5452441404864556,
+        0.044986080963923314
+      ],
+      "upperarm_l": [
+        0.5591763923438009,
+        2.818091872531239,
+        2.3727458384423983
+      ],
+      "lowerarm_l": [
+        2.030140113183215,
+        5.203093148009095,
+        2.614927750290093
+      ],
+      "hand_l": [
+        6.469063055416008,
+        6.049994594474622,
+        2.8216191652451528
+      ],
+      "upperarm_r": [
+        0.6090663157107699,
+        3.3372373259447583,
+        2.172509267177702
+      ],
+      "lowerarm_r": [
+        0.9483223442186635,
+        5.6498204716072715,
+        2.2666918454808496
+      ],
+      "hand_r": [
+        3.494700637442868,
+        7.519495603461658,
+        2.483039419600871
+      ],
+      "thigh_l": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calf_l": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "foot_l": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "thigh_r": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calf_r": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "foot_r": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  }
+}

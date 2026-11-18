@@ -1,0 +1,23 @@
+{
+  "status": "visual_gate_failed",
+  "reviewed_images": [
+    "01_GreatSword_Primary01_Cast.png",
+    "02_GreatSword_Primary01_Trajectory.png",
+    "03_GreatSword_Primary01_Impact.png",
+    "04_Knuckle_Primary01_Cast.png",
+    "05_Knuckle_Primary01_Trajectory.png",
+    "06_Knuckle_Primary01_Impact.png"
+  ],
+  "reviewed_count": 6,
+  "total_captured": 6,
+  "numeric_age_particle_gate_passed": true,
+  "effects_clearly_visible": false,
+  "asset_defect_confirmed": false,
+  "notes": [
+    "Actual GPU-rendered screenshots show body/weapon but no clearly readable orange/gold skill effects.",
+    "C has opaque cylinder/angle occlusion. D removes that occlusion and reverses camera, but still does not show the effects.",
+    "Do not scale to another full batch until rendering/owner/visibility diagnostics identify the cause.",
+    "No source material/candidate/DA mutation; not gameplay activation or final art approval."
+  ],
+  "next_diagnostic": "Use explicit transient NiagaraActor component matching successful magic-preview ownership, and record actual owner/component/render flags. WorldSettings SetHidden(false) overrides AInfo hidden default, so hidden owner is only a hypothesis until measured."
+}

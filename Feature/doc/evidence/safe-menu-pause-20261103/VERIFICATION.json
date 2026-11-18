@@ -1,0 +1,106 @@
+{
+  "BaselineCommit": "e5ec1703",
+  "Branch": "Sprint#9-25-safe-menu-pause",
+  "Native": [
+    {
+      "Label": "MenuPause1103A",
+      "Rendered": false,
+      "BeforeCount": 356,
+      "AfterCount": 358,
+      "Preserved": true,
+      "Checks": 71,
+      "Failures": 0,
+      "ExitCode": 0
+    },
+    {
+      "Label": "MenuPause1103R",
+      "Rendered": true,
+      "BeforeCount": 358,
+      "AfterCount": 360,
+      "Preserved": true,
+      "Checks": 71,
+      "Failures": 0,
+      "ExitCode": 0
+    }
+  ],
+  "Regressions": [
+    {
+      "Suite": "AttackResources_Menu1103",
+      "Passed": 4,
+      "Failed": 0,
+      "Warnings": 0,
+      "NotRun": 0
+    },
+    {
+      "Suite": "HybridSkillTree_Menu1103",
+      "Passed": 3,
+      "Failed": 0,
+      "Warnings": 0,
+      "NotRun": 0
+    },
+    {
+      "Suite": "ProgressionRequirements_Menu1103",
+      "Passed": 4,
+      "Failed": 0,
+      "Warnings": 0,
+      "NotRun": 0
+    },
+    {
+      "Suite": "RunCurrencyBaseline_Menu1103",
+      "Passed": 6,
+      "Failed": 0,
+      "Warnings": 0,
+      "NotRun": 0
+    },
+    {
+      "Suite": "WeaponCooldown_Menu1103",
+      "Passed": 5,
+      "Failed": 0,
+      "Warnings": 0,
+      "NotRun": 0
+    },
+    {
+      "Suite": "WeaponSwitch_Menu1103",
+      "Passed": 8,
+      "Failed": 0,
+      "Warnings": 0,
+      "NotRun": 0
+    }
+  ],
+  "OriginalSaveCount": 356,
+  "OriginalSavesUnchanged": true,
+  "FinalSaveCount": 360,
+  "ExistingNextRunWipUnchanged": true,
+  "Screenshots": [
+    {
+      "Name": "01_inventory_paused.png",
+      "Bytes": 1643478,
+      "SHA256": "2231425429DF2D38D762F0CEEAEA979607BAA3874B91A92C1D9719269617D151",
+      "Resolution": "1280x720",
+      "Decoded": true,
+      "RootViewed": true
+    },
+    {
+      "Name": "02_nested_menus_paused.png",
+      "Bytes": 1378026,
+      "SHA256": "3C6FFAF97DCE09F456CAA0E005EDA28ABD1FCC1B77A1865B879831C8E1F8A3FF",
+      "Resolution": "1280x720",
+      "Decoded": true,
+      "RootViewed": true
+    },
+    {
+      "Name": "03_active_run_menu_continues.png",
+      "Bytes": 1502766,
+      "SHA256": "F6591E063080C9DAB1D9454139C793CCE9B17E7402D89F2242E22F0E1C6525C6",
+      "Resolution": "1280x720",
+      "Decoded": true,
+      "RootViewed": true
+    }
+  ],
+  "PhysicalInput": "not_performed",
+  "NormalNextRun": "not_performed",
+  "MovieRecording": "cancelled_not_retried",
+  "Build": "final_cpp_and_link_passed_47.69_seconds",
+  "LauncherFreshnessFixtures": 2,
+  "LauncherASTErrors": 0
+}

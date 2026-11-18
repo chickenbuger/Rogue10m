@@ -1,0 +1,115 @@
+{
+  "schema": "Rogue10m.NormalGrowthVerification.v1",
+  "run": "BasicRun1101L",
+  "base_commit": "c9cca5581714309f7a1da6b966465c6bcd327a67",
+  "branch": "Sprint#9-23-normal-growth-boss-qa",
+  "runtime_CPP_SHA256": "a23d08bddda754aba6dcfb796b5428e53dfff86e545bb51921d8d22a1796e2e0",
+  "editor_build": "Succeeded; actual compile; 12.64 seconds",
+  "launcher_parse": "PASS",
+  "parser_only_fixtures": {
+    "pass": 26,
+    "failure": 0
+  },
+  "memory_only_preflight_cases": {
+    "pass": 11,
+    "failure": 0
+  },
+  "gameplay": {
+    "outcome": "returned_death",
+    "full_boss_completion": false,
+    "programmatic_rendered_input": true,
+    "physical_human_play": false,
+    "no_state_fixtures": true,
+    "GreatSword_equipment_UI_verified": true,
+    "natural_player_level": 3,
+    "natural_GreatSword_mastery": 3,
+    "UMG_learning_node": "I.Mana.Entry",
+    "points_before": 2,
+    "points_after": 1,
+    "spent_before": 0,
+    "spent_after": 1,
+    "effective_GreatSword_identity": "Mana",
+    "Mana_proc_damage": "not_proven; only two boss primary requests",
+    "boss_minimum_sampled_HP": 9913.363,
+    "boss_HP_max": 10000,
+    "boss_primary_requests": 2,
+    "dodge_requested": 2,
+    "dodge_accepted": 2,
+    "dodge_acceptance_is_not_evade_success": true,
+    "result_lobby_points_gain": 13,
+    "saved_return_Hub_selected_reset_and_Discovery": true,
+    "same_run_next_field": "not_performed",
+    "wrapper_exit": 0,
+    "driver_wall_seconds": 501.002
+  },
+  "preservation": {
+    "old_saves": 350,
+    "old_missing_or_changed": 0,
+    "after_saves": 352,
+    "original_package_hashes_checked": 31,
+    "packages_missing_or_changed": 0,
+    "OpenRunMap_unchanged": true
+  },
+  "visual_limitations": [
+    "Legacy default view still shows body obstruction when looking down",
+    "Return capture includes shader/texture preparation and sky warning",
+    "No exact contact frame or full human play validation"
+  ],
+  "next_analysis": [
+    "Abyss warning escape followed by reentry before impact",
+    "Artificial dodge reserve blocks otherwise free basic attacks",
+    "Granted potions were not used during the boss fight"
+  ],
+  "media": [
+    {
+      "file": "17_gear_ui_after.png",
+      "sha256": "45806636038f6ebee571abccb880eebc79a218c2c5f14cf6541d864c061b52bd",
+      "size": [
+        1280,
+        720
+      ],
+      "opened_and_decoded": true,
+      "visually_reviewed_by_root": true
+    },
+    {
+      "file": "29_skill_confirm.png",
+      "sha256": "26f3366ccf310166caa56095d7c0662b81895b23223ea2298cb2852a19c7088d",
+      "size": [
+        1280,
+        720
+      ],
+      "opened_and_decoded": true,
+      "visually_reviewed_by_root": true
+    },
+    {
+      "file": "32_boss_reached.png",
+      "sha256": "1434529192828d5128c4f5786c3a3b9037f3f58fb86228cdac1f4c59f61f7264",
+      "size": [
+        1280,
+        720
+      ],
+      "opened_and_decoded": true,
+      "visually_reviewed_by_root": true
+    },
+    {
+      "file": "33_result.png",
+      "sha256": "43e54afe2f6b2db38c6c46aa6fceceaf87aac7731a9e49f5e087f442f7b4d9ad",
+      "size": [
+        1280,
+        720
+      ],
+      "opened_and_decoded": true,
+      "visually_reviewed_by_root": true
+    },
+    {
+      "file": "34_returned_hub.png",
+      "sha256": "a707f2306483dedf1a9d83be7846924b8b35bfeb17678e75bf9b38322e5b84c2",
+      "size": [
+        1280,
+        720
+      ],
+      "opened_and_decoded": true,
+      "visually_reviewed_by_root": true
+    }
+  ]
+}

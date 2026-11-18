@@ -1,0 +1,41 @@
+{
+  "utc": "2026-10-31T17:45:43.264345+00:00",
+  "baseline": {
+    "manifest": "C:\\Users\\PC\\Documents\\Codex\\2026-10-27\\task\\preservation-20261031-165446\\manifest.json",
+    "saves": 270,
+    "files": 1127
+  },
+  "checked_backup_files": 1127,
+  "intentionally_changed_existing_files": [
+    "Scripts/VerifyOwnerView.ps1",
+    "Source/Rogue10m/Components/Rogue10mAppearanceCameraComponent.cpp",
+    "Source/Rogue10m/Components/Rogue10mAppearanceCameraComponent.h",
+    "Source/Rogue10m/Components/Rogue10mOwnerArmsComponent.cpp",
+    "Source/Rogue10m/Components/Rogue10mOwnerArmsComponent.h",
+    "Source/Rogue10m/Tests/Rogue10mOwnerViewRuntimeTest.cpp"
+  ],
+  "unexpected_existing_changes": [],
+  "preexisting_saves_preserved": 270,
+  "current_saves": 284,
+  "asset_packages_unchanged": 31,
+  "regression": {
+    "AttackResources": 4,
+    "WeaponCooldown": 5,
+    "WeaponSwitch": 8,
+    "ProgressionRequirements": 4,
+    "HybridSkillTree": 3,
+    "RunCurrencyBaseline": 6
+  },
+  "render_counts": {
+    "OFBaseB1031": 252506,
+    "OFCandB1031": 252506,
+    "OFWeightB1031": 103802,
+    "OFOrigB1031": 106518
+  },
+  "final_PNG": 70,
+  "intermediate_PNG_retained": 55,
+  "default_owner_view": false,
+  "default_framing": false,
+  "remote_operations": "none",
+  "visual_scope": "reproduced downlook/wall spikes and neutral framing corrected in reviewed images; not universal clipping-free certification"
+}

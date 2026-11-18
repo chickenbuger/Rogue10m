@@ -1,0 +1,12 @@
+PASS actual_controller_and_profile_subsystems
+PASS selected_QA_profile_survives_process_restart
+PASS actual_selected_pawn_attached_and_save_ready
+PASS real_persistent_potion_definition_loaded
+PASS live_world_slime_has_explicit_provisional_25pct_one_potion_table
+PASS progression_destination_is_exact_QA_namespace
+PASS prior_process_expected_snapshot_loaded
+PASS cross_process_profile_identity_matches
+PASS new_process_restores_exact_collected_GUID_quantity_and_asset
+checks=9
+failures=0
+NOTE=Controlled StartHub normal-monster fixture; cloned live slime data, guaranteed transient table, zero XP, no AI, real potion and collision overlap. Not normal combat/balance proof. Uncollected world drops are not serialized. SpawnActor failure not forced.

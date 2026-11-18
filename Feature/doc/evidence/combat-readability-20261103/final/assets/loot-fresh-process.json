@@ -1,0 +1,154 @@
+{
+  "slime": {
+    "monster_id": "VerdantSlime",
+    "display_name": "초록 점액체",
+    "level": 1,
+    "monster_rank": "<Rogue10mMonsterRank.NORMAL: 0>",
+    "is_boss": false,
+    "portrait_icon": null,
+    "experience_reward": 18,
+    "loot_table": {
+      "path": "/Game/Rogue10m/World/OpenWorld/Loot/DA_Loot_OW_VerdantSlime_PotionExample.DA_Loot_OW_VerdantSlime_PotionExample",
+      "class": "/Script/Rogue10m.Rogue10mLootTableDataAsset"
+    },
+    "max_health": 70.0,
+    "max_stamina": 100.0,
+    "max_mana": 100.0,
+    "health_regeneration_per_second": 0.10000000149011612,
+    "stamina_regeneration_per_second": 0.10000000149011612,
+    "mana_regeneration_per_second": 0.10000000149011612,
+    "skeletal_mesh": {
+      "path": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_SK.Slime_SK",
+      "class": "/Script/Engine.SkeletalMesh"
+    },
+    "animation_blueprint_class": null,
+    "mesh_relative_location": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -90.0
+    },
+    "mesh_relative_rotation": {
+      "pitch": 0.0,
+      "yaw": -90.0,
+      "roll": 0.0
+    },
+    "mesh_relative_scale": {
+      "x": 0.75,
+      "y": 0.75,
+      "z": 0.75
+    },
+    "walk_speed": 220.0,
+    "detection_range": 1200.0,
+    "stop_distance": 105.0,
+    "behavior_tree_asset": {
+      "path": "/Game/AI/Monster/BT_Monster.BT_Monster",
+      "class": "/Script/AIModule.BehaviorTree"
+    },
+    "lose_sight_range": 2200.0,
+    "forget_target_seconds": 5.0,
+    "patrol_radius": 600.0,
+    "patrol_wait_seconds": 2.0,
+    "max_chase_distance": 2500.0,
+    "attack_skill": null,
+    "attack_pattern_profile": {
+      "path": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_VerdantSlime.DA_OW_BasicAttack_VerdantSlime",
+      "class": "/Script/Rogue10m.Rogue10mMonsterAttackPatternProfile"
+    },
+    "attack_range": 120.0,
+    "attack_damage": 6.0,
+    "attack_interval": 1.4500000476837158,
+    "destroy_on_death": true
+  },
+  "normal": {
+    "monster_id": "VerdantSlime",
+    "display_name": "초록 점액체",
+    "level": 1,
+    "monster_rank": "<Rogue10mMonsterRank.NORMAL: 0>",
+    "is_boss": false,
+    "portrait_icon": null,
+    "experience_reward": 18,
+    "loot_table": null,
+    "max_health": 70.0,
+    "max_stamina": 100.0,
+    "max_mana": 100.0,
+    "health_regeneration_per_second": 0.10000000149011612,
+    "stamina_regeneration_per_second": 0.10000000149011612,
+    "mana_regeneration_per_second": 0.10000000149011612,
+    "skeletal_mesh": {
+      "path": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_SK.Slime_SK",
+      "class": "/Script/Engine.SkeletalMesh"
+    },
+    "animation_blueprint_class": null,
+    "mesh_relative_location": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -90.0
+    },
+    "mesh_relative_rotation": {
+      "pitch": 0.0,
+      "yaw": -90.0,
+      "roll": 0.0
+    },
+    "mesh_relative_scale": {
+      "x": 0.75,
+      "y": 0.75,
+      "z": 0.75
+    },
+    "walk_speed": 220.0,
+    "detection_range": 1200.0,
+    "stop_distance": 105.0,
+    "behavior_tree_asset": {
+      "path": "/Game/AI/Monster/BT_Monster.BT_Monster",
+      "class": "/Script/AIModule.BehaviorTree"
+    },
+    "lose_sight_range": 2200.0,
+    "forget_target_seconds": 5.0,
+    "patrol_radius": 600.0,
+    "patrol_wait_seconds": 2.0,
+    "max_chase_distance": 2500.0,
+    "attack_skill": null,
+    "attack_pattern_profile": null,
+    "attack_range": 120.0,
+    "attack_damage": 6.0,
+    "attack_interval": 1.4500000476837158,
+    "destroy_on_death": true
+  },
+  "potion": {
+    "item_id": "HealthPotion",
+    "category": "<Rogue10mItemCategory.CONSUMABLE: 1>",
+    "equip_slot_type": "<Rogue10mInventorySlotType.CONSUMABLE: 13>",
+    "max_stack_size": 20,
+    "inventory_size": {
+      "x": 1,
+      "y": 1
+    },
+    "restore_health": 25.0,
+    "dropped_world_mesh": null
+  },
+  "package_sha256": {
+    "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_VerdantSlime": "7c29405c7afefc9b02c21ad12163d539af90edbf3fca98c6ad4aadf3f92759c5",
+    "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_VerdantSlime": "0443ba14375a0d47228ecbdee2852b6af0fe197d45586e9512b86463bc788f99",
+    "/Game/DataAsset/Item/Starter/DA_Item_HealthPotion": "4ec252c7dbb6e1e4d1851537ab068444357fdf8260d343ee7940fcbe1047607e",
+    "/Game/World/Loot/BP_HeavyLootBag": "eabe0372ef1f7ae4433934435aa58574bde271500c2860192ba8cb527207b543",
+    "/Game/Rogue10m/World/OpenWorld/Loot/DA_Loot_OW_VerdantSlime_PotionExample": "74f20381a918dc788ebe9f9d50c06ee7c4ef1d54ad9f41adf0c69ad9160cc062"
+  },
+  "table": {
+    "loot_table_id": "Loot.OW.VerdantSlime.PotionExample",
+    "dropped_item_class": null,
+    "balance_notes": "Provisional playable example only: VerdantSlime independently drops one HealthPotion at 25%. This is not final loot/economy balance. Other monsters remain unassigned. Native DroppedItem prototype presentation; BP_HeavyLootBag is unchanged because its current ItemMesh collision is disabled.",
+    "entries": [
+      {
+        "item_data": {
+          "path": "/Game/DataAsset/Item/Starter/DA_Item_HealthPotion.DA_Item_HealthPotion",
+          "class": "/Script/Rogue10m.Rogue10mItemDataAsset"
+        },
+        "drop_chance": 0.25,
+        "min_quantity": 1,
+        "max_quantity": 1
+      }
+    ]
+  },
+  "verificationEngine": "5.8.4-58902052+++UE5+Release-5.8",
+  "verificationPid": 37196,
+  "failedEvidenceUnchanged": true
+}

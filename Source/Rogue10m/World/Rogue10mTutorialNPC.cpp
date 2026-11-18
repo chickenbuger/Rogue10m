@@ -16,6 +16,7 @@
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCharacterProfileSubsystem.h"
 #include "Rogue10mGameState.h"
+#include "Rogue10mGameMode.h"
 #include "Rogue10mInventoryComponent.h"
 #include "Rogue10mItemDataAsset.h"
 #include "Rogue10mPlayerController.h"
@@ -137,13 +138,18 @@ bool ARogue10mTutorialNPC::IsPlayerAvailable(ARogue10mCharacter* Character, floa
 	const ARogue10mPlayerController* RogueController = Cast<ARogue10mPlayerController>(Controller);
 	const bool bOwnTraitWindow = RogueController && RogueController->IsTraitWindowVisible()
 		&& RogueController->GetTraitServiceNPC() == this && NearbyController.Get() == Controller;
+	const bool bOwnDialogue = RogueController && RogueController->GetDialogueNPC() == this
+		&& NearbyController.Get() == Controller && (RogueController->IsNpcDialogueVisible() || bOwnTraitWindow);
+	const auto* Mode = GetWorld() ? GetWorld()->GetAuthGameMode<ARogue10mGameMode>() : nullptr;
+	const bool bOwnMenuPause = bOwnTraitWindow && Mode && Mode->HasMenuPause(const_cast<APlayerController*>(Controller));
 	if (Character->IsDead() || !Controller || !Controller->IsLocalController()
-		|| (Controller->IsMoveInputIgnored() && !bOwnTraitWindow) || UGameplayStatics::IsGamePaused(this)
+		|| (Controller->IsMoveInputIgnored() && !bOwnTraitWindow && !bOwnDialogue)
+		|| (UGameplayStatics::IsGamePaused(this) && !bOwnMenuPause)
 		|| FVector::DistSquared(GetActorLocation(), Character->GetActorLocation()) > FMath::Square(Radius))
 	{
 		return false;
 	}
-	return !RogueController || !RogueController->IsAnyBlockingWindowVisible() || bOwnTraitWindow;
+	return !RogueController || !RogueController->IsAnyBlockingWindowVisible() || bOwnTraitWindow || bOwnDialogue;
 }
 
 void ARogue10mTutorialNPC::FindOverlappingPlayer()
@@ -173,7 +179,7 @@ void ARogue10mTutorialNPC::ActivateNearbyPlayer(ARogue10mCharacter& Character)
 		bInteractBound = true;
 	}
 	TutorialWidget = CreateWidget<URogue10mTutorialWidget>(Controller, URogue10mTutorialWidget::StaticClass());
-	if (TutorialWidget) { TutorialWidget->AddToPlayerScreen(8); }
+	if (TutorialWidget) { TutorialWidget->AddToPlayerScreen(180); }
 	GetWorldTimerManager().SetTimer(NearbyTimer, this, &ThisClass::UpdateNearbyPlayer, 0.1f, true);
 	UpdateNearbyPlayer();
 }
@@ -186,6 +192,7 @@ void ARogue10mTutorialNPC::ReleaseNearbyPlayer()
 	bDialogueOpen = false;
 	if (ARogue10mPlayerController* Controller = Cast<ARogue10mPlayerController>(NearbyController.Get()))
 	{
+		Controller->EndNpcDialogueInput(this);
 		if (Controller->GetTraitServiceNPC() == this) { Controller->CloseTraitWindow(); }
 	}
 	if (NearbyController.IsValid()) { DisableInput(NearbyController.Get()); }
@@ -219,8 +226,10 @@ void ARogue10mTutorialNPC::UpdateNearbyPlayer()
 	ARogue10mCharacter* Character = NearbyCharacter.Get();
 	if (!Character || !NearbyController.IsValid()
 		|| Character->GetController() != NearbyController.Get()
-		|| FVector::DistSquared(GetActorLocation(), Character->GetActorLocation())
-			> FMath::Square(FMath::Max(InteractionRadius + 50.0f, DetectionRadius)))
+		// A capsule overlaps the discovery sphere before its actor center enters the radius.
+		// Keep discovery alive throughout that overlap; the smaller interaction range below
+		// still controls prompt visibility, dialogue and all services.
+		|| !DetectionArea || !DetectionArea->IsOverlappingActor(Character))
 	{
 		ReleaseNearbyPlayer();
 		return;
@@ -267,6 +276,7 @@ bool ARogue10mTutorialNPC::BeginDialogue(ARogue10mCharacter* Character)
 	bRewardReceivedThisDialogue = false;
 	DialogueStatus = FText::GetEmpty();
 	RefreshDialogueView();
+	if (auto* Controller = Cast<ARogue10mPlayerController>(NearbyController.Get())) { Controller->BeginNpcDialogueInput(this); }
 	return true;
 }
 
@@ -276,6 +286,7 @@ void ARogue10mTutorialNPC::CloseDialogue()
 	bDialogueOpen = false;
 	if (ARogue10mPlayerController* Controller = Cast<ARogue10mPlayerController>(NearbyController.Get()))
 	{
+		Controller->EndNpcDialogueInput(this);
 		if (Controller->GetTraitServiceNPC() == this) { Controller->CloseTraitWindow(); }
 	}
 	GuideAnimation->SetDialogueOpen(false);
@@ -409,9 +420,11 @@ void ARogue10mTutorialNPC::RefreshDialogueView()
 		: bReceived || !Data.StartingItem
 			? NSLOCTEXT("Rogue10mTutorial", "CloseAction", "F  대화 닫기")
 			: NSLOCTEXT("Rogue10mTutorial", "ClaimAction", "F  출발 보급품 받기  ·  멀어지면 대화 종료");
-	TutorialWidget->SetDialogueView(Data.GuideName, Data.GuideRole, Dialogue, GetDialogueStatus(), Action);
+	TutorialWidget->SetDialogueView(Data.GuideName, Data.GuideRole, Dialogue, GetDialogueStatus(), bDialogueOpen
+		? FText::Format(NSLOCTEXT("Rogue10mTutorial", "ChoiceControls", "클릭 이용 · ↑↓ 선택 · Enter 이용 · Esc 닫기\n{0}"), Action) : Action);
 	TutorialWidget->SetServiceView(bDialogueOpen ? BuildServiceText() : FText::GetEmpty());
-	TutorialWidget->SetVisibility(ESlateVisibility::HitTestInvisible);
+	TutorialWidget->SetServiceChoices(bDialogueOpen ? this : nullptr, BuildServiceChoices(), SelectedServiceIndex,
+		bDialogueOpen && !bReceived && Data.StartingItem != nullptr);
 }
 
 URogue10mTownProgressionComponent* ARogue10mTutorialNPC::FindTownProgression() const
@@ -538,7 +551,9 @@ bool ARogue10mTutorialNPC::UpgradeTrait(ERogue10mTownTrait Trait)
 	}
 	const FRogue10mTraitDefinition Definition = Town->GetUpgradeDefinition(Trait, &GetServiceData());
 	return FinishService(Town->TryUpgradeTrait(Trait, &GetServiceData()),
-		FText::Format(NSLOCTEXT("Rogue10mTown", "TraitUpgradeCost", "{0} 강화 완료 · 특성 포인트 {1} 사용"), Definition.DisplayName, FText::AsNumber(Definition.PointCost)),
+		FText::Format(Town->UsesLobbyBudget()
+			? NSLOCTEXT("Rogue10mTown", "LobbyTraitUpgradeCost", "{0} 강화 완료 · 로비 재화 {1} 사용")
+			: NSLOCTEXT("Rogue10mTown", "GrowthTraitUpgradeCost", "{0} 강화 완료 · 성장 포인트 {1} 사용"), Definition.DisplayName, FText::AsNumber(Definition.PointCost)),
 		NSLOCTEXT("Rogue10mTown", "TraitUpgradeFailed", "현재 상태에서 특성을 강화할 수 없습니다."));
 }
 
@@ -599,7 +614,9 @@ bool ARogue10mTutorialNPC::ResetTraits()
 	URogue10mTownProgressionComponent* Town = FindTownProgression();
 	const int32 Refund = Town ? Town->GetSpentTraitPoints() : 0;
 	return FinishService(Town && Town->TryResetTraits(),
-		FText::Format(NSLOCTEXT("Rogue10mTraits", "ResetComplete", "특성 재분배 완료 · {0}포인트 반환"), FText::AsNumber(Refund)),
+		FText::Format(Town && Town->UsesLobbyBudget()
+			? NSLOCTEXT("Rogue10mTraits", "LobbyResetComplete", "특성 재분배 완료 · 로비 재화 {0} 반환")
+			: NSLOCTEXT("Rogue10mTraits", "GrowthResetComplete", "특성 재분배 완료 · 성장 포인트 {0} 반환"), FText::AsNumber(Refund)),
 		NSLOCTEXT("Rogue10mTraits", "ResetFailed", "현재 상태에서는 특성을 재분배할 수 없습니다."));
 }
 
@@ -648,19 +665,34 @@ void ARogue10mTutorialNPC::SetServiceInputEnabled(bool bEnabled)
 void ARogue10mTutorialNPC::SelectPreviousService()
 {
 	if (!bDialogueOpen) { return; }
-	SelectedServiceIndex = (SelectedServiceIndex + 6) % 7;
-	RefreshDialogueView();
+	NavigateService(-1);
 }
 
 void ARogue10mTutorialNPC::SelectNextService()
 {
 	if (!bDialogueOpen) { return; }
-	SelectedServiceIndex = (SelectedServiceIndex + 1) % 7;
+	NavigateService(1);
+}
+
+void ARogue10mTutorialNPC::NavigateService(int32 Delta)
+{
+	if (!bDialogueOpen || !IsPlayerAvailable(NearbyCharacter.Get(), InteractionRadius)) { return; }
+	const int32 Count = FMath::Min(7, BuildServiceChoices().Num());
+	if (Count <= 0) { return; }
+	SelectedServiceIndex = ((SelectedServiceIndex + Delta % Count) % Count + Count) % Count;
 	RefreshDialogueView();
+}
+
+void ARogue10mTutorialNPC::ActivateService(int32 Index)
+{
+	if (!bDialogueOpen || !IsPlayerAvailable(NearbyCharacter.Get(), InteractionRadius)
+		|| Index < 0 || Index >= FMath::Min(7, BuildServiceChoices().Num())) { return; }
+	SelectedServiceIndex = Index; ExecuteSelectedService();
 }
 
 void ARogue10mTutorialNPC::ExecuteSelectedService()
 {
+	if (!bDialogueOpen || !IsPlayerAvailable(NearbyCharacter.Get(), InteractionRadius)) { return; }
 	switch (SelectedServiceIndex)
 	{
 	case 0: PurchasePotion(); break;
@@ -674,7 +706,7 @@ void ARogue10mTutorialNPC::ExecuteSelectedService()
 	}
 }
 
-FText ARogue10mTutorialNPC::BuildServiceText() const
+TArray<FText> ARogue10mTutorialNPC::BuildServiceChoices() const
 {
 	const URogue10mTownServiceDataAsset& Data = GetServiceData();
 	const ARogue10mCharacter* Character = NearbyCharacter.Get();
@@ -693,7 +725,7 @@ FText ARogue10mTutorialNPC::BuildServiceText() const
 	Rows.Add(FString::Printf(TEXT("회복 물약 1개 구매 · %d 골드"), Data.PotionGoldCost));
 	Rows.Add(FString::Printf(TEXT("장착 무기 +%d 강화 · %s · 공격 +%g"), WeaponLevel, *CostText(WeaponLevel), Data.EnhancementAttackPerLevel));
 	Rows.Add(FString::Printf(TEXT("장착 방어구 +%d 강화 · %s · 방어 +%g"), ArmorLevel, *CostText(ArmorLevel), Data.EnhancementDefensePerLevel));
-	Rows.Add(FString::Printf(TEXT("특성 강화 창 열기 · 16종 · 보유 %d포인트"), Town ? Town->GetAvailableTraitPoints() : 0));
+	Rows.Add(FString::Printf(TEXT("영구 특성 강화 창 열기 · 16종 · 보유 %d %s"), Town ? Town->GetAvailableTraitPoints() : 0, Town && Town->UsesLobbyBudget() ? TEXT("로비 재화") : TEXT("성장 포인트")));
 	const auto DifficultyRow = [&Rows](const TCHAR* Label, const FRogue10mDifficultyModifiers& Scale)
 	{
 		Rows.Add(FString::Printf(TEXT("%s · 적 HP ×%g / 피해 ×%g / XP ×%g"), Label, Scale.HealthMultiplier, Scale.DamageMultiplier, Scale.ExperienceMultiplier));
@@ -701,11 +733,24 @@ FText ARogue10mTutorialNPC::BuildServiceText() const
 	DifficultyRow(TEXT("쉬움"), Data.Easy);
 	DifficultyRow(TEXT("보통"), Data.Normal);
 	DifficultyRow(TEXT("어려움"), Data.Hard);
-	FString Text = FString::Printf(TEXT("마을 서비스 · %d 골드 · 특성 %d포인트\n다음 탐험: %s\n"), Inventory ? Inventory->GetGold() : 0, Town ? Town->GetAvailableTraitPoints() : 0, *DifficultyName);
+	TArray<FText> Choices; for (const FString& Row : Rows) { Choices.Add(FText::FromString(Row)); } return Choices;
+}
+
+FText ARogue10mTutorialNPC::BuildServiceText() const
+{
+    const ARogue10mCharacter* Character = NearbyCharacter.Get();
+    const URogue10mInventoryComponent* Inventory = Character ? Character->GetInventoryComponent() : nullptr;
+    const URogue10mTownProgressionComponent* Town = FindTownProgression();
+    const FString DifficultyName = !Town || Town->GetDifficulty() == ERogue10mDifficulty::Normal ? TEXT("보통")
+        : Town->GetDifficulty() == ERogue10mDifficulty::Easy ? TEXT("쉬움") : TEXT("어려움");
+    const TArray<FText> Rows = BuildServiceChoices();
+	FString Text = FString::Printf(TEXT("현재 보유 · 이번 판 골드 %d · %s %d\n다음 탐험: %s\n"), Inventory ? Inventory->GetGold() : 0, Town && Town->UsesLobbyBudget() ? TEXT("로비 재화") : TEXT("성장 포인트"), Town ? Town->GetAvailableTraitPoints() : 0, *DifficultyName);
 	for (int32 Index = 0; Index < Rows.Num(); ++Index)
 	{
-		Text += FString::Printf(TEXT("%s %s\n"), Index == SelectedServiceIndex ? TEXT("▶") : TEXT("  "), *Rows[Index]);
+		Text += FString::Printf(TEXT("%s %s\n"), Index == SelectedServiceIndex ? TEXT("▶") : TEXT("  "), *Rows[Index].ToString());
 	}
-	Text += TEXT("↑↓ 선택 · Enter 이용 · Esc 닫기\n레벨 상승: 특성 +1 · 몬스터 처치: 골드 획득");
+	Text += Town && Town->UsesLobbyBudget()
+		? TEXT("클릭 이용 · ↑↓ 선택 · Enter 이용 · Esc 닫기\n로비 재화: 판 종료 정산 · 레벨업 성장 포인트와 별개")
+		: TEXT("클릭 이용 · ↑↓ 선택 · Enter 이용 · Esc 닫기\n성장 포인트와 이번 판 골드는 별도입니다.");
 	return FText::FromString(Text);
 }

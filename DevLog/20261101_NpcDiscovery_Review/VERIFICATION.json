@@ -1,0 +1,76 @@
+{
+  "project": "D:\\Project\\Rogue10m",
+  "branch": "Sprint#9-18-basic-run-playtest",
+  "base_commit": "3fd15894b389550a63c9c5671e3c95abd6366a5a",
+  "product_fix": "NPC discovery lifetime follows physical DetectionArea overlap;320cm interaction/service checks unchanged",
+  "normal_map": "BasicRun1101E actual normal UI/held input NPC dialogue, supplies, portal, sword overlap, natural kills/XP, K point learning verified; boss route blocked",
+  "normal_map_continuation": "BasicRun1101F ongoing; not a completion claim",
+  "fixture": {
+    "label": "NpcEdge1101A",
+    "checks": 44,
+    "failures": 0,
+    "sphere_radius_cm": 650,
+    "overlap_shell_center_distance_cm": 674.1609600088098,
+    "preexisting_saves_preserved": 331
+  },
+  "media": [
+    {
+      "path": "Before_NPC/01_normal_map_missing_prompt.png",
+      "source": "D:\\Project\\Rogue10m\\DevLog\\BasicRunPlayQA\\BasicNpcTrace1101D\\Driver\\screenshots\\08_failure.png",
+      "sha256": "c889b35316b3f8c0b69b4f098ccccb9e993592bc7cec9ff9ebbc63212f555faa",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "After_NPC/01_normal_map_F_prompt.png",
+      "source": "D:\\Project\\Rogue10m\\DevLog\\BasicRunPlayQA\\BasicRun1101E\\Driver\\screenshots\\07_npc_open.png",
+      "sha256": "2a20d80d6d9ee80746a02aac581656ccd3ed8a5ccdb8563f076180952455de45",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "After_NPC/02_normal_map_F_dialogue.png",
+      "source": "D:\\Project\\Rogue10m\\DevLog\\BasicRunPlayQA\\BasicRun1101E\\Driver\\screenshots\\08_npc_supplies.png",
+      "sha256": "662e46d715adb3b261277392644ef72461f49d9f2dccdbfddcec72467535ac07",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "NativeFixture/01_f_prompt.png",
+      "source": "D:\\Project\\Rogue10m\\DevLog\\20261029_NpcInteraction_NpcEdge1101A\\01_f_prompt.png",
+      "sha256": "25e6aa9d391c147fc9bb38232e1109eb07df65a00340a1d922d9aa2490db8f91",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "NativeFixture/02_f_dialogue.png",
+      "source": "D:\\Project\\Rogue10m\\DevLog\\20261029_NpcInteraction_NpcEdge1101A\\02_f_dialogue.png",
+      "sha256": "36be42639370d915f7bf225b26b70e5a8bb4ab179d51bea13f2f1d44f1dbd3d1",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "NativeFixture/03_f_collision_probe.png",
+      "source": "D:\\Project\\Rogue10m\\DevLog\\20261029_NpcInteraction_NpcEdge1101A\\03_f_collision_probe.png",
+      "sha256": "c31c7134ed095a8477743e0bfd0e4a541c5acde49717e7dcea291dab31b4b771",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "human_physical_input": "not_performed_deferred_by_user",
+  "animation_changes": "none; ready/contact/recovery phase certification not supplied by these stage images",
+  "visual_failure_retained": "default legacy first-person representation has body triangles/near-view occlusion in some frames; new owner-arms/framing still default OFF",
+  "remote_operations": "none"
+}

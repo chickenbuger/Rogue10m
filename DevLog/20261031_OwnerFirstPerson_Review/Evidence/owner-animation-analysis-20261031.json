@@ -1,0 +1,1526 @@
+{
+  "scope": "Current owner-arms packet: existing animations retained, geometry/owner visibility only",
+  "visual_gate": "PARTIAL_FAIL: central torso removed; idle hand framing and extreme downlook/wall arm cut surfaces unresolved; product default OFF",
+  "manual_physical_input": "not performed",
+  "normal_field_completion": "not performed",
+  "image_visual_inspection_by_this_analysis": "not performed; full decoding/hash only. Root separately reviewed actual critical captures.",
+  "units": "Unreal centimeters; world and camera-relative trajectories are separate. Sampled lengths are not subframe/exact animation arc lengths.",
+  "runs": [
+    {
+      "label": "OVWeightA1031",
+      "profile": "Weighted",
+      "checks": 4552,
+      "failures": 0,
+      "source_files": {
+        "results.txt": {
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\owner-view-20261029\\OVWeightA1031\\results.txt",
+          "sha256": "5d2fd4ee363f54fdf163f8d7b0ff2a4899fc7b9f4f35fdac51eae643b5e394e2"
+        },
+        "frames.csv": {
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\owner-view-20261029\\OVWeightA1031\\frames.csv",
+          "sha256": "4542be0276262f31e877e2f3da5c1e1d73a06850d2cb30c667b7df7fc5377b42"
+        },
+        "attackframes.csv": {
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\owner-view-20261029\\OVWeightA1031\\attackframes.csv",
+          "sha256": "4b6b3cee889a1add5c396faee3541b11fd85ede28dd7ac522cf90baaaf8929d7"
+        },
+        "captures.csv": {
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\owner-view-20261029\\OVWeightA1031\\captures.csv",
+          "sha256": "d470389f082ee91d8a777c768b8cfc40181e96078e6ed3ae5174c7103008a828"
+        },
+        "animationframes.csv": {
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\owner-view-20261029\\OVWeightA1031\\animationframes.csv",
+          "sha256": "b8a8324d68c5aaea86df58d0391aea5e206bfe780b8a3218da8432998fd2c4d7"
+        }
+      },
+      "actual_assets": {
+        "dodge_asset": "/Game/DataAsset/DodgeSkill/DA_Dodge_StoneFist.DA_Dodge_StoneFist",
+        "attack_0_skill_asset": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+        "attack_0_montage_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+        "attack_0_slot_0_segment_0_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+        "attack_1_skill_asset": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+        "attack_1_montage_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+        "attack_1_slot_0_segment_0_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+        "attack_2_skill_asset": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+        "attack_2_montage_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+        "attack_2_slot_0_segment_0_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+        "owner_proxy_mesh": "/Game/Rogue10m/Character/OwnerArms/SK_OwnerArms_Hu_M.SK_OwnerArms_Hu_M",
+        "original_animation_source": "/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple",
+        "body_mesh": "/Game/StylizedCharacter/Meshes/Character/Human/Male/SK_Hu_M_FullBody.SK_Hu_M_FullBody"
+      },
+      "authored_and_measured_values": {
+        "attack_0_skill_asset": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+        "attack_0_montage_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+        "attack_0_montage_length_s": "1.000000000",
+        "attack_0_authored_hit_delay_montage_s": "0.150000006",
+        "attack_0_authored_play_rate": "1.340000033",
+        "attack_0_slot_0_segment_0_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+        "attack_0_slot_0_segment_0_source_start_s": "0.000000000",
+        "attack_0_slot_0_segment_0_source_end_s": "1.000000000",
+        "attack_0_slot_0_segment_0_montage_start_s": "0.000000000",
+        "attack_0_slot_0_segment_0_rate": "1.000000000",
+        "attack_0_fixture_pitch": "0.000000",
+        "attack_0_target_bottom_above_floor_cm": "2.000000",
+        "attack_0_ray_first_hit_target": "1",
+        "attack_0_damage": "24.693359",
+        "attack_0_first_hit_error_s": "0.002417192",
+        "attack_0_allowed_early_s": "-0.017666900",
+        "attack_0_allowed_late_s": "0.017666800",
+        "attack_1_skill_asset": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+        "attack_1_montage_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+        "attack_1_montage_length_s": "1.000000000",
+        "attack_1_authored_hit_delay_montage_s": "0.150000006",
+        "attack_1_authored_play_rate": "1.340000033",
+        "attack_1_slot_0_segment_0_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+        "attack_1_slot_0_segment_0_source_start_s": "0.000000000",
+        "attack_1_slot_0_segment_0_source_end_s": "1.000000000",
+        "attack_1_slot_0_segment_0_montage_start_s": "0.000000000",
+        "attack_1_slot_0_segment_0_rate": "1.000000000",
+        "attack_1_fixture_pitch": "-30.000000",
+        "attack_1_target_bottom_above_floor_cm": "2.000000",
+        "attack_1_ray_first_hit_target": "1",
+        "attack_1_damage": "23.222656",
+        "attack_1_first_hit_error_s": "0.014251091",
+        "attack_1_allowed_early_s": "-0.017666900",
+        "attack_1_allowed_late_s": "0.017666699",
+        "attack_2_skill_asset": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+        "attack_2_montage_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+        "attack_2_montage_length_s": "1.000000000",
+        "attack_2_authored_hit_delay_montage_s": "0.150000006",
+        "attack_2_authored_play_rate": "1.340000033",
+        "attack_2_slot_0_segment_0_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+        "attack_2_slot_0_segment_0_source_start_s": "0.000000000",
+        "attack_2_slot_0_segment_0_source_end_s": "1.000000000",
+        "attack_2_slot_0_segment_0_montage_start_s": "0.000000000",
+        "attack_2_slot_0_segment_0_rate": "1.000000000"
+      },
+      "attacks": [
+        {
+          "index": 0,
+          "scope": "actual grounded-target hit",
+          "first_acceptance_observed_world_s": 18.278386097,
+          "acceptance_frame": 1018,
+          "acceptance_dt_s": 0.0166669,
+          "actual_expected_montage_rate": 1.393599987,
+          "attack_sample_dt_range_s": [
+            0.016666699,
+            0.093385302
+          ],
+          "attack_sample_wall_dt_max_s": 0.087251,
+          "hands": {
+            "l": {
+              "world": {
+                "samples": 126,
+                "coordinate_labels": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "minimum_cm": [
+                  14.109578371,
+                  -2250.849131007,
+                  1198.87971394
+                ],
+                "maximum_cm": [
+                  43.777386403,
+                  -2223.976435968,
+                  1224.290896879
+                ],
+                "sampled_total_path_length_cm": 53.057544841,
+                "endpoint_displacement_cm": 46.753219825
+              },
+              "view": {
+                "samples": 126,
+                "coordinate_labels": [
+                  "forward",
+                  "right",
+                  "up"
+                ],
+                "minimum_cm": [
+                  4.069020664,
+                  -43.608022377,
+                  -70.765595046
+                ],
+                "maximum_cm": [
+                  31.462923187,
+                  -14.211144559,
+                  -44.641887976
+                ],
+                "sampled_total_path_length_cm": 53.81867785,
+                "endpoint_displacement_cm": 47.152217664
+              }
+            },
+            "r": {
+              "world": {
+                "samples": 126,
+                "coordinate_labels": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "minimum_cm": [
+                  -36.811431047,
+                  -2282.617295872,
+                  1197.94642619
+                ],
+                "maximum_cm": [
+                  -15.86701978,
+                  -2213.368564991,
+                  1235.407860591
+                ],
+                "sampled_total_path_length_cm": 120.567938003,
+                "endpoint_displacement_cm": 46.14077002
+              },
+              "view": {
+                "samples": 126,
+                "coordinate_labels": [
+                  "forward",
+                  "right",
+                  "up"
+                ],
+                "minimum_cm": [
+                  -27.146818084,
+                  15.707092298,
+                  -71.659794649
+                ],
+                "maximum_cm": [
+                  41.907337705,
+                  37.340063883,
+                  -33.226767473
+                ],
+                "sampled_total_path_length_cm": 121.190617735,
+                "endpoint_displacement_cm": 46.415086006
+              }
+            }
+          },
+          "first_damage_observed_world_s": 18.388438199,
+          "first_damage_frame": 1020,
+          "first_damage_dt_s": 0.0166668,
+          "first_damage_montage_s": 0.176595598,
+          "acceptance_to_first_damage_world_s": 0.110052102,
+          "authored_scaled_first_hit_delay_s": 0.107634908,
+          "first_hit_clock_error_s": 0.002417194,
+          "acceptance_to_recovery_request_world_s": 0.859994699,
+          "phases": {
+            "ready": {
+              "image": "15_level_ready_before_LMB.png",
+              "request_world_s": 17.594792891,
+              "capture_world_s": 17.768415798,
+              "request_frame": 987,
+              "capture_frame": 988,
+              "capture_delay_frames": 1,
+              "capture_delay_world_s": 0.173622907,
+              "capture_montage_s": 0.0,
+              "capture_target_health": 10000.0,
+              "capture_action_busy": "0",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "0"
+            },
+            "acceptance": {
+              "image": "09_level_actual_LMB.png",
+              "request_world_s": 18.278386097,
+              "capture_world_s": 18.278386097,
+              "request_frame": 1018,
+              "capture_frame": 1018,
+              "capture_delay_frames": 0,
+              "capture_delay_world_s": 0.0,
+              "capture_montage_s": 0.023226991,
+              "capture_target_health": 10000.0,
+              "capture_action_busy": "1",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "1"
+            },
+            "first_damage_observed": {
+              "image": "16_level_first_damage_observed.png",
+              "request_world_s": 18.388438199,
+              "capture_world_s": 18.388438199,
+              "request_frame": 1020,
+              "capture_frame": 1020,
+              "capture_delay_frames": 0,
+              "capture_delay_world_s": 0.0,
+              "capture_montage_s": 0.176595598,
+              "capture_target_health": 9975.306641,
+              "capture_action_busy": "1",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "1"
+            },
+            "recovered": {
+              "image": "17_level_action_recovered.png",
+              "request_world_s": 19.138380796,
+              "capture_world_s": 19.155047495,
+              "request_frame": 1062,
+              "capture_frame": 1063,
+              "capture_delay_frames": 1,
+              "capture_delay_world_s": 0.016666699,
+              "capture_montage_s": 0.0,
+              "capture_target_health": 9975.306641,
+              "capture_action_busy": "0",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "0"
+            }
+          }
+        },
+        {
+          "index": 1,
+          "scope": "actual grounded-target hit",
+          "first_acceptance_observed_world_s": 20.774770696,
+          "acceptance_frame": 1160,
+          "acceptance_dt_s": 0.0166669,
+          "actual_expected_montage_rate": 1.393599987,
+          "attack_sample_dt_range_s": [
+            0.016666699,
+            0.021885101
+          ],
+          "attack_sample_wall_dt_max_s": 0.0196831,
+          "hands": {
+            "l": {
+              "world": {
+                "samples": 134,
+                "coordinate_labels": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "minimum_cm": [
+                  14.109578565,
+                  -2237.159581943,
+                  1208.946679645
+                ],
+                "maximum_cm": [
+                  19.46642052,
+                  -2233.847507262,
+                  1209.786455487
+                ],
+                "sampled_total_path_length_cm": 14.427398773,
+                "endpoint_displacement_cm": 0.206758635
+              },
+              "view": {
+                "samples": 134,
+                "coordinate_labels": [
+                  "forward",
+                  "right",
+                  "up"
+                ],
+                "minimum_cm": [
+                  46.234964121,
+                  -19.649404994,
+                  -38.142223795
+                ],
+                "maximum_cm": [
+                  48.809996722,
+                  -14.248911714,
+                  -35.939605746
+                ],
+                "sampled_total_path_length_cm": 14.96460743,
+                "endpoint_displacement_cm": 0.208041808
+              }
+            },
+            "r": {
+              "world": {
+                "samples": 134,
+                "coordinate_labels": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "minimum_cm": [
+                  -25.497133485,
+                  -2253.848199854,
+                  1208.088318818
+                ],
+                "maximum_cm": [
+                  -15.886510686,
+                  -2220.354926432,
+                  1213.917041838
+                ],
+                "sampled_total_path_length_cm": 72.944681791,
+                "endpoint_displacement_cm": 0.194229172
+              },
+              "view": {
+                "samples": 134,
+                "coordinate_labels": [
+                  "forward",
+                  "right",
+                  "up"
+                ],
+                "minimum_cm": [
+                  29.930561583,
+                  15.669035299,
+                  -43.567886914
+                ],
+                "maximum_cm": [
+                  61.152502617,
+                  25.364719543,
+                  -30.134011456
+                ],
+                "sampled_total_path_length_cm": 73.419717482,
+                "endpoint_displacement_cm": 0.195505227
+              }
+            }
+          },
+          "first_damage_observed_world_s": 20.896656696,
+          "first_damage_frame": 1167,
+          "first_damage_dt_s": 0.016666699,
+          "first_damage_montage_s": 0.19308731,
+          "acceptance_to_first_damage_world_s": 0.121886,
+          "authored_scaled_first_hit_delay_s": 0.107634908,
+          "first_hit_clock_error_s": 0.014251092,
+          "acceptance_to_recovery_request_world_s": 0.857003398,
+          "phases": {
+            "ready": {
+              "image": "18_downlook_ready_before_LMB.png",
+              "request_world_s": 20.257191993,
+              "capture_world_s": 20.273858894,
+              "request_frame": 1129,
+              "capture_frame": 1130,
+              "capture_delay_frames": 1,
+              "capture_delay_world_s": 0.016666901,
+              "capture_montage_s": 0.0,
+              "capture_target_health": 10000.0,
+              "capture_action_busy": "0",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "0"
+            },
+            "acceptance": {
+              "image": "10_downlook_actual_LMB.png",
+              "request_world_s": 20.774770696,
+              "capture_world_s": 20.774770696,
+              "request_frame": 1160,
+              "capture_frame": 1160,
+              "capture_delay_frames": 0,
+              "capture_delay_world_s": 0.0,
+              "capture_montage_s": 0.023226991,
+              "capture_target_health": 10000.0,
+              "capture_action_busy": "1",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "1"
+            },
+            "first_damage_observed": {
+              "image": "19_downlook_first_damage_observed.png",
+              "request_world_s": 20.896656696,
+              "capture_world_s": 20.896656696,
+              "request_frame": 1167,
+              "capture_frame": 1167,
+              "capture_delay_frames": 0,
+              "capture_delay_world_s": 0.0,
+              "capture_montage_s": 0.19308731,
+              "capture_target_health": 9976.777344,
+              "capture_action_busy": "1",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "1"
+            },
+            "recovered": {
+              "image": "20_downlook_action_recovered.png",
+              "request_world_s": 21.631774094,
+              "capture_world_s": 21.648440994,
+              "request_frame": 1211,
+              "capture_frame": 1212,
+              "capture_delay_frames": 1,
+              "capture_delay_world_s": 0.0166669,
+              "capture_montage_s": 0.0,
+              "capture_target_health": 9976.777344,
+              "capture_action_busy": "0",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "0"
+            }
+          }
+        },
+        {
+          "index": 2,
+          "scope": "minus85 no-target acceptance/montage only",
+          "first_acceptance_observed_world_s": 23.281877395,
+          "acceptance_frame": 1310,
+          "acceptance_dt_s": 0.0166669,
+          "actual_expected_montage_rate": 1.393599987,
+          "attack_sample_dt_range_s": [
+            0.016666699,
+            0.019172799
+          ],
+          "attack_sample_wall_dt_max_s": 0.0186521,
+          "hands": {
+            "l": {
+              "world": {
+                "samples": 108,
+                "coordinate_labels": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "minimum_cm": [
+                  14.109582414,
+                  -2262.235307194,
+                  1202.857570742
+                ],
+                "maximum_cm": [
+                  19.464081021,
+                  -2258.644088535,
+                  1203.610719886
+                ],
+                "sampled_total_path_length_cm": 14.0845188,
+                "endpoint_displacement_cm": 0.104668053
+              },
+              "view": {
+                "samples": 108,
+                "coordinate_labels": [
+                  "forward",
+                  "right",
+                  "up"
+                ],
+                "minimum_cm": [
+                  60.668432956,
+                  -19.685394184,
+                  -1.606679396
+                ],
+                "maximum_cm": [
+                  61.685604453,
+                  -14.27312751,
+                  1.935677594
+                ],
+                "sampled_total_path_length_cm": 14.475870192,
+                "endpoint_displacement_cm": 0.053952275
+              }
+            },
+            "r": {
+              "world": {
+                "samples": 108,
+                "coordinate_labels": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "minimum_cm": [
+                  -25.526616453,
+                  -2273.959106128,
+                  1185.21714405
+                ],
+                "maximum_cm": [
+                  -15.933690433,
+                  -2252.528864719,
+                  1210.770444883
+                ],
+                "sampled_total_path_length_cm": 71.85442007,
+                "endpoint_displacement_cm": 0.088087415
+              },
+              "view": {
+                "samples": 108,
+                "coordinate_labels": [
+                  "forward",
+                  "right",
+                  "up"
+                ],
+                "minimum_cm": [
+                  52.846134219,
+                  15.657986738,
+                  -12.94323883
+                ],
+                "maximum_cm": [
+                  79.82634679,
+                  25.319185977,
+                  6.783007693
+                ],
+                "sampled_total_path_length_cm": 72.189695475,
+                "endpoint_displacement_cm": 0.064558982
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "OVOrigA1031",
+      "profile": "Original",
+      "checks": 4664,
+      "failures": 0,
+      "source_files": {
+        "results.txt": {
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\owner-view-20261029\\OVOrigA1031\\results.txt",
+          "sha256": "61d40ff661c53e5c0e5949982679c41cd4a060d39ee1efdee3048ab8ca0c8dfe"
+        },
+        "frames.csv": {
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\owner-view-20261029\\OVOrigA1031\\frames.csv",
+          "sha256": "ef70e792dba3bfbdd10172c4dfe949829f841ba3848a0a9cfbc44c25bf52aaf7"
+        },
+        "attackframes.csv": {
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\owner-view-20261029\\OVOrigA1031\\attackframes.csv",
+          "sha256": "4ab4af37f083456e3e63ed89bdc8b3cd811845e567eecbf8fdabb5bc0ad9fe19"
+        },
+        "captures.csv": {
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\owner-view-20261029\\OVOrigA1031\\captures.csv",
+          "sha256": "c661822dd8c8c3cc44eefa44d69643cd331f7e57703c2ca6500776346347dafe"
+        },
+        "animationframes.csv": {
+          "path": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\owner-view-20261029\\OVOrigA1031\\animationframes.csv",
+          "sha256": "99f2c05ae53ceb59cd1c8bea5add965e50617187d148b61f0336eb613206f20e"
+        }
+      },
+      "actual_assets": {
+        "dodge_asset": "/Game/DataAsset/DodgeSkill/DA_Dodge_StoneFist.DA_Dodge_StoneFist",
+        "attack_0_skill_asset": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+        "attack_0_montage_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+        "attack_0_slot_0_segment_0_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+        "attack_1_skill_asset": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+        "attack_1_montage_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+        "attack_1_slot_0_segment_0_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+        "attack_2_skill_asset": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+        "attack_2_montage_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+        "attack_2_slot_0_segment_0_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+        "owner_proxy_mesh": "/Game/Rogue10m/Character/OwnerArms/SK_OwnerArms_Hu_M.SK_OwnerArms_Hu_M",
+        "original_animation_source": "/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple",
+        "body_mesh": "/Game/StylizedCharacter/Meshes/Character/Human/Male/SK_Hu_M_FullBody.SK_Hu_M_FullBody"
+      },
+      "authored_and_measured_values": {
+        "attack_0_skill_asset": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+        "attack_0_montage_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+        "attack_0_montage_length_s": "1.000000000",
+        "attack_0_authored_hit_delay_montage_s": "0.150000006",
+        "attack_0_authored_play_rate": "1.340000033",
+        "attack_0_slot_0_segment_0_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+        "attack_0_slot_0_segment_0_source_start_s": "0.000000000",
+        "attack_0_slot_0_segment_0_source_end_s": "1.000000000",
+        "attack_0_slot_0_segment_0_montage_start_s": "0.000000000",
+        "attack_0_slot_0_segment_0_rate": "1.000000000",
+        "attack_0_fixture_pitch": "0.000000",
+        "attack_0_target_bottom_above_floor_cm": "2.000000",
+        "attack_0_ray_first_hit_target": "1",
+        "attack_0_damage": "23.001953",
+        "attack_0_first_hit_error_s": "0.012536492",
+        "attack_0_allowed_early_s": "-0.017666699",
+        "attack_0_allowed_late_s": "0.017666703",
+        "attack_1_skill_asset": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+        "attack_1_montage_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+        "attack_1_montage_length_s": "1.000000000",
+        "attack_1_authored_hit_delay_montage_s": "0.150000006",
+        "attack_1_authored_play_rate": "1.340000033",
+        "attack_1_slot_0_segment_0_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+        "attack_1_slot_0_segment_0_source_start_s": "0.000000000",
+        "attack_1_slot_0_segment_0_source_end_s": "1.000000000",
+        "attack_1_slot_0_segment_0_montage_start_s": "0.000000000",
+        "attack_1_slot_0_segment_0_rate": "1.000000000",
+        "attack_1_fixture_pitch": "-30.000000",
+        "attack_1_target_bottom_above_floor_cm": "2.000000",
+        "attack_1_ray_first_hit_target": "1",
+        "attack_1_damage": "22.410156",
+        "attack_1_first_hit_error_s": "0.010117192",
+        "attack_1_allowed_early_s": "-0.017666699",
+        "attack_1_allowed_late_s": "0.017666699",
+        "attack_2_skill_asset": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+        "attack_2_montage_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+        "attack_2_montage_length_s": "1.000000000",
+        "attack_2_authored_hit_delay_montage_s": "0.150000006",
+        "attack_2_authored_play_rate": "1.340000033",
+        "attack_2_slot_0_segment_0_asset": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+        "attack_2_slot_0_segment_0_source_start_s": "0.000000000",
+        "attack_2_slot_0_segment_0_source_end_s": "1.000000000",
+        "attack_2_slot_0_segment_0_montage_start_s": "0.000000000",
+        "attack_2_slot_0_segment_0_rate": "1.000000000"
+      },
+      "attacks": [
+        {
+          "index": 0,
+          "scope": "actual grounded-target hit",
+          "first_acceptance_observed_world_s": 17.866457202,
+          "acceptance_frame": 1018,
+          "acceptance_dt_s": 0.016666699,
+          "actual_expected_montage_rate": 1.393599987,
+          "attack_sample_dt_range_s": [
+            0.016666699,
+            0.070170999
+          ],
+          "attack_sample_wall_dt_max_s": 0.0656587,
+          "hands": {
+            "l": {
+              "world": {
+                "samples": 129,
+                "coordinate_labels": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "minimum_cm": [
+                  14.109578333,
+                  -2249.510814535,
+                  1198.984368634
+                ],
+                "maximum_cm": [
+                  43.512807927,
+                  -2223.976929431,
+                  1224.290893011
+                ],
+                "sampled_total_path_length_cm": 52.286678237,
+                "endpoint_displacement_cm": 46.242848271
+              },
+              "view": {
+                "samples": 129,
+                "coordinate_labels": [
+                  "forward",
+                  "right",
+                  "up"
+                ],
+                "minimum_cm": [
+                  5.469785617,
+                  -43.252028153,
+                  -70.212131865
+                ],
+                "maximum_cm": [
+                  32.669348665,
+                  -14.449616936,
+                  -42.262403411
+                ],
+                "sampled_total_path_length_cm": 55.42169134,
+                "endpoint_displacement_cm": 47.397433343
+              }
+            },
+            "r": {
+              "world": {
+                "samples": 129,
+                "coordinate_labels": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "minimum_cm": [
+                  -36.539056754,
+                  -2281.174581271,
+                  1197.723909024
+                ],
+                "maximum_cm": [
+                  -15.867559726,
+                  -2213.372563768,
+                  1235.39674577
+                ],
+                "sampled_total_path_length_cm": 119.374578232,
+                "endpoint_displacement_cm": 45.133332768
+              },
+              "view": {
+                "samples": 129,
+                "coordinate_labels": [
+                  "forward",
+                  "right",
+                  "up"
+                ],
+                "minimum_cm": [
+                  -24.600641669,
+                  15.30584785,
+                  -71.370861935
+                ],
+                "maximum_cm": [
+                  42.763582143,
+                  37.586010925,
+                  -30.702204719
+                ],
+                "sampled_total_path_length_cm": 122.645873629,
+                "endpoint_displacement_cm": 45.969012477
+              }
+            }
+          },
+          "first_damage_observed_world_s": 17.986628603,
+          "first_damage_frame": 1022,
+          "first_damage_dt_s": 0.016666703,
+          "first_damage_montage_s": 0.190697581,
+          "acceptance_to_first_damage_world_s": 0.120171401,
+          "authored_scaled_first_hit_delay_s": 0.107634908,
+          "first_hit_clock_error_s": 0.012536493,
+          "acceptance_to_recovery_request_world_s": 0.8768805,
+          "phases": {
+            "ready": {
+              "image": "15_level_ready_before_LMB.png",
+              "request_world_s": 17.307372402,
+              "capture_world_s": 17.360895801,
+              "request_frame": 987,
+              "capture_frame": 988,
+              "capture_delay_frames": 1,
+              "capture_delay_world_s": 0.053523399,
+              "capture_montage_s": 0.0,
+              "capture_target_health": 10000.0,
+              "capture_action_busy": "0",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "0"
+            },
+            "acceptance": {
+              "image": "09_level_actual_LMB.png",
+              "request_world_s": 17.866457202,
+              "capture_world_s": 17.866457202,
+              "request_frame": 1018,
+              "capture_frame": 1018,
+              "capture_delay_frames": 0,
+              "capture_delay_world_s": 0.0,
+              "capture_montage_s": 0.023226712,
+              "capture_target_health": 10000.0,
+              "capture_action_busy": "1",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "1"
+            },
+            "first_damage_observed": {
+              "image": "16_level_first_damage_observed.png",
+              "request_world_s": 17.986628603,
+              "capture_world_s": 17.986628603,
+              "request_frame": 1022,
+              "capture_frame": 1022,
+              "capture_delay_frames": 0,
+              "capture_delay_world_s": 0.0,
+              "capture_montage_s": 0.190697581,
+              "capture_target_health": 9976.998047,
+              "capture_action_busy": "1",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "1"
+            },
+            "recovered": {
+              "image": "17_level_action_recovered.png",
+              "request_world_s": 18.743337702,
+              "capture_world_s": 18.760004602,
+              "request_frame": 1065,
+              "capture_frame": 1066,
+              "capture_delay_frames": 1,
+              "capture_delay_world_s": 0.0166669,
+              "capture_montage_s": 0.0,
+              "capture_target_health": 9976.998047,
+              "capture_action_busy": "0",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "0"
+            }
+          }
+        },
+        {
+          "index": 1,
+          "scope": "actual grounded-target hit",
+          "first_acceptance_observed_world_s": 20.377558101,
+          "acceptance_frame": 1163,
+          "acceptance_dt_s": 0.016666699,
+          "actual_expected_montage_rate": 1.393599987,
+          "attack_sample_dt_range_s": [
+            0.016666699,
+            0.018079098
+          ],
+          "attack_sample_wall_dt_max_s": 0.017438702,
+          "hands": {
+            "l": {
+              "world": {
+                "samples": 136,
+                "coordinate_labels": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "minimum_cm": [
+                  14.109578637,
+                  -2237.159124077,
+                  1208.945216596
+                ],
+                "maximum_cm": [
+                  19.465466183,
+                  -2234.919221543,
+                  1209.237197437
+                ],
+                "sampled_total_path_length_cm": 12.14810309,
+                "endpoint_displacement_cm": 0.048535273
+              },
+              "view": {
+                "samples": 136,
+                "coordinate_labels": [
+                  "forward",
+                  "right",
+                  "up"
+                ],
+                "minimum_cm": [
+                  46.541294268,
+                  -20.099421091,
+                  -36.056337316
+                ],
+                "maximum_cm": [
+                  48.50484694,
+                  -14.545385724,
+                  -34.688731627
+                ],
+                "sampled_total_path_length_cm": 14.424122333,
+                "endpoint_displacement_cm": 0.050067745
+              }
+            },
+            "r": {
+              "world": {
+                "samples": 136,
+                "coordinate_labels": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "minimum_cm": [
+                  -25.567420203,
+                  -2253.850087637,
+                  1208.083425551
+                ],
+                "maximum_cm": [
+                  -15.93395886,
+                  -2220.356002338,
+                  1214.09287111
+                ],
+                "sampled_total_path_length_cm": 72.030610775,
+                "endpoint_displacement_cm": 0.041684202
+              },
+              "view": {
+                "samples": 136,
+                "coordinate_labels": [
+                  "forward",
+                  "right",
+                  "up"
+                ],
+                "minimum_cm": [
+                  30.456046973,
+                  15.19151924,
+                  -42.437369828
+                ],
+                "maximum_cm": [
+                  61.43363047,
+                  25.04625298,
+                  -27.294066045
+                ],
+                "sampled_total_path_length_cm": 73.957307567,
+                "endpoint_displacement_cm": 0.044015778
+              }
+            }
+          },
+          "first_damage_observed_world_s": 20.495310202,
+          "first_damage_frame": 1170,
+          "first_damage_dt_s": 0.016666699,
+          "first_damage_montage_s": 0.187326044,
+          "acceptance_to_first_damage_world_s": 0.117752101,
+          "authored_scaled_first_hit_delay_s": 0.107634908,
+          "first_hit_clock_error_s": 0.010117193,
+          "acceptance_to_recovery_request_world_s": 0.902543899,
+          "phases": {
+            "ready": {
+              "image": "18_downlook_ready_before_LMB.png",
+              "request_world_s": 19.860888403,
+              "capture_world_s": 19.877555203,
+              "request_frame": 1132,
+              "capture_frame": 1133,
+              "capture_delay_frames": 1,
+              "capture_delay_world_s": 0.0166668,
+              "capture_montage_s": 0.0,
+              "capture_target_health": 10000.0,
+              "capture_action_busy": "0",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "0"
+            },
+            "acceptance": {
+              "image": "10_downlook_actual_LMB.png",
+              "request_world_s": 20.377558101,
+              "capture_world_s": 20.377558101,
+              "request_frame": 1163,
+              "capture_frame": 1163,
+              "capture_delay_frames": 0,
+              "capture_delay_world_s": 0.0,
+              "capture_montage_s": 0.023226712,
+              "capture_target_health": 10000.0,
+              "capture_action_busy": "1",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "1"
+            },
+            "first_damage_observed": {
+              "image": "19_downlook_first_damage_observed.png",
+              "request_world_s": 20.495310202,
+              "capture_world_s": 20.495310202,
+              "request_frame": 1170,
+              "capture_frame": 1170,
+              "capture_delay_frames": 0,
+              "capture_delay_world_s": 0.0,
+              "capture_montage_s": 0.187326044,
+              "capture_target_health": 9977.589844,
+              "capture_action_busy": "1",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "1"
+            },
+            "recovered": {
+              "image": "20_downlook_action_recovered.png",
+              "request_world_s": 21.280102,
+              "capture_world_s": 21.296769001,
+              "request_frame": 1217,
+              "capture_frame": 1218,
+              "capture_delay_frames": 1,
+              "capture_delay_world_s": 0.016667001,
+              "capture_montage_s": 0.0,
+              "capture_target_health": 9977.589844,
+              "capture_action_busy": "0",
+              "capture_attack_cooldown_s": 0.0,
+              "capture_combo_active": "0"
+            }
+          }
+        },
+        {
+          "index": 2,
+          "scope": "minus85 no-target acceptance/montage only",
+          "first_acceptance_observed_world_s": 22.8977377,
+          "acceptance_frame": 1314,
+          "acceptance_dt_s": 0.0166668,
+          "actual_expected_montage_rate": 1.393599987,
+          "attack_sample_dt_range_s": [
+            0.016666699,
+            0.0191065
+          ],
+          "attack_sample_wall_dt_max_s": 0.018521897,
+          "hands": {
+            "l": {
+              "world": {
+                "samples": 111,
+                "coordinate_labels": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "minimum_cm": [
+                  14.109582639,
+                  -2262.235337475,
+                  1203.164993944
+                ],
+                "maximum_cm": [
+                  19.464146005,
+                  -2259.840511729,
+                  1203.610725665
+                ],
+                "sampled_total_path_length_cm": 11.933403762,
+                "endpoint_displacement_cm": 0.056286459
+              },
+              "view": {
+                "samples": 111,
+                "coordinate_labels": [
+                  "forward",
+                  "right",
+                  "up"
+                ],
+                "minimum_cm": [
+                  59.845367707,
+                  -20.20137433,
+                  0.065155643
+                ],
+                "maximum_cm": [
+                  60.827805114,
+                  -14.604972225,
+                  2.376119609
+                ],
+                "sampled_total_path_length_cm": 13.492310155,
+                "endpoint_displacement_cm": 0.208572255
+              }
+            },
+            "r": {
+              "world": {
+                "samples": 111,
+                "coordinate_labels": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "minimum_cm": [
+                  -25.528811621,
+                  -2273.951754284,
+                  1185.217119901
+                ],
+                "maximum_cm": [
+                  -15.932777929,
+                  -2252.52872392,
+                  1210.76361259
+                ],
+                "sampled_total_path_length_cm": 71.141112556,
+                "endpoint_displacement_cm": 0.047372412
+              },
+              "view": {
+                "samples": 111,
+                "coordinate_labels": [
+                  "forward",
+                  "right",
+                  "up"
+                ],
+                "minimum_cm": [
+                  52.742958113,
+                  15.032642892,
+                  -12.04598115
+                ],
+                "maximum_cm": [
+                  78.964836694,
+                  24.830893807,
+                  9.101901091
+                ],
+                "sampled_total_path_length_cm": 72.395151678,
+                "endpoint_displacement_cm": 0.17253724
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "images": [
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\01_neutral.png",
+      "bytes": 1317780,
+      "sha256": "718a0ba458ea503a1ab03baba9b475f176ce7ae05401be2de1bb3d6ce6932414",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\02_look_down60.png",
+      "bytes": 1490040,
+      "sha256": "54e52764a63d34b1bf137d2c489cfdd37023d6d66d647251ed9fe3b73e523e4e",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\03_look_down80.png",
+      "bytes": 1407047,
+      "sha256": "f31dcf210b8bc735684274175124ade63baa66d426f0aebb4ca3cc6f957a1b86",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\04_look_down85.png",
+      "bytes": 1395748,
+      "sha256": "74a28d7ac60d7434ff7ce8f4a8b13d3bf0adcc64e8f49df6746b62a91b36430f",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\05_downlook_sprint.png",
+      "bytes": 1164523,
+      "sha256": "2a33898e1050d1898b9c3e6035986f94b4d85d37eba66a92cdef722212d8da7b",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\06_level_E_dodge.png",
+      "bytes": 1182799,
+      "sha256": "a81c82b01d03ae19e2eb3c0a79219db54eadcb4c055a58338fba376b37921388",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\07_downlook_E_dodge.png",
+      "bytes": 1077860,
+      "sha256": "137b753955e3f8d016f38dd5dd4a9dca7875c334a1a70c5cd81c435f38dea05a",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\08_downlook_wall_contact.png",
+      "bytes": 1201309,
+      "sha256": "334721c3d4fe5b219a1bd6b4ab6f7615a8a17e3ab10d60bf539b3b65b55e8b5e",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\09_level_actual_LMB.png",
+      "bytes": 1221682,
+      "sha256": "e12a67fc44d1fc05189bc9fc961ac2c9f471c3be0b49ffe7f2ed0efd994492ae",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\10_downlook_actual_LMB.png",
+      "bytes": 1243705,
+      "sha256": "4a0df734dfcd0fe8790fcd2ca8c628024dbc213a7a85647f37716d9ae82d79e6",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\11_deep85_actual_LMB_no_target.png",
+      "bytes": 1404467,
+      "sha256": "ec0daac933305e5981cbf04f9a2d91be5953bd13ac991ccd085e04f5fdd0e071",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\12_fullbody_inspection.png",
+      "bytes": 1603832,
+      "sha256": "d55b97249f627b3e70e06f46969d0de785598547721a3d6c808d8833ac5665f7",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\13_owned_greatsword.png",
+      "bytes": 1594707,
+      "sha256": "d1cbc9d2f54d6e1c6cf630b9957798077214335e6798251442b0dc7a639b6505",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\14_owner_view_return.png",
+      "bytes": 1588567,
+      "sha256": "90b0b83510c3f16726abb5c61b252f3d1d7f8572ec83b6dc2c061122095c5917",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\15_level_ready_before_LMB.png",
+      "bytes": 1269658,
+      "sha256": "6651e5b94bf0978032c51638271116f29aa8acddd82b50a98947ddb93e9e3571",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\16_level_first_damage_observed.png",
+      "bytes": 1219836,
+      "sha256": "4e2cfc284a6a2cf036d3d529228851b1874668f44ea5441ee9578a9e975b1d78",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\17_level_action_recovered.png",
+      "bytes": 1332452,
+      "sha256": "c15fa9dc19ae5719dff2f1a567697da6bdb0949dec0b2951319ec45f40026f05",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\18_downlook_ready_before_LMB.png",
+      "bytes": 1231806,
+      "sha256": "4a37091d2233d9ed7c007d0319ef7d703c0151656d2191d9384ae724450e5c28",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\19_downlook_first_damage_observed.png",
+      "bytes": 1293961,
+      "sha256": "2d7226f45666b9a3992e95188ff9696e3a7152d15b4addec9b2ff3ebdd2c04fa",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVWeightA1031\\20_downlook_action_recovered.png",
+      "bytes": 1281039,
+      "sha256": "e2d992d98aca04c2ef1a3a19a28b768f3d7cac755b2b1506c34ebb37e7c837b2",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\01_neutral.png",
+      "bytes": 1340284,
+      "sha256": "b511d96cced8be413501283de11060e3b01287c67c7b3b20be6aba16c0327727",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\02_look_down60.png",
+      "bytes": 1488823,
+      "sha256": "eb766bbb5e99560d52e54137d54329d6ec88ee1f7d1da3466d9ae957c25daf2d",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\03_look_down80.png",
+      "bytes": 1441173,
+      "sha256": "347b5ab0a7f3529fee24ea110f79ccc35522d4641f5203fd8aec3df868b1ce80",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\04_look_down85.png",
+      "bytes": 1430366,
+      "sha256": "0b63377ed677dbc55b8271bf324adf0bf311cf950d3a37d054b06dd8b9057509",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\05_downlook_sprint.png",
+      "bytes": 1168511,
+      "sha256": "a75bd502706e294ea0361ff2452337236ef944b8bade6a7f5b5fb34ead56646d",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\06_level_E_dodge.png",
+      "bytes": 1161129,
+      "sha256": "ba907fb10bfcd90be4fa63e98bd4d96e293b50b58ee179b2fe88ae6e5577d0e8",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\07_downlook_E_dodge.png",
+      "bytes": 1080232,
+      "sha256": "007a92340cd6f3f2de44bbd418689726c39933b5504492d272e14d604e29423d",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\08_downlook_wall_contact.png",
+      "bytes": 1187507,
+      "sha256": "21b0e07198ff73d4662ad2300251162d8450d72138b8ce123cc0dba9a5bf3588",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\09_level_actual_LMB.png",
+      "bytes": 1206403,
+      "sha256": "fe36f2ecdd515c485d76b4e1c3e3183e78dff81f247b6b216ae6ab8b79bd9ebe",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\10_downlook_actual_LMB.png",
+      "bytes": 1283330,
+      "sha256": "0333f90a68015b18e9c68d562a63d5cb9a37aaf7cace781dc1426b1de0257656",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\11_deep85_actual_LMB_no_target.png",
+      "bytes": 1409371,
+      "sha256": "aa279d02d832b29707cc4b7ab8fbb60c967112719777b328e5e8013299bba5a0",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\12_fullbody_inspection.png",
+      "bytes": 1604602,
+      "sha256": "8b5939e9a8f41ca0e0daac7b00f3b45258d276f8a4e70dcabfc4f5644ea9e79e",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\13_owned_greatsword.png",
+      "bytes": 1592854,
+      "sha256": "673538c948e9c282e6dfb6da145d243df5472877845fadc1efe540a1117db43b",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\14_owner_view_return.png",
+      "bytes": 1573888,
+      "sha256": "6f16ea36c657ca33d45bd9e6a6a7728eaed8805ff6668b58a84564d5d2673cc4",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\15_level_ready_before_LMB.png",
+      "bytes": 1282903,
+      "sha256": "0b8e1315a7e21e0eaa9d0e29bd3cfeaa34ba2837c1bb4de1ebd1636ca9d0a4f4",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\16_level_first_damage_observed.png",
+      "bytes": 1266508,
+      "sha256": "823a2ea5498bbe94ac82f4059ecc163fd16dac49b4852513b3c370c7eff45bbd",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\17_level_action_recovered.png",
+      "bytes": 1271894,
+      "sha256": "fc36a0fcc910a6a2d40940af333b7cf678f8d810c44aef9094474ea935fd780c",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\18_downlook_ready_before_LMB.png",
+      "bytes": 1272106,
+      "sha256": "3a5763a7b48303c6469464b86174310e9f92f82c9ff146396642bd49b87b8924",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\19_downlook_first_damage_observed.png",
+      "bytes": 1314880,
+      "sha256": "8eb33471331383fe1853adc641b6757183d2273b9090ed2341b734e6de6b671b",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_OwnerView_OVOrigA1031\\20_downlook_action_recovered.png",
+      "bytes": 1236267,
+      "sha256": "3405d8878f1587749759b7f634a0c45f92028d6068d0d9e02ffe7ec818efbe3b",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_NpcInteraction_NpcOV1031\\01_f_prompt.png",
+      "bytes": 1573578,
+      "sha256": "7ee7a0ee194e04a552e7d0cd85aff0e97bcdafc2e3d42ee655a4ff08152d8c18",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_NpcInteraction_NpcOV1031\\02_f_dialogue.png",
+      "bytes": 1522392,
+      "sha256": "d7179fc9569bec2e0df7a46234594d7771c33cdf2bf302248f654c94df439616",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\DevLog\\20261029_NpcInteraction_NpcOV1031\\03_f_collision_probe.png",
+      "bytes": 1277128,
+      "sha256": "5fcc47deb0f95523f334c33a4b15c08ffa2209d897d9a11d14fad8e8bedee33e",
+      "format": "PNG",
+      "size": [
+        1280,
+        720
+      ],
+      "decoded": true
+    }
+  ],
+  "decoded_image_count": 43
+}

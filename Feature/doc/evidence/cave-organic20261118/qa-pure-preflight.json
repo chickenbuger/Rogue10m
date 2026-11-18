@@ -1,0 +1,49 @@
+{
+  "schema": "Rogue10m.OrganicCaveQAPurePreflight.20261118.v1",
+  "utc": "2026-11-17T19:46:17.000176+00:00",
+  "passed": true,
+  "checks": {
+    "all3_inert_imports_no_Unreal": true,
+    "frozen2016_cases": true,
+    "frozen276_routes": true,
+    "closed_tetrahedron_accepts": true,
+    "open_tetrahedron_rejects": true,
+    "reversed_face_rejects": true,
+    "import_triangle_reindex_accepts": true,
+    "import_wrong_material_ID_rejects": true,
+    "source_point_triangle_distance_known2cm": true,
+    "all_new_baseline_pins_exact": true,
+    "pinned_corrected_coldhelper_matches": true,
+    "source_oriented_triangle_contact_accepts": true,
+    "source_reversed_contact_normal_rejects": true
+  },
+  "scripts": [
+    {
+      "path": "Scripts/Editor/OrganicCaves20261118QA.py",
+      "sha256": "9dfe6d461374a3591b03b2aa115bcd758721259a94fa27bccccf69acf1173c04",
+      "AST_passed": true,
+      "import_passed_without_Unreal": true
+    },
+    {
+      "path": "Scripts/Editor/OrganicCaves20261118Camera.py",
+      "sha256": "2cc8c94a15dbad7330b0ba46ce64150d8c5eedd7b7068e98120f8e002d47d2d6",
+      "AST_passed": true,
+      "import_passed_without_Unreal": true
+    },
+    {
+      "path": "Scripts/Editor/OrganicCaves20261118Cold.py",
+      "sha256": "0efc0012dde7d8767365f72c3cb8677a836043c009bd62971432eb0eff9527d3",
+      "AST_passed": true,
+      "import_passed_without_Unreal": true
+    }
+  ],
+  "fingerprints": {
+    "case_sha256": "2d0bdc07e7d4eca5a49a5df87d9ad8ff1b3eb3982913fc69d83fa5cf21baecab",
+    "query_vectors_sha256": "fde56356bf26d7acad43015455ca09a8faab47c6f7b00598606d90038d3820c4",
+    "route_sha256": "3aaec11cdfc1676699571aa4fdd9db52090e6da5b06fa79fa4b3281866268890"
+  },
+  "editor_operations": false,
+  "assets_mutated": false,
+  "runtime_validated": false,
+  "cold_validated": false
+}

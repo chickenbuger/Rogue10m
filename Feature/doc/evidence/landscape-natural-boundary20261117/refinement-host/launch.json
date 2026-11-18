@@ -1,0 +1,25 @@
+{
+  "pid": 49456,
+  "exe": "D:\\Program Files\\UE_5.8\\Engine\\Binaries\\Win64\\UnrealEditor.exe",
+  "arguments": [
+    "\"D:\\Project\\Rogue10m\\Rogue10m.uproject\"",
+    "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A",
+    "-NoLiveCoding",
+    "-NoSplash",
+    "-NoSound",
+    "-language=en",
+    "-locale=en",
+    "-RogueEditorLanguage=ko",
+    "-RogueEditorLocale=ko-KR",
+    "-RogueNaturalStage=refine",
+    "-RogueProfileSaveSlot=Rogue10m_Town_QA_Landscape20261116A",
+    "-RogueProgressionSavePrefix=Rogue10m_Progression_QA_Landscape20261116A",
+    "-RogueSkillKeySaveSlot=Rogue10m_Fighter_QA_Landscape20261116A",
+    "-ini:EditorPerProjectUserSettings:[/Script/UnrealEd.EditorLoadingSavingSettings]:bAutoSaveEnable=False",
+    "-ini:EditorPerProjectUserSettings:[/Script/ModelContextProtocolEngine.ModelContextProtocolSettings]:bAutoStartServer=False",
+    "\"-AbsLog=D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\landscape-natural-boundary20261117\\refinement-host\\engine.log\"",
+    "\"-ExecCmds=ModelContextProtocol.StartServer 8001,py D:/Project/Rogue10m/Scripts/Editor/RefineNaturalWorld20261118.py\""
+  ],
+  "startedUtc": "2026-11-17T15:20:32.3954813Z",
+  "dllSha256": "0D2A0C2622E982B93E6D7744A69D09B4D5BCE8553A9563430601ADA91C901B38"
+}

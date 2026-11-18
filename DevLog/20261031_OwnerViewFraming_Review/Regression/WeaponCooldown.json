@@ -1,0 +1,104 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "JINSOO",
+			"instance": "C4425BC7453055C44B77759D4E128EB5",
+			"instanceName": "JINSOO-13428",
+			"platform": "WindowsEditor",
+			"oSVersion": "Windows 11 (26H2) [10.0.26300.9818] ",
+			"model": "Default",
+			"gPU": "NVIDIA GeForce RTX 3070",
+			"cPUModel": "AMD Ryzen 7 5800X 8-Core Processor             ",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.10.31-17.41.01",
+	"succeeded": 5,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.11438660323619843,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "FloorBoundaries",
+			"fullTestPath": "Rogue10m.WeaponCooldown.FloorBoundaries",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"C4425BC7453055C44B77759D4E128EB5"
+			],
+			"duration": 0.05233290046453476,
+			"dateTime": "2026.10.31-17.41.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "RealAttackAcceptance",
+			"fullTestPath": "Rogue10m.WeaponCooldown.RealAttackAcceptance",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"C4425BC7453055C44B77759D4E128EB5"
+			],
+			"duration": 0.014390602707862854,
+			"dateTime": "2026.10.31-17.41.00",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "ReservedComboDeadline",
+			"fullTestPath": "Rogue10m.WeaponCooldown.ReservedComboDeadline",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"C4425BC7453055C44B77759D4E128EB5"
+			],
+			"duration": 0.012892302125692368,
+			"dateTime": "2026.10.31-17.41.01",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SameTypeAndRestore",
+			"fullTestPath": "Rogue10m.WeaponCooldown.SameTypeAndRestore",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"C4425BC7453055C44B77759D4E128EB5"
+			],
+			"duration": 0.016691800206899643,
+			"dateTime": "2026.10.31-17.41.01",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "TimeAcrossWeapons",
+			"fullTestPath": "Rogue10m.WeaponCooldown.TimeAcrossWeapons",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"C4425BC7453055C44B77759D4E128EB5"
+			],
+			"duration": 0.0180790014564991,
+			"dateTime": "2026.10.31-17.41.01",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

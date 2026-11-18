@@ -49,9 +49,9 @@ F 수동 확인 순서는 `StartHub` Play → 320cm 안으로 접근 → F로 �
 
 [기능 결과와 상세 QA](D:/Project/Rogue10m/Feature/doc/2026-10-09_arin-walk-talk-animation.md) · [설계](D:/Project/Rogue10m/Feature/architect/2026-10-09_arin-walk-talk-animation.md)
 
-![Walk 실제 Blender 프리뷰](D:/Project/Rogue10m/Feature/doc/evidence/arin-walk-talk-20261009/preview/walk.gif)
+Walk 실제 Blender 프리뷰〔중간·보조 자료 정리로 삭제됨; [보존 목록](../../../../Feature/doc/evidence/README.md)〕
 
-![Talk 실제 Blender 프리뷰](D:/Project/Rogue10m/Feature/doc/evidence/arin-walk-talk-20261009/preview/talk.gif)
+Talk 실제 Blender 프리뷰〔중간·보조 자료 정리로 삭제됨; [보존 목록](../../../../Feature/doc/evidence/README.md)〕
 
 프리뷰는 Walk 18장·1.2초, Talk 30장·3초다. 실제 원본 동작은 30fps이며 프리뷰 GIF는 샘플 프레임으로 제작했다. [프리뷰 SHA·시간 기록](D:/Project/Rogue10m/Feature/doc/evidence/arin-walk-talk-20261009/preview/render-manifest.json)에 원본 보존과 실제 재생 길이를 남겼다.
 
@@ -69,3 +69,6 @@ Arin_Motions.blend
 ```
 
 Talk는 몸짓이며 얼굴 립싱크·개별 손가락 동작은 포함하지 않는다. 옷·가방·머리카락 추가 물리, 지형 발 IK, 영화용 상태 전환 블렌딩은 포함하지 않는다. 기본 평지 동작을 기존 모델과 골격에 적용하는 범위다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](../../../../Feature/doc/evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

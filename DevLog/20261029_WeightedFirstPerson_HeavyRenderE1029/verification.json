@@ -1,0 +1,170 @@
+{
+  "at_utc": "2026-10-29T13:46:31.879582+00:00",
+  "project": "D:\\Project\\Rogue10m",
+  "branch": "Sprint#9-10-weighted-first-person",
+  "baseline_sha": "a426d95f8f0fe6b2da3aa849680ff2fc27e9f4a5",
+  "local_commit": "021921ffda2f100d1d14bbdb5dd10666c2e07e21",
+  "remote_mutations": false,
+  "build": {
+    "status": "PASS",
+    "seconds": 10.83,
+    "engine": "5.8.3 CL58210709",
+    "log": "weighted-first-person-build-g-20261029.log"
+  },
+  "cases": {
+    "HeavyRenderE1029": {
+      "metrics": {
+        "aim_reflection_off": "1",
+        "aim_reflection_on": "1",
+        "aim_off_accumulated_yaw": "17.500000000",
+        "aim_off_accumulated_pitch": "10.000000000",
+        "aim_on_accumulated_yaw": "17.500000000",
+        "aim_on_accumulated_pitch": "10.000000000",
+        "first_damage_allowed_early_s": "-0.017666900",
+        "first_damage_allowed_late_s": "0.128273709",
+        "accepted_observation_delta_s": "0.016666900",
+        "first_damage_frame_delta_s": "0.127273709",
+        "previous_damage_frame_delta_s": "0.053880699",
+        "checks": "3400",
+        "failures": "0",
+        "frames": "716",
+        "rendered": "1",
+        "walk_cm": "417.525024",
+        "actual_target_damage": "22.778320",
+        "attack_speed_fixture": "1.000000",
+        "attack_montage_samples": "33",
+        "weighted_hand_samples": "367",
+        "contact_hand_pitch_l": "0.000000000",
+        "contact_hand_pitch_r": "0.000000000",
+        "first_damage_error_s": "0.069214106",
+        "input": "programmatic_InputKey_and_DoAim",
+        "NOTE": "Fresh QA profile, progression detached before transient items; authored attack data and clock are not edited. Attack-speed attribute is explicit fixture tuning and restored. AI-disabled marked target; reversible death flag, not full death/run/balance validation. Viewport PNGs require visual readability review."
+      },
+      "attack_frames": 33,
+      "applied_attack_frames": 0,
+      "attack_pitch_range": [
+        0,
+        0
+      ]
+    },
+    "HeavyFastC1029": {
+      "metrics": {
+        "aim_reflection_off": "1",
+        "aim_reflection_on": "1",
+        "aim_off_accumulated_yaw": "17.500000000",
+        "aim_off_accumulated_pitch": "10.000000000",
+        "aim_on_accumulated_yaw": "17.500000000",
+        "aim_on_accumulated_pitch": "10.000000000",
+        "checks": "1666",
+        "failures": "0",
+        "frames": "314",
+        "rendered": "0",
+        "walk_cm": "164.401474",
+        "actual_target_damage": "21.682617",
+        "attack_speed_fixture": "2.000000",
+        "attack_montage_samples": "11",
+        "weighted_hand_samples": "185",
+        "contact_hand_pitch_l": "0.000000000",
+        "contact_hand_pitch_r": "0.000000000",
+        "first_damage_error_s": "0.010696750",
+        "input": "programmatic_InputKey_and_DoAim",
+        "NOTE": "Fresh QA profile, progression detached before transient items; authored attack data and clock are not edited. Attack-speed attribute is explicit fixture tuning and restored. AI-disabled marked target; reversible death flag, not full death/run/balance validation. Viewport PNGs require visual readability review."
+      },
+      "attack_frames": 11,
+      "applied_attack_frames": 2,
+      "attack_pitch_range": [
+        0.308268,
+        1.189524
+      ]
+    }
+  },
+  "regressions": [
+    {
+      "suite": "AttackResources",
+      "passed": 4
+    },
+    {
+      "suite": "WeaponCooldown",
+      "passed": 5
+    },
+    {
+      "suite": "WeaponSwitch",
+      "passed": 8
+    }
+  ],
+  "photos": [
+    {
+      "path": "DevLog/20261029_WeightedFirstPerson_HeavyRenderE1029/01_weighted_idle.png",
+      "sha256": "629e910e11d387103351fd05a95a8d84e2bf38a4946964509cff4616254838aa",
+      "bytes": 1658366
+    },
+    {
+      "path": "DevLog/20261029_WeightedFirstPerson_HeavyRenderE1029/02_weighted_walk.png",
+      "sha256": "c8191a47b3020a5f048243240f42dcc3321b5cbc6c3c3b991638b0a31a0c1dce",
+      "bytes": 1525655
+    },
+    {
+      "path": "DevLog/20261029_WeightedFirstPerson_HeavyRenderE1029/03_weighted_sprint.png",
+      "sha256": "b7659a5971adcdf5186356fe9f7fbeaa07f07f262a3cf190eb25669a847b4c0b",
+      "bytes": 1880624
+    },
+    {
+      "path": "DevLog/20261029_WeightedFirstPerson_HeavyRenderE1029/04_weighted_attack_recovered.png",
+      "sha256": "af8e5f0617aedb83d8ba69e2788bd2eeb00e801115e63efcfd545e9db650e1b2",
+      "bytes": 1922080
+    },
+    {
+      "path": "DevLog/20261029_WeightedFirstPerson_HeavyRenderE1029/05_settings_boundary.png",
+      "sha256": "c63de70a46a1fe68c010ef61809ce036d5a6b3b5b698a7b92642c8838d4cbfbc",
+      "bytes": 1899317
+    },
+    {
+      "path": "DevLog/20261029_WeightedFirstPerson_HeavyRenderE1029/06_inspection_profile_skipped.png",
+      "sha256": "2e66b25719c09f7165f1a2399e1ed5c97f28ec1caf7badd061f80671906d1525",
+      "bytes": 1775563
+    },
+    {
+      "path": "DevLog/20261029_WeightedFirstPerson_HeavyRenderE1029/07_greatsword_boundary.png",
+      "sha256": "7ccfe72ab431ed4feccef60026d4b1e90bb6c9287f0086672ab6326722038863",
+      "bytes": 1934225
+    },
+    {
+      "path": "DevLog/20261029_WeightedFirstPerson_HeavyRenderE1029/08_original_profile_restored.png",
+      "sha256": "4bbb8720923139e792cdc29a5e5dacb2eed6b81217f3cc15abb407fc9c1cda2e",
+      "bytes": 1924989
+    },
+    {
+      "path": "DevLog/20261029_WeightedFirstPerson_HeavyRenderE1029/09_actual_knuckle_attack.png",
+      "sha256": "53e7bb911d23346b5f84c8ef38ce14fb6b4be0ba82eac156f8bb0096d81044dc",
+      "bytes": 1664880
+    }
+  ],
+  "preservation": {
+    "files": 516,
+    "saves": 204,
+    "evidence": 312,
+    "mismatches": []
+  },
+  "save_count": 216,
+  "input": "programmatic InputKey and reflected actual DoAim; not physical input",
+  "knuckle_appearance": "Resolved: bare hands now; future per-equipped-item mesh/socket visuals. Existing knuckle gameplay data retained. No model purchase/generation.",
+  "approval_pending": false,
+  "question_pending": false,
+  "optional_ui_inspection": {
+    "action": "read ChatGPT window 67022",
+    "result": "app approval timed out before AX state; not retried",
+    "needed_for_implementation": false
+  },
+  "limitations": [
+    "No physical mouse/keyboard test or manual full run",
+    "No dedicated knuckle model; user approved bare hands",
+    "No complete wall/weapon clipping audit",
+    "Existing sprint blur/fringe and close QA target remain",
+    "Attack additive limited to safe montage/evaluation conditions; arbitrary hitch cannot undo a previously displayed pose"
+  ],
+  "sealed_at_utc": "2026-10-29T13:51:19.983685+00:00",
+  "tracked_worktree_clean": true,
+  "active_ue_processes": [],
+  "blocking_questions": [],
+  "blocking_approvals": []
+}

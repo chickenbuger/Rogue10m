@@ -52,6 +52,10 @@
 
 관련: `Feature/architect/2026-11-16_output-log-error-triage.md`, `Docs/OutputLogErrorWorkflow.md`, `Feature/doc/evidence/output-log-errors-20261116/verification-summary.json`.
 
+## 2026-11-16 후속 정정
+
+같은 날 별도 작업에서 전역 loaded-reflection의 미지원 속성 처리와 프로필 초기 이름을 C++로 수정했다. 수정 후 당시 후보 맵에서 로드 객체 90,810개와 값 1,093,395개를 검사했다. 미지원과 잘림은 0건이었으며 데이터 보존 조건을 통과했다. 첫 작업의 미지원 실패와 이후 cold 세션에서 다시 관찰된 구형 Humanoid 참조 누락은 각각 해당 세션의 이력으로 보존한다. [참조 검사 호환성과 프로필 초기화 검증](2026-11-16_reference-scanner-compatibility.md)
+
 ## 2026-11-17 독립 게시 검증
 
 사용자의 기능별 즉시 commit·push 지시를 적용해, 원격 main의 e32e5abe에서 별도 물리 sparse checkout과 Sprint#9-33-output-log-workflow 브랜치를 준비했다. 본 도구·문서·증거만 옮기며 C++·Config·Content와 지형/전투 누적 변경은 포함하지 않는다. 최초 계획과 위 통합 대기 설명은 당시 공유 checkout의 이력이다.

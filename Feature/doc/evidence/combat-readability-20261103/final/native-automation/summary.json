@@ -1,0 +1,310 @@
+{
+  "actual_individual_tests": 40,
+  "individual_success": 40,
+  "errors": 0,
+  "clean_success": 37,
+  "success_with_known_warnings": 3,
+  "known_warning_events": 3,
+  "groups": {
+    "AttackResources": 4,
+    "BasicRunEvidence": 1,
+    "HybridSkillTree": 3,
+    "MonsterAttackGeometry": 2,
+    "MonsterLoot": 5,
+    "OpenWorld.BossSouthApproach": 2,
+    "ProgressionRequirements": 4,
+    "RunCurrencyBaseline": 6,
+    "WeaponCooldown": 5,
+    "WeaponSwitch": 8
+  },
+  "launcher_prior_count_misclassification_preserved": "Automation report failed/incomplete: 0 failures, 37 succeeded",
+  "decision_source": "all 40 actual test rows and exact three warning events, not process exit alone",
+  "tests": [
+    {
+      "test": "Rogue10m.AttackResources.AggregationAndAtomicFailure",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.AttackResources.InvalidDataAndDiscount",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.AttackResources.OptionalManaAndExecutionSnapshot",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.AttackResources.ReentrantAcceptanceRejected",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.BasicRunEvidence.SharedReaderAppend",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.HybridSkillTree.MasteryAlternativesAndLegacy",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.HybridSkillTree.MasteryAndRewards",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.HybridSkillTree.SharedLedgerAndValidation",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.MonsterAttackGeometry.CapsuleBounds",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.MonsterAttackGeometry.WarningProjection",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.MonsterLoot.ActualDeathExactlyOnce",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 1,
+      "warning_messages": [
+        "LogStreaming: Failed to read file '../../../../../Project/Rogue10m/Saved/SaveGames/Rogue10m_Town_QA_ReadabilityAutoC.sav' error."
+      ]
+    },
+    {
+      "test": "Rogue10m.MonsterLoot.PickupFailureRetryAndPersistence",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 1,
+      "warning_messages": [
+        "LogStreaming: Failed to read file '../../../../../Project/Rogue10m/Saved/SaveGames/Rogue10m_Town_QA_ReadabilityAutoC.sav' error."
+      ]
+    },
+    {
+      "test": "Rogue10m.MonsterLoot.SeededRollsAndUniqueInstances",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.MonsterLoot.TableBoundariesAndValidation",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.MonsterLoot.TestAndAuthorityIsolation",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 1,
+      "warning_messages": [
+        "LogStreaming: Failed to read file '../../../../../Project/Rogue10m/Saved/SaveGames/Rogue10m_Town_QA_ReadabilityAutoC.sav' error."
+      ]
+    },
+    {
+      "test": "Rogue10m.OpenWorld.BossSouthApproach.InvalidGeometry",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.OpenWorld.BossSouthApproach.Transform",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.ProgressionRequirements.InvalidDataAndEmptyDefaults",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.ProgressionRequirements.LegacyAlternativesAndGroups",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.ProgressionRequirements.LiveAcquisitionAndAttack",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.ProgressionRequirements.TruthTable",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.RunCurrencyBaseline.ImmutableCapture",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.RunCurrencyBaseline.InvalidCaptureIsAtomic",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.RunCurrencyBaseline.InvalidResolutionIsAtomic",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.RunCurrencyBaseline.PostPaymentRollback",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.RunCurrencyBaseline.RepeatedRollbackAndRunIsolation",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.RunCurrencyBaseline.ZeroAndMaximumBalances",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.WeaponCooldown.FloorBoundaries",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.WeaponCooldown.RealAttackAcceptance",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.WeaponCooldown.ReservedComboDeadline",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.WeaponCooldown.SameTypeAndRestore",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.WeaponCooldown.TimeAcrossWeapons",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.WeaponSwitch.AllMutationPathsSucceedAtIdle",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.WeaponSwitch.AttackBoundaryAndLongCooldown",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.WeaponSwitch.ConservativeBusyStates",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.WeaponSwitch.LocomotionAndNoInvulnerability",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.WeaponSwitch.ReentrantCommandsRejected",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.WeaponSwitch.RejectBeforeMutation",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.WeaponSwitch.SameTypeAndDuplicateInstance",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    },
+    {
+      "test": "Rogue10m.WeaponSwitch.ValidationFailureIsAtomic",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0,
+      "warning_messages": []
+    }
+  ]
+}

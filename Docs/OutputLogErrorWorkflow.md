@@ -4,10 +4,10 @@
 
 ## 검사 예시
 
-아래는 함께 보관한 진단 로그의 검사 예시다. 실제 개발에서는 활성 에디터 명령행의 `-AbsLog` 경로로 바꾼다. Python 3 표준 라이브러리만 필요하다:
+아래 명령은 프로젝트 루트에서 함께 보관한 진단 로그를 검사한다. 실제 개발에서는 활성 에디터 명령행의 `-AbsLog` 경로를 지정한다. 검사기는 Python 3 표준 라이브러리를 사용한다.
 
 ```powershell
-$TaskLog = 'D:\Project\Rogue10m\Feature\doc\evidence\output-log-errors-20261116\startup-en-restore-ko-final\startup.log'
+$TaskLog = (Resolve-Path -LiteralPath '.\Feature\doc\evidence\output-log-errors-20261116\startup-en-restore-ko-final\startup.log').Path
 python -B .\Scripts\CheckUnrealOutputLog.py --log $TaskLog
 ```
 
@@ -33,7 +33,7 @@ python -B .\Scripts\CheckUnrealOutputLog.py --log $TaskLog --watch --duration-se
 
 현재 설치 엔진의 `UnifiedError.CreateErrorMessage`(7), `CreateErrorMessageWithContext`(4), `StructuredLogFormat`(4)가 한국어 메시지와 영어 고정 기대값을 비교해 시작 시 `Condition failed` 15줄을 출력한다. 별도 정상 종료 진단에서 한국어는 429개 중 3개 실패/15줄, 영어는 같은 429개 모두 성공/오류0을 확인했다. 이는 게임플레이 코드의 오류와 구분한다.
 
-엔진 설치 파일을 바꾸지 않는 다음 실행용 우회책:
+아래 프로젝트 실행기는 엔진 설치 파일을 유지하면서 시작 시 언어를 조정한다.
 
 ```powershell
 .\Scripts\OpenCheckedEditor.ps1
@@ -44,3 +44,11 @@ python -B .\Scripts\CheckUnrealOutputLog.py --log $TaskLog --watch --duration-se
 영어 smoke → 한국어 API 복원은 숨김 진단 프로세스에서 실제 확인했다. 전체 UI의 시각적인 한국어 복귀와 시작 전에 이미 로드된 현지화 에셋까지 인증한 것은 아니다. 엔진 테스트의 한국어 호환성 결함 자체는 남으며, 나중에 한국어 상태에서 해당 엔진 테스트를 직접 실행하면 다시 실패할 수 있다. 현재 편집 중인 에디터는 이 실행기로 교체하지 않는다.
 
 상세 증거와 현재 지형 오류의 경계는 `Feature/doc/2026-11-16_output-log-error-triage.md`를 따른다.
+
+## 2026-11-16 후속 검증
+
+참조 스캐너의 lazy/FieldPath/Optional/동적 Struct·PropertyBag와 상속 저장소 처리를 보강했다. 새 DLL로 당시 후보 맵의 로드 객체 90,810개와 값 1,093,395개를 검사했다. 미지원과 잘림은 0건이었으며 데이터 보존 조건을 통과했다. 이전 cold 세션의 미지원 실패는 이력으로 보존한다. [참조 검사 결과](../Feature/doc/2026-11-16_reference-scanner-compatibility.md)
+
+프로필 초기 스폰의 이름 불일치는 PlayerState 연결 뒤 선택한 프로필을 적용하도록 수정했다. 실제 native Possess/BeginPlay 회귀 검사를 통과했다. 당시 `cold-editor.log`는 22:29:21에 닫혔다. 개발 중에는 새 세션의 실제 로그 경로를 사용한다.
+
+위 검사의 범위는 당시 로드된 반사 데이터다. 이전 로그의 vendor Humanoid/RigConfig 기록과 native/custom/unloaded 참조의 상태는 별도로 확인한다.

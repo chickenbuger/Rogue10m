@@ -1,0 +1,40 @@
+{
+  "schema": "Rogue10m.OrganicCavePreRuntimeArtGate.20261118.v1",
+  "decision": "accepted_for_runtime_validation_only",
+  "reviewer": "organic_art_review",
+  "image": {
+    "path": "Feature/doc/evidence/cave-organic20261118/visual/after-Q-vault.png",
+    "sha256": "e1f0146c385a047bfa8d2b18e3db09d12492c0893d2bf9c8d656998f30332b6f",
+    "directly_viewed": true,
+    "actual_Unreal_render": true,
+    "verified_runtime_PCM_capture": false
+  },
+  "observations_ko": [
+    "Q 보관실의 큰 회갈색·갈색 암반 덩어리가 벽에서 천장으로 이어지고, 천장 아래 실루엣이 비대칭으로 굽어 있다.",
+    "기존 사각 벽과 반복 부착 타원형 바위가 이 화면의 지배적인 구조로 보이지 않는다.",
+    "석재 질감이 곡면에 이어지고 바닥·보관함이 읽힌다. 이 화면에서 하늘빛 누출은 보이지 않는다."
+  ],
+  "remaining_runtime_review_items_ko": [
+    "프레임 위쪽 중앙에 넓고 매우 어두운 천장 띠가 보인다. 깊은 그림자 또는 가까운 돌출부로 읽히지만 이 한 화면만으로 실제 PCM의 지속 가림 여부를 판단할 수 없다.",
+    "일반 삼인칭의 입구·좁은 코너·비밀방6장과 전체 왕복 경로에서 천장 가림, 캐릭터 가독성, 국소광 포화와 색 균형을 재검토해야 한다."
+  ],
+  "scope_limits": {
+    "images_independently_viewed_for_this_gate": 1,
+    "whole_cave_art_accepted": false,
+    "Z_art_independently_reviewed": false,
+    "runtime_camera_pass_claimed": false,
+    "physical_input_claimed": false,
+    "cold_pass_claimed": false
+  },
+  "stale_capture_excluded": {
+    "path": "Feature/doc/evidence/cave-organic20261118/visual/after-Q-entry.png",
+    "sha256": "33fb4d0816bc748b99b4205e8203bb708d07ab72b162f7f6e3c683d41def4b38",
+    "status": "rejected_stale_pre_winding_repair_capture",
+    "reason": "Root confirmed the screenshot task was requested before winding repair; not current geometry/art evidence.",
+    "reviewer_directly_viewed_in_this_gate": false,
+    "retain_as_distinct_rejected_capture": true
+  },
+  "native_repair_receipt": "Feature/doc/evidence/cave-organic20261118/author-live/winding-repair.json",
+  "native_adapter": "Feature/doc/evidence/cave-organic20261118/native-adapter.json",
+  "no_Editor_or_Git_operations_by_reviewer": true
+}

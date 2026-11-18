@@ -1,0 +1,93 @@
+{
+  "dateLocal": "2026-11-12",
+  "timezone": "Asia/Seoul",
+  "status": "passed",
+  "checks": 584,
+  "failures": [],
+  "scope": "production references and docs only; no UE/map/runtime changes",
+  "world": {
+    "nodes": 21,
+    "bidirectionalEdges": 29,
+    "hiddenPlanarCrossings": 0,
+    "ordinarySpecies": 15,
+    "midBosses": 4,
+    "finalBosses": 1,
+    "routes": [
+      {
+        "id": "direct",
+        "metres": 300,
+        "secondsAt6mps": 50,
+        "measured": false
+      },
+      {
+        "id": "knuckle",
+        "metres": 783.0283588399928,
+        "secondsAt6mps": 130.50472647333214,
+        "measured": false
+      },
+      {
+        "id": "greatsword",
+        "metres": 999.514925376621,
+        "secondsAt6mps": 166.5858208961035,
+        "measured": false
+      },
+      {
+        "id": "magic",
+        "metres": 875.8509022196271,
+        "secondsAt6mps": 145.97515036993784,
+        "measured": false
+      }
+    ]
+  },
+  "acquisition": {
+    "classes": 11,
+    "npcs": 12,
+    "weapons": 3,
+    "books": {
+      "knuckle": 10,
+      "greatsword": 10,
+      "mage": 3
+    },
+    "lowerTrainingBooks": 3,
+    "fieldDiscoveryBooks": 20
+  },
+  "image": {
+    "path": "Docs/References/WorldMap/rogue10m-world-map-concept-20261112.png",
+    "sha256": "BA2A7CFFB60E06A9342386708D0E23EEBD233D7073AFA3D23EA46C96A48DA7D8",
+    "bytes": 4306713,
+    "width": 1536,
+    "height": 1024,
+    "byteIdenticalToGeneratedSource": true
+  },
+  "references": {
+    "localLinksChecked": 36
+  },
+  "preservation": {
+    "preExistingTrackedDirtyBaseline": 68,
+    "unchangedOtherThanIntendedSprintAppend": 67,
+    "intendedModifiedBaselinePaths": [
+      "Docs/SprintChangeLog.md"
+    ]
+  },
+  "harness": {
+    "checkGeneratedChanges": "passed; pre-existing binary-change warnings only",
+    "scopeDiffWhitespace": "passed for clean entry-point files"
+  },
+  "review": {
+    "independentReviewers": 2,
+    "corrections": [
+      "S/B field-vs-hub/arena labels",
+      "Ctrl entry vs undecided exit",
+      "consistent Korean magic-missile name"
+    ],
+    "runtimeValidationPerformed": false
+  },
+  "git": {
+    "workBranch": "Sprint#9-31-world-map-production-reference",
+    "remoteFetched": true,
+    "initialIntegrationHead": "e32e5abe672dd9554b3f51e90b672f6039077d29",
+    "initialWorkBase": "51f2def03774afc64874a521f6804743014c1cf3",
+    "priorCommitsBeyondIntegration": 28,
+    "promotion": "deferred: 28 pre-existing commits require separate integration validation; doc reference work does not certify those runtime changes"
+  }
+}

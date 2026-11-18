@@ -1,0 +1,75 @@
+{
+  "builds": [
+    {
+      "seconds": 156.76,
+      "result": "success_before_update"
+    },
+    {
+      "seconds": 202.78,
+      "result": "failed_Chaos_enum_and_QA_shadow_names"
+    },
+    {
+      "seconds": 16.63,
+      "result": "success_UE5.8.4"
+    },
+    {
+      "seconds": 14.59,
+      "result": "success_fixture_and_API_fixes"
+    },
+    {
+      "seconds": 77.82,
+      "result": "success_final_HUD_pose_QA"
+    }
+  ],
+  "native": {
+    "ReadabilityAutoA": {
+      "success": 40,
+      "failed": 3,
+      "failed_tests": [
+        "Rogue10m.MapMaker.EditorIntegration",
+        "Rogue10m.MonsterLoot.ActualDeathExactlyOnce",
+        "Rogue10m.MonsterLoot.PickupFailureRetryAndPersistence"
+      ]
+    },
+    "ReadabilityAutoB": {
+      "success": 37,
+      "failed": 3,
+      "failed_tests": [
+        "Rogue10m.MonsterLoot.ActualDeathExactlyOnce",
+        "Rogue10m.MonsterLoot.PickupFailureRetryAndPersistence",
+        "Rogue10m.MonsterLoot.TestAndAuthorityIsolation"
+      ]
+    }
+  },
+  "runtime": {
+    "BossRenderB": [
+      "FAIL fresh_profile_created_selected",
+      "checks=5",
+      "failures=1",
+      "cases_completed=0"
+    ],
+    "SpatialRenderA": [
+      "FAIL actual_MultiHit_second_pulse_reuses_target_after_it_leaves_query",
+      "checks=50",
+      "failures=1"
+    ],
+    "SpatialRenderB": [
+      "FAIL live_skeletal_scene_shape_follows_owned_actor_transform_while_pose_paused",
+      "checks=19",
+      "failures=1"
+    ]
+  },
+  "asset_authoring": {
+    "asset-evidence": {
+      "phase": "pending_inspection_no_automatic_retry",
+      "error": "Rogue10mLootEntry: Property 'ItemData' for attribute 'item_data' on 'Rogue10mLootEntry' cannot be edited on instances",
+      "new_table_saved": false
+    },
+    "asset-evidence-B": {
+      "phase": "pending_inspection_no_automatic_retry",
+      "error": "Native table validation failed: ",
+      "new_table_saved": false
+    }
+  },
+  "explanation": "Failed originals remain local. NativeC40/40 succeeded;3 expected missing fresh-QA-profile warnings were counted separately by engine. A/B authoring failed before save; C uses an independently proven Optional[Text] Python contract and preserves A/B bytes. Spatial A net HP was masked by real regeneration; B sampled an unsynchronized pending pose. Final C controls only owned fixture regeneration/pose; product collision and tolerances unchanged."
+}

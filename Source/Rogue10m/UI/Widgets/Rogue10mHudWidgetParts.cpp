@@ -565,6 +565,7 @@ bool URogue10mQuickSlotWidget::NativeOnDrop(
 	URogue10mCombatComponent* Combat = Character ? Character->GetCombatComponent() : nullptr;
 	if (!Combat || !Combat->AssignSkillToInputSlot(SkillOperation->SkillData, QuickSlotView.InputSlot))
 	{
+		SetToolTipText(SkillOperation->SkillData->GetAllowedSlotText());
 		return false;
 	}
 

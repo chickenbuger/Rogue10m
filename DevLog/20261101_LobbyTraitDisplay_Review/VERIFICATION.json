@@ -1,0 +1,78 @@
+{
+  "packet": "Sprint#9-20-lobby-trait-display",
+  "base": "9578fa5227870a4e5964d26faa4c595cbe7b4642",
+  "source_commit": "1928869d5d713f8c62712e4cfbdbbb7fcf95dce7",
+  "verified_utc": "2026-11-01T04:43:59.630085+00:00",
+  "original_saves": 340,
+  "after_saves": 340,
+  "all_originals_sha256_unchanged": true,
+  "original_assets": 31,
+  "assets_unchanged": true,
+  "map_unchanged": true,
+  "display_checks": 38,
+  "display_failures": 0,
+  "exact_case_coverage": true,
+  "scope": "display_fixture_only",
+  "temporary_seed_restored": true,
+  "profile_mutation": "none",
+  "purchase": "not_performed",
+  "SaveNow": "not_called",
+  "physical_input": "not_performed",
+  "currency_regression": {
+    "passed": 6,
+    "failed": 0,
+    "warnings": 0,
+    "report": "Feature\\doc\\evidence\\lobby-trait-display-20261101\\RunCurrencyBaseline_Lobby1101Final\\report\\index.json"
+  },
+  "source_changes": [
+    "UI/Widgets/Rogue10mTraitWidget.cpp",
+    "World/Rogue10mTutorialNPC.cpp",
+    "Components/Rogue10mTownProgressionComponent.cpp localized NoPoints reason only"
+  ],
+  "build_logs": {
+    "lobby-ui-build-1101.log": "a62db6cdc7344eb6744f95d4fbd1c9294c54dc434610aa93c1d8fb08fa158eca",
+    "lobby-ui-fixture-gather-build-1101.log": "99291fd159cafceabf23a8c746dbb40fe0d08e4b90924962f832e0b4f157b5b6",
+    "lobby-ui-reason-build-1101.log": "da76f824eb596d4a1000bf2e3d7c2a1a46d2ea4a63e949758fa17b74ab53771c"
+  },
+  "game_log_sha256": "22f0c26a744354abc1fcb9a38db8444f4ec0f79243fbabad241a98889feb3cc9",
+  "photos": [
+    {
+      "file": "01_highest20_budget20.png",
+      "source": "DevLog\\LobbyTraitDisplayQA\\LobbyDisplay1101B\\Driver\\screenshots\\01_highest20_budget20.png",
+      "sha256": "3b3861284f93634ba114d5ff783ecc372c0a8b670b6d4303c48aa00f997a5690",
+      "bytes": 511419,
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "02_highest1_budget20.png",
+      "source": "DevLog\\LobbyTraitDisplayQA\\LobbyDisplay1101B\\Driver\\screenshots\\02_highest1_budget20.png",
+      "sha256": "26a41f9a53e8dcfec0ed11afe9dcd0b27c70f466dff255b7de2c1e52a6df1889",
+      "bytes": 516777,
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "03_highest20_budget0.png",
+      "source": "DevLog\\LobbyTraitDisplayQA\\LobbyDisplay1101B\\Driver\\screenshots\\03_highest20_budget0.png",
+      "sha256": "94fe5f938a824ed4b49aad78fc9b1abe7c8782da491c47906ad14d6d994599fc",
+      "bytes": 535826,
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "limitations": [
+    "no real persistent purchase/save/next-run test in this fixture",
+    "old XP-only trait fixture not run or treated as passing",
+    "no human keyboard or victory/full balance/packaging validation"
+  ]
+}

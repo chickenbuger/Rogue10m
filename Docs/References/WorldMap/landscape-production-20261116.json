@@ -1,0 +1,746 @@
+{
+  "schemaVersion": 1,
+  "documentId": "rogue10m-landscape-production-20261116",
+  "status": "design_ready",
+  "runtimeImplementationComplete": false,
+  "implementationResult": "Feature/doc/2026-11-16_landscape-production-result.md",
+  "sourceCatalogs": [
+    {
+      "path": "Docs/References/WorldMap/world-layout-20261112.json",
+      "sha256": "590cd1af22492fb4d0d7e307c4bc497575e238afc78f1710b0ac227ff8446af7"
+    },
+    {
+      "path": "Docs/References/WorldMap/acquisition-catalog-20261112.json",
+      "sha256": "7e42df30c67a21cf741967c35f8e82ec6675d1c8ff4db1571a88f19fb9d4d1a7"
+    },
+    {
+      "path": "Scripts/WorldLayoutTerrain20261112.py",
+      "sha256": "465e0017277a2700eb57284cbdb8633f205e45ecea3eea0632a56c3899304923"
+    }
+  ],
+  "sourceMapPreserved": "/Game/Rogue10m/Maps/Production/WorldLayoutCompact20261113A",
+  "implementationCandidate": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A",
+  "method": "native_Landscape_Manage_Delete_outside_components_after_live_baseline",
+  "coordinateSystem": {
+    "units": "m",
+    "north": "+Y",
+    "east": "+X",
+    "origin": "S",
+    "anchorWorldCm": [
+      15000,
+      32550,
+      0
+    ]
+  },
+  "envelope": {
+    "localBoundsM": {
+      "minX": -487.5,
+      "maxX": 525.0,
+      "minY": -100.5,
+      "maxY": 462.0
+    },
+    "worldBoundsCm": [
+      -33750,
+      67500,
+      22500,
+      78750
+    ],
+    "widthM": 1012.5,
+    "depthM": 562.5,
+    "componentQuads": 63,
+    "subsectionsPerComponent": 1,
+    "gridSpacingCm": 178.57142857142858,
+    "originalComponents": 256,
+    "retainedComponents": 45,
+    "outsideComponents": 211,
+    "retainedComponentIndexX": [
+      5,
+      13
+    ],
+    "retainedComponentIndexY": [
+      10,
+      14
+    ],
+    "retainedInclusiveVertexRangeX": [
+      315,
+      882
+    ],
+    "retainedInclusiveVertexRangeY": [
+      630,
+      945
+    ],
+    "equivalentUniqueVertexGrid": [
+      568,
+      316
+    ],
+    "landscapeOriginalLocationCm": [
+      -90000,
+      -90000,
+      0
+    ],
+    "zScale": 256
+  },
+  "road": {
+    "walkWidthM": 8,
+    "totalGradedWidthM": 14,
+    "featherBeyondGradedHalfWidthM": 12,
+    "directPlanarLengthM": 300.0,
+    "directionalSlopeTargetDegrees": 12,
+    "fullTriangleSlopeTargetDegrees": 12,
+    "knownHistoricalFullTriangleMaximumDegrees": 15.095,
+    "knownHistoricalFullTriangleMaximumResolved": false
+  },
+  "finalArena": {
+    "localCenterM": [
+      0,
+      354.5
+    ],
+    "worldCenterCm": [
+      15000,
+      68000,
+      9600
+    ],
+    "radiusM": 55,
+    "northBoundaryMarginM": 52.5,
+    "bossActorPlacementImplemented": false
+  },
+  "nodes": [
+    {
+      "id": "S",
+      "label": "필드 시작점",
+      "kind": "field_start",
+      "localM": {
+        "x": 0,
+        "y": 0
+      },
+      "worldCm": {
+        "x": 15000.0,
+        "y": 32550.0
+      },
+      "baselinePadElevationM": 50.0,
+      "baselinePadRadiusM": 10.0
+    },
+    {
+      "id": "J100",
+      "label": "남쪽 중앙 갈림길",
+      "kind": "junction",
+      "localM": {
+        "x": 0,
+        "y": 100
+      },
+      "worldCm": {
+        "x": 15000.0,
+        "y": 42550.0
+      },
+      "baselinePadElevationM": null,
+      "baselinePadRadiusM": null
+    },
+    {
+      "id": "J180",
+      "label": "중앙 갈림길",
+      "kind": "junction",
+      "localM": {
+        "x": 0,
+        "y": 180
+      },
+      "worldCm": {
+        "x": 15000.0,
+        "y": 50550.0
+      },
+      "baselinePadElevationM": null,
+      "baselinePadRadiusM": null
+    },
+    {
+      "id": "J240",
+      "label": "북쪽 중앙 갈림길",
+      "kind": "junction",
+      "localM": {
+        "x": 0,
+        "y": 240
+      },
+      "worldCm": {
+        "x": 15000.0,
+        "y": 56550.0
+      },
+      "baselinePadElevationM": null,
+      "baselinePadRadiusM": null
+    },
+    {
+      "id": "B",
+      "label": "아자토르 전투 구역 입구",
+      "kind": "final_boss_entrance",
+      "localM": {
+        "x": 0,
+        "y": 300
+      },
+      "worldCm": {
+        "x": 15000.0,
+        "y": 62550.0
+      },
+      "baselinePadElevationM": 96.0,
+      "baselinePadRadiusM": 2.0
+    },
+    {
+      "id": "H",
+      "label": "낙엽 수렵촌",
+      "kind": "major_hub",
+      "localM": {
+        "x": -140,
+        "y": 100
+      },
+      "worldCm": {
+        "x": 1000.0,
+        "y": 42550.0
+      },
+      "baselinePadElevationM": 63.901098901098905,
+      "baselinePadRadiusM": 35.0
+    },
+    {
+      "id": "P",
+      "label": "산림초소",
+      "kind": "outpost",
+      "localM": {
+        "x": -250,
+        "y": 100
+      },
+      "worldCm": {
+        "x": -10000.0,
+        "y": 42550.0
+      },
+      "baselinePadElevationM": 66.50211859103078,
+      "baselinePadRadiusM": 18.0
+    },
+    {
+      "id": "W",
+      "label": "숲 사냥터",
+      "kind": "hunting_ground",
+      "localM": {
+        "x": -315,
+        "y": 150
+      },
+      "worldCm": {
+        "x": -16500.0,
+        "y": 47550.0
+      },
+      "baselinePadElevationM": null,
+      "baselinePadRadiusM": null
+    },
+    {
+      "id": "Q",
+      "label": "돌샘 수련초소",
+      "kind": "outpost",
+      "localM": {
+        "x": -280,
+        "y": 220
+      },
+      "worldCm": {
+        "x": -13000.0,
+        "y": 54550.0
+      },
+      "baselinePadElevationM": 83.86536600719968,
+      "baselinePadRadiusM": 18.0
+    },
+    {
+      "id": "M",
+      "label": "풍차장터",
+      "kind": "major_hub",
+      "localM": {
+        "x": 140,
+        "y": 100
+      },
+      "worldCm": {
+        "x": 29000.0,
+        "y": 42550.0
+      },
+      "baselinePadElevationM": 69.93378169263536,
+      "baselinePadRadiusM": 35.0
+    },
+    {
+      "id": "A",
+      "label": "운송길 사냥터",
+      "kind": "hunting_ground",
+      "localM": {
+        "x": 220,
+        "y": 90
+      },
+      "worldCm": {
+        "x": 37000.0,
+        "y": 41550.0
+      },
+      "baselinePadElevationM": null,
+      "baselinePadRadiusM": null
+    },
+    {
+      "id": "G",
+      "label": "수비초소",
+      "kind": "outpost",
+      "localM": {
+        "x": 180,
+        "y": 180
+      },
+      "worldCm": {
+        "x": 33000.0,
+        "y": 50550.0
+      },
+      "baselinePadElevationM": 77.14944011982509,
+      "baselinePadRadiusM": 18.0
+    },
+    {
+      "id": "T",
+      "label": "기록촌 마탑",
+      "kind": "major_hub",
+      "localM": {
+        "x": 70,
+        "y": 230
+      },
+      "worldCm": {
+        "x": 22000.0,
+        "y": 55550.0
+      },
+      "baselinePadElevationM": 85.3417701388408,
+      "baselinePadRadiusM": 34.0
+    },
+    {
+      "id": "O",
+      "label": "관측초소",
+      "kind": "outpost",
+      "localM": {
+        "x": 210,
+        "y": 250
+      },
+      "worldCm": {
+        "x": 36000.0,
+        "y": 57550.0
+      },
+      "baselinePadElevationM": 85.1006708921313,
+      "baselinePadRadiusM": 18.0
+    },
+    {
+      "id": "F",
+      "label": "잔불 대장간 초소",
+      "kind": "outpost",
+      "localM": {
+        "x": 310,
+        "y": 230
+      },
+      "worldCm": {
+        "x": 46000.0,
+        "y": 55550.0
+      },
+      "baselinePadElevationM": 85.80586080586082,
+      "baselinePadRadiusM": 18.0
+    },
+    {
+      "id": "Z",
+      "label": "제련로 사냥터",
+      "kind": "hunting_ground",
+      "localM": {
+        "x": 370,
+        "y": 275
+      },
+      "worldCm": {
+        "x": 52000.0,
+        "y": 60050.0
+      },
+      "baselinePadElevationM": null,
+      "baselinePadRadiusM": null
+    },
+    {
+      "id": "R",
+      "label": "유적 사냥터",
+      "kind": "hunting_ground",
+      "localM": {
+        "x": 150,
+        "y": 300
+      },
+      "worldCm": {
+        "x": 30000.0,
+        "y": 62550.0
+      },
+      "baselinePadElevationM": null,
+      "baselinePadRadiusM": null
+    },
+    {
+      "id": "BM",
+      "label": "포자 군락의 어미 구역",
+      "kind": "optional_mid_boss",
+      "localM": {
+        "x": -350,
+        "y": 190
+      },
+      "worldCm": {
+        "x": -20000.0,
+        "y": 51550.0
+      },
+      "baselinePadElevationM": 79.06593406593407,
+      "baselinePadRadiusM": 18.0
+    },
+    {
+      "id": "BW",
+      "label": "가시 성채의 수문장 구역",
+      "kind": "optional_mid_boss",
+      "localM": {
+        "x": -310,
+        "y": 300
+      },
+      "worldCm": {
+        "x": -16000.0,
+        "y": 62550.0
+      },
+      "baselinePadElevationM": 93.65449342374755,
+      "baselinePadRadiusM": 18.0
+    },
+    {
+      "id": "BE",
+      "label": "심연을 보는 눈 구역",
+      "kind": "optional_mid_boss",
+      "localM": {
+        "x": 200,
+        "y": 340
+      },
+      "worldCm": {
+        "x": 35000.0,
+        "y": 66550.0
+      },
+      "baselinePadElevationM": 95.90233346564338,
+      "baselinePadRadiusM": 18.0
+    },
+    {
+      "id": "BG",
+      "label": "황금 포식자 구역",
+      "kind": "optional_mid_boss",
+      "localM": {
+        "x": 410,
+        "y": 320
+      },
+      "worldCm": {
+        "x": 56000.0,
+        "y": 64550.0
+      },
+      "baselinePadElevationM": 96.0,
+      "baselinePadRadiusM": 18.0
+    }
+  ],
+  "edges": [
+    {
+      "id": "E01",
+      "from": "S",
+      "to": "J100",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "central_direct",
+      "planarStraightLengthM": 100,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E02",
+      "from": "J100",
+      "to": "J180",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "central_direct",
+      "planarStraightLengthM": 80,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E03",
+      "from": "J180",
+      "to": "J240",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "central_direct",
+      "planarStraightLengthM": 60,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E04",
+      "from": "J240",
+      "to": "B",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "central_direct",
+      "planarStraightLengthM": 60,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E05",
+      "from": "S",
+      "to": "H",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 172.046505,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E06",
+      "from": "S",
+      "to": "M",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 172.046505,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E07",
+      "from": "J100",
+      "to": "H",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 140,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E08",
+      "from": "J100",
+      "to": "M",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 140,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E09",
+      "from": "H",
+      "to": "J180",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 161.245155,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E10",
+      "from": "M",
+      "to": "J180",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 161.245155,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E11",
+      "from": "H",
+      "to": "P",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 110,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E12",
+      "from": "P",
+      "to": "W",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 82.006097,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E13",
+      "from": "W",
+      "to": "Q",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 78.262379,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E14",
+      "from": "Q",
+      "to": "J240",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 280.713377,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E15",
+      "from": "M",
+      "to": "A",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 80.622577,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E16",
+      "from": "A",
+      "to": "G",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 98.488578,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E17",
+      "from": "G",
+      "to": "T",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 120.83046,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E18",
+      "from": "T",
+      "to": "J240",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 70.710678,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E19",
+      "from": "G",
+      "to": "F",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 139.283883,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E20",
+      "from": "F",
+      "to": "Z",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 75,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E21",
+      "from": "Z",
+      "to": "O",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 161.941347,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E22",
+      "from": "O",
+      "to": "T",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 141.421356,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E23",
+      "from": "T",
+      "to": "R",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 106.301458,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E24",
+      "from": "R",
+      "to": "O",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 78.102497,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E25",
+      "from": "W",
+      "to": "BM",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_mid_boss_dead_branch",
+      "planarStraightLengthM": 53.150729,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E26",
+      "from": "Q",
+      "to": "BW",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_mid_boss_dead_branch",
+      "planarStraightLengthM": 85.440037,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E27",
+      "from": "O",
+      "to": "BE",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_mid_boss_dead_branch",
+      "planarStraightLengthM": 90.553851,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E28",
+      "from": "Z",
+      "to": "BG",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_mid_boss_dead_branch",
+      "planarStraightLengthM": 60.207973,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E29",
+      "from": "J180",
+      "to": "T",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 86.023253,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    }
+  ],
+  "validationBoundary": "This generated catalog verifies design geometry and historical procedural inputs only; it does not report live execution status. See implementationResult for native crop, cold reload, collision failures and runtime verification."
+}

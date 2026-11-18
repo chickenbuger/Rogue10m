@@ -1,0 +1,58 @@
+{
+  "schema": "Rogue10m.OrganicCaveSourceArtGate.20261118.v1",
+  "candidate": "analytic-sculpt-V2",
+  "decision": "accepted_source_candidate_for_Unreal_preview_only",
+  "source_geometry_spec": "Feature/doc/evidence/cave-organic20261118/geometryspec-v2.json",
+  "source_geometry_spec_sha256": "05ea056abbf5dd5c09b2365367237fb3753bac48786e6de6af68adcf928b3b7e",
+  "source_previews": [
+    {
+      "path": "tmp/cave-organic-preview-v2-20261118/Q_turn.png",
+      "sha256": "7ada6baa3677d93695a958abef56f8cd90e25bf51960e641db62a8d03696ff55",
+      "directly_viewed": true
+    },
+    {
+      "path": "tmp/cave-organic-preview-v2-20261118/Q_vault.png",
+      "sha256": "cf705977fd893504b51085a995ac488340fcb80b908d91cf29c2221b42e152e5",
+      "directly_viewed": true
+    },
+    {
+      "path": "tmp/cave-organic-preview-v2-20261118/Z_turn.png",
+      "sha256": "94ca1909251c125f246cdac976d19780443543a5e5759c3a2394161112ab71f1",
+      "directly_viewed": true
+    }
+  ],
+  "observation_ko": [
+    "Q 코너와 Z 코너는 벽이 천장으로 이어지는 연속 면과 비대칭으로 접힌 머리 위 실루엣이 읽힌다.",
+    "Q 넓은 방은 V1의 넓은 사각 평판 대신 여러 큰 볼록·오목 암반 덩어리와 높낮이가 달라지는 천장 가장자리가 보인다.",
+    "이전 반복 타원형 바위와 분리된 사각 벽의 외형에서 실질적으로 달라졌으며, 큰 형상만으로도 연속된 암반 후보로 읽힌다."
+  ],
+  "remaining_visual_risk_ko": [
+    "표면 굴곡이 둥글고 매끄러운 편이다. 실제 석재 질감과 국소 조명 아래에서 무른 점토나 고무처럼 보이는지는 Unreal 화면에서 판단해야 한다.",
+    "어두운 CPU 미리보기는 실제 시야·색·빛 포화·천장 가림·지상광 누출을 인증하지 않는다."
+  ],
+  "expected_scope": {
+    "actor_count": 1408,
+    "preserved_floor_collision_z_cm": 8610,
+    "new_visible_floor_z_cm": 8609,
+    "new_visible_floor_offset_below_collision_cm": 1,
+    "floor_material_slot": 1,
+    "floor_material_reused": "MI_CaveStoneFloor unchanged",
+    "wall_ceiling_material_slot": 0,
+    "preserved_grass_roof_top_z_cm": 9602,
+    "new_shell_components": 2,
+    "new_no_collision_ramp_visual_components": 2,
+    "existing_ramp_collisions_and_transforms_preserved": true,
+    "Landscape_height_edit_authorized": false
+  },
+  "reported_source_mesh_triangles": {
+    "Q": 125980,
+    "Z": 125976
+  },
+  "source_topology_or_counts_are_not_runtime_QA": true,
+  "actual_Unreal_render_reviewed": false,
+  "actual_camera_routes_passed": false,
+  "collision_QA_passed": false,
+  "cold_QA_passed": false,
+  "final_art_accepted": false,
+  "no_Editor_or_Git_operations_by_reviewer": true
+}

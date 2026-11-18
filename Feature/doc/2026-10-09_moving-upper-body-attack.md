@@ -71,8 +71,11 @@ flowchart LR
 .\Scripts\VerifyMovingAttackGraph.ps1 -Phase stance -Label fresh-guard-label
 ```
 
-핵심 증거: [통합 비교](evidence/moving-upper-body-attack-20261009/runtime-comparison.json), [재로드](evidence/moving-upper-body-attack-20261009/graph-reload.json), [콘텐츠 보존](evidence/moving-upper-body-attack-20261009/content-after.json), [실제 이동 공격](evidence/moving-upper-body-attack-20261009/visual/frame_0078.png).
+핵심 증거: [통합 비교](evidence/moving-upper-body-attack-20261009/runtime-comparison.json), [재로드](evidence/moving-upper-body-attack-20261009/graph-reload.json), 콘텐츠 보존〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕, [실제 이동 공격](evidence/moving-upper-body-attack-20261009/visual/frame_0078.png).
 
 원본 AnimBP SHA는 `e516c167736708885fe12231676d28aaf1cd68ff84da06844d3dfafbf9166f18`, 저장 후 SHA는 `eef1e7fe9dcaf7919d86326c8cc878b21a84524046688288db3d1fd0ae4e8f67`이다. 저장 전 Python에 노출되지 않는 weak cache 참조를 발견했으며, 원본 해시가 유지된 상태에서 native 읽기 전용 감사로 보완한 후 저장했다.
 
 StartHub Editor를 새 빌드로 복원했고 PIE 종료·미저장 에셋/맵 0·120FPS 설정을 확인했다. 기존 아린, 월드, HUD 등 미커밋 작업을 보존했다. 커밋·푸시는 하지 않았다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

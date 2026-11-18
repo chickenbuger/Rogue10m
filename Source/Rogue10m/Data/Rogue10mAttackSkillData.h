@@ -21,7 +21,22 @@ enum class ERogue10mAttackInputSlot : uint8
 	JumpPrimary,
 	JumpSpecial,
 	ChargedPrimary,
-	ChargedSpecial
+	ChargedSpecial,
+	QSkill,
+	ESkill,
+	RSkill,
+	MouseChord
+};
+
+/** Equip policy is independent from animation/legacy attack input. */
+UENUM(BlueprintType)
+enum class ERogue10mSkillSlotPolicy : uint8
+{
+	Legacy,
+	Common,
+	MouseChordOnly,
+	RightChargeOnly,
+	BasicOnly
 };
 
 UENUM(BlueprintType)
@@ -116,6 +131,18 @@ class ROGUE10M_API URogue10mAttackSkillData : public UDataAsset
 public:
 	URogue10mAttackSkillData();
 
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Loadout")
+	bool IsAllowedInLoadoutSlot(ERogue10mAttackInputSlot Slot) const;
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Loadout")
+	FText GetAllowedSlotText() const;
+	static bool IsLoadoutSlot(ERogue10mAttackInputSlot Slot);
+	static bool IsCommonLoadoutSlot(ERogue10mAttackInputSlot Slot);
+	bool RequiresLoadoutCharge() const;
+
+	/** Legacy preserves existing assets. New techniques should choose an explicit policy. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Loadout")
+	ERogue10mSkillSlotPolicy AllowedSlotPolicy = ERogue10mSkillSlotPolicy::Legacy;
+
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Combat|Damage")
 	float RollDamage(const URogue10mAttributeSet* SourceAttributes, bool& bOutCritical) const;
 
@@ -190,6 +217,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Combat|Timing", meta=(ClampMin="0.0", Units="s"))
 	float HitStartDelaySeconds = 0.0f;
 
+	/** Full contact times in seconds from montage start at 1x rate. Empty keeps legacy delay/interval timing. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Combat|Timing", meta=(ClampMin="0.0"))
+	TArray<float> AuthoredContactTimes;
+
+	/** Optional montage-1x action release time. 0 keeps V1 contact-only input ownership. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Combat|Timing", meta=(ClampMin="0.0", Units="s"))
+	float AuthoredRecoveryEndTime = 0.0f;
+
 	/** 다단히트 판정 펄스 사이의 간격입니다. 공격속도 배율에 따라 짧아집니다. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Combat|Multi Hit", meta=(EditCondition="HitCount > 1", ClampMin="0.01", Units="s"))
 	float HitInterval = 0.08f;
@@ -223,6 +258,14 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Combat", meta=(ClampMin="0.0", Units="s"))
 	float ChargeSeconds = 0.65f;
+
+	/** Prototype grounded advance, then one contact. Existing skills remain unchanged by default. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Combat|Advance")
+	bool bAdvanceBeforeHit = false;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Combat|Advance", meta=(EditCondition="bAdvanceBeforeHit", ClampMin="1.0", ClampMax="600.0", Units="cm"))
+	float AdvanceDistance = 150.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Combat|Advance", meta=(EditCondition="bAdvanceBeforeHit", ClampMin="0.05", ClampMax="2.0", Units="s"))
+	float AdvanceDuration = 0.25f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Cost")
 	TArray<FRogue10mAttackResourceCost> ResourceCosts;
@@ -292,6 +335,20 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Visual|Niagara|Tuning", meta=(ClampMin="0.1"))
 	float AttackEffectTimeDilation = 2.0f;
+
+	/** Socket-local cast presentation in active third-person gameplay only. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Visual|Niagara|Third Person", meta=(Units="cm"))
+	FVector ThirdPersonCastEffectOffset = FVector::ZeroVector;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Visual|Niagara|Third Person")
+	FRotator ThirdPersonCastEffectRotation = FRotator::ZeroRotator;
+
+	/** Move positive-damage feedback to the attacker-facing bounds surface; not a contact point. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Visual|Niagara|Third Person")
+	bool bUseThirdPersonImpactBoundsSurface = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Visual|Niagara|Third Person", meta=(EditCondition="bUseThirdPersonImpactBoundsSurface", ClampMin="0.0", Units="cm"))
+	float ThirdPersonImpactEffectSurfaceOffset = 0.0f;
 
 	/** 로컬 1인칭에서 화면 중앙을 비우는 전용 보정을 적용합니다. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Visual|Niagara|First Person")

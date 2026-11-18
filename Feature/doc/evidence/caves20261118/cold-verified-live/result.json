@@ -1,0 +1,46 @@
+{
+  "passed": false,
+  "pid": 50280,
+  "assets_saved": false,
+  "checks": 32,
+  "capsule_queries": 2016,
+  "diagnostics": [
+    {
+      "check": "all40_source_material_graphs_parameters_files_unchanged",
+      "detail": [
+        "/Game/Stylized_Village/Assets/Architecture/Doors/_Materials/MI_Door.MI_Door",
+        "/Game/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_Corners.MI_Flagstone_Wall_Corners",
+        "/Game/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_FullxFull.MI_Flagstone_Wall_FullxFull",
+        "/Game/Stylized_Village/Assets/Architecture/Flagstone/_Materials/MI_Flagstone_Wall_Trims.MI_Flagstone_Wall_Trims",
+        "/Game/Stylized_Village/Assets/Architecture/Plaster/_Materials/MI_Plaster_Architecture.MI_Plaster_Architecture",
+        "/Game/Stylized_Village/Assets/Architecture/RoofTiles/Round/_Materials/MI_RoofTiles_Round_Full.MI_RoofTiles_Round_Full",
+        "/Game/Stylized_Village/Assets/Architecture/StoneFloor/_Materials/MI_StonePath_01.MI_StonePath_01",
+        "/Game/Stylized_Village/Assets/Architecture/Windows/_Materials/MI_Windows_Brown.MI_Windows_Brown",
+        "/Game/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_Floors.MI_Wood_Floors",
+        "/Game/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_PiecesBeams_Large.MI_Wood_PiecesBeams_Large",
+        "/Game/Stylized_Village/Assets/Architecture/Wood/_Materials/MI_Wood_Roof.MI_Wood_Roof",
+        "/Game/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Tree_Large_Green/MI_Impostor_Tree_Large_Green.MI_Impostor_Tree_Large_Green",
+        "/Game/Stylized_Village/Assets/Foliage/Trees/ImposterLODs/Tree_Medium_Green/MI_Impostor_Tree_Medium_Green.MI_Impostor_Tree_Medium_Green",
+        "/Game/Stylized_Village/Assets/Foliage/Trees/_Materials/MI_Bark.MI_Bark",
+        "/Game/Stylized_Village/Assets/Foliage/Trees/_Materials/MI_Bark_Tiling.MI_Bark_Tiling",
+        "/Game/Stylized_Village/Assets/Props/Furniture/_Materials/MI_Furniture_Crate.MI_Furniture_Crate",
+        "/Game/Stylized_Village/Assets/Props/Lanterns/Materials/MI_Lanterns_On.MI_Lanterns_On",
+        "/Game/Stylized_Village/Assets/Props/Pots/_Materials/MI_Pots_01.MI_Pots_01",
+        "/Game/Stylized_Village/Assets/Stones/Boulder/_Materials/MI_Boulder_Large.MI_Boulder_Large",
+        "/Game/Stylized_Village/Assets/Stones/Boulder/_Materials/MI_Boulder_Med.MI_Boulder_Med",
+        "/Game/Stylized_Village/Assets/Terrain/Material_Landscape/MI_Terrain.MI_Terrain"
+      ]
+    },
+    {
+      "check": "all_seven_new_material_graphs_parameters_parentage_match_authored_state",
+      "detail": [
+        "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveRock.MI_CaveRock"
+      ]
+    }
+  ],
+  "traceback": null,
+  "runtime_camera_certified": false,
+  "elapsed_seconds": 9.093000000000757,
+  "process_exit_code_observed_by_caller": null,
+  "acceptance": "Require semantic passed=true AND separately observed process exit0."
+}

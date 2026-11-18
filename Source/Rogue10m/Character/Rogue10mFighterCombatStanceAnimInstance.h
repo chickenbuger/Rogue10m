@@ -9,6 +9,7 @@
 
 class UAnimMontage;
 class UAnimSequence;
+class UBlendSpace;
 class URogue10mCharacterAnimationComponent;
 class FRogue10mViewAlignedUpperBodyProxy;
 
@@ -83,6 +84,13 @@ public:
 	UPROPERTY(BlueprintReadOnly, Transient, Category="Rogue10m|Animation|Moving Attack")
 	float MovingAttackUpperBodyAlpha = 0.0f;
 
+	/** Evaluated optional arm pitch only; published on the game thread after pose evaluation. */
+	UPROPERTY(BlueprintReadOnly, Transient, Category="Rogue10m|Animation|Weighted First Person")
+	FVector2D WeightedHandPitch = FVector2D::ZeroVector;
+
+	UPROPERTY(BlueprintReadOnly, Transient, Category="Rogue10m|Animation|Weighted First Person")
+	bool bWeightedHandMotionApplied = false;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Moving Attack", meta=(ClampMin="0.0", Units="cm/s"))
 	float MovingAttackGroundSpeedThreshold = 10.0f;
 
@@ -92,6 +100,13 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Transient, Category="Rogue10m|Animation|Fighter Stance")
 	TObjectPtr<UAnimSequence> FighterCombatStanceAnimation;
+
+	UPROPERTY(BlueprintReadOnly, Transient, Category="Rogue10m|Animation|Weapon")
+	TObjectPtr<UBlendSpace> GroundLocomotionBlendSpace;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Weapon")
+	TSoftObjectPtr<UAnimSequence> GreatSwordIdleSequence;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Weapon")
+	TSoftObjectPtr<UBlendSpace> GreatSwordLocomotion;
 
 	/** Fixed provenance of the sequence player configured in ABP_Common_Unarmed. */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Fighter Stance")
@@ -117,5 +132,9 @@ private:
 	TWeakObjectPtr<UAnimMontage> CachedDodgeMontage;
 	FSoftObjectPath CachedDodgeMontagePath;
 	bool bDodgeMontageCacheAttempted = false;
+	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedFighterIdle;
+	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedGreatSwordIdle;
+	UPROPERTY(Transient) TObjectPtr<UBlendSpace> CachedUnarmedLocomotion;
+	UPROPERTY(Transient) TObjectPtr<UBlendSpace> CachedGreatSwordLocomotion;
 	float FighterCombatBlendProgress = 0.0f;
 };

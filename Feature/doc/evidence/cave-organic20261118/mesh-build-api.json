@@ -1,0 +1,28 @@
+{
+  "GeometryScript_MeshEdits": {
+    "available": true,
+    "methods": {
+      "append_buffers_to_mesh": "X.append_buffers_to_mesh(target_mesh, buffers, material_id=0, defer_change_notifications=False, debug=None) -> (DynamicMesh, new_triangle_indices_list=GeometryScriptIndexList)\r\nAdds a set of vertices/triangles to the mesh, with Normals, UVs, and Colors; returning the new triangles indices\r\n\r\nArgs:\r\n    target_mesh (DynamicMesh): \r\n    buffers (GeometryScriptSimpleMeshBuffers): \r\n    material_id (int32): \r\n    defer_change_notifications (bool): \r\n    debug (GeometryScriptDebug): \r\n\r\nReturns:\r\n    GeometryScriptIndexList: \r\n\r\n    new_triangle_indices_list (GeometryScriptIndexList):"
+    }
+  },
+  "GeometryScript_NewAssetUtils": {
+    "available": true,
+    "methods": {
+      "create_new_static_mesh_asset_from_mesh": "X.create_new_static_mesh_asset_from_mesh(from_dynamic_mesh, asset_path_and_name, options, debug=None) -> (StaticMesh, outcome=GeometryScriptOutcomePins)\r\nCreate a new StaticMesh asset from a DynamicMesh. Save the asset at the AssetPathAndName location.\r\n\r\nArgs:\r\n    from_dynamic_mesh (DynamicMesh): \r\n    asset_path_and_name (str): \r\n    options (GeometryScriptCreateNewStaticMeshAssetOptions): \r\n    debug (GeometryScriptDebug): \r\n\r\nReturns:\r\n    GeometryScriptOutcomePins: \r\n\r\n    outcome (GeometryScriptOutcomePins):"
+    }
+  },
+  "GeometryScript_Materials": {
+    "available": true,
+    "methods": {
+      "set_polygroup_material_id": "X.set_polygroup_material_id(target_mesh, group_layer, polygroup_id, material_id, defer_change_notifications=False, debug=None) -> (DynamicMesh, is_valid_polygroup_id=bool)\r\nSet a new MaterialID on all the triangles of TargetMesh with the given PolyGroup.\r\n\r\nArgs:\r\n    target_mesh (DynamicMesh): \r\n    group_layer (GeometryScriptGroupLayer): PolyGroup Layer to use as basis for PolyGroups\r\n    polygroup_id (int32): PolyGroup ID that specifies Triangles to set to new MaterialID\r\n    material_id (int32): explicit new MaterialID to set\r\n    defer_change_notifications (bool): if true, the UDynamicMesh does not emit a change event/signal for this modification\r\n    debug (GeometryScriptDebug): \r\n\r\nReturns:\r\n    bool: \r\n\r\n    is_valid_polygroup_id (bool):"
+    }
+  },
+  "GeometryScriptSimpleMeshBuffers": {
+    "available": true,
+    "methods": {}
+  },
+  "GeometryScriptCreateNewStaticMeshAssetOptions": {
+    "available": true,
+    "methods": {}
+  }
+}

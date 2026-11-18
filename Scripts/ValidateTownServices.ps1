@@ -22,7 +22,7 @@ foreach ($phase in @('Write', 'Read')) {
     $log = Join-Path $evidence ($phase.ToLowerInvariant() + '.log')
     $arguments = @(
         ('"' + $project + '"'), '/Game/Rogue10m/Maps/StartHub', '-game', '-nullrhi',
-        '-unattended', '-nosplash', '-nosound', '-NoLiveCoding', '-NoRemoteShaderCompile',
+        '-unattended', '-nosplash', '-nosound', '-DisablePython','-language=en','-locale=en-US','-NoLiveCoding', '-NoRemoteShaderCompile',
         ('-RogueProfileSaveSlot=' + $profileSlot), ('-RogueProgressionSavePrefix=' + $savePrefix),
         ('-RogueSkillKeySaveSlot=Rogue10m_Fighter_QA_Town_' + $Label),
         ('-ExecCmds="Rogue10m.TestTownServices' + $phase + '"'), ('-abslog="' + $log + '"')

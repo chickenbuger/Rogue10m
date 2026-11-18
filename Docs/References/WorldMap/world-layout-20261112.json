@@ -1,0 +1,1112 @@
+{
+  "schemaVersion": 1,
+  "documentId": "rogue10m-world-layout-20261112",
+  "title": "Rogue10m 월드 제작용 공간 기획 기준",
+  "createdDate": "2026-11-12",
+  "timezone": "Asia/Seoul",
+  "status": "planning",
+  "runtimeImplementationComplete": false,
+  "coordinateSystem": {
+    "type": "localMetres",
+    "units": "m",
+    "northAxis": "+Y",
+    "eastAxis": "+X",
+    "originNodeId": "S",
+    "heightValuesSpecified": false,
+    "placementStatus": "proposed_not_unreal_world_transforms",
+    "note": "모든 좌표는 대화에서 정리한 평면 배치 제안이다. 지형 고도·실제 도로 중심선·충돌·에셋 배치·주행 실측을 뜻하지 않는다."
+  },
+  "authority": {
+    "source": "사용자와의 월드·마을·초소·몬스터·기술·비급 기획 대화",
+    "role": "actual_map_production_reference",
+    "canonicalRosterFile": "Scripts/Editor/MonsterRosterDefinitions.py",
+    "illustrationRole": "배치 콘셉트 참고 이미지. 정확한 노드·간선·종수·시간 계약은 이 JSON과 짝 제작 가이드로 확인한다.",
+    "olderConflicts": "이 기록의 최신 사용자 요구는 과거 고정 5개 동급 마을·모든 무기 동시입력/차징 강제·중상급 비급 NPC 확정보상 초안을 대체한다."
+  },
+  "requirements": {
+    "runLimitActiveSeconds": 1200,
+    "directBossEntranceTargetActiveSeconds": 60,
+    "growthBossEntranceTargetActiveSeconds": 900,
+    "growthTargetEndsAt": "B_final_boss_entrance_not_boss_defeat",
+    "allHubsOptional": true,
+    "allQuestsOptional": true,
+    "allOutpostsOptional": true,
+    "allMidBossesOptional": true,
+    "finalBossEntranceInitiallyAccessible": true,
+    "finalBossAccessRequiresSpecificSkill": false,
+    "finalBossAccessRequiresQuestOrVisitCount": false,
+    "normalMovementDirectRoute": true,
+    "noArtificialWaitToReachGrowthTarget": true,
+    "startHubIsSeparateFromField": true,
+    "startHubIsNotCountedAmongMajorHubs": true,
+    "sameRunRevisitPreservesQuestProgress": true,
+    "questRewardsAtMostOncePerStagePerRun": true,
+    "questObjectiveItemsMustNotDependOnRandomDrops": true,
+    "firstDungeonsShareFieldWorld": true,
+    "dungeonEntryRefillsRunTimer": false,
+    "safeZoneEntryAlonePausesTime": false,
+    "safeZoneMenuPausesWorldAiAndRunClock": true,
+    "fieldAndDungeonMenusKeepTimeRunning": true,
+    "runEndResets": [
+      "run_items",
+      "run_equipment",
+      "run_mastery",
+      "run_learned_skills",
+      "run_quest_progress"
+    ],
+    "persistentDomains": [
+      "lobby_currency",
+      "permanent_lobby_upgrades",
+      "discovery_information"
+    ],
+    "discoveryGrantsAutomaticLearningOrEquipment": false,
+    "note": "위 항목은 제작 인수 요구이며 구현 완료 상태를 표시하지 않는다. 실제 저장 파일 삭제·이행을 지시하지 않는다."
+  },
+  "inputAndBookRules": {
+    "status": "latest_chat_requirements_not_runtime_certification",
+    "weaponTechniques": {
+      "mandatoryChordOrChargeForEveryWeapon": false,
+      "note": "모든 무기·직업에 좌우 동시입력 또는 차징을 강제하지 않는다. 기술별 최신 확정 입력 계약을 적용한다."
+    },
+    "mageCommand": {
+      "enterCommandMode": "single_ctrl_press",
+      "fixedDeadlineStartsAt": "first_Q",
+      "laterInputsExtendDeadline": false,
+      "QQQAutoFires": true,
+      "deadlineSeconds": null,
+      "otherSpellCombinations": "not_defined_by_this_spatial_spec",
+      "note": "첫 Q 기준의 고정 입력 마감과 QQQ 자동 발동을 보존한다. 미정 시간 수치는 임의 확정하지 않는다."
+    },
+    "skillbooks": {
+      "ordinaryNpcQuestPromisesSkillbook": false,
+      "lowerTierSimpleQuestOrTrainingException": true,
+      "midAndHighTierAcquisition": "natural_discovery_during_quest_exploration_or_optional_dungeon_and_boss_side_spaces",
+      "midAndHighTierNpcGuaranteedReward": false,
+      "midAndHighTierNpcShopSale": false,
+      "npcRole": "소문·단서·해석 제공. 특정 중상급 비급의 확정 지급을 미리 약속하지 않는다.",
+      "learningRequirementsStillApply": true,
+      "discoveryDoesNotGrantNextRunUse": true
+    }
+  },
+  "offFieldStartHub": {
+    "mapAsset": "/Game/Rogue10m/Maps/StartHub",
+    "connectedFieldNodeId": "S",
+    "includedInFieldGraph": false,
+    "runClock": "waiting_until_normal_field_run_entry",
+    "arinIdentityAndExistingPresentationPreserved": true,
+    "starterWeaponAndSupplyNewRunGrant": "proposal_requires_separate_receipt_and_inventory_validation_not_implemented_by_this_spec"
+  },
+  "nodes": [
+    {
+      "id": "S",
+      "label": "필드 시작점",
+      "kind": "field_start",
+      "positionM": {
+        "x": 0,
+        "y": 0
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": true
+    },
+    {
+      "id": "J100",
+      "label": "남쪽 중앙 갈림길",
+      "kind": "junction",
+      "positionM": {
+        "x": 0,
+        "y": 100
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false
+    },
+    {
+      "id": "J180",
+      "label": "중앙 갈림길",
+      "kind": "junction",
+      "positionM": {
+        "x": 0,
+        "y": 180
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false
+    },
+    {
+      "id": "J240",
+      "label": "북쪽 중앙 갈림길",
+      "kind": "junction",
+      "positionM": {
+        "x": 0,
+        "y": 240
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false
+    },
+    {
+      "id": "B",
+      "label": "아자토르 전투 구역 입구",
+      "kind": "final_boss_entrance",
+      "positionM": {
+        "x": 0,
+        "y": 300
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": true,
+      "entranceIsNotBossActorPosition": true
+    },
+    {
+      "id": "H",
+      "label": "낙엽 수렵촌",
+      "kind": "major_hub",
+      "positionM": {
+        "x": -140,
+        "y": 100
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false,
+      "combatSpawnAtServiceAnchor": false
+    },
+    {
+      "id": "P",
+      "label": "산림초소",
+      "kind": "outpost",
+      "positionM": {
+        "x": -250,
+        "y": 100
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false,
+      "combatSpawnAtServiceAnchor": false
+    },
+    {
+      "id": "W",
+      "label": "숲 사냥터",
+      "kind": "hunting_ground",
+      "positionM": {
+        "x": -315,
+        "y": 150
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false
+    },
+    {
+      "id": "Q",
+      "label": "돌샘 수련초소",
+      "kind": "outpost",
+      "positionM": {
+        "x": -280,
+        "y": 220
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false,
+      "combatSpawnAtServiceAnchor": false
+    },
+    {
+      "id": "M",
+      "label": "풍차장터",
+      "kind": "major_hub",
+      "positionM": {
+        "x": 140,
+        "y": 100
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false,
+      "combatSpawnAtServiceAnchor": false
+    },
+    {
+      "id": "A",
+      "label": "운송길 사냥터",
+      "kind": "hunting_ground",
+      "positionM": {
+        "x": 220,
+        "y": 90
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false
+    },
+    {
+      "id": "G",
+      "label": "수비초소",
+      "kind": "outpost",
+      "positionM": {
+        "x": 180,
+        "y": 180
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false,
+      "combatSpawnAtServiceAnchor": false
+    },
+    {
+      "id": "T",
+      "label": "기록촌 마탑",
+      "kind": "major_hub",
+      "positionM": {
+        "x": 70,
+        "y": 230
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false,
+      "combatSpawnAtServiceAnchor": false
+    },
+    {
+      "id": "O",
+      "label": "관측초소",
+      "kind": "outpost",
+      "positionM": {
+        "x": 210,
+        "y": 250
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false,
+      "combatSpawnAtServiceAnchor": false
+    },
+    {
+      "id": "F",
+      "label": "잔불 대장간 초소",
+      "kind": "outpost",
+      "positionM": {
+        "x": 310,
+        "y": 230
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false,
+      "combatSpawnAtServiceAnchor": false
+    },
+    {
+      "id": "Z",
+      "label": "제련로 사냥터",
+      "kind": "hunting_ground",
+      "positionM": {
+        "x": 370,
+        "y": 275
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false
+    },
+    {
+      "id": "R",
+      "label": "유적 사냥터",
+      "kind": "hunting_ground",
+      "positionM": {
+        "x": 150,
+        "y": 300
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false
+    },
+    {
+      "id": "BM",
+      "label": "포자 군락의 어미 구역",
+      "kind": "optional_mid_boss",
+      "positionM": {
+        "x": -350,
+        "y": 190
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false
+    },
+    {
+      "id": "BW",
+      "label": "가시 성채의 수문장 구역",
+      "kind": "optional_mid_boss",
+      "positionM": {
+        "x": -310,
+        "y": 300
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false
+    },
+    {
+      "id": "BE",
+      "label": "심연을 보는 눈 구역",
+      "kind": "optional_mid_boss",
+      "positionM": {
+        "x": 200,
+        "y": 340
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false
+    },
+    {
+      "id": "BG",
+      "label": "황금 포식자 구역",
+      "kind": "optional_mid_boss",
+      "positionM": {
+        "x": 410,
+        "y": 320
+      },
+      "placementStatus": "proposed",
+      "isEntryOrFinalBossEntrance": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "E01",
+      "from": "S",
+      "to": "J100",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "central_direct",
+      "planarStraightLengthM": 100,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E02",
+      "from": "J100",
+      "to": "J180",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "central_direct",
+      "planarStraightLengthM": 80,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E03",
+      "from": "J180",
+      "to": "J240",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "central_direct",
+      "planarStraightLengthM": 60,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E04",
+      "from": "J240",
+      "to": "B",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "central_direct",
+      "planarStraightLengthM": 60,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E05",
+      "from": "S",
+      "to": "H",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 172.046505,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E06",
+      "from": "S",
+      "to": "M",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 172.046505,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E07",
+      "from": "J100",
+      "to": "H",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 140,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E08",
+      "from": "J100",
+      "to": "M",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 140,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E09",
+      "from": "H",
+      "to": "J180",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 161.245155,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E10",
+      "from": "M",
+      "to": "J180",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 161.245155,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E11",
+      "from": "H",
+      "to": "P",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 110,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E12",
+      "from": "P",
+      "to": "W",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 82.006097,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E13",
+      "from": "W",
+      "to": "Q",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 78.262379,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E14",
+      "from": "Q",
+      "to": "J240",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 280.713377,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E15",
+      "from": "M",
+      "to": "A",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 80.622577,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E16",
+      "from": "A",
+      "to": "G",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 98.488578,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E17",
+      "from": "G",
+      "to": "T",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 120.83046,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E18",
+      "from": "T",
+      "to": "J240",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 70.710678,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E19",
+      "from": "G",
+      "to": "F",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 139.283883,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E20",
+      "from": "F",
+      "to": "Z",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 75,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E21",
+      "from": "Z",
+      "to": "O",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 161.941347,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E22",
+      "from": "O",
+      "to": "T",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 141.421356,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E23",
+      "from": "T",
+      "to": "R",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 106.301458,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E24",
+      "from": "R",
+      "to": "O",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 78.102497,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E25",
+      "from": "W",
+      "to": "BM",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_mid_boss_dead_branch",
+      "planarStraightLengthM": 53.150729,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E26",
+      "from": "Q",
+      "to": "BW",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_mid_boss_dead_branch",
+      "planarStraightLengthM": 85.440037,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E27",
+      "from": "O",
+      "to": "BE",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_mid_boss_dead_branch",
+      "planarStraightLengthM": 90.553851,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E28",
+      "from": "Z",
+      "to": "BG",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_mid_boss_dead_branch",
+      "planarStraightLengthM": 60.207973,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    },
+    {
+      "id": "E29",
+      "from": "J180",
+      "to": "T",
+      "bidirectional": true,
+      "requiresQuest": false,
+      "requiresSkill": false,
+      "role": "optional_branch_or_loop",
+      "planarStraightLengthM": 86.023253,
+      "geometryStatus": "schematic_centerline_lower_bound_not_walked"
+    }
+  ],
+  "routes": [
+    {
+      "id": "direct",
+      "label": "직행",
+      "nodeIds": [
+        "S",
+        "J100",
+        "J180",
+        "J240",
+        "B"
+      ],
+      "exampleOnly": true,
+      "requiresListedClass": false,
+      "targetBossEntranceActiveSeconds": 60,
+      "planarStraightLengthM": 300,
+      "nominalWalkSpeedMps": 6,
+      "nominalPureTravelSeconds": 50,
+      "includesCombat": false,
+      "includesLocalExploration": false,
+      "includesNpcInteraction": false,
+      "measuredInRuntime": false,
+      "note": "300m/50초는 평면 길이와 6m/s 가정의 계산이다. 실제 기본 장비·최종 이동속도·경사·입구선 통과를 새로 측정해야 한다."
+    },
+    {
+      "id": "knuckle",
+      "label": "너클 중심 서쪽 성장 예시",
+      "nodeIds": [
+        "S",
+        "H",
+        "P",
+        "W",
+        "Q",
+        "J240",
+        "B"
+      ],
+      "exampleOnly": true,
+      "requiresListedClass": false,
+      "targetBossEntranceActiveSeconds": 900,
+      "planarStraightLengthM": 783.028359,
+      "nominalWalkSpeedMps": 6,
+      "nominalPureTravelSeconds": 130.504726,
+      "includesCombat": false,
+      "includesLocalExploration": false,
+      "includesNpcInteraction": false,
+      "measuredInRuntime": false,
+      "note": "약15분은 선택 활동을 포함한 보스 입구 도착 목표다. 이동 하한을15분 플레이 또는 처치 완료 실측으로 해석하지 않는다."
+    },
+    {
+      "id": "greatsword",
+      "label": "대검 중심 동부 성장 예시",
+      "nodeIds": [
+        "S",
+        "M",
+        "A",
+        "G",
+        "F",
+        "Z",
+        "O",
+        "T",
+        "J240",
+        "B"
+      ],
+      "exampleOnly": true,
+      "requiresListedClass": false,
+      "targetBossEntranceActiveSeconds": 900,
+      "planarStraightLengthM": 999.514925,
+      "nominalWalkSpeedMps": 6,
+      "nominalPureTravelSeconds": 166.585821,
+      "includesCombat": false,
+      "includesLocalExploration": false,
+      "includesNpcInteraction": false,
+      "measuredInRuntime": false,
+      "note": "약15분은 선택 활동을 포함한 보스 입구 도착 목표다. 이동 하한을15분 플레이 또는 처치 완료 실측으로 해석하지 않는다."
+    },
+    {
+      "id": "magic",
+      "label": "마법 중심 유적·마탑 재방문 예시",
+      "nodeIds": [
+        "S",
+        "M",
+        "J180",
+        "T",
+        "R",
+        "O",
+        "T",
+        "J240",
+        "B"
+      ],
+      "exampleOnly": true,
+      "requiresListedClass": false,
+      "targetBossEntranceActiveSeconds": 900,
+      "planarStraightLengthM": 875.850902,
+      "nominalWalkSpeedMps": 6,
+      "nominalPureTravelSeconds": 145.97515,
+      "includesCombat": false,
+      "includesLocalExploration": false,
+      "includesNpcInteraction": false,
+      "measuredInRuntime": false,
+      "note": "약15분은 선택 활동을 포함한 보스 입구 도착 목표다. 이동 하한을15분 플레이 또는 처치 완료 실측으로 해석하지 않는다."
+    }
+  ],
+  "ordinarySpecies": [
+    {
+      "monsterId": "VerdantSlime",
+      "label": "초록 점액체",
+      "rank": "Normal",
+      "areaAnchorNodeId": "W",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_VerdantSlime",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    },
+    {
+      "monsterId": "Sporeling",
+      "label": "어린 포자 버섯",
+      "rank": "Normal",
+      "areaAnchorNodeId": "W",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_Sporeling",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    },
+    {
+      "monsterId": "MossShell",
+      "label": "이끼 등껍질",
+      "rank": "Normal",
+      "areaAnchorNodeId": "W",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_MossShell",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    },
+    {
+      "monsterId": "CrimsonSlime",
+      "label": "붉은 점액체",
+      "rank": "Normal",
+      "areaAnchorNodeId": "A",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_CrimsonSlime",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    },
+    {
+      "monsterId": "CactusScout",
+      "label": "선인장 정찰병",
+      "rank": "Normal",
+      "areaAnchorNodeId": "A",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_CactusScout",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    },
+    {
+      "monsterId": "SwarmDroneEight",
+      "label": "군집 드론 8호",
+      "rank": "Normal",
+      "areaAnchorNodeId": "A",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_SwarmDroneEight",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    },
+    {
+      "monsterId": "ThornMushroom",
+      "label": "가시 버섯",
+      "rank": "Normal",
+      "areaAnchorNodeId": "Q",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_ThornMushroom",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    },
+    {
+      "monsterId": "CactusRaider",
+      "label": "선인장 약탈자",
+      "rank": "Normal",
+      "areaAnchorNodeId": "Q",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_CactusRaider",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    },
+    {
+      "monsterId": "IronShell",
+      "label": "철갑 등껍질",
+      "rank": "Normal",
+      "areaAnchorNodeId": "Q",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_IronShell",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    },
+    {
+      "monsterId": "CaveBeholder",
+      "label": "동굴 감시자",
+      "rank": "Normal",
+      "areaAnchorNodeId": "R",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_CaveBeholder",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    },
+    {
+      "monsterId": "ArcaneBeholder",
+      "label": "비전 감시자",
+      "rank": "Normal",
+      "areaAnchorNodeId": "R",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_ArcaneBeholder",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    },
+    {
+      "monsterId": "YoungMimic",
+      "label": "어린 미믹",
+      "rank": "Normal",
+      "areaAnchorNodeId": "R",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_YoungMimic",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    },
+    {
+      "monsterId": "ToxicSlime",
+      "label": "맹독 점액체",
+      "rank": "Normal",
+      "areaAnchorNodeId": "Z",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_ToxicSlime",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    },
+    {
+      "monsterId": "EmberMushroom",
+      "label": "불씨 버섯",
+      "rank": "Normal",
+      "areaAnchorNodeId": "Z",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_EmberMushroom",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    },
+    {
+      "monsterId": "SwarmRipperNine",
+      "label": "군집 절단자 9호",
+      "rank": "Normal",
+      "areaAnchorNodeId": "Z",
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/Normal/DA_Monster_Normal_SwarmRipperNine",
+      "assetOrDefinitionPresenceDoesNotProveCurrentRuntimeIntegration": true,
+      "runtimePlacementVerifiedForThisPlan": false,
+      "behaviorStatus": "reuse_candidate_new_special_behavior_not_implicitly_authorized"
+    }
+  ],
+  "huntingAreas": [
+    {
+      "id": "forest",
+      "label": "숲 사냥터",
+      "anchorNodeId": "W",
+      "speciesIds": [
+        "VerdantSlime",
+        "Sporeling",
+        "MossShell"
+      ],
+      "instancesPerEncounter": null,
+      "encounterCountsStatus": "tuning_proposal_pending",
+      "bypassWithoutClearing": true,
+      "questsDoNotBlockThroughRoute": true
+    },
+    {
+      "id": "transport",
+      "label": "운송길 사냥터",
+      "anchorNodeId": "A",
+      "speciesIds": [
+        "CrimsonSlime",
+        "CactusScout",
+        "SwarmDroneEight"
+      ],
+      "instancesPerEncounter": null,
+      "encounterCountsStatus": "tuning_proposal_pending",
+      "bypassWithoutClearing": true,
+      "questsDoNotBlockThroughRoute": true
+    },
+    {
+      "id": "quarry",
+      "label": "돌샘 외곽 채석 사면",
+      "anchorNodeId": "Q",
+      "speciesIds": [
+        "ThornMushroom",
+        "CactusRaider",
+        "IronShell"
+      ],
+      "combatAreaIsNotOutpostServiceAnchor": true,
+      "combatAreaCenterM": null,
+      "placementInstruction": "돌샘 안전 NPC 구역과 추적·공격 범위가 겹치지 않는 바깥 사면에 별도 배치한다.",
+      "instancesPerEncounter": null,
+      "encounterCountsStatus": "tuning_proposal_pending",
+      "bypassWithoutClearing": true,
+      "questsDoNotBlockThroughRoute": true
+    },
+    {
+      "id": "ruin",
+      "label": "유적 사냥터",
+      "anchorNodeId": "R",
+      "speciesIds": [
+        "CaveBeholder",
+        "ArcaneBeholder",
+        "YoungMimic"
+      ],
+      "instancesPerEncounter": null,
+      "encounterCountsStatus": "tuning_proposal_pending",
+      "bypassWithoutClearing": true,
+      "questsDoNotBlockThroughRoute": true
+    },
+    {
+      "id": "furnace",
+      "label": "제련로 사냥터",
+      "anchorNodeId": "Z",
+      "speciesIds": [
+        "ToxicSlime",
+        "EmberMushroom",
+        "SwarmRipperNine"
+      ],
+      "instancesPerEncounter": null,
+      "encounterCountsStatus": "tuning_proposal_pending",
+      "bypassWithoutClearing": true,
+      "questsDoNotBlockThroughRoute": true
+    }
+  ],
+  "midBosses": [
+    {
+      "monsterId": "SporeMatriarch",
+      "label": "포자 군락의 어미",
+      "rank": "MidBoss",
+      "nodeId": "BM",
+      "branchFrom": "W",
+      "optional": true,
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/MidBoss/DA_Monster_MidBoss_SporeMatriarch",
+      "runtimePlacementVerifiedForThisPlan": false,
+      "countsAsOrdinarySpecies": false
+    },
+    {
+      "monsterId": "ThornWarden",
+      "label": "가시 성채의 수문장",
+      "rank": "MidBoss",
+      "nodeId": "BW",
+      "branchFrom": "Q",
+      "optional": true,
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/MidBoss/DA_Monster_MidBoss_ThornWarden",
+      "runtimePlacementVerifiedForThisPlan": false,
+      "countsAsOrdinarySpecies": false
+    },
+    {
+      "monsterId": "AbyssEye",
+      "label": "심연을 보는 눈",
+      "rank": "MidBoss",
+      "nodeId": "BE",
+      "branchFrom": "O",
+      "optional": true,
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/MidBoss/DA_Monster_MidBoss_AbyssEye",
+      "runtimePlacementVerifiedForThisPlan": false,
+      "countsAsOrdinarySpecies": false
+    },
+    {
+      "monsterId": "GoldenMimic",
+      "label": "황금 포식자",
+      "rank": "MidBoss",
+      "nodeId": "BG",
+      "branchFrom": "Z",
+      "optional": true,
+      "canonicalDefinitionObserved": true,
+      "canonicalAssetPath": "/Game/DataAsset/Monster/MidBoss/DA_Monster_MidBoss_GoldenMimic",
+      "runtimePlacementVerifiedForThisPlan": false,
+      "countsAsOrdinarySpecies": false
+    }
+  ],
+  "finalBoss": {
+    "monsterId": "AbyssOverlordAzathor",
+    "label": "심연의 군주 아자토르",
+    "rank": "FinalBoss",
+    "entranceNodeId": "B",
+    "arenaCenterM": null,
+    "presentation": "human_Azathor",
+    "canonicalDefinitionObserved": true,
+    "canonicalAssetPath": "/Game/DataAsset/Monster/FinalBoss/DA_Monster_FinalBoss_AbyssOverlordAzathor",
+    "currentProjectOwnedPresentationReference": "/Game/Rogue10m/Characters/Boss/AzathorHuman20261110",
+    "legacyRosterMeshIsNotCurrentPresentationAuthority": true,
+    "countsAsOrdinarySpecies": false,
+    "runtimePlacementVerifiedForThisPlan": false
+  },
+  "geometryAndValidation": {
+    "nodeCount": 21,
+    "edgeCount": 29,
+    "majorHubCount": 3,
+    "outpostCount": 5,
+    "huntingAreaCount": 5,
+    "speciesCounts": {
+      "ordinary": 15,
+      "midBoss": 4,
+      "finalBoss": 1,
+      "total": 20
+    },
+    "allEdgesBidirectional": true,
+    "centralCorridor": {
+      "axisX": 0,
+      "fromY": 0,
+      "toY": 300,
+      "serviceAndEncounterMustNotGateRoute": true,
+      "finalBossArenaStartsAfterEntrance": true,
+      "exactWidthM": null,
+      "note": "직행축의 길·충돌·통과 여유는 실제 에디터에서 확정한다. 큰 마을 광장·자동대화·사냥터 강제 전투를 직행축에 겹치지 않는다."
+    },
+    "metricMethod": "Euclidean distance between proposed node coordinates; route sum includes repeated legs; seconds = distance / 6mps",
+    "metricStatus": "calculated_design_lower_bound_not_observed_play",
+    "runtimeAcceptance": [
+      "정상 StartHub 포털·기본 장비로 필드 입장부터 B 입구선 통과까지3회60초 이내",
+      "마을·의뢰·중간보스·특정 기술 없이 직행 가능",
+      "간선 양방향 실제 통과·충돌·고저차·추적/안전 경계 확인",
+      "서로 다른 성장 경로 실제 플레이로 약15분 입구 도착 목표 조정",
+      "같은 런 재방문·확정 목표물·보상1회·던전 시계 무리필 확인",
+      "20분 자연 종료·승리/사망/포기 정산·저장 재시도·다음 런 도메인 보존 확인",
+      "일반15·중간4·최종1의 실제 모델/동작/판정/드롭 연결과 최종 시각 플레이 확인"
+    ],
+    "unverified": [
+      "terrain_and_elevation",
+      "actual_navmesh_and_collision",
+      "runtime_spawn_and_ai",
+      "asset_ownership_current_refresh",
+      "actual_route_walk_times",
+      "full_run_balance",
+      "packaged_runtime"
+    ]
+  }
+}

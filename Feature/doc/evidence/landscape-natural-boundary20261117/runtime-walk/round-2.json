@@ -1,0 +1,1622 @@
+{
+  "status": "passed",
+  "round": 2,
+  "started_utc": "2026-11-17T14:37:14.611650+00:00",
+  "character_name": "CropWalkQA",
+  "expected_character_name": "CropWalkQA",
+  "public_profile_count": 1,
+  "QA_profile_slot_exists": true,
+  "public_runtime_name_verified": true,
+  "profile_guid": "not_read; engine-log evidence must be recorded separately",
+  "map": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A",
+  "PIE_world": "/Game/Rogue10m/Maps/Production/UEDPIE_0_WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A",
+  "fresh_PIE_owner_confirmed": true,
+  "mode": "rendered PIE; programmatic Pawn.AddMovementInput",
+  "physical_input": false,
+  "speed_overrides": 0,
+  "invulnerability": false,
+  "after_field_entry_teleports": 0,
+  "run_duration_override": false,
+  "normal_profile_application": "PlayerController.EnterSelectedCharacter before timing",
+  "default_StartRun_invoked_as_setup": true,
+  "normal_Hub_portal_verified": false,
+  "default_walk_speed_cm_s": 620.0,
+  "production_pawn_class": "/Game/Character/Customization/Characters/BP_Rogue10m_HumanMaleCharacter.BP_Rogue10m_HumanMaleCharacter_C",
+  "spawn": [
+    15000.0,
+    32550.0,
+    9698.149714997584
+  ],
+  "samples": [
+    {
+      "sim_seconds": 0.0,
+      "location": [
+        15000.0,
+        32550.0,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1198.0
+    },
+    {
+      "sim_seconds": 0.5006767995655537,
+      "location": [
+        15000.0,
+        32771.14212909795,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        619.9999999997425,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1198.0
+    },
+    {
+      "sim_seconds": 0.9883956015110016,
+      "location": [
+        15000.0,
+        33073.52778630413,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1198.0
+    },
+    {
+      "sim_seconds": 1.5037873014807701,
+      "location": [
+        15000.0,
+        33393.07064028538,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1197.0
+    },
+    {
+      "sim_seconds": 2.01587850227952,
+      "location": [
+        15000.0,
+        33710.56718478061,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1196.0
+    },
+    {
+      "sim_seconds": 2.517551701515913,
+      "location": [
+        15000.0,
+        34021.60456830717,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1196.0
+    },
+    {
+      "sim_seconds": 3.0161609016358852,
+      "location": [
+        15000.0,
+        34330.742272381554,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1195.0
+    },
+    {
+      "sim_seconds": 3.5103813000023365,
+      "location": [
+        15000.0,
+        34637.158919368754,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1195.0
+    },
+    {
+      "sim_seconds": 4.010824501514435,
+      "location": [
+        15000.0,
+        34947.433704306255,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1194.0
+    },
+    {
+      "sim_seconds": 4.5092003010213375,
+      "location": [
+        15000.0,
+        35256.426700000535,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1194.0
+    },
+    {
+      "sim_seconds": 5.01064620167017,
+      "location": [
+        15000.0,
+        35567.32315840281,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1193.0
+    },
+    {
+      "sim_seconds": 5.504507500678301,
+      "location": [
+        15000.0,
+        35873.51716378785,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1193.0
+    },
+    {
+      "sim_seconds": 6.017893802374601,
+      "location": [
+        15000.0,
+        36191.81667083956,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1192.0
+    },
+    {
+      "sim_seconds": 6.514844000339508,
+      "location": [
+        15000.0,
+        36499.9257935778,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1192.0
+    },
+    {
+      "sim_seconds": 7.015200700610876,
+      "location": [
+        15000.0,
+        36810.14694774605,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1191.0
+    },
+    {
+      "sim_seconds": 7.507382500916719,
+      "location": [
+        15000.0,
+        37115.29966393567,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1191.0
+    },
+    {
+      "sim_seconds": 8.01854969933629,
+      "location": [
+        15000.0,
+        37432.223326955806,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1190.0
+    },
+    {
+      "sim_seconds": 8.518451601266861,
+      "location": [
+        15000.0,
+        37742.16250615276,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1190.0
+    },
+    {
+      "sim_seconds": 9.005579300224781,
+      "location": [
+        15000.0,
+        38044.18167950667,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1189.0
+    },
+    {
+      "sim_seconds": 9.514451500028372,
+      "location": [
+        15000.0,
+        38359.682443384896,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1189.0
+    },
+    {
+      "sim_seconds": 10.012288201600313,
+      "location": [
+        15000.0,
+        38668.3411983595,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1188.0
+    },
+    {
+      "sim_seconds": 10.510473001748323,
+      "location": [
+        15000.0,
+        38977.215774451266,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1188.0
+    },
+    {
+      "sim_seconds": 11.005873300135136,
+      "location": [
+        15000.0,
+        39284.36395945109,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1187.0
+    },
+    {
+      "sim_seconds": 11.513320300728083,
+      "location": [
+        15000.0,
+        39598.98109981872,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        619.9999999999999,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1187.0
+    },
+    {
+      "sim_seconds": 12.013338200747967,
+      "location": [
+        15000.0,
+        39908.992197831045,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1186.0
+    },
+    {
+      "sim_seconds": 12.517648100852966,
+      "location": [
+        15000.0,
+        40221.664335896145,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1186.0
+    },
+    {
+      "sim_seconds": 13.017488300800323,
+      "location": [
+        15000.0,
+        40531.565259863506,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1185.0
+    },
+    {
+      "sim_seconds": 13.511585399508476,
+      "location": [
+        15000.0,
+        40837.90546106256,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1185.0
+    },
+    {
+      "sim_seconds": 14.009906999766827,
+      "location": [
+        15000.0,
+        41146.86485322274,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1184.0
+    },
+    {
+      "sim_seconds": 14.505621802061796,
+      "location": [
+        15000.0,
+        41454.20803064562,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1184.0
+    },
+    {
+      "sim_seconds": 15.016734302043915,
+      "location": [
+        15000.0,
+        41771.09778063453,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1183.0
+    },
+    {
+      "sim_seconds": 15.517237901687622,
+      "location": [
+        15000.0,
+        42081.41001241363,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0000000000001,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1183.0
+    },
+    {
+      "sim_seconds": 16.018117502331734,
+      "location": [
+        15000.0,
+        42391.95536481298,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1182.0
+    },
+    {
+      "sim_seconds": 16.516974799335003,
+      "location": [
+        15000.0,
+        42701.24688895501,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        619.9999999999999,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1182.0
+    },
+    {
+      "sim_seconds": 17.006991799920797,
+      "location": [
+        15000.0,
+        43005.0574293182,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0000000000001,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1181.0
+    },
+    {
+      "sim_seconds": 17.51740650087595,
+      "location": [
+        15000.0,
+        43321.514543910394,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1181.0
+    },
+    {
+      "sim_seconds": 18.009375400841236,
+      "location": [
+        15000.0,
+        43626.53526188887,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1180.0
+    },
+    {
+      "sim_seconds": 18.52009630203247,
+      "location": [
+        15000.0,
+        43943.18222062744,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1180.0
+    },
+    {
+      "sim_seconds": 19.009771201759577,
+      "location": [
+        15000.0,
+        44246.78065845824,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1179.0
+    },
+    {
+      "sim_seconds": 19.51769069954753,
+      "location": [
+        15000.0,
+        44561.69074708677,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1179.0
+    },
+    {
+      "sim_seconds": 20.008263401687145,
+      "location": [
+        15000.0,
+        44865.845822413336,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1178.0
+    },
+    {
+      "sim_seconds": 20.511314500123262,
+      "location": [
+        15000.0,
+        45177.73750344373,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1178.0
+    },
+    {
+      "sim_seconds": 21.008360799402,
+      "location": [
+        15000.0,
+        45485.906208996545,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1177.0
+    },
+    {
+      "sim_seconds": 21.508794602006674,
+      "location": [
+        15000.0,
+        45796.17516661144,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1177.0
+    },
+    {
+      "sim_seconds": 22.015992399305105,
+      "location": [
+        15000.0,
+        46110.63780093647,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1176.0
+    },
+    {
+      "sim_seconds": 22.514862701296806,
+      "location": [
+        15000.0,
+        46419.937388171325,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1176.0
+    },
+    {
+      "sim_seconds": 23.006699800491333,
+      "location": [
+        15000.0,
+        46724.87638967193,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1175.0
+    },
+    {
+      "sim_seconds": 23.507408399134874,
+      "location": [
+        15000.0,
+        47035.31572083093,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1175.0
+    },
+    {
+      "sim_seconds": 24.017596501857042,
+      "location": [
+        15000.0,
+        47351.63234451867,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1174.0
+    },
+    {
+      "sim_seconds": 24.512040000408888,
+      "location": [
+        15000.0,
+        47658.187313620816,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1174.0
+    },
+    {
+      "sim_seconds": 25.019023202359676,
+      "location": [
+        15000.0,
+        47972.516898830305,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        619.9999999999999,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1173.0
+    },
+    {
+      "sim_seconds": 25.512580201029778,
+      "location": [
+        15000.0,
+        48278.52223800577,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1173.0
+    },
+    {
+      "sim_seconds": 26.01673360168934,
+      "location": [
+        15000.0,
+        48591.097346414695,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1172.0
+    },
+    {
+      "sim_seconds": 26.51410309970379,
+      "location": [
+        15000.0,
+        48899.466435183655,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1172.0
+    },
+    {
+      "sim_seconds": 27.013517402112484,
+      "location": [
+        15000.0,
+        49209.103302677046,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1171.0
+    },
+    {
+      "sim_seconds": 27.509557101875544,
+      "location": [
+        15000.0,
+        49516.64791653014,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1171.0
+    },
+    {
+      "sim_seconds": 28.016025200486183,
+      "location": [
+        15000.0,
+        49830.65813766874,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1170.0
+    },
+    {
+      "sim_seconds": 28.509594600647688,
+      "location": [
+        15000.0,
+        50136.67116576887,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1170.0
+    },
+    {
+      "sim_seconds": 29.00612710043788,
+      "location": [
+        15000.0,
+        50444.52131563879,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1169.0
+    },
+    {
+      "sim_seconds": 29.50756300240755,
+      "location": [
+        15000.0,
+        50755.41157485999,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1169.0
+    },
+    {
+      "sim_seconds": 30.012781001627445,
+      "location": [
+        15000.0,
+        51068.64673437632,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1168.0
+    },
+    {
+      "sim_seconds": 30.50722499936819,
+      "location": [
+        15000.0,
+        51375.202012975584,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1168.0
+    },
+    {
+      "sim_seconds": 31.007804300636053,
+      "location": [
+        15000.0,
+        51685.56117976166,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1167.0
+    },
+    {
+      "sim_seconds": 31.516454000025988,
+      "location": [
+        15000.0,
+        52000.92399338342,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1167.0
+    },
+    {
+      "sim_seconds": 32.00870940089226,
+      "location": [
+        15000.0,
+        52306.122341920505,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1166.0
+    },
+    {
+      "sim_seconds": 32.50646910071373,
+      "location": [
+        15000.0,
+        52614.73335580982,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1166.0
+    },
+    {
+      "sim_seconds": 33.01467249915004,
+      "location": [
+        15000.0,
+        52929.81946284033,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1165.0
+    },
+    {
+      "sim_seconds": 33.51211899891496,
+      "location": [
+        15000.0,
+        53238.23629269458,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1165.0
+    },
+    {
+      "sim_seconds": 34.01007239893079,
+      "location": [
+        15000.0,
+        53546.967400704394,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1164.0
+    },
+    {
+      "sim_seconds": 34.505261301994324,
+      "location": [
+        15000.0,
+        53853.984520603786,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1164.0
+    },
+    {
+      "sim_seconds": 35.013162199407816,
+      "location": [
+        15000.0,
+        54168.88307700015,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1163.0
+    },
+    {
+      "sim_seconds": 35.519870299845934,
+      "location": [
+        15000.0,
+        54483.042099271785,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1163.0
+    },
+    {
+      "sim_seconds": 36.0153324007988,
+      "location": [
+        15000.0,
+        54790.22860186256,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1162.0
+    },
+    {
+      "sim_seconds": 36.517831198871136,
+      "location": [
+        15000.0,
+        55101.77785666741,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1162.0
+    },
+    {
+      "sim_seconds": 37.00945379957557,
+      "location": [
+        15000.0,
+        55406.58386910416,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1161.0
+    },
+    {
+      "sim_seconds": 37.50793460011482,
+      "location": [
+        15000.0,
+        55715.641965438495,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1161.0
+    },
+    {
+      "sim_seconds": 38.00882590189576,
+      "location": [
+        15000.0,
+        56026.19457254268,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1160.0
+    },
+    {
+      "sim_seconds": 38.510372798889875,
+      "location": [
+        15000.0,
+        56337.15364867903,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1160.0
+    },
+    {
+      "sim_seconds": 39.00447430089116,
+      "location": [
+        15000.0,
+        56643.496579919825,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1159.0
+    },
+    {
+      "sim_seconds": 39.519368801265955,
+      "location": [
+        15000.0,
+        56962.7311701522,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1159.0
+    },
+    {
+      "sim_seconds": 40.03009629994631,
+      "location": [
+        15000.0,
+        57279.38221933402,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1158.0
+    },
+    {
+      "sim_seconds": 40.531328700482845,
+      "location": [
+        15000.0,
+        57590.14630766667,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1158.0
+    },
+    {
+      "sim_seconds": 41.02275240048766,
+      "location": [
+        15000.0,
+        57894.829001669656,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1157.0
+    },
+    {
+      "sim_seconds": 41.532655101269484,
+      "location": [
+        15000.0,
+        58210.968676154385,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1157.0
+    },
+    {
+      "sim_seconds": 42.02870599925518,
+      "location": [
+        15000.0,
+        58518.52023290552,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1156.0
+    },
+    {
+      "sim_seconds": 42.52887440100312,
+      "location": [
+        15000.0,
+        58828.62464198924,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1156.0
+    },
+    {
+      "sim_seconds": 43.025780498981476,
+      "location": [
+        15000.0,
+        59136.70642273582,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1155.0
+    },
+    {
+      "sim_seconds": 43.53465849906206,
+      "location": [
+        15000.0,
+        59452.21078278578,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1155.0
+    },
+    {
+      "sim_seconds": 44.02608310058713,
+      "location": [
+        15000.0,
+        59756.894035731326,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1154.0
+    },
+    {
+      "sim_seconds": 44.53436690196395,
+      "location": [
+        15000.0,
+        60072.029992584954,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1154.0
+    },
+    {
+      "sim_seconds": 45.03013639897108,
+      "location": [
+        15000.0,
+        60379.407080729376,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1153.0
+    },
+    {
+      "sim_seconds": 45.52674340084195,
+      "location": [
+        15000.0,
+        60687.303421889315,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1153.0
+    },
+    {
+      "sim_seconds": 46.02671239897609,
+      "location": [
+        15000.0,
+        60997.28420073248,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0000000000001,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1152.0
+    },
+    {
+      "sim_seconds": 46.52568560093641,
+      "location": [
+        15000.0,
+        61306.64758594788,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1152.0
+    },
+    {
+      "sim_seconds": 47.0295835994184,
+      "location": [
+        15000.0,
+        61619.064345006715,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1151.0
+    },
+    {
+      "sim_seconds": 47.529739901423454,
+      "location": [
+        15000.0,
+        61929.16125224985,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1151.0
+    },
+    {
+      "sim_seconds": 48.03465950116515,
+      "location": [
+        15000.0,
+        62242.2114040897,
+        9698.149714997584
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1150.0
+    },
+    {
+      "sim_seconds": 48.52763479948044,
+      "location": [
+        15000.0,
+        62547.85608904518,
+        9699.149995377833
+      ],
+      "velocity": [
+        0.0,
+        620.0,
+        0.0
+      ],
+      "grounded": true,
+      "max_walk_speed_cm_s": 620.0,
+      "remaining_run_seconds": 1150.0
+    }
+  ],
+  "limitations": [
+    "Developer setup travel/fresh PIE; ordinary Hub portal not exercised.",
+    "Programmatic movement input, not physical keys or a complete run.",
+    "Central S-to-boss-entrance only; optional growth/combat route not tested."
+  ],
+  "walk_start_utc": "2026-11-17T14:37:16.612467+00:00",
+  "remaining_seconds_at_start": 1198.0,
+  "arrival": [
+    15000.0,
+    62558.410224859486,
+    9699.149995377833
+  ],
+  "travel_sim_seconds": 48.54465759918094,
+  "travel_wall_seconds": 48.54700000000048,
+  "remaining_seconds_at_arrival": 1150.0,
+  "passed": true,
+  "error": null,
+  "finished_utc": "2026-11-17T14:38:05.157162+00:00",
+  "observer_wall_seconds": 50.54700000000048,
+  "grounded_observations": 3208,
+  "airborne_observations": 0,
+  "max_lateral_error_cm": 0.0
+}

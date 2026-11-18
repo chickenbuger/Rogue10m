@@ -8,6 +8,7 @@
 #include "Misc/Parse.h"
 #include "Rogue10m.h"
 #include "Rogue10mCharacter.h"
+#include "Rogue10mGameState.h"
 #include "Rogue10mCharacterProfileSubsystem.h"
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mInventoryComponent.h"
@@ -15,7 +16,10 @@
 #include "Rogue10mProgressionSaveGame.h"
 #include "Rogue10mTownProgressionComponent.h"
 #include "Rogue10mSkillTreeProgressionComponent.h"
+#include "Serialization/MemoryReader.h"
+#include "Serialization/ObjectAndNameAsStringProxyArchive.h"
 #include "TimerManager.h"
+#include "UObject/StrongObjectPtr.h"
 
 namespace Rogue10mProgressionPersistence
 {
@@ -48,6 +52,52 @@ static bool HasCanonicalTraitMirrors(const FRogue10mTownProgressionSnapshot& Tow
 		&& Town.TraitMaxHealthBonus == VitalityBonus && Town.TraitAttackBonus == PowerBonus;
 }
 
+static bool ResolveOmittedVersion(URogue10mProgressionSaveGame& Save, const TArray<uint8>& Bytes, bool bVersion4Slot)
+{
+	// UE saved only fields that differed from the class defaults. A missing
+	// SaveVersion now reads as 5, regardless of the defaults used to write it.
+	// Read the same native payload with a different initial value. This also
+	// distinguishes an omitted tag from an explicit 5 in an older slot.
+	URogue10mProgressionSaveGame* Probe = NewObject<URogue10mProgressionSaveGame>();
+	Probe->SaveVersion = 0;
+	FMemoryReader Reader = UGameplayStatics::StripSaveGameHeader(Bytes);
+	FObjectAndNameAsStringProxyArchive Archive(Reader, true);
+	Probe->Serialize(Archive);
+	if (Archive.IsError() || Reader.IsError()) { return false; }
+	if (Probe->SaveVersion == Save.SaveVersion) { return true; }
+	if (Probe->SaveVersion != 0) { return false; }
+
+	if (bVersion4Slot)
+	{
+		// v4 did not write the field-entry marker added in v5.
+		if (Save.bEnteredRun) { return false; }
+		Save.SaveVersion = 4;
+		return true;
+	}
+
+	// The unnumbered slot predates run IDs and the separate lobby ledger.
+	// Never reinterpret data from those domains as an earlier save.
+	if (Save.RunId.IsValid() || Save.LastSettledRunId.IsValid() || Save.bRunCompleted || Save.bAbandoned
+		|| Save.bEnteredRun || Save.EntryCurrencies.bCaptured || Save.EntryCurrencies.RunId.IsValid()
+		|| Save.EntryCurrencies.Gold != 0 || Save.EntryCurrencies.Crystals != 0 || Save.EntryCurrencies.LobbyEarnedPoints != 0
+		|| Save.LobbyEarnedPoints != 0 || Save.HighestRunLevel != 1 || Save.RewardDefeatBaseline != 0
+		|| !Save.DiscoveredNodes.IsEmpty())
+	{
+		return false;
+	}
+	const FRogue10mSkillTreeSnapshot& Tree = Save.SkillTree;
+	if (!Tree.Masteries.IsEmpty() || !Tree.Investments.IsEmpty() || !Tree.LegacyGrantedSkills.IsEmpty()
+		|| Tree.ActiveIdentity != ERogue10mSkillTreeIdentity::None)
+	{
+		Save.SaveVersion = 3;
+	}
+	else
+	{
+		Save.SaveVersion = Save.Town.TraitInvestments.IsEmpty() ? 1 : 2;
+	}
+	return true;
+}
+
 static bool Validate(const URogue10mProgressionSaveGame& Save, const FGuid& ProfileId)
 {
 	if (!ProfileId.IsValid() || Save.ProfileId != ProfileId
@@ -56,6 +106,13 @@ static bool Validate(const URogue10mProgressionSaveGame& Save, const FGuid& Prof
 	{
 		return false;
 	}
+	if (Save.SaveVersion >= 4 && (Save.LobbyEarnedPoints < 0 || Save.HighestRunLevel < Save.Growth.Level
+		|| Save.HighestRunLevel > 1000000 || !Save.RunId.IsValid()
+		|| (Save.bRunCompleted != (Save.LastSettledRunId == Save.RunId))
+		|| (Save.bAbandoned && (!Save.bRunCompleted || !Save.EntryCurrencies.IsValid()))
+		|| Save.RewardDefeatBaseline < 0
+		|| (Save.EntryCurrencies.bCaptured && (!Save.EntryCurrencies.IsValid() || Save.EntryCurrencies.RunId != Save.RunId))
+		|| Save.DiscoveredNodes.Contains(NAME_None))) { return false; }
 	const auto& Town = Save.Town;
 	// Old files have no canonical records. A file claiming version 1 cannot import new traits.
 	if (Save.SaveVersion == 1 && !Town.TraitInvestments.IsEmpty()) { return false; }
@@ -63,17 +120,17 @@ static bool Validate(const URogue10mProgressionSaveGame& Save, const FGuid& Prof
 	{
 		return false;
 	}
-	if (!URogue10mTownProgressionComponent::ValidateSnapshot(Town, Save.Growth.Level - 1)) { return false; }
+	if (!URogue10mTownProgressionComponent::ValidateSnapshot(Town, Save.SaveVersion >= 4 ? Save.LobbyEarnedPoints : Save.Growth.Level - 1, Save.SaveVersion >= 4 ? Save.HighestRunLevel : INDEX_NONE)) { return false; }
 	if (Save.SaveVersion < 3)
 	{
 		// A legacy version cannot claim the new domain and bypass its ledger checks.
 		if (!Save.SkillTree.Masteries.IsEmpty() || !Save.SkillTree.Investments.IsEmpty() || !Save.SkillTree.LegacyGrantedSkills.IsEmpty()
 			|| Save.SkillTree.ActiveIdentity != ERogue10mSkillTreeIdentity::None) { return false; }
 	}
-	else if (!URogue10mSkillTreeProgressionComponent::Validate(Save.SkillTree, Save.Growth.Level - 1, TraitSpent(Town))) { return false; }
+	else if (!URogue10mSkillTreeProgressionComponent::Validate(Save.SkillTree, Save.Growth.Level - 1, Save.SaveVersion >= 4 ? 0 : TraitSpent(Town))) { return false; }
 	for (const FRogue10mTraitInvestment& Investment : Town.TraitInvestments)
 	{
-		if (Investment.Trait == ERogue10mTownTrait::LastStand && Investment.Rank > 0 && Save.Growth.Level < 20)
+		if (Investment.Trait == ERogue10mTownTrait::LastStand && Investment.Rank > 0 && (Save.SaveVersion >= 4 ? Save.HighestRunLevel : Save.Growth.Level) < 20)
 		{
 			return false;
 		}
@@ -83,6 +140,11 @@ static bool Validate(const URogue10mProgressionSaveGame& Save, const FGuid& Prof
 }
 
 FString URogue10mProgressionSubsystem::GetSaveSlotForProfile(const FGuid& ProfileId) const
+{
+	return GetLegacySaveSlotForProfile(ProfileId) + TEXT("_v5");
+}
+
+FString URogue10mProgressionSubsystem::GetLegacySaveSlotForProfile(const FGuid& ProfileId) const
 {
 	FString Prefix = TEXT("Rogue10mProgression");
 #if !UE_BUILD_SHIPPING
@@ -107,18 +169,32 @@ void URogue10mProgressionSubsystem::SetError(const FText& Error) const
 URogue10mProgressionSaveGame* URogue10mProgressionSubsystem::LoadSnapshot(
 	const FGuid& ProfileId, bool& bOutExists) const
 {
-	const FString Slot = GetSaveSlotForProfile(ProfileId);
+	const FString CurrentSlot = GetSaveSlotForProfile(ProfileId);
+	const FString LegacySlot = GetLegacySaveSlotForProfile(ProfileId);
+	const FString Version4Slot = LegacySlot + TEXT("_v4");
+	FString Slot = CurrentSlot;
+	// Each newer format wins even when invalid; do not resurrect an older balance after a rejected load.
+	if (!UGameplayStatics::DoesSaveGameExist(Slot, 0))
+	{
+		Slot = UGameplayStatics::DoesSaveGameExist(Version4Slot, 0) ? Version4Slot : LegacySlot;
+	}
 	bOutExists = UGameplayStatics::DoesSaveGameExist(Slot, 0);
+	TArray<uint8> Bytes;
 	URogue10mProgressionSaveGame* Loaded = bOutExists
-		? Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(Slot, 0))
+		? (UGameplayStatics::LoadDataFromSlot(Bytes, Slot, 0)
+			? Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromMemory(Bytes)) : nullptr)
 		: NewObject<URogue10mProgressionSaveGame>(const_cast<URogue10mProgressionSubsystem*>(this));
 	if (!Loaded)
 	{
 		SetError(NSLOCTEXT("Rogue10mSave", "Unreadable", "진행 저장 파일을 읽지 못했습니다. 기존 파일은 보존됩니다."));
 		return nullptr;
 	}
-	if (!bOutExists) { Loaded->ProfileId = ProfileId; }
-	if (!Rogue10mProgressionPersistence::Validate(*Loaded, ProfileId))
+	if (!bOutExists) { Loaded->ProfileId = ProfileId; Loaded->RunId = FGuid::NewGuid(); }
+	const bool bCheckOmittedVersion = bOutExists && Slot != CurrentSlot
+		&& Loaded->GetClass() == URogue10mProgressionSaveGame::StaticClass()
+		&& Loaded->SaveVersion == URogue10mProgressionSaveGame::CurrentVersion;
+	if ((bCheckOmittedVersion && !Rogue10mProgressionPersistence::ResolveOmittedVersion(*Loaded, Bytes, Slot == Version4Slot))
+		|| !Rogue10mProgressionPersistence::Validate(*Loaded, ProfileId))
 	{
 		SetError(NSLOCTEXT("Rogue10mSave", "Incompatible", "진행 저장 버전 또는 캐릭터 데이터가 맞지 않습니다. 기존 파일은 보존됩니다."));
 		return nullptr;
@@ -133,6 +209,18 @@ URogue10mProgressionSaveGame* URogue10mProgressionSubsystem::LoadSnapshot(
 		// Old use counters include empty swings and never represent confirmed-hit mastery.
 		Loaded->SkillTree = URogue10mSkillTreeProgressionComponent::MigrateLegacy(Loaded->Combat.UnlockedSkills);
 	}
+	if (Loaded->SaveVersion < 4)
+	{
+		// Preserve prior purchased lobby upgrades, but do not convert unspent run points into lobby currency.
+		Loaded->LobbyEarnedPoints = Rogue10mProgressionPersistence::TraitSpent(Loaded->Town);
+		Loaded->HighestRunLevel = Loaded->Growth.Level;
+		for (const auto& Pair : Loaded->Growth.MonsterDefeats) { Loaded->RewardDefeatBaseline += FMath::Max(0, Pair.Value); }
+		Loaded->RunId = FGuid::NewGuid();
+		for (const auto& Row : Loaded->SkillTree.Investments) { Loaded->DiscoveredNodes.Add(Row.NodeId); }
+		Loaded->SaveVersion = 4;
+	}
+	// This marker did not exist in v4; older saves cannot prove a cost-committed field entry.
+	if (Loaded->SaveVersion < 5) { Loaded->bEnteredRun = false; }
 	return Loaded;
 }
 
@@ -200,6 +288,12 @@ bool URogue10mProgressionSubsystem::AttachCharacter(ARogue10mCharacter& Characte
 	URogue10mTownProgressionComponent* Town = State ? State->GetTownProgressionComponent() : nullptr;
 	URogue10mSkillTreeProgressionComponent* Tree = State ? State->GetSkillTreeProgressionComponent() : nullptr;
 	if (!State || !Inventory || !Combat || !Town || !Tree) { return false; }
+	if (StarterCharacter.Get() != &Character || !PawnStarterState)
+	{
+		PawnStarterState = NewObject<URogue10mProgressionSaveGame>(this);
+		PawnStarterState->Inventory = Inventory->CaptureInventory();
+		StarterCharacter = &Character;
+	}
 	CurrentCharacter = &Character;
 	CurrentPlayerState = State;
 	AttachedProfileId = Selected->ProfileId;
@@ -209,7 +303,54 @@ bool URogue10mProgressionSubsystem::AttachCharacter(ARogue10mCharacter& Characte
 	bool bExists = false;
 	SaveData = LoadSnapshot(AttachedProfileId, bExists);
 	if (!SaveData) { return false; }
-	const bool bNeedsMigration = bExists && SaveData->SaveVersion < URogue10mProgressionSaveGame::CurrentVersion;
+	const auto OriginalSaveData = TStrongObjectPtr<URogue10mProgressionSaveGame>(DuplicateObject(SaveData.Get(), this));
+	const bool bNeedsMigration = bExists && !UGameplayStatics::DoesSaveGameExist(GetSaveSlotForProfile(AttachedProfileId), 0);
+	// Reopening the hub after an interrupted new-format field run is abandonment, not a fresh 20-minute continuation.
+	const auto* AttachingRun = Character.GetWorld()->GetGameState<ARogue10mGameState>();
+	const bool bInterruptedRun = bExists && SaveData->bEnteredRun && !SaveData->bRunCompleted && SaveData->EntryCurrencies.IsValid()
+		&& AttachingRun && AttachingRun->GetRunPhase() == ERogue10mRunPhase::WaitingToStart
+		&& UGameplayStatics::GetCurrentLevelName(&Character, true) == TEXT("StartHub");
+	if (bInterruptedRun)
+	{
+		SaveData->bAbandoned = true;
+		SaveData->bRunCompleted = true;
+		SaveData->LastSettledRunId = SaveData->RunId;
+	}
+	const bool bResetCompletedRun = SaveData->bRunCompleted;
+	const int32 PreviousLobbyBudget = Town->GetLobbyEarnedBudget();
+	const int32 PreviousUnlockLevel = Town->GetLobbyUnlockLevel();
+	Town->SetLobbyBudget(SaveData->LobbyEarnedPoints, SaveData->HighestRunLevel);
+	if (bResetCompletedRun)
+	{
+		// Use this fresh pawn's authored starter kit, never the completed run's equipment or learned skills.
+		SaveData->Growth = FRogue10mGrowthSnapshot();
+		SaveData->Growth.WeaponType = Character.GetEquippedWeaponType();
+		SaveData->Inventory = PawnStarterState->Inventory;
+		if (SaveData->bAbandoned)
+		{
+			int32 Gold, Crystals, Lobby;
+			if (!SaveData->EntryCurrencies.TryResolve(SaveData->RunId, Gold, Crystals, Lobby))
+			{
+				SaveData = OriginalSaveData.Get();
+				Town->SetLobbyBudget(PreviousLobbyBudget, PreviousUnlockLevel);
+				return false;
+			}
+			SaveData->Inventory.Gold = Gold;
+			SaveData->Inventory.Crystals = Crystals;
+			SaveData->LobbyEarnedPoints = Lobby;
+			Town->SetLobbyBudget(Lobby, SaveData->HighestRunLevel);
+		}
+		SaveData->bAbandoned = false;
+		SaveData->bEnteredRun = false;
+		SaveData->Combat = FRogue10mCombatSnapshot();
+		SaveData->SkillTree = FRogue10mSkillTreeSnapshot();
+		SaveData->ClaimedRewards.Reset(); // NPC receipts are run-scoped; Discovery has its own permanent domain.
+		SaveData->RunId = FGuid::NewGuid();
+		SaveData->EntryCurrencies = FRogue10mRunCurrencyBaseline();
+		SaveData->RewardDefeatBaseline = 0;
+		SaveData->bRunCompleted = false;
+	}
+	{
 	TGuardValue<bool> RestoreGuard(bRestoring, true);
 	if (bExists)
 	{
@@ -221,14 +362,22 @@ bool URogue10mProgressionSubsystem::AttachCharacter(ARogue10mCharacter& Characte
 		const TCHAR* FailedStage = nullptr;
 		if (!State->RestoreGrowth(SaveData->Growth)) { FailedStage = TEXT("Growth"); }
 		else if (!Inventory->RestoreInventory(SaveData->Inventory)) { FailedStage = TEXT("Inventory"); }
-		else if (!Tree->RestoreForTransaction(SaveData->SkillTree, false, Rogue10mProgressionPersistence::TraitSpent(SaveData->Town))) { FailedStage = TEXT("SkillTree"); }
+		else if (!Tree->RestoreForTransaction(SaveData->SkillTree, false, 0)) { FailedStage = TEXT("SkillTree"); }
 		else if (!Town->RestoreProgression(SaveData->Town)) { FailedStage = TEXT("Town"); }
+		else if (bResetCompletedRun)
+		{
+			Tree->RefreshAutomaticUnlocks();
+			Combat->ResetCombatProgression();
+			SaveData->Combat = Combat->CaptureCombat();
+		}
 		else if (!Combat->RestoreCombat(SaveData->Combat)) { FailedStage = TEXT("Combat"); }
 		if (FailedStage)
 		{
+			SaveData = OriginalSaveData.Get();
+			Town->SetLobbyBudget(PreviousLobbyBudget, PreviousUnlockLevel);
 			const bool bGrowthRolledBack = State->RestoreGrowth(PreviousGrowth);
 			const bool bInventoryRolledBack = Inventory->RestoreInventory(PreviousInventory);
-			const bool bTreeRolledBack = Tree->RestoreForTransaction(PreviousTree, false, Rogue10mProgressionPersistence::TraitSpent(PreviousTown));
+			const bool bTreeRolledBack = Tree->RestoreForTransaction(PreviousTree, false, PreviousLobbyBudget >= 0 ? 0 : Rogue10mProgressionPersistence::TraitSpent(PreviousTown));
 			const bool bTownRolledBack = Town->RestoreProgression(PreviousTown);
 			const bool bCombatRolledBack = Combat->RestoreCombat(PreviousCombat);
 			UE_LOG(LogRogue10m, Error, TEXT("Progression restore rejected profile=%s stage=%s rollback_growth=%d rollback_inventory=%d rollback_tree=%d rollback_town=%d rollback_combat=%d"),
@@ -255,7 +404,8 @@ bool URogue10mProgressionSubsystem::AttachCharacter(ARogue10mCharacter& Characte
 	bRestoreValid = true;
 	LastError = FText::GetEmpty();
 	BindChanges(Character);
-	if (!bExists || bNeedsMigration)
+	} // Restoration is complete before the persistence gate is evaluated.
+	if (!bExists || bNeedsMigration || bResetCompletedRun || SaveData->bEnteredRun != OriginalSaveData->bEnteredRun)
 	{
 		bDirty = true;
 		CaptureCurrentState();
@@ -294,8 +444,26 @@ bool URogue10mProgressionSubsystem::CanRetrySave() const
 		&& Selected->ProfileId == AttachedProfileId && SaveData->ProfileId == AttachedProfileId;
 }
 
+void URogue10mProgressionSubsystem::HandleRunPhaseChanged(ERogue10mRunPhase Phase)
+{
+	if (Phase == ERogue10mRunPhase::Running && SaveData && CurrentCharacter.IsValid())
+	{
+		SettlementProfileId = AttachedProfileId;
+		SettlementRunId = SaveData->RunId;
+		SaveData->bEnteredRun = true;
+		if (!bRestoring) { HandleStateChanged(); }
+	}
+}
+
 void URogue10mProgressionSubsystem::BindChanges(ARogue10mCharacter& Character)
 {
+	ObservedRun = Character.GetWorld()->GetGameState<ARogue10mGameState>();
+	if (ObservedRun.IsValid())
+	{
+		ObservedRun->OnRunPhaseChanged.AddUniqueDynamic(this, &ThisClass::HandleRunPhaseChanged);
+		// Travel may start the timer before the pawn attaches; terminal worlds never adopt a new owner.
+		HandleRunPhaseChanged(ObservedRun->GetRunPhase());
+	}
 	Character.GetInventoryComponent()->OnInventoryChanged.AddUniqueDynamic(this, &ThisClass::HandleStateChanged);
 	Character.GetCombatComponent()->OnSkillTreeChanged.AddUniqueDynamic(this, &ThisClass::HandleStateChanged);
 	if (ARogue10mPlayerState* State = CurrentPlayerState.Get())
@@ -309,6 +477,12 @@ void URogue10mProgressionSubsystem::BindChanges(ARogue10mCharacter& Character)
 
 void URogue10mProgressionSubsystem::UnbindChanges()
 {
+	if (ObservedRun.IsValid()) { ObservedRun->OnRunPhaseChanged.RemoveDynamic(this, &ThisClass::HandleRunPhaseChanged); }
+	ObservedRun.Reset();
+	SettlementProfileId.Invalidate();
+	SettlementRunId.Invalidate();
+	PresentedRewardRunId.Invalidate();
+	PresentedRewardAmount = 0;
 	if (ARogue10mCharacter* Character = CurrentCharacter.Get())
 	{
 		Character->GetWorld()->GetTimerManager().ClearTimer(AutoSaveTimer);
@@ -346,12 +520,131 @@ void URogue10mProgressionSubsystem::CaptureCurrentState()
 	SaveData->Combat = Character->GetCombatComponent()->CaptureCombat();
 	SaveData->Town = State->GetTownProgressionComponent()->CaptureProgression();
 	SaveData->SkillTree = State->GetSkillTreeProgressionComponent()->Capture();
+	SaveData->HighestRunLevel = FMath::Max(SaveData->HighestRunLevel, SaveData->Growth.Level);
+	for (const auto& Row : SaveData->SkillTree.Investments) { SaveData->DiscoveredNodes.Add(Row.NodeId); }
+	State->GetTownProgressionComponent()->SetLobbyBudget(SaveData->LobbyEarnedPoints, SaveData->HighestRunLevel);
 	SaveData->SaveVersion = URogue10mProgressionSaveGame::CurrentVersion;
+}
+
+int32 URogue10mProgressionSubsystem::GetLobbyAvailablePoints() const
+{
+	const auto* Snapshot = LoadSelectedSnapshot();
+	if (Snapshot == SaveData && bRestoreValid && CurrentPlayerState.IsValid())
+	{
+		return CurrentPlayerState->GetTownProgressionComponent()->GetAvailableTraitPoints();
+	}
+	return Snapshot ? FMath::Max(0, Snapshot->LobbyEarnedPoints - Rogue10mProgressionPersistence::TraitSpent(Snapshot->Town)) : 0;
+}
+
+bool URogue10mProgressionSubsystem::HasDiscoveredNode(FName NodeId) const
+{
+	const auto* Snapshot = LoadSelectedSnapshot();
+	return !NodeId.IsNone() && Snapshot && Snapshot->DiscoveredNodes.Contains(NodeId);
+}
+
+FGuid URogue10mProgressionSubsystem::GetAttachedRunId() const
+{
+	return CanRetrySave() && SaveData ? SaveData->RunId : FGuid();
+}
+
+bool URogue10mProgressionSubsystem::SaveRunAbandonment()
+{
+	if (!CanRetrySave()) { return false; }
+	const auto* Run = CurrentCharacter->GetWorld()->GetGameState<ARogue10mGameState>();
+	if (!Run || Run != ObservedRun.Get() || Run->GetRunPhase() != ERogue10mRunPhase::Abandoned
+		|| SettlementProfileId != AttachedProfileId || SettlementRunId != SaveData->RunId) { return false; }
+	if (SaveData->LastSettledRunId != SaveData->RunId)
+	{
+		int32 Gold, Crystals, Lobby;
+		if (!SaveData->EntryCurrencies.TryResolve(SaveData->RunId, Gold, Crystals, Lobby)) { return false; }
+		CaptureCurrentState(); // Includes discovery made this run, independently of learned skills.
+		const auto Candidate = TStrongObjectPtr<URogue10mProgressionSaveGame>(DuplicateObject(SaveData.Get(), this));
+		Candidate->Inventory.Gold = Gold; Candidate->Inventory.Crystals = Crystals;
+		Candidate->LobbyEarnedPoints = Lobby;
+		Candidate->LastSettledRunId = Candidate->RunId;
+		Candidate->bRunCompleted = true;
+		Candidate->bAbandoned = true;
+		if (!Rogue10mProgressionPersistence::Validate(*Candidate, AttachedProfileId)) { return false; }
+		{
+			TGuardValue<bool> RestoreGuard(bRestoring, true);
+			if (!CurrentCharacter->GetInventoryComponent()->RestoreInventory(Candidate->Inventory)) { return false; }
+		}
+		SaveData = Candidate.Get();
+		PresentedRewardRunId = SaveData->RunId;
+		PresentedRewardAmount = 0; // Abandonment never mints a reward.
+	}
+	else if (!SaveData->bAbandoned) { return false; }
+	return SaveNow(); // A failed write retries the same already-applied receipt.
+}
+
+bool URogue10mProgressionSubsystem::SaveRunEntryCurrencyBaseline()
+{
+	if (!CanRetrySave()) { return false; }
+	const auto* Run = CurrentCharacter->GetWorld()->GetGameState<ARogue10mGameState>();
+	const auto* Inventory = CurrentCharacter->GetInventoryComponent();
+	FRogue10mRunCurrencyBaseline Candidate;
+	if (!Run || Run->GetRunPhase() != ERogue10mRunPhase::WaitingToStart || !Inventory
+		|| UGameplayStatics::GetCurrentLevelName(this, true) != TEXT("StartHub")
+		|| !Candidate.TryCapture(SaveData->RunId, Inventory->GetGold(), Inventory->GetCrystals(), SaveData->LobbyEarnedPoints)) { return false; }
+	// While still in town, each travel attempt uses the latest cost-committed balance.
+	// A rejected write must not freeze a stale checkpoint and prevent a later paid entry.
+	const auto Previous = SaveData->EntryCurrencies;
+	SaveData->EntryCurrencies = Candidate;
+	if (SaveNow()) { return true; }
+	SaveData->EntryCurrencies = Previous;
+	return false;
+}
+
+bool URogue10mProgressionSubsystem::TryResolveAbandonCurrencyBalances(int32& OutGold, int32& OutCrystals, int32& OutLobbyEarned) const
+{
+	return CanRetrySave() && SaveData && SaveData->EntryCurrencies.TryResolve(SaveData->RunId, OutGold, OutCrystals, OutLobbyEarned);
+}
+
+bool URogue10mProgressionSubsystem::TryGetCurrentRunLobbyReward(int32& OutAward, int32& OutAvailable, bool& bOutSaved) const
+{
+	if (!CanRetrySave() || !SaveData || PresentedRewardRunId != SaveData->RunId
+		|| SaveData->LastSettledRunId != SaveData->RunId || !SaveData->bRunCompleted
+		|| SettlementProfileId != AttachedProfileId || SettlementRunId != SaveData->RunId) { return false; }
+	OutAward = PresentedRewardAmount;
+	OutAvailable = GetLobbyAvailablePoints();
+	bOutSaved = IsSaveReady();
+	return true;
+}
+
+bool URogue10mProgressionSubsystem::SaveRunSettlement(bool bVictory)
+{
+	if (!CanRetrySave()) { return false; }
+	const auto* Run = CurrentCharacter->GetWorld()->GetGameState<ARogue10mGameState>();
+	if (!Run || Run != ObservedRun.Get() || SettlementProfileId != AttachedProfileId || SettlementRunId != SaveData->RunId
+		|| (bVictory ? Run->GetRunPhase() != ERogue10mRunPhase::Victory : Run->GetRunPhase() != ERogue10mRunPhase::Defeat)) { return false; }
+	CaptureCurrentState();
+	if (!Rogue10mProgressionPersistence::Validate(*SaveData, AttachedProfileId)) { return false; }
+	if (SaveData->LastSettledRunId != SaveData->RunId)
+	{
+		int64 Defeats = 0;
+		for (const auto& Pair : SaveData->Growth.MonsterDefeats) { Defeats += FMath::Max(0, Pair.Value); }
+		const int64 Reward = FMath::Max<int64>(0, Defeats - SaveData->RewardDefeatBaseline) * FMath::Clamp(LobbyPointsPerDefeat, 0, 1000)
+			+ (bVictory ? FMath::Clamp(LobbyVictoryBonus, 0, 10000) : 0);
+		const int32 BeforeAward = SaveData->LobbyEarnedPoints;
+		SaveData->LobbyEarnedPoints = static_cast<int32>(FMath::Min<int64>(MAX_int32, static_cast<int64>(SaveData->LobbyEarnedPoints) + Reward));
+		PresentedRewardRunId = SaveData->RunId;
+		PresentedRewardAmount = SaveData->LobbyEarnedPoints - BeforeAward;
+		SaveData->LastSettledRunId = SaveData->RunId;
+		SaveData->bRunCompleted = true;
+	}
+	return SaveNow();
 }
 
 bool URogue10mProgressionSubsystem::SaveNow()
 {
-	if (!bRestoreValid || !SaveData || !CurrentCharacter.IsValid()) { return false; }
+	// Selection changes its destination before GameMode saves the previous attached pawn.
+	// This write stays bound to the previous pawn's own profile; settlement requires selection too.
+	const auto* Character = CurrentCharacter.Get();
+	const auto* Player = CurrentPlayerState.Get();
+	if (!bRestoreValid || bRestoring || !SaveData || !Character || !Player || !AttachedProfileId.IsValid()
+		|| SaveData->ProfileId != AttachedProfileId || !Character->HasAuthority() || !Character->IsLocallyControlled()
+		|| !Character->GetWorld() || Character->GetWorld()->GetNetMode() != NM_Standalone
+		|| Character->GetPlayerState<ARogue10mPlayerState>() != Player || Player->GetPawn() != Character) { return false; }
 	CurrentCharacter->GetWorld()->GetTimerManager().ClearTimer(AutoSaveTimer);
 	CaptureCurrentState();
 	if (!Rogue10mProgressionPersistence::Validate(*SaveData, AttachedProfileId))

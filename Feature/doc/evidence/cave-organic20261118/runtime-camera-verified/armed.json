@@ -1,0 +1,62 @@
+{
+  "pid": 49456,
+  "route_waypoints": 276,
+  "chains": 12,
+  "captures": 6,
+  "input_policy": {
+    "schema": "Rogue10m.CaveQAAnalogApproach.20261118.v1",
+    "predecessor_observer_sha256": "689e5aaa10194639b271523a329f46fa7007ef3f607151be1904ebc38d31f70e",
+    "formula": "scale=min(1,distance_cm/max(120,620*raw_sim_frame_seconds*1.1))",
+    "reason": "Use normal analog input to approach the same waypoint at low frame rates without a stale120cm stopping window.",
+    "normal_walk_cap_cm_s": 620,
+    "arrival_radius_cm": 35.0,
+    "route_camera_ground_thresholds_changed": false,
+    "max_walk_speed_velocity_time_or_camera_setters": false,
+    "independent_known_geometry_repair_and_original_failure_ray_acceptance_required": true
+  },
+  "height_guard": {
+    "source_v1_uint16le_sha256": "ef9d5119c138e680001442fac76499e2e0ff40e9f51e428a33bd834aa3b4ffc1",
+    "source_v1_native_blake3": "b9f28e82d7661e83555d5f72942ea999ca6aea9554969753a889ea50f87e1970",
+    "target_uint16le_sha256": "a2c8846963f7d08f7df561b6c800f2f389255e6f52c14a1453a6e5e3f7674726",
+    "target_native_blake3": "67d6682a3bad4b9b480d0b4e264903e9665846b562d7b72fa5cd8ff10e0252fc",
+    "original_layer_blake3": "7b30bb0271250f6f4b2d4164c72940c83a3e49b13078ef91e9316992816a0955",
+    "collar_changed_samples": 447,
+    "full_changed_from_rounded_samples": 3300,
+    "guarded_input_sha256": {
+      "target-height-plan.json": "96abbc526da80ba3637341261a57892ade0078b8fc08df55fd3bbe3a14b3a898",
+      "author-live/apply-height-confirmed.json": "c4d5b5024ff1389c2bc8879730f546f639111445c9bd3304163176a7f0b0c93f",
+      "collar-spec.json": "4f3d5dacfdee8af8e00e32c6db3597208061e2593e488f74cdd88de334a3696a",
+      "collar-preflight.json": "2fd5f9dd3c8d57eb723d215ac724724b54234e8b23389971fe4e91f67a8e84ca",
+      "target-height-plan-collar.json": "cd7928198b0f9c3cfc0d2ad5944a49cca4debc3d1b3ca69b63c946b35873752c",
+      "author-live/apply-height-collar.json": "0281fd7a04e02ee21dc67b27d02fa9a5f6070036945111e4cde26a269889ef2e"
+    }
+  },
+  "owner_starts_PIE": "PlayInViewport; no separate game window",
+  "normal_walk_cap_cm_s": 620,
+  "normal_run_duration_seconds": 1200,
+  "normal_spring_arm_cm": 320,
+  "normal_probe_radius_cm": 14,
+  "normal_camera_pitch_degrees": -12,
+  "normal_FOV_degrees": 90,
+  "physical_input": false,
+  "teleports": 0,
+  "speed_overrides": 0,
+  "run_timer_overrides": 0,
+  "camera_component_changes": 0,
+  "organic_geometry_policy": {
+    "schema": "Rogue10m.OrganicCaveActualCameraGeometry.20261118.v1",
+    "actual_complex_Camera_sphere_radius_cm": 14.0,
+    "actual_sweep_pivot_to_current_camera": true,
+    "surface_contact_tolerance_cm": 0.5,
+    "obsolete_hidden_source_OBB_test_used": false,
+    "minimum_camera_pivot_distance_cm": 140.0,
+    "maximum_sustained_pull_in_cm": 180.0,
+    "sustained_pull_in_max_sim_seconds": 0.5,
+    "movement_capture_observer_sha256": "806d2bca47505dc9da5f99dd8ec4d92c952155e5f74231177fb0a601962d47ae",
+    "route_sha256": "3aaec11cdfc1676699571aa4fdd9db52090e6da5b06fa79fa4b3281866268890",
+    "shell_editor_component_paths": {
+      "Q": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.Actor_UAID_244BFE8DA9DFE81503_1542298845.Organic_Q_Shell",
+      "Z": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.Actor_UAID_244BFE8DA9DFE81503_1542374846.Organic_Z_Shell"
+    }
+  }
+}

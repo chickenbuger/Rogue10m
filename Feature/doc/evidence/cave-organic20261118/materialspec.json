@@ -1,0 +1,116 @@
+{
+  "schema": "Rogue10m.OrganicCaveMaterialSpec.20261118.v1",
+  "map": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A",
+  "baseline_checkpoint": "3a33ee21",
+  "frozen_inputs": {
+    "Feature/doc/evidence/cave-organic20261118/baseline-live/materials.json": "de2e85d4b23ae4ad014d88bcd0bf54d248722ee854e19f808744e5bf71a77afb",
+    "Feature/doc/evidence/cave-organic20261118/baseline-live/cave-actors.json": "fff169e2b9fc5ce1993cd0fa8372c038917fb87ee247179761d578a2a8f11ccb",
+    "Feature/doc/evidence/cave-organic20261118/baseline-live/terrain.json": "a9a87d9ed7aa94c1366d0a9d802a262c598e319c56d188bae64a7c43dfe7be2f",
+    "Feature/doc/evidence/cave-organic20261118/baseline-live/result.json": "e81bca59acc743213e58880b1a115c78e6a7338768a14238944c727ae3cfd28d",
+    "Feature/doc/evidence/caves20261118/baseline-live/baseline-actors.json": "f5390322017e3a501811a105f72686c11e90a8c0ed662484aee43404569eacf5",
+    "Feature/doc/evidence/caves20261118/triplanar-spec.json": "0d24c669a60f9c998401afcc7f7c75e74f6fe1f72c499496fda3139e5c47353f"
+  },
+  "helper_sha256": {
+    "inspector": "55c01c8ab8ec453ac2454242a1db3998c6518120eeb225828e87741854fa5ace",
+    "reader": "66ebc1c58cd9abddf14739c7624e302b09466a4b2702d5ba63fb98daedf7fb03",
+    "api": "10bfccf425157cd1676b2c75a0347e815b3426dfa77815ec5c98edb7cdaaf280",
+    "actors": "62fc86c81de9b997fc741cc73510321164a35a4bc94cb1e44242cd663a9f43cc"
+  },
+  "editor_pid": 49456,
+  "expected_dirty_packages": [],
+  "actor_count": 1408,
+  "old_material_count": 47,
+  "source": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/M_CaveSurface",
+  "source_instance": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/MI_CaveStoneFloor",
+  "source_graph_sha256": "8ece65cd367aa9855e7d061cad2501924290afb2ab918115120f628f9c316669",
+  "source_nodes": 43,
+  "source_sum_node": "MaterialExpressionAdd_4",
+  "source_roughness_node": "MaterialExpressionScalarParameter_2",
+  "fixed_stone_texture": "/Game/Stylized_Village/Assets/Terrain/Rock/T_GroundRock_01_basecolor.T_GroundRock_01_basecolor",
+  "world_tile_cm": 240.0,
+  "source_side_tint_linear_rgba": [
+    0.75,
+    0.72,
+    0.65,
+    1.0
+  ],
+  "destination_material": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/M_OrganicRock",
+  "destination_instance": "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/Caves20261118/Organic20261118/MI_OrganicRock",
+  "new_assets": 2,
+  "new_nodes": 3,
+  "destination_nodes": 46,
+  "new_expressions": [
+    {
+      "key": "tint",
+      "class": "MaterialExpressionVectorParameter",
+      "parameter_name": "OrganicTint",
+      "default_linear_rgba": [
+        0.3,
+        0.32,
+        0.28,
+        1.0
+      ]
+    },
+    {
+      "key": "tinted_stone",
+      "class": "MaterialExpressionMultiply",
+      "const_a": 0.0,
+      "const_b": 1.0
+    },
+    {
+      "key": "neutral_normal",
+      "class": "MaterialExpressionConstant3Vector",
+      "constant_linear_rgba": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "source_sum_node",
+      "output": "",
+      "destination": "tinted_stone",
+      "pin": "A"
+    },
+    {
+      "source": "tint",
+      "output": "RGB",
+      "destination": "tinted_stone",
+      "pin": "B"
+    }
+  ],
+  "outputs_changed": {
+    "MP_BASE_COLOR": "tinted_stone",
+    "MP_NORMAL": "neutral_normal"
+  },
+  "instance_values": {
+    "OrganicTint": [
+      0.3,
+      0.32,
+      0.28,
+      1.0
+    ],
+    "Roughness": 0.92
+  },
+  "preserve_all_source43_nodes_exactly": true,
+  "preserve_other_material_outputs": true,
+  "two_sided": false,
+  "used_with_instanced_static_meshes": true,
+  "old47_full_material_states_and_disk_files_preserved": true,
+  "setter_success_verified_by_getter_not_boolean": true,
+  "assets_saved": false,
+  "actors_assigned": false,
+  "lights_or_exposure_changed": false,
+  "actual_runtime_render_acceptance_required": true,
+  "api_source": "D:/Program Files/UE_5.8/Engine/Source/Editor/MaterialEditor/Private/MaterialEditingLibrary.cpp",
+  "api_source_lines": {
+    "create_material_expression": 634,
+    "connect_material_property": 905,
+    "set_material_instance_parent": 1457,
+    "scalar_setter": 1485,
+    "vector_setter": 1573
+  }
+}

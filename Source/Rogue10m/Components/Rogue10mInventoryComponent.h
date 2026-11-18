@@ -185,6 +185,7 @@ class ROGUE10M_API URogue10mInventoryComponent : public UActorComponent
 
 public:
 	URogue10mInventoryComponent();
+	bool IsEquipmentChangeInProgress() const { return bEquipmentChangeInProgress; }
 
 	UPROPERTY(BlueprintAssignable, Category="Rogue10m|Inventory|Grid")
 	FRogue10mInventoryGridChanged OnInventoryGridChanged;
@@ -206,6 +207,12 @@ public:
 		float AttackPerLevel, float DefensePerLevel);
 	/** Re-acquires a dropped instance without discarding its enhancement state. */
 	bool TryAddItemStack(const FRogue10mItemStack& Stack, int32& OutContainerIndex, FGuid& OutInstanceId);
+	/**
+	 * Merges compatible grid stacks and returns overflow; true includes zero acceptance when full.
+	 * Rejects invalid or currently owned GUIDs. The caller owns replay protection for fully merged IDs.
+	 */
+	bool TryReceiveMonsterLoot(const FRogue10mItemStack& Stack, FRogue10mItemStack& OutRemainder,
+		int32& OutAcceptedQuantity);
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Inventory|Currency")
 	bool TryPurchaseGridItem(const URogue10mItemDataAsset* ItemData, int32 Quantity, int32 GoldCost);
 
@@ -335,6 +342,11 @@ protected:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category="Rogue10m|Inventory|Grid")
 	TArray<FRogue10mInventoryContainer> InventoryContainers;
 
+	/** The first-version run weapon. Other weapons are acquired in the field. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Inventory|Starter")
+	TSoftObjectPtr<URogue10mItemDataAsset> StarterWeaponItem = TSoftObjectPtr<URogue10mItemDataAsset>(
+		FSoftObjectPath(TEXT("/Game/DataAsset/Item/Starter/DA_Item_StarterKnuckle.DA_Item_StarterKnuckle")));
+
 	/** Adds the configured prototype items once when the base inventory starts empty. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Inventory|Prototype")
 	bool bAddPrototypeStartingItems = true;
@@ -367,6 +379,11 @@ protected:
 	TArray<float> ConsumableQuickSlotCooldownEndTimes;
 
 private:
+	friend struct FRogue10mWeaponSwitchTestAccess;
+	bool CanChangeEquipmentSlot(ERogue10mInventorySlotType SlotType) const;
+	void CommitWeaponEquipmentChange(ERogue10mWeaponType WeaponType);
+	bool bEquipmentChangeInProgress = false;
+	bool bInitializingEquipment = false;
 	bool FindFirstGridPosition(int32 ContainerIndex, const URogue10mItemDataAsset* ItemData, FIntPoint& OutPosition,
 		FGuid IgnoredInstanceId = FGuid()) const;
 	FRogue10mInventoryGridEntry* FindGridEntry(int32 ContainerIndex, FGuid InstanceId);

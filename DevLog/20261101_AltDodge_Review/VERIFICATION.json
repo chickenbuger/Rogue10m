@@ -1,0 +1,282 @@
+{
+  "utc": "2026-11-01T02:33:18.833506+00:00",
+  "project": "D:\\Project\\Rogue10m",
+  "branch": "Sprint#9-17-alt-dodge-input",
+  "base_commit": "66607612768a09ca51febbb950d1a1c7ae248e5c",
+  "tests": {
+    "editor_build_seconds": [
+      36.17,
+      10.85
+    ],
+    "hybrid_runtime_checks": 207,
+    "hybrid_read_checks": 89,
+    "look_dash_checks": 535,
+    "npc_checks": 39,
+    "core_automation_tests": 30,
+    "owner_framing_numeric_repeated_checks": 252506,
+    "owner_framing_render_cases": 15
+  },
+  "failed_candidate_preserved": "Feature/doc/evidence/hybrid-tree-input-polish-20261020/AltInput1101A",
+  "human_physical_input": "deferred_by_user",
+  "normal_full_run": "not_completed",
+  "native_input": "CUA LeftAlt tap; no sustained movement/human keyboard test",
+  "native_observer": {
+    "input_frames_sampled": 20119,
+    "input_frames_flushed": 20119,
+    "evidence_io_error": 0,
+    "same_frame_alt_down_not_observed": true,
+    "hub_y_delta_cm": 31.322602,
+    "exit": "LogExit Exiting 2026-11-01T02:30:25.813Z"
+  },
+  "primary_saves": {
+    "baseline": 304,
+    "current": 318,
+    "mismatches": [],
+    "final_after_wrapper_gate_recheck": 321
+  },
+  "original_assets": {
+    "checked": 31,
+    "mismatches": []
+  },
+  "media": [
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\LookDash\\01_neutral.png",
+      "sha256": "d33bd16ffe1728b4da99b7a1018fb7a939097a82e46b31685e5c727d9db79b1b",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\LookDash\\02_look_down60.png",
+      "sha256": "24bfcd0c0f6e136e127be1ee3e1adccb5ff952e47193c9292cd737d2c0e4fe9c",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\LookDash\\03_look_down80.png",
+      "sha256": "d3ecc4c89c6226d130d4c2552196a6d11d76541f04fe36f83faa06573501fd96",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\LookDash\\04_look_down85.png",
+      "sha256": "063fe25017cf523b1b41ca2336247bde4a00c3c9086908b3b68f6e4c3a714fb8",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\LookDash\\05_downlook_sprint.png",
+      "sha256": "17cc9133c0e636b7ce4f483b4b45241949c4639a6db237c91470169baf559d43",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\LookDash\\06_level_E_dodge.png",
+      "sha256": "7f2876885c5832c1a0a8df1afa1bef1310a94e3f0fd1a21b1fd29df56255c66d",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\LookDash\\07_downlook_E_dodge.png",
+      "sha256": "6b70d4150f880247124df1f4de0f4f6a3590184b7bc5b032e4eb2a5648ad1728",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\LookDash\\08_downlook_wall_contact.png",
+      "sha256": "3cb7fa2df6bf683d1751335518a63ac62c84146a8b85ee15eec5ae6cc1f7dc5e",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\NpcInteraction\\01_f_prompt.png",
+      "sha256": "8f856b934a41b9baca72e6b74f18f7a72bd8bbd61098911ec3a3f1a27eb14384",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\NpcInteraction\\02_f_dialogue.png",
+      "sha256": "4e957c24875d94c815f371fb489171e6236f826f8be5d228d20f198f6912f7c0",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\NpcInteraction\\03_f_collision_probe.png",
+      "sha256": "78c90147f3b7416c74da58deeb15b7fd0d22a1e578f65b2e653733a95e6a4300",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\01_scene0_mode0.png",
+      "sha256": "2d1d8ae8d084750aee4f3d38e47b688de3890e52beefb11a35db55b23853eadf",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\02_scene0_mode1.png",
+      "sha256": "01626462fd1550a3f067dd269e80f2b3e101c816be20c3f60797c6d248d6cacb",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\03_scene0_mode2.png",
+      "sha256": "48bafb6255889efadb8e11396f6a25a3bff093e3752335eac6b5f345973bd411",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\04_scene1_mode0.png",
+      "sha256": "cc501bf57e4b5e56494cd820b587432ee388e7a1e0395ac5515b16cf15a95687",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\05_scene1_mode1.png",
+      "sha256": "036b7f9a786e7853a005e5a14589d441caba5e6a2c2dd3ebf62b396370b8c2e1",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\06_scene1_mode2.png",
+      "sha256": "3019095e56782bb99476090d98b140bf4c1513facfba93974211095fc7e6545e",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\07_scene2_mode0.png",
+      "sha256": "28ecc66623d3d24e2763fab1db77bb699fdadccd04d25f0bfc61b4d7b9183e1b",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\08_scene2_mode1.png",
+      "sha256": "2327e16f985cc3d05ed57fa98723139657e66d941c8a8400d0980cec419f0152",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\09_scene2_mode2.png",
+      "sha256": "f70dc7eca886b9dffaa94969c95aa86a6b9c386199676a21c07c112df0f78db0",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\10_scene3_mode0.png",
+      "sha256": "a93429560a1c3b23343a8b3eba3a621ef1da87b2a784bf43a44609b18e0fc6c6",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\11_scene3_mode1.png",
+      "sha256": "c1d966479aeccccddfbd36b35d226f2ddaf8f6ff3f080428db8c92052986678c",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\12_scene3_mode2.png",
+      "sha256": "5d4fe1e36f14c7a828621511f58f133da5892193373d3eb03ad64d4988bee0a4",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\13_scene4_mode0.png",
+      "sha256": "c6a35ef2eed0a58e38bf73bf499ca1d8ba9e02c40b1148adc8e846c1e691c4ff",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\14_scene4_mode1.png",
+      "sha256": "de6609c49811971065b71bfd59f27ee527fff68d16ce52383686015d5d280c0a",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\OwnerFraming\\15_scene4_mode2.png",
+      "sha256": "87df7da370ae2f371df7db0c131468d5cb3de2a6bf569626fe2e1944a1e6d49e",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\NativeInput\\01_before_alt.png",
+      "sha256": "65bd25794ca9b32110f32d2577009fd1ba8b5f080596a3dcd1f7c1a61c0a8c1a",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "DevLog\\20261101_AltDodge_Review\\NativeInput\\02_after_alt.png",
+      "sha256": "fb1dbf36ded6a66f9f46487087e793681f4b18ec488e165b3ba5db47d40bc667",
+      "size": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "limits": [
+    "Ctrl/Q/E/R fixed four-slot presets not implemented",
+    "safe-zone menu pause not implemented",
+    "numeric mesh checks are not pixel clipping certification",
+    "native dash stamina100 to94 includes regeneration; not exact billing proof",
+    "historical E filenames retained but actual tested key is LeftAlt",
+    "original owner-arms/framing default OFF retained"
+  ],
+  "wrapper_gate_recheck": {
+    "label": "AltGate1101C",
+    "runtime": 207,
+    "read": 89,
+    "non_qa_preserved": 318,
+    "completed_receipts_verified": true
+  }
+}

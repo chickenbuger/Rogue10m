@@ -2,7 +2,7 @@
 
 **최종 제작·Unreal 적용·검증 완료.** 사용자가 제공한 실제 FBX와 T-pose 이미지를 기준으로 도너의 얼굴·물결 머리·옆땋기·후드·자수 의상 메시와 원래 2K Color/UV를 보존하면서 국소 표면 수리, 재질, rig·Idle을 개선했다. 시작마을의 기존 튜토리얼 길잡이에 적용했고 실제 PIE **67/67**, GUI 재로드, 별도 UE process 저장 검사와 세 LOD의 9개 실제 엔진 화면 검토를 통과했다. 적용 범위와 남은 한계는 [기능 문서](D:/Project/Rogue10m/Feature/doc/2026-10-09_arin-reference-refinement.md)에 있다.
 
-![최종 아린 실제 Blender 렌더](D:/Project/Rogue10m/Feature/doc/evidence/arin-reference-refinement-20261009/candidate/idle-oblique.png)
+최종 아린 실제 Blender 렌더〔중간·보조 자료 정리로 삭제됨; [보존 목록](../../../../Feature/doc/evidence/README.md)〕
 
 | 파일 | 용도 | 최종 SHA256 시작값 |
 |---|---|---|
@@ -56,3 +56,6 @@ FBX에는 LOD 체인이 없다. 엔진에서 LOD0를 보존하고 LOD1/2를 Base
 얼굴 표정·립싱크·개별 손가락 rig, Manny/Quinn 호환, 천·헤어 simulation, 보행·전투 animation, 모든 임의 자세의 관통 부재, 자동 LOD 경계 pop과 군중/GPU/메모리/packaged build 성능은 구현하거나 검증하지 않았다. PIE 검사는 실제 reflected API를 사용했고 물리 F키 입력·한글 UI 전체 배치·네트워크·영구 프로필 저장을 승인하지 않는다.
 
 재작업은 [BuildReferenceArin.py](D:/Project/Rogue10m/Scripts/Blender/BuildReferenceArin.py)와 편집 원본에서 시작한다. geometry·shader·weight를 변경하면 bake/export·독립 재수입·실제 자세·Unreal 검증을 다시 수행해야 한다. 롤백에는 보존된 v2의 전용 mesh·Skeleton·Idle·material 참조를 함께 사용하며 버전 사이의 참조를 섞지 않는다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](../../../../Feature/doc/evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

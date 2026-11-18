@@ -76,7 +76,7 @@
 
 - [맨손·너클 공격과 V시점 20초 발췌](D:/Project/Rogue10m/tmp/view-aligned-upper-body/view-aligned-upper-body-attacks.mp4): 원래 30FPS 속도의 실제 캡처 600프레임.
 - [21상황 전체 검사영상 52.5초](D:/Project/Rogue10m/tmp/view-aligned-upper-body/view-aligned-upper-body-preview.mp4): 1280×720 H.264, 실제 1,575프레임. 고각·회피의 화면 한계도 포함한다.
-- [동영상 메타데이터](evidence/view-aligned-upper-body-20261011/video-metadata.json), [독립 최종 QA](evidence/view-aligned-upper-body-20261011/qa-review.md), [독립 최종 소스 검토](evidence/view-aligned-upper-body-20261011/final-source-review.md).
+- 동영상 메타데이터〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕, [독립 최종 QA](evidence/view-aligned-upper-body-20261011/qa-review.md), [독립 최종 소스 검토](evidence/view-aligned-upper-body-20261011/final-source-review.md).
 
 ## 실패 분석과 세이브 복원
 
@@ -110,7 +110,7 @@ SHA256: B39F2FCD80C499C50928C39082714FF3920B82A419F775C8FC02E192718DE35D
 - QA 격리: 관련 회귀 wrapper의 독립 진행 접두사 설정 증분.
 - 문서: [설계](../architect/2026-10-11_view-aligned-upper-body.md), [런타임 정적 리뷰](evidence/view-aligned-upper-body-20261011/runtime-review.md), [QA 리뷰](evidence/view-aligned-upper-body-20261011/qa-review.md), 이 결과 문서와 최종 개발/Sprint 기록.
 
-최종 보존 범위는 시작 상태 Source/Config/Scripts 451개 중 변경 6개·추가 4개·삭제 0개다. 모든 Content의 SHA 대조라고 확대하지 않으며 전체 6,359개는 크기와 mtime, Common AnimBP는 SHA를 비교했다. `CheckGeneratedChanges.ps1`와 범위 내 `git diff --check`를 통과했다. 전체 작업 트리의 기존 바이너리 자산 변경 경고는 이 작업에서 편집한 자산을 의미하지 않는다. [Editor 재로드 증거](evidence/view-aligned-upper-body-20261011/editor-restored-state.json)에 새 native 설정과 clean 상태를 기록했다.
+최종 보존 범위는 시작 상태 Source/Config/Scripts 451개 중 변경 6개·추가 4개·삭제 0개다. 모든 Content의 SHA 대조라고 확대하지 않으며 전체 6,359개는 크기와 mtime, Common AnimBP는 SHA를 비교했다. `CheckGeneratedChanges.ps1`와 범위 내 `git diff --check`를 통과했다. 전체 작업 트리의 기존 바이너리 자산 변경 경고는 이 작업에서 편집한 자산을 의미하지 않는다. Editor 재로드 증거〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕에 새 native 설정과 clean 상태를 기록했다.
 
 ```powershell
 .\Scripts\BuildEditor.ps1 -NoHotReload
@@ -122,3 +122,6 @@ SHA256: B39F2FCD80C499C50928C39082714FF3920B82A419F775C8FC02E192718DE35D
 ```
 
 핵심 증거: [활성 통합 로그](evidence/view-aligned-upper-body-20261011/aim-runtime05.log), [원본 대조 로그](evidence/view-aligned-upper-body-20261011/aim-baseline03.log), [비활성 부정 대조 로그](evidence/view-aligned-upper-body-20261011/aim-negative06.log), [실제 렌더](evidence/view-aligned-upper-body-20261011/aim-render07.log), [최종 Editor 빌드](evidence/view-aligned-upper-body-20261011/build-editor6-final.log), [보존 검사](evidence/view-aligned-upper-body-20261011/preservation-after.json). 자세한 frame/외형 metric은 `tmp/view-aligned-upper-body/aim-runtime05/`에 저장했다. 기존 미커밋 작업을 유지하며 이 작업의 커밋·푸시는 하지 않았다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

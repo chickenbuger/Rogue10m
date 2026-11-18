@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "observed_utc": "2026-11-17T16:25:28.629016+00:00",
+  "passed": true,
+  "initial_target_count": 6965,
+  "counts": {
+    "keep": {
+      "files": 3051,
+      "json": 2762,
+      "images": 289,
+      "bytes": 816252807,
+      "tracked": 1179
+    },
+    "delete": {
+      "files": 3914,
+      "json": 3293,
+      "images": 621,
+      "bytes": 810622927,
+      "tracked": 2004
+    }
+  },
+  "inactive_retained_hashes_checked": 2774,
+  "active_protected_initial_files": 277,
+  "code_input_paths_preserved": 339,
+  "non_target_initial_files_preserved": 7561,
+  "existing_invalid_json_preserved": {
+    "Feature/doc/evidence/boxing-direct-head-20260922/validation-final.json": "Expecting value: line 1 column 1 (char 0)",
+    "Feature/doc/evidence/split-hud-20261014/apply-remote02.json": "Expecting value: line 1 column 1 (char 0)"
+  },
+  "new_json_format_errors": 0,
+  "links_to_deleted_targets": [],
+  "new_document_local_links_checked": 152,
+  "new_document_missing_links": [],
+  "reference_documents_updated": 30,
+  "reference_links_updated": 76,
+  "deletion": {
+    "schema": 1,
+    "utc": "2026-11-17T16:24:43.0716440Z",
+    "plan_sha256": "459112f12a1352f63e925dc86585299de0302f6a8ef3d11975a256e014f66d04",
+    "preflight_all_targets": true,
+    "only_individual_files_removed": true,
+    "recurse_used": false,
+    "deleted_files": 3914,
+    "deleted_bytes": 810622927.0,
+    "main_merged": false
+  },
+  "game_code_or_asset_edits_by_cleanup": false,
+  "unreal_build_or_editor_operations": false,
+  "retained_report_bodies_modified": false,
+  "integration_merge_requested_or_performed": false,
+  "errors": [],
+  "repository_checks": {
+    "generated_path_check": "passed",
+    "cached_diff_whitespace_check": "passed",
+    "staged_path_scope": "passed",
+    "staged_status_counts": {
+      "M": 31,
+      "A": 7,
+      "D": 2004
+    },
+    "staged_file_count": 2042,
+    "staged_game_code_or_asset_files": 0,
+    "shared_sprint_deleted_link_repairs": 2,
+    "main_develop_test_merge": false
+  },
+  "independent_review": {
+    "blocking_findings": 0,
+    "review_receipt_sha256": "c1416cf6eefe538669c6030ff86baf24ea6e9f26b8ef2b48525cc8bf87766b61",
+    "checked": "keep/active/inputs/deletion/manifest/docs"
+  }
+}

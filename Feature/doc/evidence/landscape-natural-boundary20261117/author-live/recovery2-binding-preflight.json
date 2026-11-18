@@ -1,0 +1,93 @@
+{
+  "read_only": true,
+  "method_bindings": {
+    "Actor": {
+      "get_actor_label": true,
+      "get_actor_transform": true,
+      "get_class": true,
+      "get_editor_property": true,
+      "get_folder_path": true,
+      "get_package": true,
+      "set_actor_hidden_in_game": true,
+      "set_actor_label": true,
+      "set_actor_transform": true,
+      "set_editor_property": true,
+      "set_folder_path": true
+    },
+    "SceneComponent": {
+      "set_mobility": true,
+      "get_class": true,
+      "get_editor_property": true
+    },
+    "InstancedStaticMeshComponent": {
+      "add_instance": true,
+      "get_collision_enabled": true,
+      "get_collision_profile_name": true,
+      "get_collision_response_to_channel": true,
+      "get_editor_property": true,
+      "get_instance_count": true,
+      "get_instance_transform": true,
+      "get_material": true,
+      "get_name": true,
+      "get_path_name": true,
+      "set_cast_shadow": true,
+      "set_collision_enabled": true,
+      "set_collision_object_type": true,
+      "set_collision_profile_name": true,
+      "set_collision_response_to_all_channels": true,
+      "set_collision_response_to_channel": true,
+      "set_editor_property": true,
+      "set_hidden_in_game": true,
+      "set_material": true,
+      "set_mobility": true,
+      "set_static_mesh": true,
+      "set_visibility": true
+    },
+    "EditorActorSubsystem": {
+      "get_all_level_actors": true,
+      "spawn_actor_from_class": true
+    },
+    "UnrealEditorSubsystem": {
+      "get_editor_world": true
+    },
+    "LevelEditorSubsystem": {
+      "is_in_play_in_editor": true
+    },
+    "SubobjectDataSubsystem": {
+      "add_new_subobject": true,
+      "rename_subobject": true,
+      "k2_gather_subobject_data_for_instance": true
+    },
+    "SubobjectDataBlueprintFunctionLibrary": {
+      "get_data": true,
+      "get_associated_object": true,
+      "is_handle_valid": true,
+      "is_root_component": true,
+      "is_actor": true
+    },
+    "EditorLoadingAndSavingUtils": {
+      "get_dirty_map_packages": true,
+      "get_dirty_content_packages": true
+    },
+    "StaticMesh": {
+      "get_bounding_box": true
+    },
+    "Rotator": {
+      "quaternion": true
+    },
+    "Text": {
+      "is_empty": true
+    }
+  },
+  "properties": [
+    "generate_overlap_events",
+    "cast_shadow",
+    "visible",
+    "hidden_in_game",
+    "can_ever_affect_navigation",
+    "component_tags",
+    "static_mesh"
+  ],
+  "generate_overlap_events_access": "set_editor_property; native BlueprintSetter is not a Python method",
+  "dirty_set_unchanged": true
+}

@@ -1,0 +1,9 @@
+{
+  "phase": "await_content",
+  "traceback": "Traceback (most recent call last):\n  File \"D:/Project/Rogue10m/Scripts/Editor/RefineNaturalWorld20261118.py\", line 124, in tick\n    if state['phase']=='await_content':stage_content();return\n                                       ^^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/RefineNaturalWorld20261118.py\", line 95, in stage_content\n    context();require(not dirty(),'Intermediate checkpoint must stay clean')\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:/Project/Rogue10m/Scripts/Editor/RefineNaturalWorld20261118.py\", line 24, in require\n    if not value:raise RuntimeError(message)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Intermediate checkpoint must stay clean\n",
+  "dirty": [
+    "/Game/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth",
+    "/Game/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/XE/I951DLEFCGMJPJH2WJPILZ",
+    "/Game/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/C/VU/W5CXFK5HI354A0W9YHFKU9"
+  ]
+}

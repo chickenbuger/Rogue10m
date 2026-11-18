@@ -65,7 +65,7 @@ v2 render/runtime fixture는 실제 `DoMove`/CharacterMovement로 110·210·600c
 
 원본·v2 render와 여섯 외형의 CSV 증거 8세트 및 비교 PNG 18장을 `evidence/runtime`, `evidence/screenshots`에 보관했다. 큰 pose CSV는 gzip으로 압축하고 `evidence-manifest.json`에 SHA-256을 기록했다.
 
-[적용 에셋 검사](D:/Project/Rogue10m/Feature/doc/evidence/walking-palm-reference-20261009/apply-audit.json) · [독립 runtime 검토](D:/Project/Rogue10m/Feature/doc/evidence/walking-palm-reference-20261009/reference/runtime-review-v2.json) · [최종 에디터 상태](D:/Project/Rogue10m/Feature/doc/evidence/walking-palm-reference-20261009/final-editor-state.json) · [증거 manifest](D:/Project/Rogue10m/Feature/doc/evidence/walking-palm-reference-20261009/evidence-manifest.json) · [보정 후 왼손 확대](D:/Project/Rogue10m/Feature/doc/evidence/walking-palm-reference-20261009/screenshots/walking-palm-after-render-v2/walk210_left_hand_close.png) · [보정 후 오른손 확대](D:/Project/Rogue10m/Feature/doc/evidence/walking-palm-reference-20261009/screenshots/walking-palm-after-render-v2/walk210_right_hand_close.png) · [superseded v1 에셋 검사](D:/Project/Rogue10m/Feature/doc/evidence/walking-palm-reference-20261009/apply-audit-v1-superseded.json)
+[적용 에셋 검사](D:/Project/Rogue10m/Feature/doc/evidence/walking-palm-reference-20261009/apply-audit.json) · [독립 runtime 검토](D:/Project/Rogue10m/Feature/doc/evidence/walking-palm-reference-20261009/reference/runtime-review-v2.json) · 최종 에디터 상태〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕 · [증거 manifest](D:/Project/Rogue10m/Feature/doc/evidence/walking-palm-reference-20261009/evidence-manifest.json) · [보정 후 왼손 확대](D:/Project/Rogue10m/Feature/doc/evidence/walking-palm-reference-20261009/screenshots/walking-palm-after-render-v2/walk210_left_hand_close.png) · [보정 후 오른손 확대](D:/Project/Rogue10m/Feature/doc/evidence/walking-palm-reference-20261009/screenshots/walking-palm-after-render-v2/walk210_right_hand_close.png) · [superseded v1 에셋 검사](D:/Project/Rogue10m/Feature/doc/evidence/walking-palm-reference-20261009/apply-audit-v1-superseded.json)
 
 ## 6. 변경 파일과 복구 경계
 
@@ -75,3 +75,6 @@ v2 render/runtime fixture는 실제 `DoMove`/CharacterMovement로 110·210·600c
 - 계획: [Architecture 문서](D:/Project/Rogue10m/Feature/architect/2026-10-09_walking-palm-reference.md).
 
 복구는 Unreal Editor에서 `Walk / Run`의 BlendSpace 참조를 원래 `/Game/Characters/Mannequins/Anims/Unarmed/BS_Idle_Walk_Run`으로 되돌리는 범위로 분리했다. 원래 클립과 BlendSpace는 보존되어 있으며 적용 전 AnimBP checkpoint는 `tmp/walking-palm-reference-20261009/checkpoint/ABP_Common_Unarmed.uasset`에 있다. 커밋이나 푸시는 실행하지 않았다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

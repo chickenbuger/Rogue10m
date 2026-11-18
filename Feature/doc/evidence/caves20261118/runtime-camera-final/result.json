@@ -1,0 +1,1869 @@
+{
+  "schema": "Rogue10m.CaveTraversalCamera.20261118.v1",
+  "passed": false,
+  "status": "failed",
+  "phase_before_finish": "walking",
+  "error": "Traceback (most recent call last):\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ObserveCaveTraversalCamera20261118.py\", line 372, in tick\n    self.step()\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ObserveCaveTraversalCamera20261118.py\", line 604, in step\n    self.telemetry(sim, movement)\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ObserveCaveTraversalCamera20261118.py\", line 472, in telemetry\n    require(distance >= 140, \"Severe camera collapse below140cm pivot distance\")\n  File \"D:\\Project\\Rogue10m\\Scripts\\Editor\\ObserveCaveTraversalCamera20261118.py\", line 50, in require\n    raise RuntimeError(message)\nRuntimeError: Severe camera collapse below140cm pivot distance\n",
+  "finished_utc": "2026-11-17T17:43:33.744884+00:00",
+  "elapsed_wall_seconds": 465.7350000000006,
+  "elapsed_sim_seconds": 447.1069402694702,
+  "cleanup_errors": [],
+  "waypoints_planned": 276,
+  "waypoints_arrived": 83,
+  "height_guard": {
+    "source_v1_uint16le_sha256": "ef9d5119c138e680001442fac76499e2e0ff40e9f51e428a33bd834aa3b4ffc1",
+    "source_v1_native_blake3": "b9f28e82d7661e83555d5f72942ea999ca6aea9554969753a889ea50f87e1970",
+    "target_uint16le_sha256": "a2c8846963f7d08f7df561b6c800f2f389255e6f52c14a1453a6e5e3f7674726",
+    "target_native_blake3": "67d6682a3bad4b9b480d0b4e264903e9665846b562d7b72fa5cd8ff10e0252fc",
+    "original_layer_blake3": "7b30bb0271250f6f4b2d4164c72940c83a3e49b13078ef91e9316992816a0955",
+    "collar_changed_samples": 447,
+    "full_changed_from_rounded_samples": 3300,
+    "guarded_input_sha256": {
+      "target-height-plan.json": "96abbc526da80ba3637341261a57892ade0078b8fc08df55fd3bbe3a14b3a898",
+      "author-live/apply-height-confirmed.json": "c4d5b5024ff1389c2bc8879730f546f639111445c9bd3304163176a7f0b0c93f",
+      "collar-spec.json": "4f3d5dacfdee8af8e00e32c6db3597208061e2593e488f74cdd88de334a3696a",
+      "collar-preflight.json": "2fd5f9dd3c8d57eb723d215ac724724b54234e8b23389971fe4e91f67a8e84ca",
+      "target-height-plan-collar.json": "cd7928198b0f9c3cfc0d2ad5944a49cca4debc3d1b3ca69b63c946b35873752c",
+      "author-live/apply-height-collar.json": "0281fd7a04e02ee21dc67b27d02fa9a5f6070036945111e4cde26a269889ef2e"
+    }
+  },
+  "route_keys_per_site": [
+    "main_forward_ground_cm",
+    "main_reverse_ground_cm",
+    "secret_from_surface_ground_cm",
+    "secret_to_surface_ground_cm",
+    "shortcut_reverse_ground_cm",
+    "shortcut_return_ground_cm"
+  ],
+  "arrivals": [
+    {
+      "waypoint_index": 0,
+      "label": "field_to_Q:0",
+      "ground_cm": [
+        15000,
+        32550,
+        9600
+      ],
+      "site": null,
+      "chain": null,
+      "point_index": 0,
+      "capture": null,
+      "observed_pawn_cm": [
+        15000.0,
+        32550.0,
+        9698.150251940384
+      ],
+      "arrival_error_xy_cm": 0.0,
+      "observed_ground_z_cm": 9602.150251940384,
+      "sim_seconds": 0.0
+    },
+    {
+      "waypoint_index": 1,
+      "label": "field_to_Q:1",
+      "ground_cm": [
+        15000,
+        42550,
+        9600
+      ],
+      "site": null,
+      "chain": null,
+      "point_index": 1,
+      "capture": null,
+      "observed_pawn_cm": [
+        15000.0,
+        42577.49888308739,
+        9698.150251940384
+      ],
+      "arrival_error_xy_cm": 27.498883087391732,
+      "observed_ground_z_cm": 9602.150251940384,
+      "sim_seconds": 16.634371057152748
+    },
+    {
+      "waypoint_index": 2,
+      "label": "field_to_Q:2",
+      "ground_cm": [
+        15000,
+        50550,
+        9600
+      ],
+      "site": null,
+      "chain": null,
+      "point_index": 2,
+      "capture": null,
+      "observed_pawn_cm": [
+        15000.0,
+        50565.4239331723,
+        9698.150251940384
+      ],
+      "arrival_error_xy_cm": 15.423933172300167,
+      "observed_ground_z_cm": 9602.150251940384,
+      "sim_seconds": 29.967713460326195
+    },
+    {
+      "waypoint_index": 3,
+      "label": "field_to_Q:3",
+      "ground_cm": [
+        15000,
+        56550,
+        9600
+      ],
+      "site": null,
+      "chain": null,
+      "point_index": 3,
+      "capture": null,
+      "observed_pawn_cm": [
+        15000.0,
+        56516.1112969857,
+        9698.150251940384
+      ],
+      "arrival_error_xy_cm": 33.88870301430143,
+      "observed_ground_z_cm": 9602.150251940384,
+      "sim_seconds": 40.015188585966825
+    },
+    {
+      "waypoint_index": 4,
+      "label": "field_to_Q:4",
+      "ground_cm": [
+        -13000,
+        54550,
+        9600
+      ],
+      "site": null,
+      "chain": null,
+      "point_index": 4,
+      "capture": null,
+      "observed_pawn_cm": [
+        -12995.007241199855,
+        54550.35184244026,
+        9698.150251940384
+      ],
+      "arrival_error_xy_cm": 5.005140711227621,
+      "observed_ground_z_cm": 9602.150251940384,
+      "sim_seconds": 87.58339009061456
+    },
+    {
+      "waypoint_index": 5,
+      "label": "Q:main_forward_ground_cm:0",
+      "ground_cm": [
+        -9750.0,
+        58050.0,
+        9600.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 0,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9753.218975144688,
+        58046.761219891676,
+        9697.995393348392
+      ],
+      "arrival_error_xy_cm": 4.56634400502119,
+      "observed_ground_z_cm": 9601.995393348392,
+      "sim_seconds": 97.25006154552102
+    },
+    {
+      "waypoint_index": 6,
+      "label": "Q:main_forward_ground_cm:1",
+      "ground_cm": [
+        -9750.0,
+        59050.0,
+        9350.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 1,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9750.011928021155,
+        59047.652460200065,
+        9449.783275273398
+      ],
+      "arrival_error_xy_cm": 2.34757010331316,
+      "observed_ground_z_cm": 9353.783275273398,
+      "sim_seconds": 101.58339736238122
+    },
+    {
+      "waypoint_index": 7,
+      "label": "Q:main_forward_ground_cm:2",
+      "ground_cm": [
+        -9750.0,
+        60050.0,
+        9100.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 2,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999586101969,
+        60084.78109844817,
+        9190.501123735294
+      ],
+      "arrival_error_xy_cm": 34.78109845063207,
+      "observed_ground_z_cm": 9094.501123735294,
+      "sim_seconds": 104.91673937812448
+    },
+    {
+      "waypoint_index": 8,
+      "label": "Q:main_forward_ground_cm:3",
+      "ground_cm": [
+        -9750.0,
+        61050.0,
+        8850.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 3,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999995270533,
+        61038.97078078185,
+        8951.95371099719
+      ],
+      "arrival_error_xy_cm": 11.029219218152425,
+      "observed_ground_z_cm": 8855.95371099719,
+      "sim_seconds": 106.91674077883363
+    },
+    {
+      "waypoint_index": 9,
+      "label": "Q:main_forward_ground_cm:4",
+      "ground_cm": [
+        -9750.0,
+        62050.0,
+        8600.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 4,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999999996131,
+        62047.71303764784,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.286962352161936,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 110.58340964093804
+    },
+    {
+      "waypoint_index": 10,
+      "label": "Q:main_forward_ground_cm:5",
+      "ground_cm": [
+        -9750.0,
+        62300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 5,
+      "capture": "entrance_under_roof",
+      "observed_pawn_cm": [
+        -9749.999999999915,
+        62294.423002600284,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 5.576997399715765,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 113.91674536839128
+    },
+    {
+      "waypoint_index": 11,
+      "label": "Q:main_forward_ground_cm:6",
+      "ground_cm": [
+        -9750.0,
+        62800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 6,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9750.000000000013,
+        62831.10096958726,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 31.100969587263535,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 157.58353528752923
+    },
+    {
+      "waypoint_index": 12,
+      "label": "Q:main_forward_ground_cm:7",
+      "ground_cm": [
+        -9750.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 7,
+      "capture": "narrow_right_angle_turn",
+      "observed_pawn_cm": [
+        -9750.000000000002,
+        63294.60362158832,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 5.396378411678597,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 160.2502037025988
+    },
+    {
+      "waypoint_index": 13,
+      "label": "Q:main_forward_ground_cm:8",
+      "ground_cm": [
+        -9250.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 8,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9252.997974160102,
+        63299.944200060105,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.9984934046835687,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 202.91717359796166
+    },
+    {
+      "waypoint_index": 14,
+      "label": "Q:main_forward_ground_cm:9",
+      "ground_cm": [
+        -8750.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 9,
+      "capture": null,
+      "observed_pawn_cm": [
+        -8752.815977198588,
+        63299.99968761036,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.815977215915799,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 206.58384186401963
+    },
+    {
+      "waypoint_index": 15,
+      "label": "Q:main_forward_ground_cm:10",
+      "ground_cm": [
+        -8250.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 10,
+      "capture": null,
+      "observed_pawn_cm": [
+        -8252.827423969065,
+        63299.999998243395,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.827423969065967,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 210.25051090493798
+    },
+    {
+      "waypoint_index": 16,
+      "label": "Q:main_forward_ground_cm:11",
+      "ground_cm": [
+        -7750.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 11,
+      "capture": null,
+      "observed_pawn_cm": [
+        -7752.826638903689,
+        63299.999999990105,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.826638903688945,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 213.91717908158898
+    },
+    {
+      "waypoint_index": 17,
+      "label": "Q:main_forward_ground_cm:12",
+      "ground_cm": [
+        -7250.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 12,
+      "capture": null,
+      "observed_pawn_cm": [
+        -7252.826719924557,
+        63299.99999999995,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8267199245574375,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 217.58384743705392
+    },
+    {
+      "waypoint_index": 18,
+      "label": "Q:main_forward_ground_cm:13",
+      "ground_cm": [
+        -6750.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 13,
+      "capture": null,
+      "observed_pawn_cm": [
+        -6752.8267554399135,
+        63300.0,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8267554399135406,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 221.25051725283265
+    },
+    {
+      "waypoint_index": 19,
+      "label": "Q:main_forward_ground_cm:14",
+      "ground_cm": [
+        -6750.0,
+        63800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 14,
+      "capture": null,
+      "observed_pawn_cm": [
+        -6750.016979780041,
+        63796.996595495926,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 3.003452501375921,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 224.25051936879754
+    },
+    {
+      "waypoint_index": 20,
+      "label": "Q:main_forward_ground_cm:15",
+      "ground_cm": [
+        -6750.0,
+        64300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 15,
+      "capture": null,
+      "observed_pawn_cm": [
+        -6750.000095046728,
+        64297.18436705569,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8156329459123994,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 227.9171876348555
+    },
+    {
+      "waypoint_index": 21,
+      "label": "Q:main_forward_ground_cm:16",
+      "ground_cm": [
+        -6750.0,
+        64800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 16,
+      "capture": null,
+      "observed_pawn_cm": [
+        -6750.000000534467,
+        64797.172573401804,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.827426598196376,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 231.5838560797274
+    },
+    {
+      "waypoint_index": 22,
+      "label": "Q:main_forward_ground_cm:17",
+      "ground_cm": [
+        -7250.0,
+        64800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 17,
+      "capture": null,
+      "observed_pawn_cm": [
+        -7246.996638754362,
+        64799.983016433056,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 3.0034092650432296,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 234.58385748043656
+    },
+    {
+      "waypoint_index": 23,
+      "label": "Q:main_forward_ground_cm:18",
+      "ground_cm": [
+        -7750.0,
+        64800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 18,
+      "capture": null,
+      "observed_pawn_cm": [
+        -7747.1843850583855,
+        64799.99990493268,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.815614943219454,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 238.25052819028497
+    },
+    {
+      "waypoint_index": 24,
+      "label": "Q:main_forward_ground_cm:19",
+      "ground_cm": [
+        -8250.0,
+        64800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 19,
+      "capture": null,
+      "observed_pawn_cm": [
+        -8247.17252450311,
+        64799.9999994654,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8274754968897975,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 241.91719845309854
+    },
+    {
+      "waypoint_index": 25,
+      "label": "Q:main_forward_ground_cm:20",
+      "ground_cm": [
+        -8250.0,
+        65300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 20,
+      "capture": null,
+      "observed_pawn_cm": [
+        -8249.9830159497,
+        65296.99660521609,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 3.0034428055131634,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 244.91720030084252
+    },
+    {
+      "waypoint_index": 26,
+      "label": "Q:main_forward_ground_cm:21",
+      "ground_cm": [
+        -8250.0,
+        65800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 21,
+      "capture": null,
+      "observed_pawn_cm": [
+        -8249.999904929206,
+        65797.18436238453,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8156376170707214,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 248.58386850729585
+    },
+    {
+      "waypoint_index": 27,
+      "label": "Q:main_forward_ground_cm:22",
+      "ground_cm": [
+        -8250.0,
+        66300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 22,
+      "capture": null,
+      "observed_pawn_cm": [
+        -8249.9999994654,
+        66297.17256529992,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8274347000843187,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 252.25053713098168
+    },
+    {
+      "waypoint_index": 28,
+      "label": "Q:main_forward_ground_cm:23",
+      "ground_cm": [
+        -8250.0,
+        66800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 23,
+      "capture": null,
+      "observed_pawn_cm": [
+        -8249.999999996997,
+        66797.17333835128,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8266616487235297,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 255.91720563545823
+    },
+    {
+      "waypoint_index": 29,
+      "label": "Q:main_forward_ground_cm:24",
+      "ground_cm": [
+        -7750.0,
+        66800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 24,
+      "capture": null,
+      "observed_pawn_cm": [
+        -7753.003359320935,
+        66799.98302103879,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 3.003407314329584,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 258.9172069169581
+    },
+    {
+      "waypoint_index": 30,
+      "label": "Q:main_forward_ground_cm:25",
+      "ground_cm": [
+        -7250.0,
+        66800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 25,
+      "capture": null,
+      "observed_pawn_cm": [
+        -7252.815692349792,
+        66799.99990495582,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8156923513959047,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 262.5838756300509
+    },
+    {
+      "waypoint_index": 31,
+      "label": "Q:main_forward_ground_cm:26",
+      "ground_cm": [
+        -6750.0,
+        66800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 26,
+      "capture": null,
+      "observed_pawn_cm": [
+        -6752.827459851453,
+        66799.99999946551,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8274598514527094,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 266.2505447603762
+    },
+    {
+      "waypoint_index": 32,
+      "label": "Q:main_forward_ground_cm:27",
+      "ground_cm": [
+        -6250.0,
+        66800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_forward_ground_cm",
+      "point_index": 27,
+      "capture": null,
+      "observed_pawn_cm": [
+        -6252.826666057727,
+        66799.99999999699,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8266660577273797,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 269.9172135926783
+    },
+    {
+      "waypoint_index": 33,
+      "label": "Q:main_reverse_ground_cm:0",
+      "ground_cm": [
+        -6250.0,
+        66800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 0,
+      "capture": null,
+      "observed_pawn_cm": [
+        -6252.826666057727,
+        66799.99999999699,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8266660577273797,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 270.25054720416665
+    },
+    {
+      "waypoint_index": 34,
+      "label": "Q:main_reverse_ground_cm:1",
+      "ground_cm": [
+        -6750.0,
+        66800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 1,
+      "capture": null,
+      "observed_pawn_cm": [
+        -6746.818902468517,
+        66799.99999999994,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 3.1810975314829193,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 272.917215321213
+    },
+    {
+      "waypoint_index": 35,
+      "label": "Q:main_reverse_ground_cm:2",
+      "ground_cm": [
+        -7250.0,
+        66800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 2,
+      "capture": null,
+      "observed_pawn_cm": [
+        -7247.234576626001,
+        66799.99999999994,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.765423373998601,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 276.5838840343058
+    },
+    {
+      "waypoint_index": 36,
+      "label": "Q:main_reverse_ground_cm:3",
+      "ground_cm": [
+        -7750.0,
+        66800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 3,
+      "capture": null,
+      "observed_pawn_cm": [
+        -7747.169007827073,
+        66799.99999999994,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8309921729269263,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 280.2505636252463
+    },
+    {
+      "waypoint_index": 37,
+      "label": "Q:main_reverse_ground_cm:4",
+      "ground_cm": [
+        -8250.0,
+        66800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 4,
+      "capture": null,
+      "observed_pawn_cm": [
+        -8247.172818787729,
+        66799.99999999994,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.827181212271171,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 283.91725024953485
+    },
+    {
+      "waypoint_index": 38,
+      "label": "Q:main_reverse_ground_cm:5",
+      "ground_cm": [
+        -8250.0,
+        66300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 5,
+      "capture": null,
+      "observed_pawn_cm": [
+        -8249.983017931201,
+        66303.00335697016,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 3.0034049811648176,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 286.91725173965096
+    },
+    {
+      "waypoint_index": 39,
+      "label": "Q:main_reverse_ground_cm:6",
+      "ground_cm": [
+        -8250.0,
+        65800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 6,
+      "capture": null,
+      "observed_pawn_cm": [
+        -8249.999904887538,
+        65802.81720018006,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8172001816613688,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 290.5839604474604
+    },
+    {
+      "waypoint_index": 40,
+      "label": "Q:main_reverse_ground_cm:7",
+      "ground_cm": [
+        -8250.0,
+        65300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 7,
+      "capture": null,
+      "observed_pawn_cm": [
+        -8249.999999465173,
+        65302.82736859999,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8273685999884544,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 294.25062933936715
+    },
+    {
+      "waypoint_index": 41,
+      "label": "Q:main_reverse_ground_cm:8",
+      "ground_cm": [
+        -8250.0,
+        64800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 8,
+      "capture": null,
+      "observed_pawn_cm": [
+        -8249.999999996999,
+        64802.82667584828,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8266758482786827,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 297.91729802265763
+    },
+    {
+      "waypoint_index": 42,
+      "label": "Q:main_reverse_ground_cm:9",
+      "ground_cm": [
+        -7750.0,
+        64800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 9,
+      "capture": null,
+      "observed_pawn_cm": [
+        -7753.003347001304,
+        64800.01697897687,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 3.0033949949844523,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 300.9172998405993
+    },
+    {
+      "waypoint_index": 43,
+      "label": "Q:main_reverse_ground_cm:10",
+      "ground_cm": [
+        -7250.0,
+        64800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 10,
+      "capture": null,
+      "observed_pawn_cm": [
+        -7252.815629004575,
+        64800.0000950421,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.815629006179467,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 304.58396846428514
+    },
+    {
+      "waypoint_index": 44,
+      "label": "Q:main_reverse_ground_cm:11",
+      "ground_cm": [
+        -6750.0,
+        64800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 11,
+      "capture": null,
+      "observed_pawn_cm": [
+        -6752.827435138245,
+        64800.00000053445,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8274351382452148,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 308.2506371475756
+    },
+    {
+      "waypoint_index": 45,
+      "label": "Q:main_reverse_ground_cm:12",
+      "ground_cm": [
+        -6750.0,
+        64300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 12,
+      "capture": null,
+      "observed_pawn_cm": [
+        -6750.016985293128,
+        64303.0036574346,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 3.0037054590319796,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 311.2506573535502
+    },
+    {
+      "waypoint_index": 46,
+      "label": "Q:main_reverse_ground_cm:13",
+      "ground_cm": [
+        -6750.0,
+        63800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 13,
+      "capture": null,
+      "observed_pawn_cm": [
+        -6750.000191331399,
+        63805.666101479335,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 5.666101482565753,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 314.9906675517559
+    },
+    {
+      "waypoint_index": 47,
+      "label": "Q:main_reverse_ground_cm:14",
+      "ground_cm": [
+        -6750.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 14,
+      "capture": null,
+      "observed_pawn_cm": [
+        -6749.999979601867,
+        63269.120135622135,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 30.879864377871314,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 317.32423397898674
+    },
+    {
+      "waypoint_index": 48,
+      "label": "Q:main_reverse_ground_cm:15",
+      "ground_cm": [
+        -7250.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 15,
+      "capture": null,
+      "observed_pawn_cm": [
+        -7244.445790818653,
+        63299.578503703124,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 5.5701794188730815,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 320.39393899962306
+    },
+    {
+      "waypoint_index": 49,
+      "label": "Q:main_reverse_ground_cm:16",
+      "ground_cm": [
+        -7750.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 16,
+      "capture": null,
+      "observed_pawn_cm": [
+        -7781.229428322982,
+        63300.044764241175,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 31.229460405481976,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 322.7272739522159
+    },
+    {
+      "waypoint_index": 50,
+      "label": "Q:main_reverse_ground_cm:17",
+      "ground_cm": [
+        -8250.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 17,
+      "capture": null,
+      "observed_pawn_cm": [
+        -8244.595621717992,
+        63300.000642496896,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 5.4043783201995765,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 325.4395969212055
+    },
+    {
+      "waypoint_index": 51,
+      "label": "Q:main_reverse_ground_cm:18",
+      "ground_cm": [
+        -8750.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 18,
+      "capture": null,
+      "observed_pawn_cm": [
+        -8781.529721085079,
+        63299.99993136348,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 31.52972108515327,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 327.77293184399605
+    },
+    {
+      "waypoint_index": 52,
+      "label": "Q:main_reverse_ground_cm:19",
+      "ground_cm": [
+        -9250.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 19,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9244.5767078383,
+        63299.99999901254,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 5.423292161700464,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 330.43960013985634
+    },
+    {
+      "waypoint_index": 53,
+      "label": "Q:main_reverse_ground_cm:20",
+      "ground_cm": [
+        -9750.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 20,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9781.482909396762,
+        63300.0000001055,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 31.482909396761897,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 332.7729350924492
+    },
+    {
+      "waypoint_index": 54,
+      "label": "Q:main_reverse_ground_cm:21",
+      "ground_cm": [
+        -9750.0,
+        62800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 21,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9750.223749341741,
+        62802.902299383204,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.9109114513630505,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 335.7729367017746
+    },
+    {
+      "waypoint_index": 55,
+      "label": "Q:main_reverse_ground_cm:22",
+      "ground_cm": [
+        -9750.0,
+        62300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 22,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9750.00125556845,
+        62302.8220340502,
+        8708.149998797566
+      ],
+      "arrival_error_xy_cm": 2.8220343295124923,
+      "observed_ground_z_cm": 8612.149998797566,
+      "sim_seconds": 339.4396054148674
+    },
+    {
+      "waypoint_index": 56,
+      "label": "Q:main_reverse_ground_cm:23",
+      "ground_cm": [
+        -9750.0,
+        62050.0,
+        8600.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 23,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9750.000027529995,
+        62055.54345725388,
+        8708.149998352283
+      ],
+      "arrival_error_xy_cm": 5.543457253948111,
+      "observed_ground_z_cm": 8612.149998352283,
+      "sim_seconds": 342.772941917181
+    },
+    {
+      "waypoint_index": 57,
+      "label": "Q:main_reverse_ground_cm:24",
+      "ground_cm": [
+        -9750.0,
+        61050.0,
+        8850.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 24,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9750.000000122664,
+        61052.57857555073,
+        8948.551766490556
+      ],
+      "arrival_error_xy_cm": 2.578575550731333,
+      "observed_ground_z_cm": 8852.551766490556,
+      "sim_seconds": 347.43961080908775
+    },
+    {
+      "waypoint_index": 58,
+      "label": "Q:main_reverse_ground_cm:25",
+      "ground_cm": [
+        -9750.0,
+        60050.0,
+        9100.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 25,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.99999999572,
+        60015.05229887359,
+        9207.93332692161
+      ],
+      "arrival_error_xy_cm": 34.94770112640981,
+      "observed_ground_z_cm": 9111.93332692161,
+      "sim_seconds": 350.77297872304916
+    },
+    {
+      "waypoint_index": 59,
+      "label": "Q:main_reverse_ground_cm:26",
+      "ground_cm": [
+        -9750.0,
+        59050.0,
+        9350.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 26,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.99999999995,
+        59060.862939994506,
+        9446.480659051665
+      ],
+      "arrival_error_xy_cm": 10.862939994505723,
+      "observed_ground_z_cm": 9350.480659051665,
+      "sim_seconds": 352.77297961711884
+    },
+    {
+      "waypoint_index": 60,
+      "label": "Q:main_reverse_ground_cm:27",
+      "ground_cm": [
+        -9750.0,
+        58050.0,
+        9600.0
+      ],
+      "site": "Q",
+      "chain": "main_reverse_ground_cm",
+      "point_index": 27,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9750.000000000007,
+        58049.63999104382,
+        9698.14841260488
+      ],
+      "arrival_error_xy_cm": 0.3600089561805362,
+      "observed_ground_z_cm": 9602.14841260488,
+      "sim_seconds": 356.4396481215954
+    },
+    {
+      "waypoint_index": 61,
+      "label": "Q:secret_from_surface_ground_cm:0",
+      "ground_cm": [
+        -9750.0,
+        58050.0,
+        9600.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 0,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9750.000000000007,
+        58049.63999104382,
+        9698.14841260488
+      ],
+      "arrival_error_xy_cm": 0.3600089561805362,
+      "observed_ground_z_cm": 9602.14841260488,
+      "sim_seconds": 356.77298152446747
+    },
+    {
+      "waypoint_index": 62,
+      "label": "Q:secret_from_surface_ground_cm:1",
+      "ground_cm": [
+        -9750.0,
+        59050.0,
+        9350.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 1,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999999999996,
+        59083.345552658946,
+        9440.669094454457
+      ],
+      "arrival_error_xy_cm": 33.34555265894596,
+      "observed_ground_z_cm": 9344.669094454457,
+      "sim_seconds": 359.10631611943245
+    },
+    {
+      "waypoint_index": 63,
+      "label": "Q:secret_from_surface_ground_cm:2",
+      "ground_cm": [
+        -9750.0,
+        60050.0,
+        9100.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 2,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999999999996,
+        60037.53491433946,
+        9202.121761832888
+      ],
+      "arrival_error_xy_cm": 12.465085660536715,
+      "observed_ground_z_cm": 9106.121761832888,
+      "sim_seconds": 361.1063171327114
+    },
+    {
+      "waypoint_index": 64,
+      "label": "Q:secret_from_surface_ground_cm:3",
+      "ground_cm": [
+        -9750.0,
+        61050.0,
+        8850.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 3,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999999999996,
+        61047.63969999123,
+        8949.595573583985
+      ],
+      "arrival_error_xy_cm": 2.3603000087678083,
+      "observed_ground_z_cm": 8853.595573583985,
+      "sim_seconds": 364.7730755507946
+    },
+    {
+      "waypoint_index": 65,
+      "label": "Q:secret_from_surface_ground_cm:4",
+      "ground_cm": [
+        -9750.0,
+        62050.0,
+        8600.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 4,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999999999996,
+        62084.787900307376,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 34.78790030737582,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 368.106415361166
+    },
+    {
+      "waypoint_index": 66,
+      "label": "Q:secret_from_surface_ground_cm:5",
+      "ground_cm": [
+        -9750.0,
+        62300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 5,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999999999996,
+        62295.77552995249,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 4.224470047513023,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 370.43975007534027
+    },
+    {
+      "waypoint_index": 67,
+      "label": "Q:secret_from_surface_ground_cm:6",
+      "ground_cm": [
+        -9750.0,
+        62800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 6,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999999999996,
+        62834.46011676012,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 34.46011676012131,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 372.7730848789215
+    },
+    {
+      "waypoint_index": 68,
+      "label": "Q:secret_from_surface_ground_cm:7",
+      "ground_cm": [
+        -9750.0,
+        63300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 7,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999999999996,
+        63294.39239484877,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 5.607605151228199,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 375.439768999815
+    },
+    {
+      "waypoint_index": 69,
+      "label": "Q:secret_from_surface_ground_cm:8",
+      "ground_cm": [
+        -9750.0,
+        63800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 8,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999999999996,
+        63831.02514511493,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 31.025145114930638,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 377.7731040418148
+    },
+    {
+      "waypoint_index": 70,
+      "label": "Q:secret_from_surface_ground_cm:9",
+      "ground_cm": [
+        -9750.0,
+        64300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 9,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999999999996,
+        64294.432279050525,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 5.567720949475188,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 380.4401494562626
+    },
+    {
+      "waypoint_index": 71,
+      "label": "Q:secret_from_surface_ground_cm:10",
+      "ground_cm": [
+        -9750.0,
+        64800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 10,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999999999996,
+        64831.38589576921,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 31.3858957692064,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 382.7734847664833
+    },
+    {
+      "waypoint_index": 72,
+      "label": "Q:secret_from_surface_ground_cm:11",
+      "ground_cm": [
+        -9750.0,
+        65300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 11,
+      "capture": null,
+      "observed_pawn_cm": [
+        -9749.999999999996,
+        65294.585820453125,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 5.414179546874948,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 385.44015288352966
+    },
+    {
+      "waypoint_index": 73,
+      "label": "Q:secret_from_surface_ground_cm:12",
+      "ground_cm": [
+        -10250.0,
+        65300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 12,
+      "capture": null,
+      "observed_pawn_cm": [
+        -10247.002057962014,
+        65299.94393510524,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 2.9984662305164225,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 388.4401545226574
+    },
+    {
+      "waypoint_index": 74,
+      "label": "Q:secret_from_surface_ground_cm:13",
+      "ground_cm": [
+        -10750.0,
+        65300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 13,
+      "capture": null,
+      "observed_pawn_cm": [
+        -10747.183967935785,
+        65299.99968612091,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 2.8160320817073097,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 392.1068235337734
+    },
+    {
+      "waypoint_index": 75,
+      "label": "Q:secret_from_surface_ground_cm:14",
+      "ground_cm": [
+        -10750.0,
+        65800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 14,
+      "capture": null,
+      "observed_pawn_cm": [
+        -10749.983084826219,
+        65796.99662787627,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 3.003419756990975,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 395.10682502388954
+    },
+    {
+      "waypoint_index": 76,
+      "label": "Q:secret_from_surface_ground_cm:15",
+      "ground_cm": [
+        -10750.0,
+        66300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 15,
+      "capture": null,
+      "observed_pawn_cm": [
+        -10749.99990529524,
+        66297.18378214428,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 2.816217857317354,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 398.7735075354576
+    },
+    {
+      "waypoint_index": 77,
+      "label": "Q:secret_from_surface_ground_cm:16",
+      "ground_cm": [
+        -10750.0,
+        66800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_from_surface_ground_cm",
+      "point_index": 16,
+      "capture": "secret_dogleg_room",
+      "observed_pawn_cm": [
+        -10749.999999467478,
+        66797.17264739294,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 2.827352607055268,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 402.44017627835274
+    },
+    {
+      "waypoint_index": 78,
+      "label": "Q:secret_to_surface_ground_cm:0",
+      "ground_cm": [
+        -10750.0,
+        66800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_to_surface_ground_cm",
+      "point_index": 0,
+      "capture": null,
+      "observed_pawn_cm": [
+        -10749.999999467478,
+        66797.17264739294,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 2.827352607055268,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 430.77358642220497
+    },
+    {
+      "waypoint_index": 79,
+      "label": "Q:secret_to_surface_ground_cm:1",
+      "ground_cm": [
+        -10750.0,
+        66300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_to_surface_ground_cm",
+      "point_index": 1,
+      "capture": null,
+      "observed_pawn_cm": [
+        -10749.999999996595,
+        66303.18114925438,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 3.181149254378397,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 433.44026601314545
+    },
+    {
+      "waypoint_index": 80,
+      "label": "Q:secret_to_surface_ground_cm:2",
+      "ground_cm": [
+        -10750.0,
+        65800.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_to_surface_ground_cm",
+      "point_index": 2,
+      "capture": null,
+      "observed_pawn_cm": [
+        -10749.999999999976,
+        65802.765413786,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 2.7654137859935872,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 437.1069349348545
+    },
+    {
+      "waypoint_index": 81,
+      "label": "Q:secret_to_surface_ground_cm:3",
+      "ground_cm": [
+        -10750.0,
+        65300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_to_surface_ground_cm",
+      "point_index": 3,
+      "capture": null,
+      "observed_pawn_cm": [
+        -10750.000000000002,
+        65302.83056010908,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 2.830560109083308,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 440.77360332012177
+    },
+    {
+      "waypoint_index": 82,
+      "label": "Q:secret_to_surface_ground_cm:4",
+      "ground_cm": [
+        -10250.0,
+        65300.0,
+        8610.0
+      ],
+      "site": "Q",
+      "chain": "secret_to_surface_ground_cm",
+      "point_index": 4,
+      "capture": null,
+      "observed_pawn_cm": [
+        -10253.003396727734,
+        65300.01700258994,
+        8708.149996129272
+      ],
+      "arrival_error_xy_cm": 3.003444854201334,
+      "observed_ground_z_cm": 8612.149996129272,
+      "sim_seconds": 443.7736050784588
+    }
+  ],
+  "captures": [
+    {
+      "capture_index": 1,
+      "site": "Q",
+      "label": "entrance_under_roof",
+      "image": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\caves20261118\\runtime-camera-final\\captures\\01_Q_entrance_under_roof.png",
+      "image_sha256": "42a8e27e77078d044a63023cebfe7196495def6ddee9838f68dd5388156d10f6",
+      "visual_review_passed": true,
+      "reviewed_at_sim": 156.25020146742463
+    },
+    {
+      "capture_index": 2,
+      "site": "Q",
+      "label": "narrow_right_angle_turn",
+      "image": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\caves20261118\\runtime-camera-final\\captures\\02_Q_narrow_right_angle_turn.png",
+      "image_sha256": "7fa35660c56969d81625c88255ee25c07c04a351d9a5707d79c113beaa7b82ed",
+      "visual_review_passed": true,
+      "reviewed_at_sim": 200.25050485506654
+    },
+    {
+      "capture_index": 3,
+      "site": "Q",
+      "label": "secret_dogleg_room",
+      "image": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\caves20261118\\runtime-camera-final\\captures\\03_Q_secret_dogleg_room.png",
+      "image_sha256": "6159b412ccbdafa87f93f6697ac0ad44da9981850a3003ee800f23e3697840f6",
+      "visual_review_passed": true,
+      "reviewed_at_sim": 430.44025272130966
+    }
+  ],
+  "all_six_images_reviewed": false,
+  "sample_count": 1356,
+  "min_camera_to_pivot_cm": 139.55699926620633,
+  "max_camera_pull_in_cm": 191.69064371651018,
+  "worst_camera_sample": {
+    "sim_seconds": 447.1069402694702,
+    "phase": "walking",
+    "waypoint_index": 83,
+    "waypoint": "Q:secret_to_surface_ground_cm:5",
+    "pawn_cm": [
+      -9705.083644477621,
+      65299.99848173119,
+      8708.149996129272
+    ],
+    "velocity_cm_s": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "grounded": true,
+    "camera_cm": [
+      -9587.130763179255,
+      65367.30054340944,
+      8798.301299858034
+    ],
+    "camera_rotation_pitch_yaw_roll": [
+      -11.999999999999996,
+      -135.0019378662109,
+      -0.0
+    ],
+    "camera_FOV": 90.0,
+    "pivot_cm": [
+      -9705.083644477621,
+      65299.99848173119,
+      8766.149996129272
+    ],
+    "unfixed_camera_cm": [
+      -9425.114785025615,
+      65459.74431616455,
+      8842.463213201665
+    ],
+    "camera_to_pivot_cm": 139.55699926620633,
+    "pull_in_cm": 191.69064371651018,
+    "collision_fix_applied": true,
+    "remaining_run_seconds": 751.0
+  },
+  "grounded_observations": 1356,
+  "airborne_observations": 0,
+  "physical_input": false,
+  "teleports": 0,
+  "speed_overrides": 0,
+  "run_timer_overrides": 0,
+  "camera_component_changes": 0,
+  "jump_inputs": 0,
+  "sprint_inputs": 0,
+  "input": "normal AddMovementInput + public control-rotation aim bounded180deg/s; no offset setters",
+  "scope": "One prepared normal-profile PIE route, every planned cave chain both directions; no full combat/NavMesh/physical-keyboard acceptance"
+}

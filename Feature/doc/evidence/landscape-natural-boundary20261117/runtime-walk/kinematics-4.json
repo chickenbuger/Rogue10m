@@ -1,0 +1,40 @@
+{
+  "PIE_world": "/Game/Rogue10m/Maps/Production/UEDPIE_0_WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A",
+  "profile": "CropWalkQA",
+  "radius_cm": 34.0,
+  "half_height_cm": 96.0,
+  "jump_z_velocity": 420.0,
+  "gravity_scale": 1.0,
+  "world_gravity_z": -980.0,
+  "jump_max_count": 2,
+  "jump_max_hold_time": 0.0,
+  "setup": {
+    "started": true,
+    "route": [
+      "S",
+      "J100",
+      "M",
+      "A",
+      "G",
+      "F",
+      "Z",
+      "O",
+      "BE"
+    ],
+    "edges": [
+      "E01",
+      "E08",
+      "E15",
+      "E16",
+      "E19",
+      "E20",
+      "E21",
+      "E27"
+    ],
+    "physical_input": false,
+    "default_StartRun_preparation": true,
+    "owner_controls_PIE_lifecycle": true
+  },
+  "physical_input": false,
+  "editor_content_saved_before_walk": true
+}

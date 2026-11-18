@@ -24,7 +24,7 @@
 
 7조건은 720p·1080p·1440p·울트라와이드·800×600 ApplicationScale1.25,마력 없는 지팡이와 아이덴티티 없는 맨손이다. 실제 건강/자원 표시를 두 번 갱신하고 원형 게이지 값·현재 무기 그림·`--` 조건, 스킬5개 입력명, 좌우 경계·같은 축소비·중앙 여백, 획득 알림 겹침/만료를 검사했다. 확인 수에는 기존 저장 파일별 바이트 보존 검사도 포함된다. PNG7장의 실제 해상도·현재 생성 여부·유효 렌더링을 검사했다.
 
-root와 독립 검토자가 [대검1080p](evidence/split-hud-20261014/Rogue10m_Town_QA_split02/SplitCombatHUD_01_1920x1080.png), [마력1440p](evidence/split-hud-20261014/Rogue10m_Town_QA_split02/SplitCombatHUD_02_2560x1440.png), [작은 화면](evidence/split-hud-20261014/Rogue10m_Town_QA_split02/SplitCombatHUD_04_800x600.png)을 직접 열어 확인했다. 코드/스크립트 공백·Python 문법·생성 출력 경로 검사도 통과했다. 최종 [새 에디터 재로드](evidence/split-hud-20261014/fresh-editor-validate.json)에서도 저장 계약이 통과했다. 마지막 StartHub 에디터는 [PIE 종료](evidence/split-hud-20261014/final-is-pie.json)·dirty0 상태다.
+root와 독립 검토자가 [대검1080p](evidence/split-hud-20261014/Rogue10m_Town_QA_split02/SplitCombatHUD_01_1920x1080.png), 마력1440p〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕, [작은 화면](evidence/split-hud-20261014/Rogue10m_Town_QA_split02/SplitCombatHUD_04_800x600.png)을 직접 열어 확인했다. 코드/스크립트 공백·Python 문법·생성 출력 경로 검사도 통과했다. 최종 [새 에디터 재로드](evidence/split-hud-20261014/fresh-editor-validate.json)에서도 저장 계약이 통과했다. 마지막 StartHub 에디터는 PIE 종료〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕·dirty0 상태다.
 
 ## 발견한 문제와 수정
 
@@ -52,3 +52,6 @@ Sprint#5-32-split-combat-hud에서 이전 미커밋·아이덴티티 이미지·
 HEAD의 추적 Source/Config/uproject와 스테이징한 HUD 소스7개만 별도 폴더로 추출해 빌드했다. 진행 저장 헤더와 다른 미커밋 소스가 없는 환경의 Editor 빌드가 통과했고, 종료 보호를 보완한 최종 QA 파일도 실제 재컴파일·링크했다. [독립 빌드](evidence/split-hud-20261014/commit-clean-build.log), [최종 빌드](evidence/split-hud-20261014/commit-clean-build-final.log)에 원본 로그를 보관했다. 실제 통합 환경의 7조건·1,334검사 결과는 앞선 split02 증거다. 독립 커밋 범위·종료 보호 검토에 미해결 항목은 없다.
 
 사용자 승인 범위의 작업 브랜치 커밋과 일반 원격 푸시를 진행한다. 최종 포함 파일은 [커밋 파일 목록](evidence/split-hud-20261014/commit-files.txt)에 기록한다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

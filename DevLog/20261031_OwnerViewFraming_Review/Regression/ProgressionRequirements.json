@@ -1,0 +1,89 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "JINSOO",
+			"instance": "C82116674F46FEBAA092A9961D9CEA2A",
+			"instanceName": "JINSOO-11696",
+			"platform": "WindowsEditor",
+			"oSVersion": "Windows 11 (26H2) [10.0.26300.9818] ",
+			"model": "Default",
+			"gPU": "NVIDIA GeForce RTX 3070",
+			"cPUModel": "AMD Ryzen 7 5800X 8-Core Processor             ",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.10.31-17.41.58",
+	"succeeded": 4,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.047125797718763351,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "InvalidDataAndEmptyDefaults",
+			"fullTestPath": "Rogue10m.ProgressionRequirements.InvalidDataAndEmptyDefaults",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"C82116674F46FEBAA092A9961D9CEA2A"
+			],
+			"duration": 0.0077817998826503754,
+			"dateTime": "2026.10.31-17.41.57",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "LegacyAlternativesAndGroups",
+			"fullTestPath": "Rogue10m.ProgressionRequirements.LegacyAlternativesAndGroups",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"C82116674F46FEBAA092A9961D9CEA2A"
+			],
+			"duration": 0.020314499735832214,
+			"dateTime": "2026.10.31-17.41.57",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "LiveAcquisitionAndAttack",
+			"fullTestPath": "Rogue10m.ProgressionRequirements.LiveAcquisitionAndAttack",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"C82116674F46FEBAA092A9961D9CEA2A"
+			],
+			"duration": 0.015520498156547546,
+			"dateTime": "2026.10.31-17.41.57",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "TruthTable",
+			"fullTestPath": "Rogue10m.ProgressionRequirements.TruthTable",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"C82116674F46FEBAA092A9961D9CEA2A"
+			],
+			"duration": 0.0035089999437332153,
+			"dateTime": "2026.10.31-17.41.58",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

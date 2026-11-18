@@ -3,6 +3,8 @@
 #include "Rogue10mGameState.h"
 
 #include "Engine/World.h"
+#include "Engine/GameInstance.h"
+#include "Rogue10mProgressionSubsystem.h"
 #include "Internationalization/Text.h"
 #include "TimerManager.h"
 
@@ -46,6 +48,20 @@ void ARogue10mGameState::FinishRun(bool bVictory)
 	GetWorldTimerManager().ClearTimer(RunTimerHandle);
 	SetRunPhase(bVictory ? ERogue10mRunPhase::Victory : ERogue10mRunPhase::Defeat);
 	BroadcastTimer();
+}
+
+bool ARogue10mGameState::AbandonRun()
+{
+	if (!HasAuthority() || !IsRunActive() || !GetWorld() || GetWorld()->GetNetMode() != NM_Standalone) { return false; }
+	auto* Instance = GetGameInstance();
+	auto* Progression = Instance ? Instance->GetSubsystem<URogue10mProgressionSubsystem>() : nullptr;
+	int32 Gold, Crystals, Lobby;
+	// Old active saves without an entry checkpoint must never silently roll back to zero.
+	if (!Progression || !Progression->TryResolveAbandonCurrencyBalances(Gold, Crystals, Lobby)) { return false; }
+	GetWorldTimerManager().ClearTimer(RunTimerHandle);
+	SetRunPhase(ERogue10mRunPhase::Abandoned);
+	BroadcastTimer();
+	return true;
 }
 
 FText ARogue10mGameState::GetRemainingTimeText() const

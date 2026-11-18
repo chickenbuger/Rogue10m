@@ -1,0 +1,11 @@
+# Runtime boss south approach
+
+Packet Sprint#9-19; base648ca964. Run G independently confirmed the legacy boss platform underside at Z9500 blocks a pawn standing below it. Movement remained Walking with valid input. Preserve the original platform and add one reversible runtime pedestrian approach, without editing map packages or save data.
+
+Use the exact existing tagged Engine Cube/platform and its materials, selected after reading Docs/FabAssetReuseGuide.md. Validate the original center/extent, mesh bounds and identity. Trace streamed Landscape at XY(12000,60000) and that exact platform at XY(15000,62550); measured top endpoints plus2cm define a160cm-wide,60cm-thick ramp. Offset the cube centre along its tilted normal so both top endpoints match. Reject nonfinite, invalid or over20-degree geometry. The previous2000cm candidate is retained in task evidence but superseded because its diagonal edge did not connect over its full width.
+
+Run a separate bounded1-second timer only in exact OpenRunMap, standalone authority and an active run. Wait for streaming and actual traces. Reject duplicate matching platforms and defer if any Pawn bounds intersect the proposed footprint plus500cm. Use RF_Transient, PersistentLevel and WorldSettings owner/receipt; clear own timer on EndPlay. Preserve the original platform and its unload protection. bEnableBossSouthApproach=false restores the prior runtime behavior.
+
+Completion gate: build; two geometry contracts; normal fresh-profile internal-input run, actual ramp-floor to platform-floor transition, terminal/result UI and town return; original338 saves,31 packages and map hashes unchanged. XY waypoint or boss-reached flags alone are insufficient. Actual H completed these gates with natural death, not boss victory. Captured floor and input coordinates are sampled evidence, not an all-edge safety proof.
+
+Changes: Bootstrap h/cpp, editor-only basic-run driver, isolated geometry launcher, paired documents and local media. No new paid/downloaded asset, original animation/timing, map package, economy rule or save schema. Physical input, broad map reshaping, all side approaches, multiplayer and packaging are outside this packet. The earlier30 core regression cases apply to the post-NPC pre-ramp baseline; this packet adds2 geometry cases and one normal rendered run.

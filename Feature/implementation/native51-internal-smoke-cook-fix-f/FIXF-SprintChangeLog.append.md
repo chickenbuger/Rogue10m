@@ -1,0 +1,1 @@
+- Native51 Cook Fix F 도구 파생: UBT compile `-NoLiveCoding`만 제거하고 실제 Game UBT 명령에 같은 override가 재주입되면 postflight를 차단하도록 추가했다. 기존 47개와 새 2개 합성 검사 49/49, Python AST 8파일, PS parse 0 errors/0 termination calls. 상태: UNSEALED/NOT_EXECUTED, 실제 ABI·startup·UI·release 미검증. 관련: FixF README, lineage, FIXF-CHANGES, FIXF-DIFF, results/FixF01·FixF02. 공유 입력 및 기존 패킷 변경 0.

@@ -12,7 +12,7 @@ const FRogue10mSkillTreeNodeDefinition* URogue10mSkillTreeDataAsset::FindNode(FN
 
 ERogue10mSkillTreeTrack URogue10mSkillTreeDataAsset::ResolveTrack(ERogue10mWeaponType WeaponType)
 {
-	if (WeaponType == ERogue10mWeaponType::Unarmed || WeaponType == ERogue10mWeaponType::Knuckle) { return ERogue10mSkillTreeTrack::Brawler; }
+	if (WeaponType == ERogue10mWeaponType::Knuckle) { return ERogue10mSkillTreeTrack::Brawler; }
 	return WeaponType == ERogue10mWeaponType::GreatSword ? ERogue10mSkillTreeTrack::GreatSword : ERogue10mSkillTreeTrack::None;
 }
 
@@ -57,6 +57,11 @@ bool URogue10mSkillTreeDataAsset::IsValidCatalog(FText* OutReason) const
 			|| static_cast<uint8>(Node.NodeType) > static_cast<uint8>(ERogue10mHybridSkillTreeNodeType::Resonance)
 			|| !FMath::IsFinite(Node.Position.X) || !FMath::IsFinite(Node.Position.Y)) { return Fail(); }
 		Seen.Add(Node.NodeId);
+		if (!FRogue10mProgressionRequirements::IsValid(Node.RequiredAll)) { return Fail(); }
+		for (const auto& Requirement : Node.RequiredAll)
+		{
+			if (Requirement.Kind == ERogue10mProgressionRequirementKind::MasteryAtLeast && Requirement.Minimum > MaxMasteryLevel) { return Fail(); }
+		}
 		if (Node.bAutomaticUnlock && (Node.PointCost != 0 || !Node.Choices.IsEmpty())) { return Fail(); }
 		if (Node.Track == ERogue10mSkillTreeTrack::None && Node.AllowedTracks.IsEmpty()) { return Fail(); }
 		TSet<ERogue10mSkillTreeTrack> Tracks;

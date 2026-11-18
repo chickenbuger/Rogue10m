@@ -69,9 +69,9 @@ Content 감사는 기존 RefinedV3 메시·골격·Idle·PBR 재질·4개 텍스
 
 [연속 프리뷰 기록](D:/Project/Rogue10m/Feature/doc/evidence/arin-walk-talk-20261009/preview/render-manifest.json)은 렌더 전·후 및 GIF 조립 후 원본 SHA가 같음을 확인한다. Walk GIF는 18장·1,200ms, Talk는 30장·3,000ms다. GIF의 10ms 시간 단위에 맞춰 Walk는 70/60/70ms 지연을 반복해 실제 1.2초 주기를 유지한다. 원본 클립은 두 개 모두 30fps이며 GIF는 샘플 프레임 프리뷰다.
 
-![아린 걷기 실제 Blender 프리뷰](D:/Project/Rogue10m/Feature/doc/evidence/arin-walk-talk-20261009/preview/walk.gif)
+아린 걷기 실제 Blender 프리뷰〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕
 
-![아린 대화 몸짓 실제 Blender 프리뷰](D:/Project/Rogue10m/Feature/doc/evidence/arin-walk-talk-20261009/preview/talk.gif)
+아린 대화 몸짓 실제 Blender 프리뷰〔중간·보조 자료 정리로 삭제됨; [보존 목록](evidence/README.md)〕
 
 ## 수동 F 대화 QA 안내
 
@@ -96,3 +96,6 @@ Content 감사는 기존 RefinedV3 메시·골격·Idle·PBR 재질·4개 텍스
 ## 적용 범위와 한계
 
 Talk는 상체·머리·팔의 대화 몸짓이며 음성 립싱크나 개별 얼굴·손가락 애니메이션이 아니다. 옷·가방·땋은 머리에는 추가 물리 시뮬레이션이 없다. 기본 평지 걷기를 제작했으며 경사면 발 IK·지형 추종·AI 경로 이동·모든 순간의 self-collision 검증은 포함하지 않는다. SingleNode의 기본 상태 교체는 영화용 전환 블렌딩 품질을 보장하지 않는다.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.

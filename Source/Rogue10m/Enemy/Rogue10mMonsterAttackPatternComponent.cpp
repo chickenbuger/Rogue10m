@@ -9,6 +9,8 @@
 #include "AIController.h"
 #include "AbilitySystemComponent.h"
 #include "Animation/AnimSequence.h"
+#include "Animation/AnimMontage.h"
+#include "Rogue10mHumanoidAnimInstance.h"
 #include "Animation/AnimSingleNodeInstance.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/DecalComponent.h"
@@ -42,6 +44,11 @@ constexpr ERogue10mMonsterAttackType BossSequence[] = {
 	ERogue10mMonsterAttackType::Basic, ERogue10mMonsterAttackType::FrontalWave,
 	ERogue10mMonsterAttackType::Basic, ERogue10mMonsterAttackType::AbyssZone
 };
+
+bool IsRequiredBasicMaterialMissing(const URogue10mMonsterAttackPatternProfile* Profile, const UMaterialInterface* Material)
+{
+	return Profile && Profile->bEnableBossPatterns && Profile->bRequireBasicTelegraph && !Material;
+}
 }
 
 URogue10mMonsterAttackPatternComponent::URogue10mMonsterAttackPatternComponent()
@@ -54,12 +61,56 @@ ARogue10mBasicMonster* URogue10mMonsterAttackPatternComponent::GetMonster() cons
 	return Cast<ARogue10mBasicMonster>(GetOwner());
 }
 
+bool URogue10mMonsterAttackPatternComponent::IsWindingAgainst(const ARogue10mCharacter& Target) const
+{
+    const auto* Monster=GetMonster();
+    return PatternState==ERogue10mMonsterPatternState::Windup && LockedTarget.Get()==&Target
+        && Monster && !Monster->IsDead() && !Target.IsDead();
+}
+
+FRogue10mMonsterAttackShape URogue10mMonsterAttackPatternComponent::GetLockedAttackShape() const
+{
+	FRogue10mMonsterAttackShape Shape;
+	Shape.AttackType = CurrentAttackType; Shape.State = PatternState;
+    Shape.WindupDuration=LockedWindupSeconds;
+	Shape.SourceLocation = LockedSourceLocation; Shape.Location = LockedLocation; Shape.Forward = LockedForward;
+	Shape.Range = LockedRange; Shape.HalfWidth = LockedHalfWidth; Shape.HalfHeight = LockedHalfHeight;
+	Shape.ArcDegrees = LockedArcDegrees; Shape.bActive = IsAttackActive();
+	Shape.bWindup = PatternState == ERogue10mMonsterPatternState::Windup;
+	if (const ARogue10mCharacter* Target = LockedTarget.Get())
+	{
+		if (const UCapsuleComponent* Capsule = Target->GetCapsuleComponent())
+		{
+			Shape.TargetCapsuleRadius = Capsule->GetScaledCapsuleRadius();
+			Shape.TargetCapsuleHalfHeight = Capsule->GetScaledCapsuleHalfHeight();
+		}
+	}
+	if (Shape.bWindup && GetWorld())
+	{ Shape.WindupRemaining = FMath::Max(0.0f, LockedWindupSeconds - static_cast<float>(GetWorld()->GetTimeSeconds() - WindupStartedTime)); }
+	return Shape;
+}
+
 void URogue10mMonsterAttackPatternComponent::ConfigureProfile(URogue10mMonsterAttackPatternProfile* InProfile)
 {
 	CancelAttack();
 	UnbindHealthDelegate();
 	if (GetWorld()) GetWorld()->GetTimerManager().ClearTimer(LocomotionTimer);
+	const bool bLeavingHumanoid = Profile && Profile->bUseHumanoidAnimInstance && (!InProfile || !InProfile->bUseHumanoidAnimInstance);
 	Profile = InProfile;
+	if (bLeavingHumanoid)
+	{
+		if (auto* Monster=GetMonster(); Monster && Monster->GetMesh())
+		{
+			Monster->GetMesh()->SetReceivesDecals(bSavedReceivesDecals);
+			if (bSavedAnimationMode)
+			{
+				Monster->GetMesh()->SetAnimationMode(static_cast<EAnimationMode::Type>(SavedAnimationMode));
+				if (SavedAnimationMode == static_cast<uint8>(EAnimationMode::AnimationBlueprint))
+					Monster->GetMesh()->SetAnimInstanceClass(SavedAnimationClass);
+			}
+		}
+		bSavedAnimationMode = false;
+	}
 	const bool bRender = GetWorld() && GetWorld()->GetNetMode() != NM_DedicatedServer;
 	AttackEffect = Profile && bRender ? Profile->AttackEffect.LoadSynchronous() : nullptr;
 	ImpactEffect = Profile && bRender ? Profile->ImpactEffect.LoadSynchronous() : nullptr;
@@ -72,10 +123,14 @@ void URogue10mMonsterAttackPatternComponent::ConfigureProfile(URogue10mMonsterAt
 	CurrentAttackType = ERogue10mMonsterAttackType::Basic;
 	bEnraged = false;
 	FrontalWaveMaterial = nullptr;
+	BasicMaterial = nullptr;
 	AbyssZoneMaterial = nullptr;
 	if (Profile && Profile->bEnableBossPatterns)
 	{
 		FrontalWaveMaterial = Profile->FrontalWaveTelegraphMaterial.LoadSynchronous();
+		BasicMaterial = Profile->BasicTelegraphMaterial.LoadSynchronous();
+		if (Profile->bRequireBasicTelegraph && !BasicMaterial)
+		{ UE_LOG(LogRogue10m, Warning, TEXT("%s required basic warning material missing; basic attacks stay disabled."), *GetNameSafe(GetOwner())); }
 		AbyssZoneMaterial = Profile->AbyssZoneTelegraphMaterial.LoadSynchronous();
 		if (!FrontalWaveMaterial || !AbyssZoneMaterial)
 		{
@@ -95,8 +150,17 @@ void URogue10mMonsterAttackPatternComponent::ConfigureProfile(URogue10mMonsterAt
 	}
 	if (IsEnabled() && GetWorld())
 	{
-		SaveAnimationMode();
-		UpdateLocomotionPresentation();
+  SaveAnimationMode();
+  if (Profile->bUseHumanoidAnimInstance)
+  {
+   if (ARogue10mBasicMonster* Monster = GetMonster())
+   {
+    Monster->GetMesh()->SetReceivesDecals(false); // Floor warnings must not paint the humanoid body.
+    Monster->GetMesh()->SetAnimInstanceClass(URogue10mHumanoidAnimInstance::StaticClass());
+    if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance())) Anim->Configure(Profile);
+   }
+  }
+  UpdateLocomotionPresentation();
 		GetWorld()->GetTimerManager().SetTimer(LocomotionTimer, this,
 			&ThisClass::UpdateLocomotionPresentation, 0.15f, true);
 	}
@@ -116,6 +180,18 @@ ERogue10mMonsterAttackType URogue10mMonsterAttackPatternComponent::SelectAvailab
 	if (!Profile || !Profile->bEnableBossPatterns || !GetWorld()) return ERogue10mMonsterAttackType::Basic;
 	const ERogue10mMonsterAttackType Scheduled = BossSequence[NextSequenceIndex];
 	const double Now = GetWorld()->GetTimeSeconds();
+	if (IsRequiredBasicMaterialMissing(Profile, BasicMaterial))
+	{
+		// An unavailable melee slot must not prevent a separately valid boss special from running.
+		for (int32 Offset = 0; Offset < UE_ARRAY_COUNT(BossSequence); ++Offset)
+		{
+			const ERogue10mMonsterAttackType Candidate = BossSequence[(NextSequenceIndex + Offset) % UE_ARRAY_COUNT(BossSequence)];
+			if (Candidate == ERogue10mMonsterAttackType::FrontalWave && FrontalWaveMaterial && Now >= NextFrontalWaveTime) return Candidate;
+			if (Candidate == ERogue10mMonsterAttackType::AbyssZone && AbyssZoneMaterial && Now >= NextAbyssZoneTime) return Candidate;
+		}
+		// No valid special is ready. Basic remains a sentinel and is rejected before any attack mutation.
+		return ERogue10mMonsterAttackType::Basic;
+	}
 	if (Scheduled == ERogue10mMonsterAttackType::FrontalWave && FrontalWaveMaterial && Now >= NextFrontalWaveTime)
 		return Scheduled;
 	if (Scheduled == ERogue10mMonsterAttackType::AbyssZone && AbyssZoneMaterial && Now >= NextAbyssZoneTime)
@@ -215,6 +291,7 @@ bool URogue10mMonsterAttackPatternComponent::TryStartAttack(ARogue10mCharacter* 
 	}
 	RefreshEnrage();
 	CurrentAttackType = SelectAvailableAttack();
+	if (CurrentAttackType == ERogue10mMonsterAttackType::Basic && IsRequiredBasicMaterialMissing(Profile, BasicMaterial)) return false;
 	if (FVector::Dist2D(Monster->GetActorLocation(), Target->GetActorLocation()) > GetRangeForAttack(CurrentAttackType)) return false;
 	SnapshotAttackSettings();
 	LockedTarget = Target;
@@ -224,7 +301,9 @@ bool URogue10mMonsterAttackPatternComponent::TryStartAttack(ARogue10mCharacter* 
 		? Target->GetActorLocation() : LockedSourceLocation;
 	LockedForward = (Target->GetActorLocation() - LockedSourceLocation).GetSafeNormal2D();
 	if (LockedForward.IsNearlyZero()) LockedForward = Monster->GetActorForwardVector();
-	if (CurrentAttackType != ERogue10mMonsterAttackType::Basic && !CreateTelegraph())
+	const bool bNeedsTelegraph = CurrentAttackType != ERogue10mMonsterAttackType::Basic
+		|| (Profile->bEnableBossPatterns && (BasicMaterial != nullptr || Profile->bRequireBasicTelegraph));
+	if (bNeedsTelegraph && !CreateTelegraph())
 	{
 		DestroyTelegraph();
 		LockedTarget.Reset();
@@ -243,11 +322,24 @@ bool URogue10mMonsterAttackPatternComponent::TryStartAttack(ARogue10mCharacter* 
 	++StartedAttackCount;
 	if (Profile->bEnableBossPatterns)
 	{
-		const ERogue10mMonsterAttackType Scheduled = BossSequence[NextSequenceIndex];
-		const bool bScheduledMaterialMissing = (Scheduled == ERogue10mMonsterAttackType::FrontalWave && !FrontalWaveMaterial)
-			|| (Scheduled == ERogue10mMonsterAttackType::AbyssZone && !AbyssZoneMaterial);
-		if (CurrentAttackType == Scheduled || bScheduledMaterialMissing)
-			NextSequenceIndex = (NextSequenceIndex + 1) % UE_ARRAY_COUNT(BossSequence);
+		if (IsRequiredBasicMaterialMissing(Profile, BasicMaterial))
+		{
+			// Advance past the special actually selected after skipping unavailable basic/cooling slots.
+			for (int32 Offset = 0; Offset < UE_ARRAY_COUNT(BossSequence); ++Offset)
+			{
+				const int32 SelectedIndex = (NextSequenceIndex + Offset) % UE_ARRAY_COUNT(BossSequence);
+				if (BossSequence[SelectedIndex] == CurrentAttackType)
+				{ NextSequenceIndex = (SelectedIndex + 1) % UE_ARRAY_COUNT(BossSequence); break; }
+			}
+		}
+		else
+		{
+			const ERogue10mMonsterAttackType Scheduled = BossSequence[NextSequenceIndex];
+			const bool bScheduledMaterialMissing = (Scheduled == ERogue10mMonsterAttackType::FrontalWave && !FrontalWaveMaterial)
+				|| (Scheduled == ERogue10mMonsterAttackType::AbyssZone && !AbyssZoneMaterial);
+			if (CurrentAttackType == Scheduled || bScheduledMaterialMissing)
+				NextSequenceIndex = (NextSequenceIndex + 1) % UE_ARRAY_COUNT(BossSequence);
+		}
 		const double SpecialAvailableTime = GetWorld()->GetTimeSeconds() + LockedWindupSeconds + LockedRecoverySeconds + LockedCooldownSeconds;
 		if (CurrentAttackType == ERogue10mMonsterAttackType::FrontalWave) NextFrontalWaveTime = SpecialAvailableTime;
 		if (CurrentAttackType == ERogue10mMonsterAttackType::AbyssZone) NextAbyssZoneTime = SpecialAvailableTime;
@@ -268,6 +360,7 @@ bool URogue10mMonsterAttackPatternComponent::TryStartCombatTestAttack(ARogue10mC
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Monster || !Monster->IsCombatTestInstance() || !Profile || !GetWorld()
 		|| GetWorld()->GetNetMode() != NM_Standalone || !Monster->HasAuthority()
+		|| (Type == ERogue10mMonsterAttackType::Basic && IsRequiredBasicMaterialMissing(Profile, BasicMaterial))
 		|| (Type != ERogue10mMonsterAttackType::Basic && !Profile->bEnableBossPatterns)
 		|| (Type == ERogue10mMonsterAttackType::FrontalWave && !FrontalWaveMaterial)
 		|| (Type == ERogue10mMonsterAttackType::AbyssZone && !AbyssZoneMaterial)) return false;
@@ -292,26 +385,8 @@ bool URogue10mMonsterAttackPatternComponent::HasClearHitPath(const ARogue10mChar
 bool URogue10mMonsterAttackPatternComponent::IsInsideAttackShape(const ARogue10mCharacter& Target) const
 {
 	const UCapsuleComponent* Capsule = Target.GetCapsuleComponent();
-	if (!Capsule) return false;
-	const float Radius = Capsule->GetScaledCapsuleRadius();
-	const FVector Offset = Target.GetActorLocation() - LockedLocation;
-	if (FMath::Abs(Offset.Z) > LockedHalfHeight + Capsule->GetScaledCapsuleHalfHeight()) return false;
-	if (CurrentAttackType == ERogue10mMonsterAttackType::FrontalWave)
-	{
-		const float ForwardDistance = FVector::DotProduct(Offset, LockedForward);
-		const FVector Right(-LockedForward.Y, LockedForward.X, 0.0f);
-		return ForwardDistance >= 0.0f && ForwardDistance <= LockedRange + Radius
-			&& FMath::Abs(FVector::DotProduct(Offset, Right)) <= LockedHalfWidth + Radius;
-	}
-	if (CurrentAttackType == ERogue10mMonsterAttackType::AbyssZone)
-	{
-		return Offset.SizeSquared2D() <= FMath::Square(LockedRange + Radius);
-	}
-	const float Distance = Offset.Size2D();
-	const float AngularPadding = FMath::Asin(FMath::Clamp(Radius / FMath::Max(Distance, Radius), 0.0f, 1.0f));
-	const float HalfAngle = FMath::DegreesToRadians(LockedArcDegrees * 0.5f) + AngularPadding;
-	return Distance <= LockedRange + Radius
-		&& FVector::DotProduct(LockedForward, Offset.GetSafeNormal2D()) >= FMath::Cos(HalfAngle);
+	return Capsule && Rogue10mMonsterAttackGeometry::ContainsCapsule(GetLockedAttackShape(), Target.GetActorLocation(),
+		Capsule->GetScaledCapsuleRadius(), Capsule->GetScaledCapsuleHalfHeight());
 }
 
 void URogue10mMonsterAttackPatternComponent::CheckAttackValidity()
@@ -326,6 +401,7 @@ void URogue10mMonsterAttackPatternComponent::CheckAttackValidity()
 	}
 	if (TelegraphMaterialInstance && PatternState == ERogue10mMonsterPatternState::Windup && GetWorld())
 	{
+		UpdateTelegraphGeometry();
 		TelegraphMaterialInstance->SetScalarParameterValue(TEXT("Progress"), FMath::Clamp(
 			static_cast<float>((GetWorld()->GetTimeSeconds() - WindupStartedTime) / LockedWindupSeconds), 0.0f, 1.0f));
 	}
@@ -336,17 +412,13 @@ bool URogue10mMonsterAttackPatternComponent::CreateTelegraph()
 	DestroyTelegraph();
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Profile || !GetWorld() || !Monster) return false;
-	UMaterialInterface* Material = CurrentAttackType == ERogue10mMonsterAttackType::FrontalWave
-		? FrontalWaveMaterial.Get() : AbyssZoneMaterial.Get();
+	UMaterialInterface* Material = CurrentAttackType == ERogue10mMonsterAttackType::Basic ? BasicMaterial.Get()
+		: CurrentAttackType == ERogue10mMonsterAttackType::FrontalWave ? FrontalWaveMaterial.Get() : AbyssZoneMaterial.Get();
 	if (!Material) return false;
-	FVector Center = LockedLocation;
-	FVector Size(Positive(Profile->TelegraphDepth, 180.0f), LockedRange, LockedRange);
-	if (CurrentAttackType == ERogue10mMonsterAttackType::FrontalWave)
-	{
-		Center += LockedForward * (LockedRange * 0.5f);
-		Size.Y = LockedHalfWidth;
-		Size.Z = LockedRange * 0.5f;
-	}
+	const FRogue10mMonsterAttackShape Shape = GetLockedAttackShape();
+	const FRogue10mMonsterWarningProjection Projection = Rogue10mMonsterAttackGeometry::MakeWarningProjection(Shape, Shape.TargetCapsuleRadius);
+	FVector Center = Projection.Center;
+	const FVector Size(Positive(Profile->TelegraphDepth, 180.0f), Projection.HalfRight, Projection.HalfForward);
 	FCollisionQueryParams Params(SCENE_QUERY_STAT(MonsterBossTelegraphGround), false, Monster);
 	if (LockedTarget.IsValid()) Params.AddIgnoredActor(LockedTarget.Get());
 	FHitResult Ground;
@@ -362,6 +434,7 @@ bool URogue10mMonsterAttackPatternComponent::CreateTelegraph()
 			: Monster->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
 	}
 	Center.Z += NonNegative(Profile->TelegraphGroundOffset, 2.0f);
+	TelegraphGroundZ = Center.Z;
 	TelegraphDecal = NewObject<UDecalComponent>(Monster);
 	if (!TelegraphDecal) return false;
 	TelegraphDecal->SetDecalMaterial(Material);
@@ -372,15 +445,35 @@ bool URogue10mMonsterAttackPatternComponent::CreateTelegraph()
 	if (TelegraphMaterialInstance)
 	{
 		const FLinearColor Color = bEnraged ? FLinearColor(1.0f, 0.025f, 0.02f)
+			: CurrentAttackType == ERogue10mMonsterAttackType::Basic ? FLinearColor(1.0f, 0.62f, 0.025f)
 			: CurrentAttackType == ERogue10mMonsterAttackType::FrontalWave
 				? FLinearColor(1.0f, 0.18f, 0.025f) : FLinearColor(0.62f, 0.055f, 0.95f);
 		TelegraphMaterialInstance->SetVectorParameterValue(TEXT("WarningColor"), Color);
-		TelegraphMaterialInstance->SetScalarParameterValue(TEXT("Opacity"), 0.55f);
+		TelegraphMaterialInstance->SetScalarParameterValue(TEXT("Opacity"), CurrentAttackType == ERogue10mMonsterAttackType::Basic ? 0.72f : 0.55f);
 		TelegraphMaterialInstance->SetScalarParameterValue(TEXT("Progress"), 0.0f);
 	}
-	TelegraphDecal->SetWorldLocationAndRotation(Center, FRotator(-90.0f, LockedForward.Rotation().Yaw, 0.0f));
+	UpdateTelegraphGeometry();
 	TelegraphDecal->RegisterComponentWithWorld(GetWorld());
 	return TelegraphDecal->IsRegistered();
+}
+
+void URogue10mMonsterAttackPatternComponent::UpdateTelegraphGeometry()
+{
+	if (!Profile || !TelegraphDecal) return;
+	const FRogue10mMonsterAttackShape Shape = GetLockedAttackShape();
+	const FRogue10mMonsterWarningProjection Projection = Rogue10mMonsterAttackGeometry::MakeWarningProjection(Shape, Shape.TargetCapsuleRadius);
+	const FVector Size(Positive(Profile->TelegraphDepth, 180.0f), Projection.HalfRight, Projection.HalfForward);
+	if (!TelegraphDecal->DecalSize.Equals(Size, 0.01f))
+	{ TelegraphDecal->DecalSize = Size; TelegraphDecal->MarkRenderStateDirty(); }
+	FVector Center = Projection.Center; Center.Z = TelegraphGroundZ;
+	TelegraphDecal->SetWorldLocationAndRotation(Center, FRotator(-90.0f, LockedForward.Rotation().Yaw, 0.0f));
+	if (TelegraphMaterialInstance)
+	{
+		TelegraphMaterialInstance->SetScalarParameterValue(TEXT("ArcDegrees"), Shape.ArcDegrees);
+		TelegraphMaterialInstance->SetScalarParameterValue(TEXT("AttackRange"), Shape.Range);
+		TelegraphMaterialInstance->SetScalarParameterValue(TEXT("TargetCapsuleRadius"), Shape.TargetCapsuleRadius);
+		TelegraphMaterialInstance->SetScalarParameterValue(TEXT("CapsuleRadiusFraction"), Projection.CapsuleRadiusFraction);
+	}
 }
 
 void URogue10mMonsterAttackPatternComponent::DestroyTelegraph()
@@ -447,6 +540,8 @@ void URogue10mMonsterAttackPatternComponent::ExecuteAttack()
 	// Hide at the actual hit, never retain a stale danger warning during recovery.
 	DestroyTelegraph();
 	if (!Profile || PatternState != ERogue10mMonsterPatternState::Windup || Monster->IsDead()) return;
+ if (Profile->bUseHumanoidAnimInstance)
+  if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance())) Anim->BeginRecovery(LockedRecoverySeconds);
 	PatternState = ERogue10mMonsterPatternState::Recovery;
 	GetWorld()->GetTimerManager().SetTimer(StateTimer, this, &ThisClass::FinishRecovery,
 		LockedRecoverySeconds, false);
@@ -552,6 +647,7 @@ void URogue10mMonsterAttackPatternComponent::SaveAnimationMode()
 	{
 		SavedAnimationMode = static_cast<uint8>(Monster->GetMesh()->GetAnimationMode());
 		SavedAnimationClass = Monster->GetMesh()->GetAnimClass();
+		bSavedReceivesDecals = Monster->GetMesh()->bReceivesDecals;
 		bSavedAnimationMode = true;
 	}
 }
@@ -560,8 +656,23 @@ void URogue10mMonsterAttackPatternComponent::PlayAttackPresentation()
 {
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Profile || !Monster || !Monster->GetMesh()) return;
-	SaveAnimationMode();
-	UAnimSequence* Animation = nullptr;
+ SaveAnimationMode();
+ if (Profile->bUseHumanoidAnimInstance)
+ {
+  if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance()))
+  {
+   UAnimMontage* Montage = Profile->AttackMontage.LoadSynchronous();
+   UAnimSequence* Sequence = Profile->AttackAnimation.LoadSynchronous();
+   float Contact = Profile->AttackContactTimeSeconds;
+   if (CurrentAttackType == ERogue10mMonsterAttackType::FrontalWave)
+   { Montage = Profile->FrontalWaveMontage.LoadSynchronous(); Sequence = Profile->FrontalWaveAnimation.LoadSynchronous(); Contact = Profile->FrontalWaveContactTimeSeconds; }
+   else if (CurrentAttackType == ERogue10mMonsterAttackType::AbyssZone)
+   { Montage = Profile->AbyssZoneMontage.LoadSynchronous(); Sequence = Profile->AbyssZoneAnimation.LoadSynchronous(); Contact = Profile->AbyssZoneContactTimeSeconds; }
+   Anim->PlayPresentation(Montage, Sequence, Contact, LockedWindupSeconds);
+  }
+  return;
+ }
+ UAnimSequence* Animation = nullptr;
 	if (CurrentAttackType == ERogue10mMonsterAttackType::FrontalWave) Animation = Profile->FrontalWaveAnimation.LoadSynchronous();
 	if (CurrentAttackType == ERogue10mMonsterAttackType::AbyssZone) Animation = Profile->AbyssZoneAnimation.LoadSynchronous();
 	if (!Animation) Animation = Profile->AttackAnimation.LoadSynchronous();
@@ -575,6 +686,7 @@ void URogue10mMonsterAttackPatternComponent::PlayAttackPresentation()
 
 void URogue10mMonsterAttackPatternComponent::UpdateLocomotionPresentation()
 {
+ if (Profile && Profile->bUseHumanoidAnimInstance) return;
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Profile || !Monster || Monster->IsDead() || IsAttackActive() || !GetWorld()
 		|| GetWorld()->GetTimerManager().IsTimerActive(HitReactionTimer)) return;
@@ -594,6 +706,11 @@ void URogue10mMonsterAttackPatternComponent::RestoreAnimation()
 	if (GetWorld()) GetWorld()->GetTimerManager().ClearTimer(HitReactionTimer);
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Monster || !Monster->GetMesh()) return;
+ if (Profile && Profile->bUseHumanoidAnimInstance)
+ {
+  if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance())) Anim->StopPresentation();
+  return;
+ }
 	if (Profile && !Monster->IsDead())
 	{
 		UpdateLocomotionPresentation();
@@ -602,7 +719,7 @@ void URogue10mMonsterAttackPatternComponent::RestoreAnimation()
 	if (bSavedAnimationMode)
 	{
 		Monster->GetMesh()->SetAnimationMode(static_cast<EAnimationMode::Type>(SavedAnimationMode));
-		if (SavedAnimationClass && SavedAnimationMode == static_cast<uint8>(EAnimationMode::AnimationBlueprint))
+		if (SavedAnimationMode == static_cast<uint8>(EAnimationMode::AnimationBlueprint))
 			Monster->GetMesh()->SetAnimInstanceClass(SavedAnimationClass);
 	}
 }
@@ -612,6 +729,15 @@ void URogue10mMonsterAttackPatternComponent::PlayHitReaction()
 	RefreshEnrage();
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Profile || !Monster || Monster->IsDead() || IsAttackActive() || !GetWorld()) return;
+ if (Profile->bUseHumanoidAnimInstance)
+ {
+  if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance()))
+  {
+   const float Duration = Anim->PlayPresentation(Profile->HitMontage.LoadSynchronous(), Profile->HitAnimation.LoadSynchronous());
+   if (Duration > 0.f) GetWorld()->GetTimerManager().SetTimer(HitReactionTimer, this, &ThisClass::RestoreAnimation, Duration, false);
+  }
+  return;
+ }
 	if (UAnimSequence* Animation = Profile->HitAnimation.LoadSynchronous())
 	{
 		Monster->GetMesh()->PlayAnimation(Animation, false);
@@ -627,6 +753,12 @@ float URogue10mMonsterAttackPatternComponent::PlayDeathPresentation()
 	if (GetWorld()) GetWorld()->GetTimerManager().ClearTimer(LocomotionTimer);
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Profile || !Monster) return 0.0f;
+ if (Profile->bUseHumanoidAnimInstance)
+ {
+  if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance()))
+   return Anim->PlayPresentation(Profile->DeathMontage.LoadSynchronous(), Profile->DeathAnimation.LoadSynchronous(), 0.f, 0.f, true) + 0.05f;
+  return 0.f;
+ }
 	if (UAnimSequence* Animation = Profile->DeathAnimation.LoadSynchronous())
 	{
 		Monster->GetMesh()->PlayAnimation(Animation, false);

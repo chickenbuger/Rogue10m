@@ -1,0 +1,122 @@
+{
+  "schema": "Rogue10m.CaveGameCameraReview.20261118.v1",
+  "capture_index": 4,
+  "site": "Z",
+  "label": "entrance_under_roof",
+  "image": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\caves20261118\\runtime-camera-verified\\captures\\04_Z_entrance_under_roof.png",
+  "image_sha256": "7593c512dc8e82c6542c0ea4bd292c198b77fd5384c661491fd061ca62fa7c97",
+  "pose_before": {
+    "sim_seconds": 533.3114446476102,
+    "phase": "capture_settle",
+    "waypoint_index": 149,
+    "waypoint": "Z:main_forward_ground_cm:5",
+    "pawn_cm": [
+      55749.99999999984,
+      53409.39932201536,
+      8708.149997761946
+    ],
+    "velocity_cm_s": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "grounded": true,
+    "camera_cm": [
+      55834.99991721997,
+      53720.327461029,
+      8842.463214834339
+    ],
+    "camera_rotation_pitch_yaw_roll": [
+      -12.000000000000012,
+      -89.99998474121098,
+      -0.0
+    ],
+    "camera_FOV": 90.0,
+    "pivot_cm": [
+      55749.99999999984,
+      53409.39932201536,
+      8766.149997761946
+    ],
+    "unfixed_camera_cm": [
+      55834.99991721997,
+      53720.327461029,
+      8842.463214834339
+    ],
+    "camera_to_pivot_cm": 331.24764249403455,
+    "pull_in_cm": 0.0,
+    "collision_fix_applied": false,
+    "remaining_run_seconds": 665.0,
+    "planned_core_box_embeddings": []
+  },
+  "pose_after": {
+    "sim_seconds": 533.6447781398892,
+    "phase": "capture_pending",
+    "waypoint_index": 149,
+    "waypoint": "Z:main_forward_ground_cm:5",
+    "pawn_cm": [
+      55749.99999999984,
+      53409.39932201536,
+      8708.149997761946
+    ],
+    "velocity_cm_s": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "grounded": true,
+    "camera_cm": [
+      55834.99991721997,
+      53720.327461029,
+      8842.463214834339
+    ],
+    "camera_rotation_pitch_yaw_roll": [
+      -12.000000000000012,
+      -89.99998474121098,
+      -0.0
+    ],
+    "camera_FOV": 90.0,
+    "pivot_cm": [
+      55749.99999999984,
+      53409.39932201536,
+      8766.149997761946
+    ],
+    "unfixed_camera_cm": [
+      55834.99991721997,
+      53720.327461029,
+      8842.463214834339
+    ],
+    "camera_to_pivot_cm": 331.24764249403455,
+    "pull_in_cm": 0.0,
+    "collision_fix_applied": false,
+    "remaining_run_seconds": 665.0,
+    "planned_core_box_embeddings": []
+  },
+  "capture_pose_proof": {
+    "stable_advancing_PCM_frames": 2,
+    "target_pitch_yaw_roll_degrees": [
+      -12,
+      -89.999999999978,
+      0
+    ],
+    "before_after_delta": {
+      "camera_translation_cm": 0.0,
+      "pawn_translation_cm": 0.0,
+      "rotation_max_degrees": 0.0,
+      "FOV_delta_degrees": 0.0
+    },
+    "passed": true
+  },
+  "actual_existing_PCM_camera": true,
+  "camera_override_actor": null,
+  "editor_camera_changed": false,
+  "capture_API": "AutomationLibrary.TakeHighResScreenshot; active PIE viewport, Camera=None",
+  "engine_high_res_bShowUI": false,
+  "gameclock_keeps_running": true,
+  "owner_review_required": true,
+  "acknowledgment_file": "D:\\Project\\Rogue10m\\Feature\\doc\\evidence\\caves20261118\\runtime-camera-verified\\camera-done-4.json",
+  "ack_payload_required": {
+    "capture_index": 4,
+    "visual_review_passed": true,
+    "image_sha256": "7593c512dc8e82c6542c0ea4bd292c198b77fd5384c661491fd061ca62fa7c97"
+  }
+}

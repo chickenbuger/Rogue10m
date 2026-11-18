@@ -1,0 +1,89 @@
+{
+  "schema": "Rogue10m.OrganicCavesIndependentSourceMeshAudit.20261118.v2.floor_snap",
+  "utc": "2026-11-17T19:45:34.957101+00:00",
+  "read_only_mesh_sources": true,
+  "editor_operations": false,
+  "asset_mutations": false,
+  "previous_floor_drift_failure": "source-mesh-v2-audit.json",
+  "sites": {
+    "Q": {
+      "passed": true,
+      "checks": {
+        "closed_two_faces_per_edge": true,
+        "consistent_face_winding": true,
+        "no_degenerate_faces": true,
+        "no_duplicate_faces": true,
+        "one_connected_surface": true,
+        "no_orphan_vertices": true,
+        "finite_nonzero_signed_volume": true,
+        "floor_section_exact_horizontal8609": true,
+        "exact_rock0_floor1_assignments": true
+      },
+      "vertices": 62990,
+      "triangles": 125980,
+      "edges": 188970,
+      "component_triangle_counts": [
+        125980
+      ],
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": [],
+      "duplicate_faces": [],
+      "minimum_face_area_cm2": 2.891487536234496e-05,
+      "signed_volume_cm3": 47117760247.584206,
+      "limitations": [
+        "No global triangle self-intersection certification; actual collision and rendered interior QA are required."
+      ],
+      "path": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Q_20261118.mesh.json",
+      "sha256": "101ff97a5d3cf1659f2d1e4aa1c4f7169ef3e3625efcfcba0c3bf1870b176488",
+      "material_ids_count": 125980,
+      "floor_triangles": 4162,
+      "floor_vertex_z_cm_range": [
+        8609.0,
+        8609.0
+      ],
+      "floor_normal_z_min": 1.0
+    },
+    "Z": {
+      "passed": true,
+      "checks": {
+        "closed_two_faces_per_edge": true,
+        "consistent_face_winding": true,
+        "no_degenerate_faces": true,
+        "no_duplicate_faces": true,
+        "one_connected_surface": true,
+        "no_orphan_vertices": true,
+        "finite_nonzero_signed_volume": true,
+        "floor_section_exact_horizontal8609": true,
+        "exact_rock0_floor1_assignments": true
+      },
+      "vertices": 62988,
+      "triangles": 125976,
+      "edges": 188964,
+      "component_triangle_counts": [
+        125976
+      ],
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": [],
+      "duplicate_faces": [],
+      "minimum_face_area_cm2": 0.0001025249166624203,
+      "signed_volume_cm3": 54683937443.39144,
+      "limitations": [
+        "No global triangle self-intersection certification; actual collision and rendered interior QA are required."
+      ],
+      "path": "Art/World/CavesOrganic20261118/V2/SM_CaveOrganicSculpt_Z_20261118.mesh.json",
+      "sha256": "60acce5f7dc6f53720602c3abb66dd3df84090f832f3ca74fbba16c024e7baa3",
+      "material_ids_count": 125976,
+      "floor_triangles": 3856,
+      "floor_vertex_z_cm_range": [
+        8609.0,
+        8609.0
+      ],
+      "floor_normal_z_min": 1.0
+    }
+  },
+  "passed": true
+}

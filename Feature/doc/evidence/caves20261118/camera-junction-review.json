@@ -1,0 +1,259 @@
+{
+  "schema": "Rogue10m.CaveCameraJunctionReview.20261118.v1",
+  "utc": "2026-11-17T17:51:41.450987+00:00",
+  "status": "EXACT_TWO_INSTANCE_RECESS_PROPOSAL_NOT_IMPLEMENTED_BY_REVIEWER",
+  "read_only": true,
+  "editor_operations": false,
+  "asset_mutations": false,
+  "plan_sha256": "39b0150690e02a6edb453f91d0362603d9063dc3771dce9977d870fe184e6a74",
+  "dressing_plan_sha256": "4177a9e1b8544e16cd61217cf64fd01a5c47da8e6ef3ee84dea25228107449db",
+  "original_dressing_receipt_sha256": "f938a675dfb74019eff712d6437946174a4dc58c5cb8aaa25953bda56bdd9dbd",
+  "actual_failed_runtime_sha256": "71a7e0959a7f5bba1e49afaf65cb18fa0cb0d9900b3d8485f05b454dd6c028c1",
+  "actual_camera_sphere_trace_sha256": "193960e1946265a7abf443b54ef0068daf8a19994ea74f6c0c9596d12bdbcb67",
+  "actual_failure": {
+    "waypoint_index": 83,
+    "waypoint": "Q:secret_to_surface_ground_cm:5",
+    "sample": {
+      "sim_seconds": 447.1069402694702,
+      "phase": "walking",
+      "waypoint_index": 83,
+      "waypoint": "Q:secret_to_surface_ground_cm:5",
+      "pawn_cm": [
+        -9705.083644477621,
+        65299.99848173119,
+        8708.149996129272
+      ],
+      "velocity_cm_s": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "grounded": true,
+      "camera_cm": [
+        -9587.130763179255,
+        65367.30054340944,
+        8798.301299858034
+      ],
+      "camera_rotation_pitch_yaw_roll": [
+        -11.999999999999996,
+        -135.0019378662109,
+        -0.0
+      ],
+      "camera_FOV": 90.0,
+      "pivot_cm": [
+        -9705.083644477621,
+        65299.99848173119,
+        8766.149996129272
+      ],
+      "unfixed_camera_cm": [
+        -9425.114785025615,
+        65459.74431616455,
+        8842.463213201665
+      ],
+      "camera_to_pivot_cm": 139.55699926620633,
+      "pull_in_cm": 191.69064371651018,
+      "collision_fix_applied": true,
+      "remaining_run_seconds": 751.0
+    },
+    "sphere_trace_component": {
+      "path": "/Game/Rogue10m/Maps/Production/UEDPIE_0_WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.Actor_UAID_244BFE8DA9DFE81503_1542298845.Q_CaveDressingISM_00",
+      "class": "/Script/Engine.InstancedStaticMeshComponent"
+    },
+    "sphere_trace_item": 120,
+    "sphere_trace_distance_cm": 139.5570068359375
+  },
+  "pure_prediction_at_actual_pose": {
+    "radius_cm": 14,
+    "expanded_OBB_distance_cm": 139.71183802332425,
+    "actual_distance_cm": 139.5570068359375,
+    "difference_cm": 0.15483118738675,
+    "core_without_protruding_rock_distance_cm": 178.7559560174224
+  },
+  "full360_fixed_actual_pivot_prediction": {
+    "yaw_step_degrees": 0.25,
+    "yaw_samples": 1440,
+    "nearby_core_and_dressing_boxes": 103,
+    "before_worst_distance_cm": 121.34798252801232,
+    "before_worst_pull_in_cm": 209.89966045470413,
+    "after50X_worst_distance_cm": 155.26010490219866,
+    "after50X_worst_pull_in_cm": 175.98753808051782,
+    "after_limiting_core_wall": "Q_Wall_V_03_06",
+    "camera_gates_unchanged": {
+      "minimum_distance_cm": 140,
+      "maximum_pull_in_cm": 180,
+      "maximum_severe_pull_in_seconds": 0.5
+    },
+    "method_limitation": "Expanded OBB is a conservative sphere approximation; original mesh convex trace independently confirmed Item120. Predicted repair still requires actual Camera-channel trace and fresh full traversal."
+  },
+  "correction": [
+    {
+      "component_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.Actor_UAID_244BFE8DA9DFE81503_1542298845.Q_CaveDressingISM_00",
+      "instance_index": 120,
+      "label": "Q_Rock_Q_Wall_V_03_060",
+      "source_wall": "Q_Wall_V_03_06",
+      "world_transform_before": {
+        "p": [
+          -9506.041675139606,
+          65279.271626987254,
+          8740.934236648362
+        ],
+        "q": [
+          -0.002785365113510711,
+          0.0,
+          0.0,
+          0.9999961208630683
+        ],
+        "s": [
+          1.9856798903378923,
+          8.954944633832712,
+          4.64846492258425
+        ]
+      },
+      "world_transform_after": {
+        "p": [
+          -9456.041675139606,
+          65279.271626987254,
+          8740.934236648362
+        ],
+        "q": [
+          -0.002785365113510711,
+          0.0,
+          0.0,
+          0.9999961208630683
+        ],
+        "s": [
+          1.9856798903378923,
+          8.954944633832712,
+          4.64846492258425
+        ]
+      },
+      "translation_delta_cm": [
+        50,
+        0,
+        0
+      ],
+      "bounds_west_face_after_cm": -9522.999894232267,
+      "behind_core_west_face_cm": 17.000105767732748
+    },
+    {
+      "component_path": "/Game/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A.WorldLayoutCompactCrop20261114A:PersistentLevel.Actor_UAID_244BFE8DA9DFE81503_1542298845.Q_CaveDressingISM_00",
+      "instance_index": 121,
+      "label": "Q_Rock_Q_Wall_V_03_061",
+      "source_wall": "Q_Wall_V_03_06",
+      "world_transform_before": {
+        "p": [
+          -9508.956923308957,
+          65252.1054098113,
+          9065.76563900199
+        ],
+        "q": [
+          -0.05134370429848049,
+          0.0,
+          0.0,
+          0.9986810421896023
+        ],
+        "s": [
+          1.7988553313767648,
+          9.132193375581005,
+          4.493649565047393
+        ]
+      },
+      "world_transform_after": {
+        "p": [
+          -9458.956923308957,
+          65252.1054098113,
+          9065.76563900199
+        ],
+        "q": [
+          -0.05134370429848049,
+          0.0,
+          0.0,
+          0.9986810421896023
+        ],
+        "s": [
+          1.7988553313767648,
+          9.132193375581005,
+          4.493649565047393
+        ]
+      },
+      "translation_delta_cm": [
+        50,
+        0,
+        0
+      ],
+      "bounds_west_face_after_cm": -9519.615315419594,
+      "behind_core_west_face_cm": 20.38468458040552
+    }
+  ],
+  "original_core_wall": {
+    "collision": "BlockAll",
+    "cube_base_size_cm": 100.0,
+    "dimensions_cm": [
+      80.0,
+      500.0,
+      600.0
+    ],
+    "label": "Q_Wall_V_03_06",
+    "location_cm": [
+      -9500.0,
+      65300.0,
+      8900.0
+    ],
+    "material_role": "stone_wall",
+    "mesh": "cube",
+    "mesh_path": "/Engine/BasicShapes/Cube",
+    "rotation_pitch_yaw_roll_deg": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "tick_enabled": false
+  },
+  "preservation": {
+    "opposite_cell_3_6_is_floor": false,
+    "forced_secret_closed_edges_unchanged": [
+      [
+        [
+          1,
+          8
+        ],
+        [
+          2,
+          8
+        ]
+      ],
+      [
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          9
+        ]
+      ],
+      [
+        [
+          1,
+          10
+        ],
+        [
+          2,
+          10
+        ]
+      ]
+    ],
+    "core286_unchanged": true,
+    "all_other424_dressing_instances_unchanged": true,
+    "no_route_floor_roof_height_material_light_PP_camera_or_collision_changes": true,
+    "exact2016_capsule_cases_sha256": "2d0bdc07e7d4eca5a49a5df87d9ad8ff1b3eb3982913fc69d83fa5cf21baecab"
+  },
+  "remaining_acceptance": [
+    "Exact2-instance mutation/readback and complete preservation overlay",
+    "Original failure Camera sphere trace after repair",
+    "Exact2016 static QA vectors and latest cold validation",
+    "Bounded one-Q-Dressing-package save",
+    "Fresh entire276-waypoint12-chain normal movement/camera run and all6 final visual reviews"
+  ],
+  "additional_conservative_audit": "camera-junction-forward-audit.json; hypothetical50cm overshoot at other waypoints is inference, not authorization to expand this correction."
+}

@@ -27,7 +27,7 @@ void ARogue10mCameraManager::ApplyCameraModifiers(float DeltaTime, FMinimalViewI
 		if (LastFistPresentation.IsValid()) { LastFistPresentation->ResetCameraMotion(); }
 		LastFistPresentation = Presentation;
 	}
-	if (!Presentation || (Character && Character->GetAppearanceCameraComponent()
+	if (!Presentation || (Character && Character->IsThirdPersonGameplayActive()) || (Character && Character->GetAppearanceCameraComponent()
   && Character->GetAppearanceCameraComponent()->IsAppearanceCameraActive()))
 	{
 		return;

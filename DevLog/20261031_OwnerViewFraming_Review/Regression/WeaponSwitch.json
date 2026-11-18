@@ -1,0 +1,149 @@
+﻿{
+	"devices": [
+		{
+			"deviceName": "JINSOO",
+			"instance": "0904BB57498EECE7F2E1C9A482A76DD9",
+			"instanceName": "JINSOO-23220",
+			"platform": "WindowsEditor",
+			"oSVersion": "Windows 11 (26H2) [10.0.26300.9818] ",
+			"model": "Default",
+			"gPU": "NVIDIA GeForce RTX 3070",
+			"cPUModel": "AMD Ryzen 7 5800X 8-Core Processor             ",
+			"rAMInGB": 32,
+			"renderMode": "SM6",
+			"rHI": "",
+			"appInstanceLog": ""
+		}
+	],
+	"reportCreatedOn": "2026.10.31-17.41.30",
+	"succeeded": 8,
+	"succeededWithWarnings": 0,
+	"failed": 0,
+	"notRun": 0,
+	"inProcess": 0,
+	"totalDuration": 0.36704728007316589,
+	"comparisonExported": false,
+	"comparisonExportDirectory": "",
+	"tests": [
+		{
+			"testDisplayName": "AllMutationPathsSucceedAtIdle",
+			"fullTestPath": "Rogue10m.WeaponSwitch.AllMutationPathsSucceedAtIdle",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"0904BB57498EECE7F2E1C9A482A76DD9"
+			],
+			"duration": 0.074644200503826141,
+			"dateTime": "2026.10.31-17.41.29",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "AttackBoundaryAndLongCooldown",
+			"fullTestPath": "Rogue10m.WeaponSwitch.AttackBoundaryAndLongCooldown",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"0904BB57498EECE7F2E1C9A482A76DD9"
+			],
+			"duration": 0.015758700668811798,
+			"dateTime": "2026.10.31-17.41.29",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "ConservativeBusyStates",
+			"fullTestPath": "Rogue10m.WeaponSwitch.ConservativeBusyStates",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"0904BB57498EECE7F2E1C9A482A76DD9"
+			],
+			"duration": 0.013418599963188171,
+			"dateTime": "2026.10.31-17.41.29",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "LocomotionAndNoInvulnerability",
+			"fullTestPath": "Rogue10m.WeaponSwitch.LocomotionAndNoInvulnerability",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"0904BB57498EECE7F2E1C9A482A76DD9"
+			],
+			"duration": 0.2036719024181366,
+			"dateTime": "2026.10.31-17.41.29",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "ReentrantCommandsRejected",
+			"fullTestPath": "Rogue10m.WeaponSwitch.ReentrantCommandsRejected",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"0904BB57498EECE7F2E1C9A482A76DD9"
+			],
+			"duration": 0.019723899662494659,
+			"dateTime": "2026.10.31-17.41.30",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "RejectBeforeMutation",
+			"fullTestPath": "Rogue10m.WeaponSwitch.RejectBeforeMutation",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"0904BB57498EECE7F2E1C9A482A76DD9"
+			],
+			"duration": 0.01806269958615303,
+			"dateTime": "2026.10.31-17.41.30",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "SameTypeAndDuplicateInstance",
+			"fullTestPath": "Rogue10m.WeaponSwitch.SameTypeAndDuplicateInstance",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"0904BB57498EECE7F2E1C9A482A76DD9"
+			],
+			"duration": 0.010991699993610382,
+			"dateTime": "2026.10.31-17.41.30",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		},
+		{
+			"testDisplayName": "ValidationFailureIsAtomic",
+			"fullTestPath": "Rogue10m.WeaponSwitch.ValidationFailureIsAtomic",
+			"tags": [],
+			"state": "Success",
+			"deviceInstance": [
+				"0904BB57498EECE7F2E1C9A482A76DD9"
+			],
+			"duration": 0.010775599628686905,
+			"dateTime": "2026.10.31-17.41.30",
+			"entries": [],
+			"warnings": 0,
+			"errors": 0,
+			"artifacts": []
+		}
+	]
+}

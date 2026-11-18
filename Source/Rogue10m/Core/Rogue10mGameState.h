@@ -12,7 +12,8 @@ enum class ERogue10mRunPhase : uint8
 	WaitingToStart,
 	Running,
 	Victory,
-	Defeat
+	Defeat,
+	Abandoned
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FRogue10mRunTimerUpdated, float, RemainingSeconds, float, TotalSeconds, float, ProgressAlpha);
@@ -40,6 +41,7 @@ public:
 	/** Finishes the current run. */
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Run")
 	void FinishRun(bool bVictory);
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Run") bool AbandonRun();
 
 	/** Remaining run time formatted as MM:SS. */
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Run")
@@ -57,6 +59,8 @@ public:
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Run")
 	bool IsRunActive() const { return RunPhase == ERogue10mRunPhase::Running; }
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Run") bool IsRunTerminal() const
+	{ return RunPhase == ERogue10mRunPhase::Victory || RunPhase == ERogue10mRunPhase::Defeat || RunPhase == ERogue10mRunPhase::Abandoned; }
 
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Run")
 	ERogue10mRunPhase GetRunPhase() const { return RunPhase; }

@@ -1,0 +1,43 @@
+Using bundled DotNet SDK version: 10.0 win-x64
+Running UnrealBuildTool: dotnet "..\..\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.dll" -projectfiles -project=D:\Project\Rogue10m\Rogue10m.uproject -game -engine
+Log file: C:\Users\PC\AppData\Local\UnrealBuildTool\Log_GPF.txt
+
+Some Platforms were skipped due to invalid SDK setup: Android.
+See the log file for detailed information
+
+
+Generating VisualStudio project files:
+Discovering modules, targets and source code for project...
+Visual Studio 2022 does not support .NET 10.0 C# projects, these projects will not be added to the generated solution.
+Please generate the Visual Studio 2026 solution if .NET 10.0 C# project support is required.
+Visual Studio 2022 does not support .NET 10.0 C# projects, and the current dotnet runtime version is '.NET 10.0.7'. Compiling with an older dotnet SDK from Visual Studio can cause errors.
+The Automation_Rogue10m solution will be generated for Visual Studio 2026.
+Writing 'D:\Project\Rogue10m\Automation_Rogue10m.sln'...
+Writing 'D:\Project\Rogue10m\Automation_Rogue10m.slnx'...
+Writing automation project files took 0.25s
+Adding projects for all targets...
+Adding projects for all targets took 2.81s
+Adding projects for all game projects took 0.00s
+Adding projects for all modules took 0.12s
+Compiling Rules Assemblies 100%
+Creating Build Targets 100%
+Binding IntelliSense data...
+Creating Build Targets took 0.60s
+Binding IntelliSense data... 100%
+Binding IntelliSense data took 4.03s
+Writing project files...
+Writing 'D:\Project\Rogue10m\Rogue10m.sln'...
+Writing 'D:\Project\Rogue10m\Rogue10m.slnx'...
+Writing project files... 100%
+Writing solution file took 0.04s
+Writing project files took 2.44s
+Compiling Rules Assemblies
+
+Generating QueryTargets data for editor...
+Compiling Rules Assemblies 100%
+Writing Query Target Info 100%
+Generating QueryTargets data for editor took 0.02s
+
+Result: Succeeded
+Total execution time: 14.00 seconds
+Trace written to file C:\Users\PC\AppData\Local\UnrealBuildTool\Trace.uba with size 131.1kb

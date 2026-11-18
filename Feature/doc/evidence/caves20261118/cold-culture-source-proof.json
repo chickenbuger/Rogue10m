@@ -1,0 +1,151 @@
+{
+  "schema": "Rogue10m.CaveColdCultureSourceProof.20261118.v1",
+  "source_review_complete": true,
+  "actual_cold_validation_pass_claimed": false,
+  "diagnostic_completed": true,
+  "diagnostic_result_sha256": "2615623d34ca68f66bf4f7287fa1875394c75c214f1ede6a362bb26c1dd7b7f3",
+  "root_cause": "MaterialExpressionBreakMaterialAttributes.GetInputName uses NSLOCTEXT then ToString; MaterialEditingLibrary exposes this localized input name. Exact graph fingerprints depend on baseline language, even though node, connection, parameters and source package bytes are unchanged.",
+  "repair": "Retain English startup smoke context; restore only the owned cold process language ko and locale ko-KR with saveToConfigFalse before metadata and complete validation. Record both before and after. Keep NullRHI, all exact source40/new7 material comparison fields and all2016 capsule cases unchanged.",
+  "normalization_or_gate_relaxation": false,
+  "shared_editor_changed": false,
+  "user_config_saved": false,
+  "source_materials_saved": false,
+  "retained_failure_directory": "cold-verified-live",
+  "fresh_final_directory": "cold-final-validated-live",
+  "sources": [
+    {
+      "path": "D:\\Program Files\\UE_5.8\\Engine\\Source\\Runtime\\Engine\\Private\\Materials\\MaterialExpressions.cpp",
+      "sha256": "66909943c30bdcea8f8bc47bd3b719093eeed4d11715b94cb120fb4f4330d815",
+      "lines": [
+        {
+          "line": 6350,
+          "text": "FName UMaterialExpressionBreakMaterialAttributes::GetInputName(int32 InputIndex) const"
+        },
+        {
+          "line": 6354,
+          "text": "return *NSLOCTEXT(\"BreakMaterialAttributes\", \"InputName\", \"Attr\").ToString();"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Program Files\\UE_5.8\\Engine\\Source\\Editor\\MaterialEditor\\Private\\MaterialEditingLibrary.cpp",
+      "sha256": "96051980458dad86719f195072da4bd34eebd07a80d647ebb50bbbb0626e5565",
+      "lines": [
+        {
+          "line": 1203,
+          "text": "TArray<FString> UMaterialEditingLibrary::GetMaterialExpressionInputNames(UMaterialExpression* MaterialExpression)"
+        },
+        {
+          "line": 1217,
+          "text": "const FName ExpressionInputName = MaterialExpression->GetInputName(It.Index);"
+        },
+        {
+          "line": 1218,
+          "text": "Name = UMaterialGraphNode::GetShortenPinName(ExpressionInputName);"
+        },
+        {
+          "line": 1222,
+          "text": "InputNames.Add(Name.ToString());"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Program Files\\UE_5.8\\Engine\\Source\\Runtime\\Engine\\Private\\KismetInternationalizationLibrary.cpp",
+      "sha256": "f7e8a53a22b6884f70a3a8e7bfa37c1574886f1d67aa343867544f82eb5c9baf",
+      "lines": [
+        {
+          "line": 33,
+          "text": "bool UKismetInternationalizationLibrary::SetCurrentLanguage(const FString& Culture, const bool SaveToConfig)"
+        },
+        {
+          "line": 35,
+          "text": "if (FInternationalization::Get().SetCurrentLanguage(Culture))"
+        },
+        {
+          "line": 37,
+          "text": "if (!GIsEditor && SaveToConfig)"
+        },
+        {
+          "line": 39,
+          "text": "GConfig->SetString(TEXT(\"Internationalization\"), TEXT(\"Language\"), *Culture, GGameUserSettingsIni);"
+        },
+        {
+          "line": 40,
+          "text": "GConfig->Flush(false, GGameUserSettingsIni);"
+        },
+        {
+          "line": 53,
+          "text": "bool UKismetInternationalizationLibrary::SetCurrentLocale(const FString& Culture, const bool SaveToConfig)"
+        },
+        {
+          "line": 55,
+          "text": "if (FInternationalization::Get().SetCurrentLocale(Culture))"
+        },
+        {
+          "line": 57,
+          "text": "if (!GIsEditor && SaveToConfig)"
+        },
+        {
+          "line": 59,
+          "text": "GConfig->SetString(TEXT(\"Internationalization\"), TEXT(\"Locale\"), *Culture, GGameUserSettingsIni);"
+        },
+        {
+          "line": 60,
+          "text": "GConfig->Flush(false, GGameUserSettingsIni);"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\Scripts\\Editor\\NaturalRoadMaterial20261117.py",
+      "sha256": "66ebc1c58cd9abddf14739c7624e302b09466a4b2702d5ba63fb98daedf7fb03",
+      "lines": [
+        {
+          "line": 83,
+          "text": "names = list(map(str, lib.get_material_expression_input_names(node)))"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Project\\Rogue10m\\Scripts\\Editor\\RestoreEditorCultureAfterSmoke.py",
+      "sha256": "38017574766ccd83310264559f703da47cc76120b9d35849eff8e5caecd51489",
+      "lines": [
+        {
+          "line": 23,
+          "text": "raise RuntimeError(\"Checked launcher must supply exactly one -RogueEditor\" + key)"
+        },
+        {
+          "line": 26,
+          "text": "before = {\"language\": library.get_current_language(), \"locale\": library.get_current_locale()}"
+        },
+        {
+          "line": 27,
+          "text": "if before != {\"language\": \"en\", \"locale\": \"en\"}:"
+        },
+        {
+          "line": 28,
+          "text": "raise RuntimeError(\"English startup culture was not established: \" + str(before))"
+        },
+        {
+          "line": 29,
+          "text": "results = {\"language\": library.set_current_language(requested[\"language\"], False),"
+        },
+        {
+          "line": 30,
+          "text": "\"locale\": library.set_current_locale(requested[\"locale\"], False)}"
+        },
+        {
+          "line": 31,
+          "text": "after = {\"language\": library.get_current_language(), \"locale\": library.get_current_locale()}"
+        },
+        {
+          "line": 32,
+          "text": "record = {\"before\": before, \"requested\": requested, \"setter_results\": results, \"after\": after,"
+        },
+        {
+          "line": 33,
+          "text": "\"save_to_config\": False, \"ui_visual_verified\": False}"
+        }
+      ]
+    }
+  ]
+}

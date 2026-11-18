@@ -2,11 +2,14 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Rogue10mWeightedFirstPersonSettings.h"
 #include "Rogue10mAppearanceCameraComponent.generated.h"
 
 class URogue10mAppearanceShadowComponent;
+class URogue10mOwnerArmsComponent;
 class USkeletalMesh;
 class USkeletalMeshComponent;
+class USkinnedMeshComponent;
 class USceneComponent;
 struct FMinimalViewInfo;
 
@@ -33,6 +36,18 @@ public:
  void UpdateCameraFromAppearance();
  UFUNCTION(BlueprintPure, Category="Rogue10m|Appearance Camera")
  bool IsAppearanceCameraActive() const { return bApplied; }
+ /** Presentation-only mesh. Gameplay animation, hit geometry and equipped-item data remain on the world body. */
+ USkinnedMeshComponent* GetOwnerArmsMesh() const;
+ bool IsOwnerArmsViewActive() const;
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Appearance Camera|Owner View")
+ // Kept off until the owner-view visual acceptance gate passes.
+ bool bEnableOwnerArms = false;
+ UFUNCTION(BlueprintPure, Category="Rogue10m|Weighted First Person")
+ bool IsWeightedFirstPersonActive() const;
+ UFUNCTION(BlueprintPure, Category="Rogue10m|Weighted First Person")
+ FRogue10mWeightedFirstPersonSettings GetWeightedFirstPersonSettings() const;
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Weighted First Person")
+ FRogue10mWeightedFirstPersonSettings WeightedFirstPersonSettings;
  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Appearance Camera")
  bool bEnableAppearanceCamera = true;
  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Appearance Camera")
@@ -48,7 +63,7 @@ public:
  bool ReadAnimatedHead(FTransform& OutWorldHead, FQuat& OutWorldMotion) const;
  /** Initial local view only; later refreshes never overwrite mouse aim. */
  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Appearance Camera", meta=(ClampMin="-60", ClampMax="0", Units="deg"))
- float InitialViewPitch = -20.0f;
+ float InitialViewPitch = -10.0f;
  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Appearance Camera|Brawler Stability")
  bool bStabilizeBrawlerHeadMotion = true;
  /** Legacy fallback when all-weapon head stability is disabled; never weights mouse input. */
@@ -103,6 +118,8 @@ protected:
 private:
  UPROPERTY(Transient)
  TObjectPtr<URogue10mAppearanceShadowComponent> ShadowComponent;
+ UPROPERTY(Transient)
+ TObjectPtr<URogue10mOwnerArmsComponent> OwnerArmsComponent;
  void Restore();
  void RefreshInspectionParts();
  void RestoreInspectionParts();

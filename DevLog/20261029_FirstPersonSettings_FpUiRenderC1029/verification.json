@@ -1,0 +1,298 @@
+{
+  "utc": "2026-10-29T14:38:57.356761+00:00",
+  "project": "D:\\Project\\Rogue10m",
+  "branch": "Sprint#9-11-first-person-settings",
+  "base_sha": "021921ffda2f100d1d14bbdb5dd10666c2e07e21",
+  "final_commit": "11a150117ea8b88ae90b29175879a7c58eab7dbe",
+  "feature_status": "console_free_settings_completed; rendered_ABBA_inconclusive",
+  "build": {
+    "final": "Succeeded",
+    "seconds": 11.06,
+    "log": "C:\\Users\\PC\\Documents\\Codex\\2026-10-27\\task\\first-person-settings-build-d-20261029.log"
+  },
+  "headless": {
+    "label": "FpUiHeadB1029",
+    "checks": 560,
+    "failures": 0,
+    "frames": 1635,
+    "metrics": [
+      {
+        "segment": "0",
+        "profile": "OFF",
+        "phase": "warmed_sprint",
+        "samples": "92",
+        "wall_median_ms": "16.661901027",
+        "wall_p95_ms": "17.014600337",
+        "wall_max_ms": "17.134100199",
+        "wall_hitches_gt50ms": "0",
+        "world_median_ms": "16.666799784",
+        "world_p95_ms": "16.666900367",
+        "world_max_ms": "16.667000949",
+        "world_hitches_gt50ms": "0",
+        "min_speed_cm_s": "920.000000",
+        "max_speed_cm_s": "920.000000",
+        "net_xy_cm": "1410.679054",
+        "expected_sprint_speed_cm_s": "920.000000",
+        "grounded_samples": "92"
+      },
+      {
+        "segment": "1",
+        "profile": "ON",
+        "phase": "warmed_sprint",
+        "samples": "90",
+        "wall_median_ms": "16.680549830",
+        "wall_p95_ms": "16.978401691",
+        "wall_max_ms": "17.495699227",
+        "wall_hitches_gt50ms": "0",
+        "world_median_ms": "16.666799784",
+        "world_p95_ms": "16.666900367",
+        "world_max_ms": "16.667000949",
+        "world_hitches_gt50ms": "0",
+        "min_speed_cm_s": "920.000000",
+        "max_speed_cm_s": "920.000000",
+        "net_xy_cm": "1380.012698",
+        "expected_sprint_speed_cm_s": "920.000000",
+        "grounded_samples": "90"
+      },
+      {
+        "segment": "2",
+        "profile": "ON",
+        "phase": "warmed_sprint",
+        "samples": "90",
+        "wall_median_ms": "16.658149660",
+        "wall_p95_ms": "16.984499991",
+        "wall_max_ms": "17.191298306",
+        "wall_hitches_gt50ms": "0",
+        "world_median_ms": "16.666801646",
+        "world_p95_ms": "16.666997224",
+        "world_max_ms": "16.674898565",
+        "world_hitches_gt50ms": "0",
+        "min_speed_cm_s": "920.000000",
+        "max_speed_cm_s": "920.000000",
+        "net_xy_cm": "1380.024841",
+        "expected_sprint_speed_cm_s": "920.000000",
+        "grounded_samples": "90"
+      },
+      {
+        "segment": "3",
+        "profile": "OFF",
+        "phase": "warmed_sprint",
+        "samples": "92",
+        "wall_median_ms": "16.664899886",
+        "wall_p95_ms": "17.041899264",
+        "wall_max_ms": "17.286401242",
+        "wall_hitches_gt50ms": "0",
+        "world_median_ms": "16.666896641",
+        "world_p95_ms": "16.667000949",
+        "world_max_ms": "16.752600670",
+        "world_hitches_gt50ms": "0",
+        "min_speed_cm_s": "920.000000",
+        "max_speed_cm_s": "920.000000",
+        "net_xy_cm": "1410.769678",
+        "expected_sprint_speed_cm_s": "920.000000",
+        "grounded_samples": "92"
+      }
+    ]
+  },
+  "rendered": {
+    "label": "FpUiRenderC1029",
+    "checks": 556,
+    "failures": 5,
+    "frames": 1565,
+    "status": "partial: native UI controls/guards passed; segment2 simultaneous W/Shift release invalidated complete ABBA",
+    "metrics": [
+      {
+        "segment": "0",
+        "profile": "OFF",
+        "phase": "warmed_sprint",
+        "samples": "90",
+        "wall_median_ms": "16.679950058",
+        "wall_p95_ms": "16.961000860",
+        "wall_max_ms": "17.530601472",
+        "wall_hitches_gt50ms": "0",
+        "world_median_ms": "16.666799784",
+        "world_p95_ms": "16.666900367",
+        "world_max_ms": "16.801398247",
+        "world_hitches_gt50ms": "0",
+        "min_speed_cm_s": "920.000000",
+        "max_speed_cm_s": "920.000000",
+        "net_xy_cm": "1380.137725",
+        "expected_sprint_speed_cm_s": "920.000000",
+        "grounded_samples": "90"
+      },
+      {
+        "segment": "1",
+        "profile": "ON",
+        "phase": "warmed_sprint",
+        "samples": "90",
+        "wall_median_ms": "16.719400883",
+        "wall_p95_ms": "18.131900579",
+        "wall_max_ms": "19.675098360",
+        "wall_hitches_gt50ms": "0",
+        "world_median_ms": "16.666799784",
+        "world_p95_ms": "16.666900367",
+        "world_max_ms": "16.668800265",
+        "world_hitches_gt50ms": "0",
+        "min_speed_cm_s": "905.026591",
+        "max_speed_cm_s": "920.000000",
+        "net_xy_cm": "1248.511644",
+        "expected_sprint_speed_cm_s": "920.000000",
+        "grounded_samples": "90"
+      },
+      {
+        "segment": "2",
+        "profile": "ON",
+        "phase": "warmed_sprint",
+        "samples": "90",
+        "wall_median_ms": "16.690351069",
+        "wall_p95_ms": "17.432399094",
+        "wall_max_ms": "21.799199283",
+        "wall_hitches_gt50ms": "0",
+        "world_median_ms": "16.666799784",
+        "world_p95_ms": "16.666900367",
+        "world_max_ms": "16.669198871",
+        "world_hitches_gt50ms": "0",
+        "min_speed_cm_s": "0.000000",
+        "max_speed_cm_s": "920.000000",
+        "net_xy_cm": "740.254836",
+        "expected_sprint_speed_cm_s": "920.000000",
+        "grounded_samples": "90"
+      },
+      {
+        "segment": "3",
+        "profile": "OFF",
+        "phase": "warmed_sprint",
+        "samples": "90",
+        "wall_median_ms": "16.645500436",
+        "wall_p95_ms": "17.151698470",
+        "wall_max_ms": "17.342798412",
+        "wall_hitches_gt50ms": "0",
+        "world_median_ms": "16.666799784",
+        "world_p95_ms": "16.667000949",
+        "world_max_ms": "16.677599400",
+        "world_hitches_gt50ms": "0",
+        "min_speed_cm_s": "920.000000",
+        "max_speed_cm_s": "920.000000",
+        "net_xy_cm": "1380.023275",
+        "expected_sprint_speed_cm_s": "920.000000",
+        "grounded_samples": "90"
+      }
+    ],
+    "photos": [
+      {
+        "file": "01_settings_off.png",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "bytes": 1576501,
+        "sha256": "05fb62843c70ee56fc4d34d271dd265d937b931755edaa117c2dcf46994238b8"
+      },
+      {
+        "file": "02_settings_on.png",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "bytes": 1572878,
+        "sha256": "d2ac7089750ee2ada8752af733b2347e29ee238d3df84152b3955b7eb1ffe178"
+      },
+      {
+        "file": "03_settings_intensity_zero.png",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "bytes": 1591993,
+        "sha256": "99eebe5e863e9e4463a740d68dde3ae63c24f74f8326b783de100d324c3236e8"
+      },
+      {
+        "file": "04_settings_intensity_point4.png",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "bytes": 1592464,
+        "sha256": "aaf8491baace7fa21923f33203d96f1697e49cd2fdd2a68e708696385b623433"
+      },
+      {
+        "file": "05_settings_original_restored.png",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "bytes": 1584287,
+        "sha256": "47e83b35ea28ef6ca7ef838bc3a8cbc635122efaf14a7fa7b5580cb7fdc92a9c"
+      },
+      {
+        "file": "06_settings_abandon_modal.png",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "bytes": 843172,
+        "sha256": "ad8f1729b927d4c19a7737a0cdc625e46bdce76c5f2803870d3074fc61d71813"
+      },
+      {
+        "file": "07_original_sprint.png",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "bytes": 1283283,
+        "sha256": "2efe4f27787da3c7f4033bd452d7a1c31ee910d5729cc4b50b13406fc02690e4"
+      },
+      {
+        "file": "08_weighted_sprint.png",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "bytes": 1297662,
+        "sha256": "74ba2964dbbd864a0cc7e096a2ffa053aa4a78b056a90fadca4d2d2acd81c616"
+      }
+    ]
+  },
+  "menu_save_failure_regression": {
+    "label": "FpUiMenuF1029",
+    "checks": 97,
+    "failures": 0,
+    "rendered": false
+  },
+  "preservation": {
+    "baseline": "C:\\Users\\PC\\Documents\\Codex\\2026-10-27\\task\\preservation-20261029-140442\\manifest.json",
+    "checked": 606,
+    "baseline_saves": 216,
+    "changed_or_missing": [],
+    "current_save_count": 226
+  },
+  "tested_sources_sha256": {
+    "Source/Rogue10m/Core/Rogue10mPlayerController.cpp": "7bf2a14bb586348bf062fc3ca4e471a5567bc3f3f4bab7a371e92fe8c1f12e3b",
+    "Source/Rogue10m/Core/Rogue10mPlayerController.h": "d6de56df07b99649f5c5ad5a073f20188cf69b61999eef2fb7d9d550d0b3573f",
+    "Source/Rogue10m/UI/Widgets/Rogue10mAbandonMenuWidget.cpp": "fc584c2aad6e52c7310848eacff9200b58f2f633fc011ec8251ab91306b578bc",
+    "Source/Rogue10m/UI/Widgets/Rogue10mAbandonMenuWidget.h": "e2a161c7e0aa5d2b94557a81497c4f5b302cdb770d5040366c98c788b9616be3",
+    "Source/Rogue10m/Tests/Rogue10mFirstPersonSettingsRuntimeTest.cpp": "76a27a0f2fbe88cd2a22fb26b811560e6720d16bb060438eaf6f13c08d893713",
+    "Scripts/VerifyFirstPersonSettings.ps1": "8a8914453f009a197c070957ddbdac531150ab88f5378cfddea048cc9b93d0f6"
+  },
+  "physical_input": "not_performed",
+  "manual_field_completion": "not_performed",
+  "cold_attack_hitch_causality": "not_measured; unresolved",
+  "remote_mutations": false,
+  "pending_approval_or_user_question": null,
+  "sealed_utc": "2026-10-29T14:41:48.529220+00:00",
+  "changed_files": [
+    "DevLog/20261029.txt",
+    "Docs/RapidFieldRules.md",
+    "Docs/SprintChangeLog.md",
+    "Feature/architect/2026-10-29_first-person-settings.md",
+    "Feature/doc/2026-10-29_first-person-settings.md",
+    "Scripts/VerifyFirstPersonSettings.ps1",
+    "Source/Rogue10m/Core/Rogue10mPlayerController.cpp",
+    "Source/Rogue10m/Core/Rogue10mPlayerController.h",
+    "Source/Rogue10m/Tests/Rogue10mFirstPersonSettingsRuntimeTest.cpp",
+    "Source/Rogue10m/UI/Widgets/Rogue10mAbandonMenuWidget.cpp",
+    "Source/Rogue10m/UI/Widgets/Rogue10mAbandonMenuWidget.h"
+  ],
+  "tracked_worktree_clean": true,
+  "untracked_evidence_preserved": true
+}

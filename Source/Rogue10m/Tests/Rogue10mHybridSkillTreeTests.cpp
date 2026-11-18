@@ -59,7 +59,8 @@ bool FRogue10mHybridMasteryTest::RunTest(const FString& Parameters)
 	if (!TestNotNull(TEXT("isolated player"), Fixture.Player) || !TestNotNull(TEXT("progression component"), Fixture.Tree)) { return false; }
 	auto& Tree = *Fixture.Tree;
 	TestTrue(TEXT("catalog valid"), Tree.GetCatalog()->IsValidCatalog());
-	TestEqual(TEXT("both fist weapons resolve one mastery"), Tree.ResolveTrack(ERogue10mWeaponType::Unarmed), Tree.ResolveTrack(ERogue10mWeaponType::Knuckle));
+	TestEqual(TEXT("novice has no weapon mastery"), Tree.ResolveTrack(ERogue10mWeaponType::Unarmed), ETrack::None);
+	TestEqual(TEXT("equipped knuckle owns brawler mastery"), Tree.ResolveTrack(ERogue10mWeaponType::Knuckle), ETrack::Brawler);
 	TestTrue(TEXT("free initial fighter grant"), Tree.IsNodeUnlocked(TEXT("F.Basic")));
 	TestFalse(TEXT("core initially locked"), Tree.IsNodeUnlocked(TEXT("F.Ultimate")));
 	Fixture.Hits(385);

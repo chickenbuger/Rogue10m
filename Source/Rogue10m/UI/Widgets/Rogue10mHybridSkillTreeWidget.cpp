@@ -254,9 +254,11 @@ void URogue10mHybridSkillTreeEntryWidget::Configure(URogue10mHybridSkillTreeWidg
 		Skill = Owner->GetSelectedAttackSkill();
 	}
 	const bool bLearned = State == ERogue10mSkillTreeNodeState::Learned || State == ERogue10mSkillTreeNodeState::Active;
+	const auto* Character = Cast<ARogue10mCharacter>(GetOwningPlayerPawn());
+	const auto* Combat = Character ? Character->GetCombatComponent() : nullptr;
 	bCanDrag = bCurrentTrack && bLearned && Skill
 		&& (Definition.NodeType == ERogue10mHybridSkillTreeNodeType::Technique || Definition.NodeType == ERogue10mHybridSkillTreeNodeType::Basic)
-		&& Skill->SkillTreeNodeType == ERogue10mSkillTreeNodeType::ActiveTechnique;
+		&& Combat && Combat->IsSelectableActiveTechnique(Skill);
 	NodeButton->Configure(Owner, SelectNode, NodeId);
 	FLinearColor Accent = NodeColor(Definition);
 	if (State == ERogue10mSkillTreeNodeState::Locked) Accent = Muted * 0.55f;
@@ -765,7 +767,8 @@ void URogue10mHybridSkillTreeWidget::RefreshFromData()
 	const int32 CurrentXP = Progression->GetMasteryExperience(DisplayedTrack);
 	const int32 NeededXP = Progression->GetMasteryExperienceToNextLevel(DisplayedTrack);
 	const FString MasteryLabel = FString::Printf(TEXT("%s 숙련 M%d"), DisplayedTrack == ERogue10mSkillTreeTrack::Brawler ? TEXT("격투") : TEXT("대검"), Progression->GetMasteryLevel(DisplayedTrack));
-	MasteryText->SetText(FText::FromString(NeededXP > 0 ? FString::Printf(TEXT("%s    %d / %d"), *MasteryLabel, CurrentXP, NeededXP) : MasteryLabel + TEXT(" · 완성")));
+	const float TrainingProgress = NeededXP > 0 ? FMath::Clamp(100.0f * CurrentXP / NeededXP, 0.0f, 100.0f) : 100.0f;
+	MasteryText->SetText(FText::FromString(NeededXP > 0 ? FString::Printf(TEXT("%s    %.1f / 100"), *MasteryLabel, TrainingProgress) : MasteryLabel + TEXT(" · 완성")));
 	MasteryBar->SetPercent(NeededXP > 0 ? FMath::Clamp(static_cast<float>(CurrentXP) / NeededXP, 0.0f, 1.0f) : 1.0f);
 	const FText StatSummary = RewardText(Progression->GetTrackMasteryStatModifiers(DisplayedTrack));
 	MasteryStatsText->SetText(StatSummary);
@@ -958,8 +961,8 @@ void URogue10mHybridSkillTreeWidget::RefreshKeyControls()
 	TGuardValue<bool> Guard(bUpdatingKeys, true);
 	auto* Skill = GetSelectedSkill(); auto* Bindings = GetBindings(); auto* Combat = GetCombat();
 	const bool bCanBind = Skill && Bindings && Combat && Progression.IsValid()
-		&& Progression->GetActiveTrack() == DisplayedTrack && Combat->IsAttackSkillUnlocked(Skill)
-		&& Skill->SkillTreeNodeType == ERogue10mSkillTreeNodeType::ActiveTechnique;
+		&& Progression->GetActiveTrack() == DisplayedTrack
+		&& Combat->CanEquipSkillInSlot(Skill, ERogue10mAttackInputSlot::QSkill);
 	const FKey Key = Skill && Bindings ? Bindings->GetSkillKey(Skill) : EKeys::Invalid;
 	KeySelector->SetIsEnabled(bCanBind); KeySelector->SetSelectedKey(FInputChord(Key));
 	ClearKeyButton->SetIsEnabled(bCanBind && Key.IsValid());
@@ -968,8 +971,9 @@ void URogue10mHybridSkillTreeWidget::RefreshKeyControls()
 	BindingText->SetVisibility(Skill ? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
 	BindingText->SetText(FText::FromString(Skill
 		? FString::Printf(TEXT("%s · 키 %s"), *Skill->SkillName.ToString(), Key.IsValid() ? *Key.GetDisplayName().ToString() : TEXT("미지정")) : TEXT("")));
-	FString Hint = TEXT("현재 무기의 전수 공격 기술만 지정. 단일 키 · 이동/메뉴 키 제외 · Esc 취소. 선택 노드를 HUD로 드래그해 장착할 수 있습니다.");
-	if (Skill && (Skill->InputSlot == ERogue10mAttackInputSlot::ChargedPrimary || Skill->InputSlot == ERogue10mAttackInputSlot::ChargedSpecial))
+	FString Hint = TEXT("공용 기술은 Q/E/R 지정 또는 HUD 드래그. 전용 기술은 해당 전용 슬롯에만 장착. 기본공격·Ctrl 별도, 최대 6개.");
+	if (Skill) { Hint += TEXT(" ") + Skill->GetAllowedSlotText().ToString(); }
+	if (Skill && Skill->RequiresLoadoutCharge())
 		Hint += FString::Printf(TEXT(" %.2f초 이상 누른 뒤 놓아 사용합니다."), Skill->ChargeSeconds);
 	KeySelector->SetToolTipText(FText::FromString(Hint));
 }

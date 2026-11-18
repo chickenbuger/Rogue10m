@@ -1,0 +1,1379 @@
+{
+  "schema": "Rogue10m.NaturalRefinementPublication.20261118.v1",
+  "utc": "2026-11-17T15:46:03.233907+00:00",
+  "branch": "Sprint#9-32-landscape-world-blockout",
+  "base_head": "9a2305a4102121b8171dfa7a0b762151ec2f81e7",
+  "origin_work": "9a2305a4102121b8171dfa7a0b762151ec2f81e7",
+  "origin_main": "024ecfb7d279a3122d3715550b5ef320860dde94",
+  "promotion": "Work branch only; map-production merge gate remains active.",
+  "groups": {
+    "assets": 12,
+    "code_and_tools": 15,
+    "design_and_records": 7,
+    "validation_evidence": 159
+  },
+  "file_count_without_manifest": 193,
+  "total_bytes_without_manifest": 88080297,
+  "files": [
+    {
+      "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/1/S2/SNMFR6G92UWR7JNALFZ3ID.uasset",
+      "group": "assets",
+      "size": 302304,
+      "sha256": "b4f04c6d508fb0ddf42dfd804d16a64e6bca12fb92b914a574faeefdd3a55ca5",
+      "git_blob": "695e67de0b949d942ee6229a61aad1efe23ece53"
+    },
+    {
+      "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/5N/2QCZFO1QZEVPLRNWWQAEU9.uasset",
+      "group": "assets",
+      "size": 295042,
+      "sha256": "602a8ce4e43abf0d174b0d73bd7ec3d79e49f295f37532780afe23160edfbaa7",
+      "git_blob": "36c46bc1ebdbd2cc25d4f3b0a853f8b9dc61df0f"
+    },
+    {
+      "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/2/MX/901N9FSMWQT8HGVSYW4Y54.uasset",
+      "group": "assets",
+      "size": 204944,
+      "sha256": "ac80eaa3fcbe0b1b7db0b6550fc9b180bf0b6e9b82e7ed975f1e42ec332fd7ea",
+      "git_blob": "e0ccb6283decd8b4a029f6cf426f8fcfaf528787"
+    },
+    {
+      "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/3/T7/AAKXBAAJ48M6RIB9TWCIJD.uasset",
+      "group": "assets",
+      "size": 436698,
+      "sha256": "c5a5ebacae9794e99b4973ebdd95527b1d21372493d685fd93fb6c541c5d6f38",
+      "git_blob": "d1d3551e9eaa985a4ae45fa5295454cb604f234c"
+    },
+    {
+      "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/5/M0/6G94JGZ2U5KIQB4T0SVBSO.uasset",
+      "group": "assets",
+      "size": 389133,
+      "sha256": "f46c067832445f0181a83d169e2314e8d73f41eb3bbcc61351b18783ea6880af",
+      "git_blob": "b252ba6371141d808d5d2c09a06238c407e5a938"
+    },
+    {
+      "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/E/KB/YSSONCL958619NZG0FJTP5.uasset",
+      "group": "assets",
+      "size": 559252,
+      "sha256": "e01f2ff886bf7955bcd9a33714d8f0a3b73f408ae194b578ece13860e345b6d4",
+      "git_blob": "2deaaa5b690bd075f96ff6c74af00d72ed022950"
+    },
+    {
+      "path": "Content/Rogue10m/World/Production/WorldLayoutCompactCrop20261114A/NaturalBoundary20261117/M_VillageEarth.uasset",
+      "group": "assets",
+      "size": 19939,
+      "sha256": "c0e8b461a55fd47e401d09502da05efa5e63afecb9a1206b9fc46113a76c628f",
+      "git_blob": "d67dbfc2213312583b2476eba0264b0715a16f62"
+    },
+    {
+      "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/4/6L/FS4BX21C3C56YFAPTBMHUK.uasset",
+      "group": "assets",
+      "size": 5092,
+      "sha256": "d1025bc0be532b8084d49997d16202bd9393e21dae8d026dd304d2247c0eb303",
+      "git_blob": "5e36d765d25322d02ab69103af9044d76236078f"
+    },
+    {
+      "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/7/XE/I951DLEFCGMJPJH2WJPILZ.uasset",
+      "group": "assets",
+      "size": 10707,
+      "sha256": "b8c8ff49cdfd6f0c59610322ee82de025f9f8214d77cdb57eaa0d6ea0bdf754a",
+      "git_blob": "1eea099096711fa198ae471a0e129e36406aacd3"
+    },
+    {
+      "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/A/H5/71VDIXCEQZX40HEW3S3WJW.uasset",
+      "group": "assets",
+      "size": 5092,
+      "sha256": "2826d10fc687199a0a7f182cd339b00796b61c69ab0d7d9338e35de36fe7ae5a",
+      "git_blob": "c5c4c5b1227b5bcff5f94545ab944a2d0546cfeb"
+    },
+    {
+      "path": "Content/__ExternalActors__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/D/BG/ICJPM5I5P7728IZMG6R3V7.uasset",
+      "group": "assets",
+      "size": 5092,
+      "sha256": "bc4e240977aa7c648014ac931f85a2e3ae9d90c6f92a9cf8e6af00bc88ea67f7",
+      "git_blob": "fbabafec43bee379ed36297a5c254096c3aa917e"
+    },
+    {
+      "path": "Content/__ExternalObjects__/Rogue10m/Maps/Production/WorldLayoutCompactCrop20261114A/C/VU/W5CXFK5HI354A0W9YHFKU9.uasset",
+      "group": "assets",
+      "size": 2119,
+      "sha256": "3e30bbcc634dd7e033d47a775c74584bb14da3e840acc3f41e594417ac9107fd",
+      "git_blob": "549e70367ac92fc059c4c732bc12f0b53830725b"
+    },
+    {
+      "path": "Source/Rogue10m/Editor/Rogue10mNaturalBoundary20261117Authoring.cpp",
+      "group": "code_and_tools",
+      "size": 37562,
+      "sha256": "0a93977ca4737ca626e55fa2a41872ffe26d597f84283c4f0c37fee83c074145",
+      "git_blob": "5016f737c46289661fc9fc09e84567a10eb8aa3c"
+    },
+    {
+      "path": "Source/Rogue10m/Editor/Rogue10mNaturalBoundary20261117Authoring.h",
+      "group": "code_and_tools",
+      "size": 1934,
+      "sha256": "4df73eee749b5094591b8f63da25290f43edcab682c6cbd3b5666ec498987cf6",
+      "git_blob": "56322d8f7ea56f2362ac5e93bc59aaf61e7e04c7"
+    },
+    {
+      "path": "Scripts/CheckNaturalWorldScope20261117.py",
+      "group": "code_and_tools",
+      "size": 37283,
+      "sha256": "c85d8c6b12ac8913b31d75377ffc7ff567674c030e1d8c1737bcb5d0259d7e11",
+      "git_blob": "3c73e0563e31edf4ef03dffb9f6ec015100828a1"
+    },
+    {
+      "path": "Scripts/Editor/ValidateNaturalWorld20261117.py",
+      "group": "code_and_tools",
+      "size": 37455,
+      "sha256": "835b65ed3eca62b534655572c3255d62f8fb5248052fbbb3bfe91b9c837ad07b",
+      "git_blob": "372221f9e5c0ba6a9574e6761a66d9e52b324f35"
+    },
+    {
+      "path": "Scripts/CheckpointNaturalRefinement20261118.py",
+      "group": "code_and_tools",
+      "size": 1800,
+      "sha256": "8eb337c62b3817aeae484a22b4b4736172cd443781ee0e9302b360d9a08b706e",
+      "git_blob": "a610eed5d4ff999d4af2cf062a72257574ce7e6f"
+    },
+    {
+      "path": "Scripts/Editor/AuthorNaturalBossThreshold20261118.py",
+      "group": "code_and_tools",
+      "size": 12157,
+      "sha256": "62fc86c81de9b997fc741cc73510321164a35a4bc94cb1e44242cd663a9f43cc",
+      "git_blob": "ae33b06273c48c9a85df21fbf902d8dc59403fed"
+    },
+    {
+      "path": "Scripts/Editor/ColdNaturalRefinement20261118.py",
+      "group": "code_and_tools",
+      "size": 3591,
+      "sha256": "49f025fe40c3708a90081435d45fefcb8498e3274ad0bf89481f666e6bd9acac",
+      "git_blob": "c1b8521fed9429179ebd34123d837c28a49d1daf"
+    },
+    {
+      "path": "Scripts/Editor/NaturalWorldRefinementQA20261118.py",
+      "group": "code_and_tools",
+      "size": 15983,
+      "sha256": "e72d4cf0584d7a2686023a034ce9f1f20fa67709330b618d12073d9107d9881a",
+      "git_blob": "d43a0c293f335e3d03df33ae380f46db3e7adea8"
+    },
+    {
+      "path": "Scripts/Editor/ObserveRefinedBoundaryJump20261118.py",
+      "group": "code_and_tools",
+      "size": 6228,
+      "sha256": "61de45a260ffc04fd9d988cfe6672027ed54c944051278285babde52bd908017",
+      "git_blob": "4917d7c7615d30295a36b85bf382b860849969ed"
+    },
+    {
+      "path": "Scripts/Editor/PreflightNaturalRefinement20261118.py",
+      "group": "code_and_tools",
+      "size": 1228,
+      "sha256": "38e4e3dbdd6fe0a02e1d25002f70b02b49c7449862e958c40275c1f234ae1a1a",
+      "git_blob": "d64b6d6cd655efb4f6624c17e91770459e87cad3"
+    },
+    {
+      "path": "Scripts/Editor/RefineNaturalWorld20261118.py",
+      "group": "code_and_tools",
+      "size": 9291,
+      "sha256": "c1cba85cad4037a9b070d15562d2e6e7722a9a203bb6c786f36fbb2e605999ba",
+      "git_blob": "a79bd53a5287a1c51bf7483f95a769366297f786"
+    },
+    {
+      "path": "Scripts/Editor/ResumeNaturalRefinementQA20261118.py",
+      "group": "code_and_tools",
+      "size": 2088,
+      "sha256": "67f03168ad790c3c990130a9f6e6aa7bb87e0f90dad453d2dbb719b8bfcef8d2",
+      "git_blob": "b8d1b13f4654ba19452894585683dc818e13d0c3"
+    },
+    {
+      "path": "Scripts/Editor/VillageEarthFloor20261118.py",
+      "group": "code_and_tools",
+      "size": 26048,
+      "sha256": "c01ac2fe66cbe47b21ef98e8e0f2606937c5859b17562e1088f249b7c53fea24",
+      "git_blob": "51f5bb2c69a776654e8967f3bc46f6ac3c0a13ae"
+    },
+    {
+      "path": "Scripts/OpenNaturalRefinement20261118.ps1",
+      "group": "code_and_tools",
+      "size": 1948,
+      "sha256": "8b887fd79b3cb8f8b682550b461d4ff59fead4052452f8adffb3d6c40eff091e",
+      "git_blob": "8a4df7bcb6f576b68d5df68dd7a4af002fdb4d0c"
+    },
+    {
+      "path": "Scripts/RoundedNaturalLandscape20261118.py",
+      "group": "code_and_tools",
+      "size": 2250,
+      "sha256": "9440cd55091ab4bbc6cf6fd48929769643f69283305ac38112231fb6bdfb84b5",
+      "git_blob": "94478487c82dec54eda1f7542728ae553716aee4"
+    },
+    {
+      "path": "Feature/architect/2026-11-17_natural-world-boundaries.md",
+      "group": "design_and_records",
+      "size": 6685,
+      "sha256": "e6fb8855f6bfc238a03d0ccec668479355c6b7d1e54a466da9054f0b01416b49",
+      "git_blob": "4db19f3cdeaaf64eb1e7f15924b7cff9b4d1ae5d"
+    },
+    {
+      "path": "Feature/doc/2026-11-17_natural-world-boundaries.md",
+      "group": "design_and_records",
+      "size": 11825,
+      "sha256": "b17dd722a2f77d33191dd1d008a86cf17d1d67c21ad0d7e92c003229b1b2815f",
+      "git_blob": "55e25e3638580e92683cbcdf01fafe9817116282"
+    },
+    {
+      "path": "Docs/References/WorldMap/README.md",
+      "group": "design_and_records",
+      "size": 5519,
+      "sha256": "d24996d9a6dd5451b4a4d602201734a1aeafa8a49ff06178fc6b01aaae31aa4f",
+      "git_blob": "9217c6930e5891dca8d7c69c6703c44ecde46de7"
+    },
+    {
+      "path": "Docs/References/WorldMap/landscape-natural-boundary20261117.json",
+      "group": "design_and_records",
+      "size": 24623,
+      "sha256": "04a87223d0c90cc4f6ce2985de35da82484f1648ac1e5e91f013d05ed78849be",
+      "git_blob": "1a2e634a39612cfa1bbd7d8f7040dc988a0a8517"
+    },
+    {
+      "path": "Docs/WorldMapProductionGuide.md",
+      "group": "design_and_records",
+      "size": 30918,
+      "sha256": "c50138c3431b4a8125559e34d5647510e7c701f7672d963c066bca5b829bb5ec",
+      "git_blob": "f247eb6988a6b1831a7fdce26a1a0c540470ed59"
+    },
+    {
+      "path": "Docs/SprintChangeLog.md",
+      "group": "design_and_records",
+      "size": 349196,
+      "sha256": "02538409caa0868cbcdda695749c99b23b9abcfdea00c2a3c7e2a7fe8c0d4a96",
+      "git_blob": "eb58709a6f58c02906025c3ebb6be2ff240c6c21"
+    },
+    {
+      "path": "DevLog/20261118.txt",
+      "group": "design_and_records",
+      "size": 7117,
+      "sha256": "13bf99d5cae6e09e72e2b7d4fe2a053883ffcd5b543f6f2e4688695fcf66856b",
+      "git_blob": "69781e1053ea86144d42a8fa29d142efa08da733"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/attempt1-key-units/author-host/engine.log",
+      "group": "validation_evidence",
+      "size": 354237,
+      "sha256": "4a741b9b1d7d4d65a282b2c28153861382d136e0033c0924e8a49f1c9b2da89c",
+      "git_blob": "d023a28259531f5df8c9b752aa1bf18c64d99f6b"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/attempt1-key-units/author-host/launch.json",
+      "group": "validation_evidence",
+      "size": 1412,
+      "sha256": "f52f9d520f8164572f6e7f39ab711fbaa718f105cb67f3b140d36e12f06b3456",
+      "git_blob": "0a293b08ff0428ad2c80abe53f5aa5007b670967"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/attempt1-key-units/author-live/failure.json",
+      "group": "validation_evidence",
+      "size": 1088,
+      "sha256": "19cbafef6348da74529d7b3683ed03ea70c3bab0809fe34cdbc508838c76dc68",
+      "git_blob": "2fe944af52fe2654a228d9fcd029d7975400368d"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/attempt1-key-units/author-live/region-load.json",
+      "group": "validation_evidence",
+      "size": 57604,
+      "sha256": "08c5fe228b665bc578ca7295d3b717f87e535ad318864abdf95ebf67bdc4780b",
+      "git_blob": "5b02de0143a617bf0f97ba0f1da68af6881c6cb9"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/attempt1-key-units/author-live/startup.json",
+      "group": "validation_evidence",
+      "size": 994,
+      "sha256": "e2e4b6adc120a071661cb24956958e3fbfce080a5075229beec78d341cbcbb86",
+      "git_blob": "c66a32c16b9571f8e8d77b0ddc590b23e313a40a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/attempt1-key-units/log-check.json",
+      "group": "validation_evidence",
+      "size": 781,
+      "sha256": "dc8a1cdfa52dd3c375eb914a5f373d54dae6b692ac9d763a5e95b89fe782a070",
+      "git_blob": "eb95e4464a788dd42216f33568da9e02bf81bfbd"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-host/engine.log",
+      "group": "validation_evidence",
+      "size": 1015407,
+      "sha256": "926c77ba6e2dff09adcfd5f99b439901bea39ec313c6b2fc7ffdc693eeef7f44",
+      "git_blob": "5d4fe944432893b5b17680f750cf2a380d40d22b"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-host/launch.json",
+      "group": "validation_evidence",
+      "size": 1411,
+      "sha256": "ff28a514d97d41d432b86a2f7c10ff353c79979cc408c725bd792ee471c4b035",
+      "git_blob": "aa6e02ac1f06db395caf8e59ddc6dfa0beed5d06"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/applied-height-plan.json",
+      "group": "validation_evidence",
+      "size": 2155800,
+      "sha256": "17f5f461389640d150d087f8d1e148683601c02d11e0fa0b0e776cfc5d1cf36a",
+      "git_blob": "e0248477040cdab992ff105c87b03d14066f707c"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/apply-height.json",
+      "group": "validation_evidence",
+      "size": 2620,
+      "sha256": "e4e6c4ef72812986f2998d5ed3f1de7ae970afe2ec6bfaa590a236b118fe755f",
+      "git_blob": "c6d381f5228ff95f891fbb13deaf5755bd65b24a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/author-content.json",
+      "group": "validation_evidence",
+      "size": 1286878,
+      "sha256": "a311681447ae677ad195fe17498ebfa51d52828c902e6839797d9e4f0c23609f",
+      "git_blob": "956d7e81587680d96a8678a2b9a45b6d1b7ba239"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/capsule-validation-before-review.json",
+      "group": "validation_evidence",
+      "size": 88860,
+      "sha256": "3c4526f34b6d3bdf5e411ca43ba204552626377744cd671161228966e740a1dc",
+      "git_blob": "531cc60357ad0fb2b0818c7a49b69251673f48a8"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/capsule-validation-gate-reflow.json",
+      "group": "validation_evidence",
+      "size": 1226447,
+      "sha256": "3d3712963868151ae1ceb8c0688fb61262c5b927ebf7e46d54a5b3678bf53fd5",
+      "git_blob": "ee238b8ce1864781ea34737f7b0d9e265db8bf2e"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/capsule-validation-name-order-fix.json",
+      "group": "validation_evidence",
+      "size": 1232667,
+      "sha256": "8a6be8cfcb9a33b87e719758bf602b4ce5976c71c472b8bd93ffe8ed7f929c35",
+      "git_blob": "718b2fd84e8788d7a1124aeccdb4afa4920ff935"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/dressing-api-inspection.json",
+      "group": "validation_evidence",
+      "size": 1816,
+      "sha256": "0ac5222050b1c171fc1a4ec83c8c57d621d00c61942291555534aa7f1c4d8a31",
+      "git_blob": "27addd6c6fa6049fbee4bb2985f4c162a2e213a6"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/dressing-failure.json",
+      "group": "validation_evidence",
+      "size": 86460,
+      "sha256": "ba126f9aecbf6bbbc983b1d0db60fdd67819fb53d499f0cf9e11c54dfbff873e",
+      "git_blob": "0ee182ce5eace09b5831f744a1594775b9d81c74"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/failure.json",
+      "group": "validation_evidence",
+      "size": 319415,
+      "sha256": "8cd972259c4dd08d0727ba71ee91840d2c46bb09790354d21f3904935065fb98",
+      "git_blob": "5b8e88129cefb9a7957a4da783a2912d6f9b6129"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/ism-material-bindings.json",
+      "group": "validation_evidence",
+      "size": 1751,
+      "sha256": "d4d0a5b4f31a99677c8eb3ca338ed65b876381d77cbceaf5464cdadaf1c9f1ce",
+      "git_blob": "f3968536f223005f5f8671fa31c53bb0dd2e45cf"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/ism-material-repair.json",
+      "group": "validation_evidence",
+      "size": 240043,
+      "sha256": "fd30ae9d58468014eaef660462cdda03a4616219bb25452acd65eac6731b4308",
+      "git_blob": "bb0d3d4d71a978209ee0ababca037082985c14f3"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/library-gate-reflow-preflight.json",
+      "group": "validation_evidence",
+      "size": 379,
+      "sha256": "40c2e1991e23bc028b9f8c69f47582b8d5f859ba95e82e8e1da5576b85b0a780",
+      "git_blob": "0bdc04b3bc8fa7f9428198acdbeb03630b90d9fb"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/library-gate-reflow-result.json",
+      "group": "validation_evidence",
+      "size": 2495,
+      "sha256": "db9a99eae3258003d40655d7ce97199dfdeee5fc1742847b10febb3ef76e5699",
+      "git_blob": "ec8afab4099857906181d22a71ac269c7fc0981d"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/material-repair-log-boundary.json",
+      "group": "validation_evidence",
+      "size": 217,
+      "sha256": "f9e57de2d4ef4e6f6125e9eb0d3b5e336c92da86118fc6e814cce4fc4089db4b",
+      "git_blob": "a82ba9f699ae6c10902fa750c18997f1282a65e1"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/material-save-log-check.json",
+      "group": "validation_evidence",
+      "size": 4853,
+      "sha256": "60140c6cc0ff7fb6461519ac32a29cd4e9f35a6889f5a2135c779cdda4f6cf39",
+      "git_blob": "3d1de25f943d676d4199013b93f6ceff86006265"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/material.json",
+      "group": "validation_evidence",
+      "size": 187660,
+      "sha256": "bdcbc7fcf90f030e88f7edd02ef965e533d12d2f11bd4287848621d53d2786f1",
+      "git_blob": "022c45efa3359711717f3de26710fd91f9759b91"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/native-before.json",
+      "group": "validation_evidence",
+      "size": 2154535,
+      "sha256": "ace55921fed7af786d66d2a452abfea6d880e36f3ac8c1336109685f4b2e5a41",
+      "git_blob": "5242502991c493338ba032ac9d0ed5439d7de7f6"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/numeric-checkpoint.json",
+      "group": "validation_evidence",
+      "size": 237,
+      "sha256": "181077fd693830a2654d0fc9e53ef2ca20f292c476d2e59a0755158409950d25",
+      "git_blob": "86665504a6a27cad4792531aeb7bd0fb40bc688f"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/numeric-save-usage-rejected/save-plan.json",
+      "group": "validation_evidence",
+      "size": 87631,
+      "sha256": "67ebb33e27d3e04e5e15f84d2a373a5346a348bf144254c3df4ef88d177fa89c",
+      "git_blob": "9f121e43a578a354048fb62f06cf796e5a3e6625"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/numeric-save-usage-rejected/save-result.json",
+      "group": "validation_evidence",
+      "size": 87459,
+      "sha256": "d340839cefecf107bea22cc5034f0cad91df66774aa5fe1f695e6c820500d34f",
+      "git_blob": "0d681206e3b89427d971faca72f5f2d767d81167"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/numeric-save-usage-rejected/validation-before-numeric-save.json",
+      "group": "validation_evidence",
+      "size": 4733437,
+      "sha256": "bf18a2da64cb1155a27502039f3ed5e2bceec5c12936d09b75e702f04ef6ed1c",
+      "git_blob": "ee2911a651f8f14cbcca5b48f95ce810217f22ef"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/ready-for-visual-review.json",
+      "group": "validation_evidence",
+      "size": 87666,
+      "sha256": "dfb6f596829e2d4d871cb876b65b0e9d39fef0f536f88663ca85fb954ea70d8e",
+      "git_blob": "1c2d2c23b51f8b3d19972eb6621c3192c161fec6"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/recovery-dressing-failure.json",
+      "group": "validation_evidence",
+      "size": 87798,
+      "sha256": "e6ede871db1bcfd7feeded42f85780fb0ae2896b1cdf618b095001a63577c8e7",
+      "git_blob": "06c9a8ba91d5c4040618c63cddb27d96feef9120"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/recovery-preflight.json",
+      "group": "validation_evidence",
+      "size": 416,
+      "sha256": "59595abf484ed98e46f7fe2d49d396e6d093dc9eea8004ae4fcf15c0d7657248",
+      "git_blob": "f9cc6fb94a6660f1af6fb65394f034f4450f4d35"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/recovery2-binding-preflight.json",
+      "group": "validation_evidence",
+      "size": 2669,
+      "sha256": "a875a2d2c5a6e2e731206fc5ae923d3c14dcfe9f5543b445a37839cdbdb7fd75",
+      "git_blob": "746f377f148cb4cc3093e79d61bdc0d4c09b441a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/recovery2-callback-failure.json",
+      "group": "validation_evidence",
+      "size": 1448039,
+      "sha256": "1cccc069d7a85bda959b3f40487c4aaa8c5cf2a556fdf6d9e088c2dcac24243e",
+      "git_blob": "961531b6cd6737d532cfff0191c75724541f95dd"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/recovery2-complete.json",
+      "group": "validation_evidence",
+      "size": 76,
+      "sha256": "5979e9bbdbf62ac05f4668d95079b0730cf19c040e5997b6d66d9ba7bddcf87d",
+      "git_blob": "39bb8180e66cee0e64157814476182f13a241680"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/recovery2-preflight.json",
+      "group": "validation_evidence",
+      "size": 694,
+      "sha256": "a26fee9c7482ec21ffee2cf2e9eb346f26c49ef3d413bf0395870e2600db366e",
+      "git_blob": "a3c35e5b0a162ec4f70c4a0fb270872d68366b73"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/region-load.json",
+      "group": "validation_evidence",
+      "size": 57604,
+      "sha256": "08c5fe228b665bc578ca7295d3b717f87e535ad318864abdf95ebf67bdc4780b",
+      "git_blob": "5b02de0143a617bf0f97ba0f1da68af6881c6cb9"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/rotation-repair-preflight.json",
+      "group": "validation_evidence",
+      "size": 191,
+      "sha256": "8b696821d831ae13153a0422784d64d1203785721547febd971fc997e41bfa29",
+      "git_blob": "701d65f17095892c118b175a1ffcb16fe8ea9d00"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/rotation-repair-result.json",
+      "group": "validation_evidence",
+      "size": 273983,
+      "sha256": "26facb60a72a4c23c545d6d54edd6f5c14d62772beb1db2b5d665aee5bc86ef5",
+      "git_blob": "84803fd939e28d88a21093230d8f232c162bb768"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/save-plan.json",
+      "group": "validation_evidence",
+      "size": 87826,
+      "sha256": "3a211106012e4f565f946624e2ba60d50b755724bc9fb97eda1f752f737dba9a",
+      "git_blob": "ef9faaf3d1e1c3e7498df1f1b57163cbc93b648d"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/save-result.json",
+      "group": "validation_evidence",
+      "size": 175184,
+      "sha256": "b4d52da19a2bc61cf42c90680edb50c36807ec605716ea592e9536f89a71ae2c",
+      "git_blob": "6c80b4a301632c82e08a0167f047ac0206bc34e8"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/source-material-inspection.json",
+      "group": "validation_evidence",
+      "size": 2614,
+      "sha256": "a1ca149e52f5a7a4d5d5d697c16dc4af2dd8781d410074267c5ef316f7663a93",
+      "git_blob": "0d0b35a203c6b9d2efcdffc6a72fca64d095a84c"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/startup.json",
+      "group": "validation_evidence",
+      "size": 993,
+      "sha256": "54a388323df95f645c6924a07a7f53b0f4914713acc156248cd229cc93f88864",
+      "git_blob": "a650edcf5f94eb4ce6e209204ec1684293f834ae"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/terrain-settled.json",
+      "group": "validation_evidence",
+      "size": 2650,
+      "sha256": "fee1a537aaf7ca8d61435c47572df900321676b2d2ba6d39b543ce143da4059a",
+      "git_blob": "0e9cfc25154fb82d61a64de1f6a35919b5e8b79a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/validation-before-numeric-save.json",
+      "group": "validation_evidence",
+      "size": 4706753,
+      "sha256": "092afd5013fe93af82fb08579335b082563304a377df41e4e1aba3f5bcc7b940",
+      "git_blob": "f583d182b630f4a1608b42db7501c3b55e0f9f7e"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/validation-gate-reflow.json",
+      "group": "validation_evidence",
+      "size": 4733437,
+      "sha256": "aceee583215da5fb2e47bf193ccd74ee1a5b99e75a6e4c9215f8032dd80c8334",
+      "git_blob": "02689fc208dbaa535df96139b8646c111990a3cf"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/validation-owned-materials.json",
+      "group": "validation_evidence",
+      "size": 4735183,
+      "sha256": "52f41e49c80f500a07728ff5f05a86c2a221e8c992b860dfefb72c452c0f03ce",
+      "git_blob": "04418e130ee787c1e5360f6f423ed13936a6dedf"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/validation-rotation-fix.json",
+      "group": "validation_evidence",
+      "size": 4727027,
+      "sha256": "6a3f28d47cb4ac48c5d11e3fdc759147f91d110c17bac0682c609d30cb2dc93e",
+      "git_blob": "a54a5095f2d51035e3d85d9f65b3656281c05a42"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-live/validation.json",
+      "group": "validation_evidence",
+      "size": 4727836,
+      "sha256": "f5ee890518f763ee120865f38b91eac235801717a8e8ed2a7966cc7a9af94836",
+      "git_blob": "1d1ca76f4ee8cafd279c116323300c0d67402ade"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-plan-gate-reflow.json",
+      "group": "validation_evidence",
+      "size": 1170659,
+      "sha256": "8094f85614b5c92b881edeb5a6e7d78d02d60f2d979b3e3bca917ab54935877d",
+      "git_blob": "bfc874f0dd33b8d82a6819a5b877553dde2e3f5a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/author-plan.json",
+      "group": "validation_evidence",
+      "size": 1170290,
+      "sha256": "3692b80e790cb06d79d853239b7f3a7cff447e16ca09f3147c39d0580991618d",
+      "git_blob": "305d7c55f6a183f66677de18c28aff31c98083c6"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/baseline-files.json",
+      "group": "validation_evidence",
+      "size": 1504283,
+      "sha256": "5aa249a07702f411165f553921a950d070deb2729ce825a7491c9db6e8082a48",
+      "git_blob": "c6b0b5e2820590ca4b4a7dd0441ec93032394826"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/baseline-live/actors.json",
+      "group": "validation_evidence",
+      "size": 1539994,
+      "sha256": "6eaf096097fd2edf51059c6ff888336ebd0eeac939da2deced241e036572b4f1",
+      "git_blob": "e3f44266bead71ff157a162b1b39d770d14ea95a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/baseline-live/dependencies.json",
+      "group": "validation_evidence",
+      "size": 1175231,
+      "sha256": "d8fed047bbd6797bd7362d89418b3e4efb5ee3369eb6d1e2592bd47f8635712d",
+      "git_blob": "331a1a3e4e087976822e8696d7826f3cdce838dd"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/baseline-live/directors.json",
+      "group": "validation_evidence",
+      "size": 1734,
+      "sha256": "1570c3927824a451157277037624c177be49bfcc96f447f35b9d5dd6eda7f2a8",
+      "git_blob": "93667d143a4c5fd3dce673fcf5d1818848cbee72"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/baseline-live/load-region.json",
+      "group": "validation_evidence",
+      "size": 57604,
+      "sha256": "08c5fe228b665bc578ca7295d3b717f87e535ad318864abdf95ebf67bdc4780b",
+      "git_blob": "5b02de0143a617bf0f97ba0f1da68af6881c6cb9"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/baseline-live/primitive-meshes.json",
+      "group": "validation_evidence",
+      "size": 443,
+      "sha256": "db079c8baf0814710bb38083a87bfdd6ebcf361ef9be0c7f4c4c291c2cfc1d12",
+      "git_blob": "b237d98c0413f590365072a5957a28b644725c1e"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/baseline-live/result.json",
+      "group": "validation_evidence",
+      "size": 204,
+      "sha256": "dc565ba4192fbc496a6f47b6ad3e8e752e5bcad39385b7a3b8c744ee7655d48d",
+      "git_blob": "5c85d233a05f39829d4fd75cb16f482c4dcee22b"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/baseline-live/snapshot.json",
+      "group": "validation_evidence",
+      "size": 61342,
+      "sha256": "126952aab90ba9c673561eb37ef357dd1ea20a67220c1b2fa9a595495b4976c4",
+      "git_blob": "381dee79b412eafc072bd5e4feae575c632b2adc"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/baseline-live/terrain.json",
+      "group": "validation_evidence",
+      "size": 57575,
+      "sha256": "5cc88ff9bb89f50bb0d86fcd2cc16306b8a8466f8f480f11938be7af0ff05711",
+      "git_blob": "60848ae87d48329ad1073d3bdf51433347cc474a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/boss-threshold-plan20261118.json",
+      "group": "validation_evidence",
+      "size": 5567,
+      "sha256": "a8a450002b7dd68811e7236114dd6c0101aa701d1a513364af36a6a722f9d270",
+      "git_blob": "20c78ad07afbe0b64b2d1efea02faa5d27077796"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/boss-threshold-plan20261118B.json",
+      "group": "validation_evidence",
+      "size": 5676,
+      "sha256": "7a267a6eecfc961a551215bc635a43e0efc4aedfd8018a973764f1bb624d09a0",
+      "git_blob": "48ff2e567a5d801f5522d9b467c54180ae651aa3"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/build/editor-build-foliage.log",
+      "group": "validation_evidence",
+      "size": 14161,
+      "sha256": "9755a18c31aa3566b5ac76a79f00bfd04d3660af25afaf5454d7f2d34460997d",
+      "git_blob": "725686b9cb9cd69ec0c928d18cc302144cec0739"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/build/editor-build-keyfix.log",
+      "group": "validation_evidence",
+      "size": 5176,
+      "sha256": "b1974d3fcc251541c23f016306965ef15c40f0d28fb7325a3c3124cdfc225e43",
+      "git_blob": "8a501c402ba4d94745c48c7ab930f62aca509591"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/build/editor-build-refinement.log",
+      "group": "validation_evidence",
+      "size": 5383,
+      "sha256": "46503f7d5ac2326b75c8cdfe15201b07db612df337ffcbc39ad2c8c1ab27ba77",
+      "git_blob": "cbcd547fdd4b2dddb818a715815d3e72af054f8b"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/build/editor-build.log",
+      "group": "validation_evidence",
+      "size": 6403,
+      "sha256": "ca3439fb678e741529b52f67f960c33b3c4edb5374868ac7aee5d8d164ebe997",
+      "git_blob": "2ac038e5be8731b668a302e2dc736dc01a9d3dbe"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/build/project-generation.log",
+      "group": "validation_evidence",
+      "size": 2079,
+      "sha256": "50fd1f354c2f89f77180a2f2581477a728c08059a76dc564031acf72385f8c89",
+      "git_blob": "d4d88c3f45042a2218971957068655a699cb27cb"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/build/result-foliage.json",
+      "group": "validation_evidence",
+      "size": 187,
+      "sha256": "0a0b3332a671ee8e937bf98a82ce36edd1307182832fae16a8a22978ef00e3e9",
+      "git_blob": "c1f0ea98226c0d148badc15586ea909c35e64779"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/build/result-keyfix.json",
+      "group": "validation_evidence",
+      "size": 158,
+      "sha256": "ba6eaa45f273a2665a648a95d6abd2ae275acdbec5fc621ce5efd0dbe5015592",
+      "git_blob": "8716c691d4840d4184a78a043a3273d97922fcef"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/build/result-refinement.json",
+      "group": "validation_evidence",
+      "size": 150,
+      "sha256": "b4844a8551fcce5b6500820ecb8576104ce6313a34458734ecf414013bdc25ba",
+      "git_blob": "b32c99a581014e63b0dab4fcfc6121e63f7870e5"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/build/result.json",
+      "group": "validation_evidence",
+      "size": 73,
+      "sha256": "89639aeb66be59e23d29627290eec1373efca1a12a813ea591b5386e23baf642",
+      "git_blob": "2d94077a092f907d2672138729ff69381dc02d90"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/build/source-hashes-keyfix.json",
+      "group": "validation_evidence",
+      "size": 582,
+      "sha256": "673c81e2dc18c97eabb799be781b87b13bba601156ea18087e3a0dc658ca8913",
+      "git_blob": "620ba20b7c016a6a97c7a0931d109a5839ba0d8a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/build/source-hashes-refinement.json",
+      "group": "validation_evidence",
+      "size": 586,
+      "sha256": "bf543bd07a4f2dbd264516e7b9aa7a9e35d5e6290d9cfbc256d607936453b20b",
+      "git_blob": "4f6b48500dcb0530196bedf4c72c5601d82867e3"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/cold-host/engine.log",
+      "group": "validation_evidence",
+      "size": 321715,
+      "sha256": "2d5419efc7589f12bc393a287dadd7ac5c76de6f245469f0f1f06c8f5f236a8d",
+      "git_blob": "e173aab4af11eefa01cd613088be80c431eb53bc"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/cold-host/launch.json",
+      "group": "validation_evidence",
+      "size": 978,
+      "sha256": "9fe7dae9ee3e649c05b678bec1641874540ec7eb35889818ce7fb931c342c68b",
+      "git_blob": "b77d379a5cd92f17bc49ec0e0dc94414d72efaa5"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/cold-host/log-check.json",
+      "group": "validation_evidence",
+      "size": 362,
+      "sha256": "9069b09fedeed5fe4d6aea9ff5625d295277da0ff40638cb0268488f48561866",
+      "git_blob": "d493bc7c41d5add7158194739d71be71d2db96b8"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/cold-live/package-inventory.json",
+      "group": "validation_evidence",
+      "size": 39370,
+      "sha256": "42e1ccbc5ca847c663073942bc270d73852f42079dce700176499ebd61282441",
+      "git_blob": "de804ae3e20899307bf585dc1d2ccde9f99ecf5f"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/cold-live/region-load.json",
+      "group": "validation_evidence",
+      "size": 58178,
+      "sha256": "a4fc18f26bf9185e018b8282088a7f863ae9627115fe205e2f6c2b97222b8ec7",
+      "git_blob": "cd95452f5fa32b9995e55857e9fdcf4606382b6a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/cold-live/result.json",
+      "group": "validation_evidence",
+      "size": 126,
+      "sha256": "16243dbb3dfd34b9f7ffa6059473b3d58b9548efb4073366852642ca4010b162",
+      "git_blob": "6cd4972581fa25065b2c9e61c675147e0a785ec0"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/cold-live/validation.json",
+      "group": "validation_evidence",
+      "size": 3987820,
+      "sha256": "bdfa0a425a3024aee9bcb9afd9c79c5302feb1341f40e0820929e39832c6e435",
+      "git_blob": "fb07271c34964900c23db297bb3e879f6f147437"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/final-review20261118.json",
+      "group": "validation_evidence",
+      "size": 1637,
+      "sha256": "981c54cf81fb88045947d714f258bc81e3c8fb98c9d3585bd7e822e912b2043f",
+      "git_blob": "420acae282588915b388deeb958f495e4deb0de6"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/final-scope-refinement-verified.json",
+      "group": "validation_evidence",
+      "size": 594961,
+      "sha256": "886750ac211b5e47ed7aa4c49dbd0fc748a0266eb041e0318159244f0c74b657",
+      "git_blob": "851a5ee16341b2a9a9e2e9910c17bb85c62b2ea7"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/final-scope-refinement.json",
+      "group": "validation_evidence",
+      "size": 597236,
+      "sha256": "95fd8984bfbf917e5498d7754058eb20a3537aee8e056762adb600a4e38ef540",
+      "git_blob": "dfcb98c954e616ef5e0f02c5d9968149540eb39c"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/final-scope-report.json",
+      "group": "validation_evidence",
+      "size": 580053,
+      "sha256": "97af81548f373e3ce6c05ea70287f8395957efd86533dc897045c599e204b791",
+      "git_blob": "b73b0a849f893e82a156676ac62eedec3459cc8a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/image-transmission-approval20261118.json",
+      "group": "validation_evidence",
+      "size": 257,
+      "sha256": "94e0dcf09c2af566894f4a2d8c512f71d53787f45715ecb1e9746321e4f2820b",
+      "git_blob": "ac26d8933a2a716845f98e333e392f8fc1ccfed7"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/inspect-host/engine.log",
+      "group": "validation_evidence",
+      "size": 321678,
+      "sha256": "22daad6aa204a937cbb6000bc0f9e877088ffbee25a6b579b05aa1708d5ca8b8",
+      "git_blob": "d91360ed1a507132e7abff3da144a162c520115a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/inspect-host/launch.json",
+      "group": "validation_evidence",
+      "size": 932,
+      "sha256": "6b2ec347858e00ed294552e0e8f6a5684535deb5a2391b7e6bbc54089b717577",
+      "git_blob": "e4677647fb855909c1eb9d612e6ffa76e3f97924"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/inspect-host/log-check.json",
+      "group": "validation_evidence",
+      "size": 365,
+      "sha256": "8d6faa820208f8ab7eece2d14e00bb420f3065b6f51c0555bf697799282eca3a",
+      "git_blob": "2e84fee72febd2fd0bfdb619445f5046245d1b0c"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/nonqa-saves-before.json",
+      "group": "validation_evidence",
+      "size": 1038,
+      "sha256": "22c44bcfcc4587ff45463c73f3f6a6fa9a5d4bcd81a53338c7c2976e7b4e37a3",
+      "git_blob": "4a2b311ca19288c355f264cb2c5846a92eab3946"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/protected-save-files.json",
+      "group": "validation_evidence",
+      "size": 101014,
+      "sha256": "5b479a17ca97da0b1e92e96a29c3a46444f9c2ffa1a05b83194605662e5b1601",
+      "git_blob": "583118c7900cde97361a7b06abb494c39149d7ff"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/publication-dependency-check.json",
+      "group": "validation_evidence",
+      "size": 714,
+      "sha256": "c3b6ea120ee7d96162e63e64e1a2f7802f2e9ccbaae745fd7413be10e7df1937",
+      "git_blob": "616480e40b3faad5a8012b13082745efde9e6b39"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/publication-dependency-final20261118.json",
+      "group": "validation_evidence",
+      "size": 814,
+      "sha256": "024615a0c8c0a45c2060bfcf2a57af74bf0248b40b907ce839cd955cbee09b1e",
+      "git_blob": "815ea60d1c2c41880f10a37b828b33f5470bf97b"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-baseline-files.json",
+      "group": "validation_evidence",
+      "size": 1510695,
+      "sha256": "6d2a38c5e027fe9a58bb9f52c32840c9b694c1068ec0670e84e5331a8323f030",
+      "git_blob": "af315971fa5770232d29a816824011ff3cc1a5eb"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-cold/package-inventory.json",
+      "group": "validation_evidence",
+      "size": 39956,
+      "sha256": "a852a66a17058a89fbb6cc6847f18083bd20a25ad80f71c16438746c45f832cc",
+      "git_blob": "6477f78754a6661b3cd357c246a4f7117279ecd6"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-cold/region-load.json",
+      "group": "validation_evidence",
+      "size": 58178,
+      "sha256": "32357e537d986e47ba8d05c2f44b9bd35d3b8005f1c37415bc430b00397ffc0a",
+      "git_blob": "8fbce69a23e6a94878e34fe8bf0f812382c7a3eb"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-cold/result.json",
+      "group": "validation_evidence",
+      "size": 126,
+      "sha256": "5dab248abc8ad4ac694d44cdd8819e3183d6b2d715849258e7500261a7a539c6",
+      "git_blob": "b875f488a2f715bb1b987a2f6632aba1a8b370f2"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-cold/validation.json",
+      "group": "validation_evidence",
+      "size": 3990926,
+      "sha256": "5f2636b752acc4c69672ad156e4952845c1a912b0b18e0f3e2e9185714ea767b",
+      "git_blob": "47efd18e2d89abd15b91d57c81f7286fe1098354"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-cold-host/engine.log",
+      "group": "validation_evidence",
+      "size": 321856,
+      "sha256": "8712edd2dbbc8c959f150e3762bde09ea640fcd94a2feeaafcadef93f5391efd",
+      "git_blob": "57952974b699500a8914897ecbd1f614f81529da"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-cold-host/launch.json",
+      "group": "validation_evidence",
+      "size": 1006,
+      "sha256": "3210ca2d5e414d9afa824bb1496d103f3a0da75b6ea3e20d56eeb7148dbe2fa8",
+      "git_blob": "7f2b5f589f70009ef8995d04a0bad0cee446e488"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-cold-host/log-check.json",
+      "group": "validation_evidence",
+      "size": 373,
+      "sha256": "f39f694c6a1207df346c33036b04de1b55397b4b4baf071677e2ae43d7b1c344",
+      "git_blob": "45f8364fa4fe537dba61d579776fb9bfa0cd33e3"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-cold-host/process-exit.json",
+      "group": "validation_evidence",
+      "size": 120,
+      "sha256": "4da4af62c2076cfa3d025bf8e0e1530431df80f0695f80768148cacf53bcec7c",
+      "git_blob": "08ddb7a9e0a49e628e861f5363afa3ea0fe9df4a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-host/engine-final-snapshot.json",
+      "group": "validation_evidence",
+      "size": 431,
+      "sha256": "f140f45511ffcadcb95c5c08d00953c87a2dd51344d5796060a48ebacbca5d14",
+      "git_blob": "db47a070e2ee679aaf534d5ca56a9e623728a063"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-host/engine-final-snapshot.log",
+      "group": "validation_evidence",
+      "size": 429012,
+      "sha256": "a26c53435ee2bb081099484a1191f976753d327ebcee222cfd0ef52429499419",
+      "git_blob": "1ba126f4fa1003287710991f3e92e319aaa8bdb6"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-host/final-log-triage.json",
+      "group": "validation_evidence",
+      "size": 1504,
+      "sha256": "2013e4307c0831122b2e67e725e791b6961b966eddd68a4f1822fe05ad068dcf",
+      "git_blob": "f23b8197863dc0aaf6bceb5492f66c1789502001"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-host/launch.json",
+      "group": "validation_evidence",
+      "size": 1296,
+      "sha256": "d8f1e61668decf6424ecb65e3c6be1755abf3ebf174b359366c053551c4eb394",
+      "git_blob": "34ab291875ee93f1e36f839e7f5bba6e8805837b"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-host/log-check-pre-cold.json",
+      "group": "validation_evidence",
+      "size": 754,
+      "sha256": "d40ef431c8b239b32c1d2080ef2924b9d2d9a4b44653f16c2af36592e10cde92",
+      "git_blob": "3729a9a7bf530b6a6bb2b3c9be71cff17eb57c7f"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-host/post-recovery-boundary.json",
+      "group": "validation_evidence",
+      "size": 161,
+      "sha256": "596b327e2581c4108fb107ce4b9047ee22d5f7de5683e7d66e2df0286bb65c2c",
+      "git_blob": "b289d5de6b6de7d3882dab46ee6558fe4f3a115b"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-host/post-recovery-log-check.json",
+      "group": "validation_evidence",
+      "size": 1342,
+      "sha256": "0da68a958215a560cfb2515d1e249c8ed532dd65539bef22c8d693e95d105545",
+      "git_blob": "6355fdbdca7e9d3a80cdf4a3646846bd872b9977"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/applied-height-plan.json",
+      "group": "validation_evidence",
+      "size": 2155926,
+      "sha256": "da664ab622240adeba5578b615716422249237113db0a5e96dc54ac6b83a65ec",
+      "git_blob": "917c339151bb378fc6e8691bf3b64997e30a6e4c"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/apply-height.json",
+      "group": "validation_evidence",
+      "size": 2937,
+      "sha256": "f72e3de242e103b53f07cc5ce45407a4a56cedbdfee080463ca3d3ec55812dc8",
+      "git_blob": "97d18114a1be3ded4109005297befd663978975f"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/boss-threshold.json",
+      "group": "validation_evidence",
+      "size": 16100,
+      "sha256": "c73fa14c1ee35a97ecc5fc6feebb7002c073b4d724329fd31affc917df3b3567",
+      "git_blob": "b4653b533468c813982c31a8bf73901bfb512a25"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/content-request.json",
+      "group": "validation_evidence",
+      "size": 138,
+      "sha256": "7b88eca15351a798867d8f5acdcef794963898c2e74ab8d9890dfc30929bd9d5",
+      "git_blob": "0935166773413862a092203bf0bc09415d44a963"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/failure.json",
+      "group": "validation_evidence",
+      "size": 1175,
+      "sha256": "75a271a90edb4ba17501a50d254c526cd40fac5cc176cbcd676c42a46629abce",
+      "git_blob": "fe231744d43482eda1f90e99fdd1fe69039f9f51"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/final-save-plan.json",
+      "group": "validation_evidence",
+      "size": 1097,
+      "sha256": "51add046e095b686a2cdd987caa0476bcd6f9b6d72ffc32629ae73ff58f45f79",
+      "git_blob": "4cc83cc10c303771bee76a5c472f76c8fcf7667b"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/final-save-result.json",
+      "group": "validation_evidence",
+      "size": 1726,
+      "sha256": "731ec7fe5b7e111fdbc3f531a48b0e5c850979b29eee8e36eff765b50a8fb563",
+      "git_blob": "99eff3e05fc07ab267b9c96056a6d2ed4bff0683"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/game-view.json",
+      "group": "validation_evidence",
+      "size": 132,
+      "sha256": "beb51dd6337676e3c6e07c9f46c6a8b9ee646fff224028e58f1261c87a6b90ac",
+      "git_blob": "1ac53e2af54524faca1073715e4f343159acf566"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/height-capsules.json",
+      "group": "validation_evidence",
+      "size": 1140514,
+      "sha256": "10737d686c94ecb4311fe1b9bbc4e294a893330064fe6437bbcb7e1e57de7ab0",
+      "git_blob": "034f0adbb5203f83b25bd3e93bffebe14106bab7"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/height-ready.json",
+      "group": "validation_evidence",
+      "size": 160,
+      "sha256": "8a837bd925fd9023c52e29fca22b0d72def8d72336dbaf89341b66d3d753a776",
+      "git_blob": "8644dc17ba7cebfbb3693f4a15fee4ee9fd7bfb7"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/height-save-plan.json",
+      "group": "validation_evidence",
+      "size": 2401,
+      "sha256": "f88d014ff788b6d63d589b552a8a4c99318fa52002f42f37e3392c22eb98a5ff",
+      "git_blob": "ab883cc9df40749cf685c9dcd22ab8b8492244c3"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/height-save-result.json",
+      "group": "validation_evidence",
+      "size": 4334,
+      "sha256": "de18dd9f6fc4848a9adcc0da4457daf9a44f981f9e12639736e2e33b33552977",
+      "git_blob": "1b5dcaae84de685ececeb7b66a3226f356800e2e"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/native-before.json",
+      "group": "validation_evidence",
+      "size": 641,
+      "sha256": "8cfdb82e2d7d4e784fa2e47851e8d8c475b0f219193cd68f129dbad992ee3e3e",
+      "git_blob": "ddc8e359784ae25c143699cf392d2c71773fad9c"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/qa-recovery-preflight.json",
+      "group": "validation_evidence",
+      "size": 287,
+      "sha256": "814218783ef1e1e8b766798e80f2fd578a2789f7fba7b5f73c722474f1b99619",
+      "git_blob": "53263b7ab4eaa21e21693912aaa89014b76f8fd5"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/ready-for-final-visual.json",
+      "group": "validation_evidence",
+      "size": 139,
+      "sha256": "ab9746be0a45ba96e5d16d320123fc3f76e4320a8b56d9e129cf1e457fa3877f",
+      "git_blob": "0aacfa55594a96fdd404db35cb921e8342d80635"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/region-load.json",
+      "group": "validation_evidence",
+      "size": 58178,
+      "sha256": "a4fc18f26bf9185e018b8282088a7f863ae9627115fe205e2f6c2b97222b8ec7",
+      "git_blob": "cd95452f5fa32b9995e55857e9fdcf4606382b6a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/save-request.json",
+      "group": "validation_evidence",
+      "size": 160,
+      "sha256": "58bd49d4c4ffaa78a4478ed5a1e824ea73f7eee41d1981171e344854961898bf",
+      "git_blob": "1f9368cdff887081b054ffee69a5434bf768f728"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/saved-final.json",
+      "group": "validation_evidence",
+      "size": 108,
+      "sha256": "2f3af8f6f4159dbc3b2a4cc72ef81b36f5c09584b838e7017d0af16fe51b6c19",
+      "git_blob": "7d3c6b5b681bddfcd8fce2e1cf56a6e2e2648574"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/startup.json",
+      "group": "validation_evidence",
+      "size": 152,
+      "sha256": "20d298dd20e7b00fc31957109897e2ba9a8588ab8d923eac14bf071634546416",
+      "git_blob": "bef0baa3f50fa53b3ca9739d10b08959436d7fc2"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/terrain-settled.json",
+      "group": "validation_evidence",
+      "size": 2650,
+      "sha256": "471a8d9aa68d6b8d51b91a9e0c7a7d9bd167ad3aefd28e594a5e2a7eddd4efeb",
+      "git_blob": "2af1ae6e520cbfa4d9a754cc45eb32bac2ea315d"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/validation-complete.json",
+      "group": "validation_evidence",
+      "size": 3996934,
+      "sha256": "17c0387a3e4775ae2a4f39f9c14cf6da4087b199b1a0c78288aab467247d1770",
+      "git_blob": "6661244b7a725bd05159c4c18efb2f30ad78871f"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/validation-height_only.json",
+      "group": "validation_evidence",
+      "size": 4065521,
+      "sha256": "0c69e96eb349e6fb77e6bb1501df788c49674415a90eb12fd53a5a7d10861b35",
+      "git_blob": "6464aa1fe77ecd0e77c19730abd39015351f7064"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/village-earth.json",
+      "group": "validation_evidence",
+      "size": 99084,
+      "sha256": "53542e31e7ae097536c00d898c850d3d44f7ed329003520fbad64428dbc4b73c",
+      "git_blob": "efb0b017a70046cda2b83c0bf99e6e1c30d7eb4c"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-live/visual-review.json",
+      "group": "validation_evidence",
+      "size": 798,
+      "sha256": "c1f624b05ea504d47432ec6babefd5b45af9dcf9245b95bc3e85611214016c54",
+      "git_blob": "9ecd0cf07c8db76fa7df21e4c519f223c6f7f3d6"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-owned-assets.json",
+      "group": "validation_evidence",
+      "size": 2099,
+      "sha256": "e3ffb6150dcbd280224bd7191ade79f02e9d0484d868b7e9c17961fe3435238d",
+      "git_blob": "917df0422f4fea2cd7ad3e68dcf97dd1f220d728"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/refinement-preflight.json",
+      "group": "validation_evidence",
+      "size": 810,
+      "sha256": "2ad1c6993ed625cf03ed2d95a8510ef1a1ce8b15dba853210ea284bbd6c19fe6",
+      "git_blob": "1d4fa0b2e61a955a45d7791054b694d0d0ccf33a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/rounded-plan-preflight.json",
+      "group": "validation_evidence",
+      "size": 287,
+      "sha256": "cc68caf3beb0f56370b0b9e9950f699c7f5614b825cb0f0831ceb9b8b7c5f40a",
+      "git_blob": "6409ad4d07bd013597b9c90987cc3e8a187226b3"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-boundary-jump-refinement.json",
+      "group": "validation_evidence",
+      "size": 40615,
+      "sha256": "3422c9919823f3d1793f3166bc90880e34ad876223e19f5af053c9d39da6670b",
+      "git_blob": "d6d1690c1a6c4876f6a59b0103d6f0bfdadce1d2"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-boundary-jump.json",
+      "group": "validation_evidence",
+      "size": 40541,
+      "sha256": "875fa3f920c4cd5d86f3f6a3136702c64943344bc9aca16d0e0e593e31fa995d",
+      "git_blob": "5995baa197c577df23c3e3a5eff2d87a3e052823"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-optional-walk.json",
+      "group": "validation_evidence",
+      "size": 264777,
+      "sha256": "6c37be80cc9760b9271d53a0ac6de454202c1a9b18f4cf8655d0e6e21b6e8b5f",
+      "git_blob": "ac2e701d6834d304d5b3a70bdef993096269e548"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/all-walks-complete.json",
+      "group": "validation_evidence",
+      "size": 103,
+      "sha256": "da77a92935aea43f7c4388e5d10e00aedb8d97dd5ca9d56c8d6ba81aa18d2e9d",
+      "git_blob": "920ef9caff0e2848a4beb9c8114e1dd809b09fa4"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/armed.json",
+      "group": "validation_evidence",
+      "size": 223,
+      "sha256": "b0888809e677359b0836756b628554e07cab9ddaf897e8209c14c9e2d0af6a91",
+      "git_blob": "21b222c646314a59480f49821676945e5778fd12"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/first-log-check.json",
+      "group": "validation_evidence",
+      "size": 4853,
+      "sha256": "f73f85f9ad21031f2de7335ef89e6a2bb2e3959d9f6ba6aa4ff4599bef4a3c30",
+      "git_blob": "b67600677a7fb272cf4d43b1c339e3d2dfd44829"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/first-pie-log-check.json",
+      "group": "validation_evidence",
+      "size": 4856,
+      "sha256": "456b8fa7b60b2c0c288a6f22ef07ef2b6ecbc23f79d7d449820026a038728e78",
+      "git_blob": "510428f089f9666003867ecea979b443b9dc1c55"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/kinematics-1.json",
+      "group": "validation_evidence",
+      "size": 603,
+      "sha256": "41deaf36e27fb026d0a608da0de08416f0a46c8ddff1dca220d763c932ac54a9",
+      "git_blob": "df10456a1bfcea6d14d4d0205be626bd656a366a"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/kinematics-2.json",
+      "group": "validation_evidence",
+      "size": 603,
+      "sha256": "66099956b57cbd90686d1cf2ad6e56442d26f9720df4b556ab0e832d4396db18",
+      "git_blob": "81b1a6d7b277590d51435733d075128dbb2ef906"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/kinematics-3.json",
+      "group": "validation_evidence",
+      "size": 602,
+      "sha256": "c8e2a1755ec937398fb8edc94737e2a5627e5844892b23ab3ebfc325380c941f",
+      "git_blob": "a21179c078065f4f844f81ca63991deae4efe3d5"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/kinematics-4.json",
+      "group": "validation_evidence",
+      "size": 841,
+      "sha256": "ed95915ec4bbd5b0d58b00618a0419b8ca3cc4324530d01d3a6e9b598b6831b5",
+      "git_blob": "345097e6a553d3dfb40d9d0aa0d31c0e323a1aa6"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/log-boundary.json",
+      "group": "validation_evidence",
+      "size": 323,
+      "sha256": "e315b695fcc5522258b2a19dd392aca4fef2cdb7ea617eb8acff7adaad38c00a",
+      "git_blob": "60fc9484ec1c3e7c0f054e9259edea87bfaaa2d7"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/round-1.json",
+      "group": "validation_evidence",
+      "size": 35002,
+      "sha256": "b60f731cab2fbb36812b2e660d2eb09af3ef79c4c9dc01dc8e1e582ed5bbd01c",
+      "git_blob": "0f43ad7693b100c36771140de348f7750d7eeeb3"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/round-2.json",
+      "group": "validation_evidence",
+      "size": 35025,
+      "sha256": "bf719a1bc46ae8945795feba8c00d6536134e71b09b75a430729c27662bc06eb",
+      "git_blob": "09f6e2353ebcee2babd1aa3dd7a14b58486261b9"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/round-3.json",
+      "group": "validation_evidence",
+      "size": 34631,
+      "sha256": "18f4004b4739af470673a675c85d789e2a5a3f70602d23428f2c5a02f8ce3acf",
+      "git_blob": "eb74620b655351a4daf26796274bc745d8ca977f"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/runtime-walk/summary.json",
+      "group": "validation_evidence",
+      "size": 478,
+      "sha256": "50b96ae25b0dac4b229aa86819e3bb1b4b5e8f96de6aef8c5d9a475f05b7d03c",
+      "git_blob": "5317e26653d27d5350c08acf0cbebec22ed341f3"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/target-height-plan-rounded-ridge.json",
+      "group": "validation_evidence",
+      "size": 1077883,
+      "sha256": "750abe7decd08564d610cfdb3f27b5182b1ea02d7d3271b0044ab8c91a1e8240",
+      "git_blob": "79539f212ee1be478a1793d6f73fba58e9b80976"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/target-height-plan.json",
+      "group": "validation_evidence",
+      "size": 1077832,
+      "sha256": "81c7e6cc3ac485edbf5afa4d4c125617e82e07be7a9ba23e2bdf7ff75157b773",
+      "git_blob": "a3b1f3cd145b54d4b44ff6c4cd173dc0b0f6e54c"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/village-earth-plan20261118.json",
+      "group": "validation_evidence",
+      "size": 4089,
+      "sha256": "e6af4032bdf2d1a12aa1a2f6a9a752842457c0c8de086e4dcb020718e0ca5e90",
+      "git_blob": "cca29ef3c4f1cbec4ec4f15b43eb8eb44c057756"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/final-overview.png",
+      "group": "validation_evidence",
+      "size": 1675297,
+      "sha256": "2b42573d611aba1c9507000d5378094abcd08382ed496fc5f84dc717cde0127c",
+      "git_blob": "7535eb5029e7a1b3d867adacab85ab65ef57e74d"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/road-edge.png",
+      "group": "validation_evidence",
+      "size": 2070890,
+      "sha256": "1a833fbd7f325bc9934280c2328052328d99bad35ee469ce7bc00e33efb183d8",
+      "git_blob": "c6c0693461c2cac69ab03f2242d5a54a1158bbc1"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/village-earth-archive.png",
+      "group": "validation_evidence",
+      "size": 2093963,
+      "sha256": "31141aa227c45c4caa13a5a7dd891713afe6381b31f1f41b9f05416f3ae18fcd",
+      "git_blob": "583b74c0701504fe6b91e317f57f9c5c251fae75"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/village-earth-hunter.png",
+      "group": "validation_evidence",
+      "size": 2176924,
+      "sha256": "722720edbd1b20f7e6e6ed6945d010f8b00840e7c468e11eeab6a39ac261b03c",
+      "git_blob": "d8fc6279b571f437044a176c9e85cee0e6807e79"
+    },
+    {
+      "path": "Feature/doc/evidence/landscape-natural-boundary20261117/visual/village-earth-market.png",
+      "group": "validation_evidence",
+      "size": 2070955,
+      "sha256": "139d10aa10f2719f0ea3fbe0e5587fe126ade0df1c1a6bb3bf0667d5a52b462b",
+      "git_blob": "e3ca8f8e0f5b21c06687744ac3215d027a7ccb77"
+    }
+  ],
+  "excluded_local": [
+    "MCP base64/transport responses",
+    "intermediate photos",
+    "live-growing editor log",
+    "physical backup packages",
+    "unrelated untracked evidence",
+    "generated/cache outputs"
+  ],
+  "asset_binary_writes": "Unreal Editor only; this manifest operation writes no assets."
+}

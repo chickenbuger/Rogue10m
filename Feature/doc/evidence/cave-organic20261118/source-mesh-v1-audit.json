@@ -1,0 +1,70 @@
+{
+  "schema": "Rogue10m.OrganicCavesIndependentSourceMeshAudit.20261118.v1",
+  "utc": "2026-11-17T19:36:38.061238+00:00",
+  "read_only_mesh_sources": true,
+  "editor_operations": false,
+  "asset_mutations": false,
+  "sites": {
+    "Q": {
+      "passed": true,
+      "checks": {
+        "closed_two_faces_per_edge": true,
+        "consistent_face_winding": true,
+        "no_degenerate_faces": true,
+        "no_duplicate_faces": true,
+        "one_connected_surface": true,
+        "no_orphan_vertices": true,
+        "finite_nonzero_signed_volume": true
+      },
+      "vertices": 45000,
+      "triangles": 89996,
+      "edges": 134994,
+      "component_triangle_counts": [
+        89996
+      ],
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": [],
+      "duplicate_faces": [],
+      "minimum_face_area_cm2": 0.0011354760698616664,
+      "signed_volume_cm3": 46269467027.70465,
+      "limitations": [
+        "No global triangle self-intersection certification; actual collision and rendered interior QA are required."
+      ],
+      "path": "Art/World/CavesOrganic20261118/SM_CaveOrganic_Q_20261118.mesh.json",
+      "sha256": "51ed203632c4d54d8e7b3f30e6030c97baf3fd25be68a78e3a9b9cc46c2883e5"
+    },
+    "Z": {
+      "passed": true,
+      "checks": {
+        "closed_two_faces_per_edge": true,
+        "consistent_face_winding": true,
+        "no_degenerate_faces": true,
+        "no_duplicate_faces": true,
+        "one_connected_surface": true,
+        "no_orphan_vertices": true,
+        "finite_nonzero_signed_volume": true
+      },
+      "vertices": 44996,
+      "triangles": 89988,
+      "edges": 134982,
+      "component_triangle_counts": [
+        89988
+      ],
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "inconsistent_edges": 0,
+      "degenerate_faces": [],
+      "duplicate_faces": [],
+      "minimum_face_area_cm2": 0.000905623719004026,
+      "signed_volume_cm3": 53791032014.55348,
+      "limitations": [
+        "No global triangle self-intersection certification; actual collision and rendered interior QA are required."
+      ],
+      "path": "Art/World/CavesOrganic20261118/SM_CaveOrganic_Z_20261118.mesh.json",
+      "sha256": "7463e420711c1308de86a221a20b5a56f40b6eb8af85bd5fd74bf01507823253"
+    }
+  },
+  "passed": true
+}

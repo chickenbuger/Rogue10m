@@ -1,0 +1,142 @@
+{
+  "created_utc": "2026-11-03T16:41:22.884472+00:00",
+  "project": "D:\\Project\\Rogue10m",
+  "evidence_policy": "missing/incomplete inputs fail; source reads only; task-only output",
+  "native_automation": {
+    "actual_individual_tests": 40,
+    "individual_success": 40,
+    "errors": 0,
+    "clean_success": 37,
+    "success_with_known_warnings": 3,
+    "known_warning_events": 3
+  },
+  "loot": {
+    "write_checks": 26,
+    "read_checks": 9,
+    "failures": 0,
+    "quantity": 1,
+    "profile_guid": "DFDAEFC5414B4E6EDE2C5CBF243F5F20",
+    "loot_guid": "0B8C050E468242CBC6886D844FBFC9B7",
+    "item": "/Game/DataAsset/Item/Starter/DA_Item_HealthPotion.DA_Item_HealthPotion",
+    "slot": "Rogue10m_Progression_QA_MonsterLoot_LootRuntimeC_DFDAEFC5414B4E6EDE2C5CBF243F5F20_v5",
+    "distinct_write_read_processes": true,
+    "originalChanged": 0,
+    "unexpectedNew": 0,
+    "scope": "controlled real overlap, debounce/SaveNow and fresh-process disk read; guaranteed transient table, not balance proof"
+  },
+  "boss": {
+    "label": "BossRenderD",
+    "checks": 551,
+    "failures": 0,
+    "cases": 18,
+    "hud_cases": 18,
+    "hud_menu_probe": 1,
+    "png": 18,
+    "launcher": {
+      "label": "BossRenderD",
+      "before": 380,
+      "after": 382,
+      "preserved": true,
+      "exit": 0,
+      "failure": null
+    }
+  },
+  "spatial": {
+    "label": "SpatialRenderC",
+    "checks": 85,
+    "failures": 0,
+    "live_skeletal_exercised": 1,
+    "supported": 38,
+    "live_skeletal": 37,
+    "unsupported": 0,
+    "unresolved": 0,
+    "png": 11
+  },
+  "camera": [
+    {
+      "label": "CamN720A",
+      "checks": 49,
+      "failures": 0,
+      "weighted": 0,
+      "width": 1280,
+      "height": 720,
+      "png": 5,
+      "pixel_report": {
+        "checks": 5,
+        "failed_or_uncertain": [],
+        "scope": "pixel heuristic; human visual review is separate"
+      },
+      "engine_scope": "pre-update retained result"
+    },
+    {
+      "label": "CamN1080A",
+      "checks": 49,
+      "failures": 0,
+      "weighted": 0,
+      "width": 1920,
+      "height": 1080,
+      "png": 5,
+      "pixel_report": {
+        "checks": 5,
+        "failed_or_uncertain": [],
+        "scope": "pixel heuristic; human visual review is separate"
+      },
+      "engine_scope": "pre-update retained result"
+    },
+    {
+      "label": "CamW720A",
+      "checks": 49,
+      "failures": 0,
+      "weighted": 1,
+      "width": 1280,
+      "height": 720,
+      "png": 5,
+      "pixel_report": {
+        "checks": 5,
+        "failed_or_uncertain": [],
+        "scope": "pixel heuristic; human visual review is separate"
+      },
+      "engine_scope": "pre-update retained result"
+    },
+    {
+      "label": "CamW1080A",
+      "checks": 49,
+      "failures": 0,
+      "weighted": 1,
+      "width": 1920,
+      "height": 1080,
+      "png": 5,
+      "pixel_report": {
+        "checks": 5,
+        "failed_or_uncertain": [],
+        "scope": "pixel heuristic; human visual review is separate"
+      },
+      "engine_scope": "pre-update retained result"
+    },
+    {
+      "label": "CamN720B",
+      "checks": 49,
+      "failures": 0,
+      "weighted": 0,
+      "width": 1280,
+      "height": 720,
+      "png": 5,
+      "pixel_report": {
+        "checks": 5,
+        "failed_or_uncertain": [],
+        "scope": "pixel heuristic; human visual review is separate"
+      },
+      "engine_scope": "post-update confirmation"
+    }
+  ],
+  "save_preservation": {
+    "original_count": 364,
+    "current_count": 386,
+    "original_changed": 0,
+    "original_missing": 0,
+    "new_count": 22,
+    "unexpected_new": 0
+  },
+  "decoded_PNGs": 54,
+  "human_visual_acceptance": "separate root review; not inferred from decode/hash"
+}

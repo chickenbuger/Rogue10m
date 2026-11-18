@@ -1,0 +1,142 @@
+{
+  "method": "default_native_cross_cyan_arms_black_outline_template",
+  "scope": "offline_pixels_only_requires_visual_review_of_crops_and_original_PNGs",
+  "checks": [
+    {
+      "screenshot": "01_initial_first_person.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "expected_visible": true,
+      "pixel_template_passed": true,
+      "expected_center_px": [
+        960.0,
+        540.0
+      ],
+      "estimated_cross_center_px": [
+        960.0,
+        540.0
+      ],
+      "center_error_px": 0.0,
+      "cyan_fraction_per_arm": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dark_outline_fraction": 0.4895833333333333,
+      "template_score": 0.9489583333333332,
+      "four_arm_outline_template_found": true
+    },
+    {
+      "screenshot": "02_after_ordinary_look.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "expected_visible": true,
+      "pixel_template_passed": true,
+      "expected_center_px": [
+        960.0,
+        540.0
+      ],
+      "estimated_cross_center_px": [
+        960.0,
+        540.0
+      ],
+      "center_error_px": 0.0,
+      "cyan_fraction_per_arm": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dark_outline_fraction": 1.0,
+      "template_score": 0.9999999999999999,
+      "four_arm_outline_template_found": true
+    },
+    {
+      "screenshot": "03_inventory_hidden_reticle.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "expected_visible": false,
+      "pixel_template_passed": true,
+      "expected_center_px": [
+        960.0,
+        540.0
+      ],
+      "estimated_cross_center_px": [
+        954.5,
+        545.5
+      ],
+      "center_error_px": 7.7781745930520225,
+      "cyan_fraction_per_arm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dark_outline_fraction": 0.40625,
+      "template_score": 0.040625,
+      "four_arm_outline_template_found": false
+    },
+    {
+      "screenshot": "04_inspection_hidden_reticle.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "expected_visible": false,
+      "pixel_template_passed": true,
+      "expected_center_px": [
+        960.0,
+        540.0
+      ],
+      "estimated_cross_center_px": [
+        959.6046312178388,
+        540.1749571183533
+      ],
+      "center_error_px": 0.43234993601262073,
+      "cyan_fraction_per_arm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "dark_outline_fraction": 1.0,
+      "template_score": 0.1,
+      "four_arm_outline_template_found": false
+    },
+    {
+      "screenshot": "05_returned_first_person.png",
+      "size": [
+        1920,
+        1080
+      ],
+      "expected_visible": true,
+      "pixel_template_passed": true,
+      "expected_center_px": [
+        960.0,
+        540.0
+      ],
+      "estimated_cross_center_px": [
+        960.0,
+        540.0
+      ],
+      "center_error_px": 0.0,
+      "cyan_fraction_per_arm": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dark_outline_fraction": 1.0,
+      "template_score": 0.9999999999999999,
+      "four_arm_outline_template_found": true
+    }
+  ],
+  "failed_or_uncertain": []
+}

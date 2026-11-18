@@ -26,6 +26,12 @@ class ARogue10mGameMode : public AGameModeBase
 
 public:
 	ARogue10mGameMode();
+	/** Only the current authored starting hub, before departure, is a menu-safe context. */
+	UFUNCTION(BlueprintPure, Category="Rogue10m|UI")
+	bool IsSafeMenuContext() const;
+	bool AcquireMenuPause(APlayerController* Controller);
+	void ReleaseMenuPause(APlayerController* Controller);
+	bool HasMenuPause(APlayerController* Controller) const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Run")
 	URogue10mRunCompletionComponent* GetRunCompletionComponent() const { return RunCompletionComponent; }
 
@@ -56,6 +62,8 @@ private:
 	UFUNCTION()
 	void HandleRunPhaseChanged(ERogue10mRunPhase NewPhase);
 
+	// A distinct engine pause delegate per controller; releasing it never queries other owners.
+	TMap<TWeakObjectPtr<APlayerController>, FDelegateHandle> MenuPauseHandles;
 	bool ShouldStartRunFromTravelOptions() const;
 	void StartConfiguredRun(ARogue10mGameState& RogueGameState) const;
 	void HandleRunDefeat();

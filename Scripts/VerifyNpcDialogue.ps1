@@ -1,0 +1,48 @@
+param(
+ [Parameter(Mandatory=$true)][ValidatePattern('^[A-Za-z0-9_]{1,24}$')][string]$Label,
+ [switch]$Offscreen,[switch]$VisibleWindow,[switch]$Manual,
+ [ValidateSet('D3D11','D3D12')][string]$Renderer='D3D11',
+ [ValidateRange(60,1000)][int]$TimeoutSeconds=240,
+ [string]$ProjectRoot=(Split-Path -Parent $PSScriptRoot)
+)
+$ErrorActionPreference='Stop'
+function Saves {
+ @(Get-ChildItem -LiteralPath (Join-Path $ProjectRoot 'Saved\SaveGames') -Filter '*.sav' -Recurse -File -ErrorAction SilentlyContinue | Sort-Object FullName | ForEach-Object {
+  [pscustomobject]@{Path=$_.FullName;SHA256=(Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash}
+ })
+}
+if($Manual -and (-not $VisibleWindow -or $Offscreen)){throw 'Manual mode requires VisibleWindow without Offscreen.'}
+$ProjectRoot=(Resolve-Path -LiteralPath $ProjectRoot).Path
+$town='Rogue10m_Town_QA_NpcDialog_'+$Label;$prefix='Rogue10m_Progression_QA_NpcDialog_'+$Label;$keys='Rogue10m_Fighter_QA_NpcDialog_'+$Label
+$output=Join-Path $ProjectRoot ('DevLog\20261110_NpcDialogue\'+$Label)
+$evidence=Join-Path $ProjectRoot 'Feature\doc\evidence\npc-dialogue-20261110';$log=Join-Path $evidence ($Label+'.log')
+$beforeCsv=Join-Path $evidence ($Label+'.saves-before.csv');$afterCsv=Join-Path $evidence ($Label+'.saves-after.csv')
+$before=@(Saves)
+if((Test-Path -LiteralPath $output) -or (Test-Path -LiteralPath $log) -or (Test-Path -LiteralPath $beforeCsv) -or (Test-Path -LiteralPath $afterCsv) -or @($before|Where-Object {([IO.Path]::GetFileName($_.Path) -in @(($town+'.sav'),($keys+'.sav'))) -or ([IO.Path]::GetFileName($_.Path) -like ($prefix+'_*.sav'))}).Count){throw 'Fresh QA label required; preserve all previous evidence and saves.'}
+New-Item -ItemType Directory -Force -Path $evidence | Out-Null;$before|Export-Csv -LiteralPath $beforeCsv -NoTypeInformation -Encoding utf8
+$exe='D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe'
+$args=@(('"'+(Join-Path $ProjectRoot 'Rogue10m.uproject')+'"'),'/Game/Rogue10m/Maps/StartHub','-game','-unattended','-nosplash','-nosound','-DisablePython','-language=en','-locale=en-US','-NoLiveCoding','-NoRemoteShaderCompile',('-RogueProfileSaveSlot='+$town),('-RogueProgressionSavePrefix='+$prefix),('-RogueSkillKeySaveSlot='+$keys),('-RogueNpcDialogueLabel='+$Label),'-ExecCmds="t.MaxFPS 60,Rogue10m.TestNpcDialogue"',('-abslog="'+$log+'"'),('-'+$Renderer.ToLowerInvariant()),'-windowed','-ForceRes','-ResX=1280','-ResY=720')
+if($Offscreen){$args+='-RenderOffScreen'};if($Manual){$args+='-RogueNpcDialogueManual'}
+$process=$null;$failure=$null;$preservation=$null
+try{
+ $window=if($VisibleWindow){'Normal'}else{'Hidden'};$process=Start-Process -FilePath $exe -ArgumentList $args -WindowStyle $window -PassThru
+ Write-Output ('Owned NPC dialogue QA PID='+$process.Id+' log='+$log+' output='+$output)
+ $timer=[Diagnostics.Stopwatch]::StartNew();while(-not $process.WaitForExit(1000)){if($timer.Elapsed.TotalSeconds -gt $TimeoutSeconds){throw 'Owned NPC dialogue QA timed out.'}}
+ $process.Refresh();$result=Join-Path $output 'results.txt'
+ if(-not(Test-Path -LiteralPath $result)){throw ('No results produced; exit='+$process.ExitCode+' log='+$log)}
+ $r=[IO.File]::ReadAllText($result);Write-Output $r;$engine=[IO.File]::ReadAllText($log)
+ $expectedResult=if($Manual){'RESULT=NPC_DIALOGUE_MANUAL_SETUP_COMPLETE'}else{'RESULT=NPC_DIALOGUE_PASSED'}
+ if($engine -match '\bError:|Fatal error:|Ensure condition failed'){throw 'Unexpected engine Error/ensure/fatal; inspect full log.'}
+ if($process.ExitCode -ne 0 -or -not $engine.Contains($expectedResult) -or $r -notmatch '(?m)^failures=0$'){throw ('Dialogue QA failed; exit='+$process.ExitCode+' log='+$log)}
+ if(-not $Manual){foreach($name in @('01_proximity_prompt.png','02_selectable_dialogue.png','03_service_result.png','04_trait_branch.png','05_closed_restored.png','06_death_boundary.png')){if(-not(Test-Path -LiteralPath (Join-Path $output $name)) -or (Get-Item -LiteralPath (Join-Path $output $name)).Length -lt 1024){throw ('Missing rendered screenshot '+$name)}}}
+ if($engine -notmatch ('(?m)Log'+$Renderer+'RHI:')){throw 'Requested RHI was not observed.'}
+}catch{$failure=$_}finally{
+ if($null -ne $process -and -not $process.HasExited){$process.Kill();$process.WaitForExit(5000)|Out-Null}
+ try{
+  $after=@(Saves);$after|Export-Csv -LiteralPath $afterCsv -NoTypeInformation -Encoding utf8;$lookup=@{};foreach($s in $after){$lookup[$s.Path]=$s.SHA256}
+  $changed=@($before|Where-Object {-not $lookup.ContainsKey($_.Path)-or $lookup[$_.Path]-ne $_.SHA256});if($changed.Count){throw ('Preexisting save hashes changed count='+$changed.Count)}
+  $old=@{};foreach($s in $before){$old[$s.Path]=$true};$unexpected=@($after|Where-Object {-not $old.ContainsKey($_.Path)-and [IO.Path]::GetFileName($_.Path)-notin @(($town+'.sav'),($keys+'.sav'))-and [IO.Path]::GetFileName($_.Path)-notlike ($prefix+'_*.sav')});if($unexpected.Count){throw ('Unexpected save paths count='+$unexpected.Count)}
+  Write-Output ('Preexisting save SHA256 preserved='+$before.Count+' new_slots=exact_NpcDialog_namespace')
+ }catch{$preservation=$_}
+}
+if($preservation){throw $preservation};if($failure){throw $failure};Write-Output ($expectedResult+' output='+$output)

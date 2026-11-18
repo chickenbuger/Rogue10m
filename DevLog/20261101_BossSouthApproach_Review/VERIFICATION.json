@@ -1,0 +1,130 @@
+{
+  "packet": "Sprint#9-19-boss-south-approach",
+  "base": "648ca964b6ff3b3a58270081c1b19de1f1e30c10",
+  "project": "D:\\Project\\Rogue10m",
+  "verified_utc": "2026-11-01T04:22:11.118811+00:00",
+  "source_commit": "9578fa5227870a4e5964d26faa4c595cbe7b4642",
+  "outcome": "returned_death",
+  "boss_victory_verified": false,
+  "physical_input": "not_performed",
+  "h_session": "DevLog/BasicRunPlayQA/BasicRun1101H",
+  "all_milestones": {
+    "status": "returned_death",
+    "outcome": "returned_death",
+    "stage": "result",
+    "reason": "natural terminal and UI return observed; milestone flags remain separate",
+    "normal_menu_ui": "1",
+    "npc_dialogue": "1",
+    "field_entered": "1",
+    "sword_overlap_pickup": "1",
+    "first_natural_kill_xp": "1",
+    "normal_UMG_run_learning": "1",
+    "boss_reached": "1",
+    "returned_reset_observed": "1",
+    "full_boss_completion": "0",
+    "physical_input": "not_performed",
+    "input_driver": "Controller_InputKey_DoAim_Slate_chars_UMG_delegates",
+    "no_gameplay_fixtures": "1",
+    "wall_seconds": "355.076",
+    "terminal_phase": "Defeat",
+    "profile": "6D6E889F488B6018AD63EA9FC88E1496",
+    "render_review": "not_performed_by_driver",
+    "pending_screenshot": "",
+    "queued_screenshot_count": "0",
+    "requested_or_queued_capture_count": "24",
+    "reset_scope": "level_BrawlerXP_selected_learned_node_specific_sword_GUID_profile_phase_only"
+  },
+  "original_save_count": 338,
+  "originals_sha256_unchanged": true,
+  "after_primary_save_count": 340,
+  "original_asset_count": 31,
+  "original_assets_unchanged": true,
+  "original_map_unchanged": true,
+  "original_map_sha256": "54259b90327edda82e34a9162588c4822a1768ca3f2d7626e7aee78825a8b588",
+  "pure_geometry_tests": {
+    "succeeded": 2,
+    "failed": 0,
+    "report": "Feature/doc/evidence/boss-south-approach-20261101/BossSouthApproach_BossMath1101A/report/index.json"
+  },
+  "core_regressions": {
+    "succeeded": 30,
+    "failed": 0,
+    "timing": "before ramp source; post-NPC baseline",
+    "packet": "basic-run-regression-20261101"
+  },
+  "runtime_placement_count": 1,
+  "ramp_floor_samples": 31,
+  "ramp_feet_z": [
+    8725.543,
+    9603.62
+  ],
+  "ramp_lateral_sample_cm": [
+    -8.581951117719314,
+    34.14989164018334
+  ],
+  "input_frame_rows": 40381,
+  "input_log_cap": 120000,
+  "last_frame_map": "StartHub",
+  "boss_hp": [
+    10000.0,
+    9917.992
+  ],
+  "recovery_jump_event_count": 0,
+  "images": [
+    {
+      "file": "G_before_ceiling_stuck.png",
+      "source": "DevLog\\BasicRunPlayQA\\BasicRunDiag1101G\\Driver\\screenshots\\21_failure.png",
+      "sha256": "586f5576d4a6a33a9d51d1a68770f4c677da94c961bc1a8d1ef2abd588bb7393",
+      "bytes": 1423212,
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "H_after_boss_platform.png",
+      "source": "DevLog\\BasicRunPlayQA\\BasicRun1101H\\Driver\\screenshots\\22_boss_reached.png",
+      "sha256": "445f0ab6dfa0ec7ab13fa83d60b669d6e8e972ccadcebfbdf887ee8caafb8c28",
+      "bytes": 1433826,
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "H_death_settlement.png",
+      "source": "DevLog\\BasicRunPlayQA\\BasicRun1101H\\Driver\\screenshots\\23_result.png",
+      "sha256": "7cc7a03d2a0caac99600232f22b345690b9f83d4fae445da32fe4b9aa4be0c22",
+      "bytes": 632324,
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "H_returned_hub.png",
+      "source": "DevLog\\BasicRunPlayQA\\BasicRun1101H\\Driver\\screenshots\\24_returned_hub.png",
+      "sha256": "1ec7067069c97bde6d40d2b2318105fc26056dbd6fd1d25a8c4c578b17217b01",
+      "bytes": 1354121,
+      "decoded": true,
+      "size": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "build_log_sha256": "abeedb70295c34de310482080e9afa7792fead88eca008f92ad7f820927c9c02",
+  "math_log_sha256": "d4d465ccd46ba479854a0f512d7379c8c5138d0da4187813a5c1222def009b2a",
+  "game_log_sha256": "b88da2cc6397a779e0afc8c884d7660fc211c13c0c5f1ab9d65f23f0b789f4e3",
+  "limitations": [
+    "single south pedestrian lane only; other undersides unchanged",
+    "no physical held-key or human full-run test",
+    "no natural boss victory yet",
+    "no packaging, 60-second map target, or complete balance certification",
+    "phase-specific animation captures not produced; no animation asset or timing edited",
+    "returned hub image includes existing sky material/shader compilation warning"
+  ]
+}

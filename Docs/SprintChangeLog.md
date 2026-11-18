@@ -1,5 +1,52 @@
 # Sprint 변경 이력
 
+### Sprint#9-32 — OpenRunMap의 지형·동굴 복구
+
+- 목표는 기존 `OpenRunMap`에 보관 지형과 지하 훈련고·작업함을 반영하고 지상 이동과 런을 다시 확인하는 것이다.
+- Landscape 편집 레이어로 높이 177,014개를 복구했다. 중앙로와 마을 세 곳, 보스 바닥 연결을 정리하고 두 동굴과 도로·마을 데칼 39개를 같은 World Partition에 저장했다.
+- UE 5.8 Editor 빌드 성공. 재로드 지형 45지점, 동굴 카메라 48시야, 시작 마을 포탈 17항목, 승리와 귀환 77항목, 저장 재로드 17항목을 통과했다.
+- 상태는 QA 완료이며 맵 제작 작업 브랜치에 적용한다. 테스트 전투는 자동화가 위치를 준비했다.
+- [설계](../Feature/architect/2026-11-19_openrun-recovered-terrain-caves.md) · [개발 결과](../Feature/doc/2026-11-19_openrun-recovered-terrain-caves.md)
+
+### Sprint#9-32 — 정상 에디터 복구·Landscape 외곽 선택 완료
+
+- 결과:정상후보맵·공식MCP·PIE정지·dirty0확인.256지형/충돌·16proxy·1layer,유지179488표본의height/paint/layer기준확보.
+- 보존:후보1423파일/18272864B물리백업·SHA확인,보호3947파일/44924472B해시기록.기존맵·Source/Config변경0.
+- 추가검사:전역reflection미지원1156건실패는보존.후보18package전체7종referencer외부0·1361actor/1986component의PCG/식생/spline/water/brush0확인.독립리뷰에따른범위검증이며전역안전인증아님.
+- 상태:정식Manage/Select로외곽211선택/유지45제외·dirty불변·실제PNG저장.앱내삭제직전확인규칙에따라사용자확인대기.실제삭제/저장/UndoRedo/재로드/통행검증미완료.
+- 근거:Feature/doc/2026-11-16_editor-startup-recovery.md;Feature/doc/evidence/landscape-production-20261116/scoped-crop-review.md;live-before/native-selection.png.
+
+### Sprint#9-32 — 에디터 실행 실패 점검·Live Coding 충돌 복구
+
+- 목표: 사용자 VS 활성화 작업을 보존하며 정상 에디터를 열고 Landscape 제작을 재개한다.
+- 원인: 최신게임은-game/창닫힘종료요청, 잔류PID21224가LiveCoding잠금유지. VS Editor빌드는그잠금으로실패했다. 프로젝트파일생성은성공이며Python오류를최초종료원인으로단정하지않았다.
+- 조치: 호스트직접읽기·원문로그보존·정확한잔여게임만정리. 사용자VS종료0. 정규Editor빌드110actions/169.49초/exit0. 정상에디터실행기추가후-game없이후보맵PID11088실행.
+- 상태: 에디터로딩/live확인·후보물리백업진행. 실제Landscape삭제·저장·통행검증은아직0. 일반sandbox의프로세스없음관찰은호스트전체부재로해석하지않도록정정했다.
+- 문서: Feature/doc/2026-11-16_editor-startup-recovery.md; Feature/doc/evidence/landscape-production-20261116/editor-recovery/.
+
+### Sprint#9-32 — 월드 구성 1차 기획과 Landscape 제작 세부안
+
+- 목표: 기존 구성을 정확한 지형 치수·좌표·동선·검증 기준으로 정리해 먼저 공개하고 Landscape 구현으로 이어간다.
+- 변경: 상세 기획·좌표 보충 JSON·제작 배치도·재생성 도구. 기존21노드/29도로·3큰마을/5초소·중앙300m를 유지하는9×5컴포넌트/1,012.5×562.5m안을 기록했다. 두 기존카탈로그와 Source/Config/Content는 이번 작업에서 변경하지 않았다.
+- 검증: 설계 기하10항목 통과. 모든 대지·도로어깨가 경계 안이며 최소여유52.5m/81.5m. 독립리뷰에서 무건 이름·3회직행/성장5회·crop불변과경사보정분리·실패시ready저장가드를 보정했다. GeneratedChanges와 범위diff검사 통과.
+- 상태: 1차 기획 완료, 2차 live편집 대기. Editor없음/MCP8001연결거절을 확인하고 사용자에게 에디터실행을 요청했다. 실제crop/저장/빌드/게임/commit/push0, 기존WIP605항목보존. 과거15.095°경사와실제통행·시간검증은미해결이다.
+- 문서: Feature/architect/2026-11-16_landscape-production-plan.md; Feature/doc/2026-11-16_landscape-production-plan.md; Docs/References/WorldMap/landscape-production-20261116.json.
+
+### Sprint#9-32 — Hub 입구 포함 Windows 내부 아티팩트 완료
+
+- 결과: SDK0·정규 BCR0/332.93초·사후0, 맵6+DA·2252exports/158셀·새HubActor6/기존포털3 identity 확인. 새 EXE/PDB의 row48/Info32/Version16·consumer48를 새 원문으로 제한 검토.
+- 산출물: tmp/InternalWindows20261114HubEntryA_UNVERIFIED/Windows,50파일/1,957,709,382B, SHA B9C2ED1B46F045C2CA80A2D6844EED5C1AA023B1AE9F47F2010311EB8A80A60B.
+- 보존/검증: 입력10472·Source/Config368·Editor6·저장2루트·E5/B/D두사본·C6쌍·기록14핀 동일. AST7/7·PS0·diff0·Generated0. 기존 WIP/경고 보존, commit/push0.
+- 미완: 새패키지실행/여행/시계/NPC/F/저장종료·재시작/시각/전체런. 별도승인차단 유지. 새사용자지시에따라 실제맵축소/배치로이어가며 이 아티팩트는축소전1800m버전으로보존.
+- 근거: Feature/doc/2026-11-14_remaining-development-and-hub-windows.md; Feature/doc/evidence/hub-entry-windows20261114A/final-result.json.
+
+### Sprint#9-32 — 개발 재연결·Hub 입구 포함 Windows 내부 패킷 준비
+
+- 목표: Source의 새 Hub 포털1+표시Actor5를 별도 Windows 출력에 반영하고 새 게임 실행 없이 정적 콘텐츠를 검증한다.
+- 변경: 남은 개발 여섯 묶음과 이번 ULW 계획, 새 입력/보존 확인 및 실제 owner-session 도구. Source/Config/Content 변경은 없다.
+- 검증/상태: 재연결 파일 읽기 및 UE/빌드/게임0 확인. 전체 지문 재대조 진행 중이며 새 Build/Cook/Archive는 아직 미완료다. 기존 D 메뉴 실행과 새 패키지 실행을 구분한다.
+- 문서: Feature/architect/2026-11-14_hub-entry-windows-artifact.md; Feature/doc/2026-11-14_remaining-development-and-hub-windows.md.
+
 이 문서는 Rogue10m의 Sprint별 주요 변경 사항과 검증 결과를 요약한다.
 세부 설계와 구현 결과는 Feature 문서, 일자별 작업 과정은 DevLog를 참조한다.
 
@@ -2291,7 +2338,7 @@
 - 주요 변경: 53노드 카탈로그, PlayerState 숙련·공유 실제 지출 원장, Save v3/legacy 이전, 명중 실행당1XP, 격투가 내공·투지/대검 투지·마나, 성질·공명·MP 소비·부분 환급, 대검 파생5개, native 원형 UI·조건·키 지정. 기존 기본 공격·프로필 입력·몽타주 보존.
 - 검증: 최종 Editor 빌드 성공(83.55초), Automation3개 Success, 실제 게임50개/새 프로세스 저장 복원14개 확인에서 실패0·exit0. 원본 공격19개·초기 계약 보존, 1080p/720p 실제 화면 검토. 생성 경로·스테이징 목록/공백·스크립트 구문·문서 링크 검사 통과.
 - 상태: 구현·통합 QA·독립 리뷰·기록 완료. 기능 커밋 `a2a1db8b`와 로컬 develop→test→main fast-forward 승격 완료, 최종 통합 기록은 후속 문서 커밋으로 확정한다. 공개 푸시는 선행 체크포인트의 공개 자료 전송 승인 대기를 존중하며 우회하지 않는다. 전용 무기 애니메이션·무기별 archive·20분 전체 플레이·Shipping·멀티는 별도 범위다.
-- 관련: [계획](../Feature/architect/2026-10-20_hybrid-skill-tree-runtime.md), [결과](../Feature/doc/2026-10-20_hybrid-skill-tree-runtime.md), [설계](HybridSkillTreeDesign.md), [실제 격투가 화면](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/brawler-1080p.png), [실제 대검 화면](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/greatsword-720p.png), [검토](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/review.md).
+- 관련: [계획](../Feature/architect/2026-10-20_hybrid-skill-tree-runtime.md), [결과](../Feature/doc/2026-10-20_hybrid-skill-tree-runtime.md), [설계](HybridSkillTreeDesign.md), [실제 격투가 화면](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/brawler-1080p.png), 실제 대검 화면〔중간·보조 자료 정리로 삭제됨; [보존 목록](../Feature/doc/evidence/README.md)〕, [검토](../Feature/doc/evidence/hybrid-skill-tree-runtime-20261020/review.md).
 
 ### 공개 GitHub 게시 승인과 통합 게시 재개 (2026-10-20)
 
@@ -2398,9 +2445,825 @@
 - 실제 GUI: 좁은 창 양 끝 스크롤, 외곽/야영지 -80° 포커스, Engine Cube Height125/Yaw45/Scale20 배치, 실제 Ctrl+Z/ Ctrl+Y 제거·복원, `OW_MM_Cube` 필터 선택 1개, 목적지 `(1,-3)` 이동 후 Z/yaw/scale 유지, native Landscape/WP 열기, Simulate 편집 차단·종료 복귀, 다른 맵 거절·원본 복귀, clean 맵 저장 버튼 성공을 확인했다.
 - 보존/한계: 임시 액터·폴더 dirty 2개만 확인 후 저장 없이 폐기·원본 reload. 최종 로드 액터 1,243개·maker 0·dirty map/content 0, Editor 정상 종료·Content 변경 0이다. 실제 변경 저장/재로드는 격리 WP fixture에서 검증했다. 전체 20분/Shipping/실제 지형 sculpt·paint는 미검증이며 네이티브 경고 4개를 보존한다.
 - 상태: GUI·빌드·회귀·독립 코드 리뷰 완료. GUI 종료 후 최종 증거 검사도 원본 1,260파일 SHA 변경 0·Content 변경 0·임시 소품/dirty 0으로 통과했다. 명시 변경 범위·문서 경로 검사 뒤 커밋·develop→test→main·일반 push 예정이며 이번 QA 수정의 게시 성공 SHA는 아직 기록하지 않는다.
-- 관련: [최종 결과와 검증표](../Feature/doc/2026-10-25_map-maker-live-qa.md), [자동화](../Feature/doc/evidence/map-maker-live-qa-20261025/automation-final/result.json), [최종 증거 검사](../Feature/doc/evidence/map-maker-live-qa-20261025/final-checks.json), [최종 GUI 상태](../Feature/doc/evidence/map-maker-live-qa-20261025/live-final.json), [외곽 화면](../Feature/doc/evidence/map-maker-live-qa-20261025/focus-edge-final.png), [개발 일지](../DevLog/20261025.txt).
+- 관련: [최종 결과와 검증표](../Feature/doc/2026-10-25_map-maker-live-qa.md), [자동화](../Feature/doc/evidence/map-maker-live-qa-20261025/automation-final/result.json), [최종 증거 검사](../Feature/doc/evidence/map-maker-live-qa-20261025/final-checks.json), [최종 GUI 상태](../Feature/doc/evidence/map-maker-live-qa-20261025/live-final.json), 외곽 화면〔중간·보조 자료 정리로 삭제됨; [보존 목록](../Feature/doc/evidence/README.md)〕, [개발 일지](../DevLog/20261025.txt).
 
 - Sprint#9-1 게시 완료: 기능 `8ca0523309866aed5aa48fc4b435c02845241d8a`, 명시 94파일·생성 경로·공백·JSON/Python/문서 링크·DevLog 추가 전용 검사 통과. 최신 원격 변경 재확인 뒤 develop→test→main fast-forward 및 작업/통합 네 브랜치 일반 atomic push 성공, [직접 원격 SHA](../Feature/doc/evidence/map-maker-live-qa-20261025/publication.json) 전부 일치. 원본 Content 변경 0·QA dirty 0. 이 완료 기록은 소스/콘텐츠 변경 없는 후속 문서 체크포인트로 동일하게 게시한다.
+
+
+## Sprint#9-2 — R11 공격 자원 합산·원자적 결제 (2026-10-26)
+
+- 목표: 중복 비용 행의 합계 부족을 사전에 거부하고 부분 차감 없이 공격을 수락한다.
+- 변경: 공통 자원 예산, 기본+선택 마나 비용 계획/결제 후 아이덴티티 확정, 재진입 방지, 신규 자동화4건 및 검증 스크립트.
+- 검증: UE5.8.3 Editor 빌드 성공, 신규4+기존숙련3 Success/errors0/warnings0. 원본 clean 및 저장98개 해시 동일. 최초 컴파일/fixture 실패와 수정 증거 보존.
+- 상태: 독립 복제에서 구현·검증 완료, 로컬 체크포인트. 자동 병합/push/PR 없음. R02/R03 및 R05/생산 맵은 미착수.
+- 문서: [계획](../Feature/architect/2026-10-26_atomic-attack-costs.md), [결과](../Feature/doc/2026-10-26_atomic-attack-costs.md), [증거](../Feature/doc/evidence/atomic-attack-costs-20261026/).
+
+
+## Sprint#9-3 — R02/R03 조건 데이터·공통 평가 기반 (2026-10-26)
+
+- 목표: 필수 AND를 모든 획득 경로에 적용하면서 기존 빈 조건·OR·선행 그룹과 저장 형식을 보존한다.
+- 변경: 새 요구조건 타입/명시적 기본0 Mage 입력, 공통 eligibility/부족 목록, UI backend·구매·자동해금·후보 검증 연결. 실제 신규 검술/랭크 저장과 미확정 정책은 미적용.
+- 검증: Editor 빌드 성공, 새조건4+R11자원4+기존숙련3 Success/errors0/warnings0, 최소 실제 공격 수락 통합 통과. 원본 clean·저장98개 해시 변경0. 초기 테스트 이름/fixture 오류와 수정 증거 보존.
+- 상태: 독립 복제에서 구현·검증 완료, 로컬 체크포인트. R05·생산 맵·자동 병합/push/PR은 수행하지 않음.
+- 문서: [계획](../Feature/architect/2026-10-26_progression-requirements.md), [결과](../Feature/doc/2026-10-26_progression-requirements.md), [검증](../Feature/doc/evidence/progression-requirements-20261026/validation-summary.json).
+
+
+### 최신 사용자 규칙 인계 — 런 성장과 로비 강화 분리
+숙련 영구 성장 추천을 폐기한다. 20분 초과는 게임 오버이며 해당 런에서 오른 숙련/능력치는 초기화하고 로비용 재화를 정산한다. 로비 재화로 구매한 영구 강화는 보존한다. 게임 마무리 후 재화로 영구 강화한다. 이는 요구사항 기록이며 이번 조건 평가 packet에 초기화/정산/영구 저장을 구현하지 않았다. 사망·승리·장비·기술 해금 지속성은 미확정이다. 기존 실제 세이브 삭제·초기화·이행은 하지 않았다.
+
+
+## 추가 사용자 확정 방향 — 조합별 호환성과 보스
+
+검술 변형 전체를 한 슬롯만 활성화한다는 이전 추천은 폐기한다. 한 캐릭터가 여러 무기를 배우는 것은 허용한다. 조합별 호환성으로 표현해야 하며 마나+내공 동시 사용은 불가, 내공+투지는 허용되는 예시다. 자원 보유·동시 축적·전환 시 잔량 처리는 미정이다. RequiredAll 조건 평가와 호환성/장착 정책을 결합하지 않는다.
+
+이번 새 타입에는 단일 장착 슬롯/상호배타 채널/자원 전환 정책을 추가하지 않았다. 기존 legacy 아이덴티티 선택·자원 동작은 호환 기준선으로 남아 있으며, 이를 새 조합 호환성 시스템으로 구현 완료했다고 주장하지 않는다. 새 호환성 데이터와 전투 효과 연결은 별도 packet이다.
+
+보스는 시작 직행 상태의 승리가 현실적으로 매우 어렵지만 불가능하지 않으며 여러 기믹/기술 대응을 요구한다. 이번 packet에서 보스 밸런스/AI/생산 맵을 수정하거나 직행 승리 가능성을 플레이 검증하지 않았다.
+
+
+### 사용자 답변6 — 전투 중 무기·사전 세팅 전환
+무기별 사전 스킬 세팅은 비전투 중 편집하고 전투 중 무기 교체 시 연결된 세팅으로 전환한다. 교체는 무적을 부여하지 않는다. 전투 중 교체 전면 금지 추천은 적용하지 않는다. 교체 시간/공격 취소/쿨다운 공유/자원 잔량 세부는 미정이다. 이번 조건 기반 코드에는 구현하지 않았다. 최신 확정/미정 규칙의 통합본은 `Docs/RapidFieldRules.md`를 따른다.
+
+
+## 사용자 답변7 — 첫 버전 무기·필드 보스·퀘스트·재화
+
+첫 버전 무기는 대검/너클 두 가지다. 특정 위치의 선택형 필드 보스로 캐릭터 성장의 선택을 제공한다. 필수 중간 관문이 아니며 필드 보스 수는 아직 정하지 않았다.
+
+퀘스트는 비급서를 받는 연계 퀘스트와 이번 판 아이템 구매 재화를 버는 의뢰까지 확대한다. 퀘스트 수는 아직 미정이다. 이번 판 구매 재화는 종료 시 초기화되는 별도 재화이고 로비 영구 강화 재화와 분리한다. 현재 조건 테스트에서 기존 Gold를 충분히 채운 것은 조건 우회 방지 검증일 뿐, 기존 Gold를 신규 런/로비 재화로 확정한 구현이 아니다.
+
+사망/승리 리셋, 장비·기술 지속성, 로비 보상식, 필드 상점 방식은 후속 답변을 기다린다. 이번 packet에서는 새 경제·지속성·퀘스트·필드 보스 배치를 구현하지 않고 요구사항만 기록했다.
+
+
+### 종료 정책 최종 추가 확정
+승리·사망·시간초과 모두 런에서 오른 숙련/능력치 초기화와 로비 재화 정산 대상이다. 로비 영구 강화는 유지한다. 재화량과 장비/기술 지속성은 아직 미정이다. 앞선 사망/승리 미정 표시는 이 최신 사용자 답변으로 대체한다. 이번 체크포인트는 요구사항 기록만 갱신하며 실제 초기화/정산/세이브 이행은 하지 않았다.
+
+
+## 지속성 추가 확정 — 런 보유와 영구 Discovery 분리
+
+장비·아이템·비급서·배운 기술도 승리/사망/시간초과 등 런 종료 시 사라진다. 단 상위 기술의 최초 습득 기록은 영구 정보 공개용 Discovery로 남긴다. 처음에는 획득 조건을 `???`로 숨기고, 한 번 습득한 기록이 있으면 이후 해당 기술의 정보/조건을 볼 수 있다.
+
+Discovery는 현재 런 Learned/Equipped와 별도 도메인이다. 영구 사용권, 자동 장착/학습 또는 RequiredAll 조건 우회의 근거가 아니다. 새 런에서는 조건을 다시 충족해야 하며 정보 공개 기록만 남는다.
+
+이번 체크포인트는 정책 문서만 갱신했다. Discovery 데이터/저장·UI `???` 마스킹·런 종료 삭제/정산은 아직 구현하지 않았다. 기존 실제 세이브 이행/초기화도 하지 않는다. 현재 새 조건 API는 판정 backend이며, 상위 기술의 정보 노출 정책은 후속 UI에서 Discovery를 통해 별도로 적용해야 한다.
+
+
+## 경제·상점 추가 확정
+
+로비 재화는 처치·퀘스트·필드 보스 성과에 최종 보스 승리 보너스를 더하는 방식이다. 구체 숫자·산정 계수는 미정이다. 이번 판 구매 재화와 로비 영구 강화 재화의 분리는 유지한다.
+
+구매는 실제 필드/마을 상점을 방문하는 방식이다. 어디서나 여는 구매 메뉴로 정하지 않는다. 위치·재고·가격·상호작용 세부는 아직 확정하지 않는다.
+
+시작 지급 무기, 무기 교체/취소 타이밍, 쿨다운 유지, 메뉴 일시정지, 마나↔내공 전환과 잔량은 질문 중이다. 이 항목들은 추정 구현하지 않는다. 영구 Discovery는 정보 공개용이고 런 Learned/Equipped와 분리한다는 직전 규칙을 유지한다.
+
+이번 수정은 최신 규칙 문서 기록이다. 검증된 R02/R03 조건 기반 코드는 변경하지 않았으며 경제·상점·정산·실제 세이브 이행은 구현하지 않았다.
+
+
+## 시작 무기·숙련 승급 추가 확정
+
+초기 지급 무기는 너클만이다. 대검은 필드에서 획득한다. 첫 버전 무기 범위가 대검/너클이라는 결정과 초기 지급 범위를 구분한다. 이번 문서 기록에서 실제 시작 장비나 필드 드롭을 변경하지 않았다.
+
+무기 숙련은 특정 행동 없이도 숙련100을 채우면 레벨업할 수 있어야 한다. 필드 보스 처치 등의 행동은 추가 수련 경로이며 필수 승급 gate가 아니다. 수련 행동 목록은 사전에 공개하지 않는다. 자동/수동 승급, 행동 달성 후 목록 공개 여부는 아직 질문 중이다.
+
+숙련 승급 규칙은 상위 기술의 RequiredAll 습득 조건과 별개다. 무기 숙련 레벨을 평가하는 입력이 특정 몬스터 처치/행동을 강제하는 의미는 아니다. 상위 기술의 영구 Discovery 정보 공개 기록과 숨겨진 숙련 수련 행동 목록도 별도 정책이다.
+
+현재 R02/R03는 숙련 레벨과 명시적 MageRank를 읽는 조건 평가 기반이다. 숙련100 승급/수련 행동/목록 공개/너클 지급/대검 드롭은 구현하지 않았고 기존 숙련 공식과 실제 세이브를 변경하지 않았다.
+
+
+## Sprint#9-4 — 무기 교체·문맥 메뉴 정지 영향 분석 (2026-10-26)
+
+실제 무기 setter/인벤/Combat transition·binding·cooldown·입력·메뉴·런 timer 코드를 읽었다. 현재 교체는 진행 공격을 취소하고 기본 세팅을 재구성하며, 기존 숫자 cooldown은 남지만0.5 floor는 없다. 일반 패널에 위치 기반 pause도 없다. 요청 gate/런 세팅/쿨다운/메뉴 pause를 분리한 변경 범위와21개 미실행 테스트를 작성했다. 이번에는 런타임 코드를 바꾸거나 빌드/테스트를 재실행하지 않았다.
+
+최신 미니게임 실패 규칙도 기록했다. 일반 돌파는 조건 재충족 후 재도전 가능, 융합은 사망 가능하나 확정 사망 아님. 실패 생존 손실도 이번 판 내이며 다음 판 초기화한다. 로비 강화·로비 재화·정보용 Discovery는 보존한다. 일반 런 성장/손실의 지속성을 반복 질문하지 않는다. 최초 큰 포인트의 범위/재화와 융합 실패 생존 시 기회 소모 등은 미정이다.
+
+Notion 요약 후보: 무기 교체·메뉴 정지 사전 분석 완료, 실제 구현은 미착수. 최신 요구사항 통합은 Docs/RapidFieldRules.md. 분석은 Feature/architect/2026-10-26_weapon-switch-menu-analysis.md, 결과는 Feature/doc/2026-10-26_weapon-switch-menu-analysis.md. 자동 병합/push/생산맵/세이브 변경 없음.
+
+
+### 숙련 자동 승급 확정
+사용자 답변으로 숙련100 도달 시 자동 승급이 확정됐다. 특정 행동이나 수동 버튼 gate는 없다. 초과 숙련 처리 등 수치 세부와 행동 달성 후 목록 공개는 미정이다. 이번 읽기 전용 분석에서 숙련 공식/승급 코드는 수정하지 않았다.
+
+
+### 획득처·미래 확장 추가 기록
+대검은 고정 장소·상점·퀘스트에서 획득 가능하다. 첫 버전은 너클/대검이며 미래 무기 확장 가능 구조를 지향한다. 상점 기본 등급, 퀘스트 더 희귀한 등급, 드롭/특정 히든 피스는 매우 좋은 등급 기회다. 모든 드롭 최고 등급이나 확률·표를 확정하지 않는다. 이번에는 규칙 기록/영향 분석만 수행했다.
+
+
+## 장비별 방어 규칙 추가
+
+장착 장비에 따라 기본 회피/가드 스킬을 제공하고 방패를 장착하면 패링을 연다. 방패 슬롯과 대검/너클 동시장착 허용은 질문 중이다. 임의 보조 슬롯, 모든 무기에 대한 패링, 가드/패링 중 교체 허용 정책을 추가하지 않는다. 이번 packet은 요구사항 기록만이며 새 방어 스킬/슬롯/전투 동작은 구현하지 않았다.
+
+
+## 액티브4슬롯/보스 기준 추가 분석
+
+Ctrl/Q/E/R 독립4슬롯, 좌/우클릭 별도, 무기별4슬롯 프리셋을 기록했다. E는 현재 회피 및 예약키와 충돌한다. Ctrl은 modifier 검증, modifier-held 거부, key selector에서 막힌다. HUD 기존4칸은 마우스/차징 의미이고 새로운4개 액티브가 아니다. 기존 enum을 재정렬하지 않는 별도 슬롯 모델과 Enhanced Input·HUD·드래그/편집 UI 영향 범위를 분석에 추가했다. 방어 키는 미정이다.
+
+입력7건과 특정 기술 없이 기본 조작으로 대응 가능한 보스 패턴 기준3건을 추가해 총31개 미실행 시나리오다. 실제 입력/슬롯/방어/보스 코드는 변경하지 않았다.
+
+
+### 분석 체크포인트 최종 통합
+Ctrl/Q/E/R 독립4슬롯·E회피/Ctrl제한/HUD 충돌과 보스 기본조작 대체 대응 기준을 포함해31개 미실행 테스트 계획으로 통합했다. 융합 실패 생존은 이번 판 회복불가 손상으로 조건 미달, 다음 판 초기화다. 프로필별 해당 융합 최초1회 로비 재화 보상은 반복 성공/콜백/저장 재시도로 중복 지급하지 않는다. 금액은 미정이다. 방패/패링은 향후 한손검·둔기 후속이며 현재 너클/대검에 추가하지 않는다. 이번 변경은 문서/읽기 전용 증거이며 실제 구현·새 테스트·빌드는 하지 않았다. 최신 규칙/분석/결과를 하나의 최종 체크포인트로 제출한다.
+
+
+## 2026-10-27 Sprint#9-5 무기 타입 교체 쿨타임
+
+중단 문서6개를 원문/patch와 415dd1e7 로컬 커밋으로 보존하고 재개했다. 공유 공격 쿨타임의 긴 절대 만료 시각을 유지하며 실제 무기 타입 교체에 max(남은 시간,0.5초)를 적용했다. 초기화/복원은 별도 C++ 경로이며 Blueprint 기존 서명과 저장 형식은 유지했다. 콤보 취소 뒤 미래 쿨타임 시작 전 우회도 차단했다.
+
+UE5.8.3 기준 빌드와11개 회귀 통과 후 변경본16/16 자동화 통과. 마지막 빌드7.85초, 원본 세이브98개 SHA256 차이0/원본 git clean. 테스트 준비의 WorldContext 누락 및 float/double 오차 비교 실패 이력도 증거에 보존했다. NullRHI 자동화이며 렌더링 플레이/키 입력은 미실행이다.
+
+이 묶음은 공유 공격의 타입 전환 범위만 완료했다. 전체 무기 교체/공격·사망 상태 제한/동일 타입 다른 아이템 식별/무기별4슬롯/입력·HUD/별도 쿨타임/안전지대 메뉴 정지는 남았다. merge/push/PR/새 설치/실제 세이브 이행/생산맵 변경 없음. 설계 Feature/architect/2026-10-27_weapon-switch-cooldown.md, 결과 Feature/doc/2026-10-27_weapon-switch-cooldown.md, 증거 Feature/doc/evidence/weapon-switch-cooldown-20261027/checkpoint.json.
+
+
+## 2026-10-27 무기 교체 사전 상태·아이템 식별 완료
+
+공격·사망 중 장비 변경을 인벤토리 쓰기 전6개 경로에서 차단하고, 대기/걷기/달리기는 허용했다. 공격 행동 시간은 몽타주·판정 구간을 따르며 긴 공유 쿨타임과 분리했다. 같은 타입 다른 GUID는 실제 교체로 처리하고 중복 GUID/반복 입력은 효과를 재적용하지 않는다. 장비·자원 알림 재진입 중 공격/중첩 장착도 차단했다. 교체 무적 없음.
+
+UE5.8.3 최종 빌드8.81초 통과, 새8개+기존16개=24/24 자동화 통과, 오류·테스트 경고0. 첫 컴파일 이름 충돌과 맨손 준비 프로필 누락 경고 이력은 보존 후 수정했다. 원본 세이브98개 차이0, 원본 코드/맵/저장 이행 없음. 실제 렌더링 플레이/키 입력은 미실행이고 프리셋·입력/HUD·개별 스킬 쿨타임·메뉴 정지는 후속이다.
+
+사용자가 기능 단위 GitHub push와 원본 DevLog 아래 기능별 실제 검증 화면 보존을 추가 승인했다. 선행 원시 로그의 기기 식별자는 공개하지 않도록 로컬 원문/이력을 유지하고 별도 공개용 기능 브랜치에 코드와 요약을 구성한다. 사진은 실제 자동 테스트 결과 화면으로만 기록하며 플레이 증거와 구분한다. 원격 SHA와 미디어 검증 결과는 최종 체크포인트로 확인한다.
+
+
+2026-10-27 D 프로젝트 별도 브랜치 반영과 렌더링 검증
+세이브98개/기존 DevLog16개를 독립 백업하고 reviewed6246d60c를 Sprint#9-6-desktop-integration에 반영했다. 이전 브랜치 보존, 사용자 파일114개 최종 해시 동일. D 빌드와 최종24개 회귀 통과. Editor 전용 렌더링 QA34개 통과, 실제 InputKey 이동138.615cm/표적 피해23.783. 교체 상태/0.5초 하한/긴 쿨타임 보존 확인. 수치는 QA 사례이지 성능/밸런스 지표가 아니다.
+DevLog/20261027_DesktopIntegration_DPlayB_20261027에 실제 Unreal 뷰포트 사진6개와 범위/재현 문서를 남겼다. A 첫 실행 원본6개도 보존했으며 HUD 갱신 전 프레임 한계를 표시했다. 수동 물리 입력은 CUA 캡처·키 유지 제한으로 미검증(지표0). 새 QA 슬롯과 저장 연결 해제로 사용자 슬롯에 쓰지 않았다. 미디어·원시 로그는 Git에 추가하지 않는다.
+실제 새 캐릭터가 대검으로 시작하는 차이와 기존 v3의 런/영구 성장 통합 저장을 다음 핵심으로 기록했다. 너클 정상 시작과 런/로비 분리를 먼저 연결하고 기존 포털·정산·귀환을 재사용한다. 이번에 새 게임 규칙/맵/저장 이행은 하지 않았다. Feature/doc/2026-10-27_desktop-integration.md 참조.
+[Notion 요약 후보] D 경로 반영/24개 회귀/34개 렌더링 QA 완료. 수동 입력·정상 완주 미검증을 구분하고 다음은 너클 시작 및 런/로비 분리다.
+
+
+## Sprint#9-7-run-lobby-domains (2026-10-29)
+- 목표/완료: 너클 시작과 런/로비 성장 예산·저장·정산 분리. 기존 v1~3 슬롯 불변, v4 별도 저장.
+- 검증: Editor 빌드 PASS, 기존24개 PASS, 실제 귀환68/68/69 assertion PASS, 렌더링 InputKey34 PASS, 기존102세이브+66증거파일 해시 불변.
+- 제약: 수동 완주/60초 실측/정산 UI 로비 재화 표시/??? UI/퀘스트·필드보스 추가 보상/중도 종료 정책은 후속. 원격 변경 없음.
+- 관련: Feature/architect/2026-10-29_run-lobby-domains.md, Feature/doc/2026-10-29_run-lobby-domains.md
+
+
+## Sprint#9-8-result-lobby-ui (2026-10-29)
+- 완료: 정산획득/보유/런재화표시,포기기준선복원·무보상·Discovery유지,중단허브복구,v5보존형저장.
+- 검증: Editor빌드/자동화30/UI7시나리오/기존종료3종회귀PASS,기존270파일SHA256불변,실제PNG13장.
+- 제약: 수동완주/실제프로세스강제종료미검증,콘솔/API프로토타입포기,설정버튼후속. push/merge없음.
+- 문서: Feature/architect/2026-10-29_result-lobby-ui.md, Feature/doc/2026-10-29_result-lobby-ui.md.
+
+
+## Sprint#9-9-abandon-menu (2026-10-29)
+설정 포기 버튼·정책 확인·취소/닫기·문맥 재검증·연타 방어를 구현했다. Editor 빌드, 기존 회귀30개, 최종 메뉴 정상/실패 198항목 PASS. 실제 PNG6장 생성·디코딩·시각 검토. 보존438파일 해시 불변. 일시적 연결/렌더러 실패 뒤 새 QA 슬롯으로 완료했으며 물리 입력·수동 완주·강제종료는 미검증이다. 원격 변경 없음. 계획 Feature/architect/2026-10-29_abandon-menu.md, 결과 Feature/doc/2026-10-29_abandon-menu.md.
+
+
+## Sprint#9-10-weighted-first-person (2026-10-29)
+기존 Appearance 1인칭을 보존한 opt-in 시야/머리 안정화·상완 sway·제한된 공격 회수/준비·전환 프로필을 추가했다. 기본OFF, 원본 입력·공격 clock·자산·세이브 불변. Editor 빌드/회귀17개/일반 렌더와2배속30fps 상한 QA PASS, 실제 PNG9장. 원본516파일 해시 불변. 현재 맨손, 이후 아이템별 너클 모델 방향 확정. 물리 입력·실제맵 완주·전면 clipping은 미검증. 로컬 커밋만, push/병합 없음. 계획/결과 Feature/*/2026-10-29_weighted-first-person.md.
+
+## Sprint#9-11-first-person-settings (2026-10-29)
+
+이미 1인칭인 기존 카메라 위에 FPHeavy 토글·0~100% 동작 강도·기존 표현 복원을 O/Esc/F10 설정 메뉴로 제공한다. 실행 한정 설정이며 세이브/키/맵을 변경하지 않는다. 최종 Editor 빌드·HeadB560항목·기존 저장실패 메뉴97항목 PASS. 실제 UI PNG8장 디코딩과 가독성 확인. RenderC 전체 ABBA는 입력 해제로5실패하므로 미완전으로 기록하고 성능 개선을 주장하지 않는다. 기존 sprint PP 경로/정상 비교값으로 블러0.35/fringe0.6을 분리했다. 물리 입력·필드 완주·콜드 공격 hitch 원인은 미검증. 보존606파일 해시 불변, 로컬 커밋만, push/병합 없음. 계획/결과 Feature/*/2026-10-29_first-person-settings.md.
+
+## Sprint#9-12-input-validation (2026-10-29 UTC)
+
+제품 동작을 바꾸지 않고 공식 입력/Flush/포커스 관측과 viewport 입력·시야 오염 gate를 QA에 추가했다. native569/Offscreen565항목 PASS로 실제 이동 ON/OFF 비교를 완결했다. 프로그램 포커스 양성 대조의 정상 두키해제/새입력복구 확인. 촬영 없는 첫 공격 ABBA4프로세스/8공격142항목 PASS, 공통 첫 사용 수락75~77ms·첫 피해63~68ms 프레임을 재현했으나 내부 원인은 미확정. 과거 RenderC 원인도 단정하지 않는다. 빌드·663파일 원본/복사본 보존 PASS, 실제사진16장/대표5장 기능폴더 보존. 물리 입력·필드 완주 미실행, 로컬 커밋만. 계획/결과 Feature/*/2026-10-29_input-frame-validation.md.
+
+
+## Sprint#9-13-look-dash-interaction (2026-10-29 UTC)
+
+NPC가 소비한 F 입력의 중복 공격을 수정하고 실제 비용형 Special 양성 대조 포함39항목 PASS, 회귀17개/Editor 빌드 PASS. 아래보기·달리기·E 회피·벽/쿨다운 새 QA와 PNG 실측을 추가했다. **카메라 몸통 가림은 미완료**이며 단순 위치 후보를 채택하지 않고 실험 패치로 보존했다. Map Maker/NPC 키 사용법은 실제 소스로 확인했다. 원본747파일·QA 슬롯/증거 보존, 로컬 체크포인트만 생성, push/병합 없음. 계획/결과 Feature/*/2026-10-29_look-dash-interaction.md.
+
+
+## Sprint#9-14 owner first-person 재개 체크포인트 (2026-10-31)
+<!-- OwnerFirstPerson_1031_Checkpoint -->
+- 목표: 누락Or_F복구와아래보기몸통가림진단.
+- 변경: full polygon authoring/Or_F단일복구,owner-only leader proxy,기본OFF,QA명시활성화/20장phase사진/손궤적/애니메이션기록지침.
+- 검증: 최종빌드PASS,회귀30PASS,Weighted4552/0·Original4664/0,NPC39/0,포기Normal89/0·SaveFailure97/0,43PNGdecode.
+- 상태: PARTIAL. 중앙몸통가림제거,손프레이밍/극하향·벽팔절단면미완료. defaultOFF. 원본·세이브보존,원격변경없음.
+- 문서: Feature/doc/2026-10-31_owner-first-person-resume.md, DevLog/20261031_OwnerFirstPerson_Review/AnimationRecord.md.
+
+
+## Sprint#9-15 owner view framing (2026-10-31)
+<!-- OwnerViewFraming_1031_Final -->
+- 목표: 극하향·벽근접 팔절단면/손프레이밍 보정.
+- 변경: owner-only posecopy/4회전IK·화면goal범위·기존leaderfallback; actualproxy getter; shadow/mesh/CPUnear분리QA와전후·애니메이션사진기록.
+- 검증: BuildG PASS,관련회귀30PASS,진단252506/0각15사진,Weighted103802/0·Original106518/0각20사진.
+- 상태: 재현장면보정검증완료/기본OFF. 원본·팔6·세이브270보존. 수동입력·일반필드완주·패키징/모든외형은미검증. push/병합없음.
+- 문서: Feature/doc/2026-10-31_owner-view-framing.md, DevLog/20261031_OwnerViewFraming_Review/.
+
+
+## Sprint#9-16 — 기본 플레이 연결 (2026-11-01)
+
+필드 수동 학습 권한 분리, 기존 대검 런타임 단일 배치, 숙련도100 비율 표시, 타이머/F6 겹침 수정, 새 QA 슬롯과 네이티브 관찰기. 빌드 PASS; 신규QA87/88/87, 렌더90, 관련회귀30/0. 실제 입력 완주는 CUA 키 유지 미지원으로 남아 있고 관찰 I/O 부분 실패도 보존. 시작 저장폴더284개+별도 증거용27개(총311개 .sav)/31패키지 SHA 유지, 현재 저장폴더304개(신규QA20개). 초기311개 집계 범위 정정. 로컬 체크포인트이며 원격 작업 없음. Feature/doc/2026-11-01_basic-play-loop.md 및 Docs/BasicPlayGuide.md 참조.
+
+
+## Sprint#9-17 — Alt 회피·대시 입력 분리
+
+- 목표: E 액티브와 회피 충돌 제거. 왼쪽Alt/HUD/예약키 단일 정의. 비용·스키마·모션 유지.
+- 검증: Editor2회빌드, Hybrid207+89/LookDash535/NPC39/핵심30통과. OwnerFraming15장과 CUA마을Alt 입력 확인. failedA 보존, fixture수정B통과.
+- 보존: 실제세이브304개/자산31개해시 동일, 종료후318세이브. 28장증거 디코딩. 원격변경 없음.
+- 상태: 로컬 입력 기능검증 완료. 사람의 물리입력/정상필드완주/4슬롯프리셋/안전지대메뉴정지는 별도.
+- 문서: Feature/architect/2026-11-01_alt-dodge.md, Feature/doc/2026-11-01_alt-dodge.md, DevLog/20261101_AltDodge_Review/README.md.
+
+
+최종 QA 실행기 리뷰 보정: PASS를 세이브 보존 검사 뒤로 옮기고 runtime 완료 영수증(label/namespace/로그 SHA/보존 성공)이 있어야 read를 허용한다. 새 AltGate1101C runtime207/read89 통과, 두 단계 모두 non-QA318개 해시 보존. 현재 실제 세이브321개이며 시작304개 모두 동일하다. 제품 바이너리/규칙 변경 없이 wrapper gate만 강화했다. 기존 failedA 결과 보존.
+
+
+## Sprint#9-18 — 기본 정상 플레이 연결 검증 (진행 중)
+
+- 실제 배치NPC F안내소실복구: discovery수명physical overlap기준,320cm서비스불변.
+- NPC44회귀통과/331세이브SHA보존,정상E의NPC→필드→대검→전투XP→K학습확인. E보스입구자동경로미완료/새F검증중.
+- 맵/원본에셋/애니메이션/게임수치변경없음. DevLog/20261101_NpcDiscovery_Review에전후/fixture6장.
+- 계획Feature/architect/2026-11-01_basic-run-playtest.md, 결과Feature/doc/2026-11-01_npc-overlap.md. 원격push/병합없음.
+
+
+## NPC 기능 체크포인트 및 정상 루프 진단 확정
+
+NPC44검사와 핵심6suite30검사를 모두 통과했다. 정상 E/F/G는 메뉴→캐릭터→마을F대화/보급→도보포털→대검overlap→자연처치XP→K포인트학습을 통과했으나 보스 접근은 미완료다. G의 실제 Pawn 천장 line은Z9500.998에서보호바닥아랫면에start penetration/normalZ=-1을기록했다. 이동모드Walking/MaxWalkSpeed620/CanJump1/RootMotion0이므로입력·스태미나잠금으로해석하지않는다. E의별도위치는보호바닥밖이라같은원인으로합치지않는다.
+
+시작실제세이브321개SHA와원본/팔31패키지SHA는전부같다. 현재실제세이브338개이며새QA만추가했다. 맵·원본자산·저장스키마변경없고원격작업없다. 아직실제보스전종료/결과/마을복귀를일반입력한판에서검증하지못했다. 다음은기존보스추락방지바닥을유지한채좁은남문보행경사로를runtime에만추가하는가역후보이며현재적용하지않았다.
+
+
+### Sprint#9-19 — 보스 남쪽 진입 경사로
+
+- 목표: 기존 보스 보호 바닥 아랫면에 걸리던 진입을 가역적 단일 보행 경로로 연결.
+- 변경: Bootstrap h/cpp의 transient ramp/독립 타이머/실제 지형 검사, normal-input QA 경로와 형상 검증 스크립트. 원본 맵/바닥/애니메이션/세이브 형식 보존.
+- 검증: 빌드31.52초·형상2개 PASS. H355.076초 정상 메뉴→성장→실제 보스 바닥→자연 사망→정산+6→마을 귀환.338세이브/31자산/맵 SHA256 동일. 실제 키보드·승리·패키징 미검증.
+- 상태: 남쪽 경로와 사망 귀환 packet 완료; 기본 한 판 전체 승리 기준은 계속 진행. 원격 변경 없음.
+- 문서: Feature/architect/2026-11-01_runtime-boss-south-approach.md, Feature/doc/2026-11-01_boss-south-approach.md, DevLog/20261101_BossSouthApproach_Review/README.md.
+
+
+
+## Sprint#9-20 — 로비 강화 조건·재화 표시
+
+- 목표: 최고 런 레벨 기록과 카드 잠금을 맞추고 로비 재화와 판 내 성장 포인트의 표시를 구분한다.
+- 기준: `9578fa52`, 브랜치 `Sprint#9-20-lobby-trait-display`.
+- 변경: TraitWidget/TutorialNPC 카드·라벨, TownProgression `NoPoints` 현지화 문구. 가격·조건·경제·저장·원본 자산은 무변경.
+- 검증: 제품28.53초/테스트 실제 컴파일9.79초/최종24.24초 빌드 성공. 최초0 action은 컴파일 증거에서 제외. UI A36/0 보존, 최종 B38/0·PNG3장 직접 열기·디코딩·SHA256 확인. `RunCurrencyBaseline_Lobby1101Final`6/0·경고0·미실행0 통과. wrapper 성공 코드 누락으로 자동 연쇄가 실행되지 않은 부분을 보존 후 수정했고6개는 별도로 실행했다.
+- 보존: B 정상 exit0/PID41880 종료, 해당 실행 전후340개 세이브 SHA 동일. 전체 작업 종료 뒤 독립 확인에서도 세이브340개·원본31자산·맵 SHA256 동일.
+- 상태: 로컬 UI 표시 묶음 검증 완료. 실제 구매·저장/다음 판 강화/승리/물리 완주 및 옛9포인트 TraitUI fixture 미검증. 원격 push·병합 없음.
+- 문서·증거: `Feature/doc/2026-11-01_lobby-trait-display.md`, `DevLog/20261101_LobbyTraitDisplay_Review/README.md`, `DevLog/LobbyTraitDisplayQA/LobbyDisplay1101B/Driver`, `Feature/doc/evidence/lobby-trait-display-20261101/`.
+
+
+
+### Sprint#9-21 — prepared-run-input-qa
+
+- 브랜치: `Sprint#9-21-prepared-run-input-qa`, 기준 HEAD `1928869d`(parent 제공). 최종 로컬 커밋은 별도 기록하며 원격 push/병합 없음.
+- 상태: QA source/launcher 구현·빌드 완료, 프로그램 입력의 자연 사망/정산/마을 귀환 확인. 정상 보스 승리·물리 완주·애니메이션 시각 품질은 미완료. 문서 초안이며 D 반영 전.
+- 목표: 실제 자원 예산으로 준비된 보스 입력 전략을 검증하고 기존 공격/회피 자산·시간·사진을 정확히 관찰한다.
+- 주요 변경: 기본 OFF `RogueBasicRunPreparedBoss`/`RogueBasicRunAnimationEvidence`, 정상 입력의 자원 예산·Windup 회피·Recovery 공격, 기회 관찰 캡처 및 world 좌표 기록, wrapper 두 옵션 echo 검증. C4458 지역 `State` 이름을 `PhaseState`로만 수정. 제품 규칙/수치/맵/애니메이션 원본/세이브 형식 변경 없음.
+- 검증: 첫 빌드32.58초 실패 보존 후11.45초 성공. wrapper text fixture10/10(UE 아님). BasicRun1101I wall400.675초, 메뉴/NPC F/필드/대검획득/자연처치XP/UMG학습/보스도달/자연사망정산/Hubreset·Discovery gate 통과. 회피요청5/실제수락5/미관측0, 실제 Stamina6 차감과 velocity 관측. 보스HP10000→최저9937.703, 마지막9939.703. +6 로비 정산, full_boss_completion0, 물리입력없음.
+- 보존: 이전340개 저장 SHA 전부 보존, 신규 허용QA2개만 추가해342개. 31개 자산·맵 SHA256 동일, 사진9개 복사·디코딩·해시 확인. 새 에셋/애니메이션 원본 수정 없음.
+- 제한: 사진6개의2개 phase미확정, 나머지4개도 자세품질 PASS 아님. 기본 body 가림·손 미노출·블러를 실패/제약으로 보존. 정상승리·전체20분·물리입력·60초맵·4액티브슬롯/프리셋·전체밸런스·패키징은 미완료.
+- 관련 문서: `Feature/doc/2026-11-01_prepared-run-input-qa.md`, `DevLog/20261101_PreparedRunInput_Diagnostics/README.md`.
+- 실행 근거: `DevLog/BasicRunPlayQA/BasicRun1101I/`의 session/save-comparison 및 Driver CSV/summary/screenshots. 프로그램 입력과 authored 값, post-tick 관측, 실제 시각 판정은 서로 구분한다.
+
+
+## Sprint#9-22 — 정상 장착 UI·로비 강화 왕복 QA
+
+- 브랜치 Sprint#9-22-gear-ui-input-qa, 기반3a306c8c. 제품은 식별 getter2개만, editor-only 정상 입력 driver/안전 launcher/개인 증거 제외 규칙 추가.
+- 로비 B 실제 구매·저장·다음 판·포기·귀환27/0(9항목), OSexit0/원본344SHA유지; A 수집오류 원기록·부록 보존.
+- J는 인벤토리 우클릭 전 시간 초과·장착0, wrapper1. 원본346SHA유지→348. 후속 진단 이름 충돌 수정 후11.84초 실제 컴파일 통과. K 보이는 창 검증은 UI재양도 대기.
+- headless6suite30/0, 원본31에셋/맵 해시 유지. 실제 사진/미검증은 기능 문서·DevLog에 구분. push/병합 없음.
+- 관련: Feature/architect/2026-11-01_gear-ui-input-qa.md, Feature/architect/2026-11-01_lobby-upgrade-roundtrip-qa.md, Feature/doc/2026-11-01_gear-ui-input-qa.md, Feature/doc/2026-11-01_lobby-upgrade-roundtrip-qa.md.
+
+
+### Sprint#9-22 K 검증 마무리
+
+- 실제 native 창에서 고유 GUID 대검 우클릭 장착·기본 공격 전환·공유 쿨타임 0.500초 관측.
+- 정상 게임 시간 1200초 후 timeout 정산+6 저장·Hub 복귀·선택 런 값 reset/Discovery 유지, OS/launcher exit0. 보스 승리0/물리 입력 없음.
+- 기존348 SHA 유지→350(QA2개), 원본31에셋/맵 동일, 사진5장 직접 검토·디코딩. CSV120000행 상한·블러·귀환 재질 경고 분리 기록.
+- 실제 BP 연결 데이터에서 보스 HP10000/regen2 및 GS 기본 공격 비용0 확인. 다음 전략 후보의 Idle 공격 기회 차단을 정적 발견하여 미적용 중. 제품 수치/원격 변경 없음.
+
+
+### Sprint#9-23 정상 성장 보스 QA — 진행 중
+
+- 목표: 강제 수치 변경 없이 정상 대검 성장·스킬·보스·결과/귀환 연결 확인.
+- 변경: 기본 OFF QA 성장/궤도 입력 전략, 읽기 전용 Alt 관찰기와 결과 원장 검증.
+- 검증: 실제 Editor compile12.64초, parser26/preflight11 PASS; L은 자연 LV3/GS M3→마나 학습/활성→보스 사망→+13 저장/귀환. FullBoss0이며 완료로 처리하지 않음.
+- 보존: 기존 저장350 SHA 불변, QA2 추가; 에셋31/맵 불변. 사진5장 실제 디코딩/검토.
+- 다음: 원형 경고 재진입과 무료 공격 reserve QA 결함을 수정해 정상 승리 재검증.
+- 문서: Feature/architect/2026-11-01_normal-growth-boss-qa.md, Feature/doc/2026-11-01_normal-growth-boss-qa.md
+
+
+9-23 후속: L근거를37aa0056으로보존한뒤 QA장판바깥유지·무료기본공격예산검사를수정,실제Editor12.66초재컴파일성공.352sav변경0. M실제실행은UI반환대기중이며보스승리완료아님.
+
+
+9-23 M결과: 정상성장/마나학습→보스실제처치→승리저장+24→마을귀환 PASS(fullBoss1/exit0). 제품수치/피해판정불변, 기존352sav/31패키지/맵 보존, QA2추가. 다음판/legacy기술초기화범위는계속검증하며 사람직접완주·시야·패키징완료아님. Feature/doc/2026-11-01_normal-growth-boss-qa.md와 M_NormalVictory 기록 참고.
+
+
+### Sprint#9-24 동일 프로필 다음 판 연결 / 녹화 준비
+
+- QA continuation·4슬롯 비교·실제 메뉴 포기 관찰·옵션 녹화 게이트 추가, 제품 수치/원본 에셋 변경 없음.
+- 실제 Editor build13.13초 성공, HTTP7검사 PASS. N은 브라우저 URL 식별 정책 차단 후 Hub ready90초 timeout: blocked, 영상/다음 판 미실행.
+- 기존354sav 불변, QA2추가356. 로컬 WIP 보존, 원격 변경 없음.
+- 문서: Feature/architect/2026-11-01_next-run-connection.md, Feature/doc/2026-11-01_next-run-connection.md.
+
+9-24 기록 갱신: 녹화 요청 취소, 실제 M 캡처6+공개 설명2를 DevLog/20261101_ScreenshotDevelopmentRecord에 보존. 원본 SHA/decode/privacy검수 PASS. 현재 wrapper 파서23/13·guard2/2·모델25 PASS; 실제 다음 판 미완료. Library 준비 API 미가용으로 공유 이관 미완료, 우회 없음.
+
+9-24 스크린샷 이관 후속: 공식 create fallback으로 원본6+설명2 Library 저장 및 개인Page 원본참조 확인 완료. 로컬 xattr는 Windows 미지원으로 실패, ID sidecar 보존. 다음 판 미검증/전역입력 중단 유지.
+
+
+## Sprint#9-25 — 안전 문맥 메뉴 정지와 남은 개발 계획 (2026-11-03)
+
+- 목표: 기존 미완료 next-run QA를 보존하면서 확정된 출발 전 마을 메뉴 정지 계약을 구현한다.
+- 변경: 정확한 StartHub/WaitingToStart provider, 컨트롤러별 pause handle 소유권, I/P/K/O/Esc/F10 pause 중 닫기, 중첩 창/phase/EndPlay 정리, 미래 공격 입력만 취소하는 Combat/BasicBrawler API. 맵/에셋/저장 스키마/밸런스는 변경하지 않는다.
+- 검증: 최종 Editor CPP 컴파일·링크47.69초 성공. NullRHI71/0, D3D11 RenderOffscreen71/0, 기존6suite30/0, 런처 사전 파일 거부2개·AST 통과. 실제 PNG3개 디코딩·SHA·시각 검토, 원본356저장 보존/QA4개 추가.
+- 상태: 기능 검증 완료. 작업 브랜치 기록 대상이며 develop/test/main 승격은 기존 #9-24 연속 플레이 미검증과 분리한다. 사람 물리 입력·실제 다음 판·20분·패키징은 미완료다.
+- 관련: Feature/architect/2026-11-03_safe-menu-pause-and-roadmap.md, Feature/doc/2026-11-03_safe-menu-pause.md, DevLog/20261103.txt, Feature/doc/evidence/safe-menu-pause-20261103/VERIFICATION.json.
+
+## Sprint#9-26 — 동일 프로필 다음 판·포기 왕복 검증 (2026-11-03)
+
+- 목표: #9-24에서 남은 실제 다음 판 연결을 녹화 없이 완료하고 기존 첫 승리 결과를 보존한다.
+- 변경: 기본 OFF QA의 실제 UMG 포기 취소 확인, 다음 필드/포기 귀환의 기존 4개 유효 공격 슬롯 비교, 취소/슬롯 요약 gate. QA append 읽기 공유와 공유 reader 관찰기, 실제 UE NativeIO 회귀를 추가했다. 맵/원본 에셋/제품 밸런스/저장 스키마는 변경하지 않는다.
+- 실행: O389.908초는 `evidence_write_failed`로 보스 이동 중 blocked(엔진0/실행기1), 실패 원본 보존. P1129.537초는 실제 정상 보스 승리→같은 프로필 다음 필드→UMG 포기 취소·확정→저장귀환 완료(엔진0/실행기0, fullBoss1/nextComplete1). A→B→C 서로 다른 RunId와 단일 프로필, 1200초 타이머·너클·선택 성장 초기화/Discovery 보존을 확인했다.
+- 검증: Editor 빌드42.00/18.73/7.77초 성공. Windows 파일 공유 충돌 별도 재현 후 append100회 무손실, NativeIO 자동화1/0, 합성 파서28/28·AST0은 별도 집계. Alt 요청/수락8/8, HP 감소 관측1회는 인간 회피 난이도 판정이 아니다.
+- 보존: O360→362, P362→364. 각 기존 세이브 SHA256 변경/누락0·허용 QA2개씩 추가. P45장/O31장 전체 디코딩·SHA256, P 주요5장 Root 시각 검토와 기능별 원본 보존을 완료했다.
+- 범위: 첫 `returned_victory`/`Victory` 상태 고정, 실제 취소 동작1, 필드/귀환 슬롯 비교1. 공개 유효 슬롯 비교이며 모든 private legacy 원장 초기화 인증은 아니다. P의 저장 실패 재시도·사람 물리 입력·20분 시간초과·패키징은 미실행이다.
+- 상태: #9-24의 실제 동일 프로필 다음 판 미검증은 이번 #9-26으로 해소. 이번 기록에서 develop/test/main 병합은 하지 않았다. 보스 속도/지상형 후보·Fab·정면 시야/크로스헤어·테스트 판정 표시·처치 드롭은 최신 사용자 요청의 다음 packet이다.
+- 문서: `Feature/architect/2026-11-03_next-run-validation.md`, `Feature/doc/2026-11-03_next-run-validation.md`, `DevLog/BasicRunPlayQA/BasicRun1103O/`, `DevLog/BasicRunPlayQA/BasicRun1103P/`, `Feature/doc/evidence/next-run-validation-20261103/NativeIO1103A/`.
+
+
+## Sprint#9-27 — Combat readability and monster loot (2026-11-03)
+
+- Goal: readable boss anticipation, forward initial framing/crosshair, opt-in actual query debug, data-driven death loot with existing atomic pickup/persistence.
+- Changes: owned boss profile variant/basic warning and actual-target windup HUD; normal pitch -10; live physics query shapes/executed pulses/accepted hits with owned cleanup; provisional world Slime potion25%×1.
+- Validation: UE5.8.4 Editor build77.82s; native40/40; Boss551/0 across18 cases/HUD/menu; Spatial85/0 with37skeletal+1capsule; camera5×49/0 and25PNG pixel checks; loot26+9/0 across disk restart;54PNG decoded/hashed.364existing saves unchanged,22ownedQA adds.
+- Status: implemented/validated work checkpoint. Actual physical-input feel, all terrain/animation quality, ground-boss asset application, expanded loot balance and packaging/full20min QA remain. Fab paid Golem not acquired; account ownership unverified.
+- Docs: Feature/architect/2026-11-03_combat-readability-and-monster-loot.md; Feature/architect/2026-11-03_remaining-development-roadmap.md; Feature/doc/2026-11-03_combat-readability-and-monster-loot.md; Feature/doc/evidence/combat-readability-20261103/final/verification.json.
+
+### Sprint#9-29 인간형 보스·NPC 애니메이션 및 출력 오류 점검 (2026-11-10, 검증 중)
+- 목표: 보유 Fab/Mixamo 파생 자산으로 인간형 보스와 자연스러운 NPC 대기를 구성하고 UE5.8 BT/BB·AnimInstance/Montage 규칙과 전투 타이밍을 유지한다.
+- 변경: 최종 보스 Garret 메시, 파생 공격 프로필, 네이티브 HumanoidAnimInstance 및 몽타주5개. 아린의 새 호흡 대기 유지. 맵·능력치·보상·기존 패턴 판정은 보존.
+- 검증: B2 실제3인칭18/18케이스·431검사 실패0·저장386개 보존·빨간 오류0. 실제 PNG에서 가림/데칼/셰이더 문제를 발견해 시각 합격은 보류했고 C3에서 보완. C3 전체 빌드 성공, 후속 런타임·피격/사망 검증 진행 중.
+- 상태: 작업 브랜치 유지, 공개 커밋/푸시 없음. 1인칭 신규 개발·검수는 최신 요청에 따라 중단하고 기존 코드는 보존.
+- 문서: Feature/architect/2026-11-10_humanoid-boss-npc.md, DevLog/20261110_HumanoidBossNpc/Boss/AnimationRecord.md, Feature/doc/2026-11-10_output-log-diagnosis.md.
+
+### Sprint#9-29 3인칭 기본 시점·마우스 입력 중재 (2026-11-10, 구현/전용 검수 완료)
+- 목표: 기본3인칭 플레이, 기존1인칭 보존/신규 검수 중단, LMB/RMB/차징/동시 입력 충돌 방지와 뉴비 기본 주먹 유지.
+- 주요 변경: 어깨85cm/-12도 기본 구도, 벽 카메라 충돌·복원,3인칭 메시/데칼 처리, 마우스 입력 중재 및 취소 경계.
+- 검증: D native 성공. TP_D1 786체크 실패0,13입력 경로 통과, 실제 신규 LeftJab+1/QER·RMB·Ctrl 무기능력 거부. 카메라331.25→140.78→331.25cm, 회피248.08/벽39.97cm, 기존390저장 보존, 엔진red0.
+- 상태/한계: 전용 프로그램 입력 검수 완료. 물리입력·저장재시작·전체런·근접무기접촉은 미검증. 맵동선 변경·공개커밋·푸시 없음.
+- 문서: Feature/doc/2026-11-10-third-person-default.md, Feature/doc/2026-11-10-mouse-skill-input.md, DevLog/20261110_ThirdPerson/TP_D1/README.md.
+
+
+## 2026-11-10 인간형 보스·NPC 최종 체크포인트
+- 목표/변경: 보유 Garret와 Arin 파생 애니메이션, 기존 BT/BB 유지, opt-in AnimInstance·DefaultSlot montage, source timing/legacy 복원/RateScale 회귀 교정. 맵·vendor 원본 불변.
+- 검증: E2 성공(14.08초), Human3P_E1 451검사 실패0·18전투+피격/사망·2603프레임·22PNG 개별 판독, 기존394저장 보존, 엔진 red0. D5+D2인간형2 strict단위 통과.
+- 상태: 이번 인간형 보스/NPC 구현·격리3인칭 검증 완료. 무기 활성/아이덴티티는 별도 진행 중. 물리접촉·지속시체·전종 자연AI·전체런·AAA최종품질은 미인증. 공개 commit/push 없음.
+- 로그: ko 엔진 smoke15 영어비교 실패와 -game Editor Python AgentSkill 오류 원인 분리. QA프로세스 en/en-US·DisablePython만 적용, 엔진/사용자언어 설정 불변.
+- 문서: Feature/doc/2026-11-10_humanoid-boss-npc.md; Feature/doc/2026-11-10_output-log-diagnosis.md; Feature/doc/evidence/humanoid-boss-npc-20261110/Human3P_E1/README.md.
+- 설계 문서: Docs/WeaponClassDesign.md·SkillMotionVFXDesign.md의10무기100후보 정리 완료(구현100개 완료 아님).
+
+## Sprint#9-29 NPC 대화 선택 재개 (UTC 2026-11-10)
+- 목표: NPC 선택 불가와 중단된 F 빌드를 복구한다.
+- 변경: C4458 세 건, 특성 복귀 focus, 메뉴 takeover 안내문, 맨손 QA와 캡처/수동 결과 범위 교정.
+- 검증: 최종F4 통합빌드 성공, NPC58서비스검사 실패0·PNG6개·기존400저장 보존. 관련 회귀는 진행중.
+- 상태: NPC 기능 검증 통과, 통합 회귀 진행 중. 커밋·푸시 없음.
+- 문서: Feature/architect/2026-11-10_npc-dialogue-selection.md, Feature/doc/2026-11-10_npc-dialogue-selection.md.
+
+
+### Sprint#9-29 NPC 선택·고정 입력 packet 최종 QA 완료 (UTC 2026-11-10)
+- 상태: F9 Editor 빌드 성공 및5단계 회귀 통과. 커밋·푸시·main 승격 없음.
+- 추가 변경: 실제 Q/E/R 입력 연결 누락 교정, 비활성 FP montage가3인칭 무기변경을 막던 문제 교정. 전투 타격/비용·맵·바이너리 보존.
+- 검증: 입력92/서비스58/마을71+27/3인칭782/마우스13·단위8 모두 실패0, 원본398저장SHA보존, 최종로그8개harderror0.
+- 한계: 프로그램입력·격리fixture이며 물리입력/풀런·대검최종시각 미인증.1인칭 신규개발 보류유지.
+- 문서: Feature/doc/2026-11-10_npc-dialogue-selection.md, 최종 manifest는 해당문서참고.
+
+
+## Sprint#9-29 다섯 마을·선택 경로 보완 설계 (UTC 2026-11-10)
+- 목표: 직행 보스 입구1분 이내, 선택 콘텐츠 경유 입구 약15분, 퀘스트 없는 이동·마을 생략·재방문을 구체화한다.
+- 주요 변경: 기존 초안은 보존하고 별도 명세·결과·전용 설계 증거 추가. 다섯 마을의 고유 의뢰/상점/던전/보상 후보, 교차로 포함10지점19양방향 간선,5개 경로, 두900초 활동 예산. 보스전180초+여유120초로 기존20분 상한 유지.
+- 검증: 정적199검사 실패0, 생성파일 경로 검사 통과. 독립 소스/과거 증거 감사로 속도·시계·StartHub 전용 안전/포털·구현 공백 확인. 신규60초/15분 실제 플레이·빌드·PIE 미실행.
+- 상태: 설계 완료·정적 검증 통과, 배치·구현·플레이 검증 전. 공유 소스/에셋/설정/저장/브랜치 보존, 커밋·푸시 없음. 기존 북부 보스 보존·진입점 근접 재배치 권장, 실제 앵커·품목 수치·교전 후 이탈 정책은 후속 조율.
+- 관련 문서: Feature/architect/2026-11-10_five-village-route-spec.md; Feature/doc/2026-11-10_five-village-route-spec.md; Feature/doc/evidence/five-village-route-spec-20261110/.
+
+## Sprint#9-29 다섯 마을 별도 그레이박스 제작 준비 (UTC 2026-11-10)
+- 목표: 확정된 선택형 다섯마을 경로를 기존월드와 병렬대검작업을 보존하는 별도레벨 후보로 구체화한다.
+- 주요 변경: 신규 purePython 배치생성기와 Editor저작코드,92액터·13재질 제작JSON/SVG/검증증거.10지점·19양방향8m도로·15건물·15예약서비스·보스입구/부지. 대상은 Maps/Prototypes/FiveVillageGraybox20261110, 기존월드/포털연결없음.
+- 검증: 정적544검사 실패0, 도로/건물최소여유1.567581m, Python AST·결정성·XML·출력경계·장애물음성대조군통과. 독립UE5.8 API검토의2개수정반영. 실제Editor저작/저장/재로드/주행은미실행.
+- 상태: 분리제작준비완료, 명시적Editor인계대기. 대검8방향QA가소유중이므로 동시Editor/커맨드렛/빌드없음. 기존후보덮어쓰기와dirty작업저장/폐기차단. 서비스는예약마커,1분/15분은설계와실측구분. 커밋·푸시없음.
+- 관련문서: Feature/architect/2026-11-10_five-village-graybox.md; Feature/doc/2026-11-10_five-village-graybox.md; Feature/doc/evidence/five-village-graybox-20261110/README.md.
+
+### 2026-11-10 ResumeSword1: 대검 준비·이동 실제 적용
+- 목표: 누락 작업 asset 저장, 검 준비/이동 실제 연결, 양손 그립 및 기존 무기 회귀.
+- 구현: 27 sample/17 unique armed stride BlendSpace + Common AnimBP 연결, section/notify preflight, event-driven 양손 palm grip와 fallback/소유권 보존, 전용 렌더 QA 추가.
+- 검증: Editor build 성공, SwordResumeB 기존10스킬/34PNG, SwordMoveA20케이스/20PNG 및 실제 이미지 검수, 기존432 save 보존. Magic buffer3파일 독립1,701검사 통과. 공식 MCP로 slash VFX 후보 편집/저장·compile오류경고0.
+- 상태: 이동/전환 적용·검증 완료. 새 대검 공격5개 스킬 연결/접촉 시점, slash VFX 실제 게임 승인, 수정한 장착 unit fixture 재검증은 남음. 1인칭 보류.
+- 문서: Feature/doc/2026-11-10_sword-knuckle-visuals.md, Feature/doc/evidence/sword-knuckle-20261110/ResumeSword1/.
+
+## Sprint#9-29 다섯 마을 별도 그레이박스 실제 제작 완료 (UTC 2026-11-10)
+- 목표: 인계받은 단독 에디터에서 설계 경로를 신규 레벨로 생성·저장·재로드하고 실제 엔진 충돌/화면을 확인한다.
+- 주요 변경: Maps/Prototypes/FiveVillageGraybox20261110 레벨1개, 전용 MaterialInstance13개.92액터·10지점·19양방향8m도로·15건물·15예약서비스. 기존 월드·포털·보스·NPC·대검·세이브 통합은 수행하지 않았다.
+- 검증: 정적544/엔진748 실패0.38방향 capsule sweep·636바닥표본·양성 대조군,92액터 재로드, 실제 MCP 전체/사선/근접 시각 검수. 기존3맵 SHA256 불변. 최초 재질 반환값 오류를 읽기 검증으로 복구했고 초기 노출 경고 캡처도 보존했다.
+- 상태: 별도 그레이박스 실제 제작/저장/기술 검증 완료. 생산 캐릭터 보행·60초/15분 실측·퀘스트/서비스·기존 월드 연결은 미완료. PID53928 정상 종료20:20:54UTC 및 UE/UBT/dotnet0 확인. 커밋·푸시 없음.
+- 관련 문서: Feature/architect/2026-11-10_five-village-graybox.md; Feature/doc/2026-11-10_five-village-graybox.md; Feature/doc/evidence/five-village-graybox-20261110/final-verification.json.
+
+
+## ResumeSword1 실제 공격 활성화 및 통합 회귀 후속
+
+- 대검 5개 편집 Montage와 접촉 지연을 실제 스킬에 적용했다. 원본 FBX/애니메이션과 기존 밸런스/슬롯/VFX 필드는 보존했다.
+- SwordAuthoredA 실제 게임 렌더에서 기존 너클/대검 10개 공격과 PNG 34장을 검증했다. 대검 5개의 최초 HP 감소 관측에서 실제 타깃 캡슐과 칼날 선분 거리 조건을 통과했다. 실패 0, 기존 저장 432개 해시 보존이다.
+- 34장 모두 직접 확인했다. 대검의 공격과 무장 자세 복귀, 너클의 주먹 공격과 검 잔존 없음은 보인다. 후방 시점·블러·지연 캡처 때문에 정확한 접촉 프레임, 손가락 표면, 연속 동작까지 승인한 것은 아니다. 기존 두 스킬의 시전/적중 VFX는 사진에서 뚜렷하지 않아 시각 완료로 처리하지 않았다.
+- 공유 콘텐츠에서 CatalogSharedA 소비/정책/성장 6개 검사가 통과했다. 20개 신기술 콘텐츠 및 카탈로그 활성화 완료를 뜻하지 않는다.
+- WeaponIntegratedA는 10/11, BossTargetA는 1/5였다. Staff fixture의 ASC 초기화 누락과 Boss fixture의 abstract 캐릭터 생성 실패를 확인하여 검사 준비 코드만 수정했다. 실패 기록을 보존했고 새 빌드/새 라벨 재검증 전까지 통과로 계산하지 않는다.
+- 드롭 자동 재획득 4파일 패치를 백업 후 통합했다. 파티클 30개는 아직 실제 생성 전이며 검증 준비 도구만 작성했다.
+- 근거: SwordAuthoredA/rendered-review.json, catalog-consumption-20261110/CatalogSharedA, weapon-presentation/WeaponIntegratedA, tmp/work-boss-ai-target-loss-20261110/Engine_BossTargetA.
+
+
+## 파티클 실제 제작 및 통합 검사 후속
+
+- 공식 Unreal MCP로 너클·대검 파티클30후보를 실제 생성/컴파일/저장했다. 오류0, 스택 경고0, 원본4개 해시 보존. 시전·단발 잔상·적중 후보이며 게임 스킬 연결과 연속 리본은 미완료다.
+- 첫 프리뷰는 도구의 SimCache 반환형 검사에서0PNG로 멈췄다. realtime override ensure도 확인해 수정 중이다. 보호 파일44개 해시를 보존했고 소유 PID13140 정상 종료, UE/빌드0 확인 후 마법 담당에게 인계를 제안했다.
+- WeaponIntegratedB 무기11개, BossTargetB 타깃 생명주기5개, CatalogSharedA 소비/성장6개, LootRetryB 신규 드롭3개 검사가 통과했다. 첫 실패 fixture 기록은 보존했다.
+- 자연 AI 회귀의 보스2실패는 실제 windup1.6/1.9초보다 이른 고정1.3/1.6초 검사에 기인했다. 검사만 실제 locked windup 기반 유한 관측으로 바꿔 빌드했으며 재실행 전까지 통과로 계산하지 않는다.
+- 드롭 Write/Read A는 게임 assertions 성공이나 불필요한 Editor Python 오류가 있어 깨끗한 통과로 승인하지 않았다. -DisablePython/오류로그/전체 저장해시 검사 보강 후 B는 엔진 selftest 텍스트를 Error verbosity로 오인한 regex 문제로 Write 뒤 멈췄다. 정확한 Error: 판별로 고쳐 다음 fresh 실행을 대기한다. 저장 원본 변경 근거는 없다.
+- 남은 작업: 후보 실제30렌더/시각 검수, 드롭 전체8개와 강화 Write/Read, 자연AI 재검증. 관련 문서: Feature/doc/2026-11-10_weapon-skill-particle-candidates.md.
+
+[Notion 요약 후보] 너클·대검 파티클30개를 UE MCP로 실제 제작했다. 게임 연결 전 후보 검수 단계이며 첫 프리뷰 도구 실패를 수정 중이다. 무기11·보스5·카탈로그6·드롭3 회귀는 통과했고 나머지 저장/자연AI 회귀를 별도 추적한다.
+
+
+## 드롭 자동 재획득 통합 검증 완료
+
+- LootAllA 전체8개 자동화와 LootResumeC 실제 Write26/Read9 검사를 통과했다. 오류로그0, 기존 저장 변경/소실0, 예상 밖 신규 저장0이다.
+- fixture의 QA profile/EndPlay 정리와 runner의 Editor Python 제외·정확한 Error: 판별·전체 저장 해시 검사를 적용했다. 과거 실패 증거는 보존했다.
+- 단일플레이 통제 fixture이며 물리 입력·전체 런·정상 드롭 확률 검증과 구분한다. 마법8자산의 인계 해시도 보존했다.
+- 문서: Feature/doc/2026-11-10_monster-loot-pickup-retry.md.
+[Notion 요약 후보] 가방이 가득 차서 놓친 드롭을 제자리에서 공간 확보 후 자동으로 다시 줍도록 통합했다. 전체8개 회귀와 실제 저장/재로드35개 확인을 통과했다.
+
+
+## 회수 후 자연 AI·파티클 실제 검증 후속
+
+- BossNaturalB 자연 AI/공격/정리 회귀는 112개 성공, 실패0, 기존 저장 보존이다. 실제 wave1.6초/zone1.9초 windup을 관측했다. 고정 검사 시점을 제거한 QA 수정의 재검증이며 AI/밸런스를 바꾼 결과가 아니다.
+- 관련 PNG8장을 직접 확인했다. 파동의 분홍 효과는 보이나 장판은 첫 Niagara 컴파일 이전에 캡처를 요청해 작은 점과 Preparing Niagara Systems가 남았다. 장판 시각·첫 사용·패키지 검증 완료로 승인하지 않는다.
+- 파티클 최소 ProbeA는 running/paused/restored 캡처 차이와 실제 Age 키·입자1을 실증했다. 이를 적용한 PreviewC는30개 모두 실제 데이터 age/입자1 검증 및 PNG30장 확보, 보호44개 해시 보존에 성공했다.
+- C의 대표 사진에서 카메라와 target cylinder 가림 때문에 효과를 판독하기 어려워 시각 승인하지 않았다. 색/재질/자산은 건드리지 않고 반대 카메라·가림 제거의 대표6개 DiagnosticD로 검토를 좁혔다.
+
+
+### 단일 밝기 개선 프로토타입 실제 제작·비교
+
+- 공식 MCP에서 새 MIC1개와 이를 쓰는 대검 기본1타 Cast NS1개만 생성·컴파일·저장했다. inherited CueTint의 linear RGB를8배로 바꾸고 alpha1을 보존했다. 원본56개 해시는 동일하다.
+- 실제 ReadabilityPrototypeF1장과 baselineE 사진을 비교해 금색 세로 시전 flash가 더 뚜렷함을 확인했다. 프리뷰는58개 파일 해시 및 실제 age/입자1을 보존·검증했다.
+- 이는1개 고정 포즈 후보 비교다. 기존30개로 HDR를 확대한 것도, 게임 스킬에 연결한 것도 아니며 체감 밝기8배나 실제 전투 가시성 통과를 뜻하지 않는다.
+- Shader schema의 flat property map을 잘못 가정한 ReadabilityGain8A는 생성0건으로 중단했고 근거를 보존했다. 실제 schema 회귀검사 후 새B라벨에서 제작했다.
+
+
+## 통합 회귀 및 파티클 전체 실제 화면 검토 마무리
+
+- 무기11, 타깃 생명주기5, 카탈로그 소비/성장6, 드롭 전체8 및 Write26/Read9, 자연AI112개 검사 결과를 통합했다. 기존432개 저장 해시를 현재 디스크와 재대조해 변경·소실0을 확인했다.
+- SkillParticlesReviewG에서 기존30후보 전부 실제 age/입자1·Color/Size/NormalizedAge와 PNG완료를 확인하고30장을 직접 보았다. 보호56개 해시 동일, 소유 임시 NiagaraActor30개 정리, 오류/ensure0이다.
+- 기본 효과 형태는 보이지만 일부 시전은 몸/손에 겹치고 전반 대비가 낮다. 최종 게임 가시성/스킬 연결 승인은 아니다. 별도 MIC/NS gain8 프로토타입1개는 더 명확한 금색 시전 flash로 확인했으며 기존30개에는 확대하지 않았다.
+- 장판 첫 사용/cooked 패키지 가시성, 실제 스킬 scale/dilation/부착/타격 연계, 연속 ribbon, 지팡이 모델 지정, 신규20 기술 콘텐츠는 후속 범위다. 1인칭은 계속 보류했다.
+- 소유 PID55388은22:28:07 UTC 정상 종료 로그를 남겼고22:30:28 UTC UE/빌드/셰이더0을 확인했다. 엔진 종료 뒤 launcher의 PowerShell false/$false 오타가 있었으나 실제 작업은 반복하지 않고 캡처·종료로그·프로세스 상태를 독립 확인해 근거를 보완했다.
+- 최종 근거: Feature/doc/evidence/sword-knuckle-20261110/particle-candidates/final-integration-summary.json 및 SkillParticlesReviewG/visual-review.json.
+[Notion 요약 후보] 대검 편집 모션과 통합 기능 회귀를 검증했고, 너클·대검 파티클30후보 전부 실제 렌더를 검토했다. 최종 게임 연결 전 대비/위치/실제 전투 조건 보완이 남아 있으며 원본·저장·마법 자산은 보존했다.
+
+### 2026-11-10 지팡이 소유 자산 재사용·활성 VFX 시인성 재개
+- 목표: 확인된 소유 모델/모션으로 지팡이 장착을 검수하고 기존 활성 VFX의 실제 게임 시인성을 개선한다.
+- 변경: 검증된 로컬 Wizard 지팡이5원본 설치·MCP Staff01 파생1개, StaffStrike/Shot Manny/Human 파생4개, 기존 두 스킬의 밝기 파생 VFX 연결, 3인칭 VFX의 FP 메시 선택 오류 수정.
+- 검증: 원본17/모델5 보존, retarget8PNG, 빌드22.66s/15.02s, 실제 게임10스킬34PNG와 첫 피해 대검5 proxy/실제3P부모·scale·Niagara age 통과, 저장444보존.
+- 상태: 지팡이 production 기본값·실제 플레이어 검수 진행 중. cast 최종 시인성과30후보 활성화는 미완료. 공개 source 배포권 미확인으로 커밋/푸시 없음.
+- 문서: Feature/doc/2026-11-10_staff-equipment.md, Feature/doc/2026-11-10_active-weapon-vfx-readability.md.
+
+
+## Sprint#9-29 지팡이 실제 장착·대기 방향 (UTC 2026-11-11)
+- 목표: Staff 모델 기본값 미연결 및 대기/회복 뒤집힘을 실제 코드로 해결한다.
+- 변경: native 모델/grip/policy, 소유권을 보존하는 finalized-bone 방향 보정과 DefaultSlot 블렌드, 실제 grid 장착 fixture 및75조건 수학 회귀.
+- 검증: Editor53.54초 성공, StaffNativeResumeC461프레임·8PNG·2클립·실제 합성아이템 장착 실패0, 저장444·보호25패키지 보존,8장 직접 검수. 무기 회귀 별도 결과 대기.
+- 상태: 로컬 구현/장착·표현 검증 완료. 전투DA 신규연결/피해·전종족·풀런 미인증,1인칭 보류·공개배포 없음.
+- 문서: Feature/architect/2026-11-11_staff-upright-idle.md; Feature/doc/2026-11-11_staff-upright-idle.md.
+
+무기 최종 회귀: StaffNativeUnitC 실제 report12/12성공·경고0·오류0, 저장444보존.75조건 StaffUprightMath 포함. 실행기 요약의 과거 개수11표기는 원본을 보존한 reconciled-summary.json으로 정정했고 검증 gate는 처음부터12개였다.
+
+
+### Sprint#9-29 전리품 QA 보호 통합 (UTC 2026-11-11)
+- 목표/변경: 기존 기능 보존, 전체·숨김 저장 및 suite/error 검사를 보강한 QA 스크립트 통합.
+- 검증: 격리29/29, 현재DLL ResumeQA1111전체8/8성공, 원본변경0·예상밖신규0·suite red0. 사전 self-test red15분리.
+- 상태: 로컬 통합·현재DLL검증완료, Write/Read재실행·물리입력/풀런미실행. 커밋/푸시없음.
+- 문서: Feature/doc/2026-11-11_loot-qa-resume.md.
+
+
+### 2026-11-11 마법 스킬 VFX 연결 구현 패킷
+- 목표: 기존 Niagara 후보를 현재 Staff 스킬 경로에 연결할 실행 코드를 만들고 공유 에디터/빌드와 충돌 없이 검증한다.
+- 주요 변경: Primary01 visual-only 계약, 공식 MCP prepare/inspect/apply/verify, 전체 필드 보존·stale/dirty/charge 사전 감사·저장 파일 해시 고정, 오프라인 테스트.
+- 검증: unittest29개·Python AST4파일·CheckGeneratedChanges 통과. 후보8개 해시 일치. live MCP/UE/build/DA 수정 없음.
+- 상태: 구현·오프라인 검증 완료, 실제 연결과 실전/cold reload 검수는 통합 담당자 에디터 사용권 대기. Circle/Release·기존 Charge는 미연결/보존.
+- 관련 문서: Feature/architect/2026-11-11_magic-skill-vfx-binding.md, Feature/doc/2026-11-11_magic-skill-vfx-binding.md, Feature/doc/evidence/magic-skill-vfx-binding-20261111/validation.json.
+
+## Sprint#9-29 다섯 마을 런 연결 우선 구현 (UTC 2026-11-11)
+- 목표: 기존 월드를 보존하며 후보를 정상 Hub·생산3인칭·1200초 런에 연결할 신규 구현을 마련한다.
+- 주요 변경: 새 Portal/GameMode, PlayerState 관측 Component, RouteDataAsset 스키마·독립 상태 모델, 담당자용 포털 추가/보존/재로드 코드, UE Automation2개와 portable C++회귀. 기존 파일·맵·무기·카메라·세이브는 변경하지 않았다.
+- 검증: 독립 MSVC52검사·실패0와7만 회 재진입, 활성화 AST/guard2개 통과. 독립 검토에서 포털 lateral축 오류를 수정했다. UE 컴파일·자동화2개·실제 진입/timer/귀환은 미실행.
+- 상태: 신규 소스 구현 완료·독립 검증 통과, 공유 지팡이/통합 담당자의 빌드·에디터 활성화 대기. NavMesh/보스·서비스/의뢰/던전·마을pause/cook·60초/15분 실측은 후속. 커밋·푸시 없음.
+- 관련 문서: Feature/architect/2026-11-11_five-village-runtime-connection.md; Feature/doc/2026-11-11_five-village-runtime-connection.md; Feature/doc/evidence/five-village-runtime-20261111/README.md.
+
+
+### Sprint#9-29 보스·카탈로그 현재 DLL 통합검증 (UTC2026-11-11)
+- 목표/변경: 기존 gameplay 보존, readiness/QA실행기와 격리검사·문서 통합.
+- 검증: 보스격리49, 타깃수명5, 자연AI112, 카탈로그격리8/엔진6 모두 통과. 원본 저장 보존·예상밖신규0. 카탈로그 테스트/종료red0,카탈로그사전red0(전리품사전15와구분).
+- 상태: 로컬통합/현재회귀완료. 장판시각·20개콘텐츠/선택UI/저장이관·풀런미완료,1인칭보류·공개배포없음.
+- 문서: Feature/doc/2026-11-11_monster-ai-resume-readiness.md; Feature/doc/2026-11-11_catalog-resume-validation.md.
+
+
+### Sprint#9-29 Staff Primary01 VFX 실제 연결 (UTC2026-11-11, 검증중)
+- 변경: 백업 후 공식MCP 단일DA8표현필드저장. FP-only배율0.5·비시각필드·나머지자산보호.
+- 검증: live serialization교정/FP보존36단위, 전체snapshot·저장hash apply/readback성공.
+- 상태: 실제연결완료, cold readback·3전투케이스11PNG 검증진행. Circle/Release/Charge/피해·모션불변·1인칭보류·공개배포없음.
+- 문서: Feature/doc/2026-11-11_magic-skill-vfx-binding.md.
+
+
+## Staff Primary01 VFX cold reload·실전 정합성 검증 (UTC2026-11-11)
+- 실제8필드 연결 후 서로 다른 Editor PID41608→41280의 종료/재시작·cold readback을 통과했다. FP전용0.5·기존비시각필드·나머지자산보존이다.
+- 통합 Editor28.15초 성공. 실제3요청 정상피해/무적/빗나감,11callbackPNG·Niagara age/parent/scale·native montage 연속재생·원본저장/파일보존 실패0.
+-11장 모두 직접 보았으나 기본3인칭 cue는 가림/대비/이른 표본 때문에 뚜렷하지 않아 시각 완료로 승인하지 않았다. 첫HP감소는 기존delay0의 관측이며 접촉승인이 아니다.
+- 기술연결/정합성 완료와 시각개선 대기를 구분하고 맵 검증을 우선한다.1인칭보류·공개커밋/푸시없음.
+- Notion 요약 후보: 지팡이 기본공격 VFX를 실제연결하고 저장재로드와 피해정합성을 검증했다. 실제 화면에서 가독성 개선이 남아 별도 추적한다.
+
+## 다섯 마을 별도 런 입구 실제 활성화 (UTC2026-11-11, 여행 검수 대기)
+- 새 GameMode/PlayerState 방문 Component/전용 Portal/경로정의 source를 실제 UHT·Editor 빌드에서 통과시켰다. 최종 통합 빌드28.15초 성공이다.
+- 현재 DLL의 Rogue10m.FiveVillage RuntimeDefaults/RouteDefinition2개가 정확경로·queue·종료0·원본저장/DLL보존으로 통과했다. 이2개는 여행 검사가 아닌 기본값/스키마 검사다.
+- Hub.umap과 외부Actor/Object709개를 SHA일치 백업했다. 단독 clean Hub Editor PID29248에서 지면/캡슐통과 검사 후 새 입구를(600,4270,180)에 추가·저장했다.
+- L_Menu→StartHub 실제 재로드에서 새 Portal1개·기존 Portal1개와 원래 목적지/위치/옵션 불변을 확인했다. 후보/기존 OpenRunMap/L_Menu 파일SHA는 동일이다.
+- 디스크 변화는 Hub.umap수정1개와 새 Portal/폴더 외부패키지3개뿐이다. 기존709개 중 Hub.umap 외 패키지 변경은 없다.
+- 정상 프로필 진입·방문/재방문·타이머·정산·귀환·새 런 초기화는 후속 실제 travel fixture에서 검증한다. 보스/NavMesh/서비스/의뢰·60초/15분 실측·cook/full run은 미완료다.
+- Notion 요약 후보: 다섯 마을 후보로 가는 별도 입구를 Hub에 실제 배치하고 저장재로드를 확인했다. 기존 입구는 보존했고 정상 런 여행 검수는 별도 진행한다.
+- 근거: Feature/doc/evidence/five-village-runtime-20261111/{VillageUnitA,EditorActivation1111A}, entry-activation-*.json.
+### Sprint#9-29 다섯 마을 실제 여행 QA fixture·실행기 (UTC2026-11-11)
+- 목표: 정상 입구 여행·1200초 시계·직행/방문·재방문·포기 정산/저장·Hub 귀환을 실제로 검증할 격리 fixture와 실행기를 준비한다.
+- 변경: Source 설치 대상 C++ 한 파일을 Feature/implementation에 준비했다. 계획 기본값/사용권·해시·DLL·프로세스 guard, 두 QA 저장 namespace, 원본 저장 보존과 엄격한 결과 판정 helper·오프라인 검사를 추가했다. 공유 Source·에셋·설정은 수정하지 않았다.
+- 검증: 계약83·계획27검사 실패0, 프로세스 시도0, AST·정적/독립 검토 통과. 통합 담당자의 새 포털 저장·재로드 기록을 확인했다. fixture UE 컴파일·실제 여행/60초는 미실행이다.
+- 상태: 격리 구현·오프라인 검증 완료. Windows 패키징 동결/공유 사용권 해제 후 Source 한 파일 설치·새 Editor DLL 빌드·실제 Direct/Revisit 실행 대기. 정산은 무보상 포기 범위이며 보스 승리·비영 재화 rollback·15분 콘텐츠·물리 입력/전체 런은 후속이다.3인칭 유지·커밋/푸시 없음.
+- 관련 문서: Feature/architect/2026-11-11_five-village-travel-fixture.md; Feature/doc/2026-11-11_five-village-travel-fixture.md; Feature/doc/evidence/five-village-travel-20261111/README.md; preparation-validation.json.
+
+
+## Windows 실행 패키지 빌드 환경·독립 체크포인트 (UTC2026-11-11, 진행중)
+- Editor DLL 빌드와 별개로 Win64 Game Development·cook/stage/Pak+IoStore/archive를 실제 수행한다.
+- 기존 VS2022/MSVC14.44·SDK10.0.22621을 사용하며 Turnkey VerifySdk가 실제 VALID/종료0을 확인했다. 새 소프트웨어 설치나SDK업데이트는 하지 않았다.
+- Source/Config/저장된Content4.48GiB·6665개를 D:/R10/Win1111A/Rogue10m의 독립물리 체크포인트로 복사했다. Source/Config 전체SHA와4맵/기본StaffDA를 대조했다. 공용Source/Config/Content는 복사 이후 별도Work가 계속 가능하다.
+- PackageWindows.ps1에 명시4맵·IoStore/Prereqs·SDK확인·fresh경로·실제결과기록을 추가했다. cook출력은 Windows로 끝나는 별도경로,stage/archive도분리한다. 처음독립체크포인트는Editor모듈도 함께컴파일한다.
+- 초기실행기 timestamp/Join-Path 인자조립문제를ActualSDK뒤에 발견해 교정했다. 전체UAT인자를Preflight에서먼저조립/저장하도록고쳤고 실제BuildCookRun을시작했다. UE컴파일실패로 오인하지않는다.
+- 이전Build/Windows·기존Saved캐시는 덮거나clean하지 않았다. 신규자동전리품/퀘스트/무기스킬/보스cadence/VFX가독성/실travelQA 대기패킷은 이번체크포인트에미포함이다.
+- 실제패키지cold실행/메뉴PNG/필수Cook자산·저장경로검수는 빌드후수행하며 아직완료로보고하지않는다.
+
+
+### 2026-11-11 Windows 실행용 패키지
+- Editor DLL과 구분되는 실제 Rogue10m Win64 Development Game 컴파일·4맵 cook·IoStore·stage·archive 성공. SDK 자동 설치 없이 기존 환경 검증.
+- native soft runtime Widget/무기/동작/로비재질 cook 누락을 실제 실행에서 수정. 42개 exact 자산 검사, missing-package/모든 Error 실패 gate, bootstrap 자식·격리 저장 경로 검증 추가.
+- 최종 D: BCR94.24초 exit0, cook0오류3기존경고. 내부EXE/루트런처 DX12 cold 메뉴 및4PNG 확인, 저장447개 변경0. 전체 패키지 런/전투/포털·Shipping 검증은 미완. 자동획득 등 다음 패치는 미포함. Feature/doc/2026-11-11_windows-executable-package.md 참조.
+
+
+### Sprint#9-29 하위 작업: 몬스터 자동 입고·초과 수량 드롭 (2026-11-11)
+
+- 목표: 사냥 보상을 인벤토리에 먼저 입고하고 부분 스택을 채운 뒤 들어가지 못한 수량만 바닥에 드롭한다.
+- 주요 변경: 전용 인벤토리 입고 API·실제 처치자 연결·월드 수명 잔량 보관·바닥 실패 재시도·receipt 중복/거부 상태·런 종료 가드. 기존 줍기·저장 형식·골드·경험치·3인칭 유지.
+- 검증: 실제 수량 정책 standalone clang 컴파일, 9개 사례·무작위 5만 회·2,103,255검사 통과. 신규 UE 5개 작성 및 기존 저장 fixture 갱신. UE 빌드·자동화·실게임 미실행.
+- 상태: 격리 구현·독립 검증 완료, 공유 통합·Editor 빌드·신규/기존/저장 회귀·Windows 패키지 반영 대기. 공유 파일·프로세스 미변경, 커밋·푸시 없음.
+- 관련 문서: Feature/architect/2026-11-11_monster-auto-loot-overflow.md, Feature/doc/2026-11-11_monster-auto-loot-overflow.md.
+
+
+## Sprint#9-30 근접 신규 기술 콘텐츠 구현 패킷 (UTC 2026-11-11, 격리)
+- 목표: QA 실행기 준비에서 나아가 G04/G10 실제 전진 종점 단타와 K01~K10/G01~G10 독립 데이터 제작 경로를 구현한다.
+- 주요 변경: 기본 비활성 전진 옵션/타이머 컴포넌트·Combat 피해 연결·회피 상호 배제, 승인 snapshot/바닥·취소·재진입 보호, 원본 필드 보존과 제작중 metadata를 갖는20개 Editor 레시피/제작기. production 프로필·성장·세이브는 연결하지 않았다.
+- 검증: 독립 MSVC 시간축10시나리오56검사·모의 Unreal16개 통과,18원본 로컬 파일/해시 확인·읽기 전용 소스 리뷰. UE 빌드·실제 DA 생성/재로드·물리/시각 검증은 미실행이다.
+- 상태: 격리 구현/독립 검증 완료·패치 통합 인계. 공유 반영과 UE 사용권은 담당자 조율 후 진행. G05/G06/G08 고유기믹·G10 경로피해·전용모션/VFX·UI/저장이관은 미완료다.1인칭 보류·커밋/푸시 없음.
+- 관련 문서: Feature/architect/2026-11-11_melee-skill-content.md; Feature/doc/2026-11-11_melee-skill-content.md; Feature/doc/evidence/melee-skill-content-20261111/README.md.
+
+### Sprint#9-30 전진 기술 중단 계약 보강 (UTC 2026-11-11, 격리 후속)
+- 목표/변경: 통합 검토에서 발견된 paid 동기취소 쿨다운 누락과 외부 몽타주 중단 뒤 잔여 이동/타격을 수정했다. 지불 직후 공유쿨다운1회·긴 deadline metadata보존, 승인 playback instance poll과 Combat 마지막 접촉검사를 추가했다.
+- 검증: 독립 소스/API·콜백 리뷰에서 완료 listener 경계를 수정하고 추가 결함 없음. 실제 자원 delegate/몽타주 상태 UE 회귀를 작성했으나 공유 UE/빌드 소유권으로 컴파일·실행은 미실행이다. 기존56/16검증과 구분한다.
+- 상태: V1 보존·수정본/전용delta 인계. 의도적 중단 후 커밋은 디자인 미결정이며 기본 취소다. 공유 파일·에셋/세이브 변경0·UE/UBT0·커밋/푸시0.
+- 문서: Feature/doc/2026-11-11_melee-skill-content.md; tmp/SkillContent20261111/Delivery/InterruptionFixB/README.md.
+
+### Sprint#9-30 피격 기본 취소 구현 (UTC 2026-11-11, 격리)
+- 목표/변경: 사용자 결정에 따라 양수 실제피해→기술취소를 Character/Combat/Basic에 연결했다. 비용/use/쿨다운 보존, 남은 연타/입력/콤보/GAS·전진 정리, local pulse snapshot과 반사피해 hit/miss 확정, exact playback 중단을 구현했다. 면역/슈퍼아머/피격모션은 추가하지 않았다.
+- 검증: 새 UE Automation9개 작성 및 독립 소스/API·콜백 리뷰 완료. 엔진 컴파일/실행은0으로 기존 독립56/모의16과 구분한다. 신규native 표적UCLASS의 inline 구현으로Shipping링크 위험을 줄였다. 실제Windows빌드·패키징/플레이는 상위담당자 범위다.
+- 상태: 구현9/UE회귀3파일의 수정본 full 및 V1 delta 인계. 공유 Source·에셋·설정 동결 준수·UE/빌드 사용0·커밋/푸시0. 면역 도입 여부는 사용자 실플레이 테스트 뒤 결정이다.
+- 문서: Feature/doc/2026-11-11_melee-skill-content.md; tmp/SkillContent20261111/Delivery/InterruptionFixB/README.md.
+
+
+### Sprint#9-29 다섯 마을 선택 회수 의뢰 수직 구현 (UTC2026-11-11)
+- 목표: 길을 잠그지 않는 V1수락→V3회수→V1재방문/보상 흐름을 기존 게임 계약에 연결할 격리 구현을 준비한다.
+- 주요 변경: 신규 C++7개(모델/DataAsset/PlayerState Component/상호작용Actor), 비충돌2actor 오프라인배치준비기·명세/검사. 수락전fact·같은RunId상태·새Run초기화·실제인벤토리성공후1회확정·실패재시도/재진입차단. 기존 NPC/게임모드/세이브·전투·카메라 수정없음.
+- 검증: MSVC17 W4/WX 모델69/0·2만회stress·compile/run0, 배치25/0·원본scene/맵/물약SHA보존, 독립API/수명검토에서추가critical/medium없음. 공유Source설치·UHT/UE전체빌드·실제F/지급/재로드/정산은미실행.
+- 상태: 격리구현·오프라인검증완료, 공유담당자사용권/동결해제후Source7개설치·빌드·기존후보에Actor2개additive배치/실제검증대기. 전체5마을상점/던전/보스·안전메뉴·60초/15분·cook미완료.3인칭·피격취소유지·면역보류·커밋/푸시없음.
+- 관련 문서: Feature/architect/2026-11-11_five-village-optional-quest.md; Feature/doc/2026-11-11_five-village-optional-quest.md; Feature/doc/evidence/five-village-quests-20261111/{README.md,implementation-validation.json,placement-plan.json}.
+
+## Sprint#9-31 — 월드맵 실제 제작 참조 통합 (2026-11-12)
+- 브랜치: Sprint#9-31-world-map-production-reference
+- 목표: 대화의 최신 기획과 생성 지도를 실제 맵 제작자가 함께 참조하도록 프로젝트에 보존한다.
+- 주요 변경: 제작 기준·이미지/생성기록·배치/획득처 JSON, 시작 마을/3거점/5초소/15일반+4중간+1최종·직업 경로·NPC 대사·최신 입력/비급 정책 통합. AGENTS와 기존 제작 가이드 진입 링크 추가.
+- 검증: JSON/참조/거리/이미지해시·로컬링크·생성경로 검사. 최종 결과는 Feature/doc/evidence/world-map-production-reference-20261112/validation.json 참조. UE 빌드/PIE/실제 맵 적용은 문서 범위 밖이다.
+- 상태: 제작 참조 문서화. 실제 맵/신규AI/비급 제작은 계획 단계이며 기존 WIP를 완료로 승격하지 않는다.
+- 관련 문서: Docs/WorldMapProductionGuide.md; Docs/References/WorldMap/README.md; Feature/architect/2026-11-12_world-map-production-reference.md; Feature/doc/2026-11-12_world-map-production-reference.md.
+- 최종 검증 추가: 정적584/링크36 통과, PNG 원본SHA 일치, 기존 WIP67개 해시 보존. 독립검토2건 반영. 원격 통합 기준보다 기존28커밋이 앞서 문서 작업 브랜치 체크포인트만 공유하고 통합 승격은 별도 검증까지 보류한다.
+
+## 게임 종료 UI (2026-11-11)
+- 목표: 모든 메뉴의 종료·확인·취소와 저장 실패 보호.
+- 변경: 공통 C++ UMG 확인창, Controller 컨텍스트 검사, 정상 저장 후 종료, 기존 런 중단 정책 유지.
+- 검증 및 상태: Feature/doc/2026-11-11_game-quit-ui.md 참조.
+- 동시 작업 중인 브랜치·에디터·기존 변경은 유지. 공유 원본의 빌드/commit/push는 수행하지 않음.
+
+### Sprint#9-32 마비노기 비교 맵 규모·밀도 기획 (한국시간2026-11-12)
+- 목표: 사용자 맵과대/마비노기참고피드백을 현재맵증거·공식자료로비교하고5핵심거점/갈림길/재방문·직행1분/성장15분과직접편집가능성을보존하는기획서를작성한다.
+- 주요내용: 실제1.8km사방·21앵커760×340m·프로그램48.537초(안정화2초/허브준비teleport구분)·실제캡처2장분석. 공식마을서비스/주변활동과우리제안을분리.900×562.5m사본의면적84.375%축소산술안과기능밀도·검증/편집계획.
+- 검증: 기존terrain/scene/runtime/portal증거및PNG직접검토,마비노기PC공식3페이지확인. 새맵·높이파일·Source/설정·카탈로그수정/빌드/Editor/MCP/게임실행없음. 새후보플레이·충돌·콘텐츠·성장15분은미실행.
+- 상태: 기획서안전저장완료·사용자지시에따른개발일시중단. 소유UE/UBT프로세스0,타인프로세스미조작,읽기조회1건세션완료상태미확인. 커밋/푸시없음.
+- 관련문서: Feature/architect/2026-11-12_mabinogi-map-density-plan.md; Feature/doc/2026-11-12_mabinogi-map-density-plan.md.
+
+### Sprint#9-32 맵/공유통합 재개 CheckpointA (UTC2026-11-13)
+- 목표: 현재WIP보존·단독UE/빌드사용권확인후최신맵축소의독립사본을작은실행단위로준비한다.
+- 변경: 체크포인트/복제실행기·설계/인계문서 추가,2478파일/자동저장9개백업,신규WP맵 WorldLayoutCompact20261113A 저장. 기존Source/Config/원본맵/포털교체없음. 후보helper2개는격리준비만.
+- 검증: 정규UHT/Editor134.95초exit0·Source/Config339기존SHA변화0,정식duplicate exit0·외부Actor1360/Object58·보호2478파일SHA변화0. map QA입력20/종료manifest해시일치,실행기/후보helper정적독립리뷰통과.
+- 상태: 첫실행체크포인트완료. 실제crop/재로드·현재레이어/페인트/액터동등성·통행/15분/패키지는미검증.900×562.5기획과9×5보존대안구분,3인칭/피격취소유지·면역보류·커밋/푸시없음.
+- 문서: Feature/architect/2026-11-13_compact-world-resume.md; Feature/doc/2026-11-13_map-integration-checkpoint-a.md; Feature/doc/evidence/map-resume-20261113/{BaselineA,DuplicateA}.
+
+
+### Sprint#9-32 변경 — 2026-11-13 비GUI 맵 체크포인트 B
+
+- 목표: 현재 편집 가능한 Landscape 데이터의 보존 기준 확보와 화면조작 중단 준수
+- 변경: 소유 helper2개 v2, 읽기 전용 commandlet, 상태/해시 근거 문서
+- 검증: UHT/Editor exit0·30.55초; commandlet exit0·21.67초; 지형256/충돌256/프록시16·179488샘플; 원본2478·후보1419 SHA불변
+- 상태: 후보는1800×1800m 그대로. native Manage/Delete 및 실제 UI 검증 보류; 통합 소스 후속 진행 중
+- 관련: Feature/doc/2026-11-13_map-integration-checkpoint-b.md
+
+
+### Sprint#9-32 변경 — 2026-11-13 통합 체크포인트 C
+
+- 목표: 다른 Work의 검토된 소스를 보존 통합하고 GUI 없이 실제 UE 검증
+- 변경: G08+VFX29/NPC30 소스·도구·안내, UHT 배열 Units2곳 호환 수정, public Import 보존 검토
+- 검증: UHT/Editor exit0·104.31초; native43/43·37 clean+6 warning cases; 오프라인30; 같은DLL cold reload exit0·25.67초·지형기준값동일
+- 보존: 기존 Content2139/Config9와 baseline 패킷외2471파일 유지; 후보지형1800×1800m·1360액터 그대로; GUI입력0
+- 상태: 소스통합 검증 완료, 실제 맵축소/NPC배치/영상·물리플레이/Windows패키징은 미완료; 기존 사망귀속문제 미해결
+- 관련: Feature/doc/2026-11-13_map-integration-checkpoint-c.md 및 체크포인트B
+
+
+### Sprint#9-32 변경 — 2026-11-13 D 진행
+
+- 목표: GUI없이rawBA/의존성보존조사및별도미검증내부Windows개발빌드진전
+- 실제: actor9×5bounds모두포함; registry1419패키지·원본private향0/외부incoming0; SDKValidexit0·8.50초; 입력9524와기존save458보호기준
+- 상태: v3staged준비중·shared미설치; 현재1800m·NPC미배치·Game/Cook미실행·GUI입력0
+- 관련: Feature/architect/2026-11-13_terrain-dependencies-smoke-package.md; Feature/doc/2026-11-13_map-integration-checkpoint-d-progress.md
+
+
+### Sprint#9-32 변경 — D raw실자료/최종native
+
+- 변경: readonly helper v3/v4, raw8채널45tile·SHA연결, 별도exactEnglish/startupRED0 validator
+- 검증: v4Editorexit0·21.63초; raw360BIN·패키지/semantic불변; 독립QA실패0·pending19·exit3; 최종DLLnative43/43·전체RED0
+- 정정: 원래A시작smoke오류15줄은보존/미승인,새영어nativeB/C는전역RED0실제확인
+- 상태: 최종입력캡처후내부Windowsplan검증중·Game/Cook미실행; crop/NPC/기본맵변경0·GUI0·releasefalse
+- 관련: Feature/doc/2026-11-13_map-integration-checkpoint-d-progress.md
+
+
+### Sprint#9-32 추가 — Game fixture guard와 내부 smoke 재검증
+
+목표: Editor 전용 G08 fixture의 Game 컴파일 실패 수정. 변경: CPP guard 1행과 native D 출력 라벨, 수정 전 백업. 검증: run02 UAT exit6/Cook0, 입력10456·Editor6·저장2root 불변; 수정 후 Editor exit0/12.2146초. 상태: native D 및 새 봉인 후 내부 패키징 진행 중, release 승인 아님. 관련: Feature/doc/2026-11-13_map-integration-checkpoint-d-progress.md, Feature/doc/evidence/map-resume-20261113/GameGuardFixD/changes.json.
+
+
+### Sprint#9-32 추가 검증 — NativeD와 Windows run04
+
+검증: guard 수정 DLL native43 성공, 37+6사례/12경고, 전체 RED0, SourceConfig366 불변. 전체입력10456 중 의도한2파일 외 불변, Content9521·저장2root 보존. 상태: 새 내부 run04 pre-lease 검증 중, UAT/Cook 미판정/releasefalse. 병렬: crop pending19 증거 계획과 F 입력 회귀 메모 완료, World Map Maker API 부분검증 준비. 관련: Feature/doc/2026-11-13_map-integration-checkpoint-d-progress.md.
+
+
+### Sprint#9-32 추가 — 실제 staging 실패 및 출력 격리 계획
+
+Game fresh link/metadata와 Cook2323 완료, UAT staging exit1. 원인: cook root와 stage Windows 하위 경로 불일치. 입력차이: 생성 Build/Windows/FileOpenOrder/EditorOpenOrder.log 1개 발견, old seal은 실패 유지. 조치: 새 내부 derivative의 CookOutputDir Windows·FOOBASEDIR·정규 Game Rebuild 검토, 원본strict/B/B2 불변. 상태: Windows archive 미완료, releasefalse. 관련: Feature/architect/2026-11-13_internal-smoke-output-isolation.md.
+
+
+### Sprint#9-32 — 내부 Windows E5 실제 아카이브 완료
+
+목표: 원본 보존을 유지한 정규 내부 Win64 Development build. 구현: Cook Windows 경로/FOO 로그 격리/정규 Game Rebuild, Editor fixture guard. 검증: Editor0+Native43D/globalRED0; 실제Game99/Cook/Stage/Archive UAT0/317.48초; 전체입력10456·Editor6·저장2root불변; 공식IoStore5맵; payload50files/1.948GB 동일SHA. 상태: 내부아카이브 완료, releasefalse/UI·물리·저장라우팅 미검증; 맵1800m·crop19pending·NPC미배치. 관련: Feature/doc/2026-11-13_internal-smoke-output-isolation.md, tmp/InternalWindows20261113E5_UNVERIFIED/DELIVERY.json.
+
+
+### Sprint#9-32 — World Map Maker 후속 QA 승인 차단
+
+완료:9896물리사본/원본·Editor6·저장대조/새OriginGuard/고유map예약/metadata구체plan. 차단:root-startup-approval-A.json에approved=true 내부Root영수증생성을자동승인심사가실제승인전제우회위험으로거절(CreateProcess미실행). trustedhistory확인후새명시승인없음,재시도·우회0. QA UE/Actor/cold0,관측engine/build/game0. WindowsE5아카이브완성에는영향없음. 관련: Feature/doc/evidence/map-resume-20261113/MapMakerPhysicalQA/automatic-approval-block.json.
+
+
+### Sprint#9-32 — NPC 처치 귀속 독립 통합 시작
+
+목표:death 이력과정당한credit확정분리. 범위:7c31084 combined12만,full30덮어쓰기0. 사전검증:8기존 raw/blob일치·4부재·20관련불변·패킷SHA3일치·runtime/test분리동일. 상태:미적용,정규Editor와신규8/기존NPC회귀예정. metadata승인/cloneQA중단유지,E5는수정전고정. 관련:Feature/architect/2026-11-13_npc-combat-credit-integration.md.
+
+
+### Sprint#9-32 — NPC 첫Native51 실패와fixture만보강
+
+검증:Editor/UHT0/102.097초,현재설치standalone202871pass. 실제Native51A:43pass/신규8fail/RED57,SourceConfig368·DLL불변. 원인:APawn의AuthGameMode없는피해거부. 수정:공개nativeMode/Run/World초기화test CPP1개+positive조건, runtime9·피해API·assertion보존. 상태:재빌드/Native51B예정,기존실패보존. metadataQA중단유지. 관련:Feature/doc/evidence/npc-combat-credit-20261113A/FixtureDerivativeB/derivative.json.
+
+
+### Sprint#9-32 — NPC 처치 귀속 소스 통합과 Native51B 완료
+
+- 목표: 물리 사망 이력과 올바른 플레이어의 처치 인정을 분리하고 무귀속 복구·중복 보상·재진입·시체 파괴 후 지연 전달을 보호한다.
+- 변경: combined 12개 파일을 한 번 적용, 기존 8개 백업과 신규 4개 추가. 테스트 fixture 1개에 공개 GameMode/Run/World 초기화를 보강했으며 runtime 9개는 전달 postimage를 유지한다.
+- 실제 검증: Editor/UHT 0(최초 102.097초, fixture 후 41.881초), 설치 소스 standalone 202,871개 통과. Native51A의 43 성공/8 실패를 보존하고, 새 DLL Native51B 51/51(NPC 26 + G08/VFX 25), 전체 RED 0, 경고 11사례/19건을 확인했다. 독립 검토도 일치한다.
+- 보존: 전체 입력 10,460개 중 지정한 기존 8개 변경/신규 4개만 확인. Content 9,521개·저장 2루트·이전 Windows E5 전체 payload와 Game exe 불변. E5는 수정 전 버전으로 고정한다.
+- 상태: 소스 통합·격리 C++ 회귀 완료. 실제 Director·충돌·loot·production GUID·F/UI·새 런/저장/재시작은 미검증. 이번 작업 Computer Use 재허용을 반영했으나 실제 GUI 입력 0이며, 별도 Root 승인/metadata clone QA 중단과 재시도·우회 0은 유지한다. 사용자 WIP를 섞는 commit·push는 하지 않았다.
+- 관련: Feature/doc/2026-11-13_npc-combat-credit-integration.md; Feature/doc/evidence/npc-combat-credit-20261113A/Native51B/reviewed-result.json; Feature/doc/evidence/npc-combat-credit-20261113A/preservation-result.json.
+
+
+### Sprint#9-32 — Compact 초급 의뢰 실제 저장·cold 검증
+
+- 목표: H 수렵촌에 초급 NPC1·회수목표2·골드40을 편집 가능한 DA/Director로 연결한다.
+- 실제 변경: 후보 전용 DA1·Director external actor1·folder OFO3, 신규5파일. 기존 후보1,419/SrcCfg368/DLL 보존. 기존 아린 외형과 Engine marker를 재사용했다.
+- 검증: normal live WP1360/기존Director0; 지면3 trace 일치; native DA validation; 소유Editor 정상 종료 후 새PID cold에서 DA/Director serialized 값·참조 일치. 기존Actor package 저장0, 지형 crop0.
+- 상태: 콘텐츠 저장/cold 완료, 별도QA profile/Game F·수락·회수·보상·재방문·RunId 검증 진행 중. 실제 StartHub 포털에 Compact 연결0이므로 일반 진입 완성 아님. 기존 E5 수정 전 고정. metadata 승인/clone QA 차단·우회0 유지.
+- 관련: Feature/architect/2026-11-13_compact-intro-quest-vertical-slice.md; Feature/doc/2026-11-13_compact-intro-quest-vertical-slice.md; Feature/doc/evidence/npc-intro-compact20261113B/cold-reload-result.json.
+
+### Sprint#9-32 — Compact 초급 의뢰 실제 게임 수직 흐름 관찰
+
+- 목표: 실제 DA/Director의 F 수락·회수2·재방문·중복 보상·새 RunId 초기화 확인.
+- 검증: 정상 QA 프로필/허브 후 현재 DLL -game, 0/2→1/2→동일목표재접촉1/2→2/2, Gold0→40→재보고40/보상로그1. 일반 포기·정산·허브 후 같은 프로필의 새GUID와 수락 전0/2 확인. 실제 PNG6장 독립 검토, 정상 종료와 엔진/빌드/게임0.
+- 한계: 후보는 개발용 open/위치 준비를 사용했고 ordinary Hub 연결0. 지형1800m·미축소. 연속 위치 이동 F 안내 소실/재진입 복구, 월드 한글 네모/기존 회색재질·누락 의존, 활성무기 F·combat loot·진행 영구저장·패키지/UI7/물리루트 미검증.
+- 보존검사: Content5 외 Editor 생성 pyc1 추가를 좁게 확인·독립 bytecode 검토, 삭제/수정 없이 전체input10466으로 명시 예정. 기존10460의 불변 assertion 통과, 최종 통합 보존결과는 별도 기록.
+- Windows 후속: 별도 Native51Smoke 도구33파일 exact ZIP 설치·코드 검토, 오프라인47/47 통과. 새 전체 capture/현재콘텐츠 freeze/소유세션 release 뒤 독립 Game/Cook/IoStore 경로 예정. 기존 E5는 수정 전 고정.
+- 관련: Feature/doc/2026-11-13_compact-intro-quest-vertical-slice.md; Feature/doc/evidence/npc-intro-compact20261113B/runtime-log-observations.json; Feature/architect/2026-11-13_native51-intro-internal-windows.md.
+
+
+### Sprint#9-32 — Compact 수직 흐름 최종 보존 확인
+
+- 실제 결과: 기존10460입력·SrcCfg368·CA647 DLL·기존후보1419·보호 저장2루트·이전E5 payload50/1,948,283,459B SHA불변. 추가Content5+정확한Editor생성cache1로전체10466/Content9526.
+- 검사기의 bytes/size 및 unexpected cache 중단을 보존하고 Architect/독립Reviewer 재검토 후 exact 비교 통과. cache 삭제/수정·broad exclude0.
+- 상태: 실제 초급 수직흐름과 콘텐츠저장/cold 완료, 기존문서한계 유지. 새6맵 Windows 내부capture 진행, 아직Game/Cook0. 기존E5·strict/B/B2 및Root승인/metadataQA중단 유지.
+- 관련: Feature/doc/evidence/npc-intro-compact20261113B/runtime-final-result.json; Feature/doc/evidence/npc-intro-compact20261113B/post-game-preservation.json.
+
+### Sprint#9-32 — Windows 내부 산출물 완료·실제 시작 실패 원인 확인
+
+- 실제 build: Game/Cook/Stage/Archive0/418.71초; EXE99E843…15969 chain일치.50파일/1,951,832,646B SHA2454269E…9F1A4. 공식IoStore+sealedvalidator0:6맵+새DA7개,2252exports/158WP셀.
+- 실제 runtime: 무창실패2회, 두 번째777006. 메뉴/프로필/저장routing/UI7 미도달. 일반반복중단→Architect/독립Reviewer→소유PID debugger로원래AV0xc0000005/0.297초·일치PDB실제7unwind확보.
+- 원인: producer40B/consumer48B 구조체등록ABI,UBTcompile-NoLiveCoding override로reload구조가달라짐. 사용자Source/NPC/맵/세이브변경0. generated직접수정0.
+- 상태: 실패후보Native51IntroB/E5/strict/B/B2보존.새FixF에서compileflag만분리하고guards유지하는도구파생준비; 실제새build/macro/ABI/boot는미검증. root-startup승인/metadataQA중단유지.
+- 관련: Feature/doc/2026-11-13_native51-intro-internal-windows.md; Feature/doc/evidence/npc-intro-compact20261113B/StartupFailureB/abi-mismatch.json.
+
+### Sprint#9-32 — FixF49 통과·C 실행 중단 상태 보존
+
+- FixF: original33보존/변경6,현재manifest47파일Root해시재확인;helper0CDDDF8F…D6E0C/core5ACCE0EB…EA192. 합성49/49·PSparse0·리뷰Critical/Medium0.
+- C: fresh10466입력·maps동일SHA,새seal6762A669…8174C. 실제PS11792세션은대기호출abort뒤없어졌고journal은pre_sdk/running잔류. SDK/UAT/Game미시작,새ABI/boot미검증.
+- 보존: 원문journal/출력/lease+별도관찰. 중단뒤Editor6·저장2루트일치,현재Game99E843실패B그대로. 중단뒤전체입력재해시는미수행. UE/UBT/Game0,강제종료/재시도/commit/push0.
+- 다음: 외부Codex상태재확인→새물리출력소유세션→Game정규build/cook/IoStore→실제48/48와macro확인→저장routing/실제UI. 기존C/E5/B/승인차단보존.
+- 관련: Feature/doc/2026-11-13_native51-intro-internal-windows.md; Feature/doc/evidence/npc-intro-compact20261113B/C-interruption-observation.json.
+
+### Sprint#9-32 — D 독립 출력에서 FixF 정규 빌드 재개
+
+- 목표: 중단 C를 보존하고 실제 Game48/48 및 시작 가능한 Windows 내부 산출물 검증.
+- 변경: D 전용 실행기5개, fresh capture10466 입력 일치, 새 seal707AADD5…01A01F. 원본 Source/Config/Content·동결 FixF 변경0.
+- 실제 실행: 소유PS55740에서 정규 Game/Cook/Archive 요청, 현재 사전 검사. 성공·ABI·startup·routing·UI는 아직 미관찰.
+- 상태: 진행 중. C/B/E5와 strict/B/B2 보존, 별도 거절된 startup/metadata cloneQA 중단 유지.
+- 관련: Feature/doc/2026-11-13_native51-intro-internal-windows.md; Feature/doc/evidence/npc-intro-compact20261113B/internal-smoke-D-content-checkpoint.json.
+
+### Sprint#9-32 — D 정규 빌드·실제 샘플 ABI48/48 확인
+
+- 실제 빌드: SDK0/BCR0·431.85초, wrapper postflight0. Source/stage/archive EXE BA992042…AAB4443/PDB919BDF07…919BC5 일치. 전체10466·Editor6·보호 저장2루트 보존.
+- 검토: native PDB14질의0으로 array96/row48/Info32/Version16 타입연결, 실제 initializer→정확배열/count2→같은행 loop/+48/count/backedge 확인. 샘플 독립읽기리뷰통과.
+- 변경: D 전용 오프라인 증거 수집/질의/compile-provenance/검토요약 helper 추가. frozen FixF 및 Source/Config/Content 변경0, generated직접수정0.
+- 상태: 실제Game/UI/routing 미실행, IoStore identity검사중. 전체ABI/CRT·릴리스인증아님. B/C/E5/lease/별도승인차단보존.
+- 근거: Feature/doc/2026-11-13_native51-intro-internal-windows.md; Feature/doc/evidence/npc-intro-compact20261113B/D-abi-reviewed.json.
+
+### Sprint#9-32 — D 실제 패키지 시작 메뉴 확인·CUA 접근 시간 초과
+
+- 실제 산출물: Game/Cook/IoStore0,6맵+DA7개·2252exports·158WP셀.50파일/1,957,690,950B·CF46302D…C137FA,별도Native51IntroD_UNVERIFIED.
+- 실제 실행: bootstrap14384→packagedGame54244, nativePNG로시작메뉴확인. 실제GameEngine 스크린샷경로와QA UserDir일치·generic설정fallback. QA SaveGames0파일/프로필생성0/실제save IO미검증.
+- 차단: cua.getApp(window9964506) 앱접근승인301초시간초과. GUI입력/재시도/우회0. 권한메시지조회는user abort/결과없음. Game강제종료0,alive PID보존; 프로필/NPC/F/quit/restart 미실행.
+- 보존/검사: 최종10466변경0·Editor6·저장2루트·E5/B/D불변. C원문/복사6쌍SHA일치·lease존재/재사용0. AST9/9·diff0·GeneratedChanges0. 기존WIP·별도승인차단·맵1800m등남은범위유지.
+- 근거: Feature/doc/2026-11-13_native51-intro-internal-windows.md; Feature/doc/evidence/npc-intro-compact20261113B/D-runtime01-checkpoint.json; D-abi-reviewed.json.
+
+### Sprint#9-32 — Hub→Compact additive 입구 준비
+
+- 목표: 기존3포털/기본맵불변, 별도기본RunPortal로Compact후보연결. C++/가드변경0, 새6개외부Actor만저장계획.
+- 준비: 전체10466일치, Source/Config·Hub/후보2512파일물리백업, 보호저장2루트백업, D두물리payload일치. D14384/54244생존·입력/종료0.
+- 상태: normal-project read-only commandlet 준비, 신규콘텐츠변경/실제travel0. 게임창승인timeout/별도metadata승인차단보존.
+- 문서: Feature/architect/2026-11-13_hub-compact-entry.md; Feature/doc/evidence/hub-compact-entry20261113A/physical-checkpoint.json.
+
+### Sprint#9-32 — Source Hub→Compact 후보 입구 저장·정밀 재로드
+
+- 구현: 기본native 포털1+표시Actor5, 위치(-1440,4270,180)cm, Compact target/StartRun=1. 기존3포털·기본맵·C++/가드불변.
+- 실제검증: inspect03/author02/collision01/cold03 exit0·RED0. 신규4Mesh 영구NoCollision·재질, sign/font/색상/정렬,6package/DLayer·전체Actor값·desc691·Visibility capsulefree 확인.
+- 발견/수정: 준비barrier·HitResult바인딩·첫저장descriptor전제 교정; cold에서발견한기본충돌상속과Color위치인수문제는이번소유5package만보정. 실패·신규6개보정전물리본보존.
+- 최종보존: 이전10466입력변경0+신규6=10472, Source/Config368·Editor6·보호저장2루트·D두물리payload일치,2512백업검증. AST5/5·diff0.
+- 한계: 실제여행/프로필/NPC/F/quit/restart/saveIO/렌더링미검증. D는이추가전버전. 게임창승인timeout·별도metadata승인차단/맵1800m유지; CUA/새Game/빌드/강제종료/commit/push0.
+- 문서: Feature/doc/2026-11-13_hub-compact-entry.md; Feature/doc/evidence/hub-compact-entry20261113A/final-result.json.
+
+### Sprint#9-32 — 개발 병행 출력 오류 분석과 세션 로그 검사
+
+- 목표: 개발 중 실제 Unreal 세션의 빨간 Error를 즉시 분리·분석하고 재발을 검증한다.
+- 변경: severity/구간/기존·신규/한정watch 로그검사기, 테스트, AGENTS 상시규칙·사용가이드, 다음실행용 영어smoke→한국어세션복원 실행기와 증거. 기존Source/Config/Content·현재편집세션 직접수정0.
+- 원인/검증: 한국어 startup15줄=UnifiedError2+StructuredLogFormat1. 동일429개 ko3실패/en429성공. 최종복원probe429성공·Error0·ko/ko-KR·설정저장false·정상종료0. 검사기14pass/권한skip1, AST3+2/guard5pass. 실제live30초 기존52줄/신규0. 독립review의 quoting/중복세션guard 수정 후 재검토완료.
+- 개발오류 관찰: Undo/Redo composite Auto Layer seam(378,693) 실패2회와 소유개발의 native refresh 후 보존PASS 확인. 전역reflection미지원 실패·과거로그는보존.
+- 상태: 도구·우회책범위검증완료. 현재세션교체0/전체UI시각복원미검증/한국어엔진test직접실행결함잔존. 공유지형기능과누적WIP가검증중이므로 전체commit·push·승격대기;main완료아님.
+- 관련: Feature/architect/2026-11-16_output-log-error-triage.md; Feature/doc/2026-11-16_output-log-error-triage.md; Docs/OutputLogErrorWorkflow.md; Feature/doc/evidence/output-log-errors-20261116/verification-summary.json.
+
+### Sprint#9-32 — Landscape 외곽211개 정리·45개 저장 및 cold 보존 검증
+
+- 목표: 1차 좌표 기획 제시 후, 승인받은 독립 Crop 후보를1,012.5×562.5m Landscape로 축소한다. 기존21지점·29양방향도로·중앙300m·3큰마을·5초소와 원본 데이터를 보존한다.
+- 실제 변경: 정상 에디터 복구·정규Editor빌드 성공 후 native Landscape Manage/Delete로 외곽211개 제거, 지형/충돌45개 유지. 공개 native 재합성1회 후 terrain external actor16개만 저장했다. baseline5,370개 중16개만 변경, 보호3,947개불변·누락0. 사용자 VS·원본맵·StartHub·런타임코드 변경0.
+- 보존 검증: 삭제직후·재합성후·새프로세스 cold 재로드 각각26/26pass, raw/composite height·paint·layer/GUID·비Landscape 액터 일치. Undo256복원/Redo45복귀는 즉시 AutoLayer composite seam실패이며 raw층/B/A는 불변. 최종복구를 Undo/Redo즉시보존 합격으로 바꾸지 않는다. global reflection 미지원 실패도 보존한다.
+- 통행 QA:29도로 지면2,076+중앙선6,532점,13,006캡슐결과 중13,002실제sweep clear·4ground미확보미실행. E19/E27정확격자선2raymiss로 strict실패. 추가±0.001cm이상X offset40ray와구체6회는hit, 근본원인/repair인증아님. 직접표본최대11.8805°는전체삼각형12°인수와구분. 중앙보행3회는실행준비중이다.
+- 상태: 실제 지형후보 저장·cold 데이터보존 완료. Undo/Redo즉시보존/strict도로QA/보행·성장플레이 인수가 남아 통합·커밋·푸시·승격 보류. 누적WIP는 보존한다.
+- 문서: Feature/architect/2026-11-16_landscape-production-plan.md; Feature/doc/2026-11-16_landscape-production-result.md; Feature/doc/evidence/landscape-production-20261116/cold-reload/comparison.json; terrain-collision-check.json; ray-miss-diagnostic.json; implementation-review.md.
+
+#### 11/16 최종 인수 상태 추가
+
+- 정상 메뉴 UI에서 고립 QA 프로필1개 생성·실제 게임접속→Hub는 확인했다. 도구의 보호 SaveGame 필드접근2회·미노출 API1회 실패를 보존하고 공개 typed UObject 관측으로 교정했다. 실제 표시이름이 CropWalkQA 대신 로그라 정상프로필 게이트실패, 중앙보행0회·완료라운드0회다. 캐릭터 vendor skeleton의 엔진 Humanoid 의존성 부재도 별도 LoadErrors로 기록했다.
+- PIE정상종료 후 최종26/26보존·dirty0, baseline5,370개 중지형16개만변경·보호3,947개불변을 재확인했다. 실제지형 상부·사선캡처를 저장했고 도로시각불연속은 미인수로남겼다. 출력은startup기존15 Error행+준비신규46 Error행(4tracebacks와LoadErrors1),2736줄이후최종검증/캡처신규0이다. 독립오류46건이라는뜻이아니다.
+- 최종: 지형범위정리·저장·cold데이터보존 완료, 전체지형/플레이인수 실패·미완료. 브랜치통합/커밋/푸시/승격0. 근거: final-scope-report.json; after-reload/comparison.json; runtime-walk/runtime-state-inspection.json; landscape-crop-final.png.
+
+- 출력로그 조사 전달 후 작은 진단 보완: VerifyLandscapeProduction20261116의 snapshot 오류에 snapshot_errors JSON을 함께 표시한다. 성공조건은 불변이며 보존된5단계 AST표현식 검사에서 Undo/Redo실패·좌표/채널출력과 복구/cold/최종조건 통과를 유지했다. 추가 재합성·export·에디터 호출·자산변경0, 전체 인수/통합 상태는 그대로다. 근거: snapshot-error-diagnostic-check.json.
+
+- 후속 C++ 결과 연결: 별도소유 참조scanner 미지원0·complete/success true·보존9/cold7항목 및 프로필초기화native회귀 통과 자료를 확인했다. 지형 검증wrapper는 과거unsupported허용예외를 제거하고 success+loaded walk 완료를 필수로강화, 기존9보존/잘림/원시데이터비교유지. 기록기반6경우 AST검사와독립리뷰통과; 에디터/지형/빌드재실행0. 과거26pass·Source보호해시는당시체크포인트로보존하며새정책재실행/현재Source불변으로소급하지않는다. 실보행0·도로/Undo인수미완료·미승격은유지한다. 관련: Feature/doc/2026-11-16_reference-scanner-compatibility.md; scanner-policy-update-check.json.
+
+### Sprint#9-32 — 전역 참조 검사 UE5.8 호환성과 초기 프로필 이름 수정
+
+- 목표: lazy/FieldPath/Optional/동적Struct·PropertyBag의미지원오류해결,개발로그새Error원인수정.
+- 변경: FReferenceScan 비로딩실제값순회·loaded GUID index·wrapper상속/순환지원·원래failclosed유지,Character PossessedBy에서selectedprofile적용,transient회귀6개와한정headless검증도구.
+- 검증: 정규UHT/Editor0(123.06초/fixture교정30.59초),scanner5/5(Error0Warning0),profile1/1(errors0warnings13),실제후보90810객체/1093395값·unsupported0/nontruncated/loadedwalkcomplete/success·보존9조건/이전cold7조건통과. 최종로그3개Error0/후보watch30초신규0. GeneratedChanges통과.
+- 리뷰/실패보존: inheritednativepayload P2보강·fixture실제검출확인,초기abstractUObjectensure55줄보존후구체fixture로교정(assert유지). 최종독립review잔여actionable0.
+- 상태: 본수정범위구현·빌드·회귀·실제후보검증완료. native/custom/unloaded전체안전인증아님. 기존vendor legacyHumanoid자산호환성문제·지형전체통행인수는별도잔존. 기존대량WIP/미완료지형QA와섞는commit·push·main승격대기.
+- 관련: Feature/architect/2026-11-16_reference-scanner-compatibility.md; Feature/doc/2026-11-16_reference-scanner-compatibility.md; Feature/doc/evidence/reference-scanner-20261116/verification-summary.json; Docs/OutputLogErrorWorkflow.md.
 
 
 ### Sprint#9-33 — 기능별 즉시 commit·push와 출력 로그 도구 독립 게시
@@ -2428,6 +3291,15 @@
 - 상태: 버퍼 구현·회귀 완료, 게시 인계. Ctrl→첫Q 기한→QQQ 및 실제 시전 연결은 후속 범위다.
 - 관련: Feature/architect/2026-11-17_magic-command-buffer.md, Feature/doc/2026-11-17_magic-command-buffer.md, Feature/doc/evidence/magic-command-buffer-20261117/.
 
+### Sprint#9-32 — Landscape 도로·통행 최종 검증
+독립 null-RHI Editor-Cmd가 저장된 후보를 재로드해47/47항목을 통과했다. 지형45개 배열·등록·semantic/composite/raw/paint/B/A와 기존 액터가 보존됐고,29개 데칼의 크기·방향·비충돌 편집 표시·folder/fade0 및 재질9노드·3scalar·입출력 연결이 일치했다. 파일 범위9/9검사에서 기존663개 도로 패키지 변경, 신규29개 데칼+정리 폴더1개와 신규 재질1개만 확인했다. 삭제0, 기존 후보맵과16개 지형 외부 액터 바이트는 불변이다. 보호 입력3,951개와 비QA 저장458개의 해시·저장 목록도 유지됐다.
+중앙300m 기본 보행3회는48.7379/48.8019/48.5884초, 외곽8간선 약885.89m는144.2785초였다. 렌더링된 PIE에서 프로그램 이동 입력을 사용했으며 물리 키보드·성장/전투·20분 완주와 구분한다. 승인된 현재 에디터 변경 패키지 저장1회를 완료했고 최종 후보는 열린 상태다.
+Headless 로그 Error0, loader complete와 제한시간 전 프로세스 부재를 확인했다. 실제 프로세스 ExitCode는 미관측으로 기록한다. 시작 전 신원 가드의 JSON 날짜 재파싱9시간 오차는 ISO 문자열 보존으로 교정하고 실제 생성시각과0.032초 차이를 읽기 확인한 뒤 검증을1회 실행했다. 이번 재개에 C++/Build.cs 변경은 없어 기존 정규 DLL을 사용했다. Python/PowerShell 구문·경로·diff 및 실제 에디터/재로드 검증을 수행했다.
+독립 검토에서 신규 도로 차단 문제는 없었다. 과거 Undo/Redo 즉시 composite·정밀 point-ray 실패, 전체 성장/전투 인수는 남아 있다. 도로는 아직 게시되지 않은 Crop 지형 후보에 의존하므로 해당 기반의 통합 조건을 확인하기 전 기능 독립 게시 완료로 보고하지 않는다.
+관련: Feature/architect/2026-11-17_landscape-traversal-resume.md; Feature/doc/2026-11-17_landscape-traversal-resume.md; Feature/doc/evidence/landscape-road-surface20261117/final-cold/comparison.json; Feature/doc/evidence/landscape-resume-20261117/final-scope-report.json.
+
+통합 의존성 추가 확인: 현재 main/origin/main(fdbe8c8c)에는 검증한 Crop 후보1,453개 패키지와 신규 재질, 실제 맵의 Rogue10mVillageQuestDirector 관련 네이티브 클래스가 없다. 이번 도로 변경694개만 게시하면 기반 맵과 클래스가 빠지므로 독립 기능 게시가 불가능하다. 미완료 기반까지 포함하는 무관 WIP 통합은 하지 않았다. 근거: Feature/doc/evidence/landscape-road-surface20261117/integration-dependencies.json.
+
 
 ### Sprint#11-1 — Landscape 검사 도구 독립 검증
 
@@ -2453,3 +3325,113 @@
 - 완료 게시: 마법명령버퍼88d0bef2(6사례1701),지형참조검사6bf1c026(Editor113.28초·5/5·Error0),전리품스택계산6bfc78c6(9사례/50000무작위/2103255),프로필초기화bb7a6bd6(Editor44.35초·1/1·Error0·Warning15). 각기능 작업/develop/test/main원격SHA일치확인.
 - 남음: Crop맵1453패키지+재질은 NPC클래스14개와Tutorial/Monster/Widget변경·원래Compact/HLOD2개에의존. 도로cold47/47은현재로컬DLL기준이며전체main독립폐쇄아님. Undo/Redo즉시composite·E19/E27정밀ray실패보존. 전투표현은main에없는슬롯/입력/무기·자산선행필요. 런타임전리품도main에없는기존loot/run-terminal선행필요. 미완료를합격으로바꾸지않았다.
 - 관련: Feature/doc/2026-11-17_repository-file-audit.md, Feature/doc/2026-11-17_remaining-features-publication.md.
+
+
+### Sprint#9-32 — 맵 제작 WIP Git 체크포인트
+
+사용자의 최신 지시에 따라 현재 코드·설정·도구, 디스크저장 맵·자산, 계획·결과문서를 묶음별 commit·push한다. main/develop/test 승격은 맵제작 완료 전 중단한다. 현재 에디터 PID7684의 자연경계·장식 작업은 미저장 상태이고 후보1453개는 이전 저장본과 SHA가 같다. 이번 Git 작업은 에디터 저장·재시작·빌드를 실행하지 않는다. 실제로그2906줄 경계의 기존Error10행을 보존하고 성공으로바꾸지 않는다. 코드구문검사/원격확인/generated/diff 검사와 기능인수를구분한다. 생성fixture·PDB·비QA저장·큰원본백업은선별에서제외하고 로컬보존한다. 정확목록은 Feature/doc/evidence/git-checkpoint-20261117의manifest로남긴다. 관련계획/결과: 2026-11-17_map-production-git-checkpoint.md.
+
+
+### Sprint#9-32 — 저장 자산 체크포인트
+
+코드·도구 d2779c76을 작업브랜치에 push했다. 다음 범위는 Content4537개와 직접 제작한 무기OBJ2개·MTL1개다. 고정목록4540파일/104,531,736바이트를 재해시해 선택 이후 변경0을 확인했다. 현재 자연경계 편집은 미저장으로, 이 커밋은 이전 디스크저장 맵·도로·자산을 보관한다. 에디터저장·바이너리직접편집0, main/develop/test변경0. 관련: content-manifest.csv, content-stability-check.json.
+
+
+G2 동시작업 경계: stage 후 자연경계 소유 작업이 디스크709개를 갱신했다. Git index의4540개를 선택시점 manifest와 별도로 대조해 Content오차0, 무기원본3개는 LF정규화만 있음을 확인했다. 이 커밋은 일관된 이전 저장본이며 이후 저장분은 남은변경으로 보존하고 별도체크포인트로 나눈다.
+
+
+### Sprint#9-32 — 자연 경계 숫자검증 저장 체크포인트
+
+선행 저장본 f137e2a9의 push를 완료했다. 이후 소유 에디터의 명시741package 저장성공·dirty741→0을 확인했고, 새 Content731개와 보정스크립트1개를 별도로 고정했다. 구조검사49개·캡슐544개는숫자검증이며 visual_reviewed=false/acceptance_complete=false다. 별도검사에서732개파일이선택후불변이고새PythonAST가통과했다. 에디터/저장실행은이번Git작업에서하지않았다. main병합없이작업중체크포인트로게시한다.
+
+
+
+### Sprint#9-32 — 작업 브랜치 게시 결과와 main 보류
+
+- 코드·도구550파일은 d2779c76, 기존 저장맵·자산4540개와 기록은 f137e2a9, 이후 자연경계731개+보정스크립트1개 및 기록은65a0bf5a로 각각 commit·push했다.
+- 자연경계 저장은 소유 에디터가 명시741package를 저장했고 dirty741→0이다. 구조49·capsule544는 숫자검증이며 visual/cold/전체인수 완료는 아니다. Git 작업자가 에디터를 저장하거나 재시작하지 않았다.
+- 고정 index의Python257·PowerShell63 및 추가Python1 구문통과, generated경로없음. 코드diff의파일끝빈줄21개는 원본보존WIP한계로기록했다. 실제editor로그2906줄이후신규오류0·기존이력11행을확인했으며기존오류를삭제하지않았다. C++/PIE재실행은현재에디터보존을위해하지않았다.
+- main/develop/test는024ecfb7 기준을유지한다. 맵제작이끝나기전통합하지않는사용자지시를AGENTS에기록했다. 이번마지막계획·결과·참조·개발일지와고정manifest는문서커밋으로같은작업브랜치에게시한다.
+- raw캡처·큰백업·PDB·비QA저장은로컬보존하며이번선별게시에서제외한다. 후속에디터변경은새체크포인트의대상이며현재맵전체완료로해석하지않는다.
+- 관련: Feature/doc/2026-11-17_map-production-git-checkpoint.md, Feature/doc/evidence/git-checkpoint-20261117/publication-summary.json.
+
+### Sprint#9-32 — DevLog 대표 사진 정리
+
+- 목표: 메인 사진만 남겨 반복 캡처를 줄인다.
+- 변경: 1,618장→35장, 보조1,583장·약2.04GB삭제. 대표목록·보관규칙·55문서/57링크정리.
+- 검증: 내부경로/파일/SHA선확인, 대표35해시동일, 비사진누락0, 삭제파일잔존0, 삭제사진활성링크0, 갤러리링크모두존재.
+- 상태: 사진정리완료. 작업브랜치만게시하며main병합보류.
+- 관련: DevLog/README.md, Feature/doc/2026-11-18_devlog-photo-curation.md, Feature/architect/2026-11-18_devlog-photo-curation.md.
+
+### Sprint#9-32 — 평탄한 필드·자연 외곽·마을 갈색 바닥
+
+- 목표: 설계한 플레이 구역을 평탄하게 유지하고 외곽 이탈을 막으며, 도로와 잔디의 전이를 완화하고 마을 안팎을 명확하게 구분한다.
+- 변경: 지형45개에 원본 보존 additive 높이층, 둥근 폐곡선 능선·Pawn 차단13개, 도로29개 가장자리 전이, H/M/T 울타리·석벽과14m 열린 출입구13곳, 갈색 마을 바닥3개, 보스 입구 시각 문주와 선택 환경 소품. 마을별 재료·색·실루엣에 AAA 제작 사례의 지역 구분 원칙을 반영했다.
+- 검증: 정규Editor빌드28.99초, 구조59/59·정적 캡슐544/544·별도cold60/60·파일범위32/32 통과. 최종6패키지 한정 저장·dirty0. 기존 중앙3회48.53~48.55초, 선택8간선142.91초, 새 남쪽 대표2회 점프 요청 시험 통과. 세 마을과 전체 실제 화면 확인.
+- 보존: 원본 지형층·paint,45지형/충돌, 기존 소유7자산, 공유 재질5개, 비선택 저장458개. 백업1468+7개 예상 집합 오류와 콜백 재진입 실패는 수정 후 별도 재검증하고 원문을 유지했다.
+- 상태: 요청한 지형·마을 시각 보완의 로컬 저장·검증 완료, 작업 브랜치 게시 대상. 맵 제작 중 main 통합 보류. 기존 벤더Humanoid 참조 오류, 실제 동굴·전체 게임플레이·최종 미술·패키징 인수는 별도다.
+- 관련: Feature/architect/2026-11-17_natural-world-boundaries.md, Feature/doc/2026-11-17_natural-world-boundaries.md, Docs/References/WorldMap/landscape-natural-boundary20261117.json, DevLog/20261118.txt.
+
+
+### Sprint#9-32 — DevLog 핵심 JSON 정리
+
+- 목표: 불필요한 개발 검증 기록을 선별해 줄인다.
+- 변경: JSON326개→55개, 중간·중복271개와 약8.02MB삭제. 핵심목록·보관규칙·문서 보관상태를 정리했다.
+- 보존: 최종 판정·최근 회귀·주요 실패·고유출처, 로컬 전용 QA7개. JSON원본값과 대표사진35장·비JSON파일을 유지한다.
+- 검증: 내부경로/파일종류/SHA 사전확인, 보관해시·JSON파싱·삭제부재·사진·비JSON존재·링크검사.
+- 상태: 기록정리완료. 작업브랜치만게시하고 main병합은보류한다.
+- 관련: DevLog/Records.md, Feature/doc/2026-11-18_devlog-record-curation.md.
+
+
+2026-11-18 자료 정리: 위 실행 결과·수치·실패 설명은 당시 기록이다. 중간·보조 사진/JSON의 현재 보관 여부는 [검증 자료 보존 목록](../Feature/doc/evidence/README.md)을 따른다. 삭제 자료를 다른 성공 증거로 대체하지 않았다.
+
+
+### Sprint#9-32 — Feature 검증 자료 선별 정리
+
+- 목표: 최종 결과와 중요한 실패를 유지하면서 반복 사진·중간 JSON을 줄인다.
+- 변경: 사진 621장·JSON 3,293개, 총 3,914개 / 810,622,927바이트 삭제. 자료 보존 목록·파일별 manifest·문서 링크·보관 규칙을 정리했다.
+- 보존: 사진 289장·JSON 2,762개, 코드 입력 339개, 원본 텍스처·고유 실패 전후·대표 동작·활성 자연 경계/동굴 전체. 기존 JSON 형식 오류 두 건도 그대로 남겼다.
+- 검증: 전체 삭제 경로·일반 파일·크기/SHA 사전 확인, 비활성 보존 해시·코드 입력·비대상 파일·JSON·Markdown 링크 검사, generated 경로 및 staged diff 검사.
+- 상태: 자료 정리 완료. 게임 기능의 새 통과 판정은 아니며 작업 브랜치만 게시한다. main/develop/test 통합은 보류한다.
+- 관련: Feature/architect/2026-11-18_evidence-curation.md, Feature/doc/2026-11-18_evidence-curation.md, Feature/doc/evidence/README.md.
+
+### Sprint#9-32 — Q/Z 지하 동굴과 실제 삼인칭 검증
+
+- 목표: 지하 훈련고와 작업·보관 공간을 실제 동굴로 만들고 갈림길·비밀방·회수 지름길을 넣는다. 중앙로·세 마을 평지와 기존 획득 규칙을 유지한다.
+- 변경: 두 국소 굴착, 40m 하행로, 구조286개·바위/지지대/소품426개·등불12개를 네 액터로 구성했다. 발헤임 공식 동굴을 참고한 암반·목재·국소 조명과43노드 석재 투영을 적용했다. 원본 지형층·45개 지형/충돌·기존1404액터·도로29개와 원본 재질을 보존한다.
+- 검증: 같은2016개 충돌 질의와31개 정적 조건 통과. 실제 카메라 실패 원인인 바위2개를 보정하고1440방향 질의 실패288→0을 확인했다. 새 정상 삼인칭은12개 경로·276개 지점·6화면·2442개 지면 접촉을801.741초에 완료했다. 카메라 최소176.871cm·최대당김154.377cm였다. 독립 재로드도32/32조건·2016질의·저장변경0·종료0·로그 오류0으로 통과했다. 첫 어두운 화면·카메라 충돌·메타데이터/언어 비교 실패는 보존한다.
+- 보존: 파일 범위46/46조건 통과. 보호 입력3962개·비대상 세이브458개·물리 백업1481개·기존 소유8개·원본 재질 파일44개는 바이트 불변이다. 한정 저장5회는 고유33패키지 안에 머물렀다.
+- 상태: 지하 동굴과 기본 삼인칭 검증 완료, 검증한 체크포인트를 작업 브랜치에 게시한다. 전체 맵 제작이 끝나기 전 main/develop/test 통합은 보류하며, 최종 미술·아이템 지급·전체 전투/내비게이션·Shipping 인수와 구분한다.
+- 관련: Feature/architect/2026-11-18_underground-caves.md, Feature/doc/2026-11-18_underground-caves.md, Docs/References/WorldMap/caves20261118.json, DevLog/20261118.txt.
+
+### Sprint#9-32 — Q/Z 연속 암벽·천장 보완과 기본 카메라 검증
+
+- 목표: 사각 벽·평평한 천장·반복 부착 바위의 인상을 없애고, 중앙로·마을 평지와 기존 동굴 동선을 유지한다.
+- 변경: 불규칙한 방 가장자리와 아치 천장이 이어지는 원본 메시 두 개, 프로젝트 소유 재질 두 개, 기존 충돌과 같은 경사로의 시각 복제 두 개를 저작했다. 기존 네 동굴 액터 안의 여덟 패키지만 한정 저장했고 Landscape와 바닥·경사로 충돌·목재·조명·카메라 설정은 보존했다.
+- 검증: 같은 2,016충돌 질의·실제 RenderData 대조·1,440방향/2,880카메라 질의 통과. 정상 PIE 12동선·276지점·6화면·2,689지면 접촉을 883.369초에 완료했다. 최소 카메라 거리 231.904cm, 최대 당김 99.344cm, 지면 이탈 0이다. 독립 재로드 20조건·2,016질의·실제 종료 0·로그 오류 0, 파일 보존 24조건과 Python 33파일 구문·generated 경로 검사도 통과했다.
+- 보존: 액터 1,408개, 기존 1,404액터·47재질·지형/충돌 45개와 179,488높이 표본, 1,497백업·3,969보호 입력·458세이브를 보존했다. 첫 형상 거절, 면 방향·비교기·캡처·재로드 실행 실패와 도구 수정 근거를 남겼다.
+- 상태: 요청한 동굴 미술 보완·기존 동선·기본 삼인칭 인수 완료. 검증한 체크포인트를 작업 브랜치에 게시하며 전체 맵 제작 완료 전 develop/test/main 승격은 보류한다. 전체 전투·내비게이션·최종 제품 미술·Shipping 인수는 포함하지 않는다.
+- 관련: Feature/architect/2026-11-18_organic-cave-refinement.md, Feature/doc/2026-11-18_organic-cave-refinement.md, Docs/References/WorldMap/cave-organic20261118.json, DevLog/20261118.txt.
+
+### Sprint#9-32 — 시작 마을 포탈의 이전 진행 저장 호환
+
+- 목표는 이전 캐릭터 저장을 사용해 시작 마을에서 오픈 월드로 진입할 수 있게 복구하는 것이다.
+- 저장 버전 필드가 생략된 이전 네이티브 저장을 확인해 기존 이행 경로로 연결했다. 프로필 ID와 명시된 버전의 검증 및 슬롯 우선순위는 유지한다.
+- 실제 저장 복사본 17개 조건에서 기존 포탈 통과, `OpenRunMap`의 1,200초 런 시작, 진행과 입장 재화 기록을 확인했다. 합성 일곱 케이스와 기존 저장 460개 해시 대조를 통과했다.
+- 현재 에디터에 라이브 코딩으로 적용했다. 미저장 작업을 유지한 상태에서 Development 모듈의 정규 빌드는 남아 있다. 전체 맵 제작 완료 전에는 작업 브랜치에만 게시한다.
+- 관련 문서는 Feature/architect/2026-11-18_start-hub-portal-save-compatibility.md, Feature/doc/2026-11-18_start-hub-portal-save-compatibility.md, DevLog/20261118.txt다.
+
+### Sprint#9-32 — 시작 마을 면적 1/4 축소
+
+- 목표는 시작 마을의 플레이 면적을 1/4로 줄이고 준비와 출발 동선을 유지하는 것이다.
+- 지면을 120×120m에서 60×60m로, 경계 안쪽을 116.4×116.4m에서 58.2×58.2m로 줄였다. 주택 열 채와 우물, 아린, 준비 구역 네 곳을 유지하고 북쪽 포탈 네 개를 옮겼다.
+- 저장 전과 독립 재로드에서 지면 125점, 외곽 캡슐 28건, 보행 캡슐 13구간을 검사했다. 실제 저장 복사본으로 기존 포탈을 걸어서 통과했고, `OpenRunMap`과 20분 타이머를 포함한 17개 검증 조건이 통과했다.
+- `StartHub` 외부 액터 660패키지를 저장했다. 같은 맵의 다른 패키지 66개와 나머지 프로젝트 콘텐츠는 이번 변경 범위 밖에 있다. 검증한 맵과 문서를 현재 맵 제작 작업 브랜치에 게시한다.
+- 관련 문서는 Feature/architect/2026-11-18_start-hub-quarter.md, Feature/doc/2026-11-18_start-hub-quarter.md, DevLog/20261118.txt다.
+
+### Sprint#9-32 — 시작 마을과 오픈 월드 두 맵 운영
+
+- 시작 마을과 실제 클리어 맵을 프로젝트의 두 레벨로 정했다. `StartHub`에서 메뉴와 캐릭터 선택을 열고, 선택 뒤 같은 맵을 플레이 모드로 읽는다. 오픈 월드 작업은 기존 `OpenRunMap`에서 진행한다.
+- 폐기 맵 33개와 관련 패키지 4,529개를 정리했다. `StartHub`의 후보행 포탈 3개·장식 10개, FiveVillage 전용 런타임과 실행기도 정리했다. 최신 후보 지형·동굴과 로컬 변경은 복구본으로 보관했다.
+- Asset Registry에 레벨 2개와 폐기 경로 참조 0개를 확인했다. 정규 빌드, 메뉴 36조건, 공용 의뢰 26개, 실제 보스 승리·귀환 77조건과 독립 저장 재로드 17조건이 통과했다.
+- 검증한 두 맵 통합을 맵 제작 작업 브랜치에 게시한다. 상세 범위와 복구 경계는 Feature/doc/2026-11-18_playable-map-consolidation.md에 기록했다.

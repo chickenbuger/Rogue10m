@@ -1,0 +1,374 @@
+{
+  "Scope": "synthetic_summary_parser_only_not_UE_or_runtime_verification",
+  "LauncherPath": "D:\\Project\\Rogue10m\\Scripts\\VerifyBasicRunPlay.ps1",
+  "LauncherSHA256": "E996ADB9742DDA779314E87F5F0A5553280DF8B9E8EC20C30421B42B8A98FBA7",
+  "Extraction": "one_Read-DriverSummary_FunctionDefinitionAst_only; launcher_never_dot_sourced_or_launched",
+  "LauncherASTErrors": 0,
+  "Tests": 28,
+  "Passed": 28,
+  "Failed": 0,
+  "Results": [
+    {
+      "Name": "complete_all_observed_boundaries",
+      "Passed": true,
+      "ExpectedValid": true,
+      "ActualValid": true,
+      "ExpectedIssue": "",
+      "ActualIssues": [],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "missing_cancel_action",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "invalid_or_missing_next_run_cancel_action_verified",
+      "ActualIssues": [
+        "invalid_or_missing_next_run_cancel_action_verified",
+        "next_run_dependency_missing:next_run_connection_complete:next_run_cancel_action_verified",
+        "next_run_dependency_missing:next_run_abandon_ui_submitted:next_run_cancel_action_verified"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "focus_only_is_not_cancel_action",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_dependency_missing:next_run_abandon_ui_submitted:next_run_cancel_action_verified",
+      "ActualIssues": [
+        "next_run_dependency_missing:next_run_connection_complete:next_run_cancel_action_verified",
+        "next_run_dependency_missing:next_run_abandon_ui_submitted:next_run_cancel_action_verified"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "cancel_without_focus",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_dependency_missing:next_run_cancel_action_verified:next_run_cancel_focus_observed",
+      "ActualIssues": [
+        "next_run_dependency_missing:next_run_connection_complete:next_run_cancel_focus_observed",
+        "next_run_dependency_missing:next_run_abandon_ui_submitted:next_run_cancel_focus_observed",
+        "next_run_dependency_missing:next_run_cancel_action_verified:next_run_cancel_focus_observed"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "cancel_without_running_timer",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_dependency_missing:next_run_cancel_action_verified:next_run_timer_verified",
+      "ActualIssues": [
+        "next_run_dependency_missing:next_run_connection_complete:next_run_timer_verified",
+        "next_run_dependency_missing:next_run_abandon_ui_submitted:next_run_timer_verified",
+        "next_run_dependency_missing:next_run_cancel_action_verified:next_run_timer_verified"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "missing_final_slot_comparison",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "invalid_or_missing_next_run_returned_slot_reset_verified",
+      "ActualIssues": [
+        "invalid_or_missing_next_run_returned_slot_reset_verified",
+        "next_run_dependency_missing:next_run_connection_complete:next_run_returned_slot_reset_verified",
+        "next_run_dependency_missing:next_run_returned_hub:next_run_returned_slot_reset_verified"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "field_slots_alone_do_not_prove_return_slots",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_dependency_missing:next_run_returned_hub:next_run_returned_slot_reset_verified",
+      "ActualIssues": [
+        "next_run_dependency_missing:next_run_connection_complete:next_run_returned_slot_reset_verified",
+        "next_run_dependency_missing:next_run_returned_hub:next_run_returned_slot_reset_verified"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "return_slot_without_field_slot_baseline",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_dependency_missing:next_run_returned_slot_reset_verified:next_run_slot_reset_verified",
+      "ActualIssues": [
+        "next_run_field_without_slot_reset_verification",
+        "next_run_dependency_missing:next_run_connection_complete:next_run_slot_reset_verified",
+        "next_run_dependency_missing:next_run_returned_slot_reset_verified:next_run_slot_reset_verified"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "return_slot_without_saved_receipt",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_dependency_missing:next_run_returned_slot_reset_verified:next_run_saved_receipt_observed",
+      "ActualIssues": [
+        "next_run_dependency_missing:next_run_connection_complete:next_run_saved_receipt_observed",
+        "next_run_dependency_missing:next_run_returned_hub:next_run_saved_receipt_observed",
+        "next_run_dependency_missing:next_run_returned_slot_reset_verified:next_run_saved_receipt_observed"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "slot_comparison_without_initial_baseline",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_slot_verification_without_initial_baseline_or_first_victory",
+      "ActualIssues": [
+        "next_run_slot_verification_without_initial_baseline_or_first_victory",
+        "next_run_dependency_missing:next_run_connection_complete:next_run_slot_initial_baseline_recorded"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "completion_without_same_profile",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_dependency_missing:next_run_connection_complete:next_run_same_profile_verified",
+      "ActualIssues": [
+        "next_run_dependency_missing:next_run_connection_complete:next_run_same_profile_verified"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "completion_without_first_victory_freeze",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_milestone_without_first_victory:",
+      "ActualIssues": [
+        "next_run_milestone_without_first_victory:next_run_hub_verified",
+        "next_run_milestone_without_first_victory:next_run_field_verified",
+        "next_run_milestone_without_first_victory:next_run_timer_verified",
+        "next_run_milestone_without_first_victory:next_run_cancel_focus_observed",
+        "next_run_milestone_without_first_victory:next_run_cancel_action_verified",
+        "next_run_milestone_without_first_victory:next_run_abandon_ui_submitted",
+        "next_run_milestone_without_first_victory:next_run_saved_receipt_observed",
+        "next_run_milestone_without_first_victory:next_run_returned_hub",
+        "next_run_milestone_without_first_victory:next_run_same_profile_verified",
+        "next_run_milestone_without_first_victory:next_run_connection_complete",
+        "next_run_milestone_without_first_victory:next_run_returned_slot_reset_verified",
+        "first_full_victory_not_frozen_for_requested_next_run",
+        "next_run_slot_verification_without_initial_baseline_or_first_victory",
+        "next_run_dependency_missing:next_run_connection_complete:first_run_full_gate_frozen"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "missing_first_victory_freeze",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "invalid_or_missing_first_run_full_gate_frozen",
+      "ActualIssues": [
+        "invalid_or_missing_first_run_full_gate_frozen",
+        "next_run_milestone_without_first_victory:next_run_hub_verified",
+        "next_run_milestone_without_first_victory:next_run_field_verified",
+        "next_run_milestone_without_first_victory:next_run_timer_verified",
+        "next_run_milestone_without_first_victory:next_run_cancel_focus_observed",
+        "next_run_milestone_without_first_victory:next_run_cancel_action_verified",
+        "next_run_milestone_without_first_victory:next_run_abandon_ui_submitted",
+        "next_run_milestone_without_first_victory:next_run_saved_receipt_observed",
+        "next_run_milestone_without_first_victory:next_run_returned_hub",
+        "next_run_milestone_without_first_victory:next_run_same_profile_verified",
+        "next_run_milestone_without_first_victory:next_run_connection_complete",
+        "next_run_milestone_without_first_victory:next_run_returned_slot_reset_verified",
+        "first_full_victory_not_frozen_for_requested_next_run",
+        "next_run_slot_verification_without_initial_baseline_or_first_victory",
+        "next_run_dependency_missing:next_run_connection_complete:first_run_full_gate_frozen"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "frozen_victory_with_incomplete_followup",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_connection_incomplete_after_first_victory",
+      "ActualIssues": [
+        "next_run_connection_incomplete_after_first_victory"
+      ],
+      "NextRunComplete": "0"
+    },
+    {
+      "Name": "frozen_wrong_outcome",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_without_preserved_first_full_victory",
+      "ActualIssues": [
+        "next_run_without_preserved_first_full_victory"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "frozen_wrong_terminal",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_without_preserved_first_full_victory",
+      "ActualIssues": [
+        "next_run_without_preserved_first_full_victory"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "duplicate_first_and_second_run_ids",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_RunIds_not_distinct_at_Hub_boundaries",
+      "ActualIssues": [
+        "next_run_RunIds_not_distinct_at_Hub_boundaries"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "duplicate_first_and_final_run_ids",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_RunIds_not_distinct_at_Hub_boundaries",
+      "ActualIssues": [
+        "next_run_RunIds_not_distinct_at_Hub_boundaries"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "empty_final_run_id",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_invalid_RunId:next_run_after_return_id",
+      "ActualIssues": [
+        "next_run_invalid_RunId:next_run_after_return_id"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "noncanonical_run_id",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_invalid_RunId:next_run_id",
+      "ActualIssues": [
+        "next_run_invalid_RunId:next_run_id"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "complete_flag_with_blocked_status",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "next_run_completed_with_wrong_status",
+      "ActualIssues": [
+        "next_run_completed_with_wrong_status"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "duplicate_summary_key",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "duplicate_summary_key:next_run_cancel_action_verified",
+      "ActualIssues": [
+        "duplicate_summary_key:next_run_cancel_action_verified"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "malformed_cancel_boolean",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "invalid_or_missing_next_run_cancel_action_verified",
+      "ActualIssues": [
+        "invalid_or_missing_next_run_cancel_action_verified",
+        "next_run_dependency_missing:next_run_connection_complete:next_run_cancel_action_verified",
+        "next_run_dependency_missing:next_run_abandon_ui_submitted:next_run_cancel_action_verified"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "unexpected_next_run_mode",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "unexpected_next_run_connection_in_baseline_run",
+      "ActualIssues": [
+        "unexpected_next_run_connection_in_baseline_run"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "requested_next_run_not_echoed",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "requested_next_run_connection_not_confirmed",
+      "ActualIssues": [
+        "requested_next_run_connection_not_confirmed"
+      ],
+      "NextRunComplete": "1"
+    },
+    {
+      "Name": "missing_summary_file",
+      "Passed": true,
+      "ExpectedValid": false,
+      "ActualValid": false,
+      "ExpectedIssue": "driver_summary_missing",
+      "ActualIssues": [
+        "driver_summary_missing",
+        "requested_next_run_connection_not_confirmed",
+        "invalid_or_missing_first_run_full_gate_frozen",
+        "invalid_or_missing_next_run_hub_verified",
+        "invalid_or_missing_next_run_field_verified",
+        "invalid_or_missing_next_run_timer_verified",
+        "invalid_or_missing_next_run_cancel_focus_observed",
+        "invalid_or_missing_next_run_cancel_action_verified",
+        "invalid_or_missing_next_run_abandon_ui_submitted",
+        "invalid_or_missing_next_run_saved_receipt_observed",
+        "invalid_or_missing_next_run_returned_hub",
+        "invalid_or_missing_next_run_same_profile_verified",
+        "invalid_or_missing_next_run_connection_complete",
+        "invalid_or_missing_next_run_returned_slot_reset_verified",
+        "invalid_or_missing_next_run_slot_initial_baseline_recorded",
+        "invalid_or_missing_next_run_slot_reset_verified",
+        "next_run_slot_comparison_scope_missing"
+      ],
+      "NextRunComplete": null
+    },
+    {
+      "Name": "recorded_first_death_not_next_run_success",
+      "Passed": true,
+      "ExpectedValid": true,
+      "ActualValid": true,
+      "ExpectedIssue": "",
+      "ActualIssues": [],
+      "NextRunComplete": "0"
+    },
+    {
+      "Name": "recorded_first_timeout_not_next_run_success",
+      "Passed": true,
+      "ExpectedValid": true,
+      "ActualValid": true,
+      "ExpectedIssue": "",
+      "ActualIssues": [],
+      "NextRunComplete": "0"
+    }
+  ]
+}
