@@ -118,11 +118,14 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FRogue10mVillageQuestValidationTuningTest,
 bool FRogue10mVillageQuestValidationTuningTest::RunTest(const FString&)
 {
 	TStrongObjectPtr<URogue10mVillageQuestDataAsset> Data(NewObject<URogue10mVillageQuestDataAsset>());
+	const TSoftObjectPtr<UWorld> FixtureWorld(FSoftObjectPath(TEXT("/Temp/VillageQuestTuning.VillageQuestTuning")));
+	Data->SupportedWorld = FixtureWorld;
 	FString Reason;
-	if (!TestTrue(TEXT("Default legacy prototype definition is structurally valid"), Data->ValidateDefinition(Reason))) { return false; }
-	const auto Reject = [this](const TCHAR* Message, TFunctionRef<void(URogue10mVillageQuestDataAsset&)> Edit)
+	if (!TestTrue(TEXT("Explicitly scoped definition is structurally valid"), Data->ValidateDefinition(Reason))) { return false; }
+	const auto Reject = [this, &FixtureWorld](const TCHAR* Message, TFunctionRef<void(URogue10mVillageQuestDataAsset&)> Edit)
 	{
 		TStrongObjectPtr<URogue10mVillageQuestDataAsset> Candidate(NewObject<URogue10mVillageQuestDataAsset>());
+		Candidate->SupportedWorld = FixtureWorld;
 		Edit(*Candidate);
 		FString RejectionReason;
 		TestFalse(Message, Candidate->ValidateDefinition(RejectionReason));

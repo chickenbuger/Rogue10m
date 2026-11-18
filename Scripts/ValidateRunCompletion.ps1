@@ -38,7 +38,8 @@ foreach ($scenario in $cases) {
         $arguments = @(
             ('"' + $project + '"'), '/Game/Rogue10m/Maps/StartHub', '-game', '-d3d11', '-RenderOffscreen',
             '-ResX=1280', '-ResY=720', '-Windowed', '-unattended', '-nosplash', '-nosound',
-            '-NoLiveCoding', '-NoRemoteShaderCompile',
+            '-NoLiveCoding', '-NoRemoteShaderCompile', '-DisablePython', '-language=en', '-locale=en-US',
+            '-ini:EditorPerProjectUserSettings:[/Script/ModelContextProtocolEngine.ModelContextProtocolSettings]:bAutoStartServer=False',
             ('-RogueProfileSaveSlot=' + $profileSlot), ('-RogueProgressionSavePrefix=' + $savePrefix),
             ('-RogueSkillKeySaveSlot=' + $keySlot),
             ('-ExecCmds="t.MaxFPS 60,r.ScreenPercentage 75,Rogue10m.TestRunCompletion' + $phase + '"'), ('-abslog="' + $log + '"')

@@ -37,7 +37,7 @@ Assert-PhysicalDirectory (Join-Path $ProjectRoot 'Content')
 $project=Join-Path $ProjectRoot 'Rogue10m.uproject'
 $configuration=Get-Content -LiteralPath $project -Raw -Encoding utf8 | ConvertFrom-Json
 if($configuration.EngineAssociation -ne '5.8' -or -not($configuration.Modules | Where-Object Name -eq 'Rogue10m')){throw 'Expected UE5.8 Rogue10m project/module not found.'}
-foreach($map in @('L_Menu','StartHub','OpenRunMap')){
+foreach($map in @('StartHub','OpenRunMap')){
     if(-not(Test-Path -LiteralPath (Join-Path $ProjectRoot ('Content\Rogue10m\Maps\'+$map+'.umap')) -PathType Leaf)){throw ('Missing expected gameplay map '+$map)}
 }
 $EngineRoot=(Resolve-Path -LiteralPath $EngineRoot).Path
@@ -67,19 +67,19 @@ $occupied=@($before | Where-Object {
 if($occupied.Count){throw 'Exact QA_Manual profile, key slot or progression prefix already exists. Preserve existing evidence and choose a fresh label.'}
 
 # Reserve a new session without touching existing files. The observer alone
-# creates its fresh Observation subdirectory, after it verifies normal L_Menu UI.
+# creates its fresh Observation subdirectory after it verifies the startup menu.
 [IO.Directory]::CreateDirectory($session)|Out-Null
 $utf8=[Text.UTF8Encoding]::new($false)
 [IO.File]::WriteAllText((Join-Path $session 'saves-before.json'),(ConvertTo-Json -InputObject $before -Depth 4),$utf8)
 $log=Join-Path $session 'game.log'
-$arguments=@(('"'+$project+'"'),'/Game/Rogue10m/Maps/L_Menu','-game','-nosplash','-NoLiveCoding','-NoRemoteShaderCompile',
+$arguments=@(('"'+$project+'"'),'-game','-nosplash','-NoLiveCoding','-NoRemoteShaderCompile',
     '-d3d11','-windowed','-ForceRes','-ResX=1280','-ResY=720',
     ('-RogueProfileSaveSlot='+$town),('-RogueProgressionSavePrefix='+$prefix),('-RogueSkillKeySaveSlot='+$keys),
     ('-RogueManualPlayLabel='+$Label),('-RogueManualPlayOutput="'+$output+'"'),
     ('-RogueManualPlayTimeoutSeconds='+$ObservationSeconds),'-ExecCmds="t.MaxFPS 60,Rogue10m.ObserveManualPlay"',('-abslog="'+$log+'"'))
 $manifest=[ordered]@{
     status='launch_prepared_not_yet_started';prepared_utc=[DateTime]::UtcNow.ToString('o');label=$Label
-    project=$project;map='/Game/Rogue10m/Maps/L_Menu';executable=$exe
+    project=$project;map='/Game/Rogue10m/Maps/StartHub';executable=$exe
     engine_version=('{0}.{1}.{2}' -f $version.MajorVersion,$version.MinorVersion,$version.PatchVersion)
     engine_changelist=$version.Changelist;module_sha256=(Get-FileHash -LiteralPath $module -Algorithm SHA256).Hash
     module_last_write_utc=(Get-Item -LiteralPath $module).LastWriteTimeUtc.ToString('o')

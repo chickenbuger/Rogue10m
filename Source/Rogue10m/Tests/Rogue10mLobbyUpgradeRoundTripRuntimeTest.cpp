@@ -29,6 +29,7 @@
 #include "Rogue10mGameState.h"
 #include "Rogue10mInventoryComponent.h"
 #include "Rogue10mMainMenuWidget.h"
+#include "Rogue10mMenuGameMode.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
 #include "Rogue10mProgressionSaveGame.h"
@@ -90,7 +91,8 @@ public:
 			&& TownSlot.Len() <= 80 && Prefix.Len() <= 80 && KeySlot.Len() <= 80 && MaxSeconds >= 120 && MaxSeconds <= 600
 			&& Profiles && Profiles->GetProfileCount() == 1 && Profiles->GetProfiles()[0].ProfileId == Profile
 			&& UGameplayStatics::DoesSaveGameExist(TownSlot, 0) && Initial.GetNetMode() == NM_Standalone
-			&& UGameplayStatics::GetCurrentLevelName(&Initial, true) == TEXT("L_Menu")
+			&& UGameplayStatics::GetCurrentLevelName(&Initial, true) == TEXT("StartHub")
+			&& Initial.GetAuthGameMode<ARogue10mMenuGameMode>()
 			&& !FParse::Param(FCommandLine::Get(), TEXT("nullrhi")) && GEngine && GEngine->GameViewport
 			&& !IFileManager::Get().DirectoryExists(*Output) && ValidateCloneManifest();
 		const auto* Disk = Valid ? LoadDisk() : nullptr;
@@ -98,7 +100,7 @@ public:
 			&& !Disk->bEnteredRun && !Disk->bRunCompleted;
 		if (!Valid)
 		{
-			UE_LOG(LogRogue10m, Error, TEXT("LOBBY_UPGRADE_REJECTED verified_clone_fresh_output_profile1_normal_L_Menu_required"));
+			UE_LOG(LogRogue10m, Error, TEXT("LOBBY_UPGRADE_REJECTED verified_clone_fresh_output_profile1_StartHub_front_end_required"));
 			bFinished = true; FPlatformMisc::RequestExitWithStatus(false, 2); return;
 		}
 		Discovery = Disk->DiscoveredNodes;

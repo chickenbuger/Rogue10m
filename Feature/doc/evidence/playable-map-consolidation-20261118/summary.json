@@ -1,0 +1,42 @@
+{
+  "active_project_maps": [
+    "/Game/Rogue10m/Maps/OpenRunMap",
+    "/Game/Rogue10m/Maps/StartHub"
+  ],
+  "retired_map_count": 33,
+  "retired_packages_total": 4562,
+  "archived_package_categories": {
+    "map": 33,
+    "map_build_data": 21,
+    "map_demo_companion": 62,
+    "named_candidate_hlod_layer_for_backup": 2,
+    "named_candidate_folder_for_backup": 35,
+    "__ExternalActors__": 4201,
+    "__ExternalObjects__": 195
+  },
+  "removed_hub_candidate_portals": 3,
+  "removed_hub_decorations": 10,
+  "asset_registry_packages_before": 10948,
+  "asset_registry_packages_after": 6386,
+  "remaining_package_references_to_removed": 0,
+  "original_open_run_map_packages_preserved": 1260,
+  "development_editor_build": "passed",
+  "menu_checks_passed": 36,
+  "village_quest_automation_passed": 26,
+  "victory_write_checks_passed": 77,
+  "victory_cold_read_checks_passed": 17,
+  "victory_test_method": "isolated profile, native portal and timer, controlled low-health authored boss, player attack, result Enter, independent save reload",
+  "fresh_run_behaviour_checked": [
+    "old run gets one settlement",
+    "new run and reset run growth/equipment/currency",
+    "permanent lobby awards, traits and settled run ID retained"
+  ],
+  "editor_map_check": {
+    "map": "/Game/Rogue10m/Maps/OpenRunMap",
+    "errors": 0,
+    "warnings": 0,
+    "zen_readiness_http": 200
+  },
+  "known_game_log_messages": "Pre-existing StylizedCharacter Humanoid import dependency, repeated at level transitions",
+  "recoverability": "Retired packages and Crop local actor saved to verified local recovery archive"
+}

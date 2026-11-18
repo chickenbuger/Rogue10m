@@ -11,6 +11,7 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FRogue10mVillageQuestSelectedSlotsTest,
 bool FRogue10mVillageQuestSelectedSlotsTest::RunTest(const FString&)
 {
 	TStrongObjectPtr<URogue10mVillageQuestDataAsset> Data(NewObject<URogue10mVillageQuestDataAsset>());
+	Data->SupportedWorld = TSoftObjectPtr<UWorld>(FSoftObjectPath(TEXT("/Temp/VillageQuestSelection.VillageQuestSelection")));
 	auto Selected = Data->Quests[0];
 	Selected.SupplyClueObjectiveIndex = INDEX_NONE; Selected.bAcceptsClueReport = false;
 	for (auto& Row : Data->Quests)
@@ -95,7 +96,8 @@ bool FRogue10mVillageQuestLegacyDefaultTest::RunTest(const FString&)
 		TestTrue(TEXT("Default NPC coordinate remains unchanged"), Defaults->Quests[Index].NpcLocation.Equals(QuestsBefore[Index].NpcLocation));
 	}
 	FString Reason;
-	TestTrue(TEXT("Legacy regression definition remains structurally valid"), Defaults->ValidateDefinition(Reason));
+	TestTrue(TEXT("Shared quest default is unbound"), Defaults->SupportedWorld.IsNull());
+	TestFalse(TEXT("An explicit world is needed to validate the default rows"), Defaults->ValidateDefinition(Reason));
 	return !HasAnyErrors();
 }
 #endif

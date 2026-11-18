@@ -63,6 +63,7 @@ struct FFixture
 		FillerItem->InventorySize = FIntPoint(1, 1);
 		FillerItem->MaxStackSize = 1;
 		Definition.Reset(NewObject<URogue10mVillageQuestDataAsset>());
+		Definition->SupportedWorld = TSoftObjectPtr<UWorld>(FSoftObjectPath(World->GetPathName()));
 		Definition->Quests[0].RewardGold = 0;
 		Definition->Quests[0].RewardItem = RewardItem.Get();
 		Definition->Quests[0].RewardQuantity = 2;

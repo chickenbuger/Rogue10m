@@ -63,6 +63,7 @@
 #include "Rogue10mInventoryComponent.h"
 #include "Rogue10mItemDataAsset.h"
 #include "Rogue10mMainMenuWidget.h"
+#include "Rogue10mMenuGameMode.h"
 #include "Rogue10mMonsterDataAsset.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
@@ -122,7 +123,8 @@ public:
         Output = FPaths::ConvertRelativePathToFull(FPaths::ProjectDir() / TEXT("DevLog/BasicRunPlayQA") / Label / TEXT("Driver"));
         Valid &= FPaths::IsSamePath(Output, FPaths::ConvertRelativePathToFull(Requested));
         Valid &= !GIsEditor && Initial.WorldType == EWorldType::Game && Initial.GetNetMode() == NM_Standalone
-            && UGameplayStatics::GetCurrentLevelName(&Initial, true) == TEXT("L_Menu")
+            && UGameplayStatics::GetCurrentLevelName(&Initial, true) == TEXT("StartHub")
+            && Initial.GetAuthGameMode<ARogue10mMenuGameMode>()
             && !FParse::Param(FCommandLine::Get(), TEXT("nullrhi"));
         auto* Profiles = Initial.GetGameInstance() ? Initial.GetGameInstance()->GetSubsystem<URogue10mCharacterProfileSubsystem>() : nullptr;
         Valid &= Profiles && Profiles->GetProfileCount() == 0 && !Profiles->GetSelectedProfile();
@@ -132,7 +134,7 @@ public:
             && !UGameplayStatics::DoesSaveGameExist(KeySlot, 0) && !IFileManager::Get().DirectoryExists(*Output);
         if (!Valid)
         {
-            UE_LOG(LogRogue10m, Error, TEXT("BASIC_RUN_REJECTED exact_fresh_three_slots_rendered_L_Menu_required"));
+            UE_LOG(LogRogue10m, Error, TEXT("BASIC_RUN_REJECTED exact_fresh_three_slots_rendered_StartHub_front_end_required"));
             FPlatformMisc::RequestExitWithStatus(false, 3); return;
         }
         bPreparedBossStrategy = FParse::Param(FCommandLine::Get(), TEXT("RogueBasicRunPreparedBoss"));

@@ -9,7 +9,11 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FRogue10mVillageQuestDefinitionsTest,
 	"Rogue10m.VillageQuest.Definitions", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
 bool FRogue10mVillageQuestDefinitionsTest::RunTest(const FString&)
 {
-	const auto* Data = GetDefault<URogue10mVillageQuestDataAsset>();
+	const auto* Defaults = GetDefault<URogue10mVillageQuestDataAsset>();
+	if (!TestNotNull(TEXT("Quest defaults"), Defaults)) { return false; }
+	TestTrue(TEXT("Quest defaults require an authored world"), Defaults->SupportedWorld.IsNull());
+	auto* Data = NewObject<URogue10mVillageQuestDataAsset>();
+	Data->SupportedWorld = TSoftObjectPtr<UWorld>(FSoftObjectPath(TEXT("/Temp/VillageQuestDefinition.VillageQuestDefinition")));
 	FString Reason;
 	if (!TestNotNull(TEXT("Quest definitions"), Data) || !TestTrue(TEXT("Default definitions valid"), Data->ValidateDefinition(Reason))) { return false; }
 	const FName Expected[] = {TEXT("Q_V1_supply"), TEXT("Q_V2_stolen_grain"), TEXT("Q_V3_quarry"), TEXT("Q_V4_record"), TEXT("Q_V5_embers")};
@@ -40,6 +44,7 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FRogue10mVillageQuestInvalidDataTest,
 bool FRogue10mVillageQuestInvalidDataTest::RunTest(const FString&)
 {
 	auto* Data = NewObject<URogue10mVillageQuestDataAsset>();
+	Data->SupportedWorld = TSoftObjectPtr<UWorld>(FSoftObjectPath(TEXT("/Temp/VillageQuestDefinition.VillageQuestDefinition")));
 	const auto Original = Data->Quests; FString Reason;
 	const auto Invalid = [this, Data, &Reason](const TCHAR* Message)
 	{

@@ -38,8 +38,9 @@ function IsExpectedQA([string]$path) {
 $before=Inventory
 New-Item -ItemType Directory -Path $packet -Force | Out-Null
 $exe='D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor-Cmd.exe'
-$map=if($Mode-eq'Menu'){'/Game/Rogue10m/Maps/L_Menu'}else{'/Game/Rogue10m/Maps/StartHub'}
-$arguments=@(('"'+(Join-Path $root 'Rogue10m.uproject')+'"'),$map,'-game','-unattended','-nosplash','-nosound','-NoLiveCoding','-NoRemoteShaderCompile','-DisablePython',
+$arguments=@(('"'+(Join-Path $root 'Rogue10m.uproject')+'"'))
+if($Mode-ne'Menu'){$arguments+='/Game/Rogue10m/Maps/StartHub'}
+$arguments+=@('-game','-unattended','-nosplash','-nosound','-NoLiveCoding','-NoRemoteShaderCompile','-DisablePython',
  ('-RogueProfileSaveSlot='+$profile),('-RogueProgressionSavePrefix='+$prefix),('-RogueSkillKeySaveSlot='+$keys),
  ('-RogueQuitMenuLabel='+$Label),('-RogueQuitMenuMode='+$Mode),'-ExecCmds="t.MaxFPS 60,Rogue10m.TestQuitMenu"',('-abslog="'+$log+'"'))
 if($Rendered){$arguments+=@('-d3d11','-RenderOffscreen','-windowed','-ForceRes','-ResX=1280','-ResY=720')}else{$arguments+='-nullrhi'}

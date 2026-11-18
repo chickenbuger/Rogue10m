@@ -31,6 +31,7 @@
 #include "Rogue10mGameMode.h"
 #include "Rogue10mGameState.h"
 #include "Rogue10mInventoryComponent.h"
+#include "Rogue10mItemDataAsset.h"
 #include "AI/Rogue10mMonsterAIController.h"
 #include "Rogue10mMonsterAttackPatternComponent.h"
 #include "Rogue10mMonsterDataAsset.h"
@@ -172,17 +173,42 @@ private:
 			&& Persistence->GetAttachedProfileId() == ProfileId, TEXT("selected_character_auto_attached_to_matching_profile"));
 		if (Failures) { Finish(); return; }
 		SaveSlot = Persistence->GetSaveSlotForProfile(ProfileId);
-		Check(SaveSlot == SavePrefix + TEXT("_") + ProfileId.ToString(EGuidFormats::Digits), TEXT("progression_target_is_exact_QA_slot"));
+		const FString ExpectedSlot = FString::Printf(TEXT("%s_%s_v%d"), *SavePrefix,
+			*ProfileId.ToString(EGuidFormats::Digits), URogue10mProgressionSaveGame::CurrentVersion);
+		Check(SaveSlot == ExpectedSlot, TEXT("progression_target_is_exact_versioned_QA_slot"));
 		if (bRead)
 		{
 			TArray<uint8> Bytes;
 			Check(FFileHelper::LoadFileToArray(Bytes, *FPaths::Combine(Output, TEXT("expected.bin"))), TEXT("first_process_expected_snapshot_exists"));
 			Expected.Reset(Bytes.Num() ? Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromMemory(Bytes)) : nullptr);
 			Check(Expected && Expected->ProfileId == ProfileId, TEXT("expected_snapshot_profile_matches_second_process"));
-			if (Expected) { VerifySnapshots(); }
+			if (Expected)
+			{
+				VerifySnapshots();
+				const auto* Reloaded = Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveSlot, 0));
+				Check(Reloaded && Reloaded->RunId == Expected->RunId && Reloaded->LastSettledRunId == Expected->LastSettledRunId
+					&& Reloaded->LobbyEarnedPoints == Expected->LobbyEarnedPoints && Reloaded->HighestRunLevel == Expected->HighestRunLevel,
+					TEXT("second_process_keeps_the_new_run_identity_and_settlement_ledger"));
+			}
 			Check(RunState->GetRunPhase() == ERogue10mRunPhase::WaitingToStart, TEXT("second_process_hub_waits_without_StartRun"));
 			Finish(); return;
 		}
+		PreparationDeadline = FPlatformTime::Seconds() + 12.0;
+		WaitForEquipmentReady();
+	}
+	void WaitForEquipmentReady()
+	{
+		const bool bReady = Refresh() && Character->CanChangeWeapon();
+		if (!bReady && FPlatformTime::Seconds() < PreparationDeadline)
+		{
+			Later(0.2, [this] { WaitForEquipmentReady(); });
+			return;
+		}
+		Check(bReady, TEXT("spawn_is_grounded_and_ready_to_equip"));
+		if (Failures) { Finish(); return; }
+		const auto StarterInventory = Inventory->CaptureInventory();
+		StarterGold = StarterInventory.Gold;
+		StarterCrystals = StarterInventory.Crystals;
 		Inventory->AddGold(77);
 		State->RecordSkillUse(TEXT("RunCompletionQaPreserved"), 3);
 		SeedSkillTree();
@@ -204,23 +230,30 @@ private:
 		auto* Tree = State->GetSkillTreeProgressionComponent();
 		ARogue10mTutorialNPC* ServiceNPC = nullptr;
 		for (TActorIterator<ARogue10mTutorialNPC> It(World.Get()); It; ++It) { ServiceNPC = *It; break; }
-		Check(Tree && ServiceNPC, TEXT("v3_skill_tree_and_authored_town_service_exist"));
+		Check(Tree && ServiceNPC, TEXT("skill_tree_and_authored_town_service_exist"));
 		if (!Tree || !ServiceNPC) { return; }
+		const URogue10mItemDataAsset* Knuckle = LoadObject<URogue10mItemDataAsset>(nullptr,
+			TEXT("/Game/DataAsset/Item/Starter/DA_Item_StarterKnuckle.DA_Item_StarterKnuckle"));
+		int32 ContainerIndex = INDEX_NONE;
+		FGuid ItemId;
+		Check(Knuckle && Inventory->TryAddGridItem(Knuckle, 1, ContainerIndex, ItemId),
+			TEXT("qa_character_receives_the_authored_starter_knuckle"));
+		Check(ItemId.IsValid() && Inventory->TryEquipGridItem(ContainerIndex, ItemId),
+			TEXT("qa_character_equips_the_authored_starter_knuckle"));
 		const auto Track = Tree->GetActiveTrack();
-		Check(Track == ERogue10mSkillTreeTrack::Brawler || Track == ERogue10mSkillTreeTrack::GreatSword,
-			TEXT("v3_fixture_uses_supported_authored_weapon_track"));
+		Check(Track == ERogue10mSkillTreeTrack::Brawler, TEXT("equipped_knuckle_enables_brawler_track"));
 		if (Failures) { return; }
 		const int32 BeforeMastery = Tree->GetMasteryTotalExperience(Track);
 		for (int32 Count = 0; Count < 7; ++Count) { Tree->NotifyConfirmedAttack(Track); }
-		Check(Tree->GetMasteryTotalExperience(Track) == BeforeMastery + 7, TEXT("v3_fixture_has_nonzero_mastery_from_public_notification"));
+		Check(Tree->GetMasteryTotalExperience(Track) == BeforeMastery + 7, TEXT("fixture_has_nonzero_mastery_from_public_notification"));
 		// Give this disposable profile one earned point and buy through the actual NPC-range API.
 		State->AddExperience(100);
 		const FVector OriginalLocation = Character->GetActorLocation();
 		Character->SetActorLocation(ServiceNPC->GetActorLocation() + FVector(100, 0, 100), false, nullptr, ETeleportType::TeleportPhysics);
 		Check(Tree->CanChangeInvestments() && Tree->TryUnlockNode(TEXT("I.FightingSpirit.Entry"), ERogue10mSkillTreeUnlockRoute::Points, NAME_None),
-			TEXT("v3_fixture_purchases_identity_entry_with_actual_shared_point"));
+			TEXT("fixture_purchases_identity_entry_with_actual_shared_point"));
 		Check(Tree->GetSpentSkillTreePoints() == 1 && Tree->GetActiveIdentity() == ERogue10mSkillTreeIdentity::FightingSpirit,
-			TEXT("v3_fixture_has_paid_ledger_and_active_identity"));
+			TEXT("fixture_has_paid_ledger_and_active_identity"));
 		Character->SetActorLocation(OriginalLocation, false, nullptr, ETeleportType::TeleportPhysics);
 	}
 	void VerifyRun()
@@ -410,10 +443,6 @@ private:
 			Check(OnceGold == Inventory->GetGold() && Same(OnceGrowth, State->CaptureGrowth())
 				&& Same(OnceTree, State->GetSkillTreeProgressionComponent()->Capture()), TEXT("failed_return_retry_preserves_exactly_once_rewards"));
 		}
-		CaptureExpected();
-		TArray<uint8> Bytes;
-		Check(UGameplayStatics::SaveGameToMemory(Expected.Get(), Bytes)
-			&& FFileHelper::SaveArrayToFile(Bytes, *FPaths::Combine(Output, TEXT("expected.bin"))), TEXT("expected_postboss_snapshot_preserved_outside_Saved"));
 		FScreenshotRequest::RequestScreenshot(FPaths::Combine(Output, TEXT("run-result.png")), true, false);
 		Later(2.0, [this] { ReturnViaEnter(); });
 	}
@@ -445,6 +474,9 @@ private:
 		FSlateApplication::Get().ProcessKeyUpEvent(FKeyEvent(EKeys::Enter, FModifierKeysState(), 0, false, 0, 0));
 		Check(Completion->IsTravelStarted() && Completion->IsProgressionSaved(), TEXT("focused_result_Enter_saves_and_requests_town_travel"));
 		VerifyDiskSnapshot(TEXT("result_Enter_saved_before_hard_travel"));
+		Settlement.Reset(Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveSlot, 0)));
+		Check(Settlement && Settlement->ProfileId == ProfileId && Settlement->RunId.IsValid() && Settlement->bRunCompleted
+			&& Settlement->LastSettledRunId == Settlement->RunId, TEXT("terminal_save_records_the_settled_run_once"));
 	}
 	void VerifyTown()
 	{
@@ -454,7 +486,25 @@ private:
 		Check(RunState->GetRunPhase() == ERogue10mRunPhase::WaitingToStart && !World->URL.HasOption(TEXT("StartRun")), TEXT("town_return_clears_StartRun_option_and_timer"));
 		Check(!Character->IsDead() && !Controller->IsRunResultVisible(), TEXT("town_return_restores_alive_character_without_stale_result_panel"));
 		Check(Character->GetTraitRuntimeComponent() && !Character->GetTraitRuntimeComponent()->HasUsedLastStand(), TEXT("fresh_town_Pawn_resets_transient_LastStand_usage"));
-		VerifySnapshots();
+		const auto* FreshSave = Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveSlot, 0));
+		const bool bFreshRun = FreshSave && Settlement && FreshSave->ProfileId == ProfileId
+			&& FreshSave->RunId.IsValid() && FreshSave->RunId != Settlement->RunId
+			&& FreshSave->LastSettledRunId == Settlement->RunId && !FreshSave->bRunCompleted && !FreshSave->bEnteredRun;
+		Check(bFreshRun, TEXT("town_return_saves_a_new_waiting_run_and_retains_the_settled_id"));
+		if (!bFreshRun) { Finish(); return; }
+		Check(FreshSave->LobbyEarnedPoints == Settlement->LobbyEarnedPoints && FreshSave->HighestRunLevel == Settlement->HighestRunLevel
+			&& Same(FreshSave->Town, Settlement->Town), TEXT("town_return_keeps_lobby_rewards_and_permanent_traits"));
+		Check(FreshSave->Growth.Level == 1 && FreshSave->Growth.Experience == 0.0f && FreshSave->Growth.MonsterDefeats.IsEmpty()
+			&& FreshSave->Growth.WeaponType == ERogue10mWeaponType::Unarmed, TEXT("town_return_resets_run_growth_and_equipment"));
+		const auto* Tree = State->GetSkillTreeProgressionComponent();
+		Check(Tree && Tree->GetMasteryTotalExperience(ERogue10mSkillTreeTrack::Brawler) == 0 && Tree->GetSpentSkillTreePoints() == 0
+			&& FreshSave->Inventory.Gold == StarterGold && FreshSave->Inventory.Crystals == StarterCrystals,
+			TEXT("town_return_restores_starter_currency_and_resets_run_skill_investments"));
+		VerifyDiskSnapshot(TEXT("fresh_run_after_town_return"));
+		TArray<uint8> Bytes;
+		Check(UGameplayStatics::LoadDataFromSlot(Bytes, SaveSlot, 0)
+			&& FFileHelper::SaveArrayToFile(Bytes, *FPaths::Combine(Output, TEXT("expected.bin"))),
+			TEXT("new_waiting_run_snapshot_preserved_for_independent_read"));
 		Finish();
 	}
 	void CaptureExpected()
@@ -494,7 +544,7 @@ private:
 		}
 		Check(Expected && Same(Expected->Town, State->GetTownProgressionComponent()->CaptureProgression()), TEXT("full_traits_and_difficulty_restored"));
 		Check(Expected && Expected->SaveVersion == URogue10mProgressionSaveGame::CurrentVersion
-			&& Same(Expected->SkillTree, State->GetSkillTreeProgressionComponent()->Capture()), TEXT("full_v3_mastery_investment_choice_and_active_identity_ledger_restored"));
+			&& Same(Expected->SkillTree, State->GetSkillTreeProgressionComponent()->Capture()), TEXT("full_mastery_investment_choice_and_active_identity_ledger_restored"));
 		VerifyDiskSnapshot(bRead ? TEXT("fresh_process_read") : TEXT("restored_world"));
 	}
 	void VerifyDiskSnapshot(const TCHAR* Stage)
@@ -555,7 +605,7 @@ private:
 	URogue10mProgressionSubsystem* Persistence = nullptr;
 	ARogue10mPlayerState* State = nullptr;
 	URogue10mInventoryComponent* Inventory = nullptr;
-	TStrongObjectPtr<URogue10mProgressionSaveGame> Expected;
+	TStrongObjectPtr<URogue10mProgressionSaveGame> Expected, Settlement;
 	FRogue10mGrowthSnapshot BeforeBossGrowth;
 	ERogue10mSkillTreeTrack BossMasteryTrack = ERogue10mSkillTreeTrack::None;
 	FGuid ProfileId;
@@ -564,9 +614,10 @@ private:
 	FDelegateHandle LoadHandle;
 	FTSTicker::FDelegateHandle Watchdog;
 	TFunction<void()> Next;
-	double NextAt = 0, Deadline = 0, BossDeadline = 0, HitDeadline = 0;
+	double NextAt = 0, Deadline = 0, PreparationDeadline = 0, BossDeadline = 0, HitDeadline = 0;
 	int32 Checks = 0, Failures = 0, BeforeBossGold = 0, ExpectedXP = 0, ExpectedGold = 0;
 	int32 BeforeBossMastery = 0;
+	int32 StarterGold = 0, StarterCrystals = 0;
 	bool bRead = false, bFailure = false, bFinished = false, bExpectRun = false, bExpectTown = false;
 	bool bWatchInitialVictorySave = false, bInitialVictorySaveObserved = false;
 #if PLATFORM_WINDOWS

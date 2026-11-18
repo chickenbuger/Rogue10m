@@ -82,7 +82,6 @@ $journal=Join-Path $outDir 'iostore-verification.json'
 $wildcard=(Join-Path $pakPath '*.utoc').Replace('\','/')
 $arguments=@(('-ListContainer="'+$wildcard+'"'),('-Csv="'+$csvPath+'"'),'-unattended','-utf8output',('-UserDir="'+$userDir+'"'),('-abslog="'+$engineLog+'"'))
 $required=@(
-    '/Game/Rogue10m/Maps/L_Menu',
     '/Game/Rogue10m/Maps/StartHub',
     '/Game/Rogue10m/Maps/OpenRunMap',
     '/Game/Rogue10m/World/OpenWorld/Loot/DA_Loot_OW_VerdantSlime_PotionExample',
@@ -90,7 +89,6 @@ $required=@(
     '/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_AbyssOverlordAzathor',
     '/Game/Rogue10m/Characters/Boss/AzathorHuman20261110/DA_HumanBoss_AttackProfile',
     '/Game/Rogue10m/World/OpenWorld/Monsters/Azathor/M_Azathor_BasicConeWarning_1103',
-    '/Game/Rogue10m/Maps/Prototypes/FiveVillageGraybox20261110',
     '/Game/Weapons/Staff20261110/SM_BattleWizardStaff01',
     '/Game/Weapons/Starter20261110/SM_StarterGreatSword',
     '/Game/Weapons/Starter20261110/SM_StarterKnuckle',

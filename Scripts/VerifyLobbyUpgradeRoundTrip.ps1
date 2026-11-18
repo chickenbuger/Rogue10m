@@ -218,7 +218,7 @@ try{
         ByteIdentityScope='initial clone before UE launch only; normal game serialization may subsequently change destination QA bytes'}
     $clonePath=Join-Path $sessionRoot 'clone-manifest.json';Write-Json $clonePath $cloneManifest
     $metadata.CloneVerified=$true;$metadata.CloneManifestSHA256=Hash-File $clonePath
-    $arguments=@(('"'+$project+'"'),'/Game/Rogue10m/Maps/L_Menu','-game','-d3d11','-windowed','-ForceRes','-ResX=1280','-ResY=720',
+    $arguments=@(('"'+$project+'"'),'-game','-d3d11','-windowed','-ForceRes','-ResX=1280','-ResY=720',
         '-unattended','-nosplash','-NoLiveCoding','-NoRemoteShaderCompile',
         ('-RogueProfileSaveSlot='+$profile),('-RogueProgressionSavePrefix='+$prefix),('-RogueSkillKeySaveSlot='+$keys),
         ('-RogueLobbyUpgradeLabel='+$Label),('-RogueLobbyUpgradeSourceLabel='+$SourceLabel),('-RogueLobbyUpgradeExpectedProfile='+$source.Profile),

@@ -6,7 +6,7 @@ param(
  [string]$EngineRoot='D:\Program Files\UE_5.8',
  [string]$ProjectRoot='',
  [string]$EvidenceDirectory='',
- [string[]]$Maps=@('/Game/Rogue10m/Maps/L_Menu','/Game/Rogue10m/Maps/StartHub','/Game/Rogue10m/Maps/OpenRunMap','/Game/Rogue10m/Maps/Prototypes/FiveVillageGraybox20261110'),
+ [string[]]$Maps=@('/Game/Rogue10m/Maps/StartHub','/Game/Rogue10m/Maps/OpenRunMap'),
  [switch]$PreflightOnly
 )
 $ErrorActionPreference='Stop'

@@ -232,7 +232,7 @@ if(@($before|Where-Object{
 
 $exe='D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe'
 if(-not(Test-Path -LiteralPath $exe -PathType Leaf)){throw 'Installed UE 5.8 editor executable is missing.'}
-$arguments=@(('"'+$projectFile+'"'),'/Game/Rogue10m/Maps/L_Menu',
+$arguments=@(('"'+$projectFile+'"'),
     '-game','-d3d11','-windowed','-ForceRes','-ResX=1280','-ResY=720',
     '-unattended','-nosplash','-NoLiveCoding','-NoRemoteShaderCompile',
     ('-RogueProfileSaveSlot='+$profile),('-RogueProgressionSavePrefix='+$prefix),('-RogueSkillKeySaveSlot='+$keys),

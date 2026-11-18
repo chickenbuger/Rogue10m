@@ -26,6 +26,7 @@
 #include "Rogue10mGameMode.h"
 #include "Rogue10mGameState.h"
 #include "Rogue10mInventoryComponent.h"
+#include "Rogue10mMenuGameMode.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
 #include "Rogue10mProgressionSubsystem.h"
@@ -95,7 +96,8 @@ public:
         bValid &= FPaths::IsSamePath(Output, ActualOutput);
         bValid &= InitialWorld && !GIsEditor && InitialWorld->WorldType == EWorldType::Game
             && InitialWorld->GetNetMode() == NM_Standalone
-            && UGameplayStatics::GetCurrentLevelName(InitialWorld, true) == TEXT("L_Menu")
+            && UGameplayStatics::GetCurrentLevelName(InitialWorld, true) == TEXT("StartHub")
+            && InitialWorld->GetAuthGameMode<ARogue10mMenuGameMode>()
             && !FParse::Param(FCommandLine::Get(), TEXT("nullrhi"))
             && !FParse::Param(FCommandLine::Get(), TEXT("RenderOffscreen"));
         const UGameInstance* Instance = InitialWorld ? InitialWorld->GetGameInstance() : nullptr;
@@ -109,7 +111,7 @@ public:
             && Existing.IsEmpty() && !IFileManager::Get().DirectoryExists(*Output) && !IFileManager::Get().FileExists(*Output);
         if (!bValid)
         {
-            Ar.Logf(TEXT("Manual observer rejected: exact fresh QA_Manual label/three slots/output, visible standalone L_Menu and untouched profile UI required. No gameplay state was changed; game remains running."));
+            Ar.Logf(TEXT("Manual observer requires an exact fresh QA_Manual label, three slots and output, plus a visible standalone StartHub front end and untouched profile UI."));
             UE_LOG(LogRogue10m, Error, TEXT("MANUAL_OBSERVER_REJECTED exact_fresh_visible_menu_namespace_required"));
             return false;
         }
@@ -423,7 +425,7 @@ static void Stop(const TArray<FString>& Args, UWorld*, FOutputDevice& Ar)
     Ar.Logf(TEXT("Manual observation stopped. No gameplay command or game exit was requested."));
 }
 static FAutoConsoleCommandWithWorldArgsAndOutputDevice ObserveCommand(TEXT("Rogue10m.ObserveManualPlay"),
-    TEXT("Read-only fresh visible QA_Manual L_Menu observation; never drives or passes physical input."),
+    TEXT("Read-only observation of a fresh QA_Manual session from the visible StartHub front end."),
     FConsoleCommandWithWorldArgsAndOutputDeviceDelegate::CreateStatic(&Observe));
 static FAutoConsoleCommandWithWorldArgsAndOutputDevice StopCommand(TEXT("Rogue10m.StopManualPlayObservation"),
     TEXT("Stop only the read-only observer, preserving the running game and append-only samples."),

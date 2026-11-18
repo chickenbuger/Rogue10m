@@ -13,8 +13,6 @@ bool FRogue10mVillageObjectivePresentation::IsValid() const
 
 URogue10mVillageQuestDataAsset::URogue10mVillageQuestDataAsset()
 {
-	SupportedWorld = TSoftObjectPtr<UWorld>(FSoftObjectPath(
-		TEXT("/Game/Rogue10m/Maps/Prototypes/FiveVillageGraybox20261110.FiveVillageGraybox20261110")));
 	const auto Add = [this](const TCHAR* Id, const TCHAR* Village, const TCHAR* Name,
 		const TCHAR* Title, const TCHAR* Description, const TCHAR* First, const TCHAR* Second,
 		const FVector& Center, int32 Gold, int32 CombatIndex = INDEX_NONE)

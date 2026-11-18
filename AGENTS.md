@@ -128,6 +128,7 @@ Before committing, run:
 
 ### World Map Production Reference
 
+- The two active project levels are `/Game/Rogue10m/Maps/StartHub` and `/Game/Rogue10m/Maps/OpenRunMap`. Author future open-world changes in the existing `OpenRunMap` with the World Partition Map Maker. Keep previous layout candidates in recoverable archives and avoid adding a playable map to implement a revision.
 - Before actual world-map, village, outpost, hunting-ground, class-NPC, weapon/book placement, or related encounter work, read `Docs/WorldMapProductionGuide.md` and `Docs/References/WorldMap/README.md` together with the two referenced JSON catalogs and the retained map PNG.
 - These files preserve the latest user decisions from the map-planning chat. New explicit user instructions take priority. Treat older five-village drafts and the generated image as supporting references, not permission to restore superseded input, reward, or progression rules.
 - Keep ordinary monsters (minimum 15), four midbosses, and one final boss separate. Mid/high books are found during exploration; only introductory/lower books may be explicitly promised for simple quests/training. Weapon-specific chord/charge support and the Ctrl -> first-Q deadline -> QQQ magic-missile flow must be preserved.

@@ -120,9 +120,10 @@ try {
     $probe = Join-Path $saved 'PackageUserDirProbe.txt'
     Assert-ChildPath $out $probe
     if (-not [IO.File]::Exists($probe)) { throw 'Actual engine Saved routing probe missing' }
-    if (-not [IO.File]::ReadAllText($probe).Contains('/Game/Rogue10m/Maps/L_Menu')) { throw 'Saved routing probe did not report L_Menu' }
+    if (-not [IO.File]::ReadAllText($probe).Contains('/Game/Rogue10m/Maps/StartHub')) { throw 'Saved routing probe did not report StartHub' }
     $text = [IO.File]::ReadAllText($log)
-    if ($text -notmatch 'LoadMap:.*L_Menu') { throw 'Actual L_Menu map load not proven' }
+    if ($text -notmatch 'LogLoad:\s+LoadMap:\s+/Game/Rogue10m/Maps/StartHub(?:[?.\s]|$)') { throw 'Actual StartHub map load missing' }
+    if ($text -notmatch "LogLoad:\s+Game class is 'Rogue10mMenuGameMode'") { throw 'Front-end game mode missing on initial StartHub load' }
     if ($text -match 'Fatal error:|Assertion failed:|LowLevelFatalError|Failed to open descriptor') { throw 'Fatal packaged startup error' }
     $startupFailures = @($text -split "`r?`n" | Where-Object { $_ -match 'Log[A-Za-z0-9_]+:\s+Error:|LoadPackage: SkipPackage:|Widget is unavailable' })
     if ($startupFailures.Count) { throw ('Packaged runtime asset/UI failure: ' + ($startupFailures -join "`n")) }
