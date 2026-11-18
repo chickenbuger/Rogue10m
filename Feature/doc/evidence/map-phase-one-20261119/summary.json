@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-19",
+  "validated_integration": "99866c7ac00a29214f65ec00f6e25353431af156",
+  "published_inputs": {
+    "map": "5d23f12e",
+    "character_selection_and_cleanup": "d2d6d3c1",
+    "previous_main": "024ecfb7"
+  },
+  "levels": [
+    "/Game/Rogue10m/Maps/StartHub",
+    "/Game/Rogue10m/Maps/OpenRunMap"
+  ],
+  "editor_build": {
+    "passed": true,
+    "actions": 35,
+    "wall_seconds": 150.97
+  },
+  "integration_checks": {
+    "start_hub_portal_walk": 17,
+    "cave_camera_views": 48,
+    "cave_camera_minimum_cm": 235.69,
+    "cave_camera_maximum_pull_in_cm": 95.55,
+    "victory_settlement_and_return": 77,
+    "fresh_process_save_reload": 17,
+    "character_selection": 238,
+    "unreal_log_error_counts": {
+      "portal": 0,
+      "camera": 0,
+      "victory-write": 0,
+      "victory-read": 0,
+      "lobby": 0
+    }
+  },
+  "previous_continuous_play": {
+    "waypoints": 148,
+    "position_samples": 4654,
+    "detected_unexpected_discontinuities": 0,
+    "moving_camera_samples_q": 2406,
+    "moving_camera_samples_z": 2051,
+    "blocked_camera_samples": 0,
+    "outcome": "returned_timeout",
+    "screenshot_sha256": "f3c76e40d54c04e3064167b23b6747452d8bffa2b01a7c5dcb5e59cf5c52971b"
+  }
+}

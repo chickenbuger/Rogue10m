@@ -3,11 +3,17 @@ param(
     [switch]$Interactive,
     [switch]$Hold,
     [ValidateRange(640,3840)][int]$Width = 1920,
-    [ValidateRange(480,2160)][int]$Height = 1080
+    [ValidateRange(480,2160)][int]$Height = 1080,
+    [string]$PythonExecutable
 )
 $ErrorActionPreference = 'Stop'
 $TaskRoot = [IO.Path]::GetFullPath((Split-Path -Parent $PSScriptRoot)).TrimEnd('\')
 $TaskExe = 'D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe'
+$TaskPython = if ($PythonExecutable) { $PythonExecutable } else { Join-Path $TaskRoot 'tmp\blender-mcp-venv\Scripts\python.exe' }
+if (!(Test-Path -LiteralPath $TaskPython -PathType Leaf)) {
+    throw 'Python 3 is required for the log check. Pass the Python executable path with -PythonExecutable.'
+}
+$TaskPython = (Resolve-Path -LiteralPath $TaskPython).Path
 $TaskSaveRoot = Join-Path $TaskRoot 'Saved\SaveGames'
 $TaskRecordRoot = Join-Path $TaskRoot ('tmp\CharacterLobbyStyle20261119\' + $Label)
 $TaskDriverRoot = Join-Path $TaskRoot ('tmp\CharacterLobbyStyleQA\' + $Label)
@@ -79,7 +85,6 @@ try {
     $TaskAdded = @($TaskAfter | Where-Object { $_.Path -cnotin $TaskBefore.Path })
     $TaskRecord.Preserved = $TaskChanged.Count -eq 0
     Write-TaskJson (Join-Path $TaskRecordRoot 'save-preservation.json') ([ordered]@{Before=$TaskBefore.Count;After=$TaskAfter.Count;ChangedExisting=$TaskChanged;Added=$TaskAdded;NoRestoreOrDeletePerformed=$true})
-    $TaskPython = Join-Path $TaskRoot 'tmp\blender-mcp-venv\Scripts\python.exe'
     & $TaskPython -X utf8 -B (Join-Path $TaskRoot 'Scripts\CheckUnrealOutputLog.py') --log $TaskLog --after-line 0 --json-output (Join-Path $TaskRecordRoot 'output-log-check.json')
     $TaskRecord.LogCheckExitCode = $LASTEXITCODE
     $TaskSummaryPath = Join-Path $TaskDriverRoot 'summary.txt'

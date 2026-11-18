@@ -1,5 +1,12 @@
 # Sprint 변경 이력
 
+### Sprint#9-36 — 맵 1차 마감과 배포 브랜치 통합
+
+- `StartHub`와 `OpenRunMap` 복구, 캐릭터 선택창과 정리 커밋을 기존 배포 이력에 합쳤다.
+- UE 5.8 Editor 빌드 성공. 포탈 17항목, 동굴 48시야, 승리와 귀환 77항목, 저장 재로드 17항목, 캐릭터 선택 238항목을 통과했다.
+- 맵 복구 커밋에서 진행한 연속 플레이는 동굴 이동 중 카메라 4,457개 표본에서 가림 0건을 기록했다. 보스전은 시간 초과로 귀환했다.
+- 통합 QA 완료. `develop`, `test`, `main`에 같은 검증본을 배포한다. [계획](../Feature/architect/2026-11-19_map-phase-one-publication.md) · [마감 결과](../Feature/doc/2026-11-19_map-phase-one-publication.md)
+
 ### Sprint#9-32 — OpenRunMap의 지형·동굴 복구
 
 - 목표는 기존 `OpenRunMap`에 보관 지형과 지하 훈련고·작업함을 반영하고 지상 이동과 런을 다시 확인하는 것이다.
