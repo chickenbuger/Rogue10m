@@ -94,17 +94,15 @@ This should be tuned after the final player movement speed is decided.
 - 포탈의 `Start Run Timer On Travel`을 켜면 다음 맵 이동 옵션에 `StartRun=1`이 붙는다.
 - 다음 맵의 GameMode는 `StartRun=1` 옵션을 확인한 뒤 20분 런 타이머를 시작한다.
 
-## 다음 맵 데이터 추가 위치
+## 운영 맵과 제작 데이터
 
-- 실제 플레이맵 에셋 권장 위치: `Content/Rogue10m/Maps/OpenRunMap.umap`
-- 시작맵 에셋 권장 위치: `Content/Rogue10m/Maps/StartHub.umap`
-- 맵 메타데이터 추가 위치: `Source/Rogue10m/World/Rogue10mMapDataLibrary.cpp`
-- 포탈 C++ 클래스 위치: `Source/Rogue10m/World/Rogue10mRunPortal.*`
-- 에디터에서 새 플레이맵을 만들면 `Rogue10mMapDataLibrary.cpp`의 `LevelName`, `LevelAssetPath`, `TargetWorldSizeMeters` 값을 함께 갱신한다.
+- 실제 플레이맵은 `Content/Rogue10m/Maps/OpenRunMap.umap`, 시작맵은 `Content/Rogue10m/Maps/StartHub.umap`이다.
+- 오픈 월드 변경은 기존 `OpenRunMap`에 적용한다. 지형·배치·획득 데이터는 [월드 맵 제작 가이드](WorldMapProductionGuide.md)와 [참조 카탈로그](References/WorldMap/README.md)를 따른다.
+- 맵 이동 설정은 맵에 배치한 포탈에 있으며, 포탈 C++ 클래스는 `Source/Rogue10m/World/Rogue10mRunPortal.*`에 있다.
 
 ## 현재 저장된 오픈월드 플레이맵 (2026-10-05)
 
-- 실제 맵: `/Game/Rogue10m/Maps/OpenRunMap`. 기존 기본맵의 환경·시스템을 복제하고 시험용 기하를 새 맵에서 정리했다. MapDataLibrary의 기존 경로·1800m 계약과 일치한다.
+- 실제 맵: `/Game/Rogue10m/Maps/OpenRunMap`. 기존 기본맵의 환경·시스템을 복제하고 시험용 기하를 새 맵에서 정리했다. 초기 제작의 1800m 기준을 사용했다.
 - 크기: 1800m × 1800m Landscape, 높이 약21~140m, 1009² 높이 샘플, 256컴포넌트·16스트리밍 프록시.
 - 남쪽 야영지 `(0,-65000)`cm에서 서쪽 숲 `(-50000,-25000)`, 강 교차로 `(0,5000)`, 동쪽 풍차 `(50000,-5000)`, 바위 고원 `(-35000,42000)`, 북쪽 유적 `(15000,68000)`으로 연결된다.
 - 폭60m 강과 폭18m·길이120m 교량3개, 약12m 폭 길을 배치했다. 북쪽 유적은 처음부터 접근 가능하며 직행길 약1357m를 걷는 데 기본600cm/s 기준 약226초가 걸린다.

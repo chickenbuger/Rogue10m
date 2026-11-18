@@ -398,9 +398,6 @@ private:
 	// Item Data Asset을 기존 아이템/장비 슬롯 스택 표현으로 변환합니다.
 	static FRogue10mItemStack MakeItemFromDataAsset(const URogue10mItemDataAsset* ItemData, int32 Quantity);
 
-	// 무기 슬롯에 장착 가능한 무기 아이템 데이터를 만듭니다.
-	static FRogue10mItemStack MakeWeaponItem(ERogue10mWeaponType WeaponType, const TCHAR* DisplayName, const TCHAR* Description, const FLinearColor& ItemColor, ERogue10mInventorySlotType EquipSlotType = ERogue10mInventorySlotType::MainWeapon, bool bLocked = false);
-
 	// 비어 있는 인벤토리 칸을 표현하는 아이템 데이터를 만듭니다.
 	static FRogue10mItemStack MakeEmptyItem();
 

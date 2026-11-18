@@ -1161,30 +1161,6 @@ const URogue10mAttackSkillData* URogue10mCombatComponent::ResolveComboAttackSkil
 	return Source->NextComboSkill;
 }
 
-TArray<const URogue10mAttackSkillData*> URogue10mCombatComponent::GetWeaponQuickSlotSkills() const
-{
-	TArray<const URogue10mAttackSkillData*> Skills;
-	static constexpr ERogue10mAttackInputSlot Slots[] = {
-		ERogue10mAttackInputSlot::Primary,
-		ERogue10mAttackInputSlot::Special,
-		ERogue10mAttackInputSlot::ChargedPrimary,
-		ERogue10mAttackInputSlot::ChargedSpecial,
-		ERogue10mAttackInputSlot::JumpPrimary,
-		ERogue10mAttackInputSlot::JumpSpecial
-	};
-	for (ERogue10mAttackInputSlot Slot : Slots)
-	{
-		if (const URogue10mAttackSkillData* Skill = GetEquippedSkill(Slot))
-		{
-			Skills.AddUnique(Skill);
-		}
-	}
-	return Skills;
-}
-const URogue10mAttackSkillData* URogue10mCombatComponent::GetSkillForInputSlot(ERogue10mAttackInputSlot InputSlot) const
-{
-	return GetEquippedSkill(InputSlot);
-}
 ERogue10mAttackInputSlot URogue10mCombatComponent::GetAttackInputSlot(bool bPrimaryAttack, bool bChargedAttack, bool bJumpAttack) const
 {
 	if (bChargedAttack)
@@ -2389,15 +2365,6 @@ void URogue10mCombatComponent::ResetComboWindow()
 	ActiveComboRootSkill.Reset();
 	ActiveComboWindowOpenTime = -1.0f;
 	ActiveComboWindowCloseTime = -1.0f;
-}
-
-void URogue10mCombatComponent::DrawAttackDebug(
-    const FVector&, const FVector&, float,
-    const FLinearColor&, bool, const FHitResult&) const
-{
-    // The historical line/end-sphere approximation has no callers. Actual query
-    // snapshots now use the test component's owned buffer, which clears immediately.
-    // Keep this private compatibility hook inert rather than create global debug lines.
 }
 
 void URogue10mCombatComponent::AddCombatLog(const FString& Message, const FLinearColor& Color) const

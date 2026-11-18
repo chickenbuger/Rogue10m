@@ -191,8 +191,6 @@ public:
 	const URogue10mAttackSkillData* ResolveAttackSkill(bool bPrimaryAttack, bool bChargedAttack, bool bJumpAttack) const;
 	const URogue10mAttackSkillData* ResolveChargedAttackSkill(bool bPrimaryAttack, bool bJumpAttack) const;
 	const URogue10mAttackSkillData* ResolveComboAttackSkill(bool bPrimaryAttack, bool bJumpAttack) const;
-	TArray<const URogue10mAttackSkillData*> GetWeaponQuickSlotSkills() const;
-	const URogue10mAttackSkillData* GetSkillForInputSlot(ERogue10mAttackInputSlot InputSlot) const;
 	ERogue10mAttackInputSlot GetAttackInputSlot(bool bPrimaryAttack, bool bChargedAttack, bool bJumpAttack) const;
 
 	bool IsAttackOnCooldown(float CurrentTime) const;
@@ -252,7 +250,6 @@ private:
 	void StartSharedAttackCooldown(const URogue10mAttackSkillData& SkillData, bool bComboAttack, bool bPreserveLongerCooldown = false);
 	void OpenComboWindow(const URogue10mAttackSkillData& SkillData);
 	void ResetComboWindow();
-	void DrawAttackDebug(const FVector& TraceStart, const FVector& TraceEnd, float TraceRadius, const FLinearColor& Color, bool bHit, const FHitResult& Hit) const;
 	void AddCombatLog(const FString& Message, const FLinearColor& Color = FLinearColor::White) const;
 	FString GetAttackInputText(bool bPrimaryAttack, bool bJumpAttack) const;
 	const URogue10mWeaponSkillProfileDataAsset* FindActiveWeaponProfile() const;

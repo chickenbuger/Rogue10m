@@ -96,18 +96,12 @@
 - `Icon Label`: 아이콘 텍스처가 없을 때 표시할 짧은 임시 라벨
 - `Icon Tint`: 아이콘 배경과 강조색
 - `Attack Effect`: Niagara 또는 Particle 효과 에셋
-- `Draw Debug Attack`: 공격 판정 디버그 표시 여부
+- `Draw Debug Attack`: 이전 데이터 에셋 호환용 필드
 - `Debug Color`: 디버그 선과 판정 구체 색상
 
 ## 화면 디버그 표시
 
-공격이 실행되면 다음 디버그가 월드에 표시된다.
-
-- 카메라 앞 방향 공격 선
-- 공격 끝 지점의 판정 구체
-- 몬스터 명중 시 빨간 명중 구체
-
-디버그 표시는 `BP_FirstPersonCharacter`의 `Draw Attack Debug` 또는 개별 Data Asset의 `Draw Debug Attack`으로 제어한다.
+실제 공격 쿼리와 타격 결과를 확인하려면 전투 테스트 도구의 공간 디버그를 켠다. `Scripts/VerifySpatialDebug.ps1`로 테스트 세션에서 쿼리 표시와 종료 후 정리를 검증할 수 있다.
 
 ## 콤보 설정
 
