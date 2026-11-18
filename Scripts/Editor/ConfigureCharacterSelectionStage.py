@@ -1,4 +1,7 @@
-"""Configure the full-screen three-character selection stage."""
+"""Apply the approved navy/gold three-profile lobby Designer layout.
+
+Only the lobby Widget Blueprint is rewritten; existing art and data are reused.
+"""
 
 from pathlib import Path
 import sys
@@ -26,10 +29,19 @@ BACKGROUND_SOURCE = (
     / "T_CharacterLobby_Background.png"
 )
 
-TOP_BAR = unreal.LinearColor(0.012, 0.025, 0.045, 0.82)
-BOTTOM_BAR = unreal.LinearColor(0.008, 0.018, 0.034, 0.92)
-CARD = unreal.LinearColor(0.025, 0.055, 0.085, 0.9)
+TOP_BAR = unreal.LinearColor(0.012, 0.026, 0.045, 0.94)
+BOTTOM_BAR = unreal.LinearColor(0.010, 0.024, 0.042, 0.94)
+CARD = unreal.LinearColor(0.025, 0.055, 0.085, 0.94)
 CREATION_FRAME = unreal.LinearColor(0.018, 0.035, 0.06, 0.96)
+GOLD = unreal.LinearColor(0.63, 0.40, 0.12, 1.0)
+PALE_GOLD = unreal.LinearColor(0.92, 0.68, 0.28, 1.0)
+IVORY = unreal.LinearColor(0.96, 0.91, 0.78, 1.0)
+SOFT_TEXT = unreal.LinearColor(0.86, 0.88, 0.90, 1.0)
+PRIMARY = unreal.LinearColor(0.40, 0.22, 0.045, 1.0)
+SLOT_X = (350, 780, 1210)
+PREVIEW_SIZE = (360, 600)
+STAGE_Y = 105
+NAMEPLATE_Y = 714
 
 
 def log(message):
@@ -40,10 +52,10 @@ def import_background():
     existing = unreal.EditorAssetLibrary.load_asset(
         BACKGROUND_TEXTURE_PATH
     )
+    if existing:
+        log("기존 배경 Texture를 변경 없이 재사용합니다.")
+        return existing
     if not BACKGROUND_SOURCE.is_file():
-        if existing:
-            log("Git 제외 SourceArt가 없어 기존 배경 Texture를 재사용합니다.")
-            return existing
         raise RuntimeError(f"배경 원본과 Texture 누락: {BACKGROUND_SOURCE}")
 
     task = unreal.AssetImportTask()
@@ -55,7 +67,7 @@ def import_background():
         "destination_name", "T_CharacterLobby_Background"
     )
     task.set_editor_property("automated", True)
-    task.set_editor_property("replace_existing", True)
+    task.set_editor_property("replace_existing", False)
     task.set_editor_property("save", True)
     unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
 
@@ -66,7 +78,7 @@ def import_background():
     unreal.EditorAssetLibrary.save_loaded_asset(
         texture, only_if_is_dirty=False
     )
-    log(f"배경 Texture 갱신: {BACKGROUND_TEXTURE_PATH}")
+    log(f"누락 배경 Texture 최초 생성: {BACKGROUND_TEXTURE_PATH}")
     return texture
 
 
@@ -92,6 +104,38 @@ def canvas_stretch(slot, z=0):
     slot.set_offsets(unreal.Margin(0.0, 0.0, 0.0, 0.0))
     slot.set_z_order(z)
 
+
+def widget_map(widget):
+    tree = base.umg("GetWidgets", widget)
+    return {info.widget.get_name(): info.widget for info in tree.widgets if info.widget}
+
+
+def upsert(widget, widget_class, name, parent=None, variable=False):
+    """Keep required BindWidget nodes present at every structural compile.
+
+    Official MoveWidget marks structure only after attaching the existing node
+    to its new parent. Never delete/recreate a required control during this pass.
+    """
+    item = widget_map(widget).get(name)
+    if item is None:
+        return base.add(widget, widget_class, name, parent, variable=variable)
+    if not isinstance(item, widget_class):
+        raise RuntimeError(f"기존 위젯 형식 불일치: {name}")
+    if parent is not None and item.get_parent() != parent:
+        info = base.umg("MoveWidget", widget, item, parent, -1)
+        if not info.widget:
+            raise RuntimeError(f"기존 위젯 이동 실패: {name}")
+        return info.widget, info.slot
+    return item, item.get_editor_property("slot")
+
+
+def border(widget, name, parent, color, padding=0.0):
+    item, slot = upsert(widget, unreal.Border, name, parent)
+    item.set_brush_color(color)
+    item.set_padding(unreal.Margin(padding, padding, padding, padding))
+    return item, slot
+
+
 def make_button(
     widget,
     parent,
@@ -101,20 +145,119 @@ def make_button(
     y,
     width,
     height,
-    color=base.BUTTON,
+    color=CARD,
 ):
-    result = base.button(
-        widget, parent, name, label, x, y, width, height
-    )
+    result, button_slot = upsert(widget, unreal.Button, name, parent, variable=True)
+    canvas_place(button_slot, x, y, width, height, 8)
     result.set_background_color(color)
-    button_slot = result.get_editor_property("slot")
-    if button_slot and hasattr(button_slot, "set_z_order"):
-        button_slot.set_z_order(8)
+    result.set_visibility(unreal.SlateVisibility.VISIBLE)
+    if label is not None:
+        text = result.get_content()
+        if text is None:
+            text, text_slot = upsert(widget, unreal.TextBlock, name + "_Label", result)
+            base.set_fill_alignment(text_slot)
+        if not isinstance(text, unreal.TextBlock):
+            raise RuntimeError(f"기존 버튼 라벨 형식 불일치: {name}")
+        text.set_text(label)
+        text.set_color_and_opacity(unreal.SlateColor(specified_color=IVORY))
+        text.set_visibility(unreal.SlateVisibility.HIT_TEST_INVISIBLE)
+        text.set_editor_property("justification", unreal.TextJustify.CENTER)
+        font = text.get_editor_property("font")
+        font.size = 30 if name == "UI_EnterGameButton" else (23 if height >= 58 else 18)
+        text.set_editor_property("font", font)
     return result
 
 
+def label(widget, parent, name, value, bounds, font_size=20, color=IVORY,
+          variable=False, center=True):
+    text, slot = upsert(widget, unreal.TextBlock, name, parent, variable=variable)
+    text.set_text(value)
+    font = text.get_editor_property("font")
+    font.size = font_size
+    text.set_editor_property("font", font)
+    if isinstance(slot, unreal.CanvasPanelSlot):
+        canvas_place(slot, *bounds, z=4)
+    else:
+        base.set_fill_alignment(slot)
+    text.set_color_and_opacity(unreal.SlateColor(specified_color=color))
+    text.set_visibility(unreal.SlateVisibility.HIT_TEST_INVISIBLE)
+    text.set_clipping(unreal.WidgetClipping.CLIP_TO_BOUNDS)
+    text.set_text_overflow_policy(unreal.TextOverflowPolicy.ELLIPSIS)
+    text.set_editor_property(
+        "justification", unreal.TextJustify.CENTER if center else unreal.TextJustify.LEFT
+    )
+    return text
+
+
+def ornament_rect(widget, parent, name, bounds, color=GOLD, z=4):
+    image, slot = upsert(widget, unreal.Image, name, parent)
+    image.set_color_and_opacity(color)
+    image.set_visibility(unreal.SlateVisibility.HIT_TEST_INVISIBLE)
+    canvas_place(slot, *bounds, z=z)
+    return image
+
+
+def diamond(widget, parent, name, center, side=7, color=PALE_GOLD):
+    image = ornament_rect(
+        widget, parent, name,
+        (center[0] - side / 2, center[1] - side / 2, side, side), color
+    )
+    image.set_render_transform_pivot(unreal.Vector2D(0.5, 0.5))
+    image.set_render_transform_angle(45)
+
+
+def add_empty_slot(widget, stage, index, x):
+    button = make_button(
+        widget, stage, f"UI_Slot{index}EmptyButton", None,
+        x + 70, 140, 220, 400, unreal.LinearColor(0.035, 0.065, 0.10, 0.18)
+    )
+    canvas, canvas_slot = upsert(
+        widget, unreal.CanvasPanel, f"UI_Slot{index}EmptyCanvas", button
+    )
+    base.set_fill_alignment(canvas_slot)
+    canvas.set_visibility(unreal.SlateVisibility.SELF_HIT_TEST_INVISIBLE)
+    # Native styling supplies the outlined frame and binds the same slot action.
+    ornament_rect(widget, canvas, f"UI_Slot{index}EmptyPlusH",
+                  (77, 196, 66, 5), PALE_GOLD)
+    ornament_rect(widget, canvas, f"UI_Slot{index}EmptyPlusV",
+                  (107, 166, 5, 66), PALE_GOLD)
+
+
+def add_nameplate(widget, root, index, x):
+    button = make_button(
+        widget, root, f"UI_Slot{index}Button", None,
+        x, NAMEPLATE_Y, 360, 108, CARD
+    )
+    name = f"UI_Slot{index}NameplateCanvas"
+    canvas = widget_map(widget).get(name)
+    if canvas is None:
+        # Keep the old required TextBlock reachable while introducing its new
+        # layout container; the old button is only filled after that text moves.
+        canvas, _ = upsert(widget, unreal.CanvasPanel, name, root)
+    elif not isinstance(canvas, unreal.CanvasPanel):
+        raise RuntimeError(f"기존 이름표 컨테이너 형식 불일치: {name}")
+    canvas.set_visibility(unreal.SlateVisibility.SELF_HIT_TEST_INVISIBLE)
+    label(widget, canvas, f"UI_Slot{index}Text", f"슬롯 {index}",
+          (18, 9, 324, 42), 28, variable=True)
+    label(widget, canvas, f"UI_Slot{index}DetailText", "캐릭터 생성하기",
+          (18, 59, 324, 29), 20, SOFT_TEXT, variable=True)
+    ornament_rect(widget, canvas, f"UI_Slot{index}NameDivider",
+                  (61, 53, 238, 1), unreal.LinearColor(0.54, 0.38, 0.18, 0.5))
+    diamond(widget, canvas, f"UI_Slot{index}LeftDiamond", (18, 54), 5)
+    diamond(widget, canvas, f"UI_Slot{index}RightDiamond", (342, 54), 5)
+    canvas, canvas_slot = upsert(widget, unreal.CanvasPanel, name, button)
+    base.set_fill_alignment(canvas_slot)
+    badge, badge_slot = border(
+        widget, f"UI_Slot{index}SelectedBadge", root, PRIMARY, 0.0
+    )
+    canvas_place(badge_slot, x + 102, 814, 156, 34, 10)
+    badge.set_visibility(unreal.SlateVisibility.COLLAPSED)
+    label(widget, badge, f"UI_Slot{index}SelectedText", "선택됨",
+          (0, 0, 156, 34), 19, IVORY)
+
+
 def add_stage_character(widget, parent, index, x, y, width, height):
-    image, image_slot = base.add(
+    image, image_slot = upsert(
         widget,
         unreal.Image,
         f"UI_Slot{index}PreviewImage",
@@ -125,25 +268,27 @@ def add_stage_character(widget, parent, index, x, y, width, height):
     image.set_visibility(unreal.SlateVisibility.SELF_HIT_TEST_INVISIBLE)
 
 
-def add_creation_value_row(widget, parent, key, label, y):
-    base.value_row(widget, parent, key, label, y)
-
-
 def build_widget(background_texture):
-    widget = base.create_or_load_widget()
-    base.clear_tree(widget)
+    from ValidateCharacterCustomizationAssets import REQUIRED_WIDGETS
+    widget = base.require_asset(WIDGET_PATH)
+    required = set(REQUIRED_WIDGETS) | {"UI_CharacterLobbyRoot", "UI_SelectionStagePanel"}
+    required.update(f"UI_Slot{index}PreviewImage" for index in range(1, 4))
+    missing = sorted(required - widget_map(widget).keys())
+    if missing:
+        raise RuntimeError(f"기존 필수 바인딩 누락으로 편집 중단: {missing}")
 
-    root, _ = base.add(
+    root, _ = upsert(
         widget, unreal.CanvasPanel, "UI_CharacterLobbyRoot"
     )
-    background, background_slot = base.add(
+    root.set_visibility(unreal.SlateVisibility.SELF_HIT_TEST_INVISIBLE)
+    background, background_slot = upsert(
         widget, unreal.Image, "UI_LobbyBackgroundImage", root
     )
     canvas_stretch(background_slot, 0)
     background.set_brush_from_texture(background_texture, False)
     background.set_visibility(unreal.SlateVisibility.SELF_HIT_TEST_INVISIBLE)
 
-    shade, shade_slot = base.make_border(
+    shade, shade_slot = border(
         widget,
         "UI_BackgroundShade",
         root,
@@ -153,43 +298,35 @@ def build_widget(background_texture):
     canvas_place(shade_slot, 0, 0, 1920, 1080, 1)
     shade.set_visibility(unreal.SlateVisibility.SELF_HIT_TEST_INVISIBLE)
 
-    top_bar, top_bar_slot = base.make_border(
+    top_bar, top_bar_slot = border(
         widget, "UI_TopBar", root, TOP_BAR, 0.0
     )
-    canvas_place(top_bar_slot, 0, 0, 1920, 108, 2)
-    title, title_slot = base.make_text(
-        widget,
-        "UI_TitleText",
-        "ROGUE 10M",
-        root,
-        font_size=38,
-    )
-    canvas_place(title_slot, 72, 24, 500, 60, 3)
-    subtitle, subtitle_slot = base.make_text(
-        widget,
-        "UI_SubtitleText",
-        "CHARACTER SELECT",
-        root,
-        font_size=24,
-    )
-    canvas_place(subtitle_slot, 1390, 32, 450, 48, 3)
-    subtitle.set_editor_property(
-        "justification", unreal.TextJustify.RIGHT
-    )
+    canvas_place(top_bar_slot, 0, 0, 1920, 88, 2)
+    top_bar.set_visibility(unreal.SlateVisibility.HIT_TEST_INVISIBLE)
+    ornament_rect(widget, root, "UI_HeaderGoldLine", (0, 86, 1920, 1))
+    label(widget, root, "UI_TitleText", "ROGUE 10M",
+          (56, 12, 500, 64), 38, IVORY, center=False)
+    label(widget, root, "UI_SubtitleText", "캐릭터 선택",
+          (720, 12, 480, 64), 36, IVORY)
+    for suffix, line_x, diamond_x in (("Left", 600, 714), ("Right", 1206, 1200)):
+        ornament_rect(widget, root, "UI_Header" + suffix + "Rule",
+                      (line_x, 44, 108, 1))
+        diamond(widget, root, "UI_Header" + suffix + "Diamond", (diamond_x, 44))
 
-    stage, stage_slot = base.add(
+    stage, stage_slot = upsert(
         widget,
         unreal.CanvasPanel,
         "UI_SelectionStagePanel",
         root,
         variable=True,
     )
-    canvas_place(stage_slot, 0, 92, 1920, 760, 3)
-    add_stage_character(widget, stage, 1, 360, 15, 360, 720)
-    add_stage_character(widget, stage, 2, 780, 15, 360, 720)
-    add_stage_character(widget, stage, 3, 1200, 15, 360, 720)
+    canvas_place(stage_slot, 0, STAGE_Y, 1920, 735, 3)
+    stage.set_visibility(unreal.SlateVisibility.SELF_HIT_TEST_INVISIBLE)
+    for index, x in enumerate(SLOT_X, start=1):
+        add_stage_character(widget, stage, index, x, 12, *PREVIEW_SIZE)
+        add_empty_slot(widget, stage, index, x)
 
-    draft_image, draft_slot = base.add(
+    draft_image, draft_slot = upsert(
         widget,
         unreal.Image,
         "UI_CharacterPreviewImage",
@@ -198,169 +335,73 @@ def build_widget(background_texture):
     )
     canvas_place(draft_slot, 130, 120, 900, 820, 4)
 
-    bottom_bar, bottom_bar_slot = base.make_border(
+    bottom_bar, bottom_bar_slot = border(
         widget, "UI_BottomBar", root, BOTTOM_BAR, 0.0
     )
-    canvas_place(bottom_bar_slot, 0, 810, 1920, 270, 4)
+    canvas_place(bottom_bar_slot, 0, 930, 1920, 150, 4)
     bottom_bar.set_visibility(unreal.SlateVisibility.SELF_HIT_TEST_INVISIBLE)
+    ornament_rect(widget, root, "UI_ActionGoldLine", (0, 930, 1920, 1), PALE_GOLD)
 
-    slot_x = (360, 780, 1200)
-    for index, x in enumerate(slot_x, start=1):
-        slot_button = make_button(
-            widget,
-            root,
-            f"UI_Slot{index}Button",
-            None,
-            x,
-            830,
-            360,
-            96,
-            CARD,
-        )
-        text, text_slot = base.make_text(
-            widget,
-            f"UI_Slot{index}Text",
-            f"슬롯 {index}\n캐릭터 생성하기",
-            slot_button,
-            variable=True,
-            font_size=20,
-        )
-        base.set_fill_alignment(text_slot)
-        text.set_editor_property(
-            "justification", unreal.TextJustify.CENTER
-        )
-
+    for index, x in enumerate(SLOT_X, start=1):
+        add_nameplate(widget, root, index, x)
+    label(widget, root, "UI_SelectionHintText", "캐릭터를 더블클릭하면 접속합니다.",
+          (620, 864, 680, 40), 22, SOFT_TEXT)
+    ornament_rect(widget, root, "UI_SelectionHintRule", (470, 884, 110, 1))
+    diamond(widget, root, "UI_SelectionHintDiamond", (586, 884), 5)
 
     make_button(
         widget,
         root,
         "UI_NewCharacterButton",
         "새 캐릭터",
-        1110,
-        965,
-        190,
-        58,
+        460,
+        966,
+        275,
+        68,
     )
     make_button(
         widget,
         root,
         "UI_DeleteCharacterButton",
         "캐릭터 삭제",
-        1315,
-        965,
-        190,
-        58,
+        770,
+        966,
+        275,
+        68,
     )
     make_button(
         widget,
         root,
         "UI_EnterGameButton",
         "게임 접속",
-        1520,
-        965,
-        300,
-        58,
-        base.ACCENT,
+        1080,
+        960,
+        385,
+        80,
+        PRIMARY,
     )
 
-    creation_frame, creation_frame_slot = base.add(
-        widget,
-        unreal.Border,
-        "UI_CreationPanel",
-        root,
-        variable=True,
-    )
+    # Preserve the entire functional creation subtree and its existing bindings.
+    creation_frame = widget_map(widget)["UI_CreationPanel"]
+    if not isinstance(creation_frame, unreal.Border):
+        raise RuntimeError("UI_CreationPanel 형식 불일치")
     creation_frame.set_brush_color(CREATION_FRAME)
     creation_frame.set_padding(unreal.Margin(14.0, 14.0, 14.0, 14.0))
-    canvas_place(creation_frame_slot, 1080, 125, 760, 805, 7)
-    creation, creation_slot = base.add(
-        widget,
-        unreal.CanvasPanel,
-        "UI_CreationCanvas",
-        creation_frame,
-    )
-    base.set_fill_alignment(creation_slot)
+    canvas_place(creation_frame.get_editor_property("slot"), 1080, 125, 760, 805, 7)
 
-    base.make_text(
-        widget,
-        "UI_CreationTitle",
-        "새 모험가 생성",
-        creation,
-        font_size=28,
-    )[1].set_position(unreal.Vector2D(24, 12))
-    name_input, name_slot = base.add(
-        widget,
-        unreal.EditableTextBox,
-        "UI_CharacterNameInput",
-        creation,
-        variable=True,
-    )
-    canvas_place(name_slot, 24, 62, 690, 46)
-    name_input.set_hint_text("캐릭터 이름 (2~12자)")
+    # Labels, including preserved creation controls, must let Slate route clicks
+    # to their owning buttons. EditableTextBox remains independently interactive.
+    tree = base.umg("GetWidgets", widget)
+    for info in tree.widgets:
+        item = info.widget
+        if isinstance(item, unreal.TextBlock):
+            item.set_visibility(unreal.SlateVisibility.HIT_TEST_INVISIBLE)
 
-    base.make_text(
-        widget, "UI_RaceLabel", "종족", creation, font_size=17
-    )[1].set_position(unreal.Vector2D(24, 126))
-    make_button(
-        widget, creation, "UI_HumanRaceButton", "인간",
-        120, 118, 160, 44
-    )
-    make_button(
-        widget, creation, "UI_DwarfRaceButton", "드워프",
-        290, 118, 160, 44
-    )
-    make_button(
-        widget, creation, "UI_OrcRaceButton", "오크",
-        460, 118, 160, 44
-    )
-    base.make_text(
-        widget, "UI_GenderLabel", "성별", creation, font_size=17
-    )[1].set_position(unreal.Vector2D(24, 180))
-    make_button(
-        widget, creation, "UI_MaleGenderButton", "남성",
-        180, 172, 190, 44
-    )
-    make_button(
-        widget, creation, "UI_FemaleGenderButton", "여성",
-        385, 172, 190, 44
-    )
-
-    for row, (key, label) in enumerate(
-        (
-            ("Head", "얼굴"),
-            ("Skin", "피부"),
-            ("Hair", "헤어"),
-            ("HairColor", "헤어 색"),
-            ("Facial", "얼굴 장식"),
-            ("Eye", "눈"),
-            ("BodyDetail", "신체 디테일"),
-        )
-    ):
-        add_creation_value_row(
-            widget, creation, key, label, 228 + row * 58
-        )
-
-    make_button(
-        widget, creation, "UI_RandomizeButton", "랜덤",
-        24, 655, 150, 50
-    )
-    make_button(
-        widget,
-        creation,
-        "UI_CreateCharacterButton",
-        "캐릭터 생성",
-        185,
-        655,
-        300,
-        50,
-        base.ACCENT,
-    )
-    make_button(
-        widget, creation, "UI_CancelCreationButton", "취소",
-        500, 655, 160, 50
-    )
-
-    unreal.BlueprintEditorLibrary.compile_blueprint(widget)
+    missing = sorted(required - widget_map(widget).keys())
+    if missing:
+        raise RuntimeError(f"최종 필수 바인딩 누락: {missing}")
+    if not base.umg("CompileWidgetBlueprint", widget):
+        raise RuntimeError("Character Lobby Widget 컴파일 실패")
     generated_class = unreal.EditorAssetLibrary.load_blueprint_class(
         WIDGET_PATH
     )
@@ -379,13 +420,12 @@ def build_widget(background_texture):
         widget, only_if_is_dirty=False
     ):
         raise RuntimeError("Character Lobby Widget 저장 실패")
-    log("전체 화면 3인 캐릭터 선택 무대 구성 완료")
+    log("승인 시안의 금색·남색 3슬롯 캐릭터 선택창 적용 완료")
 
 
 def main():
     background_texture = import_background()
     build_widget(background_texture)
-    unreal.EditorLoadingAndSavingUtils.save_dirty_packages(True, True)
 
 
 if __name__ == "__main__":

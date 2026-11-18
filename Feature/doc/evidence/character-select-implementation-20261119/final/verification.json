@@ -1,0 +1,117 @@
+{
+  "date": "2026-11-19",
+  "branch": "Sprint#9-35-character-select-ui",
+  "status": "UI applied; functional and visual checks passed; full runtime log check FAILED on pre-existing vendor dependencies",
+  "build": {
+    "run": "BuildD",
+    "result": "Succeeded",
+    "actions": 6,
+    "seconds": 27.93
+  },
+  "asset_validation": {
+    "run": "EditorC",
+    "checks": 4,
+    "passed": true,
+    "output_log_errors": 0,
+    "saved_assets": [
+      "/Game/Widget/Lobby/WBP_CharacterLobby"
+    ]
+  },
+  "runtime": {
+    "run": "C1119",
+    "width": 1920,
+    "height": 1080,
+    "checks": 238,
+    "failures": 0,
+    "seconds": 40.834,
+    "process_exit_code": 0,
+    "driver_passed": true,
+    "global_log_check_exit_code": 1,
+    "global_log_error_count": 5,
+    "global_log_status": "failed, five known vendor Humanoid dependency errors retained",
+    "physical_input": "Final C is programmatic UMG plus native Slate center hit paths; B separately verified OS mouse nameplate selection, character-preview selection and enter",
+    "existing_saves": 493,
+    "existing_save_bytes_preserved": true,
+    "new_QA_files": 2
+  },
+  "visual_review": {
+    "reviewers": 2,
+    "nameplates_and_ornaments_aligned": true,
+    "selected_badge_gap_clear": true,
+    "full_body_head_and_feet_visible": true,
+    "readable_korean": true,
+    "original_gray_debug_body_material": "retained; existing skeletal-mesh usage warning; no wardrobe/model replacement"
+  },
+  "protected_inputs": {
+    "count": 6,
+    "changed": 0,
+    "original_saves_before_B": 491,
+    "no_restore_or_delete": true
+  },
+  "animation": {
+    "scope": "on-demand UI idle snapshot only",
+    "source_mesh": "/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple",
+    "source_anim_class": "/Game/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed.ABP_Unarmed_C",
+    "delta_seconds": 0,
+    "asset_changes": 0,
+    "combat_contact_recovery": "not applicable, not tested"
+  },
+  "retention": "One final actual-game main PNG in DevLog; three supporting UI states and one distinct failed screenshot in Feature evidence; full capture batches and raw logs remain in tmp; no ignored private report bodies or saves published",
+  "files": [
+    {
+      "path": "DevLog/20261119_CharacterSelect/character-selection-final.png",
+      "bytes": 3062165,
+      "sha256": "A1F0C4C093468850FD93B0923D9890929AB7102221D2E1DB2064A2CD8C44A3C1"
+    },
+    {
+      "path": "Content/Widget/Lobby/WBP_CharacterLobby.uasset",
+      "bytes": 281432,
+      "sha256": "F2A6A69FE8696F20FF5D29509708EADD52C77562C8BA7B518CF96EDA7DAE23C5"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Rogue10mCharacterCustomizationPreviewActor.cpp",
+      "bytes": 11114,
+      "sha256": "95F8B1923718E639FDF299E1EBF9F29CBBDCB18D8A1117B1618977EF306DFE8B"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mCharacterLobbyWidget.cpp",
+      "bytes": 35576,
+      "sha256": "B2871D1AA39AF92DCB79585E3C04946A88FF2BAF69FE1ACD99700F48C85DE394"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mCharacterLobbyWidget.h",
+      "bytes": 11575,
+      "sha256": "0959E06F05526F23EC6135715964B384E2DFAECA462A5B2AF540647E3879CD26"
+    },
+    {
+      "path": "Source/Rogue10m/UI/Widgets/Rogue10mQuitMenuWidget.cpp",
+      "bytes": 10197,
+      "sha256": "AF20A8CF0BD977A4D5D3CF345EAD083EFA97CC3A8E6A7A7021584DAAB8FD32FE"
+    },
+    {
+      "path": "Source/Rogue10m/Tests/Rogue10mCharacterLobbyStyleRuntimeTest.cpp",
+      "bytes": 26665,
+      "sha256": "3086A0D913AEFAD4E9FAF9ADE7CFB8EFBECDDB4C6CDD3C647FBA08AF121D81F5"
+    },
+    {
+      "path": "Scripts/Editor/ConfigureCharacterSelectionStage.py",
+      "bytes": 15887,
+      "sha256": "18BDBB52236E60569A922B861E60AE1C7B7F4FD5A3C427346A0B5A30A0267FA8"
+    },
+    {
+      "path": "Scripts/Editor/ValidateCharacterSelectionStage.py",
+      "bytes": 10726,
+      "sha256": "D085429DD99800278DA46DB2CEC455A65BBEC1EA1E90381AAB9621E8ED5A30DE"
+    },
+    {
+      "path": "Scripts/Editor/ApplyCharacterLobbyConcept20261119.py",
+      "bytes": 3272,
+      "sha256": "B0A6E75B9B4B2D02CD6A03B3E8BDB96B09659851F4BC3F28C2C27EACBF25303A"
+    },
+    {
+      "path": "Scripts/VerifyCharacterLobbyStyle.ps1",
+      "bytes": 7278,
+      "sha256": "99FD199DC1AD0B7F826B9F8BA9C39488160B9F002C82326A2AA5A79AC0429E9D"
+    }
+  ]
+}

@@ -2,6 +2,7 @@
 #include "Rogue10mQuitMenuWidget.h"
 
 #include "Blueprint/WidgetTree.h"
+#include "Brushes/SlateRoundedBoxBrush.h"
 #include "Components/Border.h"
 #include "Components/Button.h"
 #include "Components/CanvasPanel.h"
@@ -100,7 +101,42 @@ void URogue10mQuitMenuWidget::SetMenuContextVisible(bool bVisible)
 {
 	BuildTree(); bContextVisible = bVisible;
 	SetVisibility(bContextVisible || bConfirmationOpen ? ESlateVisibility::SelfHitTestInvisible : ESlateVisibility::Collapsed);
-	if (MenuButton) { MenuButton->SetVisibility(bContextVisible && !bConfirmationOpen ? ESlateVisibility::Visible : ESlateVisibility::Collapsed); }
+	if (MenuButton)
+	{
+		const ARogue10mPlayerController* PC = Cast<ARogue10mPlayerController>(GetOwningPlayer());
+		const bool bCharacterSelection = PC && PC->IsCharacterLobbyVisible();
+		FButtonStyle Style = GetDefault<UButton>()->GetStyle();
+		if (bCharacterSelection)
+		{
+			const FLinearColor Gold(0.63f, 0.39f, 0.13f);
+			Style.Normal = FSlateRoundedBoxBrush(FLinearColor(0.012f, 0.028f, 0.047f, 0.94f), 5.0f, Gold, 1.3f);
+			Style.Hovered = FSlateRoundedBoxBrush(FLinearColor(0.04f, 0.065f, 0.085f), 5.0f, FLinearColor(0.98f, 0.75f, 0.31f), 1.6f);
+			Style.Pressed = FSlateRoundedBoxBrush(FLinearColor(0.065f, 0.05f, 0.02f), 5.0f, Gold, 1.6f);
+			Style.NormalPadding = FMargin(12, 6);
+		}
+		else
+		{
+			// Settings and result screens retain their existing launcher presentation.
+			Style.Normal.TintColor = FSlateColor(FLinearColor(0.47f, 0.16f, 0.08f));
+			Style.Hovered.TintColor = FSlateColor(FLinearColor(0.65f, 0.25f, 0.11f));
+			Style.Pressed.TintColor = FSlateColor(FLinearColor(0.08f, 0.14f, 0.16f));
+			Style.NormalPadding = FMargin(20, 12);
+		}
+		Style.PressedPadding = Style.NormalPadding;
+		MenuButton->SetStyle(Style);
+		if (UCanvasPanelSlot* MenuSlot = Cast<UCanvasPanelSlot>(MenuButton->Slot))
+		{
+			MenuSlot->SetPosition(bCharacterSelection ? FVector2D(-36, 18) : FVector2D(-24, 88));
+			MenuSlot->SetSize(bCharacterSelection ? FVector2D(174, 50) : FVector2D(170, 48));
+		}
+		if (UTextBlock* Label = Cast<UTextBlock>(MenuButton->GetContent()))
+		{
+			FSlateFontInfo Font = Label->GetFont(); Font.Size = bCharacterSelection ? 22 : 18; Label->SetFont(Font);
+			Label->SetColorAndOpacity(FSlateColor(bCharacterSelection
+				? FLinearColor(0.94f, 0.91f, 0.80f) : FLinearColor(0.96f, 0.97f, 0.98f)));
+		}
+		MenuButton->SetVisibility(bContextVisible && !bConfirmationOpen ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
+	}
 }
 
 void URogue10mQuitMenuWidget::SetConfirmationOpen(bool bOpen, const FText& Policy)

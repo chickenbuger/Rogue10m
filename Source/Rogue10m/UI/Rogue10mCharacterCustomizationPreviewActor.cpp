@@ -15,8 +15,27 @@ namespace
 {
 	constexpr float CustomizationPreviewStagingHeight = 75000.0f;
 	constexpr float CustomizationPreviewFieldOfView = 30.0f;
-	constexpr float CustomizationPreviewFrameMargin = 1.18f;
+	constexpr float CustomizationPreviewFrameMargin = 1.10f;
 	constexpr float LobbyPreviewFacingYaw = -90.0f;
+	constexpr float PreviewFloorNdc = 0.90f;
+
+	void EvaluatePreviewPose(USkeletalMeshComponent* Mesh)
+	{
+		if (!Mesh || !Mesh->GetSkeletalMeshAsset())
+		{
+			return;
+		}
+		// A lobby can be paused before its first component tick. Evaluate this
+		// on-demand snapshot without advancing animation time or enabling Tick.
+		if (Mesh->GetAnimInstance())
+		{
+			Mesh->TickAnimation(0.0f, false);
+		}
+		Mesh->RefreshBoneTransforms();
+		Mesh->UpdateComponentToWorld();
+		Mesh->UpdateBounds();
+		Mesh->MarkRenderDynamicDataDirty();
+	}
 }
 
 ARogue10mCharacterCustomizationPreviewActor::ARogue10mCharacterCustomizationPreviewActor()
@@ -156,6 +175,10 @@ bool ARogue10mCharacterCustomizationPreviewActor::InitializePreview(
 		FMath::Clamp(Resolution.Y, 256, 2048));
 	RenderTarget->UpdateResourceImmediate(true);
 	SceneCapture->TextureTarget = RenderTarget;
+	UE_LOG(LogRogue10m, Display,
+		TEXT("Character lobby preview initialized. SourceMesh=%s SourceAnimBP=%s Resolution=%dx%d"),
+		*GetPathNameSafe(SourceMesh), *GetPathNameSafe(SourceAnimClass),
+		RenderTarget->SizeX, RenderTarget->SizeY);
 	return true;
 }
 
@@ -174,8 +197,14 @@ bool ARogue10mCharacterCustomizationPreviewActor::SetAppearance(
 		Archetype ? Archetype->RetargetAnimClass.LoadSynchronous() : nullptr;
 	if (RetargetAnimClass)
 	{
-		BodyMesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-		BodyMesh->SetAnimInstanceClass(RetargetAnimClass);
+		if (BodyMesh->GetAnimationMode() != EAnimationMode::AnimationBlueprint)
+		{
+			BodyMesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+		}
+		if (BodyMesh->GetAnimClass() != RetargetAnimClass)
+		{
+			BodyMesh->SetAnimInstanceClass(RetargetAnimClass);
+		}
 	}
 	else
 	{
@@ -189,7 +218,6 @@ bool ARogue10mCharacterCustomizationPreviewActor::SetAppearance(
 	BodyMesh->SetVisibility(true, false);
 	HairMesh->SetVisibility(HairMesh->GetSkeletalMeshAsset() != nullptr, false);
 	FacialMesh->SetVisibility(FacialMesh->GetSkeletalMeshAsset() != nullptr, false);
-	FrameCharacter();
 	CapturePreview();
 	return true;
 }
@@ -226,20 +254,38 @@ void ARogue10mCharacterCustomizationPreviewActor::FrameCharacter()
 
 	const FVector Center = GetActorTransform().InverseTransformPosition(Bounds.GetCenter());
 	const FVector Extent = Bounds.GetExtent();
+	// SceneCapture uses horizontal FOV; a portrait render target has a wider
+	// vertical half-angle. Fit both axes and allow for the nearest bound depth.
+	const float Aspect = RenderTarget
+		? static_cast<float>(RenderTarget->SizeX) / FMath::Max(1, RenderTarget->SizeY)
+		: 1.0f;
 	const float HalfFov = FMath::DegreesToRadians(SceneCapture->FOVAngle * 0.5f);
+	const float HorizontalTangent = FMath::Max(0.01f, FMath::Tan(HalfFov));
+	const float VerticalTangent = HorizontalTangent / FMath::Max(0.01f, Aspect);
+	const float FitDistance = FMath::Max(
+		Extent.Y / HorizontalTangent, Extent.Z / VerticalTangent);
 	const float Distance = FMath::Max(
-		190.0f,
-		(Extent.Z / FMath::Max(0.1f, FMath::Tan(HalfFov))) *
-			CustomizationPreviewFrameMargin);
-	const FVector CameraLocation(Distance, Center.Y, Center.Z);
+		190.0f, Extent.X + FitDistance * CustomizationPreviewFrameMargin);
+	const float NearestDistance = FMath::Max(1.0f, Distance - Extent.X);
+	const float FloorHeight = Center.Z - Extent.Z;
+	const FVector CameraLocation(Center.X + Distance, Center.Y,
+		FloorHeight + NearestDistance * VerticalTangent * PreviewFloorNdc);
 	SceneCapture->SetRelativeLocation(CameraLocation);
-	SceneCapture->SetRelativeRotation((Center - CameraLocation).Rotation());
+	// Keep the camera level and anchor the lowest bound near the preview floor,
+	// including wider/shorter races, instead of centering them in empty space.
+	SceneCapture->SetRelativeRotation(FRotator(0.0f, 180.0f, 0.0f));
 }
 
 void ARogue10mCharacterCustomizationPreviewActor::CapturePreview()
 {
 	if (SceneCapture && SceneCapture->TextureTarget)
 	{
+		// RetargetPoseFromMesh must read a completed source pose. With nullptr
+		// tick functions RefreshBoneTransforms evaluates synchronously.
+		EvaluatePreviewPose(AnimationSourceMesh);
+		EvaluatePreviewPose(BodyMesh);
+		BodyMesh->RefreshFollowerComponents();
+		FrameCharacter();
 		SceneCapture->CaptureScene();
 	}
 }

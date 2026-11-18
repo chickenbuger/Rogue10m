@@ -1,5 +1,13 @@
 # Sprint 변경 이력
 
+### Sprint#9-35 — 캐릭터 선택창 시안 실제 적용
+
+- 목표: 승인된 이미지 시안을 실제 선택창 배치·선택 상태·입력으로 적용한다.
+- 변경: 기존 WBP를 비파괴 갱신하는 도구, 남색·금색 테마·선택 배지·빈 슬롯 버튼, 창 좌표에 맞는 장식, 화면비/대기 포즈 프리뷰 보완, 전용 QA와 대표 사진.
+- 검증: 최종 Editor 빌드6작업/27.93초 성공, 자산4검사/Editor 오류0, 실제1920×1080 UI238검사/실패0, 별도 OS 마우스 선택·접속 확인. 기존493세이브와 보호6입력 보존.
+- 상태: UI 구현·시각/기능 검증 완료. 기존 vendor Humanoid 참조5오류로 전체 런타임 로그 QA는 보류한다. 작업 브랜치 체크포인트만 게시하며 맵 제작 완료 전 develop/test/main 승격은 보류한다.
+- 관련: Feature/architect/2026-11-19_character-select-implementation.md, Feature/doc/2026-11-19_character-select-implementation.md, DevLog/20261119_CharacterSelect/character-selection-final.png, DevLog/20261119.txt.
+
 ### Sprint#9-34 — 캐릭터 선택창 ImageGen 시안
 
 - 목표: 기존 3슬롯 프로필 선택 구조와 성채 테라스 방향을 유지한 수정 시안을 제작한다.
