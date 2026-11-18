@@ -1,5 +1,13 @@
 # Sprint 변경 이력
 
+### Sprint#9-34 — 캐릭터 선택창 ImageGen 시안
+
+- 목표: 기존 3슬롯 프로필 선택 구조와 성채 테라스 방향을 유지한 수정 시안을 제작한다.
+- 변경: 내장 이미지 생성 시안 1장·최종 프롬프트·짝 기획/결과 문서·최종 검수 기록. 선택 PNG 하나만 ignore 예외를 등록했다.
+- 검증: PNG 디코딩·1672×941 치수·SHA256 확인, 별도 검토자를 포함한 한글 문구/3슬롯/전신/선택 강조 검수 통과. 런타임 변경이 없어 UE 빌드/PIE는 실행하지 않았다.
+- 상태: 디자인 시안 완료, 실제 선택창 적용 전. 작업 브랜치 `Sprint#9-34-character-select-concept`에 한정 게시하며 맵 제작 게이트에 따라 develop/test/main 승격은 보류한다.
+- 관련: Feature/architect/2026-11-19_character-select-concept.md, Feature/doc/2026-11-19_character-select-concept.md, SourceArt/UI/CharacterLobby/2026-11-19/character-select-v1.prompt.txt, DevLog/20261119.txt.
+
 ### Sprint#9-32 — 정상 에디터 복구·Landscape 외곽 선택 완료
 
 - 결과:정상후보맵·공식MCP·PIE정지·dirty0확인.256지형/충돌·16proxy·1layer,유지179488표본의height/paint/layer기준확보.
