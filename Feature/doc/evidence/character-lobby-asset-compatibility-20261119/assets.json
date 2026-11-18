@@ -1,0 +1,89 @@
+{
+  "archetypes": [
+    {
+      "code": "Hu_M",
+      "skeleton": "/Game/StylizedCharacter/Meshes/Character/Human/Male/SKEL_Hu_M",
+      "dependencies": [
+        "/Game/StylizedCharacter/Meshes/Character/Human/Male/SK_Hu_M_FullBody"
+      ],
+      "body_and_arms_materials": {
+        "M_Body": "/Game/Character/Customization/BodyMaterials/MI_Hu_M_Body_Preview_Rogue.MI_Hu_M_Body_Preview_Rogue",
+        "M_Head": "/Game/StylizedCharacter/Materials/Instances/Character/Human/Male/Head/MI_Hu_M_Head_Preview.MI_Hu_M_Head_Preview",
+        "M_Eye": "/Game/StylizedCharacter/Materials/Instances/Character/Human/Eye/MI_HU_Eye_BrBln.MI_HU_Eye_BrBln"
+      }
+    },
+    {
+      "code": "Hu_F",
+      "skeleton": "/Game/StylizedCharacter/Meshes/Character/Human/Female/SKEL_Hu_F",
+      "dependencies": [
+        "/Game/StylizedCharacter/Meshes/Character/Human/Female/SK_Hu_F_FullBody"
+      ],
+      "body_and_arms_materials": {
+        "M_Body": "/Game/Character/Customization/BodyMaterials/MI_Hu_F_Body_Preview_Rogue.MI_Hu_F_Body_Preview_Rogue",
+        "M_Facials": "/Game/Character/Customization/BodyMaterials/M_Rogue_FacialBrass.M_Rogue_FacialBrass",
+        "M_Eyes": "/Game/StylizedCharacter/Materials/Instances/Character/Human/Eye/MI_HU_Eye_BrBln.MI_HU_Eye_BrBln",
+        "M_Head": "/Game/StylizedCharacter/Materials/Instances/Character/Human/Female/Head/MI_Hu_F_Head_Preview.MI_Hu_F_Head_Preview"
+      }
+    },
+    {
+      "code": "Dw_M",
+      "skeleton": "/Game/StylizedCharacter/Meshes/Character/Dwarf/Male/SKEL_Dw_M",
+      "dependencies": [
+        "/Game/StylizedCharacter/Meshes/Character/Dwarf/Male/SK_Dw_M_FullBody"
+      ],
+      "body_and_arms_materials": {
+        "M_Body": "/Game/Character/Customization/BodyMaterials/MI_Dw_M_Body_Preview_Rogue.MI_Dw_M_Body_Preview_Rogue",
+        "M_Head": "/Game/Character/Customization/BodyMaterials/MI_Dw_M_Head_Preview_Rogue.MI_Dw_M_Head_Preview_Rogue",
+        "M_Eyes": "/Game/StylizedCharacter/Materials/Instances/Character/Human/Eye/MI_HU_Eye_BrBln.MI_HU_Eye_BrBln"
+      }
+    },
+    {
+      "code": "Dw_F",
+      "skeleton": "/Game/StylizedCharacter/Meshes/Character/Dwarf/Female/SKEL_Dw_F",
+      "dependencies": [
+        "/Game/StylizedCharacter/Meshes/Character/Dwarf/Female/SK_Dw_F_FullBody"
+      ],
+      "body_and_arms_materials": {
+        "M_Body": "/Game/Character/Customization/BodyMaterials/MI_Dw_F_Body_Preview_Rogue.MI_Dw_F_Body_Preview_Rogue",
+        "M_Head": "/Game/Character/Customization/BodyMaterials/MI_Dw_F_Head_Preview_Rogue.MI_Dw_F_Head_Preview_Rogue",
+        "M_Eyes": "/Game/StylizedCharacter/Materials/Instances/Character/Human/Eye/MI_HU_Eye_BrBln.MI_HU_Eye_BrBln"
+      }
+    },
+    {
+      "code": "Or_M",
+      "skeleton": "/Game/StylizedCharacter/Meshes/Character/Orc/Male/SKEL_Or_M",
+      "dependencies": [
+        "/Game/StylizedCharacter/Meshes/Character/Orc/Male/SK_Or_M_FullBody"
+      ],
+      "body_and_arms_materials": {
+        "M_Body": "/Game/Character/Customization/BodyMaterials/MI_Or_M_Body_Preview_Rogue.MI_Or_M_Body_Preview_Rogue",
+        "M_Head": "/Game/StylizedCharacter/Materials/Instances/Character/Orc/Male/Head/MI_Or_M_Head_Preview.MI_Or_M_Head_Preview",
+        "M_Eyes": "/Game/StylizedCharacter/Materials/Instances/Character/Orc/Eye/MI_OR_Eye_BrBln.MI_OR_Eye_BrBln"
+      }
+    },
+    {
+      "code": "Or_F",
+      "skeleton": "/Game/StylizedCharacter/Meshes/Character/Orc/Female/SKEL_Or_F",
+      "dependencies": [
+        "/Game/StylizedCharacter/Meshes/Character/Orc/Female/SK_Or_F_FullBody"
+      ],
+      "body_and_arms_materials": {
+        "M_Head": "/Game/StylizedCharacter/Materials/Instances/Character/Orc/Female/Head/MI_Or_F_Head_Preview.MI_Or_F_Head_Preview",
+        "M_Eyes": "/Game/StylizedCharacter/Materials/Instances/Character/Orc/Eye/MI_OR_Eye_BrBln.MI_OR_Eye_BrBln",
+        "M_Facials": "/Game/Character/Customization/BodyMaterials/M_Rogue_FacialBrass.M_Rogue_FacialBrass",
+        "M_Body": "/Game/Character/Customization/BodyMaterials/MI_Or_F_Body_Preview_Rogue.MI_Or_F_Body_Preview_Rogue"
+      }
+    }
+  ],
+  "success": true,
+  "tattoos": [
+    "/Game/Character/Customization/BodyMaterials/MI_Or_M_Body_Tattoo_01_Rogue.MI_Or_M_Body_Tattoo_01_Rogue",
+    "/Game/Character/Customization/BodyMaterials/MI_Or_M_Body_Tattoo_02_Rogue.MI_Or_M_Body_Tattoo_02_Rogue",
+    "/Game/Character/Customization/BodyMaterials/MI_Or_M_Body_Tattoo_03_Rogue.MI_Or_M_Body_Tattoo_03_Rogue",
+    "/Game/Character/Customization/BodyMaterials/MI_Or_M_Body_Tattoo_04_Rogue.MI_Or_M_Body_Tattoo_04_Rogue",
+    "/Game/Character/Customization/BodyMaterials/MI_Or_F_Body_Tattoo_01_Rogue.MI_Or_F_Body_Tattoo_01_Rogue",
+    "/Game/Character/Customization/BodyMaterials/MI_Or_F_Body_Tattoo_02_Rogue.MI_Or_F_Body_Tattoo_02_Rogue",
+    "/Game/Character/Customization/BodyMaterials/MI_Or_F_Body_Tattoo_03_Rogue.MI_Or_F_Body_Tattoo_03_Rogue",
+    "/Game/Character/Customization/BodyMaterials/MI_Or_F_Body_Tattoo_04_Rogue.MI_Or_F_Body_Tattoo_04_Rogue"
+  ]
+}

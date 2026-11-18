@@ -9,6 +9,7 @@
 #include "Rogue10mCharacterCustomizationPreviewActor.generated.h"
 
 class UAnimInstance;
+class UMaterialInterface;
 class UPointLightComponent;
 class URogue10mCharacterCustomizationDataAsset;
 class USceneCaptureComponent2D;
@@ -36,6 +37,15 @@ public:
 private:
 	void FrameCharacter();
 	void CapturePreview();
+
+#if WITH_EDITOR
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	void OnPreviewMaterialCompiled(UMaterialInterface* CompiledMaterial);
+	void StopWatchingPreviewMaterials();
+
+	FDelegateHandle PreviewMaterialCompilationHandle;
+	bool bMaterialRecaptureQueued = false;
+#endif
 
 	UPROPERTY(VisibleAnywhere, Category="Rogue10m|Character Customization Preview")
 	TObjectPtr<USceneComponent> SceneRoot;

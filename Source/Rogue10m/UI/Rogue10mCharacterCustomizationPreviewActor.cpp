@@ -11,6 +11,11 @@
 #include "Rogue10m.h"
 #include "Rogue10mCharacterCustomizationDataAsset.h"
 
+#if WITH_EDITOR
+#include "Containers/Ticker.h"
+#include "Materials/Material.h"
+#endif
+
 namespace
 {
 	constexpr float CustomizationPreviewStagingHeight = 75000.0f;
@@ -230,11 +235,80 @@ void ARogue10mCharacterCustomizationPreviewActor::SetPreviewActive(bool bActive)
 	KeyLight->SetVisibility(bActive);
 	FillLight->SetVisibility(bActive);
 	RimLight->SetVisibility(bActive);
+#if WITH_EDITOR
+	if (bActive && !PreviewMaterialCompilationHandle.IsValid())
+	{
+		PreviewMaterialCompilationHandle = UMaterial::OnMaterialCompilationFinished().AddUObject(
+			this, &ARogue10mCharacterCustomizationPreviewActor::OnPreviewMaterialCompiled);
+	}
+	else if (!bActive)
+	{
+		StopWatchingPreviewMaterials();
+	}
+#endif
 	if (bActive)
 	{
 		CapturePreview();
 	}
 }
+
+#if WITH_EDITOR
+void ARogue10mCharacterCustomizationPreviewActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	StopWatchingPreviewMaterials();
+	Super::EndPlay(EndPlayReason);
+}
+
+void ARogue10mCharacterCustomizationPreviewActor::StopWatchingPreviewMaterials()
+{
+	if (PreviewMaterialCompilationHandle.IsValid())
+	{
+		UMaterial::OnMaterialCompilationFinished().Remove(PreviewMaterialCompilationHandle);
+		PreviewMaterialCompilationHandle.Reset();
+	}
+}
+
+void ARogue10mCharacterCustomizationPreviewActor::OnPreviewMaterialCompiled(UMaterialInterface* CompiledMaterial)
+{
+	if (!CompiledMaterial || bMaterialRecaptureQueued)
+	{
+		return;
+	}
+
+	for (const USkeletalMeshComponent* Mesh : { BodyMesh.Get(), HairMesh.Get(), FacialMesh.Get() })
+	{
+		if (!Mesh->IsVisible())
+		{
+			continue;
+		}
+		for (int32 Index = 0; Index < Mesh->GetNumMaterials(); ++Index)
+		{
+			UMaterialInterface* Material = Mesh->GetMaterial(Index);
+			if (!Material || !Material->IsDependent(CompiledMaterial))
+			{
+				continue;
+			}
+
+			// Shader compilation broadcasts before it updates affected render proxies.
+			// Coalesce notifications into one capture on the next frame, even while paused.
+			bMaterialRecaptureQueued = true;
+			FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateWeakLambda(this, [this](float)
+			{
+				bMaterialRecaptureQueued = false;
+				if (PreviewMaterialCompilationHandle.IsValid() && BodyMesh->IsVisible()
+					&& SceneCapture && SceneCapture->TextureTarget)
+				{
+					SceneCapture->CaptureScene();
+					UE_LOG(LogRogue10m, Display, TEXT("Character preview recaptured after material compilation. Mesh=%s"),
+						*GetPathNameSafe(BodyMesh->GetSkeletalMeshAsset()));
+				}
+				return false;
+			}));
+			return;
+		}
+	}
+}
+#endif
 
 void ARogue10mCharacterCustomizationPreviewActor::FrameCharacter()
 {
