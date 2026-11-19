@@ -1,4 +1,5 @@
 #if WITH_EDITOR
+#include "Camera/CameraActor.h"
 #include "Camera/CameraComponent.h"
 #include "AssetCompilingManager.h"
 #include "ShaderCompiler.h"
@@ -31,6 +32,7 @@
 #include "Rogue10mCharacter.h"
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mCombatComponent.h"
+#include "Rogue10mFighterCombatStanceAnimInstance.h"
 #include "Rogue10mPlayerState.h"
 #include "Rogue10mSkillLoadoutDataAsset.h"
 #include "Rogue10mCharacterProfileSubsystem.h"
@@ -195,7 +197,142 @@ private:
  void BlockedView()
  {
   ViewChecks();auto* Boom=Character->GetThirdPersonCameraBoom();const FVector Pivot=Character->GetActorLocation()+Boom->TargetOffset;BlockedDistance=FVector::Dist(PC->PlayerCameraManager->GetCameraLocation(),Pivot);Check(BlockedDistance<180&&BlockedDistance>50&&Boom->IsCollisionFixApplied(),TEXT("camera_contracts_before_wall"));Photo(TEXT("02_wall_camera_contraction.png"));
-  Later(.3,[this]{if(Obstacle.IsValid())Obstacle->Destroy();Obstacle.Reset();Stage=TEXT("recovered");Later(.35,[this]{const FVector Pivot=Character->GetActorLocation()+Character->GetThirdPersonCameraBoom()->TargetOffset;RecoveredDistance=FVector::Dist(PC->PlayerCameraManager->GetCameraLocation(),Pivot);Check(FMath::Abs(RecoveredDistance-OpenDistance)<1&&!Character->GetThirdPersonCameraBoom()->IsCollisionFixApplied(),TEXT("camera_recovers"));PC->ToggleSettings();Later(.15,[this]{Check(PC->IsSettingsVisible(),TEXT("settings_open"));PC->CloseAllBlockingPanels();Later(.2,[this]{ViewChecks();BeginMovement();});});});});
+  Later(.3,[this]{if(Obstacle.IsValid())Obstacle->Destroy();Obstacle.Reset();Stage=TEXT("recovered");Later(.35,[this]{const FVector Pivot=Character->GetActorLocation()+Character->GetThirdPersonCameraBoom()->TargetOffset;RecoveredDistance=FVector::Dist(PC->PlayerCameraManager->GetCameraLocation(),Pivot);Check(FMath::Abs(RecoveredDistance-OpenDistance)<1&&!Character->GetThirdPersonCameraBoom()->IsCollisionFixApplied(),TEXT("camera_recovers"));PC->ToggleSettings();Later(.15,[this]{Check(PC->IsSettingsVisible(),TEXT("settings_open"));PC->CloseAllBlockingPanels();Later(.2,[this]{ViewChecks();BeginHeadPitchCheck();});});});});
+ }
+ void BeginHeadPitchCheck()
+ {
+  HeadPitchSource=Character->GetAnimationPlaybackMesh();
+  HeadPitchBody=Character->GetMesh();
+  HeadPitchAnimation=HeadPitchSource.IsValid()?Cast<URogue10mFighterCombatStanceAnimInstance>(HeadPitchSource->GetAnimInstance()):nullptr;
+  const bool bHasRetargetedBody=HeadPitchSource.IsValid()&&HeadPitchBody.IsValid()&&HeadPitchSource!=HeadPitchBody;
+  Check(bHasRetargetedBody&&HeadPitchAnimation.IsValid(),TEXT("head_pitch_uses_source_and_visible_retargeted_body"));
+  if(!bHasRetargetedBody||!HeadPitchAnimation.IsValid()){Finish();return;}
+  const auto* Appearance=Character->GetAppearanceCameraComponent();
+  const FRogue10mHeadMotionSettings HeadMotion=Appearance?Appearance->GetHeadMotionSettings():FRogue10mHeadMotionSettings();
+  Check(FMath::IsNearlyEqual(HeadMotion.RotationWeight,.35f)&&FMath::IsNearlyEqual(HeadMotion.MaxRotationDegrees,5.f),TEXT("third_person_grounded_idle_uses_reviewed_head_motion"));
+
+  HeadPitchOriginalControl=PC->GetControlRotation();
+  bHeadPitchOriginalControllerYaw=Character->bUseControllerRotationYaw;
+  HeadPitchOriginalRates[0]=HeadPitchSource->GlobalAnimRateScale;
+  HeadPitchOriginalRates[1]=HeadPitchBody->GlobalAnimRateScale;
+  HeadPitchOriginalAimSpeed=HeadPitchAnimation->UpperBodyAimInterpolationSpeed;
+  bHeadPitchCheckActive=true;
+  Character->bUseControllerRotationYaw=false;
+  HeadPitchYaw=FRotator::NormalizeAxis(Character->GetActorRotation().Yaw+20.0);
+  if(bRendered)
+  {
+   const FVector Position=Character->GetActorLocation()+Character->GetActorForwardVector()*110
+    +Character->GetActorRightVector()*180+FVector::UpVector*54;
+   const FVector Target=HeadPitchBody->GetBoneLocation(TEXT("head"))-FVector::UpVector*16;
+   FActorSpawnParameters Params;
+   Params.ObjectFlags|=RF_Transient;
+   HeadPitchPhotoCamera=World->SpawnActor<ACameraActor>(Position,(Target-Position).Rotation(),Params);
+   Check(HeadPitchPhotoCamera.IsValid(),TEXT("head_pitch_profile_camera_created"));
+  }
+  Stage=TEXT("head_pitch_prepare");
+  PC->SetControlRotation(FRotator(0,HeadPitchYaw,0));
+  Later(.35,[this]
+  {
+   // Evaluate the production graphs at the same animation phase for all three inputs.
+   // Keep the meshes ticking so the proxy and the retargeter consume the new input.
+   HeadPitchSource->GlobalAnimRateScale=0;
+   HeadPitchBody->GlobalAnimRateScale=0;
+   // A frozen clip clock cannot advance aim interpolation. Measure its settled response directly.
+   HeadPitchAnimation->UpperBodyAimInterpolationSpeed=0;
+   HeadPitchSourceRevision=HeadPitchSource->GetBoneTransformRevisionNumber();
+   HeadPitchBodyRevision=HeadPitchBody->GetBoneTransformRevisionNumber();
+   ApplyHeadPitch(0);
+  });
+ }
+ void ApplyHeadPitch(int32 Index)
+ {
+  static constexpr double Pitches[]={0,65,-65};
+  const double Pitch=Pitches[Index];
+  Stage=FString::Printf(TEXT("head_pitch_%+.0f"),Pitch);
+  PC->SetControlRotation(FRotator(Pitch,HeadPitchYaw,0));
+  Later(.25,[this,Index,Pitch]{MeasureHeadPitch(Index,Pitch);});
+ }
+ void MeasureHeadPitch(int32 Index,double Pitch)
+ {
+  auto* Source=HeadPitchSource.Get();
+  auto* Body=HeadPitchBody.Get();
+  const auto* Anim=Source?Cast<URogue10mFighterCombatStanceAnimInstance>(Source->GetAnimInstance()):nullptr;
+  Check(Anim&&Body,TEXT("head_pitch_gameplay_anim_instances_available"));
+  if(!Anim||!Body){Finish();return;}
+
+  const uint32 SourceRevision=Source->GetBoneTransformRevisionNumber();
+  const uint32 BodyRevision=Body->GetBoneTransformRevisionNumber();
+  Check(SourceRevision!=HeadPitchSourceRevision,TEXT("head_pitch_source_reevaluated_at_fixed_phase"));
+  Check(BodyRevision!=HeadPitchBodyRevision,TEXT("head_pitch_visible_body_reevaluated_at_fixed_phase"));
+  HeadPitchSourceRevision=SourceRevision;
+  HeadPitchBodyRevision=BodyRevision;
+  const FRotator Control=PC->GetControlRotation();
+  const double ResidualYaw=FRotator::NormalizeAxis(Control.Yaw-Character->GetActorRotation().Yaw);
+  const FQuat ExpectedBasis(FVector::UpVector,FMath::DegreesToRadians(ResidualYaw));
+  const double AimError=FMath::RadiansToDegrees(Anim->MouseDrivenHeadWorldAim.AngularDistance(ExpectedBasis));
+  Check(FMath::IsNearlyEqual(ResidualYaw,20.0,.1),TEXT("head_pitch_has_nonzero_horizontal_aim"));
+  Check(Anim->bMouseDrivenHeadApplied&&AimError<.05,TEXT("head_pitch_published_pose_basis_is_horizontal"));
+  const double CameraPitch=FRotator::NormalizeAxis(PC->PlayerCameraManager->GetCameraCacheView().Rotation.Pitch);
+  Check(FMath::IsNearlyEqual(FRotator::NormalizeAxis(Control.Pitch),Pitch,.1)&&FMath::IsNearlyEqual(CameraPitch,Pitch,.1),TEXT("third_person_camera_keeps_requested_pitch"));
+  const FVector CombatAim=Character->GetCombatViewTransform().GetRotation().GetForwardVector();
+  // A nearby floor hit changes the ray from the character to the crosshair's aim point.
+  Check(Index==0||CombatAim.Z*FMath::Sign(Pitch)>.1,TEXT("combat_aim_follows_vertical_input"));
+  Check(FMath::IsNearlyZero(Anim->UpperBodyAimPitch,.1f),TEXT("relaxed_unarmed_arms_keep_authored_pose"));
+
+  const FName Bones[]={TEXT("neck_01"),TEXT("head"),TEXT("hand_l"),TEXT("hand_r")};
+  USkeletalMeshComponent* Meshes[]={Source,Body};
+  double MaxBoneDelta=0;
+  for(int32 MeshIndex=0;MeshIndex<UE_ARRAY_COUNT(Meshes);++MeshIndex)
+  {
+   for(int32 BoneIndex=0;BoneIndex<UE_ARRAY_COUNT(Bones);++BoneIndex)
+   {
+    auto* Mesh=Meshes[MeshIndex];
+    if(Mesh->GetBoneIndex(Bones[BoneIndex])==INDEX_NONE){Check(false,TEXT("head_pitch_bone_exists"));continue;}
+    const FQuat Rotation=Mesh->GetBoneTransform(Bones[BoneIndex],RTS_Component).GetRotation();
+    Check(Rotation.IsNormalized(),TEXT("head_pitch_bone_rotation_is_normalized"));
+    FQuat& Neutral=HeadPitchNeutral[MeshIndex][BoneIndex];
+    if(Index==0){Neutral=Rotation;continue;}
+    const double Delta=FMath::RadiansToDegrees(Rotation.AngularDistance(Neutral));
+    MaxBoneDelta=FMath::Max(MaxBoneDelta,Delta);
+    Check(Delta<.1,BoneIndex<2?TEXT("source_and_visible_head_and_neck_ignore_camera_pitch"):TEXT("source_and_visible_relaxed_hands_ignore_camera_pitch"));
+   }
+  }
+  Results+=FString::Printf(TEXT("head_pitch_input=%.3f camera_pitch=%.3f upper_body_pitch=%.3f residual_yaw=%.3f basis_error=%.6f max_bone_delta=%.6f\n"),Pitch,CameraPitch,Anim->UpperBodyAimPitch,ResidualYaw,AimError,MaxBoneDelta);
+  auto NextPitch=[this,Index]
+  {
+   if(HeadPitchPhotoCamera.IsValid()){PC->SetViewTarget(Character.Get());}
+   if(Index<2){ApplyHeadPitch(Index+1);return;}
+   RestoreHeadPitchCheck();
+   Later(.3,[this]{BeginMovement();});
+  };
+  if(Index>0&&HeadPitchPhotoCamera.IsValid())
+  {
+   // The gameplay view was measured above. A fixed side camera keeps the head visible for both captures.
+   PC->SetViewTarget(HeadPitchPhotoCamera.Get());
+   Later(.15,[this,Index,NextPitch]
+   {
+    Photo(Index==1?TEXT("06_look_up_head.png"):TEXT("07_look_down_head.png"));
+    Later(.25,NextPitch);
+   });
+   return;
+  }
+  Later(.25,NextPitch);
+ }
+ void RestoreHeadPitchCheck()
+ {
+  if(!bHeadPitchCheckActive){return;}
+  bHeadPitchCheckActive=false;
+  if(HeadPitchSource.IsValid()){HeadPitchSource->GlobalAnimRateScale=HeadPitchOriginalRates[0];}
+  if(HeadPitchBody.IsValid()){HeadPitchBody->GlobalAnimRateScale=HeadPitchOriginalRates[1];}
+  if(HeadPitchAnimation.IsValid()){HeadPitchAnimation->UpperBodyAimInterpolationSpeed=HeadPitchOriginalAimSpeed;}
+  if(Character.IsValid()){Character->bUseControllerRotationYaw=bHeadPitchOriginalControllerYaw;}
+  if(PC.IsValid()){PC->SetControlRotation(HeadPitchOriginalControl);}
+  if(HeadPitchPhotoCamera.IsValid())
+  {
+   if(PC.IsValid()&&Character.IsValid()){PC->SetViewTarget(Character.Get());}
+   HeadPitchPhotoCamera->Destroy();
+   HeadPitchPhotoCamera.Reset();
+  }
  }
  void BeginMovement()
  {
@@ -212,11 +349,21 @@ private:
  }
  void Finish(bool Exit=true)
  {
-  if(bFinished)return;bFinished=true;Next=nullptr;FWorldDelegates::OnWorldPostActorTick.Remove(SampleHandle);FWorldDelegates::OnWorldCleanup.Remove(Cleanup);UGameViewportClient::OnScreenshotCaptured().Remove(CaptureHandle);Key(EKeys::W,false);Key(Rogue10mInput::DodgeKey(),false);if(Character.IsValid()){if(Saves.IsValid()&&Saves->IsAttachedTo(*Character))Saves->DetachCharacter(*Character,false);Character->GetCharacterMovement()->StopMovementImmediately();}for(auto A:{Floor,Obstacle,Wall})if(A.IsValid())A->Destroy();if(bRendered)Check(RequestedPhotos==5&&CompletedPhotos==5&&PendingPhoto.IsEmpty(),TEXT("five_rendered_captures"));
+  if(bFinished)return;bFinished=true;Next=nullptr;RestoreHeadPitchCheck();FWorldDelegates::OnWorldPostActorTick.Remove(SampleHandle);FWorldDelegates::OnWorldCleanup.Remove(Cleanup);UGameViewportClient::OnScreenshotCaptured().Remove(CaptureHandle);Key(EKeys::W,false);Key(Rogue10mInput::DodgeKey(),false);if(Character.IsValid()){if(Saves.IsValid()&&Saves->IsAttachedTo(*Character))Saves->DetachCharacter(*Character,false);Character->GetCharacterMovement()->StopMovementImmediately();}for(auto A:{Floor,Obstacle,Wall})if(A.IsValid())A->Destroy();if(bRendered)Check(RequestedPhotos==7&&CompletedPhotos==7&&PendingPhoto.IsEmpty(),TEXT("seven_rendered_captures"));
   for(const auto& Pic:Photos){TArray64<uint8> Bytes;FImageUtils::PNGCompressImageArray(Pic.Width,Pic.Height,Pic.Pixels,Bytes);Check(FFileHelper::SaveArrayToFile(Bytes,*(Output/Pic.Name)),TEXT("captured_PNG_saved"));}Check(FFileHelper::SaveStringToFile(Frames,*(Output/TEXT("frames.csv"))),TEXT("frame_evidence_saved"));Results+=FString::Printf(TEXT("mouse_cases=%d\nmouse_passed=%d\n"),MouseCases,MousePassed);Results+=FString::Printf(TEXT("checks=%d\nfailures=%d\nsamples=%d\ndodge_samples=%d\nopen_cm=%.6f\nblocked_cm=%.6f\nrecovered_cm=%.6f\nmove_cm=%.6f\nfree_dodge_cm=%.6f\nwall_dodge_cm=%.6f\nrendered=%d\ncaptures=%d\ninput=programmatic_Controller_InputKey\nphysical_input=not_performed\nfull_run=not_performed\nmap_changes=none_transient_fixture_only\nfirst_person_QA=paused\n"),Checks,Failures,Samples,DodgeSamples,OpenDistance,BlockedDistance,RecoveredDistance,MoveTravel,FreeTravel,WallTravel,bRendered,CompletedPhotos);if(!FFileHelper::SaveStringToFile(Results,*(Output/TEXT("results.txt"))))++Failures;UE_LOG(LogRogue10m,Display,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_%s checks=%d failures=%d output=%s"),Failures?TEXT("FAILED"):TEXT("PASSED"),Checks,Failures,*Output);if(Exit)FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Code=Failures?1:0](float){FPlatformMisc::RequestExitWithStatus(false,Code);return false;}),.5f);
  }
  TStrongObjectPtr<URogue10mAttackSkillData> RealNovicePrimary;TSubclassOf<UGameplayAbility> RealNoviceAbility;int32 BeforeRealNoviceUses=0;
  TArray<URogue10mAttackSkillData*> MouseSkills;int32 BeforeUses[4]{},ExpectedUses[4]{};int32 MouseIndex=0,MouseCases=0,MousePassed=0;
+ TWeakObjectPtr<USkeletalMeshComponent> HeadPitchSource,HeadPitchBody;
+ TWeakObjectPtr<URogue10mFighterCombatStanceAnimInstance> HeadPitchAnimation;
+ TWeakObjectPtr<ACameraActor> HeadPitchPhotoCamera;
+ FRotator HeadPitchOriginalControl=FRotator::ZeroRotator;
+ FQuat HeadPitchNeutral[2][4]={};
+ double HeadPitchYaw=0;
+ float HeadPitchOriginalRates[2]={1,1};
+ float HeadPitchOriginalAimSpeed=0;
+ uint32 HeadPitchSourceRevision=0,HeadPitchBodyRevision=0;
+ bool bHeadPitchCheckActive=false,bHeadPitchOriginalControllerYaw=false;
  struct FPhoto{FString Name;int32 Width=0,Height=0;TArray<FColor> Pixels;};TWeakObjectPtr<UWorld> World;TWeakObjectPtr<ARogue10mPlayerController> PC;TWeakObjectPtr<ARogue10mCharacter> Character;TWeakObjectPtr<URogue10mProgressionSubsystem> Saves;TWeakObjectPtr<AActor> Floor,Obstacle,Wall;TFunction<void()> Next;FDelegateHandle Cleanup,SampleHandle,CaptureHandle;TArray<FPhoto> Photos;FString Label,Output,Results,Frames,Stage=TEXT("prepare"),PendingPhoto;FVector MoveStart,DodgeStart;double Deadline=0,NextAt=0;float ConfiguredDodgeDistance=100.f,ConfiguredDodgeDuration=.16f;float OpenDistance=0,BlockedDistance=0,RecoveredDistance=0,MoveTravel=0,FreeTravel=0,WallTravel=0;int32 Checks=0,Failures=0,Samples=0,DodgeSamples=0,RequestedPhotos=0,CompletedPhotos=0;bool bFinished=false,bRendered=false,bWallDodge=false,bSawDodge=false,bDodgePhoto=false;
 };
 static TSharedPtr<FRun> Active;static void Run(){if(!GEngine||GIsEditor||(Active&&!Active->Finished()))return;for(const FWorldContext& C:GEngine->GetWorldContexts())if(UWorld* W=C.World();W&&C.WorldType==EWorldType::Game){Active=MakeShared<FRun>();Active->Start(*W);return;}UE_LOG(LogRogue10m,Error,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_FAILED reason=no_game_world"));FPlatformMisc::RequestExitWithStatus(false,1);}static FAutoConsoleCommand Command(TEXT("Rogue10m.TestThirdPersonGameplay"),TEXT("Isolated fresh ThirdPerson namespace: default camera, mesh, collision, W and LeftAlt; first-person QA paused."),FConsoleCommandDelegate::CreateStatic(&Run));

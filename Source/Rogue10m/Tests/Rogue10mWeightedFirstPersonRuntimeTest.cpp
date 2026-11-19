@@ -275,7 +275,8 @@ private:
         if (const auto* Anim=Cast<URogue10mFighterCombatStanceAnimInstance>(Source->GetAnimInstance()); Anim && Anim->bMouseDrivenHeadApplied
             && !PC->IsAnyBlockingWindowVisible() && !Inspection && !Character->IsDead())
         {
-            const FQuat ExpectedAim=(PC->GetControlRotation().Quaternion()*Character->GetActorQuat().Inverse()).GetNormalized();
+            const double HeadYaw=FRotator::NormalizeAxis(PC->GetControlRotation().Yaw-Character->GetActorRotation().Yaw);
+            const FQuat ExpectedAim(FVector::UpVector,FMath::DegreesToRadians(HeadYaw));
             Check(FMath::RadiansToDegrees(Anim->MouseDrivenHeadWorldAim.AngularDistance(ExpectedAim))<.1
                 && FMath::RadiansToDegrees(Anim->MouseDrivenHeadSourceRotation.AngularDistance(Source->GetComponentQuat()))<.1,TEXT("evaluated_mouse_aim_and_source_basis_match_current_avatar"));
         }

@@ -957,10 +957,13 @@ namespace
 			const FCompactPoseBoneIndex LeftShoulder = FindBone(Pose, TEXT("clavicle_l"));
 			const FCompactPoseBoneIndex RightShoulder = FindBone(Pose, TEXT("clavicle_r"));
 			if (Spine == INDEX_NONE || LeftShoulder == INDEX_NONE || RightShoulder == INDEX_NONE) { return; }
+			const FCompactPoseBoneIndex Neck = FindBone(Pose, TEXT("neck_01"));
+			const FCompactPoseBoneIndex Head = FindBone(Pose, TEXT("head"));
+			FCSPose<FCompactPose> BeforeAim;
+			BeforeAim.InitPose(Pose);
 			TArray<FTransform, TInlineAllocator<256>> ComponentTransforms;
 			ComponentTransforms.SetNum(Pose.GetNumBones());
-			// Apply after fist IK and after recording animation-driven camera motion.
-			// Only spine/shoulder descendants follow aim; pelvis and legs keep their pose.
+			// Apply after fist IK and preserve the evaluated neck and head rotations.
 			for (const FCompactPoseBoneIndex Bone : Pose.ForEachBoneIndex())
 			{
 				const FCompactPoseBoneIndex Parent = Pose.GetParentBoneIndex(Bone);
@@ -973,6 +976,12 @@ namespace
 					Component.SetRotation((Delta * Component.GetRotation()).GetNormalized());
 					Pose[Bone] = Component.GetRelativeTransform(ParentTransform);
 					Pose[Bone].NormalizeRotation();
+				}
+				else if (Bone == Neck || Bone == Head)
+				{
+					const FQuat Original = BeforeAim.GetComponentSpaceTransform(Bone).GetRotation();
+					Component.SetRotation(Original);
+					Pose[Bone].SetRotation((ParentTransform.GetRotation().Inverse() * Original).GetNormalized());
 				}
 				ComponentTransforms[Bone.GetInt()] = Component;
 			}

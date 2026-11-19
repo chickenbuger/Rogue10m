@@ -234,7 +234,8 @@ FRogue10mHeadMotionSettings URogue10mAppearanceCameraComponent::GetHeadMotionSet
  const bool bDodgeContributes = NativeAnimation && NativeAnimation->IsViewAimDodgeActive();
  const bool bAirborne = Movement && Movement->IsFalling();
  const bool bRunning = Character && Movement && Character->IsSprinting() && Movement->Velocity.Size2D() > 10.0f;
- if (bAttackContributes || bCharging || bDodgeContributes || bAirborne)
+ const bool bAction = bAttackContributes || bCharging || bDodgeContributes || bAirborne;
+ if (bAction)
  {
   Settings.MaxRotationDegrees = Safe(AttackingHeadMaxRotationDegrees, 3.0f, 3.0f);
   Settings.MaxPositionOffsetCm = Safe(AttackingHeadMaxPositionOffset, 1.5f, 5.0f);
@@ -249,12 +250,21 @@ FRogue10mHeadMotionSettings URogue10mAppearanceCameraComponent::GetHeadMotionSet
   Settings.MaxRotationDegrees = Safe(WalkingHeadMaxRotationDegrees, 2.0f, 2.0f);
   Settings.MaxPositionOffsetCm = Safe(WalkingHeadMaxPositionOffset, 1.0f, 5.0f);
  }
+ if (!bAction && Character && Character->IsThirdPersonGameplayActive() && Movement && Movement->IsMovingOnGround()
+  && Animation && !Animation->IsAnyMontagePlaying())
+ {
+  // The locomotion clips were reviewed at the blend space's 300 cm/s walk and 600 cm/s jog samples.
+  const double JogWeight = FMath::GetMappedRangeValueClamped(FVector2D(300.0, 600.0), FVector2D(0.0, 1.0), Movement->Velocity.Size2D());
+  const float WalkLimit = Safe(ThirdPersonWalkHeadMaxRotationDegrees, 5.0f, 180.0f);
+  const float JogLimit = Safe(ThirdPersonJogHeadMaxRotationDegrees, 7.0f, 180.0f);
+  Settings.RotationWeight = Safe(ThirdPersonLocomotionHeadRotationWeight, 0.35f, 1.0f);
+  Settings.MaxRotationDegrees = FMath::Lerp(WalkLimit, JogLimit, static_cast<float>(JogWeight));
+ }
  if (IsWeightedFirstPersonActive())
  {
   const auto Feel = GetWeightedFirstPersonSettings();
   Settings.RotationWeight = FMath::Min(Settings.RotationWeight, Feel.HeadRotationWeight);
   Settings.InterpolationSpeed = Feel.HeadFollowSpeed;
-  const bool bAction = bAttackContributes || bCharging || bDodgeContributes || bAirborne;
   const float RotationLimit = bAction ? Feel.AttackingRotationDegrees : bRunning ? Feel.RunningRotationDegrees : Feel.WalkingRotationDegrees;
   const float PositionLimit = bAction ? Feel.AttackingPositionCm : bRunning ? Feel.RunningPositionCm : Feel.WalkingPositionCm;
   Settings.MaxRotationDegrees = FMath::Min(Settings.MaxRotationDegrees, RotationLimit * Feel.HeadMotionScale);

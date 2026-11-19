@@ -250,7 +250,10 @@ private:
         for(const FTransform& T:VA){Check(!T.ContainsNaN()&&T.GetRotation().IsNormalized(),TEXT("appearance_bone_nonfinite_or_unnormalized"));}
         for(const auto& Pair:TArray<TPair<FName,FName>>{{TEXT("upperarm_l"),TEXT("lowerarm_l")},{TEXT("lowerarm_l"),TEXT("hand_l")},{TEXT("upperarm_r"),TEXT("lowerarm_r")},{TEXT("lowerarm_r"),TEXT("hand_r")},{TEXT("thigh_l"),TEXT("calf_l")},{TEXT("calf_l"),TEXT("foot_l")},{TEXT("thigh_r"),TEXT("calf_r")},{TEXT("calf_r"),TEXT("foot_r")}})
         {const int32 I=Body->GetBoneIndex(Pair.Key),J=Body->GetBoneIndex(Pair.Value);if(BA.IsValidIndex(I)&&BA.IsValidIndex(J)&&BB.IsValidIndex(I)&&BB.IsValidIndex(J)){const double Base=FVector::Distance(BB[I].GetLocation(),BB[J].GetLocation());VisibleLength=FMath::Max(VisibleLength,FMath::Abs(FVector::Distance(BA[I].GetLocation(),BA[J].GetLocation())-Base)/FMath::Max(.01,Base));}}
-        const FQuat Control=Controller->GetControlRotation().Quaternion(),Aim=(Control*Character->GetActorQuat().Inverse()).GetNormalized();
+        const FRotator OriginalControl=Controller->GetControlRotation();
+        const FQuat Control=OriginalControl.Quaternion();
+        const double HeadYaw=FRotator::NormalizeAxis(OriginalControl.Yaw-Character->GetActorRotation().Yaw);
+        const FQuat Aim(FVector::UpVector,FMath::DegreesToRadians(HeadYaw));
         const FQuat SourceDelta=HeadDelta(Source.Get(),SA,SourceReference),BodyDelta=HeadDelta(Body.Get(),BA,BodyReference);
         const double SourceHead=Angle(SourceDelta,Aim),VisibleHead=Angle(BodyDelta,Aim),Limit=Cap(),PositionLimit=Limit==4?2.:(Limit==3?1.5:1.);
         FTransform View;Check(Camera->ReadCameraTransform(View),TEXT("actual_head_camera_unavailable"));const double CameraResidual=Angle(View.GetRotation(),Control);
@@ -267,7 +270,7 @@ private:
         const double ResidualAngle=Residual.AngularDistance(FQuat::Identity);
         const double ResidualFraction=ResidualAngle>UE_SMALL_NUMBER?FMath::Min(1.,FMath::DegreesToRadians(Limit)/ResidualAngle):0.;
         const FQuat BoundedLateResidual=FQuat::Slerp(FQuat::Identity,Residual,ResidualFraction).GetNormalized();
-        const FRotator OriginalControl=Controller->GetControlRotation(),Late(-33,OriginalControl.Yaw+37,0);Controller->SetControlRotation(Late);FTransform LateView,Repeat;
+        const FRotator Late(-33,OriginalControl.Yaw+37,0);Controller->SetControlRotation(Late);FTransform LateView,Repeat;
         Check(Camera->ReadCameraTransform(LateView),TEXT("late_mouse_camera_unavailable"));const double LateError=Angle(LateView.GetRotation(),(BoundedLateResidual*Late.Quaternion()).GetNormalized());
         if(!bNegative){Check(LateError<.025,TEXT("late_mouse_was_stale_or_applied_twice"));}
         double RepeatCm=0,RepeatDeg=0;
@@ -281,12 +284,11 @@ private:
             // The old mouse basis must travel with it. Derive the expected result
             // from measured local head pose and known control/actor transforms,
             // rather than reusing the camera's published snapshot parameters.
-            const FQuat ActorBefore=Character->GetActorQuat(),MeshBefore=Body->GetComponentQuat();
+            const FQuat MeshBefore=Body->GetComponentQuat();
             const FQuat HeadBefore=BA[H].GetRotation();const FRotator ActorRotationBefore=Character->GetActorRotation();
             Character->SetActorRotation(FRotator(ActorRotationBefore.Pitch,ActorRotationBefore.Yaw+80,ActorRotationBefore.Roll));
             const FQuat Transport=(Body->GetComponentQuat()*MeshBefore.Inverse()).GetNormalized();
-            const FQuat EvaluatedAim=(OriginalControl.Quaternion()*ActorBefore.Inverse()).GetNormalized();
-            const FQuat AuthoredResidual=(BodyDelta*EvaluatedAim.Inverse()).GetNormalized();
+            const FQuat AuthoredResidual=(BodyDelta*Aim.Inverse()).GetNormalized();
             const FRotator NewMouse(70,OriginalControl.Yaw-123,0);Controller->SetControlRotation(NewMouse);
             FTransform TransportedView;Check(Camera->ReadCameraTransform(TransportedView),TEXT("late_component_transport_camera_missing"));
             const FQuat ExpectedTransported=(Transport*AuthoredResidual*Transport.Inverse()*NewMouse.Quaternion()).GetNormalized();

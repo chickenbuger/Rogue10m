@@ -1,0 +1,340 @@
+{
+  "source": {
+    "blendspace": "/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference",
+    "preview_mesh": false,
+    "clips": {
+      "walk": {
+        "asset": "/Game/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Walk_Fwd_PalmReference.MF_Unarmed_Walk_Fwd_PalmReference",
+        "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+        "duration_seconds": 1.5,
+        "root_motion": true
+      },
+      "jog": {
+        "asset": "/Game/Rogue10m/Animation/Locomotion/PalmReference/MF_Unarmed_Jog_Fwd_PalmReference.MF_Unarmed_Jog_Fwd_PalmReference",
+        "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+        "duration_seconds": 1.7666666507720947,
+        "root_motion": true
+      },
+      "idle": {
+        "asset": "/Game/Characters/Mannequins/Anims/Unarmed/MM_Idle.MM_Idle",
+        "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+        "duration_seconds": 7.566666603088379,
+        "root_motion": false
+      }
+    }
+  },
+  "filter_speed_per_second": 18.0,
+  "presets": {
+    "existing": [
+      0.15,
+      {
+        "idle": 2.0,
+        "walk": 2.0,
+        "jog": 4.0
+      }
+    ],
+    "moderate": [
+      0.35,
+      {
+        "idle": 5.0,
+        "walk": 5.0,
+        "jog": 7.0
+      }
+    ],
+    "strong": [
+      0.5,
+      {
+        "idle": 6.0,
+        "walk": 6.0,
+        "jog": 8.0
+      }
+    ]
+  },
+  "results": {
+    "walk": {
+      "frame_range": [
+        1,
+        46
+      ],
+      "fps": 30.0,
+      "raw": {
+        "neck_01": {
+          "peak_from_reference_deg": 15.50002555517637,
+          "animated_rotation_span_deg": 14.39844635007394,
+          "pitch_min_deg": -13.496810730149962,
+          "pitch_max_deg": -8.794954774082973,
+          "peak_frame_speed_deg_per_s": 83.32606122362206,
+          "loop_seam_deg": 0.008128937549397764
+        },
+        "head": {
+          "peak_from_reference_deg": 17.93292647320609,
+          "animated_rotation_span_deg": 10.093339448154895,
+          "pitch_min_deg": -17.32491838055005,
+          "pitch_max_deg": -7.57080573399564,
+          "peak_frame_speed_deg_per_s": 85.35428792569533,
+          "loop_seam_deg": 0.008571658301715796
+        },
+        "protected": {
+          "max_position_change_cm": 0.0,
+          "max_orientation_change_deg": 5.12264187750956e-06
+        }
+      },
+      "existing": {
+        "neck_01": {
+          "peak_from_reference_deg": 1.9797017573222526,
+          "animated_rotation_span_deg": 1.744612059931073,
+          "pitch_min_deg": -1.907822655454901,
+          "pitch_max_deg": -1.3994168246285659,
+          "peak_frame_speed_deg_per_s": 7.456888165764243,
+          "loop_seam_deg": 0.053457558499631054
+        },
+        "head": {
+          "peak_from_reference_deg": 1.9964033933009733,
+          "animated_rotation_span_deg": 0.6917490242048238,
+          "pitch_min_deg": -1.947013180012571,
+          "pitch_max_deg": -1.3093881970446166,
+          "peak_frame_speed_deg_per_s": 7.048390848496238,
+          "loop_seam_deg": 0.05249444046158979
+        },
+        "protected": {
+          "max_position_change_cm": 0.0,
+          "max_orientation_change_deg": 5.12264187750956e-06
+        }
+      },
+      "moderate": {
+        "neck_01": {
+          "peak_from_reference_deg": 4.922986852507572,
+          "animated_rotation_span_deg": 4.293862457163044,
+          "pitch_min_deg": -4.518626969461112,
+          "pitch_max_deg": -3.2677303745902475,
+          "peak_frame_speed_deg_per_s": 17.896256364048096,
+          "loop_seam_deg": 0.12329156431292873
+        },
+        "head": {
+          "peak_from_reference_deg": 4.987294519250224,
+          "animated_rotation_span_deg": 1.8482784223008621,
+          "pitch_min_deg": -4.852608877879255,
+          "pitch_max_deg": -3.064899727035794,
+          "peak_frame_speed_deg_per_s": 17.36051436566982,
+          "loop_seam_deg": 0.13489046484056752
+        },
+        "protected": {
+          "max_position_change_cm": 0.0,
+          "max_orientation_change_deg": 5.12264187750956e-06
+        }
+      },
+      "strong": {
+        "neck_01": {
+          "peak_from_reference_deg": 5.975961850413949,
+          "animated_rotation_span_deg": 5.272015360753013,
+          "pitch_min_deg": -5.86979456163744,
+          "pitch_max_deg": -4.6642795174453155,
+          "peak_frame_speed_deg_per_s": 23.85864402877307,
+          "loop_seam_deg": 0.14137507792807516
+        },
+        "head": {
+          "peak_from_reference_deg": 5.992370847910599,
+          "animated_rotation_span_deg": 1.8889693802294192,
+          "pitch_min_deg": -5.8552193961310275,
+          "pitch_max_deg": -4.3125016722146565,
+          "peak_frame_speed_deg_per_s": 19.74361969637137,
+          "loop_seam_deg": 0.15550503776142646
+        },
+        "protected": {
+          "max_position_change_cm": 0.0,
+          "max_orientation_change_deg": 5.12264187750956e-06
+        }
+      }
+    },
+    "jog": {
+      "frame_range": [
+        1,
+        54
+      ],
+      "fps": 30.0,
+      "raw": {
+        "neck_01": {
+          "peak_from_reference_deg": 36.87225242517223,
+          "animated_rotation_span_deg": 51.2066987136149,
+          "pitch_min_deg": -27.626314222521398,
+          "pitch_max_deg": -19.591495312769755,
+          "peak_frame_speed_deg_per_s": 260.05686645296555,
+          "loop_seam_deg": 0.6161359460460654
+        },
+        "head": {
+          "peak_from_reference_deg": 26.92226473815395,
+          "animated_rotation_span_deg": 17.42391048083894,
+          "pitch_min_deg": -26.179390591811718,
+          "pitch_max_deg": -12.927409787507381,
+          "peak_frame_speed_deg_per_s": 165.29108640616195,
+          "loop_seam_deg": 0.4364957062523719
+        },
+        "protected": {
+          "max_position_change_cm": 0.0,
+          "max_orientation_change_deg": 6.8435171968767595e-06
+        }
+      },
+      "existing": {
+        "neck_01": {
+          "peak_from_reference_deg": 3.962285579473499,
+          "animated_rotation_span_deg": 5.236313675327348,
+          "pitch_min_deg": -3.84634885213927,
+          "pitch_max_deg": -2.7230940143407505,
+          "peak_frame_speed_deg_per_s": 32.907526378156305,
+          "loop_seam_deg": 0.40409170764863844
+        },
+        "head": {
+          "peak_from_reference_deg": 3.8977349143446296,
+          "animated_rotation_span_deg": 2.2347735761661545,
+          "pitch_min_deg": -3.7856892024961577,
+          "pitch_max_deg": -2.3011740946263597,
+          "peak_frame_speed_deg_per_s": 18.06345547674446,
+          "loop_seam_deg": 0.18268723189547736
+        },
+        "protected": {
+          "max_position_change_cm": 0.0,
+          "max_orientation_change_deg": 6.8435171968767595e-06
+        }
+      },
+      "moderate": {
+        "neck_01": {
+          "peak_from_reference_deg": 6.938578615473008,
+          "animated_rotation_span_deg": 9.183118363520231,
+          "pitch_min_deg": -6.805943983625002,
+          "pitch_max_deg": -4.796686736904287,
+          "peak_frame_speed_deg_per_s": 59.352897517245836,
+          "loop_seam_deg": 0.7061700283909759
+        },
+        "head": {
+          "peak_from_reference_deg": 6.974654839715796,
+          "animated_rotation_span_deg": 4.820815614042929,
+          "pitch_min_deg": -6.8208719273423855,
+          "pitch_max_deg": -5.249785209745041,
+          "peak_frame_speed_deg_per_s": 33.620832587899635,
+          "loop_seam_deg": 0.26992722023633064
+        },
+        "protected": {
+          "max_position_change_cm": 0.0,
+          "max_orientation_change_deg": 6.8435171968767595e-06
+        }
+      },
+      "strong": {
+        "neck_01": {
+          "peak_from_reference_deg": 7.929851696467757,
+          "animated_rotation_span_deg": 10.49403459432483,
+          "pitch_min_deg": -7.778180809719718,
+          "pitch_max_deg": -5.473510605163145,
+          "peak_frame_speed_deg_per_s": 67.82210001089086,
+          "loop_seam_deg": 0.806907461057721
+        },
+        "head": {
+          "peak_from_reference_deg": 7.978517337996411,
+          "animated_rotation_span_deg": 5.749809518865523,
+          "pitch_min_deg": -7.877752358020302,
+          "pitch_max_deg": -6.556406806484296,
+          "peak_frame_speed_deg_per_s": 37.89781071105245,
+          "loop_seam_deg": 0.3098939342824667
+        },
+        "protected": {
+          "max_position_change_cm": 0.0,
+          "max_orientation_change_deg": 6.8435171968767595e-06
+        }
+      }
+    },
+    "idle": {
+      "frame_range": [
+        1,
+        228
+      ],
+      "fps": 30.0,
+      "raw": {
+        "neck_01": {
+          "peak_from_reference_deg": 24.545888420982717,
+          "animated_rotation_span_deg": 4.313793643054664,
+          "pitch_min_deg": -13.138386273103158,
+          "pitch_max_deg": -10.108055061594955,
+          "peak_frame_speed_deg_per_s": 6.697545764645963,
+          "loop_seam_deg": 0.0413239602118227
+        },
+        "head": {
+          "peak_from_reference_deg": 15.037684325079114,
+          "animated_rotation_span_deg": 6.244102494363139,
+          "pitch_min_deg": -13.671664333955219,
+          "pitch_max_deg": -8.443885671588463,
+          "peak_frame_speed_deg_per_s": 13.275176223220388,
+          "loop_seam_deg": 0.037976722475482984
+        },
+        "protected": {
+          "max_position_change_cm": 0.0,
+          "max_orientation_change_deg": 6.1566493183999436e-06
+        }
+      },
+      "existing": {
+        "neck_01": {
+          "peak_from_reference_deg": 2.0000099342401536,
+          "animated_rotation_span_deg": 0.32464217368476983,
+          "pitch_min_deg": -1.0832436707866857,
+          "pitch_max_deg": -0.808589581717033,
+          "peak_frame_speed_deg_per_s": 0.4803204913190647,
+          "loop_seam_deg": 0.0012101339631386738
+        },
+        "head": {
+          "peak_from_reference_deg": 2.0000032561410297,
+          "animated_rotation_span_deg": 0.8881450896136525,
+          "pitch_min_deg": -1.8581124527637742,
+          "pitch_max_deg": -1.2414916267189309,
+          "peak_frame_speed_deg_per_s": 1.6563438286254966,
+          "loop_seam_deg": 0.003579806514563156
+        },
+        "protected": {
+          "max_position_change_cm": 0.0,
+          "max_orientation_change_deg": 6.1566493183999436e-06
+        }
+      },
+      "moderate": {
+        "neck_01": {
+          "peak_from_reference_deg": 5.000006341265905,
+          "animated_rotation_span_deg": 0.8113715249336907,
+          "pitch_min_deg": -2.722744012614346,
+          "pitch_max_deg": -2.043863638118299,
+          "peak_frame_speed_deg_per_s": 1.2008165424106019,
+          "loop_seam_deg": 0.0030168495899424792
+        },
+        "head": {
+          "peak_from_reference_deg": 4.999983992102591,
+          "animated_rotation_span_deg": 2.1650676207247503,
+          "pitch_min_deg": -4.604207491325845,
+          "pitch_max_deg": -2.914284528750791,
+          "peak_frame_speed_deg_per_s": 3.8641643690818386,
+          "loop_seam_deg": 0.009149353928016649
+        },
+        "protected": {
+          "max_position_change_cm": 0.0,
+          "max_orientation_change_deg": 6.1566493183999436e-06
+        }
+      },
+      "strong": {
+        "neck_01": {
+          "peak_from_reference_deg": 6.0000061625737215,
+          "animated_rotation_span_deg": 0.9735114540720969,
+          "pitch_min_deg": -3.272690960660181,
+          "pitch_max_deg": -2.461187034547077,
+          "peak_frame_speed_deg_per_s": 1.44065432503647,
+          "loop_seam_deg": 0.0036313090147507276
+        },
+        "head": {
+          "peak_from_reference_deg": 5.9999863494407295,
+          "animated_rotation_span_deg": 2.7024288285618336,
+          "pitch_min_deg": -5.587549841121291,
+          "pitch_max_deg": -4.143037475263986,
+          "peak_frame_speed_deg_per_s": 4.966330590479515,
+          "loop_seam_deg": 0.010753801977561614
+        },
+        "protected": {
+          "max_position_change_cm": 0.0,
+          "max_orientation_change_deg": 6.1566493183999436e-06
+        }
+      }
+    }
+  }
+}

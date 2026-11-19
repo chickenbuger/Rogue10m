@@ -142,7 +142,9 @@ void FRogue10mViewAlignedUpperBodyProxy::PreUpdate(UAnimInstance* InAnimInstance
 	if (Instance->bEnableMouseDrivenHead)
 	{
 		CaptureHeadMotionSettings(Character, DeltaSeconds);
-		HeadWorldAim = (Control.Quaternion() * Actor.Quaternion().Inverse()).GetNormalized();
+		// The head turns with horizontal look. The camera and upper-body aim use control pitch independently.
+		const float HeadYaw = FRotator::NormalizeAxis(Control.Yaw - Actor.Yaw);
+		HeadWorldAim = FRotator(0.0f, HeadYaw, 0.0f).Quaternion();
 		HeadSourceMeshRotation = MeshRotation;
 		HeadAimInMesh = (MeshRotation.Inverse() * HeadWorldAim * MeshRotation).GetNormalized();
 		bApplyMouseHead = true;
@@ -151,7 +153,7 @@ void FRogue10mViewAlignedUpperBodyProxy::PreUpdate(UAnimInstance* InAnimInstance
 	{
 		SmoothedHeadResidual = SmoothedNeckResidual = FQuat::Identity;
 	}
-	// Dodge may retain its authored body pose, but the head always remains mouse driven.
+	// Dodge retains its authored body pose while the head still responds to horizontal look.
 	if (!Instance->bEnableViewAlignedUpperBody || Instance->IsViewAimDodgeActive())
 	{
 		AimPitch = AimYaw = Instance->UpperBodyAimPitch = Instance->UpperBodyAimYaw = 0.0f;
@@ -167,7 +169,21 @@ void FRogue10mViewAlignedUpperBodyProxy::PreUpdate(UAnimInstance* InAnimInstance
 	}
 	const float PitchLimit = FMath::Clamp(Instance->UpperBodyAimMaxPitch, 0.0f, 85.0f);
 	const float YawLimit = FMath::Clamp(Instance->UpperBodyAimMaxYaw, 0.0f, 80.0f);
-	const float DesiredPitch = FMath::Clamp(FRotator::NormalizeAxis(Control.Pitch - Actor.Pitch), -PitchLimit, PitchLimit);
+	float PitchWeight = 1.0f;
+	const auto* Movement = Character->GetCharacterMovement();
+	if (Character->IsThirdPersonGameplayActive() && Character->GetEquippedWeaponType() == ERogue10mWeaponType::Unarmed
+		&& Movement && Movement->IsMovingOnGround() && !Instance->IsAnyMontagePlaying())
+	{
+		const auto* Combat = Character->GetCombatComponent();
+		const auto* Brawler = Character->GetBasicBrawlerComponent();
+		const FRogue10mBasicBrawlerSnapshot BrawlerPose = Brawler ? Brawler->GetSnapshot() : FRogue10mBasicBrawlerSnapshot();
+		if (!(Combat && Combat->IsAttackChargeHeld()) && (!BrawlerPose.bActive || BrawlerPose.Phase == ERogue10mBasicBrawlerPhase::Idle))
+		{
+			// The relaxed hands transition into view aim with the authored guard pose.
+			PitchWeight = Instance->FighterCombatStanceAlpha;
+		}
+	}
+	const float DesiredPitch = FMath::Clamp(FRotator::NormalizeAxis(Control.Pitch - Actor.Pitch), -PitchLimit, PitchLimit) * PitchWeight;
 	const float DesiredYaw = FMath::Clamp(FRotator::NormalizeAxis(Control.Yaw - Actor.Yaw), -YawLimit, YawLimit);
 	const float BaselineSpeed = FMath::Max(0.0f, Instance->UpperBodyAimInterpolationSpeed);
 	const float BaselineFollow = BaselineSpeed > 0.0f ? 1.0f - FMath::Exp(-BaselineSpeed * FMath::Max(0.0f, DeltaSeconds)) : 1.0f;
@@ -397,7 +413,7 @@ void FRogue10mViewAlignedUpperBodyProxy::ApplyMouseDrivenHead(FCompactPose& Pose
 		const FQuat RawNeck = (ComponentRotation(Pose, Neck) * ReferenceNeckRotation.Inverse()).GetNormalized();
 		const FQuat DesiredNeck = BoundedResidual(RawNeck, HeadRotationWeight, HeadRotationLimitDegrees);
 		SmoothedNeckResidual = BoundedResidual(FQuat::Slerp(SmoothedNeckResidual, DesiredNeck, HeadResidualFollow), 1.0f, HeadRotationLimitDegrees);
-		// Sharing the mouse aim avoids placing the entire vertical bend on the head joint.
+		// Share the horizontal turn across the neck and head.
 		const FQuat NeckAim = FQuat::Slerp(FQuat::Identity, HeadAimInMesh, HeadNeckAimWeight);
 		RestoreComponentRotation(Pose, Neck, NeckAim * SmoothedNeckResidual * ReferenceNeckRotation);
 	}

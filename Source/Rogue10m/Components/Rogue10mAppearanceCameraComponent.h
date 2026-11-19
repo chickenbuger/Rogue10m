@@ -92,9 +92,15 @@ public:
  float AttackingHeadMaxPositionOffset = 1.5f;
  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Appearance Camera|Head Stability", meta=(ClampMin="0", ClampMax="60"))
  float HeadMotionInterpolationSpeed = 18.0f;
- /** Share mouse turning with the neck while the final head still follows the full view angle. */
+ /** Share horizontal mouse turning with the neck. */
  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Appearance Camera|Head Stability", meta=(ClampMin="0", ClampMax="1"))
  float MouseHeadNeckAimWeight = 0.35f;
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Third Person Head Motion", meta=(ClampMin="0", ClampMax="1"))
+ float ThirdPersonLocomotionHeadRotationWeight = 0.35f;
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Third Person Head Motion", meta=(ClampMin="0", ClampMax="180", Units="deg"))
+ float ThirdPersonWalkHeadMaxRotationDegrees = 5.0f;
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Third Person Head Motion", meta=(ClampMin="0", ClampMax="180", Units="deg"))
+ float ThirdPersonJogHeadMaxRotationDegrees = 7.0f;
  bool ReadCameraTransform(FTransform& OutCamera) const;
  /** Stateless composition: repeated camera/trace calls cannot integrate motion twice. */
  static bool ComposeCameraTransform(const FTransform& AnimatedHead, const FQuat& WorldHeadMotion,
