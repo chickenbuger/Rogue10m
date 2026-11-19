@@ -20,7 +20,8 @@ DERIVED_ROOT = "/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword"
 SOURCE_TAG = "Rogue10mHybridSource"
 AUTHOR_TAG = "Rogue10mHybridAuthoringVersion"
 AUTHOR_VERSION = "1"
-EXPECTED_CATALOG_NODES = 53
+EXPECTED_CATALOG_NODES = 57
+KNUCKLE_FOUNDATIONS = ("LeftJab", "RightJab", "RightStraight", "RightHook")
 
 # Damage is an explicit additive skill base; character AttackPower still enters
 # the existing RollDamage path. Ranges, costs and cooldowns are new tuned values.
@@ -43,11 +44,10 @@ TECHNIQUES = (
      "slot": "CHARGED_PRIMARY", "description": "세 수련 경로 중 하나를 완성하면 전수하는 대검 최종기. 기존 차징 동작과 소요 시간을 재사용한다."},
 )
 
-FIGHTER_SKILL_PATHS = (
-    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab",
-    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightJab",
-    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight",
-    "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightHook",
+FIGHTER_SKILL_PATHS = tuple(
+    f"/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_{name}"
+    for name in KNUCKLE_FOUNDATIONS
+) + (
     "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01",
     "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02",
     "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03",
@@ -284,6 +284,7 @@ def make_catalog():
     if len(nodes) != EXPECTED_CATALOG_NODES or len(set(ids)) != len(nodes):
         raise RuntimeError(f"Unexpected catalog size or duplicate NodeId: {len(nodes)}")
     expected = {"F.Basic", "F.Ultimate", "G.Basic", "G.Ultimate"}
+    expected.update(f"F.Basic.{name}" for name in KNUCKLE_FOUNDATIONS)
     expected.update(f"I.{identity}.{stage}" for identity in
                     ("InternalEnergy", "FightingSpirit", "Mana")
                     for stage in ("Entry", "Advanced", "Choice"))

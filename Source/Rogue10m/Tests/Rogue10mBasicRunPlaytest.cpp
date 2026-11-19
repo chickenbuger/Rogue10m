@@ -1176,7 +1176,7 @@ private:
         { Block(TEXT("great_sword_growth_target_learned_before_UMG_purchase")); return false; }
         if (!bGreatSwordGrowthReadyObserved || !bGearUiEquipped || !VerifyGearEquipped()
             || Tree->GetActiveTrack() != ERogue10mSkillTreeTrack::GreatSword
-            || GrowthWidget.GetDisplayedTrack() != ERogue10mSkillTreeTrack::GreatSword
+            || GrowthWidget.GetDisplayedTab() != ERogue10mSkillTreeTab::Common
             || GrowthWidget.GetSelectedNodeId() != RequestedLearnNode()) { return false; }
         FText GrowthPurchaseReason;
         if (!Tree->CanUnlockNode(RequestedLearnNode(), ERogue10mSkillTreeUnlockRoute::Points, NAME_None, GrowthPurchaseReason)) { return false; }
@@ -1217,8 +1217,9 @@ private:
 
     bool SelectLearnNode(URogue10mHybridSkillTreeWidget& Widget)
     {
-        if (bGreatSwordGrowth && Widget.GetDisplayedTrack() != ERogue10mSkillTreeTrack::GreatSword)
-        { Click(&Widget, TEXT("HybridTreeGreatSword")); return false; }
+        const auto* Node = Tree->FindNode(RequestedLearnNode());
+        if (Node && Node->Track == ERogue10mSkillTreeTrack::None && Widget.GetDisplayedTab() != ERogue10mSkillTreeTab::Common)
+        { Click(&Widget, TEXT("HybridTreeCommon")); return false; }
         auto* Entry = Widget.FindNodeEntry(RequestedLearnNode());
         if (!Entry) { return false; }
         URogue10mHybridSkillTreeButton* Found = nullptr; int32 Count = 0;

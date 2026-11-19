@@ -81,6 +81,7 @@ private:
 	const ARogue10mPlayerState* GetPlayerState() const;
 	bool PrerequisitesComplete(const FRogue10mSkillTreeNodeDefinition& Node) const;
 	bool MasteryRequirementsComplete(const FRogue10mSkillTreeNodeDefinition& Node) const;
+	bool ApplyRespec(FRogue10mSkillTreeSnapshot&& Candidate);
 	void NotifyChanged(bool bIdentityChanged = false);
 	bool bRefreshing = false;
 };

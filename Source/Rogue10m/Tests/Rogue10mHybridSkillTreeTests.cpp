@@ -63,6 +63,48 @@ bool FRogue10mHybridMasteryTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("equipped knuckle owns brawler mastery"), Tree.ResolveTrack(ERogue10mWeaponType::Knuckle), ETrack::Brawler);
 	TestTrue(TEXT("free initial fighter grant"), Tree.IsNodeUnlocked(TEXT("F.Basic")));
 	TestFalse(TEXT("core initially locked"), Tree.IsNodeUnlocked(TEXT("F.Ultimate")));
+	const auto VisibleNodes = Tree.GetCatalog()->Nodes.FilterByPredicate([](const FRogue10mSkillTreeNodeDefinition& Node)
+	{
+		return Node.Track == ETrack::Brawler && Node.bShowInTree;
+	});
+	TestEqual(TEXT("the approved knuckle tree has exactly 17 visible nodes"), VisibleNodes.Num(), 17);
+	struct FTrainingStep
+	{
+		FName Id;
+		TArray<FName> Parents;
+	};
+	const FTrainingStep Steps[] = {
+		{TEXT("F.Basic.LeftJab"), {}}, {TEXT("F.Basic.RightJab"), {}},
+		{TEXT("F.Basic.RightStraight"), {}}, {TEXT("F.Basic.RightHook"), {}},
+		{TEXT("F.Power.1"), {TEXT("F.Basic.LeftJab")}}, {TEXT("F.Breath.1"), {TEXT("F.Basic.RightJab")}},
+		{TEXT("F.Body.1"), {TEXT("F.Basic.RightStraight")}}, {TEXT("F.Body.2"), {TEXT("F.Basic.RightHook")}},
+		{TEXT("F.Bengquan"), {TEXT("F.Power.1")}}, {TEXT("F.CloudHands"), {TEXT("F.Power.1"), TEXT("F.Breath.1")}},
+		{TEXT("F.Shoulder"), {TEXT("F.Body.1")}},
+		{TEXT("F.BreakingKick"), {TEXT("F.Bengquan")}}, {TEXT("F.DiamondStrike"), {TEXT("F.Bengquan")}},
+		{TEXT("F.HundredFists"), {TEXT("F.CloudHands")}}, {TEXT("F.Ultimate"), {TEXT("F.CloudHands"), TEXT("F.Shoulder")}},
+		{TEXT("F.MountainSlam"), {TEXT("F.Shoulder")}}, {TEXT("F.GoldenBody"), {TEXT("F.Body.2")}}
+	};
+	for (const FTrainingStep& Step : Steps)
+	{
+		const auto* Node = Tree.FindNode(Step.Id);
+		const FString Label = Step.Id.ToString();
+		if (!TestTrue(*Label, Node && Node->bShowInTree && Node->bAutomaticUnlock && Node->PointCost == 0)) { continue; }
+		if (Step.Parents.IsEmpty())
+		{
+			TestTrue(*(Label + TEXT(" starts as a learned single-skill root")), Node->PrerequisiteGroups.IsEmpty()
+				&& (!Node->Skill.IsNull() || Node->GrantedSkills.Num() == 1) && Tree.IsNodeUnlocked(Step.Id));
+			continue;
+		}
+		TestFalse(*(Label + TEXT(" requires training")), Tree.IsNodeUnlocked(Step.Id));
+		TestTrue(*(Label + TEXT(" has exactly the approved AND predecessors")), Node->PrerequisiteGroups.Num() == 1
+			&& Node->PrerequisiteGroups[0].NodeIds.Num() == Step.Parents.Num()
+			&& !Node->PrerequisiteGroups[0].NodeIds.ContainsByPredicate([&Step](FName Id) { return !Step.Parents.Contains(Id); }));
+		for (const FName ParentId : Step.Parents)
+		{
+			const auto* Parent = Tree.FindNode(ParentId);
+			TestTrue(*(Label + TEXT(" is visually above ") + ParentId.ToString()), Parent && Parent->Position.Y > Node->Position.Y);
+		}
+	}
 	Fixture.Hits(385);
 	TestEqual(TEXT("385 confirmed executions reach M12"), Tree.GetMasteryLevel(ETrack::Brawler), 12);
 	TestEqual(TEXT("M12 remainder zero"), Tree.GetMasteryExperience(ETrack::Brawler), 0);
@@ -83,6 +125,10 @@ bool FRogue10mHybridMasteryTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("final attack speed +.02"), Final.AttackSpeedBonus, .02f);
 	TestTrue(TEXT("ultimate automatically learned"), Tree.IsNodeUnlocked(TEXT("F.Ultimate")));
 	TestTrue(TEXT("passive automatically learned"), Tree.IsNodeUnlocked(TEXT("F.GoldenBody")));
+	for (const FTrainingStep& Step : Steps)
+	{
+		TestTrue(*(Step.Id.ToString() + TEXT(" is acquired by the final mastery milestone")), Tree.IsNodeUnlocked(Step.Id));
+	}
 	const auto Saved = Tree.Capture();
 	TestTrue(TEXT("restoring durable record succeeds"), Tree.Restore(Saved));
 	Tree.RefreshAutomaticUnlocks();
@@ -91,6 +137,22 @@ bool FRogue10mHybridMasteryTest::RunTest(const FString& Parameters)
 	Fixture.Hits(10);
 	TestEqual(TEXT("mastery cap XP is bounded"), Tree.GetMasteryTotalExperience(ETrack::Brawler), 1045);
 	TestTrue(TEXT("capped snapshot valid"), Tree.Validate(Tree.Capture(), 0, 0));
+
+	FRogue10mSkillTreeSnapshot OldKnuckle;
+	auto& OldMastery = OldKnuckle.Masteries.AddDefaulted_GetRef();
+	OldMastery.Track = ETrack::Brawler;
+	OldMastery.TotalExperience = 100;
+	for (const TCHAR* Id : {TEXT("F.Root"), TEXT("F.Basic"), TEXT("F.Breath.1"), TEXT("F.CloudHands")})
+	{
+		Invest(OldKnuckle, Id, ERoute::Automatic, 0);
+	}
+	TestTrue(TEXT("old M6 cloud hands with its previous single prerequisite still validates"), Tree.Validate(OldKnuckle, 0, 0));
+	auto IncompleteOld = OldKnuckle;
+	IncompleteOld.Investments.RemoveAt(2);
+	TestFalse(TEXT("a recorded technique without either set of prerequisites is rejected"), Tree.Validate(IncompleteOld, 0, 0));
+	TestTrue(TEXT("restoring old training keeps cloud hands and adds the new roots"), Tree.Restore(OldKnuckle)
+		&& Tree.IsNodeUnlocked(TEXT("F.CloudHands")) && Tree.IsNodeUnlocked(TEXT("F.Basic.RightHook"))
+		&& Tree.GetMasteryLevel(ETrack::Brawler) == 6 && Tree.GetSpentSkillTreePoints() == 0);
 	return true;
 }
 
@@ -177,11 +239,33 @@ bool FRogue10mHybridSourceTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("permanent source recorded independent of current weapon"), Fixture.Tree->GetMasteryStatModifiers(ETrack::Brawler).MaxStaminaBonus, 10.0f);
 	TestEqual(TEXT("no cross weapon stat accumulation"), Fixture.Tree->GetMasteryStatModifiers(ERogue10mWeaponType::GreatSword).MaxStaminaBonus, 0.0f);
 	FFixture Sword;
+	const auto* AuthoredCatalog = LoadObject<URogue10mSkillTreeDataAsset>(nullptr,
+		TEXT("/Game/DataAsset/SkillTree/DA_HybridSkillTreeCatalog.DA_HybridSkillTreeCatalog"));
+	if (!TestNotNull(TEXT("shipped hybrid catalog is loaded"), AuthoredCatalog)) { return false; }
+	const auto* SwordTechnique = AuthoredCatalog->FindNode(TEXT("G.CrushingSlash"));
+	TestTrue(TEXT("shipped catalog exposes the paid technique and historical route"), SwordTechnique
+		&& SwordTechnique->PointCost == 1 && !SwordTechnique->bAutomaticUnlock && SwordTechnique->bAcceptHistoricalAutomaticUnlock);
 	Sword.Hits(385, ETrack::GreatSword);
 	auto SwordSource = Sword.Tree->Capture();
+	TestFalse(TEXT("current sword techniques are not automatically granted at M12"), Sword.Tree->IsNodeUnlocked(TEXT("G.CrushingSlash")));
+	auto OldSword = SwordSource;
+	Invest(OldSword, TEXT("G.CrushingSlash"), ERoute::Automatic, 0);
+	Invest(OldSword, TEXT("G.Power.2"), ERoute::Automatic, 0);
+	Invest(OldSword, TEXT("G.EarthSplitter"), ERoute::Automatic, 0);
+	TestTrue(TEXT("old automatic sword grants restore under their original requirements"), Sword.Tree->Restore(OldSword));
+	TestTrue(TEXT("restored technique stays learned without debiting points"), Sword.Tree->IsNodeUnlocked(TEXT("G.EarthSplitter"))
+		&& Sword.Tree->GetSpentSkillTreePoints() == 0);
+	auto Forged = OldSword;
+	Forged.Investments.RemoveAll([](const auto& Row) { return Row.NodeId == FName(TEXT("G.Power.1")); });
+	TestFalse(TEXT("historical automatic route still requires its original prerequisite"), Sword.Tree->Validate(Forged, 0, 0));
+	Forged = OldSword;
+	Forged.Masteries[0].TotalExperience = 0;
+	TestFalse(TEXT("historical automatic route still requires mastery"), Sword.Tree->Validate(Forged, 0, 0));
+	Invest(SwordSource, TEXT("G.CrushingSlash"), ERoute::Points, 1);
+	Invest(SwordSource, TEXT("G.Power.2"), ERoute::Automatic, 0);
 	Invest(SwordSource, TEXT("I.FightingSpirit.Entry"), ERoute::Points, 1);
 	Invest(SwordSource, TEXT("I.FightingSpirit.Advanced"), ERoute::Mastery, 0);
-	TestTrue(TEXT("shared spirit accepts greatsword source alternative"), Sword.Tree->Validate(SwordSource, 1, 0));
+	TestTrue(TEXT("shared spirit accepts greatsword source alternative after sword investment"), Sword.Tree->Validate(SwordSource, 2, 0));
 	const auto* Ultimate = Fixture.Tree->FindNode(TEXT("F.Ultimate"));
 	if (!TestNotNull(TEXT("legacy ultimate definition"), Ultimate)) { return false; }
 	auto Legacy = Fixture.Tree->MigrateLegacy({Ultimate->Skill});
