@@ -63,6 +63,14 @@ bool URogue10mSkillTreeDataAsset::IsValidCatalog(FText* OutReason) const
 			if (Requirement.Kind == ERogue10mProgressionRequirementKind::MasteryAtLeast && Requirement.Minimum > MaxMasteryLevel) { return Fail(); }
 		}
 		if (Node.bAutomaticUnlock && (Node.PointCost != 0 || !Node.Choices.IsEmpty())) { return Fail(); }
+		if (Node.bAcceptHistoricalAutomaticUnlock)
+		{
+			const bool bTrainingNode = Node.Track == ERogue10mSkillTreeTrack::Brawler && Node.bAutomaticUnlock;
+			const bool bPaidSwordTechnique = Node.Track == ERogue10mSkillTreeTrack::GreatSword
+				&& Node.NodeType == ERogue10mHybridSkillTreeNodeType::Technique && !Node.bAutomaticUnlock && Node.PointCost > 0 && Node.Choices.IsEmpty();
+			if (!bTrainingNode && !bPaidSwordTechnique) { return Fail(); }
+		}
+		else if (!Node.HistoricalAutomaticMasteryAlternatives.IsEmpty() || !Node.HistoricalAutomaticPrerequisiteGroups.IsEmpty()) { return Fail(); }
 		if (Node.Track == ERogue10mSkillTreeTrack::None && Node.AllowedTracks.IsEmpty()) { return Fail(); }
 		TSet<ERogue10mSkillTreeTrack> Tracks;
 		for (auto Track : Node.AllowedTracks)
@@ -72,11 +80,14 @@ bool URogue10mSkillTreeDataAsset::IsValidCatalog(FText* OutReason) const
 			Tracks.Add(Track);
 		}
 		if (Node.Identity != ERogue10mSkillTreeIdentity::None && Node.Track != ERogue10mSkillTreeTrack::None && !IsIdentityAllowed(Node.Track, Node.Identity)) { return Fail(); }
-		for (const auto& Requirement : Node.MasteryAlternatives)
+		for (const auto* Alternatives : {&Node.MasteryAlternatives, &Node.HistoricalAutomaticMasteryAlternatives})
 		{
-			if (Requirement.Track == ERogue10mSkillTreeTrack::None || static_cast<uint8>(Requirement.Track) > static_cast<uint8>(ERogue10mSkillTreeTrack::GreatSword)
-				|| Requirement.Level < 1 || Requirement.Level > MaxMasteryLevel || !FMath::IsFinite(Requirement.AttackBonus)
-				|| !FMath::IsFinite(Requirement.StaminaBonus) || Requirement.AttackBonus < 0.0f || Requirement.StaminaBonus < 0.0f) { return Fail(); }
+			for (const auto& Requirement : *Alternatives)
+			{
+				if (Requirement.Track == ERogue10mSkillTreeTrack::None || static_cast<uint8>(Requirement.Track) > static_cast<uint8>(ERogue10mSkillTreeTrack::GreatSword)
+					|| Requirement.Level < 1 || Requirement.Level > MaxMasteryLevel || !FMath::IsFinite(Requirement.AttackBonus)
+					|| !FMath::IsFinite(Requirement.StaminaBonus) || Requirement.AttackBonus < 0.0f || Requirement.StaminaBonus < 0.0f) { return Fail(); }
+			}
 		}
 		const auto& Reward = Node.StatReward;
 		for (float Value : { Reward.AttackPowerBonus, Reward.DefenseBonus, Reward.MaxHealthBonus, Reward.MaxStaminaBonus,
@@ -94,14 +105,17 @@ bool URogue10mSkillTreeDataAsset::IsValidCatalog(FText* OutReason) const
 	}
 	for (const auto& Node : Nodes)
 	{
-		for (const auto& Group : Node.PrerequisiteGroups)
+		for (const auto* Groups : {&Node.PrerequisiteGroups, &Node.HistoricalAutomaticPrerequisiteGroups})
 		{
-			if (Group.NodeIds.IsEmpty()) { return Fail(); }
-			TSet<FName> GroupSeen;
-			for (FName Id : Group.NodeIds)
+			for (const auto& Group : *Groups)
 			{
-				if (!Seen.Contains(Id) || Id == Node.NodeId || GroupSeen.Contains(Id)) { return Fail(); }
-				GroupSeen.Add(Id);
+				if (Group.NodeIds.IsEmpty()) { return Fail(); }
+				TSet<FName> GroupSeen;
+				for (FName Id : Group.NodeIds)
+				{
+					if (!Seen.Contains(Id) || Id == Node.NodeId || GroupSeen.Contains(Id)) { return Fail(); }
+					GroupSeen.Add(Id);
+				}
 			}
 		}
 	}
@@ -112,7 +126,14 @@ bool URogue10mSkillTreeDataAsset::IsValidCatalog(FText* OutReason) const
 		if (Visiting.Contains(Id)) { return false; }
 		if (Complete.Contains(Id)) { return true; }
 		Visiting.Add(Id);
-		for (const auto& Group : FindNode(Id)->PrerequisiteGroups) { for (FName Parent : Group.NodeIds) { if (!Visit(Parent)) { return false; } } }
+		const auto& Node = *FindNode(Id);
+		for (const auto* Groups : {&Node.PrerequisiteGroups, &Node.HistoricalAutomaticPrerequisiteGroups})
+		{
+			for (const auto& Group : *Groups)
+			{
+				for (FName Parent : Group.NodeIds) { if (!Visit(Parent)) { return false; } }
+			}
+		}
 		Visiting.Remove(Id); Complete.Add(Id); return true;
 	};
 	for (const auto& Node : Nodes) { if (!Visit(Node.NodeId)) { return Fail(); } }

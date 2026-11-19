@@ -1,0 +1,55 @@
+{
+  "scope": "UE 5.8 Development Editor, StartHub native rendered UMG and simulated inputs",
+  "integrated_base": "fe7c67d9121e006d89799e4db9ee1242eb68d4db",
+  "build": {
+    "primary_seconds": 95.87,
+    "integrated_seconds": 24.34,
+    "result": "succeeded"
+  },
+  "approved_tree": {
+    "visible_nodes": 17,
+    "visible_edges": 15,
+    "foundation_skills": 4,
+    "final_skills": 6,
+    "shared_nodes_are_and": true,
+    "independent_right_route": true
+  },
+  "automation": {
+    "passed": 3,
+    "unreal_output_errors": 0,
+    "log_lines": 2390,
+    "tests": [
+      {
+        "fullTestPath": "Rogue10m.HybridSkillTree.MasteryAlternativesAndLegacy",
+        "state": "Success",
+        "errors": 0
+      },
+      {
+        "fullTestPath": "Rogue10m.HybridSkillTree.MasteryAndRewards",
+        "state": "Success",
+        "errors": 0
+      },
+      {
+        "fullTestPath": "Rogue10m.HybridSkillTree.SharedLedgerAndValidation",
+        "state": "Success",
+        "errors": 0
+      }
+    ]
+  },
+  "runtime": {
+    "id": "Knuckle1120C",
+    "passed": 229,
+    "failed": 0,
+    "unreal_output_errors": 0,
+    "log_lines": 1989
+  },
+  "fresh_process_read": {
+    "id": "Knuckle1120C",
+    "passed": 91,
+    "failed": 0,
+    "unreal_output_errors": 0,
+    "log_lines": 1797
+  },
+  "existing_saves_matching_sha256": 505,
+  "representative_screenshot": "DevLog/20261120_KnuckleTrainingTree/knuckle-tree.png"
+}

@@ -46,11 +46,12 @@ static const FInvestment* Find(const FSnapshot& Snapshot, FName Id)
 {
 	return Snapshot.Investments.FindByPredicate([Id](const auto& Row) { return Row.NodeId == Id; });
 }
-static bool Prerequisites(const FSnapshot& Snapshot, const FNode& Node)
+static bool Prerequisites(const FSnapshot& Snapshot, const FNode& Node, bool bHistoricalAutomatic = false)
 {
 	if (!Node.RequiredChoiceId.IsNone() && !Snapshot.Investments.ContainsByPredicate([&Node](const auto& Row) { return Row.ChoiceId == Node.RequiredChoiceId; })) { return false; }
-	if (Node.PrerequisiteGroups.IsEmpty()) { return true; }
-	for (const auto& Group : Node.PrerequisiteGroups)
+	const auto& Groups = bHistoricalAutomatic ? Node.HistoricalAutomaticPrerequisiteGroups : Node.PrerequisiteGroups;
+	if (Groups.IsEmpty()) { return true; }
+	for (const auto& Group : Groups)
 	{
 		bool bComplete = !Group.NodeIds.IsEmpty();
 		for (FName Id : Group.NodeIds) { bComplete &= Find(Snapshot, Id) != nullptr; }
@@ -68,16 +69,40 @@ static FRogue10mEquipmentStatModifiers Stats(const FSnapshot& Snapshot, ETrack T
 	}
 	return Result;
 }
-static bool Mastery(const FSnapshot& Snapshot, const FNode& Node, const URogue10mSkillTreeDataAsset& Catalog)
+static bool Mastery(const FSnapshot& Snapshot, const FNode& Node, const URogue10mSkillTreeDataAsset& Catalog,
+	bool bHistoricalAutomatic = false)
 {
-	for (const auto& Requirement : Node.MasteryAlternatives)
+	const auto& Alternatives = bHistoricalAutomatic ? Node.HistoricalAutomaticMasteryAlternatives : Node.MasteryAlternatives;
+	for (const auto& Requirement : Alternatives)
 	{
 		const auto Growth = Stats(Snapshot, Requirement.Track, Catalog);
 		if (Level(Snapshot, Requirement.Track, Catalog) >= Requirement.Level
 			&& Growth.AttackPowerBonus + KINDA_SMALL_NUMBER >= Requirement.AttackBonus
 			&& Growth.MaxStaminaBonus + KINDA_SMALL_NUMBER >= Requirement.StaminaBonus) { return true; }
 	}
-	return Node.MasteryAlternatives.IsEmpty() && Node.bAutomaticUnlock;
+	return Alternatives.IsEmpty() && (Node.bAutomaticUnlock || bHistoricalAutomatic);
+}
+static bool ValidateAutomaticInvestment(const FSnapshot& Snapshot, const FNode& Node, const URogue10mSkillTreeDataAsset& Catalog)
+{
+	return (Node.bAutomaticUnlock && Prerequisites(Snapshot, Node) && Mastery(Snapshot, Node, Catalog))
+		|| (Node.bAcceptHistoricalAutomaticUnlock && Prerequisites(Snapshot, Node, true) && Mastery(Snapshot, Node, Catalog, true));
+}
+static void PruneDependentInvestments(FSnapshot& Snapshot, const URogue10mSkillTreeDataAsset& Catalog)
+{
+	int32 Removed;
+	do
+	{
+		TSet<FName> Orphaned;
+		for (const FInvestment& Row : Snapshot.Investments)
+		{
+			const FNode* Node = Catalog.FindNode(Row.NodeId);
+			if (!Node || Row.Route == ERoute::Legacy) { continue; }
+			const bool bRequirementsMet = Row.Route == ERoute::Automatic ? ValidateAutomaticInvestment(Snapshot, *Node, Catalog)
+				: Prerequisites(Snapshot, *Node);
+			if (!bRequirementsMet) { Orphaned.Add(Row.NodeId); }
+		}
+		Removed = Snapshot.Investments.RemoveAll([&Orphaned](const FInvestment& Row) { return Orphaned.Contains(Row.NodeId); });
+	} while (Removed > 0);
 }
 static FRogue10mProgressionRequirementContext Context(const FSnapshot& Snapshot, const URogue10mSkillTreeDataAsset& Catalog)
 {
@@ -250,7 +275,10 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 	if (Node->bAutomaticUnlock) { Lines.Add(TEXT("조건 충족 시 무료 자동 전수")); }
 	if (const auto* Row = Rogue10mSkillTree::Find(State, NodeId))
 	{
-		Lines.Add(Row->Route == ERogue10mSkillTreeUnlockRoute::Legacy ? TEXT("이전 전수 유지 · 숙련 성장 보상 제외") : FString::Printf(TEXT("전수 완료 · 실제 지출 %dP"), Row->SpentPoints));
+		if (Row->Route == ERogue10mSkillTreeUnlockRoute::Legacy) { Lines.Add(TEXT("이전 전수 유지 · 숙련 성장 보상 제외")); }
+		else if (Row->Route == ERogue10mSkillTreeUnlockRoute::Automatic && Node->bAcceptHistoricalAutomaticUnlock && !Node->bAutomaticUnlock)
+		{ Lines.Add(TEXT("이전 자동 전수 · 실제 지출 0P")); }
+		else { Lines.Add(FString::Printf(TEXT("전수 완료 · 실제 지출 %dP"), Row->SpentPoints)); }
 	}
 	return FText::FromString(FString::Join(Lines, TEXT("\n")));
 }
@@ -383,7 +411,8 @@ bool URogue10mSkillTreeProgressionComponent::TrySetActiveChoice(FName NodeId, FN
 bool URogue10mSkillTreeProgressionComponent::Respec(ERogue10mSkillTreeIdentity Identity)
 {
 	if (!CanChangeInvestments() || static_cast<uint8>(Identity) > static_cast<uint8>(ERogue10mSkillTreeIdentity::Mana)) { return false; }
-	const int32 Removed = State.Investments.RemoveAll([&](const auto& Row)
+	auto Candidate = State;
+	const int32 Removed = Candidate.Investments.RemoveAll([&](const auto& Row)
 	{
 		const auto* Node = FindNode(Row.NodeId);
 		return Node && (Identity == ERogue10mSkillTreeIdentity::None
@@ -391,8 +420,7 @@ bool URogue10mSkillTreeProgressionComponent::Respec(ERogue10mSkillTreeIdentity I
 			: Node->Identity == Identity);
 	});
 	if (Removed == 0) { return false; }
-	if (!IsIdentityLearned(State.ActiveIdentity)) { State.ActiveIdentity = ERogue10mSkillTreeIdentity::None; }
-	RefreshAutomaticUnlocks(); NotifyChanged(true); return true;
+	return ApplyRespec(MoveTemp(Candidate));
 }
 
 bool URogue10mSkillTreeProgressionComponent::RefundNode(FName NodeId)
@@ -402,22 +430,16 @@ bool URogue10mSkillTreeProgressionComponent::RefundNode(FName NodeId)
 		&& Node->NodeType != ERogue10mHybridSkillTreeNodeType::IdentityAdvanced && Node->NodeType != ERogue10mHybridSkillTreeNodeType::IdentityChoice)) { return false; }
 	auto Candidate = State;
 	if (Candidate.Investments.RemoveAll([NodeId](const auto& Row) { return Row.NodeId == NodeId; }) == 0) { return false; }
-	int32 Removed;
-	do
-	{
-		TSet<FName> Orphaned;
-		for (const auto& Row : Candidate.Investments)
-		{
-			const auto* Dependent = FindNode(Row.NodeId);
-			// Free weapon mastery and historical combat grants never depend on reallocating an identity.
-			if (Dependent && Dependent->Identity != ERogue10mSkillTreeIdentity::None
-				&& Row.Route != ERogue10mSkillTreeUnlockRoute::Legacy && !Rogue10mSkillTree::Prerequisites(Candidate, *Dependent)) { Orphaned.Add(Row.NodeId); }
-		}
-		Removed = Candidate.Investments.RemoveAll([&Orphaned](const auto& Row) { return Orphaned.Contains(Row.NodeId); });
-	} while (Removed > 0);
-	if (!Rogue10mSkillTree::LearnedIdentity(Candidate, Candidate.ActiveIdentity, *GetCatalog())) { Candidate.ActiveIdentity = ERogue10mSkillTreeIdentity::None; }
+	return ApplyRespec(MoveTemp(Candidate));
+}
+
+bool URogue10mSkillTreeProgressionComponent::ApplyRespec(FRogue10mSkillTreeSnapshot&& Candidate)
+{
+	const auto* RespecCatalog = GetCatalog();
+	Rogue10mSkillTree::PruneDependentInvestments(Candidate, *RespecCatalog);
+	if (!Rogue10mSkillTree::LearnedIdentity(Candidate, Candidate.ActiveIdentity, *RespecCatalog)) { Candidate.ActiveIdentity = ERogue10mSkillTreeIdentity::None; }
 	const auto* Player = GetPlayerState();
-	if (!Player || !Validate(Candidate, FMath::Max(0, Player->GetPlayerLevel() - 1), Player->GetTownProgressionComponent()->GetRunSharedTraitSpent(), nullptr, GetCatalog())) { return false; }
+	if (!Player || !Validate(Candidate, FMath::Max(0, Player->GetPlayerLevel() - 1), Player->GetTownProgressionComponent()->GetRunSharedTraitSpent(), nullptr, RespecCatalog)) { return false; }
 	State = MoveTemp(Candidate);
 	RefreshAutomaticUnlocks(); NotifyChanged(true); return true;
 }
@@ -540,6 +562,11 @@ bool URogue10mSkillTreeProgressionComponent::Validate(const FRogue10mSkillTreeSn
 			if (Row.SpentPoints != 0 || (Node->NodeType != EType::Technique && Node->NodeType != EType::Passive) || Node->Skill.IsNull() || !Legacy.Contains(Node->Skill.ToSoftObjectPath())) { return Fail(); }
 			continue;
 		}
+		if (Row.Route == ERoute::Automatic)
+		{
+			if (Row.SpentPoints != 0 || !ValidateAutomaticInvestment(Snapshot, *Node, Catalog)) { return Fail(); }
+			continue;
+		}
 		if (!Prerequisites(Snapshot, *Node)) { return Fail(); }
 		if (Row.Route == ERoute::Points)
 		{
@@ -549,7 +576,6 @@ bool URogue10mSkillTreeProgressionComponent::Validate(const FRogue10mSkillTreeSn
 		{
 			if (Node->bAutomaticUnlock || Row.SpentPoints != 0 || Node->MasteryAlternatives.IsEmpty() || !Mastery(Snapshot, *Node, Catalog)) { return Fail(); }
 		}
-		else if (Row.SpentPoints != 0 || !Node->bAutomaticUnlock || !Mastery(Snapshot, *Node, Catalog)) { return Fail(); }
 	}
 	if (Spent(Snapshot) + TraitSpentPoints > EarnedPoints) { return Fail(); }
 	if (Snapshot.ActiveIdentity != EIdentity::None && !LearnedIdentity(Snapshot, Snapshot.ActiveIdentity, Catalog)) { return Fail(); }

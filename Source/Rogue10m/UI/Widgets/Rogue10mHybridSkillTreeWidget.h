@@ -18,11 +18,22 @@ class URogue10mTownProgressionComponent;
 class UCanvasPanel;
 class UComboBoxString;
 class UDragDropOperation;
+class UHorizontalBox;
 class UImage;
 class UInputKeySelector;
 class UProgressBar;
 class USizeBox;
 class UTextBlock;
+class UVerticalBox;
+
+UENUM(BlueprintType)
+enum class ERogue10mSkillTreeTab : uint8
+{
+	Common,
+	Knuckle,
+	Sword,
+	Magic
+};
 
 /** Action context belongs to the control, never to an unstable visible array index. */
 UCLASS()
@@ -82,14 +93,14 @@ private:
 	TWeakObjectPtr<URogue10mHybridSkillTreeGraphWidget> Graph;
 };
 
-/** Ring and dependency geometry is painted behind real UMG node controls. No Tick. */
+/** The current tab's paths are painted behind real UMG node controls. */
 UCLASS()
 class ROGUE10M_API URogue10mHybridSkillTreeGraphWidget : public UUserWidget
 {
 	GENERATED_BODY()
 public:
 	void SetData(URogue10mHybridSkillTreeWidget* Owner, URogue10mSkillTreeProgressionComponent* Progression,
-		ERogue10mSkillTreeTrack Track, FName SelectedNode);
+		ERogue10mSkillTreeTab InTab, ERogue10mSkillTreeTrack ContextTrack, FName SelectedNode);
 	int32 PaintConnections(const FGeometry& Geometry, FSlateWindowElementList& Elements, int32 LayerId) const;
 	URogue10mHybridSkillTreeEntryWidget* FindNodeEntry(FName NodeId) const;
 	FName GetNodeFrameShape(FName NodeId) const;
@@ -99,11 +110,11 @@ protected:
 	virtual TSharedRef<SWidget> RebuildWidget() override;
 private:
 	void BuildGraph();
-	TWeakObjectPtr<URogue10mHybridSkillTreeWidget> OwnerWidget;
 	TWeakObjectPtr<URogue10mSkillTreeProgressionComponent> Progression;
-	ERogue10mSkillTreeTrack Track = ERogue10mSkillTreeTrack::Brawler;
+	ERogue10mSkillTreeTab Tab = ERogue10mSkillTreeTab::Common;
 	FName Selected;
 	TArray<FRogue10mSkillTreeNodeDefinition> Nodes;
+	TArray<ERogue10mSkillTreeNodeState> States;
 	UPROPERTY(Transient) TObjectPtr<UCanvasPanel> Canvas;
 	UPROPERTY(Transient) TArray<TObjectPtr<URogue10mHybridSkillTreeEntryWidget>> Entries;
 	UPROPERTY(Transient) TArray<TObjectPtr<UTextBlock>> Labels;
@@ -129,13 +140,20 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
 	void BrowseTrack(ERogue10mSkillTreeTrack Track);
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
+	void BrowseTab(ERogue10mSkillTreeTab Tab);
+	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
 	void SelectNode(FName NodeId);
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree")
 	FName GetSelectedNodeId() const { return SelectedNodeId; }
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree")
-	ERogue10mSkillTreeTrack GetDisplayedTrack() const { return DisplayedTrack; }
+	ERogue10mSkillTreeTrack GetDisplayedTrack() const;
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree")
+	ERogue10mSkillTreeTab GetDisplayedTab() const { return DisplayedTab; }
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree")
+	TArray<ERogue10mSkillTreeTab> GetTabOrder() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree")
 	int32 GetVisibleNodeCount() const;
+	TArray<FRogue10mSkillTreeNodeDefinition> GetDisplayNodes() const;
 	URogue10mAttackSkillData* GetSelectedAttackSkill() const { return GetSelectedSkill(); }
 	/** Read-only presentation queries share the geometry used by the painted frame. */
 	URogue10mHybridSkillTreeEntryWidget* FindNodeEntry(FName NodeId) const;
@@ -149,6 +167,10 @@ protected:
 private:
 	void BuildTree();
 	void BindContext();
+	void RefreshEquipmentTab();
+	void SetDisplayedTab(ERogue10mSkillTreeTab Tab);
+	URogue10mHybridSkillTreeButton* GetTabButton(ERogue10mSkillTreeTab Tab) const;
+	bool IsDisplayingActiveTrack() const;
 	void RefreshDetails();
 	void ShowMessage(const FText& Message, bool bError = false);
 	void RefreshKeyControls();
@@ -170,7 +192,8 @@ private:
 	TWeakObjectPtr<URogue10mTownProgressionComponent> BoundTown;
 	TWeakObjectPtr<URogue10mCombatComponent> BoundCombat;
 	TWeakObjectPtr<URogue10mSkillBindingComponent> BoundBindings;
-	ERogue10mSkillTreeTrack DisplayedTrack = ERogue10mSkillTreeTrack::Brawler;
+	ERogue10mSkillTreeTab DisplayedTab = ERogue10mSkillTreeTab::Common;
+	TOptional<ERogue10mWeaponType> EquippedWeapon;
 	FName SelectedNodeId;
 	FName PendingChoiceId;
 	TWeakObjectPtr<URogue10mAttackSkillData> SelectedBasicSkill;
@@ -178,14 +201,20 @@ private:
 	ESlateVisibility VisibilityBeforeSkillDrag = ESlateVisibility::SelfHitTestInvisible;
 	float OpacityBeforeSkillDrag = 1.0f;
 	bool bSkillDragPresentation = false;
-	bool bHasChosenTrack = false;
+	bool bSelectEquippedTabOnRefresh = false;
 	bool bUpdatingKeys = false;
 	bool bApplyingAction = false;
 	bool bRefundConfirmation = false;
 	bool bWindowActive = false;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeGraphWidget> Graph;
+	UPROPERTY(Transient) TObjectPtr<UHorizontalBox> TabBar;
+	UPROPERTY(Transient) TObjectPtr<UHorizontalBox> TreeBody;
+	UPROPERTY(Transient) TObjectPtr<UVerticalBox> MasterySection;
+	UPROPERTY(Transient) TObjectPtr<UTextBlock> MagicPlaceholder;
+	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> CommonTab;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> FighterTab;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> GreatSwordTab;
+	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> MagicTab;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> GrowthText;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> MasteryText;
 	UPROPERTY(Transient) TObjectPtr<UProgressBar> MasteryBar;

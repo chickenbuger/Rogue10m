@@ -111,7 +111,11 @@ FRogue10mSkillTreeAttackEffect URogue10mSkillTreeCombatComponent::PreviewAttack(
 	for (const auto& Node : Data->Nodes)
 	{
 		if (Node.Skill.ToSoftObjectPath() != FSoftObjectPath(&Skill) || Node.Track != CachedTrack) { continue; }
-		for (const auto& Requirement : Node.MasteryAlternatives)
+		// Sword investments changed the acquisition route. Their original technique
+		// tiers still determine which attacks trigger core and ultimate effects.
+		const auto& TechniqueTiers = Node.bAcceptHistoricalAutomaticUnlock && !Node.bAutomaticUnlock
+			? Node.HistoricalAutomaticMasteryAlternatives : Node.MasteryAlternatives;
+		for (const auto& Requirement : TechniqueTiers)
 		{
 			bCore |= Requirement.Level >= 10;
 			bUltimate |= Requirement.Level >= Data->MaxMasteryLevel;

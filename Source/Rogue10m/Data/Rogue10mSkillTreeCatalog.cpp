@@ -43,6 +43,50 @@ static FRogue10mSkillTreeChoiceDefinition Choice(const TCHAR* Id, const TCHAR* N
 	Definition.Description = FText::FromString(Description);
 	return Definition;
 }
+
+struct FSwordInvestment
+{
+	FName NodeId;
+	TArray<FRogue10mSkillTreePrerequisiteGroup> Prerequisites;
+};
+
+static const TArray<FSwordInvestment>& SwordInvestments()
+{
+	static const TArray<FSwordInvestment> Investments = {
+		{ TEXT("G.CrushingSlash"), { All({TEXT("G.Power.1")}), All({TEXT("G.Flow.1")}) } },
+		{ TEXT("G.Whirlwind"), { All({TEXT("G.Flow.1")}), All({TEXT("G.Body.1")}) } },
+		{ TEXT("G.GuardBreak"), { All({TEXT("G.Body.1")}), All({TEXT("G.Power.1")}) } },
+		{ TEXT("G.EarthSplitter"), { All({TEXT("G.Power.2")}), All({TEXT("G.Whirlwind"), TEXT("G.GuardBreak")}) } },
+		{ TEXT("G.Ultimate"), {
+			All({TEXT("G.Power.3"), TEXT("G.EarthSplitter")}),
+			All({TEXT("G.Flow.3"), TEXT("G.Whirlwind")}),
+			All({TEXT("G.Body.3"), TEXT("G.GuardBreak")}),
+			All({TEXT("G.EarthSplitter"), TEXT("G.Whirlwind"), TEXT("G.GuardBreak")}) } }
+	};
+	return Investments;
+}
+
+}
+
+void URogue10mSkillTreeDataAsset::ApplySwordInvestments()
+{
+	using namespace Rogue10mHybridCatalog;
+	for (const FSwordInvestment& Investment : SwordInvestments())
+	{
+		FRogue10mSkillTreeNodeDefinition* Node = Nodes.FindByPredicate([&Investment](const FRogue10mSkillTreeNodeDefinition& Candidate)
+		{
+			return Candidate.NodeId == Investment.NodeId;
+		});
+		if (!Node) { continue; }
+
+		Node->bAcceptHistoricalAutomaticUnlock = true;
+		Node->HistoricalAutomaticMasteryAlternatives = MoveTemp(Node->MasteryAlternatives);
+		Node->HistoricalAutomaticPrerequisiteGroups = MoveTemp(Node->PrerequisiteGroups);
+		Node->PrerequisiteGroups = Investment.Prerequisites;
+		Node->bAutomaticUnlock = false;
+		Node->PointCost = 1;
+		Node->Description = NSLOCTEXT("Rogue10mTree", "SwordTechniqueInvestment", "선행을 충족한 뒤 공용 성장 1P로 전수합니다. 전수한 기술은 공격 슬롯 또는 직접 키에 지정할 수 있습니다.");
+	}
 }
 
 void URogue10mSkillTreeDataAsset::BuildDefaultCatalog()
@@ -93,18 +137,35 @@ void URogue10mSkillTreeDataAsset::BuildDefaultCatalog()
 			: TEXT("숙련과 선행을 충족하면 포인트 소모 없이 자동 전수. 전수 후 기존 공격 슬롯 또는 직접 키에 지정한다."));
 	};
 
-	Add(TEXT("F.Root"), ETrack::Brawler, ENode::Root, TEXT("시작"), {0, 0}, 1).Description =
-		FText::FromString(TEXT("맨손과 너클이 하나의 격투 숙련을 공유한다. 기본 공격과 회피는 아이덴티티 없이 사용할 수 있다."));
+	const auto KnucklePosition = [](double X, double Y) { return FVector2D(X - 520.0, Y - 390.0); };
+	struct FFoundation
+	{
+		const TCHAR* NodeId;
+		const TCHAR* Name;
+		const TCHAR* Asset;
+		double X;
+	};
+	const FFoundation Foundations[] = {
+		{TEXT("F.Basic.LeftJab"), TEXT("왼손 잽"), TEXT("/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab"), 240.0},
+		{TEXT("F.Basic.RightJab"), TEXT("오른손 잽"), TEXT("/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightJab"), 466.0},
+		{TEXT("F.Basic.RightStraight"), TEXT("오른손 스트레이트"), TEXT("/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight"), 649.0},
+		{TEXT("F.Basic.RightHook"), TEXT("차지 오른손 훅"), TEXT("/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightHook"), 885.0},
+	};
+	auto& BrawlerRoot = Add(TEXT("F.Root"), ETrack::Brawler, ENode::Root, TEXT("시작"), {0, 0}, 1);
+	BrawlerRoot.bShowInTree = false;
+	BrawlerRoot.Description = FText::FromString(TEXT("너클을 장착하고 유효 타격을 적중시키면 격투 숙련이 오릅니다."));
 	{
 		auto& Basic = Add(TEXT("F.Basic"), ETrack::Brawler, ENode::Basic, TEXT("기본기 · 연환권"), {0, -60}, 1, {TEXT("F.Root")});
+		Basic.bShowInTree = false;
 		Basic.Description = FText::FromString(TEXT("기본기4와 연환권을 무료 전수한다. 기존 기본 공격·회피·콤보 바인딩은 유지한다."));
-		for (const TCHAR* Path : {
-			TEXT("/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab"),
-			TEXT("/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightJab"),
-			TEXT("/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight"),
-			TEXT("/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightHook"),
-			TEXT("/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01") })
-		{ Basic.GrantedSkills.Add(SkillPath(Path)); }
+		for (const auto& Foundation : Foundations) { Basic.GrantedSkills.Add(SkillPath(Foundation.Asset)); }
+		Basic.GrantedSkills.Add(SkillPath(TEXT("/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01")));
+	}
+	for (const auto& Foundation : Foundations)
+	{
+		auto& Node = Add(Foundation.NodeId, ETrack::Brawler, ENode::Basic, Foundation.Name, KnucklePosition(Foundation.X, 675.0), 1);
+		Node.Skill = SkillPath(Foundation.Asset);
+		Node.Description = FText::FromString(TEXT("처음부터 전수된 너클 기초 무공입니다. 연결된 수련의 선행 무공입니다."));
 	}
 	Stat(TEXT("F.Power.1"), ETrack::Brawler, TEXT("공격력 +1"), {0,-110}, 3, TEXT("F.Basic"), 1,0,0,0);
 	Technique(TEXT("F.Bengquan"), ETrack::Brawler, TEXT("붕권"), {0,-160}, 5, TEXT("F.Power.1"), TEXT("/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02"));
@@ -128,9 +189,41 @@ void URogue10mSkillTreeDataAsset::BuildDefaultCatalog()
 		All({TEXT("F.Power.3"), TEXT("F.DiamondStrike")}),
 		All({TEXT("F.Flow.3"), TEXT("F.HundredFists")}),
 		All({TEXT("F.Body.3"), TEXT("F.MountainSlam")}) };
+	for (auto& Node : Nodes)
+	{
+		if (Node.NodeId == TEXT("F.Power.2") || Node.NodeId == TEXT("F.Power.3") || Node.NodeId == TEXT("F.Breath.2")
+			|| Node.NodeId == TEXT("F.Flow.3") || Node.NodeId == TEXT("F.Body.3")) { Node.bShowInTree = false; }
+	}
+	const auto PlaceKnuckleNode = [&](FName Id, double X, double Y, const TArray<FName>& Parents) -> FRogue10mSkillTreeNodeDefinition&
+	{
+		auto* Node = Nodes.FindByPredicate([Id](const FRogue10mSkillTreeNodeDefinition& Candidate) { return Candidate.NodeId == Id; });
+		check(Node);
+		Node->Position = KnucklePosition(X, Y);
+		Node->Ring = FMath::Clamp(FMath::RoundToInt(Node->Position.Size() / 70.f), 0, 6);
+		Node->bAcceptHistoricalAutomaticUnlock = true;
+		Node->HistoricalAutomaticMasteryAlternatives = Node->MasteryAlternatives;
+		Node->HistoricalAutomaticPrerequisiteGroups = MoveTemp(Node->PrerequisiteGroups);
+		Node->PrerequisiteGroups = { All(Parents) };
+		return *Node;
+	};
+	const FText ChargeTraining = NSLOCTEXT("Rogue10mTree", "KnuckleChargeTraining", "숙련과 선행 무공을 충족하면 자동 전수됩니다. 전수 후 우클릭 차징 슬롯에 장착할 수 있습니다.");
+	PlaceKnuckleNode(TEXT("F.Power.1"), 285.0, 483.0, {TEXT("F.Basic.LeftJab")});
+	PlaceKnuckleNode(TEXT("F.Breath.1"), 470.0, 477.0, {TEXT("F.Basic.RightJab")});
+	PlaceKnuckleNode(TEXT("F.Body.1"), 645.0, 475.0, {TEXT("F.Basic.RightStraight")});
+	PlaceKnuckleNode(TEXT("F.Body.2"), 880.0, 465.0, {TEXT("F.Basic.RightHook")});
+	PlaceKnuckleNode(TEXT("F.Bengquan"), 228.0, 300.0, {TEXT("F.Power.1")});
+	PlaceKnuckleNode(TEXT("F.CloudHands"), 475.0, 296.0, {TEXT("F.Power.1"), TEXT("F.Breath.1")});
+	PlaceKnuckleNode(TEXT("F.Shoulder"), 640.0, 274.0, {TEXT("F.Body.1")}).Description = ChargeTraining;
+	PlaceKnuckleNode(TEXT("F.BreakingKick"), 170.0, 128.0, {TEXT("F.Bengquan")});
+	PlaceKnuckleNode(TEXT("F.DiamondStrike"), 300.0, 137.0, {TEXT("F.Bengquan")});
+	PlaceKnuckleNode(TEXT("F.HundredFists"), 425.0, 123.0, {TEXT("F.CloudHands")});
+	PlaceKnuckleNode(TEXT("F.Ultimate"), 575.0, 120.0, {TEXT("F.CloudHands"), TEXT("F.Shoulder")}).Description = ChargeTraining;
+	PlaceKnuckleNode(TEXT("F.MountainSlam"), 730.0, 104.0, {TEXT("F.Shoulder")}).Description =
+		NSLOCTEXT("Rogue10mTree", "KnuckleAerialTraining", "숙련과 철산고 전수를 충족하면 자동 전수됩니다. 전수 후 공용 슬롯에 장착하며 공중에서 사용합니다.");
+	PlaceKnuckleNode(TEXT("F.GoldenBody"), 880.0, 157.0, {TEXT("F.Body.2")});
 
 	Add(TEXT("G.Root"), ETrack::GreatSword, ENode::Root, TEXT("시작"), {0,0}, 1).Description =
-		FText::FromString(TEXT("대검의 기본 전투를 보존하고 강타·연계·방어 수련으로 신규 핵심 기술을 배운다."));
+		FText::FromString(TEXT("대검 기본기에서 시작합니다. 강타·연계·방어 경로에서 공용 성장 포인트로 기술을 전수할 수 있습니다."));
 	{
 		auto& Basic = Add(TEXT("G.Basic"), ETrack::GreatSword, ENode::Basic, TEXT("대검 기본기"), {0,-60}, 1, {TEXT("G.Root")});
 		Basic.Description = FText::FromString(TEXT("기존 대검3연계·특수·차징5기술과 회피를 유지한다. 성장 핵심기는 기존 동작을 재사용한 별도 전투 데이터다."));
@@ -216,6 +309,7 @@ void URogue10mSkillTreeDataAsset::BuildDefaultCatalog()
 		Node.Identity = IdentityType;
 		Node.RequiredChoiceId = FName(ChoiceId);
 		Node.Color = Color;
+		Node.bShowInTree = Track != ETrack::Brawler;
 		Node.Description = FText::FromString(TEXT("최종 기술과 선택 성질을 모두 전수하면0P로 공명. 해당 아이덴티티가 활성화된 최종기의 발동 추가 피해 배율 +0.10."));
 	};
 	Resonance(TEXT("F.Resonance.Cycle"), ETrack::Brawler, EIdentity::InternalEnergy, TEXT("순환 공명"), TEXT("F.Ultimate"), TEXT("I.InternalEnergy.Choice"), TEXT("InternalEnergy.Cycle"), {-360,315}, InternalColor);
@@ -226,4 +320,5 @@ void URogue10mSkillTreeDataAsset::BuildDefaultCatalog()
 	Resonance(TEXT("G.Resonance.Spread"), ETrack::GreatSword, EIdentity::Mana, TEXT("화염 · 확산 공명"), TEXT("G.Ultimate"), TEXT("I.Mana.Choice"), TEXT("Mana.Spread"), {-140,315}, ManaColor);
 	Resonance(TEXT("G.Resonance.Burst"), ETrack::GreatSword, EIdentity::FightingSpirit, TEXT("광전 · 폭발 공명"), TEXT("G.Ultimate"), TEXT("I.FightingSpirit.Choice"), TEXT("FightingSpirit.Burst"), {140,315}, SpiritColor);
 	Resonance(TEXT("G.Resonance.Focus"), ETrack::GreatSword, EIdentity::FightingSpirit, TEXT("광전 · 집중 공명"), TEXT("G.Ultimate"), TEXT("I.FightingSpirit.Choice"), TEXT("FightingSpirit.Focus"), {360,315}, SpiritColor);
+	ApplySwordInvestments();
 }

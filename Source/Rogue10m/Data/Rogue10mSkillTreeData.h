@@ -71,6 +71,7 @@ struct FRogue10mSkillTreeNodeDefinition
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") ERogue10mHybridSkillTreeNodeType NodeType = ERogue10mHybridSkillTreeNodeType::Stat;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") FText DisplayName;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree", meta=(MultiLine="true")) FText Description;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") bool bShowInTree = true;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") FVector2D Position = FVector2D::ZeroVector;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") int32 Ring = 1;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") FLinearColor Color = FLinearColor::White;
@@ -82,6 +83,10 @@ struct FRogue10mSkillTreeNodeDefinition
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree", meta=(ClampMin="0")) int32 PointCost = 0;
 	/** Alternatives are OR; level and source-specific stat requirements inside one row are AND. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") TArray<FRogue10mSkillTreeMasteryRequirement> MasteryAlternatives;
+	/** Requirements used to validate automatic grants saved before their acquisition rules changed. */
+	UPROPERTY() bool bAcceptHistoricalAutomaticUnlock = false;
+	UPROPERTY() TArray<FRogue10mSkillTreeMasteryRequirement> HistoricalAutomaticMasteryAlternatives;
+	UPROPERTY() TArray<FRogue10mSkillTreePrerequisiteGroup> HistoricalAutomaticPrerequisiteGroups;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") FRogue10mEquipmentStatModifiers StatReward;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") TSoftObjectPtr<URogue10mAttackSkillData> Skill;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") TArray<TSoftObjectPtr<URogue10mAttackSkillData>> GrantedSkills;
@@ -176,4 +181,6 @@ public:
 	/** Implemented by the project catalog translation unit. */
 	UFUNCTION(BlueprintCallable, CallInEditor, Category="Rogue10m|Skill Tree")
 	void BuildDefaultCatalog();
+private:
+	void ApplySwordInvestments();
 };
