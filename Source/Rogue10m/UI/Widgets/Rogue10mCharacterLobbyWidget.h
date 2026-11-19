@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/Button.h"
 #include "Rogue10mCharacterCustomizationTypes.h"
 #include "UObject/SoftObjectPtr.h"
 #include "Rogue10mCharacterLobbyWidget.generated.h"
@@ -11,15 +12,32 @@
 class ARogue10mCharacterCustomizationPreviewActor;
 class ARogue10mPlayerController;
 class UBorder;
-class UButton;
 class UEditableTextBox;
 class UImage;
 class UMaterialInstanceDynamic;
 class UMaterialInterface;
 class UPanelWidget;
+class USlider;
 class URogue10mCharacterCustomizationDataAsset;
 class URogue10mCharacterProfileSubsystem;
 class UTextBlock;
+
+UCLASS(NotBlueprintable)
+class URogue10mSkinColorSwatch final : public UButton
+{
+	GENERATED_BODY()
+
+public:
+	void InitializeColor(FColor InColor);
+	void SetSelectedColor(FColor SelectedColor, bool bUseCustomColor);
+
+	DECLARE_DELEGATE_OneParam(FColorSelected, FColor);
+	FColorSelected ColorSelected;
+
+private:
+	UFUNCTION() void HandleClicked();
+	FColor Color = FColor::White;
+};
 
 UCLASS(Abstract, Blueprintable)
 class ROGUE10M_API URogue10mCharacterLobbyWidget : public UUserWidget
@@ -176,6 +194,11 @@ private:
 	void RefreshSlotButtons();
 	void RefreshMode();
 	void RefreshDraft();
+	void BuildSkinColorControls();
+	void RefreshSkinColorControls(bool bSyncSliders);
+	void ApplyDraftSkinColor(FColor Color, bool bSyncSliders = true);
+	void HandleSkinColorSwatchSelected(FColor Color);
+	void CycleLegacySkinTone(int32 Delta);
 	void RefreshPreview(const FRogue10mCharacterAppearance& Appearance);
 	void RefreshStagePreviews();
 	bool TryGetPreviewSlotAtScreenPosition(
@@ -208,6 +231,9 @@ private:
 	UFUNCTION() void HandleHeadNextClicked();
 	UFUNCTION() void HandleSkinPreviousClicked();
 	UFUNCTION() void HandleSkinNextClicked();
+	UFUNCTION() void HandleSkinColorHexCommitted(const FText& Text, ETextCommit::Type CommitMethod);
+	UFUNCTION() void HandleSkinColorSliderChanged(float Value);
+	UFUNCTION() void HandleSkinColorResetClicked();
 	UFUNCTION() void HandleHairPreviousClicked();
 	UFUNCTION() void HandleHairNextClicked();
 	UFUNCTION() void HandleHairColorPreviousClicked();
@@ -240,11 +266,28 @@ private:
 	UPROPERTY(Transient)
 	TArray<TObjectPtr<UMaterialInstanceDynamic>> SlotPreviewMaterials;
 
+	UPROPERTY(Transient)
+	TArray<TObjectPtr<URogue10mSkinColorSwatch>> SkinColorSwatches;
+
+	UPROPERTY(Transient)
+	TObjectPtr<UEditableTextBox> SkinColorHexInput;
+
+	UPROPERTY(Transient)
+	TObjectPtr<USlider> SkinColorHueSlider;
+
+	UPROPERTY(Transient)
+	TObjectPtr<USlider> SkinColorSaturationSlider;
+
+	UPROPERTY(Transient)
+	TObjectPtr<USlider> SkinColorValueSlider;
+
 	TArray<FGuid> SlotProfileIds;
 	FGuid SelectedProfileId;
 	FGuid PendingDeleteProfileId;
 	FRogue10mCharacterAppearance DraftAppearance;
 	bool bCreationMode = false;
+	bool bUpdatingSkinColorControls = false;
+	bool bInvalidSkinColorHex = false;
 
 	int32 LastClickedSlotIndex = INDEX_NONE;
 	double LastSlotClickTime = -1.0;

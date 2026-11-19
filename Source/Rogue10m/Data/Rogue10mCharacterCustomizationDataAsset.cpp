@@ -3,11 +3,41 @@
 #include "Rogue10mCharacterCustomizationDataAsset.h"
 
 #include "Components/SkeletalMeshComponent.h"
-#include "Rogue10mCharacter.h"
+#include "Engine/SkeletalMesh.h"
+#include "Materials/MaterialInstanceDynamic.h"
 #include "Materials/MaterialInterface.h"
+#include "Materials/MaterialParameters.h"
+#include "Rogue10mCharacter.h"
 
 namespace
 {
+	const FName SkinColorParameter(TEXT("RogueSkinColor"));
+	constexpr FColor SkinColorPresets[] =
+	{
+		FColor(0xFF, 0xDF, 0xC3),
+		FColor(0xEE, 0xC1, 0xA2),
+		FColor(0xD6, 0xA0, 0x7A),
+		FColor(0xBA, 0x7D, 0x59),
+		FColor(0xA0, 0x63, 0x48),
+		FColor(0x8B, 0x54, 0x3D),
+		FColor(0x61, 0x3B, 0x31),
+		FColor(0x81, 0x98, 0x62)
+	};
+	constexpr FColor HumanNaturalColors[] =
+	{
+		FColor(0xC8, 0x90, 0x70),
+		FColor(0xDE, 0xA8, 0x88),
+		FColor(0xA5, 0x69, 0x50),
+		FColor(0x7D, 0x4C, 0x3C)
+	};
+	constexpr FColor DwarfNaturalColor(0xAE, 0x75, 0x51);
+	constexpr FColor OrcNaturalColors[] =
+	{
+		FColor(0x74, 0x92, 0x4C),
+		FColor(0x6F, 0x83, 0x5D),
+		FColor(0x85, 0x77, 0x55)
+	};
+
 	int32 NormalizeRequiredIndex(int32 Value, int32 Count)
 	{
 		return Count > 0 ? FMath::Clamp(Value, 0, Count - 1) : 0;
@@ -45,10 +75,65 @@ namespace
 		}
 	}
 
+	void ApplySkinMaterial(
+		USkeletalMeshComponent& MeshComponent, FName SlotName,
+		UMaterialInterface* Variant, const FLinearColor& SkinColor)
+	{
+		const int32 SlotIndex = MeshComponent.GetMaterialIndex(SlotName);
+		if (SlotIndex == INDEX_NONE)
+		{
+			return;
+		}
+
+		UMaterialInterface* Source = Variant ? Variant
+			: MeshComponent.GetSkeletalMeshAsset()->GetMaterials()[SlotIndex].MaterialInterface.Get();
+		UMaterialInstanceDynamic* Instance =
+			Cast<UMaterialInstanceDynamic>(MeshComponent.GetMaterial(SlotIndex));
+		if (!Instance || Instance->GetOuter() != &MeshComponent || Instance->Parent != Source)
+		{
+			FLinearColor DefaultColor;
+			if (!Source || !Source->GetVectorParameterValue(
+				FHashedMaterialParameterInfo(SkinColorParameter), DefaultColor))
+			{
+				ApplyMaterial(&MeshComponent, SlotName, Variant);
+				return;
+			}
+			Instance = UMaterialInstanceDynamic::Create(Source, &MeshComponent);
+			MeshComponent.SetMaterial(SlotIndex, Instance);
+		}
+		Instance->SetVectorParameterValue(SkinColorParameter, SkinColor);
+	}
+
 	template <typename ObjectType>
 	ObjectType* LoadIndexed(const TArray<TSoftObjectPtr<ObjectType>>& Options, int32 Index)
 	{
 		return Options.IsValidIndex(Index) ? Options[Index].LoadSynchronous() : nullptr;
+	}
+}
+
+TConstArrayView<FColor> URogue10mCharacterCustomizationDataAsset::GetSkinColorPresets()
+{
+	return MakeArrayView(SkinColorPresets);
+}
+
+FColor URogue10mCharacterCustomizationDataAsset::GetSkinColor(const FRogue10mCharacterAppearance& Appearance)
+{
+	if (Appearance.bUseCustomSkinColor)
+	{
+		const FColor& Color = Appearance.CustomSkinColor;
+		return FColor(Color.R, Color.G, Color.B);
+	}
+
+	switch (Appearance.Race)
+	{
+	case ERogue10mCharacterRace::Dwarf:
+		return DwarfNaturalColor;
+	case ERogue10mCharacterRace::Orc:
+		return OrcNaturalColors[
+			NormalizeRequiredIndex(Appearance.SkinToneIndex, UE_ARRAY_COUNT(OrcNaturalColors))];
+	default:
+		return HumanNaturalColors[
+			NormalizeRequiredIndex(Appearance.SkinToneIndex, UE_ARRAY_COUNT(HumanNaturalColors))];
 	}
 }
 
@@ -80,6 +165,7 @@ FRogue10mCharacterAppearance URogue10mCharacterCustomizationDataAsset::Normalize
 	const FRogue10mCharacterAppearance& Appearance) const
 {
 	FRogue10mCharacterAppearance Result = Appearance;
+	Result.CustomSkinColor.A = 255;
 	const FRogue10mCharacterArchetype* Archetype =
 		FindArchetype(Result.Race, Result.Gender);
 	if (!Archetype)
@@ -124,28 +210,29 @@ bool URogue10mCharacterCustomizationDataAsset::ApplyAppearance(
 		return false;
 	}
 
-	if (bSetBodyMesh)
+	if (BodyMesh->GetSkeletalMeshAsset() != LoadedBody)
 	{
+		if (!bSetBodyMesh)
+		{
+			return false;
+		}
 		BodyMesh->SetSkeletalMeshAsset(LoadedBody);
 		BodyMesh->SetAnimInstanceClass(nullptr);
 		BodyMesh->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 	}
-	else if (BodyMesh->GetSkeletalMeshAsset() != LoadedBody)
-	{
-		return false;
-	}
 
 	const int32 HeadMaterialIndex =
 		Normalized.HeadStyleIndex * Archetype->SkinToneCount + Normalized.SkinToneIndex;
-	ApplyMaterial(
-		BodyMesh, Archetype->HeadMaterialSlot,
-		LoadIndexed(Archetype->HeadMaterials, HeadMaterialIndex));
+	const FLinearColor SkinColor = FLinearColor::FromSRGBColor(GetSkinColor(Normalized));
+	ApplySkinMaterial(
+		*BodyMesh, Archetype->HeadMaterialSlot,
+		LoadIndexed(Archetype->HeadMaterials, HeadMaterialIndex), SkinColor);
 	ApplyMaterial(
 		BodyMesh, Archetype->EyeMaterialSlot,
 		LoadIndexed(Archetype->EyeMaterials, Normalized.EyeColorIndex));
-	ApplyMaterial(
-		BodyMesh, Archetype->BodyMaterialSlot,
-		LoadIndexed(Archetype->BodyDetailMaterials, Normalized.BodyDetailIndex));
+	ApplySkinMaterial(
+		*BodyMesh, Archetype->BodyMaterialSlot,
+		LoadIndexed(Archetype->BodyDetailMaterials, Normalized.BodyDetailIndex), SkinColor);
 
 	auto ConfigurePart = [BodyMesh](USkeletalMeshComponent* PartMesh, USkeletalMesh* Mesh)
 	{
