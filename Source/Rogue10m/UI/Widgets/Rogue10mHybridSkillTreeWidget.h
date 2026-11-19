@@ -63,6 +63,8 @@ public:
 	URogue10mAttackSkillData* GetDragSkill() const { return Skill.Get(); }
 protected:
 	virtual TSharedRef<SWidget> RebuildWidget() override;
+	virtual int32 NativePaint(const FPaintArgs& Args, const FGeometry& Geometry, const FSlateRect& CullingRect,
+		FSlateWindowElementList& Elements, int32 LayerId, const FWidgetStyle& Style, bool bParentEnabled) const override;
 	virtual FReply NativeOnPreviewMouseButtonDown(const FGeometry& Geometry, const FPointerEvent& Event) override;
 	virtual FReply NativeOnMouseButtonDown(const FGeometry& Geometry, const FPointerEvent& Event) override;
 	virtual void NativeOnDragDetected(const FGeometry& Geometry, const FPointerEvent& Event, UDragDropOperation*& Operation) override;
@@ -72,6 +74,8 @@ private:
 	FName NodeId;
 	bool bCanDrag = false;
 	bool bHasOuterFrame = false;
+	bool bPaintSwordGlyph = false;
+	FLinearColor SwordGlyphTint;
 	UPROPERTY(Transient) TObjectPtr<URogue10mAttackSkillData> Skill;
 	UPROPERTY(Transient) TObjectPtr<USizeBox> BodyBox;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> NodeButton;

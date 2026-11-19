@@ -245,7 +245,23 @@ bool FRogue10mHybridSourceTest::RunTest(const FString& Parameters)
 	const auto* SwordTechnique = AuthoredCatalog->FindNode(TEXT("G.CrushingSlash"));
 	TestTrue(TEXT("shipped catalog exposes the paid technique and historical route"), SwordTechnique
 		&& SwordTechnique->PointCost == 1 && !SwordTechnique->bAutomaticUnlock && SwordTechnique->bAcceptHistoricalAutomaticUnlock);
-	Sword.Hits(385, ETrack::GreatSword);
+	Sword.Hits(45, ETrack::GreatSword);
+	const auto EarlySword = Sword.Tree->Capture();
+	TestEqual(TEXT("M4 exposes the three entry branches"), Sword.Tree->GetMasteryLevel(ETrack::GreatSword), 4);
+	auto StrengthRoute = EarlySword;
+	Invest(StrengthRoute, TEXT("G.CrushingSlash"), ERoute::Points, 1);
+	TestTrue(TEXT("one point affords a direct strength-route attack"), Sword.Tree->Validate(StrengthRoute, 1, 0));
+	auto SideRoute = EarlySword;
+	Invest(SideRoute, TEXT("G.Whirlwind"), ERoute::Points, 1);
+	Invest(SideRoute, TEXT("G.GuardBreak"), ERoute::Points, 1);
+	Invest(SideRoute, TEXT("G.EarthSplitter"), ERoute::Points, 1);
+	Invest(SideRoute, TEXT("G.Ultimate"), ERoute::Points, 1);
+	TestTrue(TEXT("four points reach the capstone from the sweeping and defensive branches"), Sword.Tree->Validate(SideRoute, 4, 0));
+	TestFalse(TEXT("combined side route still needs the full point budget"), Sword.Tree->Validate(SideRoute, 3, 0));
+	SideRoute.Investments.RemoveAll([](const auto& Row) { return Row.NodeId == TEXT("G.GuardBreak"); });
+	TestFalse(TEXT("combined side route cannot skip its guard-breaking predecessor"), Sword.Tree->Validate(SideRoute, 4, 0));
+
+	Sword.Hits(385 - 45, ETrack::GreatSword);
 	auto SwordSource = Sword.Tree->Capture();
 	TestFalse(TEXT("current sword techniques are not automatically granted at M12"), Sword.Tree->IsNodeUnlocked(TEXT("G.CrushingSlash")));
 	auto OldSword = SwordSource;
