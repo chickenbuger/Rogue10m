@@ -1,0 +1,75 @@
+{
+  "build": {
+    "target": "Rogue10mEditor Win64 Development",
+    "total_seconds": 36.93,
+    "success": true
+  },
+  "editor": {
+    "archetypes": 6,
+    "packages_saved": 115,
+    "existing_packages_backed_up": 27,
+    "verified_log_errors": 0,
+    "verified_log_lines": 1910
+  },
+  "game": {
+    "session": "Skin1119B",
+    "resolution": [
+      1920,
+      1080
+    ],
+    "scope": "programmatic_rendered_UMG",
+    "physical_input": "not_performed",
+    "hit_test": "native_Slate_path_at_widget_centers",
+    "passed_checks": 341,
+    "failures": 0,
+    "log_errors": 0,
+    "log_lines": 2209,
+    "seconds": 53.468,
+    "preexisting_saves_preserved": 503,
+    "qa_saves_created": 2
+  },
+  "legacy_qa_save": {
+    "source_sha256": "dddd965a366a3a14edfd07fa707bf3d526fa86adf26117cb4fc4c5f2bcca0e4f",
+    "profile_count": 2,
+    "source_bytes_preserved": true,
+    "source_has_custom_color_fields": false,
+    "reflected_appearance_defaults": {
+      "use_custom_skin_color": false,
+      "custom_skin_color_rgba": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "skin_tone_index": 0
+    }
+  },
+  "representative_image": {
+    "path": "DevLog/20261119_CharacterSkinColor/character-skin-color.png",
+    "sha256": "e9de6c5edccb63fa330a6a5b28aa09ac7d2913586ea593d484acb5256a99b4b9",
+    "session": "Skin1119Integrated"
+  },
+  "supporting_evidence_sha256": {
+    "dwarf-default.png": "025321c386c1ece4faf93db58a9e3ea8cc12c4bff6550f8e50f51c7b08d2af77",
+    "human-custom.png": "aa3b75b37a09425277a317f154d73bbf0e19755d5e222abcfdbb3595c0db95b0",
+    "game-checks.csv": "c158a0042496675f9601eb2aafa1f0de3344a3a005769c0b895ea7ac74cc2cba"
+  },
+  "integration": {
+    "session": "Skin1119Integrated",
+    "base_commit": "844bc93b424d3b48ee65252f8db92a05e11a3e77",
+    "work_commit": "5aad10f04da563d491ecfad7e804c8570c0b329b",
+    "editor_build_actions": 29,
+    "editor_build_seconds": 128.9,
+    "game_resolution": [
+      1920,
+      1080
+    ],
+    "game_scope": "programmatic_rendered_lobby_ui",
+    "physical_input": "not_claimed",
+    "passed_checks": 341,
+    "failed_checks": 0,
+    "log_errors": 0,
+    "log_lines": 2203,
+    "existing_saves_preserved": 0
+  }
+}

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Containers/ArrayView.h"
 #include "Engine/DataAsset.h"
 #include "Rogue10mCharacterCustomizationTypes.h"
 #include "UObject/SoftObjectPtr.h"
@@ -88,6 +89,9 @@ class ROGUE10M_API URogue10mCharacterCustomizationDataAsset : public UPrimaryDat
 
 public:
 	virtual FPrimaryAssetId GetPrimaryAssetId() const override;
+
+	static TConstArrayView<FColor> GetSkinColorPresets();
+	static FColor GetSkinColor(const FRogue10mCharacterAppearance& Appearance);
 
 	const FRogue10mCharacterArchetype* FindArchetype(
 		ERogue10mCharacterRace Race, ERogue10mCharacterGender Gender) const;

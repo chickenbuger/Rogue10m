@@ -1,0 +1,539 @@
+{
+  "archetypes": {
+    "Hu_M": {
+      "tint_srgb": "C89070",
+      "head_variants_with_calibrated_skin": 21,
+      "body_variants_with_calibrated_skin": 1,
+      "body_and_owner_arms_slot_maps_match": true
+    },
+    "Hu_F": {
+      "tint_srgb": "C89070",
+      "head_variants_with_calibrated_skin": 21,
+      "body_variants_with_calibrated_skin": 1,
+      "body_and_owner_arms_slot_maps_match": true
+    },
+    "Dw_M": {
+      "tint_srgb": "AE7551",
+      "head_variants_with_calibrated_skin": 1,
+      "body_variants_with_calibrated_skin": 1,
+      "body_and_owner_arms_slot_maps_match": true
+    },
+    "Dw_F": {
+      "tint_srgb": "AE7551",
+      "head_variants_with_calibrated_skin": 1,
+      "body_variants_with_calibrated_skin": 1,
+      "body_and_owner_arms_slot_maps_match": true
+    },
+    "Or_M": {
+      "tint_srgb": "74924C",
+      "head_variants_with_calibrated_skin": 16,
+      "body_variants_with_calibrated_skin": 5,
+      "body_and_owner_arms_slot_maps_match": true
+    },
+    "Or_F": {
+      "tint_srgb": "74924C",
+      "head_variants_with_calibrated_skin": 16,
+      "body_variants_with_calibrated_skin": 5,
+      "body_and_owner_arms_slot_maps_match": true
+    }
+  },
+  "skin_material_parameter": "RogueSkinColor",
+  "shared_neck_sample_positions": {
+    "Dw_F": 26,
+    "Dw_M": 30,
+    "Hu_F": 26,
+    "Hu_M": 34,
+    "Or_F": 26,
+    "Or_M": 34
+  },
+  "calibrated_atlases": 82,
+  "assets": [
+    {
+      "path": "Content/Character/Customization/BodyMaterials/MI_Dw_F_Body_Preview_Rogue.uasset",
+      "sha256": "da047040a13c9f6e50fb4884a29ed8145df1896da3a0c141a51deb2b697566b9",
+      "previous_sha256": "cbdb95c46dfe2ca33dea2a1e7372a58151d9d96a4be9a5f474362fe08c96649d"
+    },
+    {
+      "path": "Content/Character/Customization/BodyMaterials/MI_Dw_M_Body_Preview_Rogue.uasset",
+      "sha256": "d614fa1ecbdb6d2f99c31ad1e494ef22f75d003ae9e6c86c6831002b4488b44c",
+      "previous_sha256": "60c55d5609d62b4db7dbc266fec49dc138503ddf779b30f67a5a394768c0a746"
+    },
+    {
+      "path": "Content/Character/Customization/BodyMaterials/MI_Hu_F_Body_Preview_Rogue.uasset",
+      "sha256": "64ba66b0500736437d38be72b2292c41f25c87eb21fae9b9910e744e059cf647",
+      "previous_sha256": "8010bd5cf4fcffc838f5d871aae7cc2cdbb4d104d38181964ade49aa83875749"
+    },
+    {
+      "path": "Content/Character/Customization/BodyMaterials/MI_Hu_M_Body_Preview_Rogue.uasset",
+      "sha256": "8cbde4714f722a871c323106288ec1263899513cef6289507f6044ad69d33c81",
+      "previous_sha256": "a9c0cf8ce41ee780c3ce81ea2702a4e1cbe689c1f004d5321dcee1300a50b996"
+    },
+    {
+      "path": "Content/Character/Customization/BodyMaterials/MI_Or_F_Body_Preview_Rogue.uasset",
+      "sha256": "4abfaede05e3ae23a7dba6d8bf990a9b9c58ebcdf3b6932e631325fc201615ff",
+      "previous_sha256": "365a4d8a8f7b016ff36d368874b8cb83899cf9b52bcc9e7c0e5b66486cee2700"
+    },
+    {
+      "path": "Content/Character/Customization/BodyMaterials/MI_Or_F_Body_Tattoo_01_Rogue.uasset",
+      "sha256": "48727ca17b758c1d4cb4d281d1c6ebc71f840890980d89c15ba47caad37e5f19",
+      "previous_sha256": "fb890abd986df59db01c40e93dbd7b163fe8976d094468054ee586be0dbbb9a5"
+    },
+    {
+      "path": "Content/Character/Customization/BodyMaterials/MI_Or_F_Body_Tattoo_02_Rogue.uasset",
+      "sha256": "0dffd9655c4578de1941a313ae9a9081dfb72ff2ce011fbfce53301cc8149340",
+      "previous_sha256": "e6d54602fb9cc6a8d65807c87e0c8393cdf4c19d133d10d97ec4b0ad737f4e51"
+    },
+    {
+      "path": "Content/Character/Customization/BodyMaterials/MI_Or_F_Body_Tattoo_03_Rogue.uasset",
+      "sha256": "91bff0a2ef2e4860242552795867b5ac9528b71a3438999e815f5a26e1b33cd1",
+      "previous_sha256": "c990623199b5d9c2ffd14e79b8314f91fe31809e49b4b2da20c9cbc5e6c26542"
+    },
+    {
+      "path": "Content/Character/Customization/BodyMaterials/MI_Or_F_Body_Tattoo_04_Rogue.uasset",
+      "sha256": "35b3748da6f052cedecd92d2dfdb5b9be438a2ff8991b1f895c66738829f8a24",
+      "previous_sha256": "eecaeea3f33515f66c40f68ee73e8580fae0338ed238d596b3d791705daa93e2"
+    },
+    {
+      "path": "Content/Character/Customization/BodyMaterials/MI_Or_M_Body_Preview_Rogue.uasset",
+      "sha256": "636302d5190f444a596ae40d9899c4fb9172e669e7fda9d13aad568cbe76cf6f",
+      "previous_sha256": "25739bfc011f8ba015368123ea95b442fc1718011af54ecc72f05cb5e70a8f72"
+    },
+    {
+      "path": "Content/Character/Customization/BodyMaterials/MI_Or_M_Body_Tattoo_01_Rogue.uasset",
+      "sha256": "39221f6ad664e6fbd893223a4d71c9decde0132163ba01d878d414c27fbfd5e0",
+      "previous_sha256": "db16482fd4374242d12270ae8aff071d6daf9b5d071f7a0ce6980f0584d3dc4a"
+    },
+    {
+      "path": "Content/Character/Customization/BodyMaterials/MI_Or_M_Body_Tattoo_02_Rogue.uasset",
+      "sha256": "9ba9649d0103b12c68dfe7b00055725b4022e6ac3ea75646ae054422a31725fc",
+      "previous_sha256": "11cc4ec855b23fa56b4f37fa4ceaf3e7de7952ab3f248f9b89aeb5b1a3f77b12"
+    },
+    {
+      "path": "Content/Character/Customization/BodyMaterials/MI_Or_M_Body_Tattoo_03_Rogue.uasset",
+      "sha256": "23040a83bef3691c09c7c05f4ffc7d3349afeabb5c620b50f394e1d87b758e37",
+      "previous_sha256": "8a64b6c3abc56a4249ee28cbe7519e99566820e236a8b835357e3a97cd69b20e"
+    },
+    {
+      "path": "Content/Character/Customization/BodyMaterials/MI_Or_M_Body_Tattoo_04_Rogue.uasset",
+      "sha256": "8769fdb6005b6327944c61e30d4427580d1665c07ea6de8ddf6027f4f9084725",
+      "previous_sha256": "e7cafd5d7cd52a84586b10d2a119fb51069fb8b77e71635e74f38e9239b5ff99"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/MI_Dw_F_Head_Preview_Skin.uasset",
+      "sha256": "765d588f497a1479a8ef7bb2c6e7b7555e7a917771e6e866c9cde061b8a578e1"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/MI_Dw_M_Head_Preview_Skin.uasset",
+      "sha256": "8db972a680d133e3a4d3f3969b739cad0f31f484049ed6eaf56927dfca4cee5c"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/MI_Hu_F_Head_Preview_Skin.uasset",
+      "sha256": "e69db3696a479049b382de07ca4ee87e37fc437fad4ad520187d195fa6c268ec"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/MI_Hu_M_Head_Preview_Skin.uasset",
+      "sha256": "6183605de3e0f60d5013871b1614ef716de4efa8c2e6368a28c625ef7974b9d5"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/MI_Or_F_Head_Preview_Skin.uasset",
+      "sha256": "19ce8b49f2284111087a7f6753ef358fc45898c312d0244191587fca46ab43fc"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/MI_Or_M_Head_Preview_Skin.uasset",
+      "sha256": "b50e7f184fb4dc37f2157e9821a2d91f799e8cba01039837821a6bed85b58639"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_01_B_Skin.uasset",
+      "sha256": "ef3aa67339c19a1f4d0554e0fda5002a119aedd6e8041f4307d22300f247c46f"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_01_C_Skin.uasset",
+      "sha256": "8139e9f76cb01537e0a590b8559983cf43e4f629d0703f7797d6dd98473a69e5"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_01_D_Skin.uasset",
+      "sha256": "824597861346bd9bf5198fcfd20ac2df5967caebb01068782fac97185d2075da"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_01_E_Skin.uasset",
+      "sha256": "1478d24b23cf083369842b07598c6842a7e5cd6d1f279153aab54c2df89aae60"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_02_B_Skin.uasset",
+      "sha256": "0f99fbcf71bf98d9d8de3584f53ab9ad913acb622d6017c3a3cd6a42e4d6c836"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_02_C_Skin.uasset",
+      "sha256": "a3926bb5242130f9525b1979cfd08540d66c97ecb0e76da420a7fd5d6be51259"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_02_D_Skin.uasset",
+      "sha256": "3da494081f7282a5461c6ed72fbaf10df399108ae5951bd744f0900eb2ef166d"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_02_E_Skin.uasset",
+      "sha256": "86b3e8f4c40f39752a274ccc1972c5e479e3f3cb87b61b27511c9b289a4e530f"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_03_B_Skin.uasset",
+      "sha256": "6005d9695e12e375f9b3ec3ed10edcb279a037a7b9003b327842e280163b9ab9"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_03_C_Skin.uasset",
+      "sha256": "27d995140e202dfe51b08be626cdc926f76abacb5a1c72f6f58d71374ee65739"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_03_D_Skin.uasset",
+      "sha256": "6253b37746239b982a1c49007637115d9deac22623f455567b6f56506a59a71f"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_03_E_Skin.uasset",
+      "sha256": "dbf3ee99ca92fe2b441c9ce3019f9d15bc4c227fa9724e064316963a93b7c72d"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_04_B_Skin.uasset",
+      "sha256": "4b2f57fb61f1262c9437687b01ffed878d8cabc156a2f3374f6853650aacbd2b"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_04_C_Skin.uasset",
+      "sha256": "d2fb97cfe70bf469361abb785ce4f5d7e6ddb8fc75c3f33d03ea22afb428e72c"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_04_D_Skin.uasset",
+      "sha256": "3614ef61af98e374a894b0349664cc53411ff109a6a8352c8c35611a73283df8"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_04_E_Skin.uasset",
+      "sha256": "cee4afd777cd07e54d9b1ac2a4da7e33d3cf1cf20bb15a177388bae1dc0d9702"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_05_B_Skin.uasset",
+      "sha256": "3dad85edc95583c1b4ee5dac6e4c166a29fdf698099dde039468f6067faa9d7c"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_05_C_Skin.uasset",
+      "sha256": "1f29dc3e65b62f29d9455e1210d378124b2145f8cd47d57a662b81abfad3edeb"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_05_D_Skin.uasset",
+      "sha256": "89da4c34d4405dbb0dd87a498f85e8b98315f6016928ff953c482e4b26aa2101"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_F_Head_05_E_Skin.uasset",
+      "sha256": "3901ddb8efe67be5f96292d87cffc1b153afbd60e5fafec8a72fa17404d0bad9"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_01_B_Skin.uasset",
+      "sha256": "1a143610a2bb7d0dbe7b364b4f2efd954f37d6e42c1fdddba69d52411ec8ab21"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_01_C_Skin.uasset",
+      "sha256": "ceae7da549417a45278ac55a2be78ee9cebd4b72c1058f1e15cfe00f7c531e81"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_01_D_Skin.uasset",
+      "sha256": "c27effd84786049a2613bca47b1306459d1f90a6ece7261973ef830d32eca5e1"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_01_E_Skin.uasset",
+      "sha256": "6b49ed47831404b0f41ff7e8ed535022f074473c419ad18b1e94184fc7d4fb9e"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_02_B_Skin.uasset",
+      "sha256": "3ccf747a91f083221f3afcfa219bbdba1bdb338a53da44b820cd54288c849231"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_02_C_Skin.uasset",
+      "sha256": "611978ee95397588aaad5db8cc85a2e9f783c59723488e46c23bc4843aba85a3"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_02_D_Skin.uasset",
+      "sha256": "d4dd72ab3ef5fdc8cb56f48e0b8ec3fae8188416cee9413ced3601950c749c41"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_02_E_Skin.uasset",
+      "sha256": "6c079b354b1536c7c29f257b27b752386b723b7335842ad9049aa4f37ba0af2b"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_03_B_Skin.uasset",
+      "sha256": "ab39e2d7fb82070e0551891e92f6a39498e3c33f727407f8f82c7fb4ce0bb092"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_03_C_Skin.uasset",
+      "sha256": "d48c709d84e6ffac7d57be7504ea7fd800de46b5955c55c5b961c321f859a9ca"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_03_D_Skin.uasset",
+      "sha256": "8832cded22d075a90d07edaa81360815eb3615e80deed63d653c040c0bbbc10f"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_03_E_Skin.uasset",
+      "sha256": "acf58c3d300fe25fec24f149b22dd8b6203457c66c1b4e8ef89867667e5bc5de"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_04_B_Skin.uasset",
+      "sha256": "85e554a0fcca4ca6bfc28671f4ab0a471ed941d8d88d6463524a4733513571e8"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_04_C_Skin.uasset",
+      "sha256": "790ceda78d80042b8c95e72afa0f08ecf7c45fb99345afb31a7b811cf8cc2842"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_04_D_Skin.uasset",
+      "sha256": "155fdd2f49f90b548a92224f77a89ee12e916c172c0238c1789a1eff353e28c0"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_04_E_Skin.uasset",
+      "sha256": "820e1c0fabb22fe58a0f6a0c7436e5337c0175c5432029bb51a9b4904d4bc4ff"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_05_B_Skin.uasset",
+      "sha256": "8d195454a8bf3443177f60e04886d39c21f9de536bd3cdfbf38e658503559222"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_05_C_Skin.uasset",
+      "sha256": "72f0803d3400a511f9aac001d300265e9141a2c623c92372397de7999c201ee4"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_05_D_Skin.uasset",
+      "sha256": "dd193e75ff20d7ff28de973ffbd68a723fd8a4c1923f5a2185ceede99e8a32d1"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Hu_M_Head_05_E_Skin.uasset",
+      "sha256": "57127101c92a7134e9c15535ecb7e8c4fffb4da7c861d7450e49371bd474a52c"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_01_D_Skin.uasset",
+      "sha256": "6356aa55734c97282c0fe8278ee49a780d8dd6b8d2514c2ad187a524acf2e91e"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_01_E_Skin.uasset",
+      "sha256": "0cdf91921f5e8730e699b2630fa0158f0e08dbfa043360435ff861ed852117f4"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_01_F_Skin.uasset",
+      "sha256": "b5b70d809647fd89447096b02cc9074e828697e7a4d44b5b83fa20b328d310a5"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_02_D_Skin.uasset",
+      "sha256": "aacad5518046526d4b2d17aced765908fc23d7fa12c82dc06413572154acd036"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_02_E_Skin.uasset",
+      "sha256": "9c035cc4e90d39a30844fb2444f3049d24c8152f90017d9be1eecc23e6bd5af6"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_02_F_Skin.uasset",
+      "sha256": "5c29de2f4dd7fd83a4d220f36ee705cccda998e402957b4982513d9b984c76a5"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_03_D_Skin.uasset",
+      "sha256": "c019660137f80ec0c6b0f81ff8b80f9eeaa44dd30d801b858beb1842d7accc75"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_03_E_Skin.uasset",
+      "sha256": "91c1d28029e7a0bc94f458d789e8be83e3cda819a189685c830cf919a50849fe"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_03_F_Skin.uasset",
+      "sha256": "c34ce1ca8daaa7864f5788cd4ba9632b4fabe193bcaa229633294f493e9af94d"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_04_D_Skin.uasset",
+      "sha256": "0d98c8ca42ebfc167b730561199fc633808137136d0ed6cd459697e9355ea9fd"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_04_E_Skin.uasset",
+      "sha256": "2f854ecb5e92d42c5c115738441418f6fc909233e3d337bf5194cc0f3b7c09ba"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_04_F_Skin.uasset",
+      "sha256": "f7ffe8a42db5839f6ad54426904946d9ac39ebf792861a3a8414a1d2ecf9874e"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_05_D_Skin.uasset",
+      "sha256": "eac296d354838c91ece96ae153a60a4bb4cf8aaabfab82b8c166b504b888b186"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_05_E_Skin.uasset",
+      "sha256": "4dfb0404bb6e9ab9d0d3a6c5dc4691a4edcd1a46ab8e6b8b9cd7ad4dcda8fd00"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_F_Head_05_F_Skin.uasset",
+      "sha256": "a271206b21b00aebb89db27886b951f07f3da1dabfd3d16c1ad3489c7b5a261e"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_01_D_Skin.uasset",
+      "sha256": "d28dec4c4f27a77df3c0b319031912b359f1d465d415bbd47099ef5f6edab361"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_01_E_Skin.uasset",
+      "sha256": "01b17488f67158b854375e2abd3ee91fd39baf038e5b2e0d2f9753b07003469b"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_01_F_Skin.uasset",
+      "sha256": "d28e1913692b617fa754694d54f0a94d783c07297cbf3db8602a6fd43fac91a8"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_02_D_Skin.uasset",
+      "sha256": "dcad3260e990bae0f2f485925a446933da485ef9ca3520b6ec5042a507c66d5f"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_02_E_Skin.uasset",
+      "sha256": "313594b81552713781d531e6756cd88a4ef00c79200c687792fb14b4d1778b71"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_02_F_Skin.uasset",
+      "sha256": "dd8533f3e46d274f1ac16ca4bf64f7e12c614adb77a5a60a63ed021a572b99e3"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_03_D_Skin.uasset",
+      "sha256": "e06ab86d1bc6ad75cb2359c2f84fea9b3465212fa854f0ef4b8dd6275bc17fc4"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_03_E_Skin.uasset",
+      "sha256": "70921242015d581c0446583132b36d4909aabf1f1750d92973a7df3604e13745"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_03_F_Skin.uasset",
+      "sha256": "03697012b8fb21e0ef3894522705f07727ec0f6545b7a185907d46bd4e7ca093"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_04_D_Skin.uasset",
+      "sha256": "61206152ca9e1b3f0848ea22b5efdef9cc6db92d46caa97181703f5cf3eb0d8a"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_04_E_Skin.uasset",
+      "sha256": "9e84322bfc9de2af9690581a327902e104e6e8e06243630e8edbb825bfea4b78"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_04_F_Skin.uasset",
+      "sha256": "6ca335c1cc27e9457021bb63065b181f0a14cef65390dd0102db3b2eed6f2089"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_05_D_Skin.uasset",
+      "sha256": "a4434e64deee32a2413acac2bc9b35b856f1a6c190b0ec0ab414a29f51e617f2"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_05_E_Skin.uasset",
+      "sha256": "2cc3cd9d378067ea6ed967c8fc79933d084effcfb775cb9d41548fb74b6a2d17"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Heads/Variants/MI_Or_M_Head_05_F_Skin.uasset",
+      "sha256": "3755719b08f79c7e94fdd38444db14635b6056f4c8b5f52082bdeeb97414a493"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/M_RogueSkin_Dw_Body.uasset",
+      "sha256": "d71f65730bb389a80e3812da01734e75ec8124850368a084d6f374a25f7bdbaf"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/M_RogueSkin_Dw_Head.uasset",
+      "sha256": "774801fafa6d7a572089bebd5f9034416005c0bbf9a2d0f10a0c2f897d85d403"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/M_RogueSkin_Hu_Body.uasset",
+      "sha256": "27e413f28ba70b478be0a1b3049f039ed3974102fb70bc54cb54b3a09566a824"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/M_RogueSkin_Hu_Head.uasset",
+      "sha256": "2d6c4f0641bc511fe039c963ecb4c851abf48ce4c88704b80c00be38f52129fd"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/M_RogueSkin_Or_Body.uasset",
+      "sha256": "e399f076b0fb715f23554a1b31f1a4b63be86b4866fefc36acecc99e797445b0"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/M_RogueSkin_Or_Head.uasset",
+      "sha256": "82418580ecd1f1fc2e908ec9bbf393080c031f7e30df74709ae1e06163275a1f"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Masks/T_RogueSkin_Dw_F_Mask.uasset",
+      "sha256": "dc1c21f16df6db44f90715134bfe3ef31f67d0b556e726bc608e172ad67e9cc3"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Masks/T_RogueSkin_Dw_M_Mask.uasset",
+      "sha256": "9f44ed833cced92cd49361ec26aee96d38a921050d3449b491e0be7d0325424b"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Masks/T_RogueSkin_Hu_F_Mask.uasset",
+      "sha256": "57675a68f2df03a3a088c069eaac7cd0eb1725f75439f3c8186efe2316ec3c9a"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Masks/T_RogueSkin_Hu_M_Mask.uasset",
+      "sha256": "6f1043b2a4a8279c9452e485a2ae30c6a058a98f2ce65543bf721b1a74cc8df4"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Masks/T_RogueSkin_Or_F_Mask.uasset",
+      "sha256": "216903857fc032f5ac13b3a9e979e3218d4529e5d9a46f189c99d3bac18ebb4f"
+    },
+    {
+      "path": "Content/Character/Customization/SkinTone/Masks/T_RogueSkin_Or_M_Mask.uasset",
+      "sha256": "960e6321af09b6b4d0e3d090cfc05f7c37c687e5d2a506004f338c7fa81ad486"
+    },
+    {
+      "path": "Content/DataAsset/Character/Customization/DA_CharacterCustomizationCatalog.uasset",
+      "sha256": "958e57634c847b95c22db000d844b83c08a567d1bb4272b481358921d58a9d62",
+      "previous_sha256": "2ea3c8ebb0806613392b45e2a92d01173e87ea6949a5804e3963c35f83fcc0ff"
+    },
+    {
+      "path": "Content/Rogue10m/Character/OwnerArms/SK_OwnerArms_Dw_F.uasset",
+      "sha256": "42e6dd979a44b0d3d7380ea7b772d24bfa5d7ae74c44b64895348694fc376cc3",
+      "previous_sha256": "3a049b1cb77ca5895ffb58f3c6747d49861b9867389cb587fb24f1d96f9d2ae8"
+    },
+    {
+      "path": "Content/Rogue10m/Character/OwnerArms/SK_OwnerArms_Dw_M.uasset",
+      "sha256": "f391c52b8cf6df3b5764625597429594f6e6fe0a7f8095e2a31edac0c7abe784",
+      "previous_sha256": "1033b1cdf3572d9418a6125cfe353c7fc16449f676fd79779503609ad84c9754"
+    },
+    {
+      "path": "Content/Rogue10m/Character/OwnerArms/SK_OwnerArms_Hu_F.uasset",
+      "sha256": "e719a11d2b98e8f53a5d9ea83b2ffbc096cc5aa76e3bbca246a4c8b5bb5d2cf9",
+      "previous_sha256": "6e932a0c9fd64710fea478af3ed6a5292a49ca811632dbbeca8f4b5f1b50fd88"
+    },
+    {
+      "path": "Content/Rogue10m/Character/OwnerArms/SK_OwnerArms_Hu_M.uasset",
+      "sha256": "3fa981ddb87a2bb82681d78885c4e68fa6ca6810e890f129b0dbff3f57d1c9e1",
+      "previous_sha256": "7348f043c535779c778220ddadd8e28ddcc235ac42005bb4a95ec16b32beaffc"
+    },
+    {
+      "path": "Content/Rogue10m/Character/OwnerArms/SK_OwnerArms_Or_F.uasset",
+      "sha256": "f24c37ba7142d3ab7854c356570d42f3905825f4ef848b7fd3761224a8bf0810",
+      "previous_sha256": "e5f653fbc80d2e68f6b4bba5e8689e79a471d279423fb678d4172caa26bbb94b"
+    },
+    {
+      "path": "Content/Rogue10m/Character/OwnerArms/SK_OwnerArms_Or_M.uasset",
+      "sha256": "743f28e8c490e4d438879b2f6239b2943150780b9c6b1de2523983a910076345",
+      "previous_sha256": "8d61ac9c16d8f939032b5b51562c5ba64ea6ab73289d96b7bf6403835f8e8300"
+    },
+    {
+      "path": "Content/StylizedCharacter/Meshes/Character/Dwarf/Female/SK_Dw_F_FullBody.uasset",
+      "sha256": "25b256f06b383446b57f5b0492cafebe324ab714c7e67590b428f6491a47b5d4",
+      "previous_sha256": "a55796d760396c88f7606b36fad4052cb33241e70a4614762e1829f968e7176e"
+    },
+    {
+      "path": "Content/StylizedCharacter/Meshes/Character/Dwarf/Male/SK_Dw_M_FullBody.uasset",
+      "sha256": "8207ae7fcc1263cdb111cb7bec3ccd3b97f248ed9d796366b98c588819038db5",
+      "previous_sha256": "5b0d7ab4b4a3079ed4d5c74415ea36aea63ee7ea6b7ab0cbf5b8a6c12160b594"
+    },
+    {
+      "path": "Content/StylizedCharacter/Meshes/Character/Human/Female/SK_Hu_F_FullBody.uasset",
+      "sha256": "e96179e39c9e33e08f4d7a6910d572dd31f9e0e10879826e63ff311e6932caed",
+      "previous_sha256": "f35418cac314d2f8bd92ff118f58e1f3dfe8430bc364f180b655b44cac272357"
+    },
+    {
+      "path": "Content/StylizedCharacter/Meshes/Character/Human/Male/SK_Hu_M_FullBody.uasset",
+      "sha256": "3033a0b7de1e79fbece48e3932ab1062338239c0725908ce715afc9157eab0d2",
+      "previous_sha256": "0b50af6031ca7b6b456b28d75c477295ddf29bed8b138c70d448d388967928b3"
+    },
+    {
+      "path": "Content/StylizedCharacter/Meshes/Character/Orc/Female/SK_Or_F_FullBody.uasset",
+      "sha256": "60bf5ad70bef6f0b441636c3af28f506187e282df8653086164abde965d0b441",
+      "previous_sha256": "e61cd1fa0d4c84be328de7b2c77e75427d7ff7954a078faf730d287b9da29c8a"
+    },
+    {
+      "path": "Content/StylizedCharacter/Meshes/Character/Orc/Male/SK_Or_M_FullBody.uasset",
+      "sha256": "33080e8abab95d981b0f96d4e03f1c4718897c0208a9ca61b2b092cbfbcc3065",
+      "previous_sha256": "5bdc9908a565fa29abe80eb8451efc6d213d4463a8df6ec90d741e69353482f4"
+    }
+  ]
+}

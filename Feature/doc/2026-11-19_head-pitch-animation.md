@@ -18,6 +18,8 @@ UE 5.8 Editor 빌드를 통과했다. `VerifyThirdPersonGameplay.ps1 -Label Head
 
 실행별 원본 로그와 중간 캡처는 작업 사본의 `tmp/head-pitch-qa-archive/`에 보관했다. 기능 검증 폴더에는 최종 회전 수치와 두 시선의 측면 화면, 팔 보정 전 아래 보기 화면을 남겼다.
 
+피부색 기능이 먼저 반영된 `739a90fb`와 병합한 뒤 Editor를 다시 빌드하고 `HeadPitchIntegrated`를 렌더링했다. 통합본은 1,005개 검사, 마우스 전투 입력 13개, 캡처 7장을 통과했다. ±65°에서 머리·목·손의 최대 회전 차이는 0.000002°였다. 측면 렌더에서 대기 중 팔과 목이 안정적인 것을 확인했고 게임 로그 오류는 0건이며 기존 테스트 세이브 12개가 보존됐다. 피부색에 따른 화면 차이가 있어 팔 보정 전후 비교에는 피부색 통합 전의 같은 외형을 사용했다.
+
 - [설계](../architect/2026-11-19_head-pitch-animation.md)
 - [애니메이션 기록](../../DevLog/20261119_HeadPitchAnimation/AnimationRecord.md)
 - [Blender 포즈 비교와 재현 절차](evidence/head-pitch-animation-20261119/blender/README.md)

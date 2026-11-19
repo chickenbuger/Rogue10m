@@ -7,11 +7,15 @@
 #include "Components/CanvasPanelSlot.h"
 #include "Components/EditableTextBox.h"
 #include "Components/Image.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Components/Slider.h"
 #include "Components/TextBlock.h"
 #include "Containers/Ticker.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
+#include "Engine/TextureRenderTarget2D.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
 #include "Framework/Application/SlateApplication.h"
 #include "HAL/FileManager.h"
 #include "HAL/IConsoleManager.h"
@@ -19,6 +23,7 @@
 #include "HAL/PlatformTime.h"
 #include "Kismet/GameplayStatics.h"
 #include "Layout/WidgetPath.h"
+#include "Materials/MaterialInstanceDynamic.h"
 #include "Misc/CommandLine.h"
 #include "Misc/CoreDelegates.h"
 #include "Misc/DelayedAutoRegister.h"
@@ -27,7 +32,9 @@
 #include "Misc/Paths.h"
 #include "Rogue10m.h"
 #include "Rogue10mCharacter.h"
+#include "Rogue10mCharacterCustomizationPreviewActor.h"
 #include "Rogue10mCharacterLobbyWidget.h"
+#include "Rogue10mCharacterProfileSaveGame.h"
 #include "Rogue10mCharacterProfileSubsystem.h"
 #include "Rogue10mMainMenuWidget.h"
 #include "Rogue10mMenuGameMode.h"
@@ -38,6 +45,15 @@
 
 namespace Rogue10mCharacterLobbyStyleQA
 {
+static const FColor HumanDefaultSkin(0xC8, 0x90, 0x70);
+static const FColor DwarfDefaultSkin(0xAE, 0x75, 0x51);
+static const FColor OrcDefaultSkin(0x74, 0x92, 0x4C);
+static const FColor DwarfSwatchSkin(0xFF, 0xDF, 0xC3);
+static const FColor HumanCustomSkin(0x7B, 0x4C, 0x38);
+static const FName SkinParameterName(TEXT("RogueSkinColor"));
+static const FName BodySlotName(TEXT("M_Body"));
+static const FName HeadSlotName(TEXT("M_Head"));
+
 static FString Csv(FString Value)
 {
 	return TEXT("\"") + Value.Replace(TEXT("\""), TEXT("\"\"")).Replace(TEXT("\n"), TEXT(" ")).Replace(TEXT("\r"), TEXT(" ")) + TEXT("\"");
@@ -197,6 +213,80 @@ private:
 		const FWidgetPath Hit = FSlateApplication::Get().LocateWindowUnderMouse(Center, FSlateApplication::Get().GetInteractiveTopLevelWindows());
 		Check(Hit.ContainsWidget(Widget->GetCachedWidget().Get()), Name + TEXT("_native_Slate_center_hit_path"));
 	}
+	const USkeletalMeshComponent* FindPreviewBody(const FString& ImageName) const
+	{
+		const UImage* Image = Cast<UImage>(Node(ImageName));
+		if (!World.IsValid() || !Shown(Image))
+		{
+			return nullptr;
+		}
+		UObject* Brush = Image->GetBrush().GetResourceObject();
+		const UMaterialInstanceDynamic* BrushMaterial = Cast<UMaterialInstanceDynamic>(Brush);
+		UTexture* PreviewTexture = Cast<UTexture>(Brush);
+		if (BrushMaterial)
+		{
+			BrushMaterial->GetTextureParameterValue(FHashedMaterialParameterInfo(TEXT("PreviewTexture")), PreviewTexture);
+		}
+		for (TActorIterator<ARogue10mCharacterCustomizationPreviewActor> Actor(World.Get()); PreviewTexture && Actor; ++Actor)
+		{
+			if (Actor->GetRenderTarget() != PreviewTexture)
+			{
+				continue;
+			}
+			for (const USkeletalMeshComponent* Mesh : TInlineComponentArray<USkeletalMeshComponent*>(*Actor))
+			{
+				if (Mesh->IsVisible() && Mesh->GetMaterialIndex(BodySlotName) != INDEX_NONE)
+				{
+					return Mesh;
+				}
+			}
+		}
+		return nullptr;
+	}
+	void CheckMeshSkin(const USkeletalMeshComponent* Mesh, FColor Expected, const FString& Name)
+	{
+		const FLinearColor LinearExpected = FLinearColor::FromSRGBColor(Expected);
+		for (const FName Slot : {HeadSlotName, BodySlotName})
+		{
+			const int32 Index = Mesh ? Mesh->GetMaterialIndex(Slot) : INDEX_NONE;
+			const auto* Instance = Index != INDEX_NONE ? Cast<UMaterialInstanceDynamic>(Mesh->GetMaterial(Index)) : nullptr;
+			FLinearColor Actual;
+			const bool bHasColor = Instance && Instance->GetVectorParameterValue(FHashedMaterialParameterInfo(SkinParameterName), Actual);
+			Check(bHasColor && Actual.Equals(LinearExpected, 0.0001f), Name + TEXT("_") + Slot.ToString() + TEXT("_skin_color"));
+		}
+	}
+	void CheckDraftSkin(FColor Expected, const FString& Name)
+	{
+		CheckMeshSkin(FindPreviewBody(TEXT("UI_CharacterPreviewImage")), Expected, Name);
+	}
+	void CheckSlotSkin(int32 SlotNumber, FColor Expected, const FString& Name)
+	{
+		const FString ImageName = FString::Printf(TEXT("UI_Slot%dPreviewImage"), SlotNumber);
+		CheckMeshSkin(FindPreviewBody(ImageName), Expected, Name);
+	}
+	void CommitSkinHex(const TCHAR* Value)
+	{
+		auto* Input = Cast<UEditableTextBox>(Node(TEXT("SkinColorHexInput")));
+		const bool bReady = Shown(Input) && Input->GetIsEnabled();
+		Check(bReady, TEXT("skin_hex_visible_and_enabled"));
+		if (bReady)
+		{
+			const FText Text = FText::FromString(Value);
+			Input->SetText(Text);
+			Input->OnTextCommitted.Broadcast(Text, ETextCommit::OnEnter);
+		}
+	}
+	void CheckSavedSkin(const FGuid& ProfileId, TOptional<FColor> Expected, const FString& Name)
+	{
+		const auto* Saved = Cast<URogue10mCharacterProfileSaveGame>(UGameplayStatics::LoadGameFromSlot(TownSlot, 0));
+		const auto* Profile = Saved ? Saved->Profiles.FindByPredicate([&ProfileId](const FRogue10mCharacterProfile& Candidate)
+		{
+			return Candidate.ProfileId == ProfileId;
+		}) : nullptr;
+		Check(Profile && (Expected.IsSet()
+			? Profile->Appearance.bUseCustomSkinColor && Profile->Appearance.CustomSkinColor == Expected.GetValue()
+			: !Profile->Appearance.bUseCustomSkinColor && Profile->Appearance.SkinToneIndex == 0), Name);
+	}
 	void CheckSlots(int32 Count, int32 Selected)
 	{
 		Check(ReadyLobby() && !Creation() && Profiles.IsValid() && Profiles->GetProfileCount() == Count, TEXT("selection_mode_profile_count"));
@@ -274,6 +364,48 @@ private:
 			if (!ReadyLobby() || !Creation()) { return false; }
 			Draft(TEXT("UI_DwarfRaceButton"), TEXT("UI_MaleGenderButton"), TEXT("시안검수01")); return true;
 		}, 1.5);
+		Add(TEXT("skin_default_and_controls"), [this]
+		{
+			if (!ReadyLobby() || !Creation()) { return false; }
+			CheckHit(Node(TEXT("SkinColorSwatch_0")), TEXT("skin_swatch"));
+			CheckHit(Node(TEXT("SkinColorHexInput")), TEXT("skin_hex_input"));
+			CheckHit(Node(TEXT("SkinColorResetButton")), TEXT("skin_reset"));
+			CheckDraftSkin(DwarfDefaultSkin, TEXT("draft_dwarf_male_natural"));
+			Photo(TEXT("01a_creation_dwarf_default_skin.png"));
+			return true;
+		}, 1.5);
+		Add(TEXT("natural_tones_all_archetypes"), [this]
+		{
+			if (!ReadyLobby() || !Creation()) { return false; }
+			ClickLobby(TEXT("UI_FemaleGenderButton"));
+			CheckDraftSkin(DwarfDefaultSkin, TEXT("draft_dwarf_female_natural"));
+			ClickLobby(TEXT("UI_HumanRaceButton"));
+			CheckDraftSkin(HumanDefaultSkin, TEXT("draft_human_female_natural"));
+			ClickLobby(TEXT("UI_MaleGenderButton"));
+			CheckDraftSkin(HumanDefaultSkin, TEXT("draft_human_male_natural"));
+			ClickLobby(TEXT("UI_OrcRaceButton"));
+			CheckDraftSkin(OrcDefaultSkin, TEXT("draft_orc_male_natural"));
+			ClickLobby(TEXT("UI_FemaleGenderButton"));
+			CheckDraftSkin(OrcDefaultSkin, TEXT("draft_orc_female_natural"));
+			ClickLobby(TEXT("UI_DwarfRaceButton"));
+			ClickLobby(TEXT("UI_MaleGenderButton"));
+			return true;
+		});
+		Add(TEXT("preset_reset_and_hex_guard"), [this]
+		{
+			if (!ReadyLobby() || !Creation()) { return false; }
+			ClickLobby(TEXT("SkinColorSwatch_0"));
+			CheckDraftSkin(DwarfSwatchSkin, TEXT("draft_dwarf_swatch"));
+			CommitSkinHex(TEXT("#NOTHEX"));
+			CheckDraftSkin(DwarfSwatchSkin, TEXT("draft_rejects_invalid_skin_hex"));
+			ClickLobby(TEXT("UI_CreateCharacterButton"));
+			Check(Creation() && Profiles->GetProfileCount() == 0, TEXT("invalid_skin_hex_blocks_character_creation"));
+			ClickLobby(TEXT("SkinColorResetButton"));
+			CheckDraftSkin(DwarfDefaultSkin, TEXT("draft_reset_uses_race_default"));
+			ClickLobby(TEXT("SkinColorSwatch_0"));
+			CheckDraftSkin(DwarfSwatchSkin, TEXT("draft_dwarf_reapplies_swatch"));
+			return true;
+		}, 1.5);
 		Add(TEXT("creation_capture"), [this] { Photo(TEXT("02_creation_dwarf.png")); return true; }, 1.5);
 		Add(TEXT("create_profile1"), [this] { return ReadyLobby() && Creation() && ClickLobby(TEXT("UI_CreateCharacterButton")); }, 1.5);
 		Add(TEXT("profile1_and_begin_cancel"), [this]
@@ -285,7 +417,9 @@ private:
 				const auto& P = Profiles->GetProfiles()[0];
 				Check(P.CharacterName == TEXT("시안검수01") && P.Appearance.Race == ERogue10mCharacterRace::Dwarf && P.Appearance.Gender == ERogue10mCharacterGender::Male, TEXT("profile1_actual_UI_dwarf_male"));
 				FirstProfile = P.ProfileId;
+				CheckSavedSkin(FirstProfile, DwarfSwatchSkin, TEXT("profile1_swatch_opaque_srgb_on_disk"));
 			}
+			CheckSlotSkin(1, DwarfSwatchSkin, TEXT("profile1_swatch_in_selection_preview"));
 			return ClickLobby(TEXT("UI_NewCharacterButton"));
 		});
 		Add(TEXT("cancel_existing_profile"), [this] { return ReadyLobby() && Creation() && ClickLobby(TEXT("UI_CancelCreationButton")); });
@@ -293,6 +427,7 @@ private:
 		{
 			if (!ReadyLobby() || Creation()) { return false; }
 			Check(Profiles->GetProfileCount() == 1 && Profiles->FindProfile(FirstProfile), TEXT("creation_cancel_preserves_existing_profile"));
+			CheckSlotSkin(1, DwarfSwatchSkin, TEXT("profile1_swatch_after_return_to_selection"));
 			return ClickLobby(TEXT("UI_NewCharacterButton"));
 		});
 		Add(TEXT("draft_human_female"), [this]
@@ -300,6 +435,37 @@ private:
 			if (!ReadyLobby() || !Creation()) { return false; }
 			Draft(TEXT("UI_HumanRaceButton"), TEXT("UI_FemaleGenderButton"), TEXT("시안검수02")); return true;
 		});
+		Add(TEXT("draft_human_exact_skin_hex"), [this]
+		{
+			if (!ReadyLobby() || !Creation()) { return false; }
+			CheckDraftSkin(HumanDefaultSkin, TEXT("new_draft_does_not_inherit_previous_custom_skin"));
+			CommitSkinHex(TEXT("7b4c38"));
+			CheckDraftSkin(HumanCustomSkin, TEXT("draft_human_hex_srgb"));
+			return true;
+		}, 1.5);
+		Add(TEXT("draft_skin_slider_sync"), [this]
+		{
+			if (!ReadyLobby() || !Creation()) { return false; }
+			auto* Slider = Cast<USlider>(Node(TEXT("SkinColorValueSlider")));
+			const auto* Input = Cast<UEditableTextBox>(Node(TEXT("SkinColorHexInput")));
+			CheckHit(Slider, TEXT("skin_value_slider"));
+			if (Slider && Input)
+			{
+				const float NewValue = 0.75f;
+				Slider->SetValue(NewValue);
+				const FColor SliderColor = FColor::FromHex(Input->GetText().ToString());
+				Check(SliderColor.A == 255 && SliderColor != HumanCustomSkin, TEXT("skin_value_slider_updates_hex_field"));
+				CheckDraftSkin(SliderColor, TEXT("skin_value_slider_updates_both_slots"));
+			}
+			else
+			{
+				Check(false, TEXT("skin_slider_and_hex_input_available"));
+			}
+			CommitSkinHex(TEXT("#7B4C38"));
+			CheckDraftSkin(HumanCustomSkin, TEXT("draft_human_hex_with_hash_srgb"));
+			return true;
+		}, 1.5);
+		Add(TEXT("human_hex_capture"), [this] { Photo(TEXT("02a_creation_human_custom_skin.png")); return true; });
 		Add(TEXT("create_profile2"), [this] { return ReadyLobby() && Creation() && ClickLobby(TEXT("UI_CreateCharacterButton")); }, 1.5);
 		Add(TEXT("two_profiles_plus_empty"), [this]
 		{
@@ -310,7 +476,10 @@ private:
 				const auto& P = Profiles->GetProfiles()[1];
 				Check(P.CharacterName == TEXT("시안검수02") && P.Appearance.Race == ERogue10mCharacterRace::Human && P.Appearance.Gender == ERogue10mCharacterGender::Female, TEXT("profile2_actual_UI_human_female"));
 				SecondProfile = P.ProfileId;
+				CheckSavedSkin(SecondProfile, HumanCustomSkin, TEXT("profile2_exact_hex_opaque_srgb_on_disk"));
 			}
+			CheckSlotSkin(1, DwarfSwatchSkin, TEXT("profile1_skin_unaffected_by_profile2"));
+			CheckSlotSkin(2, HumanCustomSkin, TEXT("profile2_hex_in_selection_preview"));
 			Photo(TEXT("03_two_profiles_plus_empty.png")); return true;
 		}, 1.5);
 		Add(TEXT("select_slot1"), [this] { return ReadyLobby() && !Creation() && ClickLobby(TEXT("UI_Slot1Button")); });
@@ -321,7 +490,10 @@ private:
 		Add(TEXT("draft_orc_male"), [this]
 		{
 			if (!ReadyLobby() || !Creation()) { return false; }
-			Draft(TEXT("UI_OrcRaceButton"), TEXT("UI_MaleGenderButton"), TEXT("시안검수03")); return true;
+			Draft(TEXT("UI_OrcRaceButton"), TEXT("UI_MaleGenderButton"), TEXT("시안검수03"));
+			ClickLobby(TEXT("UI_BodyDetailNextButton"));
+			CheckDraftSkin(OrcDefaultSkin, TEXT("draft_orc_tattoo_preserves_head_and_body_skin"));
+			return true;
 		});
 		Add(TEXT("create_profile3"), [this] { return ReadyLobby() && Creation() && ClickLobby(TEXT("UI_CreateCharacterButton")); }, 1.5);
 		Add(TEXT("full_three_slots"), [this]
@@ -333,9 +505,32 @@ private:
 				const auto& P = Profiles->GetProfiles()[2];
 				Check(P.CharacterName == TEXT("시안검수03") && P.Appearance.Race == ERogue10mCharacterRace::Orc && P.Appearance.Gender == ERogue10mCharacterGender::Male, TEXT("profile3_actual_UI_orc_male"));
 				ThirdProfile = P.ProfileId;
+				CheckSavedSkin(ThirdProfile, {}, TEXT("profile3_no_custom_uses_legacy_skin_index_on_disk"));
 			}
+			CheckSlotSkin(3, OrcDefaultSkin, TEXT("profile3_default_orc_tattoo_selection"));
 			Photo(TEXT("06_full_three_slots.png")); return true;
 		}, 1.5);
+		Add(TEXT("reload_menu_world"), [this]
+		{
+			if (!ReadyLobby() || Creation()) { return false; }
+			UGameplayStatics::OpenLevel(World.Get(), FName(TEXT("/Game/Rogue10m/Maps/StartHub")), true,
+				TEXT("game=/Script/Rogue10m.Rogue10mMenuGameMode"));
+			return true;
+		}, 2.0);
+		Add(TEXT("reopen_character_lobby"), [this]
+		{
+			auto* Main = VisibleWidget<URogue10mMainMenuWidget>();
+			return PC.IsValid() && PC->IsMainMenuVisible() && Main && Click(Main, TEXT("UI_StartGameButton"));
+		}, 1.5);
+		Add(TEXT("reopened_lobby_skin_restored"), [this]
+		{
+			if (!ReadyLobby() || Creation()) { return false; }
+			CheckSlots(3, 2);
+			CheckSlotSkin(1, DwarfSwatchSkin, TEXT("reopened_dwarf_swatch"));
+			CheckSlotSkin(2, HumanCustomSkin, TEXT("reopened_human_hex"));
+			CheckSlotSkin(3, OrcDefaultSkin, TEXT("reopened_orc_default"));
+			return true;
+		});
 		Add(TEXT("delete_first_confirmation"), [this]
 		{
 			if (!ReadyLobby() || Creation()) { return false; }
@@ -383,6 +578,7 @@ private:
 			Check(UGameplayStatics::GetCurrentLevelName(World.Get(), true) == TEXT("StartHub"), TEXT("entered_actual_StartHub_gameplay"));
 			Check(Profile && Profile->ProfileId == SecondProfile && Character->GetCharacterDisplayName().ToString() == TEXT("시안검수02"), TEXT("entered_selected_profile_name_and_GUID_applied"));
 			Check(Character->GetCharacterAppearance().Race == ERogue10mCharacterRace::Human && Character->GetCharacterAppearance().Gender == ERogue10mCharacterGender::Female, TEXT("entered_selected_human_female_appearance"));
+			CheckMeshSkin(Character->GetMesh(), HumanCustomSkin, TEXT("selected_skin_in_actual_StartHub_pawn"));
 			Check(!PC->IsMoveInputIgnored() && !PC->IsLookInputIgnored() && !UGameplayStatics::IsGamePaused(World.Get()), TEXT("gameplay_move_look_and_pause_restored"));
 			Check(Save->GetAttachedProfileId() == SecondProfile && Save->IsAttachedTo(*Character), TEXT("progression_attached_to_actual_selected_profile"));
 			Check(UGameplayStatics::DoesSaveGameExist(TownSlot, 0) && Save->GetSaveSlotForProfile(SecondProfile).StartsWith(Prefix + TEXT("_")), TEXT("QA_profile_save_and_progression_namespace_used"));

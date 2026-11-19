@@ -2,13 +2,19 @@
 
 #include "Rogue10mCharacterLobbyWidget.h"
 
+#include "Blueprint/WidgetTree.h"
 #include "Brushes/SlateRoundedBoxBrush.h"
 #include "Components/Border.h"
 #include "Components/Button.h"
+#include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
 #include "Components/EditableTextBox.h"
+#include "Components/HorizontalBox.h"
+#include "Components/HorizontalBoxSlot.h"
 #include "Components/Image.h"
 #include "Components/PanelWidget.h"
+#include "Components/SizeBox.h"
+#include "Components/Slider.h"
 #include "Components/TextBlock.h"
 #include "Engine/TextureRenderTarget2D.h"
 #include "Engine/World.h"
@@ -58,6 +64,30 @@ namespace
 		return Style;
 	}
 
+	FText SkinHexText(FColor Color)
+	{
+		return FText::FromString(FString::Printf(TEXT("#%02X%02X%02X"), Color.R, Color.G, Color.B));
+	}
+
+	bool ParseSkinHex(const FText& Text, FColor& OutColor)
+	{
+		FString Hex = Text.ToString().TrimStartAndEnd();
+		Hex.RemoveFromStart(TEXT("#"));
+		if (Hex.Len() != 6)
+		{
+			return false;
+		}
+		for (const TCHAR Digit : Hex)
+		{
+			if (!FChar::IsHexDigit(Digit))
+			{
+				return false;
+			}
+		}
+		OutColor = FColor::FromHex(Hex);
+		return true;
+	}
+
 	FName SlotWidgetName(int32 Index, const TCHAR* Suffix)
 	{
 		return FName(*FString::Printf(TEXT("UI_Slot%d%s"), Index + 1, Suffix));
@@ -86,6 +116,34 @@ namespace
 			? NSLOCTEXT("Rogue10mCharacterLobby", "Female", "여성")
 			: NSLOCTEXT("Rogue10mCharacterLobby", "Male", "남성");
 	}
+}
+
+void URogue10mSkinColorSwatch::InitializeColor(FColor InColor)
+{
+	Color = InColor;
+	SetToolTipText(SkinHexText(Color));
+	SetSelectedColor(Color, false);
+	OnClicked.AddUniqueDynamic(this, &ThisClass::HandleClicked);
+}
+
+void URogue10mSkinColorSwatch::SetSelectedColor(FColor SelectedColor, bool bUseCustomColor)
+{
+	const FLinearColor Fill = FLinearColor::FromSRGBColor(Color);
+	const bool bSelected = bUseCustomColor && Color == SelectedColor;
+	const FLinearColor Edge = bSelected ? LobbyPaleGold : FLinearColor(0.40f, 0.42f, 0.44f);
+	FButtonStyle Style;
+	Style.Normal = FSlateRoundedBoxBrush(Fill, 5.0f, Edge, bSelected ? 3.0f : 1.0f);
+	Style.Hovered = FSlateRoundedBoxBrush(Fill, 5.0f, FLinearColor::White, 2.0f);
+	Style.Pressed = FSlateRoundedBoxBrush(Fill, 5.0f, LobbyPaleGold, 3.0f);
+	Style.Disabled = Style.Normal;
+	Style.NormalPadding = FMargin(0.0f);
+	Style.PressedPadding = Style.NormalPadding;
+	SetStyle(Style);
+}
+
+void URogue10mSkinColorSwatch::HandleClicked()
+{
+	ColorSelected.ExecuteIfBound(Color);
 }
 
 void URogue10mCharacterLobbyWidget::InitializeCharacterLobby(
@@ -199,6 +257,7 @@ void URogue10mCharacterLobbyWidget::NativeConstruct()
 		Button->SetBackgroundColor(FLinearColor::White);
 		Button->SetColorAndOpacity(LobbyIvory);
 	}
+	BuildSkinColorControls();
 
 	if (GetWorld() && Catalog)
 	{
@@ -272,6 +331,129 @@ void URogue10mCharacterLobbyWidget::NativeConstruct()
 		}
 	}
 	RefreshAll();
+}
+
+void URogue10mCharacterLobbyWidget::BuildSkinColorControls()
+{
+	UCanvasPanel* Canvas = Cast<UCanvasPanel>(UI_SkinPreviousButton->GetParent());
+	const UCanvasPanelSlot* OldSkinSlot = Cast<UCanvasPanelSlot>(UI_SkinPreviousButton->Slot);
+	const UCanvasPanelSlot* NameSlot = Cast<UCanvasPanelSlot>(UI_CharacterNameInput->Slot);
+	if (!Canvas || !OldSkinSlot || !NameSlot || UI_CharacterNameInput->GetParent() != Canvas || SkinColorHexInput)
+	{
+		return;
+	}
+
+	constexpr float SliderRowHeight = 42.0f;
+	const FVector2D SkinPosition = OldSkinSlot->GetPosition();
+	const float AvailableWidth = NameSlot->GetPosition().X + NameSlot->GetSize().X - SkinPosition.X;
+	for (UWidget* Child : Canvas->GetAllChildren())
+	{
+		if (UCanvasPanelSlot* ChildSlot = Cast<UCanvasPanelSlot>(Child->Slot);
+			ChildSlot && ChildSlot->GetPosition().Y > SkinPosition.Y)
+		{
+			ChildSlot->SetPosition(ChildSlot->GetPosition() + FVector2D(0.0f, SliderRowHeight));
+		}
+	}
+
+	UI_SkinPreviousButton->SetVisibility(ESlateVisibility::Collapsed);
+	UI_SkinNextButton->SetVisibility(ESlateVisibility::Collapsed);
+	UI_SkinValueText->SetVisibility(ESlateVisibility::Collapsed);
+
+	UHorizontalBox* ColorRow = WidgetTree->ConstructWidget<UHorizontalBox>(
+		UHorizontalBox::StaticClass(), TEXT("SkinColorPalette"));
+	UCanvasPanelSlot* ColorRowSlot = Canvas->AddChildToCanvas(ColorRow);
+	ColorRowSlot->SetLayout(OldSkinSlot->GetLayout());
+	ColorRowSlot->SetSize(FVector2D(AvailableWidth, OldSkinSlot->GetSize().Y));
+
+	const TConstArrayView<FColor> Presets = URogue10mCharacterCustomizationDataAsset::GetSkinColorPresets();
+	for (int32 Index = 0; Index < Presets.Num(); ++Index)
+	{
+		const FName Name(*FString::Printf(TEXT("SkinColorSwatch_%d"), Index));
+		auto* Swatch = WidgetTree->ConstructWidget<URogue10mSkinColorSwatch>(
+			URogue10mSkinColorSwatch::StaticClass(), Name);
+		Swatch->InitializeColor(Presets[Index]);
+		Swatch->ColorSelected.BindUObject(this, &ThisClass::HandleSkinColorSwatchSelected);
+		SkinColorSwatches.Add(Swatch);
+
+		USizeBox* Box = WidgetTree->ConstructWidget<USizeBox>();
+		Box->SetWidthOverride(31.0f);
+		Box->SetHeightOverride(31.0f);
+		Box->AddChild(Swatch);
+		UHorizontalBoxSlot* SwatchSlot = ColorRow->AddChildToHorizontalBox(Box);
+		SwatchSlot->SetPadding(FMargin(0.0f, 0.0f, 4.0f, 0.0f));
+		SwatchSlot->SetVerticalAlignment(VAlign_Center);
+	}
+
+	FSlateFontInfo Font = UI_SkinValueText->GetFont();
+	Font.Size = 15;
+	SkinColorHexInput = WidgetTree->ConstructWidget<UEditableTextBox>(
+		UEditableTextBox::StaticClass(), TEXT("SkinColorHexInput"));
+	FEditableTextBoxStyle HexStyle = SkinColorHexInput->GetWidgetStyle();
+	const FLinearColor HexFill(0.012f, 0.026f, 0.042f, 0.94f);
+	HexStyle.SetBackgroundImageNormal(FSlateRoundedBoxBrush(HexFill, 6.0f, LobbyGold, 1.0f))
+		.SetBackgroundImageHovered(FSlateRoundedBoxBrush(HexFill, 6.0f, LobbyPaleGold, 1.0f))
+		.SetBackgroundImageFocused(FSlateRoundedBoxBrush(HexFill, 6.0f, LobbyPaleGold, 2.0f))
+		.SetForegroundColor(LobbyIvory)
+		.SetFont(Font);
+	SkinColorHexInput->SetWidgetStyle(HexStyle);
+	SkinColorHexInput->SetJustification(ETextJustify::Center);
+	SkinColorHexInput->SetSelectAllTextWhenFocused(true);
+	SkinColorHexInput->SetHintText(FText::FromString(TEXT("#RRGGBB")));
+	SkinColorHexInput->SetToolTipText(NSLOCTEXT("Rogue10mCharacterLobby", "SkinHexHint", "피부색을 6자리 HEX 코드로 입력하세요."));
+	SkinColorHexInput->OnTextCommitted.AddDynamic(this, &ThisClass::HandleSkinColorHexCommitted);
+	USizeBox* HexBox = WidgetTree->ConstructWidget<USizeBox>();
+	HexBox->SetWidthOverride(119.0f);
+	HexBox->SetHeightOverride(33.0f);
+	HexBox->AddChild(SkinColorHexInput);
+	UHorizontalBoxSlot* HexSlot = ColorRow->AddChildToHorizontalBox(HexBox);
+	HexSlot->SetPadding(FMargin(10.0f, 0.0f, 8.0f, 0.0f));
+	HexSlot->SetVerticalAlignment(VAlign_Center);
+
+	UButton* Reset = WidgetTree->ConstructWidget<UButton>(
+		UButton::StaticClass(), TEXT("SkinColorResetButton"));
+	Reset->SetStyle(LobbyButtonStyle());
+	Reset->SetColorAndOpacity(LobbyIvory);
+	Reset->OnClicked.AddDynamic(this, &ThisClass::HandleSkinColorResetClicked);
+	UTextBlock* ResetLabel = WidgetTree->ConstructWidget<UTextBlock>();
+	ResetLabel->SetFont(Font);
+	ResetLabel->SetText(NSLOCTEXT("Rogue10mCharacterLobby", "SkinColorReset", "기본값"));
+	Reset->AddChild(ResetLabel);
+	USizeBox* ResetBox = WidgetTree->ConstructWidget<USizeBox>();
+	ResetBox->SetWidthOverride(76.0f);
+	ResetBox->SetHeightOverride(33.0f);
+	ResetBox->AddChild(Reset);
+	ColorRow->AddChildToHorizontalBox(ResetBox)->SetVerticalAlignment(VAlign_Center);
+
+	UHorizontalBox* SliderRow = WidgetTree->ConstructWidget<UHorizontalBox>(
+		UHorizontalBox::StaticClass(), TEXT("SkinColorSliders"));
+	UCanvasPanelSlot* SliderRowSlot = Canvas->AddChildToCanvas(SliderRow);
+	SliderRowSlot->SetLayout(OldSkinSlot->GetLayout());
+	SliderRowSlot->SetPosition(SkinPosition + FVector2D(0.0f, SliderRowHeight));
+	SliderRowSlot->SetSize(FVector2D(AvailableWidth, 30.0f));
+
+	const auto AddSlider = [this, SliderRow, Font](FName Name, const FText& Label)
+	{
+		UTextBlock* Caption = WidgetTree->ConstructWidget<UTextBlock>();
+		Caption->SetText(Label);
+		Caption->SetFont(Font);
+		Caption->SetColorAndOpacity(LobbyIvory);
+		UHorizontalBoxSlot* LabelSlot = SliderRow->AddChildToHorizontalBox(Caption);
+		LabelSlot->SetPadding(FMargin(0.0f, 0.0f, 7.0f, 0.0f));
+		LabelSlot->SetVerticalAlignment(VAlign_Center);
+
+		USlider* Slider = WidgetTree->ConstructWidget<USlider>(USlider::StaticClass(), Name);
+		Slider->SetSliderHandleColor(LobbyPaleGold);
+		Slider->SetToolTipText(Label);
+		Slider->OnValueChanged.AddDynamic(this, &ThisClass::HandleSkinColorSliderChanged);
+		UHorizontalBoxSlot* SliderSlot = SliderRow->AddChildToHorizontalBox(Slider);
+		SliderSlot->SetSize(FSlateChildSize(ESlateSizeRule::Fill));
+		SliderSlot->SetPadding(FMargin(0.0f, 0.0f, 12.0f, 0.0f));
+		SliderSlot->SetVerticalAlignment(VAlign_Center);
+		return Slider;
+	};
+	SkinColorHueSlider = AddSlider(TEXT("SkinColorHueSlider"), NSLOCTEXT("Rogue10mCharacterLobby", "SkinHue", "색상"));
+	SkinColorSaturationSlider = AddSlider(TEXT("SkinColorSaturationSlider"), NSLOCTEXT("Rogue10mCharacterLobby", "SkinSaturation", "채도"));
+	SkinColorValueSlider = AddSlider(TEXT("SkinColorValueSlider"), NSLOCTEXT("Rogue10mCharacterLobby", "SkinValue", "명도"));
 }
 
 void URogue10mCharacterLobbyWidget::NativeDestruct()
@@ -545,6 +727,7 @@ void URogue10mCharacterLobbyWidget::RefreshDraft()
 
 	UI_HeadValueText->SetText(IndexedLabel(TEXT("얼굴"), DraftAppearance.HeadStyleIndex, false));
 	UI_SkinValueText->SetText(IndexedLabel(TEXT("피부"), DraftAppearance.SkinToneIndex, false));
+	RefreshSkinColorControls(true);
 	UI_HairValueText->SetText(IndexedLabel(TEXT("헤어"), DraftAppearance.HairStyleIndex, true));
 	UI_HairColorValueText->SetText(IndexedLabel(TEXT("헤어 색"), DraftAppearance.HairColorIndex, false));
 	UI_FacialValueText->SetText(IndexedLabel(TEXT("얼굴 장식"), DraftAppearance.FacialStyleIndex, true));
@@ -563,6 +746,105 @@ void URogue10mCharacterLobbyWidget::RefreshDraft()
 	UI_BodyDetailPreviousButton->SetIsEnabled(bHasBodyDetail);
 	UI_BodyDetailNextButton->SetIsEnabled(bHasBodyDetail);
 	RefreshPreview(DraftAppearance);
+}
+
+void URogue10mCharacterLobbyWidget::RefreshSkinColorControls(bool bSyncSliders)
+{
+	if (!SkinColorHexInput || !Catalog)
+	{
+		return;
+	}
+
+	TGuardValue<bool> UpdatingControls(bUpdatingSkinColorControls, true);
+	const FColor Color = URogue10mCharacterCustomizationDataAsset::GetSkinColor(DraftAppearance);
+	SkinColorHexInput->SetText(SkinHexText(Color));
+	SkinColorHexInput->SetError(FText::GetEmpty());
+	bInvalidSkinColorHex = false;
+	for (URogue10mSkinColorSwatch* Swatch : SkinColorSwatches)
+	{
+		Swatch->SetSelectedColor(Color, DraftAppearance.bUseCustomSkinColor);
+	}
+
+	const FLinearColor RGB(Color.R / 255.0f, Color.G / 255.0f, Color.B / 255.0f);
+	if (bSyncSliders)
+	{
+		const FLinearColor HSV = RGB.LinearRGBToHSV();
+		SkinColorHueSlider->SetValue(HSV.R / 360.0f);
+		SkinColorSaturationSlider->SetValue(HSV.G);
+		SkinColorValueSlider->SetValue(HSV.B);
+	}
+	const FLinearColor Hue(SkinColorHueSlider->GetValue() * 360.0f, 0.65f, 0.8f);
+	SkinColorHueSlider->SetSliderBarColor(FLinearColor::FromSRGBColor(Hue.HSVToLinearRGB().ToFColor(false)));
+	const FLinearColor SkinColor = FLinearColor::FromSRGBColor(Color);
+	SkinColorSaturationSlider->SetSliderBarColor(FLinearColor::LerpUsingHSV(LobbyIvory, SkinColor, 0.7f));
+	SkinColorValueSlider->SetSliderBarColor(FLinearColor::LerpUsingHSV(LobbyIvory, SkinColor, 0.4f));
+}
+
+void URogue10mCharacterLobbyWidget::ApplyDraftSkinColor(FColor Color, bool bSyncSliders)
+{
+	if (!bCreationMode || !Catalog)
+	{
+		return;
+	}
+	const bool bColorChanged = !DraftAppearance.bUseCustomSkinColor || DraftAppearance.CustomSkinColor != Color;
+	DraftAppearance.bUseCustomSkinColor = true;
+	DraftAppearance.CustomSkinColor = Color;
+	RefreshSkinColorControls(bSyncSliders);
+	if (bColorChanged && PreviewActor)
+	{
+		PreviewActor->SetAppearance(DraftAppearance);
+	}
+}
+
+void URogue10mCharacterLobbyWidget::HandleSkinColorSwatchSelected(FColor Color)
+{
+	ApplyDraftSkinColor(Color);
+}
+
+void URogue10mCharacterLobbyWidget::HandleSkinColorHexCommitted(const FText& Text, ETextCommit::Type CommitMethod)
+{
+	if (bUpdatingSkinColorControls || !bCreationMode || !Catalog)
+	{
+		return;
+	}
+	if (CommitMethod == ETextCommit::OnCleared)
+	{
+		RefreshSkinColorControls(true);
+		return;
+	}
+
+	FColor Color;
+	if (!ParseSkinHex(Text, Color))
+	{
+		bInvalidSkinColorHex = true;
+		SkinColorHexInput->SetError(NSLOCTEXT("Rogue10mCharacterLobby", "InvalidSkinHex", "6자리 HEX 색상 코드가 필요합니다."));
+		return;
+	}
+	if (Color == URogue10mCharacterCustomizationDataAsset::GetSkinColor(DraftAppearance))
+	{
+		RefreshSkinColorControls(true);
+		return;
+	}
+	ApplyDraftSkinColor(Color);
+}
+
+void URogue10mCharacterLobbyWidget::HandleSkinColorSliderChanged(float)
+{
+	if (!bUpdatingSkinColorControls)
+	{
+		const FLinearColor HSV(
+			SkinColorHueSlider->GetValue() * 360.0f,
+			SkinColorSaturationSlider->GetValue(),
+			SkinColorValueSlider->GetValue());
+		ApplyDraftSkinColor(HSV.HSVToLinearRGB().ToFColor(false), false);
+	}
+}
+
+void URogue10mCharacterLobbyWidget::HandleSkinColorResetClicked()
+{
+	DraftAppearance.bUseCustomSkinColor = false;
+	DraftAppearance.SkinToneIndex = 0;
+	RefreshDraft();
 }
 
 void URogue10mCharacterLobbyWidget::RefreshPreview(
@@ -820,6 +1102,15 @@ void URogue10mCharacterLobbyWidget::HandleCreateCharacterClicked()
 	{
 		return;
 	}
+	if (SkinColorHexInput)
+	{
+		HandleSkinColorHexCommitted(SkinColorHexInput->GetText(), ETextCommit::Default);
+		if (bInvalidSkinColorHex)
+		{
+			SkinColorHexInput->SetKeyboardFocus();
+			return;
+		}
+	}
 	FRogue10mCharacterProfile CreatedProfile;
 	if (!ProfileSubsystem->CreateProfile(
 		UI_CharacterNameInput->GetText().ToString(),
@@ -850,6 +1141,7 @@ void URogue10mCharacterLobbyWidget::HandleCancelCreationClicked()
 
 void URogue10mCharacterLobbyWidget::HandleRandomizeClicked()
 {
+	DraftAppearance.bUseCustomSkinColor = false;
 	DraftAppearance.Race = static_cast<ERogue10mCharacterRace>(FMath::RandRange(0, 2));
 	DraftAppearance.Gender = static_cast<ERogue10mCharacterGender>(FMath::RandRange(0, 1));
 	if (const FRogue10mCharacterArchetype* Archetype = GetDraftArchetype())
@@ -893,8 +1185,6 @@ void URogue10mCharacterLobbyWidget::HandleFemaleGenderClicked() { DraftAppearanc
 
 ROGUE10M_CYCLE_REQUIRED_HANDLER(HandleHeadPreviousClicked, HeadStyleIndex, Archetype->HeadStyleCount, -1)
 ROGUE10M_CYCLE_REQUIRED_HANDLER(HandleHeadNextClicked, HeadStyleIndex, Archetype->HeadStyleCount, 1)
-ROGUE10M_CYCLE_REQUIRED_HANDLER(HandleSkinPreviousClicked, SkinToneIndex, Archetype->SkinToneCount, -1)
-ROGUE10M_CYCLE_REQUIRED_HANDLER(HandleSkinNextClicked, SkinToneIndex, Archetype->SkinToneCount, 1)
 ROGUE10M_CYCLE_OPTIONAL_HANDLER(HandleHairPreviousClicked, HairStyleIndex, Archetype->HairMeshes.Num(), -1)
 ROGUE10M_CYCLE_OPTIONAL_HANDLER(HandleHairNextClicked, HairStyleIndex, Archetype->HairMeshes.Num(), 1)
 ROGUE10M_CYCLE_REQUIRED_HANDLER(HandleHairColorPreviousClicked, HairColorIndex, Archetype->HairMaterials.Num(), -1)
@@ -908,3 +1198,16 @@ ROGUE10M_CYCLE_OPTIONAL_HANDLER(HandleBodyDetailNextClicked, BodyDetailIndex, Ar
 
 #undef ROGUE10M_CYCLE_REQUIRED_HANDLER
 #undef ROGUE10M_CYCLE_OPTIONAL_HANDLER
+
+void URogue10mCharacterLobbyWidget::CycleLegacySkinTone(int32 Delta)
+{
+	if (const FRogue10mCharacterArchetype* Archetype = GetDraftArchetype())
+	{
+		DraftAppearance.bUseCustomSkinColor = false;
+		CycleRequired(DraftAppearance.SkinToneIndex, Archetype->SkinToneCount, Delta);
+		RefreshDraft();
+	}
+}
+
+void URogue10mCharacterLobbyWidget::HandleSkinPreviousClicked() { CycleLegacySkinTone(-1); }
+void URogue10mCharacterLobbyWidget::HandleSkinNextClicked() { CycleLegacySkinTone(1); }

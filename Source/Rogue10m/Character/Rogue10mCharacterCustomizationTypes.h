@@ -37,6 +37,13 @@ struct ROGUE10M_API FRogue10mCharacterAppearance
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Rogue10m|Character Customization")
 	int32 SkinToneIndex = 0;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, SaveGame, Category="Rogue10m|Character Customization")
+	bool bUseCustomSkinColor = false;
+
+	/** Opaque sRGB color, used when bUseCustomSkinColor is true. */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, SaveGame, Category="Rogue10m|Character Customization")
+	FColor CustomSkinColor = FColor::White;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Rogue10m|Character Customization")
 	int32 HairStyleIndex = INDEX_NONE;
 
