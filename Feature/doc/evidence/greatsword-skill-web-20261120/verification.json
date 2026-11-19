@@ -1,0 +1,58 @@
+{
+  "scope": "UE 5.8 Development Editor and StartHub standalone with native UMG and simulated input",
+  "integrated_base": "4191852be773cd33a2953ec8b7c02617e6e56c88",
+  "build": {
+    "seconds": 12.52,
+    "result": "succeeded",
+    "checkout": "isolated physical checkout"
+  },
+  "sword_web": {
+    "visible_nodes": 20,
+    "distinct_technique_glyphs": 5,
+    "points_per_technique": 1,
+    "alternative_group_card": true,
+    "actual_slot_text": true,
+    "nodes_and_prerequisites_use_existing_catalog": true
+  },
+  "automation": {
+    "passed": 3,
+    "unreal_output_errors": 0,
+    "log_lines": 2388,
+    "tests": [
+      {
+        "fullTestPath": "Rogue10m.HybridSkillTree.MasteryAlternativesAndLegacy",
+        "state": "Success",
+        "errors": 0
+      },
+      {
+        "fullTestPath": "Rogue10m.HybridSkillTree.MasteryAndRewards",
+        "state": "Success",
+        "errors": 0
+      },
+      {
+        "fullTestPath": "Rogue10m.HybridSkillTree.SharedLedgerAndValidation",
+        "state": "Success",
+        "errors": 0
+      }
+    ]
+  },
+  "runtime": {
+    "id": "SwordWeb1120B",
+    "passed": 242,
+    "failed": 0,
+    "unreal_output_errors": 0,
+    "log_lines": 2000
+  },
+  "fresh_process_read": {
+    "id": "SwordWeb1120B",
+    "passed": 91,
+    "failed": 0,
+    "unreal_output_errors": 0,
+    "log_lines": 1794
+  },
+  "resolutions": [
+    "1920x1080",
+    "1280x720"
+  ],
+  "representative_screenshot": "DevLog/20261120_GreatSwordSkillWeb/greatsword-skill-web.png"
+}

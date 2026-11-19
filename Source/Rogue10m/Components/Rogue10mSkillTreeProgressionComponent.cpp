@@ -248,18 +248,52 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 	}
 	if (!Node->PrerequisiteGroups.IsEmpty())
 	{
+		const bool bSword = Node->Track == ERogue10mSkillTreeTrack::GreatSword;
+		const bool bShowSwordRoutes = bSword && Node->PrerequisiteGroups.Num() > 1;
+		const bool bSwordResonance = bSword && Node->NodeType == ERogue10mHybridSkillTreeNodeType::Resonance;
+		if (bShowSwordRoutes) { Lines.Add(TEXT("선행 경로 · 아래 중 하나")); }
 		TArray<FString> Alternatives;
+		FString CommonChoiceOrigin;
 		for (const auto& Group : Node->PrerequisiteGroups)
 		{
 			TArray<FString> Parents;
+			bool bGroupComplete = !Group.NodeIds.IsEmpty();
 			for (FName Id : Group.NodeIds)
 			{
 				const auto* Parent = FindNode(Id);
-				Parents.Add(FString::Printf(TEXT("%s %s"), IsNodeUnlocked(Id) ? TEXT("완료") : TEXT("미완료"), Parent ? *Parent->DisplayName.ToString() : *Id.ToString()));
+				FString ParentName = Parent ? Parent->DisplayName.ToString() : Id.ToString();
+				bool bParentComplete = IsNodeUnlocked(Id);
+				if (bShowSwordRoutes && Parent && Parent->NodeType == ERogue10mHybridSkillTreeNodeType::Stat)
+				{
+					const auto* Stage = Parent->MasteryAlternatives.FindByPredicate([](const auto& Requirement)
+					{
+						return Requirement.Track == ERogue10mSkillTreeTrack::GreatSword;
+					});
+					if (Stage) { ParentName += FString::Printf(TEXT(" (숙련 M%d)"), Stage->Level); }
+				}
+				if (bSwordResonance && Parent && Parent->Track == ERogue10mSkillTreeTrack::None
+					&& Parent->NodeType == ERogue10mHybridSkillTreeNodeType::IdentityChoice)
+				{
+					const auto* RequiredChoice = Parent->Choices.FindByPredicate([Node](const auto& Choice)
+					{
+						return Choice.ChoiceId == Node->RequiredChoiceId;
+					});
+					if (RequiredChoice)
+					{
+						bParentComplete &= GetSelectedChoice(Id) == RequiredChoice->ChoiceId;
+						CommonChoiceOrigin = FString::Printf(TEXT("공통 탭 · %s에서 %s 선택"), *ParentName, *RequiredChoice->DisplayName.ToString());
+					}
+				}
+				bGroupComplete &= bParentComplete;
+				Parents.Add(bShowSwordRoutes ? MoveTemp(ParentName)
+					: FString::Printf(TEXT("%s %s"), bParentComplete ? TEXT("완료") : TEXT("미완료"), *ParentName));
 			}
-			Alternatives.Add(FString::Join(Parents, TEXT(" + ")));
+			FString ParentList = FString::Join(Parents, TEXT(" + "));
+			if (bShowSwordRoutes) { Lines.Add(FString::Printf(TEXT("%s · %s"), bGroupComplete ? TEXT("완료") : TEXT("미완료"), *ParentList)); }
+			else { Alternatives.Add(MoveTemp(ParentList)); }
 		}
-		Lines.Add(TEXT("선행: ") + FString::Join(Alternatives, TEXT(" 또는 ")));
+		if (!bShowSwordRoutes) { Lines.Add(TEXT("선행: ") + FString::Join(Alternatives, TEXT(" 또는 "))); }
+		if (!CommonChoiceOrigin.IsEmpty()) { Lines.Add(MoveTemp(CommonChoiceOrigin)); }
 	}
 	TArray<FString> Routes;
 	if (Node->PointCost > 0) { Routes.Add(FString::Printf(TEXT("포인트 %dP (잔액 %dP)"), Node->PointCost, GetAvailableGrowthPoints())); }

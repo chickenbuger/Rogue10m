@@ -1,6 +1,7 @@
 #if WITH_EDITOR
 #include "Components/Button.h"
 #include "Components/InputKeySelector.h"
+#include "Components/TextBlock.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HAL/FileManager.h"
 #include "InputKeyEventArgs.h"
@@ -886,9 +887,11 @@ private:
 				&& Tree->GetActiveTrack() == ETrack::GreatSword, TEXT("greatsword_inventory_character_combat_and_mastery_track_are_consistent"));
 			Check(Widget->GetDisplayedTab() == ETab::Sword
 				&& Widget->GetTabOrder() == TArray<ETab>{ETab::Sword, ETab::Common, ETab::Knuckle, ETab::Magic}
-				&& Widget->FindNodeEntry(TEXT("G.Ultimate")) && !Widget->FindNodeEntry(TEXT("F.Ultimate")),
+				&& Widget->GetVisibleNodeCount() == 20 && Widget->FindNodeEntry(TEXT("G.Ultimate"))
+				&& !Widget->FindNodeEntry(TEXT("F.Ultimate")),
 				TEXT("equipping_greatsword_while_open_selects_and_moves_sword_first"));
 			if (Failures) { Finish(); return; }
+			VerifySwordGraphFrames();
 			Check(Player->GetCombatComponent()->GetActiveSkillTreeSkills().Num() == 10
 				&& Player->GetCombatComponent()->GetUnlockedWeaponSkills().Num() == 5, TEXT("greatsword_five_basics_five_locked_techniques"));
 			Check(Tree->GetMasteryLevel(ETrack::GreatSword) == 1 && Tree->GetMasteryLevel(ETrack::Brawler) == 12,
@@ -906,10 +909,17 @@ private:
 				&& !Tree->TryUnlockNode(TEXT("G.CrushingSlash"), ERoute::Mastery, NAME_None)
 				&& Tree->GetAvailableGrowthPoints() == BeforeSwordPoints,
 				TEXT("sword_rejects_disconnected_purchase_and_free_mastery_without_spending"));
-			Check(Tree->TryUnlockNode(TEXT("G.Whirlwind"), ERoute::Points, NAME_None)
-				&& Tree->TryUnlockNode(TEXT("G.GuardBreak"), ERoute::Points, NAME_None)
-				&& !Tree->IsNodeUnlocked(TEXT("G.CrushingSlash"))
-				&& Tree->TryUnlockNode(TEXT("G.EarthSplitter"), ERoute::Points, NAME_None)
+			Widget->SelectNode(TEXT("G.EarthSplitter"));
+			Check(Tree->TryUnlockNode(TEXT("G.Whirlwind"), ERoute::Points, NAME_None),
+				TEXT("sword_learns_first_side_prerequisite"));
+			VerifySwordRouteCard(false);
+			Check(!Tree->TryUnlockNode(TEXT("G.EarthSplitter"), ERoute::Points, NAME_None)
+				&& Tree->GetAvailableGrowthPoints() == BeforeSwordPoints - 1,
+				TEXT("sword_side_route_requires_both_prerequisites_without_extra_spend"));
+			Check(Tree->TryUnlockNode(TEXT("G.GuardBreak"), ERoute::Points, NAME_None)
+				&& !Tree->IsNodeUnlocked(TEXT("G.CrushingSlash")), TEXT("sword_completes_side_route_without_the_main_branch"));
+			VerifySwordRouteCard(true);
+			Check(Tree->TryUnlockNode(TEXT("G.EarthSplitter"), ERoute::Points, NAME_None)
 				&& Tree->TryUnlockNode(TEXT("G.Ultimate"), ERoute::Points, NAME_None),
 				TEXT("sword_web_can_reach_earth_splitter_and_ultimate_via_side_branches"));
 			Widget->HandleAction(100, TEXT("G.CrushingSlash"));
@@ -942,16 +952,57 @@ private:
 				&& Tree->TryUnlockNode(TEXT("I.Mana.Choice"), ERoute::Points, TEXT("Mana.Spread")),
 				TEXT("refunded_mana_deepening_and_choice_can_be_repurchased"));
 			IdentityAndSave();
-			Widget->HandleAction(100, TEXT("G.Ultimate"));
-			PC->ConsoleCommand(TEXT("r.SetRes 1280x720w"), false);
-			Later(0.7, [this]
+			CaptureSwordPanel();
+		});
+	}
+	void VerifySwordGraphFrames()
+	{
+		for (const TCHAR* Technique : {TEXT("G.CrushingSlash"), TEXT("G.Whirlwind"), TEXT("G.GuardBreak"),
+			TEXT("G.EarthSplitter"), TEXT("G.Ultimate")})
+		{
+			const FName NodeId(Technique);
+			const auto Frame = Widget->GetNodeOuterFramePoints(NodeId);
+			Check(Widget->FindNodeEntry(NodeId) && Widget->GetNodeFrameShape(NodeId) == TEXT("SwordMedallion")
+				&& Widget->GetNodeFrameOutlineCount(NodeId) == 3 && Frame.Num() == 49 && Frame[0].Equals(Frame.Last()),
+				*FString::Printf(TEXT("sword_paid_technique_has_closed_medallion_%s"), Technique));
+		}
+		Check(Widget->GetNodeFrameShape(TEXT("G.Power.1")) == TEXT("SwordSocket")
+			&& Widget->GetNodeFrameOutlineCount(TEXT("G.Power.1")) == 2,
+			TEXT("sword_mastery_stat_uses_smaller_socket_frame"));
+	}
+	void VerifySwordRouteCard(bool bSideReady)
+	{
+		const auto* Card = Cast<UTextBlock>(Widget->GetWidgetFromName(TEXT("HybridTreeDetailRequirements")));
+		const auto* Description = Cast<UTextBlock>(Widget->GetWidgetFromName(TEXT("HybridTreeDetailDescription")));
+		const auto* Technique = Widget->GetSelectedAttackSkill();
+		const FString Expected = FString(TEXT("선행 경로 · 아래 중 하나\n미완료 · 공격력 +2 (숙련 M8)\n"))
+			+ (bSideReady ? TEXT("완료 · 회전참 + 파쇄참") : TEXT("미완료 · 회전참 + 파쇄참"));
+		Check(Card && Card->GetVisibility() != ESlateVisibility::Collapsed
+			&& Widget->GetSelectedNodeId() == TEXT("G.EarthSplitter") && Card->GetText().ToString().StartsWith(Expected),
+			bSideReady ? TEXT("rendered_sword_card_shows_ready_alternative_and_missing_main_route")
+				: TEXT("rendered_sword_card_keeps_partially_learned_AND_route_missing"));
+		Check(Description && Technique && Description->GetText().ToString().Contains(Technique->GetAllowedSlotText().ToString()),
+			TEXT("rendered_sword_card_describes_actual_technique_slot_policy"));
+	}
+	void CaptureSwordPanel()
+	{
+		Widget->SelectNode(TEXT("G.EarthSplitter"));
+		Later(0.35, [this]
+		{
+			Shot(TEXT("greatsword-learned-1080p.png"));
+			Later(0.35, [this] { CaptureSwordPanelAt720p(); });
+		});
+	}
+	void CaptureSwordPanelAt720p()
+	{
+		PC->ConsoleCommand(TEXT("r.SetRes 1280x720w"), false);
+		Later(0.7, [this]
+		{
+			Shot(TEXT("greatsword-720p.png"));
+			Later(0.6, [this]
 			{
-				Shot(TEXT("greatsword-720p.png"));
-				Later(0.6, [this]
-				{
-					if (bInputQA) { BeginInputChecks(ETrack::GreatSword, [this] { Finish(); }); }
-					else { Finish(); }
-				});
+				if (bInputQA) { BeginInputChecks(ETrack::GreatSword, [this] { Finish(); }); }
+				else { Finish(); }
 			});
 		});
 	}
