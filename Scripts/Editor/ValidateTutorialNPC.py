@@ -261,7 +261,7 @@ def tick(_delta):
                   before=state["initial_timer"], after=float(game_state.get_remaining_run_seconds()))
             check("player_healthy_after_dialogue", not pawn.is_dead())
             # Return near the guide, consume one of its actual grant stack, then
-            # pass through the real collision portal. Source filler/test grants
+            # confirm departure inside the real portal collision. Source filler/test grants
             # removed earlier are captured as zero and must not reappear.
             location = npc.get_actor_location()
             pawn.set_actor_location(unreal.Vector(location.x + 150, location.y, location.z + 100), False, True)
@@ -291,6 +291,8 @@ def tick(_delta):
             state["traveled"] = True
             pawn.get_editor_property("character_movement").stop_movement_immediately()
             pawn.set_actor_location(destination, False, True)
+            check("portal_opens_departure_dialogue", portal.begin_departure_dialogue(pawn))
+            portal.select_departure_choice(1)
         elif state["phase"] == "wait_open_world":
             if "OpenRunMap" not in world.get_path_name():
                 return

@@ -378,13 +378,16 @@ def tick_impl(delta_seconds):
         record("hub_run_waiting", run.get_run_phase() == unreal.Rogue10mRunPhase.WAITING_TO_START and not run.is_run_active() and abs(run.get_remaining_run_seconds() - RUN_SECONDS) <= 0.01)
         portals = unreal.GameplayStatics.get_all_actors_of_class(world, unreal.Rogue10mRunPortal)
         record("runtime_hub_portal", len(portals) == 1)
-        collision = portals[0].get_editor_property("portal_collision")
+        portal = portals[0]
+        collision = portal.get_editor_property("portal_collision")
         capsule = pawn.get_editor_property("capsule_component")
         record("portal_overlap_events_enabled", bool(collision.get_editor_property("generate_overlap_events")) and bool(capsule.get_editor_property("generate_overlap_events")) and collision.is_query_collision_enabled() and collision.get_collision_response_to_channel(unreal.CollisionChannel.ECC_PAWN) == unreal.CollisionResponseType.ECR_OVERLAP)
         destination = collision.get_world_location()
-        state["report"]["portal_entry"] = {"method": "real_native_overlap", "destination": vector_data(destination)}
+        state["report"]["portal_entry"] = {"method": "real_overlap_then_departure_confirmation", "destination": vector_data(destination)}
         phase("wait_run", 90.0)
         pawn.set_actor_location(destination, False, True)
+        record("portal_opens_departure_dialogue", portal.begin_departure_dialogue(pawn))
+        portal.select_departure_choice(1)
         return
     if state["phase"] == "wait_run" and world.get_name().endswith("StartHub"):
         return

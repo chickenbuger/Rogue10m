@@ -1,18 +1,26 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 #if WITH_EDITOR
 
+#include "Algo/AllOf.h"
+#include "CollisionQueryParams.h"
 #include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Containers/Ticker.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
+#include "Engine/HitResult.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
+#include "Framework/Application/SlateApplication.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/DamageType.h"
 #include "HAL/FileManager.h"
 #include "HAL/IConsoleManager.h"
 #include "HAL/PlatformMisc.h"
 #include "HAL/PlatformTime.h"
+#include "Input/Events.h"
+#include "InputCoreTypes.h"
+#include "InputKeyEventArgs.h"
 #include "Kismet/GameplayStatics.h"
 #include "Misc/CommandLine.h"
 #include "Misc/FileHelper.h"
@@ -35,10 +43,13 @@
 #include "Rogue10mProgressionSaveGame.h"
 #include "Rogue10mProgressionSubsystem.h"
 #include "Rogue10mRunPortal.h"
+#include "Rogue10mSkillTreeProgressionComponent.h"
 #include "Rogue10mTownProgressionComponent.h"
+#include "Rogue10mTownServiceDataAsset.h"
 #include "Rogue10mTutorialDataAsset.h"
 #include "Rogue10mTutorialNPC.h"
 #include "TimerManager.h"
+#include "UnrealClient.h"
 #include "UObject/UObjectGlobals.h"
 #include "UObject/StrongObjectPtr.h"
 #include "UObject/UnrealType.h"
@@ -67,10 +78,19 @@ public:
 		FString ProfileSlot, ProgressionPrefix;
 		FParse::Value(FCommandLine::Get(), TEXT("RogueProfileSaveSlot="), ProfileSlot);
 		FParse::Value(FCommandLine::Get(), TEXT("RogueProgressionSavePrefix="), ProgressionPrefix);
+		FParse::Value(FCommandLine::Get(), TEXT("RogueCaptureDepartureDialogue="), DepartureCapture);
 		if (!SafeOverride(ProfileSlot, TEXT("Rogue10m_Town_QA_"), 100)
 			|| !SafeOverride(ProgressionPrefix, TEXT("Rogue10m_Progression_QA_"), 80))
 		{
 			UE_LOG(LogRogue10m, Error, TEXT("RESULT=TOWN_RUN_FAILED reason=missing_bounded_QA_save_overrides"));
+			FPlatformMisc::RequestExitWithStatus(false, 1);
+			return;
+		}
+		if (!DepartureCapture.IsEmpty() && (bRead || FPaths::IsRelative(DepartureCapture)
+			|| !FPaths::GetExtension(DepartureCapture).Equals(TEXT("png"), ESearchCase::IgnoreCase)
+			|| IFileManager::Get().FileExists(*DepartureCapture)))
+		{
+			UE_LOG(LogRogue10m, Error, TEXT("RESULT=TOWN_RUN_FAILED reason=departure_capture_requires_a_new_absolute_PNG_path_in_write_mode"));
 			FPlatformMisc::RequestExitWithStatus(false, 1);
 			return;
 		}
@@ -157,6 +177,67 @@ private:
 		Character->SetActorLocation(NPC->GetActorLocation() + FVector(100.0f, 0.0f, 100.0f), false, nullptr, ETeleportType::TeleportPhysics);
 		Character->GetCharacterMovement()->StopMovementImmediately();
 		Check(NPC->BeginDialogue(Character.Get()), TEXT("actual_Arin_dialogue_opened"));
+		if (Failures) { Finish(); return; }
+		TownGroundDeadline = FPlatformTime::Seconds() + 10.0;
+		WaitForTownGround();
+	}
+
+	void WaitForTownGround()
+	{
+		if (Character.IsValid() && Character->CanChangeWeapon())
+		{
+			PrepareTownServices();
+			return;
+		}
+		if (!Character.IsValid() || FPlatformTime::Seconds() >= TownGroundDeadline)
+		{
+			Check(false, TEXT("town_fixture_reaches_grounded_weapon_change_state"));
+			Finish();
+			return;
+		}
+		Later(.1f, &FRun::WaitForTownGround);
+	}
+
+	bool EquipStarterKnuckle()
+	{
+		const auto& Containers = Inventory->GetInventoryContainers();
+		for (int32 Index = 0; Index < Containers.Num(); ++Index)
+		{
+			for (const FRogue10mInventoryGridEntry& Entry : Containers[Index].Entries)
+			{
+				if (Entry.ItemData && Entry.Quantity == 1 && Entry.ItemData->bCanDrop
+					&& Entry.ItemData->EquipSlotType == ERogue10mInventorySlotType::MainWeapon
+					&& Entry.ItemData->WeaponType == ERogue10mWeaponType::Knuckle)
+				{
+					const FGuid StarterId = Entry.InstanceId;
+					return Inventory->TryEquipGridItem(Index, StarterId);
+				}
+			}
+		}
+		return false;
+	}
+
+	bool SeedTownTraitFixture()
+	{
+		const auto Vitality = Town->GetUpgradeDefinition(ERogue10mTownTrait::Vitality, NPC->ServiceData);
+		const auto Power = Town->GetUpgradeDefinition(ERogue10mTownTrait::Power, NPC->ServiceData);
+		if (!Vitality.IsTuningValid() || !Power.IsTuningValid() || !Persistence->SaveNow()) { return false; }
+		const int32 Budget = Vitality.PointCost + Power.PointCost;
+		const FString Slot = Persistence->GetSaveSlotForProfile(ProfileId);
+		Persistence->DetachCharacter(*Character, false);
+		auto* Seed = Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(Slot, 0));
+		if (!Seed || Seed->ProfileId != ProfileId) { return false; }
+		// Seed only this disposable profile. Run XP does not earn lobby points before settlement.
+		Seed->LobbyEarnedPoints = Budget;
+		Seed->HighestRunLevel = FMath::Max(Seed->HighestRunLevel, FMath::Max(Vitality.UnlockLevel, Power.UnlockLevel));
+		return UGameplayStatics::SaveGameToSlot(Seed, Slot, 0) && Persistence->AttachCharacter(*Character)
+			&& Persistence->IsSaveReady() && Town->GetAvailableTraitPoints() == Budget;
+	}
+
+	void PrepareTownServices()
+	{
+		Check(EquipStarterKnuckle(), TEXT("fixture_equips_existing_droppable_starter_from_fresh_inventory"));
+		if (Failures) { Finish(); return; }
 		Inventory->AddGold(777);
 		State->AddExperience(1500);
 		State->RecordSkillUse(TEXT("TownRunQaSkill"), 23);
@@ -165,6 +246,8 @@ private:
 		RewardId = NPC->TutorialData->RewardId;
 		SupplyAsset.Reset(NPC->TutorialData->StartingItem.Get());
 		Check(NPC->SelectDifficulty(ERogue10mDifficulty::Hard), TEXT("actual_NPC_Hard_selection_before_portal"));
+		Check(SeedTownTraitFixture(), TEXT("isolated_save_restores_exact_two_purchase_lobby_budget_and_unlocks"));
+		if (Failures) { Finish(); return; }
 		Check(NPC->UpgradeTrait(ERogue10mTownTrait::Vitality) && NPC->UpgradeTrait(ERogue10mTownTrait::Power), TEXT("actual_NPC_traits_purchased_before_portal"));
 		Check(NPC->EnhanceEquippedItem(ERogue10mInventorySlotType::MainWeapon), TEXT("actual_NPC_equipped_weapon_enhanced_before_portal"));
 		for (URogue10mAttackSkillData* Skill : Combat->GetUnlockedWeaponSkills())
@@ -180,16 +263,151 @@ private:
 		Expected.Reset(NewObject<URogue10mProgressionSaveGame>());
 		CaptureExpected(*Expected);
 		Check(Persistence->SaveNow(), TEXT("progression_saved_before_actual_portal_overlap"));
-		ARogue10mRunPortal* Portal = nullptr;
 		for (TActorIterator<ARogue10mRunPortal> It(World.Get()); It; ++It) { Portal = *It; break; }
-		UBoxComponent* Box = Portal ? Portal->FindComponentByClass<UBoxComponent>() : nullptr;
+		UBoxComponent* Box = Portal.IsValid() ? Portal->FindComponentByClass<UBoxComponent>() : nullptr;
 		Check(Box != nullptr, TEXT("actual_StartHub_native_portal_collision_exists"));
 		if (Failures) { Finish(); return; }
 		Character->SetActorLocation(Box->GetComponentLocation() + FVector(500.0f, 0.0f, 0.0f), false, nullptr, ETeleportType::TeleportPhysics);
+		Check(!Portal->BeginDepartureDialogue(Character.Get()), TEXT("departure_dialogue_rejects_pawn_outside_gate"));
+		Character->GetCharacterMovement()->StopMovementImmediately();
+		FVector GatePosition = Box->GetComponentLocation();
+		if (!DepartureCapture.IsEmpty())
+		{
+			GatePosition.Y -= 145.0f;
+			FHitResult Floor;
+			const FCollisionQueryParams Query(SCENE_QUERY_STAT(TownRunDepartureCaptureFloor), false, Character.Get());
+			Check(World->LineTraceSingleByChannel(Floor, GatePosition + FVector(0.0f, 0.0f, 600.0f),
+				GatePosition - FVector(0.0f, 0.0f, 600.0f), ECC_Visibility, Query), TEXT("authored_gate_approach_has_visible_floor"));
+			if (Failures) { Finish(); return; }
+			GatePosition.Z = Floor.ImpactPoint.Z + Character->GetCapsuleComponent()->GetScaledCapsuleHalfHeight() + 2.0f;
+			Character->SetActorRotation(FRotator(0.0f, 90.0f, 0.0f), ETeleportType::TeleportPhysics);
+			Controller->SetControlRotation(FRotator(-6.0f, 90.0f, 0.0f));
+		}
+		Character->SetActorLocation(GatePosition, false, nullptr, ETeleportType::TeleportPhysics);
+		Check(Box->IsOverlappingActor(Character.Get()), TEXT("real_capsule_overlaps_authored_departure_gate"));
+		if (Failures) { Finish(); return; }
+		Later(.3f, &FRun::VerifyOverlapAndOpenDeparture);
+	}
+
+	void Later(float Delay, void (FRun::*Action)())
+	{
+		World->GetTimerManager().SetTimer(PrepareTimer, FTimerDelegate::CreateLambda([Self = AsShared(), Action]
+		{
+			if (!Self->bFinished) { ((*Self).*Action)(); }
+		}), Delay, false);
+	}
+
+	bool IsWaitingInHub() const
+	{
+		const ARogue10mGameState* Run = World.IsValid() ? World->GetGameState<ARogue10mGameState>() : nullptr;
+		return Run && UGameplayStatics::GetCurrentLevelName(World.Get(), true) == TEXT("StartHub")
+			&& Run->GetRunPhase() == ERogue10mRunPhase::WaitingToStart && !World->URL.HasOption(TEXT("StartRun"));
+	}
+
+	void VerifyOverlapAndOpenDeparture()
+	{
+		Check(IsWaitingInHub() && Portal.IsValid() && !Portal->IsDepartureDialogueOpen(),
+			TEXT("overlap_alone_leaves_hub_waiting_and_dialogue_closed"));
+		if (Failures) { Finish(); return; }
+		PressInteract(&FRun::VerifyDefaultStayChoice);
+	}
+
+	void PressInteract(void (FRun::*AfterRelease)())
+	{
+		Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::F, IE_Pressed, 1.0f));
+		World->GetTimerManager().SetTimer(PrepareTimer, FTimerDelegate::CreateLambda([Self = AsShared(), AfterRelease]
+		{
+			if (!Self->bFinished && Self->Controller.IsValid() && Self->World.IsValid())
+			{
+				Self->Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::F, IE_Released, 0.0f));
+				Self->Later(.25f, AfterRelease);
+			}
+		}), .1f, false);
+	}
+
+	static bool HasSlateKeyboardFocus()
+	{
+		return FSlateApplication::IsInitialized() && FSlateApplication::Get().GetKeyboardFocusedWidget().IsValid();
+	}
+
+	static bool PressSlateKey(const FKey& Key)
+	{
+		FSlateApplication& Slate = FSlateApplication::Get();
+		const FKeyEvent Event(Key, FModifierKeysState(), 0, false, 0, 0);
+		const bool bHandled = Slate.ProcessKeyDownEvent(Event);
+		Slate.ProcessKeyUpEvent(Event);
+		return bHandled;
+	}
+
+	void VerifyDefaultStayChoice()
+	{
+		Check(Portal.IsValid() && Portal->IsDepartureDialogueOpen() && IsWaitingInHub(),
+			TEXT("controller_F_opens_departure_dialogue_without_starting_run"));
+		if (Failures) { Finish(); return; }
+		if (!DepartureCapture.IsEmpty())
+		{
+			IFileManager::Get().MakeDirectory(*FPaths::GetPath(DepartureCapture), true);
+			FScreenshotRequest::RequestScreenshot(DepartureCapture, true, false);
+			DepartureCaptureDeadline = FPlatformTime::Seconds() + 10.0;
+			Later(.3f, &FRun::WaitForDepartureCapture);
+			return;
+		}
+		ChooseStay();
+	}
+
+	void WaitForDepartureCapture()
+	{
+		if (!FScreenshotRequest::IsScreenshotRequested() && IFileManager::Get().FileSize(*DepartureCapture) > 1024)
+		{
+			Results += FString::Printf(TEXT("INFO departure_capture=%s\n"), *DepartureCapture);
+			UE_LOG(LogRogue10m, Display, TEXT("TOWN_RUN departure capture saved to %s"), *DepartureCapture);
+			ChooseStay();
+			return;
+		}
+		if (FPlatformTime::Seconds() >= DepartureCaptureDeadline)
+		{
+			Check(false, TEXT("requested_departure_dialogue_capture_saved"));
+			Finish();
+			return;
+		}
+		Later(.2f, &FRun::WaitForDepartureCapture);
+	}
+
+	void ChooseStay()
+	{
+		Check(Portal.IsValid() && Portal->IsDepartureDialogueOpen(), TEXT("departure_choices_still_available"));
+		if (Failures) { Finish(); return; }
+		if (HasSlateKeyboardFocus())
+		{
+			Check(PressSlateKey(EKeys::Enter), TEXT("focused_departure_dialogue_handles_Enter"));
+		}
+		else
+		{
+			Results += TEXT("INFO No Slate keyboard focus; using the native stay choice.\n");
+			Portal->SelectDepartureChoice(0);
+		}
+		Check(!Portal->IsDepartureDialogueOpen() && IsWaitingInHub(), TEXT("stay_closes_departure_dialogue_without_travel"));
+		if (Failures) { Finish(); return; }
+		PressInteract(&FRun::ConfirmDeparture);
+	}
+
+	void ConfirmDeparture()
+	{
+		Check(Portal.IsValid() && Portal->IsDepartureDialogueOpen() && IsWaitingInHub(),
+			TEXT("controller_F_reopens_departure_dialogue_after_staying"));
+		if (Failures) { Finish(); return; }
 		bTravelRequested = true;
-		UE_LOG(LogRogue10m, Display, TEXT("TOWN_RUN PORTAL native_overlap requested profile=%s"), *ProfileId.ToString());
-		// Moving the real capsule into the existing box dispatches its native overlap delegate.
-		Character->SetActorLocation(Box->GetComponentLocation(), false, nullptr, ETeleportType::TeleportPhysics);
+		UE_LOG(LogRogue10m, Display, TEXT("TOWN_RUN PORTAL departure confirmed profile=%s"), *ProfileId.ToString());
+		if (HasSlateKeyboardFocus())
+		{
+			Check(PressSlateKey(EKeys::Down) && PressSlateKey(EKeys::Enter), TEXT("focused_departure_dialogue_handles_selection_and_confirm"));
+		}
+		else
+		{
+			Results += TEXT("INFO No Slate keyboard focus; using the native departure choice.\n");
+			Portal->SelectDepartureChoice(1);
+		}
+		if (Failures) { Finish(); }
 	}
 
 	void DropAndPickupEnhancedWeapon()
@@ -271,10 +489,19 @@ private:
 		if (Failures) { Finish(); return; }
 		VerifyHardMonsterAndRewards();
 		Check(Persistence->SaveNow(), TEXT("postkill_progression_saved_for_restart"));
-		CaptureExpected(*Expected);
+		if (Failures) { Finish(); return; }
 		TArray<uint8> Bytes;
-		Check(UGameplayStatics::SaveGameToMemory(Expected.Get(), Bytes)
-			&& FFileHelper::SaveArrayToFile(Bytes, *FPaths::Combine(Output, TEXT("final-expected.bin"))), TEXT("postkill_independent_restart_snapshot_written"));
+		Check(UGameplayStatics::LoadDataFromSlot(Bytes, Persistence->GetSaveSlotForProfile(ProfileId), 0),
+			TEXT("postkill_actual_profile_save_bytes_loaded"));
+		const auto* Interrupted = Cast<URogue10mProgressionSaveGame>(Bytes.IsEmpty() ? nullptr : UGameplayStatics::LoadGameFromMemory(Bytes));
+		Check(Interrupted && Interrupted->ProfileId == ProfileId && Interrupted->RunId == Persistence->GetAttachedRunId()
+			&& Interrupted->RunId.IsValid() && Interrupted->bEnteredRun && !Interrupted->bRunCompleted
+			&& Interrupted->EntryCurrencies.IsValid() && Interrupted->ClaimedRewards.Contains(RewardId),
+			TEXT("postkill_actual_save_retains_entered_run_baseline_and_Arin_receipt"));
+		if (Failures) { Finish(); return; }
+		CheckSnapshots(*Interrupted, TEXT("postkill_disk"));
+		Check(FFileHelper::SaveArrayToFile(Bytes, *FPaths::Combine(Output, TEXT("final-expected.bin"))),
+			TEXT("postkill_actual_interrupted_save_preserved_for_independent_restart"));
 		Finish();
 	}
 
@@ -323,15 +550,50 @@ private:
 		TArray<uint8> Bytes;
 		Check(FFileHelper::LoadFileToArray(Bytes, *FPaths::Combine(Output, TEXT("final-expected.bin"))), TEXT("posttravel_first_process_snapshot_exists"));
 		Expected.Reset(Bytes.Num() ? Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromMemory(Bytes)) : nullptr);
-		Check(Expected && Expected->ProfileId == ProfileId, TEXT("independent_restart_snapshot_profile_matches"));
+		Check(Expected && Expected->ProfileId == ProfileId && Expected->bEnteredRun && !Expected->bRunCompleted,
+			TEXT("first_process_finished_with_an_unsettled_entered_run_for_the_same_profile"));
 		if (Failures || !Expected) { Finish(); return; }
-		CheckSnapshots(*Expected, TEXT("restart"));
+		const auto* Fresh = Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(Persistence->GetSaveSlotForProfile(ProfileId), 0));
+		Check(Fresh && Fresh->ProfileId == ProfileId && Fresh->RunId.IsValid() && Fresh->RunId != Expected->RunId
+			&& Fresh->RunId == Persistence->GetAttachedRunId() && Fresh->LastSettledRunId == Expected->RunId
+			&& !Fresh->bEnteredRun && !Fresh->bRunCompleted && !Fresh->bAbandoned && !Fresh->EntryCurrencies.IsValid(),
+			TEXT("restart_records_the_interrupted_run_and_creates_a_fresh_waiting_run"));
+		if (Failures) { Finish(); return; }
+		CheckSnapshots(*Fresh, TEXT("fresh_hub_disk"));
+		int32 EntryGold = 0, EntryCrystals = 0, EntryLobby = 0;
+	const bool bDiscoveriesRetained = Algo::AllOf(Expected->DiscoveredNodes, [Fresh](FName Node)
+	{
+		return Fresh->DiscoveredNodes.Contains(Node);
+	});
+		Check(Expected->EntryCurrencies.TryResolve(Expected->RunId, EntryGold, EntryCrystals, EntryLobby)
+			&& Fresh->Inventory.Gold == EntryGold && Fresh->Inventory.Crystals == EntryCrystals && Fresh->LobbyEarnedPoints == EntryLobby
+			&& Town->GetLobbyEarnedBudget() == EntryLobby && Fresh->HighestRunLevel == Expected->HighestRunLevel
+			&& Same(Fresh->Town, Expected->Town) && bDiscoveriesRetained,
+			TEXT("interruption_keeps_entry_currencies_permanent_traits_and_discoveries"));
+		Check(Fresh->Growth.Level == 1 && Fresh->Growth.Experience == 0.0f && Fresh->Growth.MonsterDefeats.IsEmpty()
+			&& State->GetMonsterDefeatCount(TEXT("TownRunQaTarget")) == 0 && Fresh->RewardDefeatBaseline == 0
+			&& Fresh->Growth.WeaponType == ERogue10mWeaponType::Unarmed && Character->GetEquippedWeaponType() == ERogue10mWeaponType::Unarmed
+			&& !Inventory->GetEquippedItemData(ERogue10mInventorySlotType::MainWeapon),
+			TEXT("fresh_run_clears_growth_recent_kills_and_equipped_gear"));
+		const auto* SkillTree = State->GetSkillTreeProgressionComponent();
+		Check(Expected->Growth.SkillUses.FindRef(TEXT("TownRunQaSkill")) == 23
+			&& State->GetSkillUseCount(TEXT("TownRunQaSkill")) == 0
+			&& SkillTree && SkillTree->GetMasteryTotalExperience(ERogue10mSkillTreeTrack::Brawler) == 0
+			&& SkillTree->GetSpentSkillTreePoints() == 0 && Same(Fresh->SkillTree, SkillTree->Capture()),
+			TEXT("fresh_run_clears_recorded_skill_uses_and_run_skill_progression"));
 		const ARogue10mGameState* Run = World->GetGameState<ARogue10mGameState>();
-		Check(Run && Run->GetRunPhase() == ERogue10mRunPhase::WaitingToStart, TEXT("new_process_StartHub_does_not_resume_previous_run_timer"));
+		Check(Run && Run->GetRunPhase() == ERogue10mRunPhase::WaitingToStart && !World->URL.HasOption(TEXT("StartRun")),
+			TEXT("new_process_StartHub_does_not_resume_previous_run_timer"));
+		const auto* Supplies = NPC->TutorialData.Get();
+		Check(Expected->ClaimedRewards.Contains(Supplies->RewardId) && Fresh->ClaimedRewards.IsEmpty(),
+			TEXT("fresh_run_clears_the_interrupted_runs_Arin_receipt"));
+		if (Failures) { Finish(); return; }
 		Character->SetActorLocation(NPC->GetActorLocation() + FVector(100.0f, 0.0f, 100.0f), false, nullptr, ETeleportType::TeleportPhysics);
-		Check(NPC->BeginDialogue(Character.Get()) && NPC->HasClaimedReward(Character.Get()) && !NPC->ClaimStartingSupplies(),
-			TEXT("new_process_profile_receipt_prevents_duplicate_starter_supply"));
-		Check(State->GetMonsterDefeatCount(TEXT("TownRunQaTarget")) == 1, TEXT("native_run_kill_progression_survives_process_restart"));
+		const int32 InitialSupplyCount = CountItem(Supplies->StartingItem);
+		Check(NPC->BeginDialogue(Character.Get()) && !NPC->HasClaimedReward(Character.Get()) && NPC->ClaimStartingSupplies()
+			&& NPC->HasClaimedReward(Character.Get()) && !NPC->ClaimStartingSupplies()
+			&& CountItem(Supplies->StartingItem) == InitialSupplyCount + Supplies->StartingItemQuantity,
+			TEXT("Arin_grants_starter_supplies_once_in_the_fresh_run"));
 		Finish();
 	}
 
@@ -381,6 +643,7 @@ private:
 	TWeakObjectPtr<ARogue10mCharacter> Character;
 	TWeakObjectPtr<ARogue10mPlayerController> Controller;
 	TWeakObjectPtr<ARogue10mTutorialNPC> NPC;
+	TWeakObjectPtr<ARogue10mRunPortal> Portal;
 	TStrongObjectPtr<URogue10mItemDataAsset> SupplyAsset;
 	TStrongObjectPtr<URogue10mProgressionSaveGame> Expected;
 	URogue10mCharacterProfileSubsystem* Profiles = nullptr;
@@ -394,8 +657,10 @@ private:
 	FTimerHandle PrepareTimer;
 	FDelegateHandle LoadHandle;
 	FTSTicker::FDelegateHandle Watchdog;
-	FString Output, Results;
+	FString Output, Results, DepartureCapture;
 	double Deadline = 0.0;
+	double TownGroundDeadline = 0.0;
+	double DepartureCaptureDeadline = 0.0;
 	int32 SupplyCountBeforeTravel = 0;
 	int32 Failures = 0;
 	bool bTravelRequested = false;
@@ -421,7 +686,7 @@ static void Run(bool bRead)
 }
 
 static FAutoConsoleCommand WriteCommand(TEXT("Rogue10m.TestTownRunWrite"), TEXT("Tests NPC-selected Hard difficulty, actual portal travel, drop/pickup and native kill rewards with isolated saves."), FConsoleCommandDelegate::CreateLambda([] { Run(false); }));
-static FAutoConsoleCommand ReadCommand(TEXT("Rogue10m.TestTownRunRead"), TEXT("Verifies the posttravel and postkill progression in a second isolated game process."), FConsoleCommandDelegate::CreateLambda([] { Run(true); }));
+static FAutoConsoleCommand ReadCommand(TEXT("Rogue10m.TestTownRunRead"), TEXT("Verifies abandoned-run recovery and the fresh hub state in a second isolated game process."), FConsoleCommandDelegate::CreateLambda([] { Run(true); }));
 }
 
 #endif

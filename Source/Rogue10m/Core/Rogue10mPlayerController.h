@@ -11,6 +11,7 @@ class ARogue10mBasicMonster;
 class ARogue10mGameState;
 class URogue10mProgressionSubsystem;
 class ARogue10mTutorialNPC;
+class ARogue10mRunPortal;
 class UInputMappingContext;
 class URogue10mCharacterLobbyWidget;
 class URogue10mDamageIndicatorWidget;
@@ -129,6 +130,10 @@ public:
 	void EndNpcDialogueInput(ARogue10mTutorialNPC* NPC);
 	bool IsNpcDialogueVisible() const;
 	ARogue10mTutorialNPC* GetDialogueNPC() const { return DialogueNPC.Get(); }
+	void BeginDepartureDialogueInput(ARogue10mRunPortal* Portal);
+	void EndDepartureDialogueInput(ARogue10mRunPortal* Portal);
+	bool IsDepartureDialogueVisible() const;
+	ARogue10mRunPortal* GetDepartureDialoguePortal() const { return DepartureDialoguePortal.Get(); }
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Character Lobby")
 	void EnterSelectedCharacter();
@@ -349,6 +354,9 @@ private:
 	void InitializeCharacterLobby();
 	void InitializeMainMenu();
 	void RefreshInputMode();
+	bool CanShowWorldDialogue() const;
+	void SetWorldDialogueInputActive(bool bActive);
+	void CloseWorldDialogue();
 	void RefreshQuitMenu();
 	void ResetQuitGameConfirmation();
 	UPROPERTY(Transient) TObjectPtr<URogue10mQuitMenuWidget> QuitMenuWidget;
@@ -404,6 +412,7 @@ private:
 	bool bTraitAddedLookIgnore = false;
 	TWeakObjectPtr<ARogue10mTutorialNPC> TraitServiceNPC;
 	TWeakObjectPtr<ARogue10mTutorialNPC> DialogueNPC;
+	TWeakObjectPtr<ARogue10mRunPortal> DepartureDialoguePortal;
 	bool bDialogueAddedMoveIgnore = false;
 	bool bDialogueAddedLookIgnore = false;
 	bool bShowCombatLog = true;

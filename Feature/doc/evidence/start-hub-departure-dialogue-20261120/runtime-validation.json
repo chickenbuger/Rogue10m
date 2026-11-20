@@ -1,0 +1,35 @@
+{
+  "base_commit": "a507255e",
+  "development_editor_build": "passed",
+  "rendered_departure": {
+    "resolution": [1280, 720],
+    "renderer": "D3D11 offscreen",
+    "input": "simulated controller F and focused Slate Down/Enter path",
+    "checks_passed": 60,
+    "new_unreal_errors": 0,
+    "capture": "DevLog/20261120_StartHubDeparture/north-gate-dialogue.png",
+    "capture_sha256": "1f9e9523adf07fda28041aacca2efadc05b52fd3fbf6641bf78231b2ee5a1bdd",
+    "preloaded_destination_reused": true,
+    "destination": "/Game/Rogue10m/Maps/OpenRunMap",
+    "travel_option": "StartRun=1"
+  },
+  "final_two_process_check": {
+    "write_checks_passed": 59,
+    "restart_checks_passed": 19,
+    "exit_codes": [0, 0],
+    "new_unreal_errors": [0, 0],
+    "restart": "fresh waiting run, last-settled ledger, entry currency and permanent progression preserved, run-only state cleared, starter supply once"
+  },
+  "related_regressions": {
+    "legacy_1_checks_passed": 17,
+    "legacy_1_walked_to_authored_gate": true,
+    "existing_arin_dialogue_checks_passed": 59,
+    "new_unreal_errors": [0, 0]
+  },
+  "prior_verification_observations": [
+    "The first isolated build attempt encountered the engine-wide Live Coding guard. Subsequent builds used separate physical outputs and the UBT IDE hot-reload opt-out.",
+    "Initial TownRun fixtures assumed an equipped starter, used a zero lobby budget, and then underreported the saved highest run level. The fixture was corrected and the production rules retained.",
+    "The initial restart check assumed the interrupted run could resume in StartHub. The final check covers the fresh run and permanent ledger and uses the recorded skill-use counter instead of the shape of the default weapon presets.",
+    "The original editor's separate log contained two rejected get_current_level calls while PIE was active, with two engine errors each. The isolated validation sessions showed zero errors."
+  ]
+}

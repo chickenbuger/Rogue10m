@@ -5,6 +5,10 @@
 #include "Components/Button.h"
 #include "Rogue10mTutorialWidget.generated.h"
 class ARogue10mTutorialNPC;
+class ARogue10mRunPortal;
+class UBorder;
+class UCanvasPanelSlot;
+class UScaleBoxSlot;
 class UTextBlock;
 class UVerticalBox;
 class URogue10mTutorialWidget;
@@ -29,6 +33,7 @@ public:
     void SetDialogueView(const FText& Name,const FText& Role,const FText& Dialogue,const FText& Status,const FText& Action);
     void SetServiceView(const FText& Services);
     void SetServiceChoices(ARogue10mTutorialNPC* NPC,const TArray<FText>& Labels,int32 Selected,bool bCanClaim);
+    void SetDepartureChoices(ARogue10mRunPortal* Portal, bool bOpen, int32 Selected);
     void HandleAction(int32 Action);
     UFUNCTION(BlueprintPure,Category="Rogue10m|Tutorial") FText GetDisplayedDialogue() const;
     UFUNCTION(BlueprintPure,Category="Rogue10m|Town") FText GetDisplayedServices() const;
@@ -38,8 +43,10 @@ protected:
     virtual FReply NativeOnPreviewKeyDown(const FGeometry& Geometry,const FKeyEvent& KeyEvent) override;
 private:
     void EnsureNativeWidget();
+    void UpdateChoiceRows(const TArray<FText>& Labels, int32 Selected, bool bOpen, bool bCanClaim, bool bShowClose);
     URogue10mTutorialActionButton* AddAction(UVerticalBox* Rows,FName Name,int32 Action,UTextBlock*& Label);
     TWeakObjectPtr<ARogue10mTutorialNPC> ServiceNPC;
+    TWeakObjectPtr<ARogue10mRunPortal> DeparturePortal;
     FText FullServices;
     UPROPERTY(Transient) TObjectPtr<UTextBlock> NameText;
     UPROPERTY(Transient) TObjectPtr<UTextBlock> RoleText;
@@ -48,6 +55,9 @@ private:
     UPROPERTY(Transient) TObjectPtr<UTextBlock> ActionText;
     UPROPERTY(Transient) TObjectPtr<UTextBlock> ServicesText;
     UPROPERTY(Transient) TObjectPtr<UVerticalBox> ChoiceRows;
+    UPROPERTY(Transient) TObjectPtr<UCanvasPanelSlot> CardSlot;
+    UPROPERTY(Transient) TObjectPtr<UScaleBoxSlot> CardContentSlot;
+    UPROPERTY(Transient) TObjectPtr<UBorder> CardFrame;
     UPROPERTY(Transient) TArray<TObjectPtr<URogue10mTutorialActionButton>> ServiceButtons;
     UPROPERTY(Transient) TArray<TObjectPtr<UTextBlock>> ServiceLabels;
     UPROPERTY(Transient) TObjectPtr<URogue10mTutorialActionButton> SupplyButton;

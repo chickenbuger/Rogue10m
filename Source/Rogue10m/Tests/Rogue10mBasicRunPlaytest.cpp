@@ -1460,13 +1460,20 @@ private:
         Event(TEXT("next_run_hub_verified"), TEXT("same_selected_and_attached_profile; Hub_generated_new_RunId; first_run_flags_frozen"));
         SetStage(TEXT("next_hub_route"),45.);
     }
+    void WalkToDepartureAndConfirm(const TCHAR* TravelStage, float Delta)
+    {
+        if (!Walk(Portal->GetActorLocation(), 15.f, Delta, false) || !Portal->BeginDepartureDialogue(Character.Get())) { return; }
+        SetStage(TravelStage, 45.);
+        Portal->SelectDepartureChoice(1);
+    }
+
     void TickNextRunConnection(float Delta)
     {
         if (Now() - StageAt > StageLimit) { FailNextRunConnection(TEXT("next_run_stage_timeout_") + Stage); return; }
         if (Now() < ActionAt || !NextRunOwnedReady(Stage != TEXT("next_result"))) { return; }
         if (Map() == TEXT("OpenRunMap") && Run->IsRunTerminal() && Run->GetRunPhase() != ERogue10mRunPhase::Abandoned)
         { FailNextRunConnection(TEXT("next_run_unexpected_natural_terminal")); return; }
-        if (Stage == TEXT("next_hub_route") || Stage == TEXT("next_portal_walk"))
+        if (Stage == TEXT("next_hub_route") || Stage == TEXT("next_portal_walk") || Stage == TEXT("next_portal_travel"))
         {
             if (Map() == TEXT("OpenRunMap"))
             { SetStage(TEXT("next_field_ready"),30.); return; }
@@ -1479,6 +1486,7 @@ private:
                 else { SetStage(TEXT("next_portal_walk"),45.); }
                 return;
             }
+            if (Stage == TEXT("next_portal_travel")) { return; }
             if (!Portal.IsValid())
             {
                 int32 ContinuationPortalCount = 0;
@@ -1490,7 +1498,8 @@ private:
             if (!ContinuationTown || Inventory->GetGold() != NextRunEntryGold || Inventory->GetCrystals() != NextRunEntryCrystals
                 || ContinuationTown->GetLobbyEarnedBudget() != NextRunEntryLobbyEarned || Saves->GetLobbyAvailablePoints() != NextRunEntryLobbyAvailable)
             { FailNextRunConnection(TEXT("next_run_unrequested_hub_currency_change")); return; }
-            Walk(Portal->GetActorLocation(),15.f,Delta,false); return; // Only actual overlap performs entry save/travel.
+            WalkToDepartureAndConfirm(TEXT("next_portal_travel"), Delta);
+            return;
         }
         if (Stage == TEXT("next_field_ready"))
         {
@@ -1701,11 +1710,12 @@ private:
         }
         else if (Stage == TEXT("hub_route"))
         { if (Waypoint < Route.Num()) { if (Walk(Route[Waypoint], 120.f, Delta, false)) { ++Waypoint; } } else { SetStage(TEXT("portal_walk")); } }
-        else if (Stage == TEXT("portal_walk"))
+        else if (Stage == TEXT("portal_walk") || Stage == TEXT("portal_travel"))
         {
             if (Map() == TEXT("OpenRunMap")) { SetStage(TEXT("field_ready")); return; }
+            if (Stage == TEXT("portal_travel")) { return; }
             if (!Portal.IsValid()) for (TActorIterator<ARogue10mRunPortal> It(World.Get()); It; ++It) { Portal = *It; break; }
-            if (Portal.IsValid()) { Walk(Portal->GetActorLocation(), 15.f, Delta, false); }
+            if (Portal.IsValid()) { WalkToDepartureAndConfirm(TEXT("portal_travel"), Delta); }
         }
         else if (Stage == TEXT("field_ready"))
         {

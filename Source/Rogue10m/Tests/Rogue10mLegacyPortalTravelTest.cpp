@@ -200,7 +200,7 @@ public:
 	}
 
 private:
-	enum class EStage { Seed, Restore, Walk };
+	enum class EStage { Seed, Restore, Walk, Travel };
 
 	static bool StartsInReplayDirectory(const FString& Label)
 	{
@@ -379,6 +379,7 @@ private:
 			TEXT("authored_OpenRunMap_portal_found_in_waiting_hub"))) { return false; }
 		EntryRunId = RunId;
 		EntryInventory = Pawn.GetInventoryComponent()->CaptureInventory();
+		Gate = Gates[0];
 		const FVector Center = Gates[0]->GetActorLocation();
 		const FVector Axis = Gates[0]->GetActorRightVector();
 		Waypoints = {FVector(650, -1100, 0), FVector(650, 950, 0), FVector(0, 1800, 0), Center - Axis * 300.0, Center + Axis * 300.0};
@@ -456,7 +457,14 @@ private:
 			return false;
 		}
 		if (MapPackage(*World) != Hub) { Fail(TEXT("unexpected_travel_destination")); return false; }
-		if (Waypoint == Waypoints.Num()) { Fail(TEXT("walked_through_gate_without_travel")); return false; }
+		if (Stage == EStage::Travel) { return true; }
+		if (Gate.IsValid() && Gate->BeginDepartureDialogue(Pawn))
+		{
+			Stage = EStage::Travel;
+			Gate->SelectDepartureChoice(1);
+			return true;
+		}
+		if (Waypoint == Waypoints.Num()) { Fail(TEXT("walked_through_gate_without_departure_dialogue")); return false; }
 		FVector Direction = Waypoints[Waypoint] - Pawn->GetActorLocation();
 		Direction.Z = 0.0;
 		const double Distance = Direction.Size();
@@ -467,6 +475,7 @@ private:
 	}
 
 	TWeakObjectPtr<UGameInstance> Instance;
+	TWeakObjectPtr<ARogue10mRunPortal> Gate;
 	FString Scenario, Prefix, LegacySlot, CurrentSlot, FixtureSlot;
 	TArray<uint8> FixtureBytes, InvalidBytes;
 	TArray<FVector> Waypoints;

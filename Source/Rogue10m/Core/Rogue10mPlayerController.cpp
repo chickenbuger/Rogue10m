@@ -35,6 +35,7 @@
 #include "Rogue10mTownProgressionComponent.h"
 #include "Rogue10mTutorialNPC.h"
 #include "Rogue10mTutorialWidget.h"
+#include "Rogue10mRunPortal.h"
 #include "Rogue10mMenuGameMode.h"
 #include "Rogue10mGameState.h"
 #include "Rogue10mRunHUD.h"
@@ -224,7 +225,7 @@ void ARogue10mPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason
 	bMenuPauseEndingPlay = true;
 	ResetQuitGameConfirmation();
 	if (QuitMenuWidget) { QuitMenuWidget->RemoveFromParent(); QuitMenuWidget = nullptr; }
-	if (auto* NPC = DialogueNPC.Get()) { NPC->CloseDialogue(); }
+	CloseWorldDialogue();
 	if (ARogue10mGameState* Run = GetWorld() ? GetWorld()->GetGameState<ARogue10mGameState>() : nullptr)
 	{ Run->OnRunPhaseChanged.RemoveDynamic(this, &ARogue10mPlayerController::HandleMenuPauseRunPhaseChanged); }
 	if (ARogue10mGameMode* Mode = GetWorld() ? GetWorld()->GetAuthGameMode<ARogue10mGameMode>() : nullptr)
@@ -469,7 +470,7 @@ void ARogue10mPlayerController::ToggleSettings()
 void ARogue10mPlayerController::CloseAllBlockingPanels()
 {
 	ResetQuitGameConfirmation();
-	if (auto* NPC = DialogueNPC.Get()) { NPC->CloseDialogue(); }
+	CloseWorldDialogue();
 	CloseTraitWindow();
 	if (CombatTestComponent) CombatTestComponent->SetPanelOpen(false);
 	bInventoryVisible = false;
@@ -514,33 +515,89 @@ void ARogue10mPlayerController::ShowRunResult()
 
 bool ARogue10mPlayerController::IsNpcDialogueVisible() const
 {
-    return DialogueNPC.IsValid() && DialogueNPC->IsDialogueOpen() && DialogueNPC->GetTutorialWidget()
-        && !bMainMenuVisible && !bCharacterLobbyVisible && !bInventoryVisible && !bItemWindowVisible
-        && !bSkillTreeVisible && !bSettingsVisible && !bTraitWindowVisible && !bRunResultVisible
-        && !(CombatTestComponent && CombatTestComponent->IsPanelOpen());
+	return DialogueNPC.IsValid() && DialogueNPC->IsDialogueOpen() && DialogueNPC->GetTutorialWidget() && CanShowWorldDialogue();
 }
+
+bool ARogue10mPlayerController::IsDepartureDialogueVisible() const
+{
+	return DepartureDialoguePortal.IsValid() && DepartureDialoguePortal->IsDepartureDialogueOpen()
+		&& DepartureDialoguePortal->GetDepartureWidget() && CanShowWorldDialogue();
+}
+
+bool ARogue10mPlayerController::CanShowWorldDialogue() const
+{
+	return !bQuitGameConfirmationOpen && !bMainMenuVisible && !bCharacterLobbyVisible && !bInventoryVisible && !bItemWindowVisible
+		&& !bSkillTreeVisible && !bSettingsVisible && !bTraitWindowVisible && !bRunResultVisible
+		&& !(CombatTestComponent && CombatTestComponent->IsPanelOpen());
+}
+
 void ARogue10mPlayerController::BeginNpcDialogueInput(ARogue10mTutorialNPC* NPC)
 {
-    if (!IsLocalPlayerController() || !IsValid(NPC)) { return; }
-    if (DialogueNPC.Get() != NPC)
-    {
-        if (auto* Previous = DialogueNPC.Get()) { Previous->CloseDialogue(); }
-        DialogueNPC = NPC;
-        SetIgnoreMoveInput(true); bDialogueAddedMoveIgnore = true;
-        SetIgnoreLookInput(true); bDialogueAddedLookIgnore = true;
-        if (auto* DialogueCharacter = Cast<ARogue10mCharacter>(GetPawn()))
-        { if (auto* Movement = DialogueCharacter->GetCharacterMovement()) { Movement->StopMovementImmediately(); } }
-    }
-    RefreshInputMode();
-    if (NPC->GetTutorialWidget()) { NPC->GetTutorialWidget()->SetUserFocus(this); }
+	if (!IsLocalPlayerController() || !IsValid(NPC)) { return; }
+	if (DialogueNPC.Get() != NPC)
+	{
+		CloseWorldDialogue();
+		DialogueNPC = NPC;
+		SetWorldDialogueInputActive(true);
+	}
+	RefreshInputMode();
+	if (NPC->GetTutorialWidget()) { NPC->GetTutorialWidget()->SetUserFocus(this); }
 }
+
 void ARogue10mPlayerController::EndNpcDialogueInput(ARogue10mTutorialNPC* NPC)
 {
-    if (DialogueNPC.Get() != NPC) { return; }
-    DialogueNPC.Reset();
-    if (bDialogueAddedMoveIgnore) { SetIgnoreMoveInput(false); bDialogueAddedMoveIgnore = false; }
-    if (bDialogueAddedLookIgnore) { SetIgnoreLookInput(false); bDialogueAddedLookIgnore = false; }
-    if (!bMenuPauseEndingPlay) { RefreshInputMode(); }
+	if (DialogueNPC.Get() != NPC) { return; }
+	DialogueNPC.Reset();
+	SetWorldDialogueInputActive(false);
+	if (!bMenuPauseEndingPlay) { RefreshInputMode(); }
+}
+
+void ARogue10mPlayerController::BeginDepartureDialogueInput(ARogue10mRunPortal* Portal)
+{
+	if (!IsLocalPlayerController() || !IsValid(Portal)) { return; }
+	if (DepartureDialoguePortal.Get() != Portal)
+	{
+		CloseWorldDialogue();
+		DepartureDialoguePortal = Portal;
+		SetWorldDialogueInputActive(true);
+	}
+	RefreshInputMode();
+	if (Portal->GetDepartureWidget()) { Portal->GetDepartureWidget()->SetUserFocus(this); }
+}
+
+void ARogue10mPlayerController::EndDepartureDialogueInput(ARogue10mRunPortal* Portal)
+{
+	if (DepartureDialoguePortal.Get() != Portal) { return; }
+	DepartureDialoguePortal.Reset();
+	SetWorldDialogueInputActive(false);
+	if (!bMenuPauseEndingPlay) { RefreshInputMode(); }
+}
+
+void ARogue10mPlayerController::SetWorldDialogueInputActive(bool bActive)
+{
+	if (bDialogueAddedMoveIgnore != bActive)
+	{
+		SetIgnoreMoveInput(bActive);
+		bDialogueAddedMoveIgnore = bActive;
+	}
+	if (bDialogueAddedLookIgnore != bActive)
+	{
+		SetIgnoreLookInput(bActive);
+		bDialogueAddedLookIgnore = bActive;
+	}
+	if (bActive)
+	{
+		if (auto* DialogueCharacter = Cast<ARogue10mCharacter>(GetPawn()))
+		{
+			if (auto* Movement = DialogueCharacter->GetCharacterMovement()) { Movement->StopMovementImmediately(); }
+		}
+	}
+}
+
+void ARogue10mPlayerController::CloseWorldDialogue()
+{
+	if (auto* NPC = DialogueNPC.Get()) { NPC->CloseDialogue(); }
+	if (auto* Portal = DepartureDialoguePortal.Get()) { Portal->CloseDepartureDialogue(); }
 }
 
 bool ARogue10mPlayerController::OpenTraitWindow(ARogue10mTutorialNPC* ServiceNPC)
@@ -736,7 +793,7 @@ void ARogue10mPlayerController::OpenCharacterLobbyFromMainMenu()
 }
 bool ARogue10mPlayerController::IsAnyBlockingWindowVisible() const
 {
-	return bQuitGameConfirmationOpen || IsNpcDialogueVisible() || bMainMenuVisible || bCharacterLobbyVisible || bInventoryVisible
+	return bQuitGameConfirmationOpen || IsNpcDialogueVisible() || IsDepartureDialogueVisible() || bMainMenuVisible || bCharacterLobbyVisible || bInventoryVisible
 		|| bItemWindowVisible || bSkillTreeVisible || bSettingsVisible || bTraitWindowVisible || bRunResultVisible
 		|| (CombatTestComponent && CombatTestComponent->IsPanelOpen());
 }
@@ -1329,9 +1386,11 @@ void ARogue10mPlayerController::HandleMenuPauseRunPhaseChanged(ERogue10mRunPhase
 void ARogue10mPlayerController::RefreshInputMode()
 {
 	RefreshQuitMenu();
+	URogue10mTutorialWidget* WorldDialogue = IsNpcDialogueVisible() ? DialogueNPC->GetTutorialWidget() : nullptr;
+	if (IsDepartureDialogueVisible()) { WorldDialogue = DepartureDialoguePortal->GetDepartureWidget(); }
 	// Menu pause stops the nearby NPC timer. Hide only this player's existing proximity cards
 	// immediately on a blocking transition, including when no dialogue was opened yet.
-	if (IsAnyBlockingWindowVisible() && !IsNpcDialogueVisible())
+	if (IsAnyBlockingWindowVisible() && !WorldDialogue)
 	{
 		for (TObjectIterator<URogue10mTutorialWidget> It; It; ++It)
 		{
@@ -1412,11 +1471,11 @@ void ARogue10mPlayerController::RefreshInputMode()
 		return;
 	}
 
-	if (IsNpcDialogueVisible())
+	if (WorldDialogue)
 	{
 		bShowMouseCursor = true; bEnableClickEvents = true; bEnableMouseOverEvents = true;
 		FInputModeGameAndUI InputMode;
-		InputMode.SetWidgetToFocus(DialogueNPC->GetTutorialWidget()->TakeWidget());
+		InputMode.SetWidgetToFocus(WorldDialogue->TakeWidget());
 		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
 		InputMode.SetHideCursorDuringCapture(false); SetInputMode(InputMode);
 		return;
@@ -1450,7 +1509,7 @@ void ARogue10mPlayerController::RefreshInputMode()
 void ARogue10mPlayerController::SetPanelVisible(
 	bool& PanelState, bool bVisible, URogue10mMenuWindowWidget* ActivatedWindow)
 {
-	if (bVisible && DialogueNPC.IsValid()) { DialogueNPC->CloseDialogue(); }
+	if (bVisible) { CloseWorldDialogue(); }
 	if (bVisible && CombatTestComponent) CombatTestComponent->SetPanelOpen(false);
 	if (bVisible)
 	{
@@ -1479,7 +1538,7 @@ void ARogue10mPlayerController::SetPanelVisible(
 void ARogue10mPlayerController::SetInventoryEquipmentPanelVisible(
 	bool& PanelState, bool bVisible, URogue10mMenuWindowWidget* ActivatedWindow)
 {
-	if (bVisible && DialogueNPC.IsValid()) { DialogueNPC->CloseDialogue(); }
+	if (bVisible) { CloseWorldDialogue(); }
 	if (bVisible && CombatTestComponent) CombatTestComponent->SetPanelOpen(false);
 	if (bVisible)
 	{

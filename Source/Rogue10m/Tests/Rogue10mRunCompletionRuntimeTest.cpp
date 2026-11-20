@@ -222,8 +222,11 @@ private:
 		Check(Box != nullptr, TEXT("authored_StartHub_portal_collision_found"));
 		if (Failures) { Finish(); return; }
 		Character->SetActorLocation(Box->GetComponentLocation() + FVector(500, 0, 0), false, nullptr, ETeleportType::TeleportPhysics);
-		bExpectRun = true;
 		Character->SetActorLocation(Box->GetComponentLocation(), false, nullptr, ETeleportType::TeleportPhysics);
+		Check(Portal->BeginDepartureDialogue(Character.Get()), TEXT("authored_gate_opens_departure_dialogue"));
+		if (Failures) { Finish(); return; }
+		bExpectRun = true;
+		Portal->SelectDepartureChoice(1);
 	}
 	void SeedSkillTree()
 	{

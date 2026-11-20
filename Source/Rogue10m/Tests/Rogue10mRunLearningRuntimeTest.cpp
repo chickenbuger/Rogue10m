@@ -181,6 +181,9 @@ private:
         OldWorld = World;
         Character->SetActorLocation(Box->GetComponentLocation() + FVector(500, 0, 0), false, nullptr, ETeleportType::TeleportPhysics);
         Character->SetActorLocation(Box->GetComponentLocation(), false, nullptr, ETeleportType::TeleportPhysics);
+        Check(Portal->BeginDepartureDialogue(Character.Get()), TEXT("authored_gate_opens_departure_dialogue"));
+        if (Failures) { Finish(); return; }
+        Portal->SelectDepartureChoice(1);
         Later(0.2, [this] { WaitForWorld(TEXT("OpenRunMap"), [this] { BeginField(); }); });
     }
     void WaitForWorld(const TCHAR* Name, TFunction<void()> Ready)

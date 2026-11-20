@@ -11,6 +11,7 @@
 #include "Components/VerticalBox.h"
 #include "Components/VerticalBoxSlot.h"
 #include "InputCoreTypes.h"
+#include "Rogue10mRunPortal.h"
 #include "Rogue10mTutorialNPC.h"
 URogue10mTutorialActionButton::URogue10mTutorialActionButton(const FObjectInitializer& ObjectInitializer)
     : Super(ObjectInitializer) { InitIsFocusable(false); }
@@ -40,11 +41,14 @@ void URogue10mTutorialWidget::EnsureNativeWidget()
     Canvas->SetVisibility(ESlateVisibility::SelfHitTestInvisible);WidgetTree->RootWidget=Canvas;
     auto* Scale=WidgetTree->ConstructWidget<UScaleBox>(UScaleBox::StaticClass(),TEXT("TutorialScale"));
     Scale->SetStretch(EStretch::ScaleToFit);Scale->SetStretchDirection(EStretchDirection::DownOnly);
-    auto* CanvasSlot=Canvas->AddChildToCanvas(Scale);CanvasSlot->SetAnchors(FAnchors(.52f,.04f,.98f,.94f));CanvasSlot->SetOffsets(FMargin(0));
+    CardSlot=Canvas->AddChildToCanvas(Scale);CardSlot->SetAnchors(FAnchors(.52f,.04f,.98f,.94f));CardSlot->SetOffsets(FMargin(0));
     auto* Size=WidgetTree->ConstructWidget<USizeBox>(USizeBox::StaticClass(),TEXT("TutorialSize"));Size->SetWidthOverride(550);Scale->AddChild(Size);
-    if(auto* ScaleSlot=Cast<UScaleBoxSlot>(Size->Slot)){ScaleSlot->SetHorizontalAlignment(HAlign_Right);ScaleSlot->SetVerticalAlignment(VAlign_Top);}
+    CardContentSlot=Cast<UScaleBoxSlot>(Size->Slot);
+    if(CardContentSlot){CardContentSlot->SetHorizontalAlignment(HAlign_Right);CardContentSlot->SetVerticalAlignment(VAlign_Top);}
+    CardFrame=WidgetTree->ConstructWidget<UBorder>(UBorder::StaticClass(),TEXT("TutorialFrame"));
+    CardFrame->SetBrushColor(FLinearColor::Transparent);CardFrame->SetPadding(FMargin(0));Size->AddChild(CardFrame);
     auto* Border=WidgetTree->ConstructWidget<UBorder>(UBorder::StaticClass(),TEXT("TutorialCard"));
-    Border->SetBrushColor(FLinearColor(.028f,.040f,.035f,.97f));Border->SetPadding(FMargin(16,12));Size->AddChild(Border);
+    Border->SetBrushColor(FLinearColor(.028f,.040f,.035f,.97f));Border->SetPadding(FMargin(16,12));CardFrame->AddChild(Border);
     auto* Rows=WidgetTree->ConstructWidget<UVerticalBox>(UVerticalBox::StaticClass(),TEXT("TutorialRows"));Border->AddChild(Rows);
     auto AddText=[this,Rows](FName Name,int32 FontSize,FLinearColor Color,float Gap)
     {
@@ -84,7 +88,37 @@ void URogue10mTutorialWidget::SetServiceView(const FText& Services)
 }
 void URogue10mTutorialWidget::SetServiceChoices(ARogue10mTutorialNPC* NPC,const TArray<FText>& Labels,int32 Selected,bool bCanClaim)
 {
-    EnsureNativeWidget();ServiceNPC=NPC;const bool bOpen=IsValid(NPC)&&NPC->IsDialogueOpen();
+    EnsureNativeWidget();
+    ServiceNPC = NPC;
+    UpdateChoiceRows(Labels, Selected, IsValid(NPC) && NPC->IsDialogueOpen(), bCanClaim, true);
+}
+
+void URogue10mTutorialWidget::SetDepartureChoices(ARogue10mRunPortal* Portal, bool bOpen, int32 Selected)
+{
+    EnsureNativeWidget();
+    if (DeparturePortal.Get() != Portal)
+    {
+        DeparturePortal = Portal;
+        CardSlot->SetAnchors(FAnchors(.20f, .54f, .80f, .95f));
+        if (CardContentSlot)
+        {
+            CardContentSlot->SetHorizontalAlignment(HAlign_Center);
+            CardContentSlot->SetVerticalAlignment(VAlign_Bottom);
+        }
+        CardFrame->SetBrushColor(FLinearColor(.40f, .30f, .15f));
+        CardFrame->SetPadding(FMargin(1.0f));
+        RoleText->SetVisibility(ESlateVisibility::Collapsed);
+    }
+    static const TArray<FText> Choices = {
+        NSLOCTEXT("Rogue10mPortal", "Stay", "마을에 남기"),
+        NSLOCTEXT("Rogue10mPortal", "Depart", "탐험 출발")
+    };
+    DialogueText->SetVisibility(bOpen ? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
+    UpdateChoiceRows(Choices, Selected, bOpen, false, false);
+}
+
+void URogue10mTutorialWidget::UpdateChoiceRows(const TArray<FText>& Labels, int32 Selected, bool bOpen, bool bCanClaim, bool bShowClose)
+{
     ChoiceRows->SetVisibility(bOpen?ESlateVisibility::SelfHitTestInvisible:ESlateVisibility::Collapsed);
     for(int32 Index=0;Index<ServiceButtons.Num();++Index)
     {
@@ -93,6 +127,7 @@ void URogue10mTutorialWidget::SetServiceChoices(ARogue10mTutorialNPC* NPC,const 
         ServiceButtons[Index]->SetBackgroundColor(Index==Selected?FLinearColor(.34f,.31f,.12f,1):FLinearColor(.12f,.18f,.15f,1));
     }
     SupplyButton->SetVisibility(bCanClaim?ESlateVisibility::Visible:ESlateVisibility::Collapsed);
+    CloseButton->SetVisibility(bShowClose ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
     SetVisibility(bOpen?ESlateVisibility::SelfHitTestInvisible:ESlateVisibility::HitTestInvisible);
 }
 void URogue10mTutorialWidget::SetDialogueView(const FText& Name,const FText& Role,const FText& Dialogue,const FText& Status,const FText& Action)
@@ -103,14 +138,39 @@ void URogue10mTutorialWidget::SetDialogueView(const FText& Name,const FText& Rol
 }
 void URogue10mTutorialWidget::HandleAction(int32 Action)
 {
+    if (auto* Portal = DeparturePortal.Get())
+    {
+        Portal->SelectDepartureChoice(Action);
+        if (Portal->IsDepartureDialogueOpen() && GetOwningPlayer()) { SetUserFocus(GetOwningPlayer()); }
+        return;
+    }
     auto* NPC=ServiceNPC.Get();if(!NPC||!NPC->IsDialogueOpen()){return;}
     if(Action>=0&&Action<7){NPC->ActivateService(Action);}else if(Action==7){NPC->ClaimStartingSupplies();}else if(Action==8){NPC->CloseDialogue();}
     if(IsInViewport()&&NPC->IsDialogueOpen()&&GetVisibility()!=ESlateVisibility::Collapsed&&GetOwningPlayer()){SetUserFocus(GetOwningPlayer());}
 }
 FReply URogue10mTutorialWidget::NativeOnPreviewKeyDown(const FGeometry& Geometry,const FKeyEvent& KeyEvent)
 {
-    auto* NPC=ServiceNPC.Get();if(!NPC||!NPC->IsDialogueOpen()){return Super::NativeOnPreviewKeyDown(Geometry,KeyEvent);}
     const FKey Key=KeyEvent.GetKey();
+    if (auto* Portal = DeparturePortal.Get(); Portal && Portal->IsDepartureDialogueOpen())
+    {
+        if (Key == EKeys::Up || Key == EKeys::Down)
+        {
+            Portal->NavigateDepartureChoice(Key == EKeys::Up ? -1 : 1);
+            return FReply::Handled();
+        }
+        if (Key == EKeys::Enter || Key == EKeys::SpaceBar)
+        {
+            if (!KeyEvent.IsRepeat()) { Portal->SelectDepartureChoice(Portal->GetSelectedDepartureChoice()); }
+            return FReply::Handled();
+        }
+        if (Key == EKeys::F || Key == EKeys::Escape)
+        {
+            if (!KeyEvent.IsRepeat()) { Portal->CloseDepartureDialogue(); }
+            return FReply::Handled();
+        }
+        return Super::NativeOnPreviewKeyDown(Geometry, KeyEvent);
+    }
+    auto* NPC=ServiceNPC.Get();if(!NPC||!NPC->IsDialogueOpen()){return Super::NativeOnPreviewKeyDown(Geometry,KeyEvent);}
     if(Key==EKeys::Up||Key==EKeys::Down){NPC->NavigateService(Key==EKeys::Up?-1:1);return FReply::Handled();}
     if(Key==EKeys::Enter||Key==EKeys::SpaceBar){if(!KeyEvent.IsRepeat()){NPC->ActivateService(NPC->GetSelectedServiceIndex());}return FReply::Handled();}
     if(Key==EKeys::F){if(!KeyEvent.IsRepeat()){NPC->Interact();}return FReply::Handled();}

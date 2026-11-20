@@ -93,6 +93,7 @@
     "connectedFieldNodeId": "S",
     "includedInFieldGraph": false,
     "runClock": "waiting_until_normal_field_run_entry",
+    "departureInteraction": "north_gate_F_dialogue_then_confirm_departure",
     "arinIdentityAndExistingPresentationPreserved": true,
     "starterWeaponAndSupplyNewRunGrant": "proposal_requires_separate_receipt_and_inventory_validation_not_implemented_by_this_spec"
   },
@@ -1091,7 +1092,7 @@
     "metricMethod": "Euclidean distance between proposed node coordinates; route sum includes repeated legs; seconds = distance / 6mps",
     "metricStatus": "calculated_design_lower_bound_not_observed_play",
     "runtimeAcceptance": [
-      "정상 StartHub 포털·기본 장비로 필드 입장부터 B 입구선 통과까지3회60초 이내",
+      "StartHub 북쪽 관문 대화와 기본 장비로 필드 입장부터 B 입구선 통과까지3회60초 이내",
       "마을·의뢰·중간보스·특정 기술 없이 직행 가능",
       "간선 양방향 실제 통과·충돌·고저차·추적/안전 경계 확인",
       "서로 다른 성장 경로 실제 플레이로 약15분 입구 도착 목표 조정",

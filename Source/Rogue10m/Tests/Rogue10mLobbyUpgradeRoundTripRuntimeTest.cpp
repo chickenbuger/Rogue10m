@@ -34,6 +34,7 @@
 #include "Rogue10mPlayerState.h"
 #include "Rogue10mProgressionSaveGame.h"
 #include "Rogue10mProgressionSubsystem.h"
+#include "Rogue10mRunPortal.h"
 #include "Rogue10mRunResultWidget.h"
 #include "Rogue10mTownProgressionComponent.h"
 #include "Rogue10mTraitWidget.h"
@@ -332,14 +333,22 @@ private:
 			if (!NPC.IsValid() || !NPC->IsDialogueOpen()) { EntryGold = Inventory->GetGold(); EntryCrystals = Inventory->GetCrystals(); SetStage(TEXT("portal_walk"), 70.); }
 			else if (Now() > ActionAt) { Pulse(EKeys::Escape); ActionAt = Now() + .7; }
 		}
-		else if (Stage == TEXT("portal_walk"))
+	else if (Stage == TEXT("portal_walk") || Stage == TEXT("portal_travel"))
 		{
 			if (Map() == TEXT("OpenRunMap")) { SetStage(TEXT("next_run"), 70.); }
-			else
+		else if (Stage == TEXT("portal_walk"))
 			{
+			ARogue10mRunPortal* Portal = nullptr;
+			for (TActorIterator<ARogue10mRunPortal> It(World.Get()); It; ++It) { Portal = *It; break; }
+			if (!Portal) { Block(TEXT("authored_departure_gate_missing")); return false; }
 				// The direct NPC-to-portal line crosses the central well. Use the proven H/I walking route.
-				const FVector Via[] = { FVector(650., -1100., 0.), FVector(650., 950., 0.), FVector(0., 1800., 0.), FVector(0., 4270., 0.) };
-				if (PortalWaypoint < UE_ARRAY_COUNT(Via) && Walk(Via[PortalWaypoint], PortalWaypoint == 3 ? 20.f : 140.f, Dt)) { ++PortalWaypoint; }
+			const FVector Via[] = { FVector(650., -1100., 0.), FVector(650., 950., 0.), FVector(0., 1800., 0.), Portal->GetActorLocation() };
+			if (PortalWaypoint < UE_ARRAY_COUNT(Via) && Walk(Via[PortalWaypoint], PortalWaypoint == UE_ARRAY_COUNT(Via) - 1 ? 20.f : 140.f, Dt)) { ++PortalWaypoint; }
+			if (PortalWaypoint == UE_ARRAY_COUNT(Via) && Portal->BeginDepartureDialogue(Player.Get()))
+			{
+				SetStage(TEXT("portal_travel"), 70.);
+				Portal->SelectDepartureChoice(1);
+			}
 			}
 		}
 		else if (Stage == TEXT("next_run"))
