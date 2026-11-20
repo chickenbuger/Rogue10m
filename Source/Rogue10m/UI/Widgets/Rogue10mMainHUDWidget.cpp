@@ -10,7 +10,9 @@
 #include "Components/TextBlock.h"
 #include "Components/VerticalBox.h"
 #include "Components/VerticalBoxSlot.h"
+#include "Rogue10mCharacter.h"
 #include "Widgets/Rogue10mBottomHUDWidget.h"
+#include "Widgets/Rogue10mCombatHudAWidget.h"
 
 namespace
 {
@@ -120,6 +122,7 @@ void URogue10mMainHUDWidget::NativeConstruct()
 	Super::NativeConstruct();
 	CachedResponsiveViewportSize = FVector2D::ZeroVector;
 	EnsurePrototypeLayout();
+	EnsureCombatHudA();
 
 	const TArray<URogue10mShortcutHintWidget*> HiddenShortcuts =
 	{
@@ -134,17 +137,48 @@ void URogue10mMainHUDWidget::NativeConstruct()
 	}
 }
 
+void URogue10mMainHUDWidget::EnsureCombatHudA()
+{
+	if (IsDesignTime() || !bUseCombatHudA || CombatHudA || !BottomHUDWidget || !WidgetTree)
+	{
+		return;
+	}
+
+	UCanvasPanel* RootCanvas = Cast<UCanvasPanel>(WidgetTree->RootWidget);
+	if (!RootCanvas)
+	{
+		return;
+	}
+
+	URogue10mCombatHudAWidget* Layout = WidgetTree->ConstructWidget<URogue10mCombatHudAWidget>(
+		URogue10mCombatHudAWidget::StaticClass(), TEXT("CombatHudA"));
+	if (!Layout->HasAtlas())
+	{
+		return;
+	}
+
+	UCanvasPanelSlot* CanvasSlot = RootCanvas->AddChildToCanvas(Layout);
+	CanvasSlot->SetAnchors(FAnchors(0.0f, 0.0f, 1.0f, 1.0f));
+	CanvasSlot->SetOffsets(FMargin(0.0f));
+	CanvasSlot->SetZOrder(-1);
+	Layout->SetOwningPlayerController(GetOwningPlayer());
+	Layout->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+	CombatHudA = Layout;
+	BottomHUDWidget->SetVisibility(ESlateVisibility::Collapsed);
+	RefreshBoundWidgetData();
+}
+
 void URogue10mMainHUDWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
 	const FVector2D ViewportSize = MyGeometry.GetLocalSize();
 	if (!ViewportSize.Equals(CachedResponsiveViewportSize, 0.5))
 	{
-		if (BottomHUDWidget)
+		if (BottomHUDWidget && !CombatHudA)
 		{
 			BottomHUDWidget->UpdateResponsiveLayout(ViewportSize);
 		}
-		ApplyResponsiveAcquisitionLayout(ViewportSize);
+		ApplyResponsivePeripheralLayout(ViewportSize);
 		CachedResponsiveViewportSize = ViewportSize;
 	}
 
@@ -162,25 +196,37 @@ void URogue10mMainHUDWidget::NativeTick(const FGeometry& MyGeometry, float InDel
 	}
 }
 
-void URogue10mMainHUDWidget::ApplyResponsiveAcquisitionLayout(const FVector2D& ViewportSize)
+void URogue10mMainHUDWidget::ApplyResponsivePeripheralLayout(const FVector2D& ViewportSize)
 {
-	if (!BottomHUDWidget || !ItemAcquisitionContainer || ViewportSize.X <= 0.0 || ViewportSize.Y <= 0.0)
+	if (!BottomHUDWidget || ViewportSize.X <= 0.0 || ViewportSize.Y <= 0.0)
 	{
 		return;
 	}
-	if (UCanvasPanelSlot* CanvasSlot = Cast<UCanvasPanelSlot>(ItemAcquisitionContainer->Slot))
+	if (UCanvasPanelSlot* CanvasSlot = ItemAcquisitionContainer
+		? Cast<UCanvasPanelSlot>(ItemAcquisitionContainer->Slot) : nullptr)
 	{
 		constexpr float SideMargin = 24.0f;
 		constexpr float CardWidth = 320.0f;
 		constexpr float CardHeight = 144.0f;
 		constexpr float HUDGap = 12.0f;
-		const FBox2D CombatBounds = BottomHUDWidget->GetResponsiveCombatBounds(ViewportSize);
+		const FBox2D CombatBounds = CombatHudA
+			? CombatHudA->GetCombatBounds(ViewportSize) : BottomHUDWidget->GetResponsiveCombatBounds(ViewportSize);
 		const double CardLeft = ViewportSize.X - SideMargin - CardWidth;
 		const bool bHasRoomBesideCombat = CardLeft >= CombatBounds.Max.X + HUDGap;
-		const float BottomOffset = BottomHUDWidget->IsSplitCombatLayout()
+		const float BottomOffset = !CombatHudA && BottomHUDWidget->IsSplitCombatLayout()
 			? static_cast<float>(ViewportSize.Y - BottomHUDWidget->GetResponsiveRightCombatBounds(ViewportSize).Min.Y) + 24.0f
 			: bHasRoomBesideCombat ? 64.0f : static_cast<float>(ViewportSize.Y - CombatBounds.Min.Y) + HUDGap;
 		CanvasSlot->SetOffsets(FMargin(-SideMargin, -BottomOffset, CardWidth, CardHeight));
+	}
+
+	if (CombatHudA && MonsterInfoWidget)
+	{
+		if (UCanvasPanelSlot* MonsterSlot = Cast<UCanvasPanelSlot>(MonsterInfoWidget->Slot))
+		{
+			const FBox2D VitalsBounds = CombatHudA->GetVitalsBounds(ViewportSize);
+			const double SpaceBesideVitals = ViewportSize.X - 2.0 * (VitalsBounds.Max.X + 12.0);
+			MonsterSlot->SetSize(FVector2D(FMath::Clamp(SpaceBesideVitals, 1.0, 560.0), 68.0));
+		}
 	}
 }
 
@@ -192,7 +238,17 @@ void URogue10mMainHUDWidget::RefreshBoundWidgetData()
 
 void URogue10mMainHUDWidget::RefreshFrequentWidgetData()
 {
-	if (BottomHUDWidget)
+	if (CombatHudA)
+	{
+		const FRogue10mHudVitalView ManaView = GetManaView();
+		const FRogue10mHudIdentityView IdentityView = GetIdentityView();
+		const bool bUseMana = ManaView.bVisible
+			&& (IdentityView.IdentityType == ERogue10mIdentityType::Mana || IdentityView.WeaponType == ERogue10mWeaponType::Staff);
+		const ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwningPlayerPawn());
+		CombatHudA->SetFrequentViews(GetHealthView(), GetStaminaView(), ManaView, GetProgressionView(), IdentityView,
+			bUseMana, Character ? Character->GetDodgeCooldownRemaining() : 0.0f, Character && Character->IsDodging());
+	}
+	else if (BottomHUDWidget)
 	{
 		BottomHUDWidget->SetFrequentViews(
 			GetHealthView(),
@@ -218,7 +274,11 @@ void URogue10mMainHUDWidget::RefreshFrequentWidgetData()
 
 void URogue10mMainHUDWidget::RefreshSlowWidgetData()
 {
-	if (BottomHUDWidget)
+	if (CombatHudA)
+	{
+		CombatHudA->SetSlowViews(GetSkillQuickSlotViews(), GetItemQuickSlotViews());
+	}
+	else if (BottomHUDWidget)
 	{
 		BottomHUDWidget->SetSlowViews(
 			GetSkillQuickSlotViews(),
