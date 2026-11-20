@@ -321,4 +321,87 @@ void URogue10mSkillTreeDataAsset::BuildDefaultCatalog()
 	Resonance(TEXT("G.Resonance.Burst"), ETrack::GreatSword, EIdentity::FightingSpirit, TEXT("광전 · 폭발 공명"), TEXT("G.Ultimate"), TEXT("I.FightingSpirit.Choice"), TEXT("FightingSpirit.Burst"), {140,315}, SpiritColor);
 	Resonance(TEXT("G.Resonance.Focus"), ETrack::GreatSword, EIdentity::FightingSpirit, TEXT("광전 · 집중 공명"), TEXT("G.Ultimate"), TEXT("I.FightingSpirit.Choice"), TEXT("FightingSpirit.Focus"), {360,315}, SpiritColor);
 	ApplySwordInvestments();
+	AppendDefaultCommonWeb();
+}
+
+void URogue10mSkillTreeDataAsset::AppendDefaultCommonWeb()
+{
+	using ESkill = ERogue10mCommonSkill;
+	using ENode = ERogue10mHybridSkillTreeNodeType;
+	const FLinearColor Gold(0.96f, 0.73f, 0.38f);
+	const FLinearColor Sky(0.42f, 0.72f, 1.0f);
+	const FLinearColor Jade(0.28f, 0.81f, 0.67f);
+	const FLinearColor Amber(1.0f, 0.57f, 0.22f);
+	TMap<ESkill, int32> Indices;
+	const auto Add = [&](ESkill Skill, const TCHAR* Id, const TCHAR* Name, const TCHAR* Description,
+		FVector2D Position, const FLinearColor& Color, float Value, ESkill Required = ESkill::None)
+	{
+		Indices.Add(Skill, Nodes.Num());
+		auto& Node = Nodes.AddDefaulted_GetRef();
+		Node.NodeId = FName(Id);
+		Node.CommonSkill = Skill;
+		Node.CommonRequiredSkill = Required;
+		Node.CommonValue = Value;
+		Node.DisplayName = FText::FromString(Name);
+		Node.Description = FText::FromString(Description);
+		Node.Position = Position;
+		Node.Color = Color;
+		Node.bAutomaticUnlock = Skill == ESkill::Foundation;
+		Node.NodeType = Node.bAutomaticUnlock ? ENode::Root : ENode::Passive;
+		Node.PointCost = Node.bAutomaticUnlock ? 0 : 1;
+	};
+	// Absolute coordinates in the common web's 1040×665 canvas.
+	Add(ESkill::Foundation, TEXT("C.Foundation"), TEXT("기초 단련"),
+		TEXT("공통 스킬트리의 시작점입니다. 연결된 능력부터 습득할 수 있습니다."), {520, 410}, Gold, 0.0f);
+	Add(ESkill::AirControl, TEXT("C.AirControl"), TEXT("공중 제어"),
+		TEXT("공중에서 방향을 조절하는 힘이 25% 증가합니다."), {520, 238}, Sky, 0.25f);
+	Add(ESkill::DoubleJump, TEXT("C.DoubleJump"), TEXT("이단 점프"),
+		TEXT("어떤 무기를 들고 있어도 공중에서 한 번 더 도약할 수 있습니다."), {396, 144}, Sky, 1.0f);
+	Add(ESkill::JumpHeight, TEXT("C.JumpHeight"), TEXT("도약 높이 증가"),
+		TEXT("점프의 수직 도약 속도가 8% 증가합니다."), {644, 144}, Sky, 0.08f);
+	Add(ESkill::DoubleJumpUpgrade, TEXT("C.DoubleJumpUpgrade"), TEXT("이단 점프 강화"),
+		TEXT("두 번째 점프의 수직 도약 속도에 12%를 더합니다."), {520, 57}, Sky, 0.12f, ESkill::DoubleJump);
+	Add(ESkill::MoveSpeed, TEXT("C.MoveSpeed"), TEXT("이동 속도 증가"),
+		TEXT("이동 속도가 5% 증가합니다."), {350, 410}, Jade, 0.05f);
+	Add(ESkill::GroundTurning, TEXT("C.GroundTurning"), TEXT("방향 전환 향상"),
+		TEXT("지상에서 방향을 바꿀 때 적용되는 마찰이 25% 증가합니다."), {205, 338}, Jade, 0.25f);
+	Add(ESkill::GroundAcceleration, TEXT("C.GroundAcceleration"), TEXT("가속 향상"),
+		TEXT("지상 이동 가속도가 15% 증가합니다."), {205, 510}, Jade, 0.15f);
+	Add(ESkill::MoveSpeedUpgrade, TEXT("C.MoveSpeedUpgrade"), TEXT("이동 속도 강화"),
+		TEXT("이동 속도 보너스에 5%를 더합니다."), {78, 410}, Jade, 0.05f, ESkill::MoveSpeed);
+	Add(ESkill::EvadeRecovery, TEXT("C.EvadeRecovery"), TEXT("회피 후 회복 단축"),
+		TEXT("회피 동작을 마치기까지 걸리는 시간이 15% 감소합니다."), {690, 410}, Amber, 0.15f);
+	Add(ESkill::Roll, TEXT("C.Roll"), TEXT("구르기"),
+		TEXT("Alt로 이동 방향으로 구릅니다. 이동 입력이 없으면 바라보는 방향으로 구릅니다."), {835, 338}, Amber, 1.0f);
+	Add(ESkill::EvadeDistance, TEXT("C.EvadeDistance"), TEXT("회피 거리 증가"),
+		TEXT("회피 동작의 이동 거리가 15% 증가합니다."), {835, 510}, Amber, 0.15f);
+	Add(ESkill::RollCooldown, TEXT("C.RollCooldown"), TEXT("구르기 재사용 단축"),
+		TEXT("구르기의 재사용 대기시간이 최대 20% 감소합니다. 동작이 끝난 뒤 다시 구를 수 있습니다."),
+		{962, 410}, Amber, 0.20f, ESkill::Roll);
+	Add(ESkill::AirMomentum, TEXT("C.AirMomentum"), TEXT("공중 속도 유지"),
+		TEXT("공중에서 방향 입력을 놓았을 때 감속이 40% 감소합니다."), {251, 218}, Sky, 0.40f);
+	Add(ESkill::LandingStability, TEXT("C.LandingStability"), TEXT("착지 안정"),
+		TEXT("착지 후 0.25초 동안 지상에서 제동과 방향 전환에 적용되는 마찰이 50% 증가합니다."), {789, 218}, Sky, 0.50f);
+	Add(ESkill::EvadeHaste, TEXT("C.EvadeHaste"), TEXT("회피 후 가속"),
+		TEXT("회피 동작을 마친 뒤 0.8초 동안 이동 속도가 10% 증가합니다."), {520, 572}, Jade, 0.10f);
+
+	const ESkill Edges[][2] = {
+		{ESkill::Foundation, ESkill::AirControl}, {ESkill::Foundation, ESkill::MoveSpeed}, {ESkill::Foundation, ESkill::EvadeRecovery},
+		{ESkill::AirControl, ESkill::DoubleJump}, {ESkill::AirControl, ESkill::JumpHeight},
+		{ESkill::DoubleJump, ESkill::DoubleJumpUpgrade}, {ESkill::JumpHeight, ESkill::DoubleJumpUpgrade},
+		{ESkill::MoveSpeed, ESkill::GroundTurning}, {ESkill::MoveSpeed, ESkill::GroundAcceleration},
+		{ESkill::GroundTurning, ESkill::MoveSpeedUpgrade}, {ESkill::GroundAcceleration, ESkill::MoveSpeedUpgrade},
+		{ESkill::EvadeRecovery, ESkill::Roll}, {ESkill::EvadeRecovery, ESkill::EvadeDistance},
+		{ESkill::Roll, ESkill::RollCooldown}, {ESkill::EvadeDistance, ESkill::RollCooldown},
+		{ESkill::GroundTurning, ESkill::AirMomentum}, {ESkill::AirMomentum, ESkill::DoubleJump},
+		{ESkill::JumpHeight, ESkill::LandingStability}, {ESkill::LandingStability, ESkill::Roll},
+		{ESkill::GroundAcceleration, ESkill::EvadeHaste}, {ESkill::EvadeHaste, ESkill::EvadeDistance}
+	};
+	for (const auto& Edge : Edges)
+	{
+		auto& First = Nodes[Indices.FindChecked(Edge[0])];
+		auto& Second = Nodes[Indices.FindChecked(Edge[1])];
+		First.CommonConnections.Add(Second.NodeId);
+		Second.CommonConnections.Add(First.NodeId);
+	}
 }

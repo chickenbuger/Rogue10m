@@ -296,4 +296,75 @@ bool FRogue10mHybridSourceTest::RunTest(const FString& Parameters)
 	return true;
 }
 
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FRogue10mCommonSkillWebTest, "Rogue10m.HybridSkillTree.CommonSkillWeb", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+bool FRogue10mCommonSkillWebTest::RunTest(const FString& Parameters)
+{
+	using namespace Rogue10mHybridTests;
+	using ECommon = ERogue10mCommonSkill;
+	FFixture Fixture;
+	if (!TestNotNull(TEXT("common skill progression"), Fixture.Tree)) { return false; }
+	auto& Tree = *Fixture.Tree;
+	const auto* Catalog = Tree.GetCatalog();
+	if (!TestTrue(TEXT("active catalog exposes a valid common graph"), Catalog && Catalog->IsValidCatalog())) { return false; }
+	const auto Common = Catalog->Nodes.FilterByPredicate([](const auto& Node) { return Node.CommonSkill != ECommon::None; });
+	TestEqual(TEXT("free starting node plus fifteen trainable abilities"), Common.Num(), 16);
+	int32 DirectedEdges = 0;
+	for (const auto& Node : Common)
+	{
+		TestTrue(TEXT("common ability visible for all tracks"), Node.bShowInTree
+			&& URogue10mSkillTreeDataAsset::IsNodeInTrack(Node, ETrack::None)
+			&& URogue10mSkillTreeDataAsset::IsNodeInTrack(Node, ETrack::Brawler)
+			&& URogue10mSkillTreeDataAsset::IsNodeInTrack(Node, ETrack::GreatSword));
+		TestEqual(TEXT("only foundation is free"), Node.PointCost, Node.CommonSkill == ECommon::Foundation ? 0 : 1);
+		DirectedEdges += Node.CommonConnections.Num();
+		for (FName Neighbor : Node.CommonConnections)
+		{
+			const auto* Other = Tree.FindNode(Neighbor);
+			TestTrue(TEXT("every common connection is reciprocal"), Other && Other->CommonConnections.Contains(Node.NodeId));
+		}
+	}
+	TestEqual(TEXT("twenty-one connections as drawn"), DirectedEdges, 42);
+	const auto Start = Tree.Capture();
+	TestTrue(TEXT("free foundation learned"), Tree.IsCommonSkillLearned(ECommon::Foundation));
+	TestFalse(TEXT("double jump still costs an investment"), Tree.IsCommonSkillLearned(ECommon::DoubleJump));
+	FRogue10mSkillTreeSnapshot Legacy;
+	TestTrue(TEXT("snapshot from before the common tree restores the foundation"), Tree.Restore(Legacy)
+		&& Tree.IsCommonSkillLearned(ECommon::Foundation));
+	Fixture.Player->GetRogueAttributeSet()->SetPlayerLevel(8.0f);
+	auto Route = Start;
+	for (const TCHAR* Node : {TEXT("C.DoubleJump"), TEXT("C.AirMomentum"), TEXT("C.GroundTurning"), TEXT("C.MoveSpeed")})
+	{
+		Invest(Route, Node, ERoute::Points, 1);
+	}
+	TestTrue(TEXT("bridge reaches double jump without buying air control, even with reverse save order"), Tree.Validate(Route, 4, 0));
+	TestFalse(TEXT("a trait and a common node cannot debit the same point"), Tree.Validate(Route, 4, 1));
+	TestTrue(TEXT("cross-region route restores"), Tree.Restore(Route));
+	TestTrue(TEXT("double jump applies independently of active weapon track"), Tree.IsCommonSkillLearned(ECommon::DoubleJump)
+		&& !Tree.IsCommonSkillLearned(ECommon::AirControl));
+	Fixture.Player->SetEquippedWeaponType(ERogue10mWeaponType::GreatSword);
+	TestTrue(TEXT("weapon switch retains common investments"), Tree.IsCommonSkillLearned(ECommon::DoubleJump)
+		&& Tree.IsCommonSkillLearned(ECommon::MoveSpeed) && Tree.GetSpentSkillTreePoints() == 4);
+	TestTrue(TEXT("an acquired outer node opens backwards into the entry"),
+		Tree.EvaluateNodeEligibility(TEXT("C.AirControl")).CanAcquire(ERoute::Points));
+	TestTrue(TEXT("learned double jump unlocks its upgrade"),
+		Tree.EvaluateNodeEligibility(TEXT("C.DoubleJumpUpgrade")).CanAcquire(ERoute::Points));
+
+	auto Bypass = Start;
+	for (const TCHAR* Node : {TEXT("C.AirControl"), TEXT("C.JumpHeight"), TEXT("C.DoubleJumpUpgrade")})
+	{
+		Invest(Bypass, Node, ERoute::Points, 1);
+	}
+	TestFalse(TEXT("adjacent jump height cannot replace the required double jump"), Tree.Validate(Bypass, 3, 0));
+	auto Island = Start;
+	for (const TCHAR* Node : {TEXT("C.AirMomentum"), TEXT("C.GroundTurning"), TEXT("C.DoubleJump"), TEXT("C.DoubleJumpUpgrade")})
+	{
+		Invest(Island, Node, ERoute::Points, 1);
+	}
+	TestFalse(TEXT("neighbors without a path to the foundation cannot validate each other"), Tree.Validate(Island, 4, 0));
+	auto Forged = Start;
+	Invest(Forged, TEXT("C.EvadeRecovery"), ERoute::Legacy, 0);
+	TestFalse(TEXT("cannot grant a common ability as a free legacy import"), Tree.Validate(Forged, 4, 0));
+	return true;
+}
+
 #endif

@@ -95,6 +95,7 @@ void FRogue10mViewAlignedUpperBodyProxy::Initialize(UAnimInstance* InAnimInstanc
 	bApplyWeightedHandMotion = false;
 	bWeightedHandContextValid = bUseWeightedAimFollow = bWeightedHandMotionEvaluated = false;
 	bApplyAim = bApplyMouseHead = bMouseHeadEvaluated = bBoneCacheValid = false;
+	bApplyRollPose = false;
 	SmoothedHeadResidual = SmoothedNeckResidual = FQuat::Identity;
 	HeadAimInMesh = HeadWorldAim = FQuat::Identity;
 	HeadSourceMeshRotation = FQuat::Identity;
@@ -116,6 +117,19 @@ void FRogue10mViewAlignedUpperBodyProxy::PreUpdate(UAnimInstance* InAnimInstance
 	bApplyWeightedHandMotion = false;
 	bWeightedHandContextValid = false;
 	bUseWeightedAimFollow = false;
+	FVector RollDirection;
+	bApplyRollPose = Character && SourceMesh && Character->GetRollPresentation(RollProgress, RollDirection);
+	if (bApplyRollPose)
+	{
+		const FQuat MeshRotation = SourceMesh->GetComponentQuat();
+		const FVector ActorForward = Character->GetActorForwardVector().GetSafeNormal2D();
+		const FVector Turn = FVector::CrossProduct(ActorForward, RollDirection);
+		RollYawRadians = static_cast<float>(FMath::Atan2(Turn.Z, FVector::DotProduct(ActorForward, RollDirection)));
+		RollRight = MeshRotation.UnrotateVector(FVector::CrossProduct(FVector::UpVector, ActorForward));
+		RollUp = MeshRotation.UnrotateVector(FVector::UpVector);
+		AimPitch = AimYaw = Instance->UpperBodyAimPitch = Instance->UpperBodyAimYaw = 0.0f;
+		return;
+	}
 	WeightedArmPitchDegrees[0] = WeightedArmPitchDegrees[1] = 0.0f;
 	if (!bContextValid)
 	{
@@ -357,6 +371,11 @@ bool FRogue10mViewAlignedUpperBodyProxy::Evaluate_WithRoot(FPoseContext& Output,
 	EvaluateAnimationNode_WithRoot(Output, InRootNode);
 	bMouseHeadEvaluated = false;
 	bWeightedHandMotionEvaluated = false;
+	if (bApplyRollPose)
+	{
+		ApplyRollPose(Output.Pose);
+		return true;
+	}
 	if (bApplyAim) { ApplyViewAim(Output.Pose); }
 	if (bApplyWeightedHandMotion) { ApplyWeightedHandMotion(Output.Pose); }
 	if (bApplyMouseHead) { ApplyMouseDrivenHead(Output.Pose); }
@@ -394,10 +413,52 @@ void FRogue10mViewAlignedUpperBodyProxy::RebuildBoneCache(const FBoneContainer& 
 	Hand[0] = Find(TEXT("hand_l")); Hand[1] = Find(TEXT("hand_r"));
 	IKHand[0] = Find(TEXT("ik_hand_gun")); IKHand[1] = Find(TEXT("ik_hand_l")); IKHand[2] = Find(TEXT("ik_hand_r"));
 	Root = Find(TEXT("root")); IKHandRoot = Find(TEXT("ik_hand_root"));
+	Pelvis = Find(TEXT("pelvis"));
+	Clavicle[0] = Find(TEXT("clavicle_l")); Clavicle[1] = Find(TEXT("clavicle_r"));
+	Forearm[0] = Find(TEXT("lowerarm_l")); Forearm[1] = Find(TEXT("lowerarm_r"));
+	Thigh[0] = Find(TEXT("thigh_l")); Thigh[1] = Find(TEXT("thigh_r"));
+	Calf[0] = Find(TEXT("calf_l")); Calf[1] = Find(TEXT("calf_r"));
 	ReferenceHeadRotation = Head != INDEX_NONE ? ReferenceComponentRotation(Bones, Head) : FQuat::Identity;
 	ReferenceNeckRotation = Neck != INDEX_NONE ? ReferenceComponentRotation(Bones, Neck) : FQuat::Identity;
 	BoneCacheSerial = Bones.GetSerialNumber();
 	bBoneCacheValid = true;
+}
+
+void FRogue10mViewAlignedUpperBodyProxy::ApplyRollPose(FCompactPose& Pose)
+{
+	const FBoneContainer& Bones = Pose.GetBoneContainer();
+	if (!bBoneCacheValid || BoneCacheSerial != Bones.GetSerialNumber()) { RebuildBoneCache(Bones); }
+	if (!Pose.IsValidIndex(Pelvis)) { return; }
+
+	const float Tuck = FMath::Clamp(FMath::Sin(UE_PI * RollProgress) * 1.3f, 0.0f, 1.0f);
+	const float Turn = RollYawRadians * Tuck;
+	const float ForwardRotation = 2.0f * UE_PI * FMath::SmoothStep(0.10f, 0.91f, RollProgress);
+	const auto Rotation = [Right = RollRight, Tuck](float Degrees)
+	{
+		return FQuat(Right, FMath::DegreesToRadians(Degrees * Tuck));
+	};
+	const auto TuckBone = [&Pose, &Bones, Tuck, &Rotation](FCompactPoseBoneIndex Bone, float Degrees)
+	{
+		if (!Pose.IsValidIndex(Bone)) { return; }
+		Pose[Bone].SetRotation(FQuat::Slerp(Pose[Bone].GetRotation(), Bones.GetRefPoseTransform(Bone).GetRotation(), Tuck));
+		RotateBone(Pose, Bone, Rotation(Degrees));
+	};
+
+	// Reuse the project's locomotion skeleton and evaluated pose at both ends.
+	// The roll is posed around the pelvis and has no asset root motion.
+	for (FCompactPoseBoneIndex Bone : Spine) { TuckBone(Bone, 12.0f); }
+	TuckBone(Neck, 18.0f);
+	for (int32 Index = 0; Index < 2; ++Index)
+	{
+		TuckBone(Clavicle[Index], -15.0f);
+		TuckBone(UpperArm[Index], -62.0f);
+		TuckBone(Forearm[Index], 48.0f);
+		TuckBone(Thigh[Index], -76.0f);
+		TuckBone(Calf[Index], 112.0f);
+	}
+	const FQuat Parent = ParentRotation(Pose, Pelvis);
+	Pose[Pelvis].AddToTranslation(Parent.UnrotateVector(-RollUp * (39.0f * Tuck)));
+	RotateBone(Pose, Pelvis, FQuat(RollUp, Turn) * FQuat(RollRight, ForwardRotation));
 }
 
 void FRogue10mViewAlignedUpperBodyProxy::ApplyMouseDrivenHead(FCompactPose& Pose)

@@ -58,6 +58,8 @@ FAnimInstanceProxy* URogue10mFighterCombatStanceAnimInstance::CreateAnimInstance
 
 bool URogue10mFighterCombatStanceAnimInstance::IsViewAimDodgeActive() const
 {
+	const auto* Character = Cast<ARogue10mCharacter>(TryGetPawnOwner());
+	if (Character && Character->IsRolling()) { return true; }
 	for (const FAnimMontageInstance* Instance : MontageInstances)
 	{
 		if (!Instance || !Instance->Montage) { continue; }
@@ -109,7 +111,7 @@ void URogue10mFighterCombatStanceAnimInstance::NativeUpdateAnimation(float Delta
 	const UAnimMontage* AcceptedMontage = AcceptedSkill ? AcceptedSkill->AttackMontage.Get() : nullptr;
 	const UAnimMontage* ActiveMontage = GetCurrentActiveMontage();
 	const FAnimMontageInstance* AcceptedInstance = AcceptedMontage ? GetInstanceForMontage(AcceptedMontage) : nullptr;
-	bool bDodgePoseContributes = false;
+	bool bDodgePoseContributes = Character && Character->IsRolling();
 	bool bAnyMontageContributes = false;
 	for (const FAnimMontageInstance* Instance : MontageInstances)
 	{

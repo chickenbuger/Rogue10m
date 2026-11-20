@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
+#include "Engine/NetSerialization.h"
 #include "GameFramework/Character.h"
 #include "Rogue10mCharacterCustomizationTypes.h"
 #include "Rogue10mCharacterStats.h"
@@ -29,6 +30,7 @@ class URogue10mInventoryComponent;
 class URogue10mPlayerFeedbackComponent;
 class URogue10mVitalRegenerationComponent;
 class URogue10mTraitRuntimeComponent;
+enum class ERogue10mCommonSkill : uint8;
 class USkeletalMeshComponent;
 struct FInputActionValue;
 struct FKey;
@@ -97,6 +99,9 @@ public:
 	/** Read-only state shared by HUD and runtime verification; does not accept or reset a dodge. */
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Movement|Dodge")
 	bool IsDodging() const { return bIsDodging; }
+	bool IsRolling() const { return bIsDodging && bIsRolling; }
+	bool GetRollPresentation(float& OutProgress, FVector& OutDirection) const;
+	void SetWeaponJumpAllowance(int32 MaxJumps);
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Movement|Dodge")
 	float GetDodgeCooldownRemaining() const;
 
@@ -141,7 +146,9 @@ protected:
 
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 	virtual void OnJumped_Implementation() override;
+	virtual void CheckJumpInput(float DeltaTime) override;
 	virtual void Landed(const FHitResult& Hit) override;
+	virtual void OnMovementModeChanged(EMovementMode PrevMovementMode, uint8 PreviousCustomMode) override;
 
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoAim(float Yaw, float Pitch);
@@ -291,6 +298,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Movement|Dodge", meta=(ClampMin="0.0", Units="s"))
 	float DodgeCooldown = 0.45f;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Movement|Dodge", meta=(ClampMin="0.1", Units="s"))
+	float RollDuration = 0.42f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Movement|Dodge", meta=(ClampMin="0.0", Units="cm"))
+	float RollDistance = 250.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Movement|Dodge", meta=(ClampMin="0.05", Units="s"))
+	float EvadeHasteDuration = 0.8f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Movement", meta=(ClampMin="0.05", Units="s"))
+	float LandingStabilityDuration = 0.25f;
+
 	UPROPERTY(Transient)
 	FRogue10mCharacterAppearance CharacterAppearance;
 
@@ -303,7 +319,21 @@ private:
 	void LookInput(const FInputActionValue& Value);
 	void SetSprinting(bool bNewSprinting);
 	void ConsumeSprintStamina();
+	float GetCommonSkillValue(ERogue10mCommonSkill Skill) const;
+	void CacheMobilityDefaults();
+	void RefreshCommonMobility();
+	void RefreshMovementSpeed();
+	void RefreshMovementAcceleration();
+	void RefreshGroundFriction();
+	void BeginLandingStability();
+	void ClearCommonMobilityActions();
+	void StartDodge(FVector Direction);
+	void PresentDodge(FVector Direction, float Duration, float Cooldown, bool bRoll);
 	void FinishDodge();
+	UFUNCTION(Server, Reliable)
+	void ServerRequestDodge(FVector_NetQuantizeNormal Direction);
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastDodgeStarted(FVector_NetQuantizeNormal Direction, float Duration, float Cooldown, bool bRoll);
 	bool IsBlockingWindowVisible() const;
 	void ActivateQuickSlot(int32 SlotNumber);
 	void InitializeAbilityActorInfo();
@@ -311,10 +341,23 @@ private:
 
 	FTimerHandle SprintStaminaTimerHandle;
 	FTimerHandle DodgeTimerHandle;
+	FTimerHandle LandingStabilityTimerHandle;
+	FTimerHandle EvadeHasteTimerHandle;
 	FVector2D CachedMovementInput = FVector2D::ZeroVector;
+	FVector RollDirection = FVector::ForwardVector;
 	float NormalWalkSpeed = 600.0f;
-	float NextDodgeAllowedTime = 0.0f;
+	float BaseAirControl = 0.0f;
+	float BaseGroundFriction = 0.0f;
+	float BaseMaxAcceleration = 0.0f;
+	float BaseAirBraking = 0.0f;
+	float ActiveDodgeDuration = 0.0f;
+	double NextDodgeAllowedTime = 0.0;
+	double DodgeStartedTime = 0.0;
+	int32 WeaponJumpAllowance = 1;
+	uint16 RollMotionSourceId = 0;
+	bool bMobilityDefaultsCached = false;
 	bool bThirdPersonInitialViewHandled = false;
 	bool bIsSprinting = false;
 	bool bIsDodging = false;
+	bool bIsRolling = false;
 };

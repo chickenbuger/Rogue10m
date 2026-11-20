@@ -23,7 +23,7 @@ public:
 	void SetMovementState(bool bHasMovementInput, bool bSprinting);
 	void NotifyJump(int32 JumpCount);
 	void NotifyLanded();
-	void NotifyDodge();
+	void NotifyDodge(bool bRoll, float Duration);
 	void StopMotionEffects();
 	/** Accepted attacks, charging and dodges keep the fighter's guard ready briefly. */
 	void RequestFighterCombatStance(float BusySeconds = 0.0f);

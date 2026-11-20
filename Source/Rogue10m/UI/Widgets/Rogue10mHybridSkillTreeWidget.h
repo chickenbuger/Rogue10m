@@ -57,7 +57,7 @@ class ROGUE10M_API URogue10mHybridSkillTreeEntryWidget : public UUserWidget
 	GENERATED_BODY()
 public:
 	void Configure(URogue10mHybridSkillTreeWidget* Owner, const FRogue10mSkillTreeNodeDefinition& Definition,
-		ERogue10mSkillTreeNodeState State, bool bSelected, bool bCurrentTrack);
+		ERogue10mSkillTreeNodeState State, bool bSelected, bool bCurrentTrack, float DiameterOverride = 0.0f);
 	FName GetNodeId() const { return NodeId; }
 	bool CanDragSkill() const { return bCanDrag; }
 	URogue10mAttackSkillData* GetDragSkill() const { return Skill.Get(); }
@@ -75,7 +75,8 @@ private:
 	bool bCanDrag = false;
 	bool bHasOuterFrame = false;
 	bool bPaintSwordGlyph = false;
-	FLinearColor SwordGlyphTint;
+	ERogue10mCommonSkill CommonGlyph = ERogue10mCommonSkill::None;
+	FLinearColor GlyphTint;
 	UPROPERTY(Transient) TObjectPtr<URogue10mAttackSkillData> Skill;
 	UPROPERTY(Transient) TObjectPtr<USizeBox> BodyBox;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> NodeButton;
@@ -145,6 +146,8 @@ public:
 	void BrowseTrack(ERogue10mSkillTreeTrack Track);
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
 	void BrowseTab(ERogue10mSkillTreeTab Tab);
+	void BrowseCommonIdentity();
+	bool IsShowingCommonIdentity() const { return bShowingCommonIdentity; }
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
 	void SelectNode(FName NodeId);
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree")
@@ -172,7 +175,8 @@ private:
 	void BuildTree();
 	void BindContext();
 	void RefreshEquipmentTab();
-	void SetDisplayedTab(ERogue10mSkillTreeTab Tab);
+	void BrowseTabView(ERogue10mSkillTreeTab Tab, bool bShowCommonIdentity);
+	void SetDisplayedTab(ERogue10mSkillTreeTab Tab, bool bShowCommonIdentity = false);
 	URogue10mHybridSkillTreeButton* GetTabButton(ERogue10mSkillTreeTab Tab) const;
 	bool IsDisplayingActiveTrack() const;
 	void RefreshDetails();
@@ -210,6 +214,7 @@ private:
 	bool bApplyingAction = false;
 	bool bRefundConfirmation = false;
 	bool bWindowActive = false;
+	bool bShowingCommonIdentity = false;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeGraphWidget> Graph;
 	UPROPERTY(Transient) TObjectPtr<UHorizontalBox> TabBar;
 	UPROPERTY(Transient) TObjectPtr<UHorizontalBox> TreeBody;
@@ -219,6 +224,8 @@ private:
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> FighterTab;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> GreatSwordTab;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> MagicTab;
+	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> CommonViewToggle;
+	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeEntryWidget> CommonDetailIcon;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> GrowthText;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> MasteryText;
 	UPROPERTY(Transient) TObjectPtr<UProgressBar> MasteryBar;

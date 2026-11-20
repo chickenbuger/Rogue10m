@@ -124,17 +124,14 @@ void URogue10mCharacterAnimationComponent::NotifyLanded()
 	RefreshFootstepTimer();
 }
 
-void URogue10mCharacterAnimationComponent::NotifyDodge()
+void URogue10mCharacterAnimationComponent::NotifyDodge(bool bRoll, float Duration)
 {
-	RequestFighterCombatStance();
+	RequestFighterCombatStance(Duration);
 	if (const URogue10mCharacterMotionDataAsset* Data = GetMotionData())
 	{
-		if (Data->DodgeMontage)
+		if (ARogue10mCharacter* Character = GetOwnerCharacter(); !bRoll && Character && Data->DodgeMontage)
 		{
 			RequestFighterCombatStance(Data->DodgeMontage->GetPlayLength());
-		}
-		if (ARogue10mCharacter* Character = GetOwnerCharacter())
-		{
 			Character->PlayCommonMontage(Data->DodgeMontage, 1.0f);
 		}
 		SpawnGroundEffect(
