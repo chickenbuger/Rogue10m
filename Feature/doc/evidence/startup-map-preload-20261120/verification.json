@@ -1,0 +1,39 @@
+{
+  "base_commit": "b514adf4d2dbf287241b2669fa48943ec42dcfa3",
+  "scope": "Independent checkout with isolated QA save slots. Win64 UE 5.8 standalone editor game. Portal comparison used NullRHI and programmatic movement through the authored overlap. Startup and settlement used rendered processes.",
+  "build": {
+    "editor_development": "passed",
+    "shipping_preload_source_compile": "passed"
+  },
+  "startup": {
+    "default_map": "StartHub",
+    "game_mode": "Rogue10mMenuGameMode",
+    "preload_target": "OpenRunMap",
+    "preload_scheduled_frame": 0,
+    "preload_ready_frame": 2,
+    "preload_seconds": 0.012,
+    "unreal_output_errors": 0
+  },
+  "character_lobby": {
+    "checks_passed": 341,
+    "entered_gameplay_start_hub": true,
+    "same_package_travels": 2,
+    "open_run_map_requests": 1,
+    "unreal_output_errors": 0
+  },
+  "portal": [
+    {"case": "FieldOnA", "prewarmed": true, "reused": true, "portal_to_map_loaded_seconds": 3.286, "checks_passed": 17, "unreal_output_errors": 0},
+    {"case": "FieldOffA", "prewarmed": false, "reused": false, "portal_to_map_loaded_seconds": 3.339, "checks_passed": 17, "unreal_output_errors": 0},
+    {"case": "FieldOffB", "prewarmed": false, "reused": false, "portal_to_map_loaded_seconds": 4.033, "checks_passed": 17, "unreal_output_errors": 0},
+    {"case": "FieldOnB", "prewarmed": true, "reused": true, "portal_to_map_loaded_seconds": 2.662, "checks_passed": 17, "unreal_output_errors": 0}
+  ],
+  "settlement_and_return": {
+    "entry_field_reused": true,
+    "start_hub_ready_before_return": true,
+    "start_hub_reused": true,
+    "return_map_load_seconds": 2.564,
+    "checks_passed": 77,
+    "unreal_output_errors": 0
+  },
+  "fresh_save_read": {"checks_passed": 17, "unreal_output_errors": 0}
+}
