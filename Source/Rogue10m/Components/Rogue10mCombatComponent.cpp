@@ -163,6 +163,7 @@ void URogue10mCombatComponent::HandleAttackPressed(bool bPrimaryAttack)
 {
 	if (ARogue10mCharacter* Character = GetOwnerCharacter())
 	{
+		if (Character->IsRolling()) { return; }
 		if (URogue10mBasicBrawlerComponent* Basic = Character->GetBasicBrawlerComponent(); Basic && Basic->IsBasicBrawlerActive())
 		{
 			Basic->HandleAttackPressed(bPrimaryAttack);
@@ -987,7 +988,7 @@ void URogue10mCombatComponent::ApplyActiveWeaponProfile()
 	{
 		if (ARogue10mCharacter* Character = GetOwnerCharacter())
 		{
-			Character->JumpMaxCount = 1;
+			Character->SetWeaponJumpAllowance(1);
 			UE_LOG(
 				LogRogue10m, Warning,
 				TEXT("%s 장착 무기 %s에 연결된 스킬 프로필이 없습니다."),
@@ -1001,7 +1002,7 @@ void URogue10mCombatComponent::ApplyActiveWeaponProfile()
 	bWeaponPresetApplied = true;
 	if (ARogue10mCharacter* Character = GetOwnerCharacter())
 	{
-		Character->JumpMaxCount = FMath::Max(1, Profile->MaxJumpCount);
+		Character->SetWeaponJumpAllowance(Profile->MaxJumpCount);
 	}
 	for (const TPair<ERogue10mAttackInputSlot, TObjectPtr<URogue10mAttackSkillData>>& Pair
 		: Profile->DefaultSkillBindings)
@@ -1227,7 +1228,7 @@ bool URogue10mCombatComponent::CanUseCombatInput() const
 {
 	const ARogue10mCharacter* Character = GetOwnerCharacter();
 	const ARogue10mPlayerController* Controller = Character ? Cast<ARogue10mPlayerController>(Character->GetController()) : nullptr;
-	return Character && !Character->IsDead() && !UGameplayStatics::IsGamePaused(this)
+	return Character && !Character->IsDead() && !Character->IsRolling() && !UGameplayStatics::IsGamePaused(this)
 		&& (!Character->GetInventoryComponent() || !Character->GetInventoryComponent()->IsEquipmentChangeInProgress())
 		&& (!Controller || !Controller->IsAnyBlockingWindowVisible());
 }
@@ -1278,7 +1279,7 @@ bool URogue10mCombatComponent::ExecuteAttackSkill(const URogue10mAttackSkillData
 	TGuardValue<bool> AcceptingGuard(bAcceptingAttack, true);
 	ARogue10mCharacter* Character = GetOwnerCharacter();
 	UCameraComponent* Camera = Character ? Character->GetGameplayCameraComponent() : nullptr;
-	if (!Character || Character->IsDead() || !Camera || !GetWorld()
+	if (!Character || Character->IsDead() || Character->IsRolling() || !Camera || !GetWorld()
 		|| (Character->GetInventoryComponent() && Character->GetInventoryComponent()->IsEquipmentChangeInProgress()))
 	{
 		return false;

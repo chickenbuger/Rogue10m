@@ -13,11 +13,12 @@ function Confirm-HybridAutomationReport {
     foreach ($name in @('succeeded','succeededWithWarnings','failed','notRun','inProcess','tests')) {
         if ($null -eq $report.PSObject.Properties[$name]) { throw "Missing automation report field: $name" }
     }
-    if ($report.succeeded -ne 3 -or $report.succeededWithWarnings -ne 0 -or $report.failed -ne 0 `
-        -or $report.notRun -ne 0 -or $report.inProcess -ne 0 -or @($report.tests).Count -ne 3) {
-        throw 'Hybrid automation aggregate counts must be succeeded=3 and all other outcomes=0.'
+    if ($report.succeeded -ne 4 -or $report.succeededWithWarnings -ne 0 -or $report.failed -ne 0 `
+        -or $report.notRun -ne 0 -or $report.inProcess -ne 0 -or @($report.tests).Count -ne 4) {
+        throw 'Hybrid automation aggregate counts must be succeeded=4 and all other outcomes=0.'
     }
     $expected = @(
+        'Rogue10m.HybridSkillTree.CommonSkillWeb',
         'Rogue10m.HybridSkillTree.MasteryAlternativesAndLegacy',
         'Rogue10m.HybridSkillTree.MasteryAndRewards',
         'Rogue10m.HybridSkillTree.SharedLedgerAndValidation'
@@ -52,7 +53,7 @@ if ($Phase -eq 'assets') {
         '-ExecCmds="Automation RunTests Rogue10m.HybridSkillTree"',
         '-TestExit="Automation Test Queue Empty"',
         ('-ReportExportPath="' + (Join-Path $evidence 'automation-report') + '"'))
-    $marker = 'Automation Test Queue Empty 3 tests performed.'
+    $marker = 'Automation Test Queue Empty 4 tests performed.'
 } else {
     $arguments += @('/Game/Rogue10m/Maps/StartHub','-game','-windowed','-ForceRes','-ResX=1920','-ResY=1080',
         '-ExecCmds="Rogue10m.TestHybridSkillTree"')

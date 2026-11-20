@@ -1220,6 +1220,9 @@ private:
         const auto* Node = Tree->FindNode(RequestedLearnNode());
         if (Node && Node->Track == ERogue10mSkillTreeTrack::None && Widget.GetDisplayedTab() != ERogue10mSkillTreeTab::Common)
         { Click(&Widget, TEXT("HybridTreeCommon")); return false; }
+        if (Node && Node->Identity != ERogue10mSkillTreeIdentity::None && Node->Track == ERogue10mSkillTreeTrack::None
+            && !Widget.IsShowingCommonIdentity())
+        { Click(&Widget, TEXT("HybridTreeCommonViewToggle")); return false; }
         auto* Entry = Widget.FindNodeEntry(RequestedLearnNode());
         if (!Entry) { return false; }
         URogue10mHybridSkillTreeButton* Found = nullptr; int32 Count = 0;

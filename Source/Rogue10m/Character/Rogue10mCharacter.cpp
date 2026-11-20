@@ -12,7 +12,6 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Rogue10mMouseCombatInputComponent.h"
-#include "Rogue10mWeaponIdentityComponent.h"
 #include "CollisionQueryParams.h"
 #include "InputActionValue.h"
 #include "InputCoreTypes.h"
@@ -39,7 +38,6 @@
 #include "Rogue10mTownProgressionComponent.h"
 #include "Rogue10mTraitRuntimeComponent.h"
 #include "Engine/GameInstance.h"
-#include "Rogue10mSkillLoadoutDataAsset.h"
 #include "Rogue10mVitalRegenerationComponent.h"
 #include "TimerManager.h"
 
@@ -249,6 +247,7 @@ void ARogue10mCharacter::PossessedBy(AController* NewController)
 void ARogue10mCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	RefreshCommonMobility();
 	RefreshThirdPersonPresentation();
  if (WeaponVisualComponent) { WeaponVisualComponent->RefreshWeaponVisuals(); }
 	if (GetGameInstance())
@@ -269,6 +268,7 @@ void ARogue10mCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 void ARogue10mCharacter::UnPossessed()
 {
+	ClearCommonMobilityActions();
 	if (MouseCombatInputComponent) { MouseCombatInputComponent->CancelInput(); }
 	if (GetGameInstance())
 	{
@@ -276,6 +276,7 @@ void ARogue10mCharacter::UnPossessed()
 	}
 	if (CharacterAnimationComponent) { CharacterAnimationComponent->ResetFighterCombatStance(); }
 	Super::UnPossessed();
+	RefreshCommonMobility();
 	if (AppearanceCameraComponent) { AppearanceCameraComponent->RefreshAppearanceCamera(); }
 }
 
@@ -469,79 +470,16 @@ void ARogue10mCharacter::OnJumped_Implementation()
 void ARogue10mCharacter::Landed(const FHitResult& Hit)
 {
 	Super::Landed(Hit);
+	BeginLandingStability();
 	if (CharacterAnimationComponent)
 	{
 		CharacterAnimationComponent->NotifyLanded();
 	}
 }
 
-float ARogue10mCharacter::GetDodgeCooldownRemaining() const
-{
-	const UWorld* World = GetWorld();
-	return World ? static_cast<float>(FMath::Max(0.0, static_cast<double>(NextDodgeAllowedTime) - World->GetTimeSeconds())) : 0.0f;
-}
-
-void ARogue10mCharacter::DoDodge()
-{
-	UWorld* World = GetWorld();
-	if (!World || IsDead() || IsBlockingWindowVisible() || GetCharacterMovement()->IsFalling()
-		|| (CombatComponent && CombatComponent->IsTechniqueMovementActive())
-		|| bIsDodging || World->GetTimeSeconds() < NextDodgeAllowedTime)
-	{
-		return;
-	}
-
-	SetSprinting(false);
-	const URogue10mDodgeSkillDataAsset* DodgeSkill = CombatComponent
-		? CombatComponent->GetActiveDodgeSkill()
-		: nullptr;
-	const float ActiveDistance = DodgeSkill ? DodgeSkill->Distance : DodgeDistance;
-	const float ActiveDuration = DodgeSkill ? DodgeSkill->Duration : DodgeDuration;
-	const float ActiveCooldown = DodgeSkill ? DodgeSkill->Cooldown : DodgeCooldown;
-	const float BaseStaminaCost = DodgeSkill ? DodgeSkill->StaminaCost : 0.0f;
-	const float StaminaCost = TraitRuntimeComponent ? TraitRuntimeComponent->GetDodgeStaminaCost(BaseStaminaCost) : BaseStaminaCost;
-	URogue10mAttributeSet* Attributes = GetRogueAttributeSet();
-	if (StaminaCost > 0.0f && (!Attributes || Attributes->GetStamina() < StaminaCost))
-	{
-		return;
-	}
-	if (HasAuthority() && Attributes && StaminaCost > 0.0f)
-	{
-		Attributes->SetStamina(Attributes->GetStamina() - StaminaCost);
-	}
-
-	FVector Direction = GetActorForwardVector();
-	if (!CachedMovementInput.IsNearlyZero())
-	{
-		Direction = GetActorRightVector() * CachedMovementInput.X + GetActorForwardVector() * CachedMovementInput.Y;
-	}
-	Direction.Z = 0.0f;
-	Direction = Direction.GetSafeNormal();
-	if (Direction.IsNearlyZero()) Direction = GetActorForwardVector();
-
-	bIsDodging = true;
-	if (TraitRuntimeComponent) { TraitRuntimeComponent->NotifyDodgeStarted(); }
-	NextDodgeAllowedTime = World->GetTimeSeconds() + ActiveCooldown;
-	GetCharacterMovement()->Velocity = Direction * (ActiveDistance / FMath::Max(0.05f, ActiveDuration));
-	if (CharacterAnimationComponent)
-	{
-		CharacterAnimationComponent->NotifyDodge();
-	}
-	World->GetTimerManager().SetTimer(DodgeTimerHandle, this, &ARogue10mCharacter::FinishDodge, ActiveDuration, false);
-}
-
-void ARogue10mCharacter::FinishDodge()
-{
-	bIsDodging = false;
-	FVector Velocity = GetCharacterMovement()->Velocity;
-	Velocity.X = 0.0f;
-	Velocity.Y = 0.0f;
-	GetCharacterMovement()->Velocity = Velocity;
-}
-
 void ARogue10mCharacter::DoSprintStart()
 {
-	if (IsDead() || IsBlockingWindowVisible())
+	if (IsDead() || IsBlockingWindowVisible() || IsRolling())
 	{
 		return;
 	}
@@ -571,9 +509,7 @@ void ARogue10mCharacter::SetSprinting(bool bNewSprinting)
 	}
 
 	bIsSprinting = bNewSprinting;
-	const auto* Identity = FindComponentByClass<URogue10mWeaponIdentityComponent>();
-	GetCharacterMovement()->MaxWalkSpeed = (bIsSprinting ? SprintWalkSpeed : NormalWalkSpeed)
-		* (Identity ? Identity->GetMovementMultiplier() : 1.0f);
+	RefreshMovementSpeed();
 	if (PlayerFeedbackComponent)
 	{
 		PlayerFeedbackComponent->SetSprinting(bIsSprinting);
@@ -746,6 +682,7 @@ void ARogue10mCharacter::Die()
 	}
 
 	SetSprinting(false);
+	ClearCommonMobilityActions();
 	if (CharacterAnimationComponent)
 	{
 		CharacterAnimationComponent->StopMotionEffects();
@@ -869,6 +806,8 @@ FRogue10mCharacterStatSnapshot ARogue10mCharacter::GetCharacterStatSnapshot() co
 		if (const URogue10mSkillTreeProgressionComponent* Tree = State->GetSkillTreeProgressionComponent())
 		{
 			Snapshot.Equipment.Accumulate(Tree->GetMasteryStatModifiers(State->GetEquippedWeaponType()));
+			Snapshot.Equipment.MoveSpeedMultiplierBonus += Tree->GetCommonSkillValue(ERogue10mCommonSkill::MoveSpeed)
+				+ Tree->GetCommonSkillValue(ERogue10mCommonSkill::MoveSpeedUpgrade);
 		}
 		if (const URogue10mTownProgressionComponent* Town = State->FindComponentByClass<URogue10mTownProgressionComponent>())
 		{
@@ -947,12 +886,7 @@ void ARogue10mCharacter::RefreshCharacterStats(bool bRestoreVitals)
 
 	NormalWalkSpeed = Snapshot.MoveSpeed;
 	SprintWalkSpeed = Snapshot.SprintSpeed;
-	if (UCharacterMovementComponent* Movement = GetCharacterMovement())
-	{
-		const auto* Identity = FindComponentByClass<URogue10mWeaponIdentityComponent>();
-		Movement->MaxWalkSpeed = (bIsSprinting ? SprintWalkSpeed : NormalWalkSpeed)
-			* (Identity ? Identity->GetMovementMultiplier() : 1.0f);
-	}
+	RefreshCommonMobility();
 }
 
 const URogue10mAttackSkillData* ARogue10mCharacter::GetDisplayedAttackSkillForHUD() const

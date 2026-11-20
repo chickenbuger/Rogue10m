@@ -1,0 +1,81 @@
+{
+  "scope": "UE 5.8 Development Editor; StartHub game and fresh process read from isolated save slots; programmatic InputKey and Slate pointer input",
+  "integrated_base": "d3629f01233c0b90a794426c161fa62073e02742",
+  "build": {
+    "seconds": 102.35,
+    "result": "succeeded",
+    "checkout": "isolated physical checkout"
+  },
+  "common_web": {
+    "nodes_including_free_foundation": 16,
+    "undirected_edges": 21,
+    "points_per_ability": 1,
+    "bridge_route": [
+      "C.MoveSpeed",
+      "C.GroundTurning",
+      "C.AirMomentum",
+      "C.DoubleJump"
+    ]
+  },
+  "automation": {
+    "passed": 4,
+    "unreal_output_errors": 0,
+    "log_lines": 2398,
+    "tests": [
+      "Rogue10m.HybridSkillTree.CommonSkillWeb",
+      "Rogue10m.HybridSkillTree.MasteryAlternativesAndLegacy",
+      "Rogue10m.HybridSkillTree.MasteryAndRewards",
+      "Rogue10m.HybridSkillTree.SharedLedgerAndValidation"
+    ]
+  },
+  "runtime": {
+    "passed": 282,
+    "failed": 0,
+    "unreal_output_errors": 0,
+    "log_lines": 2062
+  },
+  "read": {
+    "passed": 109,
+    "failed": 0,
+    "unreal_output_errors": 0,
+    "log_lines": 1812
+  },
+  "first_runtime_attempt": {
+    "label": "CommonWeb1120A",
+    "roll_unbounded_input_travel_cm": 1580.87,
+    "failures": [
+      "gear swap issued before attack/recovery completed",
+      "roll sample issued before landing"
+    ],
+    "fixes": [
+      "fixed distance uses its own 250 cm tuning",
+      "QA waits for legal swap and landing"
+    ]
+  },
+  "roll": {
+    "ready": {
+      "world_seconds": 12.401,
+      "capsule_world_cm": "V(X=540.00, Y=-1510.00, Z=98.15)",
+      "pelvis_from_capsule_cm": "V(X=3.00, Y=-27.95, Z=3.56)",
+      "right_hand_from_capsule_cm": "V(X=-41.01, Y=2.01, Z=36.38)"
+    },
+    "active": {
+      "world_seconds": 12.768,
+      "capsule_world_cm": "V(X=540.00, Y=-1349.05, Z=98.15)",
+      "pelvis_from_capsule_cm": "V(X=6.39, Y=-24.47, Z=-43.96)",
+      "right_hand_from_capsule_cm": "V(X=-46.00, Y=-44.51, Z=-38.11)"
+    },
+    "recovered": {
+      "world_seconds": 13.226,
+      "capsule_world_cm": "V(X=540.00, Y=-1212.41, Z=98.15)",
+      "pelvis_from_capsule_cm": "V(X=-0.02, Y=-19.92, Z=1.51)",
+      "right_hand_from_capsule_cm": "V(X=-14.83, Y=6.35, Z=-0.51)"
+    },
+    "travel_cm": 297.59
+  },
+  "resolutions": [
+    "1920x1080",
+    "1280x720"
+  ],
+  "representative_screenshot": "DevLog/20261120_CommonSkillWeb/common-skill-web.png"
+}

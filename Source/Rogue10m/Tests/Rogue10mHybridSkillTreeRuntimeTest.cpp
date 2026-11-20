@@ -1,6 +1,7 @@
 #if WITH_EDITOR
 #include "Components/Button.h"
 #include "Components/InputKeySelector.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Components/TextBlock.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HAL/FileManager.h"
@@ -78,6 +79,7 @@ public:
 		World = &InWorld;
 		bRead = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridRead"));
 		bInputQA = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridInputQA"));
+		bCommonQA = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridCommonQA"));
 		if (!SafeFlag(TEXT("RogueProfileSaveSlot="), TEXT("Rogue10m_Town_QA_"))
 			|| !SafeFlag(TEXT("RogueProgressionSavePrefix="), TEXT("Rogue10m_Progression_QA_"))
 			|| !SafeFlag(TEXT("RogueSkillKeySaveSlot="), TEXT("Rogue10m_Fighter_QA_")))
@@ -343,18 +345,22 @@ private:
 		Click(TEXT("HybridTreeCommon"));
 		Later(0.35, [this]
 		{
-			const FName IdentityNode = InputTrack == ETrack::Brawler ? FName(TEXT("I.InternalEnergy.Entry")) : FName(TEXT("I.Mana.Entry"));
-			const auto Diamond = Widget->GetNodeOuterFramePoints(IdentityNode);
-			Check(Widget->GetNodeFrameShape(IdentityNode) == TEXT("IdentityDiamond") && Diamond.Num() == 5
-				&& Diamond[0].Equals(Diamond.Last()) && Widget->GetNodeFrameOutlineCount(IdentityNode) == 1,
-				TEXT("input_actual_paint_geometry_has_closed_identity_diamond"));
-			// The visible outer frames extend beyond the old central 44-unit button.
-			// Route real clicks at their upper edge; cached centers would miss this regression.
-			ClickWidget(Widget->FindNodeEntry(IdentityNode), FVector2D(0.5, 0.06));
-			Check(Widget->GetSelectedNodeId() == IdentityNode, TEXT("input_identity_outer_diamond_pointer_click_selects_node"));
-			Click(InputTrack == ETrack::Brawler ? TEXT("HybridTreeFighter") : TEXT("HybridTreeGreatSword"));
-			Later(0.35, [this] { VerifyWeaponTabInput(); });
+			Click(TEXT("HybridTreeCommonViewToggle"));
+			Later(0.35, [this] { VerifyIdentityPointer(); });
 		});
+	}
+	void VerifyIdentityPointer()
+	{
+		const FName IdentityNode = InputTrack == ETrack::Brawler ? FName(TEXT("I.InternalEnergy.Entry")) : FName(TEXT("I.Mana.Entry"));
+		const auto Diamond = Widget->GetNodeOuterFramePoints(IdentityNode);
+		Check(Widget->GetNodeFrameShape(IdentityNode) == TEXT("IdentityDiamond") && Diamond.Num() == 5
+			&& Diamond[0].Equals(Diamond.Last()) && Widget->GetNodeFrameOutlineCount(IdentityNode) == 1,
+			TEXT("input_actual_paint_geometry_has_closed_identity_diamond"));
+		// Route a real click near the edge of the original identity hit area.
+		ClickWidget(Widget->FindNodeEntry(IdentityNode), FVector2D(0.5, 0.06));
+		Check(Widget->GetSelectedNodeId() == IdentityNode, TEXT("input_identity_outer_diamond_pointer_click_selects_node"));
+		Click(InputTrack == ETrack::Brawler ? TEXT("HybridTreeFighter") : TEXT("HybridTreeGreatSword"));
+		Later(0.35, [this] { VerifyWeaponTabInput(); });
 	}
 	void VerifyWeaponTabInput()
 	{
@@ -633,12 +639,17 @@ private:
 		PC->ToggleSkillTree();
 		Check(Widget->GetDisplayedTab() == ETab::Knuckle, TEXT("reopening_after_browsing_selects_equipped_tab"));
 		Widget->BrowseTab(ETab::Common);
+		Check(Widget->GetDisplayedTab() == ETab::Common && Widget->GetVisibleNodeCount() == 16
+			&& Widget->FindNodeEntry(TEXT("C.Foundation")) && Widget->FindNodeEntry(TEXT("C.Roll"))
+			&& !Widget->FindNodeEntry(TEXT("I.InternalEnergy.Entry")), TEXT("common_tab_opens_the_sixteen_node_mobility_web"));
+		Widget->BrowseCommonIdentity();
 		Check(Widget->GetDisplayedTab() == ETab::Common && Widget->FindNodeEntry(TEXT("I.InternalEnergy.Entry"))
 			&& Widget->FindNodeEntry(TEXT("I.FightingSpirit.Entry")) && Widget->FindNodeEntry(TEXT("I.Mana.Entry"))
-			&& !Widget->FindNodeEntry(TEXT("F.Ultimate")), TEXT("common_owns_shared_identity_lanes"));
+			&& !Widget->FindNodeEntry(TEXT("C.DoubleJump")) && !Widget->FindNodeEntry(TEXT("F.Ultimate")),
+			TEXT("common_identity_subview_preserves_shared_identity_lanes"));
 		Tree->NotifyWeaponChanged();
 		Check(Widget->GetDisplayedTab() == ETab::Common, TEXT("unchanged_equipment_refresh_preserves_manual_tab"));
-		Shot(TEXT("common-1080p.png"));
+		Shot(TEXT("identity-1080p.png"));
 		Widget->HandleAction(100, TEXT("I.InternalEnergy.Advanced"));
 		Later(0.7, [this]
 		{
@@ -718,9 +729,9 @@ private:
 			&& Saved->LobbyEarnedPoints == 0 && Saved->Town.TraitInvestments.IsEmpty(),
 			TEXT("read_current_v5_same_profile_valid_run_identity_and_zero_independent_lobby_budget"));
 		if (Failures) { Finish(); return; }
-		Check(State->GetPlayerLevel() == 15 && State->GetPlayerLevel() == Saved->Growth.Level
+		Check(State->GetPlayerLevel() == (bCommonQA ? 29 : 15) && State->GetPlayerLevel() == Saved->Growth.Level
 			&& Player->GetEquippedWeaponType() == ERogue10mWeaponType::GreatSword
-			&& Player->GetCombatComponent()->GetActiveSkillTreeWeaponType() == ERogue10mWeaponType::GreatSword, TEXT("read_growth_LV15_and_greatsword_combat_restored"));
+			&& Player->GetCombatComponent()->GetActiveSkillTreeWeaponType() == ERogue10mWeaponType::GreatSword, TEXT("read_expected_growth_and_greatsword_combat_restored"));
 		const auto Inventory = Player->GetInventoryComponent()->CaptureInventory();
 		Check(Inventory.Gold == Saved->Inventory.Gold && Inventory.Crystals == Saved->Inventory.Crystals
 			&& Inventory.LeftEquipment.Num() == Saved->Inventory.LeftEquipment.Num()
@@ -746,9 +757,20 @@ private:
 		Check(Tree->GetMasteryLevel(ETrack::Brawler) == 12 && Tree->GetMasteryTotalExperience(ETrack::Brawler) == 385
 			&& Tree->GetMasteryLevel(ETrack::GreatSword) == 20 && Tree->GetMasteryTotalExperience(ETrack::GreatSword) == 1045,
 			TEXT("read_brawler_M12_and_greatsword_M20_with_exact_XP_restored"));
-		Check(Tree->GetSpentSkillTreePoints() == 13 && Tree->GetAvailableGrowthPoints() == 1
+		Check(Tree->GetSpentSkillTreePoints() == (bCommonQA ? 28 : 13) && Tree->GetAvailableGrowthPoints() == (bCommonQA ? 0 : 1)
 			&& State->GetPlayerLevel() - 1 == Tree->GetSpentSkillTreePoints() + Tree->GetAvailableGrowthPoints(),
-			TEXT("read_LV15_budget_restores_five_sword_and_eight_identity_points"));
+			TEXT("read_shared_budget_restores_sword_identity_and_common_investments"));
+		if (bCommonQA)
+		{
+			for (const auto& Node : Tree->GetCatalog()->Nodes)
+			{
+				if (Node.CommonSkill != ERogue10mCommonSkill::None)
+				{
+					Check(Tree->IsCommonSkillLearned(Node.CommonSkill), *Node.NodeId.ToString());
+				}
+			}
+			Check(Player->JumpMaxCount >= 2, TEXT("read_common_double_jump_reapplied_to_equipped_greatsword"));
+		}
 		Check(Tree->GetActiveIdentity() == EIdentity::Mana && Tree->GetSelectedProperty(EIdentity::Mana) == TEXT("Mana.Spread")
 			&& Tree->HasResonance(ETrack::GreatSword, EIdentity::Mana), TEXT("read_active_mana_spread_and_ultimate_resonance_restored"));
 		auto* Combat = Player->GetCombatComponent();
@@ -1001,10 +1023,169 @@ private:
 			Shot(TEXT("greatsword-720p.png"));
 			Later(0.6, [this]
 			{
-				if (bInputQA) { BeginInputChecks(ETrack::GreatSword, [this] { Finish(); }); }
-				else { Finish(); }
+				if (bInputQA) { BeginInputChecks(ETrack::GreatSword, [this] { CompleteRuntime(); }); }
+				else { CompleteRuntime(); }
 			});
 		});
+	}
+	void CompleteRuntime()
+	{
+		if (!bCommonQA || Failures) { Finish(); return; }
+		PC->ConsoleCommand(TEXT("r.SetRes 1920x1080w"), false);
+		if (!PC->IsSkillTreeVisible()) { PC->ToggleSkillTree(); }
+		Widget->BrowseTab(ETab::Common);
+		auto Growth = State->CaptureGrowth();
+		Growth.Level = 29;
+		Check(State->RestoreGrowth(Growth) && Tree->GetAvailableGrowthPoints() == 15,
+			TEXT("common_fixture_has_fifteen_points_after_sword_and_identity_investments"));
+		const auto* Movement = Player->GetCharacterMovement();
+		CommonBaseWalkSpeed = Movement->MaxWalkSpeed;
+		CommonBaseAcceleration = Movement->MaxAcceleration;
+		CommonBaseAirControl = Movement->AirControl;
+		CommonBaseAirBraking = Movement->BrakingDecelerationFalling;
+		Check(Player->JumpMaxCount == 1, TEXT("common_fixture_greatsword_has_one_jump_before_training"));
+		Later(0.7, [this]
+		{
+			ClickWidget(Widget->FindNodeEntry(TEXT("C.MoveSpeed")));
+			Check(Widget->GetSelectedNodeId() == TEXT("C.MoveSpeed"), TEXT("common_move_speed_node_hit_target"));
+			Later(0.25, [this] { InvestCommonWeb(); });
+		});
+	}
+	void InvestCommonWeb()
+	{
+		Click(TEXT("HybridTreeLearnPoints"));
+		Check(Tree->GetAvailableGrowthPoints() == 14 && Tree->IsCommonSkillLearned(ERogue10mCommonSkill::MoveSpeed)
+			&& Player->GetCharacterMovement()->MaxWalkSpeed > CommonBaseWalkSpeed, TEXT("common_real_UI_purchase_spends_one_point_and_applies_speed"));
+		Check(!Tree->TryUnlockNode(TEXT("C.RollCooldown"), ERoute::Points, NAME_None) && Tree->GetAvailableGrowthPoints() == 14,
+			TEXT("locked_common_skill_cannot_spend_points"));
+		for (const TCHAR* Id : {TEXT("C.GroundTurning"), TEXT("C.AirMomentum"), TEXT("C.DoubleJump")})
+		{
+			Check(Tree->TryUnlockNode(Id, ERoute::Points, NAME_None), Id);
+		}
+		Check(Player->JumpMaxCount >= 2 && !Tree->IsCommonSkillLearned(ERogue10mCommonSkill::AirControl)
+			&& Player->GetCharacterMovement()->BrakingDecelerationFalling < CommonBaseAirBraking
+			&& Tree->GetAvailableGrowthPoints() == 11, TEXT("common_cross_path_grants_two_jumps_on_greatsword_without_air_control"));
+		Widget->SelectNode(TEXT("C.DoubleJump"));
+		Later(0.35, [this]
+		{
+			Shot(TEXT("common-1080p.png"));
+			Later(0.35, [this]
+			{
+				PC->ConsoleCommand(TEXT("r.SetRes 1280x720w"), false);
+				Later(0.7, [this]
+				{
+					Shot(TEXT("common-720p.png"));
+					Later(0.35, [this] { ExerciseCommonMovement(); });
+				});
+			});
+		});
+	}
+	void ExerciseCommonMovement()
+	{
+		for (const TCHAR* Id : {TEXT("C.DoubleJumpUpgrade"), TEXT("C.JumpHeight"), TEXT("C.AirControl"), TEXT("C.LandingStability"),
+			TEXT("C.Roll"), TEXT("C.RollCooldown"), TEXT("C.EvadeDistance"), TEXT("C.EvadeRecovery"),
+			TEXT("C.EvadeHaste"), TEXT("C.GroundAcceleration"), TEXT("C.MoveSpeedUpgrade")})
+		{
+			Check(Tree->TryUnlockNode(Id, ERoute::Points, NAME_None), Id);
+		}
+		Check(Tree->GetAvailableGrowthPoints() == 0 && Player->GetCharacterMovement()->MaxAcceleration > CommonBaseAcceleration
+			&& Player->GetCharacterMovement()->AirControl > CommonBaseAirControl, TEXT("common_full_web_spends_fifteen_points_and_applies_acceleration_and_air_control"));
+		PC->CloseAllBlockingPanels();
+		WaitForCommonWeaponSwap(25);
+	}
+	void WaitForCommonWeaponSwap(int32 Attempts)
+	{
+		if (!Player->CanChangeWeapon() && Attempts > 0)
+		{
+			Later(0.15, [this, Attempts] { WaitForCommonWeaponSwap(Attempts - 1); });
+			return;
+		}
+		Check(Player->CanChangeWeapon(), TEXT("common_swap_fixture_waits_for_attack_recovery"));
+		auto* Inventory = Player->GetInventoryComponent();
+		const auto Equipped = Inventory->CaptureInventory();
+		Check(Inventory->TryUnequipItemToFirstAvailableGrid(ERogue10mInventorySlotType::MainWeapon)
+			&& Player->GetEquippedWeaponType() == ERogue10mWeaponType::Unarmed && Player->JumpMaxCount >= 2
+			&& Tree->IsCommonSkillLearned(ERogue10mCommonSkill::Roll), TEXT("common_unequipping_keeps_jump_and_roll_available"));
+		Check(Inventory->RestoreInventory(Equipped) && Player->GetEquippedWeaponType() == ERogue10mWeaponType::GreatSword
+			&& Player->GetCharacterMovement()->MaxWalkSpeed > CommonBaseWalkSpeed, TEXT("common_greatsword_re_equip_retains_movement_passives"));
+		Later(0.5, [this] { VerifyCommonJump(); });
+	}
+	void VerifyCommonJump()
+	{
+		auto* Movement = Player->GetCharacterMovement();
+		if (!Movement->IsMovingOnGround()) { Check(false, TEXT("common_fixture_requires_ground_for_jump")); Finish(); return; }
+		GameKey(EKeys::SpaceBar, true);
+		Later(0.26, [this]
+		{
+			GameKey(EKeys::SpaceBar, false);
+			Check(Player->GetCharacterMovement()->IsFalling() && Player->JumpCurrentCount == 1, TEXT("common_first_space_press_leaves_ground"));
+			Later(0.08, [this]
+			{
+				const double BeforeAirJumpVelocity = Player->GetVelocity().Z;
+				GameKey(EKeys::SpaceBar, true);
+				Later(0.12, [this, BeforeAirJumpVelocity]
+				{
+					GameKey(EKeys::SpaceBar, false);
+					Check(Player->JumpCurrentCount == 2 && Player->GetVelocity().Z > BeforeAirJumpVelocity,
+						TEXT("common_second_space_input_launches_the_equipped_sword_pawn_in_air"));
+				Later(0.8, [this] { VerifyCommonRoll(18); });
+				});
+			});
+		});
+	}
+	void VerifyCommonRoll(int32 Attempts)
+	{
+		if (!Player->GetCharacterMovement()->IsMovingOnGround() && Attempts > 0)
+		{
+			Later(0.12, [this, Attempts] { VerifyCommonRoll(Attempts - 1); });
+			return;
+		}
+		Check(Player->GetCharacterMovement()->IsMovingOnGround(), TEXT("common_roll_starts_after_landing"));
+		const double PelvisBefore = LogCommonRollPelvis(TEXT("ready"));
+		Shot(TEXT("roll-ready.png"));
+		Later(0.12, [this, PelvisBefore]
+		{
+			const FVector Origin = Player->GetActorLocation();
+			GameKey(Rogue10mInput::DodgeKey(), true);
+			Later(0.18, [this, Origin, PelvisBefore]
+			{
+				GameKey(Rogue10mInput::DodgeKey(), false);
+				float RollProgress = 0.0f;
+				FVector RollDirection;
+				Check(Player->GetRollPresentation(RollProgress, RollDirection) && RollProgress > 0.1f && RollProgress < 0.95f
+					&& Player->GetDodgeCooldownRemaining() > 0.0f, TEXT("common_alt_starts_timed_grounded_roll_with_cooldown"));
+				const auto* AttackNode = Tree->FindNode(TEXT("G.CrushingSlash"));
+				auto* Attack = AttackNode ? AttackNode->Skill.LoadSynchronous() : nullptr;
+				Check(Attack && !Player->GetCombatComponent()->ActivateTreeSkill(Attack), TEXT("common_roll_blocks_attack_acceptance_until_recovery"));
+				const double PelvisDuring = LogCommonRollPelvis(TEXT("active"));
+				Check(PelvisBefore - PelvisDuring > 15.0, TEXT("common_roll_lowers_rendered_pelvis_into_tuck"));
+				Shot(TEXT("roll-active.png"));
+				Later(0.45, [this, Origin, PelvisBefore]
+				{
+					const double Travel = FVector::Dist2D(Origin, Player->GetActorLocation());
+					Check(!Player->IsRolling() && !Player->IsDodging() && Travel > 100.0 && Travel < 370.0,
+						TEXT("common_alt_roll_travels_plausible_distance_and_finishes"));
+					UE_LOG(LogRogue10m, Display, TEXT("COMMON_ROLL travel_cm=%.2f"), Travel);
+					const double PelvisAfter = LogCommonRollPelvis(TEXT("recovered"));
+					Check(FMath::Abs(PelvisBefore - PelvisAfter) < 15.0, TEXT("common_roll_restores_the_standing_pose"));
+					Shot(TEXT("roll-recovered.png"));
+					Later(0.35, [this] { Finish(); });
+				});
+			});
+		});
+	}
+	double LogCommonRollPelvis(const TCHAR* Stage)
+	{
+		const auto* Mesh = Player->GetMesh();
+		Check(Mesh && Mesh->GetBoneIndex(TEXT("pelvis")) != INDEX_NONE && Mesh->GetBoneIndex(TEXT("hand_r")) != INDEX_NONE,
+			TEXT("common_roll_visible_body_has_sampled_bones"));
+		if (!Mesh) { return 0.0; }
+		const FVector Origin = Player->GetActorLocation();
+		const FVector Pelvis = Mesh->GetBoneLocation(TEXT("pelvis")) - Origin;
+		const FVector Hand = Mesh->GetBoneLocation(TEXT("hand_r")) - Origin;
+		UE_LOG(LogRogue10m, Display, TEXT("COMMON_ROLL %s t=%.3f capsule=%s pelvis=%s right_hand=%s"), Stage,
+			World->GetTimeSeconds(), *Origin.ToCompactString(), *Pelvis.ToCompactString(), *Hand.ToCompactString());
+		return Pelvis.Z;
 	}
 	void IdentityAndSave()
 	{
@@ -1062,7 +1243,7 @@ private:
 		if (!bRead && State.IsValid() && Tree.IsValid())
 		{
 			auto* Persistence = World.IsValid() ? World->GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>() : nullptr;
-			Check(Persistence && Persistence->SaveNow(), TEXT("write_final_rebuilt_identity_state_saved_before_exit"));
+			Check(Persistence && Persistence->SaveNow(), TEXT("write_final_skill_tree_state_before_exit"));
 		}
 		Done = true;
 		const TCHAR* Phase = bRead ? TEXT("READ") : TEXT("RUNTIME");
@@ -1089,6 +1270,11 @@ private:
 	bool Done = false;
 	bool bRead = false;
 	bool bInputQA = false;
+	bool bCommonQA = false;
+	float CommonBaseWalkSpeed = 0.0f;
+	float CommonBaseAcceleration = 0.0f;
+	float CommonBaseAirControl = 0.0f;
+	float CommonBaseAirBraking = 0.0f;
 	ETrack InputTrack = ETrack::None;
 	FName InputNode;
 	FDelegateHandle EProbeHandle;

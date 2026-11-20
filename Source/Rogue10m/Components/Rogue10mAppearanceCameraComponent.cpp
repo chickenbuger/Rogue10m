@@ -289,6 +289,18 @@ bool URogue10mAppearanceCameraComponent::ComposeCameraTransform(const FTransform
 bool URogue10mAppearanceCameraComponent::ReadCameraTransform(FTransform& OutCamera) const
 {
  const auto* Character = Cast<ARogue10mCharacter>(GetOwner());
+ if (bApplied && Character && Character->IsRolling())
+ {
+  if (const USkeletalMeshComponent* Mesh = AppliedMesh.Get())
+  {
+   const FQuat ViewRotation = Character->GetControlRotation().Quaternion();
+   // Keep the neutral head height and mouse look while the body turns through the roll.
+   const FVector ViewLocation = Mesh->GetComponentTransform().TransformPosition(ReferenceHeadLocation)
+    + ViewRotation.RotateVector(EyeOffset);
+   OutCamera = FTransform(ViewRotation, ViewLocation);
+   return !OutCamera.ContainsNaN();
+  }
+ }
  FTransform Head;
  FQuat Motion;
  if (!bApplied || !Character || !ReadAnimatedHead(Head, Motion)) { return false; }

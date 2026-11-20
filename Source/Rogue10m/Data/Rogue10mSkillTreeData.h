@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "Templates/Function.h"
 #include "Rogue10mCharacterStats.h"
 #include "Rogue10mWeaponTypes.h"
 #include "Rogue10mProgressionRequirementTypes.h"
@@ -15,6 +16,14 @@ enum class ERogue10mSkillTreeTrack : uint8 { None, Brawler, GreatSword };
 /** Progression identities are independent of the legacy HUD resource enum. */
 UENUM(BlueprintType)
 enum class ERogue10mSkillTreeIdentity : uint8 { None, InternalEnergy, FightingSpirit, Mana };
+
+UENUM(BlueprintType)
+enum class ERogue10mCommonSkill : uint8
+{
+	None, Foundation, AirControl, DoubleJump, JumpHeight, DoubleJumpUpgrade,
+	MoveSpeed, GroundTurning, GroundAcceleration, MoveSpeedUpgrade,
+	EvadeRecovery, Roll, EvadeDistance, RollCooldown, AirMomentum, LandingStability, EvadeHaste
+};
 
 UENUM(BlueprintType)
 enum class ERogue10mHybridSkillTreeNodeType : uint8
@@ -65,7 +74,7 @@ struct FRogue10mSkillTreeNodeDefinition
 {
 	GENERATED_BODY()
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") FName NodeId;
-	/** None denotes a shared identity node. */
+	/** None denotes shared identity or weapon-independent common progression. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") ERogue10mSkillTreeTrack Track = ERogue10mSkillTreeTrack::None;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") TArray<ERogue10mSkillTreeTrack> AllowedTracks;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") ERogue10mHybridSkillTreeNodeType NodeType = ERogue10mHybridSkillTreeNodeType::Stat;
@@ -94,6 +103,13 @@ struct FRogue10mSkillTreeNodeDefinition
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") TArray<FRogue10mSkillTreeChoiceDefinition> Choices;
 	/** Resonances may require a particular previously selected nature. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Skill Tree") FName RequiredChoiceId;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Common Skills") ERogue10mCommonSkill CommonSkill = ERogue10mCommonSkill::None;
+	/** A common skill requires any one learned neighbor. Edges are reciprocal. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Common Skills") TArray<FName> CommonConnections;
+	/** Upgrades can also require their corresponding base skill. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Common Skills") ERogue10mCommonSkill CommonRequiredSkill = ERogue10mCommonSkill::None;
+	/** Positive effect magnitude, zero for the foundation and ability unlocks. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Common Skills", meta=(ClampMin="0")) float CommonValue = 0.0f;
 };
 
 USTRUCT(BlueprintType)
@@ -155,6 +171,7 @@ class ROGUE10M_API URogue10mSkillTreeDataAsset : public UDataAsset
 	GENERATED_BODY()
 public:
 	URogue10mSkillTreeDataAsset();
+	virtual void PostLoad() override;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Skill Tree") TArray<FRogue10mSkillTreeNodeDefinition> Nodes;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Skill Tree", meta=(ClampMin="2", ClampMax="1000")) int32 MaxMasteryLevel = 20;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(ClampMin="0")) float IdentityGaugePerHit = 20.0f;
@@ -173,6 +190,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(ClampMin="0", ClampMax="1")) float FocusRecoveryMultiplier = 0.75f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(ClampMin="0")) float ResonanceDamageBonus = 0.10f;
 	const FRogue10mSkillTreeNodeDefinition* FindNode(FName NodeId) const;
+	const FRogue10mSkillTreeNodeDefinition* FindCommonSkill(ERogue10mCommonSkill Skill) const;
+	bool MeetsCommonPrerequisites(const FRogue10mSkillTreeNodeDefinition& Node, TFunctionRef<bool(FName)> IsLearned) const;
+	TSet<FName> GetReachableCommonNodes(const TSet<FName>& Candidates) const;
 	TArray<FRogue10mSkillTreeNodeDefinition> GetNodes(ERogue10mSkillTreeTrack Track) const;
 	bool IsValidCatalog(FText* OutReason = nullptr) const;
 	static ERogue10mSkillTreeTrack ResolveTrack(ERogue10mWeaponType WeaponType);
@@ -183,4 +203,5 @@ public:
 	void BuildDefaultCatalog();
 private:
 	void ApplySwordInvestments();
+	void AppendDefaultCommonWeb();
 };

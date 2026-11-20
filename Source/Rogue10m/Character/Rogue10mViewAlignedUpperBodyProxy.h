@@ -26,6 +26,7 @@ private:
 	void ApplyWeightedHandMotion(FCompactPose& Pose);
 	void SyncHandIKHelpers(FCompactPose& Pose);
 	void ApplyMouseDrivenHead(FCompactPose& Pose);
+	void ApplyRollPose(FCompactPose& Pose);
 	void CaptureHeadMotionSettings(const ARogue10mCharacter* Character, float DeltaSeconds);
 	void CaptureWeightedHandMotion(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
 
@@ -53,6 +54,10 @@ private:
 	FVector2D EvaluatedWeightedHandPitch = FVector2D::ZeroVector;
 	int32 SkippedWeightedAttackInstanceId = INDEX_NONE;
 	float TorsoWeight = 0.25f;
+	float RollProgress = 0.0f;
+	float RollYawRadians = 0.0f;
+	FVector RollRight = FVector::RightVector;
+	FVector RollUp = FVector::UpVector;
 	uint16 BoneCacheSerial = 0;
 	bool bBoneCacheValid = false;
 	bool bApplyAim = false;
@@ -62,6 +67,12 @@ private:
 	bool bWeightedHandMotionEvaluated = false;
 	bool bApplyMouseHead = false;
 	bool bMouseHeadEvaluated = false;
+	bool bApplyRollPose = false;
+	FCompactPoseBoneIndex Pelvis = FCompactPoseBoneIndex(INDEX_NONE);
+	FCompactPoseBoneIndex Clavicle[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
+	FCompactPoseBoneIndex Forearm[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
+	FCompactPoseBoneIndex Thigh[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
+	FCompactPoseBoneIndex Calf[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
 	FCompactPoseBoneIndex Spine[3] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
 	FCompactPoseBoneIndex UpperArm[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
 	FCompactPoseBoneIndex Neck = FCompactPoseBoneIndex(INDEX_NONE);

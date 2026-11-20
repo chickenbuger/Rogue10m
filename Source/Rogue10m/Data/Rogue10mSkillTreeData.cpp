@@ -5,9 +5,55 @@ URogue10mSkillTreeDataAsset::URogue10mSkillTreeDataAsset()
 	BuildDefaultCatalog();
 }
 
+void URogue10mSkillTreeDataAsset::PostLoad()
+{
+	Super::PostLoad();
+	// Older catalog assets serialized the Nodes array before common skills existed.
+	if (!Nodes.IsEmpty() && !Nodes.ContainsByPredicate([](const auto& Node) { return Node.CommonSkill != ERogue10mCommonSkill::None; }))
+	{
+		AppendDefaultCommonWeb();
+	}
+}
+
 const FRogue10mSkillTreeNodeDefinition* URogue10mSkillTreeDataAsset::FindNode(FName NodeId) const
 {
 	return Nodes.FindByPredicate([NodeId](const auto& Node) { return Node.NodeId == NodeId; });
+}
+
+const FRogue10mSkillTreeNodeDefinition* URogue10mSkillTreeDataAsset::FindCommonSkill(ERogue10mCommonSkill Skill) const
+{
+	return Skill == ERogue10mCommonSkill::None ? nullptr
+		: Nodes.FindByPredicate([Skill](const auto& Node) { return Node.CommonSkill == Skill; });
+}
+
+bool URogue10mSkillTreeDataAsset::MeetsCommonPrerequisites(const FRogue10mSkillTreeNodeDefinition& Node, TFunctionRef<bool(FName)> IsLearned) const
+{
+	if (Node.CommonSkill == ERogue10mCommonSkill::Foundation) { return true; }
+	if (Node.CommonRequiredSkill != ERogue10mCommonSkill::None)
+	{
+		const auto* Required = FindCommonSkill(Node.CommonRequiredSkill);
+		if (!Required || !IsLearned(Required->NodeId)) { return false; }
+	}
+	return Node.CommonConnections.ContainsByPredicate(IsLearned);
+}
+
+TSet<FName> URogue10mSkillTreeDataAsset::GetReachableCommonNodes(const TSet<FName>& Candidates) const
+{
+	TSet<FName> Reachable;
+	int32 PreviousCount;
+	do
+	{
+		PreviousCount = Reachable.Num();
+		for (const auto& Node : Nodes)
+		{
+			if (Node.CommonSkill != ERogue10mCommonSkill::None && Candidates.Contains(Node.NodeId) && !Reachable.Contains(Node.NodeId)
+				&& MeetsCommonPrerequisites(Node, [&Reachable](FName Id) { return Reachable.Contains(Id); }))
+			{
+				Reachable.Add(Node.NodeId);
+			}
+		}
+	} while (Reachable.Num() != PreviousCount);
+	return Reachable;
 }
 
 ERogue10mSkillTreeTrack URogue10mSkillTreeDataAsset::ResolveTrack(ERogue10mWeaponType WeaponType)
@@ -26,6 +72,7 @@ bool URogue10mSkillTreeDataAsset::IsIdentityAllowed(ERogue10mSkillTreeTrack Trac
 
 bool URogue10mSkillTreeDataAsset::IsNodeInTrack(const FRogue10mSkillTreeNodeDefinition& Node, ERogue10mSkillTreeTrack Track)
 {
+	if (Node.CommonSkill != ERogue10mCommonSkill::None) { return true; }
 	if (Track == ERogue10mSkillTreeTrack::None) { return false; }
 	return Node.Track == Track || (Node.Track == ERogue10mSkillTreeTrack::None && Node.AllowedTracks.Contains(Track));
 }
@@ -49,6 +96,8 @@ bool URogue10mSkillTreeDataAsset::IsValidCatalog(FText* OutReason) const
 	}
 	if (IdentityGaugeThreshold < 1.0f || IdentityRangeMultiplier < 1.0f || CirculationCostMultiplier > 1.0f || FocusRecoveryMultiplier > 1.0f) { return Fail(); }
 	TSet<FName> Seen;
+	TSet<FName> CommonIds;
+	TSet<ERogue10mCommonSkill> CommonSkills;
 	for (const auto& Node : Nodes)
 	{
 		if (Node.NodeId.IsNone() || Seen.Contains(Node.NodeId) || Node.PointCost < 0 || Node.PointCost > 1000000
@@ -71,7 +120,25 @@ bool URogue10mSkillTreeDataAsset::IsValidCatalog(FText* OutReason) const
 			if (!bTrainingNode && !bPaidSwordTechnique) { return Fail(); }
 		}
 		else if (!Node.HistoricalAutomaticMasteryAlternatives.IsEmpty() || !Node.HistoricalAutomaticPrerequisiteGroups.IsEmpty()) { return Fail(); }
-		if (Node.Track == ERogue10mSkillTreeTrack::None && Node.AllowedTracks.IsEmpty()) { return Fail(); }
+		if (Node.CommonSkill != ERogue10mCommonSkill::None)
+		{
+			const bool bFoundation = Node.CommonSkill == ERogue10mCommonSkill::Foundation;
+			const bool bCorrectAcquisition = bFoundation
+				? Node.NodeType == ERogue10mHybridSkillTreeNodeType::Root && Node.bAutomaticUnlock && Node.CommonRequiredSkill == ERogue10mCommonSkill::None
+				: Node.NodeType == ERogue10mHybridSkillTreeNodeType::Passive && !Node.bAutomaticUnlock && Node.PointCost > 0;
+			if (Node.Track != ERogue10mSkillTreeTrack::None || !Node.AllowedTracks.IsEmpty()
+				|| Node.Identity != ERogue10mSkillTreeIdentity::None || !Node.PrerequisiteGroups.IsEmpty()
+				|| !Node.RequiredAll.IsEmpty() || !Node.MasteryAlternatives.IsEmpty() || !Node.RequiredChoiceId.IsNone()
+				|| !Node.Skill.IsNull() || !Node.GrantedSkills.IsEmpty() || !Node.Choices.IsEmpty()
+				|| static_cast<uint8>(Node.CommonSkill) > static_cast<uint8>(ERogue10mCommonSkill::EvadeHaste)
+				|| CommonSkills.Contains(Node.CommonSkill) || Node.CommonConnections.IsEmpty()
+				|| !FMath::IsFinite(Node.CommonValue) || Node.CommonValue < 0.0f || Node.CommonValue > 10.0f
+				|| !bCorrectAcquisition) { return Fail(); }
+			CommonSkills.Add(Node.CommonSkill);
+			CommonIds.Add(Node.NodeId);
+		}
+		else if ((Node.Track == ERogue10mSkillTreeTrack::None && Node.AllowedTracks.IsEmpty())
+			|| !Node.CommonConnections.IsEmpty() || Node.CommonRequiredSkill != ERogue10mCommonSkill::None || Node.CommonValue != 0.0f) { return Fail(); }
 		TSet<ERogue10mSkillTreeTrack> Tracks;
 		for (auto Track : Node.AllowedTracks)
 		{
@@ -105,6 +172,19 @@ bool URogue10mSkillTreeDataAsset::IsValidCatalog(FText* OutReason) const
 	}
 	for (const auto& Node : Nodes)
 	{
+		if (Node.CommonSkill != ERogue10mCommonSkill::None)
+		{
+			if (Node.CommonRequiredSkill != ERogue10mCommonSkill::None
+				&& (!CommonSkills.Contains(Node.CommonRequiredSkill) || Node.CommonRequiredSkill == Node.CommonSkill)) { return Fail(); }
+			TSet<FName> Neighbors;
+			for (FName NeighborId : Node.CommonConnections)
+			{
+				const auto* Neighbor = FindNode(NeighborId);
+				if (NeighborId == Node.NodeId || Neighbors.Contains(NeighborId) || !Neighbor
+					|| Neighbor->CommonSkill == ERogue10mCommonSkill::None || !Neighbor->CommonConnections.Contains(Node.NodeId)) { return Fail(); }
+				Neighbors.Add(NeighborId);
+			}
+		}
 		for (const auto* Groups : {&Node.PrerequisiteGroups, &Node.HistoricalAutomaticPrerequisiteGroups})
 		{
 			for (const auto& Group : *Groups)
@@ -119,7 +199,9 @@ bool URogue10mSkillTreeDataAsset::IsValidCatalog(FText* OutReason) const
 			}
 		}
 	}
-	// Reject cycles across all alternatives; progression may never depend on its own result.
+	// Common edges can form loops, but every skill needs a route that can actually be acquired.
+	if (GetReachableCommonNodes(CommonIds).Num() != CommonIds.Num()) { return Fail(); }
+	// Reject cycles across directed weapon and identity alternatives.
 	TSet<FName> Visiting, Complete;
 	TFunction<bool(FName)> Visit = [&](FName Id)
 	{

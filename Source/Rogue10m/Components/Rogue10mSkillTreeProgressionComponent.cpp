@@ -20,6 +20,7 @@ using FSnapshot = FRogue10mSkillTreeSnapshot;
 using FInvestment = FRogue10mSkillTreeInvestment;
 using ETrack = ERogue10mSkillTreeTrack;
 using EIdentity = ERogue10mSkillTreeIdentity;
+using ECommon = ERogue10mCommonSkill;
 using EType = ERogue10mHybridSkillTreeNodeType;
 using ERoute = ERogue10mSkillTreeUnlockRoute;
 
@@ -46,8 +47,13 @@ static const FInvestment* Find(const FSnapshot& Snapshot, FName Id)
 {
 	return Snapshot.Investments.FindByPredicate([Id](const auto& Row) { return Row.NodeId == Id; });
 }
-static bool Prerequisites(const FSnapshot& Snapshot, const FNode& Node, bool bHistoricalAutomatic = false)
+static bool Prerequisites(const FSnapshot& Snapshot, const FNode& Node, const URogue10mSkillTreeDataAsset& Catalog,
+	bool bHistoricalAutomatic = false)
 {
+	if (Node.CommonSkill != ECommon::None)
+	{
+		return Catalog.MeetsCommonPrerequisites(Node, [&Snapshot](FName Id) { return Find(Snapshot, Id) != nullptr; });
+	}
 	if (!Node.RequiredChoiceId.IsNone() && !Snapshot.Investments.ContainsByPredicate([&Node](const auto& Row) { return Row.ChoiceId == Node.RequiredChoiceId; })) { return false; }
 	const auto& Groups = bHistoricalAutomatic ? Node.HistoricalAutomaticPrerequisiteGroups : Node.PrerequisiteGroups;
 	if (Groups.IsEmpty()) { return true; }
@@ -84,21 +90,34 @@ static bool Mastery(const FSnapshot& Snapshot, const FNode& Node, const URogue10
 }
 static bool ValidateAutomaticInvestment(const FSnapshot& Snapshot, const FNode& Node, const URogue10mSkillTreeDataAsset& Catalog)
 {
-	return (Node.bAutomaticUnlock && Prerequisites(Snapshot, Node) && Mastery(Snapshot, Node, Catalog))
-		|| (Node.bAcceptHistoricalAutomaticUnlock && Prerequisites(Snapshot, Node, true) && Mastery(Snapshot, Node, Catalog, true));
+	return (Node.bAutomaticUnlock && Prerequisites(Snapshot, Node, Catalog) && Mastery(Snapshot, Node, Catalog))
+		|| (Node.bAcceptHistoricalAutomaticUnlock && Prerequisites(Snapshot, Node, Catalog, true) && Mastery(Snapshot, Node, Catalog, true));
+}
+static void RecordCommonFoundation(FSnapshot& Snapshot, const URogue10mSkillTreeDataAsset& Catalog)
+{
+	const auto* Foundation = Catalog.FindCommonSkill(ECommon::Foundation);
+	if (Foundation && !Find(Snapshot, Foundation->NodeId))
+	{
+		auto& Row = Snapshot.Investments.AddDefaulted_GetRef();
+		Row.NodeId = Foundation->NodeId;
+	}
 }
 static void PruneDependentInvestments(FSnapshot& Snapshot, const URogue10mSkillTreeDataAsset& Catalog)
 {
 	int32 Removed;
 	do
 	{
+		TSet<FName> Learned;
+		for (const FInvestment& Row : Snapshot.Investments) { Learned.Add(Row.NodeId); }
+		const auto ReachableCommon = Catalog.GetReachableCommonNodes(Learned);
 		TSet<FName> Orphaned;
 		for (const FInvestment& Row : Snapshot.Investments)
 		{
 			const FNode* Node = Catalog.FindNode(Row.NodeId);
 			if (!Node || Row.Route == ERoute::Legacy) { continue; }
-			const bool bRequirementsMet = Row.Route == ERoute::Automatic ? ValidateAutomaticInvestment(Snapshot, *Node, Catalog)
-				: Prerequisites(Snapshot, *Node);
+			const bool bRequirementsMet = Node->CommonSkill != ECommon::None ? ReachableCommon.Contains(Row.NodeId)
+				: Row.Route == ERoute::Automatic ? ValidateAutomaticInvestment(Snapshot, *Node, Catalog)
+				: Prerequisites(Snapshot, *Node, Catalog);
 			if (!bRequirementsMet) { Orphaned.Add(Row.NodeId); }
 		}
 		Removed = Snapshot.Investments.RemoveAll([&Orphaned](const FInvestment& Row) { return Orphaned.Contains(Row.NodeId); });
@@ -119,7 +138,7 @@ static FRogue10mSkillTreeEligibility Eligibility(const FSnapshot& Snapshot, cons
 	FRogue10mSkillTreeEligibility Result;
 	Result.RequiredAll = FRogue10mProgressionRequirements::Evaluate(Node.RequiredAll, Context(Snapshot, Catalog));
 	Result.bValid = Result.RequiredAll.bValid;
-	Result.bPrerequisitesSatisfied = Prerequisites(Snapshot, Node);
+	Result.bPrerequisitesSatisfied = Prerequisites(Snapshot, Node, Catalog);
 	Result.bPointsRouteSatisfied = !Node.bAutomaticUnlock && Node.PointCost > 0 && AvailablePoints >= Node.PointCost;
 	Result.bMasteryRouteSatisfied = !Node.bAutomaticUnlock && !Node.MasteryAlternatives.IsEmpty() && Mastery(Snapshot, Node, Catalog);
 	Result.bAutomaticRouteSatisfied = Node.bAutomaticUnlock && Mastery(Snapshot, Node, Catalog);
@@ -158,6 +177,16 @@ URogue10mSkillTreeProgressionComponent::URogue10mSkillTreeProgressionComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 	Catalog = TSoftObjectPtr<URogue10mSkillTreeDataAsset>(FSoftObjectPath(TEXT("/Game/DataAsset/SkillTree/DA_HybridSkillTreeCatalog.DA_HybridSkillTreeCatalog")));
+}
+
+void URogue10mSkillTreeProgressionComponent::BeginPlay()
+{
+	Super::BeginPlay();
+	const auto* Player = GetPlayerState();
+	if (Player && Player->HasAuthority() && GetCatalog()->IsValidCatalog())
+	{
+		Rogue10mSkillTree::RecordCommonFoundation(State, *GetCatalog());
+	}
 }
 
 const ARogue10mPlayerState* URogue10mSkillTreeProgressionComponent::GetPlayerState() const { return Cast<ARogue10mPlayerState>(GetOwner()); }
@@ -199,11 +228,21 @@ int32 URogue10mSkillTreeProgressionComponent::GetAvailableGrowthPoints() const
 	return Player && Town ? FMath::Max(0, Player->GetPlayerLevel() - 1) - Town->GetRunSharedTraitSpent() - GetSpentSkillTreePoints() : 0;
 }
 bool URogue10mSkillTreeProgressionComponent::IsNodeUnlocked(FName NodeId) const { return Rogue10mSkillTree::Find(State, NodeId) != nullptr; }
+bool URogue10mSkillTreeProgressionComponent::IsCommonSkillLearned(ERogue10mCommonSkill Skill) const
+{
+	const auto* Node = GetCatalog()->FindCommonSkill(Skill);
+	return Node && IsNodeUnlocked(Node->NodeId);
+}
+float URogue10mSkillTreeProgressionComponent::GetCommonSkillValue(ERogue10mCommonSkill Skill) const
+{
+	const auto* Node = GetCatalog()->FindCommonSkill(Skill);
+	return Node && IsNodeUnlocked(Node->NodeId) ? Node->CommonValue : 0.0f;
+}
 FName URogue10mSkillTreeProgressionComponent::GetSelectedChoice(FName NodeId) const
 {
 	const auto* Row = Rogue10mSkillTree::Find(State, NodeId); return Row ? Row->ChoiceId : NAME_None;
 }
-bool URogue10mSkillTreeProgressionComponent::PrerequisitesComplete(const FRogue10mSkillTreeNodeDefinition& Node) const { return Rogue10mSkillTree::Prerequisites(State, Node); }
+bool URogue10mSkillTreeProgressionComponent::PrerequisitesComplete(const FRogue10mSkillTreeNodeDefinition& Node) const { return Rogue10mSkillTree::Prerequisites(State, Node, *GetCatalog()); }
 bool URogue10mSkillTreeProgressionComponent::MasteryRequirementsComplete(const FRogue10mSkillTreeNodeDefinition& Node) const { return Rogue10mSkillTree::Mastery(State, Node, *GetCatalog()); }
 
 FRogue10mProgressionRequirementContext URogue10mSkillTreeProgressionComponent::GetRequirementContext() const
@@ -246,6 +285,26 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 			Evaluation.RequiredAll.bValid ? (bMissing ? TEXT("미완료") : TEXT("완료")) : TEXT("설정 오류"),
 			*Requirement.Id.ToString(), Requirement.Minimum, RequirementContext.GetValue(Requirement)));
 	}
+	if (Node->CommonSkill != ERogue10mCommonSkill::None && !Node->bAutomaticUnlock)
+	{
+		TArray<FString> Neighbors;
+		bool bHasLearnedNeighbor = false;
+		for (FName Id : Node->CommonConnections)
+		{
+			const auto* Neighbor = FindNode(Id);
+			if (!Neighbor) { continue; }
+			const bool bLearned = IsNodeUnlocked(Id);
+			bHasLearnedNeighbor |= bLearned;
+			Neighbors.Add(bLearned ? Neighbor->DisplayName.ToString() + TEXT(" ✓") : Neighbor->DisplayName.ToString());
+		}
+		Lines.Add(FString::Printf(TEXT("연결된 능력 중 하나 습득 · %s\n%s"), bHasLearnedNeighbor ? TEXT("완료") : TEXT("미완료"),
+			*FString::Join(Neighbors, TEXT(" / "))));
+		if (const auto* Required = GetCatalog()->FindCommonSkill(Node->CommonRequiredSkill))
+		{
+			Lines.Add(FString::Printf(TEXT("필수 · %s (%s)"), *Required->DisplayName.ToString(),
+				IsNodeUnlocked(Required->NodeId) ? TEXT("완료") : TEXT("미완료")));
+		}
+	}
 	if (!Node->PrerequisiteGroups.IsEmpty())
 	{
 		const bool bSword = Node->Track == ERogue10mSkillTreeTrack::GreatSword;
@@ -281,7 +340,7 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 					if (RequiredChoice)
 					{
 						bParentComplete &= GetSelectedChoice(Id) == RequiredChoice->ChoiceId;
-						CommonChoiceOrigin = FString::Printf(TEXT("공통 탭 · %s에서 %s 선택"), *ParentName, *RequiredChoice->DisplayName.ToString());
+						CommonChoiceOrigin = FString::Printf(TEXT("공통 탭의 아이덴티티 · %s에서 %s 선택"), *ParentName, *RequiredChoice->DisplayName.ToString());
 					}
 				}
 				bGroupComplete &= bParentComplete;
@@ -306,13 +365,16 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 		Routes.Add(Text + TEXT(" · 0P"));
 	}
 	if (!Routes.IsEmpty()) { Lines.Add(FString::Join(Routes, TEXT(" 또는 "))); }
-	if (Node->bAutomaticUnlock) { Lines.Add(TEXT("조건 충족 시 무료 자동 전수")); }
+	if (Node->bAutomaticUnlock)
+	{
+		Lines.Add(Node->CommonSkill == ERogue10mCommonSkill::Foundation ? TEXT("처음부터 습득") : TEXT("조건 충족 시 무료 자동 전수"));
+	}
 	if (const auto* Row = Rogue10mSkillTree::Find(State, NodeId))
 	{
 		if (Row->Route == ERogue10mSkillTreeUnlockRoute::Legacy) { Lines.Add(TEXT("이전 전수 유지 · 숙련 성장 보상 제외")); }
 		else if (Row->Route == ERogue10mSkillTreeUnlockRoute::Automatic && Node->bAcceptHistoricalAutomaticUnlock && !Node->bAutomaticUnlock)
 		{ Lines.Add(TEXT("이전 자동 전수 · 실제 지출 0P")); }
-		else { Lines.Add(FString::Printf(TEXT("전수 완료 · 실제 지출 %dP"), Row->SpentPoints)); }
+		else if (Node->CommonSkill == ERogue10mCommonSkill::None) { Lines.Add(FString::Printf(TEXT("전수 완료 · 실제 지출 %dP"), Row->SpentPoints)); }
 	}
 	return FText::FromString(FString::Join(Lines, TEXT("\n")));
 }
@@ -365,7 +427,11 @@ bool URogue10mSkillTreeProgressionComponent::CanUnlockNode(FName NodeId, ERogue1
 	if (Node->bAutomaticUnlock) { return Fail(TEXT("숙련 조건을 만족하면 자동 전수됩니다.")); }
 	const auto Evaluation = EvaluateNodeEligibility(NodeId);
 	if (!Evaluation.RequiredAll.bSatisfied) { return Fail(TEXT("필수 AND 조건을 모두 충족해야 합니다.")); }
-	if (!Evaluation.bPrerequisitesSatisfied) { return Fail(TEXT("선행 노드를 먼저 전수해 주세요.")); }
+	if (!Evaluation.bPrerequisitesSatisfied)
+	{
+		return Fail(Node->CommonSkill == ERogue10mCommonSkill::None
+			? TEXT("선행 노드를 먼저 전수해 주세요.") : TEXT("연결된 능력과 필수 능력을 먼저 습득해 주세요."));
+	}
 	if (!Rogue10mSkillTree::ChoiceValid(*Node, ChoiceId)) { return Fail(TEXT("성질을 하나 선택해 주세요.")); }
 	const auto* Player = GetPlayerState();
 	if (!Validate(State, FMath::Max(0, Player->GetPlayerLevel() - 1), Player->GetTownProgressionComponent()->GetRunSharedTraitSpent(), nullptr, GetCatalog())) { return Fail(TEXT("성장 포인트 원장을 확인해 주세요.")); }
@@ -583,12 +649,14 @@ bool URogue10mSkillTreeProgressionComponent::Validate(const FRogue10mSkillTreeSn
 		Legacy.Add(Path);
 	}
 	TSet<FName> Seen;
+	int32 CommonInvestments = 0;
 	for (const auto& Row : Snapshot.Investments)
 	{
 		const auto* Node = Catalog.FindNode(Row.NodeId);
 		if (!Node || Seen.Contains(Row.NodeId) || Row.SpentPoints < 0 || Row.SpentPoints > 1000000
 			|| static_cast<uint8>(Row.Route) > static_cast<uint8>(ERoute::Legacy) || !ChoiceValid(*Node, Row.ChoiceId)) { return Fail(); }
 		Seen.Add(Row.NodeId);
+		if (Node->CommonSkill != ECommon::None) { ++CommonInvestments; }
 		// Mandatory conditions apply even to forged acquisition routes; empty legacy gates remain true.
 		if (!FRogue10mProgressionRequirements::Evaluate(Node->RequiredAll, Context(Snapshot, Catalog)).bSatisfied) { return Fail(); }
 		if (Row.Route == ERoute::Legacy)
@@ -601,7 +669,7 @@ bool URogue10mSkillTreeProgressionComponent::Validate(const FRogue10mSkillTreeSn
 			if (Row.SpentPoints != 0 || !ValidateAutomaticInvestment(Snapshot, *Node, Catalog)) { return Fail(); }
 			continue;
 		}
-		if (!Prerequisites(Snapshot, *Node)) { return Fail(); }
+		if (!Prerequisites(Snapshot, *Node, Catalog)) { return Fail(); }
 		if (Row.Route == ERoute::Points)
 		{
 			if (Node->bAutomaticUnlock || Node->PointCost <= 0 || Row.SpentPoints <= 0) { return Fail(); }
@@ -611,6 +679,7 @@ bool URogue10mSkillTreeProgressionComponent::Validate(const FRogue10mSkillTreeSn
 			if (Node->bAutomaticUnlock || Row.SpentPoints != 0 || Node->MasteryAlternatives.IsEmpty() || !Mastery(Snapshot, *Node, Catalog)) { return Fail(); }
 		}
 	}
+	if (CommonInvestments > 0 && Catalog.GetReachableCommonNodes(Seen).Num() != CommonInvestments) { return Fail(); }
 	if (Spent(Snapshot) + TraitSpentPoints > EarnedPoints) { return Fail(); }
 	if (Snapshot.ActiveIdentity != EIdentity::None && !LearnedIdentity(Snapshot, Snapshot.ActiveIdentity, Catalog)) { return Fail(); }
 	return true;
@@ -629,6 +698,7 @@ bool URogue10mSkillTreeProgressionComponent::RestoreForTransaction(const FRogue1
 	const auto* Town = Player ? Player->GetTownProgressionComponent() : nullptr;
 	if (!Player || !Player->HasAuthority() || !Town || !Validate(Snapshot, FMath::Max(0, Player->GetPlayerLevel() - 1), TraitSpentPoints, nullptr, GetCatalog())) { return false; }
 	State = Snapshot;
+	Rogue10mSkillTree::RecordCommonFoundation(State, *GetCatalog());
 	if (bNotify) { RefreshAutomaticUnlocks(); NotifyChanged(true); }
 	return true;
 }

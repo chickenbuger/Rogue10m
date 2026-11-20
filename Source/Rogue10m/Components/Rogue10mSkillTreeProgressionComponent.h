@@ -33,6 +33,8 @@ public:
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") int32 GetAvailableGrowthPoints() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") int32 GetSpentSkillTreePoints() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") bool IsNodeUnlocked(FName NodeId) const;
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Common Skills") bool IsCommonSkillLearned(ERogue10mCommonSkill Skill) const;
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Common Skills") float GetCommonSkillValue(ERogue10mCommonSkill Skill) const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") ERogue10mSkillTreeNodeState GetNodeState(FName NodeId, ERogue10mSkillTreeTrack Track) const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") FName GetSelectedChoice(FName NodeId) const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") FText GetNodeRequirementsText(FName NodeId) const;
@@ -73,6 +75,8 @@ public:
 	bool Restore(const FRogue10mSkillTreeSnapshot& Snapshot, bool bNotify = true);
 	static bool Validate(const FRogue10mSkillTreeSnapshot& Snapshot, int32 EarnedPoints, int32 TraitSpentPoints, FText* OutReason = nullptr, const URogue10mSkillTreeDataAsset* InCatalog = nullptr);
 	static FRogue10mSkillTreeSnapshot MigrateLegacy(const TArray<TSoftObjectPtr<URogue10mAttackSkillData>>& Skills, const URogue10mSkillTreeDataAsset* InCatalog = nullptr);
+protected:
+	virtual void BeginPlay() override;
 private:
 	friend class URogue10mProgressionSubsystem;
 	/** The persistence transaction supplies its already validated target trait domain. */

@@ -54,7 +54,7 @@ namespace Rogue10mHybridTreeUI
 	const FLinearColor SwordSteel(0.38f, 0.46f, 0.52f);
 	const FLinearColor SwordBrass(0.54f, 0.34f, 0.15f);
 	enum EAction { Fighter = 1, GreatSword, LearnPoints, LearnMastery, Activate, Choose,
-		Refund, CancelRefund, ClearKey, Close, Common = 11, Magic = 12, SelectNode = 100 };
+		Refund, CancelRefund, ClearKey, Close, Common = 11, Magic = 12, ToggleCommonView = 13, SelectNode = 100 };
 
 	FText IdentityName(ERogue10mSkillTreeIdentity Identity)
 	{
@@ -74,6 +74,7 @@ namespace Rogue10mHybridTreeUI
 	}
 	FLinearColor NodeColor(const FRogue10mSkillTreeNodeDefinition& Node)
 	{
+		if (Node.CommonSkill != ERogue10mCommonSkill::None) return Node.Color;
 		return Node.Identity == ERogue10mSkillTreeIdentity::None ? Gold : IdentityColor(Node.Identity);
 	}
 	float Diameter(ERogue10mHybridSkillTreeNodeType Type)
@@ -90,6 +91,16 @@ namespace Rogue10mHybridTreeUI
 	float NodeDiameter(const FRogue10mSkillTreeNodeDefinition& Node)
 	{
 		using ENode = ERogue10mHybridSkillTreeNodeType;
+		using ECommon = ERogue10mCommonSkill;
+		switch (Node.CommonSkill)
+		{
+		case ECommon::None: break;
+		case ECommon::Foundation: return 84.0f;
+		case ECommon::DoubleJump:
+		case ECommon::Roll:
+		case ECommon::MoveSpeed: return 72.0f;
+		default: return 60.0f;
+		}
 		if (Node.Track == ERogue10mSkillTreeTrack::Brawler) return 68.0f;
 		if (Node.Track == ERogue10mSkillTreeTrack::GreatSword)
 		{
@@ -178,6 +189,18 @@ namespace Rogue10mHybridTreeUI
 		Style.Pressed = FSlateRoundedBoxBrush(FLinearColor(0.063f, 0.041f, 0.022f), Radius, KnuckleLight, 1.9f);
 		return Style;
 	}
+	FButtonStyle CommonMedallionStyle(FLinearColor Accent, ERogue10mSkillTreeNodeState State, bool bSelected, float Radius)
+	{
+		using EState = ERogue10mSkillTreeNodeState;
+		const bool bLocked = State == EState::Locked;
+		const FLinearColor Rim = bSelected ? KnuckleLight : bLocked ? Accent * 0.42f : Accent;
+		const FLinearColor Fill = (bSelected ? Accent * 0.15f : Accent * (bLocked ? 0.035f : 0.085f)).CopyWithNewOpacity(1.0f);
+		FButtonStyle Style = ButtonStyle(Rim, false, !bLocked, Radius);
+		Style.Normal = FSlateRoundedBoxBrush(Fill, Radius, Rim.CopyWithNewOpacity(1.0f), bSelected ? 2.6f : 1.5f);
+		Style.Hovered = FSlateRoundedBoxBrush((Accent * 0.20f).CopyWithNewOpacity(1.0f), Radius, Pale, 2.4f);
+		Style.Pressed = FSlateRoundedBoxBrush((Accent * 0.25f).CopyWithNewOpacity(1.0f), Radius, KnuckleLight, 2.4f);
+		return Style;
+	}
 	void SetTextStyle(UTextBlock* Text, int32 Size, FLinearColor Color)
 	{
 		FSlateFontInfo Font = Text->GetFont(); Font.Size = Size; Text->SetFont(Font);
@@ -192,6 +215,7 @@ namespace Rogue10mHybridTreeUI
 	{
 		using EIdentity = ERogue10mSkillTreeIdentity;
 		using ENode = ERogue10mHybridSkillTreeNodeType;
+		if (Node.CommonSkill != ERogue10mCommonSkill::None) return Node.Position + FVector2D(0.0, 46.0);
 		if (Tab == ERogue10mSkillTreeTab::Common && Node.Identity != EIdentity::None)
 		{
 			const double X = Node.Identity == EIdentity::InternalEnergy ? 240.0
@@ -222,7 +246,8 @@ namespace Rogue10mHybridTreeUI
 	ERogue10mSkillTreeNodeState DisplayState(const URogue10mSkillTreeProgressionComponent& Progression,
 		const FRogue10mSkillTreeNodeDefinition& Node, ERogue10mSkillTreeTrack ContextTrack)
 	{
-		if (Node.Track == ERogue10mSkillTreeTrack::None && !Node.AllowedTracks.Contains(ContextTrack))
+		if (Node.Identity != ERogue10mSkillTreeIdentity::None && Node.Track == ERogue10mSkillTreeTrack::None
+			&& !Node.AllowedTracks.Contains(ContextTrack))
 		{
 			return Progression.IsNodeUnlocked(Node.NodeId) ? ERogue10mSkillTreeNodeState::Learned : ERogue10mSkillTreeNodeState::Locked;
 		}
@@ -260,7 +285,14 @@ namespace Rogue10mHybridTreeUI
 		const float Radius = NodeDiameter(Node) * 0.5f;
 		Frame.Extent = Radius;
 		const FVector2f Location(Position(Node));
-		if (Node.Track == ERogue10mSkillTreeTrack::Brawler)
+		if (Node.CommonSkill != ERogue10mCommonSkill::None)
+		{
+			Frame.Shape = TEXT("CommonMedallion");
+			Frame.OutlineCount = 3;
+			Frame.Extent = Radius + 7.0f;
+			Frame.OuterPoints = CirclePoints(Location, Radius + 5.0f);
+		}
+		else if (Node.Track == ERogue10mSkillTreeTrack::Brawler)
 		{
 			Frame.Shape = TEXT("KnuckleMedallion");
 			Frame.OutlineCount = 3;
@@ -294,6 +326,138 @@ namespace Rogue10mHybridTreeUI
 			Frame.OuterPoints = CirclePoints(Location, OuterRadius);
 		}
 		return Frame;
+	}
+	void PaintCommonGlyph(ERogue10mCommonSkill Skill, const FGeometry& Geometry,
+		FSlateWindowElementList& Elements, int32 Layer, FLinearColor Ink)
+	{
+		const FVector2f CanvasSize(Geometry.GetLocalSize());
+		const FVector2f Origin = CanvasSize * 0.5f;
+		const float Scale = FMath::Min(CanvasSize.X, CanvasSize.Y) * 0.32f;
+		const float LineScale = FMath::Clamp(Scale / 21.0f, 1.0f, 1.65f);
+		const FPaintGeometry PaintGeometry = Geometry.ToPaintGeometry();
+		const auto Stroke = [&](TArray<FVector2f> Points, float Width = 1.9f, float Opacity = 1.0f)
+		{
+			for (FVector2f& Point : Points) Point = Origin + Point * Scale;
+			FSlateDrawElement::MakeLines(Elements, Layer, PaintGeometry, Points, ESlateDrawEffect::None,
+				Ink.CopyWithNewOpacity(Ink.A * Opacity), true, Width * LineScale);
+		};
+		const auto Arrow = [&Stroke](FVector2f Start, FVector2f End)
+		{
+			const FVector2f Direction = (End - Start).GetSafeNormal();
+			const FVector2f Tail = End - Direction * 0.26f;
+			const FVector2f Wing = FVector2f(-Direction.Y, Direction.X) * 0.19f;
+			Stroke({Start, End});
+			Stroke({Tail + Wing, End, Tail - Wing});
+		};
+		const auto Arc = [&Stroke](FVector2f Offset, FVector2f Radius, float Start, float ArcLength, float Width = 1.8f)
+		{
+			TArray<FVector2f> Points;
+			Points.Reserve(25);
+			for (int32 Step = 0; Step <= 24; ++Step)
+			{
+				const float Angle = Start + ArcLength * static_cast<float>(Step) / 24.0f;
+				Points.Add(Offset + FVector2f(FMath::Cos(Angle) * Radius.X, FMath::Sin(Angle) * Radius.Y));
+			}
+			Stroke(MoveTemp(Points), Width);
+		};
+		const auto Jump = [&Stroke](FVector2f Offset)
+		{
+			Stroke({Offset + FVector2f(-.55f, .37f), Offset + FVector2f(-.32f, .05f),
+				Offset + FVector2f(-.06f, -.12f), Offset + FVector2f(.30f, -.22f)});
+			Stroke({Offset + FVector2f(.02f, -.38f), Offset + FVector2f(.30f, -.22f), Offset + FVector2f(.10f, .02f)});
+		};
+		using ESkill = ERogue10mCommonSkill;
+		switch (Skill)
+		{
+		case ESkill::Foundation:
+			Stroke({{-.33f,.74f}, {-.41f,.43f}, {-.70f,.06f}, {-.64f,-.11f}, {-.37f,.08f},
+				{-.42f,-.55f}, {-.27f,-.60f}, {-.19f,-.14f}, {-.17f,-.76f}, {-.01f,-.79f},
+				{.06f,-.20f}, {.12f,-.65f}, {.27f,-.64f}, {.27f,-.17f}, {.42f,-.47f},
+				{.56f,-.41f}, {.48f,.36f}, {.34f,.59f}, {.32f,.74f}, {-.33f,.74f}}, 2.25f);
+			Stroke({{-.30f,.31f}, {-.05f,.14f}, {.22f,.22f}}, 1.3f, 0.72f);
+			break;
+		case ESkill::AirControl:
+			Stroke({{-.66f,.65f}, {-.19f,.09f}, {.47f,-.52f}}, 2.1f);
+			Stroke({{-.27f,.19f}, {-.21f,-.23f}, {.18f,-.55f}, {.65f,-.64f}, {.52f,-.12f},
+				{.30f,.13f}, {-.27f,.19f}});
+			Stroke({{-.73f,.27f}, {-.53f,.33f}}, 1.4f, 0.70f);
+			break;
+		case ESkill::DoubleJump:
+		case ESkill::DoubleJumpUpgrade:
+			Jump({-.24f,.34f});
+			Jump({.42f,-.24f});
+			if (Skill == ESkill::DoubleJumpUpgrade)
+			{
+				Stroke({{-.54f,-.68f}, {-.54f,-.16f}});
+				Stroke({{-.80f,-.42f}, {-.28f,-.42f}});
+			}
+			else Stroke({{-.78f,.76f}, {-.45f,.76f}}, 1.3f, 0.67f);
+			break;
+		case ESkill::JumpHeight:
+			Arrow({.05f,.64f}, {.05f,-.75f});
+			Arrow({-.50f,.47f}, {-.50f,-.38f});
+			Stroke({{.40f,.52f}, {.40f,-.18f}}, 1.6f, 0.70f);
+			break;
+		case ESkill::MoveSpeed:
+		case ESkill::MoveSpeedUpgrade:
+			Stroke({{-.18f,-.56f}, {.35f,-.56f}, {.23f,.10f}, {.60f,.27f}, {.72f,.50f}, {.62f,.61f},
+				{-.40f,.61f}, {-.48f,.47f}, {-.27f,.29f}, {-.18f,-.56f}}, 2.15f);
+			Stroke({{-.09f,-.29f}, {.23f,-.29f}}, 1.4f, 0.78f);
+			Stroke({{-.77f,-.13f}, {-.39f,-.13f}}, 1.6f, 0.75f);
+			Stroke({{-.85f,.12f}, {-.49f,.12f}}, 1.6f, 0.55f);
+			if (Skill == ESkill::MoveSpeedUpgrade) Stroke({{-.79f,-.38f}, {-.43f,-.38f}}, 1.85f);
+			break;
+		case ESkill::GroundTurning:
+			Arc({0,0}, {.73f,.50f}, 0.40f, 4.35f);
+			Stroke({{-.28f,-.70f}, {.03f,-.50f}, {-.23f,-.25f}});
+			Arc({0,0}, {.38f,.22f}, 3.0f, -2.5f, 1.5f);
+			break;
+		case ESkill::GroundAcceleration:
+			for (const float X : {-.46f, -.02f, .42f})
+			{
+				Stroke({{X-.25f,-.39f}, {X+.25f,0}, {X-.25f,.39f}});
+			}
+			break;
+		case ESkill::EvadeRecovery:
+		case ESkill::RollCooldown:
+			Arc({.08f,.05f}, {.61f,.61f}, 0.0f, 2.0f * UE_PI, 2.0f);
+			Stroke({{.08f,-.31f}, {.08f,.05f}, {.38f,-.08f}});
+			Stroke({{-.05f,-.71f}, {.21f,-.71f}}, 1.6f);
+			if (Skill == ESkill::RollCooldown)
+			{
+				Arc({.08f,.05f}, {.79f,.79f}, 1.65f, 1.55f, 1.4f);
+				Stroke({{-.85f,.25f}, {-.71f,.03f}, {-.55f,.22f}});
+			}
+			else Stroke({{-.83f,.36f}, {-.62f,.36f}}, 1.4f, 0.73f);
+			break;
+		case ESkill::Roll:
+			Arc({0,0}, {.79f,.68f}, 0.8f, 4.5f, 2.15f);
+			Stroke({{.16f,-.72f}, {.42f,-.56f}, {.16f,-.34f}}, 1.7f);
+			Arc({.31f,-.06f}, {.16f,.16f}, 0, 2.0f * UE_PI, 1.55f);
+			Stroke({{.13f,-.08f}, {-.13f,-.20f}, {-.40f,-.03f}, {-.40f,.23f}, {-.19f,.37f},
+				{.15f,.29f}, {.29f,.17f}, {.06f,.12f}, {-.08f,.24f}}, 1.9f);
+			break;
+		case ESkill::EvadeDistance:
+			Arrow({-.33f,-.11f}, {-.81f,-.11f});
+			Arrow({.33f,-.11f}, {.81f,-.11f});
+			Stroke({{-.10f,-.13f}, {0,-.28f}, {.11f,-.13f}, {0,.04f}, {-.10f,-.13f}}, 1.45f);
+			Stroke({{-.65f,.35f}, {.65f,.35f}}, 1.5f, 0.67f);
+			break;
+		case ESkill::AirMomentum:
+			Stroke({{-.72f,-.17f}, {-.38f,-.25f}, {-.08f,-.49f}, {.32f,-.52f}, {.70f,-.38f}}, 2.0f);
+			Stroke({{-.80f,.25f}, {-.45f,.16f}, {-.10f,-.08f}, {.33f,-.08f}, {.79f,.04f}}, 2.0f);
+			Stroke({{-.65f,.59f}, {-.34f,.47f}, {-.05f,.31f}, {.32f,.35f}}, 1.7f, 0.82f);
+			break;
+		case ESkill::LandingStability:
+			Arrow({0,-.77f}, {0,.29f});
+			Arc({0,.41f}, {.69f,.24f}, 0.0f, 2.0f * UE_PI, 1.8f);
+			break;
+		case ESkill::EvadeHaste:
+			Stroke({{.24f,-.70f}, {-.39f,.05f}, {-.04f,.05f}, {-.25f,.73f}, {.52f,-.15f}, {.17f,-.15f}, {.24f,-.70f}}, 2.0f);
+			Stroke({{-.80f,.34f}, {-.43f,.34f}}, 1.6f, 0.75f);
+			break;
+		default: break;
+		}
 	}
 	UTexture2D* KnuckleTrainingIcon(const FRogue10mSkillTreeNodeDefinition& Node)
 	{
@@ -349,13 +513,19 @@ int32 URogue10mHybridSkillTreeEntryWidget::NativePaint(const FPaintArgs& Args, c
 	bool bParentEnabled) const
 {
 	const int32 ContentLayer = Super::NativePaint(Args, Geometry, CullingRect, Elements, LayerId, Style, bParentEnabled);
+	if (CommonGlyph != ERogue10mCommonSkill::None)
+	{
+		Rogue10mHybridTreeUI::PaintCommonGlyph(CommonGlyph, Geometry, Elements, ContentLayer + 1,
+			GlyphTint * Style.GetColorAndOpacityTint());
+		return ContentLayer + 1;
+	}
 	if (!bPaintSwordGlyph) return ContentLayer;
 
 	const FVector2f CanvasSize(Geometry.GetLocalSize());
 	const FVector2f CenterPoint = CanvasSize * 0.5f;
 	const float Size = FMath::Min(CanvasSize.X, CanvasSize.Y) * 0.36f;
 	const FPaintGeometry PaintGeometry = Geometry.ToPaintGeometry();
-	const FLinearColor Ink = SwordGlyphTint * Style.GetColorAndOpacityTint();
+	const FLinearColor Ink = GlyphTint * Style.GetColorAndOpacityTint();
 	const auto Stroke = [&](TArray<FVector2f> Points, float Width = 1.5f, float Opacity = 1.0f)
 	{
 		for (FVector2f& Point : Points) Point = CenterPoint + Point * Size;
@@ -472,15 +642,19 @@ void URogue10mHybridSkillTreeEntryWidget::BuildEntry()
 	SymbolSlot->SetHorizontalAlignment(HAlign_Center); SymbolSlot->SetVerticalAlignment(VAlign_Center);
 }
 void URogue10mHybridSkillTreeEntryWidget::Configure(URogue10mHybridSkillTreeWidget* Owner,
-	const FRogue10mSkillTreeNodeDefinition& Definition, ERogue10mSkillTreeNodeState State, bool bSelected, bool bCurrentTrack)
+	const FRogue10mSkillTreeNodeDefinition& Definition, ERogue10mSkillTreeNodeState State,
+	bool bSelected, bool bCurrentTrack, float DiameterOverride)
 {
 	using namespace Rogue10mHybridTreeUI;
 	BuildEntry(); OwnerWidget = Owner; NodeId = Definition.NodeId;
 	const bool bKnuckle = Definition.Track == ERogue10mSkillTreeTrack::Brawler;
 	const bool bSword = Definition.Track == ERogue10mSkillTreeTrack::GreatSword;
-	const float BodySize = NodeDiameter(Definition);
+	CommonGlyph = Definition.CommonSkill;
+	const bool bCommon = CommonGlyph != ERogue10mCommonSkill::None;
+	const float BodySize = DiameterOverride > 0.0f ? DiameterOverride : NodeDiameter(Definition);
 	BodyBox->SetWidthOverride(BodySize); BodyBox->SetHeightOverride(BodySize);
-	bHasOuterFrame = bKnuckle || bSword || HasIdentityFrame(Definition.NodeType) || Definition.NodeType == ERogue10mHybridSkillTreeNodeType::Resonance;
+	bHasOuterFrame = bKnuckle || bSword || (bCommon && DiameterOverride <= 0.0f)
+		|| HasIdentityFrame(Definition.NodeType) || Definition.NodeType == ERogue10mHybridSkillTreeNodeType::Resonance;
 	Skill = Definition.Skill.LoadSynchronous();
 	if (!Skill && !Definition.GrantedSkills.IsEmpty()) Skill = Definition.GrantedSkills[0].LoadSynchronous();
 	if (Definition.NodeType == ERogue10mHybridSkillTreeNodeType::Basic && Owner && Owner->GetSelectedNodeId() == NodeId)
@@ -499,6 +673,7 @@ void URogue10mHybridSkillTreeEntryWidget::Configure(URogue10mHybridSkillTreeWidg
 	if (State == ERogue10mSkillTreeNodeState::Available) Accent = FLinearColor::LerpUsingHSV(Accent, Pale, 0.38f);
 	FButtonStyle Style = bKnuckle ? KnuckleMedallionStyle(State, bSelected, BodySize * 0.5f)
 		: bSword ? SwordNodeStyle(Definition.Identity == ERogue10mSkillTreeIdentity::None ? SwordBrass : NodeColor(Definition), State, bSelected, BodySize * 0.5f)
+		: bCommon ? CommonMedallionStyle(NodeColor(Definition), State, bSelected, BodySize * 0.5f)
 		: ButtonStyle(Accent, bSelected, bLearned, BodySize * 0.5f);
 	// The diamond is the identity's resting silhouette. Keep the native circle's fill,
 	// hover/press feedback, without a second competing resting border.
@@ -519,8 +694,14 @@ void URogue10mHybridSkillTreeEntryWidget::Configure(URogue10mHybridSkillTreeWidg
 	}
 	const bool bHasIcon = Texture != nullptr;
 	bPaintSwordGlyph = bSword && !bHasIcon;
-	SwordGlyphTint = State == ERogue10mSkillTreeNodeState::Locked ? SwordSteel
+	GlyphTint = State == ERogue10mSkillTreeNodeState::Locked ? SwordSteel
 		: (Definition.Identity == ERogue10mSkillTreeIdentity::None ? Pale : NodeColor(Definition));
+	if (bCommon)
+	{
+		GlyphTint = FLinearColor::LerpUsingHSV(NodeColor(Definition), Pale, bSelected ? 0.42f : 0.20f);
+		if (State == ERogue10mSkillTreeNodeState::Locked && !bSelected) GlyphTint *= 0.67f;
+		GlyphTint.A = 1.0f;
+	}
 	Icon->SetBrushFromTexture(Texture);
 	if (bKnuckle || bSword)
 	{
@@ -552,7 +733,7 @@ void URogue10mHybridSkillTreeEntryWidget::Configure(URogue10mHybridSkillTreeWidg
 	else if (Definition.NodeType == ERogue10mHybridSkillTreeNodeType::Technique) Glyph = Definition.Track == ERogue10mSkillTreeTrack::GreatSword ? TEXT("검") : TEXT("권");
 	Symbol->SetText(FText::FromString(Glyph));
 	SetTextStyle(Symbol, Definition.NodeType == ERogue10mHybridSkillTreeNodeType::Stat ? 17 : 14, Accent);
-	Symbol->SetVisibility(bHasIcon || bPaintSwordGlyph ? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible);
+	Symbol->SetVisibility(bHasIcon || bPaintSwordGlyph || bCommon ? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible);
 }
 FReply URogue10mHybridSkillTreeEntryWidget::NativeOnPreviewMouseButtonDown(const FGeometry& Geometry, const FPointerEvent& Event)
 {
@@ -655,12 +836,13 @@ void URogue10mHybridSkillTreeGraphWidget::SetData(URogue10mHybridSkillTreeWidget
 		{
 			const bool bKnuckle = Tab == ERogue10mSkillTreeTab::Knuckle;
 			const bool bSword = Tab == ERogue10mSkillTreeTab::Sword;
+			const bool bCommon = Node.CommonSkill != ERogue10mCommonSkill::None;
 			FText Label = Node.DisplayName;
 			if (bSword && Node.PointCost > 0 && !IsLearned(State))
 			{
 				Label = FText::Format(NSLOCTEXT("Rogue10mTree", "SwordNodePrice", "{0} · {1}P"), Node.DisplayName, Node.PointCost);
 			}
-			else if (!bKnuckle && !bSword)
+			else if (!bKnuckle && !bSword && !bCommon)
 			{
 				Label = FText::Format(FText::FromString(TEXT("{0}\n{1}")), Node.DisplayName, GraphCaption(Node, State));
 			}
@@ -686,7 +868,8 @@ void URogue10mHybridSkillTreeGraphWidget::BuildGraph()
 
 	const bool bKnuckle = Tab == ERogue10mSkillTreeTab::Knuckle;
 	const bool bSword = Tab == ERogue10mSkillTreeTab::Sword;
-	if (bKnuckle || bSword)
+	const bool bCommon = Nodes[0].CommonSkill != ERogue10mCommonSkill::None;
+	if (bKnuckle || bSword || bCommon)
 	{
 		if (UTexture2D* Frame = LoadObject<UTexture2D>(nullptr, TEXT("/Game/UI/MartialArts/T_UI_MartialArtsSkillTreeFrame.T_UI_MartialArtsSkillTreeFrame")))
 		{
@@ -696,7 +879,7 @@ void URogue10mHybridSkillTreeGraphWidget::BuildGraph()
 			Brush.ImageSize = FVector2f(GraphSize);
 			Brush.SetUVRegion(FBox2f(FVector2f(0.215f, 0.075f), FVector2f(0.785f, 0.935f)));
 			Texture->SetBrush(Brush);
-			Texture->SetRenderOpacity(bKnuckle ? 0.34f : 0.18f);
+			Texture->SetRenderOpacity(bKnuckle ? 0.34f : bCommon ? 0.22f : 0.18f);
 			Texture->SetVisibility(ESlateVisibility::HitTestInvisible);
 			UCanvasPanelSlot* TextureSlot = Canvas->AddChildToCanvas(Texture);
 			TextureSlot->SetSize(GraphSize);
@@ -723,21 +906,22 @@ void URogue10mHybridSkillTreeGraphWidget::BuildGraph()
 		EntrySlot->SetSize(FVector2D(FrameExtent * 2.0f));
 		EntrySlot->SetZOrder(3);
 
-		if (!bKnuckle && !bSword && (Node.NodeType == ERogue10mHybridSkillTreeNodeType::Root || Node.NodeType == ERogue10mHybridSkillTreeNodeType::Basic)) continue;
+		if (!bKnuckle && !bSword && !bCommon
+			&& (Node.NodeType == ERogue10mHybridSkillTreeNodeType::Root || Node.NodeType == ERogue10mHybridSkillTreeNodeType::Basic)) continue;
 
 		UTextBlock* Label = WidgetTree->ConstructWidget<UTextBlock>();
 		Labels[Index] = Label;
 		const bool bMainSwordNode = bSword && (Node.NodeType == ERogue10mHybridSkillTreeNodeType::Basic || Node.NodeType == ERogue10mHybridSkillTreeNodeType::Technique);
-		SetTextStyle(Label, bKnuckle || bMainSwordNode ? 16 : 15, Pale);
+		SetTextStyle(Label, bCommon ? 17 : bKnuckle || bMainSwordNode ? 16 : 15, Pale);
 		Label->SetWrapTextAt(156.0f);
 		Label->SetJustification(ETextJustify::Center);
 		UCanvasPanelSlot* LabelSlot;
-		if (bKnuckle || bSword)
+		if (bKnuckle || bSword || bCommon)
 		{
 			UBorder* Plaque = WidgetTree->ConstructWidget<UBorder>();
-			const FLinearColor Background = bKnuckle ? FLinearColor(0.013f, 0.010f, 0.007f) : FLinearColor(0.012f, 0.014f, 0.015f);
+			const FLinearColor Background = bKnuckle || bCommon ? FLinearColor(0.013f, 0.010f, 0.007f) : FLinearColor(0.012f, 0.014f, 0.015f);
 			const FLinearColor FrameColor = bKnuckle ? FLinearColor(0.15f, 0.090f, 0.039f)
-				: bMainSwordNode ? FLinearColor(0.23f, 0.14f, 0.065f) : FLinearColor(0.12f, 0.14f, 0.15f);
+				: bMainSwordNode || bCommon ? FLinearColor(0.23f, 0.14f, 0.065f) : FLinearColor(0.12f, 0.14f, 0.15f);
 			Plaque->SetBrush(FSlateRoundedBoxBrush(Background, 4.0f, FrameColor, 0.7f));
 			Plaque->SetVisibility(ESlateVisibility::HitTestInvisible);
 			Plaque->SetPadding(FMargin(6.0f, 2.0f));
@@ -746,7 +930,7 @@ void URogue10mHybridSkillTreeGraphWidget::BuildGraph()
 			LabelSlot->SetAutoSize(true);
 			const bool bSideLabel = bSword && Node.NodeType == ERogue10mHybridSkillTreeNodeType::Root;
 			LabelSlot->SetAlignment(bSideLabel ? FVector2D(0.0, 0.5) : FVector2D(0.5, 0.0));
-			const double LabelGap = bMainSwordNode ? -3.0 : 6.0;
+			const double LabelGap = bMainSwordNode ? -3.0 : bCommon ? -1.0 : 6.0;
 			LabelSlot->SetPosition(Location + (bSideLabel ? FVector2D(FrameExtent + 9.0, 0.0) : FVector2D(0.0, FrameExtent + LabelGap)));
 		}
 		else
@@ -776,8 +960,37 @@ namespace Rogue10mHybridTreeUI
 		const FVector2D Start = Position(Parent);
 		const FVector2D End = Position(Node);
 		TArray<FVector2D> Path = {Start};
+		const bool bCommon = Node.CommonSkill != ERogue10mCommonSkill::None;
 
-		if (Tab == ERogue10mSkillTreeTab::Sword)
+		if (bCommon && (Parent.CommonSkill == ERogue10mCommonSkill::EvadeHaste || Node.CommonSkill == ERogue10mCommonSkill::EvadeHaste))
+		{
+			// The long lower connections bend beneath the diamond-shaped branches.
+			const FVector2D Control = (Start + End) * 0.5 + FVector2D(0.0, 64.0);
+			for (int32 Step = 1; Step < 24; ++Step)
+			{
+				const double Progress = static_cast<double>(Step) / 24.0;
+				Path.Add(FMath::Lerp(FMath::Lerp(Start, Control, Progress), FMath::Lerp(Control, End, Progress), Progress));
+			}
+			// Shorten the curve at the circles instead of pulling just its first/last samples inward.
+			const double StartExtent = NodeFrame(Parent).Extent - 2.0;
+			const double EndExtent = NodeFrame(Node).Extent - 2.0;
+			Path.RemoveAll([&](const FVector2D& Point)
+			{
+				return FVector2D::DistSquared(Point, Start) < FMath::Square(StartExtent)
+					|| FVector2D::DistSquared(Point, End) < FMath::Square(EndExtent);
+			});
+			if (!Path.IsEmpty())
+			{
+				Path.Insert(Start + (Path[0] - Start).GetSafeNormal() * StartExtent, 0);
+				Path.Add(End + (Path.Last() - End).GetSafeNormal() * EndExtent);
+				TArray<FVector2f> Curve;
+				Curve.Reserve(Path.Num());
+				for (const FVector2D& Point : Path) Curve.Add(FVector2f(Point));
+				return Curve;
+			}
+			Path.Add(Start);
+		}
+		else if (Tab == ERogue10mSkillTreeTab::Sword)
 		{
 			const bool bToUltimate = Node.NodeId == TEXT("G.Ultimate");
 			// Keep long links clear of controls on the inner rings.
@@ -803,7 +1016,7 @@ namespace Rogue10mHybridTreeUI
 		}
 
 		Path.Add(End);
-		const double EdgePadding = Tab == ERogue10mSkillTreeTab::Knuckle || Tab == ERogue10mSkillTreeTab::Sword ? -2.0 : 2.0;
+		const double EdgePadding = bCommon || Tab == ERogue10mSkillTreeTab::Knuckle || Tab == ERogue10mSkillTreeTab::Sword ? -2.0 : 2.0;
 		Path[0] += (Path[1] - Start).GetSafeNormal() * (NodeFrame(Parent).Extent + EdgePadding);
 		Path.Last() -= (End - Path[Path.Num() - 2]).GetSafeNormal() * (NodeFrame(Node).Extent + EdgePadding);
 		TArray<FVector2f> Points;
@@ -841,6 +1054,40 @@ int32 URogue10mHybridSkillTreeGraphWidget::PaintConnections(const FGeometry& Geo
 	{
 		const FRogue10mSkillTreeNodeDefinition& Node = Nodes[Index];
 		const EState State = States.IsValidIndex(Index) ? States[Index] : EState::Locked;
+		if (Node.CommonSkill != ERogue10mCommonSkill::None)
+		{
+			for (FName NeighborId : Node.CommonConnections)
+			{
+				const int32 NeighborIndex = Nodes.IndexOfByPredicate([NeighborId](const auto& Item) { return Item.NodeId == NeighborId; });
+				if (NeighborIndex <= Index || !States.IsValidIndex(NeighborIndex)) continue;
+				const FRogue10mSkillTreeNodeDefinition& Neighbor = Nodes[NeighborIndex];
+				const EState NeighborState = States[NeighborIndex];
+				const bool bLearnedPath = IsLearned(State) && IsLearned(NeighborState);
+				const bool bReadyPath = (IsLearned(State) && NeighborState == EState::Available)
+					|| (IsLearned(NeighborState) && State == EState::Available);
+				TArray<FVector2f> Points = DependencyPath(Node, Neighbor, Tab);
+				const FLinearColor ReadyColor = NodeColor(State == EState::Available ? Node : Neighbor);
+				const FLinearColor Color = bLearnedPath ? KnuckleLight : bReadyPath ? ReadyColor : SwordBrass * 0.72f;
+				if (bLearnedPath)
+				{
+					FSlateDrawElement::MakeLines(Elements, LayerId, PaintGeometry, Points, ESlateDrawEffect::None,
+						KnuckleLight.CopyWithNewOpacity(0.25f), true, 5.25f);
+				}
+				FSlateDrawElement::MakeLines(Elements, LayerId + 1, PaintGeometry, MoveTemp(Points), ESlateDrawEffect::None,
+					Color.CopyWithNewOpacity(1.0f), true, bLearnedPath ? 2.45f : bReadyPath ? 2.0f : 1.4f);
+			}
+
+			const FNodeFrame Frame = NodeFrame(Node);
+			const bool bSelected = Node.NodeId == Selected;
+			const FLinearColor Ring = bSelected || IsLearned(State) ? KnuckleLight
+				: State == EState::Available ? NodeColor(Node) : SwordBrass;
+			const FVector2f Location(Position(Node));
+			FSlateDrawElement::MakeLines(Elements, LayerId + 2, PaintGeometry, Frame.OuterPoints, ESlateDrawEffect::None,
+				Ring.CopyWithNewOpacity(bSelected ? 1.0f : 0.83f), true, bSelected ? 2.6f : 1.6f);
+			FSlateDrawElement::MakeLines(Elements, LayerId + 2, PaintGeometry, CirclePoints(Location, NodeDiameter(Node) * 0.5f + 2.5f),
+				ESlateDrawEffect::None, Ring.CopyWithNewOpacity(bSelected ? 0.75f : 0.52f), true, 1.05f);
+			continue;
+		}
 		TMap<FName, bool> ReadyByParent;
 		for (const FRogue10mSkillTreePrerequisiteGroup& Group : Node.PrerequisiteGroups)
 		{
@@ -1137,6 +1384,10 @@ void URogue10mHybridSkillTreeWidget::BuildTree()
 	};
 	GrowthText = AddText(TEXT("HybridTreeGrowth"), TEXT("캐릭터 성장"), 21, Pale);
 	ContextText = AddText(TEXT("HybridTreeContext"), TEXT(""), 15, Muted);
+	CommonViewToggle = MakeButton(TEXT("HybridTreeCommonViewToggle"),
+		NSLOCTEXT("Rogue10mTree", "OpenCommonIdentity", "아이덴티티"), ToggleCommonView);
+	LeftRoot->AddChildToVerticalBox(CommonViewToggle)->SetPadding(FMargin(2, 3, 2, 8));
+	CommonViewToggle->SetVisibility(ESlateVisibility::Collapsed);
 	MasterySection = WidgetTree->ConstructWidget<UVerticalBox>();
 	LeftRoot->AddChildToVerticalBox(MasterySection);
 	Left = MasterySection;
@@ -1155,6 +1406,12 @@ void URogue10mHybridSkillTreeWidget::BuildTree()
 	AddText(NAME_None, TEXT("선택 노드"), 17, Gold);
 	DetailName = AddText(TEXT("HybridTreeDetailName"), TEXT(""), 23, Pale);
 	DetailState = AddText(TEXT("HybridTreeDetailState"), TEXT(""), 17, Muted);
+	CommonDetailIcon = CreateWidget<URogue10mHybridSkillTreeEntryWidget>(GetOwningPlayer(),
+		URogue10mHybridSkillTreeEntryWidget::StaticClass(), TEXT("HybridTreeCommonDetailIcon"));
+	UVerticalBoxSlot* CommonDetailSlot = Left->AddChildToVerticalBox(CommonDetailIcon);
+	CommonDetailSlot->SetHorizontalAlignment(HAlign_Center);
+	CommonDetailSlot->SetPadding(FMargin(0, 12, 0, 16));
+	CommonDetailIcon->SetVisibility(ESlateVisibility::Collapsed);
 	DetailDescription = AddText(TEXT("HybridTreeDetailDescription"), TEXT(""), 17, Pale);
 	DetailRequirements = AddText(TEXT("HybridTreeDetailRequirements"), TEXT(""), 16, Muted);
 	DetailCost = AddText(TEXT("HybridTreeDetailCost"), TEXT(""), 16, Gold);
@@ -1276,18 +1533,23 @@ TArray<FRogue10mSkillTreeNodeDefinition> URogue10mHybridSkillTreeWidget::GetDisp
 {
 	if (!Progression.IsValid() || DisplayedTab == ERogue10mSkillTreeTab::Magic) return {};
 	const auto Track = GetDisplayedTrack();
-	return Progression->GetCatalog()->Nodes.FilterByPredicate([Track](const FRogue10mSkillTreeNodeDefinition& Node)
+	const bool bIdentityView = bShowingCommonIdentity;
+	return Progression->GetCatalog()->Nodes.FilterByPredicate([Track, bIdentityView](const FRogue10mSkillTreeNodeDefinition& Node)
 	{
-		return Node.Track == Track && Node.bShowInTree;
+		if (Node.Track != Track || !Node.bShowInTree) return false;
+		if (Track != ERogue10mSkillTreeTrack::None) return true;
+		return bIdentityView ? Node.Identity != ERogue10mSkillTreeIdentity::None : Node.CommonSkill != ERogue10mCommonSkill::None;
 	});
 }
 
-void URogue10mHybridSkillTreeWidget::SetDisplayedTab(ERogue10mSkillTreeTab Tab)
+void URogue10mHybridSkillTreeWidget::SetDisplayedTab(ERogue10mSkillTreeTab Tab, bool bShowCommonIdentity)
 {
-	if (DisplayedTab == Tab) return;
+	bShowCommonIdentity = Tab == ERogue10mSkillTreeTab::Common && bShowCommonIdentity;
+	if (DisplayedTab == Tab && bShowingCommonIdentity == bShowCommonIdentity) return;
 	CancelOwnedSkillDrag();
 	CancelKeySelection();
 	DisplayedTab = Tab;
+	bShowingCommonIdentity = bShowCommonIdentity;
 	SelectedNodeId = NAME_None;
 	PendingChoiceId = NAME_None;
 	SelectedBasicSkill.Reset();
@@ -1327,17 +1589,21 @@ void URogue10mHybridSkillTreeWidget::RefreshFromData()
 	BuildTree(); BindContext();
 	if (!Graph) return;
 	RefreshEquipmentTab();
+	const bool bCommon = DisplayedTab == ERogue10mSkillTreeTab::Common;
+	const bool bCommonWeb = bCommon && !bShowingCommonIdentity;
 	if (UTextBlock* Title = Cast<UTextBlock>(WidgetTree->FindWidget(TEXT("HybridTreeTitle"))))
 	{
 		Title->SetText(DisplayedTab == ERogue10mSkillTreeTab::Sword
 			? NSLOCTEXT("Rogue10mTree", "SwordTreeTitle", "ROGUE10M  ·  대검 스킬트리")
+			: bCommonWeb ? NSLOCTEXT("Rogue10mTree", "CommonTreeTitle", "ROGUE10M  ·  공통 스킬트리")
+			: bShowingCommonIdentity ? NSLOCTEXT("Rogue10mTree", "IdentityTreeTitle", "ROGUE10M  ·  아이덴티티")
 			: NSLOCTEXT("Rogue10mTree", "SkillTreeTitle", "ROGUE10M  ·  스킬트리"));
 	}
 	for (ERogue10mSkillTreeTab Tab : DefaultTabOrder)
 	{
 		const bool bSelected = DisplayedTab == Tab;
 		FButtonStyle Style = ButtonStyle(Gold, bSelected);
-		if (bSelected && (Tab == ERogue10mSkillTreeTab::Knuckle || Tab == ERogue10mSkillTreeTab::Sword))
+		if (bSelected && Tab != ERogue10mSkillTreeTab::Magic)
 		{
 			Style.Normal = FSlateRoundedBoxBrush(FLinearColor(0.13f, 0.061f, 0.018f), 5.0f, KnuckleLight, 2.0f);
 			Style.Hovered = FSlateRoundedBoxBrush(FLinearColor(0.17f, 0.082f, 0.023f), 5.0f, KnuckleLight, 2.5f);
@@ -1348,6 +1614,12 @@ void URogue10mHybridSkillTreeWidget::RefreshFromData()
 	TreeBody->SetVisibility(bMagic ? ESlateVisibility::Collapsed : ESlateVisibility::SelfHitTestInvisible);
 	LegendText->SetVisibility(bMagic ? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible);
 	MagicPlaceholder->SetVisibility(bMagic ? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
+	CommonViewToggle->SetVisibility(bCommon ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
+	CastChecked<UTextBlock>(CommonViewToggle->GetContent())->SetText(bCommonWeb
+		? NSLOCTEXT("Rogue10mTree", "OpenCommonIdentity", "아이덴티티")
+		: NSLOCTEXT("Rogue10mTree", "OpenCommonWeb", "공통 능력"));
+	IdentityText->SetVisibility(!bCommonWeb ? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
+	if (!bCommonWeb || !Progression.IsValid()) CommonDetailIcon->SetVisibility(ESlateVisibility::Collapsed);
 	const auto Track = GetDisplayedTrack();
 	if (bMagic || !Progression.IsValid())
 	{
@@ -1357,23 +1629,27 @@ void URogue10mHybridSkillTreeWidget::RefreshFromData()
 	}
 	const auto Nodes = GetDisplayNodes();
 	const auto ActiveTrack = Progression->GetActiveTrack();
-	const bool bCommon = DisplayedTab == ERogue10mSkillTreeTab::Common;
 	// The loadout can still open the legacy combo bundle directly without adding it to the visual tree.
 	const bool bShowingLegacyCombo = DisplayedTab == ERogue10mSkillTreeTab::Knuckle && SelectedNodeId == TEXT("F.Basic")
 		&& SelectedBasicSkill.IsValid();
 	if (!bShowingLegacyCombo && !Nodes.ContainsByPredicate([this](const auto& Node) { return Node.NodeId == SelectedNodeId; }))
 	{
-		const auto* CurrentIdentity = bCommon ? Nodes.FindByPredicate([ActiveTrack](const auto& Node)
+		const auto* PreferredNode = bShowingCommonIdentity ? Nodes.FindByPredicate([ActiveTrack](const auto& Node)
 		{
 			return URogue10mSkillTreeDataAsset::IsNodeInTrack(Node, ActiveTrack);
+		}) : bCommonWeb ? Nodes.FindByPredicate([](const auto& Node)
+		{
+			return Node.CommonSkill == ERogue10mCommonSkill::Foundation;
 		}) : nullptr;
-		SelectedNodeId = CurrentIdentity ? CurrentIdentity->NodeId : (Nodes.IsEmpty() ? NAME_None : Nodes[0].NodeId);
+		SelectedNodeId = PreferredNode ? PreferredNode->NodeId : (Nodes.IsEmpty() ? NAME_None : Nodes[0].NodeId);
 		PendingChoiceId = NAME_None;
 	}
 	GrowthText->SetText(FText::FromString(FString::Printf(TEXT("LV%d · 공용 성장 %dP"), BoundState.IsValid() ? BoundState->GetPlayerLevel() : 1, Progression->GetAvailableGrowthPoints())));
 	if (bCommon)
 	{
-		ContextText->SetText(NSLOCTEXT("Rogue10mTree", "CommonTreeContext", "장착 무기에 따라 전수할 수 있는 아이덴티티가 달라집니다."));
+		ContextText->SetText(bCommonWeb
+			? NSLOCTEXT("Rogue10mTree", "CommonWebContext", "습득한 능력은 모든 무기에서 적용됩니다.")
+			: NSLOCTEXT("Rogue10mTree", "CommonTreeContext", "장착 무기에 따라 전수할 수 있는 아이덴티티가 달라집니다."));
 	}
 	else
 	{
@@ -1403,7 +1679,9 @@ void URogue10mHybridSkillTreeWidget::RefreshFromData()
 	if (!Progression->GetCatalog()->IsIdentityAllowed(ContextTrack, Identity)) Identity = ERogue10mSkillTreeIdentity::None;
 	IdentityText->SetText(FText::Format(FText::FromString(TEXT("활성 아이덴티티 · {0}")), IdentityName(Identity)));
 	IdentityText->SetColorAndOpacity(FSlateColor(IdentityColor(Identity)));
-	LegendText->SetText(FText::FromString(bCommon
+	LegendText->SetText(FText::FromString(bCommonWeb
+		? TEXT("금색 선 · 습득 경로   밝은 테두리 · 조건 충족   어두운 테두리 · 잠김")
+		: bCommon
 		? TEXT("내공 · 녹색   투지 · 붉은색   마나 · 푸른색")
 		: DisplayedTab == ERogue10mSkillTreeTab::Knuckle
 		? TEXT("실선 · 선행 수련   밝은 그림 · 전수 또는 조건 충족   어두운 그림 · 잠김")
@@ -1419,9 +1697,13 @@ void URogue10mHybridSkillTreeWidget::RefreshDetails()
 	const auto ActiveTrack = Progression->GetActiveTrack();
 	const auto ContextTrack = DisplayedTab == ERogue10mSkillTreeTab::Common ? ActiveTrack : GetDisplayedTrack();
 	const bool bLearned = Progression->IsNodeUnlocked(Node->NodeId);
-	const auto State = URogue10mSkillTreeDataAsset::IsNodeInTrack(*Node, ContextTrack)
-		? Progression->GetNodeState(Node->NodeId, ContextTrack)
-		: (bLearned ? ERogue10mSkillTreeNodeState::Learned : ERogue10mSkillTreeNodeState::Locked);
+	const auto State = DisplayState(*Progression.Get(), *Node, ContextTrack);
+	const bool bCommonNode = Node->CommonSkill != ERogue10mCommonSkill::None;
+	if (bCommonNode)
+	{
+		CommonDetailIcon->Configure(nullptr, *Node, State, true, false, 116.0f);
+		CommonDetailIcon->SetVisibility(ESlateVisibility::HitTestInvisible);
+	}
 	const URogue10mAttackSkillData* BasicSkill = Node->NodeType == ERogue10mHybridSkillTreeNodeType::Basic ? SelectedBasicSkill.Get() : nullptr;
 	DetailName->SetText(BasicSkill ? BasicSkill->SkillName : Node->DisplayName);
 	FText Description = BasicSkill ? BasicSkill->SkillDescription : Node->Description;
@@ -1437,6 +1719,12 @@ void URogue10mHybridSkillTreeWidget::RefreshDetails()
 	}
 	DetailDescription->SetText(Description);
 	DetailState->SetText(StateName(State)); DetailState->SetColorAndOpacity(FSlateColor(bLearned ? Green : Gold));
+	if (bCommonNode)
+	{
+		DetailState->SetText(Node->CommonSkill == ERogue10mCommonSkill::Foundation
+			? NSLOCTEXT("Rogue10mTree", "CommonStartingNode", "시작점")
+			: bLearned ? NSLOCTEXT("Rogue10mTree", "CommonNodeLearned", "습득 완료") : StateName(State));
+	}
 	if (Node->bAutomaticUnlock && Node->NodeType != ERogue10mHybridSkillTreeNodeType::Root)
 	{
 		DetailState->SetText(FText::Format(FText::FromString(TEXT("{0} · {1}")), StateName(State),
@@ -1476,7 +1764,9 @@ void URogue10mHybridSkillTreeWidget::RefreshDetails()
 	const bool bCanPoints = Progression->CanUnlockNode(Node->NodeId, ERogue10mSkillTreeUnlockRoute::Points, PendingChoiceId, PointReason);
 	const bool bCanMastery = Progression->CanUnlockNode(Node->NodeId, ERogue10mSkillTreeUnlockRoute::Mastery, PendingChoiceId, MasteryReason);
 	PointsButton->SetVisibility(Node->PointCost > 0 && !bLearned ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
-	CastChecked<UTextBlock>(PointsButton->GetContent())->SetText(FText::FromString(FString::Printf(TEXT("전수 · %dP"), Node->PointCost)));
+	CastChecked<UTextBlock>(PointsButton->GetContent())->SetText(FText::Format(bCommonNode
+		? NSLOCTEXT("Rogue10mTree", "CommonLearnPoints", "습득 · {0}P")
+		: NSLOCTEXT("Rogue10mTree", "LearnPoints", "전수 · {0}P"), FText::AsNumber(Node->PointCost)));
 	PointsButton->SetIsEnabled(bCanInvest && bCanPoints);
 	PointsButton->SetToolTipText(PointReason);
 	MasteryButton->SetVisibility(!bLearned && !Node->bAutomaticUnlock && !Node->MasteryAlternatives.IsEmpty() ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
@@ -1519,6 +1809,9 @@ void URogue10mHybridSkillTreeWidget::HandleAction(int32 Action, FName NodeId, FN
 	case Fighter: BrowseTab(ERogue10mSkillTreeTab::Knuckle); return;
 	case GreatSword: BrowseTab(ERogue10mSkillTreeTab::Sword); return;
 	case Magic: BrowseTab(ERogue10mSkillTreeTab::Magic); return;
+	case ToggleCommonView:
+		BrowseTabView(ERogue10mSkillTreeTab::Common, !bShowingCommonIdentity);
+		return;
 	default: break;
 	}
 	if (Action == Rogue10mHybridTreeUI::SelectNode)
@@ -1568,17 +1861,26 @@ void URogue10mHybridSkillTreeWidget::BrowseTrack(ERogue10mSkillTreeTrack Track)
 }
 void URogue10mHybridSkillTreeWidget::BrowseTab(ERogue10mSkillTreeTab Tab)
 {
+	BrowseTabView(Tab, false);
+}
+void URogue10mHybridSkillTreeWidget::BrowseCommonIdentity()
+{
+	BrowseTabView(ERogue10mSkillTreeTab::Common, true);
+}
+void URogue10mHybridSkillTreeWidget::BrowseTabView(ERogue10mSkillTreeTab Tab, bool bShowCommonIdentity)
+{
 	BuildTree(); BindContext();
 	if (!TabBar || !GetTabButton(Tab)) return;
 	RefreshEquipmentTab();
-	SetDisplayedTab(Tab);
+	SetDisplayedTab(Tab, bShowCommonIdentity);
 	RefreshFromData();
 }
 void URogue10mHybridSkillTreeWidget::SelectNode(FName NodeId)
 {
 	if (const auto* Node = Progression.IsValid() ? Progression->FindNode(NodeId) : nullptr)
 	{
-		SetDisplayedTab(Rogue10mHybridTreeUI::TabForTrack(Node->Track));
+		SetDisplayedTab(Rogue10mHybridTreeUI::TabForTrack(Node->Track),
+			Node->Track == ERogue10mSkillTreeTrack::None && Node->Identity != ERogue10mSkillTreeIdentity::None);
 		HandleAction(Rogue10mHybridTreeUI::SelectNode, NodeId);
 	}
 }
