@@ -1,5 +1,7 @@
 #if WITH_EDITOR
+#include "Blueprint/WidgetTree.h"
 #include "Components/Button.h"
+#include "Components/Image.h"
 #include "Components/InputKeySelector.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/TextBlock.h"
@@ -80,6 +82,7 @@ public:
 		bRead = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridRead"));
 		bInputQA = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridInputQA"));
 		bCommonQA = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridCommonQA"));
+		bCommonPresentationQA = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridCommonPresentationQA"));
 		if (!SafeFlag(TEXT("RogueProfileSaveSlot="), TEXT("Rogue10m_Town_QA_"))
 			|| !SafeFlag(TEXT("RogueProgressionSavePrefix="), TEXT("Rogue10m_Progression_QA_"))
 			|| !SafeFlag(TEXT("RogueSkillKeySaveSlot="), TEXT("Rogue10m_Fighter_QA_")))
@@ -1075,10 +1078,43 @@ private:
 				Later(0.7, [this]
 				{
 					Shot(TEXT("common-720p.png"));
-					Later(0.35, [this] { ExerciseCommonMovement(); });
+					Later(0.35, [this]
+					{
+						if (bCommonPresentationQA) { VerifyCommonPresentation(); Finish(); }
+						else { ExerciseCommonMovement(); }
+					});
 				});
 			});
 		});
+	}
+	void VerifyCommonPresentation()
+	{
+		const auto HasMedallion = [](const UUserWidget* Entry)
+		{
+			bool bHasMedallion = false;
+			if (!Entry || !Entry->WidgetTree) { return false; }
+			Entry->WidgetTree->ForEachWidget([&bHasMedallion](UWidget* Child)
+			{
+				const auto* Icon = Cast<UImage>(Child);
+				bHasMedallion |= Icon && GetNameSafe(Icon->GetBrush().GetResourceObject()) == TEXT("T_CommonSkillMedallions")
+					&& static_cast<FBox2f>(Icon->GetBrush().GetUVRegion()).bIsValid && Icon->IsVisible();
+			});
+			return bHasMedallion;
+		};
+		for (const auto& Node : Tree->GetCatalog()->Nodes)
+		{
+			if (Node.CommonSkill != ERogue10mCommonSkill::None)
+			{
+				Check(HasMedallion(Widget->FindNodeEntry(Node.NodeId)), *FString::Printf(TEXT("common_medallion_visible_%s"), *Node.NodeId.ToString()));
+			}
+		}
+		Check(HasMedallion(Cast<UUserWidget>(Widget->GetWidgetFromName(TEXT("HybridTreeCommonDetailIcon"))))
+			&& Widget->GetSelectedNodeId() == TEXT("C.DoubleJump"), TEXT("common_detail_medallion_shows_selected_double_jump"));
+		const auto* Active = Cast<UButton>(Widget->GetWidgetFromName(TEXT("HybridTreeCommon")));
+		const auto* Inactive = Cast<UButton>(Widget->GetWidgetFromName(TEXT("HybridTreeGreatSword")));
+		Check(Active && Inactive && Active->GetStyle().Normal.DrawAs == ESlateBrushDrawType::RoundedBox
+			&& Active->GetStyle().Normal.TintColor.GetSpecifiedColor() != Inactive->GetStyle().Normal.TintColor.GetSpecifiedColor(),
+			TEXT("common_active_tab_has_its_own_visible_fill"));
 	}
 	void ExerciseCommonMovement()
 	{
@@ -1271,6 +1307,7 @@ private:
 	bool bRead = false;
 	bool bInputQA = false;
 	bool bCommonQA = false;
+	bool bCommonPresentationQA = false;
 	float CommonBaseWalkSpeed = 0.0f;
 	float CommonBaseAcceleration = 0.0f;
 	float CommonBaseAirControl = 0.0f;

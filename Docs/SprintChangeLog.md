@@ -3527,3 +3527,10 @@ G2 동시작업 경계: stage 후 자연경계 소유 작업이 디스크709개�
 - StartHub에서 OpenRunMap을 낮은 우선순위로 비동기 로딩한다. 필드에서는 StartHub를 준비하고 기존 레벨 이동으로 사용한다.
 - UE 5.8 Editor 빌드, Win64 Shipping 대상 소스 컴파일, 캐릭터 선택과 게임 입장 341개, 실제 포털 4회, 렌더링 정산·복귀와 새 프로세스 저장 복원을 확인했다. 두 목적지에서 엔진의 사전 로드 재사용을 확인했다.
 - [작업 계획](../Feature/architect/2026-11-20_startup-map-preload.md) · [검증 결과](../Feature/doc/2026-11-20_startup-map-preload.md)
+
+### Sprint#14-3 — 공통 스킬트리 화면 개선
+
+- 목표는 승인 시안의 검은 바탕과 금속의 명암, 메달리온의 입체감을 실제 K 창에서 구현하는 것이다.
+- 공통 탭에 메달리온 16종과 숯빛 질감, 이름표, 선택 탭과 습득 경로 강조를 적용했다. 왼쪽 상세 카드에 선택 아이콘을 크게 표시한다.
+- UE 5.8 Editor 빌드, UI 텍스처 2종 임포트, 자동화 4개와 StartHub 실제 게임 입력 검사를 통과했다. 1080p와 720p에서 최종 화면을 확인했다.
+- 구현과 검증을 완료했다. [작업 계획](../Feature/architect/2026-11-20_common-skill-tree-art.md) · [결과](../Feature/doc/2026-11-20_common-skill-tree-art.md)

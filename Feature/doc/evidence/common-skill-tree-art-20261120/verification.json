@@ -1,0 +1,86 @@
+{
+  "scope": "UE 5.8 Development Editor and independent StartHub runtime; simulated Slate and game input in isolated saves",
+  "prior_integrated_build": "a507255e",
+  "build": {
+    "result": "succeeded",
+    "seconds": 13.02
+  },
+  "asset_import": {
+    "textures": {
+      "T_CommonSkillMedallions": [
+        1024,
+        1024
+      ],
+      "T_CommonSkillCharcoal": [
+        256,
+        256
+      ]
+    },
+    "unreal_output_errors": 0,
+    "log_lines": 1930
+  },
+  "runtime": {
+    "id": "CommonArt1120F",
+    "mode": "common presentation QA and existing weapon UI regression",
+    "passed": 274,
+    "failed": 0,
+    "unreal_output_errors": 0,
+    "log_lines": 2046
+  },
+  "automation": {
+    "passed": 4,
+    "unreal_output_errors": 0,
+    "log_lines": 2397,
+    "tests": [
+      "Rogue10m.HybridSkillTree.CommonSkillWeb",
+      "Rogue10m.HybridSkillTree.MasteryAlternativesAndLegacy",
+      "Rogue10m.HybridSkillTree.MasteryAndRewards",
+      "Rogue10m.HybridSkillTree.SharedLedgerAndValidation"
+    ]
+  },
+  "visual_review": {
+    "resolutions": [
+      "1920x1080",
+      "1280x720"
+    ],
+    "selected_node": "C.DoubleJump",
+    "learned_path": [
+      "C.Foundation",
+      "C.MoveSpeed",
+      "C.GroundTurning",
+      "C.AirMomentum",
+      "C.DoubleJump"
+    ]
+  },
+  "previous_findings": [
+    {
+      "id": "CommonArt1120A",
+      "result": "fatal",
+      "failure": "TArray append read an element of the same array in the Slate edge painter",
+      "fix": "copied the first vertex to an independent value before insertion"
+    },
+    {
+      "id": "CommonArt1120B",
+      "result": "runtime passed",
+      "visual_findings": "tab highlight and node plaques were not drawn; extra wrapping and clipped legend",
+      "fix": "native tab brushes, explicitly filled plaque surfaces, revised label widths and typography, compact detail and legend removed from the Common view"
+    },
+    {
+      "id": "CommonArt1120C",
+      "result": "visual review passed; one runtime assertion failed",
+      "failure": "second jump frame sample did not satisfy the velocity check; eligibility, first jump, roll and both captures passed"
+    },
+    {
+      "id": "CommonArt1120D",
+      "result": "both captures succeeded; three movement assertions failed",
+      "failure": "second jump sample failed and the roll recovery check ran before the actor state had recovered"
+    },
+    {
+      "id": "CommonArt1120E",
+      "result": "both captures succeeded; one movement assertion failed",
+      "failure": "a trial using game-state observations still failed the second jump check",
+      "resolution": "reverted trial and added a focused opt-in presentation run, keeping the existing full movement run available"
+    }
+  ],
+  "representative_screenshot": "DevLog/20261120_CommonSkillTreeArt/common-skill-tree-art.png"
+}

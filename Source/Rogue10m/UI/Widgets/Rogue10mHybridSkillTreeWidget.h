@@ -15,12 +15,14 @@ class URogue10mHybridSkillTreeGraphWidget;
 class URogue10mSkillBindingComponent;
 class URogue10mSkillTreeProgressionComponent;
 class URogue10mTownProgressionComponent;
+class UBorder;
 class UCanvasPanel;
 class UComboBoxString;
 class UDragDropOperation;
 class UHorizontalBox;
 class UImage;
 class UInputKeySelector;
+class UOverlaySlot;
 class UProgressBar;
 class USizeBox;
 class UTextBlock;
@@ -173,6 +175,7 @@ protected:
 	virtual void NativeDestruct() override;
 private:
 	void BuildTree();
+	void ApplyCommonChrome(bool bCommonWeb);
 	void BindContext();
 	void RefreshEquipmentTab();
 	void BrowseTabView(ERogue10mSkillTreeTab Tab, bool bShowCommonIdentity);
@@ -215,7 +218,16 @@ private:
 	bool bRefundConfirmation = false;
 	bool bWindowActive = false;
 	bool bShowingCommonIdentity = false;
+	TOptional<bool> bCommonChromeEnabled;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeGraphWidget> Graph;
+	UPROPERTY(Transient) TObjectPtr<USizeBox> WindowSize;
+	UPROPERTY(Transient) TObjectPtr<USizeBox> LeftColumnSize;
+	UPROPERTY(Transient) TObjectPtr<USizeBox> GraphViewportSize;
+	UPROPERTY(Transient) TObjectPtr<UBorder> WindowRim;
+	UPROPERTY(Transient) TObjectPtr<UBorder> WindowInterior;
+	UPROPERTY(Transient) TObjectPtr<UOverlaySlot> DetailPanelSlot;
+	UPROPERTY(Transient) TObjectPtr<UOverlaySlot> GraphPanelSlot;
+	UPROPERTY(Transient) TArray<TObjectPtr<UWidget>> CommonChromeWidgets;
 	UPROPERTY(Transient) TObjectPtr<UHorizontalBox> TabBar;
 	UPROPERTY(Transient) TObjectPtr<UHorizontalBox> TreeBody;
 	UPROPERTY(Transient) TObjectPtr<UVerticalBox> MasterySection;
@@ -226,6 +238,8 @@ private:
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> MagicTab;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> CommonViewToggle;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeEntryWidget> CommonDetailIcon;
+	UPROPERTY(Transient) TObjectPtr<UTextBlock> CommonGrowthText;
+	UPROPERTY(Transient) TObjectPtr<UTextBlock> DetailHeading;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> GrowthText;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> MasteryText;
 	UPROPERTY(Transient) TObjectPtr<UProgressBar> MasteryBar;
