@@ -1,0 +1,110 @@
+{
+  "map_start_line": 1588,
+  "qa_start_line": 1720,
+  "full_error_count": 58,
+  "verified_bootstrap_error_count": 58,
+  "other_error_count": 0,
+  "verified_bootstrap_traces": [
+    {
+      "plugin": "Toolsets/AIModuleToolset",
+      "missingType": "ToolsetDefinition",
+      "lines": [
+        1695,
+        1696,
+        1697,
+        1698,
+        1699,
+        1700,
+        1701,
+        1702,
+        1703
+      ]
+    },
+    {
+      "plugin": "Toolsets/EditorToolset",
+      "missingType": "AgentSkill",
+      "lines": [
+        1661,
+        1662,
+        1663,
+        1664,
+        1665,
+        1666,
+        1667,
+        1668,
+        1669,
+        1670
+      ]
+    },
+    {
+      "plugin": "ToolsetRegistry",
+      "missingType": "PythonTestRunner",
+      "lines": [
+        1712,
+        1713,
+        1714,
+        1715,
+        1716
+      ]
+    },
+    {
+      "plugin": "Toolsets/StateTreeToolset",
+      "missingType": "ToolsetDefinition",
+      "lines": [
+        1641,
+        1642,
+        1643,
+        1644,
+        1645,
+        1646,
+        1647,
+        1648,
+        1649
+      ]
+    },
+    {
+      "plugin": "Toolsets/NiagaraToolsets",
+      "missingType": "AgentSkill",
+      "lines": [
+        1652,
+        1653,
+        1654,
+        1655,
+        1656,
+        1657,
+        1658
+      ]
+    },
+    {
+      "plugin": "Toolsets/AnimationAssistantToolset",
+      "missingType": "ToolsetDefinition",
+      "lines": [
+        1684,
+        1685,
+        1686,
+        1687,
+        1688,
+        1689,
+        1690,
+        1691,
+        1692
+      ]
+    },
+    {
+      "plugin": "Toolsets/ConversationToolset",
+      "missingType": "ToolsetDefinition",
+      "lines": [
+        1673,
+        1674,
+        1675,
+        1676,
+        1677,
+        1678,
+        1679,
+        1680,
+        1681
+      ]
+    }
+  ],
+  "other_errors": []
+}

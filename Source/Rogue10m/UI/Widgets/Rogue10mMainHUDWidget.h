@@ -9,6 +9,7 @@
 class UPanelWidget;
 class UTextBlock;
 class URogue10mBottomHUDWidget;
+class URogue10mCombatHudAWidget;
 
 #include "Rogue10mMainHUDWidget.generated.h"
 
@@ -25,6 +26,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|HUD")
 	void RefreshBoundWidgetData();
+
+	URogue10mCombatHudAWidget* GetCombatHudA() const { return CombatHudA; }
 
 protected:
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|HUD|Bound Widgets")
@@ -72,14 +75,21 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|HUD|Prototype")
 	bool bCreatePrototypeLayoutWhenEmpty = false;
 
+	UPROPERTY(EditDefaultsOnly, Category="Rogue10m|HUD|Layout")
+	bool bUseCombatHudA = true;
+
 private:
 	void AssignOwningMainHUDToBoundWidgets();
+	void EnsureCombatHudA();
 	void EnsurePrototypeLayout();
 	void RefreshLogContainer(UPanelWidget* Container, const TArray<FRogue10mHudLogEntryView>& Views,
 		int32 MaxEntries, TSubclassOf<URogue10mLogLineWidget> InLogLineWidgetClass);
 	void RefreshFrequentWidgetData();
 	void RefreshSlowWidgetData();
-	void ApplyResponsiveAcquisitionLayout(const FVector2D& ViewportSize);
+	void ApplyResponsivePeripheralLayout(const FVector2D& ViewportSize);
+
+	UPROPERTY(Transient)
+	TObjectPtr<URogue10mCombatHudAWidget> CombatHudA;
 
 	UPROPERTY(EditDefaultsOnly, Category="Rogue10m|HUD|Performance", meta=(ClampMin="0.02", Units="s"))
 	float FrequentRefreshInterval = 0.1f;
