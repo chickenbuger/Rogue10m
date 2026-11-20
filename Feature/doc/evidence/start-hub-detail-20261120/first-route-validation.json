@@ -1,0 +1,521 @@
+{
+  "map": "/Game/Rogue10m/Maps/StartHub",
+  "method": "independent read-only editor commandlet cold load and Pawn-profile collision probes",
+  "capsule_radius_cm": 42.0,
+  "capsule_half_height_cm": 96.0,
+  "checks": [
+    {
+      "name": "no_dirty_packages_before_cold_reload",
+      "passed": true,
+      "packages": []
+    },
+    {
+      "name": "all_world_partition_descriptors_loaded",
+      "passed": true,
+      "descriptor_count": 992,
+      "missing": []
+    },
+    {
+      "name": "exactly_one_player_start_and_guide_and_departure_portal",
+      "passed": true
+    },
+    {
+      "name": "start_original_anchor",
+      "passed": true,
+      "expected_cm": [
+        0,
+        -2040,
+        112
+      ],
+      "actual_cm": [
+        -2.842170943040401e-14,
+        -2040.0,
+        112.0
+      ]
+    },
+    {
+      "name": "guide_original_anchor",
+      "passed": true,
+      "expected_cm": [
+        440,
+        -1510,
+        2
+      ],
+      "actual_cm": [
+        440.0,
+        -1510.0,
+        2.0
+      ]
+    },
+    {
+      "name": "portal_original_anchor",
+      "passed": true,
+      "expected_cm": [
+        0,
+        2135,
+        200
+      ],
+      "actual_cm": [
+        0.0,
+        2135.0,
+        200.0
+      ]
+    },
+    {
+      "name": "existing_portal_contract_targets_field_and_starts_run",
+      "passed": true,
+      "destination": "/Game/Rogue10m/Maps/OpenRunMap",
+      "starts_run": true,
+      "extra_options": "",
+      "pawn_overlap": true,
+      "gate_right_vector": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "trigger_half_extent_cm": [
+        120.0,
+        80.0,
+        180.0
+      ]
+    },
+    {
+      "name": "editor_default_hub_game_mode_waits_for_departure",
+      "passed": true
+    },
+    {
+      "name": "retains_60m_ground_and_height",
+      "passed": true,
+      "center_cm": [
+        0.0,
+        0.0,
+        -60.0
+      ],
+      "half_extent_cm": [
+        3000.0,
+        3000.0,
+        60.0
+      ]
+    },
+    {
+      "name": "base_collision_covers_60m_square_only",
+      "passed": true,
+      "floor_samples": 121,
+      "outside_samples": 4,
+      "failures": []
+    },
+    {
+      "name": "ten_existing_house_foundations_retained",
+      "passed": true,
+      "labels": [
+        "SV_House_01_Foundation",
+        "SV_House_02_Foundation",
+        "SV_House_03_Foundation",
+        "SV_House_04_Foundation",
+        "SV_House_05_Foundation",
+        "SV_House_06_Foundation",
+        "SV_House_07_Foundation",
+        "SV_House_08_Foundation",
+        "SV_House_09_Foundation",
+        "SV_House_10_Foundation"
+      ]
+    },
+    {
+      "name": "pawn_capsule_query_detects_support_positive_control",
+      "passed": true,
+      "hit": {
+        "actor": "SV_DirtPath_South",
+        "impact_cm": [
+          0.0,
+          -1940.0,
+          6.0
+        ],
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "initial_overlap": false
+      }
+    },
+    {
+      "name": "pawn_boundary_has_no_exit_North",
+      "passed": true,
+      "samples": 7,
+      "failures": []
+    },
+    {
+      "name": "pawn_boundary_has_no_exit_South",
+      "passed": true,
+      "samples": 7,
+      "failures": []
+    },
+    {
+      "name": "pawn_boundary_has_no_exit_West",
+      "passed": true,
+      "samples": 7,
+      "failures": []
+    },
+    {
+      "name": "pawn_boundary_has_no_exit_East",
+      "passed": true,
+      "samples": 7,
+      "failures": []
+    },
+    {
+      "name": "authored_dressing_all_stored_as_start_hub_external_actors",
+      "passed": true,
+      "tag": "Rogue10m.StartHubDetail",
+      "actor_count": 314,
+      "other_packages": []
+    },
+    {
+      "name": "visual_group_saved_Arrival",
+      "passed": true,
+      "actor_count": 28,
+      "expected_labels": [],
+      "missing": [],
+      "bad_labels": []
+    },
+    {
+      "name": "visual_group_saved_Plaza",
+      "passed": true,
+      "actor_count": 24,
+      "expected_labels": [],
+      "missing": [],
+      "bad_labels": []
+    },
+    {
+      "name": "visual_group_saved_Departure",
+      "passed": true,
+      "actor_count": 23,
+      "expected_labels": [],
+      "missing": [],
+      "bad_labels": []
+    },
+    {
+      "name": "visual_group_saved_Equipment",
+      "passed": true,
+      "actor_count": 27,
+      "expected_labels": [],
+      "missing": [],
+      "bad_labels": []
+    },
+    {
+      "name": "visual_group_saved_Forge",
+      "passed": true,
+      "actor_count": 28,
+      "expected_labels": [],
+      "missing": [],
+      "bad_labels": []
+    },
+    {
+      "name": "visual_group_saved_Expedition",
+      "passed": true,
+      "actor_count": 27,
+      "expected_labels": [],
+      "missing": [],
+      "bad_labels": []
+    },
+    {
+      "name": "visual_group_saved_Archive",
+      "passed": true,
+      "actor_count": 29,
+      "expected_labels": [],
+      "missing": [],
+      "bad_labels": []
+    },
+    {
+      "name": "visual_group_saved_Training",
+      "passed": true,
+      "actor_count": 37,
+      "expected_labels": [],
+      "missing": [],
+      "bad_labels": []
+    },
+    {
+      "name": "visual_group_saved_Perimeter",
+      "passed": true,
+      "actor_count": 91,
+      "expected_labels": [],
+      "missing": [],
+      "bad_labels": []
+    },
+    {
+      "name": "walk_clearance_east_bypass_native_portal_replay",
+      "passed": true,
+      "route_xy_cm": [
+        [
+          0,
+          -2040
+        ],
+        [
+          650,
+          -1100
+        ],
+        [
+          650,
+          950
+        ],
+        [
+          0,
+          1800
+        ],
+        [
+          0,
+          2080
+        ]
+      ],
+      "capsule_sweeps": 8,
+      "ground_samples": 43,
+      "failures": []
+    },
+    {
+      "name": "walk_clearance_west_bypass",
+      "passed": true,
+      "route_xy_cm": [
+        [
+          0,
+          -2040
+        ],
+        [
+          -650,
+          -1000
+        ],
+        [
+          -650,
+          950
+        ],
+        [
+          0,
+          1800
+        ],
+        [
+          0,
+          2080
+        ]
+      ],
+      "capsule_sweeps": 8,
+      "ground_samples": 42,
+      "failures": []
+    },
+    {
+      "name": "walk_clearance_arin_interaction_approach",
+      "passed": true,
+      "route_xy_cm": [
+        [
+          0,
+          -2040
+        ],
+        [
+          155,
+          -1510
+        ]
+      ],
+      "capsule_sweeps": 2,
+      "ground_samples": 6,
+      "failures": []
+    },
+    {
+      "name": "walk_clearance_equipment_approach",
+      "passed": true,
+      "route_xy_cm": [
+        [
+          -650,
+          -820
+        ],
+        [
+          -925,
+          -820
+        ]
+      ],
+      "capsule_sweeps": 2,
+      "ground_samples": 4,
+      "failures": []
+    },
+    {
+      "name": "walk_clearance_forge_approach",
+      "passed": true,
+      "route_xy_cm": [
+        [
+          650,
+          -825
+        ],
+        [
+          1090,
+          -825
+        ]
+      ],
+      "capsule_sweeps": 2,
+      "ground_samples": 5,
+      "failures": []
+    },
+    {
+      "name": "walk_clearance_expedition_approach",
+      "passed": true,
+      "route_xy_cm": [
+        [
+          -650,
+          850
+        ],
+        [
+          -1020,
+          850
+        ]
+      ],
+      "capsule_sweeps": 2,
+      "ground_samples": 4,
+      "failures": []
+    },
+    {
+      "name": "walk_clearance_archive_approach",
+      "passed": true,
+      "route_xy_cm": [
+        [
+          650,
+          900
+        ],
+        [
+          1070,
+          900
+        ]
+      ],
+      "capsule_sweeps": 2,
+      "ground_samples": 5,
+      "failures": []
+    },
+    {
+      "name": "walk_clearance_west_training_approach",
+      "passed": false,
+      "route_xy_cm": [
+        [
+          -650,
+          950
+        ],
+        [
+          -830,
+          1170
+        ],
+        [
+          -1280,
+          1170
+        ],
+        [
+          -1280,
+          1360
+        ]
+      ],
+      "capsule_sweeps": 6,
+      "ground_samples": 12,
+      "failures": [
+        {
+          "direction": 0,
+          "from_cm": [
+            -650,
+            950
+          ],
+          "to_cm": [
+            -830,
+            1170
+          ],
+          "hit": {
+            "actor": "SV_PathLanternPost_-670_1750",
+            "impact_cm": [
+              -842.5626685267433,
+              1178.0719328458854,
+              140.06196837113282
+            ],
+            "normal": [
+              0.7143866719114497,
+              -0.6997511329453666,
+              -1.5492378158121767e-08
+            ],
+            "initial_overlap": false
+          }
+        },
+        {
+          "direction": 1,
+          "from_cm": [
+            -830,
+            1170
+          ],
+          "to_cm": [
+            -650,
+            950
+          ],
+          "hit": {
+            "actor": "SV_PathLanternPost_-670_1750",
+            "impact_cm": [
+              -842.5484320747154,
+              1178.0864801939078,
+              140.12974409464402
+            ],
+            "normal": [
+              0.8405797518429149,
+              -0.5416878074977345,
+              -2.8771820149470025e-08
+            ],
+            "initial_overlap": true
+          }
+        },
+        {
+          "direction": 0,
+          "from_cm": [
+            -830,
+            1170
+          ],
+          "to_cm": [
+            -1280,
+            1170
+          ],
+          "hit": {
+            "actor": "SV_PathLanternPost_-670_1750",
+            "impact_cm": [
+              -842.5484320747158,
+              1178.0864801939078,
+              140.12973265055263
+            ],
+            "normal": [
+              0.8405797518425109,
+              -0.5416878074974516,
+              9.93366192361448e-07
+            ],
+            "initial_overlap": true
+          }
+        },
+        {
+          "direction": 1,
+          "from_cm": [
+            -1280,
+            1170
+          ],
+          "to_cm": [
+            -830,
+            1170
+          ],
+          "hit": {
+            "actor": "SV_PathLanternPost_-670_1750",
+            "impact_cm": [
+              -867.6563413713,
+              1178.2858391340324,
+              140.1372923323329
+            ],
+            "normal": [
+              -0.9999999657714582,
+              0.0,
+              3.422854177870249e-08
+            ],
+            "initial_overlap": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "no_dirty_packages_after_read_only_checks",
+      "passed": true,
+      "packages": []
+    }
+  ],
+  "feature_layout_supplied": false,
+  "passed": false
+}

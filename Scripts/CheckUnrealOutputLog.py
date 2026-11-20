@@ -58,7 +58,9 @@ def scan(data, path):
         else:
             continue
         critical = CRITICAL.search(message)
-        implicit_load_error = match and category == "LoadErrors" and match["severity"] is None
+        # The editor writes the message-log page heading through the LoadErrors category.
+        implicit_load_error = (match and category == "LoadErrors" and match["severity"] is None
+                               and not message.startswith("New Page: Loading map: "))
         if severity not in ("Fatal", "Error") and not implicit_load_error and not critical:
             continue
         if critical and "Ensure" in critical.group():

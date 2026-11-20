@@ -46,13 +46,14 @@ class OutputLogTests(unittest.TestCase):
         self.assertEqual(result["new_errors"][0]["line"], 3)
         self.assertEqual(result["new_errors"][-1]["severity"], "Fatal")
 
-    def test_explicit_load_warning_and_display_are_not_red_errors(self):
+    def test_load_page_heading_warning_and_display_are_not_red_errors(self):
         self.write(row("LoadErrors: Warning: Missing optional resource")
                    + row("LoadErrors: Display: Validation summary")
+                   + row("LoadErrors: New Page: Loading map: StartHub.umap")
                    + row("LoadErrors: Error: Failed required load"))
         result = checker.inspect(self.log)
         self.assertEqual(result["new_error_count"], 1)
-        self.assertEqual(result["new_errors"][0]["line"], 3)
+        self.assertEqual(result["new_errors"][0]["line"], 4)
 
     def test_existing_errors_survive_clean_delta(self):
         self.write(row("LogPython: Error: prior failure") + row("LogInit: Ready"))
