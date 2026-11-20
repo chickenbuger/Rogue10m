@@ -1,0 +1,35 @@
+Rogue10m 인벤토리 시안
+
+생성 방식: Codex 내장 image_gen
+
+1차 생성 입력
+- Image 1: Saved/GothicUIAppliedPreview.png — 이전 인벤토리 배치와 프레임을 확인한 로컬 프리뷰
+- Image 2: DevLog/20261120_CommonSkillWeb/common-skill-web.png — StartHub와 현재 UI 팔레트를 확인한 실제 게임 프리뷰
+
+Use case: ui-mockup
+Asset type: one high-fidelity widescreen 16:9 PC gameplay inventory design mockup for the original Unreal action RPG Rogue10m.
+Input images: Image 1 is the project's earlier inventory-window style and EXACT grid-layout reference. Use only its left inventory panel, exact 10×10 square grid and blackened bronze character. Discard its gray-box arena and obsolete HUD. Image 2 is the project's actual StartHub environment and current charcoal-and-antique-brass UI palette reference. Keep its stylized medieval village atmosphere and peripheral split HUD feeling. Omit the skill-tree overlay, any combat test buttons, and pop-up notifications.
+Primary request: show the actual existing inventory system in a clear redesigned skin. View the inhabited game world in first person from the StartHub village, slightly muted behind the UI, stone and timber buildings, afternoon grass. Open only one floating, draggable inventory window on the left, vertically near center. Its width is about 33% of the screen, the right half of the game world stays easily visible. Strong straight-on orthographic UI, generous safe margins. Use blackened iron, charcoal, restrained warm brass lines and two very small dark garnet accents. Recess the grid. Keep clean contemporary Korean UI type, high contrast and well-spaced. This is a credible in-game menu view.
+Inventory construction: a compact header, with exact “인벤토리” on the left and unobtrusive keycap label “I” on the right; one EXACT ten-column by ten-row grid (100 equal SQUARE cells), like graph paper. This exact count is essential. Trace the ten intervals on both axes from image 1. Exactly 11 vertical and 11 horizontal rules at uniform intervals including perimeter, only missing behind occupied rectangles. Keep the bottom six rows almost entirely empty so the geometry is countable. Place exactly six discrete icons with one centered object per item, each spanning a single solid footprint visibly snapped to grid lines. Use the first row left to right: vertical iron longsword 1 column × 3 rows at c1 r1, guardian helmet 2 columns × 2 rows at c3 r1, leather breastplate 2 columns × 3 rows at c6 r1, one red potion icon 1 × 1 at c9 r1 with a small exact “4” stack badge, one silver ring 1 × 1 at c10 r1. Also place one pair of leather boots together in one 2 × 2 item at c4 r4. Use painterly authentic item cutouts with transparent surroundings, full visible silhouettes, no clutter. The helmet is hovered with a thin bright warm-ivory inset outline distinct from its muted violet rarity border. Keep different rarities as subtle dark tinted item backgrounds, and dark neutral empty slots.
+Footer INSIDE frame below grid: exact labels “골드 120” on left and “무게 12.8 / 100.0 kg” on right, separated and aligned.
+One local hover state: place two modest dark tooltip cards side-by-side just outside the grid to its right, next to the highlighted helmet, without covering the grid or dominating the screen. Selected item's card contains only these exact Korean lines: “수호자의 투구”, “영웅 · 투구”, “방어력 +10”, “최대 체력 +20”, “우클릭 장착”. Smaller comparison card contains only “현재 장착”, “철제 투구”, “방어력 +5”, “최대 체력 +10”. One small standard mouse cursor over helmet. Keep card copy clean and legible. Show no second equipment window in this state.
+No extra text, no watermarks, no added tabs, rotate, sort, item tiles of uniform footprint, toolbar, shop pane, close button, or additional grid. Keep gameplay world recognizable at right.
+
+2차 편집 입력
+- Image 1: 1차 생성 결과
+- Image 2: inventory-grid-guide.png — 정확한 10×10 격자와 아이템 점유 좌표
+
+Use case: precise-object-edit
+Asset type: final widescreen Rogue10m inventory UI concept.
+Image 1 is the EDIT TARGET. Preserve its excellent game scene, Korean text, title/keycap, tooltip contents, composition, sharp blackened-iron and brass frame and six item illustrations. Image 2 is the EXACT GEOMETRY GUIDE for the grid only. Its square perimeter has 10 columns by 10 rows of perfectly square cells. Six colored rectangles mark six footprints. Use Image 2 as if pasting its grid lines directly, then render them to match the metal style and put Image 1's corresponding original icons back on the matching tinted shapes. No line may pass through a tinted footprint. Match the guide for every interval and tile, exactly. The sword is blue (1×3), helmet purple (2×2), chest armor purple (2×3), red potion on gray (1×1 with “4”), ring warm orange (1×1), boots gray (2×2). Highlight only the helmet with the same ivory border and cursor.
+Keep the grid's existing top-left position from Image 1. Keep its width, but SHORTEN the tall inventory grid to a SQUARE with equal width and height, leaving exactly six completely empty full rows under the boots. Move only the bottom of the frame and its footer up to wrap the new square grid. Do not scale any lettering. One terminology correction: in the left tooltip change exactly “영웅 · 투구” to “에픽 · 투구”. Preserve the exact remaining Korean and English text, do not add anything. One screenshot view, 16:9, preserve game world throughout.
+
+최종 편집 입력
+- Image 1: 2차 편집 결과
+- Image 2: inventory-grid-guide.png
+
+Use case: precise-object-edit
+Asset type: final Rogue10m inventory UI concept.
+Image 1 is the edit target. Image 2 is the 10×10 geometry guide. Make exactly ONE very local edit: fix the brown chest armor footprint in the top three rows of the existing grid. Its left edge stays on the same line at x=380. Its right edge currently sits at x=516 (three columns), and must move LEFT to the existing x=471 grid line (two columns wide). Visually shrink and center that one brown armor icon within the narrower 2-column × 3-row purple footprint. CLEARLY restore a full empty cell immediately to the right of that armor in EACH of its three rows: the dark empty column between armor and potion, restoring the thin horizontal bronze lines at y=212 and y=268 in that empty column. Geometry guide confirms empty column eight. Keep the potion and its 4 in place.
+Preserve absolutely EVERYTHING else in the target, including the 10 columns, 10 rows, all other icons and positions, immaculate Korean copy (“에픽 · 투구”), tooltip, no second window, frame, footer numbers, composition, and village background. Same 1672×941 proportions.
+

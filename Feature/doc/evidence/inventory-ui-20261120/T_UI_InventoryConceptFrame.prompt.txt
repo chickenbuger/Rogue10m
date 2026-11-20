@@ -1,0 +1,12 @@
+Rogue10m 인벤토리 프레임
+
+Codex 내장 ImageGen 편집, 투명 배경 사용
+편집 대상: Feature/doc/evidence/inventory-concept-20261120/inventory-concept.png
+
+Use case: background-extraction
+Asset type: transparent 2D texture for the approved game's real inventory window. A single empty reusable frame aligned straight-on, exact fidelity to the visual reference, true transparent alpha outside.
+
+Image 1 is the EDIT TARGET. Isolate only the existing full inventory frame on the left. Keep its exact silhouette, original geometry, blackened hammered iron, very thin aged golden bronze inlays, four compact pointed ornaments with a small deep red center, square body, flat undecorated center top edge, and the exact same narrow textured plaque at the top and one narrow plaque at the bottom. Preserve the detected original proportions as closely as possible. The frame width/height ratio is about 0.86. Its rectangular center opening is almost square. Its left edge at about x=52, right edge x=698, top edge y=50, bottom edge about y=792. Show each edge without clipping. Keep the outline and frame corner points closely matched to Image 1.
+
+Remove all scene/background pixels outside the frame and all comparison tooltips. True transparent alpha outside the frame, with wholly transparent padding around it. Remove and seamlessly replace the text, keycap, grid lines, mouse cursor, sword, helmet, armor, potion, ring, boots, footer numbers and all imagery from the three INNER compartments. Replace those interior regions with perfectly plain matte near-black, with the surrounding trim preserved. There is a thin recessed gold boundary around the main empty interior opening. Use no transparency inside the frame. Retain subtle carbon-gray micro-texture only on the metal borders and empty title and footer plaques. Match the reference silhouettes and positions. No raster lettering, item inventory slots, embellishments, added gems, glow, drop shadow, bevel outside the outline, text, watermark, scenery. Asset fills almost the whole frame with a narrow transparent margin. Exact frontal view, no perspective.
+

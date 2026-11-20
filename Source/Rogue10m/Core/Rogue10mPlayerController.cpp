@@ -164,6 +164,7 @@ void ARogue10mPlayerController::BeginPlay()
 	{ Run->OnRunPhaseChanged.AddUniqueDynamic(this, &ARogue10mPlayerController::HandleMenuPauseRunPhaseChanged); }
 	InitializeRunHUD();
 	InitializeMenuWindows();
+	OnPossessedPawnChanged.AddUniqueDynamic(this, &ARogue10mPlayerController::HandleMenuPawnChanged);
 	InitializeDamageIndicatorPool();
 	if (CombatTestComponent) CombatTestComponent->InitializeUI();
 	ResetIgnoreMoveInput();
@@ -221,6 +222,7 @@ void ARogue10mPlayerController::SetupInputComponent()
 
 void ARogue10mPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	OnPossessedPawnChanged.RemoveDynamic(this, &ARogue10mPlayerController::HandleMenuPawnChanged);
 	bMenuPauseEndingPlay = true;
 	ResetQuitGameConfirmation();
 	if (QuitMenuWidget) { QuitMenuWidget->RemoveFromParent(); QuitMenuWidget = nullptr; }
@@ -1153,6 +1155,20 @@ void ARogue10mPlayerController::InitializeMenuWindows()
 	TObjectPtr<URogue10mMenuWindowWidget> SkillTreeBase;
 	InitializeWindow(ResolvedSkillTreeClass, SkillTreeBase);
 	SkillTreeWindowWidget = Cast<URogue10mSkillTreeWindowWidget>(SkillTreeBase);
+}
+
+void ARogue10mPlayerController::HandleMenuPawnChanged(APawn*, APawn* NewPawn)
+{
+	const ARogue10mCharacter* RogueCharacter = Cast<ARogue10mCharacter>(NewPawn);
+	URogue10mInventoryComponent* Inventory = RogueCharacter ? RogueCharacter->GetInventoryComponent() : nullptr;
+	if (InventoryWindowWidget)
+	{
+		InventoryWindowWidget->InitializeMenuWindow(Inventory);
+	}
+	if (EquipmentWindowWidget)
+	{
+		EquipmentWindowWidget->InitializeMenuWindow(Inventory);
+	}
 }
 
 void ARogue10mPlayerController::ApplyMenuWindowVisibility()

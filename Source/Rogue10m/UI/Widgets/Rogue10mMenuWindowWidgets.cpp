@@ -13,6 +13,7 @@
 #include "Rogue10mItemDataAsset.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
+#include "Brushes/SlateRoundedBoxBrush.h"
 #include "Components/Border.h"
 #include "Components/Button.h"
 #include "Components/CanvasPanel.h"
@@ -28,12 +29,24 @@
 #include "Engine/World.h"
 #include "Components/TextBlock.h"
 #include "Components/UniformGridPanel.h"
+#include "Components/UniformGridSlot.h"
 #include "Components/VerticalBox.h"
+#include "Components/VerticalBoxSlot.h"
 #include "Framework/Application/SlateApplication.h"
 #include "InputCoreTypes.h"
 #include "Widgets/Rogue10mItemDragDropOperation.h"
 #include "Widgets/Rogue10mSkillDragDropOperation.h"
 #include "Widgets/Rogue10mHybridSkillTreeWidget.h"
+
+namespace
+{
+FLinearColor GetInventoryPlacementColor(bool bCanPlace)
+{
+	return bCanPlace
+		? FLinearColor(0.34f, 0.85f, 0.43f)
+		: FLinearColor(1.0f, 0.22f, 0.15f);
+}
+}
 
 void URogue10mMenuWindowWidget::InitializeMenuWindow(URogue10mInventoryComponent* InInventoryComponent)
 {
@@ -214,7 +227,7 @@ void SetRarityNameColor(UTextBlock* TextBlock, const URogue10mItemDataAsset* Ite
 }
 
 void AddTooltipStatRow(UVerticalBox* Container, const FText& Label, float Value,
-	bool bPercent, const FLinearColor& Color)
+	bool bPercent, const FLinearColor& Color, bool bConceptPresentation = false)
 {
 	if (!Container)
 	{
@@ -232,15 +245,21 @@ void AddTooltipStatRow(UVerticalBox* Container, const FText& Label, float Value,
 	Arguments.Add(TEXT("Suffix"), bPercent ? FText::FromString(TEXT("%")) : FText::GetEmpty());
 
 	UTextBlock* Row = NewObject<UTextBlock>(Container);
-	Row->SetText(FText::Format(NSLOCTEXT("Rogue10mInventory", "EquipmentStatRow",
-		"{Label}: {Sign}{Value}{Suffix}"), Arguments));
+	const FText Pattern = bConceptPresentation
+		? NSLOCTEXT("Rogue10mInventory", "InventoryConceptStatRow", "{Label} {Sign}{Value}{Suffix}")
+		: NSLOCTEXT("Rogue10mInventory", "EquipmentStatRow", "{Label}: {Sign}{Value}{Suffix}");
+	Row->SetText(FText::Format(Pattern, Arguments));
 	FSlateFontInfo Font = Row->GetFont();
-	Font.Size = 12;
+	Font.Size = bConceptPresentation ? 20 : 12;
 	Row->SetFont(Font);
 	Row->SetColorAndOpacity(FSlateColor(Color));
 	Row->SetShadowOffset(FVector2D(1.0f, 1.0f));
 	Row->SetShadowColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 0.75f));
-	Container->AddChildToVerticalBox(Row);
+	UVerticalBoxSlot* RowSlot = Container->AddChildToVerticalBox(Row);
+	if (bConceptPresentation && RowSlot)
+	{
+		RowSlot->SetPadding(FMargin(0.0f, 0.0f, 0.0f, 3.0f));
+	}
 }
 
 void AddEmptyStatRow(UVerticalBox* Container, const FText& Text)
@@ -259,7 +278,7 @@ void AddEmptyStatRow(UVerticalBox* Container, const FText& Text)
 }
 
 void PopulateEquipmentStatRows(UVerticalBox* Container,
-	const FRogue10mEquipmentStatModifiers& Stats)
+	const FRogue10mEquipmentStatModifiers& Stats, bool bConceptPresentation)
 {
 	if (!Container)
 	{
@@ -267,12 +286,14 @@ void PopulateEquipmentStatRows(UVerticalBox* Container,
 	}
 	Container->ClearChildren();
 	int32 AddedRows = 0;
+	const FLinearColor StatColor = bConceptPresentation
+		? FLinearColor(0.92f, 0.87f, 0.79f, 1.0f)
+		: FLinearColor(0.38f, 0.82f, 1.0f, 1.0f);
 	const auto Add = [&](const FText& Label, float Value, bool bPercent)
 	{
 		if (!FMath::IsNearlyZero(Value))
 		{
-			AddTooltipStatRow(Container, Label, Value, bPercent,
-				FLinearColor(0.38f, 0.82f, 1.0f, 1.0f));
+			AddTooltipStatRow(Container, Label, Value, bPercent, StatColor, bConceptPresentation);
 			++AddedRows;
 		}
 	};
@@ -370,12 +391,15 @@ void URogue10mInventoryItemTooltipWidget::InitializeItemTooltip(
 	const bool bHasEquippedComparison = bEquipment && InEquippedItemData
 		&& InEquippedItemData->Category == ERogue10mItemCategory::Equipment
 		&& InEquippedItemData->EquipSlotType == InItemData->EquipSlotType;
+	const bool bConceptPresentation = UI_ItemKindText != nullptr;
 
 	if (UI_ItemTooltipSize)
 	{
-		UI_ItemTooltipSize->SetWidthOverride(bHasEquippedComparison ? 580.0f : 280.0f);
+		const float ItemWidth = bConceptPresentation ? 322.0f : 280.0f;
+		const float ComparisonWidth = bConceptPresentation ? 568.0f : 580.0f;
+		UI_ItemTooltipSize->SetWidthOverride(bHasEquippedComparison ? ComparisonWidth : ItemWidth);
 	}
-	SetTooltipIcon(UI_ItemIcon, InItemData);
+	SetTooltipIcon(UI_ItemIcon, bConceptPresentation && !bInEquippedSlot ? nullptr : InItemData);
 
 	if (UI_ItemNameText)
 	{
@@ -394,41 +418,44 @@ void URogue10mInventoryItemTooltipWidget::InitializeItemTooltip(
 	{
 		UI_ItemWeightText->SetText(FormatTooltipWeight(InItemData, InQuantity));
 	}
-	if (UI_ItemStatsSection)
+	FText ActionHint;
+	if (bInEquippedSlot)
 	{
-		if (UI_ItemStatsTitleText)
-		{
-			UI_ItemStatsTitleText->SetVisibility(ESlateVisibility::Collapsed);
-		}
-	if (UI_ItemActionHintText)
+		ActionHint = NSLOCTEXT("Rogue10mInventory", "UnequipItemHint",
+			"\uC6B0\uD074\uB9AD : \uC7A5\uCC29 \uD574\uC81C");
+	}
+	else if (bEquipment)
 	{
-		FText ActionHint;
-		if (bInEquippedSlot)
-		{
-			ActionHint = NSLOCTEXT("Rogue10mInventory", "UnequipItemHint",
-				"\uC6B0\uD074\uB9AD : \uC7A5\uCC29 \uD574\uC81C");
-		}
-		else if (InItemData && InItemData->Category == ERogue10mItemCategory::Equipment)
-		{
-			ActionHint = NSLOCTEXT("Rogue10mInventory", "EquipItemHint",
-				"\uC6B0\uD074\uB9AD : \uC7A5\uCC29\uD558\uAE30");
-		}
-		else if (InItemData && InItemData->Category == ERogue10mItemCategory::Consumable)
-		{
-			ActionHint = NSLOCTEXT("Rogue10mInventory", "UseItemHint",
-				"\uC6B0\uD074\uB9AD : \uC0AC\uC6A9\uD558\uAE30");
-		}
-		UI_ItemActionHintText->SetText(ActionHint);
-		UI_ItemActionHintText->SetVisibility(ActionHint.IsEmpty()
-			? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible);
+		ActionHint = NSLOCTEXT("Rogue10mInventory", "InventoryConceptEquipItemHint", "우클릭 장착");
+	}
+	else if (InItemData && InItemData->Category == ERogue10mItemCategory::Consumable)
+	{
+		ActionHint = NSLOCTEXT("Rogue10mInventory", "InventoryConceptUseItemHint", "우클릭 사용");
 	}
 
+	const ESlateVisibility ActionVisibility = ActionHint.IsEmpty()
+		? ESlateVisibility::Collapsed : ESlateVisibility::HitTestInvisible;
+	if (UI_ItemActionHintText)
+	{
+		UI_ItemActionHintText->SetText(ActionHint);
+		UI_ItemActionHintText->SetVisibility(ActionVisibility);
+	}
+	if (UI_ItemActionSection)
+	{
+		UI_ItemActionSection->SetVisibility(ActionVisibility);
+	}
+	if (UI_ItemStatsTitleText)
+	{
+		UI_ItemStatsTitleText->SetVisibility(ESlateVisibility::Collapsed);
+	}
+	if (UI_ItemStatsSection)
+	{
 		UI_ItemStatsSection->SetVisibility(bEquipment
 			? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
 	}
 	if (bEquipment)
 	{
-		PopulateEquipmentStatRows(UI_ItemStatsContainer, InItemData->EquipmentStats);
+		PopulateEquipmentStatRows(UI_ItemStatsContainer, InItemData->EquipmentStats, bConceptPresentation);
 	}
 
 	if (UI_EquippedItemPanel)
@@ -438,12 +465,15 @@ void URogue10mInventoryItemTooltipWidget::InitializeItemTooltip(
 	}
 	if (bHasEquippedComparison)
 	{
-		SetTooltipIcon(UI_EquippedItemIcon, InEquippedItemData);
+		SetTooltipIcon(UI_EquippedItemIcon, bConceptPresentation ? nullptr : InEquippedItemData);
 		if (UI_EquippedItemNameText)
 		{
 			UI_EquippedItemNameText->SetText(!InEquippedItemData->DisplayName.IsEmpty()
 				? InEquippedItemData->DisplayName : FallbackName);
-			SetRarityNameColor(UI_EquippedItemNameText, InEquippedItemData);
+			if (!bConceptPresentation)
+			{
+				SetRarityNameColor(UI_EquippedItemNameText, InEquippedItemData);
+			}
 		}
 		if (UI_EquippedItemDescriptionText)
 		{
@@ -451,11 +481,45 @@ void URogue10mInventoryItemTooltipWidget::InitializeItemTooltip(
 				? InEquippedItemData->Description : FallbackDescription);
 		}
 		PopulateEquipmentStatRows(UI_EquippedItemStatsContainer,
-			InEquippedItemData->EquipmentStats);
+			InEquippedItemData->EquipmentStats, bConceptPresentation);
 		PopulateComparisonRows(UI_ComparisonStatsContainer, InItemData->EquipmentStats,
 			InEquippedItemData->EquipmentStats);
 	}
 	SetVisibility(ESlateVisibility::HitTestInvisible);
+}
+
+void URogue10mInventoryItemTooltipWidget::SetInventoryItemKind(
+	const URogue10mItemDataAsset& ItemData, const FText& TypeName)
+{
+	if (!UI_ItemKindText)
+	{
+		return;
+	}
+
+	FText RarityName;
+	switch (ItemData.Rarity)
+	{
+	case ERogue10mItemRarity::Rare:
+		RarityName = NSLOCTEXT("Rogue10mInventory", "TooltipRare", "레어");
+		break;
+	case ERogue10mItemRarity::Epic:
+		RarityName = NSLOCTEXT("Rogue10mInventory", "TooltipEpic", "에픽");
+		break;
+	case ERogue10mItemRarity::Unique:
+		RarityName = NSLOCTEXT("Rogue10mInventory", "TooltipUnique", "유니크");
+		break;
+	case ERogue10mItemRarity::Mythic:
+		RarityName = NSLOCTEXT("Rogue10mInventory", "TooltipMythic", "신화");
+		break;
+	default:
+		RarityName = NSLOCTEXT("Rogue10mInventory", "TooltipCommon", "일반");
+		break;
+	}
+
+	UI_ItemKindText->SetText(FText::Format(
+		NSLOCTEXT("Rogue10mInventory", "TooltipItemKind", "{0} · {1}"), RarityName, TypeName));
+	SetRarityNameColor(UI_ItemKindText, &ItemData);
+	UI_ItemKindText->SetVisibility(ESlateVisibility::HitTestInvisible);
 }
 
 void URogue10mEquipmentSlotActionWidget::InitializeActionMenu(
@@ -570,9 +634,16 @@ void URogue10mInventoryItemWidget::InitializeGridItem(
 	}
 	if (UI_InventoryItemRarityBackground)
 	{
-		UI_InventoryItemRarityBackground->SetBrushColor(ItemData
+		const FLinearColor Rarity = ItemData
 			? ItemData->GetInventoryRarityBackgroundColor()
-			: FLinearColor(0.12f, 0.12f, 0.12f, 0.2f));
+			: FLinearColor(0.12f, 0.12f, 0.12f, 0.2f);
+		const FLinearColor Tint(Rarity.R, Rarity.G, Rarity.B);
+		const FLinearColor Fill = FMath::Lerp(
+			FLinearColor(0.012f, 0.014f, 0.018f), Tint, Rarity.A * 0.20f);
+		const FLinearColor Edge = FMath::Lerp(
+			FLinearColor(0.26f, 0.16f, 0.071f), Tint, Rarity.A);
+		UI_InventoryItemRarityBackground->SetBrush(FSlateRoundedBoxBrush(Fill, 0.0f, Edge, 1.0f));
+		UI_InventoryItemRarityBackground->SetBrushColor(FLinearColor::White);
 	}
 	UTexture2D* Icon = ItemData ? ItemData->InventoryIcon.LoadSynchronous() : nullptr;
 
@@ -585,16 +656,15 @@ void URogue10mInventoryItemWidget::InitializeGridItem(
 		UI_InventoryItemIcon->SetRenderOpacity(1.0f);
 		if (Icon)
 		{
-			const float TargetWidth = Footprint.X * CellSize; 
-			const float TargetHeight = Footprint.Y * CellSize; 
-
-			FSlateBrush IconBrush = UI_InventoryItemIcon->GetBrush();
-			IconBrush.SetResourceObject(Icon);
-
-			// margin 4px to avoid clipping the icon
-			IconBrush.SetImageSize(FVector2D(TargetWidth-8.0f, TargetHeight-8.0f));
-
-			UI_InventoryItemIcon->SetBrush(IconBrush);
+			const FVector2D TextureSize(FMath::Max(1, Icon->GetSizeX()), FMath::Max(1, Icon->GetSizeY()));
+			const FVector2D Bounds(Footprint.X * CellSize, Footprint.Y * CellSize);
+			const double MaxScale = FMath::Min(Bounds.X / TextureSize.X, Bounds.Y / TextureSize.Y);
+			const double PaddedScale = FMath::Min(
+				(Bounds.X - 8.0) / TextureSize.X, (Bounds.Y - 8.0) / TextureSize.Y);
+			const double ItemScale = ItemData ? FMath::Clamp(ItemData->InventoryIconScale, 0.1f, 2.0f) : 1.0;
+			FSlateBrush Brush = UI_InventoryItemIcon->GetBrush();
+			Brush.SetImageSize(TextureSize * FMath::Min(MaxScale, PaddedScale * ItemScale));
+			UI_InventoryItemIcon->SetBrush(Brush);
 		}
 		UI_InventoryItemIcon->SetRenderScale(FVector2D::UnitVector);
 		UI_InventoryItemIcon->SetVisibility(Icon ? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
@@ -618,30 +688,35 @@ void URogue10mInventoryItemWidget::InitializeGridItem(
 		}
 		UI_InventoryItemQuantityText->SetText(Label);
 	}
-	SetToolTip(nullptr);
-	UClass* TooltipClass = ItemData ? InventoryItemTooltipWidgetClass.LoadSynchronous() : nullptr;
-	if (TooltipClass)
-	{
-		if (URogue10mInventoryItemTooltipWidget* TooltipWidget =
-			CreateWidget<URogue10mInventoryItemTooltipWidget>(GetOwningPlayer(), TooltipClass))
-		{
-			const URogue10mItemDataAsset* EquippedItemData = ItemData && Inventory
-				&& ItemData->Category == ERogue10mItemCategory::Equipment
-				? Inventory->GetEquippedItemData(ItemData->EquipSlotType) : nullptr;
-			TooltipWidget->InitializeItemTooltip(ItemData, Quantity, EquippedItemData, false);
-			SetToolTip(TooltipWidget);
-		}
-	}
 	SetPlacementPreview(false, true);
 }
 
 void URogue10mInventoryItemWidget::SetPlacementPreview(bool bPreviewing, bool bCanPlace)
 {
+	const FLinearColor Color = GetInventoryPlacementColor(bCanPlace);
 	if (UI_InventoryItemPreviewBorder)
 	{
-		UI_InventoryItemPreviewBorder->SetBrushColor(bPreviewing
-			? (bCanPlace ? FLinearColor(0.1f, 0.8f, 0.2f, 0.45f) : FLinearColor(0.9f, 0.08f, 0.05f, 0.55f))
-			: FLinearColor(0.015f, 0.018f, 0.024f, 0.08f));
+		UI_InventoryItemPreviewBorder->SetBrushColor(FLinearColor::White);
+		UI_InventoryItemPreviewBorder->SetBrush(bPreviewing
+			? FSlateRoundedBoxBrush(Color.CopyWithNewOpacity(0.18f), 0.0f, Color, 2.0f)
+			: FSlateRoundedBoxBrush(FLinearColor::Transparent, 0.0f));
+	}
+	if (UI_InventoryItemPlacementMark)
+	{
+		UI_InventoryItemPlacementMark->SetText(FText::AsCultureInvariant(bCanPlace ? TEXT("✓") : TEXT("×")));
+		UI_InventoryItemPlacementMark->SetColorAndOpacity(FSlateColor(Color));
+		UI_InventoryItemPlacementMark->SetVisibility(bPreviewing
+			? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
+	}
+}
+
+void URogue10mInventoryItemWidget::SetInventoryHoverVisual(bool bHovered)
+{
+	if (UI_InventoryItemPreviewBorder)
+	{
+		UI_InventoryItemPreviewBorder->SetBrush(bHovered
+			? FSlateRoundedBoxBrush(FLinearColor::Transparent, 0.0f, FLinearColor(1.0f, 0.79f, 0.49f), 2.0f)
+			: FSlateRoundedBoxBrush(FLinearColor::Transparent, 0.0f));
 	}
 }
 
@@ -743,6 +818,7 @@ void URogue10mBagTabWidget::HandleBagTabClicked()
 void URogue10mInventoryWindowWidget::InitializeMenuWindow(
 	URogue10mInventoryComponent* InInventoryComponent)
 {
+	EndGridItemDrag(nullptr);
 	if (URogue10mInventoryComponent* PreviousInventory = GetInventoryComponent())
 	{
 		PreviousInventory->OnInventoryGridChanged.RemoveDynamic(
@@ -765,6 +841,11 @@ void URogue10mInventoryWindowWidget::SetWindowOpen(bool bOpen)
 	{
 		RefreshInventoryDisplay();
 	}
+	else
+	{
+		HideInventoryItemHover();
+		EndGridItemDrag(nullptr);
+	}
 }
 
 void URogue10mInventoryWindowWidget::NativeConstruct()
@@ -780,6 +861,8 @@ void URogue10mInventoryWindowWidget::NativeConstruct()
 
 void URogue10mInventoryWindowWidget::NativeDestruct()
 {
+	HideInventoryItemHover();
+	EndGridItemDrag(nullptr);
 	if (URogue10mInventoryComponent* Inventory = GetInventoryComponent())
 	{
 		Inventory->OnInventoryGridChanged.RemoveDynamic(
@@ -790,6 +873,7 @@ void URogue10mInventoryWindowWidget::NativeDestruct()
 
 void URogue10mInventoryWindowWidget::BeginGridItemDrag(URogue10mItemDragDropOperation* Operation)
 {
+	HideInventoryItemHover();
 	ActiveGridDragOperation = Operation;
 	Operation->InventoryWindow = this;
 	SetIsFocusable(true);
@@ -810,7 +894,8 @@ bool URogue10mInventoryWindowWidget::NativeOnDragOver(const FGeometry& InGeometr
 	const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
 {
 	URogue10mItemDragDropOperation* Operation = Cast<URogue10mItemDragDropOperation>(InOperation);
-	const bool bGridDropSource = Operation
+	const bool bGridDropSource = Operation && Operation->Inventory
+		&& Operation->Inventory == GetInventoryComponent()
 		&& (Operation->Source == ERogue10mItemDragSource::GridInventory
 			|| Operation->Source == ERogue10mItemDragSource::Equipment);
 	if (!bGridDropSource)
@@ -829,15 +914,14 @@ bool URogue10mInventoryWindowWidget::NativeOnDrop(const FGeometry& InGeometry,
 {
 	URogue10mItemDragDropOperation* Operation = Cast<URogue10mItemDragDropOperation>(InOperation);
 	URogue10mInventoryComponent* Inventory = GetInventoryComponent();
-	if (!Operation || !Inventory
+	if (!Operation || !Inventory || Operation->Inventory != Inventory
 		|| (Operation->Source != ERogue10mItemDragSource::GridInventory
 			&& Operation->Source != ERogue10mItemDragSource::Equipment))
 	{
 		return Super::NativeOnDrop(InGeometry, InDragDropEvent, InOperation);
 	}
-	UpdateGridDropPreview(InDragDropEvent, Operation);
 	bool bMoved = false;
-	if (Operation->bPreviewCanPlace)
+	if (UpdateGridDropPreview(InDragDropEvent, Operation) && Operation->bPreviewCanPlace)
 	{
 		bMoved = Operation->Source == ERogue10mItemDragSource::Equipment
 			? Inventory->TryUnequipItemToGrid(Operation->EquipmentSlotType, PrimaryContainerIndex,
@@ -868,19 +952,45 @@ bool URogue10mInventoryWindowWidget::UpdateGridDropPreview(const FDragDropEvent&
 	{
 		return false;
 	}
-	const FVector2D Local = UI_InventoryItemCanvas->GetCachedGeometry().AbsoluteToLocal(DragDropEvent.GetScreenSpacePosition());
+	const FGeometry& GridGeometry = UI_InventoryItemCanvas->GetCachedGeometry();
+	const FVector2D Local = GridGeometry.AbsoluteToLocal(DragDropEvent.GetScreenSpacePosition());
 	Operation->PreviewGridPosition = FIntPoint(
-		FMath::FloorToInt(Local.X / InventoryCellSize) - Operation->GrabCellOffset.X,
-		FMath::FloorToInt(Local.Y / InventoryCellSize) - Operation->GrabCellOffset.Y);
+		FMath::FloorToInt(Local.X / GridDisplayCellSize) - Operation->GrabCellOffset.X,
+		FMath::FloorToInt(Local.Y / GridDisplayCellSize) - Operation->GrabCellOffset.Y);
 	const FGuid IgnoredId = Operation->SourceContainerIndex == PrimaryContainerIndex ? Operation->InstanceId : FGuid();
-	Operation->bPreviewCanPlace = Inventory->CanPlaceGridItem(PrimaryContainerIndex, Operation->ItemData,
-		Operation->PreviewGridPosition, IgnoredId);
-	Operation->SetGridPlacementPreview(true, Operation->bPreviewCanPlace);
+	const bool bCanPlace = GridGeometry.IsUnderLocation(DragDropEvent.GetScreenSpacePosition())
+		&& Inventory->CanPlaceGridItem(PrimaryContainerIndex, Operation->ItemData,
+			Operation->PreviewGridPosition, IgnoredId);
+	Operation->SetGridPlacementPreview(true, bCanPlace);
+	if (UI_InventoryDropPreview)
+	{
+		const FIntPoint Position = Operation->PreviewGridPosition;
+		const FIntPoint End = Position + Operation->ItemData->GetClampedInventorySize();
+		const FIntPoint Min(FMath::Max(0, Position.X), FMath::Max(0, Position.Y));
+		const FIntPoint Max(FMath::Min(CachedGridSize.X, End.X), FMath::Min(CachedGridSize.Y, End.Y));
+		UCanvasPanelSlot* PreviewSlot = UWidgetLayoutLibrary::SlotAsCanvasSlot(UI_InventoryDropPreview);
+		const UCanvasPanelSlot* GridSlot = UWidgetLayoutLibrary::SlotAsCanvasSlot(UI_InventoryItemCanvas);
+		const bool bIntersectsGrid = PreviewSlot && GridSlot && Min.X < Max.X && Min.Y < Max.Y;
+		UI_InventoryDropPreview->SetVisibility(bIntersectsGrid
+			? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
+		if (bIntersectsGrid)
+		{
+			const FLinearColor Color = GetInventoryPlacementColor(bCanPlace);
+			PreviewSlot->SetPosition(GridSlot->GetPosition() + FVector2D(Min) * GridDisplayCellSize);
+			PreviewSlot->SetSize(FVector2D(Max - Min) * GridDisplayCellSize);
+			UI_InventoryDropPreview->SetBrush(FSlateRoundedBoxBrush(
+				Color.CopyWithNewOpacity(0.15f), 0.0f, Color, 2.0f));
+		}
+	}
 	return true;
 }
 
 void URogue10mInventoryWindowWidget::ClearGridDropPreview()
 {
+	if (UI_InventoryDropPreview)
+	{
+		UI_InventoryDropPreview->SetVisibility(ESlateVisibility::Collapsed);
+	}
 	if (URogue10mItemDragDropOperation* Operation = ActiveGridDragOperation.Get())
 	{
 		Operation->SetGridPlacementPreview(false, false);
@@ -896,6 +1006,7 @@ void URogue10mInventoryWindowWidget::RefreshInventoryDisplay()
 	URogue10mInventoryComponent* Inventory = GetInventoryComponent();
 	if (!Inventory)
 	{
+		RebuildInventoryItems();
 		return;
 	}
 	const TArray<FRogue10mInventoryContainer>& Containers = Inventory->GetInventoryContainers();
@@ -906,7 +1017,9 @@ void URogue10mInventoryWindowWidget::RefreshInventoryDisplay()
 	}
 	if (UI_InventoryMoneyText)
 	{
-		UI_InventoryMoneyText->SetText(FText::Format(NSLOCTEXT("Rogue10mInventory", "InventoryMoney", "Gold: {0}"), FText::AsNumber(Inventory->GetGold())));
+		UI_InventoryMoneyText->SetText(FText::Format(
+			NSLOCTEXT("Rogue10mInventory", "InventoryGoldSummary", "골드 {0}"),
+			FText::AsNumber(Inventory->GetGold())));
 	}
 	if (UI_InventoryWeightText)
 	{
@@ -916,7 +1029,8 @@ void URogue10mInventoryWindowWidget::RefreshInventoryDisplay()
 		FFormatNamedArguments Args;
 		Args.Add(TEXT("Current"), FText::AsNumber(Inventory->GetTotalInventoryWeight(), &Format));
 		Args.Add(TEXT("Maximum"), FText::AsNumber(Inventory->GetMaxCarryWeight(), &Format));
-		UI_InventoryWeightText->SetText(FText::Format(NSLOCTEXT("Rogue10mInventory", "InventoryWeight", "Weight: {Current} / {Maximum} kg"), Args));
+		UI_InventoryWeightText->SetText(FText::Format(
+			NSLOCTEXT("Rogue10mInventory", "InventoryWeightSummary", "무게 {Current} / {Maximum} kg"), Args));
 	}
 }
 void URogue10mInventoryWindowWidget::RebuildInventoryCells(FIntPoint GridSize)
@@ -935,6 +1049,18 @@ void URogue10mInventoryWindowWidget::RebuildInventoryCells(FIntPoint GridSize)
 
 	UI_InventoryGrid->ClearChildren();
 	CachedGridSize = GridSize;
+	GridDisplayCellSize = InventoryCellSize * 10.0f / FMath::Max3(10, GridSize.X, GridSize.Y);
+	const FVector2D DisplaySize = FVector2D(GridSize) * GridDisplayCellSize;
+	if (UCanvasPanelSlot* GridSlot = UWidgetLayoutLibrary::SlotAsCanvasSlot(UI_InventoryGrid))
+	{
+		GridSlot->SetSize(DisplaySize);
+	}
+	if (UCanvasPanelSlot* ItemCanvasSlot = UWidgetLayoutLibrary::SlotAsCanvasSlot(UI_InventoryItemCanvas))
+	{
+		ItemCanvasSlot->SetSize(DisplaySize);
+	}
+	UI_InventoryGrid->SetMinDesiredSlotWidth(GridDisplayCellSize);
+	UI_InventoryGrid->SetMinDesiredSlotHeight(GridDisplayCellSize);
 	if (!InventoryCellWidgetClass)
 	{
 		UE_LOG(LogRogue10m, Warning,
@@ -954,13 +1080,16 @@ void URogue10mInventoryWindowWidget::RebuildInventoryCells(FIntPoint GridSize)
 			}
 
 			Cell->SetGridPosition(FIntPoint(X, Y));
-			UI_InventoryGrid->AddChildToUniformGrid(Cell, Y, X);
+			UUniformGridSlot* CellSlot = UI_InventoryGrid->AddChildToUniformGrid(Cell, Y, X);
+			CellSlot->SetHorizontalAlignment(HAlign_Fill);
+			CellSlot->SetVerticalAlignment(VAlign_Fill);
 		}
 	}
 }
 
 void URogue10mInventoryWindowWidget::RebuildInventoryItems()
 {
+	HideInventoryItemHover();
 	if (!UI_InventoryItemCanvas)
 	{
 		return;
@@ -983,14 +1112,14 @@ void URogue10mInventoryWindowWidget::RebuildInventoryItems()
 		{
 			continue;
 		}
-		ItemWidget->InitializeGridItem(Inventory, this, PrimaryContainerIndex, Entry, InventoryCellSize);
+		ItemWidget->InitializeGridItem(Inventory, this, PrimaryContainerIndex, Entry, GridDisplayCellSize);
 		UCanvasPanelSlot* CanvasSlot = UI_InventoryItemCanvas->AddChildToCanvas(ItemWidget);
 		const FIntPoint Size = Entry.ItemData->GetClampedInventorySize();
 		CanvasSlot->SetAnchors(FAnchors(0.0f, 0.0f));
 		CanvasSlot->SetAlignment(FVector2D::ZeroVector);
 		CanvasSlot->SetAutoSize(false);
-		CanvasSlot->SetPosition(FVector2D(Entry.Position.X * InventoryCellSize, Entry.Position.Y * InventoryCellSize));
-		CanvasSlot->SetSize(FVector2D(Size.X * InventoryCellSize, Size.Y * InventoryCellSize));
+		CanvasSlot->SetPosition(FVector2D(Entry.Position) * GridDisplayCellSize);
+		CanvasSlot->SetSize(FVector2D(Size) * GridDisplayCellSize);
 	}
 }
 
@@ -1143,7 +1272,15 @@ void URogue10mEquipmentWindowWidget::RebuildEquipmentDragSourceProxies()
 
 void URogue10mEquipmentWindowWidget::InitializeMenuWindow(URogue10mInventoryComponent* InInventoryComponent)
 {
-	if (URogue10mInventoryComponent* PreviousInventory = GetInventoryComponent())
+	URogue10mInventoryComponent* PreviousInventory = GetInventoryComponent();
+	const bool bInventoryChanged = PreviousInventory != InInventoryComponent;
+	if (bInventoryChanged)
+	{
+		HandleEquipmentDragFinished(nullptr);
+		CloseEquipmentSlotActionMenu();
+		DestroyCharacterPreview();
+	}
+	if (PreviousInventory)
 	{
 		PreviousInventory->OnEquipmentChanged.RemoveDynamic(
 			this, &URogue10mEquipmentWindowWidget::HandleEquipmentChanged);
@@ -1155,6 +1292,10 @@ void URogue10mEquipmentWindowWidget::InitializeMenuWindow(URogue10mInventoryComp
 			this, &URogue10mEquipmentWindowWidget::HandleEquipmentChanged);
 	}
 	RefreshEquipmentDisplay();
+	if (bInventoryChanged && InInventoryComponent && IsWindowOpen() && EnsureCharacterPreview())
+	{
+		CharacterPreviewActor->SetPreviewActive(true);
+	}
 }
 
 void URogue10mEquipmentWindowWidget::SetWindowOpen(bool bOpen)

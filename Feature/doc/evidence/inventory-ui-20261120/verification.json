@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-20",
+  "integration_base": "122cb740bc27fc0e313b69fd103b6730c6925184",
+  "editor_build": {
+    "result": "succeeded",
+    "actions": 11,
+    "seconds": 40.82
+  },
+  "saved_widget_compile": {
+    "result": "passed",
+    "unreal_output_errors": 0,
+    "inventory_grid": "580 x 580",
+    "texture": "1162 x 1353",
+    "separator_logical_width": 2,
+    "checker": "verify_saved_ui.py"
+  },
+  "runtime": [
+    {
+      "label": "Inv1080K",
+      "phase": "play",
+      "checks": 79,
+      "failures": 0,
+      "unreal_output_errors": 0,
+      "results": "play-1080-results.txt",
+      "image": "DevLog/20261120_InventoryConceptUI/inventory-comparison.png",
+      "image_sha256": "e3c184d5ff2a302d7fd912275fcb99b69fefc14ed339fbe32c23fdf1ea613278",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "visible_interior_separators": {
+        "horizontal": 9,
+        "vertical": 9
+      }
+    },
+    {
+      "label": "Inv720K",
+      "phase": "play",
+      "checks": 79,
+      "failures": 0,
+      "unreal_output_errors": 0,
+      "results": "play-720-results.txt",
+      "image": "Feature/doc/evidence/inventory-ui-20261120/inventory-comparison-720.png",
+      "image_sha256": "66a25ac86862ae42c7406e43a0b36a200d26748c9f55652d61fb5be29fc93b72",
+      "resolution": [
+        1280,
+        720
+      ],
+      "visible_interior_separators": {
+        "horizontal": 9,
+        "vertical": 9
+      }
+    },
+    {
+      "label": "Inv1080K",
+      "phase": "reload",
+      "checks": 8,
+      "failures": 0,
+      "unreal_output_errors": 0,
+      "results": "reload-results.txt"
+    }
+  ],
+  "input": "controller key events and programmatic Slate pointer events against painted hit grid",
+  "physical_input_performed": false,
+  "unrelated_save_hashes_preserved": true,
+  "shared_editor_log": {
+    "after_line": 3644,
+    "existing_errors": 4,
+    "new_errors": 0
+  },
+  "output_failures": "initial-checks.md"
+}

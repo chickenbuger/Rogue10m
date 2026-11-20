@@ -342,6 +342,8 @@ protected:
 private:
 	bool ShouldUseTouchControls() const;
 	void InitializeMenuWindows();
+	UFUNCTION()
+	void HandleMenuPawnChanged(APawn* OldPawn, APawn* NewPawn);
 	void ApplyMenuWindowVisibility();
 	URogue10mMenuWindowWidget* GetTopmostOpenMenuWindow() const;
 	void InitializeRunHUD();

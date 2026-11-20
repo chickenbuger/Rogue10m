@@ -111,6 +111,8 @@ public:
 	void InitializeItemTooltip(const URogue10mItemDataAsset* InItemData, int32 InQuantity,
 		const URogue10mItemDataAsset* InEquippedItemData, bool bInEquippedSlot);
 
+	void SetInventoryItemKind(const URogue10mItemDataAsset& ItemData, const FText& TypeName);
+
 protected:
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Inventory|Tooltip")
 	TObjectPtr<USizeBox> UI_ItemTooltipSize;
@@ -121,6 +123,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Inventory|Tooltip")
 	TObjectPtr<UTextBlock> UI_ItemNameText;
 
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Inventory|Tooltip")
+	TObjectPtr<UTextBlock> UI_ItemKindText;
+
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Inventory|Tooltip")
 	TObjectPtr<UTextBlock> UI_ItemDescriptionText;
 
@@ -129,6 +134,8 @@ protected:
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Inventory|Tooltip")
 	TObjectPtr<UTextBlock> UI_ItemActionHintText;
 
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Inventory|Tooltip")
+	TObjectPtr<UVerticalBox> UI_ItemActionSection;
 
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Inventory|Tooltip")
 	TObjectPtr<UVerticalBox> UI_ItemStatsSection;
@@ -206,9 +213,12 @@ public:
 	void InitializeGridItem(URogue10mInventoryComponent* InInventory, class URogue10mInventoryWindowWidget* InInventoryWindow,
 		int32 InContainerIndex, const struct FRogue10mInventoryGridEntry& InEntry, float InCellSize);
 	void SetPlacementPreview(bool bPreviewing, bool bCanPlace);
+	void SetInventoryHoverVisual(bool bHovered);
 	FGuid GetItemInstanceId() const { return InstanceId; }
 	int32 GetContainerIndex() const { return ContainerIndex; }
 protected:
+	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
 	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 	virtual void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent,
 		UDragDropOperation*& OutOperation) override;
@@ -217,10 +227,14 @@ protected:
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Inventory") TObjectPtr<UTextBlock> UI_InventoryItemQuantityText;
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Inventory") TObjectPtr<UBorder> UI_InventoryItemRarityBackground;
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Inventory") TObjectPtr<UBorder> UI_InventoryItemPreviewBorder;
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Inventory")
+	TObjectPtr<UTextBlock> UI_InventoryItemPlacementMark;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Inventory|Tooltip")
 	TSoftClassPtr<URogue10mInventoryItemTooltipWidget> InventoryItemTooltipWidgetClass =
 		TSoftClassPtr<URogue10mInventoryItemTooltipWidget>(FSoftObjectPath(TEXT("/Game/Widget/Component/Inventory/WBP_InventoryItemTooltip.WBP_InventoryItemTooltip_C")));
 private:
+	URogue10mInventoryItemTooltipWidget* CreateInventoryTooltip() const;
+
 	UPROPERTY(Transient) TObjectPtr<URogue10mInventoryComponent> Inventory;
 	UPROPERTY(Transient) TObjectPtr<class URogue10mInventoryWindowWidget> InventoryWindow;
 	UPROPERTY(Transient) TObjectPtr<const URogue10mItemDataAsset> ItemData;
@@ -260,6 +274,10 @@ public:
 	void BeginGridItemDrag(URogue10mItemDragDropOperation* Operation);
 	void EndGridItemDrag(URogue10mItemDragDropOperation* Operation);
 
+	void ShowInventoryItemHover(URogue10mInventoryItemWidget& Item, const FGeometry& ItemGeometry,
+		URogue10mInventoryItemTooltipWidget& Tooltip);
+	void HideInventoryItemHover(const URogue10mInventoryItemWidget* Item = nullptr);
+
 protected:
 	virtual void NativeConstruct() override;
 	virtual void NativeDestruct() override;
@@ -277,6 +295,9 @@ protected:
 	/** NxM 아이템 위젯을 셀 좌표와 크기에 맞춰 배치하는 Grid 상단 레이어입니다. */
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Inventory")
 	TObjectPtr<UCanvasPanel> UI_InventoryItemCanvas;
+
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidgetOptional), Category="Rogue10m|Inventory")
+	TObjectPtr<UBorder> UI_InventoryDropPreview;
 
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget), Category="Rogue10m|Inventory")
 	TObjectPtr<UTextBlock> UI_InventoryMoneyText;
@@ -305,8 +326,13 @@ private:
 	void ClearGridDropPreview();
 
 	FIntPoint CachedGridSize = FIntPoint::ZeroValue;
+	float GridDisplayCellSize = 44.0f;
 	static constexpr int32 PrimaryContainerIndex = 0;
 	TWeakObjectPtr<URogue10mItemDragDropOperation> ActiveGridDragOperation;
+	TWeakObjectPtr<URogue10mInventoryItemWidget> HoveredInventoryItem;
+
+	UPROPERTY(Transient)
+	TObjectPtr<URogue10mInventoryItemTooltipWidget> InventoryHoverTooltip;
 };
 
 /**

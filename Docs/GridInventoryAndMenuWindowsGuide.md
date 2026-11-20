@@ -38,6 +38,7 @@ Inventory Widget C++가 `OnInventoryGridChanged`를 자동 구독한다. Constru
 - `UI_InventoryWindowFrame`
 - `UI_InventoryGrid` (`UniformGridPanel`, 필수 BindWidget, 런타임 셀 컨테이너)
 - `UI_InventoryItemCanvas` (`CanvasPanel`, 필수 BindWidget, NxM 아이템 직접 배치)
+- `UI_InventoryDropPreview` (`Border`, 드래그 대상 영역 표시)
 - `UI_InventoryMoneyText` (`TextBlock`, 필수 BindWidget)
 - `UI_InventoryWeightText` (`TextBlock`, 필수 BindWidget)
 
@@ -58,10 +59,12 @@ Inventory Widget C++가 `OnInventoryGridChanged`를 자동 구독한다. Constru
 - 부모: `URogue10mInventoryCellWidget`
 - `UI_InventoryCellFrame`
 - `UI_InventoryCellFill`
-- 기본 크기: 44×44
-- `UI_InventoryCellFrame`의 0.5 패딩으로 각 셀 사이에 어두운 외곽선을 표시한다.
+- 시안 적용 시 기본 크기 58×58
+- `UI_InventoryCellFrame`의 우측·하단 패딩으로 얇은 황동색 격자선을 표시한다.
 
-Inventory Window가 `InventoryContainers[0].GridSize`를 읽어 X×Y개의 `WBP_InventoryCell`을 자동 생성한다. 현재 화면은 기본 10×10 한 개로 고정되어 100개 셀을 생성한다. GridSize가 바뀌지 않았다면 기존 셀 개수가 맞는지 확인하고 불필요한 재생성을 생략한다.
+Inventory Window가 `InventoryContainers[0].GridSize`를 읽어 X×Y개의 `WBP_InventoryCell`을 자동 생성한다. 기본 가방은 10×10으로 100개 셀을 580×580에 펼친다. 더 큰 저장 가방을 읽을 때는 동일한 표시 영역에 들어오도록 정사각형 셀을 줄인다. GridSize와 셀 개수가 같으면 기존 셀을 재사용한다.
+
+인벤토리 시안의 프레임·격자·아이템·툴팁을 다시 작성할 때는 `Scripts/Editor/ApplyInventoryConcept.py`를 전용 Editor commandlet에서 실행한다. [인벤토리 시안 적용 계획](../Feature/architect/2026-11-20_inventory-concept-implementation.md)
 ### WBP_EquipmentWindow
 
 - Root: `UI_EquipmentCanvas`

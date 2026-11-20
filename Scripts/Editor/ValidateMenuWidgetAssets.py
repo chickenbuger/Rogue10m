@@ -201,7 +201,8 @@ def main():
                 if info.widget
             }
             tooltip_width = widgets["UI_ItemTooltipSize"].get_editor_property("width_override")
-            if abs(tooltip_width - 280.0) > 0.01:
+            expected_width = 322.0 if "UI_ItemKindText" in widgets else 280.0
+            if abs(tooltip_width - expected_width) > 0.01:
                 raise RuntimeError(f"Invalid default Tooltip width: {tooltip_width}")
             equipped_visibility = widgets["UI_EquippedItemPanel"].get_visibility()
             if equipped_visibility != unreal.SlateVisibility.COLLAPSED:
