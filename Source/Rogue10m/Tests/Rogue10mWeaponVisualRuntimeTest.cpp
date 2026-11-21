@@ -76,10 +76,13 @@ public:
   bSwordEquipAudit=bMeleeVfxRun&&FParse::Value(FCommandLine::Get(),TEXT("RogueSwordEquipAppearance="),SwordEquipAppearance);
   bSwordEquipWalking=bSwordEquipAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueSwordEquipWalking"));
   bSwordTechniqueAudit=FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordTechniqueQA"));
-  bSwordTechniqueRender=bSwordTechniqueAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordWhirlwindCapture"));
+  const bool bWhirlwindCapture=FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordWhirlwindCapture"));
+  const bool bGuardBreakCapture=FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordGuardBreakCapture"));
+  bSwordTechniqueRender=bSwordTechniqueAudit&&(bWhirlwindCapture||bGuardBreakCapture);
+  bSwordGuardBreakAudit=bSwordTechniqueAudit&&(bGuardBreakCapture||FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordGuardBreakAudit")));
   const bool bNullRhi=FParse::Param(FCommandLine::Get(),TEXT("nullrhi"));
   const bool bTechniqueModeOK=bSwordTechniqueRender?(!bMeleeVfxLogicOnly&&!bNullRhi):(bMeleeVfxLogicOnly&&bNullRhi);
-  if(bSwordTechniqueAudit&&(!bMeleeVfxRun||bSwordEquipAudit||bCapstoneBraceRun||!bTechniqueModeOK))
+  if(bSwordTechniqueAudit&&(!bMeleeVfxRun||bSwordEquipAudit||bCapstoneBraceRun||!bTechniqueModeOK||(bWhirlwindCapture&&bSwordGuardBreakAudit)))
   {
    bFinished=true;
    UE_LOG(LogRogue10m,Error,TEXT("RESULT=GREAT_SWORD_TECHNIQUES_FAILED reason=select_dedicated_nullrhi_or_render_mode"));
@@ -125,7 +128,7 @@ public:
   if(bSwordTechniqueRender)
   {
    TechniqueViewport=GEngine?GEngine->GameViewport:nullptr;
-   Check(TechniqueViewport.IsValid(),TEXT("whirlwind_capture_game_viewport_required"));
+   Check(TechniqueViewport.IsValid(),TEXT("technique_capture_game_viewport_required"));
    if(Failures){Finish();return;}
    bPreviousWorldRenderingDisabled=TechniqueViewport->bDisableWorldRendering;
    TechniqueViewport->bDisableWorldRendering=true;
@@ -140,8 +143,14 @@ public:
 private:
  void Check(bool B,const TCHAR* Reason){if(!B){++Failures;UE_LOG(LogRogue10m,Error,TEXT("WEAPON3P FAIL skill=%d frame=%d %s"),Index,Frame,*FString(Reason));}}
  static constexpr int32 TechniqueCount=4;
+ static constexpr double GuardBreakDistances[]={85.,110.,140.};
+ static constexpr int32 GuardBreakCaseCount=UE_ARRAY_COUNT(GuardBreakDistances)+1;
  bool IsSwordCase() const {return bSwordTechniqueAudit||Index<5||(Index>=10&&Index<12);}
- bool IsMeleeMissCase() const {return bSwordTechniqueAudit?Index>=TechniqueCount:bMeleeVfxRun&&(Index==11||Index==13);}
+ bool IsMeleeMissCase() const
+ {
+  if(bSwordGuardBreakAudit){return Index==GuardBreakCaseCount-1;}
+  return bSwordTechniqueAudit?Index>=TechniqueCount:bMeleeVfxRun&&(Index==11||Index==13);
+ }
  bool IsMeleeMotionCase() const {return !bSwordTechniqueAudit&&bMeleeVfxRun&&(Index==0||Index==5||Index==10||Index==12);}
  void SendSwordTechniqueKey(bool bPressed)
  {
@@ -344,10 +353,19 @@ private:
    }
    auto* Skill=Entry->Skill.LoadSynchronous();
    if(!Skill||!Skill->AttackMontage||!Tree->IsSkillGranted(Skill)){return false;}
-   if(!bSwordTechniqueRender||Skill->GetFName()==TEXT("DA_Hybrid_GreatSword_Whirlwind")){Skills.Add(Skill);}
+   if(bSwordGuardBreakAudit&&Skill->GetFName()!=TEXT("DA_Hybrid_GreatSword_GuardBreak")){continue;}
+   if(bSwordTechniqueRender&&!bSwordGuardBreakAudit&&Skill->GetFName()!=TEXT("DA_Hybrid_GreatSword_Whirlwind")){continue;}
+   Skills.Add(Skill);
   }
   if(Tree->GetAvailableGrowthPoints()!=Points-TechniqueCount){return false;}
   if(bSwordTechniqueRender){return Skills.Num()==1;}
+  if(bSwordGuardBreakAudit)
+  {
+   if(Skills.Num()!=1){return false;}
+   const auto Skill=Skills[0];
+   while(Skills.Num()<GuardBreakCaseCount){Skills.Add(Skill);}
+   return true;
+  }
   for(int32 I=0;I<TechniqueCount;++I){const auto Skill=Skills[I];Skills.Add(Skill);}
   return true;
  }
@@ -519,12 +537,15 @@ private:
   if(bSwordTechniqueRender)
   {
    const FVector Origin=Character->GetActorLocation();
-   const FVector Position=Origin-Character->GetActorForwardVector()*290.-Character->GetActorRightVector()*300.+FVector(0,0,65);
-   const FVector Focus=Origin+FVector(0,0,35);
+   const FVector Forward=Character->GetActorForwardVector();
+   const FVector Right=Character->GetActorRightVector();
+   const FVector Position=bSwordGuardBreakAudit?Origin+Forward*120.-Right*420.+FVector(0,0,85):
+    Origin-Forward*290.-Right*300.+FVector(0,0,65);
+   const FVector Focus=Origin+FVector(0,0,35)+(bSwordGuardBreakAudit?Forward*52.:FVector::ZeroVector);
    FActorSpawnParameters CameraParams;
    CameraParams.ObjectFlags|=RF_Transient;
    auto* Camera=World->SpawnActor<ACameraActor>(Position,(Focus-Position).Rotation(),CameraParams);
-   Check(Camera!=nullptr,TEXT("whirlwind_capture_fixed_camera_spawned"));
+   Check(Camera!=nullptr,TEXT("technique_capture_fixed_camera_spawned"));
    if(!Camera){Finish();return;}
    Camera->GetCameraComponent()->SetFieldOfView(63.f);
    Controller->SetViewTarget(Camera);
@@ -1103,6 +1124,10 @@ private:
   auto* Skill=Skills[Index].Get();
   const FVector Right=FVector::CrossProduct(FVector::UpVector,Forward);
   FVector TargetOffset=Forward*110.;
+  if(bSwordGuardBreakAudit&&!bSwordTechniqueRender&&!IsMeleeMissCase())
+  {
+   TargetOffset=Forward*GuardBreakDistances[Index];
+  }
   if(bSwordTechniqueAudit&&!IsMeleeMissCase()&&Skill->AttackShape==ERogue10mAttackShape::Circle)
   {
    TargetOffset=Forward*(Skill->CircleForwardOffset-0.40*Skill->AttackRange)+Right*55.;
@@ -1162,6 +1187,7 @@ private:
   if(Failures){Finish();return;}
   if(GShaderCompilingManager){GShaderCompilingManager->FinishAllCompilation();}
   CaseStartedAt=World->GetTimeSeconds();Accepted=-1;AttackSent=false;ChargeReleased=false;PulseCount=0;MontageSamples=0;
+  GuardBreakNearestBladeGap=TNumericLimits<double>::Max();
   bReadyRequested=bReadyCaptured=bFirstDamageCaptured=bFirstDamageRequested=bAcceptanceRequested=bImpactResidualRequested=bRecoveryRequested=bRecoveryCaptured=false;RenderedHandMaxTravelCm=0;
   VfxExcluded.Reset();VfxObservations.Reset();FirstImpactComponent.Reset();bFirstImpactObserved=false;bVfxTimedOut=false;
   bSawMeleeTrail=bSawMeleeRange=bSawMeleeImpact=bMotionRequested=bMotionCaptured=false;
@@ -1379,6 +1405,11 @@ private:
   FVector BladeClosest,CapsuleClosest;
   FMath::SegmentDistToSegmentSafe(Base,Tip,TargetCenter-TargetUp*TargetAxisHalf,TargetCenter+TargetUp*TargetAxisHalf,BladeClosest,CapsuleClosest);
   const double SwordCapsuleGap=IsSwordCase()?FVector::Distance(BladeClosest,CapsuleClosest)-TargetRadius:-1.;
+  if(bSwordGuardBreakAudit&&Playing&&!IsMeleeMissCase()&&Right&&Right->IsVisible()
+   &&FVector::DistSquared(Base,Tip)>1.&&FMath::IsFinite(SwordCapsuleGap))
+  {
+   GuardBreakNearestBladeGap=FMath::Min(GuardBreakNearestBladeGap,SwordCapsuleGap);
+  }
   const double Health=Target->GetRogueAttributeSet()->GetHealth(),Drop=PreviousHealth-Health;
   if(Drop>.01)
   {
@@ -1406,7 +1437,8 @@ private:
   {
    bFirstDamageRequested=Capture(IsMeleeMissCase()?TEXT("contact_miss"):TEXT("after_first_damage"));
   }
-  else if(bSwordTechniqueRender&&Playing&&bFirstDamageCaptured&&!bMotionRequested&&!bCapturePending&&MontageTime>=1.02)
+  else if(bSwordTechniqueRender&&Playing&&bFirstDamageCaptured&&!bMotionRequested&&!bCapturePending
+   &&MontageTime>=(bSwordGuardBreakAudit?.694:1.02))
   {
    bMotionRequested=Capture(TEXT("motion"));
   }
@@ -1457,7 +1489,12 @@ private:
    const int32 Wanted=IsMeleeMissCase()?0:Skill->HitMode==ERogue10mAttackHitMode::Single?1:Skill->HitCount;
    Check(PulseCount==Wanted,TEXT("actual_damage_count_mismatch"));Check(MontageSamples>5,TEXT("montage_instance_not_playing_enough_samples"));
    Check(RenderedHandMaxTravelCm>2.,TEXT("rendered_body_hand_motion_missing"));Check(bFirstDamageCaptured,TEXT("after_first_damage_capture_not_completed"));
-   if(bSwordTechniqueRender){Check(bMotionCaptured,TEXT("whirlwind_rendered_sweep_missing"));}
+   if(bSwordTechniqueRender){Check(bMotionCaptured,TEXT("technique_rendered_motion_missing"));}
+   if(bSwordGuardBreakAudit&&!IsMeleeMissCase())
+   {
+    UE_LOG(LogRogue10m,Display,TEXT("GREAT_SWORD_GUARD_BREAK case=%d nearest_visible_blade_capsule_gap_cm=%.6f"),Index,GuardBreakNearestBladeGap);
+    Check(GuardBreakNearestBladeGap<=0.,TEXT("guard_break_visible_axis_never_crossed_target_capsule"));
+   }
    if(bMeleeVfxRun&&!bSwordTechniqueAudit){CheckMeleeVfxRecovery();}
    bRecoveryRequested=true;if(!Capture(TEXT("recovery"))){Finish();return;}
   }
@@ -1484,7 +1521,8 @@ private:
   }
   if(bCapstoneBraceRun){FinishCapstoneBrace();return;}
   for(const FString& Path:CapturePaths){Check(IFileManager::Get().FileSize(*Path)>0,TEXT("final_screenshot_file_missing_or_empty"));}
-  const int32 ExpectedCases=bSwordTechniqueAudit?(bSwordTechniqueRender?1:TechniqueCount*2):bMeleeVfxRun?14:10;
+  const int32 ExpectedCases=bSwordTechniqueRender?1:bSwordGuardBreakAudit?GuardBreakCaseCount:
+   bSwordTechniqueAudit?TechniqueCount*2:bMeleeVfxRun?14:10;
   const int32 ExpectedCaptures=bMeleeVfxLogicOnly?0:(bSwordTechniqueRender?4:bMeleeVfxRun?46:34);
   if(bSwordTechniqueAudit)
   {
@@ -1512,11 +1550,14 @@ private:
    Frame,Failures,Index,CapturePaths.Num(),CompletedCaptures,bRequireAuthoredSword?1:0,AuthoredSwordValidated,SwordFirstDamageChecks,
    bMeleeVfxLogicOnly?TEXT("NullRHI, numeric phases only"):TEXT("rendered PNGs"));
   const FString TechniqueSummary=FString::Printf(TEXT("completed_skills=%d\nfailures=%d\nframes=%d\nNOTE=%s Real Q/RMB controller input, Manny and visible pose.\n"),Index,Failures,Frame,
+   bSwordGuardBreakAudit?(bSwordTechniqueRender?TEXT("One GuardBreak at 110 cm with rendered phases."):
+    TEXT("GuardBreak at three real frontal positions and one position outside its query.")):
    bSwordTechniqueRender?TEXT("One Whirlwind case with a rear target and rendered phases."):TEXT("Four learned GreatSword skills, each inside and outside its combat query."));
   Check(FFileHelper::SaveStringToFile(bSwordTechniqueAudit?TechniqueSummary:bMeleeVfxRun?MeleeSummary:Summary,*(Output/TEXT("metrics.txt"))),TEXT("summary_evidence_save_failed"));
   if(bOwnFixed){FApp::SetUseFixedTimeStep(OldFixed);FApp::SetFixedDeltaTime(OldDelta);}
   const bool Passed=Failures==0&&Index==ExpectedCases;
-  const TCHAR* ResultName=bSwordTechniqueAudit?TEXT("GREAT_SWORD_TECHNIQUES"):
+  const TCHAR* ResultName=bSwordGuardBreakAudit?TEXT("GREAT_SWORD_GUARD_BREAK"):
+   bSwordTechniqueAudit?TEXT("GREAT_SWORD_TECHNIQUES"):
    bMeleeVfxLogicOnly?TEXT("MELEE_VFX_LOGIC"):(bMeleeVfxRun?TEXT("MELEE_VFX"):TEXT("WEAPON_THIRDPERSON"));
   UE_LOG(LogRogue10m,Display,TEXT("RESULT=%s_%s completed=%d failures=%d"),ResultName,
    Passed?TEXT("PASSED"):TEXT("FAILED"),Index,Failures);
@@ -1531,8 +1572,9 @@ private:
  FString MeleeVfxRows;
  FString SwordEquipAppearance,SwordEquipRows,SwordTechniquePoses,SwordTechniqueActor;
  TWeakObjectPtr<UGameViewportClient> TechniqueViewport;
+ double GuardBreakNearestBladeGap=TNumericLimits<double>::Max();
  bool bPreviousWorldRenderingDisabled=false;
- bool bSwordTechniqueAudit=false,bSwordTechniqueRender=false;
+ bool bSwordTechniqueAudit=false,bSwordTechniqueRender=false,bSwordGuardBreakAudit=false;
  int32 SwordEquipGrid=INDEX_NONE;
  FGuid SwordEquipItem;
  bool bSwordEquipAudit=false,bSwordEquipWalking=false;

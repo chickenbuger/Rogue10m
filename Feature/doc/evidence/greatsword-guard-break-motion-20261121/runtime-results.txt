@@ -1,0 +1,83 @@
+[ExportGuardDonors.log]
+[2026.11.21-11.27.48:947][  0]LogPython: RESULT=GREAT_SWORD_GUARD_BREAK_REFERENCES_EXPORTED
+
+[BlenderGuardBreakA.log]
+RuntimeError: Candidate geometry failed: {'shoulder_yaw_range_deg': 125.28266081317508, 'shoulder_yaw_largest_step_deg': 7.601930128125389, 'shoulder_largest_step_phase': 0.53, 'root_travel_cm': 0.0, 'hand_l': {'lowest_z_cm': 66.24452209472656, 'largest_step_cm': 10.777250609993395, 'endpoint_delta_cm': 0.0}, 'hand_r': {'lowest_z_cm': 75.7823257446289, 'largest_step_cm': 10.742846351426403, 'endpoint_delta_cm': 0.0}, 'foot_l': {'lowest_z_cm': 6.797257423400879, 'largest_step_cm': 3.866756419553653, 'endpoint_delta_cm': 0.0}, 'foot_r': {'lowest_z_cm': 8.217730522155762, 'largest_step_cm': 7.5052884977189604, 'endpoint_delta_cm': 0.0}, 'ball_l': {'lowest_z_cm': -0.4873785078525543, 'largest_step_cm': 4.661590063811884, 'endpoint_delta_cm': 0.0}, 'ball_r': {'lowest_z_cm': -0.5752586722373962, 'largest_step_cm': 8.837162916023694, 'endpoint_delta_cm': 0.0}, 'hand_spacing_cm': [13.092678276442246, 26.497692201823043], 'bone_count': 89, 'fps': 60, 'intervals': 100, 'root_rotation_deg': 0.0, 'palm_span_cm': [12.745176412649249, 23.876788806310866], 'shoulder_ready': [-21.43190574645996, -21.8154296875, 136.18218994140625], 'shoulder_recovery': [-21.43190574645996, -21.8154296875, 136.18218994140625]}
+
+[ImportGuardBreak-A-reference-guard.log]
+[2026.11.21-11.32.33:551][  0]LogPython: Error: RuntimeError: Original GuardBreak montage and immediate damage must match baseline.
+[2026.11.21-11.32.33:552][  0]LogInit: Display: LogPython: Error: RuntimeError: Original GuardBreak montage and immediate damage must match baseline.
+
+[ImportGuardBreak.log]
+[2026.11.21-11.33.30:400][  0]LogPython: RESULT=GREAT_SWORD_GUARD_BREAK_IMPORTED
+
+[build-GuardBreak-Final.log]
+Result: Succeeded
+Total execution time: 16.54 seconds
+
+[SwordGuardBreakPre.log]
+[2026.11.21-11.28.33:750][255]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=0 skill=DA_Hybrid_GreatSword_GuardBreak miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=84.49, Y=9.30)
+[2026.11.21-11.28.33:798][317]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak frame=63 world=5.300000 montage_s=0.014840 source_s=0.014840 source=/Game/Rogue10m/Animation/Combat/HeadSafe/A_Safe_Hook.A_Safe_Hook sword_capsule_gap_cm=23.571540 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.28.33:798][317]LogRogue10m: Display: WEAPON3P DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak pulse=1 elapsed=0.000000 expected=0.000000 blade_target_cm=57.572
+[2026.11.21-11.28.33:886][431]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_GuardBreak instance_samples=97 damage_pulses=1 rendered_hand_travel_cm=46.076
+[2026.11.21-11.28.33:886][431]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=1 skill=DA_Hybrid_GreatSword_GuardBreak miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=109.72, Y=7.88)
+[2026.11.21-11.28.33:929][493]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak frame=239 world=8.233334 montage_s=0.014840 source_s=0.014840 source=/Game/Rogue10m/Animation/Combat/HeadSafe/A_Safe_Hook.A_Safe_Hook sword_capsule_gap_cm=45.459530 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.28.33:929][493]LogRogue10m: Display: WEAPON3P DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak pulse=1 elapsed=0.000000 expected=0.000000 blade_target_cm=79.460
+[2026.11.21-11.28.34:021][607]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_GuardBreak instance_samples=97 damage_pulses=1 rendered_hand_travel_cm=45.600
+[2026.11.21-11.28.34:022][607]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=2 skill=DA_Hybrid_GreatSword_GuardBreak miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=139.64, Y=10.03)
+[2026.11.21-11.28.34:065][669]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak frame=415 world=11.166667 montage_s=0.014840 source_s=0.014840 source=/Game/Rogue10m/Animation/Combat/HeadSafe/A_Safe_Hook.A_Safe_Hook sword_capsule_gap_cm=68.349026 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.28.34:065][669]LogRogue10m: Display: WEAPON3P DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak pulse=1 elapsed=0.000000 expected=0.000000 blade_target_cm=102.349
+[2026.11.21-11.28.34:148][783]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_GuardBreak instance_samples=97 damage_pulses=1 rendered_hand_travel_cm=45.837
+[2026.11.21-11.28.34:148][783]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=3 skill=DA_Hybrid_GreatSword_GuardBreak miss=1 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=-50.65, Y=146.75)
+[2026.11.21-11.28.34:281][959]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_GuardBreak instance_samples=97 damage_pulses=0 rendered_hand_travel_cm=45.984
+[2026.11.21-11.28.34:289][959]LogRogue10m: Display: RESULT=GREAT_SWORD_GUARD_BREAK_PASSED completed=4 failures=0
+
+[SwordGuardBreakFinal.log]
+[2026.11.21-11.38.51:613][255]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=0 skill=DA_Hybrid_GreatSword_GuardBreak miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=84.49, Y=9.30)
+[2026.11.21-11.38.51:661][317]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak frame=63 world=5.300000 montage_s=0.014840 source_s=0.014840 source=/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_GuardBreak.A_GreatSword_GuardBreak sword_capsule_gap_cm=22.840775 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.38.51:661][317]LogRogue10m: Display: WEAPON3P DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak pulse=1 elapsed=0.000000 expected=0.000000 blade_target_cm=56.841
+[2026.11.21-11.38.51:749][430]LogRogue10m: Display: GREAT_SWORD_GUARD_BREAK case=0 nearest_visible_blade_capsule_gap_cm=-31.275945
+[2026.11.21-11.38.51:749][431]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_GuardBreak instance_samples=97 damage_pulses=1 rendered_hand_travel_cm=99.996
+[2026.11.21-11.38.51:750][431]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=1 skill=DA_Hybrid_GreatSword_GuardBreak miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=109.72, Y=7.88)
+[2026.11.21-11.38.51:792][493]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak frame=239 world=8.233334 montage_s=0.014840 source_s=0.014840 source=/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_GuardBreak.A_GreatSword_GuardBreak sword_capsule_gap_cm=44.467195 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.38.51:792][493]LogRogue10m: Display: WEAPON3P DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak pulse=1 elapsed=0.000000 expected=0.000000 blade_target_cm=78.467
+[2026.11.21-11.38.51:878][606]LogRogue10m: Display: GREAT_SWORD_GUARD_BREAK case=1 nearest_visible_blade_capsule_gap_cm=-30.854172
+[2026.11.21-11.38.51:879][607]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_GuardBreak instance_samples=97 damage_pulses=1 rendered_hand_travel_cm=99.686
+[2026.11.21-11.38.51:879][607]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=2 skill=DA_Hybrid_GreatSword_GuardBreak miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=139.64, Y=10.03)
+[2026.11.21-11.38.51:919][669]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak frame=415 world=11.166667 montage_s=0.014840 source_s=0.014840 source=/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_GuardBreak.A_GreatSword_GuardBreak sword_capsule_gap_cm=66.959345 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.38.51:919][669]LogRogue10m: Display: WEAPON3P DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak pulse=1 elapsed=0.000000 expected=0.000000 blade_target_cm=100.959
+[2026.11.21-11.38.52:002][782]LogRogue10m: Display: GREAT_SWORD_GUARD_BREAK case=2 nearest_visible_blade_capsule_gap_cm=-28.722018
+[2026.11.21-11.38.52:003][783]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_GuardBreak instance_samples=97 damage_pulses=1 rendered_hand_travel_cm=99.499
+[2026.11.21-11.38.52:003][783]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=3 skill=DA_Hybrid_GreatSword_GuardBreak miss=1 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=-50.65, Y=146.75)
+[2026.11.21-11.38.52:127][959]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_GuardBreak instance_samples=97 damage_pulses=0 rendered_hand_travel_cm=99.917
+[2026.11.21-11.38.52:134][959]LogRogue10m: Display: RESULT=GREAT_SWORD_GUARD_BREAK_PASSED completed=4 failures=0
+
+[SwordGuardBreakGeneral.log]
+[2026.11.21-11.39.13:132][955]LogRogue10m: Display: RESULT=GREAT_SWORD_TECHNIQUES_PASSED completed=8 failures=0
+
+[SwordGuardBreakWarp.log]
+[2026.11.21-11.36.27:548][  0]LogD3D: D3D12CreateDevice failed with code 0x887A0004
+[2026.11.21-11.36.27:595][  0]LogD3D: D3D11CreateDevice failed with code 0x887A0004
+[2026.11.21-11.36.27:614][  0]LogD3D11RHI: Error: Result failed with error 887A0004
+[2026.11.21-11.36.27:614][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-11.36.27:614][  0]LogD3D11RHI:    1. 'Microsoft Basic Render Driver' (Feature Level 11_1)
+[2026.11.21-11.36.27:614][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-11.36.27:619][  0]LogWindows: Unable to find requested device 'Microsoft Basic Render Driver' using Setup API.
+[2026.11.21-11.36.27:619][  0]LogWindows: Failed to get driver data for device 'Microsoft Basic Render Driver' using Setup API. Switching to fallback method.
+[2026.11.21-11.36.27:623][  0]LogRHI:             Name: Microsoft Basic Render Driver
+[2026.11.21-11.36.27:623][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-11.36.27:644][  0]LogCsvProfiler: Display: Metadata set : gpu="Microsoft Basic Render Driver"
+[2026.11.21-11.36.55:698][276]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_GuardBreak phase=ready frame=22 world=4.616667 montage=0.000000 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordGuardBreakWarp/images/DA_Hybrid_GreatSword_GuardBreak_ready_19D5F9124E9BE649881AF5A3705CEFE8.png
+[2026.11.21-11.36.57:075][276]LogCore: Display: Tracing Screenshot "DA_Hybrid_GreatSword_GuardBreak_ready_19D5F9124E9BE649881AF5A3705CEFE8" taken with size: 1280 x 720
+[2026.11.21-11.36.57:168][276]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_GuardBreak phase=ready frame=22 world=4.616667 montage=0.000000 bytes=986051
+[2026.11.21-11.36.57:199][286]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak frame=32 world=4.783334 montage_s=0.014840 source_s=0.014840 source=/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_GuardBreak.A_GreatSword_GuardBreak sword_capsule_gap_cm=41.801564 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.36.57:199][286]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_GuardBreak phase=after_first_damage frame=32 world=4.783334 montage=0.014840 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordGuardBreakWarp/images/DA_Hybrid_GreatSword_GuardBreak_after_first_damage_19D5F9124E9BE649881AF5A3705CEFE8.png
+[2026.11.21-11.36.58:055][286]LogCore: Display: Tracing Screenshot "DA_Hybrid_GreatSword_GuardBreak_after_first_damage_19D5F9124E9BE649881AF5A3705CEFE8" taken with size: 1280 x 720
+[2026.11.21-11.36.58:160][286]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_GuardBreak phase=after_first_damage frame=32 world=4.783334 montage=0.014840 bytes=1068195
+[2026.11.21-11.36.58:330][332]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_GuardBreak phase=motion frame=78 world=5.550000 montage=0.697480 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordGuardBreakWarp/images/DA_Hybrid_GreatSword_GuardBreak_motion_19D5F9124E9BE649881AF5A3705CEFE8.png
+[2026.11.21-11.36.59:040][332]LogCore: Display: Tracing Screenshot "DA_Hybrid_GreatSword_GuardBreak_motion_19D5F9124E9BE649881AF5A3705CEFE8" taken with size: 1280 x 720
+[2026.11.21-11.36.59:149][332]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_GuardBreak phase=motion frame=78 world=5.550000 montage=0.697480 bytes=1073106
+[2026.11.21-11.36.59:316][399]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_GuardBreak phase=recovery frame=145 world=6.666667 montage=0.000000 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordGuardBreakWarp/images/DA_Hybrid_GreatSword_GuardBreak_recovery_19D5F9124E9BE649881AF5A3705CEFE8.png
+[2026.11.21-11.36.59:855][399]LogCore: Display: Tracing Screenshot "DA_Hybrid_GreatSword_GuardBreak_recovery_19D5F9124E9BE649881AF5A3705CEFE8" taken with size: 1280 x 720
+[2026.11.21-11.36.59:960][399]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_GuardBreak phase=recovery frame=145 world=6.666667 montage=0.000000 bytes=1109195
+[2026.11.21-11.36.59:971][400]LogRogue10m: Display: RESULT=GREAT_SWORD_GUARD_BREAK_PASSED completed=1 failures=0
