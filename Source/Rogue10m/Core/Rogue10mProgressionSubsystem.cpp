@@ -23,6 +23,25 @@
 
 namespace Rogue10mProgressionPersistence
 {
+static void RecordInvestedDiscoveries(TSet<FName>& DiscoveredNodes, const FRogue10mSkillTreeSnapshot& Snapshot)
+{
+	for (const auto& Row : Snapshot.Investments) { DiscoveredNodes.Add(Row.NodeId); }
+}
+
+static void RecordCurrentSkillDiscoveries(TSet<FName>& DiscoveredNodes, const FRogue10mSkillTreeSnapshot& Snapshot,
+	const URogue10mSkillTreeProgressionComponent& Tree)
+{
+	RecordInvestedDiscoveries(DiscoveredNodes, Snapshot);
+	// Rank-based resonance unlocks are derived and have no investment row.
+	for (const auto& Node : Tree.GetCatalog()->Nodes)
+	{
+		if (Node.NodeType == ERogue10mHybridSkillTreeNodeType::Resonance && Tree.IsNodeUnlocked(Node.NodeId))
+		{
+			DiscoveredNodes.Add(Node.NodeId);
+		}
+	}
+}
+
 static int32 TraitSpent(const FRogue10mTownProgressionSnapshot& Town)
 {
 	const auto Canonical = URogue10mTownProgressionComponent::MigrateLegacySnapshot(Town);
@@ -217,9 +236,10 @@ URogue10mProgressionSaveGame* URogue10mProgressionSubsystem::LoadSnapshot(
 		Loaded->HighestRunLevel = Loaded->Growth.Level;
 		for (const auto& Pair : Loaded->Growth.MonsterDefeats) { Loaded->RewardDefeatBaseline += FMath::Max(0, Pair.Value); }
 		Loaded->RunId = FGuid::NewGuid();
-		for (const auto& Row : Loaded->SkillTree.Investments) { Loaded->DiscoveredNodes.Add(Row.NodeId); }
 		Loaded->SaveVersion = 4;
 	}
+	// Bring forward known investments before a completed run clears the live tree.
+	Rogue10mProgressionPersistence::RecordInvestedDiscoveries(Loaded->DiscoveredNodes, Loaded->SkillTree);
 	// This marker did not exist in v4; older saves cannot prove a cost-committed field entry.
 	if (Loaded->SaveVersion < 5) { Loaded->bEnteredRun = false; }
 	return Loaded;
@@ -472,7 +492,7 @@ void URogue10mProgressionSubsystem::BindChanges(ARogue10mCharacter& Character)
 		State->OnGrowthChanged.AddUniqueDynamic(this, &ThisClass::HandleStateChanged);
 		State->OnMartialArtsProgressChanged.AddUniqueDynamic(this, &ThisClass::HandleStateChanged);
 		State->GetTownProgressionComponent()->OnTownProgressionChanged.AddUniqueDynamic(this, &ThisClass::HandleStateChanged);
-		State->GetSkillTreeProgressionComponent()->OnChanged.AddUniqueDynamic(this, &ThisClass::HandleStateChanged);
+		State->GetSkillTreeProgressionComponent()->OnChanged.AddUniqueDynamic(this, &ThisClass::HandleSkillTreeChanged);
 	}
 }
 
@@ -495,7 +515,7 @@ void URogue10mProgressionSubsystem::UnbindChanges()
 		State->OnGrowthChanged.RemoveDynamic(this, &ThisClass::HandleStateChanged);
 		State->OnMartialArtsProgressChanged.RemoveDynamic(this, &ThisClass::HandleStateChanged);
 		State->GetTownProgressionComponent()->OnTownProgressionChanged.RemoveDynamic(this, &ThisClass::HandleStateChanged);
-		State->GetSkillTreeProgressionComponent()->OnChanged.RemoveDynamic(this, &ThisClass::HandleStateChanged);
+		State->GetSkillTreeProgressionComponent()->OnChanged.RemoveDynamic(this, &ThisClass::HandleSkillTreeChanged);
 	}
 }
 
@@ -523,17 +543,19 @@ void URogue10mProgressionSubsystem::CaptureCurrentState()
 	const auto* Tree = State->GetSkillTreeProgressionComponent();
 	SaveData->SkillTree = Tree->Capture();
 	SaveData->HighestRunLevel = FMath::Max(SaveData->HighestRunLevel, SaveData->Growth.Level);
-	for (const auto& Row : SaveData->SkillTree.Investments) { SaveData->DiscoveredNodes.Add(Row.NodeId); }
-	// Rank-based resonance unlocks are derived from the current run, so they have no investment row to record above.
-	for (const auto& Node : Tree->GetCatalog()->Nodes)
-	{
-		if (Node.NodeType == ERogue10mHybridSkillTreeNodeType::Resonance && Tree->IsNodeUnlocked(Node.NodeId))
-		{
-			SaveData->DiscoveredNodes.Add(Node.NodeId);
-		}
-	}
+	Rogue10mProgressionPersistence::RecordCurrentSkillDiscoveries(SaveData->DiscoveredNodes, SaveData->SkillTree, *Tree);
 	State->GetTownProgressionComponent()->SetLobbyBudget(SaveData->LobbyEarnedPoints, SaveData->HighestRunLevel);
 	SaveData->SaveVersion = URogue10mProgressionSaveGame::CurrentVersion;
+}
+
+void URogue10mProgressionSubsystem::HandleSkillTreeChanged()
+{
+	const auto* State = CurrentPlayerState.Get();
+	if (!bRestoreValid || bRestoring || !SaveData || !State || !CurrentCharacter.IsValid()) { return; }
+	const auto* Tree = State->GetSkillTreeProgressionComponent();
+	// Remember the acquisition immediately. The disk write still follows the existing debounce.
+	Rogue10mProgressionPersistence::RecordCurrentSkillDiscoveries(SaveData->DiscoveredNodes, Tree->Capture(), *Tree);
+	HandleStateChanged();
 }
 
 int32 URogue10mProgressionSubsystem::GetLobbyAvailablePoints() const

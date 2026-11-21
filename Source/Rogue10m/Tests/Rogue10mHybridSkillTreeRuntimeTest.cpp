@@ -874,6 +874,11 @@ private:
 		const auto* IdentityCombat = Player->GetSkillTreeCombatComponent();
 		Check(IdentityCombat && IdentityCombat->GetGauge() == 0.0f && IdentityCombat->GetCooldownRemaining() == 0.0f,
 			TEXT("read_transient_identity_gauge_and_cooldown_start_empty"));
+		Check(Persistence->HasDiscoveredNode(TEXT("G.EarthSplitter"))
+			&& Persistence->HasDiscoveredNode(TEXT("G.Whirlwind"))
+			&& Persistence->HasDiscoveredNode(TEXT("F.DiamondStrike"))
+			&& !Persistence->HasDiscoveredNode(TEXT("F.Ultimate")),
+			TEXT("cold_profile_restores_actual_discoveries_without_revealing_unlearned_techniques"));
 		if (bInputQA)
 		{
 			const auto* Node = Tree->FindNode(TEXT("G.CrushingSlash"));
@@ -885,6 +890,13 @@ private:
 			PC->ToggleSkillTree();
 			for (TObjectIterator<URogue10mHybridSkillTreeWidget> It; It; ++It)
 			{ if (It->GetWorld() == World.Get() && It->GetOwningPlayer() == PC.Get()) { Widget = *It; break; } }
+			if (Widget.IsValid())
+			{
+				Widget->SelectNode(TEXT("G.EarthSplitter"));
+				VerifySelectedDisclosure(TEXT("G.EarthSplitter"), false, false);
+				Widget->SelectNode(TEXT("F.Ultimate"));
+				VerifySelectedDisclosure(TEXT("F.Ultimate"), true, true);
+			}
 			Later(0.4, [this] { BeginInputChecks(ETrack::GreatSword, [this] { Finish(); }); });
 			return;
 		}
@@ -1031,29 +1043,71 @@ private:
 			Check(Tree->TryUnlockNode(TEXT("G.GuardBreak"), ERoute::Points, NAME_None)
 				&& !Tree->IsNodeUnlocked(TEXT("G.CrushingSlash")), TEXT("sword_completes_side_route_without_the_main_branch"));
 			VerifySwordRouteCard(true);
-			Check(Tree->TryUnlockNode(TEXT("G.EarthSplitter"), ERoute::Points, NAME_None)
-				&& Tree->TryUnlockNode(TEXT("G.Ultimate"), ERoute::Points, NAME_None),
-				TEXT("sword_web_can_reach_earth_splitter_and_ultimate_via_side_branches"));
-			Widget->HandleAction(100, TEXT("G.CrushingSlash"));
 			Widget->HandleAction(3);
-			Check(!Tree->TryUnlockNode(TEXT("G.Whirlwind"), ERoute::Points, NAME_None)
-				&& Tree->IsNodeUnlocked(TEXT("G.CrushingSlash"))
-				&& Tree->GetAvailableGrowthPoints() == BeforeSwordPoints - 5
-				&& Player->GetCombatComponent()->GetUnlockedWeaponSkills().Num() == 10,
-				TEXT("sword_widget_purchase_and_other_paths_grant_all_attacks_for_exactly_five_points"));
-			const auto InvestedSword = Tree->Capture();
-			Check(Tree->IsNodeUnlocked(TEXT("G.Power.2")) && Tree->Respec(EIdentity::None)
-				&& Tree->GetAvailableGrowthPoints() == 14 && !Tree->IsNodeUnlocked(TEXT("G.Power.2"))
-				&& Tree->IsNodeUnlocked(TEXT("G.Power.1")) && Tree->GetMasteryLevel(ETrack::GreatSword) == 20
-				&& Player->GetCombatComponent()->GetUnlockedWeaponSkills().Num() == 5,
-				TEXT("full_respec_refunds_paid_sword_paths_and_prunes_dependents_without_losing_mastery"));
-			Check(Tree->Restore(InvestedSword), TEXT("paid_sword_paths_restore_before_identity_checks"));
-			Check(Tree->GetIdentityRank(EIdentity::Mana) == 16
-				&& Tree->HasResonance(ETrack::GreatSword, EIdentity::Mana),
-				TEXT("sword_ultimate_and_mana_rank_activate_resonance_without_a_purchase"));
-			IdentityAndSave();
-			CaptureSwordPanel();
+			Check(Tree->IsNodeUnlocked(TEXT("G.EarthSplitter")), TEXT("available_mystery_can_be_learned_through_skill_tree_action"));
+			VerifySelectedDisclosure(TEXT("G.EarthSplitter"), false, false);
+			const auto SideRoute = Tree->Capture();
+			Check(Tree->Respec(EIdentity::None) && Tree->TryUnlockNode(TEXT("G.Whirlwind"), ERoute::Points, NAME_None),
+				TEXT("sword_discovery_fixture_keeps_one_learned_branch_after_respec"));
+			VerifySelectedDisclosure(TEXT("G.EarthSplitter"), false, true);
+			VerifyNodeDisclosure(TEXT("G.Whirlwind"), false, false, TEXT("T_WeaponSkillMedallions"));
+			VerifyNodeDisclosure(TEXT("G.Ultimate"), true, true, TEXT("T_WeaponSkillMedallions"));
+			auto* Persistence = World->GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>();
+			Check(Persistence && Persistence->HasDiscoveredNode(TEXT("G.EarthSplitter"))
+				&& !Tree->IsNodeUnlocked(TEXT("G.EarthSplitter")) && Persistence->SaveNow(),
+				TEXT("discovery_is_recorded_before_save_even_when_skill_is_removed_immediately"));
+			if (Failures) { Finish(); return; }
+			const auto* SavedDiscovery = Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(
+				Persistence->GetSaveSlotForProfile(Persistence->GetAttachedProfileId()), 0));
+			Check(SavedDiscovery && SavedDiscovery->DiscoveredNodes.Contains(TEXT("G.EarthSplitter"))
+				&& !SavedDiscovery->SkillTree.Investments.ContainsByPredicate([](const auto& Row)
+				{
+					return Row.NodeId == TEXT("G.EarthSplitter");
+				}), TEXT("serialized_history_keeps_a_discovered_skill_without_its_current_investment"));
+			CaptureSwordDiscoveryStates(SideRoute, BeforeSwordPoints);
 		});
+	}
+	void CaptureSwordDiscoveryStates(const FRogue10mSkillTreeSnapshot& SideRoute, int32 BeforeSwordPoints)
+	{
+		Shot(TEXT("greatsword-discovery-states-1080p.png"));
+		Later(0.4, [this, SideRoute, BeforeSwordPoints]
+		{
+			PC->ConsoleCommand(TEXT("r.SetRes 1280x720w"), false);
+			Later(0.7, [this, SideRoute, BeforeSwordPoints]
+			{
+				Shot(TEXT("greatsword-discovery-states-720p.png"));
+				Later(0.4, [this, SideRoute, BeforeSwordPoints]
+				{
+					PC->ConsoleCommand(TEXT("r.SetRes 1920x1080w"), false);
+					Later(0.7, [this, SideRoute, BeforeSwordPoints] { CompleteSwordInvestments(SideRoute, BeforeSwordPoints); });
+				});
+			});
+		});
+	}
+	void CompleteSwordInvestments(const FRogue10mSkillTreeSnapshot& SideRoute, int32 BeforeSwordPoints)
+	{
+		Check(Tree->Restore(SideRoute) && Tree->TryUnlockNode(TEXT("G.Ultimate"), ERoute::Points, NAME_None),
+			TEXT("sword_web_can_reach_earth_splitter_and_ultimate_via_side_branches"));
+		Widget->HandleAction(100, TEXT("G.CrushingSlash"));
+		Widget->HandleAction(3);
+		Check(!Tree->TryUnlockNode(TEXT("G.Whirlwind"), ERoute::Points, NAME_None)
+			&& Tree->IsNodeUnlocked(TEXT("G.CrushingSlash"))
+			&& Tree->GetAvailableGrowthPoints() == BeforeSwordPoints - 5
+			&& Player->GetCombatComponent()->GetUnlockedWeaponSkills().Num() == 10,
+			TEXT("sword_widget_purchase_and_other_paths_grant_all_attacks_for_exactly_five_points"));
+		const auto InvestedSword = Tree->Capture();
+		Check(Tree->IsNodeUnlocked(TEXT("G.Power.2")) && Tree->Respec(EIdentity::None)
+			&& Tree->GetAvailableGrowthPoints() == 14 && !Tree->IsNodeUnlocked(TEXT("G.Power.2"))
+			&& Tree->IsNodeUnlocked(TEXT("G.Power.1")) && Tree->GetMasteryLevel(ETrack::GreatSword) == 20
+			&& Player->GetCombatComponent()->GetUnlockedWeaponSkills().Num() == 5,
+			TEXT("full_respec_refunds_paid_sword_paths_and_prunes_dependents_without_losing_mastery"));
+		Check(Tree->Restore(InvestedSword), TEXT("paid_sword_paths_restore_before_identity_checks"));
+		Check(Tree->GetIdentityRank(EIdentity::Mana) == 16
+			&& Tree->HasResonance(ETrack::GreatSword, EIdentity::Mana),
+			TEXT("sword_ultimate_and_mana_rank_activate_resonance_without_a_purchase"));
+		if (Failures) { Finish(); return; }
+		IdentityAndSave();
+		CaptureSwordPanel();
 	}
 	void VerifySwordGraphFrames()
 	{
@@ -1073,16 +1127,15 @@ private:
 	void VerifySwordRouteCard(bool bSideReady)
 	{
 		const auto* Card = Cast<UTextBlock>(Widget->GetWidgetFromName(TEXT("HybridTreeDetailRequirements")));
-		const auto* Description = Cast<UTextBlock>(Widget->GetWidgetFromName(TEXT("HybridTreeDetailDescription")));
-		const auto* Technique = Widget->GetSelectedAttackSkill();
+		const auto* LearnButton = Cast<UButton>(Widget->GetWidgetFromName(TEXT("HybridTreeLearnPoints")));
 		const FString Expected = FString(TEXT("선행 경로 · 아래 중 하나\n미완료 · 공격력 +2 (숙련 M8)\n"))
-			+ (bSideReady ? TEXT("완료 · 회전참 + 파쇄참") : TEXT("미완료 · 회전참 + 파쇄참"));
+			+ (bSideReady ? TEXT("완료 · 회전참 + 파쇄참") : TEXT("미완료 · 회전참 + 미발견"));
 		Check(Card && Card->GetVisibility() != ESlateVisibility::Collapsed
-			&& Widget->GetSelectedNodeId() == TEXT("G.EarthSplitter") && Card->GetText().ToString().StartsWith(Expected),
+			&& Card->GetText().ToString().StartsWith(Expected)
+			&& LearnButton && LearnButton->GetIsEnabled() == bSideReady,
 			bSideReady ? TEXT("rendered_sword_card_shows_ready_alternative_and_missing_main_route")
-				: TEXT("rendered_sword_card_keeps_partially_learned_AND_route_missing"));
-		Check(Description && Technique && Description->GetText().ToString().Contains(Technique->GetAllowedSlotText().ToString()),
-			TEXT("rendered_sword_card_describes_actual_technique_slot_policy"));
+				: TEXT("rendered_sword_card_masks_never_learned_alternative_and_keeps_it_missing"));
+		VerifySelectedDisclosure(TEXT("G.EarthSplitter"), true, true);
 	}
 	void CaptureSwordPanel()
 	{
@@ -1127,6 +1180,7 @@ private:
 		{
 			ClickWidget(Widget->FindNodeEntry(TEXT("C.MoveSpeed")));
 			Check(Widget->GetSelectedNodeId() == TEXT("C.MoveSpeed"), TEXT("common_move_speed_node_hit_target"));
+			VerifySelectedDisclosure(TEXT("C.MoveSpeed"), true, true);
 			Later(0.25, [this] { InvestCommonWeb(); });
 		});
 	}
@@ -1135,6 +1189,7 @@ private:
 		Click(TEXT("HybridTreeLearnPoints"));
 		Check(Tree->GetAvailableGrowthPoints() == 22 && Tree->IsCommonSkillLearned(ERogue10mCommonSkill::MoveSpeed)
 			&& Player->GetCharacterMovement()->MaxWalkSpeed > CommonBaseWalkSpeed, TEXT("common_real_UI_purchase_spends_one_point_and_applies_speed"));
+		VerifySelectedDisclosure(TEXT("C.MoveSpeed"), false, false);
 		Check(!Tree->TryUnlockNode(TEXT("C.RollCooldown"), ERoute::Points, NAME_None) && Tree->GetAvailableGrowthPoints() == 22,
 			TEXT("locked_common_skill_cannot_spend_points"));
 		for (const TCHAR* Id : {TEXT("C.GroundTurning"), TEXT("C.AirMomentum"), TEXT("C.DoubleJump")})
@@ -1175,12 +1230,58 @@ private:
 		});
 		return bHasMedallion;
 	}
+	void VerifyNodeDisclosure(FName NodeId, bool bMystery, bool bLocked, FName Atlas)
+	{
+		const auto* Entry = Widget->FindNodeEntry(NodeId);
+		const auto* Glyph = Entry && Entry->WidgetTree
+			? Cast<UTextBlock>(Entry->WidgetTree->FindWidget(TEXT("HybridTreeMysteryGlyph"))) : nullptr;
+		const auto* Definition = Tree->FindNode(NodeId);
+		const FString Tooltip = Entry ? Entry->GetToolTipText().ToString() : FString();
+		FString ExpectedLabel = bMystery || !Definition ? TEXT("미발견") : Definition->DisplayName.ToString();
+		if (Definition && Definition->Track == ETrack::GreatSword && Definition->PointCost > 0 && bLocked)
+		{
+			ExpectedLabel += FString::Printf(TEXT(" · %dP"), Definition->PointCost);
+		}
+		Check(Entry && Definition && Entry->IsMystery() == bMystery && Entry->HasLockBadge() == bLocked
+			&& Widget->GetNodeLabel(NodeId).ToString() == ExpectedLabel
+			&& HasMedallion(Entry, Atlas) == !bMystery
+			&& (!bMystery || (Glyph && Glyph->IsVisible() && Glyph->GetText().ToString() == TEXT("?")
+				&& !Tooltip.Contains(Definition->DisplayName.ToString())
+				&& (Definition->Description.IsEmpty() || !Tooltip.Contains(Definition->Description.ToString()))))
+			&& (!bLocked || !Entry->CanDragSkill()),
+			*FString::Printf(TEXT("node_disclosure_matches_icon_label_tooltip_and_drag_%s"), *NodeId.ToString()));
+	}
+	void VerifySelectedDisclosure(FName NodeId, bool bMystery, bool bLocked)
+	{
+		const auto* Definition = Tree->FindNode(NodeId);
+		if (!Definition)
+		{
+			Check(false, TEXT("disclosure_fixture_node_exists"));
+			return;
+		}
+		const FName Atlas = Definition->CommonSkill == ERogue10mCommonSkill::None
+			? TEXT("T_WeaponSkillMedallions") : TEXT("T_CommonSkillMedallions");
+		VerifyNodeDisclosure(NodeId, bMystery, bLocked, Atlas);
+		const auto* Name = Cast<UTextBlock>(Widget->GetWidgetFromName(TEXT("HybridTreeDetailName")));
+		const auto* Description = Cast<UTextBlock>(Widget->GetWidgetFromName(TEXT("HybridTreeDetailDescription")));
+		const auto* Portrait = Cast<URogue10mHybridSkillTreeEntryWidget>(Widget->GetWidgetFromName(TEXT("HybridTreeCommonDetailIcon")));
+		const auto* Skill = Widget->GetSelectedAttackSkill();
+		const FString ExpectedName = bMystery ? TEXT("미발견") : Definition->DisplayName.ToString();
+		Check(Widget->GetSelectedNodeId() == NodeId && Name && Description && Portrait
+			&& Name->GetText().ToString() == ExpectedName
+			&& Portrait->IsMystery() == bMystery && Portrait->HasLockBadge() == bLocked
+			&& HasMedallion(Portrait, Atlas) == !bMystery
+			&& (!bMystery || (!Skill && Description->GetText().ToString() == TEXT("처음 습득하면 기술의 이름과 효과가 공개됩니다.")))
+			&& (bMystery || !Skill || Definition->Track != ETrack::GreatSword
+				|| Description->GetText().ToString().Contains(Skill->GetAllowedSlotText().ToString())),
+			*FString::Printf(TEXT("selected_card_exposes_only_discovered_skill_details_%s"), *NodeId.ToString()));
+	}
 	void VerifyWeaponPresentation(FName HighlightedNode, FName ActiveTab)
 	{
 		const FName WeaponAtlas(TEXT("T_WeaponSkillMedallions"));
-		for (FName NodeId : Widget->GetVisibleNodeIds())
+		for (const auto& Node : Widget->GetDisplayNodes())
 		{
-			Check(HasMedallion(Widget->FindNodeEntry(NodeId), WeaponAtlas), *NodeId.ToString());
+			VerifyNodeDisclosure(Node.NodeId, Widget->IsMysteryNode(Node), !Tree->IsNodeUnlocked(Node.NodeId), WeaponAtlas);
 		}
 		Check(HasMedallion(Widget->FindNodeEntry(HighlightedNode), WeaponAtlas)
 			&& HasMedallion(Cast<UUserWidget>(Widget->GetWidgetFromName(TEXT("HybridTreeCommonDetailIcon"))), WeaponAtlas),
@@ -1198,7 +1299,7 @@ private:
 		{
 			if (Node.CommonSkill != ERogue10mCommonSkill::None)
 			{
-				Check(HasMedallion(Widget->FindNodeEntry(Node.NodeId), CommonAtlas), *FString::Printf(TEXT("common_medallion_visible_%s"), *Node.NodeId.ToString()));
+				VerifyNodeDisclosure(Node.NodeId, Widget->IsMysteryNode(Node), !Tree->IsNodeUnlocked(Node.NodeId), CommonAtlas);
 			}
 		}
 		Check(HasMedallion(Cast<UUserWidget>(Widget->GetWidgetFromName(TEXT("HybridTreeCommonDetailIcon"))), CommonAtlas)

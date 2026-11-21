@@ -75,7 +75,26 @@
     "same_sword_guard_walk_and_attack_test_assets": true,
     "same_guard_metrics_at_six_decimal_places": true
   },
+  "skill_tree_discovery_integration": {
+    "base": "4cba98941723b837a73954f76781c46d71ec9fb9",
+    "combat_parent": "0347db317e53f2c94882cfc00106f1cec0001b7a",
+    "run": "MotionDiscoveryMerge",
+    "build_seconds": 87.55,
+    "build_log_errors": 0,
+    "checks": 6497,
+    "failures": 0,
+    "game_log_errors": 0,
+    "engine_result_line": 1556,
+    "existing_qa_saves_preserved": 14,
+    "bone_rows_compared": 6312,
+    "differing_columns": ["world_seconds", "revision"],
+    "sword_charge_held_frames": 48,
+    "sword_release_active_montage_frames": 72,
+    "identical_results_file": "results-latest-nullrhi.txt",
+    "results_sha256": "c2f92929debcd81fabd4f808df9bbf658cbf0e95d3f0b5b4d226b0ef2190c8b6"
+  },
   "current_integration_render": {
+    "base": "a24f522edfba3b50abfd52882272754cac26ff1b",
     "run": "MotionLatestWarp",
     "adapter": "Microsoft Basic Render Driver",
     "checks": 994,

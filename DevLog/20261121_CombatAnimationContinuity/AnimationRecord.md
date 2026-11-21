@@ -1,6 +1,6 @@
 # 대검 가드 전환과 공격 입력 관찰
 
-2026-11-21 KST, 독립 작업 사본 `CombatMotionWorktree20261121`, `Sprint#18-2-combat-animation-continuity`. 최초 비교 기준 `2666013d`, 최종 통합 기준 `a24f522e`. 실행은 `StartHub`의 정상 프로필 진입 뒤 QA 저장 슬롯에서 했다. [결과와 재현](../../Feature/doc/2026-11-21_combat-animation-continuity.md)
+2026-11-21 KST, 독립 작업 사본 `CombatMotionWorktree20261121`, `Sprint#18-2-combat-animation-continuity`. 최초 비교 기준 `2666013d`, 렌더 기준 `a24f522e`, 최종 수치 통합 기준 `4cba9894`. 실행은 `StartHub`의 정상 프로필 진입 뒤 QA 저장 슬롯에서 했다. [결과와 재현](../../Feature/doc/2026-11-21_combat-animation-continuity.md)
 
 ## 애니메이션과 출처
 

@@ -296,6 +296,12 @@ ERogue10mSkillTreeNodeState URogue10mSkillTreeProgressionComponent::GetNodeState
 
 FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName NodeId) const
 {
+	return GetNodeRequirementsTextWithNames(NodeId, [](const FRogue10mSkillTreeNodeDefinition& Node) { return Node.DisplayName; });
+}
+
+FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsTextWithNames(
+	FName NodeId, TFunctionRef<FText(const FRogue10mSkillTreeNodeDefinition&)> GetNodeName) const
+{
 	const auto* Node = FindNode(NodeId);
 	if (!Node) { return FText::GetEmpty(); }
 	if (Rogue10mSkillTree::IsIdentityStage(Node->NodeType))
@@ -314,7 +320,7 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 			for (FName Id : Group.NodeIds)
 			{
 				const auto* Parent = FindNode(Id);
-				if (Parent && Parent->Track == Node->Track) { Requirements.AddUnique(Parent->DisplayName.ToString()); }
+				if (Parent && Parent->Track == Node->Track) { Requirements.AddUnique(GetNodeName(*Parent).ToString()); }
 			}
 		}
 		return FText::Format(NSLOCTEXT("Rogue10mTree", "ResonanceGrowthRequirements", "선행 기술 · {0}\n{1} 등급 {2} 필요 (현재 {3})"),
@@ -341,13 +347,15 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 			if (!Neighbor) { continue; }
 			const bool bLearned = IsNodeUnlocked(Id);
 			bHasLearnedNeighbor |= bLearned;
-			Neighbors.Add(bLearned ? Neighbor->DisplayName.ToString() + TEXT(" ✓") : Neighbor->DisplayName.ToString());
+			FString NeighborName = GetNodeName(*Neighbor).ToString();
+			if (bLearned) { NeighborName += TEXT(" ✓"); }
+			Neighbors.Add(MoveTemp(NeighborName));
 		}
 		Lines.Add(FString::Printf(TEXT("연결된 능력 중 하나 습득 · %s\n%s"), bHasLearnedNeighbor ? TEXT("완료") : TEXT("미완료"),
 			*FString::Join(Neighbors, TEXT(" / "))));
 		if (const auto* Required = GetCatalog()->FindCommonSkill(Node->CommonRequiredSkill))
 		{
-			Lines.Add(FString::Printf(TEXT("필수 · %s (%s)"), *Required->DisplayName.ToString(),
+			Lines.Add(FString::Printf(TEXT("필수 · %s (%s)"), *GetNodeName(*Required).ToString(),
 				IsNodeUnlocked(Required->NodeId) ? TEXT("완료") : TEXT("미완료")));
 		}
 	}
@@ -364,7 +372,7 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 			for (FName Id : Group.NodeIds)
 			{
 				const auto* Parent = FindNode(Id);
-				FString ParentName = Parent ? Parent->DisplayName.ToString() : Id.ToString();
+				FString ParentName = Parent ? GetNodeName(*Parent).ToString() : Id.ToString();
 				const bool bParentComplete = IsNodeUnlocked(Id);
 				if (bShowSwordRoutes && Parent && Parent->NodeType == ERogue10mHybridSkillTreeNodeType::Stat)
 				{

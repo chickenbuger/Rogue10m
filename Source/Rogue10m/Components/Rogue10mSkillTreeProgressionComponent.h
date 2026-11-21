@@ -38,6 +38,8 @@ public:
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") ERogue10mSkillTreeNodeState GetNodeState(FName NodeId, ERogue10mSkillTreeTrack Track) const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") FName GetSelectedChoice(FName NodeId) const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") FText GetNodeRequirementsText(FName NodeId) const;
+	/** Lets presentation choose the name shown for each referenced prerequisite. */
+	FText GetNodeRequirementsTextWithNames(FName NodeId, TFunctionRef<FText(const FRogue10mSkillTreeNodeDefinition&)> GetNodeName) const;
 	/** Reads existing state for compatibility; does not choose future run/lobby progression lifetimes. */
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") FRogue10mProgressionRequirementContext GetRequirementContext() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") FRogue10mSkillTreeEligibility EvaluateNodeEligibility(FName NodeId) const;

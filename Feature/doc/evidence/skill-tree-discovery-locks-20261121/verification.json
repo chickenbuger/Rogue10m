@@ -1,0 +1,73 @@
+{
+  "date_kst": "2026-11-21",
+  "engine": "Unreal Engine 5.8",
+  "target": "Rogue10mEditor Win64 Development",
+  "rendered_runtime": {
+    "base_commit": "c81da27c1c34dee5bcf9eee71eeafb01452888b6",
+    "renderer": "D3D11 WARP",
+    "input": "Programmatic input in the running StartHub game window",
+    "runtime": {
+      "assertions_passed": 342,
+      "result": "RESULT=HYBRID_INPUT_RUNTIME_PASSED failures=0",
+      "log_errors": [
+        {
+          "line": 928,
+          "category": "LogD3D11RHI",
+          "severity": "Error",
+          "message": "Result failed with error 887A0004",
+          "timestamp_utc": "2026-11-21T16:18:17.963+09:00"
+        }
+      ]
+    },
+    "cold_profile_read": {
+      "assertions_passed": 111,
+      "result": "RESULT=HYBRID_INPUT_READ_PASSED failures=0",
+      "log_errors": [
+        {
+          "line": 928,
+          "category": "LogD3D11RHI",
+          "severity": "Error",
+          "message": "Result failed with error 887A0004",
+          "timestamp_utc": "2026-11-21T16:20:21.085+09:00"
+        }
+      ]
+    }
+  },
+  "integrated_candidate": {
+    "base_commit": "a24f522edfba3b50abfd52882272754cac26ff1b",
+    "editor_build": "Passed",
+    "automation_nullrhi": {
+      "passed": 13,
+      "errors": 0,
+      "tests": [
+        "Rogue10m.AttackResources.AggregationAndAtomicFailure",
+        "Rogue10m.AttackResources.InvalidDataAndDiscount",
+        "Rogue10m.AttackResources.OptionalManaAndExecutionSnapshot",
+        "Rogue10m.AttackResources.ReentrantAcceptanceRejected",
+        "Rogue10m.HybridSkillTree.CommonSkillWeb",
+        "Rogue10m.HybridSkillTree.LevelAndConsumableIdentityGrowth",
+        "Rogue10m.HybridSkillTree.MasteryAlternativesAndLegacy",
+        "Rogue10m.HybridSkillTree.MasteryAndRewards",
+        "Rogue10m.HybridSkillTree.SharedLedgerAndValidation",
+        "Rogue10m.ProgressionRequirements.InvalidDataAndEmptyDefaults",
+        "Rogue10m.ProgressionRequirements.LegacyAlternativesAndGroups",
+        "Rogue10m.ProgressionRequirements.LiveAcquisitionAndAttack",
+        "Rogue10m.ProgressionRequirements.TruthTable"
+      ]
+    }
+  },
+  "captures": [
+    {
+      "width": 1280,
+      "height": 720,
+      "path": "DevLog/20261121_SkillTreeDiscovery/discovery-states-720p.png",
+      "sha256": "d85f1fddca30ec2045c8b1de9e9083182d13d523151654933846dae46dcba8dd"
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "path": "Feature/doc/evidence/skill-tree-discovery-locks-20261121/discovery-states-1080p.png",
+      "sha256": "ce35a9a965e728699aae1bffaaad7111be13de2e8e8cf98e408672694c155d5d"
+    }
+  ]
+}
