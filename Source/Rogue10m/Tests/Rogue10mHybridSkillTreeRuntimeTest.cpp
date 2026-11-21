@@ -1,9 +1,13 @@
 #if WITH_EDITOR
+#include "Animation/AnimSequence.h"
 #include "Blueprint/WidgetTree.h"
+#include "Camera/CameraActor.h"
 #include "Components/Button.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/Image.h"
 #include "Components/InputKeySelector.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/StaticMeshComponent.h"
 #include "Components/TextBlock.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HAL/FileManager.h"
@@ -15,6 +19,7 @@
 #include "Containers/Ticker.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
+#include "Engine/StaticMesh.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "Framework/Application/SlateApplication.h"
@@ -33,6 +38,7 @@
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCharacterProfileSubsystem.h"
 #include "Rogue10mCombatComponent.h"
+#include "Rogue10mFighterCombatStanceAnimInstance.h"
 #include "Rogue10mHybridSkillTreeWidget.h"
 #include "Rogue10mInventoryComponent.h"
 #include "Rogue10mItemDataAsset.h"
@@ -45,6 +51,7 @@
 #include "Rogue10mSkillTreeProgressionComponent.h"
 #include "Rogue10mTownProgressionComponent.h"
 #include "Rogue10mTutorialNPC.h"
+#include "Rogue10mWeaponVisualComponent.h"
 #include "UObject/UnrealType.h"
 #include "UnrealClient.h"
 
@@ -83,6 +90,7 @@ public:
 		bInputQA = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridInputQA"));
 		bCommonQA = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridCommonQA"));
 		bCommonPresentationQA = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridCommonPresentationQA"));
+		bRollOnlyQA = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridRollQA"));
 		if (!SafeFlag(TEXT("RogueProfileSaveSlot="), TEXT("Rogue10m_Town_QA_"))
 			|| !SafeFlag(TEXT("RogueProgressionSavePrefix="), TEXT("Rogue10m_Progression_QA_"))
 			|| !SafeFlag(TEXT("RogueSkillKeySaveSlot="), TEXT("Rogue10m_Fighter_QA_")))
@@ -107,12 +115,12 @@ public:
 			}
 		}
 		IFileManager::Get().MakeDirectory(*Output, true);
-		Later(3.0, [this] { Prepare(); });
+		Later(bRollOnlyQA ? 0.15 : 3.0, [this] { Prepare(); });
 		FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self = AsShared()](float)
 		{
 			if (Self->Done) { return false; }
 			if (!Self->World.IsValid()) { Self->Check(false, TEXT("world_lost")); Self->Finish(); return false; }
-			if (FPlatformTime::Seconds() >= Self->NextTime && Self->Next) { auto F = MoveTemp(Self->Next); F(); }
+			if (Self->FixtureTime() >= Self->NextTime && Self->Next) { auto F = MoveTemp(Self->Next); F(); }
 			return !Self->Done;
 		}), 0.03f);
 	}
@@ -123,7 +131,8 @@ private:
 		UE_LOG(LogRogue10m, Display, TEXT("HYBRID_%s %s %s"), bRead ? TEXT("READ") : TEXT("RUNTIME"), Passed ? TEXT("PASS") : TEXT("FAIL"), Message);
 		if (!Passed) { ++Failures; }
 	}
-	void Later(double Seconds, TFunction<void()> F) { NextTime = FPlatformTime::Seconds() + Seconds; Next = MoveTemp(F); }
+	double FixtureTime() const { return bRollOnlyQA ? World->GetTimeSeconds() : FPlatformTime::Seconds(); }
+	void Later(double Seconds, TFunction<void()> F) { NextTime = FixtureTime() + Seconds; Next = MoveTemp(F); }
 	bool HitPath(UWidget* Target, FWidgetPath& OutPath, FVector2D& Point, const FVector2D& NormalizedPoint = FVector2D(0.5, 0.5))
 	{
 		FWidgetPath FocusPath;
@@ -496,7 +505,39 @@ private:
 		Check(Profiles->CreateProfile(TEXT("HybridTreeQa"), FRogue10mCharacterAppearance(), Profile)
 			&& Profiles->SelectProfile(Profile.ProfileId), TEXT("new_profile_created"));
 		PC->EnterSelectedCharacter(); PC->CloseAllBlockingPanels();
-		Later(0.6, [this] { PrepareKnuckleFixture(); });
+		Later(bRollOnlyQA ? 0.22 : 0.6, [this]
+		{
+			if (bRollOnlyQA) { PrepareRollOnlyFixture(); }
+			else { PrepareKnuckleFixture(); }
+		});
+	}
+	void PrepareRollOnlyFixture()
+	{
+		Player = Cast<ARogue10mCharacter>(PC->GetPawn());
+		State = Player.IsValid() ? Player->GetPlayerState<ARogue10mPlayerState>() : nullptr;
+		Tree = State.IsValid() ? State->GetSkillTreeProgressionComponent() : nullptr;
+		for (TActorIterator<ARogue10mTutorialNPC> It(World.Get()); It; ++It) { NPC = *It; break; }
+		Check(Tree.IsValid() && NPC.IsValid() && Player.IsValid(), TEXT("roll_only_player_tree_and_town_npc_exist"));
+		if (Failures) { Finish(); return; }
+
+		auto* Inventory = Player->GetInventoryComponent();
+		auto* Sword = LoadObject<URogue10mItemDataAsset>(nullptr, TEXT("/Game/DataAsset/Item/Starter/DA_Item_IronLongsword.DA_Item_IronLongsword"));
+		int32 Grid = INDEX_NONE;
+		FGuid Item;
+		Check(Inventory && Sword && Player->CanChangeWeapon() && Inventory->TryAddGridItem(Sword, 1, Grid, Item)
+			&& Inventory->TryEquipGridItem(Grid, Item) && Player->GetEquippedWeaponType() == ERogue10mWeaponType::GreatSword,
+			TEXT("roll_only_equips_real_sword_through_inventory"));
+		Player->SetActorLocation(NPC->GetActorLocation() + FVector(100, 0, 100), false, nullptr, ETeleportType::TeleportPhysics);
+		auto Growth = State->CaptureGrowth();
+		Growth.Level = 8;
+		Check(State->RestoreGrowth(Growth), TEXT("roll_only_restores_growth_in_isolated_profile"));
+		for (const TCHAR* Id : {TEXT("C.EvadeRecovery"), TEXT("C.Roll"), TEXT("C.EvadeDistance"), TEXT("C.RollCooldown")})
+		{
+			Check(Tree->TryUnlockNode(Id, ERoute::Points, NAME_None), Id);
+		}
+		Check(Tree->IsCommonSkillLearned(ERogue10mCommonSkill::Roll), TEXT("roll_only_learns_common_roll"));
+		if (Failures) { Finish(); return; }
+		Later(0.22, [this] { VerifyCommonRoll(18); });
 	}
 	void PrepareKnuckleFixture()
 	{
@@ -1177,38 +1218,131 @@ private:
 			return;
 		}
 		Check(Player->GetCharacterMovement()->IsMovingOnGround(), TEXT("common_roll_starts_after_landing"));
+		BeginRollMotionEvidence();
+		Later(0.12, [this] { VerifyCommonRollInput(); });
+	}
+	void VerifyCommonRollInput()
+	{
 		const double PelvisBefore = LogCommonRollPelvis(TEXT("ready"));
+		RollPelvisBefore = PelvisBefore;
+		RecordRollMotion(TEXT("ready"), 0.0f);
 		Shot(TEXT("roll-ready.png"));
 		Later(0.12, [this, PelvisBefore]
 		{
 			const FVector Origin = Player->GetActorLocation();
 			GameKey(Rogue10mInput::DodgeKey(), true);
-			Later(0.18, [this, Origin, PelvisBefore]
+			Later(0.12, [this, Origin, PelvisBefore]
 			{
 				GameKey(Rogue10mInput::DodgeKey(), false);
-				float RollProgress = 0.0f;
-				FVector RollDirection;
-				Check(Player->GetRollPresentation(RollProgress, RollDirection) && RollProgress > 0.1f && RollProgress < 0.95f
-					&& Player->GetDodgeCooldownRemaining() > 0.0f, TEXT("common_alt_starts_timed_grounded_roll_with_cooldown"));
-				const auto* AttackNode = Tree->FindNode(TEXT("G.CrushingSlash"));
-				auto* Attack = AttackNode ? AttackNode->Skill.LoadSynchronous() : nullptr;
-				Check(Attack && !Player->GetCombatComponent()->ActivateTreeSkill(Attack), TEXT("common_roll_blocks_attack_acceptance_until_recovery"));
-				const double PelvisDuring = LogCommonRollPelvis(TEXT("active"));
-				Check(PelvisBefore - PelvisDuring > 15.0, TEXT("common_roll_lowers_rendered_pelvis_into_tuck"));
-				Shot(TEXT("roll-active.png"));
-				Later(0.45, [this, Origin, PelvisBefore]
+				Later(0.75, [this, Origin, PelvisBefore]
 				{
+					Check(bRollTuckCaptured, TEXT("common_roll_observed_a_tucked_simulation_frame"));
 					const double Travel = FVector::Dist2D(Origin, Player->GetActorLocation());
 					Check(!Player->IsRolling() && !Player->IsDodging() && Travel > 100.0 && Travel < 370.0,
-						TEXT("common_alt_roll_travels_plausible_distance_and_finishes"));
+						TEXT("common_roll_travels_plausible_distance_and_finishes"));
 					UE_LOG(LogRogue10m, Display, TEXT("COMMON_ROLL travel_cm=%.2f"), Travel);
 					const double PelvisAfter = LogCommonRollPelvis(TEXT("recovered"));
 					Check(FMath::Abs(PelvisBefore - PelvisAfter) < 15.0, TEXT("common_roll_restores_the_standing_pose"));
+					RecordRollMotion(TEXT("recovered"), 1.0f);
 					Shot(TEXT("roll-recovered.png"));
 					Later(0.35, [this] { Finish(); });
 				});
 			});
 		});
+	}
+	void BeginRollMotionEvidence()
+	{
+		const auto* Source = Player->GetAnimationPlaybackMesh();
+		const auto* Anim = Source ? Cast<URogue10mFighterCombatStanceAnimInstance>(Source->GetAnimInstance()) : nullptr;
+		const auto* Sequence = Anim ? Anim->GetLearnedRollAnimation() : nullptr;
+		Check(Sequence && Sequence->GetPlayLength() > 0.0f, TEXT("common_roll_has_loaded_authored_sequence"));
+		if (Sequence)
+		{
+			Report += FString::Printf(TEXT("roll_sequence=%s length_s=%.6f\n"), *Sequence->GetPathName(), Sequence->GetPlayLength());
+		}
+		RollMotionRows = TEXT("phase,frame,world_s,progress,body_revision,capsule_x_cm,capsule_y_cm,capsule_z_cm,capsule_bottom_z_cm,walkable_floor,floor_z_cm,sword_bounds_clearance_cm,bone,bone_x_cm,bone_y_cm,bone_z_cm,bone_qx,bone_qy,bone_qz,bone_qw\n");
+		RollMotionHandle = FWorldDelegates::OnWorldPostActorTick.AddLambda([Self = AsShared()](UWorld* InWorld, ELevelTick, float)
+		{
+			float Progress = 0.0f;
+			FVector Direction;
+			if (InWorld != Self->World.Get() || !Self->Player.IsValid() || Self->RollMotionFrames >= 120
+				|| !Self->Player->GetRollPresentation(Progress, Direction)) { return; }
+			++Self->RollMotionFrames;
+			Self->RollMotionMin = FMath::Min(Self->RollMotionMin, Progress);
+			Self->RollMotionMax = FMath::Max(Self->RollMotionMax, Progress);
+			Self->RecordRollMotion(TEXT("active"), Progress);
+			if (!Self->bRollTuckCaptured && Progress >= 0.54f && Progress <= 0.70f)
+			{
+				Self->CaptureRollTuck();
+			}
+		});
+		if (FParse::Param(FCommandLine::Get(), TEXT("nullrhi"))) { return; }
+		const FVector Target = Player->GetActorLocation() + Player->GetActorForwardVector() * 140.0 - FVector::UpVector * 24.0;
+		const FVector Position = Target + Player->GetActorRightVector() * 385.0
+			- Player->GetActorForwardVector() * 120.0 + FVector::UpVector * 45.0;
+		FActorSpawnParameters Params;
+		Params.ObjectFlags |= RF_Transient;
+		RollPhotoCamera = World->SpawnActor<ACameraActor>(Position, (Target - Position).Rotation(), Params);
+		Check(RollPhotoCamera.IsValid(), TEXT("common_roll_fixed_side_capture_camera"));
+		if (RollPhotoCamera.IsValid())
+		{
+			RollPreviousViewTarget = PC->GetViewTarget();
+			PC->SetViewTarget(RollPhotoCamera.Get());
+		}
+	}
+	void CaptureRollTuck()
+	{
+		bRollTuckCaptured = true;
+		const auto* Source = Player->GetAnimationPlaybackMesh();
+		const auto* Anim = Source ? Cast<URogue10mFighterCombatStanceAnimInstance>(Source->GetAnimInstance()) : nullptr;
+		Check(Anim && Anim->WasLearnedRollPoseApplied(), TEXT("common_roll_tuck_uses_the_authored_pose"));
+		Check(Player->GetDodgeCooldownRemaining() > 0.0f, TEXT("common_dodge_key_starts_timed_grounded_roll_with_cooldown"));
+		const auto* AttackNode = Tree->FindNode(TEXT("G.CrushingSlash"));
+		auto* Attack = bRollOnlyQA ? Player->GetCombatComponent()->GetEquippedSkill(ERogue10mAttackInputSlot::Primary)
+			: AttackNode ? AttackNode->Skill.LoadSynchronous() : nullptr;
+		Check(Attack && !Player->GetCombatComponent()->ActivateTreeSkill(Attack), TEXT("common_roll_blocks_attack_acceptance_until_recovery"));
+		Check(RollPelvisBefore - LogCommonRollPelvis(TEXT("active")) > 15.0,
+			TEXT("common_roll_lowers_rendered_pelvis_into_tuck"));
+		Shot(TEXT("roll-active.png"));
+	}
+	void RecordRollMotion(const TCHAR* Phase, float Progress)
+	{
+		const auto* Mesh = Player->GetMesh();
+		const auto* Capsule = Player->GetCapsuleComponent();
+		if (!Mesh || !Capsule) { bRollMotionValid = false; return; }
+		const FVector Origin = Capsule->GetComponentLocation();
+		const auto& Floor = Player->GetCharacterMovement()->CurrentFloor;
+		const double FloorZ = Floor.IsWalkableFloor() ? Floor.HitResult.ImpactPoint.Z : 0.0;
+		const auto* Visual = Player->FindComponentByClass<URogue10mWeaponVisualComponent>();
+		const auto* Sword = Visual ? Visual->GetRightWeaponMesh() : nullptr;
+		const UStaticMesh* SwordAsset = Sword ? Sword->GetStaticMesh().Get() : nullptr;
+		double SwordClearance = 0.0;
+		if (SwordAsset && Floor.IsWalkableFloor())
+		{
+			const FBox Bounds = SwordAsset->GetBoundingBox().TransformBy(Sword->GetComponentTransform());
+			SwordClearance = Bounds.Min.Z - FloorZ;
+			MinRollSwordClearance = FMath::Min(MinRollSwordClearance, SwordClearance);
+		}
+		else
+		{
+			bRollMotionValid = false;
+		}
+		const FString Measure = FString::Printf(TEXT("%s,%llu,%.6f,%.6f,%u,%.4f,%.4f,%.4f,%.4f,%d,%.4f,%.4f"),
+			Phase, GFrameCounter, World->GetTimeSeconds(), Progress, Mesh->GetBoneTransformRevisionNumber(),
+			Origin.X, Origin.Y, Origin.Z, Origin.Z - Capsule->GetScaledCapsuleHalfHeight(), Floor.IsWalkableFloor(), FloorZ, SwordClearance);
+		static const FName Bones[] = { TEXT("pelvis"), TEXT("head"), TEXT("clavicle_l"), TEXT("clavicle_r"),
+			TEXT("hand_l"), TEXT("hand_r"), TEXT("calf_l"), TEXT("calf_r"), TEXT("foot_l"), TEXT("foot_r") };
+		bRollMotionValid &= !Origin.ContainsNaN() && FMath::IsFinite(FloorZ) && FMath::IsFinite(Progress);
+		for (const FName Bone : Bones)
+		{
+			if (Mesh->GetBoneIndex(Bone) == INDEX_NONE) { bRollMotionValid = false; continue; }
+			const FTransform Pose = Mesh->GetBoneTransform(Bone, RTS_World);
+			const FVector Location = Pose.GetLocation();
+			const FQuat Rotation = Pose.GetRotation();
+			bRollMotionValid &= !Pose.ContainsNaN() && Rotation.IsNormalized();
+			RollMotionRows += FString::Printf(TEXT("%s,%s,%.4f,%.4f,%.4f,%.7f,%.7f,%.7f,%.7f\n"),
+				*Measure, *Bone.ToString(), Location.X, Location.Y, Location.Z, Rotation.X, Rotation.Y, Rotation.Z, Rotation.W);
+		}
 	}
 	double LogCommonRollPelvis(const TCHAR* Stage)
 	{
@@ -1268,7 +1402,28 @@ private:
 	{
 		if (Done) { return; }
 		FWorldDelegates::OnWorldPostActorTick.Remove(EProbeHandle);
+		FWorldDelegates::OnWorldPostActorTick.Remove(RollMotionHandle);
 		if (PC.IsValid()) { GameKey(EKeys::E, false); }
+		if (!RollMotionRows.IsEmpty())
+		{
+			if (PC.IsValid()) { GameKey(Rogue10mInput::DodgeKey(), false); }
+			if (RollPhotoCamera.IsValid())
+			{
+				for (const TCHAR* Name : { TEXT("roll-ready.png"), TEXT("roll-active.png"), TEXT("roll-recovered.png") })
+				{
+					Check(IFileManager::Get().FileSize(*FPaths::Combine(Output, Name)) > 1024, TEXT("common_roll_profile_capture_written"));
+				}
+				if (PC.IsValid() && RollPreviousViewTarget.IsValid()) { PC->SetViewTarget(RollPreviousViewTarget.Get()); }
+				RollPhotoCamera->Destroy();
+			}
+			Report += FString::Printf(TEXT("roll_samples=%d progress_min=%.4f progress_max=%.4f\n"),
+				RollMotionFrames, RollMotionMin, RollMotionMax);
+			Report += FString::Printf(TEXT("sword_bounds_min_clearance_cm=%.3f\n"), MinRollSwordClearance);
+			Check(bRollMotionValid, TEXT("common_roll_visible_bone_transforms_finite_and_normalized"));
+			Check(RollMotionFrames >= 3 && RollMotionMin < 0.35f && RollMotionMax > 0.65f, TEXT("common_roll_motion_sampled_across_active_phases"));
+			Check(MinRollSwordClearance >= -2.0, TEXT("common_roll_keeps_equipped_sword_above_floor"));
+			Check(FFileHelper::SaveStringToFile(RollMotionRows, *FPaths::Combine(Output, TEXT("roll-motion.csv"))), TEXT("common_roll_motion_csv_saved"));
+		}
 		if (bInputQA)
 		{
 			Check(InputCompletedTracks.Contains(ETrack::GreatSword) && (bRead || InputCompletedTracks.Contains(ETrack::Brawler)),
@@ -1308,6 +1463,7 @@ private:
 	bool bInputQA = false;
 	bool bCommonQA = false;
 	bool bCommonPresentationQA = false;
+	bool bRollOnlyQA = false;
 	float CommonBaseWalkSpeed = 0.0f;
 	float CommonBaseAcceleration = 0.0f;
 	float CommonBaseAirControl = 0.0f;
@@ -1315,6 +1471,17 @@ private:
 	ETrack InputTrack = ETrack::None;
 	FName InputNode;
 	FDelegateHandle EProbeHandle;
+	FDelegateHandle RollMotionHandle;
+	TWeakObjectPtr<ACameraActor> RollPhotoCamera;
+	TWeakObjectPtr<AActor> RollPreviousViewTarget;
+	FString RollMotionRows;
+	double RollPelvisBefore = 0.0;
+	double MinRollSwordClearance = TNumericLimits<double>::Max();
+	int32 RollMotionFrames = 0;
+	float RollMotionMin = 1.0f;
+	float RollMotionMax = 0.0f;
+	bool bRollMotionValid = true;
+	bool bRollTuckCaptured = false;
 	bool bSawDodgeDuringE = false;
 	TWeakObjectPtr<URogue10mAttackSkillData> InputSkill;
 	TSet<ETrack> InputCompletedTracks;

@@ -211,7 +211,7 @@ void ARogue10mCharacter::PresentDodge(FVector Direction, float Duration, float C
 	NextDodgeAllowedTime = DodgeStartedTime + Cooldown;
 	if (CharacterAnimationComponent && GetNetMode() != NM_DedicatedServer)
 	{
-		CharacterAnimationComponent->NotifyDodge(bRoll, Duration);
+		CharacterAnimationComponent->NotifyDodge(Direction, bRoll, Duration);
 	}
 	World->GetTimerManager().SetTimer(DodgeTimerHandle, this, &ThisClass::FinishDodge, Duration, false);
 }

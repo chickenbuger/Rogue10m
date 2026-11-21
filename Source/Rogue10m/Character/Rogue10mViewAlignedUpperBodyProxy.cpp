@@ -1,10 +1,13 @@
 #include "Rogue10mViewAlignedUpperBodyProxy.h"
 
+#include "Animation/AnimationPoseData.h"
 #include "Animation/AnimNodeBase.h"
 #include "Animation/AnimMontage.h"
+#include "Animation/AnimSequence.h"
 #include "BoneContainer.h"
 #include "BonePose.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Engine/SkeletalMesh.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Rogue10mCharacter.h"
@@ -96,6 +99,9 @@ void FRogue10mViewAlignedUpperBodyProxy::Initialize(UAnimInstance* InAnimInstanc
 	bWeightedHandContextValid = bUseWeightedAimFollow = bWeightedHandMotionEvaluated = false;
 	bApplyAim = bApplyMouseHead = bMouseHeadEvaluated = bBoneCacheValid = false;
 	bApplyRollPose = false;
+	bLearnedRollPoseEvaluated = false;
+	RollSequence = nullptr;
+	RollSequenceLength = 0.0f;
 	SmoothedHeadResidual = SmoothedNeckResidual = FQuat::Identity;
 	HeadAimInMesh = HeadWorldAim = FQuat::Identity;
 	HeadSourceMeshRotation = FQuat::Identity;
@@ -117,6 +123,7 @@ void FRogue10mViewAlignedUpperBodyProxy::PreUpdate(UAnimInstance* InAnimInstance
 	bApplyWeightedHandMotion = false;
 	bWeightedHandContextValid = false;
 	bUseWeightedAimFollow = false;
+	RollSequence = nullptr;
 	FVector RollDirection;
 	bApplyRollPose = Character && SourceMesh && Character->GetRollPresentation(RollProgress, RollDirection);
 	if (bApplyRollPose)
@@ -127,6 +134,18 @@ void FRogue10mViewAlignedUpperBodyProxy::PreUpdate(UAnimInstance* InAnimInstance
 		RollYawRadians = static_cast<float>(FMath::Atan2(Turn.Z, FVector::DotProduct(ActorForward, RollDirection)));
 		RollRight = MeshRotation.UnrotateVector(FVector::CrossProduct(FVector::UpVector, ActorForward));
 		RollUp = MeshRotation.UnrotateVector(FVector::UpVector);
+		const UAnimSequence* Sequence = Instance->CachedLearnedRoll;
+		const USkeletalMesh* Mesh = SourceMesh->GetSkeletalMeshAsset();
+		if (Sequence && Mesh && Sequence->GetSkeleton() == Mesh->GetSkeleton()
+			&& !Sequence->IsValidAdditive() && !Sequence->HasRootMotion())
+		{
+			const float Length = Sequence->GetPlayLength();
+			if (FMath::IsFinite(Length) && Length > UE_SMALL_NUMBER)
+			{
+				RollSequence = Sequence;
+				RollSequenceLength = Length;
+			}
+		}
 		AimPitch = AimYaw = Instance->UpperBodyAimPitch = Instance->UpperBodyAimYaw = 0.0f;
 		return;
 	}
@@ -359,9 +378,10 @@ bool FRogue10mViewAlignedUpperBodyProxy::Evaluate_WithRoot(FPoseContext& Output,
 	EvaluateAnimationNode_WithRoot(Output, InRootNode);
 	bMouseHeadEvaluated = false;
 	bWeightedHandMotionEvaluated = false;
+	bLearnedRollPoseEvaluated = false;
 	if (bApplyRollPose)
 	{
-		ApplyRollPose(Output.Pose);
+		if (!ApplyAuthoredRoll(Output)) { ApplyRollPose(Output.Pose); }
 		return true;
 	}
 	if (bApplyAim) { ApplyViewAim(Output.Pose); }
@@ -378,6 +398,7 @@ void FRogue10mViewAlignedUpperBodyProxy::PostEvaluate(UAnimInstance* InAnimInsta
 		// PostEvaluate is on the game thread. No UObject is read or written by the pose worker.
 		Instance->bMouseDrivenHeadApplied = bMouseHeadEvaluated;
 		Instance->bWeightedHandMotionApplied = bWeightedHandMotionEvaluated;
+		Instance->bLearnedRollPoseApplied = bLearnedRollPoseEvaluated;
 		Instance->WeightedHandPitch = bWeightedHandMotionEvaluated
 			? EvaluatedWeightedHandPitch : FVector2D::ZeroVector;
 		// A later PreUpdate can prepare another aim without evaluating a new pose.
@@ -410,6 +431,52 @@ void FRogue10mViewAlignedUpperBodyProxy::RebuildBoneCache(const FBoneContainer& 
 	ReferenceNeckRotation = Neck != INDEX_NONE ? ReferenceComponentRotation(Bones, Neck) : FQuat::Identity;
 	BoneCacheSerial = Bones.GetSerialNumber();
 	bBoneCacheValid = true;
+}
+
+bool FRogue10mViewAlignedUpperBodyProxy::ApplyAuthoredRoll(FPoseContext& Output)
+{
+	if (!RollSequence) { return false; }
+	const FBoneContainer& Bones = Output.Pose.GetBoneContainer();
+	if (!bBoneCacheValid || BoneCacheSerial != Bones.GetSerialNumber()) { RebuildBoneCache(Bones); }
+	if (!Output.Pose.IsValidIndex(Root) || !Output.Pose.IsValidIndex(Pelvis)) { return false; }
+
+	// Blend the takeoff and recovery into the current graph at either dodge duration.
+	const float Weight = FMath::SmoothStep(0.0f, 0.14f, RollProgress)
+		* (1.0f - FMath::SmoothStep(0.86f, 1.0f, RollProgress));
+	if (Weight <= UE_SMALL_NUMBER) { return true; }
+
+	FPoseContext Authored(Output);
+	Authored.ResetToRefPose();
+	FAnimationPoseData PoseData(Authored);
+	RollSequence->GetAnimationPose(PoseData, FAnimExtractContext(RollProgress * RollSequenceLength, false));
+	for (const FCompactPoseBoneIndex Bone : Authored.Pose.ForEachBoneIndex())
+	{
+		if (Authored.Pose[Bone].ContainsNaN()) { return false; }
+	}
+
+	// Rotate the body and the root-level IK chains around the graph root. The graph
+	// root itself and its extracted motion remain owned by the existing movement path.
+	// Spread a side or back turn across takeoff and recovery, keeping the turn
+	// direction settled while the shoulder carries the body.
+	const float TurnWeight = FMath::SmoothStep(0.0f, 0.34f, RollProgress)
+		* (1.0f - FMath::SmoothStep(0.67f, 1.0f, RollProgress));
+	const FQuat RootRotation = Output.Pose[Root].GetRotation();
+	const FQuat DirectionInRoot = RootRotation.Inverse() * FQuat(RollUp, RollYawRadians * TurnWeight) * RootRotation;
+	for (const FCompactPoseBoneIndex Bone : Output.Pose.ForEachBoneIndex())
+	{
+		if (Bone == Root) { continue; }
+		FTransform Blended;
+		Blended.Blend(Output.Pose[Bone], Authored.Pose[Bone], Weight);
+		if (Output.Pose.GetParentBoneIndex(Bone) == Root)
+		{
+			Blended.SetTranslation(DirectionInRoot.RotateVector(Blended.GetTranslation()));
+			Blended.SetRotation(DirectionInRoot * Blended.GetRotation());
+		}
+		Blended.NormalizeRotation();
+		Output.Pose[Bone] = Blended;
+	}
+	bLearnedRollPoseEvaluated = true;
+	return true;
 }
 
 void FRogue10mViewAlignedUpperBodyProxy::ApplyRollPose(FCompactPose& Pose)

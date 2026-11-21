@@ -8,6 +8,7 @@
 struct FBoneContainer;
 struct FCompactPose;
 class ARogue10mCharacter;
+class UAnimSequence;
 class URogue10mFighterCombatStanceAnimInstance;
 
 class FRogue10mViewAlignedUpperBodyProxy final : public FAnimInstanceProxy
@@ -26,6 +27,7 @@ private:
 	void ApplyWeightedHandMotion(FCompactPose& Pose);
 	void SyncHandIKHelpers(FCompactPose& Pose);
 	void ApplyMouseDrivenHead(FCompactPose& Pose);
+	bool ApplyAuthoredRoll(FPoseContext& Output);
 	void ApplyRollPose(FCompactPose& Pose);
 	void CaptureHeadMotionSettings(const ARogue10mCharacter* Character, float DeltaSeconds);
 	void CaptureWeightedHandMotion(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
@@ -54,6 +56,9 @@ private:
 	FVector2D EvaluatedWeightedHandPitch = FVector2D::ZeroVector;
 	int32 SkippedWeightedAttackInstanceId = INDEX_NONE;
 	float TorsoWeight = 0.25f;
+	// The animation instance owns the sequence while the worker evaluates this snapshot.
+	const UAnimSequence* RollSequence = nullptr;
+	float RollSequenceLength = 0.0f;
 	float RollProgress = 0.0f;
 	float RollYawRadians = 0.0f;
 	FVector RollRight = FVector::RightVector;
@@ -68,6 +73,7 @@ private:
 	bool bApplyMouseHead = false;
 	bool bMouseHeadEvaluated = false;
 	bool bApplyRollPose = false;
+	bool bLearnedRollPoseEvaluated = false;
 	FCompactPoseBoneIndex Pelvis = FCompactPoseBoneIndex(INDEX_NONE);
 	FCompactPoseBoneIndex Clavicle[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
 	FCompactPoseBoneIndex Forearm[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };

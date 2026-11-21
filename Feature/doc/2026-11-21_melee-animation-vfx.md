@@ -25,4 +25,4 @@ VFX 단계는 해당 기술의 카탈로그 요구 숙련에서 가져온다. �
 
 [수치 결과](evidence/melee-animation-vfx-20261121/verification.json) · [검증 이벤트와 재생 자산](evidence/melee-animation-vfx-20261121/runtime-events.txt) · [에셋 재로딩 12종](evidence/melee-animation-vfx-20261121/asset-readback.json) · [첫 검증과 수정 기록](evidence/melee-animation-vfx-20261121/first-run-notes.md)
 
-최신 전투 키와 콘텐츠 정리를 반영한 `455037c8` 통합 기준에서도 UE 5.8 빌드, NullRHI 전투 14개 케이스와 기하 자동화 2건을 통과했다. 당시 하드웨어 Direct3D 초기화와 WARP의 엔진 셰이더 파이프라인에서 렌더 실행이 중단되어, 화면 검수는 같은 VFX 구현의 720p 렌더를 사용했다. [최종 통합 검증](evidence/melee-animation-vfx-20261121/integration-results.txt)
+전투 키와 콘텐츠 정리를 반영한 `455037c8` 통합 기준에서도 UE 5.8 빌드, NullRHI 전투 14개 케이스와 기하 자동화 2건을 통과했다. 회피 애니메이션까지 포함한 최종 기준 `2666013d`에서 재빌드와 전투 14개 케이스를 다시 통과했다. 통합 검증의 하드웨어 Direct3D 초기화와 WARP의 엔진 셰이더 파이프라인에서 렌더 실행이 중단되어, 화면 검수는 같은 VFX 구현의 720p 렌더를 사용했다. [최종 통합 검증](evidence/melee-animation-vfx-20261121/integration-results.txt)
