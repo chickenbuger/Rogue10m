@@ -27,3 +27,4 @@
 - 1920×1080과 1280×720 실제 게임 화면에서 노드와 이름표 간격, 테두리, 아이콘을 확인했다. [너클 1080p](../../DevLog/20261121_WeaponSkillTree/knuckle-tree.png) · [너클 720p](evidence/weapon-skill-tree-identity-growth-20261121/knuckle-720p.png) · [검 1080p](evidence/weapon-skill-tree-identity-growth-20261121/sword-1080p.png) · [검 720p](evidence/weapon-skill-tree-identity-growth-20261121/sword-720p.png)
 - 실제 StartHub에서 장착 무기 우선 탭, 노드 선택, 승인 HUD 드래그, 슬롯 거부, 키 할당, 영약 소비와 성장, 마나 용량, 공명을 프로그램 입력으로 검증했다. 런타임 326개, 종료 후 재실행 106개, 관련 자동화 13개를 통과했다. 드롭 확률과 아이템 연결은 붉은 점액체가 사용하는 실제 데이터 에셋으로 검증했다. [검증 요약](evidence/weapon-skill-tree-identity-growth-20261121/verification.json)
 - 하드웨어 어댑터 손실로 최신 화면과 입력은 Direct3D 11 소프트웨어 어댑터에서 확인했다. 실행과 복원 로그는 하드웨어 탐색 오류 `0x887A0004`를 각각 1건 기록했고 소프트웨어 어댑터 선택 후 검사를 통과했다. 자동화와 에셋 재연결 로그에는 신규 오류가 없었다.
+- 구르기 변경 통합 후 별도 수치 검증 27개를 통과했고 이동 거리 304.56cm를 기록했다. 근접 VFX를 합친 754bd051 기준 통합본에서 에디터 빌드와 관련 자동화 13개를 재검증했다. 두 세션의 신규 오류는 0건이다.

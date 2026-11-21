@@ -2,10 +2,15 @@
 #include "Animation/AnimMontage.h"
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimSequenceBase.h"
+#include "AssetCompilingManager.h"
+#include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Containers/Ticker.h"
 #include "Engine/Engine.h"
+#include "Engine/GameInstance.h"
+#include "Engine/StaticMesh.h"
 #include "Engine/World.h"
 #include "Engine/SkeletalMesh.h"
 #include "EngineUtils.h"
@@ -14,21 +19,27 @@
 #include "HAL/IConsoleManager.h"
 #include "HAL/PlatformMisc.h"
 #include "HAL/PlatformTime.h"
+#include "Materials/MaterialInterface.h"
 #include "Misc/App.h"
 #include "Misc/CommandLine.h"
 #include "Misc/FileHelper.h"
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
+#include "ProceduralMeshComponent.h"
 #include "Rogue10m.h"
 #include "Rogue10mAppearanceCameraComponent.h"
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mBasicMonster.h"
 #include "Rogue10mCharacter.h"
+#include "Rogue10mCharacterProfileSubsystem.h"
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mFighterCombatStanceAnimInstance.h"
+#include "Rogue10mMeleeVfxComponent.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
+#include "Rogue10mProgressionSaveGame.h"
+#include "Rogue10mProgressionSubsystem.h"
 #include "Rogue10mSkillTreeProgressionComponent.h"
 #include "Rogue10mStylizedCharacter.h"
 #include "Rogue10mVitalRegenerationComponent.h"
@@ -49,8 +60,24 @@ public:
  void Start(UWorld* W)
  {
   World=W; FString Label=TEXT("Weapon3P");FParse::Value(FCommandLine::Get(),TEXT("RogueWeaponLabel="),Label);
-  Output=FPaths::ProjectDir()/TEXT("Feature/doc/evidence/sword-knuckle-20261110")/FPaths::MakeValidFileName(Label);
-  Images=FPaths::ProjectDir()/TEXT("DevLog/20261110_SwordKnuckle")/FPaths::MakeValidFileName(Label);
+  bMeleeVfxRun=FParse::Param(FCommandLine::Get(),TEXT("RogueMeleeVfxRun"));
+  bMeleeVfxLogicOnly=bMeleeVfxRun&&FParse::Param(FCommandLine::Get(),TEXT("RogueMeleeVfxLogicOnly"));
+  if(bMeleeVfxRun)
+  {
+   FString ProfileSlot,ProgressionPrefix,KeySlot;
+   FParse::Value(FCommandLine::Get(),TEXT("RogueProfileSaveSlot="),ProfileSlot);
+   FParse::Value(FCommandLine::Get(),TEXT("RogueProgressionSavePrefix="),ProgressionPrefix);
+   FParse::Value(FCommandLine::Get(),TEXT("RogueSkillKeySaveSlot="),KeySlot);
+   if(Label.IsEmpty()||W->GetNetMode()!=NM_Standalone||ProfileSlot!=TEXT("Rogue10m_Town_QA_MeleeVfx_")+Label||
+    ProgressionPrefix!=TEXT("Rogue10m_Progression_QA_MeleeVfx_")+Label||KeySlot!=TEXT("Rogue10m_Fighter_QA_MeleeVfx_")+Label)
+   {
+    bFinished=true;
+    UE_LOG(LogRogue10m,Error,TEXT("RESULT=MELEE_VFX_FAILED reason=dedicated_save_namespace_required"));
+    FPlatformMisc::RequestExitWithStatus(false,1);return;
+   }
+  }
+  Output=FPaths::ProjectDir()/(bMeleeVfxRun?TEXT("tmp/MeleeVfxQARuns"):TEXT("Feature/doc/evidence/sword-knuckle-20261110"))/FPaths::MakeValidFileName(Label);
+  Images=bMeleeVfxRun?Output/TEXT("images"):FPaths::ProjectDir()/TEXT("DevLog/20261110_SwordKnuckle")/FPaths::MakeValidFileName(Label);
   IFileManager::Get().MakeDirectory(*Output,true);IFileManager::Get().MakeDirectory(*Images,true);
   CaptureRunId=FGuid::NewGuid().ToString(EGuidFormats::Digits);
   bRequireAuthoredSword=FParse::Param(FCommandLine::Get(),TEXT("RogueRequireAuthoredSword"));
@@ -58,11 +85,19 @@ public:
   Rows=TEXT("frame,world_s,skill,phase,montage_s,health,damage,elapsed,expected_delay,blade_target_cm,hand_r_x,hand_r_y,hand_r_z,hand_l_x,hand_l_y,hand_l_z,blade_base_x,blade_base_y,blade_base_z,blade_tip_x,blade_tip_y,blade_tip_z,min_foot_world_z,capsule_bottom_world_z,foot_above_capsule_bottom_cm,target_center_x,target_center_y,target_center_z,target_radius_cm,target_halfheight_cm,target_up_x,target_up_y,target_up_z,sword_capsule_gap_cm,montage_source_s,montage_source_path\n");
   CaptureRows=TEXT("event,skill,phase,fixture_frame,world_s,montage_s,file,bytes\n");
   VfxRows=TEXT("event,skill,kind,fixture_frame,world_s,world_path,component_path,asset_path,attach_socket,first_seen_frame,observed_frame_delta,controller_valid,actual_sim_age_s,age_source,active,visible,registered,complete,eligible,location_x,location_y,location_z,scale_x,scale_y,scale_z,bounds_origin_x,bounds_origin_y,bounds_origin_z,bounds_extent_x,bounds_extent_y,bounds_extent_z,custom_time_dilation,damage_pulses_observed,first_observed_damage_pulse,pinned_first_impact,attach_parent_path,expected_3p_scale,third_person_parent_valid,third_person_scale_valid\n");
-  W->GetTimerManager().SetTimer(PrepareTimer,FTimerDelegate::CreateLambda([Self=AsShared()]{Self->Prepare();}),4.f,false);
+  MeleeVfxRows=TEXT("case,skill,frame,world_s,observed_damage,range_count,impact_count,trail_samples,trail_triangles,range_triangles,impact_triangles,tier,outline_vertices,outline_diameter_cm,capsule_surface_gap_cm\n");
+  if(bMeleeVfxRun)
+  {
+   FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self=AsShared()](float){Self->Prepare();return false;}),4.f);
+  }
+  else{W->GetTimerManager().SetTimer(PrepareTimer,FTimerDelegate::CreateLambda([Self=AsShared()]{Self->Prepare();}),4.f,false);}
  }
  bool Finished()const{return bFinished;}
 private:
  void Check(bool B,const TCHAR* Reason){if(!B){++Failures;UE_LOG(LogRogue10m,Error,TEXT("WEAPON3P FAIL skill=%d frame=%d %s"),Index,Frame,*FString(Reason));}}
+ bool IsSwordCase() const {return Index<5||(Index>=10&&Index<12);}
+ bool IsMeleeMissCase() const {return bMeleeVfxRun&&(Index==11||Index==13);}
+ bool IsMeleeMotionCase() const {return bMeleeVfxRun&&(Index==0||Index==5||Index==10||Index==12);}
  float CaptureMontagePosition() const
  {
   const auto* Source=Character.IsValid()?Character->GetAnimationPlaybackMesh():nullptr;
@@ -72,8 +107,15 @@ private:
  }
  bool Capture(const TCHAR* Phase)
  {
+  if(bMeleeVfxLogicOnly)
+  {
+   // Run the same phase checks without counting screenshots on a NullRHI session.
+   CompletePhase(FString(Phase),true);
+   return true;
+  }
   if(bCapturePending||FScreenshotRequest::IsScreenshotRequested()){Check(false,TEXT("screenshot_request_already_pending"));return false;}
   PendingCaptureSkill=Skills.IsValidIndex(Index)&&Skills[Index].IsValid()?Skills[Index]->GetName():TEXT("setup");
+  if(IsMeleeMissCase()){PendingCaptureSkill+=TEXT("_Outside");}
   PendingCapturePhase=Phase;
   // A unique file cannot be mistaken for a successful capture left by an earlier run.
   PendingCapturePath=FPaths::ConvertRelativePathToFull(Images/(PendingCaptureSkill+TEXT("_")+Phase+TEXT("_")+CaptureRunId+TEXT(".png")));
@@ -93,11 +135,16 @@ private:
   CaptureRows+=FString::Printf(TEXT("processed,%s,%s,%d,%.6f,%.6f,%s,%lld\n"),*PendingCaptureSkill,*PendingCapturePhase,Frame,World.IsValid()?World->GetTimeSeconds():-1.,CaptureMontagePosition(),*PendingCapturePath,static_cast<long long>(Bytes));
   UE_LOG(LogRogue10m,Display,TEXT("WEAPON3P CAPTURE_PROCESSED skill=%s phase=%s frame=%d world=%.6f montage=%.6f bytes=%lld"),*PendingCaptureSkill,*PendingCapturePhase,Frame,World.IsValid()?World->GetTimeSeconds():-1.,CaptureMontagePosition(),static_cast<long long>(Bytes));
   if(bSaved){++CompletedCaptures;}
-  if(PendingCapturePhase==TEXT("ready")){bReadyCaptured=bSaved;}
-  else if(PendingCapturePhase==TEXT("after_first_damage")){bFirstDamageCaptured=bSaved;}
-  else if(PendingCapturePhase==TEXT("recovery")){bRecoveryCaptured=bSaved;}
+  CompletePhase(PendingCapturePhase,bSaved);
   bCapturePending=false;
   if(!bSaved){bFinishRequested=true;}
+ }
+ void CompletePhase(const FString& Phase,bool bCompleted)
+ {
+  if(Phase==TEXT("ready")){bReadyCaptured=bCompleted;}
+  else if(Phase==TEXT("after_first_damage")||Phase==TEXT("contact_miss")){bFirstDamageCaptured=bCompleted;}
+  else if(Phase==TEXT("motion")){bMotionCaptured=bCompleted;}
+  else if(Phase==TEXT("recovery")){bRecoveryCaptured=bCompleted;}
  }
  // Read-only, per-component evidence. Exact asset pointers distinguish cast from impact.
  // Production spawns these transient components without pooling; exclude pre-input instances.
@@ -106,7 +153,7 @@ private:
   TWeakObjectPtr<UNiagaraComponent> Component;
   int32 FirstFrame=0,LastFrame=0,FirstDamagePulse=0;bool bPresentationFailureReported=false;
  };
- bool IsVfxCase() const {return Index==4||Index==7;}
+ bool IsVfxCase() const {return !bMeleeVfxRun&&(Index==4||Index==7);}
  void BaselineVfx()
  {
   if(!IsVfxCase()){return;}
@@ -178,29 +225,114 @@ private:
    *Skills[Index]->GetName(),Phase,Kind,*Ready->GetPathName(),*Asset->GetPathName(),Frame,Frame-VfxObservations.FindChecked(Ready).FirstFrame,static_cast<double>(Instance->GetAge()),VfxObservations.FindChecked(Ready).FirstDamagePulse,static_cast<double>(Ready->GetCustomTimeDilation()));
   return Capture(Phase);
  }
+ bool AddMeleeVfxSkillCases(ARogue10mPlayerState& State, URogue10mSkillTreeProgressionComponent& Tree)
+ {
+  // Use a validated run snapshot so the test map does not need a temporary trainer.
+  FRogue10mGrowthSnapshot Growth=State.CaptureGrowth();
+  Growth.Level=15;
+  if(!State.RestoreGrowth(Growth)){return false;}
+  FRogue10mSkillTreeSnapshot Snapshot=Tree.Capture();
+  for(const TCHAR* Node:{TEXT("G.Whirlwind"),TEXT("G.GuardBreak"),TEXT("G.EarthSplitter"),TEXT("G.Ultimate")})
+  {
+   auto& Investment=Snapshot.Investments.AddDefaulted_GetRef();
+   Investment.NodeId=Node;
+   Investment.Route=ERogue10mSkillTreeUnlockRoute::Points;
+   Investment.SpentPoints=1;
+  }
+  if(!Tree.Restore(Snapshot)){return false;}
+  for(const TCHAR* Node:{TEXT("G.Ultimate"),TEXT("F.Ultimate")})
+  {
+   const auto* Entry=Tree.FindNode(Node);
+   auto* Skill=Entry?Entry->Skill.LoadSynchronous():nullptr;
+   if(!Skill||!Skill->AttackMontage||!Tree.IsSkillGranted(Skill)){return false;}
+   Skills.Add(Skill);
+   Skills.Add(Skill);
+  }
+  return true;
+ }
+ bool PrepareMeleeFixture()
+ {
+  // StartHub uses the normal character lobby. Detach this one isolated profile after possession.
+  auto* Instance=World->GetGameInstance();
+  auto* Profiles=Instance?Instance->GetSubsystem<URogue10mCharacterProfileSubsystem>():nullptr;
+  auto* Saves=Instance?Instance->GetSubsystem<URogue10mProgressionSubsystem>():nullptr;
+  FRogue10mCharacterProfile Profile;
+  if(!Controller.IsValid()||!Profiles||!Saves||Profiles->GetProfileCount()!=0||
+   !Profiles->CreateProfile(TEXT("MeleeVfxQA"),FRogue10mCharacterAppearance(),Profile)||!Profiles->SelectProfile(Profile.ProfileId)){return false;}
+  Controller->EnterSelectedCharacter();
+  Controller->CloseAllBlockingPanels();
+  Character=Cast<ARogue10mCharacter>(Controller->GetPawn());
+  if(!Character.IsValid()||!Saves->IsAttachedTo(*Character)){return false;}
+  Saves->DetachCharacter(*Character,false);
+
+  // Use the same flat, transient test surface as the third-person and identity runtime fixtures.
+  const FVector Start=Character->GetActorLocation();
+  const double Surface=Start.Z+1800.;
+  FActorSpawnParameters Params;
+  Params.ObjectFlags|=RF_Transient;
+  auto* Floor=World->SpawnActor<AActor>(AActor::StaticClass(),FTransform(FVector(Start.X,Start.Y,Surface-20.)),Params);
+  auto* Cube=LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cube.Cube"));
+  if(!Floor||!Cube){return false;}
+  auto* Shape=NewObject<UBoxComponent>(Floor,NAME_None,RF_Transient);
+  Floor->AddInstanceComponent(Shape);
+  Floor->SetRootComponent(Shape);
+  Shape->SetBoxExtent(FVector(2500.,2500.,20.));
+  Shape->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+  Shape->SetCollisionObjectType(ECC_WorldStatic);
+  Shape->SetCollisionResponseToAllChannels(ECR_Block);
+  Shape->SetGenerateOverlapEvents(false);
+  Shape->SetCanEverAffectNavigation(false);
+  Shape->RegisterComponent();
+  auto* Mesh=NewObject<UStaticMeshComponent>(Floor,NAME_None,RF_Transient);
+  Floor->AddInstanceComponent(Mesh);
+  Mesh->SetupAttachment(Shape);
+  Mesh->SetStaticMesh(Cube);
+  Mesh->SetRelativeScale3D(FVector(50.,50.,.4));
+  Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+  Mesh->RegisterComponent();
+  Floor->SetActorLocation(FVector(Start.X,Start.Y,Surface-20.));
+  const double HalfHeight=Character->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+  Character->SetActorLocation(FVector(Start.X,Start.Y,Surface+HalfHeight),false,nullptr,ETeleportType::TeleportPhysics);
+  return true;
+ }
  void Prepare()
  {
   Controller=Cast<ARogue10mPlayerController>(World->GetFirstPlayerController());
-  auto* Old=Controller.IsValid()?Cast<ARogue10mCharacter>(Controller->GetPawn()):nullptr;
-  UClass* Class=LoadClass<ARogue10mCharacter>(nullptr,TEXT("/Game/Character/Customization/Characters/BP_Rogue10m_HumanMaleCharacter.BP_Rogue10m_HumanMaleCharacter_C"));
-  if(!Old||!Class){Check(false,TEXT("fixture_character_missing"));Finish();return;}
-  const FTransform T=Old->GetActorTransform();Old->SetActorEnableCollision(false);Old->SetActorHiddenInGame(true);
   FActorSpawnParameters P;P.SpawnCollisionHandlingOverride=ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-  Character=World->SpawnActor<ARogue10mCharacter>(Class,T,P);Controller->Possess(Character.Get());Controller->SetViewTarget(Character.Get());
-  if(auto* S=Cast<ARogue10mStylizedCharacter>(Character.Get()))
+  if(bMeleeVfxRun)
   {
-   FRogue10mCharacterProfile Profile;Profile.ProfileId=FGuid::NewGuid();Profile.CharacterName=TEXT("WeaponQA");Profile.Appearance.Race=S->GetAppearanceRace();Profile.Appearance.Gender=S->GetAppearanceGender();Check(S->ApplyCharacterProfile(Profile),TEXT("profile_failed"));
+   Check(PrepareMeleeFixture(),TEXT("fresh_profile_start_hub_and_test_floor_required"));
+   if(Failures){Finish();return;}
+  }
+  else
+  {
+   auto* Old=Controller.IsValid()?Cast<ARogue10mCharacter>(Controller->GetPawn()):nullptr;
+   UClass* Class=LoadClass<ARogue10mCharacter>(nullptr,TEXT("/Game/Character/Customization/Characters/BP_Rogue10m_HumanMaleCharacter.BP_Rogue10m_HumanMaleCharacter_C"));
+   if(!Old||!Class){Check(false,TEXT("fixture_character_missing"));Finish();return;}
+   const FTransform T=Old->GetActorTransform();Old->SetActorEnableCollision(false);Old->SetActorHiddenInGame(true);
+   Character=World->SpawnActor<ARogue10mCharacter>(Class,T,P);Controller->Possess(Character.Get());Controller->SetViewTarget(Character.Get());
+   if(auto* S=Cast<ARogue10mStylizedCharacter>(Character.Get()))
+   {
+    FRogue10mCharacterProfile Profile;Profile.ProfileId=FGuid::NewGuid();Profile.CharacterName=TEXT("WeaponQA");Profile.Appearance.Race=S->GetAppearanceRace();Profile.Appearance.Gender=S->GetAppearanceGender();Check(S->ApplyCharacterProfile(Profile),TEXT("profile_failed"));
+   }
   }
   Character->SetCanBeDamaged(false);Character->DisableInput(Controller.Get());Character->GetCharacterMovement()->StopMovementImmediately();
   Character->SetActorRotation(FRotator(0,0,0));Controller->SetControlRotation(FRotator(-8,0,0));
   // The current user-requested default is third person. This fixture never toggles into first person.
   Check(Character->IsThirdPersonGameplayActive(),TEXT("third_person_mode_required"));
   Character->GetMesh()->SetOwnerNoSee(false);Character->GetMesh()->SetVisibility(true,false);
+  if(bMeleeVfxLogicOnly)
+  {
+   Character->GetMesh()->VisibilityBasedAnimTickOption=EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+   if(auto* Playback=Character->GetAnimationPlaybackMesh())
+   {Playback->VisibilityBasedAnimTickOption=EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;}
+  }
   for(TActorIterator<ARogue10mBasicMonster> It(World.Get());It;++It){It->ClearAITarget();if(It->GetController()){It->GetController()->UnPossess();}It->SetActorEnableCollision(false);It->GetCharacterMovement()->DisableMovement();}
   Target=World->SpawnActor<ARogue10mBasicMonster>(ARogue10mBasicMonster::StaticClass(),Character->GetActorLocation()+FVector(110,0,0),FRotator::ZeroRotator,P);
   if(!Target.IsValid()){Check(false,TEXT("target_failed"));Finish();return;}
   Target->GetMesh()->SetSkeletalMeshAsset(LoadObject<USkeletalMesh>(nullptr,TEXT("/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple")));
   Target->GetMesh()->SetRelativeLocationAndRotation(FVector(0,0,-90),FRotator(0,-90,0));
+  if(bMeleeVfxRun){Target->Tags.AddUnique(TEXT("TrainingTarget"));}
   Target->ClearAITarget();if(Target->GetController()){Target->GetController()->UnPossess();}Target->GetCharacterMovement()->DisableMovement();
   if(auto* R=Target->FindComponentByClass<URogue10mVitalRegenerationComponent>()){R->ConfigureRegeneration(0,0,0);}
   Target->GetRogueAttributeSet()->SetMaxHealth(100000);Target->GetRogueAttributeSet()->SetHealth(100000);
@@ -223,16 +355,30 @@ private:
   auto* Tree=State?State->GetSkillTreeProgressionComponent():nullptr;
   Check(Tree!=nullptr,TEXT("fixture_progression_missing"));if(!Tree){Finish();return;}
   FRogue10mSkillTreeSnapshot Snapshot;
-  // M13 = 12*10 + 5*12*11/2 XP; the catalog still decides every automatic grant.
+  // The catalog determines the automatic grants. The VFX cases also exercise the two capstones.
   for(auto Track:{ERogue10mSkillTreeTrack::GreatSword,ERogue10mSkillTreeTrack::Brawler})
-  {auto& Mastery=Snapshot.Masteries.AddDefaulted_GetRef();Mastery.Track=Track;Mastery.TotalExperience=450;}
+  {auto& Mastery=Snapshot.Masteries.AddDefaulted_GetRef();Mastery.Track=Track;Mastery.TotalExperience=bMeleeVfxRun?1045:450;}
   Check(Tree->Restore(Snapshot),TEXT("fixture_valid_mastery_restore_failed"));
+  if(bMeleeVfxRun)
+  {
+   Check(AddMeleeVfxSkillCases(*State,*Tree),TEXT("fixture_two_validated_capstone_grants_required"));
+  }
   for(const auto& Entry:Skills){Check(Tree->IsSkillGranted(Entry.Get()),TEXT("fixture_catalog_skill_not_granted"));}
-  UE_LOG(LogRogue10m,Display,TEXT("WEAPON3P FIXTURE progression=validated_M13_450XP_each automatic_grants_only identity=None"));
+  if(bMeleeVfxRun){UE_LOG(LogRogue10m,Display,TEXT("WEAPON3P FIXTURE progression=validated_M20_1045XP_each four_point_sword_route identity=None"));}
+  else{UE_LOG(LogRogue10m,Display,TEXT("WEAPON3P FIXTURE progression=validated_M13_450XP_each automatic_grants_only identity=None"));}
   if(Failures){Finish();return;}
   TSet<UNiagaraSystem*> Effects;
   for(const auto& Entry:Skills){const auto* Skill=Entry.Get();for(UNiagaraSystem* FX:{Skill->CastEffect.Get(),Skill->ChargeEffect.Get(),Skill->ImpactEffect.Get()}){if(FX){Effects.Add(FX);}}}
   for(UNiagaraSystem* FX:Effects){FX->RequestCompile(false);FX->WaitForCompilationComplete(true,false);}
+  if(bMeleeVfxRun)
+  {
+   // Resolve the production material on the idle frame, before timed animation samples or screenshots.
+   const auto* Material=LoadObject<UMaterialInterface>(nullptr,
+    TEXT("/Game/Rogue10m/VFX/Character/Combat/Melee20261121/M_MeleeReadability.M_MeleeReadability"));
+   Check(Material!=nullptr,TEXT("production_melee_material_available_for_warmup"));
+   if(Failures){Finish();return;}
+   FAssetCompilingManager::Get().FinishAllCompilation();
+  }
   if(GShaderCompilingManager){GShaderCompilingManager->FinishAllCompilation();}
   OldFixed=FApp::UseFixedTimeStep();OldDelta=FApp::GetFixedDeltaTime();FApp::SetUseFixedTimeStep(true);FApp::SetFixedDeltaTime(1./60.);bOwnFixed=true;
   ScreenshotProcessed=FScreenshotRequest::OnScreenshotRequestProcessed().AddLambda([Self=AsShared()]{Self->CaptureProcessed();});
@@ -243,20 +389,32 @@ private:
  {
   if(Index>=Skills.Num()){Finish();return;}
   auto* C=Character->GetCombatComponent();C->CancelBoundSkillInput();C->CancelCombatVisuals();
-  Character->RestoreEquippedWeaponType(Index<5?ERogue10mWeaponType::GreatSword:ERogue10mWeaponType::Knuckle);
+  Character->RestoreEquippedWeaponType(IsSwordCase()?ERogue10mWeaponType::GreatSword:ERogue10mWeaponType::Knuckle);
   const UClass* BodyClass=Character->GetMesh()->GetAnimClass();
   const bool SwordRetarget=BodyClass&&BodyClass->GetPathName().Contains(TEXT("/GreatSword20261110/ABP_Human_GreatSword"));
-  Check(Index<5?SwordRetarget:!SwordRetarget,TEXT("weapon_specific_body_retarget_selection_failed"));
+  Check(IsSwordCase()?SwordRetarget:!SwordRetarget,TEXT("weapon_specific_body_retarget_selection_failed"));
   // Range starts at the production body combat origin, never the camera behind the player.
   const FTransform CombatView=Character->GetCombatViewTransform();
   FVector Forward=CombatView.GetRotation().GetForwardVector();Forward.Z=0;Forward.Normalize();
-  FVector CloseTarget=Character->GetActorLocation()+Forward*110.;
+  auto* Skill=Skills[Index].Get();
+  const FVector Right=FVector::CrossProduct(FVector::UpVector,Forward);
+  FVector TargetOffset=Forward*110.;
+  if(IsMeleeMissCase())
+  {
+   const double Radius=Target->GetCapsuleComponent()->GetScaledCapsuleRadius();
+   switch(Skill->AttackShape)
+   {
+    case ERogue10mAttackShape::LinearBox: TargetOffset+=Right*(Skill->BoxHalfWidth+Radius+30.);break;
+    case ERogue10mAttackShape::Arc: TargetOffset=Right*150.-Forward*40.;break;
+    default: TargetOffset=Forward*(Skill->AttackRange+Skill->CircleForwardOffset+Radius+30.);break;
+   }
+  }
+  const FVector CloseTarget=Character->GetActorLocation()+TargetOffset;
   Target->SetActorLocation(CloseTarget,false,nullptr,ETeleportType::TeleportPhysics);
   UE_LOG(LogRogue10m,Display,TEXT("WEAPON3P TARGET skill=%s combat_origin=%s aim=%s grounded_target=%s"),*Skills[Index]->GetName(),*CombatView.GetLocation().ToCompactString(),*Forward.ToCompactString(),*CloseTarget.ToCompactString());
-  auto* Skill=Skills[Index].Get();
   Check(C->IsAttackSkillUnlocked(Skill),TEXT("fixture_catalog_unlock_failed"));
   auto* Basic=C->GetEquippedSkill(ERogue10mAttackInputSlot::Primary);
-  Check(Basic==Skills[(Index/5)*5].Get(),TEXT("production_primary_binding_changed"));
+  Check(Basic==Skills[IsSwordCase()?0:5].Get(),TEXT("production_primary_binding_changed"));
   CaseSlot=ERogue10mAttackInputSlot::Primary;Chain.Reset();ChainStep=0;ChainAcceptedAt=-1.;ChainNextAt=-1.;
   if(Skill!=Basic)
   {
@@ -288,8 +446,86 @@ private:
   CaseStartedAt=World->GetTimeSeconds();Accepted=-1;AttackSent=false;ChargeReleased=false;PulseCount=0;MontageSamples=0;
   bReadyRequested=bReadyCaptured=bFirstDamageCaptured=bFirstDamageRequested=bAcceptanceRequested=bImpactResidualRequested=bRecoveryRequested=bRecoveryCaptured=false;RenderedHandMaxTravelCm=0;
   VfxExcluded.Reset();VfxObservations.Reset();FirstImpactComponent.Reset();bFirstImpactObserved=false;bVfxTimedOut=false;
+  bSawMeleeTrail=bSawMeleeRange=bSawMeleeImpact=bMotionRequested=bMotionCaptured=false;
+  CasePresentationTier=FirstTrailMeshFrame=INDEX_NONE;
+  TrailTrianglesThisFrame=0;
   if(IsVfxCase()){Check(Skill->CastEffect&&Skill->ImpactEffect&&Skill->CastEffect!=Skill->ImpactEffect,TEXT("vfx_distinct_cast_and_impact_assets_required"));}
   Uses=Character->GetPlayerState<ARogue10mPlayerState>()->GetSkillUseCount(Skills[Index]->GetFName());PreviousHealth=Target->GetRogueAttributeSet()->GetHealth();
+ }
+ bool ObserveMeleeVfx(const URogue10mAttackSkillData& Skill, double Now, double Damage)
+ {
+  auto* Vfx=Character->FindComponentByClass<URogue10mMeleeVfxComponent>();
+  if(!Vfx){return false;}
+  TInlineComponentArray<UProceduralMeshComponent*> Meshes(Character.Get());
+  UProceduralMeshComponent* CueMesh=nullptr;
+  for(auto* Mesh:Meshes)
+  {
+   if(Mesh->ComponentHasTag(TEXT("Rogue10m.MeleeVfx"))){CueMesh=Mesh;break;}
+  }
+  const auto TriangleCount=[CueMesh](int32 SectionIndex)
+  {
+   const auto* Section=CueMesh&&CueMesh->IsRegistered()&&CueMesh->IsVisible()?CueMesh->GetProcMeshSection(SectionIndex):nullptr;
+   return Section&&Section->bSectionVisible?Section->ProcIndexBuffer.Num()/3:0;
+  };
+  const int32 TrailTriangles=TriangleCount(0),RangeTriangles=TriangleCount(1),ImpactTriangles=TriangleCount(2);
+  const int32 RangeCount=Vfx->GetActiveRangeCount(),ImpactCount=Vfx->GetActiveImpactCount();
+  const auto* Outline=Vfx->GetLastRangeOutline();
+  const auto Impact=Vfx->GetLastImpactPoint();
+  const int32 Tier=Vfx->GetLastPresentationTier();
+  double Diameter=-1.,SurfaceGap=-1.;
+  TrailTrianglesThisFrame=TrailTriangles;
+  if(TrailTriangles>0&&FirstTrailMeshFrame==INDEX_NONE){FirstTrailMeshFrame=Frame;}
+  bSawMeleeTrail|=TrailTriangles>0;
+  if(RangeCount>0&&!bSawMeleeRange)
+  {
+   Check(Outline&&Outline->Num()>=3,TEXT("range_cue_has_no_query_outline"));
+   if(Outline&&Outline->Num()>=3)
+   {
+    Diameter=0.;
+    for(int32 A=0;A<Outline->Num();++A)
+    {
+     for(int32 B=A+1;B<Outline->Num();++B){Diameter=FMath::Max(Diameter,FVector::Dist2D((*Outline)[A],(*Outline)[B]));}
+    }
+    const double MaxDiameter=Skill.AttackShape==ERogue10mAttackShape::LinearBox
+      ?FVector(Skill.AttackRange,2.*Skill.BoxHalfWidth,2.*Skill.BoxHalfHeight).Length():2.*Skill.AttackRange;
+    Check(FMath::IsFinite(Diameter)&&Diameter>=.5*Skill.AttackRange&&Diameter<=MaxDiameter+1.,
+      TEXT("range_outline_diameter_outside_authored_query_envelope"));
+   }
+   CasePresentationTier=Tier;
+   if(Index==0||Index==5){Check(Tier==0,TEXT("base_attack_should_use_first_vfx_tier"));}
+   if(Index>=10){Check(Tier==3,TEXT("capstone_should_use_highest_vfx_tier"));}
+   bSawMeleeRange=true;
+  }
+  if(Impact.IsSet()&&!bSawMeleeImpact)
+  {
+   const auto* Capsule=Target->GetCapsuleComponent();
+   const FVector Center=Capsule->GetComponentLocation();
+   const double Radius=Capsule->GetScaledCapsuleRadius();
+   const FVector HalfAxis=Capsule->GetUpVector()*(Capsule->GetScaledCapsuleHalfHeight()-Radius);
+   const FVector AxisPoint=FMath::ClosestPointOnSegment(Impact.GetValue(),Center-HalfAxis,Center+HalfAxis);
+   SurfaceGap=FMath::Abs(FVector::Distance(Impact.GetValue(),AxisPoint)-Radius);
+   Check(!IsMeleeMissCase()&&PulseCount>0,TEXT("impact_cue_without_confirmed_damage"));
+   Check(FMath::IsFinite(SurfaceGap)&&SurfaceGap<=.5,TEXT("impact_cue_not_on_target_capsule_surface"));
+   bSawMeleeImpact=true;
+  }
+  MeleeVfxRows+=FString::Printf(TEXT("%d,%s,%d,%.6f,%.3f,%d,%d,%d,%d,%d,%d,%d,%d,%.6f,%.6f\n"),
+   Index,*Skill.GetName(),Frame,Now,Damage,RangeCount,ImpactCount,Vfx->GetTrailSampleCount(),TrailTriangles,RangeTriangles,ImpactTriangles,
+   Tier,Outline?Outline->Num():0,Diameter,SurfaceGap);
+  // Mesh sections may be generated one tick after the gameplay event. Wait for both cues to be drawn.
+  return RangeTriangles>0&&(IsMeleeMissCase()?ImpactTriangles==0:ImpactTriangles>0&&PulseCount>0);
+ }
+ void CheckMeleeVfxRecovery()
+ {
+  const auto* Vfx=Character->FindComponentByClass<URogue10mMeleeVfxComponent>();
+  Check(Vfx!=nullptr,TEXT("accepted_action_did_not_create_production_vfx"));
+  if(!Vfx){return;}
+  Check(bSawMeleeTrail&&bSawMeleeRange,TEXT("motion_trail_or_query_outline_missing"));
+  Check(bSawMeleeImpact!=IsMeleeMissCase(),TEXT("confirmed_hit_marker_missing_or_miss_marker_present"));
+  if(IsMeleeMotionCase()){Check(bMotionCaptured,TEXT("representative_visible_motion_capture_missing"));}
+  Check(Vfx->GetActiveRangeCount()==0&&Vfx->GetActiveImpactCount()==0&&Vfx->GetTrailSampleCount()==0,
+   TEXT("melee_vfx_did_not_expire_by_recovery"));
+  UE_LOG(LogRogue10m,Display,TEXT("MELEE_VFX CASE index=%d skill=%s miss=%d tier=%d damage_pulses=%d trail=%d range=%d impact=%d"),
+   Index,*Skills[Index]->GetName(),IsMeleeMissCase(),CasePresentationTier,PulseCount,bSawMeleeTrail,bSawMeleeRange,bSawMeleeImpact);
  }
  void Step()
  {
@@ -312,7 +548,7 @@ private:
   }
   auto* Skill=Skills[Index].Get();auto* C=Character->GetCombatComponent();auto* Source=Character->GetAnimationPlaybackMesh();auto* Anim=Source->GetAnimInstance();
   auto* Visual=Character->FindComponentByClass<URogue10mWeaponVisualComponent>();auto* Right=Visual?Visual->GetRightWeaponMesh():nullptr;auto* Left=Visual?Visual->GetLeftWeaponMesh():nullptr;
-  if(Frame%60==0){Check(Right&&Right->IsVisible()&&Right->GetAttachParent()==Character->GetMesh()&&Right->GetAttachSocketName()==TEXT("hand_r"),TEXT("right_weapon_attachment_failed"));Check(Index<5?!Left||!Left->IsVisible():Left&&Left->IsVisible(),TEXT("offhand_visibility_failed"));}
+  if(Frame%60==0){Check(Right&&Right->IsVisible()&&Right->GetAttachParent()==Character->GetMesh()&&Right->GetAttachSocketName()==TEXT("hand_r"),TEXT("right_weapon_attachment_failed"));Check(IsSwordCase()?!Left||!Left->IsVisible():Left&&Left->IsVisible(),TEXT("offhand_visibility_failed"));}
   const double Now=World->GetTimeSeconds(),Age=Now-CaseStartedAt;
   const double MinFootZ=FMath::Min(Character->GetMesh()->GetSocketLocation(TEXT("foot_l")).Z,Character->GetMesh()->GetSocketLocation(TEXT("foot_r")).Z);
   const double CapsuleBottomZ=Character->GetActorLocation().Z-Character->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
@@ -415,7 +651,7 @@ private:
   const double TargetAxisHalf=FMath::Max(0.,TargetHalfHeight-TargetRadius);
   FVector BladeClosest,CapsuleClosest;
   FMath::SegmentDistToSegmentSafe(Base,Tip,TargetCenter-TargetUp*TargetAxisHalf,TargetCenter+TargetUp*TargetAxisHalf,BladeClosest,CapsuleClosest);
-  const double SwordCapsuleGap=Index<5?FVector::Distance(BladeClosest,CapsuleClosest)-TargetRadius:-1.;
+  const double SwordCapsuleGap=IsSwordCase()?FVector::Distance(BladeClosest,CapsuleClosest)-TargetRadius:-1.;
   const double Health=Target->GetRogueAttributeSet()->GetHealth(),Drop=PreviousHealth-Health;
   if(Drop>.01)
   {
@@ -437,7 +673,18 @@ private:
    UE_LOG(LogRogue10m,Display,TEXT("WEAPON3P DAMAGE skill=%s pulse=%d elapsed=%.6f expected=%.6f blade_target_cm=%.3f"),*Skill->GetName(),PulseCount,Now-Accepted,Expected,BladeDistance);
   }
   PreviousHealth=Health;
-  if(PulseCount>0&&!bFirstDamageRequested&&!bCapturePending){bFirstDamageRequested=Capture(TEXT("after_first_damage"));}
+  const bool bMeleeContact=bMeleeVfxRun&&Accepted>=0&&ObserveMeleeVfx(*Skill,Now,Drop);
+  if((bMeleeVfxRun?bMeleeContact:PulseCount>0)&&!bFirstDamageRequested&&!bCapturePending)
+  {
+   bFirstDamageRequested=Capture(IsMeleeMissCase()?TEXT("contact_miss"):TEXT("after_first_damage"));
+  }
+  else if(IsMeleeMotionCase()&&Accepted>=0&&!bMotionRequested&&!bCapturePending
+   &&TrailTrianglesThisFrame>0&&Frame>FirstTrailMeshFrame
+   &&(PulseCount==0||(Index==10&&bFirstDamageCaptured)))
+  {
+   // The upper Sword pose first exposes its blade ribbon after the gameplay contact.
+   bMotionRequested=Capture(TEXT("motion"));
+  }
   if(IsVfxCase()&&PulseCount>0&&bFirstDamageCaptured&&!bImpactResidualRequested&&!bCapturePending&&!bVfxTimedOut)
   {bImpactResidualRequested=CaptureVfx(TEXT("impact_residual"),Skill->ImpactEffect.Get(),TEXT("impact"));}
   if(IsVfxCase()&&Accepted>=0&&!bVfxTimedOut&&Now-Accepted>Expected+2.&&(!bAcceptanceRequested||!bImpactResidualRequested))
@@ -452,9 +699,10 @@ private:
   {
    if(bCapturePending){return;}
    if(IsVfxCase()&&!bVfxTimedOut&&(!bAcceptanceRequested||!bImpactResidualRequested)){return;}
-   const int32 Wanted=Skill->HitMode==ERogue10mAttackHitMode::Single?1:Skill->HitCount;
+   const int32 Wanted=IsMeleeMissCase()?0:Skill->HitMode==ERogue10mAttackHitMode::Single?1:Skill->HitCount;
    Check(PulseCount==Wanted,TEXT("actual_damage_count_mismatch"));Check(MontageSamples>5,TEXT("montage_instance_not_playing_enough_samples"));
    Check(RenderedHandMaxTravelCm>2.,TEXT("rendered_body_hand_motion_missing"));Check(bFirstDamageCaptured,TEXT("after_first_damage_capture_not_completed"));
+   if(bMeleeVfxRun){CheckMeleeVfxRecovery();}
    bRecoveryRequested=true;if(!Capture(TEXT("recovery"))){Finish();return;}
   }
   else if(Accepted<0&&AttackSent&&Now-Pressed>16.){Check(false,TEXT("attack_not_accepted"));++Index;Next();}
@@ -465,15 +713,31 @@ private:
   if(bCapturePending){bFinishRequested=true;return;}
   bFinished=true;FWorldDelegates::OnWorldPostActorTick.Remove(Tick);FScreenshotRequest::OnScreenshotRequestProcessed().Remove(ScreenshotProcessed);
   for(const FString& Path:CapturePaths){Check(IFileManager::Get().FileSize(*Path)>0,TEXT("final_screenshot_file_missing_or_empty"));}
-  if(Index==10){Check(CapturePaths.Num()==34&&CompletedCaptures==34,TEXT("all_34_phase_captures_required"));}
+  const int32 ExpectedCases=bMeleeVfxRun?14:10,ExpectedCaptures=bMeleeVfxLogicOnly?0:(bMeleeVfxRun?46:34);
+  if(Index==ExpectedCases){Check(CapturePaths.Num()==ExpectedCaptures&&CompletedCaptures==ExpectedCaptures,TEXT("all_phase_captures_required"));}
   if(bRequireAuthoredSword){Check(AuthoredSwordValidated==5&&SwordFirstDamageChecks==5,TEXT("all_five_authored_sword_contracts_and_first_damage_gates_required"));}
   Check(FFileHelper::SaveStringToFile(Rows,*(Output/TEXT("frames.csv"))),TEXT("frame_evidence_save_failed"));
   Check(FFileHelper::SaveStringToFile(CaptureRows,*(Output/TEXT("captures.csv"))),TEXT("capture_evidence_save_failed"));
   Check(FFileHelper::SaveStringToFile(VfxRows,*(Output/TEXT("vfx-components.csv"))),TEXT("vfx_component_evidence_save_failed"));
+  if(bMeleeVfxRun)
+  {
+   Check(FFileHelper::SaveStringToFile(MeleeVfxRows,*(Output/TEXT("melee-vfx.csv"))),TEXT("melee_vfx_evidence_save_failed"));
+  }
   const FString Summary=FString::Printf(TEXT("frames=%d\nfailures=%d\ncompleted_skills=%d\nrequested_captures=%d\ncompleted_captures=%d\nrequire_authored_sword=%d\nauthored_sword_validated=%d\nsword_first_damage_checks=%d\nsword_first_damage_surface_gap_limit_cm=10\nNOTE=Third-person-only; validated M13 mastery fixture with automatic catalog grants. Production Primary is unchanged; legal loadout inputs or actual Primary combo precursors select each exact skill. Ready for a combo case is before its precursor chain, not the follow-up attack pose. Accepted bound-skill inputs and target health. Ready/recovery transitions wait for screenshot processing and non-empty files. after_first_damage is a deferred screenshot requested after health loss; captures.csv records request/processing times, not exact rendered contact timing. Montage samples count active instances only; component-local rendered-body hand travel must exceed 2cm. Ready rendered foot markers must be 0..30cm above the capsule bottom; attack foot gaps are recorded without a strict bound. The optional authored-sword gate checks five task-owned montage paths and positive hit delays, then signed blade-to-actual-capsule surface gap <=10cm on the first HP-drop observation only. Knuckle gap is -1 (not applicable) and is never gated. This is an abstract capsule intersection/timing proxy, not skeletal-mesh contact, physical collision or visual approval. montage_s, montage_source_s/path, target capsule and rendered body/weapon coordinates are cached in the same world-post-actor-tick callback as HP observation. Damage timers, source pose and retarget bone finalization can have different update order or pose age; this is not an exact contact-frame synchronization guarantee. Screenshots are deferred and can show a later pose. acceptance_cue and impact_residual require a matching same-world post-input component observed for at least two fixture frames and positive actual simulation age from FNiagaraSystemInstanceController::GetAge; desired age is never used. vfx-components.csv records cast and impact separately per component, including request-phase readbacks. Positive simulation age is numerical evidence only, not proof of visible particles or approved pixels.\n"),Frame,Failures,Index,CapturePaths.Num(),CompletedCaptures,bRequireAuthoredSword?1:0,AuthoredSwordValidated,SwordFirstDamageChecks);
-  Check(FFileHelper::SaveStringToFile(Summary,*(Output/TEXT("metrics.txt"))),TEXT("summary_evidence_save_failed"));
+  const FString MeleeSummary=FString::Printf(
+   TEXT("frames=%d\nfailures=%d\ncompleted_skills=%d\nrequested_captures=%d\ncompleted_captures=%d\nrequire_authored_sword=%d\nauthored_sword_validated=%d\nsword_first_damage_checks=%d\n")
+   TEXT("NOTE=Actual third-person animation on a transient flat platform in StartHub, legal programmatic bindings and combo inputs, default camera, separate saves, M20 mastery with four paid Sword nodes. ")
+   TEXT("The same montage/weapon path is checked for each capstone against an in-range target and a position outside the query. ")
+   TEXT("A contact capture is deferred until after mesh sections report geometry. Four separate motion captures sample a frame after the trail appears. ")
+   TEXT("Capture mode: %s. A capsule measurement is a collision proxy and visual quality requires inspecting the rendered PNGs.\n"),
+   Frame,Failures,Index,CapturePaths.Num(),CompletedCaptures,bRequireAuthoredSword?1:0,AuthoredSwordValidated,SwordFirstDamageChecks,
+   bMeleeVfxLogicOnly?TEXT("NullRHI, numeric phases only"):TEXT("rendered PNGs"));
+  Check(FFileHelper::SaveStringToFile(bMeleeVfxRun?MeleeSummary:Summary,*(Output/TEXT("metrics.txt"))),TEXT("summary_evidence_save_failed"));
   if(bOwnFixed){FApp::SetUseFixedTimeStep(OldFixed);FApp::SetFixedDeltaTime(OldDelta);}
-  const bool Passed=Failures==0&&Index==10;UE_LOG(LogRogue10m,Display,TEXT("RESULT=WEAPON_THIRDPERSON_%s completed=%d failures=%d"),Passed?TEXT("PASSED"):TEXT("FAILED"),Index,Failures);
+  const bool Passed=Failures==0&&Index==ExpectedCases;
+  const TCHAR* ResultName=bMeleeVfxLogicOnly?TEXT("MELEE_VFX_LOGIC"):(bMeleeVfxRun?TEXT("MELEE_VFX"):TEXT("WEAPON_THIRDPERSON"));
+  UE_LOG(LogRogue10m,Display,TEXT("RESULT=%s_%s completed=%d failures=%d"),ResultName,
+   Passed?TEXT("PASSED"):TEXT("FAILED"),Index,Failures);
   FPlatformMisc::RequestExitWithStatus(false,Passed?0:1);
  }
  TWeakObjectPtr<UWorld> World;TWeakObjectPtr<ARogue10mCharacter> Character;TWeakObjectPtr<ARogue10mPlayerController> Controller;TWeakObjectPtr<ARogue10mBasicMonster> Target;
@@ -482,6 +746,9 @@ private:
  TWeakObjectPtr<UNiagaraComponent> FirstImpactComponent;bool bFirstImpactObserved=false;
  TArray<TWeakObjectPtr<UNiagaraComponent>> VfxExcluded;
  TMap<TWeakObjectPtr<UNiagaraComponent>,FVfxObservation> VfxObservations;FString VfxRows;bool bVfxTimedOut=false;
+ FString MeleeVfxRows;
+ bool bMeleeVfxRun=false,bMeleeVfxLogicOnly=false,bSawMeleeTrail=false,bSawMeleeRange=false,bSawMeleeImpact=false,bMotionRequested=false,bMotionCaptured=false;
+ int32 CasePresentationTier=INDEX_NONE,FirstTrailMeshFrame=INDEX_NONE,TrailTrianglesThisFrame=0;
  ERogue10mAttackInputSlot CaseSlot=ERogue10mAttackInputSlot::Primary;
  int32 Index=0,Frame=0,Failures=0,Uses=0,PulseCount=0,MontageSamples=0,CompletedCaptures=0;double CaseStartedAt=0,Pressed=0,Accepted=-1,Expected=0,PreviousHealth=0,OldDelta=1./60.,CaptureRequestedAt=0,RenderedHandMaxTravelCm=0;
  FVector ReadyRightHandLocal=FVector::ZeroVector,ReadyLeftHandLocal=FVector::ZeroVector;

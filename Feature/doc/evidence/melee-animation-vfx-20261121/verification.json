@@ -1,0 +1,35 @@
+{
+  "base_commit": "2011e0dec81b634330c58187b58f639a7dd5cae7",
+  "engine": "UE 5.8",
+  "runtime_label": "MeleeVfxB",
+  "resolution": "1280x720",
+  "input": "Programmatic input through production routes and a controlled target fixture in actual StartHub game mode",
+  "total_cases": 14,
+  "hit_cases": 12,
+  "miss_cases": 2,
+  "captures": 46,
+  "retained_captures": 11,
+  "max_capsule_surface_anchor_gap_cm": 0.0,
+  "geometry_tests": [
+    {
+      "fullTestPath": "Rogue10m.Combat.MeleeVfx.ImpactPlacement",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "fullTestPath": "Rogue10m.Combat.MeleeVfx.RangeProjection",
+      "state": "Success",
+      "errors": 0,
+      "warnings": 0
+    }
+  ],
+  "clean_session_logs": [
+    "material-2",
+    "geometry-final",
+    "MeleeVfxB",
+    "asset-readback"
+  ],
+  "material_sha256": "BFD53D0D021265ECDB4C6F3D94A5BF852B99E454B4C39EFAAA068E7091A28683",
+  "imagegen_concept_sha256": "863915029DA309398B47246248E8F81CCE33FB594EE3535A802D4342A7C14796"
+}

@@ -1,0 +1,41 @@
+Incoming main 455037c8445dfdbe649a979fce26f5b9aec1c6de
+Rendered VFX feature commit 658b1fbbfefcbff220920921f7e37c9e2e3d921c
+UE 5.8 integrated Editor builds 8 and 9 succeeded.
+Integrated geometry automation 2 passed, 0 warnings, 0 errors.
+Integrated StartHub actual game, programmatic input, NullRHI.
+Integrated game and geometry Unreal log checks both report zero selected errors.
+frames=2640
+failures=0
+completed_skills=14
+requested_captures=0
+completed_captures=0
+require_authored_sword=1
+authored_sword_validated=5
+sword_first_damage_checks=5
+NOTE=Actual third-person animation on a transient flat platform in StartHub, legal programmatic bindings and combo inputs, default camera, separate saves, M20 mastery with four paid Sword nodes. The same montage/weapon path is checked for each capstone against an in-range target and a position outside the query. A contact capture is deferred until after mesh sections report geometry. Four separate motion captures sample a frame after the trail appears. Capture mode: NullRHI, numeric phases only. A capsule measurement is a collision proxy and visual quality requires inspecting the rendered PNGs.
+[2026.11.21-06.48.36:038][880]LogRogue10m: Display: RESULT=MELEE_VFX_LOGIC_PASSED completed=14 failures=0
+
+Distinct hardware/renderer failures before a captured frame
+MeleeVfxIntegrated and MeleeVfxIntegrated2, 1080p D3D11: log lines 927 and 942. RTX test result 887A0004, followed by failure to select a D3D11 adapter.
+MeleeVfxIntegratedDX12, 1080p D3D12: log line 921. No usable D3D12 adapter.
+MeleeVfxIntegratedWarp, 720p D3D12 WARP: FTSRResolveHistoryCS precache ensure at 1622-1623 and pipeline-state errors 80070057, then fatal at 1662.
+The retained rendered comparison is MeleeVfxB, 720p D3D11, 46 PNGs and zero errors before the input and Content integration.
+
+Final incoming main 2666013df02da3329eae98254b531c6cbb85083a, including shoulder rolls and sword grip changes.
+UE 5.8 integrated Editor build 10 succeeded.
+MeleeVfxRollIntegrated, NullRHI: 14 passed, 0 failures, 0 Unreal log errors.
+[2026.11.21-06.55.27:869][369]LogRogue10m: Display: MELEE_VFX CASE index=0 skill=DA_Attack_GreatSword_Primary01 miss=0 tier=0 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-06.55.27:974][498]LogRogue10m: Display: MELEE_VFX CASE index=1 skill=DA_Attack_GreatSword_Primary02 miss=0 tier=0 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-06.55.28:099][651]LogRogue10m: Display: MELEE_VFX CASE index=2 skill=DA_Attack_GreatSword_Primary03 miss=0 tier=0 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-06.55.28:266][851]LogRogue10m: Display: MELEE_VFX CASE index=3 skill=DA_Attack_GreatSword_Special miss=0 tier=1 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-06.55.28:495][139]LogRogue10m: Display: MELEE_VFX CASE index=4 skill=DA_Attack_GreatSword_Charged miss=0 tier=1 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-06.55.28:630][250]LogRogue10m: Display: MELEE_VFX CASE index=5 skill=DA_Attack_Knuckle_Primary01 miss=0 tier=0 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-06.55.28:741][361]LogRogue10m: Display: MELEE_VFX CASE index=6 skill=DA_Attack_Knuckle_Primary02 miss=0 tier=1 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-06.55.28:886][500]LogRogue10m: Display: MELEE_VFX CASE index=7 skill=DA_Attack_Knuckle_Primary03 miss=0 tier=2 damage_pulses=6 trail=1 range=1 impact=1
+[2026.11.21-06.55.29:027][645]LogRogue10m: Display: MELEE_VFX CASE index=8 skill=DA_Attack_Knuckle_Special miss=0 tier=2 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-06.55.29:240][870]LogRogue10m: Display: MELEE_VFX CASE index=9 skill=DA_Attack_Knuckle_Charged miss=0 tier=1 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-06.55.29:481][147]LogRogue10m: Display: MELEE_VFX CASE index=10 skill=DA_Hybrid_GreatSword_Ultimate miss=0 tier=3 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-06.55.29:707][424]LogRogue10m: Display: MELEE_VFX CASE index=11 skill=DA_Hybrid_GreatSword_Ultimate miss=1 tier=3 damage_pulses=0 trail=1 range=1 impact=0
+[2026.11.21-06.55.29:871][596]LogRogue10m: Display: MELEE_VFX CASE index=12 skill=DA_Attack_StoneFist_ChargedShockwave miss=0 tier=3 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-06.55.30:134][874]LogRogue10m: Display: MELEE_VFX CASE index=13 skill=DA_Attack_StoneFist_ChargedShockwave miss=1 tier=3 damage_pulses=0 trail=1 range=1 impact=0
+[2026.11.21-06.55.30:145][875]LogRogue10m: Display: RESULT=MELEE_VFX_LOGIC_PASSED completed=14 failures=0
