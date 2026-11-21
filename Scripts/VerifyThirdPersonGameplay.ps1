@@ -1,5 +1,7 @@
-param([Parameter(Mandatory)][ValidatePattern('^[A-Za-z0-9_]{1,24}$')][string]$Label,[switch]$NullRHI,[switch]$MouseInput,[int]$TimeoutSeconds=210)
+param([Parameter(Mandatory)][ValidatePattern('^[A-Za-z0-9_]{1,24}$')][string]$Label,[switch]$NullRHI,[switch]$MouseInput,[int]$TimeoutSeconds=210,[switch]$CombatMotion,[switch]$CombatMotionRender)
 $ErrorActionPreference='Stop'
+if($CombatMotion -and (-not $NullRHI -or $MouseInput)){throw 'CombatMotion requires NullRHI without MouseInput.'}
+if($CombatMotionRender -and ($NullRHI -or $MouseInput -or $CombatMotion)){throw 'CombatMotionRender is a separate software-rendered run.'}
 $root=(Resolve-Path -LiteralPath (Split-Path -Parent $PSScriptRoot)).Path
 $project=Join-Path $root 'Rogue10m.uproject'
 $out=Join-Path $root ('Feature\doc\evidence\third-person-20261110\'+$Label)
@@ -15,8 +17,11 @@ function Saves {
 $before=@(Saves);$before|ConvertTo-Json -Depth 4|Set-Content -LiteralPath (Join-Path $out 'saves-before.json')
 $log=Join-Path $out 'engine.log'
 $exe='D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe'
-$argsList=@(('"'+$project+'"'),'/Game/Rogue10m/Maps/StartHub','-game','-DisablePython','-unattended','-nosplash','-nosound','-NoLiveCoding','-NoRemoteShaderCompile','-language=en','-locale=en-US','-windowed','-ForceRes','-ResX=1280','-ResY=720',('-abslog="'+$log+'"'),('-RogueProfileSaveSlot=Rogue10m_Town_QA_ThirdPerson_'+$Label),('-RogueProgressionSavePrefix=Rogue10m_Progression_QA_ThirdPerson_'+$Label),('-RogueSkillKeySaveSlot=Rogue10m_Fighter_QA_ThirdPerson_'+$Label),('-RogueThirdPersonQALabel='+$Label),'-ExecCmds="t.MaxFPS 60,Rogue10m.TestThirdPersonGameplay"')
+$motionRenderCommands=if($CombatMotionRender){'r.MotionBlurQuality 0,'}else{''}
+$argsList=@(('"'+$project+'"'),'/Game/Rogue10m/Maps/StartHub','-game','-DisablePython','-unattended','-nosplash','-nosound','-NoLiveCoding','-NoRemoteShaderCompile','-language=en','-locale=en-US','-windowed','-ForceRes','-ResX=1280','-ResY=720',('-abslog="'+$log+'"'),('-RogueProfileSaveSlot=Rogue10m_Town_QA_ThirdPerson_'+$Label),('-RogueProgressionSavePrefix=Rogue10m_Progression_QA_ThirdPerson_'+$Label),('-RogueSkillKeySaveSlot=Rogue10m_Fighter_QA_ThirdPerson_'+$Label),('-RogueThirdPersonQALabel='+$Label),('-ExecCmds="t.MaxFPS 60,'+$motionRenderCommands+'Rogue10m.TestThirdPersonGameplay"'))
 if($MouseInput){$argsList+='-RogueThirdPersonMouseQA'}
+if($CombatMotion -or $CombatMotionRender){$argsList+=@('-RogueThirdPersonCombatMotionQA','-UseFixedTimeStep','-FPS=60')}
+if($CombatMotionRender){$argsList+=@('-RogueThirdPersonCombatMotionCapture','-AllowSoftwareRendering','-graphicsadapter=1')}
 if($NullRHI){$argsList+='-nullrhi'}else{$argsList+=@('-d3d11','-RenderOffScreen')}
 $p=$null;$failure=$null;$started=$null
 try {
@@ -26,12 +31,30 @@ try {
  $p.Refresh();$result=Get-Content -LiteralPath (Join-Path $root ('DevLog\20261110_ThirdPerson\'+$Label+'\results.txt')) -Raw;Write-Output $result
  if($p.ExitCode -ne 0 -or $result -notmatch '(?m)^failures=0\s*$' -or -not(Select-String -LiteralPath $log -Pattern 'RESULT=THIRD_PERSON_GAMEPLAY_PASSED' -Quiet)){throw ('Third-person result failed; UE exit='+$p.ExitCode)}
  if($MouseInput -and ($result -notmatch '(?m)^mouse_cases=13\s*$' -or $result -notmatch '(?m)^mouse_passed=13\s*$')){throw '13 mouse input cases incomplete'}
- if(-not $NullRHI){foreach($name in @('01_default_third_person.png','02_wall_camera_contraction.png','03_third_person_movement.png','04_active_third_person_dodge.png','05_wall_dodge_result.png','06_look_up_head.png','07_look_down_head.png')){$file=Join-Path $root ('DevLog\20261110_ThirdPerson\'+$Label+'\'+$name);if(-not(Test-Path -LiteralPath $file) -or (Get-Item -LiteralPath $file).Length -lt 1024){throw ('Missing screenshot '+$name)}}}
- $errors=@(Select-String -LiteralPath $log -Pattern '\bError:|Fatal error:|Ensure condition failed');if($errors.Count){throw ('Unexpected red output errors='+$errors.Count)}
+ if($CombatMotion){
+  $motionCsv=Join-Path $root ('DevLog\20261110_ThirdPerson\'+$Label+'\motion-frames.csv')
+  if(-not(Test-Path -LiteralPath $motionCsv)){throw 'Cannot find combat motion frame observations.'}
+  foreach($case in @('sword_guard_to_walk','sword_guard_300_long_control','sword_guard_300','unarmed_punch_still','unarmed_punch_to_walk')){if(-not $result.Contains('motion_case='+$case+' ')){throw ('Combat motion case incomplete: '+$case)}}
+ }
+ if(-not $NullRHI){
+  $expectedImages=if($CombatMotionRender){@('01_sword_guard_before_W.png','02_sword_guard_fading.png')}else{@('01_default_third_person.png','02_wall_camera_contraction.png','03_third_person_movement.png','04_active_third_person_dodge.png','05_wall_dodge_result.png','06_look_up_head.png','07_look_down_head.png')}
+  foreach($name in $expectedImages){$file=Join-Path $root ('DevLog\20261110_ThirdPerson\'+$Label+'\'+$name);if(-not(Test-Path -LiteralPath $file) -or (Get-Item -LiteralPath $file).Length -lt 1024){throw ('Missing screenshot '+$name)}}
+ }
+ $errors=@(Select-String -LiteralPath $log -Pattern '\bError:|Fatal error:|Ensure condition failed')
+ if($CombatMotionRender){
+  $selected=Select-String -LiteralPath $log -Pattern 'LogRHI:\s+Name:\s+Microsoft Basic Render Driver' | Select-Object -First 1
+  if(-not $selected){throw 'CombatMotionRender must use the software adapter.'}
+  $startupProbe=@($errors | Where-Object {$_.LineNumber -lt $selected.LineNumber -and $_.Line -match 'LogD3D11RHI: Error: Result failed with error 887A0004\s*$'})
+  if($startupProbe.Count){$startupProbe | ForEach-Object {Write-Output ('Hardware device probe recorded at log line '+$_.LineNumber)}}
+  $errors=@($errors | Where-Object {$_.LineNumber -notin $startupProbe.LineNumber})
+ }
+ if($errors.Count){throw ('Unexpected red output errors='+$errors.Count)}
 } catch {$failure=$_} finally {
  if($p -and -not $p.HasExited){$current=Get-Process -Id $p.Id -ErrorAction SilentlyContinue;if($current -and $current.StartTime -eq $started -and $current.Path -eq $exe){Stop-Process -InputObject $current -Force;$null=$p.WaitForExit(10000)}}
  $after=@(Saves);$after|ConvertTo-Json -Depth 4|Set-Content -LiteralPath (Join-Path $out 'saves-after.json');$lookup=@{};foreach($s in $after){$lookup[$s.path]=$s.sha256};$changed=@($before|Where-Object {-not $lookup.ContainsKey($_.path) -or $lookup[$_.path] -ne $_.sha256});$preserved=$changed.Count -eq 0
  [pscustomobject]@{label=$Label;before=$before.Count;after=$after.Count;preserved=$preserved;exit=if($p -and $p.HasExited){$p.ExitCode}else{$null};failure=if($failure){$failure.ToString()}else{$null};first_person_qa=$false;physical_input=$false;full_run=$false;language_override='process only en/en-US'}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $out 'launcher.json')
 }
 if(-not $preserved){throw 'Save preservation failure'};if($failure){throw $failure}
-Write-Output ('PASSED third-person camera/movement/dodge QA; existing saves preserved='+$before.Count+'; review actual PNGs separately')
+if($CombatMotion -or $CombatMotionRender){Write-Output ('PASSED third-person combat motion observations; existing saves preserved='+$before.Count)}else{
+ Write-Output ('PASSED third-person camera/movement/dodge QA; existing saves preserved='+$before.Count+'; review actual PNGs separately')
+}

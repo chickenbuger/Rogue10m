@@ -1,0 +1,123 @@
+{
+  "frame_rows": 4392,
+  "cases": {
+    "sword_guard_to_walk": {
+      "frames": 80,
+      "boundaries": [
+        {
+          "frame": 7,
+          "speed_cm_s": 34.133335,
+          "montage_id": -1,
+          "montage_seconds": -1.0,
+          "weight_changes": {
+            "guard_alpha": [
+              1.0,
+              0.0
+            ]
+          },
+          "visible_bones": {
+            "pelvis": {
+              "component_step_cm": 2.513935,
+              "component_angle_deg": 6.131269,
+              "pelvis_relative_step_cm": 0.0
+            },
+            "spine_03": {
+              "component_step_cm": 6.753324,
+              "component_angle_deg": 27.454666,
+              "pelvis_relative_step_cm": 6.139471
+            },
+            "hand_l": {
+              "component_step_cm": 19.016146,
+              "component_angle_deg": 27.100896,
+              "pelvis_relative_step_cm": 19.326739
+            },
+            "hand_r": {
+              "component_step_cm": 18.34995,
+              "component_angle_deg": 27.08017,
+              "pelvis_relative_step_cm": 19.433977
+            },
+            "foot_l": {
+              "component_step_cm": 13.728154,
+              "component_angle_deg": 8.253712,
+              "pelvis_relative_step_cm": 12.008259
+            },
+            "foot_r": {
+              "component_step_cm": 10.846449,
+              "component_angle_deg": 7.611067,
+              "pelvis_relative_step_cm": 1.848372
+            }
+          }
+        }
+      ],
+      "ground_speed_peak_cm_s": 620.0,
+      "active_montage_frames": 0,
+      "charge_held_frames": 0
+    },
+    "unarmed_punch_still": {
+      "frames": 80,
+      "boundaries": [],
+      "ground_speed_peak_cm_s": 0.0,
+      "active_montage_frames": 28,
+      "charge_held_frames": 2
+    },
+    "unarmed_punch_to_walk": {
+      "frames": 80,
+      "boundaries": [
+        {
+          "frame": 9,
+          "speed_cm_s": 34.133335,
+          "montage_id": 1,
+          "montage_seconds": 0.078,
+          "weight_changes": {
+            "moving_attack_alpha": [
+              0.0,
+              1.0
+            ]
+          },
+          "visible_bones": {
+            "pelvis": {
+              "component_step_cm": 1.815156,
+              "component_angle_deg": 2.822164,
+              "pelvis_relative_step_cm": 0.0
+            },
+            "spine_03": {
+              "component_step_cm": 1.796454,
+              "component_angle_deg": 0.586763,
+              "pelvis_relative_step_cm": 1.259227
+            },
+            "hand_l": {
+              "component_step_cm": 4.204796,
+              "component_angle_deg": 6.841808,
+              "pelvis_relative_step_cm": 5.211814
+            },
+            "hand_r": {
+              "component_step_cm": 4.465495,
+              "component_angle_deg": 7.854912,
+              "pelvis_relative_step_cm": 2.883628
+            },
+            "foot_l": {
+              "component_step_cm": 4.44916,
+              "component_angle_deg": 6.396489,
+              "pelvis_relative_step_cm": 3.803612
+            },
+            "foot_r": {
+              "component_step_cm": 3.095646,
+              "component_angle_deg": 4.119709,
+              "pelvis_relative_step_cm": 5.61485
+            }
+          }
+        }
+      ],
+      "ground_speed_peak_cm_s": 341.333344,
+      "active_montage_frames": 28,
+      "charge_held_frames": 2
+    },
+    "sword_charge_to_swing": {
+      "frames": 126,
+      "boundaries": [],
+      "ground_speed_peak_cm_s": 0.0,
+      "active_montage_frames": 72,
+      "charge_held_frames": 48
+    }
+  }
+}
