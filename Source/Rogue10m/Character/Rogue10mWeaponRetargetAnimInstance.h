@@ -23,6 +23,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Weapon")
 	bool bEnableOrcEarthSplitterPresentation = false;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Weapon")
+	bool bEnableEarthSplitterWallRecovery = true;
+
 	static bool UsesVisibleEarthSplitter(const ARogue10mCharacter& Character);
 
 protected:

@@ -46,6 +46,7 @@ void URogue10mFighterCombatStanceAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
 	DwarfEarthSplitterSample = {};
+	EarthSplitterWallRecoverySample = {};
 	CachedFighterIdle = FighterCombatStanceSequence.LoadSynchronous();
 	CachedGreatSwordIdle = GreatSwordIdleSequence.LoadSynchronous();
 	CachedUnarmedLocomotion = LoadObject<UBlendSpace>(nullptr, TEXT("/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference"));

@@ -1,0 +1,80 @@
+{
+  "HumanF": {
+    "standing": {
+      "pose_samples": 26640,
+      "max_pose_position_diff_cm": 0.0,
+      "max_different_rows_per_quaternion_component": 0,
+      "observed_earth_samples": 217,
+      "max_differences": {
+        "montage_s": 0.0,
+        "hold_s": 0.0,
+        "accepted_s": 0.0,
+        "bounds_min_above_capsule_cm": 0.0,
+        "tip_above_capsule_cm": 0.0,
+        "blade_dir_z": 0.0,
+        "blade_dir_forward": 0.0,
+        "blade_dir_right": 0.0,
+        "palm_span_cm": 0.0,
+        "grip_palm_error_cm": 0.0,
+        "actor_travel_cm": 0.0,
+        "pelvis_local_z_cm": 0.0,
+        "lowest_foot_above_capsule_cm": 0.0
+      },
+      "first_damage_montage_s": [
+        0.010953,
+        0.010953
+      ]
+    },
+    "back_roll": {
+      "reference": "HumanFBackOld",
+      "duplicate": "HumanFBackNative",
+      "joint_pose_samples": 924,
+      "matched_active_world_frames": 22,
+      "max_capsule_delta_cm": 0.0,
+      "max_bone_position_delta_cm": 0.0,
+      "max_bone_rotation_delta_deg": 3.4150945850063755e-06,
+      "max_sword_floor_delta_cm": 0.0,
+      "reference_min_sword_floor_cm": 19.376,
+      "duplicate_min_sword_floor_cm": 19.376
+    }
+  },
+  "OrcF": {
+    "standing": {
+      "pose_samples": 26640,
+      "max_pose_position_diff_cm": 0.0,
+      "max_different_rows_per_quaternion_component": 0,
+      "observed_earth_samples": 217,
+      "max_differences": {
+        "montage_s": 0.0,
+        "hold_s": 0.0,
+        "accepted_s": 0.0,
+        "bounds_min_above_capsule_cm": 0.0,
+        "tip_above_capsule_cm": 0.0,
+        "blade_dir_z": 0.0,
+        "blade_dir_forward": 0.0,
+        "blade_dir_right": 0.0,
+        "palm_span_cm": 0.0,
+        "grip_palm_error_cm": 0.0,
+        "actor_travel_cm": 0.0,
+        "pelvis_local_z_cm": 0.0,
+        "lowest_foot_above_capsule_cm": 0.0
+      },
+      "first_damage_montage_s": [
+        0.010953,
+        0.010953
+      ]
+    },
+    "back_roll": {
+      "reference": "OrcFBackOld",
+      "duplicate": "OrcFBackNative",
+      "joint_pose_samples": 924,
+      "matched_active_world_frames": 22,
+      "max_capsule_delta_cm": 0.0,
+      "max_bone_position_delta_cm": 0.0,
+      "max_bone_rotation_delta_deg": 3.4150945850063755e-06,
+      "max_sword_floor_delta_cm": 0.0,
+      "reference_min_sword_floor_cm": 19.447,
+      "duplicate_min_sword_floor_cm": 19.447
+    }
+  }
+}

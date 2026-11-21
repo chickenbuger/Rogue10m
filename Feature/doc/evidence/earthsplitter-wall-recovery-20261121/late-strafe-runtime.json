@@ -1,0 +1,85 @@
+{
+  "ER03DMLate": {
+    "scenario": "Right",
+    "actual_release_intersections": [],
+    "worst_wall_AABB_reconstruction_error_cm": 0.0008568098871215568,
+    "accepted_samples": 169,
+    "modified_samples": 68,
+    "last_modified_montage_s": 1.434885,
+    "first_stock_montage_s_after_fix": 1.445838,
+    "max_weight": 1.0,
+    "minimum_weighted_wall_AABB_gap_cm": -7.424913,
+    "minimum_weighted_floor_cm": 70.609323,
+    "max_affected_blade_axis_step_degrees": 5.874768829323512,
+    "max_affected_world_blade_step_degrees": 5.87476882932345,
+    "max_released_translation_cm": 25.212821,
+    "same_tick_original_playback": [
+      [
+        0.0,
+        0.010953
+      ]
+    ]
+  },
+  "ER03DMLateStock": {
+    "scenario": "Right",
+    "actual_release_intersections": [
+      {
+        "frame": 785,
+        "montage_s": 1.139145,
+        "triangles": 6
+      },
+      {
+        "frame": 786,
+        "montage_s": 1.150099,
+        "triangles": 15
+      },
+      {
+        "frame": 794,
+        "montage_s": 1.237725,
+        "triangles": 10
+      },
+      {
+        "frame": 795,
+        "montage_s": 1.248678,
+        "triangles": 16
+      },
+      {
+        "frame": 796,
+        "montage_s": 1.259632,
+        "triangles": 16
+      },
+      {
+        "frame": 797,
+        "montage_s": 1.270585,
+        "triangles": 16
+      },
+      {
+        "frame": 798,
+        "montage_s": 1.281538,
+        "triangles": 8
+      },
+      {
+        "frame": 799,
+        "montage_s": 1.292492,
+        "triangles": 8
+      }
+    ],
+    "worst_wall_AABB_reconstruction_error_cm": 0.0008122365365856865,
+    "accepted_samples": 169,
+    "modified_samples": 0,
+    "last_modified_montage_s": null,
+    "first_stock_montage_s_after_fix": null,
+    "max_weight": 0,
+    "minimum_weighted_wall_AABB_gap_cm": null,
+    "minimum_weighted_floor_cm": null,
+    "max_affected_blade_axis_step_degrees": 0,
+    "max_affected_world_blade_step_degrees": 0,
+    "max_released_translation_cm": 25.212821,
+    "same_tick_original_playback": [
+      [
+        0.0,
+        0.010953
+      ]
+    ]
+  }
+}

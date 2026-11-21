@@ -8,6 +8,7 @@
 
 struct FBoneContainer;
 struct FCompactPose;
+struct FRogue10mDwarfEarthSplitterSample;
 class ARogue10mCharacter;
 class UAnimSequence;
 class USkeletalMeshComponent;
@@ -37,6 +38,8 @@ private:
 	void CaptureCapstoneBrace(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
 	void ApplyCapstoneBrace(FPoseContext& Output);
 	void CaptureEarthSplitterPose(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
+	FRogue10mDwarfEarthSplitterSample CaptureEarthSplitterWallRecovery(const ARogue10mCharacter* Character,
+		const URogue10mFighterCombatStanceAnimInstance& Instance);
 	void ApplyEarthSplitterPose(FPoseContext& Output);
 	void ApplySecondJumpPose(FPoseContext& Output);
 	void CaptureSecondJumpPose(const ARogue10mCharacter& Character, const URogue10mFighterCombatStanceAnimInstance& Instance,
@@ -83,9 +86,12 @@ private:
 	float EarthSplitterWeight = 0.0f;
 	float EarthSplitterLowerBodyWeight = 0.0f;
 	int32 EarthSplitterMontageAtChargeStart = INDEX_NONE;
+	int32 EarthSplitterWallRecoveryMontageId = INDEX_NONE;
+	float EarthSplitterWallRecoveryMovementAt = -1.0f;
 	bool bEarthSplitterChargeContinuous = false;
 	bool bEarthSplitterHoldObserved = false;
 	bool bUseDwarfEarthSplitterGrip = false;
+	bool bEarthSplitterWallRecoveryAdmitted = false;
 	const UAnimSequence* NonlethalHitSequence = nullptr;
 	float NonlethalHitAge = 0.0f;
 	float NonlethalHitWeight = 0.0f;

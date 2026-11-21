@@ -123,11 +123,14 @@ public:
 		FAnimInstanceProxy::PreEvaluateAnimation(Instance);
 		DwarfGripWeight = 0.0f;
 		const auto* Character = Cast<ARogue10mCharacter>(Instance->TryGetPawnOwner());
-		if (!Character || !URogue10mWeaponRetargetAnimInstance::UsesVisibleEarthSplitter(*Character)
-			|| Character->GetMesh() != Instance->GetSkelMeshComponent() || Character->IsDodging() || Character->IsDead()) { return; }
+		if (!Character || Character->GetMesh() != Instance->GetSkelMeshComponent() || Character->IsDodging() || Character->IsDead()) { return; }
 		const auto* SourceMesh = Character->GetAnimationPlaybackMesh();
 		const auto* Source = SourceMesh ? Cast<URogue10mFighterCombatStanceAnimInstance>(SourceMesh->GetAnimInstance()) : nullptr;
-		const FRogue10mDwarfEarthSplitterSample Sample = Source ? Source->GetDwarfEarthSplitterSample() : FRogue10mDwarfEarthSplitterSample{};
+		if (!Source) { return; }
+		const FRogue10mDwarfEarthSplitterSample Recovery = Source->GetEarthSplitterWallRecoverySample();
+		const bool bWallRecovery = Recovery.Weight > UE_SMALL_NUMBER;
+		if (!bWallRecovery && !URogue10mWeaponRetargetAnimInstance::UsesVisibleEarthSplitter(*Character)) { return; }
+		const FRogue10mDwarfEarthSplitterSample Sample = bWallRecovery ? Recovery : Source->GetDwarfEarthSplitterSample();
 		if (Sample.Weight <= UE_SMALL_NUMBER) { return; }
 		const auto* Clip = Source->GetEarthSplitterReference(Sample.bRelease);
 		const auto* Visual = Character->FindComponentByClass<URogue10mWeaponVisualComponent>();
@@ -163,7 +166,11 @@ public:
 		DwarfGripSwordScale = SwordComponent->GetComponentScale();
 		DwarfGripForward = Character->GetActorForwardVector();
 		DwarfGripRight = Character->GetActorRightVector();
-		DwarfGripWeight = Sample.Weight * (Sample.bRelease ? 1.0f - FMath::SmoothStep(.15f, .73f, Sample.Time) : 1.0f);
+		DwarfGripWeight = Sample.Weight;
+		if (Sample.bRelease && !bWallRecovery)
+		{
+			DwarfGripWeight *= 1.0f - FMath::SmoothStep(.15f, .73f, Sample.Time);
+		}
 	}
 
 	bool Evaluate_WithRoot(FPoseContext& Output, FAnimNode_Base* Root) override

@@ -40,6 +40,7 @@ public:
 	const UAnimSequence* GetSecondJumpPoseAnimation() const { return CachedSecondJumpPose.Get(); }
 	bool WasSecondJumpPoseApplied() const { return bSecondJumpPoseApplied; }
 	FRogue10mDwarfEarthSplitterSample GetDwarfEarthSplitterSample() const { return DwarfEarthSplitterSample; }
+	FRogue10mDwarfEarthSplitterSample GetEarthSplitterWallRecoverySample() const { return EarthSplitterWallRecoverySample; }
 	const UAnimSequence* GetEarthSplitterReference(bool bRelease) const
 	{
 		return bRelease ? CachedEarthSplitterRelease.Get() : CachedEarthSplitterCharge.Get();
@@ -216,6 +217,7 @@ private:
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedEarthSplitterFemaleCharge;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedEarthSplitterFemaleRelease;
 	FRogue10mDwarfEarthSplitterSample DwarfEarthSplitterSample;
+	FRogue10mDwarfEarthSplitterSample EarthSplitterWallRecoverySample;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedSecondJumpPose;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedNonlethalFront;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedNonlethalRear;
