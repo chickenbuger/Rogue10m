@@ -49,6 +49,7 @@
 #include "Rogue10mSkillLoadoutDataAsset.h"
 #include "Rogue10mCharacterProfileSubsystem.h"
 #include "Rogue10mInputKeys.h"
+#include "Rogue10mMotionQAAppearance.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mProgressionSubsystem.h"
 #include "Rogue10mSkillTreeProgressionComponent.h"
@@ -189,6 +190,13 @@ public:
   bForwardLandingQA=FParse::Param(Args,TEXT("RogueThirdPersonForwardLandingQA"));
   bExpectForwardLanding=FParse::Param(Args,TEXT("RogueExpectForwardLanding"));
   bExpectSecondJumpPose=FParse::Param(Args,TEXT("RogueExpectSecondJumpPose"));
+  FString AppearanceName;
+  if(FParse::Value(Args,TEXT("RogueMotionQAAppearance="),AppearanceName))
+  {
+   MotionAppearance=Rogue10mMotionQA::FindAppearance(AppearanceName);
+   if(!bForwardLandingQA||!MotionAppearance)
+   {UE_LOG(LogRogue10m,Error,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_FAILED reason=appearance_requires_forward_landing_and_a_known_profile"));FPlatformMisc::RequestExitWithStatus(false,1);return;}
+  }
   if(bDoubleJumpMotion&&(bPlayerHitMotion||bCombatMotion||bDoubleJumpCapture==FParse::Param(Args,TEXT("nullrhi"))))
   {UE_LOG(LogRogue10m,Error,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_FAILED reason=jump_audit_requires_its_own_explicit_capture_or_nullrhi_run"));FPlatformMisc::RequestExitWithStatus(false,1);return;}
   if(bForwardLandingQA&&(bDoubleJumpMotion||bCombatMotion||bPlayerHitMotion))
@@ -218,8 +226,15 @@ private:
  {
   PC=Cast<ARogue10mPlayerController>(World->GetFirstPlayerController());auto* GI=World->GetGameInstance();auto* Profiles=GI?GI->GetSubsystem<URogue10mCharacterProfileSubsystem>():nullptr;Saves=GI?GI->GetSubsystem<URogue10mProgressionSubsystem>():nullptr;
   Check(PC.IsValid()&&Profiles&&Saves.IsValid(),TEXT("profile_controller_progression_available"));if(Failures){Finish();return;}
-  FRogue10mCharacterProfile P;Check(Profiles->GetProfileCount()==0&&Profiles->CreateProfile(TEXT("ThirdQa"),FRogue10mCharacterAppearance(),P)&&Profiles->SelectProfile(P.ProfileId),TEXT("fresh_profile_selected"));if(Failures){Finish();return;}
+  const auto Appearance=MotionAppearance?MotionAppearance->MakeProfileAppearance():FRogue10mCharacterAppearance();
+  FRogue10mCharacterProfile P;Check(Profiles->GetProfileCount()==0&&Profiles->CreateProfile(TEXT("ThirdQa"),Appearance,P)&&Profiles->SelectProfile(P.ProfileId),TEXT("fresh_profile_selected"));if(Failures){Finish();return;}
   PC->EnterSelectedCharacter();PC->CloseAllBlockingPanels();Character=Cast<ARogue10mCharacter>(PC->GetPawn());Check(Character.IsValid()&&Saves->IsAttachedTo(*Character),TEXT("normal_entry_pawn_and_save_attach"));if(Failures){Finish();return;}
+  if(MotionAppearance)
+  {
+   Check(MotionAppearance->Matches(Character.Get()),TEXT("landing_selected_profile_uses_expected_visible_mesh"));if(Failures){Finish();return;}
+   Results+=FString::Printf(TEXT("appearance=%s body=%s retarget=%s\n"),MotionAppearance->Name,
+    *GetPathNameSafe(Character->GetMesh()->GetSkeletalMeshAsset()),*GetPathNameSafe(Character->GetMesh()->GetAnimClass()));
+  }
   if(bDoubleJumpMotion){TrainDoubleJump();if(Failures){Finish();return;}}
   Saves->DetachCharacter(*Character,false);Character->SetCanBeDamaged(bPlayerHitMotion);Check(Character->IsThirdPersonGameplayActive()&&Character->GetGameplayCameraComponent()&&Character->GetThirdPersonCameraBoom(),TEXT("third_person_default_components"));if(Failures){Finish();return;}
   RealNovicePrimary.Reset(Character->GetCombatComponent()->GetEquippedSkill(ERogue10mAttackInputSlot::Primary));RealNoviceAbility=FRogue10mMouseCombatTestAccess::Ability(*Character->GetCombatComponent());
@@ -241,6 +256,14 @@ private:
  void BeginLandingAudit()
  {
   auto* Movement=Character->GetCharacterMovement();
+  if(MotionAppearance&&!bExpectForwardLanding)
+  {
+   const auto* Source=Character->GetAnimationPlaybackMesh();
+   auto* Anim=Source?Cast<URogue10mFighterCombatStanceAnimInstance>(Source->GetAnimInstance()):nullptr;
+   Check(Anim!=nullptr,TEXT("landing_stock_control_has_live_manny_anim_instance"));if(Failures){Finish();return;}
+   // Force the stock branch only on this fixture's transient source instance.
+   Anim->ForwardRunLandingSpeedRange=FVector2D(-1.,-1.);
+  }
   LandingOriginalSpeed=Movement->MaxWalkSpeed;
   LandingOrigin=Character->GetActorLocation();
   LandingRows=TEXT("case,mesh,frame,seconds_from_contact,speed_cm_s,floor_z_cm,fall_time_s,land_time_s,land_weight,land_asset,gait_sample_time_s,marker_prev,marker_next,marker_alpha,seed,revision,bone,local_x_cm,local_y_cm,local_z_cm,qx,qy,qz,qw,world_x_cm,world_y_cm,world_z_cm\n");
@@ -1422,6 +1445,7 @@ private:
  uint32 HeadPitchSourceRevision=0,HeadPitchBodyRevision=0;
  int32 HeadPitchCaseIndex=0;
  bool bHeadPitchCheckActive=false,bHeadPitchOriginalControllerYaw=false;
+ const Rogue10mMotionQA::FAppearance* MotionAppearance=nullptr;
  struct FPhoto{FString Name;int32 Width=0,Height=0;TArray<FColor> Pixels;};TWeakObjectPtr<UWorld> World;TWeakObjectPtr<ARogue10mPlayerController> PC;TWeakObjectPtr<ARogue10mCharacter> Character;TWeakObjectPtr<URogue10mProgressionSubsystem> Saves;TWeakObjectPtr<AActor> Floor,Obstacle,Wall;TFunction<void()> Next;FDelegateHandle Cleanup,SampleHandle,CaptureHandle;TArray<FPhoto> Photos;FString Label,Output,Results,Frames,Stage=TEXT("prepare"),PendingPhoto;FVector MoveStart,DodgeStart;double Deadline=0,NextAt=0;float ConfiguredDodgeDistance=100.f,ConfiguredDodgeDuration=.16f;float OpenDistance=0,BlockedDistance=0,RecoveredDistance=0,MoveTravel=0,FreeTravel=0,WallTravel=0;int32 Checks=0,Failures=0,Samples=0,DodgeSamples=0,RequestedPhotos=0,CompletedPhotos=0;bool bFinished=false,bRendered=false,bSawDodge=false,bSawForwardDodgeMontage=false,bDodgePhoto=false;
 };
 static TSharedPtr<FRun> Active;static void Run(){if(!GEngine||GIsEditor||(Active&&!Active->Finished()))return;for(const FWorldContext& C:GEngine->GetWorldContexts())if(UWorld* W=C.World();W&&C.WorldType==EWorldType::Game){Active=MakeShared<FRun>();Active->Start(*W);return;}UE_LOG(LogRogue10m,Error,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_FAILED reason=no_game_world"));FPlatformMisc::RequestExitWithStatus(false,1);}static FAutoConsoleCommand Command(TEXT("Rogue10m.TestThirdPersonGameplay"),TEXT("Isolated fresh ThirdPerson namespace: default camera, mesh, collision, W and Left Ctrl; first-person QA paused."),FConsoleCommandDelegate::CreateStatic(&Run));

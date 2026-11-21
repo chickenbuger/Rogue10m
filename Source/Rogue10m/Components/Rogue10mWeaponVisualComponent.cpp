@@ -1,8 +1,13 @@
 #include "Rogue10mWeaponVisualComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/SkeletalMesh.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#if WITH_EDITOR
+#include "HAL/IConsoleManager.h"
+#endif
 #include "Animation/AnimInstance.h"
 #include "Animation/Skeleton.h"
 #include "Rogue10mCharacter.h"
@@ -12,6 +17,77 @@
 #include "BoneContainer.h"
 #include "Math/RotationMatrix.h"
 #include "Rogue10mWeaponRetargetAnimInstance.h"
+
+namespace
+{
+#if WITH_EDITOR
+TAutoConsoleVariable<bool> CVarRollSwordFloorCorrection(TEXT("a.Rogue10m.RollSwordFloorCorrection"), true,
+ TEXT("Compare the stock learned-roll weapon presentation in isolated editor animation QA."));
+TAutoConsoleVariable<bool> CVarShortRollSwordEntry(TEXT("a.Rogue10m.ShortRollSwordEntry"), false,
+ TEXT("Compare the earlier end of the two-hand to carry blend in isolated editor animation QA."));
+#endif
+FQuat KeepRollBladeAboveFloor(const UStaticMeshComponent& Sword, const FVector& FloorPoint, const FVector& FloorNormal,
+ const FTransform& Body, const FTransform& Hand, const FVector& Palm, const FQuat& Desired, const FVector& Blade)
+{
+ const UStaticMesh* Mesh = Sword.GetStaticMesh();
+ if (!Mesh) { return Desired; }
+
+ const FVector FlatBlade = FVector::VectorPlaneProject(Blade, FloorNormal).GetSafeNormal();
+ if (FlatBlade.IsNearlyZero()) { return Desired; }
+
+ const FBox LocalBounds = Mesh->GetBoundingBox();
+ const FVector Scale = (Hand * Body).GetScale3D() * Sword.GetRelativeScale3D();
+ const double PalmHeight = FVector::DotProduct(Body.TransformPosition(Palm) - FloorPoint, FloorNormal);
+ const auto Clearance = [&](const FQuat& Rotation)
+ {
+  const FVector NormalInSword = (Body.GetRotation() * Rotation).UnrotateVector(FloorNormal) * Scale;
+  return PalmHeight + FVector::DotProduct(LocalBounds.GetCenter(), NormalInSword)
+   - FVector::DotProduct(LocalBounds.GetExtent(), NormalInSword.GetAbs());
+ };
+ constexpr double ClearanceCm = 0.5;
+ const double DesiredClearance = Clearance(Desired);
+ if (DesiredClearance >= ClearanceCm) { return Desired; }
+
+ // Use the same carry heading along the floor when the existing grip would cross it.
+ const FQuat Safe = Body.GetRotation().Inverse()
+  * FRotationMatrix::MakeFromZY(FlatBlade + FloorNormal * 0.05, FloorNormal).ToQuat();
+ const double SafeClearance = Clearance(Safe);
+ if (SafeClearance < ClearanceCm) { return SafeClearance > DesiredClearance ? Safe : Desired; }
+
+ double Lower = 0.0;
+ double Upper = 1.0;
+ for (int32 Step = 0; Step < 8; ++Step)
+ {
+  const double Middle = (Lower + Upper) * 0.5;
+  if (Clearance(FQuat::Slerp(Desired, Safe, Middle)) >= ClearanceCm) { Upper = Middle; }
+  else { Lower = Middle; }
+ }
+ return FQuat::Slerp(Desired, Safe, Upper).GetNormalized();
+}
+}
+
+bool URogue10mWeaponVisualComponent::GetRollSwordFloorPlane(const ARogue10mCharacter& Character,
+ FVector& FloorPoint, FVector& FloorNormal)
+{
+ const auto* Movement = Character.GetCharacterMovement();
+ const auto* Capsule = Character.GetCapsuleComponent();
+ if (!Movement || !Capsule || !Movement->IsMovingOnGround() || !Movement->CurrentFloor.IsWalkableFloor()) { return false; }
+
+ const FHitResult& Hit = Movement->CurrentFloor.HitResult;
+ FloorPoint = Hit.ImpactPoint;
+ FloorNormal = Hit.ImpactNormal.GetSafeNormal();
+ const FVector CapsuleBottom = Capsule->GetComponentLocation() - FVector::UpVector * Capsule->GetScaledCapsuleHalfHeight();
+ const double FloorDistance = FVector::DotProduct(CapsuleBottom - FloorPoint, FloorNormal);
+ // The previous platform can still be reported while the capsule crosses below its top.
+ return !FloorNormal.IsNearlyZero() && FloorDistance >= -2.0 && FloorDistance <= Movement->MaxStepHeight + 3.0;
+}
+
+#if WITH_EDITOR
+bool URogue10mWeaponVisualComponent::IsRollSwordFloorCorrectionEnabled()
+{
+ return CVarRollSwordFloorCorrection.GetValueOnGameThread();
+}
+#endif
 
 void URogue10mWeaponVisualComponent::SwitchWeaponRetarget(USkeletalMeshComponent& Body, UClass* NewClass, bool bThirdPerson)
 {
@@ -72,6 +148,8 @@ void URogue10mWeaponVisualComponent::UnbindSwordGrip()
 {
  if (GripBody.IsValid() && GripDelegate.IsValid()) { GripBody->UnregisterOnBoneTransformsFinalizedDelegate(GripDelegate); }
  GripDelegate.Reset(); GripBody.Reset(); bOwnGrip=false;
+ bHasTwoHandSwordRotation = false;
+ bHasRollSwordStart = false;
 }
 
 void URogue10mWeaponVisualComponent::UpdateSwordGrip()
@@ -100,6 +178,7 @@ void URogue10mWeaponVisualComponent::UpdateSwordGrip()
    FTransform Grip;
    if (!Hand.ContainsNaN() && BuildSwordPalmGrip((RH+RF)*.5,(LH+LF)*.5,RF-RH,Grip))
    {
+    const FQuat ComponentRotation = Body->GetComponentQuat();
     float RollProgress = 0.0f;
     FVector RollDirection;
     if (Character->GetRollPresentation(RollProgress, RollDirection))
@@ -108,12 +187,42 @@ void URogue10mWeaponVisualComponent::UpdateSwordGrip()
      // Carry the blade on the rolling side with its flat face nearly parallel to the floor.
      const FVector RollSide = FVector::CrossProduct(FVector::UpVector, RollDirection);
      const FVector Blade = (RollDirection * 0.4 + RollSide * 0.9 + FVector::UpVector * 0.05).GetSafeNormal();
-     const FQuat ComponentRotation = Body->GetComponentQuat();
      const FQuat Carry = FRotationMatrix::MakeFromZY(ComponentRotation.UnrotateVector(Blade),
       ComponentRotation.UnrotateVector(FVector::UpVector)).ToQuat();
      const float CarryWeight = FMath::SmoothStep(0.03f, 0.27f, RollProgress)
       * (1.0f - FMath::SmoothStep(0.76f, 0.99f, RollProgress));
-     Grip.SetRotation(FQuat::Slerp(Grip.GetRotation(), Carry, CarryWeight).GetNormalized());
+     FQuat Preferred = FQuat::Slerp(Grip.GetRotation(), Carry, CarryWeight).GetNormalized();
+     bool bCorrectRollGrip = true;
+#if WITH_EDITOR
+     bCorrectRollGrip = IsRollSwordFloorCorrectionEnabled();
+#endif
+     if (bCorrectRollGrip)
+     {
+      if (!bHasRollSwordStart || RollProgress < LastSwordRollProgress)
+      {
+       RollSwordStartWorldRotation = bHasTwoHandSwordRotation ? LastTwoHandSwordWorldRotation : ComponentRotation * Grip.GetRotation();
+       bHasRollSwordStart = true;
+      }
+      LastSwordRollProgress = RollProgress;
+      // The lead hand separates early. Blend from the last complete two-hand orientation instead of the changing palm line.
+      const FQuat Start = ComponentRotation.Inverse() * RollSwordStartWorldRotation;
+      float CarryEntryEnd = 0.35f;
+#if WITH_EDITOR
+      if (CVarShortRollSwordEntry.GetValueOnGameThread()) { CarryEntryEnd = 0.27f; }
+#endif
+      const FQuat InCarry = FQuat::Slerp(Start, Carry, FMath::SmoothStep(0.03f, CarryEntryEnd, RollProgress));
+      Preferred = FQuat::Slerp(InCarry, Grip.GetRotation(), FMath::SmoothStep(0.68f, 0.99f, RollProgress)).GetNormalized();
+     }
+     FVector FloorPoint, FloorNormal;
+     Grip.SetRotation(bCorrectRollGrip && GetRollSwordFloorPlane(*Character, FloorPoint, FloorNormal)
+      ? KeepRollBladeAboveFloor(*RightWeaponMesh, FloorPoint, FloorNormal, Body->GetComponentTransform(), Hand,
+        Grip.GetLocation(), Preferred, Blade) : Preferred);
+    }
+    else
+    {
+     LastTwoHandSwordWorldRotation = ComponentRotation * Grip.GetRotation();
+     bHasTwoHandSwordRotation = true;
+     bHasRollSwordStart = false;
     }
     const FTransform Candidate=Grip.GetRelativeTransform(Hand);
     if (!Candidate.ContainsNaN()) { Relative=Candidate; }

@@ -2,6 +2,7 @@
 #include "Animation/AnimSequence.h"
 #include "Blueprint/WidgetTree.h"
 #include "Camera/CameraActor.h"
+#include "Components/BoxComponent.h"
 #include "Components/Button.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/Image.h"
@@ -43,6 +44,7 @@
 #include "Rogue10mHybridSkillTreeWidget.h"
 #include "Rogue10mInventoryComponent.h"
 #include "Rogue10mItemDataAsset.h"
+#include "Rogue10mMotionQAAppearance.h"
 #include "Rogue10mLootTableDataAsset.h"
 #include "Rogue10mMonsterDataAsset.h"
 #include "Rogue10mPlayerController.h"
@@ -123,6 +125,23 @@ public:
 			else if (RollAuditDirection != TEXT("Forward"))
 			{
 				Check(false, TEXT("known_directional_roll_audit_case")); Finish(); return;
+			}
+		}
+		FString AppearanceName;
+		if (FParse::Value(FCommandLine::Get(), TEXT("RogueMotionQAAppearance="), AppearanceName))
+		{
+			MotionAppearance = Rogue10mMotionQA::FindAppearance(AppearanceName);
+			if (!bRollOnlyQA || bRead || RollAuditDirection.IsEmpty() || !MotionAppearance)
+			{
+				UE_LOG(LogRogue10m, Error, TEXT("RESULT=HYBRID_ROLL_QA_FAILED reason=appearance_requires_directional_roll_and_a_known_profile"));
+				FPlatformMisc::RequestExitWithStatus(false, 1); return;
+			}
+			bStockRollSword = FParse::Param(FCommandLine::Get(), TEXT("RogueRollStockSwordQA"));
+			bRollFloorEdge = FParse::Param(FCommandLine::Get(), TEXT("RogueRollFloorEdgeQA"));
+			if (bStockRollSword == URogue10mWeaponVisualComponent::IsRollSwordFloorCorrectionEnabled())
+			{
+				UE_LOG(LogRogue10m, Error, TEXT("RESULT=HYBRID_ROLL_QA_FAILED reason=stock_sword_mode_does_not_match_runtime_cvar"));
+				FPlatformMisc::RequestExitWithStatus(false, 1); return;
 			}
 		}
 		IFileManager::Get().MakeDirectory(*Output, true);
@@ -529,7 +548,8 @@ private:
 		Check(PC.IsValid() && Profiles && Profiles->GetProfileCount() == 0, TEXT("fresh_isolated_profile"));
 		if (Failures) { Finish(); return; }
 		FRogue10mCharacterProfile Profile;
-		Check(Profiles->CreateProfile(TEXT("HybridTreeQa"), FRogue10mCharacterAppearance(), Profile)
+		const auto Appearance = MotionAppearance ? MotionAppearance->MakeProfileAppearance() : FRogue10mCharacterAppearance();
+		Check(Profiles->CreateProfile(TEXT("HybridTreeQa"), Appearance, Profile)
 			&& Profiles->SelectProfile(Profile.ProfileId), TEXT("new_profile_created"));
 		PC->EnterSelectedCharacter(); PC->CloseAllBlockingPanels();
 		Later(bRollOnlyQA ? 0.22 : 0.6, [this]
@@ -554,7 +574,38 @@ private:
 		Check(Inventory && Sword && Player->CanChangeWeapon() && Inventory->TryAddGridItem(Sword, 1, Grid, Item)
 			&& Inventory->TryEquipGridItem(Grid, Item) && Player->GetEquippedWeaponType() == ERogue10mWeaponType::GreatSword,
 			TEXT("roll_only_equips_real_sword_through_inventory"));
-		Player->SetActorLocation(NPC->GetActorLocation() + FVector(100, 0, 100), false, nullptr, ETeleportType::TeleportPhysics);
+		if (MotionAppearance)
+		{
+			Check(MotionAppearance->Matches(Player.Get()), TEXT("roll_selected_profile_uses_expected_visible_mesh"));
+			if (Failures) { Finish(); return; }
+			Report += FString::Printf(TEXT("appearance=%s body=%s retarget=%s\n"), MotionAppearance->Name,
+				*GetPathNameSafe(Player->GetMesh()->GetSkeletalMeshAsset()), *GetPathNameSafe(Player->GetMesh()->GetAnimClass()));
+		}
+		FVector Start = NPC->GetActorLocation() + FVector(100, 0, 100);
+		if (bRollFloorEdge)
+		{
+			constexpr double Thickness = 12.0;
+			const FVector PlatformCenter = Start + FVector::UpVector * (60.0 - Thickness);
+			FActorSpawnParameters Spawn;
+			Spawn.ObjectFlags |= RF_Transient;
+			auto* Platform = World->SpawnActor<AActor>(Spawn);
+			Check(Platform != nullptr, TEXT("roll_edge_transient_platform_created"));
+			if (Failures) { Finish(); return; }
+			auto* FloorBox = NewObject<UBoxComponent>(Platform, NAME_None, RF_Transient);
+			Platform->AddInstanceComponent(FloorBox);
+			Platform->SetRootComponent(FloorBox);
+			FloorBox->SetBoxExtent(FVector(100.0, 100.0, Thickness));
+			FloorBox->SetCollisionObjectType(ECC_WorldStatic);
+			FloorBox->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+			FloorBox->SetCollisionResponseToAllChannels(ECR_Block);
+			FloorBox->SetGenerateOverlapEvents(false);
+			FloorBox->SetCanEverAffectNavigation(false);
+			FloorBox->RegisterComponent();
+			Platform->SetActorLocation(PlatformCenter);
+			Start.Z = PlatformCenter.Z + Thickness + Player->GetCapsuleComponent()->GetScaledCapsuleHalfHeight() + 2.0;
+			Player->GetCharacterMovement()->SetMovementMode(MOVE_Falling);
+		}
+		Player->SetActorLocation(Start, false, nullptr, ETeleportType::TeleportPhysics);
 		auto Growth = State->CaptureGrowth();
 		Growth.Level = 8;
 		Check(State->RestoreGrowth(Growth), TEXT("roll_only_restores_growth_in_isolated_profile"));
@@ -1460,6 +1511,19 @@ private:
 			Self->RecordRollMotion(TEXT("active"), Progress);
 			if (Self->RollPhotoCamera.IsValid() && !Self->RollAuditDirection.IsEmpty())
 			{
+				if (Self->MotionAppearance)
+				{
+					static constexpr struct { float Progress; const TCHAR* Filename; } SwordCaptures[] = {
+						{ 0.09f, TEXT("roll-sword-before-entry.png") }, { 0.135f, TEXT("roll-sword-entry.png") },
+						{ 0.18f, TEXT("roll-sword-after-entry.png") }, { 0.412f, TEXT("roll-sword-support.png") },
+					};
+					const int32 Next = Self->NextRollSwordCapture;
+					if (Next < UE_ARRAY_COUNT(SwordCaptures) && Progress >= SwordCaptures[Next].Progress)
+					{
+						Self->Shot(SwordCaptures[Next].Filename);
+						++Self->NextRollSwordCapture;
+					}
+				}
 				if (!Self->bRollReleaseEntryCaptured && Progress >= 0.50f)
 				{
 					Self->bRollReleaseEntryCaptured = true;
@@ -1513,39 +1577,50 @@ private:
 		const auto* Capsule = Player->GetCapsuleComponent();
 		if (!Mesh || !Capsule) { bRollMotionValid = false; return; }
 		const FVector Origin = Capsule->GetComponentLocation();
-		const auto& Floor = Player->GetCharacterMovement()->CurrentFloor;
-		const double FloorZ = Floor.IsWalkableFloor() ? Floor.HitResult.ImpactPoint.Z : 0.0;
+		const auto* Movement = Player->GetCharacterMovement();
+		const auto& Floor = Movement->CurrentFloor;
+		const bool bWalkableFloor = Floor.IsWalkableFloor() && Movement->IsMovingOnGround()
+			&& (!bRollFloorEdge || Origin.Z - Capsule->GetScaledCapsuleHalfHeight() >= Floor.HitResult.ImpactPoint.Z - 2.0);
+		const double FloorZ = bWalkableFloor ? Floor.HitResult.ImpactPoint.Z : 0.0;
 		const auto* Visual = Player->FindComponentByClass<URogue10mWeaponVisualComponent>();
 		const auto* Sword = Visual ? Visual->GetRightWeaponMesh() : nullptr;
 		const UStaticMesh* SwordAsset = Sword ? Sword->GetStaticMesh().Get() : nullptr;
 		double SwordClearance = 0.0;
-		if (SwordAsset && Floor.IsWalkableFloor())
+		if (SwordAsset && bWalkableFloor)
 		{
 			const FBox Bounds = SwordAsset->GetBoundingBox().TransformBy(Sword->GetComponentTransform());
 			SwordClearance = Bounds.Min.Z - FloorZ;
 			MinRollSwordClearance = FMath::Min(MinRollSwordClearance, SwordClearance);
 		}
-		else
+		else if (!bRollFloorEdge || !SwordAsset)
 		{
 			bRollMotionValid = false;
 		}
+		if (bRollFloorEdge && FCString::Strcmp(Phase, TEXT("active")) == 0)
+		{
+			bSawFloorDuringRoll |= bWalkableFloor;
+			bSawAirDuringRoll |= !bWalkableFloor && Movement->IsFalling();
+		}
 		const FString Measure = FString::Printf(TEXT("%s,%llu,%.6f,%.6f,%u,%.4f,%.4f,%.4f,%.4f,%d,%.4f,%.4f"),
 			Phase, GFrameCounter, World->GetTimeSeconds(), Progress, Mesh->GetBoneTransformRevisionNumber(),
-			Origin.X, Origin.Y, Origin.Z, Origin.Z - Capsule->GetScaledCapsuleHalfHeight(), Floor.IsWalkableFloor(), FloorZ, SwordClearance);
+			Origin.X, Origin.Y, Origin.Z, Origin.Z - Capsule->GetScaledCapsuleHalfHeight(), bWalkableFloor, FloorZ, SwordClearance);
 		static const FName Bones[] = { TEXT("pelvis"), TEXT("head"), TEXT("clavicle_l"), TEXT("clavicle_r"),
 			TEXT("hand_l"), TEXT("hand_r"), TEXT("calf_l"), TEXT("calf_r"), TEXT("foot_l"), TEXT("foot_r") };
 		static const FName ExtraBones[] = { TEXT("thigh_l"), TEXT("thigh_r"), TEXT("ball_l"), TEXT("ball_r"),
 			TEXT("upperarm_l"), TEXT("upperarm_r"), TEXT("lowerarm_l"), TEXT("lowerarm_r"), TEXT("neck_01") };
 		bRollMotionValid &= !Origin.ContainsNaN() && FMath::IsFinite(FloorZ) && FMath::IsFinite(Progress);
-		const auto RecordBone = [&](const USkeletalMeshComponent* SampleMesh, FName Bone, const TCHAR* Prefix)
+		const auto RecordTransform = [&](const FTransform& Pose, const FString& Name)
 		{
-			if (!SampleMesh || SampleMesh->GetBoneIndex(Bone) == INDEX_NONE) { bRollMotionValid = false; return; }
-			const FTransform Pose = SampleMesh->GetBoneTransform(Bone, RTS_World);
 			const FVector Location = Pose.GetLocation();
 			const FQuat Rotation = Pose.GetRotation();
 			bRollMotionValid &= !Pose.ContainsNaN() && Rotation.IsNormalized();
-			RollMotionRows += FString::Printf(TEXT("%s,%s%s,%.4f,%.4f,%.4f,%.7f,%.7f,%.7f,%.7f\n"),
-				*Measure, Prefix, *Bone.ToString(), Location.X, Location.Y, Location.Z, Rotation.X, Rotation.Y, Rotation.Z, Rotation.W);
+			RollMotionRows += FString::Printf(TEXT("%s,%s,%.4f,%.4f,%.4f,%.7f,%.7f,%.7f,%.7f\n"),
+				*Measure, *Name, Location.X, Location.Y, Location.Z, Rotation.X, Rotation.Y, Rotation.Z, Rotation.W);
+		};
+		const auto RecordBone = [&](const USkeletalMeshComponent* SampleMesh, FName Bone, const TCHAR* Prefix)
+		{
+			if (!SampleMesh || SampleMesh->GetBoneIndex(Bone) == INDEX_NONE) { bRollMotionValid = false; return; }
+			RecordTransform(SampleMesh->GetBoneTransform(Bone, RTS_World), FString(Prefix) + Bone.ToString());
 		};
 		for (const FName Bone : Bones) { RecordBone(Mesh, Bone, TEXT("")); }
 		if (!RollAuditDirection.IsEmpty())
@@ -1557,6 +1632,19 @@ private:
 				RecordBone(Mesh, Bone, TEXT(""));
 				RecordBone(Source, Bone, TEXT("source."));
 			}
+		}
+		if (MotionAppearance && SwordAsset)
+		{
+			RecordBone(Mesh, TEXT("middle_01_r"), TEXT(""));
+			RecordBone(Mesh, TEXT("middle_01_l"), TEXT(""));
+			const FTransform Hilt = Sword->GetComponentTransform();
+			RecordTransform(Hilt, TEXT("sword.hilt"));
+			FTransform Tip = Hilt;
+			const FBox Bounds = SwordAsset->GetBoundingBox();
+			FVector BladeEnd = Bounds.GetCenter();
+			BladeEnd.Z = Bounds.Max.Z;
+			Tip.SetLocation(Hilt.TransformPosition(BladeEnd));
+			RecordTransform(Tip, TEXT("sword.tip"));
 		}
 	}
 	double LogCommonRollPelvis(const TCHAR* Stage)
@@ -1634,6 +1722,14 @@ private:
 						Check(IFileManager::Get().FileSize(*FPaths::Combine(Output, Name)) > 1024, TEXT("directional_roll_release_capture_written"));
 					}
 				}
+				if (MotionAppearance)
+				{
+					for (const TCHAR* Name : { TEXT("roll-sword-before-entry.png"), TEXT("roll-sword-entry.png"),
+						TEXT("roll-sword-after-entry.png"), TEXT("roll-sword-support.png") })
+					{
+						Check(IFileManager::Get().FileSize(*FPaths::Combine(Output, Name)) > 1024, TEXT("avatar_roll_sword_phase_capture_written"));
+					}
+				}
 				if (PC.IsValid() && RollPreviousViewTarget.IsValid()) { PC->SetViewTarget(RollPreviousViewTarget.Get()); }
 				RollPhotoCamera->Destroy();
 			}
@@ -1642,7 +1738,14 @@ private:
 			Report += FString::Printf(TEXT("sword_bounds_min_clearance_cm=%.3f\n"), MinRollSwordClearance);
 			Check(bRollMotionValid, TEXT("common_roll_visible_bone_transforms_finite_and_normalized"));
 			Check(RollMotionFrames >= 3 && RollMotionMin < 0.35f && RollMotionMax > 0.65f, TEXT("common_roll_motion_sampled_across_active_phases"));
-			Check(MinRollSwordClearance >= -2.0, TEXT("common_roll_keeps_equipped_sword_above_floor"));
+			if (!bStockRollSword)
+			{
+				Check(MinRollSwordClearance >= (MotionAppearance ? 0.45 : -2.0), TEXT("common_roll_keeps_equipped_sword_above_floor"));
+			}
+			if (bRollFloorEdge)
+			{
+				Check(bSawFloorDuringRoll && bSawAirDuringRoll, TEXT("roll_edge_exercises_grounded_and_airborne_support"));
+			}
 			Check(FFileHelper::SaveStringToFile(RollMotionRows, *FPaths::Combine(Output, TEXT("roll-motion.csv"))), TEXT("common_roll_motion_csv_saved"));
 		}
 		if (bInputQA)
@@ -1697,6 +1800,12 @@ private:
 	TWeakObjectPtr<AActor> RollPreviousViewTarget;
 	FString RollMotionRows;
 	FString RollAuditDirection;
+	const Rogue10mMotionQA::FAppearance* MotionAppearance = nullptr;
+	bool bStockRollSword = false;
+	bool bRollFloorEdge = false;
+	bool bSawFloorDuringRoll = false;
+	bool bSawAirDuringRoll = false;
+	int32 NextRollSwordCapture = 0;
 	FKey RollMoveKey;
 	FVector RollExpectedDirection = FVector::ZeroVector;
 	FVector RollObservedDirection = FVector::ZeroVector;

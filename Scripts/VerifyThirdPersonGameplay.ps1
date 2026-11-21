@@ -1,4 +1,4 @@
-param([Parameter(Mandatory)][ValidatePattern('^[A-Za-z0-9_]{1,24}$')][string]$Label,[switch]$NullRHI,[switch]$MouseInput,[int]$TimeoutSeconds=210,[switch]$CombatMotion,[switch]$CombatMotionRender,[switch]$DoubleJumpMotion,[switch]$DoubleJumpMotionRender,[switch]$ExpectSecondJumpPose,[switch]$PlayerHitMotion,[switch]$PlayerHitMotionRender,[switch]$ForwardLanding,[switch]$ExpectStockLanding)
+param([Parameter(Mandatory)][ValidatePattern('^[A-Za-z0-9_]{1,24}$')][string]$Label,[switch]$NullRHI,[switch]$MouseInput,[int]$TimeoutSeconds=210,[switch]$CombatMotion,[switch]$CombatMotionRender,[switch]$DoubleJumpMotion,[switch]$DoubleJumpMotionRender,[switch]$ExpectSecondJumpPose,[switch]$PlayerHitMotion,[switch]$PlayerHitMotionRender,[switch]$ForwardLanding,[switch]$ExpectStockLanding,[ValidateSet('HumanMale','HumanFemale','DwarfMale','DwarfFemale','OrcMale','OrcFemale')][string]$Appearance)
 $ErrorActionPreference='Stop'
 if($CombatMotion -and (-not $NullRHI -or $MouseInput)){throw 'CombatMotion requires NullRHI without MouseInput.'}
 if($CombatMotionRender -and ($NullRHI -or $MouseInput -or $CombatMotion)){throw 'CombatMotionRender is a separate software-rendered run.'}
@@ -8,6 +8,7 @@ $jumpQA=$DoubleJumpMotion -or $DoubleJumpMotionRender
 $softwareCapture=$CombatMotionRender -or $DoubleJumpMotionRender -or $PlayerHitMotionRender -or ($ForwardLanding -and -not $NullRHI)
 if($ForwardLanding -and ($jumpQA -or $CombatMotion -or $CombatMotionRender -or $PlayerHitMotion -or $PlayerHitMotionRender -or $MouseInput)){throw 'ForwardLanding requires a separate run.'}
 if($ExpectStockLanding -and -not $ForwardLanding){throw 'ExpectStockLanding requires a landing audit.'}
+if($Appearance -and -not $ForwardLanding){throw 'Appearance requires a landing audit.'}
 if($ExpectSecondJumpPose -and -not $jumpQA){throw 'ExpectSecondJumpPose requires a jump audit run.'}
 if($PlayerHitMotionRender -and $NullRHI){throw 'PlayerHitMotionRender requires D3D11.'}
 if($PlayerHitMotionRender){$PlayerHitMotion=$true}
@@ -39,6 +40,7 @@ if($PlayerHitMotionRender){$argsList+='-RoguePlayerHitMotionCapture'}
 if($ForwardLanding){
  $argsList+=@('-RogueThirdPersonForwardLandingQA','-UseFixedTimeStep','-FPS=60')
  if(-not $ExpectStockLanding){$argsList+='-RogueExpectForwardLanding'}
+ if($Appearance){$argsList+=('-RogueMotionQAAppearance='+$Appearance)}
 }
 if($softwareCapture){$argsList+=@('-AllowSoftwareRendering','-graphicsadapter=1')}
 if($ExpectSecondJumpPose){$argsList+='-RogueExpectSecondJumpPose'}
@@ -81,6 +83,7 @@ try {
   }
  }
  if($ForwardLanding){
+  if($Appearance -and $result -notmatch ('(?m)^appearance='+[regex]::Escape($Appearance)+' body=')){throw 'Landing audit did not enter the expected appearance.'}
   $landingCsv=Join-Path $root ('DevLog\20261110_ThirdPerson\'+$Label+'\forward-landing-frames.csv')
   if(-not(Test-Path -LiteralPath $landingCsv -PathType Leaf)){throw 'Missing forward-landing frame observations.'}
   $cases=if($NullRHI){@('forward_620','forward_610','stationary','sideways')}else{@('forward_620')}

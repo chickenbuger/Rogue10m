@@ -11,6 +11,7 @@ class USkeletalMeshComponent;
 class USkeleton;
 class UStaticMeshComponent;
 class URogue10mWeaponRetargetAnimInstance;
+class ARogue10mCharacter;
 /** Event-driven weapon meshes attached to the rendered character, never the hidden animation source. */
 UCLASS(ClassGroup=(Rogue10m), meta=(BlueprintSpawnableComponent))
 class ROGUE10M_API URogue10mWeaponVisualComponent : public UActorComponent
@@ -22,6 +23,10 @@ public:
  static bool BuildStaffUprightGrip(const FTransform& HandWorld, const FTransform& AuthoredGrip,
   const FVector& FacingForward, float ActionWeight, FTransform& OutGrip);
  static bool BuildSwordPalmGrip(const FVector& RightPalm, const FVector& LeftPalm, const FVector& FingerAxis, FTransform& OutGrip);
+ static bool GetRollSwordFloorPlane(const ARogue10mCharacter& Character, FVector& FloorPoint, FVector& FloorNormal);
+#if WITH_EDITOR
+ static bool IsRollSwordFloorCorrectionEnabled();
+#endif
  UFUNCTION(BlueprintCallable, Category="Rogue10m|Weapon Visual")
  void RefreshWeaponVisuals();
  UFUNCTION(BlueprintPure, Category="Rogue10m|Weapon Visual")
@@ -78,6 +83,11 @@ private:
  TWeakObjectPtr<class USkeletalMeshComponent> GripBody;
  FDelegateHandle GripDelegate;
  FTransform LastGrip;
+ FQuat LastTwoHandSwordWorldRotation = FQuat::Identity;
+ FQuat RollSwordStartWorldRotation = FQuat::Identity;
+ float LastSwordRollProgress = 0.0f;
+ bool bHasTwoHandSwordRotation = false;
+ bool bHasRollSwordStart = false;
  bool bOwnGrip = false;
  void RefreshBodyRetarget(class USkeletalMeshComponent* Body, bool bGreatSword);
  UPROPERTY(Transient) TObjectPtr<UClass> PreviousBodyAnimClass;
