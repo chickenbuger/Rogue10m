@@ -1,0 +1,53 @@
+{
+  "species": "ThornWarden",
+  "asset": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_ThornWarden.DA_OW_ThornWarden",
+  "profile": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_ThornWarden.DA_OW_BasicAttack_ThornWarden",
+  "mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/Cactus_SK.Cactus_SK",
+  "walk_cm_s": 250.0,
+  "use_native_humanoid_blend": false,
+  "clips": {
+    "idle": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_IdleNormal_ANIM.Cactus_IdleNormal_ANIM",
+    "movement": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_WalkFWD_ANIM.Cactus_WalkFWD_ANIM",
+    "attack": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_Attack01_ANIM.Cactus_Attack01_ANIM",
+    "hit": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_GetHit_ANIM.Cactus_GetHit_ANIM",
+    "death": "/Game/MonsterForSurvivalGame/Animation/PBR/Cactus/Cactus_Die_ANIM.Cactus_Die_ANIM"
+  },
+  "idle_to_walk_pose_gap_at_eight_idle_phases": [
+    {
+      "bone": "cactus_rightHandTip",
+      "cm": 77.31521148756366
+    },
+    {
+      "bone": "cactus_rightHandTip",
+      "cm": 77.1870148462196
+    },
+    {
+      "bone": "cactus_rightHandTip",
+      "cm": 76.88828537474183
+    },
+    {
+      "bone": "cactus_rightHandTip",
+      "cm": 76.55303052387053
+    },
+    {
+      "bone": "cactus_rightHandTip",
+      "cm": 76.29524768682165
+    },
+    {
+      "bone": "cactus_rightHandTip",
+      "cm": 76.23580677289424
+    },
+    {
+      "bone": "cactus_rightHandTip",
+      "cm": 76.55380602867784
+    },
+    {
+      "bone": "cactus_rightHandTip",
+      "cm": 77.04541832992123
+    }
+  ],
+  "walk_loop_gap": {
+    "bone": "cactus_head",
+    "cm": 0.0
+  }
+}

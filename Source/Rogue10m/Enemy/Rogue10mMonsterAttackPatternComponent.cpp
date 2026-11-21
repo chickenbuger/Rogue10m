@@ -96,8 +96,10 @@ void URogue10mMonsterAttackPatternComponent::ConfigureProfile(URogue10mMonsterAt
 	UnbindHealthDelegate();
 	if (GetWorld()) GetWorld()->GetTimerManager().ClearTimer(LocomotionTimer);
 	const bool bLeavingHumanoid = Profile && Profile->bUseHumanoidAnimInstance && (!InProfile || !InProfile->bUseHumanoidAnimInstance);
+	const bool bLeavingBlendedLocomotion = Profile && Profile->bBlendLegacyLocomotion
+		&& (!InProfile || (!InProfile->bBlendLegacyLocomotion && !InProfile->bUseHumanoidAnimInstance));
 	Profile = InProfile;
-	if (bLeavingHumanoid)
+	if (bLeavingHumanoid || bLeavingBlendedLocomotion)
 	{
 		if (auto* Monster=GetMonster(); Monster && Monster->GetMesh())
 		{
@@ -157,6 +159,13 @@ void URogue10mMonsterAttackPatternComponent::ConfigureProfile(URogue10mMonsterAt
    {
     Monster->GetMesh()->SetReceivesDecals(false); // Floor warnings must not paint the humanoid body.
     Monster->GetMesh()->SetAnimInstanceClass(URogue10mHumanoidAnimInstance::StaticClass());
+    if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance())) Anim->Configure(Profile);
+   }
+  }
+  else if (Profile->bBlendLegacyLocomotion)
+  {
+   if (auto* Monster = GetMonster(); Monster && Monster->GetMesh())
+   {
     if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance())) Anim->Configure(Profile);
    }
   }
@@ -690,6 +699,16 @@ void URogue10mMonsterAttackPatternComponent::UpdateLocomotionPresentation()
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Profile || !Monster || Monster->IsDead() || IsAttackActive() || !GetWorld()
 		|| GetWorld()->GetTimerManager().IsTimerActive(HitReactionTimer)) return;
+	if (Profile->bBlendLegacyLocomotion)
+	{
+		USkeletalMeshComponent* Mesh = Monster->GetMesh();
+		if (!Cast<URogue10mHumanoidAnimInstance>(Mesh->GetAnimInstance()))
+		{
+			Mesh->SetAnimInstanceClass(URogue10mHumanoidAnimInstance::StaticClass());
+		}
+		if (const auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Mesh->GetAnimInstance());
+			Anim && Anim->GetIdleSequence() && Anim->GetMovementSequence()) { return; }
+	}
 	UAnimSequence* Animation = Monster->GetVelocity().SizeSquared2D() > 100.0f
 		? Profile->MovementAnimation.LoadSynchronous() : Profile->IdleAnimation.LoadSynchronous();
 	if (!Animation) return;

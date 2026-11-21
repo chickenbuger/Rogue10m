@@ -1,7 +1,10 @@
 #if WITH_EDITOR
 #include "AI/Rogue10mMonsterAIController.h"
+#include "Animation/AnimSequence.h"
+#include "Animation/AnimSingleNodeInstance.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Camera/CameraActor.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Containers/Ticker.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
@@ -23,7 +26,10 @@
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCharacterProfileSubsystem.h"
 #include "Rogue10mCombatTestComponent.h"
+#include "Rogue10mHumanoidAnimInstance.h"
 #include "Rogue10mMonsterAttackPatternComponent.h"
+#include "Rogue10mMonsterAttackPatternProfile.h"
+#include "Rogue10mMonsterDataAsset.h"
 #include "Rogue10mPlayerController.h"
 #include "UnrealClient.h"
 
@@ -42,7 +48,9 @@ public:
 		{ FPlatformMisc::RequestExitWithStatus(false, 2); return; }
 		Output = FPaths::Combine(FPaths::ProjectDir(), TEXT("Feature/doc/evidence/monster-effects-chase-20261011"), Slot);
 		IFileManager::Get().MakeDirectory(*Output, true);
-		Deadline = FPlatformTime::Seconds() + 7.0;
+		bThornWalk = FParse::Param(FCommandLine::Get(), TEXT("RogueThornWardenWalkQA"));
+		if (bThornWalk) { Species = 4; }
+		Deadline = FPlatformTime::Seconds() + (bThornWalk ? 1.0 : 7.0);
 		FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self=AsShared()](float) { return Self->Tick(); }), 0.05f);
 	}
 private:
@@ -78,7 +86,7 @@ private:
 		Camera = World->SpawnActor<ACameraActor>();
 		for (TActorIterator<ARogue10mBasicMonster> It(World.Get()); It; ++It)
 			if (auto* ExistingAI = Cast<ARogue10mMonsterAIController>(It->GetController())) ExistingAI->StopMonsterAI();
-		Stage = 1; Deadline = FPlatformTime::Seconds()+4;
+		Stage = 1; Deadline = FPlatformTime::Seconds()+(bThornWalk ? .5 : 4);
 	}
 	void Spawn()
 	{
@@ -90,6 +98,26 @@ private:
 		Monster = Tools->GetTestTarget();
 		if (!Monster.IsValid()) { Finish(); return; }
 		AI = Cast<ARogue10mMonsterAIController>(Monster->GetController());
+		if (bThornWalk)
+		{
+			auto* Pattern = Monster->GetAttackPatternComponent();
+			const auto* Live = LoadObject<URogue10mMonsterDataAsset>(nullptr,
+				TEXT("/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_ThornWarden.DA_OW_ThornWarden"));
+			ThornProfile = Pattern ? Pattern->GetProfile() : nullptr;
+			Check(Live && Monster->GetMonsterData() == Live && ThornProfile.Get() == Live->AttackPatternProfile
+				&& ThornProfile.IsValid() && ThornProfile->bBlendLegacyLocomotion, TEXT("real_ThornWarden_profile_uses_blended_ground_graph"));
+			if (Failures) { Finish(); return; }
+			ThornOrigin = Monster->GetActorTransform();
+			ThornDirection = (Monster->GetActorLocation() - Player->GetActorLocation()).GetSafeNormal2D();
+			ThornFrames = TEXT("case,frame,elapsed_s,speed_cm_s,right_hand_step_cm,native_graph\n");
+			BeginThornWalk(false);
+			Stage = 11;
+			ThornHandle = FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* InWorld, ELevelTick, float)
+			{
+				if (InWorld == Self->World.Get()) Self->SampleThornWalk();
+			});
+			return;
+		}
 		FVector SpawnAt;
 		SpawnAt=Monster->GetActorLocation();
 		Check(FVector::Dist2D(Origin,SpawnAt)>400,TEXT("chase_starts_outside_melee_range_on_UI_validated_ground"));
@@ -101,6 +129,78 @@ private:
 		bCapturePending=false;
 		Tools->ExecuteAction(ERogue10mCombatTestAction::ToggleAI);
 		Stage=2; Deadline=FPlatformTime::Seconds()+2;
+	}
+	void BeginThornWalk(bool bBlend)
+	{
+		auto* Profile = bBlend ? ThornProfile.Get()
+			: DuplicateObject<URogue10mMonsterAttackPatternProfile>(ThornProfile.Get(), GetTransientPackage());
+		if (!bBlend) { Profile->bBlendLegacyLocomotion = false; }
+		Monster->GetAttackPatternComponent()->ConfigureProfile(Profile);
+		Monster->SetActorTransform(ThornOrigin, false, nullptr, ETeleportType::TeleportPhysics);
+		Monster->SetActorRotation(ThornDirection.Rotation());
+		Monster->GetCharacterMovement()->StopMovementImmediately();
+		Monster->GetCharacterMovement()->bRunPhysicsWithNoController = true;
+		Monster->GetMesh()->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+		bThornBlend = bBlend;
+		ThornStart = World->GetTimeSeconds();
+		PeakThornStep = 0.0;
+		PeakThornSpeed = 0.0;
+		bThornAnimated = false;
+	}
+	void SampleThornWalk()
+	{
+		if (!Monster.IsValid() || !ThornProfile.IsValid()) { Check(false, TEXT("thorn_walk_fixture_lost_actor_or_profile")); Finish(); return; }
+		auto* Pattern = Monster->GetAttackPatternComponent();
+		auto* Mesh = Monster->GetMesh();
+		if (bObserveThornRecovery)
+		{
+			if (Pattern->IsAttackActive()) { return; }
+			if (!Cast<URogue10mHumanoidAnimInstance>(Mesh->GetAnimInstance()) && World->GetTimeSeconds() < ThornStart + 1.0) { return; }
+			Check(Cast<URogue10mHumanoidAnimInstance>(Mesh->GetAnimInstance()) != nullptr, TEXT("legacy_attack_recovers_into_blended_ground_graph"));
+			Finish();
+			return;
+		}
+
+		const double Elapsed = World->GetTimeSeconds() - ThornStart;
+		const double Speed = Monster->GetVelocity().Size2D();
+		const bool bMoving = Elapsed >= .40 && Elapsed < 1.03;
+		if (bMoving) { Monster->AddMovementInput(ThornDirection, 1.0f, true); }
+		const FName Bone(TEXT("cactus_rightHandTip"));
+		if (Mesh->GetBoneIndex(Bone) == INDEX_NONE) { Check(false, TEXT("live_right_hand_tip_exists")); Finish(); return; }
+		const FVector Hand = Mesh->GetSocketTransform(Bone, RTS_Component).GetLocation();
+		const double Step = FVector::Dist(Hand, PreviousThornHand);
+		const bool bNative = Cast<URogue10mHumanoidAnimInstance>(Mesh->GetAnimInstance()) != nullptr;
+		if (Elapsed >= .40 && Elapsed < 1.28)
+		{
+			PeakThornStep = FMath::Max(PeakThornStep, Step);
+			PeakThornSpeed = FMath::Max(PeakThornSpeed, Speed);
+			bThornAnimated |= Speed > 100.0 && bNative == bThornBlend;
+			ThornFrames += FString::Printf(TEXT("%s,%llu,%.6f,%.3f,%.4f,%d\n"),
+				bThornBlend ? TEXT("blended") : TEXT("legacy"), GFrameCounter, Elapsed, Speed, Step, bNative);
+		}
+		PreviousThornHand = Hand;
+		if (Elapsed < 1.45) { return; }
+		Results += FString::Printf(TEXT("thorn_%s_peak_pose_step_cm=%.4f speed_cm_s=%.3f\n"),
+			bThornBlend ? TEXT("blended") : TEXT("legacy"), PeakThornStep, PeakThornSpeed);
+		Check(bThornAnimated && PeakThornSpeed >= 0.95 * Monster->GetMonsterData()->WalkSpeed,
+			TEXT("actual_ThornWarden_moves_at_profile_speed_in_expected_pose_graph"));
+		if (!bThornBlend && !Failures)
+		{
+			LegacyThornStep = PeakThornStep;
+			BeginThornWalk(true);
+			return;
+		}
+		Check(PeakThornStep > 0.5 && LegacyThornStep >= 20.0 && PeakThornStep < LegacyThornStep * 0.6,
+			TEXT("blended_start_and_stop_reduce_visible_hand_tip_discontinuity"));
+		if (Failures) { Finish(); return; }
+		const auto* Clip = ThornProfile->AttackAnimation.LoadSynchronous();
+		Check(Tools->ExecuteAction(ERogue10mCombatTestAction::Basic)
+			&& Mesh->GetSingleNodeInstance() && Mesh->GetSingleNodeInstance()->GetCurrentAsset() == Clip
+			&& FMath::IsNearlyEqual(Pattern->GetLockedAttackShape().WindupDuration, ThornProfile->AttackWindupSeconds),
+			TEXT("blended_locomotion_still_uses_existing_legacy_attack_clip_and_windup"));
+		if (Failures) { Finish(); return; }
+		ThornStart = World->GetTimeSeconds();
+		bObserveThornRecovery = true;
 	}
 	bool Tick()
 	{
@@ -240,8 +340,15 @@ private:
 	}
 	void Finish()
 	{
+		if (bFinished) { return; }
 		bFinished=true;
+		FWorldDelegates::OnWorldPostActorTick.Remove(ThornHandle);
 		if (Tools.IsValid()) Tools->ExecuteAction(ERogue10mCombatTestAction::Clear);
+		if (bThornWalk)
+		{
+			Check(FFileHelper::SaveStringToFile(ThornFrames,*FPaths::Combine(Output,TEXT("thorn-walk-frames.csv"))),
+				TEXT("thorn_walk_pose_samples_written"));
+		}
 		FFileHelper::SaveStringToFile(Results,*FPaths::Combine(Output,TEXT("results.txt")),FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM);
 		UE_LOG(LogRogue10m,Display,TEXT("RESULT=MONSTER_FX_%s failures=%d"),Failures ? TEXT("FAILED") : TEXT("PASSED"),Failures);
 		FPlatformMisc::RequestExitWithStatus(false,Failures ? 1 : 0);
@@ -253,6 +360,13 @@ private:
 	TWeakObjectPtr<ARogue10mBasicMonster> Monster;
 	TWeakObjectPtr<ARogue10mMonsterAIController> AI;
 	TWeakObjectPtr<ACameraActor> Camera;
+	TWeakObjectPtr<URogue10mMonsterAttackPatternProfile> ThornProfile;
+	FTransform ThornOrigin;
+	FVector ThornDirection = FVector::ZeroVector, PreviousThornHand = FVector::ZeroVector;
+	FDelegateHandle ThornHandle;
+	FString ThornFrames;
+	double ThornStart = 0.0, PeakThornStep = 0.0, PeakThornSpeed = 0.0, LegacyThornStep = 0.0;
+	bool bThornWalk = false, bThornBlend = false, bThornAnimated = false, bObserveThornRecovery = false;
 	FString Output,Results;
 	FVector Origin,ChaseStart;
 	double Deadline=0;
