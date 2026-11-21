@@ -3511,3 +3511,9 @@ G2 동시작업 경계: stage 후 자연경계 소유 작업이 디스크709개�
 - 공통 탭에 메달리온 16종과 숯빛 질감, 이름표, 선택 탭과 습득 경로 강조를 적용했다. 왼쪽 상세 카드에 선택 아이콘을 크게 표시한다.
 - UE 5.8 Editor 빌드, UI 텍스처 2종 임포트, 자동화 4개와 StartHub 실제 게임 입력 검사를 통과했다. 1080p와 720p에서 최종 화면을 확인했다.
 - 구현과 검증을 완료했다. [작업 계획](../Feature/architect/2026-11-20_common-skill-tree-art.md) · [결과](../Feature/doc/2026-11-20_common-skill-tree-art.md)
+
+### Sprint#17-1 — 기존 OpenRunMap 배치 복구
+
+- 기존 필드 레벨에서 지형·두 동굴과 세 마을의 건물, 울타리, 갈색 바닥을 복구했다. 회색 외곽벽 네 개는 충돌 설정을 유지하며 표시를 껐다.
+- 새 Unreal 세션에서 376개 배치를 다시 확인했다. 실제 StartHub 포탈 보행 17개 검사와 동굴 카메라 구체 충돌 검사 48회를 수행했다.
+- 현재 브랜치에 복구 체크포인트를 남겼다. 전체 외곽 지형의 면적 정리는 추가 검증이 필요하다. [작업 계획](../Feature/architect/2026-11-22_openrun-layout-restoration.md) · [검증 결과](../Feature/doc/2026-11-22_openrun-layout-restoration.md)
