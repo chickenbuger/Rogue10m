@@ -1,0 +1,127 @@
+{
+  "baseline_commit": "2666013df02da3329eae98254b531c6cbb85083a",
+  "branch": "Sprint#18-2-combat-animation-continuity",
+  "map": "/Game/Rogue10m/Maps/StartHub",
+  "input": "programmatic Controller InputKey",
+  "clock_hz": 60,
+  "baseline": {
+    "run": "MotionContinuityA",
+    "checks": 4557,
+    "failures": 0,
+    "rendered": false,
+    "first_w_frame": {
+      "ground_speed_cm_per_second": 34.133335,
+      "guard_weight": [1.0, 0.0],
+      "visible_chest_step_degrees": 27.454666,
+      "visible_max_hand_travel_from_pelvis_cm": 19.433977,
+      "visible_left_foot_travel_from_pelvis_cm": 12.008259
+    }
+  },
+  "first_candidate": {
+    "run": "MotionContinuityB",
+    "move_blend_seconds": 0.45,
+    "checks": 4559,
+    "failures": 0,
+    "first_seven_frames_peak_chest_degrees": 0.962926,
+    "first_seven_frames_peak_hand_cm": 0.821468,
+    "guard_weight_at_307_cm_per_second": 0.740741
+  },
+  "final_candidate": {
+    "run": "MotionContinuityC",
+    "move_blend_seconds": 0.18,
+    "checks": 6497,
+    "failures": 0,
+    "game_log_errors": 0,
+    "world_samples": 526,
+    "bone_samples": 6312,
+    "existing_qa_saves_preserved": 4,
+    "first_w_frame": {
+      "guard_weight": 0.975868,
+      "visible_chest_step_degrees": 0.714456,
+      "visible_max_hand_travel_from_pelvis_cm": 0.459808,
+      "visible_left_foot_travel_from_pelvis_cm": 0.297639
+    },
+    "first_seven_frames_peak_chest_degrees": 3.438893,
+    "first_seven_frames_peak_hand_cm": 2.718131,
+    "paced": {
+      "measured_speed_cm_per_second": 300.0,
+      "earlier_duration_frames_guard_at_least_five_percent_at_pace": 15,
+      "final_duration_frames_guard_at_least_five_percent_at_pace": 1,
+      "earlier_duration_first_frame_below_five_percent_after_w": 24,
+      "final_duration_first_frame_below_five_percent_after_w": 10,
+      "first_seven_frames_peak_chest_degrees": 3.306326,
+      "first_seven_frames_peak_hand_cm": 2.665741
+    },
+    "unarmed_punch_montage_time_at_moving_layer_change_seconds": 0.078,
+    "sword_charge_held_frames": 48,
+    "sword_release_active_montage_frames": 72
+  },
+  "default_regression": {
+    "run": "MotionContinuityReg",
+    "checks": 1568,
+    "mouse_cases_passed": 13,
+    "failures": 0,
+    "game_log_errors": 0,
+    "existing_qa_saves_preserved": 8
+  },
+  "current_integration": {
+    "base": "a24f522edfba3b50abfd52882272754cac26ff1b",
+    "build_seconds": 130.31,
+    "run": "MotionContinuityLatest",
+    "checks": 6497,
+    "failures": 0,
+    "game_log_errors": 0,
+    "existing_qa_saves_preserved": 10,
+    "same_sword_guard_walk_and_attack_test_assets": true,
+    "same_guard_metrics_at_six_decimal_places": true
+  },
+  "skill_tree_discovery_integration": {
+    "base": "4cba98941723b837a73954f76781c46d71ec9fb9",
+    "combat_parent": "0347db317e53f2c94882cfc00106f1cec0001b7a",
+    "run": "MotionDiscoveryMerge",
+    "build_seconds": 87.55,
+    "build_log_errors": 0,
+    "checks": 6497,
+    "failures": 0,
+    "game_log_errors": 0,
+    "engine_result_line": 1556,
+    "existing_qa_saves_preserved": 14,
+    "bone_rows_compared": 6312,
+    "differing_columns": ["world_seconds", "revision"],
+    "sword_charge_held_frames": 48,
+    "sword_release_active_montage_frames": 72,
+    "identical_results_file": "results-latest-nullrhi.txt",
+    "results_sha256": "c2f92929debcd81fabd4f808df9bbf658cbf0e95d3f0b5b4d226b0ef2190c8b6"
+  },
+  "current_integration_render": {
+    "base": "a24f522edfba3b50abfd52882272754cac26ff1b",
+    "run": "MotionLatestWarp",
+    "adapter": "Microsoft Basic Render Driver",
+    "checks": 994,
+    "failures": 0,
+    "existing_qa_saves_preserved": 12,
+    "world_samples": 80,
+    "visible_pose_pairs": 79,
+    "peak_speed_cm_per_second": 620.0,
+    "first_seven_frames_peak_chest_degrees": 3.444668,
+    "first_seven_frames_peak_hand_cm": 2.720102,
+    "hardware_probe_error": "887A0004",
+    "hardware_probe_log_line": 924,
+    "game_log_errors_after_hardware_probe": 0,
+    "capture_size_pixels": [1280, 720],
+    "captures": [
+      {
+        "file": "01_sword_guard_before_W.png",
+        "request_frame": 5,
+        "request_world_seconds": 0.400000,
+        "sha256": "1b988261d62884fb6be3bfe2ea182cb59bb7cbf59904e8527779fff4aaaec0b7"
+      },
+      {
+        "file": "02_sword_guard_fading.png",
+        "request_frame": 12,
+        "request_world_seconds": 0.516667,
+        "sha256": "a0f26808c07c3ad43dc9c51d462f2032a9def3a67a31fcdbef4472daa40fa54f"
+      }
+    ]
+  }
+}

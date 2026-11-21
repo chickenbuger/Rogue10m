@@ -177,10 +177,14 @@ void URogue10mFighterCombatStanceAnimInstance::NativeUpdateAnimation(float Delta
 		}
 	}
 
-	// The cached locomotion pose is also the lower-body source during moving attacks.
-	// Do not leave it mixed with a stationary guard while movement or a jump has already begun.
-	if (Movement && (!Movement->IsMovingOnGround() || GroundSpeed > FMath::Max(0.0f, FighterCombatStationarySpeed)
-		|| (Animation && Animation->HasMovementInput())))
+	// Ease the sword guard into ordinary third-person travel. Attacks still need the
+	// unmixed locomotion pose under their lower body, as do jumps and evasions.
+	const bool bLeavesStandingPose = Movement && (!Movement->IsMovingOnGround()
+		|| GroundSpeed > FMath::Max(0.0f, FighterCombatStationarySpeed) || (Animation && Animation->HasMovementInput()));
+	const bool bBlendSwordGuardIntoMovement = bLeavesStandingPose && bContextValid && bGreatSword && Character->IsThirdPersonGameplayActive()
+		&& Movement->IsMovingOnGround() && !Character->IsDodging() && !bDodgePoseContributes
+		&& !bAnyMontageContributes && !(Combat && Combat->IsWeaponChangeBlocked());
+	if (bLeavesStandingPose && !bBlendSwordGuardIntoMovement)
 	{
 		FighterCombatBlendProgress = FighterCombatStanceAlpha = 0.0f;
 		return;
@@ -196,7 +200,9 @@ void URogue10mFighterCombatStanceAnimInstance::NativeUpdateAnimation(float Delta
 		? FMath::Lerp(FighterCombatRaiseSeconds, WeightedSettings.GuardRaiseSeconds, WeightedSettings.HandMotionScale) : FighterCombatRaiseSeconds;
 	const float LowerSeconds = bWeightedGuard
 		? FMath::Lerp(FighterCombatLowerSeconds, WeightedSettings.GuardLowerSeconds, WeightedSettings.HandMotionScale) : FighterCombatLowerSeconds;
-	const float Duration = bRaise ? RaiseSeconds : LowerSeconds;
+	const float MoveLowerSeconds = bBlendSwordGuardIntoMovement
+		? FMath::Min(LowerSeconds, FMath::Max(0.01f, GreatSwordMoveGuardLowerSeconds)) : LowerSeconds;
+	const float Duration = bRaise ? RaiseSeconds : MoveLowerSeconds;
 	const float Step = FMath::Max(0.0f, DeltaSeconds) / FMath::Max(0.01f, Duration);
 	FighterCombatBlendProgress = FMath::Clamp(FighterCombatBlendProgress + (bRaise ? Step : -Step), 0.0f, 1.0f);
 	FighterCombatStanceAlpha = FMath::SmoothStep(0.0f, 1.0f, FighterCombatBlendProgress);

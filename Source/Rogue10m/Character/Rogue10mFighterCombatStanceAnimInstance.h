@@ -124,6 +124,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Fighter Stance", meta=(ClampMin="0.01", Units="s"))
 	float FighterCombatLowerSeconds = 0.45f;
 
+	/** Limit the standing guard's recovery into ordinary third-person sword movement. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Fighter Stance", meta=(ClampMin="0.01", Units="s"))
+	float GreatSwordMoveGuardLowerSeconds = 0.18f;
+
 	/** A full-body standing guard yields to locomotion as soon as the player moves. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Fighter Stance", meta=(ClampMin="0.0", Units="cm/s"))
 	float FighterCombatStationarySpeed = 10.0f;
