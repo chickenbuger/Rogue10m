@@ -9,7 +9,9 @@ param(
     [switch]$CapstoneBraceRender,
     [ValidateSet('HumanMale','HumanFemale','DwarfMale','DwarfFemale','OrcMale','OrcFemale')][string]$SwordEquipAppearance,
     [switch]$SwordEquipWalking,
-    [switch]$SwordEquipMovingBoth
+    [switch]$SwordEquipMovingBoth,
+    [switch]$BreakingKick,
+    [switch]$ExpectAuthoredKick
 )
 
 $ErrorActionPreference = 'Stop'
@@ -19,7 +21,9 @@ if ($CapstoneBrace -and $RequireAuthoredSword) { throw 'Choose a single fixture 
 if ($SwordEquipAppearance -and ($CapstoneBrace -or $RequireAuthoredSword)) { throw 'Choose a single fixture mode.' }
 if ($SwordEquipWalking -and -not $SwordEquipAppearance) { throw 'Choose the character profile for the walking test.' }
 if ($SwordEquipMovingBoth -and -not $SwordEquipWalking) { throw 'Both moving transitions require the walking test.' }
-$softwareRender = $CapstoneBraceRender -or ($SwordEquipAppearance -and -not $LogicOnly)
+if ($ExpectAuthoredKick -and -not $BreakingKick) { throw 'The authored kick gate requires the dedicated kick test.' }
+if ($BreakingKick -and ($CapstoneBrace -or $SwordEquipAppearance -or $RequireAuthoredSword)) { throw 'Choose a single fixture mode.' }
+$softwareRender = $CapstoneBraceRender -or (($BreakingKick -or $SwordEquipAppearance) -and -not $LogicOnly)
 $projectRoot = (Resolve-Path -LiteralPath (Split-Path -Parent $PSScriptRoot)).Path
 $projectFile = Join-Path $projectRoot 'Rogue10m.uproject'
 $editor = Join-Path $EngineRoot 'Engine\Binaries\Win64\UnrealEditor.exe'
@@ -61,6 +65,8 @@ if ($softwareRender) { $argsList += @('-AllowSoftwareRendering', '-graphicsadapt
 if ($SwordEquipAppearance) { $argsList += "-RogueSwordEquipAppearance=$SwordEquipAppearance" }
 if ($SwordEquipWalking) { $argsList += '-RogueSwordEquipWalking' }
 if ($SwordEquipMovingBoth) { $argsList += '-RogueSwordEquipMovingBoth' }
+if ($BreakingKick) { $argsList += '-RogueBreakingKickQA' }
+if ($ExpectAuthoredKick) { $argsList += '-RogueBreakingKickAuthored' }
 
 $process = $null
 $started = $null
@@ -84,9 +90,9 @@ try {
             $logCheck = $LASTEXITCODE
         }
     }
-    $result = if ($CapstoneBraceRender) { 'CAPSTONE_BRACE_RENDER' } elseif ($CapstoneBrace) { 'CAPSTONE_BRACE' }
+    $result = if ($BreakingKick) { 'BREAKING_KICK' } elseif ($CapstoneBraceRender) { 'CAPSTONE_BRACE_RENDER' } elseif ($CapstoneBrace) { 'CAPSTONE_BRACE' }
     elseif ($LogicOnly) { 'MELEE_VFX_LOGIC' } else { 'MELEE_VFX' }
-    $expectedCases = if ($CapstoneBraceRender) { 2 } elseif ($CapstoneBrace) { 4 } else { 14 }
+    $expectedCases = if ($BreakingKick) { 1 } elseif ($CapstoneBraceRender) { 2 } elseif ($CapstoneBrace) { 4 } else { 14 }
     $expected = if ($SwordEquipAppearance) { "RESULT=SWORD_EQUIP_POSE_PASSED appearance=$SwordEquipAppearance frames=88 failures=0" }
     else { "RESULT=${result}_PASSED completed=$expectedCases failures=0" }
     if ($process.ExitCode -ne 0 -or $logCheck -ne 0 -or -not (Select-String -LiteralPath $log -SimpleMatch $expected -Quiet)) {
@@ -144,6 +150,10 @@ try {
         Write-Output $expected
         if ($LogicOnly) { return }
     }
+    if ($BreakingKick) {
+        Select-String -LiteralPath $log -Pattern 'BREAKING_KICK_CONTACT|RESULT=BREAKING_KICK' | ForEach-Object { $_.Line }
+        if ($LogicOnly) { return }
+    }
 
     if ($CapstoneBrace -and -not $CapstoneBraceRender) {
         $evidence = @(Import-Csv -LiteralPath (Join-Path $output 'capstone-brace.csv'))
@@ -162,7 +172,7 @@ try {
     $captures = @(Import-Csv -LiteralPath (Join-Path $output 'captures.csv'))
     $requests = @($captures | Where-Object event -eq 'request')
     $processed = @($captures | Where-Object event -eq 'processed')
-    $expectedCaptures = if ($SwordEquipMovingBoth) { 5 } elseif ($SwordEquipAppearance) { 4 } elseif ($CapstoneBraceRender) { 2 } elseif ($LogicOnly) { 0 } else { 46 }
+    $expectedCaptures = if ($BreakingKick) { 3 } elseif ($SwordEquipMovingBoth) { 5 } elseif ($SwordEquipAppearance) { 4 } elseif ($CapstoneBraceRender) { 2 } elseif ($LogicOnly) { 0 } else { 46 }
     if ($requests.Count -ne $expectedCaptures -or $processed.Count -ne $expectedCaptures -or
         ($expectedCaptures -gt 0 -and @($requests.file | Select-Object -Unique).Count -ne $expectedCaptures)) {
         throw "Expected $expectedCaptures unique requested and processed screenshots."
@@ -171,6 +181,17 @@ try {
         if ([long]$capture.bytes -lt 1024 -or (Get-Item -LiteralPath $capture.file).Length -ne [long]$capture.bytes) {
             throw "Invalid rendered capture: $($capture.file)"
         }
+    }
+    if ($BreakingKick) {
+        foreach ($phase in @('ready','after_first_damage','recovery')) {
+            $request = @($requests | Where-Object phase -eq $phase)
+            $saved = @($processed | Where-Object phase -eq $phase)
+            if ($request.Count -ne 1 -or $saved.Count -ne 1 -or [int]$request[0].fixture_frame -ne [int]$saved[0].fixture_frame) {
+                throw "Expected a same-frame BreakingKick capture for $phase."
+            }
+            Write-Output $saved[0].file
+        }
+        return
     }
     if ($SwordEquipAppearance) {
         $equipPhases = @('before_equip','first_equip','sword_guard','first_unequip')
