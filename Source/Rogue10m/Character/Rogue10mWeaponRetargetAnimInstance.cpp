@@ -10,6 +10,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/SkeletalMesh.h"
 #include "Engine/StaticMesh.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Rogue10mCharacter.h"
@@ -122,7 +123,7 @@ public:
 		FAnimInstanceProxy::PreEvaluateAnimation(Instance);
 		DwarfGripWeight = 0.0f;
 		const auto* Character = Cast<ARogue10mCharacter>(Instance->TryGetPawnOwner());
-		if (!Character || Character->GetCharacterAppearance().Race != ERogue10mCharacterRace::Dwarf
+		if (!Character || !URogue10mWeaponRetargetAnimInstance::UsesVisibleEarthSplitter(*Character)
 			|| Character->GetMesh() != Instance->GetSkelMeshComponent() || Character->IsDodging() || Character->IsDead()) { return; }
 		const auto* SourceMesh = Character->GetAnimationPlaybackMesh();
 		const auto* Source = SourceMesh ? Cast<URogue10mFighterCombatStanceAnimInstance>(SourceMesh->GetAnimInstance()) : nullptr;
@@ -288,6 +289,7 @@ private:
 	void CaptureRollFloor(const UAnimInstance* Instance, const ARogue10mCharacter* Character)
 	{
 		bHasRollFloor = false;
+		if (!CastChecked<URogue10mWeaponRetargetAnimInstance>(Instance)->bEnableRollPalmSupport) { return; }
 #if WITH_EDITOR
 		if (!URogue10mWeaponVisualComponent::IsRollSwordFloorCorrectionEnabled()) { return; }
 #endif
@@ -366,6 +368,18 @@ private:
 	double DwarfGripSpan = 0.0;
 	float DwarfGripWeight = 0.0f;
 };
+}
+
+bool URogue10mWeaponRetargetAnimInstance::UsesVisibleEarthSplitter(const ARogue10mCharacter& Character)
+{
+	const auto* Body = Character.GetMesh();
+	const auto* Retarget = Body ? Cast<URogue10mWeaponRetargetAnimInstance>(Body->GetAnimInstance()) : nullptr;
+	if (!Retarget) { return false; }
+	const auto Appearance = Character.GetCharacterAppearance();
+	if (Appearance.Race == ERogue10mCharacterRace::Dwarf) { return true; }
+	const auto* Mesh = Body->GetSkeletalMeshAsset();
+	return Retarget->bEnableOrcEarthSplitterPresentation && Mesh && Mesh->GetFName() == TEXT("SK_Or_M_FullBody")
+		&& Appearance.Race == ERogue10mCharacterRace::Orc && Appearance.Gender == ERogue10mCharacterGender::Male;
 }
 
 void URogue10mWeaponRetargetAnimInstance::NativeInitializeAnimation()

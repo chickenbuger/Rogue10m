@@ -1,0 +1,48 @@
+{
+  "OrcWallStock05": {
+    "tested_close_frames": [],
+    "actual_mesh_intersection_frames": [],
+    "max_aabb_floor_reconstruction_error_cm": 0,
+    "max_aabb_wall_gap_reconstruction_error_cm": 0
+  },
+  "OrcEarthWall05": {
+    "tested_close_frames": [
+      {
+        "hold_s": 0.566667,
+        "yaw": 12.142861,
+        "aabb_gap_cm": 0.004315,
+        "palm_span_cm": 28.881401,
+        "triangle_separation_lower_bound_cm": 6.7654929353495845
+      }
+    ],
+    "actual_mesh_intersection_frames": [],
+    "max_aabb_floor_reconstruction_error_cm": 9.457853518313186e-05,
+    "max_aabb_wall_gap_reconstruction_error_cm": 0.0007666218265481436
+  },
+  "OrcEarthWall06": {
+    "tested_close_frames": [
+      {
+        "hold_s": 0.516667,
+        "yaw": 6.071432,
+        "aabb_gap_cm": -0.942295,
+        "palm_span_cm": 33.600975,
+        "triangle_separation_lower_bound_cm": 6.043419672277324
+      }
+    ],
+    "actual_mesh_intersection_frames": [],
+    "max_aabb_floor_reconstruction_error_cm": 0.00020000592556357333,
+    "max_aabb_wall_gap_reconstruction_error_cm": 0.0007989342511237618
+  },
+  "OrcFastWallStock06": {
+    "tested_close_frames": [],
+    "actual_mesh_intersection_frames": [],
+    "max_aabb_floor_reconstruction_error_cm": 0,
+    "max_aabb_wall_gap_reconstruction_error_cm": 0
+  },
+  "OrcFastEarthWall06": {
+    "tested_close_frames": [],
+    "actual_mesh_intersection_frames": [],
+    "max_aabb_floor_reconstruction_error_cm": 0,
+    "max_aabb_wall_gap_reconstruction_error_cm": 0
+  }
+}

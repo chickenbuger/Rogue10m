@@ -1,0 +1,22 @@
+{
+  "OrcIntegratedWall": {
+    "tested_close_frames": [
+      {
+        "hold_s": 0.516667,
+        "yaw": 6.071432,
+        "aabb_gap_cm": -0.942295,
+        "palm_span_cm": 33.600975,
+        "triangle_separation_lower_bound_cm": 6.043419672277324
+      }
+    ],
+    "actual_mesh_intersection_frames": [],
+    "max_aabb_floor_reconstruction_error_cm": 0.00020000592556357333,
+    "max_aabb_wall_gap_reconstruction_error_cm": 0.0007989342511237618
+  },
+  "OrcIntegratedFastWall": {
+    "tested_close_frames": [],
+    "actual_mesh_intersection_frames": [],
+    "max_aabb_floor_reconstruction_error_cm": 0,
+    "max_aabb_wall_gap_reconstruction_error_cm": 0
+  }
+}

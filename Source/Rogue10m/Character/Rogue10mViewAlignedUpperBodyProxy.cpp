@@ -20,6 +20,7 @@
 #include "Rogue10mCharacter.h"
 #include "Rogue10mFighterCombatStanceAnimInstance.h"
 #include "Rogue10mPlayerController.h"
+#include "Rogue10mWeaponRetargetAnimInstance.h"
 #include "Rogue10mAppearanceCameraComponent.h"
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mBasicBrawlerComponent.h"
@@ -728,14 +729,17 @@ void FRogue10mViewAlignedUpperBodyProxy::CaptureEarthSplitterPose(const ARogue10
 	const bool bFemaleRefit = Appearance.Gender == ERogue10mCharacterGender::Female
 		&& (Appearance.Race == ERogue10mCharacterRace::Human || Appearance.Race == ERogue10mCharacterRace::Orc);
 	const bool bHumanMale = Appearance.Race == ERogue10mCharacterRace::Human && Appearance.Gender == ERogue10mCharacterGender::Male;
-	bUseDwarfEarthSplitterGrip = Appearance.Race == ERogue10mCharacterRace::Dwarf;
+	bUseDwarfEarthSplitterGrip = Character && URogue10mWeaponRetargetAnimInstance::UsesVisibleEarthSplitter(*Character);
 	const auto* Charge = Instance ? (bFemaleRefit ? Instance->CachedEarthSplitterFemaleCharge.Get() : Instance->CachedEarthSplitterCharge.Get()) : nullptr;
 	const auto* Release = Instance ? (bFemaleRefit ? Instance->CachedEarthSplitterFemaleRelease.Get() : Instance->CachedEarthSplitterRelease.Get()) : nullptr;
 	const auto* Controller = Character ? Cast<ARogue10mPlayerController>(Character->GetController()) : nullptr;
 	bool bPresentationEnabled = true;
 #if WITH_EDITOR
 	bPresentationEnabled = CVarEarthSplitterPose.GetValueOnGameThread() != 0;
-	bUseDwarfEarthSplitterGrip = bUseDwarfEarthSplitterGrip && CVarDwarfEarthSplitterGrip.GetValueOnGameThread() != 0;
+	if (Appearance.Race == ERogue10mCharacterRace::Dwarf)
+	{
+		bUseDwarfEarthSplitterGrip = bUseDwarfEarthSplitterGrip && CVarDwarfEarthSplitterGrip.GetValueOnGameThread() != 0;
+	}
 #endif
 	// The displayed retarget changes the blade axis because the mount uses both palms.
 	// Only use the authored pairs on profiles calibrated against that visible grip.
@@ -771,7 +775,8 @@ void FRogue10mViewAlignedUpperBodyProxy::CaptureEarthSplitterPose(const ARogue10
 	{
 		const bool bWasContinuous = bEarthSplitterChargeContinuous;
 		const bool bStartsHold = bNewHold && Hold.GetValue() <= .10f;
-		const bool bDwarfMaleGrip = bUseDwarfEarthSplitterGrip && Appearance.Gender == ERogue10mCharacterGender::Male;
+		const bool bDwarfMaleGrip = bUseDwarfEarthSplitterGrip && Appearance.Race == ERogue10mCharacterRace::Dwarf
+			&& Appearance.Gender == ERogue10mCharacterGender::Male;
 		// A cancelled brace can only restart with a new charge.
 		bEarthSplitterChargeContinuous = bCanUseLowPose
 			&& (bWasContinuous || (bStartsHold && (!bDwarfMaleGrip || IsDwarfEarthSplitterRecoverySpaceClear(*Character))));

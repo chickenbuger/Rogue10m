@@ -380,6 +380,12 @@ private:
    &&Character->GetEquippedWeaponType()==ERogue10mWeaponType::GreatSword;
   Check(bEquipped,TEXT("sword_technique_actual_inventory_equip"));
   if(!bEquipped){return false;}
+  if(bEarthSplitterAudit)
+  {
+   auto* Body=Character->GetMesh();
+   UE_LOG(LogRogue10m,Display,TEXT("EARTHSPLITTER_BODY profile=%s mesh=%s retarget=%s"),
+    *EarthSplitterAppearance,*GetPathNameSafe(Body->GetSkeletalMeshAsset()),*GetPathNameSafe(Body->GetAnimClass()));
+  }
   Character->SetActorLocation(Guide->GetActorLocation()+FVector(100.,0.,100.),false,nullptr,ETeleportType::TeleportPhysics);
   auto Growth=State->CaptureGrowth();
   Growth.Level=15;
@@ -1643,7 +1649,10 @@ private:
   if(EarthWall.IsValid()&&AttackSent&&!ChargeReleased)
   {
    FRotator Look=EarthInitialLook;
-   Look.Yaw+=34.*FMath::Clamp((Now-Pressed-.45)/.28,0.,1.);
+   const bool bFasterOrcWallTurn=EarthSplitterAppearance==TEXT("OrcMale")
+    &&FParse::Param(FCommandLine::Get(),TEXT("RogueOrcEarthFastWallQA"));
+   const double TurnSeconds=bFasterOrcWallTurn?.18:.28;
+   Look.Yaw+=34.*FMath::Clamp((Now-Pressed-.45)/TurnSeconds,0.,1.);
    Controller->SetControlRotation(Look);
   }
   if(bEarthSplitterRender&&AttackSent&&!ChargeReleased&&!bMotionRequested&&!bCapturePending&&Now-Pressed>=.30)

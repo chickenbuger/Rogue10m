@@ -1,0 +1,60 @@
+{
+  "initial_low": {
+    "frame": 682,
+    "estimated_tip_above_capsule_cm": 14.536004778343568,
+    "axis": [
+      0.7782744819488396,
+      -0.1529336219930999,
+      -0.609015712450292
+    ],
+    "span_cm": 20.00899271682849,
+    "frame_count": 12,
+    "min_floor_cm": 4.5,
+    "peak_steps_cm": {
+      "r": 2.8284271247461903,
+      "l": 2.825289184424287
+    },
+    "min_extension_cm": {
+      "r": 4.5312934635995745,
+      "l": 13.70299685161848
+    }
+  },
+  "handoff": {
+    "start": 693,
+    "end": 739,
+    "mode": "lifted_geodesic_12",
+    "requested_floor_margin_cm": 4.5,
+    "max_direction_step_deg": 6.392845624780975,
+    "max_roll_basis_step_deg": 4.078152868973534,
+    "max_both_palm_steps_cm": [
+      4.351062242487946,
+      4.328796532312851
+    ],
+    "closest_bounding_box_above_capsule_cm": 4.5,
+    "min_extension_slack_cm": {
+      "r": 4.528253776494211,
+      "l": 15.331474418865973
+    },
+    "min_fold_slack_cm": {
+      "r": 21.132325231429178,
+      "l": 11.709860252244933
+    },
+    "final_bounds_above_capsule_cm": 131.97196035876095,
+    "final_right_left_distance_from_stock_cm": [
+      0.0,
+      7.105427357601002e-15
+    ],
+    "interior": {
+      "min_capsule_clearance_cm": 4.31380211518308,
+      "min_slack_cm": {
+        "r": 4.546915680012177,
+        "l": 15.299398923694518
+      },
+      "min_fold_slack_cm": {
+        "r": 21.134098386032104,
+        "l": 11.715361567306367
+      },
+      "tested_interior_samples": 322
+    }
+  }
+}
