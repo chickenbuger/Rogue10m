@@ -1,5 +1,6 @@
 #if WITH_EDITOR
 #include "AI/Rogue10mMonsterAIController.h"
+#include "AbilitySystemComponent.h"
 #include "Animation/AnimSequence.h"
 #include "Animation/AnimSingleNodeInstance.h"
 #include "BehaviorTree/BlackboardComponent.h"
@@ -35,6 +36,23 @@
 
 namespace Rogue10mMonsterChaseEffectsQA
 {
+static const FName SporelingSkirtBone(TEXT("mushroom_skirt08"));
+static const FName SporelingHeadBone(TEXT("mushroom_head"));
+
+struct FSporelingWalkMeasure
+{
+	double StartSkirtStep = 0.0;
+	double StopSkirtStep = 0.0;
+	double HeadStep = 0.0;
+	double PeakSpeed = 0.0;
+	double Travel = 0.0;
+	int32 PairedFrames = 0;
+	int32 FirstDamageFrame = 0;
+	int32 RecoveryFrame = 0;
+	float Damage = 0.0f;
+	bool bSawWalk = false;
+};
+
 class FRun : public TSharedFromThis<FRun>
 {
 public:
@@ -49,8 +67,13 @@ public:
 		Output = FPaths::Combine(FPaths::ProjectDir(), TEXT("Feature/doc/evidence/monster-effects-chase-20261011"), Slot);
 		IFileManager::Get().MakeDirectory(*Output, true);
 		bThornWalk = FParse::Param(FCommandLine::Get(), TEXT("RogueThornWardenWalkQA"));
+		bSporelingWalk = FParse::Param(FCommandLine::Get(), TEXT("RogueSporelingWalkQA"));
+		bSporelingSavedProfile = FParse::Param(FCommandLine::Get(), TEXT("RogueSporelingSavedProfile"));
+		if ((bThornWalk && bSporelingWalk) || (bSporelingSavedProfile && !bSporelingWalk))
+		{ Check(false, TEXT("incompatible_monster_walk_qa_modes")); Finish(); return; }
 		if (bThornWalk) { Species = 4; }
-		Deadline = FPlatformTime::Seconds() + (bThornWalk ? 1.0 : 7.0);
+		if (bSporelingWalk) { Species = 1; }
+		Deadline = FPlatformTime::Seconds() + (bThornWalk || bSporelingWalk ? 1.0 : 7.0);
 		FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self=AsShared()](float) { return Self->Tick(); }), 0.05f);
 	}
 private:
@@ -86,7 +109,7 @@ private:
 		Camera = World->SpawnActor<ACameraActor>();
 		for (TActorIterator<ARogue10mBasicMonster> It(World.Get()); It; ++It)
 			if (auto* ExistingAI = Cast<ARogue10mMonsterAIController>(It->GetController())) ExistingAI->StopMonsterAI();
-		Stage = 1; Deadline = FPlatformTime::Seconds()+(bThornWalk ? .5 : 4);
+		Stage = 1; Deadline = FPlatformTime::Seconds()+(bThornWalk || bSporelingWalk ? .5 : 4);
 	}
 	void Spawn()
 	{
@@ -98,23 +121,60 @@ private:
 		Monster = Tools->GetTestTarget();
 		if (!Monster.IsValid()) { Finish(); return; }
 		AI = Cast<ARogue10mMonsterAIController>(Monster->GetController());
-		if (bThornWalk)
+		if (bThornWalk || bSporelingWalk)
 		{
 			auto* Pattern = Monster->GetAttackPatternComponent();
-			const auto* Live = LoadObject<URogue10mMonsterDataAsset>(nullptr,
-				TEXT("/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_ThornWarden.DA_OW_ThornWarden"));
+			const auto* Live = LoadObject<URogue10mMonsterDataAsset>(nullptr, bSporelingWalk
+				? TEXT("/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_Sporeling.DA_OW_Sporeling")
+				: TEXT("/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_ThornWarden.DA_OW_ThornWarden"));
 			ThornProfile = Pattern ? Pattern->GetProfile() : nullptr;
-			Check(Live && Monster->GetMonsterData() == Live && ThornProfile.Get() == Live->AttackPatternProfile
-				&& ThornProfile.IsValid() && ThornProfile->bBlendLegacyLocomotion, TEXT("real_ThornWarden_profile_uses_blended_ground_graph"));
+			const bool bUsesLiveProfile = Live && Monster->GetMonsterData() == Live && ThornProfile.IsValid()
+				&& ThornProfile.Get() == Live->AttackPatternProfile;
+			if (bSporelingWalk)
+			{
+				Check(bUsesLiveProfile && !ThornProfile->bUseHumanoidAnimInstance
+					&& ThornProfile->bBlendLegacyLocomotion == bSporelingSavedProfile
+					&& ThornProfile->GetPathName() == TEXT("/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_Sporeling.DA_OW_BasicAttack_Sporeling")
+					&& Monster->GetMesh()->GetSkeletalMeshAsset() == Live->SkeletalMesh.Get(),
+					TEXT("real_Sporeling_profile_and_mesh_match_requested_saved_state"));
+				Check(FMath::IsNearlyEqual(World->GetDeltaSeconds(), 1.0f / 60.0f, 0.0001f),
+					TEXT("Sporeling_pose_samples_use_fixed_60hz"));
+				const auto* Mesh = Monster->GetMesh();
+				Check(Mesh->GetBoneIndex(SporelingSkirtBone) != INDEX_NONE && Mesh->GetBoneIndex(SporelingHeadBone) != INDEX_NONE,
+					TEXT("live_Sporeling_skirt_and_head_bones_exist"));
+				if (bUsesLiveProfile)
+				{
+					Results += FString::Printf(TEXT("profile=%s\nmesh=%s\nidle=%s\nwalk=%s\nattack=%s\nhit=%s\ndeath=%s\n"),
+						*ThornProfile->GetPathName(), *GetPathNameSafe(Mesh->GetSkeletalMeshAsset()),
+						*ThornProfile->IdleAnimation.ToString(), *ThornProfile->MovementAnimation.ToString(),
+						*ThornProfile->AttackAnimation.ToString(), *ThornProfile->HitAnimation.ToString(),
+						*ThornProfile->DeathAnimation.ToString());
+				}
+			}
+			else
+			{
+				Check(bUsesLiveProfile && ThornProfile->bBlendLegacyLocomotion, TEXT("real_ThornWarden_profile_uses_blended_ground_graph"));
+			}
 			if (Failures) { Finish(); return; }
 			ThornOrigin = Monster->GetActorTransform();
 			ThornDirection = (Monster->GetActorLocation() - Player->GetActorLocation()).GetSafeNormal2D();
-			ThornFrames = TEXT("case,frame,elapsed_s,speed_cm_s,right_hand_step_cm,native_graph\n");
-			BeginThornWalk(false);
+			if (bSporelingWalk)
+			{
+				SporelingFrames = TEXT("case,frame,world_seconds,revision,paired,input_for_next_frame,speed_cm_s,travel_cm,native_graph,skirt_x,skirt_y,skirt_z,skirt_step_cm,head_x,head_y,head_z,head_step_cm\n");
+				BeginSporelingWalk(false);
+				Deadline = FPlatformTime::Seconds() + 35.0;
+			}
+			else
+			{
+				ThornFrames = TEXT("case,frame,elapsed_s,speed_cm_s,right_hand_step_cm,native_graph\n");
+				BeginGroundWalk(false);
+			}
 			Stage = 11;
 			ThornHandle = FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* InWorld, ELevelTick, float)
 			{
-				if (InWorld == Self->World.Get()) Self->SampleThornWalk();
+				if (InWorld != Self->World.Get()) { return; }
+				if (Self->bSporelingWalk) { Self->SampleSporelingWalk(); }
+				else { Self->SampleThornWalk(); }
 			});
 			return;
 		}
@@ -130,11 +190,12 @@ private:
 		Tools->ExecuteAction(ERogue10mCombatTestAction::ToggleAI);
 		Stage=2; Deadline=FPlatformTime::Seconds()+2;
 	}
-	void BeginThornWalk(bool bBlend)
+	void BeginGroundWalk(bool bBlend)
 	{
-		auto* Profile = bBlend ? ThornProfile.Get()
+		const bool bUseSavedProfile = bBlend && (!bSporelingWalk || bSporelingSavedProfile);
+		auto* Profile = bUseSavedProfile ? ThornProfile.Get()
 			: DuplicateObject<URogue10mMonsterAttackPatternProfile>(ThornProfile.Get(), GetTransientPackage());
-		if (!bBlend) { Profile->bBlendLegacyLocomotion = false; }
+		if (!bUseSavedProfile) { Profile->bBlendLegacyLocomotion = bBlend; }
 		Monster->GetAttackPatternComponent()->ConfigureProfile(Profile);
 		Monster->SetActorTransform(ThornOrigin, false, nullptr, ETeleportType::TeleportPhysics);
 		Monster->SetActorRotation(ThornDirection.Rotation());
@@ -187,7 +248,7 @@ private:
 		if (!bThornBlend && !Failures)
 		{
 			LegacyThornStep = PeakThornStep;
-			BeginThornWalk(true);
+			BeginGroundWalk(true);
 			return;
 		}
 		Check(PeakThornStep > 0.5 && LegacyThornStep >= 20.0 && PeakThornStep < LegacyThornStep * 0.6,
@@ -202,9 +263,168 @@ private:
 		ThornStart = World->GetTimeSeconds();
 		bObserveThornRecovery = true;
 	}
+	void BeginSporelingWalk(bool bBlend)
+	{
+		BeginGroundWalk(bBlend);
+		Monster->GetMesh()->bEnableUpdateRateOptimizations = false;
+		SporelingFrame = 0;
+		SporelingAttackFrame = 0;
+		SporelingMeasure = {};
+	}
+	const TCHAR* SporelingCase() const
+	{
+		if (!bThornBlend) { return TEXT("legacy"); }
+		return bSporelingSavedProfile ? TEXT("saved_blend") : TEXT("transient_blend");
+	}
+	bool HasSporelingGroundPose(bool bMoving) const
+	{
+		const auto* Mesh = Monster->GetMesh();
+		const auto* Idle = ThornProfile->IdleAnimation.Get();
+		const auto* Walk = ThornProfile->MovementAnimation.Get();
+		if (!Idle || !Walk) { return false; }
+		if (bThornBlend)
+		{
+			const auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Mesh->GetAnimInstance());
+			return Anim && Anim->GetIdleSequence() == Idle && Anim->GetMovementSequence() == Walk;
+		}
+		auto* SingleNode = Mesh->GetSingleNodeInstance();
+		return SingleNode && SingleNode->GetCurrentAsset() == (bMoving ? Walk : Idle);
+	}
+	void SampleSporelingWalk()
+	{
+		if (!Monster.IsValid() || !ThornProfile.IsValid() || !Player.IsValid())
+		{ Check(false, TEXT("Sporeling_walk_fixture_lost_actor_or_profile")); Finish(); return; }
+		if (SporelingAttackFrame > 0) { ObserveSporelingAttack(); return; }
+
+		constexpr int32 MoveStart = 24;
+		constexpr int32 MoveEnd = 62;
+		constexpr int32 LastFrame = 90;
+		++SporelingFrame;
+		auto* Mesh = Monster->GetMesh();
+		const uint32 Revision = Mesh->GetBoneTransformRevisionNumber();
+		const bool bPaired = SporelingFrame > 1 && Revision != PreviousSporelingRevision;
+		const bool bMovementInput = SporelingFrame >= MoveStart && SporelingFrame < MoveEnd;
+		const FVector Skirt = Mesh->GetSocketTransform(SporelingSkirtBone, RTS_Component).GetLocation();
+		const FVector Head = Mesh->GetSocketTransform(SporelingHeadBone, RTS_Component).GetLocation();
+		if (Skirt.ContainsNaN() || Head.ContainsNaN()) { Check(false, TEXT("Sporeling_valid_bone_positions")); Finish(); return; }
+		const double SkirtStep = bPaired ? FVector::Dist(Skirt, PreviousSporelingSkirt) : 0.0;
+		const double HeadStep = bPaired ? FVector::Dist(Head, PreviousSporelingHead) : 0.0;
+		const double Speed = Monster->GetVelocity().Size2D();
+		SporelingMeasure.Travel = FVector::Dist2D(ThornOrigin.GetLocation(), Monster->GetActorLocation());
+		SporelingMeasure.PeakSpeed = FMath::Max(SporelingMeasure.PeakSpeed, Speed);
+		SporelingMeasure.PairedFrames += bPaired ? 1 : 0;
+		SporelingMeasure.bSawWalk |= Speed >= 0.95 * Monster->GetMonsterData()->WalkSpeed && HasSporelingGroundPose(true);
+		if (SporelingFrame > MoveStart && SporelingFrame <= MoveStart + 18)
+		{ SporelingMeasure.StartSkirtStep = FMath::Max(SporelingMeasure.StartSkirtStep, SkirtStep); }
+		if (SporelingFrame > MoveEnd && SporelingFrame <= MoveEnd + 18)
+		{ SporelingMeasure.StopSkirtStep = FMath::Max(SporelingMeasure.StopSkirtStep, SkirtStep); }
+		if (SporelingFrame > MoveStart)
+		{ SporelingMeasure.HeadStep = FMath::Max(SporelingMeasure.HeadStep, HeadStep); }
+		const bool bNative = Cast<URogue10mHumanoidAnimInstance>(Mesh->GetAnimInstance()) != nullptr;
+		SporelingFrames += FString::Printf(TEXT("%s,%d,%.6f,%u,%d,%d,%.4f,%.4f,%d,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f\n"),
+			SporelingCase(), SporelingFrame, World->GetTimeSeconds(), Revision, bPaired, bMovementInput, Speed,
+			SporelingMeasure.Travel, bNative, Skirt.X, Skirt.Y, Skirt.Z, SkirtStep, Head.X, Head.Y, Head.Z, HeadStep);
+		PreviousSporelingRevision = Revision;
+		PreviousSporelingSkirt = Skirt;
+		PreviousSporelingHead = Head;
+		if (bMovementInput) { Monster->AddMovementInput(ThornDirection, 1.0f, true); }
+		if (SporelingFrame != LastFrame) { return; }
+
+		Results += FString::Printf(TEXT("sporeling_%s start_skirt_cm=%.4f stop_skirt_cm=%.4f head_cm=%.4f speed_cm_s=%.4f travel_cm=%.4f paired_frames=%d\n"),
+			SporelingCase(), SporelingMeasure.StartSkirtStep, SporelingMeasure.StopSkirtStep, SporelingMeasure.HeadStep,
+			SporelingMeasure.PeakSpeed, SporelingMeasure.Travel, SporelingMeasure.PairedFrames);
+		Check(SporelingMeasure.PairedFrames >= LastFrame - 2 && SporelingMeasure.bSawWalk && Speed < 1.0 && HasSporelingGroundPose(false),
+			TEXT("Sporeling_fresh_pose_pairs_cover_settled_walk_and_idle"));
+		if (!bThornBlend)
+		{
+			Check(SporelingMeasure.StartSkirtStep >= 15.0, TEXT("legacy_gait_reproduces_large_component_space_skirt_step"));
+		}
+		else
+		{
+			Check(FMath::IsNearlyEqual(SporelingMeasure.PeakSpeed, LegacySporelingMeasure.PeakSpeed, 0.1)
+				&& FMath::IsNearlyEqual(SporelingMeasure.Travel, LegacySporelingMeasure.Travel, 1.0),
+				TEXT("Sporeling_matches_legacy_ground_speed_and_travel"));
+			Check(SporelingMeasure.StartSkirtStep > 0.1 && SporelingMeasure.StartSkirtStep < LegacySporelingMeasure.StartSkirtStep * 0.6
+				&& SporelingMeasure.StopSkirtStep <= FMath::Max(3.0, LegacySporelingMeasure.StopSkirtStep * 1.15)
+				&& SporelingMeasure.HeadStep <= FMath::Max(3.0, LegacySporelingMeasure.HeadStep * 1.15),
+				TEXT("Sporeling_ground_blend_reduces_start_pop_without_larger_stop_or_head_step"));
+		}
+		if (Failures) { Finish(); return; }
+		StartSporelingAttack();
+	}
+	void StartSporelingAttack()
+	{
+		auto* AbilitySystem = Player->GetAbilitySystemComponent();
+		if (!AbilitySystem)
+		{ Check(false, TEXT("Sporeling_attack_has_live_player_health_delegate")); Finish(); return; }
+		SporelingHealthObserver = AbilitySystem->GetGameplayAttributeValueChangeDelegate(URogue10mAttributeSet::GetHealthAttribute())
+			.AddLambda([this](const FOnAttributeChangeData& Change)
+			{
+				SporelingMeasure.Damage += FMath::Max(0.0f, Change.OldValue - Change.NewValue);
+			});
+		const auto* Pattern = Monster->GetAttackPatternComponent();
+		SporelingHitsBefore = Pattern->GetSuccessfulHitCount();
+		const auto* Clip = ThornProfile->AttackAnimation.LoadSynchronous();
+		const bool bStarted = Clip && Tools->ExecuteAction(ERogue10mCombatTestAction::Basic);
+		auto* Playing = Monster->GetMesh()->GetSingleNodeInstance();
+		Check(bStarted && Playing && Playing->GetCurrentAsset() == Clip
+			&& FMath::IsNearlyEqual(Pattern->GetLockedAttackShape().WindupDuration, ThornProfile->AttackWindupSeconds),
+			TEXT("Sporeling_basic_uses_existing_single_node_clip_and_windup"));
+		if (Failures) { Finish(); return; }
+		SporelingAttackFrame = 1;
+	}
+	void ObserveSporelingAttack()
+	{
+		const auto* Pattern = Monster->GetAttackPatternComponent();
+		const int32 Hits = Pattern->GetSuccessfulHitCount() - SporelingHitsBefore;
+		if (Hits > 0 && SporelingMeasure.FirstDamageFrame == 0)
+		{
+			SporelingMeasure.FirstDamageFrame = SporelingAttackFrame;
+		}
+		if (Pattern->IsAttackActive() && SporelingAttackFrame < 420) { ++SporelingAttackFrame; return; }
+		RemoveSporelingHealthObserver();
+		SporelingMeasure.RecoveryFrame = SporelingAttackFrame;
+		Results += FString::Printf(TEXT("sporeling_%s attack_first_damage_frame=%d recovery_frame=%d damage=%.4f\n"),
+			SporelingCase(), SporelingMeasure.FirstDamageFrame, SporelingMeasure.RecoveryFrame, SporelingMeasure.Damage);
+		const int32 WindupFrames = FMath::RoundToInt(ThornProfile->AttackWindupSeconds * 60.0f);
+		Check(!Pattern->IsAttackActive() && Hits == 1 && SporelingMeasure.Damage > 0.0f
+			&& FMath::Abs(SporelingMeasure.FirstDamageFrame - WindupFrames) <= 1 && HasSporelingGroundPose(false),
+			TEXT("Sporeling_same_attack_lands_once_then_recovers_into_ground_pose"));
+		if (!bThornBlend && !Failures)
+		{
+			LegacySporelingMeasure = SporelingMeasure;
+			BeginSporelingWalk(true);
+			return;
+		}
+		Check(FMath::Abs(SporelingMeasure.FirstDamageFrame - LegacySporelingMeasure.FirstDamageFrame) <= 1
+			&& FMath::Abs(SporelingMeasure.RecoveryFrame - LegacySporelingMeasure.RecoveryFrame) <= 1
+			&& FMath::IsNearlyEqual(SporelingMeasure.Damage, LegacySporelingMeasure.Damage, 0.01f),
+			TEXT("Sporeling_damage_and_attack_recovery_match_legacy"));
+		Finish();
+	}
+	void RemoveSporelingHealthObserver()
+	{
+		if (!SporelingHealthObserver.IsValid()) { return; }
+		if (Player.IsValid())
+		{
+			if (auto* AbilitySystem = Player->GetAbilitySystemComponent())
+			{
+				AbilitySystem->GetGameplayAttributeValueChangeDelegate(URogue10mAttributeSet::GetHealthAttribute())
+					.Remove(SporelingHealthObserver);
+			}
+		}
+		SporelingHealthObserver.Reset();
+	}
 	bool Tick()
 	{
 		if (bFinished) return false;
+		if (Stage == 11 && bSporelingWalk)
+		{
+			if (FPlatformTime::Seconds() < Deadline) { return true; }
+			Check(false, TEXT("Sporeling_pose_fixture_watchdog"));
+			Finish();
+			return false;
+		}
 		if (Stage==3 && Monster.IsValid() && !bCapturePending
 			&& Monster->GetAttackPatternComponent()->GetSuccessfulHitCount()>0
 			&& Monster->GetAttackPatternComponent()->GetActiveEffectCount()>0)
@@ -343,11 +563,17 @@ private:
 		if (bFinished) { return; }
 		bFinished=true;
 		FWorldDelegates::OnWorldPostActorTick.Remove(ThornHandle);
+		RemoveSporelingHealthObserver();
 		if (Tools.IsValid()) Tools->ExecuteAction(ERogue10mCombatTestAction::Clear);
 		if (bThornWalk)
 		{
 			Check(FFileHelper::SaveStringToFile(ThornFrames,*FPaths::Combine(Output,TEXT("thorn-walk-frames.csv"))),
 				TEXT("thorn_walk_pose_samples_written"));
+		}
+		if (bSporelingWalk)
+		{
+			Check(FFileHelper::SaveStringToFile(SporelingFrames,*FPaths::Combine(Output,TEXT("sporeling-walk-frames.csv"))),
+				TEXT("Sporeling_walk_pose_samples_written"));
 		}
 		FFileHelper::SaveStringToFile(Results,*FPaths::Combine(Output,TEXT("results.txt")),FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM);
 		UE_LOG(LogRogue10m,Display,TEXT("RESULT=MONSTER_FX_%s failures=%d"),Failures ? TEXT("FAILED") : TEXT("PASSED"),Failures);
@@ -367,6 +593,13 @@ private:
 	FString ThornFrames;
 	double ThornStart = 0.0, PeakThornStep = 0.0, PeakThornSpeed = 0.0, LegacyThornStep = 0.0;
 	bool bThornWalk = false, bThornBlend = false, bThornAnimated = false, bObserveThornRecovery = false;
+	FSporelingWalkMeasure SporelingMeasure, LegacySporelingMeasure;
+	FString SporelingFrames;
+	FVector PreviousSporelingSkirt = FVector::ZeroVector, PreviousSporelingHead = FVector::ZeroVector;
+	FDelegateHandle SporelingHealthObserver;
+	uint32 PreviousSporelingRevision = 0;
+	int32 SporelingFrame = 0, SporelingAttackFrame = 0, SporelingHitsBefore = 0;
+	bool bSporelingWalk = false, bSporelingSavedProfile = false;
 	FString Output,Results;
 	FVector Origin,ChaseStart;
 	double Deadline=0;

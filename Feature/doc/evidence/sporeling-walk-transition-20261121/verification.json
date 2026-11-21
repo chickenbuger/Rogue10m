@@ -1,0 +1,88 @@
+{
+  "base": "cd0b0c863421cca5f6429dab88488620b76673cb",
+  "map": "/Game/Rogue10m/Maps/StartHub",
+  "monster_data": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_Sporeling.DA_OW_Sporeling",
+  "profile": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_Sporeling.DA_OW_BasicAttack_Sporeling",
+  "skeleton": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Mushroom_Skeleton.Mushroom_Skeleton",
+  "original_pack": "Monster For Survival Game",
+  "asset_save": {
+    "editor": "UnrealEditor-Cmd 5.8 Python commandlet",
+    "edit": "bBlendLegacyLocomotion false to true",
+    "editor_result_line": 1864,
+    "editor_errors": 0,
+    "checked_same_skeleton_clips": 5,
+    "before_sha256": "d890ed313b3b2b37aa90f38bb9d7f3740abf68f7689c9160cfee13132babf605",
+    "after_sha256": "28037e0d7ebd22c8440c47fdccd5dfb4f4a02899689b9964cfdadd6b98e2ca51"
+  },
+  "prior_editor_clip_audit": {
+    "idle_samples": 8,
+    "skirt_bone": "mushroom_skirt08",
+    "max_idle_to_walk_start_gap_cm": 28.64834193274861,
+    "walk_loop_closure_gap_cm": 0.0
+  },
+  "runtime": {
+    "input": "programmatic game movement and combat test action",
+    "fps": 60,
+    "pose_coordinates": "skeletal mesh component-space centimeters",
+    "frames_per_case": 90,
+    "paired_pose_revisions_per_case": 89,
+    "pose_rows": 180,
+    "start_skirt_step_cm": [27.9136, 3.9633],
+    "stop_skirt_step_cm": [29.0540, 4.0187],
+    "max_head_step_after_movement_input_cm": [22.3336, 4.3463],
+    "peak_ground_speed_cm_per_second": [230.0, 230.0],
+    "ground_travel_cm": [138.1507, 138.1507],
+    "basic_windup_seconds": 0.35,
+    "basic_recovery_seconds": 0.483333,
+    "first_damage_frame": [21, 21],
+    "recovery_complete_frame": [50, 50],
+    "health_decrease_at_hit": [1.0, 1.0],
+    "rendered": false,
+    "physical_input": false,
+    "full_field_run": false
+  },
+  "transient_run": {
+    "label": "SporelingTransientA",
+    "checks": 17,
+    "failures": 0,
+    "errors": 0,
+    "report": "transient-results.txt"
+  },
+  "initial_saved_run": {
+    "label": "SporelingSavedA",
+    "failures": 1,
+    "engine_result_line": 1574,
+    "failed_assertion": "Sporeling_damage_and_attack_recovery_match_legacy",
+    "incorrect_net_health_change": 0.8984,
+    "actual_damage_in_character_log": [1.0, 1.0],
+    "cause": "player health regeneration between attack start and actual hit contaminated the net delta",
+    "fixture_fix": "sum negative gameplay health attribute changes during the attack",
+    "report": "saved-initial-failure.txt"
+  },
+  "saved_run": {
+    "label": "SporelingSavedB",
+    "checks": 17,
+    "failures": 0,
+    "engine_result_line": 1573,
+    "errors": 0,
+    "existing_qa_saves_preserved": 4,
+    "report": "saved-results.txt",
+    "pose_samples": "saved-pose-frames.csv"
+  },
+  "thorn_warden_regression": {
+    "label": "SporelingThornReg",
+    "checks": 10,
+    "failures": 0,
+    "errors": 0,
+    "existing_qa_saves_preserved": 6,
+    "same_result_bytes_as_published": true,
+    "result_sha256": "2cacc1f22dab5691a8eca2a43f1a63a5c7adaeb1ecf81ff99290f20bb6de9644"
+  },
+  "build": {
+    "target": "Rogue10mEditor Win64 Development",
+    "first_cold_status": "C2662: GetCurrentAsset is non-const in UE 5.8",
+    "after_api_correction_seconds": 10.93,
+    "after_damage_observer_correction_seconds": 11.10,
+    "final_log_errors": 0
+  }
+}
