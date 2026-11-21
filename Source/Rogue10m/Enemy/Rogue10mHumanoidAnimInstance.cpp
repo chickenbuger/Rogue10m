@@ -33,6 +33,12 @@ public:
   DeathStartPose = MoveTemp(Pose);
   DeathBlendElapsed = 0.f;
  }
+ void BeginMovingAttackBlend(float Seconds)
+ {
+  MovingAttackBlendSeconds = MovingAttackBlendRemaining = Seconds;
+  MovingAttackInitialAlpha = Locomotion.Alpha;
+ }
+ void CancelMovingAttackBlend() { MovingAttackBlendRemaining = 0.f; }
 #if WITH_EDITOR
  float GetMovementPlaybackTime() const { return Movement.GetAccumulatedTime(); }
 #endif
@@ -50,7 +56,16 @@ public:
   const float Speed = Pawn ? Pawn->GetVelocity().Size2D() : 0.f;
   Movement.SetPlayRate(Humanoid->GetMovementPlayRate(Speed));
   const float TargetAlpha = Speed > 10.f ? 1.f : 0.f;
-  Locomotion.Alpha = FMath::FInterpTo(Locomotion.Alpha, TargetAlpha, DeltaSeconds, 8.f);
+  if (MovingAttackBlendRemaining > 0.f && TargetAlpha == 0.f)
+  {
+   MovingAttackBlendRemaining = FMath::Max(0.f, MovingAttackBlendRemaining - FMath::Max(0.f, DeltaSeconds));
+   Locomotion.Alpha = MovingAttackInitialAlpha * FMath::SmoothStep(0.f, MovingAttackBlendSeconds, MovingAttackBlendRemaining);
+  }
+  else
+  {
+   CancelMovingAttackBlend();
+   Locomotion.Alpha = FMath::FInterpTo(Locomotion.Alpha, TargetAlpha, DeltaSeconds, 8.f);
+  }
  }
 
  bool Evaluate_WithRoot(FPoseContext& Output, FAnimNode_Base* Root) override
@@ -76,6 +91,9 @@ private:
  static constexpr float DeathBlendSeconds = .15f;
  FPoseSnapshot DeathStartPose;
  float DeathBlendElapsed = 0.f;
+ float MovingAttackBlendSeconds = 0.f;
+ float MovingAttackBlendRemaining = 0.f;
+ float MovingAttackInitialAlpha = 0.f;
  FAnimNode_SequencePlayer_Standalone Idle;
  FAnimNode_SequencePlayer_Standalone Movement;
  FAnimNode_TwoWayBlend Locomotion;
@@ -133,13 +151,18 @@ float URogue10mHumanoidAnimInstance::CalculatePhaseRate(float ClipSeconds, float
  return FMath::Max(0.001f, ClipSeconds) / GameplaySeconds;
 }
 float URogue10mHumanoidAnimInstance::PlayPresentation(UAnimMontage* Montage, UAnimSequence* Sequence,
- float ContactSeconds, float WindupSeconds, bool bHoldFinalPose, float SequenceBlendInSeconds)
+ float ContactSeconds, float WindupSeconds, bool bHoldFinalPose, float BlendInSeconds)
 {
  StopPresentation();
  // Clone authored montages: runtime settings must never mutate shared assets.
  PresentationMontage = Montage ? DuplicateObject<UAnimMontage>(Montage, this)
-  : (Sequence ? UAnimMontage::CreateSlotAnimationAsDynamicMontage(Sequence, TEXT("DefaultSlot"), SequenceBlendInSeconds, 0.1f) : nullptr);
+  : (Sequence ? UAnimMontage::CreateSlotAnimationAsDynamicMontage(
+   Sequence, TEXT("DefaultSlot"), BlendInSeconds >= 0.f ? BlendInSeconds : 0.08f, 0.1f) : nullptr);
  if (!PresentationMontage) return 0.f;
+ if (Montage && BlendInSeconds >= 0.f)
+ {
+  PresentationMontage->BlendIn.SetBlendTime(BlendInSeconds);
+ }
  // Phase mapping owns rate; an authored asset RateScale must not multiply it again.
  PresentationMontage->RateScale = 1.f;
  const float Length = PresentationMontage->GetPlayLength();
@@ -149,7 +172,13 @@ float URogue10mHumanoidAnimInstance::PlayPresentation(UAnimMontage* Montage, UAn
  const float Rate = bTimedAttack ? CalculatePhaseRate(PresentationContactSeconds, WindupSeconds) : 1.f;
  // Hold timed attacks through contact; the authoritative recovery timer blends them out.
  PresentationMontage->bEnableAutoBlendOut = !bTimedAttack && !bHoldFinalPose;
- return Montage_Play(PresentationMontage, Rate, EMontagePlayReturnType::Duration);
+ const float Duration = Montage_Play(PresentationMontage, Rate, EMontagePlayReturnType::Duration);
+ if (Duration > 0.f && Montage && BlendInSeconds > 0.f)
+ {
+  // Retain the last gait phase on the stopped motor and ease that pose out under the incoming slot.
+  GetProxyOnGameThread<FHumanoidAnimProxy>().BeginMovingAttackBlend(BlendInSeconds);
+ }
+ return Duration;
 }
 bool URogue10mHumanoidAnimInstance::PlayLegacySequenceForWindow(UAnimSequence& Sequence, float GameplaySeconds)
 {
@@ -175,6 +204,10 @@ void URogue10mHumanoidAnimInstance::BeginRecovery(float RecoverySeconds)
 }
 void URogue10mHumanoidAnimInstance::StopPresentation()
 {
- if (PresentationMontage) Montage_Stop(0.1f, PresentationMontage);
+ if (PresentationMontage)
+ {
+  Montage_Stop(0.1f, PresentationMontage);
+  GetProxyOnGameThread<FHumanoidAnimProxy>().CancelMovingAttackBlend();
+ }
  PresentationMontage = nullptr;
 }

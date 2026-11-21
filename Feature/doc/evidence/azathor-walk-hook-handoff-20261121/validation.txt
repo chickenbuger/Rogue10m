@@ -1,0 +1,35 @@
+# 아자토르 보행에서 훅으로 전환
+
+기준 커밋 9cd829f32ce61b19dae75a3c8316cfd25041cc39
+최종 통합 기반 3b9c1c36d9e119a0274008ca3dea449cd6d40a4a
+
+AzathorStock9cdBuildHost | Editor 28단계 204.37초 | 오류 0
+AzathorStock9cd | 기존 여섯 종의 대기·보행 수치 12건 통과 | 오류 0
+AzathorFade22Build | Editor 10단계 122.62초 | 오류 0
+AzathorFade22 / AzathorWarp22 | 몽타주만 0.22초로 보간 | 첫 걷기 프레임 16.05cm
+AzathorGait3bBuild | 통합 Editor 19단계 125.78초 | 오류 0
+AzathorGait3b | 대기, 보행, 취소와 재시작 | 오류 0, 기존 QA 저장 6개 보존
+AzathorFinalWarp3b | 처리된 1280×720 소프트웨어 렌더 여섯 장 | 오류 0
+AzathorBoss3bRealtime | 기존 보스 기본·정면 파동·심연 영역 검증 18건 | 오류 0, 기존 QA 저장 12개 보존
+AzathorAllLiving3b | 배치된 여섯 종의 대기·보행 공격과 피격 12건 | 오류 0, 기존 QA 저장 14개 보존
+아자토르를 제외한 다섯 종의 동일한 프레임 1608개에서 사용 시퀀스·피해·재생 시각·이동 속도가 같았다. 이웃 프레임 최대값 차이는 0.0022cm와 0.05905°였다.
+
+모든 실행은 개별 -AbsLog를 썼다. 최종 수치·렌더·보스 실시간 실행은 0행 경계부터 오류를 검사했다.
+첫 컴파일 요청은 관리 환경의 임시 잠금 경로에서 대기했으며 호스트의 정상 빌드 잠금을 사용해 재실행했다.
+보간 중간 후보는 게임·캡처를 완료했지만 발볼의 첫 프레임이 16.05cm 움직였다. 정지 순간에 남은 걸음 자세도 보간해 최종값이 3.45cm가 됐다.
+후속 위치·회전을 완전히 같게 보는 중간 검사에서 의상 본의 움직임 차이를 관측했다. 최종 수치는 20틱 이후 변화의 크기와 원래 클립 시각을 함께 검증한다.
+실패 AzathorBoss3b | 고정 프레임을 기존 보스 18건 시험에 같이 사용했다. 사망 액터 제거가 기존 검사의 실시간 콜백보다 먼저 일어나 테스트의 575행에서 널 참조로 종료했다. 최초 오류 1673행, 종료 코드 3. 로그는 로컬 보존했다. 동일 바이너리를 기존 실시간 플래그로 다시 실행해 18건을 확인했다.
+
+기존 패키지 SHA-256
+DA_HumanBoss_AttackProfile 9186E777C90F8E2EF2796E2FA24438A54677336FEE45ABD1BAC72771890B160A
+AM_HumanBoss_Attack A8854710F928CD19E15F52D194D85AED11C2D1399187A4CD64B2D48666BD87A6
+A_HumanBoss_Hook_Raw 0DE2CDFA28E3A5E40DEEB21CDA1E0A89BC87772E3BC9B2854CACEFF6D44F504E
+
+최종 화면과 수치 SHA-256
+attack-ready.png 6EAD4616C5D5C08764BB61B8565DEBBAF457650169FED866948BB5256CB77F0D
+first-step-720p.png 57A109710415BC26EC6E128AE9DF24F718670E3F59838557F10A145DB3D470EF
+attack-early-motion.png E1AAA00809BF63208E955EE199574BA1DE4F929553FD44569A91D16D3450BB1E
+attack-damage.png 9D818D94E1BBDECDC0C3BC3B60CBFB1AEDF146592CDA38E4D55A2798115BF484
+attack-recovered.png BC6396BDB0567CB7A9471766E43354C68233F7FC60C86E737C60067DEF81B715
+pose-comparison.json ED1E76C899F96C92535D402DE8130C5DB4E71E051FE4F2C6BD11CEF35502B257
+final-detail.csv 75BE1D4098F1D723182265B3025B9D75FADBD9746F1A752065168B35D9D1927F

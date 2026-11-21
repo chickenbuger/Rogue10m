@@ -9,7 +9,8 @@ param(
  [switch]$MonsterDeathMotion,
  [switch]$MonsterDeathRender,
  [switch]$MonsterLivingMotion,
- [switch]$MonsterLivingRender
+ [switch]$MonsterLivingRender,
+ [switch]$AzathorHook
 )
 $ErrorActionPreference='Stop';$root=(Resolve-Path -LiteralPath (Split-Path -Parent $PSScriptRoot)).Path;$project=Join-Path $root 'Rogue10m.uproject'
 if (($ThornWalk -and $SporelingWalk) -or ($SporelingSavedProfile -and -not $SporelingWalk)) {
@@ -20,7 +21,7 @@ if(($OrdinaryWalk -and ($ThornWalk -or $SporelingWalk)) -or ($OrdinarySavedProfi
 }
 if($MonsterDeathRender){$MonsterDeathMotion=$true}
 if($MonsterDeathMotion -and ($OrdinaryWalk -or $ThornWalk -or $SporelingWalk)){throw 'MonsterDeathMotion requires a separate run.'}
-if($MonsterLivingRender){$MonsterLivingMotion=$true}
+if($MonsterLivingRender -or $AzathorHook){$MonsterLivingMotion=$true}
 if($MonsterLivingMotion -and ($MonsterDeathMotion -or $OrdinaryWalk -or $ThornWalk -or $SporelingWalk)){
  throw 'MonsterLivingMotion requires a separate run.'
 }
@@ -34,8 +35,10 @@ function Saves {
 }
 $before=@(Saves);$before|ConvertTo-Json -Depth 3|Set-Content -LiteralPath (Join-Path $out 'saves-before.json');$log=Join-Path $out 'engine.log';$slot='Rogue10m_Town_QA_MonsterFX_'+$Label
 $exe='D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe'
+if($AzathorHook -and -not $MonsterLivingRender){$exe='D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor-Cmd.exe'}
 $map=if($ThornWalk -or $SporelingWalk -or $OrdinaryWalk -or $MonsterDeathMotion -or $MonsterLivingMotion){'/Game/Rogue10m/Maps/StartHub'}else{'/Game/Rogue10m/Maps/OpenRunMap'}
 $gameCommands=if($MonsterLivingRender){'t.MaxFPS 60,r.MotionBlurQuality 0,Rogue10m.TestMonsterChaseEffects'}else{'t.MaxFPS 60,Rogue10m.TestMonsterChaseEffects'}
+if($AzathorHook -and $MonsterLivingRender){$gameCommands='t.MaxFPS 60,r.MotionBlurQuality 0,r.ScreenPercentage 50,Rogue10m.TestMonsterChaseEffects'}
 $a=@(('"'+$project+'"'),$map,'-game','-DisablePython','-language=en','-locale=en-US','-windowed','-ForceRes','-ResX=1280','-ResY=720','-unattended','-nosplash','-nosound','-NoLiveCoding','-NoRemoteShaderCompile',('-RogueProfileSaveSlot='+$slot),('-RogueProgressionSavePrefix=Rogue10m_Progression_QA_MonsterFX_'+$Label),('-RogueSkillKeySaveSlot=Rogue10m_Fighter_QA_MonsterFX_'+$Label),('-ExecCmds="'+$gameCommands+'"'),('-abslog="'+$log+'"'))
 if ($MonsterDeathRender -or $MonsterLivingRender) { $a+=@('-RenderOffScreen','-d3d11','-UseFixedTimeStep','-FPS=60','-AllowSoftwareRendering','-graphicsadapter=1') }
 elseif ($ThornWalk -or $SporelingWalk -or $OrdinaryWalk -or $MonsterDeathMotion -or $MonsterLivingMotion) { $a+=@('-NullRHI','-UseFixedTimeStep','-FPS=60') }
@@ -49,6 +52,7 @@ if ($MonsterDeathMotion) { $a+='-RogueMonsterDeathMotionQA' }
 if ($MonsterDeathRender) { $a+='-RogueMonsterDeathRender' }
 if ($MonsterLivingMotion) { $a+='-RogueMonsterLivingTransitionsQA' }
 if ($MonsterLivingRender) { $a+='-RogueMonsterLivingRender' }
+if ($AzathorHook) { $a+='-RogueAzathorHookHandoffQA' }
 $p=$null;$failure=$null;$started=$null
 try {
  $p=Start-Process -FilePath $exe -ArgumentList $a -WindowStyle Hidden -PassThru;$started=$p.StartTime;Write-Output ('Owned monsterAI PID='+$p.Id)
@@ -72,6 +76,7 @@ elseif($SporelingWalk){Write-Output 'PASSED Sporeling paired locomotion and basi
 elseif($OrdinaryWalk){Write-Output ('PASSED paired gait, attack and hit recovery observations for '+$OrdinaryWalk)}
 elseif($MonsterDeathRender){Write-Output 'PASSED matched ThornWarden walking death WARP captures'}
 elseif($MonsterDeathMotion){Write-Output 'PASSED six-species idle, walk and attack lethal-pose observations'}
+elseif($AzathorHook){Write-Output ('PASSED Azathor walk-to-hook validation. Gameplay captures and samples are under Feature/doc/evidence/monster-effects-chase-20261011/'+$slot)}
 elseif($MonsterLivingRender){Write-Output 'PASSED ThornWarden living attack and hit WARP captures'}
 elseif($MonsterLivingMotion){Write-Output 'PASSED six-species idle and walking attack and hit motion observations'}
 else{Write-Output 'PASSED natural sight/chase/effects regression'}

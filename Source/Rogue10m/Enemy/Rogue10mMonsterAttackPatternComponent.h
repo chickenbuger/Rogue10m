@@ -113,7 +113,7 @@ private:
 	void FinishRecovery();
 	void DamageTarget(ARogue10mCharacter* Target);
 	bool HasClearHitPath(const ARogue10mCharacter& Target) const;
-	void PlayAttackPresentation();
+	void PlayAttackPresentation(bool bMovingNativeBasicAttack);
 	void RestoreAnimation();
 	void SaveAnimationMode();
 	void UpdateLocomotionPresentation();

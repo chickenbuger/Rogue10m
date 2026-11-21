@@ -20,7 +20,7 @@ public:
  static float CalculatePhaseRate(float ClipSeconds, float GameplaySeconds);
  void Configure(URogue10mMonsterAttackPatternProfile* Profile);
  float PlayPresentation(UAnimMontage* Montage, UAnimSequence* Sequence, float ContactSeconds = 0.f,
-   float WindupSeconds = 0.f, bool bHoldFinalPose = false, float SequenceBlendInSeconds = 0.08f);
+   float WindupSeconds = 0.f, bool bHoldFinalPose = false, float BlendInSeconds = -1.f);
  bool PlayLegacySequenceForWindow(UAnimSequence& Sequence, float GameplaySeconds);
  bool PlayDeathFromPose(UAnimSequence& Sequence, FPoseSnapshot&& StartPose);
  void BeginRecovery(float RecoverySeconds);

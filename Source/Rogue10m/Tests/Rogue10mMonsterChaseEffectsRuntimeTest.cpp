@@ -96,6 +96,7 @@ public:
 		bDeathRender = bDeathMotion && FParse::Param(FCommandLine::Get(), TEXT("RogueMonsterDeathRender"));
 		bLivingTransitions = FParse::Param(FCommandLine::Get(), TEXT("RogueMonsterLivingTransitionsQA"));
 		bLivingRender = bLivingTransitions && FParse::Param(FCommandLine::Get(), TEXT("RogueMonsterLivingRender"));
+		bAzathorHook = FParse::Param(FCommandLine::Get(), TEXT("RogueAzathorHookHandoffQA"));
 		FString OrdinaryId;
 		if (FParse::Value(FCommandLine::Get(), TEXT("RogueOrdinaryGaitQA="), OrdinaryId))
 		{
@@ -112,14 +113,16 @@ public:
 		{ Check(false, TEXT("ordinary_gait_saved_profile_requires_species")); Finish(); return; }
 		if ((bThornWalk && bSporelingWalk) || (bSporelingSavedProfile && !bSporelingWalk)
 			|| (bDeathMotion && (bThornWalk || bSporelingWalk || OrdinaryGait || bLivingTransitions))
-			|| (bLivingTransitions && (bThornWalk || bSporelingWalk || OrdinaryGait)))
+			|| (bLivingTransitions && (bThornWalk || bSporelingWalk || OrdinaryGait))
+			|| (bAzathorHook && !bLivingTransitions))
 		{ Check(false, TEXT("incompatible_monster_walk_qa_modes")); Finish(); return; }
 		if (bThornWalk) { Species = 4; }
 		if (bSporelingWalk) { Species = 1; }
 		if (bDeathRender) { Species = 4; DeathStance = 1; }
+		if (bAzathorHook) { Species = UE_ARRAY_COUNT(DeathSpecies) - 1; }
 		if (bLivingRender)
 		{
-			Species = 4;
+			if (!bAzathorHook) { Species = 4; }
 			bLivingWalk = true;
 			LivingViewport = World->GetGameViewport();
 			if (!LivingViewport.IsValid()) { Check(false, TEXT("living_transition_game_viewport")); Finish(); return; }
@@ -249,6 +252,12 @@ private:
 
 	enum class ELivingPhase { Settle, Attack, Rest, Hit, Recovered };
 
+	const TCHAR* LivingPoseName() const
+	{
+		if (bAzathorReplay) { return bAzathorReplayCancelled ? TEXT("walk_replay") : TEXT("walk_cancel"); }
+		return bLivingWalk ? TEXT("walk") : TEXT("idle");
+	}
+
 	void PrepareLivingTransitions()
 	{
 		const auto* Data = Monster->GetMonsterData();
@@ -273,6 +282,11 @@ private:
 		if (!ThornHandle.IsValid())
 		{
 			LivingRows = TEXT("species,source_pose,phase,frame,revision,asset,position_s,monster_speed_cm_s,damage_events,peak_bone_step_cm,peak_bone_angle_deg\n");
+			if (bAzathorHook)
+			{
+				AzathorHookRows = TEXT("source_pose,phase,frame,asset,position_s,montage_weight,blend_s,")
+					TEXT("actor_x,actor_y,actor_z,foot_l_world_z,foot_r_world_z,step_bone,angle_bone\n");
+			}
 			ThornHandle = FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* TickWorld, ELevelTick, float)
 			{
 				if (TickWorld == Self->World.Get() && !Self->bFinished && Self->Stage == 13) { Self->SampleLivingTransition(); }
@@ -284,7 +298,7 @@ private:
 		LivingInitialHits = Monster->GetAttackPatternComponent()->GetSuccessfulHitCount();
 		bLivingSawHit = false;
 		Stage = 13;
-		Deadline = FPlatformTime::Seconds() + (bLivingRender ? 100.0 : 40.0);
+		Deadline = FPlatformTime::Seconds() + (bLivingRender ? (bAzathorHook ? 180.0 : 100.0) : 40.0);
 	}
 
 	const UAnimationAsset* RecordLivingPose(const TCHAR* Phase)
@@ -297,17 +311,30 @@ private:
 		const float Position = Single ? Single->GetCurrentTime() : Montage ? Anim->Montage_GetPosition(Montage) : -1.f;
 		const auto& Pose = Mesh->GetComponentSpaceTransforms();
 		double Step = 0.0, Turn = 0.0;
+		int32 StepBone = INDEX_NONE, TurnBone = INDEX_NONE;
 		if (LivingPreviousPose.Num() == Pose.Num())
 		{
 			for (int32 Index = 0; Index < Pose.Num(); ++Index)
 			{
-				Step = FMath::Max(Step, FVector::Dist(Pose[Index].GetLocation(), LivingPreviousPose[Index].GetLocation()));
-				Turn = FMath::Max(Turn, FMath::RadiansToDegrees(Pose[Index].GetRotation().AngularDistance(LivingPreviousPose[Index].GetRotation())));
+				const double BoneStep = FVector::Dist(Pose[Index].GetLocation(), LivingPreviousPose[Index].GetLocation());
+				const double BoneTurn = FMath::RadiansToDegrees(Pose[Index].GetRotation().AngularDistance(LivingPreviousPose[Index].GetRotation()));
+				if (BoneStep > Step) { Step = BoneStep; StepBone = Index; }
+				if (BoneTurn > Turn) { Turn = BoneTurn; TurnBone = Index; }
 			}
+		}
+		if (bAzathorHook)
+		{
+			const auto* MontageInstance = Montage ? Anim->GetActiveInstanceForMontage(Montage) : nullptr;
+			const FVector ActorAt = Monster->GetActorLocation();
+			AzathorHookRows += FString::Printf(TEXT("%s,%s,%d,%s,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%s,%s\n"),
+				LivingPoseName(), Phase, LivingFrame, *GetNameSafe(Active), Position,
+				MontageInstance ? MontageInstance->GetWeight() : 0.f, Montage ? Montage->BlendIn.GetBlendTime() : 0.f,
+				ActorAt.X, ActorAt.Y, ActorAt.Z, Mesh->GetSocketLocation(TEXT("foot_l")).Z, Mesh->GetSocketLocation(TEXT("foot_r")).Z,
+				*Mesh->GetBoneName(StepBone).ToString(), *Mesh->GetBoneName(TurnBone).ToString());
 		}
 		LivingPreviousPose = Pose;
 		LivingRows += FString::Printf(TEXT("%s,%s,%s,%d,%u,%s,%.6f,%.4f,%d,%.5f,%.5f\n"), DeathSpecies[Species],
-			bLivingWalk ? TEXT("walk") : TEXT("idle"), Phase, LivingFrame, Mesh->GetBoneTransformRevisionNumber(),
+			LivingPoseName(), Phase, LivingFrame, Mesh->GetBoneTransformRevisionNumber(),
 			*GetNameSafe(Active), Position, Monster->GetVelocity().Size2D(),
 			Monster->GetAttackPatternComponent()->GetSuccessfulHitCount() - LivingInitialHits, Step, Turn);
 		return Active;
@@ -374,15 +401,29 @@ private:
 			RecordLivingPose(bActive ? TEXT("attack") : TEXT("attack_exit"));
 			const int32 Hits = Pattern->GetSuccessfulHitCount() - LivingInitialHits;
 			if (LivingFrame == 1) { CaptureLivingPose(TEXT("attack-first-frame")); }
+			if (bAzathorHook && LivingFrame == 8) { CaptureLivingPose(TEXT("attack-early-motion")); }
 			if (Hits > 0 && LivingFirstDamage == 0)
 			{
 				LivingFirstDamage = LivingFrame;
 				CaptureLivingPose(TEXT("attack-damage"));
 			}
+			if (bAzathorReplay && !bAzathorReplayCancelled && LivingFrame == 3)
+			{
+				Pattern->CancelAttack();
+				Check(!Pattern->IsAttackActive() && Hits == 0, TEXT("azathor_hook_cancelled_before_damage"));
+				bAzathorReplayCancelled = true;
+				LivingFrame = 0;
+				LivingPhase = ELivingPhase::Settle;
+				return;
+			}
 			if (bActive && LivingFrame < 300) { return; }
 			Check(!bActive && Hits == 1 && LivingFirstDamage > 0, TEXT("living_basic_one_hit_and_recovery"));
+			if (bAzathorHook)
+			{
+				Check(LivingFirstDamage == 60 && LivingFrame == 143, TEXT("azathor_hook_original_damage_and_recovery_frames"));
+			}
 			Results += FString::Printf(TEXT("living_attack_case=%s/%s first_damage=%d recovery=%d\n"), DeathSpecies[Species],
-				bLivingWalk ? TEXT("walk") : TEXT("idle"), LivingFirstDamage, LivingFrame);
+				LivingPoseName(), LivingFirstDamage, LivingFrame);
 			LivingFrame = 0;
 			LivingPhase = ELivingPhase::Rest;
 			return;
@@ -419,12 +460,19 @@ private:
 		if (LivingFrame < 12) { return; }
 		if (bLivingRender)
 		{
-			Check(LivingCaptures.Num() == 5, TEXT("living_transition_captured_all_phases"));
+			Check(LivingCaptures.Num() == (bAzathorHook ? 6 : 5), TEXT("living_transition_captured_all_phases"));
 			for (const FString& Capture : LivingCaptures)
 			{
 				Check(IFileManager::Get().FileSize(*Capture) > 1024, TEXT("living_transition_capture_written"));
 			}
 			Finish(); return;
+		}
+		if (bAzathorReplay) { Finish(); return; }
+		if (bAzathorHook && bLivingWalk && !Failures)
+		{
+			bAzathorReplay = true;
+			Spawn();
+			return;
 		}
 		bLivingWalk = !bLivingWalk;
 		if (!bLivingWalk) { ++Species; }
@@ -1141,6 +1189,11 @@ private:
 		{
 			Check(FFileHelper::SaveStringToFile(LivingRows, *FPaths::Combine(Output, TEXT("living-transition-frames.csv"))),
 				TEXT("living_transition_pose_samples_written"));
+			if (bAzathorHook)
+			{
+				Check(FFileHelper::SaveStringToFile(AzathorHookRows, *FPaths::Combine(Output, TEXT("azathor-hook-frames.csv"))),
+					TEXT("azathor_hook_montage_and_floor_samples_written"));
+			}
 		}
 		FFileHelper::SaveStringToFile(Results,*FPaths::Combine(Output,TEXT("results.txt")),FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM);
 		UE_LOG(LogRogue10m,Display,TEXT("RESULT=MONSTER_FX_%s failures=%d"),Failures ? TEXT("FAILED") : TEXT("PASSED"),Failures);
@@ -1183,12 +1236,14 @@ private:
 	FString DeathRows;
 	ELivingPhase LivingPhase = ELivingPhase::Settle;
 	bool bLivingTransitions = false, bLivingWalk = false, bLivingSawHit = false, bLivingRender = false;
+	bool bAzathorHook = false, bAzathorReplay = false, bAzathorReplayCancelled = false;
 	bool bLivingWorldRenderingWasDisabled = false;
 	int32 LivingFrame = 0, LivingInitialHits = 0, LivingFirstDamage = 0;
 	TArray<FTransform> LivingPreviousPose;
 	TWeakObjectPtr<UGameViewportClient> LivingViewport;
 	TArray<FString> LivingCaptures;
 	FString LivingRows;
+	FString AzathorHookRows;
 	FString Output,Results;
 	FVector Origin,ChaseStart;
 	double Deadline=0;

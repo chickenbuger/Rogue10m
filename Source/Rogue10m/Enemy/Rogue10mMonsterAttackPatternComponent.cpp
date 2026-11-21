@@ -319,13 +319,17 @@ bool URogue10mMonsterAttackPatternComponent::TryStartAttack(ARogue10mCharacter* 
 		LockedTarget.Reset();
 		return false;
 	}
+	auto* Movement = Monster->GetCharacterMovement();
+	const bool bMovingNativeBasicAttack = Profile->bUseHumanoidAnimInstance && Profile->bEnableBossPatterns
+		&& CurrentAttackType == ERogue10mMonsterAttackType::Basic && Movement->IsMovingOnGround()
+		&& Movement->Velocity.SizeSquared2D() > FMath::Square(10.0);
 	Monster->SetActorRotation(LockedForward.Rotation());
 	if (AAIController* AI = Cast<AAIController>(Monster->GetController()))
 	{
 		AI->StopMovement();
 		AI->ClearFocus(EAIFocusPriority::Gameplay);
 	}
-	Monster->GetCharacterMovement()->StopMovementImmediately();
+	Movement->StopMovementImmediately();
 	GetWorld()->GetTimerManager().ClearTimer(HitReactionTimer);
 	PatternState = ERogue10mMonsterPatternState::Windup;
 	WindupStartedTime = GetWorld()->GetTimeSeconds();
@@ -355,7 +359,7 @@ bool URogue10mMonsterAttackPatternComponent::TryStartAttack(ARogue10mCharacter* 
 		if (CurrentAttackType == ERogue10mMonsterAttackType::AbyssZone) NextAbyssZoneTime = SpecialAvailableTime;
 		GetWorld()->GetTimerManager().SetTimer(AttackGuardTimer, this, &ThisClass::CheckAttackValidity, 0.05f, true);
 	}
-	PlayAttackPresentation();
+	PlayAttackPresentation(bMovingNativeBasicAttack);
 	GetWorld()->GetTimerManager().SetTimer(StateTimer, this, &ThisClass::ExecuteAttack,
 		LockedWindupSeconds, false);
 	return true;
@@ -662,7 +666,7 @@ void URogue10mMonsterAttackPatternComponent::SaveAnimationMode()
 	}
 }
 
-void URogue10mMonsterAttackPatternComponent::PlayAttackPresentation()
+void URogue10mMonsterAttackPatternComponent::PlayAttackPresentation(bool bMovingNativeBasicAttack)
 {
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Profile || !Monster || !Monster->GetMesh()) return;
@@ -678,7 +682,11 @@ void URogue10mMonsterAttackPatternComponent::PlayAttackPresentation()
    { Montage = Profile->FrontalWaveMontage.LoadSynchronous(); Sequence = Profile->FrontalWaveAnimation.LoadSynchronous(); Contact = Profile->FrontalWaveContactTimeSeconds; }
    else if (CurrentAttackType == ERogue10mMonsterAttackType::AbyssZone)
    { Montage = Profile->AbyssZoneMontage.LoadSynchronous(); Sequence = Profile->AbyssZoneAnimation.LoadSynchronous(); Contact = Profile->AbyssZoneContactTimeSeconds; }
-   Anim->PlayPresentation(Montage, Sequence, Contact, LockedWindupSeconds);
+   // Give the live gait time to settle under the basic hook after movement stops.
+   // The montage still advances from frame zero against the existing damage clock.
+   constexpr float MovingBasicBlendInSeconds = 0.22f;
+   Anim->PlayPresentation(Montage, Sequence, Contact, LockedWindupSeconds, false,
+    bMovingNativeBasicAttack && Montage ? MovingBasicBlendInSeconds : -1.0f);
   }
   return;
  }
