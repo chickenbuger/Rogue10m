@@ -25,7 +25,7 @@
 
 namespace
 {
-	const FVector2f DesignSize(1672, 941);
+	const FVector2f CombatHudDesignSize(1672, 941);
 	const FVector2f AtlasSize(1024, 512);
 
 	enum class ESkin : uint8
@@ -119,11 +119,11 @@ namespace
 	{
 		explicit FHudPlacement(const FVector2D& Size)
 		{
-			Scale = FMath::Max(0.0f, FMath::Min(static_cast<float>(Size.X) / DesignSize.X,
-				static_cast<float>(Size.Y) / DesignSize.Y));
+			Scale = FMath::Max(0.0f, FMath::Min(static_cast<float>(Size.X) / CombatHudDesignSize.X,
+				static_cast<float>(Size.Y) / CombatHudDesignSize.Y));
 			// Layout A is placed relative to the original canvas center and bottom,
 			// retaining its slight right bias from the identity medallion.
-			CombatOffset = FVector2f((Size.X - DesignSize.X * Scale) * 0.5, Size.Y - DesignSize.Y * Scale);
+			CombatOffset = FVector2f((Size.X - CombatHudDesignSize.X * Scale) * 0.5, Size.Y - CombatHudDesignSize.Y * Scale);
 		}
 		FVector2f Offset(bool bCombat) const { return bCombat ? CombatOffset : FVector2f::ZeroVector; }
 		FSlateLayoutTransform Transform(const FVector2f& DesignPoint, bool bCombat) const

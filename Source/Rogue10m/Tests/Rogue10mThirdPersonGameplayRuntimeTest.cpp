@@ -30,6 +30,7 @@
 #include "Rogue10m.h"
 #include "Rogue10mAppearanceCameraComponent.h"
 #include "Rogue10mCharacter.h"
+#include "Rogue10mCharacterAnimationComponent.h"
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mFighterCombatStanceAnimInstance.h"
@@ -43,6 +44,7 @@
 #include "UObject/UnrealType.h"
 #include "UObject/StrongObjectPtr.h"
 #include "Rogue10mWeaponIdentityComponent.h"
+#include "Rogue10mWeaponVisualComponent.h"
 
 struct FRogue10mMouseCombatTestAccess
 {
@@ -61,6 +63,20 @@ struct FRogue10mMouseCombatTestAccess
 
 namespace Rogue10mThirdPersonGameplayQA
 {
+struct FHeadPitchCase
+{
+ const TCHAR* Name;
+ ERogue10mWeaponType Weapon;
+ bool bRequestGuard;
+};
+static constexpr FHeadPitchCase HeadPitchCases[]={
+ {TEXT("unarmed_idle"),ERogue10mWeaponType::Unarmed,false},
+ {TEXT("unarmed_guard"),ERogue10mWeaponType::Unarmed,true},
+ {TEXT("greatsword_ready"),ERogue10mWeaponType::GreatSword,false}
+};
+static const FName HeadPitchBones[]={TEXT("neck_01"),TEXT("head"),TEXT("upperarm_l"),TEXT("upperarm_r"),
+ TEXT("lowerarm_l"),TEXT("lowerarm_r"),TEXT("hand_l"),TEXT("hand_r")};
+
 // Programmatic input and rendered QA, never a claim of physical input or full-run play.
 class FRun : public TSharedFromThis<FRun>
 {
@@ -212,6 +228,7 @@ private:
   Check(FMath::IsNearlyEqual(HeadMotion.RotationWeight,.35f)&&FMath::IsNearlyEqual(HeadMotion.MaxRotationDegrees,5.f),TEXT("third_person_grounded_idle_uses_reviewed_head_motion"));
 
   HeadPitchOriginalControl=PC->GetControlRotation();
+  HeadPitchOriginalWeapon=Character->GetEquippedWeaponType();
   bHeadPitchOriginalControllerYaw=Character->bUseControllerRotationYaw;
   HeadPitchOriginalRates[0]=HeadPitchSource->GlobalAnimRateScale;
   HeadPitchOriginalRates[1]=HeadPitchBody->GlobalAnimRateScale;
@@ -229,9 +246,21 @@ private:
    HeadPitchPhotoCamera=World->SpawnActor<ACameraActor>(Position,(Target-Position).Rotation(),Params);
    Check(HeadPitchPhotoCamera.IsValid(),TEXT("head_pitch_profile_camera_created"));
   }
-  Stage=TEXT("head_pitch_prepare");
+  BeginHeadPitchCase();
+ }
+ void BeginHeadPitchCase()
+ {
+  const FHeadPitchCase& Case=HeadPitchCases[HeadPitchCaseIndex];
+  Character->RestoreEquippedWeaponType(Case.Weapon);
+  auto* Animation=Character->GetCharacterAnimationComponent();
+  Animation->ResetFighterCombatStance();
+  if(Case.bRequestGuard){Animation->RequestFighterCombatStance(5.f);}
+  HeadPitchSource->GlobalAnimRateScale=HeadPitchOriginalRates[0];
+  HeadPitchBody->GlobalAnimRateScale=HeadPitchOriginalRates[1];
+  HeadPitchAnimation->UpperBodyAimInterpolationSpeed=HeadPitchOriginalAimSpeed;
+  Stage=FString::Printf(TEXT("head_pitch_%s_prepare"),Case.Name);
   PC->SetControlRotation(FRotator(0,HeadPitchYaw,0));
-  Later(.35,[this]
+  Later(.5,[this]
   {
    // Evaluate the production graphs at the same animation phase for all three inputs.
    // Keep the meshes ticking so the proxy and the retargeter consume the new input.
@@ -248,7 +277,7 @@ private:
  {
   static constexpr double Pitches[]={0,65,-65};
   const double Pitch=Pitches[Index];
-  Stage=FString::Printf(TEXT("head_pitch_%+.0f"),Pitch);
+  Stage=FString::Printf(TEXT("head_pitch_%s_%+.0f"),HeadPitchCases[HeadPitchCaseIndex].Name,Pitch);
   PC->SetControlRotation(FRotator(Pitch,HeadPitchYaw,0));
   Later(.25,[this,Index,Pitch]{MeasureHeadPitch(Index,Pitch);});
  }
@@ -259,6 +288,16 @@ private:
   const auto* Anim=Source?Cast<URogue10mFighterCombatStanceAnimInstance>(Source->GetAnimInstance()):nullptr;
   Check(Anim&&Body,TEXT("head_pitch_gameplay_anim_instances_available"));
   if(!Anim||!Body){Finish();return;}
+  const FHeadPitchCase& Case=HeadPitchCases[HeadPitchCaseIndex];
+  Check(Character->GetEquippedWeaponType()==Case.Weapon,TEXT("head_pitch_expected_weapon_equipped"));
+  const bool bExpectGuard=Case.bRequestGuard||Case.Weapon==ERogue10mWeaponType::GreatSword;
+  Check(bExpectGuard?Anim->FighterCombatStanceAlpha>.95f:Anim->FighterCombatStanceAlpha<.05f,TEXT("head_pitch_expected_idle_or_ready_stance"));
+  if(Case.Weapon==ERogue10mWeaponType::GreatSword)
+  {
+   const auto* Visual=Character->FindComponentByClass<URogue10mWeaponVisualComponent>();
+   const auto* Sword=Visual?Visual->GetRightWeaponMesh():nullptr;
+   Check(Sword&&Sword->IsVisible()&&Sword->GetAttachParent()==Body&&Sword->GetAttachSocketName()==TEXT("hand_r"),TEXT("head_pitch_visible_greatsword_attached_to_hand"));
+  }
 
   const uint32 SourceRevision=Source->GetBoneTransformRevisionNumber();
   const uint32 BodyRevision=Body->GetBoneTransformRevisionNumber();
@@ -277,35 +316,40 @@ private:
   const FVector CombatAim=Character->GetCombatViewTransform().GetRotation().GetForwardVector();
   // A nearby floor hit changes the ray from the character to the crosshair's aim point.
   Check(Index==0||CombatAim.Z*FMath::Sign(Pitch)>.1,TEXT("combat_aim_follows_vertical_input"));
-  Check(FMath::IsNearlyZero(Anim->UpperBodyAimPitch,.1f),TEXT("relaxed_unarmed_arms_keep_authored_pose"));
+  Check(FMath::IsNearlyZero(Anim->UpperBodyAimPitch,.1f),TEXT("third_person_arms_ignore_vertical_input"));
+  Check(FMath::IsNearlyEqual(static_cast<double>(Anim->UpperBodyAimYaw),ResidualYaw,.1),TEXT("third_person_upper_body_keeps_horizontal_aim"));
 
-  const FName Bones[]={TEXT("neck_01"),TEXT("head"),TEXT("hand_l"),TEXT("hand_r")};
   USkeletalMeshComponent* Meshes[]={Source,Body};
-  double MaxBoneDelta=0;
+  double MaxBoneDelta=0,MaxBoneTravel=0;
   for(int32 MeshIndex=0;MeshIndex<UE_ARRAY_COUNT(Meshes);++MeshIndex)
   {
-   for(int32 BoneIndex=0;BoneIndex<UE_ARRAY_COUNT(Bones);++BoneIndex)
+   for(int32 BoneIndex=0;BoneIndex<UE_ARRAY_COUNT(HeadPitchBones);++BoneIndex)
    {
     auto* Mesh=Meshes[MeshIndex];
-    if(Mesh->GetBoneIndex(Bones[BoneIndex])==INDEX_NONE){Check(false,TEXT("head_pitch_bone_exists"));continue;}
-    const FQuat Rotation=Mesh->GetBoneTransform(Bones[BoneIndex],RTS_Component).GetRotation();
-    Check(Rotation.IsNormalized(),TEXT("head_pitch_bone_rotation_is_normalized"));
-    FQuat& Neutral=HeadPitchNeutral[MeshIndex][BoneIndex];
-    if(Index==0){Neutral=Rotation;continue;}
-    const double Delta=FMath::RadiansToDegrees(Rotation.AngularDistance(Neutral));
+    const FName Bone=HeadPitchBones[BoneIndex];
+    if(Mesh->GetBoneIndex(Bone)==INDEX_NONE){Check(false,TEXT("head_pitch_bone_exists"));continue;}
+    const FTransform Pose=Mesh->GetBoneTransform(Bone,RTS_Component);
+    Check(!Pose.ContainsNaN()&&Pose.GetRotation().IsNormalized(),TEXT("head_pitch_bone_transform_is_valid"));
+    FTransform& Neutral=HeadPitchNeutral[MeshIndex][BoneIndex];
+    if(Index==0){Neutral=Pose;continue;}
+    const double Delta=FMath::RadiansToDegrees(Pose.GetRotation().AngularDistance(Neutral.GetRotation()));
+    const double Travel=FVector::Distance(Pose.GetLocation(),Neutral.GetLocation());
     MaxBoneDelta=FMath::Max(MaxBoneDelta,Delta);
-    Check(Delta<.1,BoneIndex<2?TEXT("source_and_visible_head_and_neck_ignore_camera_pitch"):TEXT("source_and_visible_relaxed_hands_ignore_camera_pitch"));
+    MaxBoneTravel=FMath::Max(MaxBoneTravel,Travel);
+    Check(Delta<.1&&Travel<.1,BoneIndex<2?TEXT("source_and_visible_head_and_neck_ignore_camera_pitch"):TEXT("source_and_visible_arms_ignore_camera_pitch"));
    }
   }
-  Results+=FString::Printf(TEXT("head_pitch_input=%.3f camera_pitch=%.3f upper_body_pitch=%.3f residual_yaw=%.3f basis_error=%.6f max_bone_delta=%.6f\n"),Pitch,CameraPitch,Anim->UpperBodyAimPitch,ResidualYaw,AimError,MaxBoneDelta);
+  Results+=FString::Printf(TEXT("head_pitch_input=%.3f pose=%s camera_pitch=%.3f upper_body_pitch=%.3f upper_body_yaw=%.3f stance_alpha=%.3f residual_yaw=%.3f basis_error=%.6f max_bone_delta=%.6f max_bone_travel_cm=%.6f\n"),
+   Pitch,Case.Name,CameraPitch,Anim->UpperBodyAimPitch,Anim->UpperBodyAimYaw,Anim->FighterCombatStanceAlpha,ResidualYaw,AimError,MaxBoneDelta,MaxBoneTravel);
   auto NextPitch=[this,Index]
   {
    if(HeadPitchPhotoCamera.IsValid()){PC->SetViewTarget(Character.Get());}
    if(Index<2){ApplyHeadPitch(Index+1);return;}
+   if(++HeadPitchCaseIndex<UE_ARRAY_COUNT(HeadPitchCases)){BeginHeadPitchCase();return;}
    RestoreHeadPitchCheck();
    Later(.3,[this]{BeginMovement();});
   };
-  if(Index>0&&HeadPitchPhotoCamera.IsValid())
+  if(Index>0&&Case.Weapon==ERogue10mWeaponType::GreatSword&&HeadPitchPhotoCamera.IsValid())
   {
    // The gameplay view was measured above. A fixed side camera keeps the head visible for both captures.
    PC->SetViewTarget(HeadPitchPhotoCamera.Get());
@@ -325,7 +369,12 @@ private:
   if(HeadPitchSource.IsValid()){HeadPitchSource->GlobalAnimRateScale=HeadPitchOriginalRates[0];}
   if(HeadPitchBody.IsValid()){HeadPitchBody->GlobalAnimRateScale=HeadPitchOriginalRates[1];}
   if(HeadPitchAnimation.IsValid()){HeadPitchAnimation->UpperBodyAimInterpolationSpeed=HeadPitchOriginalAimSpeed;}
-  if(Character.IsValid()){Character->bUseControllerRotationYaw=bHeadPitchOriginalControllerYaw;}
+  if(Character.IsValid())
+  {
+   Character->bUseControllerRotationYaw=bHeadPitchOriginalControllerYaw;
+   Character->GetCharacterAnimationComponent()->ResetFighterCombatStance();
+   Character->RestoreEquippedWeaponType(HeadPitchOriginalWeapon);
+  }
   if(PC.IsValid()){PC->SetControlRotation(HeadPitchOriginalControl);}
   if(HeadPitchPhotoCamera.IsValid())
   {
@@ -358,11 +407,13 @@ private:
  TWeakObjectPtr<URogue10mFighterCombatStanceAnimInstance> HeadPitchAnimation;
  TWeakObjectPtr<ACameraActor> HeadPitchPhotoCamera;
  FRotator HeadPitchOriginalControl=FRotator::ZeroRotator;
- FQuat HeadPitchNeutral[2][4]={};
+ ERogue10mWeaponType HeadPitchOriginalWeapon=ERogue10mWeaponType::Unarmed;
+ FTransform HeadPitchNeutral[2][UE_ARRAY_COUNT(HeadPitchBones)]={};
  double HeadPitchYaw=0;
  float HeadPitchOriginalRates[2]={1,1};
  float HeadPitchOriginalAimSpeed=0;
  uint32 HeadPitchSourceRevision=0,HeadPitchBodyRevision=0;
+ int32 HeadPitchCaseIndex=0;
  bool bHeadPitchCheckActive=false,bHeadPitchOriginalControllerYaw=false;
  struct FPhoto{FString Name;int32 Width=0,Height=0;TArray<FColor> Pixels;};TWeakObjectPtr<UWorld> World;TWeakObjectPtr<ARogue10mPlayerController> PC;TWeakObjectPtr<ARogue10mCharacter> Character;TWeakObjectPtr<URogue10mProgressionSubsystem> Saves;TWeakObjectPtr<AActor> Floor,Obstacle,Wall;TFunction<void()> Next;FDelegateHandle Cleanup,SampleHandle,CaptureHandle;TArray<FPhoto> Photos;FString Label,Output,Results,Frames,Stage=TEXT("prepare"),PendingPhoto;FVector MoveStart,DodgeStart;double Deadline=0,NextAt=0;float ConfiguredDodgeDistance=100.f,ConfiguredDodgeDuration=.16f;float OpenDistance=0,BlockedDistance=0,RecoveredDistance=0,MoveTravel=0,FreeTravel=0,WallTravel=0;int32 Checks=0,Failures=0,Samples=0,DodgeSamples=0,RequestedPhotos=0,CompletedPhotos=0;bool bFinished=false,bRendered=false,bWallDodge=false,bSawDodge=false,bDodgePhoto=false;
 };

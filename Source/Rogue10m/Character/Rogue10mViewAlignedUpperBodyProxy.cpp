@@ -181,23 +181,11 @@ void FRogue10mViewAlignedUpperBodyProxy::PreUpdate(UAnimInstance* InAnimInstance
 		BaselineAimPitch = BaselineAimYaw = 0.0f;
 		return;
 	}
-	const float PitchLimit = FMath::Clamp(Instance->UpperBodyAimMaxPitch, 0.0f, 85.0f);
+	// The third-person camera and combat query consume vertical look independently of the pose.
+	const float PitchLimit = Character->IsThirdPersonGameplayActive()
+		? 0.0f : FMath::Clamp(Instance->UpperBodyAimMaxPitch, 0.0f, 85.0f);
 	const float YawLimit = FMath::Clamp(Instance->UpperBodyAimMaxYaw, 0.0f, 80.0f);
-	float PitchWeight = 1.0f;
-	const auto* Movement = Character->GetCharacterMovement();
-	if (Character->IsThirdPersonGameplayActive() && Character->GetEquippedWeaponType() == ERogue10mWeaponType::Unarmed
-		&& Movement && Movement->IsMovingOnGround() && !Instance->IsAnyMontagePlaying())
-	{
-		const auto* Combat = Character->GetCombatComponent();
-		const auto* Brawler = Character->GetBasicBrawlerComponent();
-		const FRogue10mBasicBrawlerSnapshot BrawlerPose = Brawler ? Brawler->GetSnapshot() : FRogue10mBasicBrawlerSnapshot();
-		if (!(Combat && Combat->IsAttackChargeHeld()) && (!BrawlerPose.bActive || BrawlerPose.Phase == ERogue10mBasicBrawlerPhase::Idle))
-		{
-			// The relaxed hands transition into view aim with the authored guard pose.
-			PitchWeight = Instance->FighterCombatStanceAlpha;
-		}
-	}
-	const float DesiredPitch = FMath::Clamp(FRotator::NormalizeAxis(Control.Pitch - Actor.Pitch), -PitchLimit, PitchLimit) * PitchWeight;
+	const float DesiredPitch = FMath::Clamp(FRotator::NormalizeAxis(Control.Pitch - Actor.Pitch), -PitchLimit, PitchLimit);
 	const float DesiredYaw = FMath::Clamp(FRotator::NormalizeAxis(Control.Yaw - Actor.Yaw), -YawLimit, YawLimit);
 	const float BaselineSpeed = FMath::Max(0.0f, Instance->UpperBodyAimInterpolationSpeed);
 	const float BaselineFollow = BaselineSpeed > 0.0f ? 1.0f - FMath::Exp(-BaselineSpeed * FMath::Max(0.0f, DeltaSeconds)) : 1.0f;
