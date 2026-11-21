@@ -1,11 +1,15 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 #if WITH_EDITOR
 
+#include "Animation/AnimInstance.h"
+#include "Animation/AnimMontage.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Containers/Ticker.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
+#include "Engine/GameViewportClient.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "Framework/Application/SlateApplication.h"
@@ -77,6 +81,7 @@ public:
 		Mode = InMode;
 		bRead = Mode.EndsWith(TEXT("Read"));
 		bFailure = Mode.StartsWith(TEXT("Failure"));
+		if (Mode == TEXT("Death")) { FParse::Value(FCommandLine::Get(), TEXT("RoguePlayerDeathMotion="), DeathPose); }
 		FString Keys;
 		FParse::Value(FCommandLine::Get(), TEXT("RogueProfileSaveSlot="), ProfileSlot);
 		FParse::Value(FCommandLine::Get(), TEXT("RogueProgressionSavePrefix="), SavePrefix);
@@ -92,6 +97,15 @@ public:
 		}
 		Output = FPaths::Combine(FPaths::ProjectDir(), TEXT("Feature/doc/evidence/boss-run-completion-20261020"), ProfileSlot);
 		IFileManager::Get().MakeDirectory(*Output, true);
+		if (!DeathPose.IsEmpty() && FParse::Param(FCommandLine::Get(), TEXT("RogueDeathMotionCaptureFramesOnly")))
+		{
+			CaptureViewport = InWorld.GetGameViewport();
+			if (UGameViewportClient* Viewport = CaptureViewport.Get())
+			{
+				bOriginalWorldRenderDisabled = Viewport->bDisableWorldRendering;
+				Viewport->bDisableWorldRendering = true;
+			}
+		}
 		Deadline = FPlatformTime::Seconds() + 420.0;
 		Watchdog = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self = AsShared()](float)
 		{
@@ -107,6 +121,7 @@ public:
 				TFunction<void()> Callback = MoveTemp(Self->Next);
 				Callback();
 			}
+			Self->UpdateDeathCaptureRendering();
 			return !Self->bFinished;
 		}), 0.05f);
 		LoadHandle = FCoreUObjectDelegates::PostLoadMapWithWorld.AddLambda([Self = AsShared()](UWorld* NewWorld)
@@ -276,6 +291,7 @@ private:
 		}
 		if (Mode == TEXT("Death"))
 		{
+			if (!DeathPose.IsEmpty()) { BeginDeathMotion(); return; }
 			const float Damage = Character->GetRogueAttributeSet()->GetMaxHealth() * 10.0f + 10000.0f;
 			UGameplayStatics::ApplyDamage(Character.Get(), Damage, nullptr, nullptr, UDamageType::StaticClass());
 			Later(0.5, [this] { VerifyDefeat(); }); return;
@@ -286,6 +302,141 @@ private:
 		Character->SetActorLocation(FVector(15000, 69000, 10000), false, nullptr, ETeleportType::TeleportPhysics);
 		BossDeadline = FPlatformTime::Seconds() + 90.0;
 		Later(2.0, [this] { FindBoss(); });
+	}
+	void BeginDeathMotion()
+	{
+		Check(DeathPose == TEXT("Idle") || DeathPose == TEXT("Jog") || DeathPose == TEXT("Air"), TEXT("supported_player_death_motion_case"));
+		const UFunction* Event = Character->FindFunction(FName(TEXT("BP_OnRunDeath")));
+		Check(Event && Character->IsThirdPersonGameplayActive(), TEXT("player_death_event_and_actual_third_person_pawn"));
+		Check(Character->GetAnimationPlaybackMesh() && Character->GetMesh()
+			&& Character->GetAnimationPlaybackMesh() != Character->GetMesh(), TEXT("player_lethal_source_and_visible_retarget_meshes"));
+		if (Failures) { Finish(); return; }
+		Results += FString::Printf(TEXT("death_actor=%s event_owner=%s script_bytes=%d\n"),
+			*Character->GetClass()->GetPathName(), *Event->GetOuter()->GetPathName(), Event->Script.Num());
+		DeathMotion = TEXT("phase,frame,world_time,mesh,revision,montage,montage_time,speed,capsule_z,paused,defeat,result,component_visible,physics,bone,x,y,z,qx,qy,qz,qw\n");
+		if (DeathPose == TEXT("Jog")) { SimulateDeathInput(EKeys::W, true); }
+		if (DeathPose == TEXT("Air")) { SimulateDeathInput(EKeys::SpaceBar, true); }
+		DeathMotionHandle = FWorldDelegates::OnWorldPostActorTick.AddLambda([Self = AsShared()](UWorld* TickWorld, ELevelTick, float)
+		{
+			if (Self->World.Get() == TickWorld) { Self->StepDeathMotion(); }
+		});
+	}
+	void SimulateDeathInput(const FKey& Key, bool bDown)
+	{
+		Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Key, bDown ? IE_Pressed : IE_Released, bDown ? 1.f : 0.f));
+	}
+
+	void UpdateDeathCaptureRendering()
+	{
+		if (UGameViewportClient* Viewport = CaptureViewport.Get()) { Viewport->bDisableWorldRendering = !FScreenshotRequest::IsScreenshotRequested(); }
+	}
+	void RecordDeathPose(const TCHAR* Phase)
+	{
+		for (const bool bSource : {true, false})
+		{
+			const USkeletalMeshComponent* Mesh = bSource ? Character->GetAnimationPlaybackMesh() : Character->GetMesh();
+			if (!Mesh) { continue; }
+			const UAnimInstance* Anim = Mesh->GetAnimInstance();
+			const UAnimMontage* Montage = Anim ? Anim->GetCurrentActiveMontage() : nullptr;
+			const UObject* Sequence = Montage ? Montage->GetFirstAnimReference() : nullptr;
+			const FString Sample = FString::Printf(TEXT("%s,%d,%.6f,%s,%u,%s,%.6f,%.3f,%.3f,%d,%d,%d,%d,%d"), Phase, DeathMotionFrame,
+				World->GetTimeSeconds(), bSource ? TEXT("source") : TEXT("visible"),
+				Mesh->GetBoneTransformRevisionNumber(), *GetNameSafe(Sequence), Montage ? Anim->Montage_GetPosition(Montage) : 0.f,
+				Character->GetVelocity().Size2D(), Character->GetActorLocation().Z, World->IsPaused(),
+				RunState->GetRunPhase() == ERogue10mRunPhase::Defeat, Controller->IsRunResultVisible(), Mesh->IsVisible(), Mesh->IsSimulatingPhysics());
+			for (const FName Bone : {FName(TEXT("pelvis")), FName(TEXT("head")), FName(TEXT("hand_l")),
+				FName(TEXT("hand_r")), FName(TEXT("foot_l")), FName(TEXT("foot_r"))})
+			{
+				if (Mesh->GetBoneIndex(Bone) == INDEX_NONE) { continue; }
+				const FTransform Pose = Mesh->GetSocketTransform(Bone, RTS_Component);
+				const FVector P = Pose.GetLocation();
+				const FQuat Q = Pose.GetRotation();
+				DeathMotion += FString::Printf(TEXT("%s,%s,%.4f,%.4f,%.4f,%.6f,%.6f,%.6f,%.6f\n"),
+					*Sample, *Bone.ToString(), P.X, P.Y, P.Z, Q.X, Q.Y, Q.Z, Q.W);
+			}
+		}
+	}
+	void StepDeathMotion()
+	{
+		const bool bAir = DeathPose == TEXT("Air");
+		const bool bJog = DeathPose == TEXT("Jog");
+		const int32 DamageFrame = bAir ? 14 : 42;
+		if (bAir && DeathMotionFrame == 5) { SimulateDeathInput(EKeys::SpaceBar, false); }
+		if (!FParse::Param(FCommandLine::Get(), TEXT("NullRHI")))
+		{
+			if (DeathMotionFrame == DamageFrame - 5)
+			{
+				FScreenshotRequest::RequestScreenshot(FPaths::Combine(Output, TEXT("death-ready.png")), true, false);
+			}
+			else if (DeathMotionFrame == DamageFrame + 1)
+			{
+				FScreenshotRequest::RequestScreenshot(FPaths::Combine(Output, TEXT("death-first-result.png")), true, false);
+			}
+			else if (DeathMotionFrame == DamageFrame + 6)
+			{
+				FScreenshotRequest::RequestScreenshot(FPaths::Combine(Output, TEXT("death-sixth-tick.png")), true, false);
+			}
+			else if (DeathMotionFrame == DamageFrame + 36)
+			{
+				FScreenshotRequest::RequestScreenshot(FPaths::Combine(Output, TEXT("death-settled.png")), true, false);
+			}
+			UpdateDeathCaptureRendering();
+		}
+		if (DeathMotionFrame >= DamageFrame - 6)
+		{
+			RecordDeathPose(DeathMotionFrame <= DamageFrame ? TEXT("before") : TEXT("after"));
+		}
+		if (DeathMotionFrame == DamageFrame)
+		{
+			const auto* Movement = Character->GetCharacterMovement();
+			Check((bAir && Movement->IsFalling()) || (bJog && Movement->IsMovingOnGround() && Character->GetVelocity().Size2D() > 300.0)
+				|| (DeathPose == TEXT("Idle") && Movement->IsMovingOnGround() && Character->GetVelocity().Size2D() < 1.0),
+				TEXT("actual_requested_pose_before_lethal"));
+			const auto* Attributes = Character->GetRogueAttributeSet();
+			DeathCapsuleLocation = Character->GetActorLocation();
+			DeathCapsuleCollision = Character->GetCapsuleComponent()->GetCollisionEnabled();
+			DeathStartingVisiblePelvis = Character->GetMesh()->GetSocketTransform(TEXT("pelvis"), RTS_Component).GetLocation().Z;
+			const float AcceptedDamage = UGameplayStatics::ApplyDamage(Character.Get(), Attributes->GetMaxHealth() * 10.f + 10000.f,
+				Controller.Get(), nullptr, UDamageType::StaticClass());
+			if (bJog) { SimulateDeathInput(EKeys::W, false); }
+			Check(AcceptedDamage > 0.f && Attributes->GetHealth() <= 0.f && Character->IsDead()
+				&& RunState->GetRunPhase() == ERogue10mRunPhase::Defeat, TEXT("lethal_damage_accepted_and_immediately_commits_defeat"));
+			Check(!Controller->IsRunResultVisible(), TEXT("defeat_result_waits_for_next_world_tick"));
+			RecordDeathPose(TEXT("lethal"));
+		}
+		if (DeathMotionFrame > DamageFrame)
+		{
+			bDeathCapsuleStable &= Character->GetActorLocation().Equals(DeathCapsuleLocation, .01)
+				&& Character->GetVelocity().IsNearlyZero() && Character->GetCharacterMovement()->MovementMode == MOVE_None
+				&& Character->GetCapsuleComponent()->GetCollisionEnabled() == DeathCapsuleCollision
+				&& !Character->GetMesh()->IsSimulatingPhysics();
+		}
+		if (DeathMotionFrame == DamageFrame + 1)
+		{
+			Check(Controller->IsRunResultVisible() && Completion->IsProgressionSaved() && !World->IsPaused(),
+				TEXT("defeat_result_open_and_settled_on_first_tick"));
+		}
+		if (DeathMotionFrame == DamageFrame + 60)
+		{
+			Check(bDeathCapsuleStable, TEXT("death_preserves_capsule_transform_collision_and_disabled_movement"));
+			const auto* SourceAnim = Character->GetAnimationPlaybackMesh()->GetAnimInstance();
+			const UAnimMontage* Active = SourceAnim ? SourceAnim->GetCurrentActiveMontage() : nullptr;
+			const UObject* Sequence = Active ? Active->GetFirstAnimReference() : nullptr;
+			const bool bAppliedOwnedClip = GetNameSafe(Sequence) == TEXT("A_CommonGroundedDefeat");
+			Check(bAppliedOwnedClip == !bAir, TEXT("only_grounded_defeat_holds_owned_manny_clips_end"));
+			if (!bAir)
+			{
+				const double VisiblePelvis = Character->GetMesh()->GetSocketTransform(TEXT("pelvis"), RTS_Component).GetLocation().Z;
+			Check(SourceAnim && Active && DeathStartingVisiblePelvis - VisiblePelvis > 25.0 && SourceAnim->Montage_GetPosition(Active) > .75f,
+					TEXT("grounded_collapse_reaches_visible_final_pose_without_returning_to_idle"));
+			}
+		}
+		if (++DeathMotionFrame > DamageFrame + 60)
+		{
+			FWorldDelegates::OnWorldPostActorTick.Remove(DeathMotionHandle);
+			Check(FFileHelper::SaveStringToFile(DeathMotion, *FPaths::Combine(Output, TEXT("death-motion.csv"))), TEXT("player_death_pose_samples_written"));
+			Later(0.0, [this] { VerifyDefeat(); });
+		}
 	}
 	void VerifyExcludedMonsters()
 	{
@@ -457,6 +608,7 @@ private:
 		Check(Controller->IsRunResultVisible() && Controller->GetRunResultWidget(), TEXT("Defeat_native_result_visible_even_when_Pawn_input_disabled"));
 		CaptureExpected();
 		VerifyDiskSnapshot(TEXT("defeat_settlement"));
+		if (!DeathPose.IsEmpty() && FParse::Param(FCommandLine::Get(), TEXT("NullRHI"))) { Finish(); return; }
 		FScreenshotRequest::RequestScreenshot(FPaths::Combine(Output, TEXT("run-result.png")), true, false);
 		Later(2.0, [this] { ReturnViaEnter(); });
 	}
@@ -589,7 +741,10 @@ private:
 	{
 		if (bFinished) { return; }
 		bFinished = true; UnlockSaveFile(); Next = nullptr;
+		if (UGameViewportClient* Viewport = CaptureViewport.Get()) { Viewport->bDisableWorldRendering = bOriginalWorldRenderDisabled; }
+		CaptureViewport.Reset();
 		FCoreUObjectDelegates::PostLoadMapWithWorld.Remove(LoadHandle);
+		FWorldDelegates::OnWorldPostActorTick.Remove(DeathMotionHandle);
 		Results += FString::Printf(TEXT("mode=%s\nchecks=%d\nfailures=%d\nprofile=%s\n"), *Mode, Checks, Failures, *ProfileId.ToString());
 		if (!Output.IsEmpty() && !FFileHelper::SaveStringToFile(Results, *FPaths::Combine(Output, Mode.ToLower() + TEXT("-results.txt")))) { ++Failures; }
 		UE_LOG(LogRogue10m, Display, TEXT("RESULT=RUN_COMPLETION_%s mode=%s checks=%d failures=%d output=%s"),
@@ -598,6 +753,7 @@ private:
 	}
 
 	TWeakObjectPtr<UWorld> World;
+	TWeakObjectPtr<UGameViewportClient> CaptureViewport;
 	TWeakObjectPtr<ARogue10mPlayerController> Controller;
 	TWeakObjectPtr<ARogue10mCharacter> Character;
 	TWeakObjectPtr<ARogue10mGameState> RunState;
@@ -613,13 +769,21 @@ private:
 	FGuid ProfileId;
 	FName BossId;
 	FString Mode, ProfileSlot, SavePrefix, SaveSlot, Output, Results;
+	FString DeathPose, DeathMotion;
 	FDelegateHandle LoadHandle;
+	FDelegateHandle DeathMotionHandle;
 	FTSTicker::FDelegateHandle Watchdog;
 	TFunction<void()> Next;
 	double NextAt = 0, Deadline = 0, PreparationDeadline = 0, BossDeadline = 0, HitDeadline = 0;
 	int32 Checks = 0, Failures = 0, BeforeBossGold = 0, ExpectedXP = 0, ExpectedGold = 0;
 	int32 BeforeBossMastery = 0;
 	int32 StarterGold = 0, StarterCrystals = 0;
+	int32 DeathMotionFrame = 0;
+	FVector DeathCapsuleLocation = FVector::ZeroVector;
+	ECollisionEnabled::Type DeathCapsuleCollision = ECollisionEnabled::NoCollision;
+	double DeathStartingVisiblePelvis = 0.0;
+	bool bDeathCapsuleStable = true;
+	bool bOriginalWorldRenderDisabled = false;
 	bool bRead = false, bFailure = false, bFinished = false, bExpectRun = false, bExpectTown = false;
 	bool bWatchInitialVictorySave = false, bInitialVictorySaveObserved = false;
 #if PLATFORM_WINDOWS

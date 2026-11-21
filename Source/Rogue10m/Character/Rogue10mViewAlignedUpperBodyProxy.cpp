@@ -26,6 +26,8 @@
 
 namespace
 {
+constexpr float GroundedDefeatBlendSeconds = .22f;
+
 #if WITH_EDITOR
 TAutoConsoleVariable<int32> CVarGreatSwordCapstoneBrace(TEXT("a.Rogue10m.GreatSwordCapstoneBrace"), 1,
 	TEXT("Enable the visual-only capstone brace for editor pose comparisons."));
@@ -120,6 +122,8 @@ void FRogue10mViewAlignedUpperBodyProxy::Initialize(UAnimInstance* InAnimInstanc
 	bSecondJumpPoseEvaluated = false;
 	NonlethalHitSequence = nullptr;
 	NonlethalHitAge = NonlethalHitWeight = 0.0f;
+	GroundedDefeatStartPose.Reset();
+	GroundedDefeatBlendElapsed = 0.0f;
 	SmoothedHeadResidual = SmoothedNeckResidual = FQuat::Identity;
 	HeadAimInMesh = HeadWorldAim = FQuat::Identity;
 	HeadSourceMeshRotation = FQuat::Identity;
@@ -129,6 +133,10 @@ void FRogue10mViewAlignedUpperBodyProxy::Initialize(UAnimInstance* InAnimInstanc
 void FRogue10mViewAlignedUpperBodyProxy::PreUpdate(UAnimInstance* InAnimInstance, float DeltaSeconds)
 {
 	FAnimInstanceProxy::PreUpdate(InAnimInstance, DeltaSeconds);
+	if (GroundedDefeatStartPose.bIsValid && (GroundedDefeatBlendElapsed += FMath::Max(0.0f, DeltaSeconds)) >= GroundedDefeatBlendSeconds)
+	{
+		GroundedDefeatStartPose.Reset();
+	}
 	auto* Instance = Cast<URogue10mFighterCombatStanceAnimInstance>(InAnimInstance);
 	const auto* Character = Instance ? Cast<ARogue10mCharacter>(Instance->TryGetPawnOwner()) : nullptr;
 	const AController* Controller = Character ? Character->GetController() : nullptr;
@@ -410,6 +418,11 @@ bool FRogue10mViewAlignedUpperBodyProxy::Evaluate_WithRoot(FPoseContext& Output,
 	bWeightedHandMotionEvaluated = false;
 	bLearnedRollPoseEvaluated = false;
 	bSecondJumpPoseEvaluated = false;
+	if (GroundedDefeatStartPose.bIsValid)
+	{
+		BlendGroundedDefeatStartPose(Output.Pose);
+		return true;
+	}
 	if (bApplyRollPose)
 	{
 		if (!ApplyAuthoredRoll(Output)) { ApplyRollPose(Output.Pose); }
@@ -440,6 +453,28 @@ void FRogue10mViewAlignedUpperBodyProxy::PostEvaluate(UAnimInstance* InAnimInsta
 		// Publish only the basis actually consumed when the head pose was written.
 		Instance->MouseDrivenHeadWorldAim = bMouseHeadEvaluated ? EvaluatedHeadWorldAim : FQuat::Identity;
 		Instance->MouseDrivenHeadSourceRotation = bMouseHeadEvaluated ? EvaluatedHeadSourceRotation : FQuat::Identity;
+	}
+}
+
+void FRogue10mViewAlignedUpperBodyProxy::SetGroundedDefeatStartPose(FPoseSnapshot&& Pose)
+{
+	GroundedDefeatStartPose = MoveTemp(Pose);
+	GroundedDefeatBlendElapsed = 0.0f;
+}
+
+void FRogue10mViewAlignedUpperBodyProxy::BlendGroundedDefeatStartPose(FCompactPose& Pose) const
+{
+	const FBoneContainer& Bones = Pose.GetBoneContainer();
+	const FReferenceSkeleton& ReferenceSkeleton = Bones.GetReferenceSkeleton();
+	const float Weight = 1.0f - FMath::SmoothStep(0.0f, 1.0f, GroundedDefeatBlendElapsed / GroundedDefeatBlendSeconds);
+	for (const FCompactPoseBoneIndex Bone : Pose.ForEachBoneIndex())
+	{
+		const int32 Index = Bones.MakeMeshPoseIndex(Bone).GetInt();
+		if (GroundedDefeatStartPose.LocalTransforms.IsValidIndex(Index) && GroundedDefeatStartPose.BoneNames.IsValidIndex(Index)
+			&& ReferenceSkeleton.GetBoneName(Index) == GroundedDefeatStartPose.BoneNames[Index])
+		{
+			Pose[Bone].BlendWith(GroundedDefeatStartPose.LocalTransforms[Index], Weight);
+		}
 	}
 }
 

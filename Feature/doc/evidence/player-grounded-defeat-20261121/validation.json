@@ -1,0 +1,48 @@
+{
+  "gameplay_base": "ad94906da359f8394ee2c29c9eed20e4e7d9fb7b",
+  "baseline": "41d5a224d2090df2471eeb8e21c23ec8f84d16eb",
+  "unreal_asset": "/Game/Rogue10m/Animation/Common/Defeat/A_CommonGroundedDefeat.A_CommonGroundedDefeat",
+  "unreal_asset_sha256": "6c16468b0950151b0ae358d5325cf8a47cd03842e0b99e5d26be75684e40a5bc",
+  "duration_seconds": 0.800000011920929,
+  "stationary_imported_root_max_cm": 0.0,
+  "pelvis_drop_raw_cm": 41.10701370239258,
+  "donor": {
+    "asset": "/Game/Characters/Mannequins/Anims/Death/MM_Death_Front_01",
+    "package_sha256": "c9daa694dda4639b106a29401712b03376344b301b6161955a92ba64ea60ae6d",
+    "fbx_sha256": "2b7c79c754fe181364f692e5c1adb01b131c8243abbd0417cf27032a38319f7e"
+  },
+  "blender_fbx_sha256": "35ce47d40ea284f35f1ad330691a94498005f0bb5f92c6032b7de2159b1942d8",
+  "fresh_blender": {
+    "blender": "4.5.14 LTS",
+    "bones": 89,
+    "frames": 49,
+    "fps": 60,
+    "max_pose_roundtrip_drift_cm": 0.0001861601823431399,
+    "root_stationary": true,
+    "minimum_toe_cm": 0.7499616146087646,
+    "max_knee_step_degrees_l_r": [
+      6.010026884666786,
+      4.479470284126137
+    ],
+    "pelvis_drop_cm": 41.107025146484375
+  },
+  "headless_checks_passed": {
+    "idle": 46,
+    "jog": 46,
+    "air": 45
+  },
+  "rendered_checks_passed": {
+    "baseline": 61,
+    "candidate": 66
+  },
+  "render_resolution": "1280x720",
+  "render_driver": "Microsoft Basic Render Driver",
+  "render_device_probe": "0x887A0004 at startup before software adapter fallback in both sessions",
+  "headless_runtime_errors": 0,
+  "failure_records": [
+    "First headless baseline reached valid numeric/settlement state but the renderer-only mandatory screenshot check failed before numeric end was separated.",
+    "Blender v1 rejected at per-60Hz knee steps of 18.524 deg left and 15.967 deg right.",
+    "Standard montage blend v2 rejected for resetting into idle under the mix. Jog left foot first-six-tick step 23.99 cm vs baseline 19.34 cm. Right wrist 18.26 vs 9.39 cm.",
+    "Continuous WARP attempts ran about 2s per frame; stopped owned processes. Selected actual draws completed both baseline and candidate."
+  ]
+}

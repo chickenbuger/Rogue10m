@@ -25,6 +25,7 @@ public:
 	URogue10mFighterCombatStanceAnimInstance();
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+	void SetGroundedDefeatStartPose(struct FPoseSnapshot&& Pose);
 	/** Read-only GT state used by the shared head-motion budget. */
 	bool IsViewAimDodgeActive() const;
 	const UAnimSequence* GetLearnedRollAnimation() const { return CachedLearnedRoll.Get(); }

@@ -75,6 +75,11 @@ FAnimInstanceProxy* URogue10mFighterCombatStanceAnimInstance::CreateAnimInstance
 	return new FRogue10mViewAlignedUpperBodyProxy(this);
 }
 
+void URogue10mFighterCombatStanceAnimInstance::SetGroundedDefeatStartPose(FPoseSnapshot&& Pose)
+{
+	GetProxyOnGameThread<FRogue10mViewAlignedUpperBodyProxy>().SetGroundedDefeatStartPose(MoveTemp(Pose));
+}
+
 bool URogue10mFighterCombatStanceAnimInstance::IsViewAimDodgeActive() const
 {
 	const auto* Character = Cast<ARogue10mCharacter>(TryGetPawnOwner());

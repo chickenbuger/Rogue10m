@@ -703,6 +703,9 @@ void ARogue10mCharacter::Die()
 		return;
 	}
 
+	const ARogue10mGameState* ActiveRun = GetWorld() ? GetWorld()->GetGameState<ARogue10mGameState>() : nullptr;
+	const bool bPlayGroundedDefeat = ActiveRun && ActiveRun->IsRunActive() && IsThirdPersonGameplayActive()
+		&& GetCharacterMovement()->IsMovingOnGround();
 	SetSprinting(false);
 	ClearCommonMobilityActions();
 	if (CharacterAnimationComponent)
@@ -730,6 +733,10 @@ void ARogue10mCharacter::Die()
 	if (ARogue10mGameState* Run = GetWorld() ? GetWorld()->GetGameState<ARogue10mGameState>() : nullptr)
 	{
 		Run->FinishRun(false);
+	}
+	if (bPlayGroundedDefeat && CharacterAnimationComponent)
+	{
+		CharacterAnimationComponent->PlayGroundedDefeat();
 	}
 }
 

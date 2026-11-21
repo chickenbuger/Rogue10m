@@ -10,6 +10,7 @@
 class ARogue10mCharacter;
 class URogue10mCharacterMotionDataAsset;
 class UAnimMontage;
+class UAnimSequence;
 
 /** 이동 이벤트를 공통 모션과 Niagara Cue로 변환합니다. 상시 Tick을 사용하지 않습니다. */
 UCLASS(ClassGroup=(Rogue10m), meta=(BlueprintSpawnableComponent))
@@ -26,6 +27,7 @@ public:
 	float GetSecondJumpPresentationAge() const;
 	void NotifyDodge(const FVector& Direction, bool bRoll, float Duration);
 	void NotifyNonlethalHit(const FVector& ShotDirection);
+	void PlayGroundedDefeat();
 	bool GetNonlethalHitPresentation(float& AgeSeconds, bool& bFromRear) const;
 	void StopMotionEffects();
 	/** Accepted attacks, charging and dodges keep the fighter's guard ready briefly. */
@@ -62,6 +64,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation", meta=(AllowPrivateAccess="true"))
 	TSoftObjectPtr<URogue10mCharacterMotionDataAsset> MotionData;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation", meta=(AllowPrivateAccess="true"))
+	TObjectPtr<UAnimSequence> GroundedDefeatAnimation;
 
 	FTimerHandle FootstepTimerHandle;
 	bool bMovementInputActive = false;

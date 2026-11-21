@@ -4,9 +4,12 @@
 
 #include "Animation/AnimMontage.h"
 #include "Animation/AnimComposite.h"
+#include "Animation/AnimSequence.h"
 #include "Animation/AnimSequenceBase.h"
+#include "Animation/PoseSnapshot.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Engine/SkeletalMesh.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
@@ -15,6 +18,7 @@
 #include "Rogue10mCharacterMotionDataAsset.h"
 #include "Rogue10mFighterCombatStanceAnimInstance.h"
 #include "TimerManager.h"
+#include "UObject/ConstructorHelpers.h"
 
 namespace Rogue10mHeadViewMotion
 {
@@ -85,6 +89,33 @@ URogue10mCharacterAnimationComponent::URogue10mCharacterAnimationComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 	MotionData = TSoftObjectPtr<URogue10mCharacterMotionDataAsset>(FSoftObjectPath(TEXT(
 		"/Game/DataAsset/Character/Animation/DA_CommonCharacterMotion.DA_CommonCharacterMotion")));
+	static ConstructorHelpers::FObjectFinderOptional<UAnimSequence> DefeatSequence(TEXT(
+		"/Game/Rogue10m/Animation/Common/Defeat/A_CommonGroundedDefeat.A_CommonGroundedDefeat"));
+	GroundedDefeatAnimation = DefeatSequence.Get();
+}
+
+void URogue10mCharacterAnimationComponent::PlayGroundedDefeat()
+{
+	const ARogue10mCharacter* Character = GetOwnerCharacter();
+	USkeletalMeshComponent* Mesh = Character ? Character->GetAnimationPlaybackMesh() : nullptr;
+	auto* Anim = Mesh ? Cast<URogue10mFighterCombatStanceAnimInstance>(Mesh->GetAnimInstance()) : nullptr;
+	const USkeletalMesh* Rig = Mesh ? Mesh->GetSkeletalMeshAsset() : nullptr;
+	if (!Anim || !GroundedDefeatAnimation || GroundedDefeatAnimation->HasRootMotion()
+		|| !Rig || Rig->GetSkeleton() != GroundedDefeatAnimation->GetSkeleton())
+	{
+		return;
+	}
+	FPoseSnapshot StartPose;
+	Mesh->SnapshotPose(StartPose);
+	const float BlendIn = StartPose.bIsValid ? 0.f : .14f;
+	UAnimMontage* Defeat = UAnimMontage::CreateSlotAnimationAsDynamicMontage(GroundedDefeatAnimation, TEXT("DefaultSlot"), BlendIn, 0.f);
+	if (!Defeat || !IsHeadViewSafeAttackMontage(Defeat)) { return; }
+	// Keep the collapse under the result instead of blending back to an idle pose.
+	Defeat->bEnableAutoBlendOut = false;
+	if (Anim->Montage_Play(Defeat, 1.f, EMontagePlayReturnType::MontageLength, 0.f, false) > 0.f && StartPose.bIsValid)
+	{
+		Anim->SetGroundedDefeatStartPose(MoveTemp(StartPose));
+	}
 }
 
 void URogue10mCharacterAnimationComponent::SetMovementState(

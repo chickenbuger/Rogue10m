@@ -3,6 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstanceProxy.h"
+#include "Animation/PoseSnapshot.h"
 #include "BoneIndices.h"
 
 struct FBoneContainer;
@@ -21,6 +22,7 @@ public:
 	virtual void PreEvaluateAnimation(UAnimInstance* InAnimInstance) override;
 	virtual bool Evaluate_WithRoot(FPoseContext& Output, FAnimNode_Base* InRootNode) override;
 	virtual void PostEvaluate(UAnimInstance* InAnimInstance) override;
+	void SetGroundedDefeatStartPose(FPoseSnapshot&& Pose);
 
 private:
 	void RebuildBoneCache(const FBoneContainer& Bones);
@@ -37,6 +39,7 @@ private:
 		const USkeletalMeshComponent& Mesh, float DeltaSeconds);
 	void CaptureNonlethalHit(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance);
 	void ApplyNonlethalHit(FPoseContext& Output);
+	void BlendGroundedDefeatStartPose(FCompactPose& Pose) const;
 	void CaptureHeadMotionSettings(const ARogue10mCharacter* Character, float DeltaSeconds);
 	void CaptureWeightedHandMotion(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
 
@@ -74,6 +77,8 @@ private:
 	const UAnimSequence* NonlethalHitSequence = nullptr;
 	float NonlethalHitAge = 0.0f;
 	float NonlethalHitWeight = 0.0f;
+	FPoseSnapshot GroundedDefeatStartPose;
+	float GroundedDefeatBlendElapsed = 0.0f;
 	float RollProgress = 0.0f;
 	float RollYawRadians = 0.0f;
 	FVector RollRight = FVector::RightVector;
