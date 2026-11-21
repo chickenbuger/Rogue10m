@@ -1,0 +1,5 @@
+Initial GUI executable fixed-step run reached RESULT=MONSTER_FX_PASSED but the output-log gate rejected two UE startup errors.
+Engine UE 5.8 ConcertMessageData.h initializes CreationTimeInTicks from FDateTime::Now() without an IgnoreForMemberInitializationTest marker.
+[2026.11.21-11.04.06:208][  0]LogClass: Error: Int64Property FConcertSessionChallengeData::CreationTimeInTicks is not initialized properly even though its struct probably has a custom default constructor. Non deterministic fields should use UPROPERTY(Meta = (IgnoreForMemberInitializationTest)) to avoid errors from this test. Module:Concert File:Public/ConcertMessageData.h
+[2026.11.21-11.04.06:216][  0]LogAutomationTest: Error: LogClass: Int64Property FConcertSessionChallengeData::CreationTimeInTicks is not initialized properly even though its struct probably has a custom default constructor. Non deterministic fields should use UPROPERTY(Meta = (IgnoreForMemberInitializationTest)) to avoid errors from this test. Module:Concert File:Public/ConcertMessageData.h
+[2026.11.21-11.04.22:975][229]LogRogue10m: Display: RESULT=MONSTER_FX_PASSED failures=0

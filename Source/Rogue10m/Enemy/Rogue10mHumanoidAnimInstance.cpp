@@ -151,6 +151,13 @@ float URogue10mHumanoidAnimInstance::PlayPresentation(UAnimMontage* Montage, UAn
  PresentationMontage->bEnableAutoBlendOut = !bTimedAttack && !bHoldFinalPose;
  return Montage_Play(PresentationMontage, Rate, EMontagePlayReturnType::Duration);
 }
+bool URogue10mHumanoidAnimInstance::PlayLegacySequenceForWindow(UAnimSequence& Sequence, float GameplaySeconds)
+{
+ // Keep the legacy constant rate. Recovery and hit timers stop the slot at their original boundaries.
+ if (PlayPresentation(nullptr, &Sequence, 0.f, 0.f, true, .10f) <= 0.f) { return false; }
+ Montage_SetPlayRate(PresentationMontage, CalculatePhaseRate(Sequence.GetPlayLength(), GameplaySeconds));
+ return true;
+}
 bool URogue10mHumanoidAnimInstance::PlayDeathFromPose(UAnimSequence& Sequence, FPoseSnapshot&& StartPose)
 {
  // Use the visible pose for the blend-in while the original clip advances at its normal rate.

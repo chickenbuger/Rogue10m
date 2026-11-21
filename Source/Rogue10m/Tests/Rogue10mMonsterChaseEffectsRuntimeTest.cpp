@@ -7,10 +7,12 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Camera/CameraActor.h"
 #include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Containers/Ticker.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
+#include "Engine/GameViewportClient.h"
 #include "Engine/SkeletalMesh.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -92,6 +94,8 @@ public:
 		bSporelingSavedProfile = FParse::Param(FCommandLine::Get(), TEXT("RogueSporelingSavedProfile"));
 		bDeathMotion = FParse::Param(FCommandLine::Get(), TEXT("RogueMonsterDeathMotionQA"));
 		bDeathRender = bDeathMotion && FParse::Param(FCommandLine::Get(), TEXT("RogueMonsterDeathRender"));
+		bLivingTransitions = FParse::Param(FCommandLine::Get(), TEXT("RogueMonsterLivingTransitionsQA"));
+		bLivingRender = bLivingTransitions && FParse::Param(FCommandLine::Get(), TEXT("RogueMonsterLivingRender"));
 		FString OrdinaryId;
 		if (FParse::Value(FCommandLine::Get(), TEXT("RogueOrdinaryGaitQA="), OrdinaryId))
 		{
@@ -107,12 +111,22 @@ public:
 		if (bOrdinarySavedProfile && !OrdinaryGait)
 		{ Check(false, TEXT("ordinary_gait_saved_profile_requires_species")); Finish(); return; }
 		if ((bThornWalk && bSporelingWalk) || (bSporelingSavedProfile && !bSporelingWalk)
-			|| (bDeathMotion && (bThornWalk || bSporelingWalk || OrdinaryGait)))
+			|| (bDeathMotion && (bThornWalk || bSporelingWalk || OrdinaryGait || bLivingTransitions))
+			|| (bLivingTransitions && (bThornWalk || bSporelingWalk || OrdinaryGait)))
 		{ Check(false, TEXT("incompatible_monster_walk_qa_modes")); Finish(); return; }
 		if (bThornWalk) { Species = 4; }
 		if (bSporelingWalk) { Species = 1; }
 		if (bDeathRender) { Species = 4; DeathStance = 1; }
-		Deadline = FPlatformTime::Seconds() + (bThornWalk || bSporelingWalk || OrdinaryGait || bDeathMotion ? 1.0 : 7.0);
+		if (bLivingRender)
+		{
+			Species = 4;
+			bLivingWalk = true;
+			LivingViewport = World->GetGameViewport();
+			if (!LivingViewport.IsValid()) { Check(false, TEXT("living_transition_game_viewport")); Finish(); return; }
+			bLivingWorldRenderingWasDisabled = LivingViewport->bDisableWorldRendering;
+			LivingViewport->bDisableWorldRendering = true;
+		}
+		Deadline = FPlatformTime::Seconds() + (bThornWalk || bSporelingWalk || OrdinaryGait || bDeathMotion || bLivingTransitions ? 1.0 : 7.0);
 		FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self=AsShared()](float) { return Self->Tick(); }), 0.05f);
 	}
 private:
@@ -148,7 +162,7 @@ private:
 		Camera = World->SpawnActor<ACameraActor>();
 		for (TActorIterator<ARogue10mBasicMonster> It(World.Get()); It; ++It)
 			if (auto* ExistingAI = Cast<ARogue10mMonsterAIController>(It->GetController())) ExistingAI->StopMonsterAI();
-		Stage = 1; Deadline = FPlatformTime::Seconds()+(bThornWalk || bSporelingWalk || OrdinaryGait || bDeathMotion ? .5 : 4);
+		Stage = 1; Deadline = FPlatformTime::Seconds()+(bThornWalk || bSporelingWalk || OrdinaryGait || bDeathMotion || bLivingTransitions ? .5 : 4);
 	}
 	void Spawn()
 	{
@@ -161,6 +175,7 @@ private:
 		if (!Monster.IsValid()) { Finish(); return; }
 		AI = Cast<ARogue10mMonsterAIController>(Monster->GetController());
 		if (bDeathMotion) { PrepareDeathMotion(); return; }
+		if (bLivingTransitions) { PrepareLivingTransitions(); return; }
 		if (OrdinaryGait) { PrepareOrdinaryGait(); return; }
 		if (bThornWalk || bSporelingWalk)
 		{
@@ -231,6 +246,192 @@ private:
 		Tools->ExecuteAction(ERogue10mCombatTestAction::ToggleAI);
 		Stage=2; Deadline=FPlatformTime::Seconds()+2;
 	}
+
+	enum class ELivingPhase { Settle, Attack, Rest, Hit, Recovered };
+
+	void PrepareLivingTransitions()
+	{
+		const auto* Data = Monster->GetMonsterData();
+		const auto* Profile = Monster->GetAttackPatternComponent()->GetProfile();
+		auto* Mesh = Monster->GetMesh();
+		const FString ExpectedData = FString::Printf(TEXT("DA_OW_%s"), DeathSpecies[Species]);
+		Check(Data && Data->GetName() == ExpectedData && Profile && Profile == Data->AttackPatternProfile
+			&& Mesh->GetSkeletalMeshAsset() == Data->SkeletalMesh.Get(), TEXT("living_transition_deployed_profile_and_mesh"));
+		Check(FMath::IsNearlyEqual(World->GetDeltaSeconds(), 1.f / 60.f, .0001f), TEXT("living_transition_fixed_60hz"));
+		if (Failures) { Finish(); return; }
+		Mesh->bEnableUpdateRateOptimizations = false;
+		Mesh->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+		Monster->GetCharacterMovement()->bRunPhysicsWithNoController = true;
+		ThornDirection = (Player->GetActorLocation() - Monster->GetActorLocation()).GetSafeNormal2D();
+		Monster->SetActorRotation(ThornDirection.Rotation());
+		if (bLivingRender)
+		{
+			Check(Camera.IsValid(), TEXT("living_transition_side_camera"));
+			if (Failures) { Finish(); return; }
+			ConfigureMonsterSideCamera();
+		}
+		if (!ThornHandle.IsValid())
+		{
+			LivingRows = TEXT("species,source_pose,phase,frame,revision,asset,position_s,monster_speed_cm_s,damage_events,peak_bone_step_cm,peak_bone_angle_deg\n");
+			ThornHandle = FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* TickWorld, ELevelTick, float)
+			{
+				if (TickWorld == Self->World.Get() && !Self->bFinished && Self->Stage == 13) { Self->SampleLivingTransition(); }
+			});
+		}
+		LivingPreviousPose.Reset();
+		LivingPhase = ELivingPhase::Settle;
+		LivingFrame = LivingFirstDamage = 0;
+		LivingInitialHits = Monster->GetAttackPatternComponent()->GetSuccessfulHitCount();
+		bLivingSawHit = false;
+		Stage = 13;
+		Deadline = FPlatformTime::Seconds() + (bLivingRender ? 100.0 : 40.0);
+	}
+
+	const UAnimationAsset* RecordLivingPose(const TCHAR* Phase)
+	{
+		const auto* Mesh = Monster->GetMesh();
+		auto* Single = Mesh->GetSingleNodeInstance();
+		const auto* Anim = Mesh->GetAnimInstance();
+		const auto* Montage = Anim ? Anim->GetCurrentActiveMontage() : nullptr;
+		const UAnimationAsset* Active = Single ? Single->GetCurrentAsset() : Montage ? Montage->GetFirstAnimReference() : nullptr;
+		const float Position = Single ? Single->GetCurrentTime() : Montage ? Anim->Montage_GetPosition(Montage) : -1.f;
+		const auto& Pose = Mesh->GetComponentSpaceTransforms();
+		double Step = 0.0, Turn = 0.0;
+		if (LivingPreviousPose.Num() == Pose.Num())
+		{
+			for (int32 Index = 0; Index < Pose.Num(); ++Index)
+			{
+				Step = FMath::Max(Step, FVector::Dist(Pose[Index].GetLocation(), LivingPreviousPose[Index].GetLocation()));
+				Turn = FMath::Max(Turn, FMath::RadiansToDegrees(Pose[Index].GetRotation().AngularDistance(LivingPreviousPose[Index].GetRotation())));
+			}
+		}
+		LivingPreviousPose = Pose;
+		LivingRows += FString::Printf(TEXT("%s,%s,%s,%d,%u,%s,%.6f,%.4f,%d,%.5f,%.5f\n"), DeathSpecies[Species],
+			bLivingWalk ? TEXT("walk") : TEXT("idle"), Phase, LivingFrame, Mesh->GetBoneTransformRevisionNumber(),
+			*GetNameSafe(Active), Position, Monster->GetVelocity().Size2D(),
+			Monster->GetAttackPatternComponent()->GetSuccessfulHitCount() - LivingInitialHits, Step, Turn);
+		return Active;
+	}
+
+	const UAnimationAsset* GetPresentationClip() const
+	{
+		const auto* Mesh = Monster->GetMesh();
+		if (auto* Single = Mesh->GetSingleNodeInstance()) { return Single->GetCurrentAsset(); }
+		const auto* Anim = Mesh->GetAnimInstance();
+		const auto* Montage = Anim ? Anim->GetCurrentActiveMontage() : nullptr;
+		return Montage ? Montage->GetFirstAnimReference() : nullptr;
+	}
+
+	void CaptureLivingPose(const TCHAR* Phase)
+	{
+		if (!LivingViewport.IsValid()) { return; }
+		LivingViewport->bDisableWorldRendering = false;
+		const FString Path = FPaths::ConvertRelativePathToFull(Output / (FString(Phase) + TEXT(".png")));
+		LivingCaptures.Add(Path);
+		FScreenshotRequest::RequestScreenshot(Path, false, false);
+	}
+
+	void SampleLivingTransition()
+	{
+		if (!Monster.IsValid() || Monster->IsDead()) { Check(false, TEXT("living_transitions_require_live_monster")); Finish(); return; }
+		++LivingFrame;
+		if (LivingViewport.IsValid())
+		{
+			// Keep simulation and camera updates on every tick while drawing only the captured poses.
+			LivingViewport->bDisableWorldRendering = !FScreenshotRequest::IsScreenshotRequested();
+			UpdateMonsterSideCamera();
+		}
+		auto* Pattern = Monster->GetAttackPatternComponent();
+		const auto* Profile = Pattern->GetProfile();
+		if (LivingPhase == ELivingPhase::Settle)
+		{
+			RecordLivingPose(TEXT("pre"));
+			if (LivingFrame == 27) { CaptureLivingPose(TEXT("attack-ready")); }
+			if (LivingFrame < 28)
+			{
+				if (bLivingWalk) { Monster->AddMovementInput(ThornDirection, 1.f, true); }
+				return;
+			}
+			const double Speed = Monster->GetVelocity().Size2D();
+			Check(bLivingWalk ? Speed > 20.0 : Speed < 1.0, TEXT("living_attack_exact_pre_state"));
+			FVector PlayerAt;
+			const FVector Approach = Monster->GetActorLocation() + ThornDirection * (Profile->AttackRange * 0.70);
+			if (!Ground(Approach, Player->GetCapsuleComponent()->GetScaledCapsuleHalfHeight(), PlayerAt))
+			{ Check(false, TEXT("living_attack_grounded_in_range")); Finish(); return; }
+			Player->SetActorLocation(PlayerAt, false, nullptr, ETeleportType::TeleportPhysics);
+			Player->GetCharacterMovement()->StopMovementImmediately();
+			const bool bAccepted = Pattern->TryStartCombatTestAttack(Player.Get(), ERogue10mMonsterAttackType::Basic);
+			Check(bAccepted && Pattern->IsAttackActive(), TEXT("living_attack_accepted_on_real_pattern"));
+			if (Failures) { Finish(); return; }
+			LivingFrame = 0;
+			LivingPhase = ELivingPhase::Attack;
+			RecordLivingPose(TEXT("attack_call"));
+			return;
+		}
+		if (LivingPhase == ELivingPhase::Attack)
+		{
+			const bool bActive = Pattern->IsAttackActive();
+			RecordLivingPose(bActive ? TEXT("attack") : TEXT("attack_exit"));
+			const int32 Hits = Pattern->GetSuccessfulHitCount() - LivingInitialHits;
+			if (LivingFrame == 1) { CaptureLivingPose(TEXT("attack-first-frame")); }
+			if (Hits > 0 && LivingFirstDamage == 0)
+			{
+				LivingFirstDamage = LivingFrame;
+				CaptureLivingPose(TEXT("attack-damage"));
+			}
+			if (bActive && LivingFrame < 300) { return; }
+			Check(!bActive && Hits == 1 && LivingFirstDamage > 0, TEXT("living_basic_one_hit_and_recovery"));
+			Results += FString::Printf(TEXT("living_attack_case=%s/%s first_damage=%d recovery=%d\n"), DeathSpecies[Species],
+				bLivingWalk ? TEXT("walk") : TEXT("idle"), LivingFirstDamage, LivingFrame);
+			LivingFrame = 0;
+			LivingPhase = ELivingPhase::Rest;
+			return;
+		}
+		if (LivingPhase == ELivingPhase::Rest)
+		{
+			RecordLivingPose(TEXT("rest"));
+			if (LivingFrame == 6) { CaptureLivingPose(TEXT("attack-recovered")); }
+			if (LivingFrame < 23) { return; }
+			const float Damage = UGameplayStatics::ApplyDamage(Monster.Get(), 1.f, PC.Get(), Player.Get(), nullptr);
+			Check(Damage > 0.0f && !Monster->IsDead(), TEXT("living_reaction_actual_nonlethal_damage"));
+			if (Failures) { Finish(); return; }
+			LivingFrame = 0;
+			LivingPhase = ELivingPhase::Hit;
+			RecordLivingPose(TEXT("hit_call"));
+			return;
+		}
+		if (LivingPhase == ELivingPhase::Hit)
+		{
+			const auto* Active = RecordLivingPose(TEXT("hit"));
+			if (LivingFrame == 1) { CaptureLivingPose(TEXT("nonlethal-first-frame")); }
+			const auto* HitMontage = Profile->bUseHumanoidAnimInstance ? Profile->HitMontage.Get() : nullptr;
+			const auto* HitClip = HitMontage ? HitMontage->GetFirstAnimReference() : Profile->HitAnimation.Get();
+			bLivingSawHit |= HitClip && Active == HitClip;
+			if ((!bLivingSawHit || Active == HitClip) && LivingFrame < 150) { return; }
+			Check(bLivingSawHit && Active != HitClip, TEXT("living_original_hit_clip_followed_by_ground_pose"));
+			Results += FString::Printf(TEXT("living_hit_case=%s/%s clip_exit=%d\n"), DeathSpecies[Species],
+				bLivingWalk ? TEXT("walk") : TEXT("idle"), LivingFrame);
+			LivingPhase = ELivingPhase::Recovered;
+			LivingFrame = 0;
+			return;
+		}
+		RecordLivingPose(TEXT("hit_exit"));
+		if (LivingFrame < 12) { return; }
+		if (bLivingRender)
+		{
+			Check(LivingCaptures.Num() == 5, TEXT("living_transition_captured_all_phases"));
+			for (const FString& Capture : LivingCaptures)
+			{
+				Check(IFileManager::Get().FileSize(*Capture) > 1024, TEXT("living_transition_capture_written"));
+			}
+			Finish(); return;
+		}
+		bLivingWalk = !bLivingWalk;
+		if (!bLivingWalk) { ++Species; }
+		if (Failures || Species == UE_ARRAY_COUNT(DeathSpecies)) { Finish(); return; }
+		Spawn();
+	}
+
 	void PrepareDeathMotion()
 	{
 		const FString Name = FString::Printf(TEXT("DA_OW_%s"), DeathSpecies[Species]);
@@ -257,12 +458,7 @@ private:
 		{
 			Check(Camera.IsValid(), TEXT("death_side_camera_available"));
 			if (Failures) { Finish(); return; }
-			Camera->GetCameraComponent()->SetFieldOfView(45.f);
-			PC->SetViewTarget(Camera.Get());
-			const auto& Bounds = Monster->GetMesh()->Bounds;
-			DeathViewHeight = Bounds.Origin.Z - Monster->GetActorLocation().Z;
-			const double Distance = FMath::Max(350.0, static_cast<double>(Bounds.SphereRadius) * 3.4);
-			DeathViewOffset = Monster->GetActorRotation().RotateVector(FVector(0.5, -1.0, 0.28) * Distance);
+			ConfigureMonsterSideCamera();
 		}
 		if (!ThornHandle.IsValid())
 		{
@@ -376,10 +572,25 @@ private:
 		if (bDeathRender) { UpdateDeathCapture(RelativeFrame); }
 	}
 
+	void ConfigureMonsterSideCamera()
+	{
+		Camera->GetCameraComponent()->SetFieldOfView(45.f);
+		PC->SetViewTarget(Camera.Get());
+		const auto& Bounds = Monster->GetMesh()->Bounds;
+		SideViewHeight = Bounds.Origin.Z - Monster->GetActorLocation().Z;
+		const double Distance = FMath::Max(350.0, static_cast<double>(Bounds.SphereRadius) * 3.4);
+		SideViewOffset = Monster->GetActorRotation().RotateVector(FVector(0.5, -1.0, 0.28) * Distance);
+	}
+
+	void UpdateMonsterSideCamera()
+	{
+		const FVector Focus = Monster->GetActorLocation() + FVector(0, 0, SideViewHeight);
+		Camera->SetActorLocationAndRotation(Focus + SideViewOffset, (-SideViewOffset).Rotation());
+	}
+
 	void UpdateDeathCapture(int32 RelativeFrame)
 	{
-		const FVector Focus = Monster->GetActorLocation() + FVector(0, 0, DeathViewHeight);
-		Camera->SetActorLocationAndRotation(Focus + DeathViewOffset, (-DeathViewOffset).Rotation());
+		UpdateMonsterSideCamera();
 		const TCHAR* Phase = RelativeFrame == -1 ? TEXT("before") : RelativeFrame == 1 ? TEXT("first") : RelativeFrame == 10 ? TEXT("follow-through") : nullptr;
 		if (Phase)
 		{
@@ -455,7 +666,7 @@ private:
 		if (Failures) { Finish(); return; }
 		const auto* Clip = ThornProfile->AttackAnimation.LoadSynchronous();
 		Check(Tools->ExecuteAction(ERogue10mCombatTestAction::Basic)
-			&& Mesh->GetSingleNodeInstance() && Mesh->GetSingleNodeInstance()->GetCurrentAsset() == Clip
+			&& Clip && GetPresentationClip() == Clip
 			&& FMath::IsNearlyEqual(Pattern->GetLockedAttackShape().WindupDuration, ThornProfile->AttackWindupSeconds),
 			TEXT("blended_locomotion_still_uses_existing_legacy_attack_clip_and_windup"));
 		if (Failures) { Finish(); return; }
@@ -601,7 +812,7 @@ private:
 		if (bThornBlend)
 		{
 			const auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Mesh->GetAnimInstance());
-			return Anim && Anim->GetIdleSequence() == Idle && Anim->GetMovementSequence() == Walk;
+			return Anim && Anim->GetIdleSequence() == Idle && Anim->GetMovementSequence() == Walk && !Anim->GetCurrentActiveMontage();
 		}
 		auto* SingleNode = Mesh->GetSingleNodeInstance();
 		return SingleNode && SingleNode->GetCurrentAsset() == (bMoving ? Walk : Idle);
@@ -682,11 +893,10 @@ private:
 		SporelingHitsBefore = Pattern->GetSuccessfulHitCount();
 		const auto* Clip = ThornProfile->AttackAnimation.LoadSynchronous();
 		const bool bStarted = Clip && Tools->ExecuteAction(ERogue10mCombatTestAction::Basic);
-		auto* Playing = Monster->GetMesh()->GetSingleNodeInstance();
-		Check(bStarted && Playing && Playing->GetCurrentAsset() == Clip
+		Check(bStarted && GetPresentationClip() == Clip
 			&& FMath::IsNearlyEqual(Pattern->GetLockedAttackShape().WindupDuration, ThornProfile->AttackWindupSeconds),
-			OrdinaryGait ? TEXT("ordinary_basic_uses_existing_single_node_clip_and_windup")
-				: TEXT("Sporeling_basic_uses_existing_single_node_clip_and_windup"));
+			OrdinaryGait ? TEXT("ordinary_basic_uses_existing_clip_and_windup")
+				: TEXT("Sporeling_basic_uses_existing_clip_and_windup"));
 		if (Failures) { Finish(); return; }
 		SporelingAttackFrame = 1;
 	}
@@ -720,8 +930,7 @@ private:
 			}
 			if (Failures) { Finish(); return; }
 			const double Applied = UGameplayStatics::ApplyDamage(Monster.Get(), 1.f, PC.Get(), Player.Get(), nullptr);
-			auto* HitPlayer = Monster->GetMesh()->GetSingleNodeInstance();
-			Check(Applied > 0.0 && !Monster->IsDead() && HitPlayer && HitPlayer->GetCurrentAsset() == ThornProfile->HitAnimation.Get(),
+			Check(Applied > 0.0 && !Monster->IsDead() && GetPresentationClip() == ThornProfile->HitAnimation.Get(),
 				TEXT("ordinary_hit_plays_existing_hit_clip_after_nonlethal_damage"));
 			if (Failures) { Finish(); return; }
 			OrdinaryHitFrame = 1;
@@ -755,10 +964,10 @@ private:
 	bool Tick()
 	{
 		if (bFinished) return false;
-		if (Stage == 12)
+		if (Stage == 12 || Stage == 13)
 		{
 			if (FPlatformTime::Seconds() < Deadline) { return true; }
-			Check(false, TEXT("death_motion_watchdog")); Finish(); return false;
+			Check(false, Stage == 12 ? TEXT("death_motion_watchdog") : TEXT("living_transition_watchdog")); Finish(); return false;
 		}
 		if (Stage == 11 && (bSporelingWalk || OrdinaryGait))
 		{
@@ -905,6 +1114,7 @@ private:
 		if (bFinished) { return; }
 		bFinished=true;
 		FWorldDelegates::OnWorldPostActorTick.Remove(ThornHandle);
+		if (LivingViewport.IsValid()) { LivingViewport->bDisableWorldRendering = bLivingWorldRenderingWasDisabled; }
 		RemovePairedGaitHealthObserver();
 		if (Tools.IsValid()) Tools->ExecuteAction(ERogue10mCombatTestAction::Clear);
 		if (bThornWalk)
@@ -926,6 +1136,11 @@ private:
 		{
 			Check(FFileHelper::SaveStringToFile(DeathRows, *FPaths::Combine(Output, TEXT("death-motion-frames.csv"))),
 				TEXT("death_motion_pose_samples_written"));
+		}
+		if (bLivingTransitions)
+		{
+			Check(FFileHelper::SaveStringToFile(LivingRows, *FPaths::Combine(Output, TEXT("living-transition-frames.csv"))),
+				TEXT("living_transition_pose_samples_written"));
 		}
 		FFileHelper::SaveStringToFile(Results,*FPaths::Combine(Output,TEXT("results.txt")),FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM);
 		UE_LOG(LogRogue10m,Display,TEXT("RESULT=MONSTER_FX_%s failures=%d"),Failures ? TEXT("FAILED") : TEXT("PASSED"),Failures);
@@ -963,9 +1178,17 @@ private:
 	TWeakObjectPtr<UAnimSequence> DeathClip;
 	TMap<FName,FTransform> DeathOutgoingPose;
 	TArray<FString> DeathCaptures;
-	FVector DeathViewOffset = FVector::ZeroVector;
-	double DeathViewHeight = 0.0;
+	FVector SideViewOffset = FVector::ZeroVector;
+	double SideViewHeight = 0.0;
 	FString DeathRows;
+	ELivingPhase LivingPhase = ELivingPhase::Settle;
+	bool bLivingTransitions = false, bLivingWalk = false, bLivingSawHit = false, bLivingRender = false;
+	bool bLivingWorldRenderingWasDisabled = false;
+	int32 LivingFrame = 0, LivingInitialHits = 0, LivingFirstDamage = 0;
+	TArray<FTransform> LivingPreviousPose;
+	TWeakObjectPtr<UGameViewportClient> LivingViewport;
+	TArray<FString> LivingCaptures;
+	FString LivingRows;
 	FString Output,Results;
 	FVector Origin,ChaseStart;
 	double Deadline=0;

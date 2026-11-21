@@ -688,8 +688,13 @@ void URogue10mMonsterAttackPatternComponent::PlayAttackPresentation()
 	if (!Animation) Animation = Profile->AttackAnimation.LoadSynchronous();
 	if (Animation)
 	{
-		Monster->GetMesh()->PlayAnimation(Animation, false);
 		const float Duration = LockedWindupSeconds + LockedRecoverySeconds;
+		if (Profile->bBlendLegacyLocomotion)
+		{
+			if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance());
+				Anim && Anim->PlayLegacySequenceForWindow(*Animation, Duration)) { return; }
+		}
+		Monster->GetMesh()->PlayAnimation(Animation, false);
 		Monster->GetMesh()->SetPlayRate(Animation->GetPlayLength() / Duration);
 	}
 }
@@ -726,11 +731,15 @@ void URogue10mMonsterAttackPatternComponent::RestoreAnimation()
 	if (GetWorld()) GetWorld()->GetTimerManager().ClearTimer(HitReactionTimer);
 	ARogue10mBasicMonster* Monster = GetMonster();
 	if (!Monster || !Monster->GetMesh()) return;
- if (Profile && Profile->bUseHumanoidAnimInstance)
- {
-  if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance())) Anim->StopPresentation();
-  return;
- }
+	if (Profile && (Profile->bUseHumanoidAnimInstance || Profile->bBlendLegacyLocomotion))
+	{
+		if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance()))
+		{
+			Anim->StopPresentation();
+			return;
+		}
+		if (Profile->bUseHumanoidAnimInstance) { return; }
+	}
 	if (Profile && !Monster->IsDead())
 	{
 		UpdateLocomotionPresentation();
@@ -760,10 +769,15 @@ void URogue10mMonsterAttackPatternComponent::PlayHitReaction()
  }
 	if (UAnimSequence* Animation = Profile->HitAnimation.LoadSynchronous())
 	{
-		Monster->GetMesh()->PlayAnimation(Animation, false);
-		Monster->GetMesh()->SetPlayRate(1.0f);
-		GetWorld()->GetTimerManager().SetTimer(HitReactionTimer, this, &ThisClass::RestoreAnimation,
-			Positive(Animation->GetPlayLength(), 0.25f), false);
+		const float Duration = Positive(Animation->GetPlayLength(), 0.25f);
+		auto* Anim = Profile->bBlendLegacyLocomotion
+			? Cast<URogue10mHumanoidAnimInstance>(Monster->GetMesh()->GetAnimInstance()) : nullptr;
+		if (!Anim || !Anim->PlayLegacySequenceForWindow(*Animation, Duration))
+		{
+			Monster->GetMesh()->PlayAnimation(Animation, false);
+			Monster->GetMesh()->SetPlayRate(1.0f);
+		}
+		GetWorld()->GetTimerManager().SetTimer(HitReactionTimer, this, &ThisClass::RestoreAnimation, Duration, false);
 	}
 }
 

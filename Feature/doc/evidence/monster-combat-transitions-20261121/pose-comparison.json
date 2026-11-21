@@ -1,0 +1,991 @@
+{
+  "fixed_rate_hz": 60,
+  "map": "/Game/Rogue10m/Maps/StartHub",
+  "checked_cases": 12,
+  "cases": {
+    "VerdantSlime/idle": {
+      "paired_original_clip_frames": 98,
+      "max_playback_seconds_difference": 0.0,
+      "clip_names": [
+        "Slime_Attack01_ANIM",
+        "Slime_GetHit_ANIM"
+      ],
+      "before": {
+        "attack_first_frame": {
+          "max_step_cm": 8.56357,
+          "max_angle_degrees": 50.5247
+        },
+        "attack_first_6": {
+          "max_step_cm": 9.69626,
+          "max_angle_degrees": 50.5247
+        },
+        "attack_exit_first": {
+          "max_step_cm": 4.22132,
+          "max_angle_degrees": 39.60258
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 4.22132,
+          "max_angle_degrees": 39.60258
+        },
+        "hit_first_frame": {
+          "max_step_cm": 16.02925,
+          "max_angle_degrees": 40.9968
+        },
+        "hit_first_6": {
+          "max_step_cm": 18.69104,
+          "max_angle_degrees": 40.9968
+        },
+        "hit_exit_first": {
+          "max_step_cm": 4.28054,
+          "max_angle_degrees": 38.42133
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 4.28054,
+          "max_angle_degrees": 38.42133
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 50
+      },
+      "after": {
+        "attack_first_frame": {
+          "max_step_cm": 0.5198,
+          "max_angle_degrees": 4.94539
+        },
+        "attack_first_6": {
+          "max_step_cm": 14.34264,
+          "max_angle_degrees": 20.53927
+        },
+        "attack_exit_first": {
+          "max_step_cm": 0.325,
+          "max_angle_degrees": 0.32752
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 1.37827,
+          "max_angle_degrees": 9.68757
+        },
+        "hit_first_frame": {
+          "max_step_cm": 1.19621,
+          "max_angle_degrees": 1.35395
+        },
+        "hit_first_6": {
+          "max_step_cm": 26.25256,
+          "max_angle_degrees": 27.6438
+        },
+        "hit_exit_first": {
+          "max_step_cm": 0.51891,
+          "max_angle_degrees": 1.53421
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 2.14957,
+          "max_angle_degrees": 9.68697
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 50
+      }
+    },
+    "VerdantSlime/walk": {
+      "paired_original_clip_frames": 98,
+      "max_playback_seconds_difference": 0.0,
+      "clip_names": [
+        "Slime_Attack01_ANIM",
+        "Slime_GetHit_ANIM"
+      ],
+      "before": {
+        "attack_first_frame": {
+          "max_step_cm": 25.38683,
+          "max_angle_degrees": 35.18194
+        },
+        "attack_first_6": {
+          "max_step_cm": 25.38683,
+          "max_angle_degrees": 35.18194
+        },
+        "attack_exit_first": {
+          "max_step_cm": 4.22132,
+          "max_angle_degrees": 39.60258
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 4.22132,
+          "max_angle_degrees": 39.60258
+        },
+        "hit_first_frame": {
+          "max_step_cm": 16.02925,
+          "max_angle_degrees": 40.9968
+        },
+        "hit_first_6": {
+          "max_step_cm": 18.69104,
+          "max_angle_degrees": 40.9968
+        },
+        "hit_exit_first": {
+          "max_step_cm": 4.28054,
+          "max_angle_degrees": 38.42133
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 4.28054,
+          "max_angle_degrees": 38.42133
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 50
+      },
+      "after": {
+        "attack_first_frame": {
+          "max_step_cm": 4.04029,
+          "max_angle_degrees": 1.15765
+        },
+        "attack_first_6": {
+          "max_step_cm": 15.95056,
+          "max_angle_degrees": 18.78765
+        },
+        "attack_exit_first": {
+          "max_step_cm": 0.325,
+          "max_angle_degrees": 0.32752
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 1.3779,
+          "max_angle_degrees": 9.68696
+        },
+        "hit_first_frame": {
+          "max_step_cm": 1.19621,
+          "max_angle_degrees": 1.35395
+        },
+        "hit_first_6": {
+          "max_step_cm": 26.25256,
+          "max_angle_degrees": 27.6438
+        },
+        "hit_exit_first": {
+          "max_step_cm": 0.51891,
+          "max_angle_degrees": 1.53421
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 2.14957,
+          "max_angle_degrees": 9.68697
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 50
+      }
+    },
+    "Sporeling/idle": {
+      "paired_original_clip_frames": 92,
+      "max_playback_seconds_difference": 0.0,
+      "clip_names": [
+        "Mushroom_Attack01Smile_ANIM",
+        "Mushroom_GetHitSmile_ANIM"
+      ],
+      "before": {
+        "attack_first_frame": {
+          "max_step_cm": 4.89231,
+          "max_angle_degrees": 12.48859
+        },
+        "attack_first_6": {
+          "max_step_cm": 4.89231,
+          "max_angle_degrees": 12.48859
+        },
+        "attack_exit_first": {
+          "max_step_cm": 6.55507,
+          "max_angle_degrees": 13.1885
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 6.55507,
+          "max_angle_degrees": 13.1885
+        },
+        "hit_first_frame": {
+          "max_step_cm": 33.47852,
+          "max_angle_degrees": 30.1161
+        },
+        "hit_first_6": {
+          "max_step_cm": 33.47852,
+          "max_angle_degrees": 30.1161
+        },
+        "hit_exit_first": {
+          "max_step_cm": 3.23292,
+          "max_angle_degrees": 12.28849
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 3.23292,
+          "max_angle_degrees": 12.28849
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 44
+      },
+      "after": {
+        "attack_first_frame": {
+          "max_step_cm": 0.2845,
+          "max_angle_degrees": 0.92379
+        },
+        "attack_first_6": {
+          "max_step_cm": 3.24526,
+          "max_angle_degrees": 3.63587
+        },
+        "attack_exit_first": {
+          "max_step_cm": 2.8819,
+          "max_angle_degrees": 2.53827
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 2.8819,
+          "max_angle_degrees": 3.05082
+        },
+        "hit_first_frame": {
+          "max_step_cm": 2.50764,
+          "max_angle_degrees": 1.99107
+        },
+        "hit_first_6": {
+          "max_step_cm": 14.84785,
+          "max_angle_degrees": 17.18197
+        },
+        "hit_exit_first": {
+          "max_step_cm": 0.9036,
+          "max_angle_degrees": 0.94493
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 0.96716,
+          "max_angle_degrees": 3.04964
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 44
+      }
+    },
+    "Sporeling/walk": {
+      "paired_original_clip_frames": 92,
+      "max_playback_seconds_difference": 0.0,
+      "clip_names": [
+        "Mushroom_Attack01Smile_ANIM",
+        "Mushroom_GetHitSmile_ANIM"
+      ],
+      "before": {
+        "attack_first_frame": {
+          "max_step_cm": 16.56169,
+          "max_angle_degrees": 20.30713
+        },
+        "attack_first_6": {
+          "max_step_cm": 16.56169,
+          "max_angle_degrees": 20.30713
+        },
+        "attack_exit_first": {
+          "max_step_cm": 6.55507,
+          "max_angle_degrees": 13.1885
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 6.55507,
+          "max_angle_degrees": 13.1885
+        },
+        "hit_first_frame": {
+          "max_step_cm": 33.47852,
+          "max_angle_degrees": 30.1161
+        },
+        "hit_first_6": {
+          "max_step_cm": 33.47852,
+          "max_angle_degrees": 30.1161
+        },
+        "hit_exit_first": {
+          "max_step_cm": 3.23292,
+          "max_angle_degrees": 12.28849
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 3.23292,
+          "max_angle_degrees": 12.28849
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 44
+      },
+      "after": {
+        "attack_first_frame": {
+          "max_step_cm": 1.37166,
+          "max_angle_degrees": 2.24106
+        },
+        "attack_first_6": {
+          "max_step_cm": 5.2243,
+          "max_angle_degrees": 5.97448
+        },
+        "attack_exit_first": {
+          "max_step_cm": 2.8819,
+          "max_angle_degrees": 2.53827
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 2.8819,
+          "max_angle_degrees": 3.0511
+        },
+        "hit_first_frame": {
+          "max_step_cm": 2.50764,
+          "max_angle_degrees": 1.99107
+        },
+        "hit_first_6": {
+          "max_step_cm": 14.84785,
+          "max_angle_degrees": 17.18197
+        },
+        "hit_exit_first": {
+          "max_step_cm": 0.9036,
+          "max_angle_degrees": 0.94493
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 0.96716,
+          "max_angle_degrees": 3.04964
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 44
+      }
+    },
+    "CrimsonSlime/idle": {
+      "paired_original_clip_frames": 98,
+      "max_playback_seconds_difference": 0.0,
+      "clip_names": [
+        "Slime_Attack01_ANIM",
+        "Slime_GetHit_ANIM"
+      ],
+      "before": {
+        "attack_first_frame": {
+          "max_step_cm": 8.56181,
+          "max_angle_degrees": 50.52277
+        },
+        "attack_first_6": {
+          "max_step_cm": 9.69626,
+          "max_angle_degrees": 50.52277
+        },
+        "attack_exit_first": {
+          "max_step_cm": 4.22132,
+          "max_angle_degrees": 39.60258
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 4.22132,
+          "max_angle_degrees": 39.60258
+        },
+        "hit_first_frame": {
+          "max_step_cm": 16.02925,
+          "max_angle_degrees": 40.9968
+        },
+        "hit_first_6": {
+          "max_step_cm": 18.69104,
+          "max_angle_degrees": 40.9968
+        },
+        "hit_exit_first": {
+          "max_step_cm": 4.28054,
+          "max_angle_degrees": 38.42133
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 4.28054,
+          "max_angle_degrees": 38.42133
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 50
+      },
+      "after": {
+        "attack_first_frame": {
+          "max_step_cm": 0.5198,
+          "max_angle_degrees": 4.94539
+        },
+        "attack_first_6": {
+          "max_step_cm": 14.34264,
+          "max_angle_degrees": 20.53927
+        },
+        "attack_exit_first": {
+          "max_step_cm": 0.325,
+          "max_angle_degrees": 0.32752
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 1.37827,
+          "max_angle_degrees": 9.68757
+        },
+        "hit_first_frame": {
+          "max_step_cm": 1.19621,
+          "max_angle_degrees": 1.35395
+        },
+        "hit_first_6": {
+          "max_step_cm": 26.25256,
+          "max_angle_degrees": 27.6438
+        },
+        "hit_exit_first": {
+          "max_step_cm": 0.51891,
+          "max_angle_degrees": 1.53421
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 2.14957,
+          "max_angle_degrees": 9.68697
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 50
+      }
+    },
+    "CrimsonSlime/walk": {
+      "paired_original_clip_frames": 98,
+      "max_playback_seconds_difference": 0.0,
+      "clip_names": [
+        "Slime_Attack01_ANIM",
+        "Slime_GetHit_ANIM"
+      ],
+      "before": {
+        "attack_first_frame": {
+          "max_step_cm": 25.38683,
+          "max_angle_degrees": 35.18194
+        },
+        "attack_first_6": {
+          "max_step_cm": 25.38683,
+          "max_angle_degrees": 35.18194
+        },
+        "attack_exit_first": {
+          "max_step_cm": 4.22132,
+          "max_angle_degrees": 39.60258
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 4.22132,
+          "max_angle_degrees": 39.60258
+        },
+        "hit_first_frame": {
+          "max_step_cm": 16.02925,
+          "max_angle_degrees": 40.9968
+        },
+        "hit_first_6": {
+          "max_step_cm": 18.69104,
+          "max_angle_degrees": 40.9968
+        },
+        "hit_exit_first": {
+          "max_step_cm": 4.28054,
+          "max_angle_degrees": 38.42133
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 4.28054,
+          "max_angle_degrees": 38.42133
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 50
+      },
+      "after": {
+        "attack_first_frame": {
+          "max_step_cm": 4.04029,
+          "max_angle_degrees": 1.15765
+        },
+        "attack_first_6": {
+          "max_step_cm": 15.95056,
+          "max_angle_degrees": 18.78765
+        },
+        "attack_exit_first": {
+          "max_step_cm": 0.325,
+          "max_angle_degrees": 0.32752
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 1.3779,
+          "max_angle_degrees": 9.68696
+        },
+        "hit_first_frame": {
+          "max_step_cm": 1.19621,
+          "max_angle_degrees": 1.35395
+        },
+        "hit_first_6": {
+          "max_step_cm": 26.25256,
+          "max_angle_degrees": 27.6438
+        },
+        "hit_exit_first": {
+          "max_step_cm": 0.51891,
+          "max_angle_degrees": 1.53421
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 2.14957,
+          "max_angle_degrees": 9.68697
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 50
+      }
+    },
+    "IronShell/idle": {
+      "paired_original_clip_frames": 98,
+      "max_playback_seconds_difference": 0.0,
+      "clip_names": [
+        "TurtleShell_Attack01_ANIM",
+        "TurtleShell_GetHit_ANIM"
+      ],
+      "before": {
+        "attack_first_frame": {
+          "max_step_cm": 6.4064,
+          "max_angle_degrees": 19.84445
+        },
+        "attack_first_6": {
+          "max_step_cm": 9.38872,
+          "max_angle_degrees": 19.84445
+        },
+        "attack_exit_first": {
+          "max_step_cm": 3.77061,
+          "max_angle_degrees": 22.51349
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 3.77061,
+          "max_angle_degrees": 22.51349
+        },
+        "hit_first_frame": {
+          "max_step_cm": 8.89541,
+          "max_angle_degrees": 19.16817
+        },
+        "hit_first_6": {
+          "max_step_cm": 18.6842,
+          "max_angle_degrees": 19.16817
+        },
+        "hit_exit_first": {
+          "max_step_cm": 0.29437,
+          "max_angle_degrees": 23.22899
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 0.29437,
+          "max_angle_degrees": 23.22899
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 50
+      },
+      "after": {
+        "attack_first_frame": {
+          "max_step_cm": 0.48303,
+          "max_angle_degrees": 1.58387
+        },
+        "attack_first_6": {
+          "max_step_cm": 12.65071,
+          "max_angle_degrees": 6.67509
+        },
+        "attack_exit_first": {
+          "max_step_cm": 0.68952,
+          "max_angle_degrees": 0.35167
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 1.0207,
+          "max_angle_degrees": 5.43232
+        },
+        "hit_first_frame": {
+          "max_step_cm": 0.58688,
+          "max_angle_degrees": 1.56198
+        },
+        "hit_first_6": {
+          "max_step_cm": 19.66265,
+          "max_angle_degrees": 14.60293
+        },
+        "hit_exit_first": {
+          "max_step_cm": 0.296,
+          "max_angle_degrees": 0.9735
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 1.44423,
+          "max_angle_degrees": 5.2844
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 50
+      }
+    },
+    "IronShell/walk": {
+      "paired_original_clip_frames": 98,
+      "max_playback_seconds_difference": 0.0,
+      "clip_names": [
+        "TurtleShell_Attack01_ANIM",
+        "TurtleShell_GetHit_ANIM"
+      ],
+      "before": {
+        "attack_first_frame": {
+          "max_step_cm": 28.23544,
+          "max_angle_degrees": 35.57868
+        },
+        "attack_first_6": {
+          "max_step_cm": 28.23544,
+          "max_angle_degrees": 35.57868
+        },
+        "attack_exit_first": {
+          "max_step_cm": 3.77061,
+          "max_angle_degrees": 22.51349
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 3.77061,
+          "max_angle_degrees": 22.51349
+        },
+        "hit_first_frame": {
+          "max_step_cm": 8.89541,
+          "max_angle_degrees": 19.16817
+        },
+        "hit_first_6": {
+          "max_step_cm": 18.6842,
+          "max_angle_degrees": 19.16817
+        },
+        "hit_exit_first": {
+          "max_step_cm": 0.29437,
+          "max_angle_degrees": 23.22899
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 0.29437,
+          "max_angle_degrees": 23.22899
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 50
+      },
+      "after": {
+        "attack_first_frame": {
+          "max_step_cm": 4.42186,
+          "max_angle_degrees": 4.19411
+        },
+        "attack_first_6": {
+          "max_step_cm": 14.77145,
+          "max_angle_degrees": 8.51502
+        },
+        "attack_exit_first": {
+          "max_step_cm": 0.68952,
+          "max_angle_degrees": 0.35167
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 1.0224,
+          "max_angle_degrees": 5.43318
+        },
+        "hit_first_frame": {
+          "max_step_cm": 0.58688,
+          "max_angle_degrees": 1.56198
+        },
+        "hit_first_6": {
+          "max_step_cm": 19.66265,
+          "max_angle_degrees": 14.60293
+        },
+        "hit_exit_first": {
+          "max_step_cm": 0.296,
+          "max_angle_degrees": 0.9735
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 1.44423,
+          "max_angle_degrees": 5.2844
+        },
+        "damage_first_frame": 21,
+        "recovery_frame": 50,
+        "hit_clip_exit_frame": 50
+      }
+    },
+    "ThornWarden/idle": {
+      "paired_original_clip_frames": 83,
+      "max_playback_seconds_difference": 5e-05,
+      "clip_names": [
+        "Cactus_Attack01_ANIM",
+        "Cactus_GetHit_ANIM"
+      ],
+      "before": {
+        "attack_first_frame": {
+          "max_step_cm": 33.18133,
+          "max_angle_degrees": 37.99459
+        },
+        "attack_first_6": {
+          "max_step_cm": 33.18133,
+          "max_angle_degrees": 37.99459
+        },
+        "attack_exit_first": {
+          "max_step_cm": 32.9008,
+          "max_angle_degrees": 39.24793
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 32.9008,
+          "max_angle_degrees": 39.24793
+        },
+        "hit_first_frame": {
+          "max_step_cm": 44.4598,
+          "max_angle_degrees": 42.89476
+        },
+        "hit_first_6": {
+          "max_step_cm": 44.4598,
+          "max_angle_degrees": 42.89476
+        },
+        "hit_exit_first": {
+          "max_step_cm": 32.84638,
+          "max_angle_degrees": 37.22285
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 32.84638,
+          "max_angle_degrees": 37.22285
+        },
+        "damage_first_frame": 17,
+        "recovery_frame": 41,
+        "hit_clip_exit_frame": 44
+      },
+      "after": {
+        "attack_first_frame": {
+          "max_step_cm": 2.33401,
+          "max_angle_degrees": 2.79809
+        },
+        "attack_first_6": {
+          "max_step_cm": 10.73088,
+          "max_angle_degrees": 12.67362
+        },
+        "attack_exit_first": {
+          "max_step_cm": 0.0,
+          "max_angle_degrees": 0.0
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 8.05098,
+          "max_angle_degrees": 9.44686
+        },
+        "hit_first_frame": {
+          "max_step_cm": 3.32178,
+          "max_angle_degrees": 3.34783
+        },
+        "hit_first_6": {
+          "max_step_cm": 16.83796,
+          "max_angle_degrees": 16.48185
+        },
+        "hit_exit_first": {
+          "max_step_cm": 3.54672,
+          "max_angle_degrees": 5.3654
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 8.05634,
+          "max_angle_degrees": 8.99956
+        },
+        "damage_first_frame": 17,
+        "recovery_frame": 41,
+        "hit_clip_exit_frame": 44
+      }
+    },
+    "ThornWarden/walk": {
+      "paired_original_clip_frames": 83,
+      "max_playback_seconds_difference": 5e-05,
+      "clip_names": [
+        "Cactus_Attack01_ANIM",
+        "Cactus_GetHit_ANIM"
+      ],
+      "before": {
+        "attack_first_frame": {
+          "max_step_cm": 60.37042,
+          "max_angle_degrees": 79.23799
+        },
+        "attack_first_6": {
+          "max_step_cm": 60.37042,
+          "max_angle_degrees": 79.23799
+        },
+        "attack_exit_first": {
+          "max_step_cm": 32.9008,
+          "max_angle_degrees": 39.24793
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 32.9008,
+          "max_angle_degrees": 39.24793
+        },
+        "hit_first_frame": {
+          "max_step_cm": 44.4598,
+          "max_angle_degrees": 42.89476
+        },
+        "hit_first_6": {
+          "max_step_cm": 44.4598,
+          "max_angle_degrees": 42.89476
+        },
+        "hit_exit_first": {
+          "max_step_cm": 32.84638,
+          "max_angle_degrees": 37.22285
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 32.84638,
+          "max_angle_degrees": 37.22285
+        },
+        "damage_first_frame": 17,
+        "recovery_frame": 41,
+        "hit_clip_exit_frame": 44
+      },
+      "after": {
+        "attack_first_frame": {
+          "max_step_cm": 8.85258,
+          "max_angle_degrees": 9.26406
+        },
+        "attack_first_6": {
+          "max_step_cm": 16.75867,
+          "max_angle_degrees": 21.07287
+        },
+        "attack_exit_first": {
+          "max_step_cm": 0.0,
+          "max_angle_degrees": 0.0
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 8.04583,
+          "max_angle_degrees": 9.43904
+        },
+        "hit_first_frame": {
+          "max_step_cm": 3.32114,
+          "max_angle_degrees": 3.34733
+        },
+        "hit_first_6": {
+          "max_step_cm": 16.8355,
+          "max_angle_degrees": 16.48185
+        },
+        "hit_exit_first": {
+          "max_step_cm": 3.54672,
+          "max_angle_degrees": 5.3654
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 8.05634,
+          "max_angle_degrees": 8.99956
+        },
+        "damage_first_frame": 17,
+        "recovery_frame": 41,
+        "hit_clip_exit_frame": 44
+      }
+    },
+    "AbyssOverlordAzathor/idle": {
+      "paired_original_clip_frames": 154,
+      "max_playback_seconds_difference": 0.0,
+      "clip_names": [
+        "A_HumanBoss_Hit",
+        "A_HumanBoss_Hook_Raw"
+      ],
+      "before": {
+        "attack_first_frame": {
+          "max_step_cm": 1.71994,
+          "max_angle_degrees": 6.60373
+        },
+        "attack_first_6": {
+          "max_step_cm": 3.03066,
+          "max_angle_degrees": 23.77418
+        },
+        "attack_exit_first": {
+          "max_step_cm": 0.13069,
+          "max_angle_degrees": 0.75066
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 0.50571,
+          "max_angle_degrees": 2.36986
+        },
+        "hit_first_frame": {
+          "max_step_cm": 9.14888,
+          "max_angle_degrees": 16.36064
+        },
+        "hit_first_6": {
+          "max_step_cm": 22.55144,
+          "max_angle_degrees": 41.03703
+        },
+        "hit_exit_first": {
+          "max_step_cm": 1.92691,
+          "max_angle_degrees": 14.20055
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 18.91361,
+          "max_angle_degrees": 30.40581
+        },
+        "damage_first_frame": 60,
+        "recovery_frame": 143,
+        "hit_clip_exit_frame": 13
+      },
+      "after": {
+        "attack_first_frame": {
+          "max_step_cm": 1.71994,
+          "max_angle_degrees": 6.60373
+        },
+        "attack_first_6": {
+          "max_step_cm": 3.03066,
+          "max_angle_degrees": 23.77418
+        },
+        "attack_exit_first": {
+          "max_step_cm": 0.13069,
+          "max_angle_degrees": 0.75066
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 0.50571,
+          "max_angle_degrees": 2.36986
+        },
+        "hit_first_frame": {
+          "max_step_cm": 9.14906,
+          "max_angle_degrees": 16.36052
+        },
+        "hit_first_6": {
+          "max_step_cm": 22.55004,
+          "max_angle_degrees": 41.0363
+        },
+        "hit_exit_first": {
+          "max_step_cm": 1.92694,
+          "max_angle_degrees": 14.20065
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 18.91361,
+          "max_angle_degrees": 30.40581
+        },
+        "damage_first_frame": 60,
+        "recovery_frame": 143,
+        "hit_clip_exit_frame": 13
+      }
+    },
+    "AbyssOverlordAzathor/walk": {
+      "paired_original_clip_frames": 154,
+      "max_playback_seconds_difference": 0.0,
+      "clip_names": [
+        "A_HumanBoss_Hit",
+        "A_HumanBoss_Hook_Raw"
+      ],
+      "before": {
+        "attack_first_frame": {
+          "max_step_cm": 24.90347,
+          "max_angle_degrees": 38.38738
+        },
+        "attack_first_6": {
+          "max_step_cm": 33.02082,
+          "max_angle_degrees": 49.64796
+        },
+        "attack_exit_first": {
+          "max_step_cm": 0.1307,
+          "max_angle_degrees": 0.75066
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 0.50571,
+          "max_angle_degrees": 2.36986
+        },
+        "hit_first_frame": {
+          "max_step_cm": 9.14906,
+          "max_angle_degrees": 16.36052
+        },
+        "hit_first_6": {
+          "max_step_cm": 22.55004,
+          "max_angle_degrees": 41.0363
+        },
+        "hit_exit_first": {
+          "max_step_cm": 1.92694,
+          "max_angle_degrees": 14.20066
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 18.91361,
+          "max_angle_degrees": 30.40581
+        },
+        "damage_first_frame": 60,
+        "recovery_frame": 143,
+        "hit_clip_exit_frame": 13
+      },
+      "after": {
+        "attack_first_frame": {
+          "max_step_cm": 24.90347,
+          "max_angle_degrees": 38.38738
+        },
+        "attack_first_6": {
+          "max_step_cm": 33.02082,
+          "max_angle_degrees": 49.64796
+        },
+        "attack_exit_first": {
+          "max_step_cm": 0.1307,
+          "max_angle_degrees": 0.75066
+        },
+        "attack_exit_first_6": {
+          "max_step_cm": 0.50571,
+          "max_angle_degrees": 2.36986
+        },
+        "hit_first_frame": {
+          "max_step_cm": 9.14906,
+          "max_angle_degrees": 16.36052
+        },
+        "hit_first_6": {
+          "max_step_cm": 22.55004,
+          "max_angle_degrees": 41.0363
+        },
+        "hit_exit_first": {
+          "max_step_cm": 1.92694,
+          "max_angle_degrees": 14.20066
+        },
+        "hit_exit_first_6": {
+          "max_step_cm": 18.91361,
+          "max_angle_degrees": 30.40581
+        },
+        "damage_first_frame": 60,
+        "recovery_frame": 143,
+        "hit_clip_exit_frame": 13
+      }
+    }
+  }
+}

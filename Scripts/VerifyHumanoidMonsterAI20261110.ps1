@@ -7,7 +7,9 @@ param(
  [ValidateSet('VerdantSlime','CrimsonSlime','IronShell')][string]$OrdinaryWalk,
  [switch]$OrdinarySavedProfile,
  [switch]$MonsterDeathMotion,
- [switch]$MonsterDeathRender
+ [switch]$MonsterDeathRender,
+ [switch]$MonsterLivingMotion,
+ [switch]$MonsterLivingRender
 )
 $ErrorActionPreference='Stop';$root=(Resolve-Path -LiteralPath (Split-Path -Parent $PSScriptRoot)).Path;$project=Join-Path $root 'Rogue10m.uproject'
 if (($ThornWalk -and $SporelingWalk) -or ($SporelingSavedProfile -and -not $SporelingWalk)) {
@@ -18,6 +20,10 @@ if(($OrdinaryWalk -and ($ThornWalk -or $SporelingWalk)) -or ($OrdinarySavedProfi
 }
 if($MonsterDeathRender){$MonsterDeathMotion=$true}
 if($MonsterDeathMotion -and ($OrdinaryWalk -or $ThornWalk -or $SporelingWalk)){throw 'MonsterDeathMotion requires a separate run.'}
+if($MonsterLivingRender){$MonsterLivingMotion=$true}
+if($MonsterLivingMotion -and ($MonsterDeathMotion -or $OrdinaryWalk -or $ThornWalk -or $SporelingWalk)){
+ throw 'MonsterLivingMotion requires a separate run.'
+}
 if(@(Get-CimInstance Win32_Process|Where-Object {$_.Name -like 'UnrealEditor*' -and $_.CommandLine -and $_.CommandLine.Contains($project)}).Count){throw 'Shared project UE process running'}
 $out=Join-Path $root ('Feature\doc\evidence\humanoid-boss-npc-20261110\'+$Label);if(Test-Path -LiteralPath $out){throw 'Fresh output required'};New-Item -ItemType Directory -Path $out|Out-Null
 function Saves {
@@ -28,10 +34,11 @@ function Saves {
 }
 $before=@(Saves);$before|ConvertTo-Json -Depth 3|Set-Content -LiteralPath (Join-Path $out 'saves-before.json');$log=Join-Path $out 'engine.log';$slot='Rogue10m_Town_QA_MonsterFX_'+$Label
 $exe='D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe'
-$map=if($ThornWalk -or $SporelingWalk -or $OrdinaryWalk -or $MonsterDeathMotion){'/Game/Rogue10m/Maps/StartHub'}else{'/Game/Rogue10m/Maps/OpenRunMap'}
-$a=@(('"'+$project+'"'),$map,'-game','-DisablePython','-language=en','-locale=en-US','-windowed','-ForceRes','-ResX=1280','-ResY=720','-unattended','-nosplash','-nosound','-NoLiveCoding','-NoRemoteShaderCompile',('-RogueProfileSaveSlot='+$slot),('-RogueProgressionSavePrefix=Rogue10m_Progression_QA_MonsterFX_'+$Label),('-RogueSkillKeySaveSlot=Rogue10m_Fighter_QA_MonsterFX_'+$Label),'-ExecCmds="t.MaxFPS 60,Rogue10m.TestMonsterChaseEffects"',('-abslog="'+$log+'"'))
-if ($MonsterDeathRender) { $a+=@('-RenderOffScreen','-d3d11','-UseFixedTimeStep','-FPS=60','-AllowSoftwareRendering','-graphicsadapter=1','-RogueMonsterDeathRender') }
-elseif ($ThornWalk -or $SporelingWalk -or $OrdinaryWalk -or $MonsterDeathMotion) { $a+=@('-NullRHI','-UseFixedTimeStep','-FPS=60') }
+$map=if($ThornWalk -or $SporelingWalk -or $OrdinaryWalk -or $MonsterDeathMotion -or $MonsterLivingMotion){'/Game/Rogue10m/Maps/StartHub'}else{'/Game/Rogue10m/Maps/OpenRunMap'}
+$gameCommands=if($MonsterLivingRender){'t.MaxFPS 60,r.MotionBlurQuality 0,Rogue10m.TestMonsterChaseEffects'}else{'t.MaxFPS 60,Rogue10m.TestMonsterChaseEffects'}
+$a=@(('"'+$project+'"'),$map,'-game','-DisablePython','-language=en','-locale=en-US','-windowed','-ForceRes','-ResX=1280','-ResY=720','-unattended','-nosplash','-nosound','-NoLiveCoding','-NoRemoteShaderCompile',('-RogueProfileSaveSlot='+$slot),('-RogueProgressionSavePrefix=Rogue10m_Progression_QA_MonsterFX_'+$Label),('-RogueSkillKeySaveSlot=Rogue10m_Fighter_QA_MonsterFX_'+$Label),('-ExecCmds="'+$gameCommands+'"'),('-abslog="'+$log+'"'))
+if ($MonsterDeathRender -or $MonsterLivingRender) { $a+=@('-RenderOffScreen','-d3d11','-UseFixedTimeStep','-FPS=60','-AllowSoftwareRendering','-graphicsadapter=1') }
+elseif ($ThornWalk -or $SporelingWalk -or $OrdinaryWalk -or $MonsterDeathMotion -or $MonsterLivingMotion) { $a+=@('-NullRHI','-UseFixedTimeStep','-FPS=60') }
 else { $a+=@('-RenderOffScreen','-d3d11') }
 if ($ThornWalk) { $a+='-RogueThornWardenWalkQA' }
 if ($SporelingWalk) { $a+='-RogueSporelingWalkQA' }
@@ -39,6 +46,9 @@ if ($SporelingSavedProfile) { $a+='-RogueSporelingSavedProfile' }
 if ($OrdinaryWalk) { $a+='-RogueOrdinaryGaitQA='+$OrdinaryWalk }
 if ($OrdinarySavedProfile) { $a+='-RogueOrdinaryGaitSaved' }
 if ($MonsterDeathMotion) { $a+='-RogueMonsterDeathMotionQA' }
+if ($MonsterDeathRender) { $a+='-RogueMonsterDeathRender' }
+if ($MonsterLivingMotion) { $a+='-RogueMonsterLivingTransitionsQA' }
+if ($MonsterLivingRender) { $a+='-RogueMonsterLivingRender' }
 $p=$null;$failure=$null;$started=$null
 try {
  $p=Start-Process -FilePath $exe -ArgumentList $a -WindowStyle Hidden -PassThru;$started=$p.StartTime;Write-Output ('Owned monsterAI PID='+$p.Id)
@@ -46,9 +56,9 @@ try {
  $p.Refresh()
  if($p.ExitCode -ne 0 -or -not(Select-String -LiteralPath $log -Pattern 'RESULT=MONSTER_FX_PASSED' -Quiet)){throw 'AI result failed or incomplete'}
  $errors=@(Select-String -LiteralPath $log -Pattern '\bError:|Fatal error:|Ensure condition failed')
- if($MonsterDeathRender){
+ if($MonsterDeathRender -or $MonsterLivingRender){
   $adapter=Select-String -LiteralPath $log -Pattern 'LogRHI:\s+Name:\s+Microsoft Basic Render Driver' | Select-Object -First 1
-  if(-not $adapter){throw 'MonsterDeathRender requires the software adapter.'}
+  if(-not $adapter){throw 'Monster transition captures require the software adapter.'}
   $probes=@($errors|Where-Object {$_.LineNumber -lt $adapter.LineNumber -and $_.Line -match 'LogD3D11RHI: Error: Result failed with error 887A0004\s*$'})
   foreach($probe in $probes){Write-Output ('Hardware adapter probe recorded at line '+$probe.LineNumber)}
   $errors=@($errors|Where-Object {$_.LineNumber -notin $probes.LineNumber})
@@ -62,4 +72,6 @@ elseif($SporelingWalk){Write-Output 'PASSED Sporeling paired locomotion and basi
 elseif($OrdinaryWalk){Write-Output ('PASSED paired gait, attack and hit recovery observations for '+$OrdinaryWalk)}
 elseif($MonsterDeathRender){Write-Output 'PASSED matched ThornWarden walking death WARP captures'}
 elseif($MonsterDeathMotion){Write-Output 'PASSED six-species idle, walk and attack lethal-pose observations'}
+elseif($MonsterLivingRender){Write-Output 'PASSED ThornWarden living attack and hit WARP captures'}
+elseif($MonsterLivingMotion){Write-Output 'PASSED six-species idle and walking attack and hit motion observations'}
 else{Write-Output 'PASSED natural sight/chase/effects regression'}
