@@ -1,0 +1,30 @@
+2026-11-21, UE 5.8 Editor, StartHub
+
+기존 실패 MainCtrlA1121
+기본 3인칭 모드에서 전신 1인칭 하한 −85°를 기대했다. 검사 23개, 실패 1개.
+같은 실행의 초기화 로그에 실험적 Python Toolset 모듈의 가져오기 오류가 있었다.
+
+수정 후 프로그램 컨트롤러 입력과 DoAim, NullRHI, 별도 저장 경로
+CamModesOrig21121 Original  RESULT=LOOK_DASH_PASSED checks=936 failures=0
+CamModesWgt21121  Weighted  RESULT=LOOK_DASH_PASSED checks=940 failures=0
+
+측정                                    Original       Weighted
+정상 진입 3인칭 하한                     −70°            −70°
+검사용 전신 1인칭 하한                   −85°            −85°
+수평 시점 전방 회피 이동                 305.959cm       305.988cm
+아래 시점 전방 회피 이동                 305.962cm       304.153cm
+아래 시점 벽 충돌 이동                   7.831cm         7.831cm
+측정 중 입력 flush와 외부 뷰포트 이벤트  0               0
+Unreal 출력 오류                        0               0
+
+수정된 검사 스크립트로 재실행한 CamModesWrap1121 Weighted는 검사 934개, 실패 0개였다.
+기존 저장 파일 54개 SHA-256 일치, Unreal 출력 오류 0건.
+
+현재 실제 눌림 바인딩은 LeftControl이며 기존 LeftAlt 별칭은 없다.
+고립된 바닥·벽으로 수평·하향 회피, 실제 충돌, 재입력, 설정창, 공중 제한을 검사했다.
+약간의 실제 회피 거리 차이는 기동·정지를 관측한 프레임에서 발생한다.
+이 실행은 프로그램 입력과 수치를 확인했다. 물리 입력과 뷰포트는 별도로 검사한다.
+
+재현
+Scripts/VerifyLookDash.ps1 -Label FreshLookOrig -Profile Original
+Scripts/VerifyLookDash.ps1 -Label FreshLookWgt -Profile Weighted

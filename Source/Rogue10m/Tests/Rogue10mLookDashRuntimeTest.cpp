@@ -154,10 +154,41 @@ private:
  }
  void CalibrateAim()
  {
+  GameplayCamera=Character->GetGameplayCameraComponent();
+  ThirdPersonFlag=FindFProperty<FBoolProperty>(Character->GetClass(),TEXT("bUseThirdPersonGameplay"));
+  Check(ThirdPersonFlag&&Character->IsThirdPersonGameplayActive()&&GameplayCamera.IsValid()
+   &&GameplayCamera!=Camera&&!Appearance->IsAppearanceCameraActive(),TEXT("normal_entry_uses_the_third_person_gameplay_camera"));
+  if(Failures){Finish();return;}
   Stage=TEXT("calibrate_actual_look_input");PC->SetControlRotation(FRotator(0,InitialControl.Yaw,0));Aim(1.f);
   Later(.1,[this]{PitchPerInput=FRotator::NormalizeAxis(PC->GetControlRotation().Pitch);Check(FMath::IsFinite(PitchPerInput)&&FMath::Abs(PitchPerInput)>.01f&&FMath::Abs(PitchPerInput)<20.f,TEXT("actual_DoAim_pitch_input_has_finite_nonzero_effect"));if(Failures){Finish();return;}
    Results+=FString::Printf(TEXT("actual_pitch_delta_per_DoAim_unit=%.9f\nproduction_pitch_min=%.6f\n"),PitchPerInput,PC->PlayerCameraManager->ViewPitchMin);
-   PC->SetControlRotation(FRotator(0,InitialControl.Yaw,0));Aim(-120.f/PitchPerInput);Later(.15,[this]{Check(FMath::Abs(FRotator::NormalizeAxis(PC->GetControlRotation().Pitch)+85.f)<.04f,TEXT("real_CameraManager_clamps_beyond_downward_request_at_minus85"));if(Failures){Finish();return;}LookCase(0);});});
+   SetLook(-70.f,[this]{ProbeThirdPersonLimit();});});
+ }
+ void ProbeThirdPersonLimit()
+ {
+  PC->SetControlRotation(FRotator(0,InitialControl.Yaw,0));Aim(-120.f/PitchPerInput);
+  Later(.15,[this]{
+   const float ThirdPersonPitch=FRotator::NormalizeAxis(PC->GetControlRotation().Pitch);
+   Check(FMath::IsNearlyEqual(ThirdPersonPitch,-70.f,.04f),TEXT("actual_third_person_camera_clamps_at_minus70"));
+   Results+=FString::Printf(TEXT("observed_third_person_pitch_min=%.6f\n"),ThirdPersonPitch);
+   if(Failures){Finish();return;}
+
+   // The old full-body profiles run on this detached QA pawn after checking the gameplay camera.
+   ThirdPersonFlag->SetPropertyValue_InContainer(Character.Get(),false);
+   bOwnCameraMode=true;
+   GameplayCamera->Deactivate();Camera->Activate();Appearance->RefreshAppearanceCamera();
+   Check(Appearance->IsAppearanceCameraActive(),TEXT("detached_legacy_camera_active_before_full_body_checks"));
+   if(Failures){Finish();return;}
+
+   PC->SetControlRotation(FRotator(0,InitialControl.Yaw,0));Aim(-120.f/PitchPerInput);
+   Later(.15,[this]{
+    const float FirstPersonPitch=FRotator::NormalizeAxis(PC->GetControlRotation().Pitch);
+    Check(FMath::IsNearlyEqual(FirstPersonPitch,-85.f,.04f),TEXT("real_CameraManager_clamps_beyond_downward_request_at_minus85"));
+    Results+=FString::Printf(TEXT("observed_full_body_first_person_pitch_min=%.6f\n"),FirstPersonPitch);
+    if(Failures){Finish();return;}
+    LookCase(0);
+   });
+  });
  }
  void LookCase(int32 Index)
  {
@@ -254,6 +285,13 @@ private:
   if(Viewport.IsValid())Viewport->OnInputKey().Remove(InputHandle);UGameViewportClient::OnScreenshotCaptured().Remove(CaptureHandle);Stop();
   if(bPrepared&&Character.IsValid()){if(Saves.IsValid()&&Saves->IsAttachedTo(*Character))Saves->DetachCharacter(*Character,false);PC->CloseAllBlockingPanels();Character->SetBase(static_cast<FMovementBaseInterfaceData*>(nullptr));Character->SetCanBeDamaged(bInitialDamage);Character->SetActorTransform(InitialTransform,false,nullptr,ETeleportType::TeleportPhysics);PC->SetControlRotation(InitialControl);}
   if(bOwnEyeOffset&&Appearance.IsValid()){Appearance->EyeOffset=SavedEyeOffset;}
+  if(bOwnCameraMode&&Character.IsValid())
+  {
+   ThirdPersonFlag->SetPropertyValue_InContainer(Character.Get(),true);
+   if(Appearance.IsValid())Appearance->RefreshAppearanceCamera();
+   if(Camera.IsValid())Camera->Deactivate();
+   if(GameplayCamera.IsValid())GameplayCamera->Activate();
+  }
   if(Wall.IsValid())Wall->Destroy();if(Ground.IsValid())Ground->Destroy();if(bOwnCVars){Heavy->Set(OldHeavy,ECVF_SetByConsole);Motion->Set(OldMotion,ECVF_SetByConsole);Fov->Set(OldFov,ECVF_SetByConsole);}
   if(bRendered)Check(RequestedCaptures==8&&CompletedCaptures==8&&PendingCapture.IsEmpty(),TEXT("all_eight_actual_viewport_captures_completed"));
   // Keep PNG compression and disk IO out of the measured movement/dodge frames.
@@ -264,6 +302,9 @@ private:
  }
  TWeakObjectPtr<UWorld> World;TWeakObjectPtr<ARogue10mPlayerController> PC;TWeakObjectPtr<ARogue10mCharacter> Character;TWeakObjectPtr<URogue10mAppearanceCameraComponent> Appearance;TWeakObjectPtr<USkeletalMeshComponent> Body,Source;TWeakObjectPtr<UCameraComponent> Camera;TWeakObjectPtr<URogue10mCombatComponent> Combat;TWeakObjectPtr<const URogue10mDodgeSkillDataAsset> Dodge;TWeakObjectPtr<UGameViewportClient> Viewport;TWeakObjectPtr<AActor> Ground,Wall;TWeakObjectPtr<UStaticMesh> Cube;
  TWeakObjectPtr<URogue10mProgressionSubsystem> Saves;IConsoleVariable* Heavy=nullptr;IConsoleVariable* Motion=nullptr;IConsoleVariable* Fov=nullptr;FDelegateHandle SampleHandle,Cleanup,FlushHandle,InputHandle,CaptureHandle;TFunction<void()> Next;
+ const FBoolProperty* ThirdPersonFlag=nullptr;
+ TWeakObjectPtr<UCameraComponent> GameplayCamera;
+ bool bOwnCameraMode=false;
  TArray<FCapturedPixels> CapturedImages;FString Label,Profile,Output,Images,Stage=TEXT("prepare"),Frames,Results,Captures,PendingCapture,DodgeConfig,AppearanceConfig;FTransform InitialTransform,Fixture;FRotator InitialControl;FVector MoveOrigin,DodgeOrigin,Forward,SavedEyeOffset;
  double Deadline=0,NextAt=0,GroundDeadline=0,LastWall=0,Surface=0,AcceptedAt=-1,DodgeRequestWorld=0,DodgeRequestWall=0,RepeatDeadline=0,FreeTravel[2]{},DodgeEndObserved=-1,FirstActiveDT=0,EndObservedDT=0,MaxDodgeDT=0;float PitchPerInput=1,WantedPitch=0,Duration=.16f,Cooldown=.45f,Distance=100,Cost=0,BeforeStamina=0,RepeatStamina=0,OldMotion=1,OldFov=0;int32 Checks=0,Failures=0,OldHeavy=0,DodgeIndex=0,DashSamples=0,DodgeActivationCount=0,Flushes=0,ViewportEvents=0,MeasuredFlushes=0,MeasuredViewportEvents=0,RequestedCaptures=0,CompletedCaptures=0;bool bFinished=false,bPrepared=false,bRendered=false,bOffscreen=false,bWeighted=false,bOwnCVars=false,bOwnEyeOffset=false,bInitialDamage=true,bFlushHook=false,bMeasured=false,bDashPhoto=false,bObservedDodgeActive=false;
 };

@@ -15,3 +15,7 @@ Alt에서 재현한 기본 3인칭 회피는 전방 조깅에서 만든 스텝�
 검증은 격리된 StartHub에서 컨트롤러 입력을 재현했다. 대검 구르기의 고정 카메라는 전방 회피를 촬영했다. 측면·후방에서 배운 구르기와 전체 플레이의 검증은 별도로 남아 있다. [이전 후보 기록](evidence/alt-dodge-motion-20261121/roll-verification-attempts.txt)
 
 [설계와 점검 범위](../architect/2026-11-21_animation-motion-audit.md) · [Blender 비교](evidence/alt-dodge-motion-20261121/blender/README.md) · [동작 기록](../../DevLog/20261121_AltDodgeMotion/AnimationRecord.md)
+
+### 카메라 모드별 회피 재검사
+
+현재 입력의 회피 키는 왼쪽 Ctrl이다. StartHub에 정상 진입한 뒤 실제 시점 입력으로 3인칭 하한 −70°를 확인했다. 같은 검사에서 분리한 테스트 캐릭터를 기존 전신 1인칭으로 전환해 하한 −85°와 아래를 보면서 달리기, 전방 회피 및 벽 충돌을 확인했다. Original 936개와 Weighted 940개 수치 검사가 통과했다. [카메라 모드별 수치](evidence/look-dash-20261029/camera-mode-regression-20261121.txt)

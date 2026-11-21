@@ -33,9 +33,9 @@ if(-not(Test-Path -LiteralPath $exe) -or -not(Test-Path -LiteralPath $project)){
 $before=@(Save-Inventory $saves)
 New-Item -ItemType Directory -Force -Path $base | Out-Null
 $before | Export-Csv -LiteralPath $beforeFile -NoTypeInformation -Encoding utf8
-$arguments=@(('"'+$project+'"'),'/Game/Rogue10m/Maps/StartHub','-game','-unattended','-nosplash','-nosound','-NoLiveCoding','-NoRemoteShaderCompile',
+$arguments=@(('"'+$project+'"'),'/Game/Rogue10m/Maps/StartHub','-game','-unattended','-nosplash','-nosound','-NoLiveCoding','-NoRemoteShaderCompile','-DisablePython',
  ('-RogueProfileSaveSlot='+$town),('-RogueProgressionSavePrefix='+$prefix),('-RogueSkillKeySaveSlot='+$keys),
- ('-RogueLookDashLabel='+$Label),('-RogueLookDashProfile='+$Profile),'-ExecCmds="t.MaxFPS 60,Rogue10m.TestLookDash"',('-abslog="'+$log+'"'))
+ ('-RogueLookDashLabel='+$Label),('-RogueLookDashProfile='+$Profile),'-ini:Engine:[SystemSettings]:t.MaxFPS=60','-ExecCmds=Rogue10m.TestLookDash',('-abslog="'+$log+'"'))
 if($EyeForwardCm -gt 0){$arguments+=('-RogueLookDashEyeForward='+$EyeForwardCm.ToString([Globalization.CultureInfo]::InvariantCulture))}
 if($Rendered){$arguments+=@('-d3d11','-windowed','-ForceRes','-ResX=1280','-ResY=720')}else{$arguments+='-nullrhi'}
 if($Offscreen){$arguments+='-RenderOffScreen'}
