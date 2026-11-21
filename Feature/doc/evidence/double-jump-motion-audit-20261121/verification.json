@@ -1,0 +1,48 @@
+{
+  "baseline_base": "531a7668f5ad5b259cca7afbf4fe652323f77b62",
+  "candidate_base": "3b1e8047ced250d980ad9aae8d4b237005098bbb",
+  "build_seconds": {"cold_baseline": 140.92, "integrated_candidate": 80.28, "final_fixture": 11.96},
+  "input": "Programmatic Space presses through Controller InputKey and real Enhanced Input on StartHub",
+  "fixed_frames_per_second": 60,
+  "unlock_path": ["C.AirControl", "C.DoubleJump"],
+  "baseline": {"label": "DoubleJumpAuditA", "checks": 2959, "failures": 0, "log_errors": 0},
+  "final": {
+    "label": "DoubleJumpFinal",
+    "checks": 2976,
+    "failures": 0,
+    "log_errors": 0,
+    "pose_rows": 2926,
+    "state_frames": 209,
+    "existing_qa_saves_preserved": 8,
+    "second_boost_frame": 40,
+    "second_boost_velocity_cm_per_second": [-86.333359, 403.666656],
+    "pose_applied_frames": [41, 54],
+    "pose_applied_frame_count": 14,
+    "max_trajectory_delta_cm": 0,
+    "max_component_left_foot_delta_cm": {"source": 19.5782, "visible": 19.5427},
+    "landing_frames": {"single_space": 60, "double_space": 101}
+  },
+  "render": {
+    "label": "DoubleJumpWarpB",
+    "checks": 1748,
+    "failures": 0,
+    "adapter": "Microsoft Basic Render Driver",
+    "hardware_probe_error": "887A0004",
+    "hardware_probe_log_line": 924,
+    "adapter_log_line": 967,
+    "post_hardware_probe_errors": 0,
+    "existing_qa_saves_preserved": 10,
+    "size": [1280, 720],
+    "request_frame": 47,
+    "request_world_seconds": [0.95, 2.116667],
+    "captures_completed": 2,
+    "control_sha256": "b28429c610131b8f600ebc5a6b397750e6e46c90a544e74323ec623ca4a2c218",
+    "second_jump_sha256": "a97c50b55fce0865f792fbe207e85d9fe8faff79c5175a48be1107e8b9c200b3"
+  },
+  "integrated_regressions": {
+    "third_person": {"label": "DoubleJumpIntegratedReg", "checks": 1594, "mouse_cases": 13, "failures": 0, "log_errors": 0},
+    "greatsword_brace": {"label": "DoubleJumpCapstoneReg", "cases": 4, "failures": 0, "log_errors": 0}
+  },
+  "physical_input": false,
+  "full_field_run": false
+}

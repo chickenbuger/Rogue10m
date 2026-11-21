@@ -1,5 +1,9 @@
 #if WITH_EDITOR
+#include "Animation/AnimClassInterface.h"
+#include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
+#include "Animation/AnimNode_RelevantAssetPlayerBase.h"
+#include "Animation/AnimNode_StateMachine.h"
 #include "Camera/CameraActor.h"
 #include "Camera/CameraComponent.h"
 #include "AssetCompilingManager.h"
@@ -15,6 +19,7 @@
 #include "Engine/GameViewportClient.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/World.h"
+#include "EngineUtils.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "HAL/FileManager.h"
@@ -28,6 +33,7 @@
 #include "Misc/FileHelper.h"
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
+#include "NiagaraSystem.h"
 #include "Rogue10m.h"
 #include "Rogue10mAppearanceCameraComponent.h"
 #include "Rogue10mCharacter.h"
@@ -42,6 +48,8 @@
 #include "Rogue10mInputKeys.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mProgressionSubsystem.h"
+#include "Rogue10mSkillTreeProgressionComponent.h"
+#include "Rogue10mTutorialNPC.h"
 #include "UnrealClient.h"
 #include "UObject/UnrealType.h"
 #include "UObject/StrongObjectPtr.h"
@@ -95,6 +103,38 @@ struct FObservedMotionPose
  uint32 Revision=0;
 };
 
+static const FName JumpPoseBones[]={TEXT("pelvis"),TEXT("thigh_l"),TEXT("thigh_r"),TEXT("calf_l"),
+ TEXT("calf_r"),TEXT("foot_l"),TEXT("foot_r")};
+
+struct FObservedJumpPose
+{
+ FTransform Bones[UE_ARRAY_COUNT(JumpPoseBones)];
+ uint32 Revision=0;
+ int32 PairedFrames=0;
+};
+
+static FString DescribeJumpAnimation(UAnimInstance* Instance)
+{
+ if(!Instance){return FString();}
+ const auto* Class=IAnimClassInterface::GetFromClass(Instance->GetClass());
+ if(!Class){return FString();}
+ FString Description;
+ for(const auto& Definition:Class->GetBakedStateMachines())
+ {
+  const int32 MachineIndex=Instance->GetStateMachineIndex(Definition.MachineName);
+  const auto* Machine=MachineIndex!=INDEX_NONE?Instance->GetStateMachineInstance(MachineIndex):nullptr;
+  const int32 StateIndex=Machine?Machine->GetCurrentState():INDEX_NONE;
+  if(!Definition.States.IsValidIndex(StateIndex)){continue;}
+  const auto* Player=Instance->GetRelevantAssetPlayerInterfaceFromState(MachineIndex,StateIndex);
+  if(!Description.IsEmpty()){Description+=TEXT("|");}
+  Description+=FString::Printf(TEXT("%s:%s:%s:%.6f:%s:%.6f"),*GetNameSafe(Instance->GetClass()),
+   *Definition.MachineName.ToString(),*Instance->GetCurrentStateName(MachineIndex).ToString(),
+   Machine->GetCurrentStateElapsedTime(),*GetPathNameSafe(Player?Player->GetAnimAsset():nullptr),
+   Player?Player->GetAccumulatedTime():0.0f);
+ }
+ return Description;
+}
+
 // Programmatic input and rendered QA, never a claim of physical input or full-run play.
 class FRun : public TSharedFromThis<FRun>
 {
@@ -106,6 +146,11 @@ public:
   FParse::Value(Args,TEXT("RogueThirdPersonQALabel="),Label);FParse::Value(Args,TEXT("RogueProfileSaveSlot="),Town);FParse::Value(Args,TEXT("RogueProgressionSavePrefix="),Prefix);FParse::Value(Args,TEXT("RogueSkillKeySaveSlot="),Keys);
   bCombatMotion=FParse::Param(Args,TEXT("RogueThirdPersonCombatMotionQA"));
   bCombatMotionCapture=bCombatMotion&&FParse::Param(Args,TEXT("RogueThirdPersonCombatMotionCapture"));
+  bDoubleJumpMotion=FParse::Param(Args,TEXT("RogueThirdPersonDoubleJumpQA"));
+  bDoubleJumpCapture=bDoubleJumpMotion&&FParse::Param(Args,TEXT("RogueThirdPersonDoubleJumpCapture"));
+  bExpectSecondJumpPose=FParse::Param(Args,TEXT("RogueExpectSecondJumpPose"));
+  if(bDoubleJumpMotion&&(bCombatMotion||bDoubleJumpCapture==FParse::Param(Args,TEXT("nullrhi"))))
+  {UE_LOG(LogRogue10m,Error,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_FAILED reason=jump_audit_requires_its_own_explicit_capture_or_nullrhi_run"));FPlatformMisc::RequestExitWithStatus(false,1);return;}
   bool Valid=!Label.IsEmpty()&&Label.Len()<=24;for(TCHAR C:Label)Valid&=FChar::IsAlnum(C)||C==TEXT('_');
   TArray<FString> Existing;IFileManager::Get().FindFiles(Existing,*(FPaths::ProjectSavedDir()/TEXT("SaveGames")/(Prefix+TEXT("_*.sav"))),true,false);
   if(!Valid||W.GetNetMode()!=NM_Standalone||Town!=TEXT("Rogue10m_Town_QA_ThirdPerson_")+Label||Prefix!=TEXT("Rogue10m_Progression_QA_ThirdPerson_")+Label||Keys!=TEXT("Rogue10m_Fighter_QA_ThirdPerson_")+Label||UGameplayStatics::DoesSaveGameExist(Town,0)||UGameplayStatics::DoesSaveGameExist(Keys,0)||!Existing.IsEmpty())
@@ -120,7 +165,7 @@ private:
  void Check(bool Value,const TCHAR* Why){++Checks;if(!Value){++Failures;Results+=FString(TEXT("FAIL "))+Why+TEXT("\n");if(Failures<25)UE_LOG(LogRogue10m,Error,TEXT("THIRD_PERSON FAIL %s"),Why);}}
  void Later(double Delay,TFunction<void()> Work){NextAt=FPlatformTime::Seconds()+Delay;Next=MoveTemp(Work);}
  void Key(FKey K,bool Down){if(PC.IsValid())PC->InputKey(FInputKeyEventArgs::CreateSimulated(K,Down?IE_Pressed:IE_Released,Down?1.f:0.f));}
- void Photo(const TCHAR* Name){if(!bRendered)return;Check(PendingPhoto.IsEmpty(),TEXT("previous_capture_completed"));PendingPhoto=Name;++RequestedPhotos;FScreenshotRequest::RequestScreenshot(Output/Name,!bCombatMotionCapture,false);}
+ void Photo(const TCHAR* Name){if(!bRendered)return;Check(PendingPhoto.IsEmpty(),TEXT("previous_capture_completed"));PendingPhoto=Name;++RequestedPhotos;FScreenshotRequest::RequestScreenshot(Output/Name,!bCombatMotionCapture&&!bDoubleJumpCapture,false);}
  AActor* MakeBox(const FVector& Center,const FVector& Extent,const FRotator& Rotation)
  {
   FActorSpawnParameters P;P.ObjectFlags|=RF_Transient;auto* A=World->SpawnActor<AActor>(AActor::StaticClass(),FTransform(Rotation,Center),P);if(!A)return nullptr;
@@ -133,6 +178,7 @@ private:
   Check(PC.IsValid()&&Profiles&&Saves.IsValid(),TEXT("profile_controller_progression_available"));if(Failures){Finish();return;}
   FRogue10mCharacterProfile P;Check(Profiles->GetProfileCount()==0&&Profiles->CreateProfile(TEXT("ThirdQa"),FRogue10mCharacterAppearance(),P)&&Profiles->SelectProfile(P.ProfileId),TEXT("fresh_profile_selected"));if(Failures){Finish();return;}
   PC->EnterSelectedCharacter();PC->CloseAllBlockingPanels();Character=Cast<ARogue10mCharacter>(PC->GetPawn());Check(Character.IsValid()&&Saves->IsAttachedTo(*Character),TEXT("normal_entry_pawn_and_save_attach"));if(Failures){Finish();return;}
+  if(bDoubleJumpMotion){TrainDoubleJump();if(Failures){Finish();return;}}
   Saves->DetachCharacter(*Character,false);Character->SetCanBeDamaged(false);Check(Character->IsThirdPersonGameplayActive()&&Character->GetGameplayCameraComponent()&&Character->GetThirdPersonCameraBoom(),TEXT("third_person_default_components"));if(Failures){Finish();return;}
   RealNovicePrimary.Reset(Character->GetCombatComponent()->GetEquippedSkill(ERogue10mAttackInputSlot::Primary));RealNoviceAbility=FRogue10mMouseCombatTestAccess::Ability(*Character->GetCombatComponent());
   const auto* DodgeData=Character->GetCombatComponent()->GetActiveDodgeSkill();
@@ -147,7 +193,196 @@ private:
   CaptureHandle=UGameViewportClient::OnScreenshotCaptured().AddLambda([Self=AsShared()](int32 W,int32 H,const TArray<FColor>& Pixels){if(Self->PendingPhoto.IsEmpty()||Self->bFinished)return;auto& Pic=Self->Photos.AddDefaulted_GetRef();Pic.Name=Self->PendingPhoto;Pic.Width=W;Pic.Height=H;Pic.Pixels=Pixels;Self->PendingPhoto.Empty();++Self->CompletedPhotos;});
   if(bRendered){FAssetCompilingManager::Get().FinishAllCompilation();if(GShaderCompilingManager)GShaderCompilingManager->FinishAllCompilation();Check(!GShaderCompilingManager||!GShaderCompilingManager->IsCompiling(),TEXT("first_capture_waits_for_material_shaders"));}
   SampleHandle=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* X,ELevelTick,float){if(X==Self->World.Get())Self->Sample();});
-  Later(.8,[this]{if(bCombatMotion){BeginCombatMotion();}else{OpenView();}});
+  Later(.8,[this]{if(bDoubleJumpMotion){BeginDoubleJumpMotion();}else if(bCombatMotion){BeginCombatMotion();}else{OpenView();}});
+ }
+
+ void TrainDoubleJump()
+ {
+  auto* State=Character->GetPlayerState<ARogue10mPlayerState>();
+  auto* Tree=State?State->GetSkillTreeProgressionComponent():nullptr;
+  TActorIterator<ARogue10mTutorialNPC> Services(World.Get());
+  Check(Tree&&Services&&Character->GetEquippedWeaponType()==ERogue10mWeaponType::Unarmed
+   &&Character->JumpMaxCount==1&&!Tree->IsCommonSkillLearned(ERogue10mCommonSkill::DoubleJump),
+   TEXT("unarmed_player_has_one_jump_before_learning"));
+  if(Failures){return;}
+  State->AddExperience(500);
+  const int32 PointsBefore=Tree->GetAvailableGrowthPoints();
+  const FVector Location=Character->GetActorLocation();
+  Character->SetActorLocation(Services->GetActorLocation()+FVector(100,0,100),false,nullptr,ETeleportType::TeleportPhysics);
+  constexpr auto Route=ERogue10mSkillTreeUnlockRoute::Points;
+  Check(Tree->CanChangeInvestments()&&Tree->TryUnlockNode(TEXT("C.AirControl"),Route,NAME_None)
+   &&Character->JumpMaxCount==1&&Tree->TryUnlockNode(TEXT("C.DoubleJump"),Route,NAME_None),
+   TEXT("authored_town_service_learns_air_control_then_double_jump"));
+  Check(Tree->IsCommonSkillLearned(ERogue10mCommonSkill::DoubleJump)&&Character->JumpMaxCount==2
+   &&Tree->GetAvailableGrowthPoints()==PointsBefore-2,TEXT("common_investment_grants_two_real_jumps"));
+  Character->SetActorLocation(Location,false,nullptr,ETeleportType::TeleportPhysics);
+ }
+
+ void BeginDoubleJumpMotion()
+ {
+  const auto* Movement=Character->GetCharacterMovement();
+  auto* Source=Character->GetAnimationPlaybackMesh();
+  auto* Visible=Character->GetMesh();
+  if(!Movement->IsMovingOnGround())
+  {
+   // The 2 cm setup drop may still be in progress on the slow software renderer.
+   Later(.01,[this]{BeginDoubleJumpMotion();});
+   return;
+  }
+  Check(FMath::IsNearlyEqual(World->GetDeltaSeconds(),1.0f/60.0f,.0001f),TEXT("jump_audit_uses_fixed_60_hz_ground"));
+  Check(Source&&Visible&&Source!=Visible&&Source->GetAnimInstance()&&Visible->GetAnimInstance(),
+   TEXT("jump_audit_uses_live_source_and_retargeted_mesh"));
+  if(Failures){Finish();return;}
+  const auto* Anim=Cast<URogue10mFighterCombatStanceAnimInstance>(Source->GetAnimInstance());
+  Check(!bExpectSecondJumpPose||(Anim&&Anim->GetSecondJumpPoseAnimation()),TEXT("expected_second_jump_clip_is_loaded"));
+  if(Failures){Finish();return;}
+  for(auto* Mesh:{Source,Visible})
+  {
+   Mesh->bEnableUpdateRateOptimizations=false;
+   Mesh->VisibilityBasedAnimTickOption=EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+   for(const FName Bone:JumpPoseBones){Check(Mesh->GetBoneIndex(Bone)!=INDEX_NONE,TEXT("jump_pose_bone_exists"));}
+  }
+  if(Failures){Finish();return;}
+  if(bDoubleJumpCapture)
+  {
+   FActorSpawnParameters Parameters;
+   Parameters.ObjectFlags|=RF_Transient;
+   MotionCamera=World->SpawnActor<ACameraActor>(Parameters);
+   Check(MotionCamera.IsValid(),TEXT("jump_capture_side_camera_created"));
+   if(Failures){Finish();return;}
+   MotionCamera->GetCameraComponent()->SetFieldOfView(60.0f);
+   PC->SetViewTarget(MotionCamera.Get());
+  }
+  const auto* Motion=Character->GetCharacterAnimationComponent()->GetMotionData();
+  Results+=FString::Printf(TEXT("jump_max_count=%d\njump_velocity_setting=%.6f\njump_source_mesh=%s\njump_visible_mesh=%s\njump_fx_profile=%s\ndouble_jump_fx=%s\n"),
+   Character->JumpMaxCount,Movement->JumpZVelocity,*GetPathNameSafe(Source->GetSkeletalMeshAsset()),
+   *GetPathNameSafe(Visible->GetSkeletalMeshAsset()),*GetPathNameSafe(Motion),
+   *GetPathNameSafe(Motion?Motion->DoubleJumpEffect.Get():nullptr));
+  JumpStateRows=TEXT("case,frame,world_seconds,jump_count,movement_mode,falling,velocity_z,actor_z,source_class,visible_class,source_graph,visible_graph,source_montage,second_jump_pose_applied\n");
+  JumpPoseRows=TEXT("case,frame,mesh,revision,paired,bone,x,y,z,qx,qy,qz,qw,position_step_cm,angle_step_deg\n");
+  bJumpMotionStarted=true;
+ }
+
+ void SampleDoubleJumpMotion()
+ {
+  const auto* Movement=Character->GetCharacterMovement();
+  const bool bFalling=Movement->IsFalling();
+  const float Velocity=Movement->Velocity.Z;
+  const int32 Count=Character->JumpCurrentCount;
+  const TCHAR* Case=bSecondJumpInput?TEXT("double_space"):TEXT("single_space");
+  ++JumpFrame;
+  if(JumpFrame>240){Check(false,TEXT("jump_motion_case_finishes_within_four_seconds"));Finish();return;}
+  if(JumpFrame==8){Key(EKeys::SpaceBar,true);}
+  if(JumpTakeoffFrame==0&&Count==1&&bFalling)
+  {
+   JumpTakeoffFrame=JumpFrame;
+   JumpTakeoffVelocity=Velocity;
+   Key(EKeys::SpaceBar,false);
+  }
+  if(JumpTakeoffFrame>0&&JumpRequestFrame==0&&Count==1&&bFalling&&Velocity<=-75.0f)
+  {
+   JumpRequestFrame=JumpFrame;
+   if(bSecondJumpInput){Key(EKeys::SpaceBar,true);}
+  }
+  if(JumpBoostFrame==0&&Count==2)
+  {
+   JumpBoostFrame=JumpFrame;
+   JumpBeforeBoostVelocity=PreviousJumpVelocity;
+   JumpBoostVelocity=Velocity;
+   Check(bSecondJumpInput&&JumpRequestFrame>0&&bFalling&&JumpBeforeBoostVelocity<=-75.0f
+    &&JumpBoostVelocity>Movement->JumpZVelocity*.8f,TEXT("second_space_reverses_descent_while_still_falling"));
+   Key(EKeys::SpaceBar,false);
+  }
+  if(JumpTakeoffFrame>0&&JumpLandFrame==0&&Movement->IsMovingOnGround()){JumpLandFrame=JumpFrame;}
+  PreviousJumpVelocity=Velocity;
+
+  const USkeletalMeshComponent* Meshes[]={Character->GetAnimationPlaybackMesh(),Character->GetMesh()};
+  const auto* SourceAnim=Meshes[0]->GetAnimInstance();
+  const auto* FighterAnim=Cast<URogue10mFighterCombatStanceAnimInstance>(SourceAnim);
+  const bool bSecondPose=FighterAnim&&FighterAnim->WasSecondJumpPoseApplied();
+  if(bSecondPose)
+  {
+   ++AppliedSecondJumpFrames;
+   Check(Count==2&&bFalling&&JumpBoostFrame>0,TEXT("second_jump_pose_is_scoped_to_airborne_boost"));
+  }
+  FString Graph[2];
+  for(int32 Index=0;Index<UE_ARRAY_COUNT(Meshes);++Index)
+  {
+   const auto* Mesh=Meshes[Index];
+   Graph[Index]=DescribeJumpAnimation(Mesh->GetAnimInstance());
+   for(auto* Linked:Mesh->GetLinkedAnimInstances())
+   {
+    const FString Details=DescribeJumpAnimation(Linked);
+    if(!Details.IsEmpty()){if(!Graph[Index].IsEmpty()){Graph[Index]+=TEXT("|");}Graph[Index]+=Details;}
+   }
+   auto& Previous=JumpPrevious[Index];
+   const uint32 Revision=Mesh->GetBoneTransformRevisionNumber();
+   const bool bPaired=JumpFrame>1&&Revision!=Previous.Revision;
+   Previous.PairedFrames+=bPaired?1:0;
+   for(int32 BoneIndex=0;BoneIndex<UE_ARRAY_COUNT(JumpPoseBones);++BoneIndex)
+   {
+    const FName Bone=JumpPoseBones[BoneIndex];
+    const FTransform Pose=Mesh->GetBoneTransform(Bone,RTS_Component);
+    const FVector Location=Pose.GetLocation();
+    const FQuat Rotation=Pose.GetRotation();
+    Check(!Pose.ContainsNaN()&&Rotation.IsNormalized(),TEXT("valid_sampled_jump_bone_pose"));
+    const FTransform& Prior=Previous.Bones[BoneIndex];
+    const double Step=bPaired?FVector::Dist(Location,Prior.GetLocation()):0.0;
+    const double Angle=bPaired?FMath::RadiansToDegrees(Rotation.AngularDistance(Prior.GetRotation())):0.0;
+    JumpPoseRows+=FString::Printf(TEXT("%s,%d,%s,%u,%d,%s,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f\n"),
+     Case,JumpFrame,Index==0?TEXT("source"):TEXT("visible"),Revision,bPaired,*Bone.ToString(),
+     Location.X,Location.Y,Location.Z,Rotation.X,Rotation.Y,Rotation.Z,Rotation.W,Step,Angle);
+    Previous.Bones[BoneIndex]=Pose;
+   }
+   Previous.Revision=Revision;
+  }
+  JumpStateRows+=FString::Printf(TEXT("%s,%d,%.6f,%d,%d,%d,%.6f,%.6f,%s,%s,%s,%s,%s,%d\n"),
+   Case,JumpFrame,World->GetTimeSeconds(),Count,static_cast<int32>(Movement->MovementMode),bFalling,Velocity,
+   Character->GetActorLocation().Z,*GetPathNameSafe(SourceAnim->GetClass()),*GetPathNameSafe(Meshes[1]->GetAnimInstance()->GetClass()),
+   *Graph[0],*Graph[1],*GetPathNameSafe(SourceAnim->GetCurrentActiveMontage()),bSecondPose);
+  if(bDoubleJumpCapture)
+  {
+   const FVector Target=Character->GetActorLocation()+FVector(0,0,6);
+   const FVector Offset=-155.0*Character->GetActorForwardVector()+350.0*Character->GetActorRightVector()+FVector(0,0,40);
+   MotionCamera->SetActorLocationAndRotation(Target+Offset,(-Offset).Rotation());
+   if(JumpRequestFrame>0&&JumpFrame==JumpRequestFrame+8)
+   {
+    const auto* Name=bSecondJumpInput?TEXT("02_second_space_at_pose_peak.png"):TEXT("01_single_space_at_matched_frame.png");
+    Results+=FString::Printf(TEXT("jump_capture_request=%s frame=%d world_seconds=%.6f\n"),Name,JumpFrame,World->GetTimeSeconds());
+    Photo(Name);
+   }
+   if(JumpRequestFrame==0||JumpFrame<JumpRequestFrame+12||!PendingPhoto.IsEmpty()){return;}
+   if(!bSecondJumpInput&&(JumpLandFrame==0||JumpFrame<JumpLandFrame+10)){return;}
+  }
+  else if(JumpLandFrame==0||JumpFrame<JumpLandFrame+24){return;}
+
+  Results+=FString::Printf(TEXT("jump_case=%s frames=%d takeoff_frame=%d takeoff_vz=%.6f second_boundary=%d boost_frame=%d before_boost_vz=%.6f boost_vz=%.6f landing_frame=%d paired_source=%d paired_visible=%d second_pose_frames=%d\n"),
+   Case,JumpFrame,JumpTakeoffFrame,JumpTakeoffVelocity,JumpRequestFrame,JumpBoostFrame,JumpBeforeBoostVelocity,
+   JumpBoostVelocity,JumpLandFrame,JumpPrevious[0].PairedFrames,JumpPrevious[1].PairedFrames,AppliedSecondJumpFrames);
+  if(bExpectSecondJumpPose)
+  {
+   Check(bSecondJumpInput?(AppliedSecondJumpFrames>=5&&AppliedSecondJumpFrames<=16):AppliedSecondJumpFrames==0,
+    TEXT("brief_second_jump_pose_only_appears_after_second_space"));
+  }
+  Check(JumpTakeoffFrame>8&&JumpTakeoffVelocity>Movement->JumpZVelocity*.8f&&JumpRequestFrame>JumpTakeoffFrame
+   &&(bSecondJumpInput?JumpBoostFrame>JumpRequestFrame:JumpBoostFrame==0)&&(bDoubleJumpCapture||Count==0),
+   bDoubleJumpCapture?TEXT("real_jump_reaches_matched_capture"):TEXT("complete_real_jump_and_landing_sequence_observed"));
+  Check(JumpPrevious[0].PairedFrames>=JumpFrame-2&&JumpPrevious[1].PairedFrames>=JumpFrame-2,
+   TEXT("source_and_visible_meshes_have_adjacent_pose_revisions"));
+  if(bSecondJumpInput)
+  {
+   Check(JumpTakeoffFrame==ControlJumpTakeoffFrame&&JumpRequestFrame==ControlJumpRequestFrame,
+    TEXT("control_and_boost_share_the_same_takeoff_and_descent_boundary"));
+   Finish();
+   return;
+  }
+  bSecondJumpInput=true;
+  ControlJumpTakeoffFrame=JumpTakeoffFrame;
+  ControlJumpRequestFrame=JumpRequestFrame;
+  JumpFrame=JumpTakeoffFrame=JumpRequestFrame=JumpBoostFrame=JumpLandFrame=0;
+  AppliedSecondJumpFrames=0;
+  JumpPrevious[0]={};
+  JumpPrevious[1]={};
  }
 
  void BeginCombatMotion()
@@ -667,6 +902,11 @@ private:
  }
  void Sample()
  {
+  if(bDoubleJumpMotion)
+  {
+   if(bJumpMotionStarted&&!bFinished&&Character.IsValid()){SampleDoubleJumpMotion();}
+   return;
+  }
   if(bCombatMotion){if(bCombatMotionStarted&&!bFinished){ObserveCombatMotion();}return;}
   if(bFinished||!Character.IsValid()||!PC.IsValid()||!PC->PlayerCameraManager)return;const auto& V=PC->PlayerCameraManager->GetCameraCacheView();const FVector P=Character->GetActorLocation();++Samples;Check(!V.Location.ContainsNaN()&&!V.Rotation.ContainsNaN()&&FMath::IsFinite(V.FOV),TEXT("sample_camera_finite"));
   if(Stage.EndsWith(TEXT("dodge"))&&Character->IsDodging())
@@ -682,6 +922,17 @@ private:
  }
  void Finish(bool Exit=true)
  {
+  if(bDoubleJumpMotion&&bJumpMotionStarted&&!bFinished)
+  {
+   Key(EKeys::SpaceBar,false);
+   Check(FFileHelper::SaveStringToFile(JumpStateRows,*(Output/TEXT("jump-state-frames.csv")))
+    &&FFileHelper::SaveStringToFile(JumpPoseRows,*(Output/TEXT("jump-pose-frames.csv"))),TEXT("jump_pose_and_state_evidence_saved"));
+  }
+  if(bDoubleJumpCapture&&MotionCamera.IsValid()&&!bFinished)
+  {
+   if(PC.IsValid()&&Character.IsValid()){PC->SetViewTarget(Character.Get());}
+   MotionCamera->Destroy();
+  }
   if(bCombatMotion&&!bFinished)
   {
    RestoreMotionTuning();
@@ -696,12 +947,19 @@ private:
   if(bFinished)return;bFinished=true;Next=nullptr;RestoreHeadPitchCheck();FWorldDelegates::OnWorldPostActorTick.Remove(SampleHandle);FWorldDelegates::OnWorldCleanup.Remove(Cleanup);UGameViewportClient::OnScreenshotCaptured().Remove(CaptureHandle);Key(EKeys::W,false);Key(EKeys::S,false);Key(EKeys::D,false);Key(Rogue10mInput::DodgeKey(),false);if(Character.IsValid()){if(Saves.IsValid()&&Saves->IsAttachedTo(*Character))Saves->DetachCharacter(*Character,false);Character->GetCharacterMovement()->StopMovementImmediately();}for(auto A:{Floor,Obstacle,Wall})if(A.IsValid())A->Destroy();
   if(bRendered)
   {
-   const int32 ExpectedCaptures=bCombatMotionCapture?2:7;
+   const int32 ExpectedCaptures=bCombatMotionCapture||bDoubleJumpCapture?2:7;
    Check(RequestedPhotos==ExpectedCaptures&&CompletedPhotos==ExpectedCaptures&&PendingPhoto.IsEmpty(),TEXT("all_requested_rendered_captures_completed"));
   }
   for(const auto& Pic:Photos){TArray64<uint8> Bytes;FImageUtils::PNGCompressImageArray(Pic.Width,Pic.Height,Pic.Pixels,Bytes);Check(FFileHelper::SaveArrayToFile(Bytes,*(Output/Pic.Name)),TEXT("captured_PNG_saved"));}Check(FFileHelper::SaveStringToFile(Frames,*(Output/TEXT("frames.csv"))),TEXT("frame_evidence_saved"));Results+=FString::Printf(TEXT("mouse_cases=%d\nmouse_passed=%d\n"),MouseCases,MousePassed);Results+=FString::Printf(TEXT("checks=%d\nfailures=%d\nsamples=%d\ndodge_samples=%d\nopen_cm=%.6f\nblocked_cm=%.6f\nrecovered_cm=%.6f\nmove_cm=%.6f\nfree_dodge_cm=%.6f\nwall_dodge_cm=%.6f\nrendered=%d\ncaptures=%d\ninput=programmatic_Controller_InputKey\nphysical_input=not_performed\nfull_run=not_performed\nmap_changes=none_transient_fixture_only\nfirst_person_QA=paused\n"),Checks,Failures,Samples,DodgeSamples,OpenDistance,BlockedDistance,RecoveredDistance,MoveTravel,FreeTravel,WallTravel,bRendered,CompletedPhotos);if(!FFileHelper::SaveStringToFile(Results,*(Output/TEXT("results.txt"))))++Failures;UE_LOG(LogRogue10m,Display,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_%s checks=%d failures=%d output=%s"),Failures?TEXT("FAILED"):TEXT("PASSED"),Checks,Failures,*Output);if(Exit)FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Code=Failures?1:0](float){FPlatformMisc::RequestExitWithStatus(false,Code);return false;}),.5f);
  }
  TStrongObjectPtr<URogue10mAttackSkillData> RealNovicePrimary;TSubclassOf<UGameplayAbility> RealNoviceAbility;int32 BeforeRealNoviceUses=0;
+ FObservedJumpPose JumpPrevious[2];
+ FString JumpStateRows,JumpPoseRows;
+ int32 JumpFrame=0,JumpTakeoffFrame=0,JumpRequestFrame=0,JumpBoostFrame=0,JumpLandFrame=0;
+ int32 ControlJumpTakeoffFrame=0,ControlJumpRequestFrame=0;
+ int32 AppliedSecondJumpFrames=0;
+ float JumpTakeoffVelocity=0.0f,JumpBoostVelocity=0.0f,JumpBeforeBoostVelocity=0.0f,PreviousJumpVelocity=0.0f;
+ bool bDoubleJumpMotion=false,bDoubleJumpCapture=false,bJumpMotionStarted=false,bSecondJumpInput=false,bExpectSecondJumpPose=false;
  TWeakObjectPtr<const URogue10mAttackSkillData> MotionSkill;
  TWeakObjectPtr<URogue10mFighterCombatStanceAnimInstance> MotionTunedAnimation;
  TWeakObjectPtr<ACameraActor> MotionCamera;

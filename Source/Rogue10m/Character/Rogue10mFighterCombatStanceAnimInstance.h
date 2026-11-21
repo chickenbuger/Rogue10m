@@ -27,6 +27,8 @@ public:
 	bool IsViewAimDodgeActive() const;
 	const UAnimSequence* GetLearnedRollAnimation() const { return CachedLearnedRoll.Get(); }
 	bool WasLearnedRollPoseApplied() const { return bLearnedRollPoseApplied; }
+	const UAnimSequence* GetSecondJumpPoseAnimation() const { return CachedSecondJumpPose.Get(); }
+	bool WasSecondJumpPoseApplied() const { return bSecondJumpPoseApplied; }
 
 	/** The final head orientation follows the mouse separately from the authored body motion. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Head Aim")
@@ -121,6 +123,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Weapon", meta=(ClampMin="0.0", ClampMax="1.0"))
 	float GreatSwordCapstoneBraceStrength = 0.40f;
 
+	/** In-place local leg rotation offsets keyed over the second airborne boost. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Jump")
+	TSoftObjectPtr<UAnimSequence> SecondJumpPoseAnimation;
+
 	/** Fixed provenance of the sequence player configured in ABP_Common_Unarmed. */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Fighter Stance")
 	TSoftObjectPtr<UAnimSequence> FighterCombatStanceSequence;
@@ -153,8 +159,10 @@ private:
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedGreatSwordIdle;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedLearnedRoll;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedCapstoneBrace;
+	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedSecondJumpPose;
 	UPROPERTY(Transient) TObjectPtr<UBlendSpace> CachedUnarmedLocomotion;
 	UPROPERTY(Transient) TObjectPtr<UBlendSpace> CachedGreatSwordLocomotion;
 	float FighterCombatBlendProgress = 0.0f;
 	bool bLearnedRollPoseApplied = false;
+	bool bSecondJumpPoseApplied = false;
 };

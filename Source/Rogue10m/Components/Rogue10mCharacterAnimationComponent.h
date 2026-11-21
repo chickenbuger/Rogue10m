@@ -23,6 +23,7 @@ public:
 	void SetMovementState(bool bHasMovementInput, bool bSprinting);
 	void NotifyJump(int32 JumpCount);
 	void NotifyLanded();
+	float GetSecondJumpPresentationAge() const;
 	void NotifyDodge(const FVector& Direction, bool bRoll, float Duration);
 	void StopMotionEffects();
 	/** Accepted attacks, charging and dodges keep the fighter's guard ready briefly. */
@@ -66,4 +67,5 @@ private:
 	bool bNextFootstepRight = false;
 	bool bFighterCombatChargeHeld = false;
 	float FighterCombatReadyUntil = -1.0f;
+	double SecondJumpPresentationStartedAt = -1.0;
 };

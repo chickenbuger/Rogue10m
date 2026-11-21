@@ -26,6 +26,8 @@ URogue10mFighterCombatStanceAnimInstance::URogue10mFighterCombatStanceAnimInstan
 		"/Game/Rogue10m/Animation/Common/Evade/A_CommonShoulderRoll.A_CommonShoulderRoll")));
 	GreatSwordCapstoneBrace = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT(
 		"/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_CapstoneChargeBrace.A_GreatSword_CapstoneChargeBrace")));
+	SecondJumpPoseAnimation = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT(
+		"/Game/Rogue10m/Animation/Common/Airborne/A_CommonSecondJumpImpulse.A_CommonSecondJumpImpulse")));
 }
 
 void URogue10mFighterCombatStanceAnimInstance::NativeInitializeAnimation()
@@ -38,6 +40,8 @@ void URogue10mFighterCombatStanceAnimInstance::NativeInitializeAnimation()
 	CachedLearnedRoll = LearnedRollAnimation.LoadSynchronous();
 	CachedCapstoneBrace = GreatSwordCapstoneBrace.LoadSynchronous();
 	bLearnedRollPoseApplied = false;
+	CachedSecondJumpPose = SecondJumpPoseAnimation.LoadSynchronous();
+	bSecondJumpPoseApplied = false;
 	FighterCombatStanceAnimation = CachedFighterIdle;
 	GroundLocomotionBlendSpace = CachedUnarmedLocomotion;
 	FighterCombatBlendProgress = FighterCombatStanceAlpha = 0.0f;

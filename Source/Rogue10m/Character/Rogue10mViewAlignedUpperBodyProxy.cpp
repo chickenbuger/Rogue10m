@@ -114,6 +114,10 @@ void FRogue10mViewAlignedUpperBodyProxy::Initialize(UAnimInstance* InAnimInstanc
 	RollSequenceLength = 0.0f;
 	CapstoneBraceSequence = nullptr;
 	CapstoneBraceTime = CapstoneBraceBlend = CapstoneBraceWeight = 0.0f;
+	SecondJumpSequence = nullptr;
+	SecondJumpAge = -1.0f;
+	SecondJumpInterruptionWeight = 1.0f;
+	bSecondJumpPoseEvaluated = false;
 	SmoothedHeadResidual = SmoothedNeckResidual = FQuat::Identity;
 	HeadAimInMesh = HeadWorldAim = FQuat::Identity;
 	HeadSourceMeshRotation = FQuat::Identity;
@@ -137,8 +141,18 @@ void FRogue10mViewAlignedUpperBodyProxy::PreUpdate(UAnimInstance* InAnimInstance
 	bUseWeightedAimFollow = false;
 	CaptureCapstoneBrace(bContextValid ? Character : nullptr, Instance, DeltaSeconds);
 	RollSequence = nullptr;
+	SecondJumpSequence = nullptr;
 	FVector RollDirection;
 	bApplyRollPose = Character && SourceMesh && Character->GetRollPresentation(RollProgress, RollDirection);
+	if (bContextValid && !bApplyRollPose)
+	{
+		CaptureSecondJumpPose(*Character, *Instance, *SourceMesh, DeltaSeconds);
+	}
+	else
+	{
+		SecondJumpAge = -1.0f;
+		SecondJumpInterruptionWeight = 1.0f;
+	}
 	if (bApplyRollPose)
 	{
 		const FQuat MeshRotation = SourceMesh->GetComponentQuat();
@@ -392,12 +406,14 @@ bool FRogue10mViewAlignedUpperBodyProxy::Evaluate_WithRoot(FPoseContext& Output,
 	bMouseHeadEvaluated = false;
 	bWeightedHandMotionEvaluated = false;
 	bLearnedRollPoseEvaluated = false;
+	bSecondJumpPoseEvaluated = false;
 	if (bApplyRollPose)
 	{
 		if (!ApplyAuthoredRoll(Output)) { ApplyRollPose(Output.Pose); }
 		return true;
 	}
 	if (CapstoneBraceWeight > UE_SMALL_NUMBER) { ApplyCapstoneBrace(Output); }
+	if (SecondJumpSequence) { ApplySecondJumpPose(Output); }
 	if (bApplyAim) { ApplyViewAim(Output.Pose); }
 	if (bApplyWeightedHandMotion) { ApplyWeightedHandMotion(Output.Pose); }
 	if (bApplyMouseHead) { ApplyMouseDrivenHead(Output.Pose); }
@@ -413,6 +429,7 @@ void FRogue10mViewAlignedUpperBodyProxy::PostEvaluate(UAnimInstance* InAnimInsta
 		Instance->bMouseDrivenHeadApplied = bMouseHeadEvaluated;
 		Instance->bWeightedHandMotionApplied = bWeightedHandMotionEvaluated;
 		Instance->bLearnedRollPoseApplied = bLearnedRollPoseEvaluated;
+		Instance->bSecondJumpPoseApplied = bSecondJumpPoseEvaluated;
 		Instance->WeightedHandPitch = bWeightedHandMotionEvaluated
 			? EvaluatedWeightedHandPitch : FVector2D::ZeroVector;
 		// A later PreUpdate can prepare another aim without evaluating a new pose.
@@ -441,6 +458,8 @@ void FRogue10mViewAlignedUpperBodyProxy::RebuildBoneCache(const FBoneContainer& 
 	Forearm[0] = Find(TEXT("lowerarm_l")); Forearm[1] = Find(TEXT("lowerarm_r"));
 	Thigh[0] = Find(TEXT("thigh_l")); Thigh[1] = Find(TEXT("thigh_r"));
 	Calf[0] = Find(TEXT("calf_l")); Calf[1] = Find(TEXT("calf_r"));
+	Foot[0] = Find(TEXT("foot_l")); Foot[1] = Find(TEXT("foot_r"));
+	Ball[0] = Find(TEXT("ball_l")); Ball[1] = Find(TEXT("ball_r"));
 	ReferenceHeadRotation = Head != INDEX_NONE ? ReferenceComponentRotation(Bones, Head) : FQuat::Identity;
 	ReferenceNeckRotation = Neck != INDEX_NONE ? ReferenceComponentRotation(Bones, Neck) : FQuat::Identity;
 	BoneCacheSerial = Bones.GetSerialNumber();
@@ -509,6 +528,68 @@ void FRogue10mViewAlignedUpperBodyProxy::ApplyCapstoneBrace(FPoseContext& Output
 	}
 	FAnimationPoseData BaseData(Output);
 	FAnimationRuntime::AccumulateAdditivePose(BaseData, BraceData, CapstoneBraceWeight, AAT_LocalSpaceBase);
+}
+
+void FRogue10mViewAlignedUpperBodyProxy::CaptureSecondJumpPose(const ARogue10mCharacter& Character,
+	const URogue10mFighterCombatStanceAnimInstance& Instance, const USkeletalMeshComponent& Mesh, float DeltaSeconds)
+{
+	const auto* Animation = Character.GetCharacterAnimationComponent();
+	const auto* Movement = Character.GetCharacterMovement();
+	const UAnimSequence* Sequence = Instance.CachedSecondJumpPose;
+	const USkeletalMesh* SkeletalMesh = Mesh.GetSkeletalMeshAsset();
+	const float Age = Animation ? Animation->GetSecondJumpPresentationAge() : -1.0f;
+	if (!Character.IsThirdPersonGameplayActive() || Character.IsDodging() || !Movement || !Movement->IsFalling()
+		|| !Sequence || !SkeletalMesh || Sequence->GetSkeleton() != SkeletalMesh->GetSkeleton()
+		|| Sequence->HasRootMotion() || Sequence->IsValidAdditive()
+		|| !FMath::IsFinite(Age) || Age < 0.0f || Age >= Sequence->GetPlayLength())
+	{
+		SecondJumpAge = -1.0f;
+		SecondJumpInterruptionWeight = 1.0f;
+		return;
+	}
+
+	const auto* Combat = Character.GetCombatComponent();
+	const bool bAttack = Instance.IsAnyMontagePlaying() || (Combat && Combat->IsWeaponChangeBlocked());
+	if (SecondJumpAge < 0.0f || Age < SecondJumpAge)
+	{
+		SecondJumpInterruptionWeight = bAttack ? 0.0f : 1.0f;
+	}
+	else if (bAttack || SecondJumpInterruptionWeight < 1.0f)
+	{
+		// Yield a pulse already in progress over three 60 Hz frames. Do not resume
+		// that pulse if the attack ends before its short authored window expires.
+		SecondJumpInterruptionWeight = FMath::Max(0.0f,
+			SecondJumpInterruptionWeight - 20.0f * FMath::Clamp(DeltaSeconds, 0.0f, 0.05f));
+	}
+	SecondJumpAge = Age;
+	if (SecondJumpInterruptionWeight > UE_SMALL_NUMBER) { SecondJumpSequence = Sequence; }
+}
+
+void FRogue10mViewAlignedUpperBodyProxy::ApplySecondJumpPose(FPoseContext& Output)
+{
+	const FBoneContainer& Bones = Output.Pose.GetBoneContainer();
+	if (!bBoneCacheValid || BoneCacheSerial != Bones.GetSerialNumber()) { RebuildBoneCache(Bones); }
+
+	FPoseContext Neutral(Output);
+	Neutral.ResetToRefPose();
+	FAnimationPoseData NeutralData(Neutral);
+	SecondJumpSequence->GetAnimationPose(NeutralData, FAnimExtractContext(0.0, false));
+	FPoseContext Authored(Output);
+	Authored.ResetToRefPose();
+	FAnimationPoseData AuthoredData(Authored);
+	SecondJumpSequence->GetAnimationPose(AuthoredData, FAnimExtractContext(SecondJumpAge, false));
+
+	// Transfer only local leg rotations relative to the clip's first frame.
+	// The live fall graph owns the pelvis, root, timing and the upper body.
+	for (const FCompactPoseBoneIndex Bone : { Thigh[0], Thigh[1], Calf[0], Calf[1], Foot[0], Foot[1], Ball[0], Ball[1] })
+	{
+		if (!Output.Pose.IsValidIndex(Bone) || Neutral.Pose[Bone].ContainsNaN() || Authored.Pose[Bone].ContainsNaN()) { continue; }
+		const FQuat Delta = (Neutral.Pose[Bone].GetRotation().Inverse() * Authored.Pose[Bone].GetRotation()).GetNormalized();
+		const FQuat Applied = FQuat::Slerp(FQuat::Identity, Delta, SecondJumpInterruptionWeight);
+		if (Applied.AngularDistance(FQuat::Identity) <= UE_KINDA_SMALL_NUMBER) { continue; }
+		Output.Pose[Bone].SetRotation((Output.Pose[Bone].GetRotation() * Applied).GetNormalized());
+		bSecondJumpPoseEvaluated = true;
+	}
 }
 
 bool FRogue10mViewAlignedUpperBodyProxy::ApplyAuthoredRoll(FPoseContext& Output)

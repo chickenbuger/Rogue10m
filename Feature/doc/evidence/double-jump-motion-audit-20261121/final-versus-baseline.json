@@ -1,0 +1,224 @@
+{
+  "pose_rows": 2926,
+  "state_rows": 209,
+  "max_trajectory_error_cm": 0,
+  "applied_second_jump_frames": [
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54
+  ],
+  "air_graph_mismatches": [],
+  "pose_peaks": {
+    "source": {
+      "pre_takeoff_ground_idle_pelvis": {
+        "max_delta_cm": 0.26093104865462446,
+        "max_delta_degrees": 0.7239793050524352,
+        "max_angle_step_degrees": 0.4747,
+        "max_position_step_cm": 0.58746,
+        "max_delta_bone": "pelvis",
+        "max_delta_frame": 1
+      },
+      "pre_takeoff_ground_idle": {
+        "max_delta_cm": 0.398555675170985,
+        "max_delta_degrees": 0.8693119857869839,
+        "max_angle_step_degrees": 1.417175,
+        "max_position_step_cm": 0.657128,
+        "max_delta_bone": "calf_r",
+        "max_delta_frame": 1
+      },
+      "initial_takeoff_blend_from_unsynchronized_idle_pelvis": {
+        "max_delta_cm": 0.21686089553904817,
+        "max_delta_degrees": 0.2716464771557766,
+        "max_angle_step_degrees": 7.051938,
+        "max_position_step_cm": 4.105051,
+        "max_delta_bone": "pelvis",
+        "max_delta_frame": 9
+      },
+      "initial_takeoff_blend_from_unsynchronized_idle": {
+        "max_delta_cm": 0.28976236805009825,
+        "max_delta_degrees": 0.6748676262321456,
+        "max_angle_step_degrees": 12.105652,
+        "max_position_step_cm": 12.156767,
+        "max_delta_bone": "calf_r",
+        "max_delta_frame": 9
+      },
+      "first_jump_air_pelvis": {
+        "max_delta_cm": 9.999999974752427e-07,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 7.050272,
+        "max_position_step_cm": 4.124558,
+        "max_delta_bone": "pelvis",
+        "max_delta_frame": 18
+      },
+      "first_jump_air": {
+        "max_delta_cm": 1.0000000116860974e-06,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 12.026492,
+        "max_position_step_cm": 12.162555,
+        "max_delta_bone": "foot_r",
+        "max_delta_frame": 17
+      },
+      "single_landing_pelvis": {
+        "max_delta_cm": 0,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 6.333268,
+        "max_position_step_cm": 7.449641
+      },
+      "single_landing": {
+        "max_delta_cm": 0,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 15.46079,
+        "max_position_step_cm": 7.916526
+      },
+      "after_pose_fades_pelvis": {
+        "max_delta_cm": 0,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 0.694035,
+        "max_position_step_cm": 0.623167
+      },
+      "after_pose_fades": {
+        "max_delta_cm": 0,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 3.510977,
+        "max_position_step_cm": 2.157549
+      },
+      "applied_second_pose_pelvis": {
+        "max_delta_cm": 0,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 0.870516,
+        "max_position_step_cm": 0.693711
+      },
+      "applied_second_pose": {
+        "max_delta_cm": 19.578195578172267,
+        "max_delta_degrees": 24.88648107771439,
+        "max_angle_step_degrees": 9.980894,
+        "max_position_step_cm": 9.864616,
+        "max_delta_bone": "foot_l",
+        "max_delta_frame": 47
+      },
+      "double_landing_pelvis": {
+        "max_delta_cm": 0,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 6.880376,
+        "max_position_step_cm": 7.844868
+      },
+      "double_landing": {
+        "max_delta_cm": 0,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 18.104899,
+        "max_position_step_cm": 8.356633
+      }
+    },
+    "visible": {
+      "pre_takeoff_ground_idle_pelvis": {
+        "max_delta_cm": 0.28080049825454956,
+        "max_delta_degrees": 0.723944945466889,
+        "max_angle_step_degrees": 0.4747,
+        "max_position_step_cm": 0.632193,
+        "max_delta_bone": "pelvis",
+        "max_delta_frame": 1
+      },
+      "pre_takeoff_ground_idle": {
+        "max_delta_cm": 0.4747813866496897,
+        "max_delta_degrees": 0.7985627794267881,
+        "max_angle_step_degrees": 1.417175,
+        "max_position_step_cm": 0.711215,
+        "max_delta_bone": "calf_r",
+        "max_delta_frame": 1
+      },
+      "initial_takeoff_blend_from_unsynchronized_idle_pelvis": {
+        "max_delta_cm": 0.2333746174929959,
+        "max_delta_degrees": 0.27174944372173226,
+        "max_angle_step_degrees": 7.051938,
+        "max_position_step_cm": 4.417637,
+        "max_delta_bone": "pelvis",
+        "max_delta_frame": 9
+      },
+      "initial_takeoff_blend_from_unsynchronized_idle": {
+        "max_delta_cm": 0.34345956652566934,
+        "max_delta_degrees": 0.6131651035596873,
+        "max_angle_step_degrees": 12.108491,
+        "max_position_step_cm": 13.65466,
+        "max_delta_bone": "calf_r",
+        "max_delta_frame": 9
+      },
+      "first_jump_air_pelvis": {
+        "max_delta_cm": 9.999999974752427e-07,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 7.050272,
+        "max_position_step_cm": 4.438628,
+        "max_delta_bone": "pelvis",
+        "max_delta_frame": 25
+      },
+      "first_jump_air": {
+        "max_delta_cm": 1.0000000010279564e-06,
+        "max_delta_degrees": 8.372207287059234e-05,
+        "max_angle_step_degrees": 12.098907,
+        "max_position_step_cm": 13.652353,
+        "max_delta_bone": "calf_l",
+        "max_delta_frame": 21
+      },
+      "single_landing_pelvis": {
+        "max_delta_cm": 0,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 6.333268,
+        "max_position_step_cm": 8.016906
+      },
+      "single_landing": {
+        "max_delta_cm": 0,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 15.531193,
+        "max_position_step_cm": 8.579064
+      },
+      "after_pose_fades_pelvis": {
+        "max_delta_cm": 0,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 0.694035,
+        "max_position_step_cm": 0.670619
+      },
+      "after_pose_fades": {
+        "max_delta_cm": 0,
+        "max_delta_degrees": 3.4150945850063755e-06,
+        "max_angle_step_degrees": 3.570241,
+        "max_position_step_cm": 2.291488
+      },
+      "applied_second_pose_pelvis": {
+        "max_delta_cm": 0,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 0.870516,
+        "max_position_step_cm": 0.746535
+      },
+      "applied_second_pose": {
+        "max_delta_cm": 19.54269133901498,
+        "max_delta_degrees": 24.444570792775025,
+        "max_angle_step_degrees": 9.771806,
+        "max_position_step_cm": 10.121497,
+        "max_delta_bone": "foot_l",
+        "max_delta_frame": 47
+      },
+      "double_landing_pelvis": {
+        "max_delta_cm": 0,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 6.880376,
+        "max_position_step_cm": 8.442227
+      },
+      "double_landing": {
+        "max_delta_cm": 0,
+        "max_delta_degrees": 2.4148365394514667e-06,
+        "max_angle_step_degrees": 17.568684,
+        "max_position_step_cm": 9.390035
+      }
+    }
+  }
+}

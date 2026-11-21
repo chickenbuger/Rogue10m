@@ -1,0 +1,223 @@
+{
+  "frames": {
+    "single_space": {
+      "takeoff": 9,
+      "landing": 60,
+      "total": 84
+    },
+    "double_space": {
+      "takeoff": 9,
+      "landing": 101,
+      "total": 125
+    }
+  },
+  "boost_frame": 40,
+  "pose_rows": 2926,
+  "state_rows": 209,
+  "states_around_boost": {
+    "single_space": [
+      {
+        "frame": "39",
+        "jump_count": "1",
+        "movement_mode": "3",
+        "falling": "1",
+        "velocity_z": "-86.333359",
+        "actor_z": "2088.497240",
+        "source_class": "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed.ABP_Common_Unarmed_C",
+        "visible_class": "/Game/Character/Customization/Retargeting/ABP_Retarget_Hu_M.ABP_Retarget_Hu_M_C",
+        "source_graph": "ABP_Common_Unarmed_C:Main States:Fall Loop:0.016667:/Game/Characters/Mannequins/Anims/Unarmed/Jump/MM_Fall_Loop.MM_Fall_Loop:0.016667|ABP_Common_Unarmed_C:Locomotion:Idle:16.716583:None:0.000000",
+        "visible_graph": "",
+        "source_montage": "None"
+      },
+      {
+        "frame": "40",
+        "jump_count": "1",
+        "movement_mode": "3",
+        "falling": "1",
+        "velocity_z": "-102.666695",
+        "actor_z": "2086.922240",
+        "source_class": "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed.ABP_Common_Unarmed_C",
+        "visible_class": "/Game/Character/Customization/Retargeting/ABP_Retarget_Hu_M.ABP_Retarget_Hu_M_C",
+        "source_graph": "ABP_Common_Unarmed_C:Main States:Fall Loop:0.033333:/Game/Characters/Mannequins/Anims/Unarmed/Jump/MM_Fall_Loop.MM_Fall_Loop:0.033333|ABP_Common_Unarmed_C:Locomotion:Idle:16.716583:None:0.000000",
+        "visible_graph": "",
+        "source_montage": "None"
+      },
+      {
+        "frame": "41",
+        "jump_count": "1",
+        "movement_mode": "3",
+        "falling": "1",
+        "velocity_z": "-119.000031",
+        "actor_z": "2085.075017",
+        "source_class": "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed.ABP_Common_Unarmed_C",
+        "visible_class": "/Game/Character/Customization/Retargeting/ABP_Retarget_Hu_M.ABP_Retarget_Hu_M_C",
+        "source_graph": "ABP_Common_Unarmed_C:Main States:Fall Loop:0.050000:/Game/Characters/Mannequins/Anims/Unarmed/Jump/MM_Fall_Loop.MM_Fall_Loop:0.050000|ABP_Common_Unarmed_C:Locomotion:Idle:16.716583:None:0.000000",
+        "visible_graph": "",
+        "source_montage": "None"
+      },
+      {
+        "frame": "46",
+        "jump_count": "1",
+        "movement_mode": "3",
+        "falling": "1",
+        "velocity_z": "-200.666702",
+        "actor_z": "2071.755569",
+        "source_class": "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed.ABP_Common_Unarmed_C",
+        "visible_class": "/Game/Character/Customization/Retargeting/ABP_Retarget_Hu_M.ABP_Retarget_Hu_M_C",
+        "source_graph": "ABP_Common_Unarmed_C:Main States:Fall Loop:0.133333:/Game/Characters/Mannequins/Anims/Unarmed/Jump/MM_Fall_Loop.MM_Fall_Loop:0.133333|ABP_Common_Unarmed_C:Locomotion:Idle:16.716583:None:0.000000",
+        "visible_graph": "",
+        "source_montage": "None"
+      },
+      {
+        "frame": "52",
+        "jump_count": "1",
+        "movement_mode": "3",
+        "falling": "1",
+        "velocity_z": "-298.666718",
+        "actor_z": "2046.788898",
+        "source_class": "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed.ABP_Common_Unarmed_C",
+        "visible_class": "/Game/Character/Customization/Retargeting/ABP_Retarget_Hu_M.ABP_Retarget_Hu_M_C",
+        "source_graph": "ABP_Common_Unarmed_C:Main States:Fall Loop:0.233333:/Game/Characters/Mannequins/Anims/Unarmed/Jump/MM_Fall_Loop.MM_Fall_Loop:0.233333|ABP_Common_Unarmed_C:Locomotion:Idle:16.716583:None:0.000000",
+        "visible_graph": "",
+        "source_montage": "None"
+      }
+    ],
+    "double_space": [
+      {
+        "frame": "39",
+        "jump_count": "1",
+        "movement_mode": "3",
+        "falling": "1",
+        "velocity_z": "-86.333359",
+        "actor_z": "2088.497241",
+        "source_class": "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed.ABP_Common_Unarmed_C",
+        "visible_class": "/Game/Character/Customization/Retargeting/ABP_Retarget_Hu_M.ABP_Retarget_Hu_M_C",
+        "source_graph": "ABP_Common_Unarmed_C:Main States:Fall Loop:0.016667:/Game/Characters/Mannequins/Anims/Unarmed/Jump/MM_Fall_Loop.MM_Fall_Loop:0.016667|ABP_Common_Unarmed_C:Locomotion:Idle:0.250000:/Game/Characters/Mannequins/Anims/Unarmed/MM_Idle.MM_Idle:0.250000",
+        "visible_graph": "",
+        "source_montage": "None"
+      },
+      {
+        "frame": "40",
+        "jump_count": "2",
+        "movement_mode": "3",
+        "falling": "1",
+        "velocity_z": "403.666656",
+        "actor_z": "2095.361130",
+        "source_class": "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed.ABP_Common_Unarmed_C",
+        "visible_class": "/Game/Character/Customization/Retargeting/ABP_Retarget_Hu_M.ABP_Retarget_Hu_M_C",
+        "source_graph": "ABP_Common_Unarmed_C:Main States:Fall Loop:0.033333:/Game/Characters/Mannequins/Anims/Unarmed/Jump/MM_Fall_Loop.MM_Fall_Loop:0.033333|ABP_Common_Unarmed_C:Locomotion:Idle:0.250000:/Game/Characters/Mannequins/Anims/Unarmed/MM_Idle.MM_Idle:0.250000",
+        "visible_graph": "",
+        "source_montage": "None"
+      },
+      {
+        "frame": "41",
+        "jump_count": "2",
+        "movement_mode": "3",
+        "falling": "1",
+        "velocity_z": "387.333344",
+        "actor_z": "2101.952797",
+        "source_class": "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed.ABP_Common_Unarmed_C",
+        "visible_class": "/Game/Character/Customization/Retargeting/ABP_Retarget_Hu_M.ABP_Retarget_Hu_M_C",
+        "source_graph": "ABP_Common_Unarmed_C:Main States:Fall Loop:0.050000:/Game/Characters/Mannequins/Anims/Unarmed/Jump/MM_Fall_Loop.MM_Fall_Loop:0.050000|ABP_Common_Unarmed_C:Locomotion:Idle:0.250000:/Game/Characters/Mannequins/Anims/Unarmed/MM_Idle.MM_Idle:0.250000",
+        "visible_graph": "",
+        "source_montage": "None"
+      },
+      {
+        "frame": "46",
+        "jump_count": "2",
+        "movement_mode": "3",
+        "falling": "1",
+        "velocity_z": "305.666656",
+        "actor_z": "2130.827799",
+        "source_class": "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed.ABP_Common_Unarmed_C",
+        "visible_class": "/Game/Character/Customization/Retargeting/ABP_Retarget_Hu_M.ABP_Retarget_Hu_M_C",
+        "source_graph": "ABP_Common_Unarmed_C:Main States:Fall Loop:0.133333:/Game/Characters/Mannequins/Anims/Unarmed/Jump/MM_Fall_Loop.MM_Fall_Loop:0.133333|ABP_Common_Unarmed_C:Locomotion:Idle:0.250000:/Game/Characters/Mannequins/Anims/Unarmed/MM_Idle.MM_Idle:0.250000",
+        "visible_graph": "",
+        "source_montage": "None"
+      },
+      {
+        "frame": "52",
+        "jump_count": "2",
+        "movement_mode": "3",
+        "falling": "1",
+        "velocity_z": "207.666656",
+        "actor_z": "2156.494466",
+        "source_class": "/Game/Rogue10m/Animation/Common/ABP_Common_Unarmed.ABP_Common_Unarmed_C",
+        "visible_class": "/Game/Character/Customization/Retargeting/ABP_Retarget_Hu_M.ABP_Retarget_Hu_M_C",
+        "source_graph": "ABP_Common_Unarmed_C:Main States:Fall Loop:0.233333:/Game/Characters/Mannequins/Anims/Unarmed/Jump/MM_Fall_Loop.MM_Fall_Loop:0.233333|ABP_Common_Unarmed_C:Locomotion:Idle:0.250000:/Game/Characters/Mannequins/Anims/Unarmed/MM_Idle.MM_Idle:0.250000",
+        "visible_graph": "",
+        "source_montage": "None"
+      }
+    ]
+  },
+  "mesh_pose_comparison": {
+    "source": {
+      "boost_frame_max_position_step": {
+        "frame": 40,
+        "bone": "foot_l",
+        "boost_position_step_cm": 2.157549,
+        "boost_angle_step_deg": 1.364418,
+        "cm": 0.0,
+        "deg": 0.0
+      },
+      "boost_frame_max_angular_step": {
+        "frame": 40,
+        "bone": "foot_r",
+        "boost_position_step_cm": 2.003575,
+        "boost_angle_step_deg": 3.510977,
+        "cm": 0.0,
+        "deg": 0.0
+      },
+      "window_max_control_delta_cm": {
+        "frame": 40,
+        "bone": "pelvis",
+        "boost_position_step_cm": 0.623167,
+        "boost_angle_step_deg": 0.694035,
+        "cm": 0.0,
+        "deg": 1.7075472925031877e-06
+      },
+      "window_max_control_delta_deg": {
+        "frame": 41,
+        "bone": "foot_r",
+        "boost_position_step_cm": 1.965644,
+        "boost_angle_step_deg": 3.876342,
+        "cm": 0.0,
+        "deg": 2.4148365394514667e-06
+      }
+    },
+    "visible": {
+      "boost_frame_max_position_step": {
+        "frame": 40,
+        "bone": "foot_l",
+        "boost_position_step_cm": 2.291488,
+        "boost_angle_step_deg": 1.462363,
+        "cm": 0.0,
+        "deg": 0.0
+      },
+      "boost_frame_max_angular_step": {
+        "frame": 40,
+        "bone": "foot_r",
+        "boost_position_step_cm": 2.088909,
+        "boost_angle_step_deg": 3.570241,
+        "cm": 0.0,
+        "deg": 0.0
+      },
+      "window_max_control_delta_cm": {
+        "frame": 40,
+        "bone": "pelvis",
+        "boost_position_step_cm": 0.670619,
+        "boost_angle_step_deg": 0.694035,
+        "cm": 0.0,
+        "deg": 0.0
+      },
+      "window_max_control_delta_deg": {
+        "frame": 40,
+        "bone": "thigh_r",
+        "boost_position_step_cm": 0.770377,
+        "boost_angle_step_deg": 1.873121,
+        "cm": 0.0,
+        "deg": 2.4148365394514667e-06
+      }
+    }
+  }
+}

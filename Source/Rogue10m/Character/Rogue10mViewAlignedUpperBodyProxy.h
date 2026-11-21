@@ -9,6 +9,7 @@ struct FBoneContainer;
 struct FCompactPose;
 class ARogue10mCharacter;
 class UAnimSequence;
+class USkeletalMeshComponent;
 class URogue10mFighterCombatStanceAnimInstance;
 
 class FRogue10mViewAlignedUpperBodyProxy final : public FAnimInstanceProxy
@@ -31,6 +32,9 @@ private:
 	void ApplyRollPose(FCompactPose& Pose);
 	void CaptureCapstoneBrace(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
 	void ApplyCapstoneBrace(FPoseContext& Output);
+	void ApplySecondJumpPose(FPoseContext& Output);
+	void CaptureSecondJumpPose(const ARogue10mCharacter& Character, const URogue10mFighterCombatStanceAnimInstance& Instance,
+		const USkeletalMeshComponent& Mesh, float DeltaSeconds);
 	void CaptureHeadMotionSettings(const ARogue10mCharacter* Character, float DeltaSeconds);
 	void CaptureWeightedHandMotion(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
 
@@ -69,6 +73,9 @@ private:
 	float RollYawRadians = 0.0f;
 	FVector RollRight = FVector::RightVector;
 	FVector RollUp = FVector::UpVector;
+	const UAnimSequence* SecondJumpSequence = nullptr;
+	float SecondJumpAge = -1.0f;
+	float SecondJumpInterruptionWeight = 1.0f;
 	uint16 BoneCacheSerial = 0;
 	bool bBoneCacheValid = false;
 	bool bApplyAim = false;
@@ -80,11 +87,14 @@ private:
 	bool bMouseHeadEvaluated = false;
 	bool bApplyRollPose = false;
 	bool bLearnedRollPoseEvaluated = false;
+	bool bSecondJumpPoseEvaluated = false;
 	FCompactPoseBoneIndex Pelvis = FCompactPoseBoneIndex(INDEX_NONE);
 	FCompactPoseBoneIndex Clavicle[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
 	FCompactPoseBoneIndex Forearm[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
 	FCompactPoseBoneIndex Thigh[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
 	FCompactPoseBoneIndex Calf[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
+	FCompactPoseBoneIndex Foot[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
+	FCompactPoseBoneIndex Ball[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
 	FCompactPoseBoneIndex Spine[3] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
 	FCompactPoseBoneIndex UpperArm[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
 	FCompactPoseBoneIndex Neck = FCompactPoseBoneIndex(INDEX_NONE);

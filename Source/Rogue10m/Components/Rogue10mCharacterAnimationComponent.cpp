@@ -97,9 +97,11 @@ void URogue10mCharacterAnimationComponent::SetMovementState(
 
 void URogue10mCharacterAnimationComponent::NotifyJump(int32 JumpCount)
 {
+	SecondJumpPresentationStartedAt = -1.0;
 	if (UWorld* World = GetWorld())
 	{
 		World->GetTimerManager().ClearTimer(FootstepTimerHandle);
+		if (JumpCount == 2) { SecondJumpPresentationStartedAt = World->GetTimeSeconds(); }
 	}
 
 	const URogue10mCharacterMotionDataAsset* Data = GetMotionData();
@@ -113,8 +115,16 @@ void URogue10mCharacterAnimationComponent::NotifyJump(int32 JumpCount)
 	}
 }
 
+float URogue10mCharacterAnimationComponent::GetSecondJumpPresentationAge() const
+{
+	const UWorld* World = GetWorld();
+	return World && SecondJumpPresentationStartedAt >= 0.0
+		? static_cast<float>(World->GetTimeSeconds() - SecondJumpPresentationStartedAt) : -1.0f;
+}
+
 void URogue10mCharacterAnimationComponent::NotifyLanded()
 {
+	SecondJumpPresentationStartedAt = -1.0;
 	const URogue10mCharacterMotionDataAsset* Data = GetMotionData();
 	if (Data)
 	{
