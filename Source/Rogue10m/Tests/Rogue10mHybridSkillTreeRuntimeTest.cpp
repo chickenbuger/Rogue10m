@@ -1,4 +1,6 @@
 #if WITH_EDITOR
+#include "Animation/AnimInstance.h"
+#include "Animation/AnimMontage.h"
 #include "Animation/AnimSequence.h"
 #include "Blueprint/WidgetTree.h"
 #include "Camera/CameraActor.h"
@@ -93,6 +95,7 @@ public:
 		bCommonQA = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridCommonQA"));
 		bCommonPresentationQA = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridCommonPresentationQA"));
 		bRollOnlyQA = FParse::Param(FCommandLine::Get(), TEXT("RogueHybridRollQA"));
+		bAerialMotionQA = FParse::Value(FCommandLine::Get(), TEXT("RogueAerialSkillJumpCount="), AerialJumpCount);
 		if (!SafeFlag(TEXT("RogueProfileSaveSlot="), TEXT("Rogue10m_Town_QA_"))
 			|| !SafeFlag(TEXT("RogueProgressionSavePrefix="), TEXT("Rogue10m_Progression_QA_"))
 			|| !SafeFlag(TEXT("RogueSkillKeySaveSlot="), TEXT("Rogue10m_Fighter_QA_")))
@@ -126,7 +129,11 @@ public:
 			}
 		}
 		IFileManager::Get().MakeDirectory(*Output, true);
-		Later(bRollOnlyQA ? 0.15 : 3.0, [this] { Prepare(); });
+		if (bAerialMotionQA && (AerialJumpCount < 1 || AerialJumpCount > 2 || bRead || bInputQA || bCommonQA || bCommonPresentationQA || bRollOnlyQA))
+		{
+			Check(false, TEXT("aerial_requires_independent_one_or_two_space_fixture")); Finish(); return;
+		}
+		Later(bRollOnlyQA || bAerialMotionQA ? 0.15 : 3.0, [this] { Prepare(); });
 		FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self = AsShared()](float)
 		{
 			if (Self->Done) { return false; }
@@ -142,7 +149,7 @@ private:
 		UE_LOG(LogRogue10m, Display, TEXT("HYBRID_%s %s %s"), bRead ? TEXT("READ") : TEXT("RUNTIME"), Passed ? TEXT("PASS") : TEXT("FAIL"), Message);
 		if (!Passed) { ++Failures; }
 	}
-	double FixtureTime() const { return bRollOnlyQA ? World->GetTimeSeconds() : FPlatformTime::Seconds(); }
+	double FixtureTime() const { return bRollOnlyQA || bAerialMotionQA ? World->GetTimeSeconds() : FPlatformTime::Seconds(); }
 	void Later(double Seconds, TFunction<void()> F) { NextTime = FixtureTime() + Seconds; Next = MoveTemp(F); }
 	bool HitPath(const TSharedPtr<SWidget>& Target, FWidgetPath& OutPath, FVector2D& Point,
 		const FVector2D& NormalizedPoint = FVector2D(0.5, 0.5))
@@ -529,15 +536,233 @@ private:
 		Check(PC.IsValid() && Profiles && Profiles->GetProfileCount() == 0, TEXT("fresh_isolated_profile"));
 		if (Failures) { Finish(); return; }
 		FRogue10mCharacterProfile Profile;
-		Check(Profiles->CreateProfile(TEXT("HybridTreeQa"), FRogue10mCharacterAppearance(), Profile)
+		FRogue10mCharacterAppearance Appearance;
+		if (bAerialMotionQA && FParse::Param(FCommandLine::Get(), TEXT("RogueAerialOrcFemale")))
+		{
+			Appearance.Race = ERogue10mCharacterRace::Orc;
+			Appearance.Gender = ERogue10mCharacterGender::Female;
+		}
+		Check(Profiles->CreateProfile(TEXT("HybridTreeQa"), Appearance, Profile)
 			&& Profiles->SelectProfile(Profile.ProfileId), TEXT("new_profile_created"));
 		PC->EnterSelectedCharacter(); PC->CloseAllBlockingPanels();
-		Later(bRollOnlyQA ? 0.22 : 0.6, [this]
+		Later(bRollOnlyQA || bAerialMotionQA ? 0.22 : 0.6, [this]
 		{
-			if (bRollOnlyQA) { PrepareRollOnlyFixture(); }
+			if (bAerialMotionQA) { PrepareAerialMotion(); }
+			else if (bRollOnlyQA) { PrepareRollOnlyFixture(); }
 			else { PrepareKnuckleFixture(); }
 		});
 	}
+	void PrepareAerialMotion()
+	{
+		Player = Cast<ARogue10mCharacter>(PC->GetPawn());
+		State = Player.IsValid() ? Player->GetPlayerState<ARogue10mPlayerState>() : nullptr;
+		Tree = State.IsValid() ? State->GetSkillTreeProgressionComponent() : nullptr;
+		TActorIterator<ARogue10mTutorialNPC> Guide(World.Get());
+		Check(Player.IsValid() && Tree.IsValid() && Guide, TEXT("aerial_player_tree_and_town_guide_exist"));
+		if (Failures) { Finish(); return; }
+
+		auto* Inventory = Player->GetInventoryComponent();
+		auto* Item = LoadObject<URogue10mItemDataAsset>(nullptr,
+			TEXT("/Game/DataAsset/Item/Starter/DA_Item_StarterKnuckle.DA_Item_StarterKnuckle"));
+		int32 Grid = INDEX_NONE;
+		FGuid Instance;
+		Check(Inventory && Item && Inventory->TryAddGridItem(Item, 1, Grid, Instance)
+			&& Inventory->TryEquipGridItem(Grid, Instance) && Player->GetEquippedWeaponType() == ERogue10mWeaponType::Knuckle,
+			TEXT("aerial_equips_real_starter_knuckle_through_inventory"));
+
+		Player->SetActorLocation(Guide->GetActorLocation() + FVector(100.0, 0.0, 100.0), false, nullptr, ETeleportType::TeleportPhysics);
+		State->AddExperience(500);
+		Check(Tree->CanChangeInvestments() && Tree->TryUnlockNode(TEXT("C.AirControl"), ERoute::Points, NAME_None)
+			&& Tree->TryUnlockNode(TEXT("C.DoubleJump"), ERoute::Points, NAME_None) && Player->JumpMaxCount == 2,
+			TEXT("aerial_learns_two_real_jumps_from_common_tree"));
+		auto Snapshot = Tree->Capture();
+		auto* Mastery = Snapshot.Masteries.FindByPredicate([](const auto& Record) { return Record.Track == ETrack::Brawler; });
+		if (!Mastery) { Mastery = &Snapshot.Masteries.AddDefaulted_GetRef(); }
+		Mastery->Track = ETrack::Brawler;
+		Mastery->TotalExperience = 1045;
+		Check(Tree->Restore(Snapshot) && Tree->GetMasteryLevel(ETrack::Brawler) >= 15 && Player->JumpMaxCount == 2,
+			TEXT("aerial_restores_valid_knuckle_mastery_with_common_nodes"));
+		const auto* Entry = Tree->FindNode(TEXT("F.MountainSlam"));
+		AerialSkill = Entry ? Entry->Skill.LoadSynchronous() : nullptr;
+		auto* Combat = Player->GetCombatComponent();
+		auto* Keys = PC->FindComponentByClass<URogue10mSkillBindingComponent>();
+		FText Reason;
+		Check(AerialSkill.IsValid() && Tree->IsSkillGranted(AerialSkill.Get()) && Combat->IsAttackSkillUnlocked(AerialSkill.Get())
+			&& Keys && Keys->SetSkillKey(AerialSkill.Get(), EKeys::Q, Reason) && Keys->GetSkillKey(AerialSkill.Get()) == EKeys::Q,
+			TEXT("aerial_learned_mountain_slam_bound_to_real_q"));
+		if (!Reason.IsEmpty()) { Report += Reason.ToString() + TEXT("\n"); }
+		if (Failures) { Finish(); return; }
+
+		Report += FString::Printf(TEXT("aerial_skill=%s slot=%d montage=%s configured_damage_delay=%.6f\n"), *AerialSkill->GetPathName(),
+			static_cast<int32>(AerialSkill->InputSlot), *GetPathNameSafe(AerialSkill->AttackMontage.Get()), AerialSkill->HitStartDelaySeconds);
+		Later(0.24, [this] { BeginAerialMotion(); });
+	}
+
+	void BeginAerialMotion()
+	{
+		auto* Movement = Player->GetCharacterMovement();
+		auto* Source = Player->GetAnimationPlaybackMesh();
+		auto* Visible = Player->GetMesh();
+		Check(Movement && Movement->IsMovingOnGround(), TEXT("aerial_initially_grounded_on_starthub_floor"));
+		Check(FMath::IsNearlyEqual(World->GetDeltaSeconds(), 1.0f / 60.0f, 0.0001f), TEXT("aerial_uses_60_hz"));
+		Check(Source && Visible && Source != Visible && Source->GetAnimInstance() && Visible->GetAnimInstance(),
+			TEXT("aerial_uses_live_manny_and_visible_mesh"));
+		if (Failures) { Finish(); return; }
+
+		for (auto* Mesh : {Source, Visible})
+		{
+			Mesh->bEnableUpdateRateOptimizations = false;
+			Mesh->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+		}
+		FActorSpawnParameters Parameters;
+		Parameters.ObjectFlags |= RF_Transient;
+		Parameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		AerialTarget = World->SpawnActor<ARogue10mBasicMonster>(
+			Player->GetActorLocation() + Player->GetActorForwardVector() * 110.0, FRotator::ZeroRotator, Parameters);
+		if (AerialTarget.IsValid())
+		{
+			AerialTarget->ClearAITarget();
+			if (AController* AI = AerialTarget->GetController()) { AI->UnPossess(); }
+			AerialTarget->GetCharacterMovement()->DisableMovement();
+			if (auto* Attributes = AerialTarget->GetRogueAttributeSet())
+			{
+				Attributes->SetMaxHealth(10000.0f);
+				Attributes->SetHealth(10000.0f);
+				AerialTargetHealth = Attributes->GetHealth();
+			}
+		}
+		Check(AerialTarget.IsValid() && AerialTargetHealth > 0.0f, TEXT("aerial_stationary_target_on_actual_floor"));
+		if (Failures) { Finish(); return; }
+
+		if (FParse::Param(FCommandLine::Get(), TEXT("RogueAerialCapture"))
+			&& !FParse::Param(FCommandLine::Get(), TEXT("nullrhi")))
+		{
+			const FVector Direction = Player->GetActorForwardVector().GetSafeNormal2D();
+			const FVector Center = Player->GetActorLocation() + Direction * 45.0 + FVector::UpVector * 82.0;
+			const FVector Camera = Center + Player->GetActorRightVector() * 485.0 - Direction * 155.0 + FVector::UpVector * 70.0;
+			AerialCamera = World->SpawnActor<ACameraActor>(Camera, (Center - Camera).Rotation(), Parameters);
+			Check(AerialCamera.IsValid(), TEXT("aerial_camera_exists"));
+			if (Failures) { Finish(); return; }
+			AerialViewTarget = PC->GetViewTarget();
+			PC->SetViewTarget(AerialCamera.Get());
+		}
+		Report += FString::Printf(TEXT("aerial_manny=%s display=%s\n"), *GetPathNameSafe(Source->GetSkeletalMeshAsset()),
+			*GetPathNameSafe(Visible->GetSkeletalMeshAsset()));
+		AerialUsesBefore = State->GetSkillUseCount(AerialSkill->GetFName());
+		AerialRows = TEXT("frame,world_s,jump_count,falling,velocity_z,actor_z,skill_uses,active_montage_pos,active_montage_weight,second_jump_pose,target_health,mesh,revision,bone,x,y,z,qx,qy,qz,qw\n");
+		AerialHandle = FWorldDelegates::OnWorldPostActorTick.AddLambda([Self = AsShared()](UWorld* InWorld, ELevelTick, float)
+		{
+			if (InWorld == Self->World.Get() && !Self->Done) { Self->ObserveAerialMotion(); }
+		});
+	}
+
+	void ObserveAerialMotion()
+	{
+		if (++AerialFrame > 200) { Check(false, TEXT("aerial_case_completes_within_200_frames")); Finish(); return; }
+		const auto* Movement = Player->GetCharacterMovement();
+		const bool bFalling = Movement->IsFalling();
+		const int32 JumpCount = Player->JumpCurrentCount;
+		const int32 Uses = State->GetSkillUseCount(AerialSkill->GetFName());
+		const auto* Health = AerialTarget->GetRogueAttributeSet();
+		const float TargetHealth = Health ? Health->GetHealth() : -1.0f;
+		const auto* Source = Player->GetAnimationPlaybackMesh();
+		const auto* Visible = Player->GetMesh();
+		const auto* Anim = Cast<URogue10mFighterCombatStanceAnimInstance>(Source->GetAnimInstance());
+		const auto* Montage = Anim && AerialSkill->AttackMontage
+			? Anim->GetActiveInstanceForMontage(AerialSkill->AttackMontage.Get()) : nullptr;
+		if (AerialFrame == 1)
+		{
+			if (AerialCamera.IsValid()) { Shot(TEXT("aerial-ready.png")); }
+			GameKey(EKeys::Q, true);
+		}
+		if (AerialFrame == 3) { GameKey(EKeys::Q, false); }
+		if (AerialFrame == 10)
+		{
+			Check(Uses == AerialUsesBefore && !bFalling, TEXT("aerial_q_on_ground_rejected_and_player_grounded"));
+			GameKey(EKeys::SpaceBar, true);
+		}
+		if (!AerialFirstJumpFrame && JumpCount == 1 && bFalling)
+		{
+			AerialFirstJumpFrame = AerialFrame;
+			GameKey(EKeys::SpaceBar, false);
+		}
+		if (AerialJumpCount == 2 && AerialFirstJumpFrame && AerialFrame == AerialFirstJumpFrame + 12)
+		{
+			GameKey(EKeys::SpaceBar, true);
+		}
+		if (!AerialSecondJumpFrame && JumpCount == 2)
+		{
+			AerialSecondJumpFrame = AerialFrame;
+			GameKey(EKeys::SpaceBar, false);
+		}
+		const int32 LaunchFrame = AerialJumpCount == 2 ? AerialSecondJumpFrame : AerialFirstJumpFrame;
+		if (LaunchFrame && AerialFrame == LaunchFrame + 5)
+		{
+			Check(bFalling && JumpCount == AerialJumpCount, TEXT("aerial_q_begins_after_requested_actual_space_count"));
+			AerialQFrame = AerialFrame;
+			GameKey(EKeys::Q, true);
+		}
+		if (AerialQFrame && AerialFrame == AerialQFrame + 2) { GameKey(EKeys::Q, false); }
+		if (Uses == AerialUsesBefore + 1 && !AerialAcceptedFrame)
+		{
+			AerialAcceptedFrame = AerialFrame;
+			Check(bFalling && JumpCount == AerialJumpCount
+				&& Player->GetCombatComponent()->GetLastAcceptedAttackSkill() == AerialSkill.Get(),
+				TEXT("aerial_exact_mountain_slam_accepted_after_actual_jump"));
+		}
+		if (Montage)
+		{
+			++AerialMontageSamples;
+			if (!AerialFirstMontageFrame) { AerialFirstMontageFrame = AerialFrame; }
+		}
+		if (!AerialDamageFrame && TargetHealth >= 0.0f && TargetHealth < AerialTargetHealth)
+		{
+			AerialDamageFrame = AerialFrame;
+			if (AerialCamera.IsValid()) { Shot(TEXT("aerial-first-damage.png")); }
+		}
+		if (AerialCamera.IsValid() && AerialAcceptedFrame && AerialFrame == AerialAcceptedFrame + 10)
+		{
+			Shot(TEXT("aerial-downstroke.png"));
+		}
+		if (!AerialLandFrame && AerialFirstJumpFrame && !bFalling && Movement->IsMovingOnGround())
+		{
+			AerialLandFrame = AerialFrame;
+			if (AerialCamera.IsValid()) { Shot(TEXT("aerial-landing.png")); }
+		}
+
+		const FString Frame = FString::Printf(TEXT("%d,%.6f,%d,%d,%.4f,%.4f,%d,%.6f,%.6f,%d,%.3f"),
+			AerialFrame, World->GetTimeSeconds(), JumpCount, bFalling, Movement->Velocity.Z, Player->GetActorLocation().Z, Uses,
+			Montage ? Montage->GetPosition() : -1.0f, Montage ? Montage->GetWeight() : 0.0f,
+			Anim && Anim->WasSecondJumpPoseApplied(), TargetHealth);
+		static const FName Bones[] = {TEXT("pelvis"), TEXT("head"), TEXT("upperarm_l"), TEXT("upperarm_r"), TEXT("lowerarm_l"),
+			TEXT("lowerarm_r"), TEXT("hand_l"), TEXT("hand_r"), TEXT("thigh_l"), TEXT("thigh_r"), TEXT("foot_l"), TEXT("foot_r")};
+		for (const auto* Mesh : {Source, Visible})
+		{
+			const TCHAR* MeshName = Mesh == Source ? TEXT("manny") : TEXT("visible");
+			for (const FName Bone : Bones)
+			{
+				if (Mesh->GetBoneIndex(Bone) == INDEX_NONE) { bAerialSamplesValid = false; continue; }
+				const FTransform Pose = Mesh->GetBoneTransform(Bone, RTS_Component);
+				const FVector P = Pose.GetLocation();
+				const FQuat Q = Pose.GetRotation();
+				bAerialSamplesValid &= !Pose.ContainsNaN() && Q.IsNormalized();
+				AerialRows += FString::Printf(TEXT("%s,%s,%u,%s,%.4f,%.4f,%.4f,%.7f,%.7f,%.7f,%.7f\n"),
+					*Frame, MeshName, Mesh->GetBoneTransformRevisionNumber(), *Bone.ToString(), P.X, P.Y, P.Z, Q.X, Q.Y, Q.Z, Q.W);
+			}
+		}
+
+		const bool bReadyToFinish = AerialLandFrame && AerialFrame >= AerialLandFrame + 12 && !Montage;
+		const bool bNoAttack = AerialQFrame && !AerialAcceptedFrame && AerialFrame >= AerialQFrame + 36;
+		if (bReadyToFinish || bNoAttack)
+		{
+			Check(AerialAcceptedFrame && Uses == AerialUsesBefore + 1, TEXT("aerial_input_accepted_once"));
+			Check(AerialMontageSamples >= 3, TEXT("aerial_montage_evaluated_on_source"));
+			Check(AerialLandFrame && bAerialSamplesValid, TEXT("aerial_ground_recovery_and_both_meshes_sampled"));
+			Finish();
+		}
+	}
+
+
 	void PrepareRollOnlyFixture()
 	{
 		Player = Cast<ARogue10mCharacter>(PC->GetPawn());
@@ -1617,6 +1842,27 @@ private:
 		if (Done) { return; }
 		FWorldDelegates::OnWorldPostActorTick.Remove(EProbeHandle);
 		FWorldDelegates::OnWorldPostActorTick.Remove(RollMotionHandle);
+		if (AerialHandle.IsValid())
+		{
+			FWorldDelegates::OnWorldPostActorTick.Remove(AerialHandle);
+			GameKey(EKeys::SpaceBar, false);
+			GameKey(EKeys::Q, false);
+			Report += FString::Printf(TEXT("aerial_case=%d first=%d second=%d q=%d accepted=%d montage=%d montage_samples=%d first_damage=%d land=%d\n"),
+				AerialJumpCount, AerialFirstJumpFrame, AerialSecondJumpFrame, AerialQFrame, AerialAcceptedFrame, AerialFirstMontageFrame,
+				AerialMontageSamples, AerialDamageFrame, AerialLandFrame);
+			Check(FFileHelper::SaveStringToFile(AerialRows, *FPaths::Combine(Output, TEXT("aerial-frames.csv"))),
+				TEXT("aerial_pose_evidence_saved"));
+			if (AerialCamera.IsValid())
+			{
+				for (const TCHAR* Name : {TEXT("aerial-ready.png"), TEXT("aerial-first-damage.png"), TEXT("aerial-downstroke.png"), TEXT("aerial-landing.png")})
+				{
+					Check(IFileManager::Get().FileSize(*FPaths::Combine(Output, Name)) > 1024, TEXT("aerial_phase_capture_written"));
+				}
+				if (PC.IsValid() && AerialViewTarget.IsValid()) { PC->SetViewTarget(AerialViewTarget.Get()); }
+				AerialCamera->Destroy();
+			}
+			if (AerialTarget.IsValid()) { AerialTarget->Destroy(); }
+		}
 		if (PC.IsValid()) { GameKey(EKeys::E, false); }
 		if (!RollMotionRows.IsEmpty())
 		{
@@ -1685,6 +1931,26 @@ private:
 	bool bCommonQA = false;
 	bool bCommonPresentationQA = false;
 	bool bRollOnlyQA = false;
+	bool bAerialMotionQA = false;
+	bool bAerialSamplesValid = true;
+	int32 AerialJumpCount = 0;
+	int32 AerialFrame = 0;
+	int32 AerialFirstJumpFrame = 0;
+	int32 AerialSecondJumpFrame = 0;
+	int32 AerialQFrame = 0;
+	int32 AerialAcceptedFrame = 0;
+	int32 AerialFirstMontageFrame = 0;
+	int32 AerialDamageFrame = 0;
+	int32 AerialLandFrame = 0;
+	int32 AerialMontageSamples = 0;
+	int32 AerialUsesBefore = 0;
+	float AerialTargetHealth = 0.0f;
+	FDelegateHandle AerialHandle;
+	FString AerialRows;
+	TWeakObjectPtr<ACameraActor> AerialCamera;
+	TWeakObjectPtr<AActor> AerialViewTarget;
+	TWeakObjectPtr<ARogue10mBasicMonster> AerialTarget;
+	TWeakObjectPtr<URogue10mAttackSkillData> AerialSkill;
 	float CommonBaseWalkSpeed = 0.0f;
 	float CommonBaseAcceleration = 0.0f;
 	float CommonBaseAirControl = 0.0f;

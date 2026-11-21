@@ -1,0 +1,104 @@
+{
+  "1_space": {
+    "events": {
+      "aerial_case": 1,
+      "first": 11,
+      "second": 0,
+      "q": 16,
+      "accepted": 17,
+      "montage": 17,
+      "montage_samples": 79,
+      "first_damage": 17,
+      "land": 62
+    },
+    "sampled_clock_frames_match": 96,
+    "damage_frame_indices": [
+      17
+    ],
+    "pose": {
+      "manny": {
+        "baseline": {
+          "wrist_descent_100_to_200_ms_cm": -10.6019,
+          "left_foot_path_late_air_cm": 0.0,
+          "right_foot_path_late_air_cm": 0.0,
+          "left_foot_path_landing_handoff_cm": 0.0,
+          "right_foot_path_landing_handoff_cm": 0.0
+        },
+        "candidate": {
+          "wrist_descent_100_to_200_ms_cm": 12.256000000000029,
+          "left_foot_path_late_air_cm": 41.34270546766777,
+          "right_foot_path_late_air_cm": 15.527290419448269,
+          "left_foot_path_landing_handoff_cm": 43.266514002443365,
+          "right_foot_path_landing_handoff_cm": 40.132751453623776
+        }
+      },
+      "visible": {
+        "baseline": {
+          "wrist_descent_100_to_200_ms_cm": -10.445599999999999,
+          "left_foot_path_late_air_cm": 0.0,
+          "right_foot_path_late_air_cm": 0.0,
+          "left_foot_path_landing_handoff_cm": 0.0,
+          "right_foot_path_landing_handoff_cm": 0.0
+        },
+        "candidate": {
+          "wrist_descent_100_to_200_ms_cm": 12.009900000000016,
+          "left_foot_path_late_air_cm": 44.78063449256223,
+          "right_foot_path_late_air_cm": 15.044078317058839,
+          "left_foot_path_landing_handoff_cm": 45.52200789904781,
+          "right_foot_path_landing_handoff_cm": 45.31245600289494
+        }
+      }
+    }
+  },
+  "2_space": {
+    "events": {
+      "aerial_case": 2,
+      "first": 11,
+      "second": 24,
+      "q": 29,
+      "accepted": 30,
+      "montage": 30,
+      "montage_samples": 79,
+      "first_damage": 30,
+      "land": 84
+    },
+    "sampled_clock_frames_match": 109,
+    "damage_frame_indices": [
+      30
+    ],
+    "pose": {
+      "manny": {
+        "baseline": {
+          "wrist_descent_100_to_200_ms_cm": -3.61190000000002,
+          "left_foot_path_late_air_cm": 0.0,
+          "right_foot_path_late_air_cm": 0.0,
+          "left_foot_path_landing_handoff_cm": 0.0,
+          "right_foot_path_landing_handoff_cm": 0.0
+        },
+        "candidate": {
+          "wrist_descent_100_to_200_ms_cm": 11.1935,
+          "left_foot_path_late_air_cm": 4.830516356433703,
+          "right_foot_path_late_air_cm": 6.878818220573454,
+          "left_foot_path_landing_handoff_cm": 43.38593315728056,
+          "right_foot_path_landing_handoff_cm": 39.46687996620661
+        }
+      },
+      "visible": {
+        "baseline": {
+          "wrist_descent_100_to_200_ms_cm": -1.0499999999999972,
+          "left_foot_path_late_air_cm": 0.0,
+          "right_foot_path_late_air_cm": 0.0,
+          "left_foot_path_landing_handoff_cm": 0.0,
+          "right_foot_path_landing_handoff_cm": 0.0
+        },
+        "candidate": {
+          "wrist_descent_100_to_200_ms_cm": 13.681099999999972,
+          "left_foot_path_late_air_cm": 5.629292783644188,
+          "right_foot_path_late_air_cm": 6.892707462104621,
+          "left_foot_path_landing_handoff_cm": 44.92683392465486,
+          "right_foot_path_landing_handoff_cm": 44.53508354417247
+        }
+      }
+    }
+  }
+}
