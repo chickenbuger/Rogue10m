@@ -1,0 +1,26 @@
+UE 5.8 / StartHub transient flat surface / actual programmatic W and inventory / 60 Hz / NullRHI
+Final base: 96b1e21d998acfa1dbccbc25c7c0231022b1b2ba + moving weapon retarget fix
+Final moving and stationary launch errors: 0; existing test saves preserved: 80 and 82.
+
+Published equipment baseline before this correction:
+[2026.11.21-09.25.15:764][270]LogRogue10m: Display: SWORD_EQUIP_SYNC appearance=HumanMale equip=1 before_revision=31 after_revision=31 maximum_cm=0.000000 maximum_deg=0.000000
+[2026.11.21-09.25.15:804][308]LogRogue10m: Display: SWORD_EQUIP_WALK speed_cm_s=136.533340
+[2026.11.21-09.25.15:818][308]LogRogue10m: Display: SWORD_EQUIP_SYNC appearance=HumanMale equip=0 before_revision=69 after_revision=69 maximum_cm=29.251027 maximum_deg=36.041573
+[2026.11.21-09.25.15:818][308]LogRogue10m: Error: WEAPON3P FAIL skill=0 frame=68 equip_audit_pose_preserved_during_inventory_call
+[2026.11.21-09.25.15:822][309]LogRogue10m: Display: RESULT=SWORD_EQUIP_POSE_FAILED appearance=HumanMale frames=69 failures=1
+
+Final walking input and standing regression:
+SwordMovingFinal
+[2026.11.21-09.47.47:905][270]LogRogue10m: Display: SWORD_EQUIP_SYNC appearance=HumanMale equip=1 before_revision=31 after_revision=31 maximum_cm=0.000000 maximum_deg=0.000000
+[2026.11.21-09.47.47:941][308]LogRogue10m: Display: SWORD_EQUIP_WALK speed_cm_s=136.533340
+[2026.11.21-09.47.47:957][308]LogRogue10m: Display: SWORD_EQUIP_SYNC appearance=HumanMale equip=0 before_revision=69 after_revision=69 maximum_cm=0.000000 maximum_deg=0.000000
+[2026.11.21-09.47.47:985][328]LogRogue10m: Display: RESULT=SWORD_EQUIP_POSE_PASSED appearance=HumanMale frames=88 failures=0
+SwordMovingRestReg
+[2026.11.21-09.48.15:419][270]LogRogue10m: Display: SWORD_EQUIP_SYNC appearance=HumanMale equip=1 before_revision=31 after_revision=31 maximum_cm=0.000000 maximum_deg=0.000000
+[2026.11.21-09.48.15:469][308]LogRogue10m: Display: SWORD_EQUIP_SYNC appearance=HumanMale equip=0 before_revision=69 after_revision=69 maximum_cm=0.000000 maximum_deg=0.000002
+[2026.11.21-09.48.15:491][328]LogRogue10m: Display: RESULT=SWORD_EQUIP_POSE_PASSED appearance=HumanMale frames=88 failures=0
+
+Preliminary motion diagnosis. The primitive blendspace swaps but the normalized clock continues:
+[2026.11.21-09.41.12:643][308]LogRogue10m: Display: SWORD_EQUIP_GAIT frame=68 node=AnimGraphNode_BlendSpacePlayer clip=/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground weight=0.30991 time=0.044444 resets=1
+[2026.11.21-09.41.12:655][309]LogRogue10m: Display: SWORD_EQUIP_GAIT frame=69 node=AnimGraphNode_BlendSpacePlayer clip=/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference weight=0.44455 time=0.055556 resets=1
+[2026.11.21-09.41.12:656][310]LogRogue10m: Display: SWORD_EQUIP_GAIT frame=70 node=AnimGraphNode_BlendSpacePlayer clip=/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference weight=0.58299 time=0.066667 resets=1

@@ -72,6 +72,7 @@ public:
   bCapstoneBraceRun=bMeleeVfxRun&&FParse::Param(FCommandLine::Get(),TEXT("RogueCapstoneBraceQA"));
   bCapstoneBraceRender=bCapstoneBraceRun&&!bMeleeVfxLogicOnly&&FParse::Param(FCommandLine::Get(),TEXT("RogueCapstoneBraceRender"));
   bSwordEquipAudit=bMeleeVfxRun&&FParse::Value(FCommandLine::Get(),TEXT("RogueSwordEquipAppearance="),SwordEquipAppearance);
+  bSwordEquipWalking=bSwordEquipAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueSwordEquipWalking"));
   if(bMeleeVfxRun)
   {
    FString ProfileSlot,ProgressionPrefix,KeySlot;
@@ -336,7 +337,7 @@ private:
    }
   }
   Character->SetCanBeDamaged(false);
-  if(!bCapstoneBraceRun){Character->DisableInput(Controller.Get());}
+  if(!bCapstoneBraceRun&&!bSwordEquipWalking){Character->DisableInput(Controller.Get());}
   Character->GetCharacterMovement()->StopMovementImmediately();
   Character->SetActorRotation(FRotator(0,0,0));Controller->SetControlRotation(FRotator(-8,0,0));
   // The current user-requested default is third person. This fixture never toggles into first person.
@@ -909,6 +910,7 @@ private:
    }
   }
   auto* Inventory=Character->GetInventoryComponent();
+  if(bSwordEquipWalking&&Frame==64){BraceKey(EKeys::W,true);}
   if(Frame==30||Frame==68)
   {
    const bool bEquip=Frame==30;
@@ -926,6 +928,12 @@ private:
    }
    else
    {
+    if(bSwordEquipWalking)
+    {
+     const float Speed=Character->GetVelocity().Size2D();
+     UE_LOG(LogRogue10m,Display,TEXT("SWORD_EQUIP_WALK speed_cm_s=%.6f"),Speed);
+     Check(Speed>=65.,TEXT("equip_audit_unequip_during_actual_walk_input"));
+    }
     Check(bSwordVisible&&Inventory->TryUnequipItemToFirstAvailableGrid(ERogue10mInventorySlotType::MainWeapon)
      &&Character->GetEquippedWeaponType()==ERogue10mWeaponType::Unarmed,TEXT("equip_audit_inventory_unequipped_sword"));
    }
@@ -949,6 +957,7 @@ private:
   }
   if(Frame==88)
   {
+   if(bSwordEquipWalking){BraceKey(EKeys::W,false);}
    Check(!bSwordVisible,TEXT("equip_audit_sword_hidden_after_unequip"));
    Check(bMeleeVfxLogicOnly||CompletedCaptures==4,TEXT("equip_audit_four_render_captures"));
    Finish();
@@ -1334,7 +1343,7 @@ private:
  FString SwordEquipAppearance,SwordEquipRows;
  int32 SwordEquipGrid=INDEX_NONE;
  FGuid SwordEquipItem;
- bool bSwordEquipAudit=false;
+ bool bSwordEquipAudit=false,bSwordEquipWalking=false;
  TWeakObjectPtr<URogue10mAttackSkillData> BraceSkill,BraceSpecial;
  EBraceStep BraceStep=EBraceStep::Settle;
  IConsoleVariable* BraceCVar=nullptr;

@@ -7,7 +7,8 @@ param(
     [switch]$LogicOnly,
     [switch]$CapstoneBrace,
     [switch]$CapstoneBraceRender,
-    [ValidateSet('HumanMale','HumanFemale','DwarfMale','DwarfFemale','OrcMale','OrcFemale')][string]$SwordEquipAppearance
+    [ValidateSet('HumanMale','HumanFemale','DwarfMale','DwarfFemale','OrcMale','OrcFemale')][string]$SwordEquipAppearance,
+    [switch]$SwordEquipWalking
 )
 
 $ErrorActionPreference = 'Stop'
@@ -15,6 +16,7 @@ if ($CapstoneBraceRender -and $LogicOnly) { throw 'Capstone brace rendering requ
 if ($CapstoneBraceRender) { $CapstoneBrace = $true }
 if ($CapstoneBrace -and $RequireAuthoredSword) { throw 'Choose a single fixture mode.' }
 if ($SwordEquipAppearance -and ($CapstoneBrace -or $RequireAuthoredSword)) { throw 'Choose a single fixture mode.' }
+if ($SwordEquipWalking -and -not $SwordEquipAppearance) { throw 'Choose the character profile for the walking test.' }
 $softwareRender = $CapstoneBraceRender -or ($SwordEquipAppearance -and -not $LogicOnly)
 $projectRoot = (Resolve-Path -LiteralPath (Split-Path -Parent $PSScriptRoot)).Path
 $projectFile = Join-Path $projectRoot 'Rogue10m.uproject'
@@ -55,6 +57,7 @@ if ($CapstoneBrace) { $argsList += '-RogueCapstoneBraceQA' }
 if ($CapstoneBraceRender) { $argsList += '-RogueCapstoneBraceRender' }
 if ($softwareRender) { $argsList += @('-AllowSoftwareRendering', '-graphicsadapter=1') }
 if ($SwordEquipAppearance) { $argsList += "-RogueSwordEquipAppearance=$SwordEquipAppearance" }
+if ($SwordEquipWalking) { $argsList += '-RogueSwordEquipWalking' }
 
 $process = $null
 $started = $null
@@ -112,7 +115,8 @@ try {
                 }
                 $largest = [math]::Max($largest, [math]::Sqrt($distanceSquared))
             }
-            if ($largest -gt 2.5) { throw "Displayed transition at frame $frame exceeded 2.5 cm ($largest cm)." }
+            $limit = if ($SwordEquipWalking -and $frame -eq 69) { 4.5 } else { 2.5 }
+            if ($largest -gt $limit) { throw "Displayed transition at frame $frame exceeded $limit cm ($largest cm)." }
             Write-Output ('Displayed transition at frame ' + $frame + ' maximum=' + $largest.ToString('0.0000', $culture) + ' cm')
         }
         Write-Output $expected

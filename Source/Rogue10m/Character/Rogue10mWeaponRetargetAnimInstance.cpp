@@ -37,8 +37,11 @@ public:
 			PreviousLocalPose.Reset();
 			return;
 		}
-		// Preserve current foot motion if an equip takes place during a stride.
-		OldLegWeight = FMath::GetMappedRangeValueClamped(FVector2f(10.0f, 120.0f), FVector2f(1.0f, 0.0f), Movement->Velocity.Size2D());
+		// The first evaluation can happen before the new graph has live foot motion.
+		// Preserve the last complete pose and ease the legs back into the live stride.
+		const float StanceWeight = FMath::GetMappedRangeValueClamped(FVector2f(10.0f, 120.0f), FVector2f(1.0f, 0.0f), Movement->Velocity.Size2D());
+		const float LegBlend = 1.0f - FMath::Exp(-Elapsed / FMath::Min(Duration, 0.055f));
+		OldLegWeight = FMath::Lerp(1.0f, StanceWeight, LegBlend);
 	}
 
 	bool Evaluate_WithRoot(FPoseContext& Output, FAnimNode_Base* Root) override
