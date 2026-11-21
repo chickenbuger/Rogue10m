@@ -59,6 +59,8 @@ void URogue10mFighterCombatStanceAnimInstance::NativeInitializeAnimation()
 	MouseDrivenHeadWorldAim = FQuat::Identity;
 	MouseDrivenHeadSourceRotation = FQuat::Identity;
 	GroundLocomotionPlayRate = 1.0f;
+	bUseForwardRunLanding = bWasAirborneOnFirstJump = false;
+	GroundLocomotionStartPosition = ForwardRunLandingElapsed = 0.0f;
 	CachedDodgeMontage.Reset();
 	CachedDodgeMontagePath.Reset();
 	bDodgeMontageCacheAttempted = false;
@@ -97,6 +99,35 @@ void URogue10mFighterCombatStanceAnimInstance::CacheDodgeMontage(const URogue10m
 	CachedDodgeMontagePath = FSoftObjectPath(CachedDodgeMontage.Get());
 }
 
+void URogue10mFighterCombatStanceAnimInstance::UpdateForwardRunLanding(const ARogue10mCharacter* Character,
+	const UCharacterMovementComponent* Movement, bool bCharacterContextValid, float GroundSpeed, float DeltaSeconds)
+{
+	const bool bArrivingFromFirstJump = bWasAirborneOnFirstJump;
+	bWasAirborneOnFirstJump = bCharacterContextValid && Movement->IsFalling() && Character->JumpCurrentCount == 1;
+	if (!bUseForwardRunLanding && !bArrivingFromFirstJump)
+	{
+		return;
+	}
+
+	// At these speeds the existing BlendSpace selects its authored forward Jog endpoint.
+	constexpr float SeedGateTime = 0.25f;
+	constexpr float HandoffSettledTime = 0.50f;
+	// The outgoing L/R interval enters Walk / Run at the second Jog stride.
+	constexpr float SeedSecondsInJog = 0.767617f;
+	constexpr float ForwardJogDuration = 53.0f / 30.0f;
+	const bool bWithinSpeed = GroundSpeed >= ForwardRunLandingSpeedRange.X && GroundSpeed <= ForwardRunLandingSpeedRange.Y;
+	const bool bGroundedForwardRun = bCharacterContextValid && bWithinSpeed && Movement->IsMovingOnGround()
+		&& Character->IsThirdPersonGameplayActive() && Character->GetEquippedWeaponType() == ERogue10mWeaponType::Unarmed
+		&& !Character->IsDodging() && !Character->IsSprinting() && !IsAnyMontagePlaying()
+		&& Movement->GetCurrentAcceleration().SizeSquared2D() > UE_SMALL_NUMBER
+		&& FVector::DotProduct(Movement->Velocity.GetSafeNormal2D(), Character->GetActorForwardVector().GetSafeNormal2D())
+			>= FMath::Cos(FMath::DegreesToRadians(ForwardRunLandingMaxYaw));
+	ForwardRunLandingElapsed = bUseForwardRunLanding ? ForwardRunLandingElapsed + FMath::Max(0.0f, DeltaSeconds) : 0.0f;
+	bUseForwardRunLanding = bGroundedForwardRun && ForwardRunLandingElapsed < HandoffSettledTime;
+	GroundLocomotionStartPosition = bUseForwardRunLanding && ForwardRunLandingElapsed >= SeedGateTime
+		? SeedSecondsInJog / ForwardJogDuration : 0.0f;
+}
+
 void URogue10mFighterCombatStanceAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
@@ -111,6 +142,7 @@ void URogue10mFighterCombatStanceAnimInstance::NativeUpdateAnimation(float Delta
 	const bool bCharacterContextValid = Character && Movement && Character->GetController()
 		&& !Character->IsDead() && !(Controller && Controller->IsAnyBlockingWindowVisible());
 	const float GroundSpeed = Movement ? Movement->Velocity.Size2D() : 0.0f;
+	UpdateForwardRunLanding(Character, Movement, bCharacterContextValid, GroundSpeed, DeltaSeconds);
 	GroundLocomotionPlayRate = 1.0f;
 	if (bCharacterContextValid && Movement->IsMovingOnGround() && !IsViewAimDodgeActive()
 		&& FMath::IsFinite(GroundSpeed) && GroundSpeed > UE_SMALL_NUMBER)

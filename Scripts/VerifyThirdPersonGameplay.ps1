@@ -1,11 +1,13 @@
-param([Parameter(Mandatory)][ValidatePattern('^[A-Za-z0-9_]{1,24}$')][string]$Label,[switch]$NullRHI,[switch]$MouseInput,[int]$TimeoutSeconds=210,[switch]$CombatMotion,[switch]$CombatMotionRender,[switch]$DoubleJumpMotion,[switch]$DoubleJumpMotionRender,[switch]$ExpectSecondJumpPose,[switch]$PlayerHitMotion,[switch]$PlayerHitMotionRender)
+param([Parameter(Mandatory)][ValidatePattern('^[A-Za-z0-9_]{1,24}$')][string]$Label,[switch]$NullRHI,[switch]$MouseInput,[int]$TimeoutSeconds=210,[switch]$CombatMotion,[switch]$CombatMotionRender,[switch]$DoubleJumpMotion,[switch]$DoubleJumpMotionRender,[switch]$ExpectSecondJumpPose,[switch]$PlayerHitMotion,[switch]$PlayerHitMotionRender,[switch]$ForwardLanding,[switch]$ExpectStockLanding)
 $ErrorActionPreference='Stop'
 if($CombatMotion -and (-not $NullRHI -or $MouseInput)){throw 'CombatMotion requires NullRHI without MouseInput.'}
 if($CombatMotionRender -and ($NullRHI -or $MouseInput -or $CombatMotion)){throw 'CombatMotionRender is a separate software-rendered run.'}
 if($DoubleJumpMotion -and (-not $NullRHI -or $MouseInput -or $CombatMotion -or $CombatMotionRender)){throw 'DoubleJumpMotion requires a separate NullRHI run.'}
 if($DoubleJumpMotionRender -and ($NullRHI -or $MouseInput -or $CombatMotion -or $CombatMotionRender -or $DoubleJumpMotion)){throw 'DoubleJumpMotionRender requires a separate software-rendered run.'}
 $jumpQA=$DoubleJumpMotion -or $DoubleJumpMotionRender
-$softwareCapture=$CombatMotionRender -or $DoubleJumpMotionRender -or $PlayerHitMotionRender
+$softwareCapture=$CombatMotionRender -or $DoubleJumpMotionRender -or $PlayerHitMotionRender -or ($ForwardLanding -and -not $NullRHI)
+if($ForwardLanding -and ($jumpQA -or $CombatMotion -or $CombatMotionRender -or $PlayerHitMotion -or $PlayerHitMotionRender -or $MouseInput)){throw 'ForwardLanding requires a separate run.'}
+if($ExpectStockLanding -and -not $ForwardLanding){throw 'ExpectStockLanding requires a landing audit.'}
 if($ExpectSecondJumpPose -and -not $jumpQA){throw 'ExpectSecondJumpPose requires a jump audit run.'}
 if($PlayerHitMotionRender -and $NullRHI){throw 'PlayerHitMotionRender requires D3D11.'}
 if($PlayerHitMotionRender){$PlayerHitMotion=$true}
@@ -34,6 +36,10 @@ if($jumpQA){$argsList+=@('-RogueThirdPersonDoubleJumpQA','-UseFixedTimeStep','-F
 if($DoubleJumpMotionRender){$argsList+='-RogueThirdPersonDoubleJumpCapture'}
 if($PlayerHitMotion){$argsList+=@('-RoguePlayerHitMotionQA','-UseFixedTimeStep','-FPS=60')}
 if($PlayerHitMotionRender){$argsList+='-RoguePlayerHitMotionCapture'}
+if($ForwardLanding){
+ $argsList+=@('-RogueThirdPersonForwardLandingQA','-UseFixedTimeStep','-FPS=60')
+ if(-not $ExpectStockLanding){$argsList+='-RogueExpectForwardLanding'}
+}
 if($softwareCapture){$argsList+=@('-AllowSoftwareRendering','-graphicsadapter=1')}
 if($ExpectSecondJumpPose){$argsList+='-RogueExpectSecondJumpPose'}
 if($NullRHI){$argsList+='-nullrhi'}else{$argsList+=@('-d3d11','-RenderOffScreen')}
@@ -74,8 +80,14 @@ try {
    if(-not $result.Contains('jump_case='+$case+' ')){throw ('Jump audit case incomplete: '+$case)}
   }
  }
+ if($ForwardLanding){
+  $landingCsv=Join-Path $root ('DevLog\20261110_ThirdPerson\'+$Label+'\forward-landing-frames.csv')
+  if(-not(Test-Path -LiteralPath $landingCsv -PathType Leaf)){throw 'Missing forward-landing frame observations.'}
+  $cases=if($NullRHI){@('forward_620','forward_610','stationary','sideways')}else{@('forward_620')}
+  foreach($case in $cases){if(-not $result.Contains('landing_case='+$case+' ')){throw ('Landing audit case incomplete: '+$case)}}
+ }
  if(-not $NullRHI){
-  $expectedImages=if($PlayerHitMotionRender){@('01_idle_control.png','02_front_recoil.png')}elseif($DoubleJumpMotionRender){@('01_single_space_at_matched_frame.png','02_second_space_at_pose_peak.png')}elseif($CombatMotionRender){@('01_sword_guard_before_W.png','02_sword_guard_fading.png')}else{@('01_default_third_person.png','02_wall_camera_contraction.png','03_third_person_movement.png','04_active_third_person_dodge.png','05_wall_dodge_result.png','06_look_up_head.png','07_look_down_head.png')}
+  $expectedImages=if($ForwardLanding){@('01_forward_landing_left_support.png','02_forward_landing_jog_handoff.png')}elseif($PlayerHitMotionRender){@('01_idle_control.png','02_front_recoil.png')}elseif($DoubleJumpMotionRender){@('01_single_space_at_matched_frame.png','02_second_space_at_pose_peak.png')}elseif($CombatMotionRender){@('01_sword_guard_before_W.png','02_sword_guard_fading.png')}else{@('01_default_third_person.png','02_wall_camera_contraction.png','03_third_person_movement.png','04_active_third_person_dodge.png','05_wall_dodge_result.png','06_look_up_head.png','07_look_down_head.png')}
   foreach($name in $expectedImages){$file=Join-Path $root ('DevLog\20261110_ThirdPerson\'+$Label+'\'+$name);if(-not(Test-Path -LiteralPath $file) -or (Get-Item -LiteralPath $file).Length -lt 1024){throw ('Missing screenshot '+$name)}}
  }
  $errors=@(Select-String -LiteralPath $log -Pattern '\bError:|Fatal error:|Ensure condition failed')
@@ -93,7 +105,8 @@ try {
  [pscustomobject]@{label=$Label;before=$before.Count;after=$after.Count;preserved=$preserved;exit=if($p -and $p.HasExited){$p.ExitCode}else{$null};failure=if($failure){$failure.ToString()}else{$null};first_person_qa=$false;physical_input=$false;full_run=$false;language_override='process only en/en-US'}|ConvertTo-Json|Set-Content -LiteralPath (Join-Path $out 'launcher.json')
 }
 if(-not $preserved){throw 'Save preservation failure'};if($failure){throw $failure}
-if($jumpQA){Write-Output ('PASSED third-person Space input and jump pose audit; existing saves preserved='+$before.Count)}
+if($ForwardLanding){Write-Output ('PASSED third-person running landing phase audit; existing saves preserved='+$before.Count)}
+elseif($jumpQA){Write-Output ('PASSED third-person Space input and jump pose audit; existing saves preserved='+$before.Count)}
 elseif($PlayerHitMotion){Write-Output ('PASSED player hit-pose observations; existing saves preserved='+$before.Count)}
 elseif($CombatMotion -or $CombatMotionRender){Write-Output ('PASSED third-person combat motion observations; existing saves preserved='+$before.Count)}else{
  Write-Output ('PASSED third-person camera/movement/dodge QA; existing saves preserved='+$before.Count+'; review actual PNGs separately')

@@ -63,6 +63,13 @@
 - **검증** UE 5.8 Editor 빌드와 `4cba9894` 통합 기준의 StartHub 포즈 검사 6,497개, 기본 3인칭 회귀 1,568개·마우스 13건, `a24f522e` 기준의 소프트웨어 렌더 검사 994개를 통과했다. 첫 일곱 프레임의 흉부 최대 변화는 27.45°에서 3.44°, 골반 상대 손 최대 이동은 19.43cm에서 2.72cm로 줄었다.
 - **상태** 독립 작업 사본에서 구현 및 실행 확인. [작업 계획](../Feature/architect/2026-11-21_combat-animation-continuity.md) · [측정 결과](../Feature/doc/2026-11-21_combat-animation-continuity.md)
 
+### Sprint#18-1 — 전방 달리기 착지
+
+- **목표** 맨손 3인칭 전방 착지에서 발을 끄는 동작을 줄이고 다음 달리기 보폭으로 연결한다.
+- **변경** 기존 Manny 낙하·착지·Jog를 Blender에서 편집해 0.45초 인플레이스 클립을 만들고 두 번째 오른발 Jog 마커로 인계했다.
+- **검증** StartHub 60Hz 통합 검수 9,640개를 통과했다. 620/610cm/s 표시 외형에서 접지 부근 발볼 이동은 각각 77.1%/77.2% 줄었고, 정지와 옆 방향은 기존 `MM_Land`였다.
+- **상태** 통합 UE Editor 빌드 및 720p WARP 2,396개 검사와 측면 두 장 확인. [설계](../Feature/architect/2026-11-21_player-locomotion-audit.md) · [검증](../Feature/doc/2026-11-21_player-locomotion-audit.md)
+
 ### Sprint#17-5 — 아린 대화 자세 전환
 
 - StartHub 아린의 대화 시작과 종료에 기존 Idle·Talk 자세가 부드럽게 이어지도록 연결했다. 실제 안내인에서 전환 전후 손목·루트·발 위치를 기록하는 검사를 추가했다.

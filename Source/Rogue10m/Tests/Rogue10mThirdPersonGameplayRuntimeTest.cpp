@@ -127,6 +127,20 @@ struct FObservedMotionPose
 
 static const FName JumpPoseBones[]={TEXT("pelvis"),TEXT("thigh_l"),TEXT("thigh_r"),TEXT("calf_l"),
  TEXT("calf_r"),TEXT("foot_l"),TEXT("foot_r")};
+static const FName LandingBones[]={TEXT("root"),TEXT("pelvis"),TEXT("thigh_l"),TEXT("thigh_r"),TEXT("calf_l"),
+ TEXT("calf_r"),TEXT("foot_l"),TEXT("foot_r"),TEXT("ball_l"),TEXT("ball_r"),TEXT("head")};
+static const FName ForwardLandingAsset(TEXT("A_CommonForwardRunLanding_L"));
+struct FLandingInput
+{
+ const TCHAR* Name;
+ FKey Key;
+ float Speed;
+ bool bForward;
+};
+static const FLandingInput LandingInputs[]={
+ {TEXT("forward_620"),EKeys::W,620.f,true}, {TEXT("forward_610"),EKeys::W,610.f,true},
+ {TEXT("stationary"),FKey(),0.f,false}, {TEXT("sideways"),EKeys::D,620.f,false}
+};
 
 struct FObservedJumpPose
 {
@@ -172,9 +186,13 @@ public:
   bPlayerHitMotionRender=bPlayerHitMotion&&FParse::Param(Args,TEXT("RoguePlayerHitMotionCapture"));
   bDoubleJumpMotion=FParse::Param(Args,TEXT("RogueThirdPersonDoubleJumpQA"));
   bDoubleJumpCapture=bDoubleJumpMotion&&FParse::Param(Args,TEXT("RogueThirdPersonDoubleJumpCapture"));
+  bForwardLandingQA=FParse::Param(Args,TEXT("RogueThirdPersonForwardLandingQA"));
+  bExpectForwardLanding=FParse::Param(Args,TEXT("RogueExpectForwardLanding"));
   bExpectSecondJumpPose=FParse::Param(Args,TEXT("RogueExpectSecondJumpPose"));
   if(bDoubleJumpMotion&&(bPlayerHitMotion||bCombatMotion||bDoubleJumpCapture==FParse::Param(Args,TEXT("nullrhi"))))
   {UE_LOG(LogRogue10m,Error,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_FAILED reason=jump_audit_requires_its_own_explicit_capture_or_nullrhi_run"));FPlatformMisc::RequestExitWithStatus(false,1);return;}
+  if(bForwardLandingQA&&(bDoubleJumpMotion||bCombatMotion||bPlayerHitMotion))
+  {UE_LOG(LogRogue10m,Error,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_FAILED reason=forward_landing_requires_its_own_run"));FPlatformMisc::RequestExitWithStatus(false,1);return;}
   bool Valid=!Label.IsEmpty()&&Label.Len()<=24;for(TCHAR C:Label)Valid&=FChar::IsAlnum(C)||C==TEXT('_');
   TArray<FString> Existing;IFileManager::Get().FindFiles(Existing,*(FPaths::ProjectSavedDir()/TEXT("SaveGames")/(Prefix+TEXT("_*.sav"))),true,false);
   if(!Valid||W.GetNetMode()!=NM_Standalone||Town!=TEXT("Rogue10m_Town_QA_ThirdPerson_")+Label||Prefix!=TEXT("Rogue10m_Progression_QA_ThirdPerson_")+Label||Keys!=TEXT("Rogue10m_Fighter_QA_ThirdPerson_")+Label||UGameplayStatics::DoesSaveGameExist(Town,0)||UGameplayStatics::DoesSaveGameExist(Keys,0)||!Existing.IsEmpty())
@@ -189,7 +207,7 @@ private:
  void Check(bool Value,const TCHAR* Why){++Checks;if(!Value){++Failures;Results+=FString(TEXT("FAIL "))+Why+TEXT("\n");if(Failures<25)UE_LOG(LogRogue10m,Error,TEXT("THIRD_PERSON FAIL %s"),Why);}}
  void Later(double Delay,TFunction<void()> Work){NextAt=FPlatformTime::Seconds()+Delay;Next=MoveTemp(Work);}
  void Key(FKey K,bool Down){if(PC.IsValid())PC->InputKey(FInputKeyEventArgs::CreateSimulated(K,Down?IE_Pressed:IE_Released,Down?1.f:0.f));}
- void Photo(const TCHAR* Name){if(!bRendered)return;Check(PendingPhoto.IsEmpty(),TEXT("previous_capture_completed"));PendingPhoto=Name;++RequestedPhotos;FScreenshotRequest::RequestScreenshot(Output/Name,!bCombatMotionCapture&&!bDoubleJumpCapture&&!bPlayerHitMotionRender,false);}
+ void Photo(const TCHAR* Name){if(!bRendered)return;Check(PendingPhoto.IsEmpty(),TEXT("previous_capture_completed"));PendingPhoto=Name;++RequestedPhotos;FScreenshotRequest::RequestScreenshot(Output/Name,!bCombatMotionCapture&&!bDoubleJumpCapture&&!bPlayerHitMotionRender&&!bForwardLandingQA,false);}
  AActor* MakeBox(const FVector& Center,const FVector& Extent,const FRotator& Rotation)
  {
   FActorSpawnParameters P;P.ObjectFlags|=RF_Transient;auto* A=World->SpawnActor<AActor>(AActor::StaticClass(),FTransform(Rotation,Center),P);if(!A)return nullptr;
@@ -217,7 +235,125 @@ private:
   CaptureHandle=UGameViewportClient::OnScreenshotCaptured().AddLambda([Self=AsShared()](int32 W,int32 H,const TArray<FColor>& Pixels){if(Self->PendingPhoto.IsEmpty()||Self->bFinished)return;auto& Pic=Self->Photos.AddDefaulted_GetRef();Pic.Name=Self->PendingPhoto;Pic.Width=W;Pic.Height=H;Pic.Pixels=Pixels;Self->PendingPhoto.Empty();++Self->CompletedPhotos;});
   if(bRendered){FAssetCompilingManager::Get().FinishAllCompilation();if(GShaderCompilingManager)GShaderCompilingManager->FinishAllCompilation();Check(!GShaderCompilingManager||!GShaderCompilingManager->IsCompiling(),TEXT("first_capture_waits_for_material_shaders"));}
   SampleHandle=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* X,ELevelTick,float){if(X==Self->World.Get())Self->Sample();});
-  Later(.8,[this]{if(bPlayerHitMotion){BeginPlayerHitMotion();}else if(bDoubleJumpMotion){BeginDoubleJumpMotion();}else if(bCombatMotion){BeginCombatMotion();}else{OpenView();}});
+  Later(.8,[this]{if(bForwardLandingQA){BeginLandingAudit();}else if(bPlayerHitMotion){BeginPlayerHitMotion();}else if(bDoubleJumpMotion){BeginDoubleJumpMotion();}else if(bCombatMotion){BeginCombatMotion();}else{OpenView();}});
+ }
+
+ void BeginLandingAudit()
+ {
+  auto* Movement=Character->GetCharacterMovement();
+  LandingOriginalSpeed=Movement->MaxWalkSpeed;
+  LandingOrigin=Character->GetActorLocation();
+  LandingRows=TEXT("case,mesh,frame,seconds_from_contact,speed_cm_s,floor_z_cm,fall_time_s,land_time_s,land_weight,land_asset,gait_sample_time_s,marker_prev,marker_next,marker_alpha,seed,revision,bone,local_x_cm,local_y_cm,local_z_cm,qx,qy,qz,qw,world_x_cm,world_y_cm,world_z_cm\n");
+  if(bRendered)
+  {
+   FActorSpawnParameters Spawn;Spawn.ObjectFlags|=RF_Transient;
+   MotionCamera=World->SpawnActor<ACameraActor>(Spawn);
+   Check(MotionCamera.IsValid(),TEXT("landing_side_camera_available"));
+   if(MotionCamera.IsValid()){MotionCamera->GetCameraComponent()->SetFieldOfView(43.f);PC->SetViewTarget(MotionCamera.Get());}
+  }
+  bLandingStarted=true;
+  BeginLandingCase();
+ }
+
+ void BeginLandingCase()
+ {
+  const auto& Input=LandingInputs[LandingCase];
+  auto* Movement=Character->GetCharacterMovement();
+  Movement->StopMovementImmediately();
+  Character->SetActorLocation(LandingOrigin,false,nullptr,ETeleportType::TeleportPhysics);
+  Movement->MaxWalkSpeed=Input.Speed>0.f?Input.Speed:LandingOriginalSpeed;
+  LandingFrame=0;LandingContact=-1;LandingContactSpeed=0.0;
+  bLandingAscent=bLandingDescent=bLandingSawCandidate=bLandingSawStock=bLandingSawSeed=bLandingSawGait=bLandingSawAlignedRight=false;
+  if(Input.Key.IsValid()){Key(Input.Key,true);}
+ }
+
+ void SampleLandingAudit()
+ {
+  const auto& Input=LandingInputs[LandingCase];
+  auto* Movement=Character->GetCharacterMovement();
+  ++LandingFrame;
+  if(LandingFrame==55){Key(EKeys::SpaceBar,true);}
+  if(LandingFrame==60){Key(EKeys::SpaceBar,false);}
+  if(MotionCamera.IsValid())
+  {
+   const FVector Focus(Character->GetActorLocation().X,Character->GetActorLocation().Y,LandingOrigin.Z-15.0);
+   const FVector View=Focus+FVector(130,-490,35);
+   MotionCamera->SetActorLocationAndRotation(View,(Focus-View).Rotation());
+  }
+  if(LandingFrame<55){return;}
+  const bool bGrounded=Movement->IsMovingOnGround();
+  bLandingAscent|=Movement->IsFalling()&&Movement->Velocity.Z>0.f;
+  bLandingDescent|=Movement->IsFalling()&&Movement->Velocity.Z<0.f;
+  const double Speed=Movement->Velocity.Size2D();
+  if(bGrounded&&bLandingDescent&&LandingContact<0){LandingContact=LandingFrame;LandingContactSpeed=Speed;}
+  const int32 ContactFrame=LandingContact<0?-1:LandingFrame-LandingContact;
+  if(LandingCase==0&&!bRendered){Check(FMath::IsNearlyEqual(World->GetDeltaSeconds(),1.f/60.f,0.0005f),TEXT("landing_fixed_60hz"));}
+  if(LandingCase==0&&bRendered&&ContactFrame==8){Photo(TEXT("01_forward_landing_left_support.png"));}
+  if(LandingCase==0&&bRendered&&ContactFrame==27){Photo(TEXT("02_forward_landing_jog_handoff.png"));}
+  auto* Source=Character->GetAnimationPlaybackMesh();
+  auto* Anim=Source?Cast<URogue10mFighterCombatStanceAnimInstance>(Source->GetAnimInstance()):nullptr;
+  auto* Body=Character->GetMesh();
+  if(!Anim||!Body||Source==Body){Check(false,TEXT("landing_hidden_manny_and_visible_body_available"));Finish();return;}
+  const FName Main(TEXT("Main States")), Gait(TEXT("Locomotion"));
+  const int32 MainIndex=Anim->GetStateMachineIndex(Main);
+  const int32 GaitIndex=Anim->GetStateMachineIndex(Gait);
+  const FAnimNode_StateMachine* MainMachine=MainIndex!=INDEX_NONE?Anim->GetStateMachineInstance(MainIndex):nullptr;
+  const FAnimNode_StateMachine* GaitMachine=GaitIndex!=INDEX_NONE?Anim->GetStateMachineInstance(GaitIndex):nullptr;
+  if(!MainMachine||!GaitMachine){Check(false,TEXT("landing_source_typed_state_machines_available"));Finish();return;}
+  const auto Player=[Anim](const FAnimNode_StateMachine& Machine,int32 MachineIndex,FName State,float& Weight)
+  {
+   const int32 StateIndex=Machine.GetStateIndex(State);
+   Weight=StateIndex!=INDEX_NONE?Machine.GetStateWeight(StateIndex):0.f;
+   return Weight>KINDA_SMALL_NUMBER?Anim->GetRelevantAssetPlayerInterfaceFromState(MachineIndex,StateIndex):nullptr;
+  };
+  float FallWeight=0.f,StockWeight=0.f,ForwardWeight=0.f,GaitWeight=0.f;
+  const auto* Fall=Player(*MainMachine,MainIndex,TEXT("Fall Loop"),FallWeight);
+  const auto* Forward=Player(*MainMachine,MainIndex,TEXT("Forward Run Land"),ForwardWeight);
+  const auto* Stock=Player(*MainMachine,MainIndex,TEXT("Land"),StockWeight);
+  const auto* Jog=Player(*GaitMachine,GaitIndex,TEXT("Walk / Run"),GaitWeight);
+  const auto* Land=Forward?Forward:Stock;
+  const FName LandAsset=Land&&Land->GetAnimAsset()?Land->GetAnimAsset()->GetFName():NAME_None;
+  const auto Marker=Anim->GetSyncGroupPosition(Gait);
+  bLandingSawCandidate|=LandAsset==ForwardLandingAsset;
+  bLandingSawStock|=LandAsset==TEXT("MM_Land");
+  bLandingSawSeed|=Anim->GroundLocomotionStartPosition>0.f&&(Forward||bExpectForwardLanding);
+  bLandingSawGait|=ContactFrame>=32&&Jog&&Marker.IsValid();
+  constexpr float SecondJogRightMarker=0.851702f;
+  bLandingSawAlignedRight|=ContactFrame>=22&&ContactFrame<=26&&Jog&&Marker.IsValid()
+   &&Marker.PreviousMarkerName==TEXT("R")&&FMath::Abs(Jog->GetCurrentAssetTime()-SecondJogRightMarker)<0.018f;
+  const auto& FloorResult=Movement->CurrentFloor;
+  const FString State=FString::Printf(TEXT("%.4f,%.4f,%.6f,%.6f,%.6f,%s,%.6f,%s,%s,%.6f,%.6f"),Speed,
+   FloorResult.IsWalkableFloor()?FloorResult.HitResult.ImpactPoint.Z:LandingOrigin.Z-Character->GetCapsuleComponent()->GetScaledCapsuleHalfHeight()-2.0,
+   Fall?Fall->GetAccumulatedTime():-1.f,Land?Land->GetAccumulatedTime():-1.f,ForwardWeight+StockWeight,*LandAsset.ToString(),
+   Jog?Jog->GetCurrentAssetTime():-1.f,*Marker.PreviousMarkerName.ToString(),*Marker.NextMarkerName.ToString(),
+   Marker.PositionBetweenMarkers,Anim->GroundLocomotionStartPosition);
+  for(const USkeletalMeshComponent* Mesh:{Source,Body})
+  {
+   const TCHAR* MeshName=Mesh==Source?TEXT("manny"):TEXT("visible");
+   const FString Row=FString::Printf(TEXT("%s,%s,%d,%.6f,%s,%u"),Input.Name,MeshName,LandingFrame,ContactFrame/60.0,*State,Mesh->GetBoneTransformRevisionNumber());
+   for(const FName Bone:LandingBones)
+   {
+    const FTransform Pose=Mesh->GetBoneTransform(Bone,RTS_Component);
+    Check(Mesh->GetBoneIndex(Bone)!=INDEX_NONE&&!Pose.ContainsNaN()&&Pose.GetRotation().IsNormalized(),TEXT("landing_recorded_pose_valid"));
+    const FVector P=Pose.GetLocation(),W=Mesh->GetComponentTransform().TransformPosition(P);
+    const FQuat Q=Pose.GetRotation();
+    LandingRows+=FString::Printf(TEXT("%s,%s,%.6f,%.6f,%.6f,%.8f,%.8f,%.8f,%.8f,%.6f,%.6f,%.6f\n"),
+      *Row,*Bone.ToString(),P.X,P.Y,P.Z,Q.X,Q.Y,Q.Z,Q.W,W.X,W.Y,W.Z);
+   }
+  }
+  if(ContactFrame<55&&LandingFrame<180){return;}
+  if(Input.Key.IsValid()){Key(Input.Key,false);}
+  const bool bExpectCandidate=Input.bForward&&bExpectForwardLanding;
+  Check(bLandingAscent&&bLandingDescent&&LandingContact>=0,TEXT("landing_actual_takeoff_descent_and_contact"));
+  Check(FMath::Abs(LandingContactSpeed-Input.Speed)<5.0,TEXT("landing_expected_contact_speed"));
+  Check(bLandingSawCandidate==bExpectCandidate&&bLandingSawStock!=bExpectCandidate&&bLandingSawSeed==bExpectCandidate,
+   TEXT("landing_uses_only_the_intended_asset_and_phase_seed"));
+  Check(!bExpectCandidate||bLandingSawAlignedRight,TEXT("landing_handoff_uses_the_second_forward_jog_right_marker"));
+  Check(!Input.Key.IsValid()||bLandingSawGait,TEXT("landing_recovers_to_continuous_gait"));
+  Results+=FString::Printf(TEXT("landing_case=%s contact_speed_cm_s=%.4f candidate=%d stock=%d seeded=%d gait=%d second_right_marker=%d\n"),
+   Input.Name,LandingContactSpeed,bLandingSawCandidate,bLandingSawStock,bLandingSawSeed,bLandingSawGait,bLandingSawAlignedRight);
+  if(++LandingCase==UE_ARRAY_COUNT(LandingInputs)||bRendered){Finish();return;}
+  BeginLandingCase();
  }
 
  void TrainDoubleJump()
@@ -1154,6 +1290,7 @@ private:
  }
  void Sample()
  {
+  if(bForwardLandingQA){if(bLandingStarted&&!bFinished){SampleLandingAudit();}return;}
   if(bDoubleJumpMotion)
   {
    if(bJumpMotionStarted&&!bFinished&&Character.IsValid()){SampleDoubleJumpMotion();}
@@ -1176,6 +1313,17 @@ private:
  }
  void Finish(bool Exit=true)
  {
+  if(bLandingStarted&&!bFinished)
+  {
+   Key(EKeys::SpaceBar,false);
+   if(Character.IsValid()){Character->GetCharacterMovement()->MaxWalkSpeed=LandingOriginalSpeed;}
+   if(MotionCamera.IsValid())
+   {
+    if(PC.IsValid()&&Character.IsValid()){PC->SetViewTarget(Character.Get());}
+    MotionCamera->Destroy();
+   }
+   Check(FFileHelper::SaveStringToFile(LandingRows,*(Output/TEXT("forward-landing-frames.csv"))),TEXT("landing_trajectory_saved"));
+  }
   if(bDoubleJumpMotion&&bJumpMotionStarted&&!bFinished)
   {
    Key(EKeys::SpaceBar,false);
@@ -1216,7 +1364,7 @@ private:
   if(bFinished)return;bFinished=true;Next=nullptr;RestoreHeadPitchCheck();FWorldDelegates::OnWorldPostActorTick.Remove(SampleHandle);FWorldDelegates::OnWorldCleanup.Remove(Cleanup);UGameViewportClient::OnScreenshotCaptured().Remove(CaptureHandle);Key(EKeys::W,false);Key(EKeys::S,false);Key(EKeys::D,false);Key(Rogue10mInput::DodgeKey(),false);if(Character.IsValid()){if(Saves.IsValid()&&Saves->IsAttachedTo(*Character))Saves->DetachCharacter(*Character,false);Character->GetCharacterMovement()->StopMovementImmediately();}for(auto A:{Floor,Obstacle,Wall})if(A.IsValid())A->Destroy();
   if(bRendered)
   {
-   const int32 ExpectedCaptures=bCombatMotionCapture||bDoubleJumpCapture||bPlayerHitMotionRender?2:7;
+   const int32 ExpectedCaptures=bCombatMotionCapture||bDoubleJumpCapture||bPlayerHitMotionRender||bForwardLandingQA?2:7;
    Check(RequestedPhotos==ExpectedCaptures&&CompletedPhotos==ExpectedCaptures&&PendingPhoto.IsEmpty(),TEXT("all_requested_rendered_captures_completed"));
   }
   for(const auto& Pic:Photos){TArray64<uint8> Bytes;FImageUtils::PNGCompressImageArray(Pic.Width,Pic.Height,Pic.Pixels,Bytes);Check(FFileHelper::SaveArrayToFile(Bytes,*(Output/Pic.Name)),TEXT("captured_PNG_saved"));}Check(FFileHelper::SaveStringToFile(Frames,*(Output/TEXT("frames.csv"))),TEXT("frame_evidence_saved"));Results+=FString::Printf(TEXT("mouse_cases=%d\nmouse_passed=%d\n"),MouseCases,MousePassed);Results+=FString::Printf(TEXT("checks=%d\nfailures=%d\nsamples=%d\ndodge_samples=%d\nopen_cm=%.6f\nblocked_cm=%.6f\nrecovered_cm=%.6f\nmove_cm=%.6f\nfree_dodge_cm=%.6f\nwall_dodge_cm=%.6f\nrendered=%d\ncaptures=%d\ninput=programmatic_Controller_InputKey\nphysical_input=not_performed\nfull_run=not_performed\nmap_changes=none_transient_fixture_only\nfirst_person_QA=paused\n"),Checks,Failures,Samples,DodgeSamples,OpenDistance,BlockedDistance,RecoveredDistance,MoveTravel,FreeTravel,WallTravel,bRendered,CompletedPhotos);if(!FFileHelper::SaveStringToFile(Results,*(Output/TEXT("results.txt"))))++Failures;UE_LOG(LogRogue10m,Display,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_%s checks=%d failures=%d output=%s"),Failures?TEXT("FAILED"):TEXT("PASSED"),Checks,Failures,*Output);if(Exit)FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Code=Failures?1:0](float){FPlatformMisc::RequestExitWithStatus(false,Code);return false;}),.5f);
@@ -1227,6 +1375,13 @@ private:
  int32 JumpFrame=0,JumpTakeoffFrame=0,JumpRequestFrame=0,JumpBoostFrame=0,JumpLandFrame=0;
  int32 ControlJumpTakeoffFrame=0,ControlJumpRequestFrame=0;
  int32 AppliedSecondJumpFrames=0;
+ FString LandingRows;
+ FVector LandingOrigin=FVector::ZeroVector;
+ int32 LandingCase=0,LandingFrame=0,LandingContact=-1;
+ float LandingOriginalSpeed=0.f;
+ double LandingContactSpeed=0.0;
+ bool bForwardLandingQA=false,bExpectForwardLanding=false,bLandingStarted=false;
+ bool bLandingAscent=false,bLandingDescent=false,bLandingSawCandidate=false,bLandingSawStock=false,bLandingSawSeed=false,bLandingSawGait=false,bLandingSawAlignedRight=false;
  float JumpTakeoffVelocity=0.0f,JumpBoostVelocity=0.0f,JumpBeforeBoostVelocity=0.0f,PreviousJumpVelocity=0.0f;
  bool bDoubleJumpMotion=false,bDoubleJumpCapture=false,bJumpMotionStarted=false,bSecondJumpInput=false,bExpectSecondJumpPose=false;
  TWeakObjectPtr<AActor> IncomingHitSource;

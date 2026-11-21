@@ -10,6 +10,8 @@
 class UAnimMontage;
 class UAnimSequence;
 class UBlendSpace;
+class ARogue10mCharacter;
+class UCharacterMovementComponent;
 class URogue10mCharacterAnimationComponent;
 class FRogue10mViewAlignedUpperBodyProxy;
 
@@ -49,6 +51,20 @@ public:
 	/** Feeds only the grounded Walk / Run BlendSpace player, never montage or jump time. */
 	UPROPERTY(BlueprintReadOnly, Transient, Category="Rogue10m|Animation|Locomotion Speed")
 	float GroundLocomotionPlayRate = 1.0f;
+
+	/** Enabled only for the verified forward, unarmed, first-jump landing. */
+	UPROPERTY(BlueprintReadOnly, Transient, Category="Rogue10m|Animation|Jump")
+	bool bUseForwardRunLanding = false;
+
+	/** Selects the correct repeated L/R occurrence only when the run re-enters from this landing. */
+	UPROPERTY(BlueprintReadOnly, Transient, Category="Rogue10m|Animation|Jump")
+	float GroundLocomotionStartPosition = 0.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Jump", meta=(Units="cm/s"))
+	FVector2D ForwardRunLandingSpeedRange = FVector2D(600.0, 640.0);
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Jump", meta=(ClampMin="0.0", ClampMax="15.0", Units="deg"))
+	float ForwardRunLandingMaxYaw = 3.0f;
 
 	/** Verified Jog samples in BS_Unarmed_PalmReference were authored at 600 cm/s. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Locomotion Speed", meta=(ClampMin="1", Units="cm/s"))
@@ -160,6 +176,8 @@ protected:
 private:
 	friend class FRogue10mViewAlignedUpperBodyProxy;
 	void CacheDodgeMontage(const URogue10mCharacterAnimationComponent* Animation);
+	void UpdateForwardRunLanding(const ARogue10mCharacter* Character, const UCharacterMovementComponent* Movement,
+		bool bCharacterContextValid, float GroundSpeed, float DeltaSeconds);
 
 	TWeakObjectPtr<UAnimMontage> CachedDodgeMontage;
 	FSoftObjectPath CachedDodgeMontagePath;
@@ -176,4 +194,6 @@ private:
 	float FighterCombatBlendProgress = 0.0f;
 	bool bLearnedRollPoseApplied = false;
 	bool bSecondJumpPoseApplied = false;
+	bool bWasAirborneOnFirstJump = false;
+	float ForwardRunLandingElapsed = 0.0f;
 };
