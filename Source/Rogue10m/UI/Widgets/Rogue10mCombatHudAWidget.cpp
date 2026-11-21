@@ -398,6 +398,9 @@ namespace
 		}
 
 		Paint.DrawSkin(ESkin::SlotAlt, true);
+		const FRegion DodgeKeyBand{430, 834, 45, 19};
+		Paint.DrawText(Rogue10mInput::DodgeKeyLabel(), DodgeKeyBand.Center(), 14.0f, true,
+			DodgeKeyBand.Width - 6.0f, &DodgeKeyBand);
 		if (HUD.GetDodgeCooldownRemaining() > 0.0f || HUD.IsDodging())
 		{
 			const FRegion& Alt = Sprite(ESkin::SlotAlt).Design;
@@ -451,6 +454,9 @@ namespace
 		if (HUD.ShowsIdentityKey())
 		{
 			Paint.DrawSkin(ESkin::PlateCtrl, true);
+			const FRegion IdentityKeyBand{1275, 857, 39, 20};
+			Paint.DrawText(Rogue10mInput::IdentityKeyLabel(), IdentityKeyBand.Center(), 14.0f, true,
+				IdentityKeyBand.Width - 6.0f, &IdentityKeyBand);
 		}
 	}
 

@@ -30,6 +30,7 @@
 #include "Rogue10mCharacterAnimationComponent.h"
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mFighterCombatStanceAnimInstance.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
 #include "TimerManager.h"
@@ -97,14 +98,14 @@ private:
         Refill();RecordSkeleton(Character->GetAnimationPlaybackMesh(),TEXT("source"));RecordSkeleton(Character->GetMesh(),TEXT("appearance"));
         OldFixed=FApp::UseFixedTimeStep();OldDelta=FApp::GetFixedDeltaTime();bOwnFixed=true;FApp::SetFixedDeltaTime(1.0/30.0);FApp::SetUseFixedTimeStep(true);
         Tick=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* W,ELevelTick,float){if(W==Self->World.Get()){Self->Frame();}});
-        UE_LOG(LogRogue10m,Display,TEXT("FIGHTER_STANCE TIMELINE frames=640 fps=30 jabs=35/38 tap=95/98 charge=150:276 walk=180:200 jump=326:332 V=105/130 knuckle=448/455/457 unsupported=510:530 menu=550:570 dodge=600 capture=%d"),bCaptureAll);
+        UE_LOG(LogRogue10m,Display,TEXT("FIGHTER_STANCE TIMELINE frames=640 fps=30 jabs=35/38 tap=95/98 charge=150:276 walk=180:200 jump=326:332 inspection=105/130 knuckle=448/455/457 unsupported=510:530 menu=550:570 dodge=600 capture=%d"),bCaptureAll);
     }
     void Refill(){if(auto* A=Character->GetRogueAttributeSet()){A->SetStamina(A->GetMaxStamina());A->SetMana(A->GetMaxMana());A->SetIdentity(A->GetMaxIdentity());}}
     void Press(bool Primary){Refill();Character->GetCombatComponent()->HandleAttackPressed(Primary);}
     void Release(bool Primary){Character->GetCombatComponent()->HandleAttackReleased(Primary);}
     void Move(float Forward)
     {struct FParams{float Right=0.f;float Forward=0.f;}Params;Params.Forward=Forward;Character->ProcessEvent(Character->FindFunctionChecked(TEXT("DoMove")),&Params);Character->GetCharacterAnimationComponent()->SetMovementState(!FMath::IsNearlyZero(Forward),false);}
-    void V(EInputEvent Event){Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::V,Event,Event==IE_Pressed?1.f:0.f));}
+    void InspectionKey(EInputEvent Event){Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Rogue10mInput::InspectionCameraKey(),Event,Event==IE_Pressed?1.f:0.f));}
     void RecordSkeleton(USkeletalMeshComponent* Mesh,const TCHAR* Stage)
     {
         if(!Mesh||!Mesh->GetSkeletalMeshAsset()){Check(false,TEXT("skeleton_missing"));return;}
@@ -194,7 +195,7 @@ private:
         if(FrameIndex>=579&&FrameIndex<=595){Check(!Requested&&Alpha<.001&&Snapshot.Phase==ERogue10mBasicBrawlerPhase::Idle,TEXT("menu_charge_reappeared_after_close"));}
         if(FrameIndex>=625&&FrameIndex<=638&&!Montage){Check(Alpha>.98&&Requested,TEXT("dodge_did_not_restore_guard"));++DodgeGuardSamples;}
         if(FrameIndex==35||FrameIndex==38){Press(true);Release(true);}if(FrameIndex==95||FrameIndex==150||FrameIndex==536){Press(false);}if(FrameIndex==98||FrameIndex==276||FrameIndex==571){Release(false);}
-        if(FrameIndex==105||FrameIndex==130){V(IE_Pressed);}if(FrameIndex==106||FrameIndex==131){V(IE_Released);}
+        if(FrameIndex==105||FrameIndex==130){InspectionKey(IE_Pressed);}if(FrameIndex==106||FrameIndex==131){InspectionKey(IE_Released);}
         if(FrameIndex==180){WalkStart=Character->GetActorLocation();}if(FrameIndex>=180&&FrameIndex<200){Move(-.25f);MaxWalkCm=FMath::Max(MaxWalkCm,static_cast<double>(FVector::Dist2D(WalkStart,Character->GetActorLocation())));}if(FrameIndex==200){Move(0);Character->GetCharacterMovement()->StopMovementImmediately();}
         if(FrameIndex==326){JumpStartZ=Character->GetActorLocation().Z;Character->ProcessEvent(Character->FindFunctionChecked(TEXT("DoJumpStart")),nullptr);}if(FrameIndex==332){Character->ProcessEvent(Character->FindFunctionChecked(TEXT("DoJumpEnd")),nullptr);}if(FrameIndex>=326&&FrameIndex<396){MaxJumpCm=FMath::Max(MaxJumpCm,static_cast<double>(Character->GetActorLocation().Z-JumpStartZ));}
         if(FrameIndex==448){Check(Snapshot.AcceptedSerial==4,TEXT("unarmed_jab_jab_straight_hook_not_all_accepted"));Character->SetEquippedWeaponType(ERogue10mWeaponType::Knuckle);Combat->UnlockAttackSkill(Skills[4].Get());Check(Combat->AssignSkillToInputSlot(Skills[4].Get(),ERogue10mAttackInputSlot::Primary),TEXT("knuckle_primary_assignment_failed"));}
@@ -244,6 +245,6 @@ private:
 static TSharedPtr<FRun> Active;
 static void Run()
 {if(!GEngine||GIsEditor||(Active.IsValid()&&!Active->IsFinished()))return;for(const FWorldContext& Context:GEngine->GetWorldContexts()){if(UWorld* W=Context.World();W&&W->WorldType==EWorldType::Game){Active=MakeShared<FRun>();Active->Start(W);return;}}}
-static FAutoConsoleCommand Command(TEXT("Rogue10m.TestFighterCombatStance"),TEXT("Integrated relaxed/combat guard, >3s charge, locomotion, V, Knuckle, weapon/menu cancellation and dodge. -RogueFighterStanceLabel=name -RogueFighterStanceCaptureAll"),FConsoleCommandDelegate::CreateStatic(&Run));
+static FAutoConsoleCommand Command(TEXT("Rogue10m.TestFighterCombatStance"),TEXT("Integrated relaxed/combat guard, >3s charge, locomotion, inspection, Knuckle, weapon/menu cancellation and dodge. -RogueFighterStanceLabel=name -RogueFighterStanceCaptureAll"),FConsoleCommandDelegate::CreateStatic(&Run));
 }
 #endif

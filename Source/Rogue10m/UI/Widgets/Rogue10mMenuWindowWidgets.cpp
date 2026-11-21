@@ -5,6 +5,7 @@
 #include "Rogue10mInventoryComponent.h"
 #include "Rogue10m.h"
 #include "Rogue10mCharacter.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mEquipmentPreviewActor.h"
 #include "Rogue10mAttackSkillData.h"
@@ -2394,7 +2395,9 @@ void URogue10mSkillTreeWindowWidget::RefreshKeyControls()
 		if (bActive && bAttack && bUnlocked && SelectedSkill)
 		{
 			Hint = Combat->IsSelectableActiveTechnique(SelectedSkill)
-				? SelectedSkill->GetAllowedSlotText().ToString() + TEXT(". 공용은 Q/E/R 지정 또는 HUD 드래그, 전용은 해당 HUD 슬롯. 최대 6개, 기본공격·Ctrl 별도.")
+				? FText::Format(NSLOCTEXT("Rogue10mSkillTree", "LegacyIdentitySlotHint",
+					"{0}. 공용은 Q/E/R 지정 또는 HUD 드래그, 전용은 해당 HUD 슬롯. 최대 6개, 기본공격·아이덴티티({1}) 별도."),
+					SelectedSkill->GetAllowedSlotText(), Rogue10mInput::IdentityKeyLabel()).ToString()
 				: TEXT("기본공격 또는 현재 무기의 장착 후보 목록에 포함되지 않은 기술입니다.");
 		}
 		UI_SkillKeyHintText->SetText(FText::FromString(Hint));

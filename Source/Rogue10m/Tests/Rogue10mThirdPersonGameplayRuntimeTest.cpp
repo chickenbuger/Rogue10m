@@ -168,7 +168,7 @@ private:
    Check(RealNovicePrimary.IsValid()&&RealNovicePrimary.Get()!=MouseSkills[0]&&RealNovicePrimary->GetPathName().StartsWith(TEXT("/Game/")),TEXT("actual_novice_primary_is_real_content_not_synthetic"));
    if(!RealNovicePrimary.IsValid()){Finish();return;}
    FRogue10mMouseCombatTestAccess::Slot(*C,ERogue10mAttackInputSlot::Primary,RealNovicePrimary.Get());FRogue10mMouseCombatTestAccess::Ability(*C,RealNoviceAbility);BeforeRealNoviceUses=State->GetSkillUseCount(RealNovicePrimary->GetFName());
-   Key(L,true);Later(.08,[this,L,R,Done]{Key(L,false);for(auto K:{EKeys::Q,EKeys::E,EKeys::R}){Key(K,true);Key(K,false);}Key(R,true);Later(.3,[this,R,Done]{Key(R,false);Key(EKeys::LeftControl,true);Key(EKeys::LeftControl,false);Done();});});
+   Key(L,true);Later(.08,[this,L,R,Done]{Key(L,false);for(auto K:{EKeys::Q,EKeys::E,EKeys::R}){Key(K,true);Key(K,false);}Key(R,true);Later(.3,[this,R,Done]{Key(R,false);Key(Rogue10mInput::IdentityKey(),true);Key(Rogue10mInput::IdentityKey(),false);Done();});});
   }
  }
  void FinishMouseCase()
@@ -180,7 +180,7 @@ private:
    const auto* State=Character->GetPlayerState<ARogue10mPlayerState>();const int32 Delta=State->GetSkillUseCount(RealNovicePrimary->GetFName())-BeforeRealNoviceUses;
    const auto* Identity=Character->FindComponentByClass<URogue10mWeaponIdentityComponent>();
    const bool BasicAccepted=Delta==1;const bool NoTechniques=Character->GetCombatComponent()->GetEquippedLoadoutSkillCount()==0&&(!Identity||!Identity->IsIdentityActive());
-   Check(BasicAccepted,TEXT("actual_novice_InputKey_LMB_accepts_real_fixed_punch"));Check(NoTechniques,TEXT("actual_novice_QER_RMB_Ctrl_cannot_activate_weapon_skills"));Passed&=BasicAccepted&&NoTechniques;
+   Check(BasicAccepted,TEXT("actual_novice_InputKey_LMB_accepts_real_fixed_punch"));Check(NoTechniques,TEXT("actual_novice_QER_RMB_identity_key_cannot_activate_weapon_skills"));Passed&=BasicAccepted&&NoTechniques;
    Results+=FString::Printf(TEXT("actual_novice_primary=%s\nactual_novice_primary_use_delta=%d\nactual_novice_weapon_skills_rejected=%d\nactual_novice_input=Controller_InputKey_not_physical\nactual_novice_save_restart=not_performed\n"),*RealNovicePrimary->GetPathName(),Delta,NoTechniques);
   }
   ++MouseCases;if(Passed)++MousePassed;
@@ -204,7 +204,7 @@ private:
  void BeginDodge(bool WallCase)
  {
   Stage=WallCase?TEXT("wall_dodge"):TEXT("free_dodge");DodgeStart=Character->GetActorLocation();bWallDodge=WallCase;bSawDodge=false;bDodgePhoto=false;Character->GetCharacterMovement()->StopMovementImmediately();if(WallCase)Wall=MakeBox(DodgeStart+Character->GetActorForwardVector()*85,FVector(10,180,180),Character->GetActorRotation());Key(Rogue10mInput::DodgeKey(),true);
-  Later(.35,[this,WallCase]{Key(Rogue10mInput::DodgeKey(),false);const float Travel=FVector::Dist2D(DodgeStart,Character->GetActorLocation());Check(bSawDodge,TEXT("production_LeftAlt_activates_dodge"));Check(!Character->IsDodging(),TEXT("dodge_finishes"));if(WallCase){WallTravel=Travel;Check(Travel<=43&&Travel<FreeTravel,TEXT("dodge_stops_before_wall"));Photo(TEXT("05_wall_dodge_result.png"));Later(.35,[this]{MaybeMouse();});}else{FreeTravel=Travel;Check(Travel>FMath::Min(20.f,ConfiguredDodgeDistance*.05f)&&Travel<=ConfiguredDodgeDistance+5.f,TEXT("free_dodge_travel_within_actual_configuration"));Later(.5,[this]{BeginDodge(true);});}});
+  Later(.35,[this,WallCase]{Key(Rogue10mInput::DodgeKey(),false);const float Travel=FVector::Dist2D(DodgeStart,Character->GetActorLocation());Check(bSawDodge,TEXT("production_LeftCtrl_activates_dodge"));Check(!Character->IsDodging(),TEXT("dodge_finishes"));if(WallCase){WallTravel=Travel;Check(Travel<=43&&Travel<FreeTravel,TEXT("dodge_stops_before_wall"));Photo(TEXT("05_wall_dodge_result.png"));Later(.35,[this]{MaybeMouse();});}else{FreeTravel=Travel;Check(Travel>FMath::Min(20.f,ConfiguredDodgeDistance*.05f)&&Travel<=ConfiguredDodgeDistance+5.f,TEXT("free_dodge_travel_within_actual_configuration"));Later(.5,[this]{BeginDodge(true);});}});
  }
  void Sample()
  {
@@ -219,6 +219,6 @@ private:
  TArray<URogue10mAttackSkillData*> MouseSkills;int32 BeforeUses[4]{},ExpectedUses[4]{};int32 MouseIndex=0,MouseCases=0,MousePassed=0;
  struct FPhoto{FString Name;int32 Width=0,Height=0;TArray<FColor> Pixels;};TWeakObjectPtr<UWorld> World;TWeakObjectPtr<ARogue10mPlayerController> PC;TWeakObjectPtr<ARogue10mCharacter> Character;TWeakObjectPtr<URogue10mProgressionSubsystem> Saves;TWeakObjectPtr<AActor> Floor,Obstacle,Wall;TFunction<void()> Next;FDelegateHandle Cleanup,SampleHandle,CaptureHandle;TArray<FPhoto> Photos;FString Label,Output,Results,Frames,Stage=TEXT("prepare"),PendingPhoto;FVector MoveStart,DodgeStart;double Deadline=0,NextAt=0;float ConfiguredDodgeDistance=100.f,ConfiguredDodgeDuration=.16f;float OpenDistance=0,BlockedDistance=0,RecoveredDistance=0,MoveTravel=0,FreeTravel=0,WallTravel=0;int32 Checks=0,Failures=0,Samples=0,DodgeSamples=0,RequestedPhotos=0,CompletedPhotos=0;bool bFinished=false,bRendered=false,bWallDodge=false,bSawDodge=false,bDodgePhoto=false;
 };
-static TSharedPtr<FRun> Active;static void Run(){if(!GEngine||GIsEditor||(Active&&!Active->Finished()))return;for(const FWorldContext& C:GEngine->GetWorldContexts())if(UWorld* W=C.World();W&&C.WorldType==EWorldType::Game){Active=MakeShared<FRun>();Active->Start(*W);return;}UE_LOG(LogRogue10m,Error,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_FAILED reason=no_game_world"));FPlatformMisc::RequestExitWithStatus(false,1);}static FAutoConsoleCommand Command(TEXT("Rogue10m.TestThirdPersonGameplay"),TEXT("Isolated fresh ThirdPerson namespace: default camera, mesh, collision, W and LeftAlt; first-person QA paused."),FConsoleCommandDelegate::CreateStatic(&Run));
+static TSharedPtr<FRun> Active;static void Run(){if(!GEngine||GIsEditor||(Active&&!Active->Finished()))return;for(const FWorldContext& C:GEngine->GetWorldContexts())if(UWorld* W=C.World();W&&C.WorldType==EWorldType::Game){Active=MakeShared<FRun>();Active->Start(*W);return;}UE_LOG(LogRogue10m,Error,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_FAILED reason=no_game_world"));FPlatformMisc::RequestExitWithStatus(false,1);}static FAutoConsoleCommand Command(TEXT("Rogue10m.TestThirdPersonGameplay"),TEXT("Isolated fresh ThirdPerson namespace: default camera, mesh, collision, W and Left Ctrl; first-person QA paused."),FConsoleCommandDelegate::CreateStatic(&Run));
 }
 #endif

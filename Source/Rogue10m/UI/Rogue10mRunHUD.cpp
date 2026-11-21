@@ -263,7 +263,10 @@ FRogue10mHudIdentityView URogue10mRunHUD::GetIdentityView() const
 		const auto* Burst = Character ? Character->FindComponentByClass<URogue10mWeaponIdentityComponent>() : nullptr;
 		View.bHasManualActivation = Burst != nullptr;
 		const bool bActive = Burst && Burst->IsIdentityActive();
-		View.ResourceLabel = FText::FromString(bActive ? TEXT("Ctrl · 질풍투기 활성") : TEXT("Ctrl · 질풍투기"));
+		const FText BurstLabel = bActive ? NSLOCTEXT("Rogue10mHUD", "KnuckleBurstActive", "질풍투기 활성")
+			: NSLOCTEXT("Rogue10mHUD", "KnuckleBurst", "질풍투기");
+		View.ResourceLabel = FText::Format(NSLOCTEXT("Rogue10mHUD", "ManuallyActivatedIdentity", "{0} · {1}"),
+			Rogue10mInput::IdentityKeyLabel(), BurstLabel);
 		View.Current = Burst ? (bActive ? Burst->GetRemainingSeconds() : Burst->GetCooldownRemaining()) : 0.f;
 		View.Max = Burst ? (bActive ? Burst->DurationSeconds : Burst->CooldownSeconds) : 1.f;
 		View.Normalized = View.Max > 0.f ? View.Current / View.Max : 0.f; View.bHasIdentityResource = true;

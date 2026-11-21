@@ -10,7 +10,7 @@ class UPostProcessComponent;
 class URogue10mAttackSkillData;
 enum class ERogue10mRunPhase : uint8;
 
-/** Prototype knuckle Ctrl burst. Derived overlays never write persistent GAS base attributes. */
+/** Prototype knuckle identity burst. Derived overlays never write persistent GAS base attributes. */
 UCLASS(ClassGroup=(Rogue10m), meta=(BlueprintSpawnableComponent))
 class ROGUE10M_API URogue10mWeaponIdentityComponent : public UActorComponent
 {

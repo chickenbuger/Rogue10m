@@ -55,6 +55,13 @@ BAKED_CAPTIONS = {
     "PlateCtrl": ((1277, 857, 36, 20), (1273, 857, 5, 20)),
 }
 
+# The native key captions are centered and clipped in these design-pixel
+# bands. The atlas IDs still describe the approved source artwork.
+LIVE_CAPTION_BANDS = {
+    "SlotAlt": (430, 834, 45, 19),
+    "PlateCtrl": (1275, 857, 39, 20),
+}
+
 
 def box(rect):
     x, y, width, height = rect
@@ -136,12 +143,17 @@ def caption_ink(source, rect):
     return ink
 
 
-def shrink_caption(target, source, rect, patch_rect):
+def clear_caption(target, source, rect, patch_rect):
     ink = caption_ink(source, rect)
     if ink.getbbox() is None:
         raise ValueError(f"No caption pixels at {rect}")
 
     replace_from_patch(target, source, rect, patch_rect, ink.filter(ImageFilter.MaxFilter(7)), blur=1.0)
+    return ink
+
+
+def shrink_caption(target, source, rect, patch_rect):
+    ink = clear_caption(target, source, rect, patch_rect)
     image = source.crop(box(rect)).convert("RGBA")
     image.putalpha(ink.filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(0.45)))
     image_bounds = image.getbbox()
@@ -259,8 +271,11 @@ def identity_layers(source):
 
 def sprites(source):
     caption_face = source.copy()
-    for rect, sample in BAKED_CAPTIONS.values():
-        shrink_caption(caption_face, source, rect, sample)
+    for name, (rect, sample) in BAKED_CAPTIONS.items():
+        if name in LIVE_CAPTION_BANDS:
+            clear_caption(caption_face, source, rect, sample)
+        else:
+            shrink_caption(caption_face, source, rect, sample)
 
     health_face = source.copy()
     hp_clean = (37, 33, 216, 29)
