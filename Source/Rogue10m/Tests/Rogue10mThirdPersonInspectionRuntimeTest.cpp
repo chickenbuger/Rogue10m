@@ -27,6 +27,7 @@
 #include "Rogue10mBasicMonster.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCombatComponent.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mPlayerController.h"
 #include "TimerManager.h"
 #include "UnrealClient.h"
@@ -53,7 +54,7 @@ private:
     void Key(EInputEvent Event)
     {
         // This enters PlayerInput and its bound IE_Pressed delegate on the following input tick.
-        const bool bAccepted=Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::V,Event,Event==IE_Pressed ? 1.f : 0.f));
+        const bool bAccepted=Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Rogue10mInput::InspectionCameraKey(),Event,Event==IE_Pressed ? 1.f : 0.f));
         UE_LOG(LogRogue10m,Display,TEXT("INSPECTION KEY frame=%d event=%d accepted=%d menu=%d"),FrameIndex,static_cast<int32>(Event),bAccepted,Controller->IsInventoryVisible());
     }
     FVector Pivot() const
@@ -73,7 +74,7 @@ private:
         Check(!Controller->IsInventoryVisible() && !Controller->IsLookInputIgnored() && !Controller->IsMoveInputIgnored() && !Controller->bShowMouseCursor,TEXT("initial_input_blocked"));
         const FRotator ObservedControl=Controller->GetControlRotation();
         // Isolate only this test pawn from the user's live mouse/movement input. PlayerController
-        // input stays enabled, so V still travels through InputKey and its real bound delegate.
+        // input stays enabled, so the inspection key still travels through InputKey and its real bound delegate.
         OldPawnInputEnabled=Character->InputEnabled(); Character->DisableInput(Controller.Get()); bOwnPawnInput=true;
         Controller->RotationInput=FRotator::ZeroRotator;
         BaseControl=FRotator(-30.f,Character->GetActorRotation().Yaw,0.f);
@@ -99,7 +100,7 @@ private:
         if (bCapture) { IFileManager::Get().MakeDirectory(*Output,true); }
         Tick=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* W,ELevelTick,float)
         { if (W==Self->World.Get()) { Self->Frame(); } });
-        UE_LOG(LogRogue10m,Display,TEXT("INSPECTION TIMELINE V=30/120/170/195/220/250 left_right_jab=55/58 obstacle=[100,110) inventory=[140,150) blocked_V=145 frames=280 fps=30 capture=%d cosmetics=%d control=%s"),bCapture,PartOwnerNoSee.Num(),*BaseControl.ToString());
+        UE_LOG(LogRogue10m,Display,TEXT("INSPECTION TIMELINE inspection=30/120/170/195/220/250 left_right_jab=55/58 obstacle=[100,110) inventory=[140,150) blocked_inspection=145 frames=280 fps=30 capture=%d cosmetics=%d control=%s"),bCapture,PartOwnerNoSee.Num(),*BaseControl.ToString());
     }
     void SpawnCameraObstacle()
     {
@@ -199,7 +200,7 @@ private:
         if (FrameIndex==140) { Controller->ToggleInventory(); Check(Controller->IsInventoryVisible(),TEXT("inventory_did_not_open")); }
         if (FrameIndex==148)
         {
-            Check(Controller->IsInventoryVisible(),TEXT("inventory_closed_during_V_test"));
+            Check(Controller->IsInventoryVisible(),TEXT("inventory_closed_during_inspection_key_test"));
             Check(!Character->GetAppearanceCameraComponent()->IsThirdPersonInspectionActive(),TEXT("V_not_blocked_by_inventory"));
             Controller->ToggleInspectionCamera();
             Check(!Character->GetAppearanceCameraComponent()->IsThirdPersonInspectionActive(),TEXT("direct_handler_not_blocked_by_inventory"));
@@ -264,7 +265,7 @@ static void Run()
     }
 }
 static FAutoConsoleCommand Command(TEXT("Rogue10m.TestThirdPersonInspection"),
-    TEXT("Injects V through PlayerController input to verify third-person inspection, original body jabs, first-person restoration, menu rejection and camera collision; captures 280 frames. -RogueInspectionNoCapture skips images."),
+    TEXT("Injects the inspection key through PlayerController input to verify third-person inspection, original body jabs, first-person restoration, menu rejection and camera collision; captures 280 frames. -RogueInspectionNoCapture skips images."),
     FConsoleCommandDelegate::CreateStatic(&Run));
 }
 #endif

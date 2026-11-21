@@ -2,12 +2,14 @@
 #if WITH_EDITOR
 
 #include "Algo/AllOf.h"
+#include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/Widget.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
 #include "Engine/GameViewportClient.h"
 #include "Engine/World.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "HAL/FileManager.h"
 #include "HAL/IConsoleManager.h"
@@ -18,6 +20,7 @@
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
 #include "Rogue10m.h"
+#include "Rogue10mAppearanceCameraComponent.h"
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mCharacter.h"
@@ -33,6 +36,7 @@
 #include "Rogue10mWeaponIdentityComponent.h"
 #include "TimerManager.h"
 #include "UObject/UObjectIterator.h"
+#include "UObject/UnrealType.h"
 #include "UnrealClient.h"
 #include "Widgets/Rogue10mCombatHudAWidget.h"
 #include "Widgets/Rogue10mMainHUDWidget.h"
@@ -161,7 +165,7 @@ private:
 		}
 		const auto& Identity = View->GetDisplayedIdentity();
 		Check(Identity.WeaponType == ERogue10mWeaponType::Unarmed && !Identity.bHasIdentityResource
-			&& !View->ShowsIdentityPercent() && !View->ShowsIdentityKey(), TEXT("unarmed_hides_placeholder_percentage_and_Ctrl"));
+			&& !View->ShowsIdentityPercent() && !View->ShowsIdentityKey(), TEXT("unarmed_hides_placeholder_percentage_and_identity_key"));
 		Report += FString::Printf(TEXT("unarmed_default_camera_arm=%.1f target=(%.1f,%.1f,%.1f) socket=(%.1f,%.1f,%.1f)\n"),
 			CameraBoom->TargetArmLength, CameraBoom->TargetOffset.X, CameraBoom->TargetOffset.Y, CameraBoom->TargetOffset.Z,
 			CameraBoom->SocketOffset.X, CameraBoom->SocketOffset.Y, CameraBoom->SocketOffset.Z);
@@ -328,28 +332,51 @@ private:
 		});
 	}
 
-	void ProbeDodgeAndEmptySkill()
+	void TapGameKey(const FKey& Key, TFunction<void()> InspectAfterRelease)
 	{
 		auto* Controller = Cast<ARogue10mPlayerController>(World->GetFirstPlayerController());
-		if (!Check(Controller != nullptr, TEXT("live_controller_can_receive_simulated_Alt")))
+		if (!Controller)
 		{
+			Check(false, TEXT("live_controller_can_receive_simulated_input"));
 			Finish();
 			return;
 		}
-		Character->GetCombatComponent()->UnassignSkillFromInputSlot(ERogue10mAttackInputSlot::QSkill);
-		Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Rogue10mInput::DodgeKey(), IE_Pressed, 1.f));
-		Later(.10f, [this, WeakController = TWeakObjectPtr<ARogue10mPlayerController>(Controller)]()
+		Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Key, IE_Pressed, 1.f));
+		Later(.10f, [Key, WeakController = TWeakObjectPtr<ARogue10mPlayerController>(Controller), InspectAfterRelease = MoveTemp(InspectAfterRelease)]()
 		{
 			if (WeakController.IsValid())
 			{
-				WeakController->InputKey(FInputKeyEventArgs::CreateSimulated(Rogue10mInput::DodgeKey(), IE_Released, 0.f));
+				WeakController->InputKey(FInputKeyEventArgs::CreateSimulated(Key, IE_Released, 0.f));
 			}
+			InspectAfterRelease();
+		});
+	}
+
+	void ProbeDodgeAndEmptySkill()
+	{
+		Check(Character->GetCharacterMovement()->IsMovingOnGround() && !Character->IsDodging()
+			&& Character->GetDodgeCooldownRemaining() <= 0.0f, TEXT("retired_Alt_probed_while_dodge_available"));
+		const float Stamina = Character->GetRogueAttributeSet()->GetStamina();
+		TapGameKey(EKeys::LeftAlt, [this, Stamina]()
+		{
+			Check(!Character->IsDodging() && Character->GetDodgeCooldownRemaining() <= 0.0f
+				&& FMath::IsNearlyEqual(Character->GetRogueAttributeSet()->GetStamina(), Stamina, .01f),
+				TEXT("literal_LeftAlt_does_not_start_dodge_or_consume_stamina"));
+			ProbeCtrlDodge();
+		});
+	}
+
+	void ProbeCtrlDodge()
+	{
+		Character->GetCombatComponent()->UnassignSkillFromInputSlot(ERogue10mAttackInputSlot::QSkill);
+		TapGameKey(EKeys::LeftControl, [this]()
+		{
 			URogue10mMainHUDWidget* Main = FindHud();
 			if (Main) { Main->RefreshBoundWidgetData(); }
 			const auto* View = Main ? Main->GetCombatHudA() : nullptr;
 			Check(View && Character->GetDodgeCooldownRemaining() > 0.f && View->GetDodgeCooldownRemaining() > 0.f
 				&& FMath::IsNearlyEqual(View->GetDodgeCooldownRemaining(), Character->GetDodgeCooldownRemaining(), .15f),
-				TEXT("simulated_Alt_reaches_real_HUD_positive_dodge_cooldown"));
+				TEXT("literal_LeftCtrl_starts_real_dodge_and_updates_HUD_cooldown"));
 			Check(View && !View->GetDisplayedSkills().IsEmpty() && !View->GetDisplayedSkills()[0].bUnlocked
 				&& !View->GetDisplayedSkills()[0].SkillData, TEXT("cleared_Q_skill_render_state_is_locked"));
 			Later(.50f, [this]() { ProbeVitalDrain(); });
@@ -505,27 +532,81 @@ private:
 		{
 			const URogue10mMainHUDWidget* Main = FindHud();
 			const auto* View = Main ? Main->GetCombatHudA() : nullptr;
-			auto* Controller = Cast<ARogue10mPlayerController>(World->GetFirstPlayerController());
-			if (!Check(View && Controller && View->GetDisplayedIdentity().WeaponType == ERogue10mWeaponType::Knuckle
-				&& View->ShowsIdentityKey(), TEXT("equipped_knuckle_shows_supported_Ctrl_input")))
+			const auto* Burst = Character->FindComponentByClass<URogue10mWeaponIdentityComponent>();
+			if (!Check(View && Burst && !Burst->IsIdentityActive() && View->GetDisplayedIdentity().WeaponType == ERogue10mWeaponType::Knuckle
+				&& View->ShowsIdentityKey() && Rogue10mInput::IdentityKey() == EKeys::V,
+				TEXT("equipped_knuckle_shows_supported_V_identity_input")))
 			{
 				Finish();
 				return;
 			}
-			Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::LeftControl, IE_Pressed, 1.f));
-			Later(.15f, [this, WeakController = TWeakObjectPtr<ARogue10mPlayerController>(Controller)]()
+			TapGameKey(EKeys::LeftControl, [this]()
 			{
-				if (WeakController.IsValid())
-				{
-					WeakController->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::LeftControl, IE_Released, 0.f));
-				}
-				const auto* Burst = Character->FindComponentByClass<URogue10mWeaponIdentityComponent>();
-				URogue10mMainHUDWidget* RefreshedMain = FindHud();
-				if (RefreshedMain) { RefreshedMain->RefreshBoundWidgetData(); }
-				const auto* RefreshedView = RefreshedMain ? RefreshedMain->GetCombatHudA() : nullptr;
-				Check(Burst && Burst->IsIdentityActive() && RefreshedView && RefreshedView->ShowsIdentityKey()
-					&& RefreshedView->ShowsIdentityPercent() && RefreshedView->GetDisplayedIdentity().Normalized > 0.0f,
-					TEXT("simulated_Ctrl_activates_real_knuckle_identity_and_updates_HUD"));
+				const auto* CurrentBurst = Character->FindComponentByClass<URogue10mWeaponIdentityComponent>();
+				Check(Character->GetDodgeCooldownRemaining() > 0.0f && CurrentBurst && !CurrentBurst->IsIdentityActive(),
+					TEXT("literal_LeftCtrl_dodges_with_knuckle_without_triggering_identity"));
+				Later(FMath::Max(.30f, Character->GetDodgeCooldownRemaining() + .15f), [this]() { ProbeIdentityV(); });
+			});
+		});
+	}
+
+	void ProbeIdentityV()
+	{
+		Check(!Character->IsDodging() && Character->GetDodgeCooldownRemaining() <= 0.0f,
+			TEXT("V_identity_probe_starts_with_dodge_available"));
+		const UCameraComponent* GameplayCamera = Character->GetGameplayCameraComponent();
+		TapGameKey(EKeys::V, [this, GameplayCamera]()
+		{
+			const auto* Burst = Character->FindComponentByClass<URogue10mWeaponIdentityComponent>();
+			URogue10mMainHUDWidget* Main = FindHud();
+			if (Main) { Main->RefreshBoundWidgetData(); }
+			const auto* View = Main ? Main->GetCombatHudA() : nullptr;
+			Check(Burst && Burst->IsIdentityActive() && View && View->ShowsIdentityKey()
+				&& View->ShowsIdentityPercent() && View->GetDisplayedIdentity().Normalized > 0.0f,
+				TEXT("literal_V_activates_real_knuckle_identity_and_updates_HUD"));
+			const auto* Appearance = Character->GetAppearanceCameraComponent();
+			Check(!Character->IsDodging() && Character->GetDodgeCooldownRemaining() <= 0.0f
+				&& Appearance && !Appearance->IsThirdPersonInspectionActive() && Character->GetGameplayCameraComponent() == GameplayCamera,
+				TEXT("literal_V_neither_dodges_nor_switches_gameplay_camera"));
+			const FString Screenshot = Evidence / TEXT("CombatHudA_Knuckle_1280x720.png");
+			FScreenshotRequest::RequestScreenshot(Screenshot, true, false);
+			Later(1.0f, [this, Screenshot]()
+			{
+				Check(IFileManager::Get().FileSize(*Screenshot) > 24, TEXT("active_knuckle_V_badge_capture_saved"));
+				ProbeInspectionCamera();
+			});
+		});
+	}
+
+	void ProbeInspectionCamera()
+	{
+		auto* Appearance = Character->GetAppearanceCameraComponent();
+		const auto* ThirdPersonFlag = FindFProperty<FBoolProperty>(Character->GetClass(), TEXT("bUseThirdPersonGameplay"));
+		UCameraComponent* GameplayCamera = Character->GetGameplayCameraComponent();
+		UCameraComponent* FirstPersonCamera = Character->GetFirstPersonCameraComponent();
+		if (!Check(Appearance && ThirdPersonFlag && GameplayCamera && FirstPersonCamera
+			&& Rogue10mInput::InspectionCameraKey() == EKeys::C, TEXT("inspection_C_has_detached_camera_fixture")))
+		{
+			Finish();
+			return;
+		}
+		// The default gameplay camera never enters inspection. Probe the legacy input context on this detached pawn only.
+		ThirdPersonFlag->SetPropertyValue_InContainer(Character.Get(), false);
+		GameplayCamera->Deactivate();
+		FirstPersonCamera->Activate();
+		Appearance->RefreshAppearanceCamera();
+		Check(Appearance->IsAppearanceCameraActive() && !Appearance->IsThirdPersonInspectionActive(),
+			TEXT("detached_pawn_enters_legacy_appearance_camera_before_inspection_probe"));
+		TapGameKey(EKeys::V, [this, Appearance, ThirdPersonFlag, GameplayCamera, FirstPersonCamera]()
+		{
+			Check(!Appearance->IsThirdPersonInspectionActive(), TEXT("literal_V_no_longer_toggles_even_when_inspection_is_available"));
+			TapGameKey(EKeys::C, [this, Appearance, ThirdPersonFlag, GameplayCamera, FirstPersonCamera]()
+			{
+				Check(Appearance->IsThirdPersonInspectionActive(), TEXT("literal_C_enters_supported_legacy_inspection"));
+				ThirdPersonFlag->SetPropertyValue_InContainer(Character.Get(), true);
+				Appearance->RefreshAppearanceCamera();
+				FirstPersonCamera->Deactivate();
+				GameplayCamera->Activate();
 				Finish();
 			});
 		});
@@ -600,13 +681,13 @@ private:
 			&& Identity.IdentityType == ExpectedIdentity.IdentityType && Identity.bHasIdentityResource && Identity.Label.EqualTo(ExpectedIdentity.Label)
 			&& Identity.Normalized > 0.f && Identity.Normalized < 1.f
 			&& FMath::IsNearlyEqual(Identity.Normalized, ExpectedIdentity.Normalized, .001f), TEXT("paint_live_greatsword_identity"));
-		Check(View.ShowsIdentityPercent() && !View.ShowsIdentityKey(), TEXT("greatsword_paints_gauge_without_unsupported_Ctrl"));
+		Check(View.ShowsIdentityPercent() && !View.ShowsIdentityKey(), TEXT("greatsword_paints_gauge_without_unsupported_identity_key"));
 		Report += FString::Printf(TEXT("rendered_health=%.1f/%.1f stamina=%.1f/%.1f level=%d identity=%.3f\n"),
 			Health.Current, Health.Max, Resource.Current, Resource.Max, Growth.Level, Identity.Normalized);
-		Check(Rogue10mInput::DodgeKey() == EKeys::LeftAlt && Rogue10mInput::DodgeKeyLabel().ToString() == TEXT("Alt")
+		Check(Rogue10mInput::DodgeKey() == EKeys::LeftControl && Rogue10mInput::DodgeKeyLabel().ToString() == TEXT("Ctrl")
 			&& View.IsDodging() == Character->IsDodging()
 			&& FMath::IsNearlyEqual(View.GetDodgeCooldownRemaining(), Character->GetDodgeCooldownRemaining(), .15f),
-			TEXT("separate_Alt_dodge_and_live_cooldown_state"));
+			TEXT("separate_Ctrl_dodge_and_live_cooldown_state"));
 
 		const auto& Skills = View.GetDisplayedSkills();
 		const TArray<FRogue10mHudQuickSlotView> ExpectedSkills = Main.GetSkillQuickSlotViews();

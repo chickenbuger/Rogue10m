@@ -3,6 +3,7 @@
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCombatComponent.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
 #include "Rogue10mSkillBindingComponent.h"
@@ -2235,7 +2236,9 @@ void URogue10mHybridSkillTreeWidget::RefreshKeyControls()
 	BindingText->SetVisibility(Skill ? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
 	BindingText->SetText(FText::FromString(Skill
 		? FString::Printf(TEXT("%s · 키 %s"), *Skill->SkillName.ToString(), Key.IsValid() ? *Key.GetDisplayName().ToString() : TEXT("미지정")) : TEXT("")));
-	FString Hint = TEXT("공용 기술은 Q/E/R 지정 또는 HUD 드래그. 전용 기술은 해당 전용 슬롯에만 장착. 기본공격·Ctrl 별도, 최대 6개.");
+	FString Hint = FText::Format(NSLOCTEXT("Rogue10mSkillTree", "IdentitySlotHint",
+		"공용 기술은 Q/E/R 지정 또는 HUD 드래그. 전용 기술은 해당 전용 슬롯에만 장착. 기본공격·아이덴티티({0}) 별도, 최대 6개."),
+		Rogue10mInput::IdentityKeyLabel()).ToString();
 	if (Skill) { Hint += TEXT(" ") + Skill->GetAllowedSlotText().ToString(); }
 	if (Skill && Skill->RequiresLoadoutCharge())
 		Hint += FString::Printf(TEXT(" %.2f초 이상 누른 뒤 놓아 사용합니다."), Skill->ChargeSeconds);

@@ -27,6 +27,7 @@
 #include "Rogue10mBasicMonster.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCombatComponent.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mPlayerController.h"
 #include "TimerManager.h"
 #include "UnrealClient.h"
@@ -105,7 +106,7 @@ private:
         FApp::SetFixedDeltaTime(1.0/30.0);FApp::SetUseFixedTimeStep(true);
         RecordSkeleton(Character->GetAnimationPlaybackMesh(),TEXT("source"));RecordSkeleton(Character->GetMesh(),TEXT("appearance"));
         Tick=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* W,ELevelTick,float){if(W==Self->World.Get()){Self->Frame();}});
-        UE_LOG(LogRogue10m,Display,TEXT("STABILITY TIMELINE frames=%d fps=30 V=30/115/125/315 jabs=45/48 straight=135/138 charge=210/246 walk=[330,360) jump=380/386 locomotion=%d capture=%d output=%s"),FrameLimit,bLocomotion,bCapture,*Output);
+        UE_LOG(LogRogue10m,Display,TEXT("STABILITY TIMELINE frames=%d fps=30 inspection=30/115/125/315 jabs=45/48 straight=135/138 charge=210/246 walk=[330,360) jump=380/386 locomotion=%d capture=%d output=%s"),FrameLimit,bLocomotion,bCapture,*Output);
     }
     void RecordSkeleton(USkeletalMeshComponent* Mesh,const TCHAR* Stage)
     {
@@ -174,9 +175,9 @@ private:
                 Character->GetActorLocation().X,Character->GetActorLocation().Y,Character->GetActorLocation().Z,Character->GetCharacterMovement()->IsFalling());
         RecordPose(Source,TEXT("source"));RecordPose(Body,TEXT("appearance"));
         if(FrameIndex==30 || FrameIndex==115 || FrameIndex==125 || FrameIndex==315)
-        {Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::V,IE_Pressed,1.f));}
+        {Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Rogue10mInput::InspectionCameraKey(),IE_Pressed,1.f));}
         if(FrameIndex==31 || FrameIndex==116 || FrameIndex==126 || FrameIndex==316)
-        {Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::V,IE_Released,0.f));}
+        {Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Rogue10mInput::InspectionCameraKey(),IE_Released,0.f));}
         auto* Combat=Character->GetCombatComponent();
         if(FrameIndex==45 || FrameIndex==48){Combat->HandleAttackPressed(true);Combat->HandleAttackReleased(true);}
         if(FrameIndex==135 || FrameIndex==210){Combat->HandleAttackPressed(false);}

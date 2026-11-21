@@ -410,12 +410,12 @@ private:
 		SelectKeyByInput(EKeys::Escape);
 		Check(Keys && Keys->GetSkillKey(InputSkill.Get()) == EKeys::Q && PC->IsAnyBlockingWindowVisible(),
 			TEXT("input_Esc_cancels_selection_preserves_key_and_menu"));
-		Check(Rogue10mInput::DodgeKey() == EKeys::LeftAlt, TEXT("input_contract_independently_requires_LeftAlt_dodge"));
+		Check(Rogue10mInput::DodgeKey() == EKeys::LeftControl, TEXT("input_contract_independently_requires_LeftCtrl_dodge"));
 		SelectKeyByInput(EKeys::W);
 		Check(Keys && Keys->GetSkillKey(InputSkill.Get()) == EKeys::Q, TEXT("input_reserved_movement_key_rejected_preserves_binding"));
 		FText DodgeReason;
 		Check(Keys && !Keys->SetSkillKey(InputSkill.Get(), Rogue10mInput::DodgeKey(), DodgeReason)
-			&& Keys->GetSkillKey(InputSkill.Get()) == EKeys::Q, TEXT("input_LeftAlt_dodge_cannot_be_assigned_as_active_skill"));
+			&& Keys->GetSkillKey(InputSkill.Get()) == EKeys::Q, TEXT("input_LeftCtrl_dodge_cannot_be_assigned_as_active_skill"));
 		SelectKeyByInput(EKeys::E);
 		Check(Keys && Keys->GetSkillKey(InputSkill.Get()) == EKeys::E, TEXT("input_freed_E_selected_through_real_key_selector"));
 		Click(TEXT("HybridTreeClearKey"));
