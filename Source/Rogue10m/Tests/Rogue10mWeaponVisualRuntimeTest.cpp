@@ -82,11 +82,16 @@ public:
   bSwordTechniqueAudit=FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordTechniqueQA"));
   const bool bWhirlwindCapture=FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordWhirlwindCapture"));
   const bool bGuardBreakCapture=FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordGuardBreakCapture"));
-  bSwordTechniqueRender=bSwordTechniqueAudit&&(bWhirlwindCapture||bGuardBreakCapture);
+  bCrushingCapture=bSwordTechniqueAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordCrushingSlashCapture"));
+  bCrushingEdge=bSwordTechniqueAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordCrushingEdgeQA"));
+  bCrushingStock=bSwordTechniqueAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordCrushingStockReference"));
+  bSwordTechniqueRender=bSwordTechniqueAudit&&(bWhirlwindCapture||bGuardBreakCapture||bCrushingCapture);
   bSwordGuardBreakAudit=bSwordTechniqueAudit&&(bGuardBreakCapture||FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordGuardBreakAudit")));
   const bool bNullRhi=FParse::Param(FCommandLine::Get(),TEXT("nullrhi"));
   const bool bTechniqueModeOK=bSwordTechniqueRender?(!bMeleeVfxLogicOnly&&!bNullRhi):(bMeleeVfxLogicOnly&&bNullRhi);
-  if(bSwordTechniqueAudit&&(!bMeleeVfxRun||bSwordEquipAudit||bCapstoneBraceRun||!bTechniqueModeOK||(bWhirlwindCapture&&bSwordGuardBreakAudit)))
+  const bool bConflictingTechnique=(bSwordGuardBreakAudit&&(bWhirlwindCapture||bCrushingCapture||bCrushingEdge))
+   ||(bWhirlwindCapture&&(bCrushingCapture||bCrushingEdge))||(bCrushingStock&&(!bCrushingEdge||!bMeleeVfxLogicOnly));
+  if(bSwordTechniqueAudit&&(!bMeleeVfxRun||bSwordEquipAudit||bCapstoneBraceRun||!bTechniqueModeOK||bConflictingTechnique))
   {
    bFinished=true;
    UE_LOG(LogRogue10m,Error,TEXT("RESULT=GREAT_SWORD_TECHNIQUES_FAILED reason=select_dedicated_nullrhi_or_render_mode"));
@@ -148,6 +153,7 @@ private:
  void Check(bool B,const TCHAR* Reason){if(!B){++Failures;UE_LOG(LogRogue10m,Error,TEXT("WEAPON3P FAIL skill=%d frame=%d %s"),Index,Frame,*FString(Reason));}}
  static constexpr int32 TechniqueCount=4;
  static constexpr double GuardBreakDistances[]={85.,110.,140.};
+ static constexpr double CrushingEdgeDistance=205.;
  static constexpr int32 GuardBreakCaseCount=UE_ARRAY_COUNT(GuardBreakDistances)+1;
  bool IsSwordCase() const {return bSwordTechniqueAudit||Index<5||(Index>=10&&Index<12);}
  bool IsMeleeMissCase() const
@@ -209,6 +215,7 @@ private:
   if(Phase==TEXT("ready")){bReadyCaptured=bCompleted;}
   else if(Phase==TEXT("hold_peak")&&bCapstoneBraceRender){bBracePeakCaptured=bCompleted;}
   else if(Phase==TEXT("after_first_damage")||Phase==TEXT("contact_miss")){bFirstDamageCaptured=bCompleted;}
+  else if(Phase==TEXT("overhead_load")){bCrushingLoadCaptured=bCompleted;}
   else if(Phase==TEXT("motion")){bMotionCaptured=bCompleted;}
   else if(Phase==TEXT("recovery")){bRecoveryCaptured=bCompleted;}
  }
@@ -357,8 +364,17 @@ private:
    }
    auto* Skill=Entry->Skill.LoadSynchronous();
    if(!Skill||!Skill->AttackMontage||!Tree->IsSkillGranted(Skill)){return false;}
+   const bool bCrushingSkill=Skill->GetFName()==TEXT("DA_Hybrid_GreatSword_CrushingSlash");
+   if(bCrushingStock&&bCrushingSkill)
+   {
+    // The edge comparison uses the authored baseline montage on the same isolated skill and query.
+    auto* Stock=LoadObject<UAnimMontage>(nullptr,TEXT("/Game/Rogue10m/Animation/Combat/GreatSword/AM_GreatSword_Primary03.AM_GreatSword_Primary03"));
+    if(!Stock){return false;}
+    Skill->AttackMontage=Stock;
+   }
    if(bSwordGuardBreakAudit&&Skill->GetFName()!=TEXT("DA_Hybrid_GreatSword_GuardBreak")){continue;}
-   if(bSwordTechniqueRender&&!bSwordGuardBreakAudit&&Skill->GetFName()!=TEXT("DA_Hybrid_GreatSword_Whirlwind")){continue;}
+   if(bCrushingCapture&&!bCrushingSkill){continue;}
+   if(bSwordTechniqueRender&&!bSwordGuardBreakAudit&&!bCrushingCapture&&Skill->GetFName()!=TEXT("DA_Hybrid_GreatSword_Whirlwind")){continue;}
    Skills.Add(Skill);
   }
   if(Tree->GetAvailableGrowthPoints()!=Points-TechniqueCount){return false;}
@@ -543,9 +559,10 @@ private:
    const FVector Origin=Character->GetActorLocation();
    const FVector Forward=Character->GetActorForwardVector();
    const FVector Right=Character->GetActorRightVector();
-   const FVector Position=bSwordGuardBreakAudit?Origin+Forward*120.-Right*420.+FVector(0,0,85):
+   const bool bFrontalCapture=bSwordGuardBreakAudit||bCrushingCapture;
+   const FVector Position=bFrontalCapture?Origin+Forward*120.-Right*420.+FVector(0,0,85):
     Origin-Forward*290.-Right*300.+FVector(0,0,65);
-   const FVector Focus=Origin+FVector(0,0,35)+(bSwordGuardBreakAudit?Forward*52.:FVector::ZeroVector);
+   const FVector Focus=Origin+FVector(0,0,35)+(bFrontalCapture?Forward*(bCrushingEdge?100.:52.):FVector::ZeroVector);
    FActorSpawnParameters CameraParams;
    CameraParams.ObjectFlags|=RF_Transient;
    auto* Camera=World->SpawnActor<ACameraActor>(Position,(Focus-Position).Rotation(),CameraParams);
@@ -1165,6 +1182,10 @@ private:
   auto* Skill=Skills[Index].Get();
   const FVector Right=FVector::CrossProduct(FVector::UpVector,Forward);
   FVector TargetOffset=Forward*110.;
+  if(bCrushingEdge&&!IsMeleeMissCase()&&Skill->GetFName()==TEXT("DA_Hybrid_GreatSword_CrushingSlash"))
+  {
+   TargetOffset=Forward*CrushingEdgeDistance;
+  }
   if(bSwordGuardBreakAudit&&!bSwordTechniqueRender&&!IsMeleeMissCase())
   {
    TargetOffset=Forward*GuardBreakDistances[Index];
@@ -1232,6 +1253,7 @@ private:
   bReadyRequested=bReadyCaptured=bFirstDamageCaptured=bFirstDamageRequested=bAcceptanceRequested=bImpactResidualRequested=bRecoveryRequested=bRecoveryCaptured=false;RenderedHandMaxTravelCm=0;
   VfxExcluded.Reset();VfxObservations.Reset();FirstImpactComponent.Reset();bFirstImpactObserved=false;bVfxTimedOut=false;
   bSawMeleeTrail=bSawMeleeRange=bSawMeleeImpact=bMotionRequested=bMotionCaptured=false;
+  bCrushingLoadRequested=bCrushingLoadCaptured=false;
   CasePresentationTier=FirstTrailMeshFrame=INDEX_NONE;
   TrailTrianglesThisFrame=0;
   if(IsVfxCase()){Check(Skill->CastEffect&&Skill->ImpactEffect&&Skill->CastEffect!=Skill->ImpactEffect,TEXT("vfx_distinct_cast_and_impact_assets_required"));}
@@ -1478,8 +1500,12 @@ private:
   {
    bFirstDamageRequested=Capture(IsMeleeMissCase()?TEXT("contact_miss"):TEXT("after_first_damage"));
   }
+  else if(bCrushingCapture&&Playing&&bFirstDamageCaptured&&!bCrushingLoadRequested&&!bCapturePending&&MontageTime>=.50)
+  {
+   bCrushingLoadRequested=Capture(TEXT("overhead_load"));
+  }
   else if(bSwordTechniqueRender&&Playing&&bFirstDamageCaptured&&!bMotionRequested&&!bCapturePending
-   &&MontageTime>=(bSwordGuardBreakAudit?.694:1.02))
+   &&MontageTime>=(bSwordGuardBreakAudit?.694:bCrushingCapture?.761:1.02))
   {
    bMotionRequested=Capture(TEXT("motion"));
   }
@@ -1508,7 +1534,8 @@ private:
    const FVector Actor=Character->GetActorLocation();
    SwordTechniqueActor+=FString::Printf(TEXT("%d,%s,%d,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f\n"),Index,*Skill->GetName(),
     Frame,Now-Accepted,MontageTime,Actor.X,Actor.Y,Actor.Z,Character->GetActorRotation().Yaw);
-   static const FName Bones[]={TEXT("pelvis"),TEXT("head"),TEXT("upperarm_r"),TEXT("upperarm_l"),TEXT("hand_r"),TEXT("hand_l"),TEXT("foot_r"),TEXT("foot_l")};
+   static const FName Bones[]={TEXT("pelvis"),TEXT("head"),TEXT("upperarm_r"),TEXT("upperarm_l"),TEXT("lowerarm_r"),TEXT("lowerarm_l"),
+    TEXT("hand_r"),TEXT("hand_l"),TEXT("middle_01_r"),TEXT("middle_01_l"),TEXT("foot_r"),TEXT("foot_l")};
    const USkeletalMeshComponent* Meshes[]={Source,Character->GetMesh()};
    for(const auto* Mesh:Meshes)
    {
@@ -1531,6 +1558,7 @@ private:
    Check(PulseCount==Wanted,TEXT("actual_damage_count_mismatch"));Check(MontageSamples>5,TEXT("montage_instance_not_playing_enough_samples"));
    Check(RenderedHandMaxTravelCm>2.,TEXT("rendered_body_hand_motion_missing"));Check(bFirstDamageCaptured,TEXT("after_first_damage_capture_not_completed"));
    if(bSwordTechniqueRender){Check(bMotionCaptured,TEXT("technique_rendered_motion_missing"));}
+   if(bCrushingCapture){Check(bCrushingLoadCaptured,TEXT("crushing_slash_overhead_capture_missing"));}
    if(bSwordGuardBreakAudit&&!IsMeleeMissCase())
    {
     UE_LOG(LogRogue10m,Display,TEXT("GREAT_SWORD_GUARD_BREAK case=%d nearest_visible_blade_capsule_gap_cm=%.6f"),Index,GuardBreakNearestBladeGap);
@@ -1564,7 +1592,7 @@ private:
   for(const FString& Path:CapturePaths){Check(IFileManager::Get().FileSize(*Path)>0,TEXT("final_screenshot_file_missing_or_empty"));}
   const int32 ExpectedCases=bSwordTechniqueRender?1:bSwordGuardBreakAudit?GuardBreakCaseCount:
    bSwordTechniqueAudit?TechniqueCount*2:bMeleeVfxRun?14:10;
-  const int32 ExpectedCaptures=bMeleeVfxLogicOnly?0:(bSwordTechniqueRender?4:bMeleeVfxRun?46:34);
+  const int32 ExpectedCaptures=bMeleeVfxLogicOnly?0:(bSwordTechniqueRender?(bCrushingCapture?5:4):bMeleeVfxRun?46:34);
   if(bSwordTechniqueAudit)
   {
    Check(FFileHelper::SaveStringToFile(SwordTechniquePoses,*(Output/TEXT("technique-poses.csv"))),
@@ -1593,6 +1621,7 @@ private:
   const FString TechniqueSummary=FString::Printf(TEXT("completed_skills=%d\nfailures=%d\nframes=%d\nNOTE=%s Real Q/RMB controller input, Manny and visible pose.\n"),Index,Failures,Frame,
    bSwordGuardBreakAudit?(bSwordTechniqueRender?TEXT("One GuardBreak at 110 cm with rendered phases."):
     TEXT("GuardBreak at three real frontal positions and one position outside its query.")):
+   bCrushingCapture?TEXT("One CrushingSlash at a frontal placement with rendered phases."):
    bSwordTechniqueRender?TEXT("One Whirlwind case with a rear target and rendered phases."):TEXT("Four learned GreatSword skills, each inside and outside its combat query."));
   Check(FFileHelper::SaveStringToFile(bSwordTechniqueAudit?TechniqueSummary:bMeleeVfxRun?MeleeSummary:Summary,*(Output/TEXT("metrics.txt"))),TEXT("summary_evidence_save_failed"));
   if(bOwnFixed){FApp::SetUseFixedTimeStep(OldFixed);FApp::SetFixedDeltaTime(OldDelta);}
@@ -1618,6 +1647,8 @@ private:
  double GuardBreakNearestBladeGap=TNumericLimits<double>::Max();
  bool bPreviousWorldRenderingDisabled=false;
  bool bSwordTechniqueAudit=false,bSwordTechniqueRender=false,bSwordGuardBreakAudit=false;
+ bool bCrushingCapture=false,bCrushingEdge=false,bCrushingStock=false;
+ bool bCrushingLoadRequested=false,bCrushingLoadCaptured=false;
  int32 SwordEquipGrid=INDEX_NONE;
  FGuid SwordEquipItem;
  bool bSwordEquipAudit=false,bSwordEquipWalking=false,bSwordEquipMovingBoth=false;

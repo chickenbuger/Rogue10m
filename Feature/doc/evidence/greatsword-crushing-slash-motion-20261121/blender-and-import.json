@@ -1,0 +1,229 @@
+{
+  "stock": {
+    "skill": "/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_CrushingSlash.DA_Hybrid_GreatSword_CrushingSlash",
+    "damage_delay": 0.0,
+    "skill_rate": 0.7200000286102295,
+    "montage": "/Game/Rogue10m/Animation/Combat/GreatSword/AM_GreatSword_Primary03.AM_GreatSword_Primary03",
+    "play_length": 1.8333333730697632,
+    "rate": 1.0,
+    "slot": "DefaultSlot",
+    "segment": [
+      {
+        "clip": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.MM_ChargedAttack",
+        "rate": 1.0,
+        "length": 1.8333333730697632
+      }
+    ]
+  },
+  "donor": {
+    "path": "/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Primary02.A_GreatSword_Primary02",
+    "duration_s": 1.2666666507720947,
+    "root_motion": false,
+    "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+    "fbx_sha256": "f26764e77c0840a5253870f8dd5a866d4a94a88bd897944267a83a2eac44f669"
+  },
+  "v1_movement": {
+    "shoulder_yaw_range_deg": 152.94882279188494,
+    "shoulder_yaw_largest_step_deg": 11.978863474302557,
+    "shoulder_largest_step_phase": 0.2636363636363636,
+    "root_travel_cm": 0.0,
+    "hand_l": {
+      "lowest_z_cm": 84.60774230957031,
+      "largest_step_cm": 13.937574506460491,
+      "endpoint_delta_cm": 0.0
+    },
+    "hand_r": {
+      "lowest_z_cm": 77.4129867553711,
+      "largest_step_cm": 13.771743423995053,
+      "endpoint_delta_cm": 0.0
+    },
+    "foot_l": {
+      "lowest_z_cm": 8.315454483032227,
+      "largest_step_cm": 5.923498538130126,
+      "endpoint_delta_cm": 0.0
+    },
+    "foot_r": {
+      "lowest_z_cm": 8.238565444946289,
+      "largest_step_cm": 2.2130819521185154,
+      "endpoint_delta_cm": 0.0
+    },
+    "ball_l": {
+      "lowest_z_cm": 0.9465562701225281,
+      "largest_step_cm": 5.877515663834563,
+      "endpoint_delta_cm": 0.0
+    },
+    "ball_r": {
+      "lowest_z_cm": 0.5999932289123535,
+      "largest_step_cm": 2.917966257645547,
+      "endpoint_delta_cm": 0.0
+    },
+    "hand_spacing_cm": [
+      13.163533654194342,
+      20.004544138675296
+    ],
+    "fps": 60,
+    "intervals": 110,
+    "bone_count": 89,
+    "root_rotation_deg": 0.0,
+    "max_floor_raise_cm": 3.980624771118164,
+    "floor_raise_peak_motion_s": 1.2166666666666666,
+    "largest_floor_raise_step_cm": 0.4212622046470642,
+    "palm_span_cm": [
+      11.557976079992285,
+      19.114848436887776
+    ],
+    "two_palms_sword_floor_proxy_cm": 12.383995056152344
+  },
+  "v2_grounded_reach": {
+    "shoulder_yaw_range_deg": 152.9488178366298,
+    "shoulder_yaw_largest_step_deg": 11.978869434260332,
+    "shoulder_largest_step_phase": 0.2636363636363636,
+    "root_travel_cm": 0.0,
+    "hand_l": {
+      "lowest_z_cm": 72.1708984375,
+      "largest_step_cm": 13.89561797004683,
+      "endpoint_delta_cm": 0.0
+    },
+    "hand_r": {
+      "lowest_z_cm": 65.26668548583984,
+      "largest_step_cm": 14.125806786548862,
+      "endpoint_delta_cm": 0.0
+    },
+    "foot_l": {
+      "lowest_z_cm": 8.315459251403809,
+      "largest_step_cm": 6.481720391371985,
+      "endpoint_delta_cm": 0.0
+    },
+    "foot_r": {
+      "lowest_z_cm": 8.238558769226074,
+      "largest_step_cm": 2.21308056224321,
+      "endpoint_delta_cm": 0.0
+    },
+    "ball_l": {
+      "lowest_z_cm": 0.9465637803077698,
+      "largest_step_cm": 6.849649774680599,
+      "endpoint_delta_cm": 0.0
+    },
+    "ball_r": {
+      "lowest_z_cm": 0.5999953746795654,
+      "largest_step_cm": 2.9179616933039454,
+      "endpoint_delta_cm": 0.0
+    },
+    "hand_spacing_cm": [
+      13.163533182428578,
+      20.004552171066937
+    ],
+    "root_rotation_deg": 0.0,
+    "palm_span_cm": [
+      11.55797294452733,
+      19.114836612526016
+    ],
+    "maximum_pelvis_advance_cm": 26.0,
+    "maximum_pelvis_lowering_cm": 15.033885941621975,
+    "rear_ankle_baseline_difference_cm": 5.7852748443996816e-05,
+    "maximum_leg_segment_length_error_cm": 3.5294148958087135e-05,
+    "two_palms_sword_floor_proxy_cm": 7.999431610107422
+  },
+  "rejected_unlimited_lunge": {
+    "shoulder_yaw_range_deg": 152.94884887958062,
+    "shoulder_yaw_largest_step_deg": 11.978869434260332,
+    "shoulder_largest_step_phase": 0.2636363636363636,
+    "root_travel_cm": 0.0,
+    "hand_l": {
+      "lowest_z_cm": 70.46194458007812,
+      "largest_step_cm": 13.89561797004683,
+      "endpoint_delta_cm": 0.0
+    },
+    "hand_r": {
+      "lowest_z_cm": 62.74277114868164,
+      "largest_step_cm": 14.125806786548862,
+      "endpoint_delta_cm": 0.0
+    },
+    "foot_l": {
+      "lowest_z_cm": 8.315459251403809,
+      "largest_step_cm": 6.481720391371985,
+      "endpoint_delta_cm": 0.0
+    },
+    "foot_r": {
+      "lowest_z_cm": 8.238558769226074,
+      "largest_step_cm": 2.21308056224321,
+      "endpoint_delta_cm": 0.0
+    },
+    "ball_l": {
+      "lowest_z_cm": 0.9465637803077698,
+      "largest_step_cm": 6.849649774680599,
+      "endpoint_delta_cm": 0.0
+    },
+    "ball_r": {
+      "lowest_z_cm": 0.5999921560287476,
+      "largest_step_cm": 2.9179616933039454,
+      "endpoint_delta_cm": 0.0
+    },
+    "hand_spacing_cm": [
+      13.163533182428578,
+      20.004552171066937
+    ],
+    "root_rotation_deg": 0.0,
+    "palm_span_cm": [
+      11.55797294452733,
+      19.114836612526016
+    ],
+    "maximum_pelvis_advance_cm": 26.0,
+    "maximum_pelvis_lowering_cm": 15.426074762326841,
+    "rear_ankle_baseline_difference_cm": 6.157664664214297e-05,
+    "maximum_leg_segment_length_error_cm": 4.488782351330656e-05,
+    "two_palms_sword_floor_proxy_cm": -2.0706787109375
+  },
+  "fresh_blender_v2": {
+    "fbx_sha256": "1bab971dccb94099910761fa4cf87b03ecc2d0b4f728424961a13c9156bbf571",
+    "blend_sha256": "661963419f44966192145ad8c2f8433b4038c0079277d86a18c864397238d695",
+    "bones": 89,
+    "samples": 111,
+    "fps": 60,
+    "max_world_landmark_error_cm": 0.00019968264125964216,
+    "max_world_rotation_error_deg": 0.05074420430746445,
+    "root_travel_cm": 0.0,
+    "root_rotation_deg": 0.0,
+    "endpoint_error_cm": 0.0
+  },
+  "unreal_v2": {
+    "skill": "/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_CrushingSlash.DA_Hybrid_GreatSword_CrushingSlash",
+    "old_montage": "/Game/Rogue10m/Animation/Combat/GreatSword/AM_GreatSword_Primary03.AM_GreatSword_Primary03",
+    "old_sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.MM_ChargedAttack",
+    "new_montage": "/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/AM_GreatSword_CrushingSlash.AM_GreatSword_CrushingSlash",
+    "new_sequence": "/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_CrushingSlash.A_GreatSword_CrushingSlash",
+    "skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+    "damage_delay_s": 0.0,
+    "montage_clock": {
+      "montage_s": 1.8333333730697632,
+      "rate_scale": 1.0,
+      "slot_segment": {
+        "start_pos": 0.0,
+        "anim_start_time": 0.0,
+        "anim_end_time": 1.8333333730697632,
+        "anim_play_rate": 1.0,
+        "looping_count": 1
+      },
+      "blend_in": {
+        "time_s": 0.25,
+        "option": "<AlphaBlendOption.HERMITE_CUBIC: 2>",
+        "curve": null
+      },
+      "blend_out": {
+        "time_s": 0.25,
+        "option": "<AlphaBlendOption.HERMITE_CUBIC: 2>",
+        "curve": null
+      },
+      "blend_out_trigger_time": -1.0
+    },
+    "fbx_sha256": "1bab971dccb94099910761fa4cf87b03ecc2d0b4f728424961a13c9156bbf571",
+    "rate": 60,
+    "sample_intervals": 110,
+    "raw_root_travel_cm": 0.0,
+    "raw_root_quaternion_error": 0.0,
+    "raw_guard_endpoint_drift_cm": 0.0,
+    "raw_shoulder_range_deg": 152.94890894988995,
+    "raw_shoulder_max_step_deg": 11.978870613130596,
+    "raw_lowest_ball_z_cm": 0.6000224146833819
+  }
+}

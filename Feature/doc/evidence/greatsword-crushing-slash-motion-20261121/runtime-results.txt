@@ -1,0 +1,62 @@
+[build-CrushingCapture.log]
+Result: Succeeded
+Total execution time: 34.67 seconds
+
+[ExportCrushingDonors.log]
+[2026.11.21-11.44.40:543][  0]LogPython: RESULT=GREAT_SWORD_CRUSHING_REFERENCES_EXPORTED
+
+[BlenderCrushingA.log]
+RuntimeError: Candidate pose or sword proxy failed: {'shoulder_yaw_range_deg': 152.94882279188494, 'shoulder_yaw_largest_step_deg': 11.978863474302557, 'shoulder_largest_step_phase': 0.2636363636363636, 'root_travel_cm': 0.0, 'hand_l': {'lowest_z_cm': 84.60774230957031, 'largest_step_cm': 13.937574506460491, 'endpoint_delta_cm': 0.0}, 'hand_r': {'lowest_z_cm': 77.4129867553711, 'largest_step_cm': 13.771743423995053, 'endpoint_delta_cm': 0.0}, 'foot_l': {'lowest_z_cm': 8.315454483032227, 'largest_step_cm': 5.923498538130126, 'endpoint_delta_cm': 0.0}, 'foot_r': {'lowest_z_cm': 8.238565444946289, 'largest_step_cm': 2.2130819521185154, 'endpoint_delta_cm': 0.0}, 'ball_l': {'lowest_z_cm': 0.9465562701225281, 'largest_step_cm': 5.877515663834563, 'endpoint_delta_cm': 0.0}, 'ball_r': {'lowest_z_cm': 0.5999932289123535, 'largest_step_cm': 2.917966257645547, 'endpoint_delta_cm': 0.0}, 'hand_spacing_cm': [13.163533654194342, 20.004544138675296], 'fps': 60, 'intervals': 110, 'bone_count': 89, 'root_rotation_deg': 0.0, 'max_floor_raise_cm': 3.980624771118164, 'palm_span_cm': [11.557976079992285, 19.114848436887776], 'two_palms_sword_floor_proxy_cm': 12.383995056152344}
+
+[BlenderCrushingC.log]
+RuntimeError: Grounded reach correction failed: {'shoulder_yaw_range_deg': 152.94884887958062, 'shoulder_yaw_largest_step_deg': 11.978869434260332, 'shoulder_largest_step_phase': 0.2636363636363636, 'root_travel_cm': 0.0, 'hand_l': {'lowest_z_cm': 70.46194458007812, 'largest_step_cm': 13.89561797004683, 'endpoint_delta_cm': 0.0}, 'hand_r': {'lowest_z_cm': 62.74277114868164, 'largest_step_cm': 14.125806786548862, 'endpoint_delta_cm': 0.0}, 'foot_l': {'lowest_z_cm': 8.315459251403809, 'largest_step_cm': 6.481720391371985, 'endpoint_delta_cm': 0.0}, 'foot_r': {'lowest_z_cm': 8.238558769226074, 'largest_step_cm': 2.21308056224321, 'endpoint_delta_cm': 0.0}, 'ball_l': {'lowest_z_cm': 0.9465637803077698, 'largest_step_cm': 6.849649774680599, 'endpoint_delta_cm': 0.0}, 'ball_r': {'lowest_z_cm': 0.5999921560287476, 'largest_step_cm': 2.9179616933039454, 'endpoint_delta_cm': 0.0}, 'hand_spacing_cm': [13.163533182428578, 20.004552171066937], 'root_rotation_deg': 0.0, 'palm_span_cm': [11.55797294452733, 19.114836612526016], 'maximum_pelvis_advance_cm': 26.0, 'maximum_pelvis_lowering_cm': 15.426074762326841, 'rear_ankle_baseline_difference_cm': 6.157664664214297e-05, 'maximum_leg_segment_length_error_cm': 4.488782351330656e-05, 'two_palms_sword_floor_proxy_cm': -2.0706787109375}
+
+[ReimportCrushingSlash.log]
+[2026.11.21-12.05.50:131][  0]LogPython: RESULT=GREAT_SWORD_CRUSHING_SLASH_REIMPORTED
+
+[SwordCrushingPre.log]
+[2026.11.21-11.47.00:242][255]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=0 skill=DA_Hybrid_GreatSword_CrushingSlash miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=109.34, Y=12.03)
+[2026.11.21-11.47.00:290][317]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_CrushingSlash frame=63 world=5.300000 montage_s=0.012720 source_s=0.012720 source=/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.MM_ChargedAttack sword_capsule_gap_cm=44.853869 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.47.01:588][955]LogRogue10m: Display: RESULT=GREAT_SWORD_TECHNIQUES_PASSED completed=8 failures=0
+
+[SwordCrushingEdgeStock.log]
+[2026.11.21-12.03.47:233][255]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=0 skill=DA_Hybrid_GreatSword_CrushingSlash miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=203.77, Y=22.42)
+[2026.11.21-12.03.47:300][317]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_CrushingSlash frame=63 world=5.300000 montage_s=0.012720 source_s=0.012720 source=/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.MM_ChargedAttack sword_capsule_gap_cm=122.689227 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-12.03.48:753][955]LogRogue10m: Display: RESULT=GREAT_SWORD_TECHNIQUES_PASSED completed=8 failures=0
+
+[SwordCrushingEdgeV1.log]
+[2026.11.21-12.04.59:685][255]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=0 skill=DA_Hybrid_GreatSword_CrushingSlash miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=203.77, Y=22.42)
+[2026.11.21-12.04.59:743][317]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_CrushingSlash frame=63 world=5.300000 montage_s=0.012720 source_s=0.012720 source=/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_CrushingSlash.A_GreatSword_CrushingSlash sword_capsule_gap_cm=118.183182 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-12.05.01:236][955]LogRogue10m: Display: RESULT=GREAT_SWORD_TECHNIQUES_PASSED completed=8 failures=0
+
+[SwordCrushingEdgeV2.log]
+[2026.11.21-12.06.34:712][255]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=0 skill=DA_Hybrid_GreatSword_CrushingSlash miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=203.77, Y=22.42)
+[2026.11.21-12.06.34:772][317]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_CrushingSlash frame=63 world=5.300000 montage_s=0.012720 source_s=0.012720 source=/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_CrushingSlash.A_GreatSword_CrushingSlash sword_capsule_gap_cm=118.183227 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-12.06.36:293][955]LogRogue10m: Display: RESULT=GREAT_SWORD_TECHNIQUES_PASSED completed=8 failures=0
+
+[SwordCrushingNearV2.log]
+[2026.11.21-12.07.02:402][255]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=0 skill=DA_Hybrid_GreatSword_CrushingSlash miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=109.34, Y=12.03)
+[2026.11.21-12.07.02:461][317]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_CrushingSlash frame=63 world=5.300000 montage_s=0.012720 source_s=0.012720 source=/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_CrushingSlash.A_GreatSword_CrushingSlash sword_capsule_gap_cm=42.628875 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-12.07.03:907][955]LogRogue10m: Display: RESULT=GREAT_SWORD_TECHNIQUES_PASSED completed=8 failures=0
+
+[SwordCrushingEdgeWarp.log]
+[2026.11.21-12.08.43:334][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-12.08.43:334][  0]LogD3D11RHI:    1. 'Microsoft Basic Render Driver' (Feature Level 11_1)
+[2026.11.21-12.08.43:334][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-12.08.43:414][  0]LogWindows: Unable to find requested device 'Microsoft Basic Render Driver' using Setup API.
+[2026.11.21-12.08.43:414][  0]LogWindows: Failed to get driver data for device 'Microsoft Basic Render Driver' using Setup API. Switching to fallback method.
+[2026.11.21-12.08.43:417][  0]LogRHI:             Name: Microsoft Basic Render Driver
+[2026.11.21-12.08.43:417][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-12.08.43:439][  0]LogCsvProfiler: Display: Metadata set : gpu="Microsoft Basic Render Driver"
+[2026.11.21-12.09.53:346][276]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_CrushingSlash phase=ready frame=22 world=4.616667 montage=0.000000 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordCrushingEdgeWarp/images/DA_Hybrid_GreatSword_CrushingSlash_ready_A7A7284A4FFF18B648CC84B3865C50DC.png
+[2026.11.21-12.09.56:508][276]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_CrushingSlash phase=ready frame=22 world=4.616667 montage=0.000000 bytes=992377
+[2026.11.21-12.09.56:585][286]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_CrushingSlash frame=32 world=4.783334 montage_s=0.012720 source_s=0.012720 source=/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_CrushingSlash.A_GreatSword_CrushingSlash sword_capsule_gap_cm=117.037894 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-12.09.56:585][286]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_CrushingSlash phase=after_first_damage frame=32 world=4.783334 montage=0.012720 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordCrushingEdgeWarp/images/DA_Hybrid_GreatSword_CrushingSlash_after_first_damage_A7A7284A4FFF18B648CC84B3865C50DC.png
+[2026.11.21-12.09.58:458][286]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_CrushingSlash phase=after_first_damage frame=32 world=4.783334 montage=0.012720 bytes=1075150
+[2026.11.21-12.09.58:785][325]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_CrushingSlash phase=overhead_load frame=71 world=5.433334 montage=0.508800 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordCrushingEdgeWarp/images/DA_Hybrid_GreatSword_CrushingSlash_overhead_load_A7A7284A4FFF18B648CC84B3865C50DC.png
+[2026.11.21-12.10.00:088][325]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_CrushingSlash phase=overhead_load frame=71 world=5.433334 montage=0.508800 bytes=1105526
+[2026.11.21-12.10.00:185][345]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_CrushingSlash phase=motion frame=91 world=5.766667 montage=0.763200 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordCrushingEdgeWarp/images/DA_Hybrid_GreatSword_CrushingSlash_motion_A7A7284A4FFF18B648CC84B3865C50DC.png
+[2026.11.21-12.10.01:135][345]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_CrushingSlash phase=motion frame=91 world=5.766667 montage=0.763200 bytes=1106470
+[2026.11.21-12.10.01:525][431]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_CrushingSlash phase=recovery frame=177 world=7.200000 montage=0.000000 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordCrushingEdgeWarp/images/DA_Hybrid_GreatSword_CrushingSlash_recovery_A7A7284A4FFF18B648CC84B3865C50DC.png
+[2026.11.21-12.10.02:460][431]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_CrushingSlash phase=recovery frame=177 world=7.200000 montage=0.000000 bytes=1124135
+[2026.11.21-12.10.02:487][432]LogRogue10m: Display: RESULT=GREAT_SWORD_TECHNIQUES_PASSED completed=1 failures=0
