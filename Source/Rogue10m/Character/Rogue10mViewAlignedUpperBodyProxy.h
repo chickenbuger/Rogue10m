@@ -38,6 +38,8 @@ private:
 	void CaptureCapstoneBrace(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
 	void ApplyCapstoneBrace(FPoseContext& Output);
 	void CaptureEarthSplitterPose(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
+	FRogue10mDwarfEarthSplitterSample CaptureEarthSplitterFrontWall(const ARogue10mCharacter& Character,
+		const URogue10mFighterCombatStanceAnimInstance& Instance) const;
 	FRogue10mDwarfEarthSplitterSample CaptureEarthSplitterWallRecovery(const ARogue10mCharacter* Character,
 		const URogue10mFighterCombatStanceAnimInstance& Instance);
 	void ApplyEarthSplitterPose(FPoseContext& Output);

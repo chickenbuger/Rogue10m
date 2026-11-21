@@ -1,0 +1,131 @@
+{
+  "label": "EF01HMFlush",
+  "wall_half_extents_cm": [
+    14.0,
+    160.0,
+    150.0
+  ],
+  "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+  "damage": [
+    {
+      "hold_s": 0.8,
+      "accepted_s": 0.0,
+      "montage_s": 0.010953,
+      "damage": 77.648438
+    }
+  ],
+  "phase_measurements": {
+    "ready": {
+      "samples": 59,
+      "triangle_intersection_samples": 0,
+      "min_mesh_front_plane_cm": 26.746666999999995
+    },
+    "charge": {
+      "samples": 48,
+      "triangle_intersection_samples": 0,
+      "min_mesh_front_plane_cm": 20.637498
+    },
+    "release": {
+      "samples": 152,
+      "triangle_intersection_samples": 0,
+      "min_mesh_front_plane_cm": 6.568341999999998
+    },
+    "recovery": {
+      "samples": 17,
+      "triangle_intersection_samples": 9,
+      "min_mesh_front_plane_cm": -47.55572957594533
+    }
+  },
+  "minimum_capsule_plane_gap_cm": 2.0,
+  "minimum_weapon_floor_gap_cm": 70.616975,
+  "maximum_actor_travel_cm": 0.0,
+  "maximum_palm_span_cm": 35.474283,
+  "maximum_hilt_anchor_error_cm": 0.0,
+  "maximum_blade_angle_step_deg": 89.58486460512192,
+  "maximum_hilt_step_cm": 34.26202199263239,
+  "maximum_charge_hilt_step_cm": 0.4714758528673549,
+  "maximum_obj_runtime_aabb_gap_error_cm": 1.9816039298348187E-06,
+  "intersections": [
+    {
+      "frame": 841,
+      "phase": "recovery",
+      "hold_s": 3.45,
+      "accepted_s": 2.65,
+      "montage_s": 0.0,
+      "triangles": 12,
+      "mesh_front_plane_cm": -2.461914961706114
+    },
+    {
+      "frame": 842,
+      "phase": "recovery",
+      "hold_s": 3.466667,
+      "accepted_s": 2.666667,
+      "montage_s": 0.0,
+      "triangles": 16,
+      "mesh_front_plane_cm": -3.981363558448413
+    },
+    {
+      "frame": 843,
+      "phase": "recovery",
+      "hold_s": 3.483334,
+      "accepted_s": 2.683333,
+      "montage_s": 0.0,
+      "triangles": 34,
+      "mesh_front_plane_cm": -4.957156727632283
+    },
+    {
+      "frame": 844,
+      "phase": "recovery",
+      "hold_s": 3.5,
+      "accepted_s": 2.7,
+      "montage_s": 0.0,
+      "triangles": 35,
+      "mesh_front_plane_cm": -17.14886009246249
+    },
+    {
+      "frame": 845,
+      "phase": "recovery",
+      "hold_s": 3.516667,
+      "accepted_s": 2.716667,
+      "montage_s": 0.0,
+      "triangles": 32,
+      "mesh_front_plane_cm": -29.670711882173375
+    },
+    {
+      "frame": 846,
+      "phase": "recovery",
+      "hold_s": 3.533334,
+      "accepted_s": 2.733333,
+      "montage_s": 0.0,
+      "triangles": 26,
+      "mesh_front_plane_cm": -38.82316228257254
+    },
+    {
+      "frame": 847,
+      "phase": "recovery",
+      "hold_s": 3.55,
+      "accepted_s": 2.75,
+      "montage_s": 0.0,
+      "triangles": 19,
+      "mesh_front_plane_cm": -44.65086796475656
+    },
+    {
+      "frame": 848,
+      "phase": "recovery",
+      "hold_s": 3.566667,
+      "accepted_s": 2.766667,
+      "montage_s": 0.0,
+      "triangles": 15,
+      "mesh_front_plane_cm": -47.34567106995321
+    },
+    {
+      "frame": 849,
+      "phase": "recovery",
+      "hold_s": 3.583334,
+      "accepted_s": 2.783333,
+      "montage_s": 0.0,
+      "triangles": 15,
+      "mesh_front_plane_cm": -47.55572957594533
+    }
+  ]
+}

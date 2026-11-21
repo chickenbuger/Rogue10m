@@ -1,0 +1,218 @@
+[
+  {
+    "label": "EF00HMFront",
+    "wall_half_extents_cm": [
+      28.0,
+      14.0,
+      63.0
+    ],
+    "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+    "damage": [
+      {
+        "frame": 682,
+        "hold_s": 0.8,
+        "accepted_s": 0.0,
+        "montage_s": 0.010953,
+        "damage": 81.617188
+      }
+    ],
+    "phase_measurements": {
+      "ready": {
+        "samples": 59,
+        "triangle_intersection_samples": 0,
+        "min_mesh_front_plane_cm": -27.703559136755885,
+        "maximum_blade_axis_step_deg": 0.057766128280801375,
+        "maximum_hilt_step_cm": 0.05646614535276949
+      },
+      "charge": {
+        "samples": 48,
+        "triangle_intersection_samples": 0,
+        "min_mesh_front_plane_cm": -30.21329745075974,
+        "maximum_blade_axis_step_deg": 0.058777643602736435,
+        "maximum_hilt_step_cm": 0.05912673122201058
+      },
+      "release": {
+        "samples": 152,
+        "triangle_intersection_samples": 11,
+        "min_mesh_front_plane_cm": -174.85033407234232,
+        "maximum_blade_axis_step_deg": 14.584098116506745,
+        "maximum_hilt_step_cm": 21.21547216489591
+      },
+      "recovery": {
+        "samples": 17,
+        "triangle_intersection_samples": 0,
+        "min_mesh_front_plane_cm": -26.55572957594533,
+        "maximum_blade_axis_step_deg": 7.592187369012364,
+        "maximum_hilt_step_cm": 5.479313300327788
+      }
+    },
+    "minimum_capsule_plane_gap_cm": 23.0,
+    "minimum_weapon_floor_gap_cm": 64.664635,
+    "maximum_actor_travel_cm": 0.0,
+    "maximum_palm_span_cm": 94.873726,
+    "maximum_hilt_anchor_error_cm": 0.0,
+    "maximum_blade_angle_step_deg": 14.584098116506745,
+    "maximum_hilt_step_cm": 21.21547216489591,
+    "maximum_charge_hilt_step_cm": 0.05912673122201058,
+    "maximum_obj_runtime_aabb_gap_error_cm": 1.8907672370005457e-06,
+    "intersections": [
+      {
+        "frame": 782,
+        "phase": "release",
+        "hold_s": 2.466667,
+        "accepted_s": 1.666667,
+        "montage_s": 1.106285,
+        "triangles": 209,
+        "mesh_front_plane_cm": -117.26600509389195
+      },
+      {
+        "frame": 783,
+        "phase": "release",
+        "hold_s": 2.483333,
+        "accepted_s": 1.683333,
+        "montage_s": 1.117239,
+        "triangles": 649,
+        "mesh_front_plane_cm": -148.18509045141417
+      },
+      {
+        "frame": 784,
+        "phase": "release",
+        "hold_s": 2.5,
+        "accepted_s": 1.7,
+        "montage_s": 1.128192,
+        "triangles": 453,
+        "mesh_front_plane_cm": -168.37573108364063
+      },
+      {
+        "frame": 799,
+        "phase": "release",
+        "hold_s": 2.75,
+        "accepted_s": 1.95,
+        "montage_s": 1.292492,
+        "triangles": 29,
+        "mesh_front_plane_cm": -142.56979112986664
+      },
+      {
+        "frame": 800,
+        "phase": "release",
+        "hold_s": 2.766667,
+        "accepted_s": 1.966667,
+        "montage_s": 1.303445,
+        "triangles": 169,
+        "mesh_front_plane_cm": -137.4460480227744
+      },
+      {
+        "frame": 801,
+        "phase": "release",
+        "hold_s": 2.783333,
+        "accepted_s": 1.983333,
+        "montage_s": 1.314398,
+        "triangles": 321,
+        "mesh_front_plane_cm": -131.4078176124649
+      },
+      {
+        "frame": 802,
+        "phase": "release",
+        "hold_s": 2.8,
+        "accepted_s": 2.0,
+        "montage_s": 1.325351,
+        "triangles": 291,
+        "mesh_front_plane_cm": -124.55998426933593
+      },
+      {
+        "frame": 803,
+        "phase": "release",
+        "hold_s": 2.816667,
+        "accepted_s": 2.016667,
+        "montage_s": 1.336305,
+        "triangles": 211,
+        "mesh_front_plane_cm": -116.70657169590325
+      },
+      {
+        "frame": 804,
+        "phase": "release",
+        "hold_s": 2.833333,
+        "accepted_s": 2.033333,
+        "montage_s": 1.347258,
+        "triangles": 130,
+        "mesh_front_plane_cm": -107.42456538152157
+      },
+      {
+        "frame": 805,
+        "phase": "release",
+        "hold_s": 2.85,
+        "accepted_s": 2.05,
+        "montage_s": 1.358211,
+        "triangles": 38,
+        "mesh_front_plane_cm": -96.42458746168506
+      },
+      {
+        "frame": 806,
+        "phase": "release",
+        "hold_s": 2.866667,
+        "accepted_s": 2.066667,
+        "montage_s": 1.369165,
+        "triangles": 7,
+        "mesh_front_plane_cm": -83.14115157239175
+      }
+    ]
+  },
+  {
+    "label": "EF03HMFront",
+    "wall_half_extents_cm": [
+      28.0,
+      14.0,
+      63.0
+    ],
+    "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+    "damage": [
+      {
+        "frame": 682,
+        "hold_s": 0.8,
+        "accepted_s": 0.0,
+        "montage_s": 0.010953,
+        "damage": 78.40625
+      }
+    ],
+    "phase_measurements": {
+      "ready": {
+        "samples": 59,
+        "triangle_intersection_samples": 0,
+        "min_mesh_front_plane_cm": 47.746667,
+        "maximum_blade_axis_step_deg": 0,
+        "maximum_hilt_step_cm": 0.024887203679797403
+      },
+      "charge": {
+        "samples": 48,
+        "triangle_intersection_samples": 0,
+        "min_mesh_front_plane_cm": 41.63749800000001,
+        "maximum_blade_axis_step_deg": 0.38453125878880184,
+        "maximum_hilt_step_cm": 0.4714758528673563
+      },
+      "release": {
+        "samples": 152,
+        "triangle_intersection_samples": 0,
+        "min_mesh_front_plane_cm": 27.568342,
+        "maximum_blade_axis_step_deg": 0.19704969211772136,
+        "maximum_hilt_step_cm": 5.954076200382902
+      },
+      "recovery": {
+        "samples": 17,
+        "triangle_intersection_samples": 0,
+        "min_mesh_front_plane_cm": 48.212411,
+        "maximum_blade_axis_step_deg": 0,
+        "maximum_hilt_step_cm": 1.8979673455602462
+      }
+    },
+    "minimum_capsule_plane_gap_cm": 23.0,
+    "minimum_weapon_floor_gap_cm": 82.956577,
+    "maximum_actor_travel_cm": 0.0,
+    "maximum_palm_span_cm": 20.0,
+    "maximum_hilt_anchor_error_cm": 0.0,
+    "maximum_blade_angle_step_deg": 0.38453125878880184,
+    "maximum_hilt_step_cm": 5.954076200382902,
+    "maximum_charge_hilt_step_cm": 0.4714758528673563,
+    "maximum_obj_runtime_aabb_gap_error_cm": 1.9816039298348187e-06,
+    "intersections": []
+  }
+]

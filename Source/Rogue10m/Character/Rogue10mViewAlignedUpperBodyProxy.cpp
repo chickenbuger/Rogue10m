@@ -27,7 +27,6 @@
 #include "Rogue10mCharacterAnimationComponent.h"
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mWeightedFirstPersonSettings.h"
-#include "Rogue10mWeaponRetargetAnimInstance.h"
 
 namespace
 {
@@ -55,6 +54,8 @@ TAutoConsoleVariable<int32> CVarDwarfEarthSplitterGrip(TEXT("a.Rogue10m.DwarfEar
 	TEXT("Enable the displayed Dwarf EarthSplitter grip for editor comparisons."));
 TAutoConsoleVariable<int32> CVarEarthSplitterWallRecovery(TEXT("a.Rogue10m.EarthSplitterWallRecovery"), 1,
 	TEXT("Enable EarthSplitter's displayed recovery near distant static obstacles."));
+TAutoConsoleVariable<int32> CVarEarthSplitterFrontWall(TEXT("a.Rogue10m.EarthSplitterFrontWall"), 1,
+	TEXT("Enable the compact EarthSplitter stance at a close frontal wall."));
 #endif
 
 constexpr float WeaponLocomotionUpperSeconds = 0.22f;
@@ -157,11 +158,16 @@ bool IsDwarfEarthSplitterRecoverySpaceClear(const ARogue10mCharacter& Character)
 		FCollisionShape::MakeBox(FVector(63.0, 63.0, 42.5)), Params);
 }
 
+bool IsEarthSplitter(const URogue10mAttackSkillData* Skill)
+{
+	static const FSoftObjectPath EarthSplitter(TEXT("/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_EarthSplitter.DA_Hybrid_GreatSword_EarthSplitter"));
+	return Skill && FSoftObjectPath(Skill) == EarthSplitter;
+}
+
 const UAnimMontage* GetAcceptedEarthSplitterMontage(const URogue10mCombatComponent& Combat)
 {
 	const auto* Accepted = Combat.GetLastAcceptedAttackSkill();
-	static const FSoftObjectPath EarthSplitter(TEXT("/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_EarthSplitter.DA_Hybrid_GreatSword_EarthSplitter"));
-	return Accepted && FSoftObjectPath(Accepted) == EarthSplitter ? Accepted->AttackMontage.Get() : nullptr;
+	return IsEarthSplitter(Accepted) ? Accepted->AttackMontage.Get() : nullptr;
 }
 }
 
@@ -477,7 +483,9 @@ void FRogue10mViewAlignedUpperBodyProxy::PreEvaluateAnimation(UAnimInstance* InA
 		Instance->DwarfEarthSplitterSample = bUseDwarfEarthSplitterGrip && EarthSplitterSequence
 			? FRogue10mDwarfEarthSplitterSample{EarthSplitterTime, EarthSplitterWeight, EarthSplitterSequence == Instance->CachedEarthSplitterRelease.Get()}
 			: FRogue10mDwarfEarthSplitterSample{};
-		Instance->EarthSplitterWallRecoverySample = CaptureEarthSplitterWallRecovery(Character, *Instance);
+		const auto Front = Character ? CaptureEarthSplitterFrontWall(*Character, *Instance) : FRogue10mDwarfEarthSplitterSample{};
+		const auto Side = CaptureEarthSplitterWallRecovery(Character, *Instance);
+		Instance->EarthSplitterWallRecoverySample = Front.Weight > UE_SMALL_NUMBER ? Front : Side;
 	}
 	if (!bUseWeightedAimFollow)
 	{
@@ -841,6 +849,61 @@ void FRogue10mViewAlignedUpperBodyProxy::CaptureEarthSplitterPose(const ARogue10
 	if (EarthSplitterWeight <= UE_SMALL_NUMBER) { EarthSplitterSequence = nullptr; }
 }
 
+FRogue10mDwarfEarthSplitterSample FRogue10mViewAlignedUpperBodyProxy::CaptureEarthSplitterFrontWall(
+	const ARogue10mCharacter& Character, const URogue10mFighterCombatStanceAnimInstance& Instance) const
+{
+#if WITH_EDITOR
+	if (CVarEarthSplitterFrontWall.GetValueOnGameThread() == 0 || CVarEarthSplitterPose.GetValueOnGameThread() == 0) { return {}; }
+#endif
+	if (!Character.IsThirdPersonGameplayActive() || Character.IsDead() || Character.IsDodging()
+		|| Character.GetEquippedWeaponType() != ERogue10mWeaponType::GreatSword
+		|| Instance.GetSkelMeshComponent() != Character.GetAnimationPlaybackMesh()) { return {}; }
+	const auto* Combat = Character.GetCombatComponent();
+	const auto* Movement = Character.GetCharacterMovement();
+	const auto* Capsule = Character.GetCapsuleComponent();
+	const auto* World = Character.GetWorld();
+	const auto* Controller = Cast<ARogue10mPlayerController>(Character.GetController());
+	const auto* Body = Character.GetMesh();
+	const auto* Display = Body ? Cast<URogue10mWeaponRetargetAnimInstance>(Body->GetAnimInstance()) : nullptr;
+	if (!Combat || !Movement || !Movement->IsMovingOnGround() || !Capsule || !World
+		|| !Controller || Controller->IsAnyBlockingWindowVisible() || !Display || !Display->bEnableEarthSplitterWallRecovery) { return {}; }
+
+	const TOptional<float> Hold = Combat->GetGreatSwordEarthSplitterHoldSeconds();
+	const UAnimMontage* Montage = GetAcceptedEarthSplitterMontage(*Combat);
+	const FAnimMontageInstance* Playback = Montage ? Instance.GetActiveInstanceForMontage(Montage) : nullptr;
+	// The ordinary raised guard already reaches through a flush wall. Start the compact
+	// stance as the fighter approaches with EarthSplitter available, and return to it after the strike.
+	if (!Hold.IsSet() && !Playback
+		&& (Instance.GetCurrentActiveMontage() || !IsEarthSplitter(Combat->GetEquippedSkill(ERogue10mAttackInputSlot::ChargedSpecial)))) { return {}; }
+
+	const FVector Forward = Character.GetActorForwardVector().GetSafeNormal2D();
+	const FVector Start = Capsule->GetComponentLocation() + FVector::UpVector * 12.0;
+	const double Radius = Capsule->GetScaledCapsuleRadius();
+	const double BlendEnd = EarthSplitterWallRecoveryNearDistance;
+	const FCollisionQueryParams Params(SCENE_QUERY_STAT(EarthSplitterFrontWall), false, &Character);
+	FHitResult Hit;
+	if (!World->LineTraceSingleByObjectType(Hit, Start, Start + Forward * BlendEnd,
+		FCollisionObjectQueryParams(ECC_WorldStatic), Params)) { return {}; }
+	const FVector Normal = Hit.ImpactNormal.GetSafeNormal();
+	const double Facing = -FVector::DotProduct(Normal, Forward);
+	if (Facing <= .62 || FMath::Abs(Normal.Z) > .30) { return {}; }
+
+	const double Distance = Hit.Distance;
+	const double Approach = 1.0 - FMath::SmoothStep(Radius + 35.0, BlendEnd, Distance);
+	const double AttackRange = 1.0 - FMath::SmoothStep(BlendEnd - 8.0, BlendEnd, Distance);
+	// Complete the tuck during the hold, while the original attack is still preparing.
+	// At the end use the original blend-out to ease back to the distance-based guard.
+	const FAnimMontageInstance* BlendOut = !Playback && Montage ? Instance.GetInstanceForMontage(Montage) : nullptr;
+	const double Attack = Hold.IsSet() ? FMath::SmoothStep(0.0f, .32f, Hold.GetValue())
+		: Playback ? 1.0 : BlendOut ? BlendOut->GetWeight() : 0.0;
+	const float Weight = FMath::Lerp(Approach, 1.0, Attack * AttackRange) * FMath::SmoothStep(.62, .82, Facing);
+	const bool bRelease = !Hold.IsSet() && Playback;
+	const auto* Reference = Instance.GetEarthSplitterReference(bRelease);
+	if (!Reference || (bRelease && !FMath::IsNearlyEqual(Montage->GetPlayLength(), Reference->GetPlayLength(), .001f))) { return {}; }
+	const float Time = FMath::Clamp(bRelease ? Playback->GetPosition() : Hold.Get(0.0f), 0.0f, Reference->GetPlayLength());
+	return {Time, Weight, bRelease, FPlane(Hit.ImpactPoint, Normal)};
+}
+
 FRogue10mDwarfEarthSplitterSample FRogue10mViewAlignedUpperBodyProxy::CaptureEarthSplitterWallRecovery(
 	const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance& Instance)
 {
@@ -884,8 +947,7 @@ FRogue10mDwarfEarthSplitterSample FRogue10mViewAlignedUpperBodyProxy::CaptureEar
 	{
 		EarthSplitterWallRecoveryMontageId = Playback->GetInstanceID();
 		EarthSplitterWallRecoveryMovementAt = -1.0f;
-		// A distant obstruction can intercept the wide stock follow-through. Close walls
-		// leave too little room for either motion, so preserve the normal route there.
+		// The wider follow-through needs room near the fighter. The frontal stance handles close walls.
 		bEarthSplitterWallRecoveryAdmitted = bCanRecover && bStationary && Time <= EarthSplitterWallRecoveryBlendStart + .06f
 			&& !IsEarthSplitterBladeSpaceClear(*Character, *Movement, 0.0)
 			&& IsEarthSplitterBladeSpaceClear(*Character, *Movement, 0.0, EarthSplitterWallRecoveryNearDistance);

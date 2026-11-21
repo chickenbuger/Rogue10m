@@ -20,6 +20,7 @@ struct FRogue10mDwarfEarthSplitterSample
 	float Time = 0.0f;
 	float Weight = 0.0f;
 	bool bRelease = false;
+	FPlane FrontWall = FPlane(ForceInit);
 };
 
 /** Common Manny locomotion remains in the AnimBP; moving ground attacks retain its lower-body pose. */

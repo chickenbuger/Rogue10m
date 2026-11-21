@@ -1,0 +1,641 @@
+{
+  "input_hz": 60,
+  "profile_count": 6,
+  "compiled": "Candidate03",
+  "baseline_intersections": 907.0,
+  "final_intersections": 0.0,
+  "baseline": [
+    {
+      "label": "EF00HMFlush",
+      "wall_half_extents_cm": [
+        14.0,
+        160.0,
+        150.0
+      ],
+      "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+      "damage": [
+        {
+          "hold_s": 0.8,
+          "accepted_s": 0.0,
+          "montage_s": 0.010953,
+          "damage": 79.992188
+        }
+      ],
+      "phase_measurements": {
+        "ready": {
+          "samples": 59,
+          "triangle_intersection_samples": 59,
+          "min_mesh_front_plane_cm": -48.703559136755885
+        },
+        "charge": {
+          "samples": 48,
+          "triangle_intersection_samples": 48,
+          "min_mesh_front_plane_cm": -51.21329745075974
+        },
+        "release": {
+          "samples": 152,
+          "triangle_intersection_samples": 34,
+          "min_mesh_front_plane_cm": -195.85033407234232
+        },
+        "recovery": {
+          "samples": 17,
+          "triangle_intersection_samples": 10,
+          "min_mesh_front_plane_cm": -47.55572957594533
+        }
+      },
+      "minimum_capsule_plane_gap_cm": 2.0,
+      "minimum_weapon_floor_gap_cm": 64.664635,
+      "maximum_actor_travel_cm": 0.0,
+      "maximum_palm_span_cm": 94.873726,
+      "maximum_hilt_anchor_error_cm": 0.0,
+      "maximum_blade_angle_step_deg": 14.584098116506745,
+      "maximum_hilt_step_cm": 21.215472164895907,
+      "maximum_charge_hilt_step_cm": 0.05912673122201058,
+      "maximum_obj_runtime_aabb_gap_error_cm": 2.557462437380309E-06
+    },
+    {
+      "label": "EF00HFFlush",
+      "wall_half_extents_cm": [
+        14.0,
+        160.0,
+        150.0
+      ],
+      "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+      "damage": [
+        {
+          "hold_s": 0.8,
+          "accepted_s": 0.0,
+          "montage_s": 0.010953,
+          "damage": 76.90625
+        }
+      ],
+      "phase_measurements": {
+        "ready": {
+          "samples": 59,
+          "triangle_intersection_samples": 59,
+          "min_mesh_front_plane_cm": -24.274724716202712
+        },
+        "charge": {
+          "samples": 48,
+          "triangle_intersection_samples": 48,
+          "min_mesh_front_plane_cm": -26.151116175811524
+        },
+        "release": {
+          "samples": 152,
+          "triangle_intersection_samples": 36,
+          "min_mesh_front_plane_cm": -186.55305987260783
+        },
+        "recovery": {
+          "samples": 17,
+          "triangle_intersection_samples": 10,
+          "min_mesh_front_plane_cm": -22.44733845374715
+        }
+      },
+      "minimum_capsule_plane_gap_cm": 2.0,
+      "minimum_weapon_floor_gap_cm": 73.645602,
+      "maximum_actor_travel_cm": 0.0,
+      "maximum_palm_span_cm": 100.812537,
+      "maximum_hilt_anchor_error_cm": 0.0,
+      "maximum_blade_angle_step_deg": 13.948145645478041,
+      "maximum_hilt_step_cm": 19.644291414241287,
+      "maximum_charge_hilt_step_cm": 0.04938105375546607,
+      "maximum_obj_runtime_aabb_gap_error_cm": 2.1799426921376153E-06
+    },
+    {
+      "label": "EF00DMFlush",
+      "wall_half_extents_cm": [
+        14.0,
+        160.0,
+        150.0
+      ],
+      "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+      "damage": [
+        {
+          "hold_s": 0.8,
+          "accepted_s": 0.0,
+          "montage_s": 0.010953,
+          "damage": 87.875
+        }
+      ],
+      "phase_measurements": {
+        "ready": {
+          "samples": 59,
+          "triangle_intersection_samples": 59,
+          "min_mesh_front_plane_cm": -9.174498533079422
+        },
+        "charge": {
+          "samples": 48,
+          "triangle_intersection_samples": 48,
+          "min_mesh_front_plane_cm": -11.317119203089135
+        },
+        "release": {
+          "samples": 152,
+          "triangle_intersection_samples": 30,
+          "min_mesh_front_plane_cm": -204.70963287206294
+        },
+        "recovery": {
+          "samples": 17,
+          "triangle_intersection_samples": 12,
+          "min_mesh_front_plane_cm": -8.355112673460138
+        }
+      },
+      "minimum_capsule_plane_gap_cm": 2.0,
+      "minimum_weapon_floor_gap_cm": 58.990219,
+      "maximum_actor_travel_cm": 0.0,
+      "maximum_palm_span_cm": 140.4478,
+      "maximum_hilt_anchor_error_cm": 0.0,
+      "maximum_blade_angle_step_deg": 14.218415379186407,
+      "maximum_hilt_step_cm": 24.82861545758835,
+      "maximum_charge_hilt_step_cm": 0.06934514281475748,
+      "maximum_obj_runtime_aabb_gap_error_cm": 2.7436236358369115E-06
+    },
+    {
+      "label": "EF00DFFlush",
+      "wall_half_extents_cm": [
+        14.0,
+        160.0,
+        150.0
+      ],
+      "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+      "damage": [
+        {
+          "hold_s": 0.8,
+          "accepted_s": 0.0,
+          "montage_s": 0.010953,
+          "damage": 92.671875
+        }
+      ],
+      "phase_measurements": {
+        "ready": {
+          "samples": 59,
+          "triangle_intersection_samples": 59,
+          "min_mesh_front_plane_cm": -35.11555453473379
+        },
+        "charge": {
+          "samples": 48,
+          "triangle_intersection_samples": 48,
+          "min_mesh_front_plane_cm": -37.03819364866667
+        },
+        "release": {
+          "samples": 152,
+          "triangle_intersection_samples": 37,
+          "min_mesh_front_plane_cm": -187.18827353837423
+        },
+        "recovery": {
+          "samples": 17,
+          "triangle_intersection_samples": 9,
+          "min_mesh_front_plane_cm": -33.07559455515213
+        }
+      },
+      "minimum_capsule_plane_gap_cm": 2.0,
+      "minimum_weapon_floor_gap_cm": 57.358527,
+      "maximum_actor_travel_cm": 0.0,
+      "maximum_palm_span_cm": 101.519097,
+      "maximum_hilt_anchor_error_cm": 0.0,
+      "maximum_blade_angle_step_deg": 15.119134623831352,
+      "maximum_hilt_step_cm": 20.938282669338165,
+      "maximum_charge_hilt_step_cm": 0.04929680582958421,
+      "maximum_obj_runtime_aabb_gap_error_cm": 2.481506726326188E-06
+    },
+    {
+      "label": "EF00OMFlush",
+      "wall_half_extents_cm": [
+        14.0,
+        160.0,
+        150.0
+      ],
+      "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+      "damage": [
+        {
+          "hold_s": 0.8,
+          "accepted_s": 0.0,
+          "montage_s": 0.010953,
+          "damage": 83.03125
+        }
+      ],
+      "phase_measurements": {
+        "ready": {
+          "samples": 59,
+          "triangle_intersection_samples": 59,
+          "min_mesh_front_plane_cm": -6.611381825275192
+        },
+        "charge": {
+          "samples": 48,
+          "triangle_intersection_samples": 48,
+          "min_mesh_front_plane_cm": -8.513823132299038
+        },
+        "release": {
+          "samples": 152,
+          "triangle_intersection_samples": 31,
+          "min_mesh_front_plane_cm": -198.06844935468064
+        },
+        "recovery": {
+          "samples": 17,
+          "triangle_intersection_samples": 10,
+          "min_mesh_front_plane_cm": -5.304193008486241
+        }
+      },
+      "minimum_capsule_plane_gap_cm": 2.0,
+      "minimum_weapon_floor_gap_cm": 70.719416,
+      "maximum_actor_travel_cm": 0.0,
+      "maximum_palm_span_cm": 111.342398,
+      "maximum_hilt_anchor_error_cm": 0.0,
+      "maximum_blade_angle_step_deg": 13.549776491501147,
+      "maximum_hilt_step_cm": 22.220200532556856,
+      "maximum_charge_hilt_step_cm": 0.056841779863055074,
+      "maximum_obj_runtime_aabb_gap_error_cm": 2.5214680459129113E-06
+    },
+    {
+      "label": "EF00OFFlush",
+      "wall_half_extents_cm": [
+        14.0,
+        160.0,
+        150.0
+      ],
+      "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+      "damage": [
+        {
+          "hold_s": 0.8,
+          "accepted_s": 0.0,
+          "montage_s": 0.010953,
+          "damage": 90.953125
+        }
+      ],
+      "phase_measurements": {
+        "ready": {
+          "samples": 59,
+          "triangle_intersection_samples": 59,
+          "min_mesh_front_plane_cm": -23.77080683573974
+        },
+        "charge": {
+          "samples": 48,
+          "triangle_intersection_samples": 48,
+          "min_mesh_front_plane_cm": -25.64111768685313
+        },
+        "release": {
+          "samples": 152,
+          "triangle_intersection_samples": 36,
+          "min_mesh_front_plane_cm": -186.49193929700573
+        },
+        "recovery": {
+          "samples": 17,
+          "triangle_intersection_samples": 10,
+          "min_mesh_front_plane_cm": -21.97595981904375
+        }
+      },
+      "minimum_capsule_plane_gap_cm": 2.0,
+      "minimum_weapon_floor_gap_cm": 73.721736,
+      "maximum_actor_travel_cm": 0.0,
+      "maximum_palm_span_cm": 100.841255,
+      "maximum_hilt_anchor_error_cm": 0.0,
+      "maximum_blade_angle_step_deg": 13.944221747043912,
+      "maximum_hilt_step_cm": 19.62541666561299,
+      "maximum_charge_hilt_step_cm": 0.04940152890346444,
+      "maximum_obj_runtime_aabb_gap_error_cm": 2.280669264109747E-06
+    }
+  ],
+  "final": [
+    {
+      "label": "EF03HMFlush",
+      "wall_half_extents_cm": [
+        14.0,
+        160.0,
+        150.0
+      ],
+      "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+      "damage": [
+        {
+          "frame": 682,
+          "hold_s": 0.8,
+          "accepted_s": 0.0,
+          "montage_s": 0.010953,
+          "damage": 85.234375
+        }
+      ],
+      "phase_measurements": {
+        "ready": {
+          "samples": 59,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 26.746666999999995,
+          "maximum_blade_axis_step_deg": 0,
+          "maximum_hilt_step_cm": 0.024887203679802843
+        },
+        "charge": {
+          "samples": 48,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 20.637498,
+          "maximum_blade_axis_step_deg": 0.38453125878880184,
+          "maximum_hilt_step_cm": 0.4714758528673549
+        },
+        "release": {
+          "samples": 152,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 6.568341999999998,
+          "maximum_blade_axis_step_deg": 0.19704969211772136,
+          "maximum_hilt_step_cm": 5.954076200382895
+        },
+        "recovery": {
+          "samples": 17,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 27.212410999999996,
+          "maximum_blade_axis_step_deg": 0,
+          "maximum_hilt_step_cm": 1.8979673455602462
+        }
+      },
+      "minimum_capsule_plane_gap_cm": 2.0,
+      "minimum_weapon_floor_gap_cm": 82.956577,
+      "maximum_actor_travel_cm": 0.0,
+      "maximum_palm_span_cm": 20.0,
+      "maximum_hilt_anchor_error_cm": 0.0,
+      "maximum_blade_angle_step_deg": 0.38453125878880184,
+      "maximum_hilt_step_cm": 5.954076200382895,
+      "maximum_charge_hilt_step_cm": 0.4714758528673549,
+      "maximum_obj_runtime_aabb_gap_error_cm": 1.9816039298348187E-06
+    },
+    {
+      "label": "EF03HFFlush",
+      "wall_half_extents_cm": [
+        14.0,
+        160.0,
+        150.0
+      ],
+      "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+      "damage": [
+        {
+          "frame": 682,
+          "hold_s": 0.8,
+          "accepted_s": 0.0,
+          "montage_s": 0.010953,
+          "damage": 77.757812
+        }
+      ],
+      "phase_measurements": {
+        "ready": {
+          "samples": 59,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 30.911076,
+          "maximum_blade_axis_step_deg": 0,
+          "maximum_hilt_step_cm": 0.023069438853166067
+        },
+        "charge": {
+          "samples": 48,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 24.806314,
+          "maximum_blade_axis_step_deg": 0.38453125878880184,
+          "maximum_hilt_step_cm": 0.4714592942280371
+        },
+        "release": {
+          "samples": 152,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 9.649467999999999,
+          "maximum_blade_axis_step_deg": 0.19704969211772136,
+          "maximum_hilt_step_cm": 5.8717410527906475
+        },
+        "recovery": {
+          "samples": 17,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 31.328308999999997,
+          "maximum_blade_axis_step_deg": 0,
+          "maximum_hilt_step_cm": 1.890253923078595
+        }
+      },
+      "minimum_capsule_plane_gap_cm": 2.0,
+      "minimum_weapon_floor_gap_cm": 83.668347,
+      "maximum_actor_travel_cm": 0.0,
+      "maximum_palm_span_cm": 20.0,
+      "maximum_hilt_anchor_error_cm": 0.0,
+      "maximum_blade_angle_step_deg": 0.38453125878880184,
+      "maximum_hilt_step_cm": 5.8717410527906475,
+      "maximum_charge_hilt_step_cm": 0.4714592942280371,
+      "maximum_obj_runtime_aabb_gap_error_cm": 1.0000000116860974E-06
+    },
+    {
+      "label": "EF03DMFlush",
+      "wall_half_extents_cm": [
+        14.0,
+        160.0,
+        150.0
+      ],
+      "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+      "damage": [
+        {
+          "frame": 682,
+          "hold_s": 0.8,
+          "accepted_s": 0.0,
+          "montage_s": 0.010953,
+          "damage": 91.132812
+        }
+      ],
+      "phase_measurements": {
+        "ready": {
+          "samples": 59,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 21.363496999999995,
+          "maximum_blade_axis_step_deg": 0,
+          "maximum_hilt_step_cm": 0.023323930843667646
+        },
+        "charge": {
+          "samples": 48,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 15.181497,
+          "maximum_blade_axis_step_deg": 0.38453125878880184,
+          "maximum_hilt_step_cm": 0.4721398841085123
+        },
+        "release": {
+          "samples": 152,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 12.166186999999997,
+          "maximum_blade_axis_step_deg": 0.19704969211772136,
+          "maximum_hilt_step_cm": 5.31427407174432
+        },
+        "recovery": {
+          "samples": 17,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 21.756194,
+          "maximum_blade_axis_step_deg": 0,
+          "maximum_hilt_step_cm": 2.122743161670525
+        }
+      },
+      "minimum_capsule_plane_gap_cm": 2.0,
+      "minimum_weapon_floor_gap_cm": 74.357829,
+      "maximum_actor_travel_cm": 0.0,
+      "maximum_palm_span_cm": 20.0,
+      "maximum_hilt_anchor_error_cm": 0.0,
+      "maximum_blade_angle_step_deg": 0.38453125878880184,
+      "maximum_hilt_step_cm": 5.31427407174432,
+      "maximum_charge_hilt_step_cm": 0.4721398841085123,
+      "maximum_obj_runtime_aabb_gap_error_cm": 1.9816039298348187E-06
+    },
+    {
+      "label": "EF03DFFlush",
+      "wall_half_extents_cm": [
+        14.0,
+        160.0,
+        150.0
+      ],
+      "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+      "damage": [
+        {
+          "frame": 682,
+          "hold_s": 0.8,
+          "accepted_s": 0.0,
+          "montage_s": 0.010953,
+          "damage": 126.234375
+        }
+      ],
+      "phase_measurements": {
+        "ready": {
+          "samples": 59,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 22.459902999999997,
+          "maximum_blade_axis_step_deg": 0,
+          "maximum_hilt_step_cm": 0.0235632327578349
+        },
+        "charge": {
+          "samples": 48,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 16.323633,
+          "maximum_blade_axis_step_deg": 0.38453125878880184,
+          "maximum_hilt_step_cm": 0.47145691478861895
+        },
+        "release": {
+          "samples": 152,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 11.607118,
+          "maximum_blade_axis_step_deg": 0.19704969211772136,
+          "maximum_hilt_step_cm": 5.635897127290825
+        },
+        "recovery": {
+          "samples": 17,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 22.889507000000002,
+          "maximum_blade_axis_step_deg": 0,
+          "maximum_hilt_step_cm": 2.284140032360981
+        }
+      },
+      "minimum_capsule_plane_gap_cm": 2.0,
+      "minimum_weapon_floor_gap_cm": 71.462177,
+      "maximum_actor_travel_cm": 0.0,
+      "maximum_palm_span_cm": 20.0,
+      "maximum_hilt_anchor_error_cm": 0.0,
+      "maximum_blade_angle_step_deg": 0.38453125878880184,
+      "maximum_hilt_step_cm": 5.635897127290825,
+      "maximum_charge_hilt_step_cm": 0.47145691478861895,
+      "maximum_obj_runtime_aabb_gap_error_cm": 1.2827297766193624E-06
+    },
+    {
+      "label": "EF03OMFlush",
+      "wall_half_extents_cm": [
+        14.0,
+        160.0,
+        150.0
+      ],
+      "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+      "damage": [
+        {
+          "frame": 682,
+          "hold_s": 0.8,
+          "accepted_s": 0.0,
+          "montage_s": 0.010953,
+          "damage": 92.601562
+        }
+      ],
+      "phase_measurements": {
+        "ready": {
+          "samples": 59,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 30.831880999999996,
+          "maximum_blade_axis_step_deg": 0,
+          "maximum_hilt_step_cm": 0.02540167524003
+        },
+        "charge": {
+          "samples": 48,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 24.748179999999998,
+          "maximum_blade_axis_step_deg": 0.38453125878880184,
+          "maximum_hilt_step_cm": 0.46825245996684306
+        },
+        "release": {
+          "samples": 152,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 9.923828999999998,
+          "maximum_blade_axis_step_deg": 0.19704969211772136,
+          "maximum_hilt_step_cm": 5.837832839178168
+        },
+        "recovery": {
+          "samples": 17,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 31.370965999999996,
+          "maximum_blade_axis_step_deg": 0,
+          "maximum_hilt_step_cm": 1.6650179681676136
+        }
+      },
+      "minimum_capsule_plane_gap_cm": 2.0,
+      "minimum_weapon_floor_gap_cm": 83.917346,
+      "maximum_actor_travel_cm": 0.0,
+      "maximum_palm_span_cm": 20.0,
+      "maximum_hilt_anchor_error_cm": 0.0,
+      "maximum_blade_angle_step_deg": 0.38453125878880184,
+      "maximum_hilt_step_cm": 5.837832839178168,
+      "maximum_charge_hilt_step_cm": 0.46825245996684306,
+      "maximum_obj_runtime_aabb_gap_error_cm": 1.00000000458067E-06
+    },
+    {
+      "label": "EF03OFFlush",
+      "wall_half_extents_cm": [
+        14.0,
+        160.0,
+        150.0
+      ],
+      "mesh": "/Game/Weapons/Starter20261110/SM_StarterGreatSword.SM_StarterGreatSword",
+      "damage": [
+        {
+          "frame": 682,
+          "hold_s": 0.8,
+          "accepted_s": 0.0,
+          "montage_s": 0.010953,
+          "damage": 81.03125
+        }
+      ],
+      "phase_measurements": {
+        "ready": {
+          "samples": 59,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 30.911085,
+          "maximum_blade_axis_step_deg": 6.891809794781364E-05,
+          "maximum_hilt_step_cm": 0.023069335707816902
+        },
+        "charge": {
+          "samples": 48,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 24.806323,
+          "maximum_blade_axis_step_deg": 0.38453125878880184,
+          "maximum_hilt_step_cm": 0.47145940822726307
+        },
+        "release": {
+          "samples": 152,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 9.649488999999999,
+          "maximum_blade_axis_step_deg": 0.19704969211772136,
+          "maximum_hilt_step_cm": 5.871738846439354
+        },
+        "recovery": {
+          "samples": 17,
+          "triangle_intersection_samples": 0,
+          "min_mesh_front_plane_cm": 31.328317999999996,
+          "maximum_blade_axis_step_deg": 0,
+          "maximum_hilt_step_cm": 1.8902542082362876
+        }
+      },
+      "minimum_capsule_plane_gap_cm": 2.0,
+      "minimum_weapon_floor_gap_cm": 83.66836,
+      "maximum_actor_travel_cm": 0.0,
+      "maximum_palm_span_cm": 20.0,
+      "maximum_hilt_anchor_error_cm": 0.0,
+      "maximum_blade_angle_step_deg": 0.38453125878880184,
+      "maximum_hilt_step_cm": 5.871738846439354,
+      "maximum_charge_hilt_step_cm": 0.47145940822726307,
+      "maximum_obj_runtime_aabb_gap_error_cm": 1.0000000116860974E-06
+    }
+  ]
+}

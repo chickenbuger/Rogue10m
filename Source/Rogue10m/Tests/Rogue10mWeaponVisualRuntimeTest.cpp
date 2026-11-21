@@ -88,7 +88,13 @@ public:
   bSwordTechniqueAudit=FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordTechniqueQA"));
   bEarthSplitterRender=bSwordTechniqueAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordEarthSplitterCapture"));
   bEarthSplitterMoving=bSwordTechniqueAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordEarthSplitterMoving"));
-  bEarthSplitterFrontWall=bSwordTechniqueAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordEarthSplitterFrontWall"));
+  bEarthSplitterFlushWall=bSwordTechniqueAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordEarthSplitterFlushWall"));
+  if(bEarthSplitterFlushWall)
+  {
+   FParse::Value(FCommandLine::Get(),TEXT("RogueGreatSwordEarthSplitterFlushGap="),EarthSplitterFlushGap);
+  }
+  bEarthSplitterFrontWall=bEarthSplitterFlushWall
+   ||(bSwordTechniqueAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordEarthSplitterFrontWall")));
   bEarthSplitterLeftWall=bSwordTechniqueAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordEarthSplitterLeftWall"));
   bEarthSplitterWall=bEarthSplitterFrontWall||bEarthSplitterLeftWall
    ||(bSwordTechniqueAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordEarthSplitterWall")));
@@ -629,11 +635,12 @@ private:
    const FVector Forward=Character->GetActorForwardVector();
    const FVector Right=Character->GetActorRightVector();
    const bool bFrontalCapture=bSwordGuardBreakAudit||bCrushingCapture||bEarthSplitterRender;
-   const FVector Position=IsFocusedKnuckleCase()?Origin+Forward*136.+Right*(bShoulderBashAudit?365.:-365.)+FVector(0,0,48):
+   const FVector Position=bEarthSplitterFlushWall?Origin-Forward*75.-Right*410.+FVector(0,0,72):
+    IsFocusedKnuckleCase()?Origin+Forward*136.+Right*(bShoulderBashAudit?365.:-365.)+FVector(0,0,48):
     bFrontalCapture?Origin+Forward*120.-Right*420.+FVector(0,0,85):
     Origin-Forward*290.-Right*300.+FVector(0,0,65);
    const FVector Focus=IsFocusedKnuckleCase()?Origin+Forward*52.+FVector(0,0,2):
-    Origin+FVector(0,0,35)+(bFrontalCapture?Forward*(bCrushingEdge?100.:52.):FVector::ZeroVector);
+    Origin+FVector(0,0,35)+(bFrontalCapture?Forward*(bEarthSplitterFlushWall?30.:bCrushingEdge?100.:52.):FVector::ZeroVector);
    FActorSpawnParameters CameraParams;
    CameraParams.ObjectFlags|=RF_Transient;
    auto* Camera=World->SpawnActor<ACameraActor>(Position,(Focus-Position).Rotation(),CameraParams);
@@ -1417,15 +1424,23 @@ private:
     auto* Shape=NewObject<UBoxComponent>(Wall,NAME_None,RF_Transient);
     Wall->AddInstanceComponent(Shape);
     Wall->SetRootComponent(Shape);
-    Shape->SetBoxExtent(FVector(28.,14.,63.));
+    const FVector WallExtent=bEarthSplitterFlushWall?FVector(14.,160.,150.):FVector(28.,14.,63.);
+    Shape->SetBoxExtent(WallExtent);
     Shape->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
     Shape->SetCollisionObjectType(ECC_WorldStatic);
     Shape->SetCollisionResponseToAllChannels(ECR_Block);
     Shape->SetGenerateOverlapEvents(false);
     Shape->SetCanEverAffectNavigation(false);
     Shape->RegisterComponent();
-    const FVector WallOffset=bEarthSplitterFrontWall?FVector(85.,0.,-28.):FVector(135.,bEarthSplitterLeftWall?-129.:129.,-28.);
+    const auto* Capsule=Character->GetCapsuleComponent();
+    const FVector WallOffset=bEarthSplitterFlushWall
+     ?FVector(Capsule->GetScaledCapsuleRadius()+EarthSplitterFlushGap+WallExtent.X,0.,WallExtent.Z-Capsule->GetScaledCapsuleHalfHeight())
+     :bEarthSplitterFrontWall?FVector(85.,0.,-28.):FVector(135.,bEarthSplitterLeftWall?-129.:129.,-28.);
     Wall->SetActorLocation(Basis.TransformPosition(WallOffset));
+    if(bEarthSplitterFlushWall)
+    {
+     Wall->SetActorRotation(FRotator(0.,Basis.Rotator().Yaw,0.));
+    }
     if(bEarthSplitterRender)
     {
      auto* Cube=LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cube.Cube"));
@@ -1603,6 +1618,25 @@ private:
     if(bShoulderBashAuthored){Check(FMath::IsFinite(Lead)&&Lead>0.,TEXT("shoulder_bash_visible_shoulder_leads_both_hands"));}
    }
   }
+ }
+ void RecordEarthSplitterFrontWall(const UStaticMeshComponent& Sword,bool Playing,double Now,float MontageTime,double Drop)
+ {
+  const auto* Shape=CastChecked<UBoxComponent>(EarthWall->GetRootComponent());
+  const FTransform SwordInWall=Sword.GetComponentTransform().GetRelativeTransform(Shape->GetComponentTransform());
+  const FBox Bounds=Sword.GetStaticMesh()->GetBoundingBox().TransformBy(SwordInWall);
+  const FVector Extent=Shape->GetUnscaledBoxExtent(),Position=SwordInWall.GetLocation(),Scale=SwordInWall.GetScale3D();
+  const FQuat Rotation=SwordInWall.GetRotation();
+  const auto* Capsule=Character->GetCapsuleComponent();
+  const FVector CapsuleInWall=Shape->GetComponentTransform().InverseTransformPosition(Capsule->GetComponentLocation());
+  const double CapsuleGap=-Extent.X-CapsuleInWall.X-Capsule->GetScaledCapsuleRadius();
+  const FVector Gap=(Bounds.GetCenter()).GetAbs()-Bounds.GetExtent()-Extent;
+  const TCHAR* Phase=!AttackSent?TEXT("ready"):Accepted<0?TEXT("charge"):Playing?TEXT("release"):TEXT("recovery");
+  Check(!SwordInWall.ContainsNaN()&&Bounds.IsValid&&FMath::IsFinite(CapsuleGap),TEXT("earthsplitter_front_wall_geometry_valid"));
+  EarthSplitterFrontRows+=FString::Printf(TEXT("%d,%d,%s,%.6f,%.6f,%.6f,%.6f,%s,")
+   TEXT("%.6f,%.6f,%.6f,%.8f,%.8f,%.8f,%.8f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f\n"),
+   Index,Frame,Phase,AttackSent?Now-Pressed:-1.,Accepted<0?-1.:Now-Accepted,MontageTime,Drop,
+   *Sword.GetStaticMesh()->GetPathName(),Position.X,Position.Y,Position.Z,Rotation.X,Rotation.Y,Rotation.Z,Rotation.W,
+   Scale.X,Scale.Y,Scale.Z,Extent.X,Extent.Y,Extent.Z,-Extent.X-Bounds.Max.X,Gap.GetMax(),CapsuleGap);
  }
  void Step()
  {
@@ -1875,6 +1909,10 @@ private:
     }
    }
   }
+  if(bEarthSplitterFrontWall&&EarthWall.IsValid()&&Right&&Right->GetStaticMesh())
+  {
+   RecordEarthSplitterFrontWall(*Right,Playing,Now,MontageTime,Drop);
+  }
   if(bEarthSplitterAudit&&IsEarthSplitterCase()&&AttackSent&&Right&&Right->GetStaticMesh())
   {
    const auto* Body=Character->GetMesh();
@@ -1986,6 +2024,14 @@ private:
     TEXT("sword_technique_source_and_visible_trajectory_saved"));
    Check(FFileHelper::SaveStringToFile(SwordTechniqueActor,*(Output/TEXT("technique-actor.csv"))),
     TEXT("sword_technique_capsule_trajectory_saved"));
+   if(bEarthSplitterFrontWall)
+   {
+    const FString Header=TEXT("case,frame,phase,hold_s,accepted_s,montage_s,damage,mesh_path,")
+     TEXT("sword_x,sword_y,sword_z,sword_qx,sword_qy,sword_qz,sword_qw,sword_sx,sword_sy,sword_sz,")
+     TEXT("wall_ex,wall_ey,wall_ez,front_plane_aabb_gap_cm,wall_axis_gap_cm,capsule_plane_gap_cm\n");
+    Check(!EarthSplitterFrontRows.IsEmpty()&&FFileHelper::SaveStringToFile(Header+EarthSplitterFrontRows,
+     *(Output/TEXT("earthsplitter-front-wall.csv"))),TEXT("earthsplitter_front_wall_geometry_saved"));
+   }
    if(!EarthSplitterRows.IsEmpty())
    {
     const FString Header=TEXT("case,frame,hold_s,accepted_s,montage_s,release,damage,bounds_min_above_capsule_cm,tip_above_capsule_cm,blade_dir_z,blade_dir_forward,palm_span_cm,grip_palm_error_cm,actor_travel_cm,actor_yaw_deg,wall_axis_gap_cm,blade_dir_right,right_palm_local_x,right_palm_local_y,right_palm_local_z,left_palm_local_x,left_palm_local_y,left_palm_local_z,pelvis_local_z_cm,lowest_foot_above_capsule_cm,wall_recovery_weight\n");
@@ -2047,14 +2093,15 @@ private:
  bool bCrushingCapture=false,bCrushingEdge=false,bCrushingStock=false;
  bool bCrushingLoadRequested=false,bCrushingLoadCaptured=false;
  bool bEarthSplitterAudit=false,bEarthSplitterRender=false,bEarthSplitterMoving=false,bEarthSplitterWall=false;
- bool bEarthSplitterFrontWall=false,bEarthSplitterLeftWall=false,bEarthSplitterLateStrafe=false;
+ bool bEarthSplitterFlushWall=false,bEarthSplitterFrontWall=false,bEarthSplitterLeftWall=false,bEarthSplitterLateStrafe=false;
+ double EarthSplitterFlushGap=2.;
  bool bEarthWallFollowThroughRequested=false;
  bool bEarthHeldCaptureRequested=false,bEarthBeganStrafe=false,bEarthEndedStrafe=false;
  TWeakObjectPtr<AActor> EarthWall;
  FRotator EarthInitialLook=FRotator::ZeroRotator;
  FString EarthSplitterAppearance;
  FVector EarthInitialActor=FVector::ZeroVector;
- FString EarthSplitterRows;
+ FString EarthSplitterRows,EarthSplitterFrontRows;
  int32 SwordEquipGrid=INDEX_NONE;
  FGuid SwordEquipItem;
  bool bSwordEquipAudit=false,bSwordEquipWalking=false,bSwordEquipMovingBoth=false;

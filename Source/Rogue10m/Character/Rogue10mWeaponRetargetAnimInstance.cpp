@@ -38,6 +38,12 @@ FCompactPoseBoneIndex CompactBone(const FBoneContainer& Bones, FName Name)
 	return Bones.MakeCompactPoseIndex(FMeshPoseBoneIndex(Bones.GetPoseBoneIndexForBoneName(Name)));
 }
 
+double LowestBladeProjection(const FBox& Bounds, const FQuat& Rotation, const FVector& Scale, const FVector& Axis)
+{
+	const FVector LocalAxis = Rotation.UnrotateVector(Axis) * Scale;
+	return FVector::DotProduct(Bounds.GetCenter(), LocalAxis) - FVector::DotProduct(Bounds.GetExtent(), LocalAxis.GetAbs());
+}
+
 struct FGripArm
 {
 	FCompactPoseBoneIndex Shoulder = FCompactPoseBoneIndex(INDEX_NONE);
@@ -122,6 +128,7 @@ public:
 	{
 		FAnimInstanceProxy::PreEvaluateAnimation(Instance);
 		DwarfGripWeight = 0.0f;
+		FrontWall = FPlane(ForceInit);
 		const auto* Character = Cast<ARogue10mCharacter>(Instance->TryGetPawnOwner());
 		if (!Character || Character->GetMesh() != Instance->GetSkelMeshComponent() || Character->IsDodging() || Character->IsDead()) { return; }
 		const auto* SourceMesh = Character->GetAnimationPlaybackMesh();
@@ -138,24 +145,6 @@ public:
 		const UStaticMesh* Sword = SwordComponent ? SwordComponent->GetStaticMesh() : nullptr;
 		const auto* Movement = Character->GetCharacterMovement();
 		if (!Clip || !Clip->GetSkeleton() || !Sword || !Movement || !Movement->IsMovingOnGround()) { return; }
-		const auto& Reference = Clip->GetSkeleton()->GetReferenceSkeleton();
-		const auto MarkerWorld = [&](FName Bone)
-		{
-			return SourceMesh->GetComponentTransform().TransformPosition(ReferenceGripMarker(*Clip, Reference, Bone, Sample.Time));
-		};
-		const FVector RightWrist = MarkerWorld(TEXT("hand_r"));
-		const FVector LeftWrist = MarkerWorld(TEXT("hand_l"));
-		const FVector RightFinger = MarkerWorld(TEXT("middle_01_r")) - RightWrist;
-		const FVector LeftFinger = MarkerWorld(TEXT("middle_01_l")) - LeftWrist;
-		const FVector Right = RightWrist + RightFinger * .5;
-		const FVector Left = LeftWrist + LeftFinger * .5;
-		FTransform AuthoredGrip;
-		if (!URogue10mWeaponVisualComponent::BuildSwordPalmGrip(Right, Left, RightFinger, AuthoredGrip)) { return; }
-		DwarfGripAuthoredRotation = AuthoredGrip.GetRotation();
-		DwarfGripAuthoredFingers[0] = DwarfGripAuthoredRotation.UnrotateVector(RightFinger);
-		DwarfGripAuthoredFingers[1] = DwarfGripAuthoredRotation.UnrotateVector(LeftFinger);
-		DwarfGripSpan = FMath::Clamp((Right - Left).Size() * .82, 17.0, 22.0);
-		DwarfGripHeight = Right.Z + 6.0;
 		const auto* Capsule = Character->GetCapsuleComponent();
 		DwarfGripFloor = FMath::Max(Movement->CurrentFloor.HitResult.ImpactPoint.Z,
 			Capsule->GetComponentLocation().Z - Capsule->GetScaledCapsuleHalfHeight());
@@ -166,6 +155,52 @@ public:
 		DwarfGripSwordScale = SwordComponent->GetComponentScale();
 		DwarfGripForward = Character->GetActorForwardVector();
 		DwarfGripRight = Character->GetActorRightVector();
+		FrontWall = Sample.FrontWall;
+		const FVector WallNormal(FrontWall.X, FrontWall.Y, FrontWall.Z);
+		if (!WallNormal.IsNearlyZero())
+		{
+			// Use the same compact guard before charging and when the attack finishes.
+			// The raised hilt folds back towards the chest after the damage frame.
+			const float Raised = Sample.bRelease
+				? 1.0f - FMath::SmoothStep(.78f, 1.51f, Sample.Time)
+				: FMath::SmoothStep(0.0f, .65f, Sample.Time);
+			const float Retract = Sample.bRelease
+				? FMath::SmoothStep(.10f, .60f, Sample.Time) * (1.0f - FMath::SmoothStep(.91f, 1.52f, Sample.Time))
+				: 0.0f;
+			FVector AlongWall = FVector::CrossProduct(WallNormal, FVector::UpVector).GetSafeNormal();
+			if (FVector::DotProduct(AlongWall, DwarfGripRight) < 0.0) { AlongWall *= -1.0; }
+			const FVector WallUp = FVector::VectorPlaneProject(FVector::UpVector, WallNormal).GetSafeNormal();
+			const double Lean = FMath::DegreesToRadians(4.0 + 10.0 * Raised - 6.0 * Retract);
+			const FVector BladeAxis = WallUp * FMath::Cos(Lean) + AlongWall * FMath::Sin(Lean);
+			const FVector PalmFacing = FVector::VectorPlaneProject(DwarfGripForward, BladeAxis).GetSafeNormal();
+			DwarfGripAuthoredRotation = FRotationMatrix::MakeFromZY(BladeAxis, PalmFacing).ToQuat();
+			DwarfGripAuthoredFingers[0] = FVector::RightVector;
+			DwarfGripAuthoredFingers[1] = FVector(-.7, .7, 0.0);
+			DwarfGripSpan = 20.0;
+			FrontHiltOffset = FVector(10.0 + 6.0 * Raised - 11.0 * Retract,
+				5.0 + 7.0 * Raised + 4.0 * Retract, -13.0 + 8.0 * Raised - 7.0 * Retract);
+		}
+		else
+		{
+			const auto& Reference = Clip->GetSkeleton()->GetReferenceSkeleton();
+			const auto MarkerWorld = [&](FName Bone)
+			{
+				return SourceMesh->GetComponentTransform().TransformPosition(ReferenceGripMarker(*Clip, Reference, Bone, Sample.Time));
+			};
+			const FVector RightWrist = MarkerWorld(TEXT("hand_r"));
+			const FVector LeftWrist = MarkerWorld(TEXT("hand_l"));
+			const FVector RightFinger = MarkerWorld(TEXT("middle_01_r")) - RightWrist;
+			const FVector LeftFinger = MarkerWorld(TEXT("middle_01_l")) - LeftWrist;
+			const FVector Right = RightWrist + RightFinger * .5;
+			const FVector Left = LeftWrist + LeftFinger * .5;
+			FTransform AuthoredGrip;
+			if (!URogue10mWeaponVisualComponent::BuildSwordPalmGrip(Right, Left, RightFinger, AuthoredGrip)) { return; }
+			DwarfGripAuthoredRotation = AuthoredGrip.GetRotation();
+			DwarfGripAuthoredFingers[0] = DwarfGripAuthoredRotation.UnrotateVector(RightFinger);
+			DwarfGripAuthoredFingers[1] = DwarfGripAuthoredRotation.UnrotateVector(LeftFinger);
+			DwarfGripSpan = FMath::Clamp((Right - Left).Size() * .82, 17.0, 22.0);
+			DwarfGripHeight = Right.Z + 6.0;
+		}
 		DwarfGripWeight = Sample.Weight;
 		if (Sample.bRelease && !bWallRecovery)
 		{
@@ -235,6 +270,13 @@ private:
 		const FVector Shoulders[] = {WorldJoint(Right.Shoulder), WorldJoint(Left.Shoulder)};
 		FVector AuthoredRight = (Shoulders[0] + Shoulders[1]) * .5 + DwarfGripForward * 22.0 + DwarfGripRight * 8.0;
 		AuthoredRight.Z = DwarfGripHeight;
+		const FVector WallNormal(FrontWall.X, FrontWall.Y, FrontWall.Z);
+		const bool bHasFrontWall = !WallNormal.IsNearlyZero();
+		if (bHasFrontWall)
+		{
+			AuthoredRight = (Shoulders[0] + Shoulders[1]) * .5 + DwarfGripForward * FrontHiltOffset.X
+				+ DwarfGripRight * FrontHiltOffset.Y + FVector::UpVector * FrontHiltOffset.Z;
+		}
 		FVector Center = FMath::Lerp((StockPalms[0] + StockPalms[1]) * .5, AuthoredRight - AuthoredAxis * (DwarfGripSpan * .5), Alpha);
 		FVector FingerOffsets[2], SphereCenters[2];
 		double SphereRadii[2];
@@ -255,9 +297,13 @@ private:
 		}
 		const double MinimumHeight = DwarfGripFloor + 2.0 * Alpha - PalmOffsets[0].Z
 			- DwarfGripBounds.TransformBy(FTransform(Rotation, FVector::ZeroVector, DwarfGripSwordScale)).Min.Z;
-		// Project one rigid hilt into both visible arm reaches and above the floor. The residuals
-		// retain the nearest common center when all three boundaries constrain the same frame.
-		FVector Residue[3] = {FVector::ZeroVector, FVector::ZeroVector, FVector::ZeroVector};
+		const double WallClearance = 2.0;
+		const double MinimumWallProjection = bHasFrontWall
+			? FrontWall.W + WallClearance - FVector::DotProduct(PalmOffsets[0], WallNormal)
+				- LowestBladeProjection(DwarfGripBounds, Rotation, DwarfGripSwordScale, WallNormal)
+			: 0.0;
+		// Project the rigid hilt into both arm reaches and clear of the floor and any frontal wall.
+		FVector Residue[4] = {};
 		for (int32 Pass = 0; Pass < 40; ++Pass)
 		{
 			for (int32 Index = 0; Index < 2; ++Index)
@@ -269,6 +315,12 @@ private:
 			const FVector Request = Center + Residue[2];
 			Center = FVector(Request.X, Request.Y, FMath::Max(Request.Z, MinimumHeight));
 			Residue[2] = Request - Center;
+			if (bHasFrontWall)
+			{
+				const FVector WallRequest = Center + Residue[3];
+				Center = WallRequest + WallNormal * FMath::Max(0.0, MinimumWallProjection - FVector::DotProduct(WallRequest, WallNormal));
+				Residue[3] = WallRequest - Center;
+			}
 		}
 		const double Reserve = 3.0 * Alpha / DwarfGripMeshWorld.GetScale3D().X;
 		for (int32 Index = 0; Index < 2; ++Index)
@@ -283,6 +335,8 @@ private:
 		if (!URogue10mWeaponVisualComponent::BuildSwordPalmGrip(FinalRight, FinalLeft, FinalRight - WorldJoint(Right.Wrist), Grip)) { return; }
 		Grip.SetScale3D(DwarfGripSwordScale);
 		if (DwarfGripBounds.TransformBy(Grip).Min.Z < DwarfGripFloor - .005) { return; }
+		if (bHasFrontWall && FrontWall.PlaneDot(FinalRight)
+			+ LowestBladeProjection(DwarfGripBounds, Grip.GetRotation(), DwarfGripSwordScale, WallNormal) < WallClearance - .005) { return; }
 		FPoseContext Mixed(Output);
 		Mixed.Pose.CopyBonesFrom(Output.Pose);
 		FCSPose<FCompactPose>::ConvertComponentPosesToLocalPosesSafe(Corrected, Mixed.Pose);
@@ -374,6 +428,8 @@ private:
 	double DwarfGripFloor = 0.0;
 	double DwarfGripSpan = 0.0;
 	float DwarfGripWeight = 0.0f;
+	FPlane FrontWall = FPlane(ForceInit);
+	FVector FrontHiltOffset = FVector::ZeroVector;
 };
 }
 
