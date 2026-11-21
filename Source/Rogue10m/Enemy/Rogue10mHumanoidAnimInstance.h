@@ -24,6 +24,10 @@ public:
  void StopPresentation();
  UAnimSequence* GetIdleSequence() const { return IdleSequence; }
  UAnimSequence* GetMovementSequence() const { return MovementSequence; }
+ float GetMovementPlayRate(float Speed) const;
+#if WITH_EDITOR
+ float GetMovementPlaybackTime() const;
+#endif
 protected:
  virtual FAnimInstanceProxy* CreateAnimInstanceProxy() override;
  virtual void DestroyAnimInstanceProxy(FAnimInstanceProxy* InProxy) override;
@@ -31,5 +35,6 @@ private:
  UPROPERTY(Transient) TObjectPtr<UAnimSequence> IdleSequence;
  UPROPERTY(Transient) TObjectPtr<UAnimSequence> MovementSequence;
  UPROPERTY(Transient) TObjectPtr<UAnimMontage> PresentationMontage;
+ float AuthoredWalkSpeed = 0.f;
  float PresentationContactSeconds = 0.f;
 };

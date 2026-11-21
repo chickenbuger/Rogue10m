@@ -26,6 +26,9 @@ public:
   Slot.bAlwaysUpdateSourcePose = true;
  }
  virtual FAnimNode_Base* GetCustomRootNode() override { return &Slot; }
+#if WITH_EDITOR
+ float GetMovementPlaybackTime() const { return Movement.GetAccumulatedTime(); }
+#endif
  virtual void PreUpdate(UAnimInstance* Instance, float DeltaSeconds) override
  {
   FAnimInstanceProxy::PreUpdate(Instance, DeltaSeconds);
@@ -33,7 +36,9 @@ public:
   Idle.SetSequence(Humanoid->GetIdleSequence());
   Movement.SetSequence(Humanoid->GetMovementSequence() ? Humanoid->GetMovementSequence() : Humanoid->GetIdleSequence());
   const APawn* Pawn = Instance->TryGetPawnOwner();
-  const float TargetAlpha = Pawn && Pawn->GetVelocity().SizeSquared2D() > 100.f ? 1.f : 0.f;
+  const float Speed = Pawn ? Pawn->GetVelocity().Size2D() : 0.f;
+  Movement.SetPlayRate(Humanoid->GetMovementPlayRate(Speed));
+  const float TargetAlpha = Speed > 10.f ? 1.f : 0.f;
   Locomotion.Alpha = FMath::FInterpTo(Locomotion.Alpha, TargetAlpha, DeltaSeconds, 8.f);
  }
 private:
@@ -57,7 +62,21 @@ void URogue10mHumanoidAnimInstance::Configure(URogue10mMonsterAttackPatternProfi
 {
  IdleSequence = Profile ? Profile->IdleAnimation.LoadSynchronous() : nullptr;
  MovementSequence = Profile ? Profile->MovementAnimation.LoadSynchronous() : nullptr;
+ AuthoredWalkSpeed = Profile ? Profile->AuthoredWalkSpeed : 0.f;
 }
+float URogue10mHumanoidAnimInstance::GetMovementPlayRate(float Speed) const
+{
+ // The sequence player applies the asset rate after applying the node rate.
+ const float Reference = MovementSequence ? AuthoredWalkSpeed * MovementSequence->RateScale : 0.f;
+ return Reference > UE_SMALL_NUMBER && FMath::IsFinite(Reference) && FMath::IsFinite(Speed)
+  ? FMath::Clamp(Speed / Reference, 0.f, 3.f) : 1.f;
+}
+#if WITH_EDITOR
+float URogue10mHumanoidAnimInstance::GetMovementPlaybackTime() const
+{
+ return GetProxyOnGameThread<FHumanoidAnimProxy>().GetMovementPlaybackTime();
+}
+#endif
 float URogue10mHumanoidAnimInstance::ResolveContactTime(float AuthoredContactSeconds, float LengthSeconds)
 {
  const float Length = FMath::IsFinite(LengthSeconds) ? FMath::Max(0.002f, LengthSeconds) : 0.002f;

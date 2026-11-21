@@ -78,6 +78,7 @@ public:
         Images = FPaths::ProjectDir()/TEXT("DevLog")/(TEXT("20261103_BossReadability_")+Label);
         bRendered = !FParse::Param(Args, TEXT("nullrhi"));
         bThirdPerson = FParse::Param(Args, TEXT("RogueBossThirdPersonQA"));
+        bWalkContactOnly = FParse::Param(Args, TEXT("RogueBossWalkContactQA"));
         if (IFileManager::Get().DirectoryExists(*Output) || IFileManager::Get().DirectoryExists(*Images))
         { UE_LOG(LogRogue10m, Error, TEXT("RESULT=BOSS_READABILITY_FAILED fresh_evidence_required")); FPlatformMisc::RequestExitWithStatus(false, 1); return; }
         IFileManager::Get().MakeDirectory(*Output, true);
@@ -284,9 +285,19 @@ private:
         Check(LiveData && Boss->GetMonsterData()==LiveData && Pattern->GetProfile()==LiveData->AttackPatternProfile,
             TEXT("fixture_resolves_actual_live_monster_DA_profile_not_old_hardcoded_profile"));
         if (Failures) { Finish(); return; }
+        if (bWalkContactOnly)
+        {
+            WalkProfile = Pattern->GetProfile();
+            WalkOrigin = Boss->GetActorTransform();
+            WalkDirection = (Boss->GetActorLocation() - Player->GetActorLocation()).GetSafeNormal2D();
+            WalkSpeed = LiveData->WalkSpeed;
+            WalkRows = TEXT("phase,world_s,clip_s,bone,world_x_cm,world_y_cm,world_z_cm,actor_speed_cm_s,contact_drift_cm_s\n");
+            BeginWalkContact(false);
+            return;
+        }
         if (Case==0)
         {
-            if (bThirdPerson)
+            if (bThirdPerson && bRendered)
             {
                 FAssetCompilingManager::Get().FinishAllCompilation();
                 const auto* P=Pattern->GetProfile();
@@ -377,8 +388,80 @@ private:
         Check(FMath::Abs(Locked.WindupRemaining-ExpectedLead)<.035, TEXT("actual_profile_matches_tuning_candidate"));
         Results+=FString::Printf(TEXT("CASE %s profile=%s authored_lead=%.9f initial_warning=1\n"), *CaseName, *Pattern->GetProfile()->GetPathName(), ExpectedLead);
     }
+    void BeginWalkContact(bool bTuned)
+    {
+        auto* Original = WalkProfile.Get();
+        auto* Profile = bTuned ? Original : DuplicateObject<URogue10mMonsterAttackPatternProfile>(Original, GetTransientPackage());
+        Check(Profile && Original && Original->AuthoredWalkSpeed > 0.0f && !WalkDirection.IsNearlyZero(), TEXT("active_walk_profile_has_stance_calibration"));
+        if (Failures) { Finish(); return; }
+        if (!bTuned) { Profile->AuthoredWalkSpeed = 0.0f; }
+        Pattern->ConfigureProfile(Profile);
+        const auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Boss->GetMesh()->GetAnimInstance());
+        Check(Anim && Anim->GetMovementSequence() && FMath::IsNearlyEqual(
+            Anim->GetMovementPlayRate(WalkSpeed), bTuned ? WalkSpeed / Original->AuthoredWalkSpeed : 1.0f, 0.001f),
+            TEXT("live_graph_uses_expected_walk_rate"));
+        if (Failures) { Finish(); return; }
+        Boss->GetMesh()->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+        Boss->SetActorTransform(WalkOrigin, false, nullptr, ETeleportType::TeleportPhysics);
+        Boss->SetActorRotation(WalkDirection.Rotation());
+        auto* Movement = Boss->GetCharacterMovement();
+        Movement->StopMovementImmediately();
+        Movement->bRunPhysicsWithNoController = true;
+        Movement->bForceNextFloorCheck = true;
+        WalkStartSeconds = World->GetTimeSeconds();
+        bTunedWalk = bTuned;
+        PreviousWalkPhase = -1.0f;
+        WalkDrifts.Reset();
+    }
+    void SampleWalkContact(float DeltaSeconds)
+    {
+        if (!Boss.IsValid() || !Pattern.IsValid()) { Check(false, TEXT("walk_fixture_lost_boss")); Finish(); return; }
+        const auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Boss->GetMesh()->GetAnimInstance());
+        if (!Anim) { Check(false, TEXT("walk_fixture_lost_native_graph")); Finish(); return; }
+        Boss->AddMovementInput(WalkDirection, 1.0f, true);
+        const double Now = World->GetTimeSeconds();
+        const float Phase = Anim->GetMovementPlaybackTime();
+        const float Speed = FVector::DotProduct(Boss->GetVelocity(), WalkDirection);
+        const bool bSettled = Now - WalkStartSeconds > 0.45 && FMath::Abs(Speed - WalkSpeed) < 3.0f;
+        // The low intervals were verified in the production retargeted Garret clip.
+        const auto InWindow = [this, Phase](float Begin, float End)
+        { return PreviousWalkPhase >= Begin && Phase <= End && Phase > PreviousWalkPhase; };
+        const bool Planted[] = { InWindow(0.60f, 0.83f) || InWindow(1.37f, 1.50f),
+            InWindow(0.23f, 0.46f) || InWindow(1.0f, 1.24f) };
+        const FName FootBones[] = { TEXT("foot_l"), TEXT("foot_r") };
+        for (int32 Side = 0; Side != UE_ARRAY_COUNT(FootBones); ++Side)
+        {
+            const FVector Foot = Boss->GetMesh()->GetBoneLocation(FootBones[Side]);
+            if (bSettled && Planted[Side] && DeltaSeconds > UE_SMALL_NUMBER)
+            {
+                const float Drift = FVector::DotProduct(Foot - PreviousWalkFeet[Side], WalkDirection) / DeltaSeconds;
+                WalkDrifts.Add(FMath::Abs(Drift));
+                WalkRows += FString::Printf(TEXT("%s,%.5f,%.5f,%s,%.3f,%.3f,%.3f,%.3f,%.3f\n"),
+                    bTunedWalk ? TEXT("paced") : TEXT("fixed"), Now, Phase, *FootBones[Side].ToString(),
+                    Foot.X, Foot.Y, Foot.Z, Speed, Drift);
+            }
+            PreviousWalkFeet[Side] = Foot;
+        }
+        PreviousWalkPhase = Phase;
+        if (Now - WalkStartSeconds < 2.9) { return; }
+        WalkDrifts.Sort();
+        const float Median = WalkDrifts.IsEmpty() ? -1.0f : WalkDrifts[WalkDrifts.Num() / 2];
+        Results += FString::Printf(TEXT("walk_%s_samples=%d median_absolute_drift_cm_s=%.3f\n"),
+            bTunedWalk ? TEXT("paced") : TEXT("fixed"), WalkDrifts.Num(), Median);
+        Check(WalkDrifts.Num() >= 15, TEXT("sampled_planted_feet_at_actual_walk_speed"));
+        if (!bTunedWalk && !Failures)
+        {
+            FixedWalkDrift = Median;
+            BeginWalkContact(true);
+            return;
+        }
+        Check(bTunedWalk && FixedWalkDrift >= 35.0f && Median >= 0.0f && Median < FixedWalkDrift * 0.5f,
+            TEXT("paced_walk_reduces_measured_ground_contact_drift"));
+        Finish();
+    }
     void Sample(float DT)
     {
+        if (bWalkContactOnly && WalkProfile.IsValid() && !bFinished) { SampleWalkContact(DT); return; }
         if (!bTrial || bFinished || !Pattern.IsValid() || !Boss.IsValid() || !Player.IsValid()) return;
         const double Elapsed=World->GetTimeSeconds()-StartTime;
         const auto S=Pattern->GetLockedAttackShape();
@@ -525,7 +608,14 @@ private:
             if (bThirdPerson) Check(FFileHelper::SaveStringToFile(AnimationFrames,*(Output/TEXT("animation-frames.csv"))), TEXT("actual_montage_hand_and_foot_trajectory_written"));
             Check(FFileHelper::SaveStringToFile(Captures,*(Output/TEXT("captures.csv"))), TEXT("capture_metadata_written"));
             Check(FFileHelper::SaveStringToFile(HudFrames,*(Output/TEXT("hud-frames.csv"))),TEXT("actual_HUD_frame_data_written"));
-            Check(HudCasesChecked==18 && (bThirdPerson || HudVisibilityProbeCount==1),TEXT("all_18_cases_and_applicable_camera_checks_completed"));
+            if (bWalkContactOnly)
+            {
+                Check(FFileHelper::SaveStringToFile(WalkRows, *(Output/TEXT("walk-contact.csv"))), TEXT("actual_gait_contact_trajectory_written"));
+            }
+            else
+            {
+                Check(HudCasesChecked==18 && (bThirdPerson || HudVisibilityProbeCount==1),TEXT("all_18_cases_and_applicable_camera_checks_completed"));
+            }
             Results+=FString::Printf(TEXT("third_person_gameplay_QA=%d\nfirst_person_QA_executed=%d\n"),bThirdPerson,!bThirdPerson);
             Results+=FString::Printf(TEXT("checks=%d\nfailures=%d\ncases_completed=%d\nrendered=%d\ninput=programmatic_Controller_InputKey\nreaction_delay_s=.25\nAlt_s=.32_after_warning_with_movement_key_held\nstandalone_owned_floor_and_reward_free_boss_only=1\nno_teleport_during_attack=1\nHP_damage_cooldown_assets_unchanged=1\nhud_windup_cases_checked=%d\nhud_menu_inspection_probes=%d\nhud_target_source=normal_HP_widget_refresh_not_seeded\nhud_pixels=requires_actual_NativePaint_PNG_review\nhud_death_and_wrong_locked_actor=source_review_only_no_extra_HP_or_actor_fixture\nphysical_input_and_full_field_run=not_performed\ngeometry=expanded_narrow_shape_plus_actual_overlap_selected_target_height_and_LOS_gates\nwave=instant_locked_rectangle_no_travelling_projectile\nvisual_acceptance=requires_actual_ready_resolution_recovery_PNG_review\n"), Checks,Failures,Case,bRendered,HudCasesChecked,HudVisibilityProbeCount);
             if (!FFileHelper::SaveStringToFile(Results,*(Output/TEXT("results.txt")))) ++Failures;
@@ -536,6 +626,15 @@ private:
     TWeakObjectPtr<UWorld> World; TWeakObjectPtr<ARogue10mPlayerController> PC;
     TWeakObjectPtr<ARogue10mCharacter> Player; TWeakObjectPtr<URogue10mCombatTestComponent> Tools;
     TWeakObjectPtr<ARogue10mBasicMonster> Boss; TWeakObjectPtr<URogue10mMonsterAttackPatternComponent> Pattern;
+    TWeakObjectPtr<URogue10mMonsterAttackPatternProfile> WalkProfile;
+    FTransform WalkOrigin;
+    FVector WalkDirection = FVector::ZeroVector;
+    FVector PreviousWalkFeet[2] = { FVector::ZeroVector, FVector::ZeroVector };
+    TArray<float> WalkDrifts;
+    FString WalkRows;
+    double WalkStartSeconds = 0.0;
+    float WalkSpeed = 0.0f, PreviousWalkPhase = -1.0f, FixedWalkDrift = 0.0f;
+    bool bWalkContactOnly = false, bTunedWalk = false;
     TWeakObjectPtr<URogue10mRunHUD> HUD;
     TWeakObjectPtr<URogue10mProgressionSubsystem> Saves; TWeakObjectPtr<AActor> Ground;
     FDelegateHandle CaptureHandle,SampleHandle,Cleanup; TFunction<void()> Next; TArray<FPhoto> Photos;

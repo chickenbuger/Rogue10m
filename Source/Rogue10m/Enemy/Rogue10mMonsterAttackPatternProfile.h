@@ -38,6 +38,9 @@ public:
  /** Opt-in native locomotion graph and full-body DefaultSlot montages. Legacy profiles remain single-node. */
  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Animation")
  bool bUseHumanoidAnimInstance = false;
+ /** World speed matching the authored planted stride at the configured mesh scale and unit playback rate. */
+ UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Animation", meta=(ClampMin="0.0", Units="cm/s"))
+ float AuthoredWalkSpeed = 0.f;
  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Animation")
  TSoftObjectPtr<UAnimMontage> AttackMontage;
  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Monster|Animation")
