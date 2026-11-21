@@ -15,6 +15,13 @@ class UCharacterMovementComponent;
 class URogue10mCharacterAnimationComponent;
 class FRogue10mViewAlignedUpperBodyProxy;
 
+struct FRogue10mDwarfEarthSplitterSample
+{
+	float Time = 0.0f;
+	float Weight = 0.0f;
+	bool bRelease = false;
+};
+
 /** Common Manny locomotion remains in the AnimBP; moving ground attacks retain its lower-body pose. */
 UCLASS(Blueprintable)
 class ROGUE10M_API URogue10mFighterCombatStanceAnimInstance : public UAnimInstance
@@ -32,6 +39,11 @@ public:
 	bool WasLearnedRollPoseApplied() const { return bLearnedRollPoseApplied; }
 	const UAnimSequence* GetSecondJumpPoseAnimation() const { return CachedSecondJumpPose.Get(); }
 	bool WasSecondJumpPoseApplied() const { return bSecondJumpPoseApplied; }
+	FRogue10mDwarfEarthSplitterSample GetDwarfEarthSplitterSample() const { return DwarfEarthSplitterSample; }
+	const UAnimSequence* GetEarthSplitterReference(bool bRelease) const
+	{
+		return bRelease ? CachedEarthSplitterRelease.Get() : CachedEarthSplitterCharge.Get();
+	}
 
 	/** The final head orientation follows the mouse separately from the authored body motion. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Head Aim")
@@ -203,6 +215,7 @@ private:
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedEarthSplitterRelease;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedEarthSplitterFemaleCharge;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedEarthSplitterFemaleRelease;
+	FRogue10mDwarfEarthSplitterSample DwarfEarthSplitterSample;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedSecondJumpPose;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedNonlethalFront;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedNonlethalRear;

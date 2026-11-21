@@ -85,6 +85,7 @@ private:
 	int32 EarthSplitterMontageAtChargeStart = INDEX_NONE;
 	bool bEarthSplitterChargeContinuous = false;
 	bool bEarthSplitterHoldObserved = false;
+	bool bUseDwarfEarthSplitterGrip = false;
 	const UAnimSequence* NonlethalHitSequence = nullptr;
 	float NonlethalHitAge = 0.0f;
 	float NonlethalHitWeight = 0.0f;

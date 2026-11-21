@@ -8,6 +8,7 @@
 #include "BoneContainer.h"
 #include "BonePose.h"
 #include "CollisionQueryParams.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/SkeletalMesh.h"
 #include "Engine/World.h"
@@ -32,6 +33,7 @@ constexpr float GroundedDefeatBlendSeconds = .22f;
 constexpr float EarthSplitterFadeRate = 10.0f;
 constexpr float EarthSplitterMovingLowerBodyFadeRate = 15.0f;
 constexpr double EarthSplitterClearanceFadeMargin = 39.0;
+constexpr double DwarfEarthSplitterClearanceFadeMargin = 62.0;
 
 #if WITH_EDITOR
 TAutoConsoleVariable<int32> CVarGreatSwordCapstoneBrace(TEXT("a.Rogue10m.GreatSwordCapstoneBrace"), 1,
@@ -40,6 +42,8 @@ TAutoConsoleVariable<int32> CVarMovingWeaponLocomotion(TEXT("a.Rogue10m.MovingWe
 	TEXT("Enable the grounded pose handoff when equipping or removing a sword while moving."));
 TAutoConsoleVariable<int32> CVarEarthSplitterPose(TEXT("a.Rogue10m.EarthSplitterPose"), 1,
 	TEXT("Enable the EarthSplitter two-palm pose for editor comparisons."));
+TAutoConsoleVariable<int32> CVarDwarfEarthSplitterGrip(TEXT("a.Rogue10m.DwarfEarthSplitterGrip"), 1,
+	TEXT("Enable the displayed Dwarf EarthSplitter grip for editor comparisons."));
 #endif
 
 constexpr float WeaponLocomotionUpperSeconds = 0.22f;
@@ -122,6 +126,24 @@ bool IsEarthSplitterBladeSpaceClear(const ARogue10mCharacter& Character, const U
 	return !World->SweepTestByObjectType(Origin + Forward * 43.0, Origin + Forward * 175.0, Forward.ToOrientationQuat(),
 		FCollisionObjectQueryParams(ECC_WorldStatic), FCollisionShape::MakeBox(FVector(9.0, 48.0 + SideMargin, 66.0)), Params);
 }
+
+bool IsDwarfEarthSplitterRecoverySpaceClear(const ARogue10mCharacter& Character)
+{
+	const UWorld* World = Character.GetWorld();
+	const UCapsuleComponent* Capsule = Character.GetCapsuleComponent();
+	if (!World || !Capsule)
+	{
+		return false;
+	}
+
+	// The male Dwarf blade sweeps higher and farther right while returning to the stock grip.
+	const FQuat Facing = Character.GetActorForwardVector().GetSafeNormal2D().ToOrientationQuat();
+	const FVector CapsuleBottom = Capsule->GetComponentLocation() - FVector::UpVector * Capsule->GetScaledCapsuleHalfHeight();
+	const FVector Center = CapsuleBottom + Facing.RotateVector(FVector(91.0, 109.0, 112.5));
+	const FCollisionQueryParams Params(SCENE_QUERY_STAT(DwarfEarthSplitterRecoveryClearance), false, &Character);
+	return !World->OverlapAnyTestByObjectType(Center, Facing, FCollisionObjectQueryParams(ECC_WorldStatic),
+		FCollisionShape::MakeBox(FVector(63.0, 63.0, 42.5)), Params);
+}
 }
 
 FRogue10mViewAlignedUpperBodyProxy::FRogue10mViewAlignedUpperBodyProxy(UAnimInstance* Instance)
@@ -151,6 +173,7 @@ void FRogue10mViewAlignedUpperBodyProxy::Initialize(UAnimInstance* InAnimInstanc
 	EarthSplitterMontageAtChargeStart = INDEX_NONE;
 	bEarthSplitterChargeContinuous = false;
 	bEarthSplitterHoldObserved = false;
+	bUseDwarfEarthSplitterGrip = false;
 	SecondJumpSequence = nullptr;
 	SecondJumpAge = -1.0f;
 	SecondJumpInterruptionWeight = 1.0f;
@@ -426,6 +449,13 @@ void FRogue10mViewAlignedUpperBodyProxy::PreEvaluateAnimation(UAnimInstance* InA
 	// Montage advance can start/end a contributing pose after PreUpdate. Recheck before evaluation.
 	CaptureWeightedHandMotion(Character, Instance, GetDeltaSeconds());
 	CaptureEarthSplitterPose(Character, Instance, GetDeltaSeconds());
+	if (Instance)
+	{
+		// The displayed mesh ticks after this source. It reads phase data only.
+		Instance->DwarfEarthSplitterSample = bUseDwarfEarthSplitterGrip && EarthSplitterSequence
+			? FRogue10mDwarfEarthSplitterSample{EarthSplitterTime, EarthSplitterWeight, EarthSplitterSequence == Instance->CachedEarthSplitterRelease.Get()}
+			: FRogue10mDwarfEarthSplitterSample{};
+	}
 	if (!bUseWeightedAimFollow)
 	{
 		// Restore the continuously tracked baseline immediately when disabled or an action starts.
@@ -467,7 +497,7 @@ bool FRogue10mViewAlignedUpperBodyProxy::Evaluate_WithRoot(FPoseContext& Output,
 	}
 	ApplyWeaponLocomotionBlend(Output.Pose);
 	if (CapstoneBraceWeight > UE_SMALL_NUMBER) { ApplyCapstoneBrace(Output); }
-	if (EarthSplitterSequence && EarthSplitterWeight > UE_SMALL_NUMBER) { ApplyEarthSplitterPose(Output); }
+	if (!bUseDwarfEarthSplitterGrip && EarthSplitterSequence && EarthSplitterWeight > UE_SMALL_NUMBER) { ApplyEarthSplitterPose(Output); }
 	if (SecondJumpSequence) { ApplySecondJumpPose(Output); }
 	if (NonlethalHitSequence) { ApplyNonlethalHit(Output); }
 	if (bApplyAim) { ApplyViewAim(Output.Pose); }
@@ -698,16 +728,19 @@ void FRogue10mViewAlignedUpperBodyProxy::CaptureEarthSplitterPose(const ARogue10
 	const bool bFemaleRefit = Appearance.Gender == ERogue10mCharacterGender::Female
 		&& (Appearance.Race == ERogue10mCharacterRace::Human || Appearance.Race == ERogue10mCharacterRace::Orc);
 	const bool bHumanMale = Appearance.Race == ERogue10mCharacterRace::Human && Appearance.Gender == ERogue10mCharacterGender::Male;
+	bUseDwarfEarthSplitterGrip = Appearance.Race == ERogue10mCharacterRace::Dwarf;
 	const auto* Charge = Instance ? (bFemaleRefit ? Instance->CachedEarthSplitterFemaleCharge.Get() : Instance->CachedEarthSplitterCharge.Get()) : nullptr;
 	const auto* Release = Instance ? (bFemaleRefit ? Instance->CachedEarthSplitterFemaleRelease.Get() : Instance->CachedEarthSplitterRelease.Get()) : nullptr;
 	const auto* Controller = Character ? Cast<ARogue10mPlayerController>(Character->GetController()) : nullptr;
 	bool bPresentationEnabled = true;
 #if WITH_EDITOR
 	bPresentationEnabled = CVarEarthSplitterPose.GetValueOnGameThread() != 0;
+	bUseDwarfEarthSplitterGrip = bUseDwarfEarthSplitterGrip && CVarDwarfEarthSplitterGrip.GetValueOnGameThread() != 0;
 #endif
 	// The displayed retarget changes the blade axis because the mount uses both palms.
 	// Only use the authored pairs on profiles calibrated against that visible grip.
-	if (!bPresentationEnabled || (!bHumanMale && !bFemaleRefit) || !Combat || !Controller || Controller->IsAnyBlockingWindowVisible() || Character->IsDead()
+	if (!bPresentationEnabled || (!bHumanMale && !bFemaleRefit && !bUseDwarfEarthSplitterGrip)
+		|| !Combat || !Controller || Controller->IsAnyBlockingWindowVisible() || Character->IsDead()
 		|| !Character->IsThirdPersonGameplayActive() || Character->IsDodging() || Character->GetEquippedWeaponType() != ERogue10mWeaponType::GreatSword
 		|| Source != Character->GetAnimationPlaybackMesh() || !Mesh || !Charge || !Release || !Movement || !Movement->IsMovingOnGround()
 		|| Charge->GetSkeleton() != Mesh->GetSkeleton() || Release->GetSkeleton() != Mesh->GetSkeleton())
@@ -731,13 +764,17 @@ void FRogue10mViewAlignedUpperBodyProxy::CaptureEarthSplitterPose(const ARogue10
 
 	// A wall being approached by a turn gets a wider warning corridor to release the pose before
 	// it reaches the inner clearance. An immediate obstruction still takes precedence over blending.
-	const bool bCanUseLowPose = bStationary && IsEarthSplitterBladeSpaceClear(*Character, *Movement, EarthSplitterClearanceFadeMargin);
+	const double ClearanceFadeMargin = bUseDwarfEarthSplitterGrip ? DwarfEarthSplitterClearanceFadeMargin : EarthSplitterClearanceFadeMargin;
+	const bool bCanUseLowPose = bStationary && IsEarthSplitterBladeSpaceClear(*Character, *Movement, ClearanceFadeMargin);
 	const UAnimSequence* Desired = nullptr;
 	if (Hold.IsSet())
 	{
 		const bool bWasContinuous = bEarthSplitterChargeContinuous;
+		const bool bStartsHold = bNewHold && Hold.GetValue() <= .10f;
+		const bool bDwarfMaleGrip = bUseDwarfEarthSplitterGrip && Appearance.Gender == ERogue10mCharacterGender::Male;
 		// A cancelled brace can only restart with a new charge.
-		bEarthSplitterChargeContinuous = bCanUseLowPose && (bWasContinuous || (bNewHold && Hold.GetValue() <= .10f));
+		bEarthSplitterChargeContinuous = bCanUseLowPose
+			&& (bWasContinuous || (bStartsHold && (!bDwarfMaleGrip || IsDwarfEarthSplitterRecoverySpaceClear(*Character))));
 		if (bEarthSplitterChargeContinuous)
 		{
 			if (!bWasContinuous)

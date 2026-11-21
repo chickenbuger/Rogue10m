@@ -1,0 +1,8 @@
+# 드워프 대지파쇄 애니메이션 기록
+
+- `Sprint#29-2-dwarf-earthsplitter-ik`의 2026-11-21 검증이다. StartHub에서 장검을 장착하고 아린에게 기술을 배운 뒤 `Rogue10m.TestWeaponThirdPerson`의 `-RogueGreatSwordTechniqueQA -RogueGreatSwordEarthSplitterAudit`로 Q와 RMB를 프로그램 입력했다. `-RogueGreatSwordEarthSplitterAppearance=DwarfMale`과 `DwarfFemale`을 각각 실행했다. `-RogueGreatSwordEarthSplitterMoving` 및 `-RogueGreatSwordEarthSplitterWall`로 분기하고 `a.Rogue10m.DwarfEarthSplitterGrip 0`으로 기존 자세를 대조할 수 있다.
+- `/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_EarthSplitter`와 `AM_GreatSword_Charged`의 원본 판정·재생 경로를 사용한다. `/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_EarthSplitterCharge`와 `A_GreatSword_EarthSplitterRelease`에서 궤적과 손잡이를 참조한다. 기존 Manny와 프로젝트의 Mixamo 파생 대검을 Blender 4.5.14에서 편집한 시퀀스다. [기존 Blender 편집 기록](../20261121_EarthSplitter/AnimationRecord.md)
+- 화면의 `ABP_Retarget_Dw_M`과 `ABP_Retarget_Dw_F`는 `/Game/Character/Customization/Retargeting/`에 있다. 사용 골격은 `/Game/StylizedCharacter/Meshes/Character/Dwarf/Male/SKEL_Dw_M`과 `/Game/StylizedCharacter/Meshes/Character/Dwarf/Female/SKEL_Dw_F`다. 실제 표시 팔 길이와 원래 골반·다리의 자세를 사용한다. 드워프용 새 클립을 추가하지 않았다.
+- 차징을 0.800초에 놓은 60Hz 수치 검사에서 682프레임에 최초 피해를 기록했다. 그때 원본 몽타주는 0.010953초였다. 검의 후속 복귀는 원본 몽타주 0.15~0.73초에 두 손을 함께 이동시켜 이어간다. 손과 검 방향은 액터 기준으로, 검끝과 경계 상자 최저 높이는 캡슐 바닥 기준 cm로 기록했다.
+- 720p 게임 촬영의 검사 프레임은 준비 22, 차징 중간 49, 차징 완료 78, 첫 피해 직후 80, 회복 248이다. 각 사진은 요청과 동일한 시뮬레이션 프레임에 기록됐다. 드워프 남성의 최종 촬영에서 평가 후 저장은 0.83~1.65초 뒤 완료됐다. 어두운 측면에서도 두 손 위치, 낮게 내려간 검, 기본 가드 복귀를 확인했다. [첫 피해 직후 대표 화면](first-damage-720p.png)
+- 실제 게임용 기술 경로의 수치 48건과 두 외형의 프로그램 렌더를 각각 기록했다. 기존 자세와의 회복 도중 검축이 한 프레임에 129° 이상 회전하거나 벽을 통과한 후보도 보존했다. [결과와 실패 기록](../../Feature/doc/evidence/dwarf-earthsplitter-grip-20261121/)
