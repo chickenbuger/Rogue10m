@@ -1,0 +1,19 @@
+UE 5.8 Development Editor, StartHub standalone, NullRHI, label ArinMotionNumericA
+Base: 2011e0dec81b634330c58187b58f639a7dd5cae7
+Date: 2026-11-21 15:43 KST
+CheckUnrealOutputLog.py --after-line 0: 40 new Error lines, including stack trace. No pose samples were produced.
+
+Original error, line 1515 of ArinMotionNumericA.log:
+Assertion failed: NodeData [File:D:\build\++UE5\Sync\Engine\Source\Runtime\Engine\Classes\Animation\AnimNodeBase.h] [Line: 825]
+
+Stack excerpt:
+FAnimNode_Inertialization::Evaluate_AnyThread() [AnimNode_Inertialization.cpp:708]
+FAnimInstanceProxy::EvaluateAnimationNode_WithRoot() [AnimInstanceProxy.cpp:1535]
+USkeletalMeshComponent::InitAnim() [SkeletalMeshComponent.cpp:1217]
+USkeletalMeshComponent::SetAnimInstanceClass() [SkeletalMeshComponent.cpp:3705]
+URogue10mTutorialAnimationComponent::RefreshAnimation() [Rogue10mTutorialAnimationComponent.cpp:171]
+ARogue10mTutorialNPC::BeginPlay() [Rogue10mTutorialNPC.cpp:108]
+
+Candidate change: removed the traced Inertialization graph node from the native proxy. The native node now captures the last evaluated pose and blends toward the destination sequence with Unreal's pose blending runtime. All engine traces remain enabled.
+
+Build environment note: the first attempt stopped at the shared Live Coding probe before compilation. The retry passed with -NoHotReloadFromIDE and left the existing editor session running.

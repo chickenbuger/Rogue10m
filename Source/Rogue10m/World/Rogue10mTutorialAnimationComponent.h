@@ -53,6 +53,9 @@ private:
 	TWeakObjectPtr<USkeletalMeshComponent> GuideMesh;
 	TWeakObjectPtr<URogue10mTutorialDataAsset> TutorialData;
 	TWeakObjectPtr<UAnimSequence> FallbackIdleAnimation;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Tutorial|Animation",
+		meta=(AllowPrivateAccess="true", ClampMin="0.0", ClampMax="1.0", Units="s"))
+	float TransitionBlendSeconds = 0.18f;
 	UPROPERTY(Transient)
 	TObjectPtr<UAnimSequence> CurrentAnimation;
 	FTimerHandle MovementTimer;

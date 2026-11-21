@@ -90,7 +90,8 @@ def install():
         mesh = npc.get_editor_property("guide_mesh")
         component = npc.get_editor_property("guide_animation")
         instance = mesh.get_anim_instance()
-        asset = instance.get_animation_asset() if isinstance(instance, unreal.AnimSingleNodeInstance) else None
+        native = isinstance(instance, unreal.Rogue10mTutorialGuideAnimInstance)
+        asset = instance.get_playback_sequence() if native else None
         return {
             "world_seconds": now(world),
             "wall_seconds": time.monotonic() - base.state["started"],
@@ -102,10 +103,9 @@ def install():
             "dialogue_open": bool(npc.is_dialogue_open()),
             "selected_clip": package_path(component.get_current_animation()),
             "native_clip": package_path(asset),
-            "single_node": isinstance(instance, unreal.AnimSingleNodeInstance),
-            "playing": bool(mesh.is_playing()),
-            "position_seconds": float(mesh.get_position()),
-            "play_rate": float(mesh.get_play_rate()),
+            "guide_anim_instance": native,
+            "position_seconds": float(instance.get_playback_position()) if native else 0.0,
+            "play_rate": float(instance.get_playback_rate()) if native else 0.0,
             "measured_speed_cm_s": float(component.get_measured_speed()),
             "actor_location": tuple3(npc.get_actor_location()),
             "head_rotation": tuple3(mesh.get_socket_rotation("head")),
@@ -116,8 +116,8 @@ def install():
     def expect_snapshot(name, observed, expected_state, expected_clip, request=None):
         base.check(name + "_native_state_and_clip",
                    observed["state"] == expected_state and observed["selected_clip"] == expected_clip
-                   and observed["native_clip"] == expected_clip and observed["single_node"]
-                   and observed["playing"], observed=observed,
+                   and observed["native_clip"] == expected_clip and observed["guide_anim_instance"],
+                   observed=observed,
                    expected_state=expected_state, expected_clip=expected_clip)
         if request is not None:
             base.check(name + "_dialogue_request", observed["requested_dialogue"] == request
@@ -214,9 +214,9 @@ def install():
     def validate_progress(name, samples, clip, bone):
         # At a low frame rate, the first observation can precede the next native
         # movement sample. Observe progression only after the selected clip has
-        # actually reached the single-node instance, never across a clip change.
+        # actually reached the guide's native sequence player.
         samples = [sample for sample in samples if sample["native_clip"] == package_path(clip)
-                   and sample["selected_clip"] == package_path(clip) and sample["playing"]]
+                   and sample["selected_clip"] == package_path(clip) and sample["guide_anim_instance"]]
         if len(samples) < 3:
             raise RuntimeError(name + ": fewer than three native playback observations.")
         length = float(clip.get_play_length())

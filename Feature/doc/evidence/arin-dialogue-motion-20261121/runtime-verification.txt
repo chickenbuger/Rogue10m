@@ -1,0 +1,15 @@
+Arin dialogue-pose runtime verification, 2026-11-21 KST
+
+Integrated candidate
+Base 2666013df02da3329eae98254b531c6cbb85083a plus this Arin scope
+UE 5.8 Development Editor Win64: 18 of 18 build actions succeeded with -NoHotReloadFromIDE, build mutex honored.
+StartHub ArinMotionIntegratedA -Motion -NullRHI: exit 0. 39 assertions passed and results were serialized (40 engine checks). CheckUnrealOutputLog.py --after-line 0: zero errors, zero new errors. Six preexisting QA saves matched SHA-256. The preserved output is results-nullrhi.txt and poses-nullrhi.csv.
+The active setup, Arin mesh, skeleton, three sequences and StartHub map match the earlier base; runtime-assets-sha256.csv records the blobs and actual byte hashes.
+
+Rendered provenance
+Base 2011e0dec81b634330c58187b58f639a7dd5cae7 with the same Arin runtime files.
+StartHub ArinMotionWarpB -Motion -Offscreen -AllowSoftwareRendering: exit 0. 39 assertions plus successful result serialization. D3D11 hardware probe at log line 924 returned 887A0004 and the Microsoft Basic Render Driver loaded; CheckUnrealOutputLog.py --after-line 924 found zero later errors. Four preexisting QA saves matched SHA-256.
+LOD 2 to LOD 1 on second opening pose. The LOD-aware opening peak step was 1.563512cm (the earlier rendered candidate jumped by 11.024975cm). Closing peak 4.429038cm. Immediate reopen peak 3.924785cm. All four first steps rounded to 0.000000cm. Root and feet moved at most 0.000006cm.
+1280x720 screenshot trace frames and UTC completion: 57 at 06:56:15.707 (close source), 63 at 06:56:19.057 (blend midpoint), 139 at 06:56:59.517 (reopened dialogue). Close source and midpoint completed in their request game frames. The reopening capture completed immediately after the settled window as the viewport finished the image. The prior HUD binding was rendered on this older base.
+
+Both fixtures called actual NPC native dialogue methods with a fresh QA profile and fixed 60Hz game time. They recorded evaluated bone positions in mesh component-space centimeters. Physical input and normal field-play were outside this fixture.

@@ -1,5 +1,10 @@
 # Sprint 변경 이력
 
+### Sprint#17-5 — 아린 대화 자세 전환
+
+- StartHub 아린의 대화 시작과 종료에 기존 Idle·Talk 자세가 부드럽게 이어지도록 연결했다. 실제 안내인에서 전환 전후 손목·루트·발 위치를 기록하는 검사를 추가했다.
+- 통합 기준 `2666013d`의 UE 5.8 Editor 빌드와 StartHub 60Hz 수치 검사 39개를 통과했다. 소프트웨어 렌더에서 LOD 변경과 대화 전환을 확인했다. 닫기의 최대 프레임 손목 이동은 4.43cm, 다시 열기는 3.92cm였다. [작업 계획](../Feature/architect/2026-11-21_arin-dialogue-motion.md) · [검증 기록](../Feature/doc/2026-11-21_arin-dialogue-motion.md)
+
 ### Sprint#17-3 — Content 기능별 정리와 레거시 제거
 
 - **목표** 현재 프로젝트의 에셋을 기능별로 탐색하고 사용이 끝난 콘텐츠를 제거한다.

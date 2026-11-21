@@ -2,13 +2,13 @@
 #include "Rogue10mTutorialAnimationComponent.h"
 
 #include "Animation/AnimSequence.h"
-#include "Animation/AnimSingleNodeInstance.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/SkeletalMesh.h"
 #include "Engine/World.h"
 #include "GameFramework/Actor.h"
 #include "Rogue10m.h"
 #include "Rogue10mTutorialDataAsset.h"
+#include "Rogue10mTutorialGuideAnimInstance.h"
 #include "Rogue10mTutorialNPC.h"
 #include "TimerManager.h"
 
@@ -162,13 +162,18 @@ void URogue10mTutorialAnimationComponent::RefreshAnimation()
 	AnimationState = DesiredState;
 	CurrentAnimation = Desired;
 	if (!Desired) { return; }
-	const UAnimSingleNodeInstance* Instance = Mesh->GetSingleNodeInstance();
-	if (Mesh->GetAnimationMode() != EAnimationMode::AnimationSingleNode
-		|| !Instance || Instance->GetAnimationAsset() != Desired)
-	{
-		Mesh->PlayAnimation(Desired, true);
-	}
 	const float Rate = DesiredState == ERogue10mTutorialAnimationState::Walk
 		? FMath::Clamp(MeasuredSpeed / FMath::Max(1.0f, Data->GuideWalkReferenceSpeed), 0.01f, 10.0f) : 1.0f;
-	Mesh->SetPlayRate(Rate);
+	auto* Instance = Cast<URogue10mTutorialGuideAnimInstance>(Mesh->GetAnimInstance());
+	if (!Instance)
+	{
+		Mesh->SetAnimInstanceClass(URogue10mTutorialGuideAnimInstance::StaticClass());
+		Instance = Cast<URogue10mTutorialGuideAnimInstance>(Mesh->GetAnimInstance());
+	}
+	if (Instance)
+	{
+		const float BlendSeconds = FMath::IsFinite(TransitionBlendSeconds)
+			? FMath::Clamp(TransitionBlendSeconds, 0.0f, 1.0f) : 0.18f;
+		Instance->SetPlayback(Desired, Rate, BlendSeconds);
+	}
 }

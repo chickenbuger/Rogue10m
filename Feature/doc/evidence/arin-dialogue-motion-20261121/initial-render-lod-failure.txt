@@ -1,0 +1,10 @@
+UE 5.8 Development Editor, actual StartHub, D3D11 Microsoft Basic Render Driver, ArinMotionWarpA
+2026-11-21 15:51 KST, 60 Hz fixed game timestep
+
+The first rendered opening had 15 fresh bone updates at 0.016667s spacing. The first wrist step was zero. The second step was 11.024975cm, above the 8cm threshold. The root and feet remained planted. The same production implementation passed without a renderer, so the rendered failure is retained separately.
+
+Engine log line 924 records the hardware adapter probe: LogD3D11RHI: Error: Result failed with error 887A0004
+Engine log line 967 selects Microsoft Basic Render Driver.
+Engine log line 1675: LogRogue10m: Error: NPC_DIALOGUE FAIL motion_wrist_continuity
+
+The native blend reset its history on CacheBones. The renderer can rebuild required bones when its predicted skeletal LOD changes. The revised snapshot matches bones by mesh index and retains the blend across those changes. The rerun records mesh LOD alongside each observed pose.

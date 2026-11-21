@@ -9,7 +9,13 @@ def check(name,value):
     if not value:raise RuntimeError(name)
 def sample(npc,label):
     mesh=npc.get_editor_property('guide_mesh');anim=npc.get_editor_property('guide_animation')
-    STATE['samples'].append({'label':label,'animation':anim.get_current_animation().get_path_name(),'state':str(anim.get_animation_state()),'position':mesh.get_position(),'bones':{n:list(mesh.get_socket_location(n).to_tuple()) for n in ['root','head','hand_l','hand_r','foot_l','foot_r']}})
+    instance = mesh.get_anim_instance()
+    selected = anim.get_current_animation()
+    check('native_playback_' + label, isinstance(instance, unreal.Rogue10mTutorialGuideAnimInstance)
+          and instance.get_playback_sequence() == selected)
+    STATE['samples'].append({'label':label,'animation':selected.get_path_name(),
+        'state':str(anim.get_animation_state()),'position':instance.get_playback_position(),
+        'bones':{n:list(mesh.get_socket_location(n).to_tuple()) for n in ['root','head','hand_l','hand_r','foot_l','foot_r']}})
 def finish(error=None):
     if STATE.get('finished'):return
     STATE['finished']=True;STATE['status']='failed' if error else 'passed'

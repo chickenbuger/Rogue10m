@@ -1,6 +1,8 @@
 // Isolated real StartHub NPC service UI QA. Slate routing is not physical input.
 #if WITH_EDITOR
+#include "Animation/AnimSequence.h"
 #include "Components/Button.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Components/TextBlock.h"
 #include "Containers/Ticker.h"
 #include "Engine/Engine.h"
@@ -29,7 +31,9 @@
 #include "Rogue10mProgressionSubsystem.h"
 #include "Rogue10mTownProgressionComponent.h"
 #include "Rogue10mTownServiceDataAsset.h"
+#include "Rogue10mTutorialAnimationComponent.h"
 #include "Rogue10mTutorialDataAsset.h"
+#include "Rogue10mTutorialGuideAnimInstance.h"
 #include "Rogue10mTutorialNPC.h"
 #include "Rogue10mTutorialWidget.h"
 #include "UnrealClient.h"
@@ -46,9 +50,14 @@ public:
   bool Valid=!Label.IsEmpty()&&Label.Len()<=24;for(TCHAR C:Label){Valid&=FChar::IsAlnum(C)||C==TEXT('_');}
   TArray<FString> Existing;IFileManager::Get().FindFiles(Existing,*(FPaths::ProjectSavedDir()/TEXT("SaveGames")/(Prefix+TEXT("_*.sav"))),true,false);
   Output=FPaths::ProjectDir()/TEXT("DevLog/20261110_NpcDialogue")/Label;
-  if(!Valid||W.GetNetMode()!=NM_Standalone||TownSlot!=TEXT("Rogue10m_Town_QA_NpcDialog_")+Label||Prefix!=TEXT("Rogue10m_Progression_QA_NpcDialog_")+Label||Keys!=TEXT("Rogue10m_Fighter_QA_NpcDialog_")+Label||UGameplayStatics::DoesSaveGameExist(TownSlot,0)||UGameplayStatics::DoesSaveGameExist(Keys,0)||!Existing.IsEmpty()||IFileManager::Get().DirectoryExists(*Output)||FParse::Param(Args,TEXT("nullrhi")))
-  {UE_LOG(LogRogue10m,Error,TEXT("RESULT=NPC_DIALOGUE_FAILED exact_fresh_rendered_namespace_required"));FPlatformMisc::RequestExitWithStatus(false,1);return;}
-  bManual=FParse::Param(Args,TEXT("RogueNpcDialogueManual"));IFileManager::Get().MakeDirectory(*Output,true);Deadline=FPlatformTime::Seconds()+(bManual?900.:180.);
+  bManual=FParse::Param(Args,TEXT("RogueNpcDialogueManual"));
+  bMotion=FParse::Param(Args,TEXT("RogueNpcDialogueMotion"));
+  bNullRHI=FParse::Param(Args,TEXT("nullrhi"));
+  if(!Valid||W.GetNetMode()!=NM_Standalone||TownSlot!=TEXT("Rogue10m_Town_QA_NpcDialog_")+Label||Prefix!=TEXT("Rogue10m_Progression_QA_NpcDialog_")+Label||Keys!=TEXT("Rogue10m_Fighter_QA_NpcDialog_")+Label||UGameplayStatics::DoesSaveGameExist(TownSlot,0)||UGameplayStatics::DoesSaveGameExist(Keys,0)||!Existing.IsEmpty()||IFileManager::Get().DirectoryExists(*Output)||(bNullRHI&&!bMotion)||(bManual&&bMotion))
+  {UE_LOG(LogRogue10m,Error,TEXT("RESULT=NPC_DIALOGUE_FAILED exact_fresh_namespace_and_compatible_mode_required"));FPlatformMisc::RequestExitWithStatus(false,1);return;}
+  IFileManager::Get().MakeDirectory(*Output,true);
+  const bool bSoftwareMotion=bMotion && FParse::Param(Args,TEXT("AllowSoftwareRendering"));
+  Deadline=FPlatformTime::Seconds()+(bManual?900.:bSoftwareMotion?540.:180.);
   FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self=AsShared()](float)
   {
    if(Self->bFinished){return false;}
@@ -96,12 +105,20 @@ private:
   FRogue10mCharacterProfile Profile;Check(Profiles->GetProfileCount()==0&&Profiles->CreateProfile(TEXT("NpcDialogQA"),FRogue10mCharacterAppearance(),Profile)&&Profiles->SelectProfile(Profile.ProfileId),TEXT("normal_fresh_profile_created_selected"));if(Failures){Finish();return;}
   PC->EnterSelectedCharacter();PC->CloseAllBlockingPanels();Player=Cast<ARogue10mCharacter>(PC->GetPawn());
   State=Player.IsValid()?Player->GetPlayerState<ARogue10mPlayerState>():nullptr;Inventory=Player.IsValid()?Player->GetInventoryComponent():nullptr;Town=State.IsValid()?State->GetTownProgressionComponent():nullptr;
-  for(TActorIterator<ARogue10mTutorialNPC> It(World.Get());It;++It){NPC=*It;break;}
+  for(TActorIterator<ARogue10mTutorialNPC> It(World.Get());It;++It)
+  {
+   if(!bMotion || (It->TutorialData && It->TutorialData->GetPathName().Equals(TEXT("/Game/Rogue10m/World/StartVillage/Tutorial/DA_StartVillageGuide.DA_StartVillageGuide"))))
+   {
+    NPC=*It;
+    break;
+   }
+  }
   Run=World->GetGameState<ARogue10mGameState>();
   Check(Player.IsValid()&&State.IsValid()&&Inventory.IsValid()&&Town.IsValid()&&NPC.IsValid()&&NPC->TutorialData&&NPC->TutorialData->StartingItem&&Run.IsValid()&&Save->IsAttachedTo(*Player),TEXT("actual_StartHub_NPC_data_and_save_attached"));if(Failures){Finish();return;}
   Check(Player->IsThirdPersonGameplayActive(),TEXT("production_third_person_mode_active"));
   Near=NPC->GetActorLocation()+FVector(180,0,95);Player->SetActorLocation(Near,false,nullptr,ETeleportType::TeleportPhysics);
   PC->SetControlRotation((NPC->GetActorLocation()-Near).Rotation()+FRotator(-12,0,0));
+  if(bMotion){Later(1.0,[this]{BeginMotionProbe();});return;}
   const auto& D=NPC->ServiceData?*NPC->ServiceData:*GetDefault<URogue10mTownServiceDataAsset>();PotionCost=D.PotionGoldCost;EnhanceCost=D.EnhancementGoldCost;
   Inventory->AddGold(1000);Remaining=Run->GetRemainingRunSeconds();
   Later(1.,[this]
@@ -111,6 +128,186 @@ private:
    Later(.7,[this]{FPress([this]{Opened();});});
   });
  }
+ enum class EMotionPhase : uint8 { Opening, FirstGesture, Closing, SecondGesture, BeforeReopen, Reopening };
+ struct FMotionPose
+ {
+  enum EBoneIndex { Root, Head, LeftWrist, RightWrist, LeftFoot, RightFoot, PositionCount };
+  inline static const FName Bones[PositionCount]={FName(TEXT("root")),FName(TEXT("head")),FName(TEXT("hand_l")),
+   FName(TEXT("hand_r")),FName(TEXT("foot_l")),FName(TEXT("foot_r"))};
+  FVector Position[PositionCount]{};
+ };
+
+ FMotionPose ReadMotionPose(const USkeletalMeshComponent& Mesh) const
+ {
+  FMotionPose Pose;
+  for(int32 Index=0;Index<FMotionPose::PositionCount;++Index)
+  {
+   Pose.Position[Index]=Mesh.GetSocketTransform(FMotionPose::Bones[Index],RTS_Component).GetTranslation();
+  }
+  return Pose;
+ }
+
+ double MaxWristDistance(const FMotionPose& From,const FMotionPose& To) const
+ {
+  return FMath::Max(FVector::Dist(From.Position[FMotionPose::LeftWrist],To.Position[FMotionPose::LeftWrist]),
+   FVector::Dist(From.Position[FMotionPose::RightWrist],To.Position[FMotionPose::RightWrist]));
+ }
+
+ void RecordMotion(const FMotionPose& Pose,double Seconds,uint32 Revision,float ClipPosition,const TCHAR* Event)
+ {
+  MotionRows+=FString::Printf(TEXT("%s,%.6f,%u,%.6f,%d"),Event,Seconds,Revision,ClipPosition,
+   NPC->GuideMesh->GetPredictedLODLevel());
+  for(const FVector& Position:Pose.Position)
+  {
+   MotionRows+=FString::Printf(TEXT(",%.6f,%.6f,%.6f"),Position.X,Position.Y,Position.Z);
+  }
+  MotionRows+=TEXT("\n");
+ }
+
+ void BeginMotionProbe()
+ {
+  USkeletalMeshComponent* Mesh=NPC->GuideMesh;
+  auto* Anim=Mesh ? Cast<URogue10mTutorialGuideAnimInstance>(Mesh->GetAnimInstance()) : nullptr;
+  Check(Anim && NPC->TutorialData->GuideIdleAnimation && NPC->TutorialData->GuideTalkAnimation
+   && NPC->TutorialData->GuideIdleAnimation->GetFName()==FName(TEXT("A_Arin_BreathingIdle"))
+   && Anim->GetPlaybackSequence()==NPC->TutorialData->GuideIdleAnimation, TEXT("actual_Arin_BreathingIdle_and_native_graph_ready"));
+  if(Failures){Finish();return;}
+  for(const FName Bone:FMotionPose::Bones)
+  {
+   Check(Mesh->GetBoneIndex(Bone)!=INDEX_NONE,TEXT("required_Arin_pose_bone_exists"));
+  }
+  if(Failures){Finish();return;}
+  if(IConsoleVariable* MaxFps=IConsoleManager::Get().FindConsoleVariable(TEXT("t.MaxFPS")))
+  {
+   MaxFps->Set(60.0f,ECVF_SetByConsole);
+  }
+  Mesh->VisibilityBasedAnimTickOption=EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+  Mesh->bEnableUpdateRateOptimizations=false;
+  MotionRows=TEXT("event,world_seconds,bone_revision,clip_seconds,mesh_lod,root_x,root_y,root_z,head_x,head_y,head_z,hand_l_x,hand_l_y,hand_l_z,hand_r_x,hand_r_y,hand_r_z,foot_l_x,foot_l_y,foot_l_z,foot_r_x,foot_r_y,foot_r_z\n");
+  const float ClipPosition=Anim->GetPlaybackPosition();
+  MotionRevision=Mesh->GetBoneTransformRevisionNumber();
+  BeginMotionTransition(EMotionPhase::Opening,TEXT("idle_to_talk"),true,ReadMotionPose(*Mesh),
+   World->GetTimeSeconds(),ClipPosition);
+  MotionTick=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* TickWorld,ELevelTick,float)
+  {
+   if(Self->World.Get()==TickWorld){Self->TickMotionProbe(*TickWorld);}
+  });
+ }
+
+ void BeginMotionTransition(EMotionPhase Phase,const TCHAR* Name,bool bOpen,const FMotionPose& Before,
+  double Seconds,float ClipPosition)
+ {
+  MotionPhase=Phase;
+  MotionName=Name;
+  MotionOrigin=MotionPrevious=Before;
+  MotionStart=MotionLastTime=Seconds;
+  MotionSamples=0;
+  FirstWristStep=MaxWristStep=MaxPlantMovement=MaxSampleGap=0.0;
+  RecordMotion(Before,Seconds,MotionRevision,ClipPosition,*FString::Printf(TEXT("%s_before"),Name));
+  if(!bNullRHI && Phase==EMotionPhase::Closing){Photo(TEXT("01_arin_close_source.png"));}
+  if(bOpen)
+  {
+   GestureOrigin=Before;
+   Check(NPC->BeginDialogue(Player.Get()),TEXT("native_motion_dialogue_opened"));
+  }
+  else{NPC->CloseDialogue();}
+  Check(NPC->IsDialogueOpen()==bOpen,TEXT("native_motion_dialogue_state_changed"));
+ }
+
+ void TickMotionProbe(UWorld& TickWorld)
+ {
+  if(bFinished){return;}
+  if(!NPC.IsValid() || !NPC->GuideMesh || !NPC->TutorialData || !NPC->GuideAnimation)
+  {
+   Check(false,TEXT("motion_Arin_fixture_retained"));
+   Finish();
+   return;
+  }
+  USkeletalMeshComponent* Mesh=NPC->GuideMesh;
+  auto* Anim=Cast<URogue10mTutorialGuideAnimInstance>(Mesh->GetAnimInstance());
+  if(!Anim || Failures)
+  {
+   Check(Anim!=nullptr,TEXT("motion_graph_not_reinitialized"));
+   Finish();
+   return;
+  }
+  // Native playback readback completes parallel evaluation before we observe the mesh.
+  const float ClipPosition=Anim->GetPlaybackPosition();
+  const uint32 Revision=Mesh->GetBoneTransformRevisionNumber();
+  if(Revision==MotionRevision){return;}
+  MotionRevision=Revision;
+  const FMotionPose Current=ReadMotionPose(*Mesh);
+  const double Now=TickWorld.GetTimeSeconds();
+  if(MotionPhase==EMotionPhase::FirstGesture || MotionPhase==EMotionPhase::SecondGesture)
+  {
+   if(ClipPosition<0.8f){return;}
+   Check(ClipPosition<=0.84f && Anim->GetPlaybackSequence()==NPC->TutorialData->GuideTalkAnimation,
+    TEXT("outgoing_gesture_observed_at_0_8_seconds"));
+   const double GestureExcursion=MaxWristDistance(GestureOrigin,Current);
+   Results+=FString::Printf(TEXT("GESTURE clip_s=%.6f wrist_excursion_cm=%.6f\n"),ClipPosition,GestureExcursion);
+   Check(GestureExcursion>=12.0,TEXT("evaluated_Talk_pose_has_actual_gesture_excursion"));
+   if(Failures){Finish();return;}
+   const bool bInterrupt=MotionPhase==EMotionPhase::SecondGesture;
+   BeginMotionTransition(bInterrupt?EMotionPhase::BeforeReopen:EMotionPhase::Closing,
+    bInterrupt?TEXT("talk_to_idle_before_reopen"):TEXT("talk_to_idle"),false,Current,Now,ClipPosition);
+   return;
+  }
+
+  RecordMotion(Current,Now,Revision,ClipPosition,*MotionName);
+  for(const FVector& Position:Current.Position)
+  {
+   if(Position.ContainsNaN()){Check(false,TEXT("finite_motion_pose_positions"));Finish();return;}
+  }
+  const double WristStep=MaxWristDistance(MotionPrevious,Current);
+  if(++MotionSamples==1){FirstWristStep=WristStep;}
+  if(!bNullRHI && MotionPhase==EMotionPhase::Closing && MotionSamples==6){Photo(TEXT("02_arin_close_blend.png"));}
+  MaxWristStep=FMath::Max(MaxWristStep,WristStep);
+  for(const auto Index:{FMotionPose::Root,FMotionPose::LeftFoot,FMotionPose::RightFoot})
+  {
+   MaxPlantMovement=FMath::Max(MaxPlantMovement,FVector::Dist(Current.Position[Index],MotionOrigin.Position[Index]));
+  }
+  MaxSampleGap=FMath::Max(MaxSampleGap,Now-MotionLastTime);
+  MotionLastTime=Now;
+  MotionPrevious=Current;
+  const bool bInterrupted=MotionPhase==EMotionPhase::BeforeReopen;
+  if(bInterrupted ? MotionSamples<3 : Now-MotionStart<0.25){return;}
+
+  const bool bDialogueTarget=MotionPhase==EMotionPhase::Opening || MotionPhase==EMotionPhase::Reopening;
+  const auto* Expected=bDialogueTarget?NPC->TutorialData->GuideTalkAnimation.Get():NPC->TutorialData->GuideIdleAnimation.Get();
+  const auto ExpectedState=bDialogueTarget?ERogue10mTutorialAnimationState::Talk:ERogue10mTutorialAnimationState::Idle;
+  Results+=FString::Printf(TEXT("MOTION %s n=%d first_step_cm=%.6f peak_step_cm=%.6f plant_cm=%.6f max_sample_gap_s=%.6f\n"),
+   *MotionName,MotionSamples,FirstWristStep,MaxWristStep,MaxPlantMovement,MaxSampleGap);
+  Check(FirstWristStep<=6.0 && MaxWristStep<=8.0,TEXT("motion_wrist_continuity"));
+  Check(MaxPlantMovement<=0.05,TEXT("motion_root_and_feet_stay_planted"));
+  Check(MaxSampleGap<=0.035 && MotionSamples>=(bInterrupted?3:8),TEXT("motion_high_rate_fresh_pose_samples"));
+  Check(Anim->GetPlaybackSequence()==Expected && NPC->IsDialogueOpen()==bDialogueTarget && ClipPosition>0.0f
+   && NPC->GuideAnimation->GetAnimationState()==ExpectedState,TEXT("motion_destination_asset_and_time_advance"));
+  if(Failures){Finish();return;}
+
+  switch(MotionPhase)
+  {
+  case EMotionPhase::Opening:
+   MotionPhase=EMotionPhase::FirstGesture;
+   break;
+  case EMotionPhase::Closing:
+   GestureOrigin=Current;
+   Check(NPC->BeginDialogue(Player.Get()),TEXT("native_dialogue_opens_for_interrupt_case"));
+   MotionPhase=EMotionPhase::SecondGesture;
+   break;
+  case EMotionPhase::BeforeReopen:
+   BeginMotionTransition(EMotionPhase::Reopening,TEXT("reopen_after_three_poses"),true,Current,Now,ClipPosition);
+   break;
+  case EMotionPhase::Reopening:
+   FWorldDelegates::OnWorldPostActorTick.Remove(MotionTick);
+   MotionTick.Reset();
+   if(bNullRHI){Finish();}
+   else{PhotoThen(TEXT("03_arin_motion_reopened.png"),[this]{Finish();});}
+   break;
+  default:
+   break;
+  }
+ }
+
  void Opened()
  {
   auto* W=NPC->GetTutorialWidget();Check(NPC->IsDialogueOpen()&&PC->IsNpcDialogueVisible()&&PC->GetDialogueNPC()==NPC.Get()&&W,TEXT("F_real_input_stack_opens_owned_dialogue"));
@@ -203,13 +400,31 @@ private:
  void Finish()
  {
   if(bFinished){return;}bFinished=true;if(NPC.IsValid()){NPC->CloseDialogue();}
-  const FString Meta=FString::Printf(TEXT("label=%s\nchecks=%d\nfailures=%d\nmanual_mode=%d\ninput=Controller_InputKey_and_actual_Slate_hit_test_pointer_and_key_routing\nphysical_input_performed=0\nnormal_field_run=0\nvalidation_scope=%s\n"),*Label,Checks,Failures,bManual,bManual?TEXT("manual_setup_only_service_assertions_not_run"):TEXT("automated_service_suite"));
+  if(MotionTick.IsValid()){FWorldDelegates::OnWorldPostActorTick.Remove(MotionTick);}
+  if(bMotion)
+  {
+   Check(FFileHelper::SaveStringToFile(MotionRows,*(Output/TEXT("motion-poses.csv")),FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM),TEXT("motion_measurements_written"));
+  }
+  const TCHAR* Scope=bMotion?TEXT("real_Arin_native_dialogue_pose_transitions")
+   :bManual?TEXT("manual_setup_only_service_assertions_not_run"):TEXT("automated_service_suite");
+  const TCHAR* Input=bMotion?TEXT("native_BeginDialogue_and_CloseDialogue"):TEXT("Controller_InputKey_and_actual_Slate_hit_test_pointer_and_key_routing");
+  const FString Meta=FString::Printf(TEXT("label=%s\nchecks=%d\nfailures=%d\nmanual_mode=%d\ninput=%s\nphysical_input_performed=0\nnormal_field_run=0\nvalidation_scope=%s\n"),*Label,Checks,Failures,bManual,Input,Scope);
   Check(FFileHelper::SaveStringToFile(Meta+Results,*(Output/TEXT("results.txt")),FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM),TEXT("results_written"));
   UE_LOG(LogRogue10m,Display,TEXT("RESULT=NPC_DIALOGUE_%s checks=%d failures=%d output=%s"),Failures?TEXT("FAILED"):(bManual?TEXT("MANUAL_SETUP_COMPLETE"):TEXT("PASSED")),Checks,Failures,*Output);FPlatformMisc::RequestExitWithStatus(false,Failures?1:0);
  }
  TWeakObjectPtr<UWorld> World;TWeakObjectPtr<ARogue10mPlayerController> PC;TWeakObjectPtr<ARogue10mCharacter> Player;TWeakObjectPtr<ARogue10mPlayerState> State;TWeakObjectPtr<ARogue10mTutorialNPC> NPC;TWeakObjectPtr<ARogue10mGameState> Run;
  TWeakObjectPtr<URogue10mInventoryComponent> Inventory;TWeakObjectPtr<URogue10mTownProgressionComponent> Town;TWeakObjectPtr<URogue10mProgressionSubsystem> Save;
  FString Label,Output,Results;TFunction<void()> Next;double NextAt=0,Deadline=0;FVector Near;float Remaining=0;int32 Checks=0,Failures=0,PotionCost=0,EnhanceCost=0;bool bFinished=false,bManual=false;
+ bool bMotion=false;
+ bool bNullRHI=false;
+ EMotionPhase MotionPhase=EMotionPhase::Opening;
+ FMotionPose MotionOrigin,MotionPrevious,GestureOrigin;
+ FDelegateHandle MotionTick;
+ FString MotionRows,MotionName;
+ double MotionStart=0,MotionLastTime=0;
+ double FirstWristStep=0,MaxWristStep=0,MaxPlantMovement=0,MaxSampleGap=0;
+ uint32 MotionRevision=0;
+ int32 MotionSamples=0;
 };
 static TSharedPtr<FRun> Active;
 static void Run()

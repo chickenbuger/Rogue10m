@@ -85,11 +85,13 @@ void ARogue10mTutorialNPC::ApplyGuideAppearance()
 		const USkeletalMesh* Mesh = GuideMesh->GetSkeletalMeshAsset();
 		if (Mesh && Mesh->GetSkeleton() == TutorialData->GuideIdleAnimation->GetSkeleton())
 		{
-			GuideMesh->SetAnimationMode(EAnimationMode::AnimationSingleNode);
+			if (!HasActorBegunPlay())
+			{
+				GuideMesh->SetAnimationMode(EAnimationMode::AnimationSingleNode);
+			}
 			GuideMesh->AnimationData.AnimToPlay = TutorialData->GuideIdleAnimation;
 			GuideMesh->AnimationData.bSavedLooping = true;
 			GuideMesh->AnimationData.bSavedPlaying = true;
-			if (HasActorBegunPlay()) { GuideMesh->PlayAnimation(TutorialData->GuideIdleAnimation, true); }
 		}
 		else
 		{
