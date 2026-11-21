@@ -171,6 +171,10 @@ void URogue10mMainHUDWidget::EnsureCombatHudA()
 void URogue10mMainHUDWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
+	if (CombatHudA)
+	{
+		CombatHudA->AdvanceDepletionAnimations(InDeltaTime);
+	}
 	const FVector2D ViewportSize = MyGeometry.GetLocalSize();
 	if (!ViewportSize.Equals(CachedResponsiveViewportSize, 0.5))
 	{

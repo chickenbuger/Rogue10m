@@ -1,0 +1,83 @@
+PASS case=0 isolated_HUD_A_QA_save_names_required
+PASS case=0 isolated_evidence_directory_and_real_StartHub
+PASS case=0 disposable_profile_created_through_game_subsystem
+PASS case=0 real_third_person_pawn_and_production_save_attachment
+PASS case=0 QA_changes_detached_from_progression_save
+PASS case=0 default_camera_unarmed_capture_uses_real_HUD_at_reference_resolution
+PASS case=0 unarmed_hides_placeholder_percentage_and_Ctrl
+unarmed_default_camera_arm=320.0 target=(0.0,0.0,58.0) socket=(0.0,85.0,10.0)
+PASS case=0 unarmed_untouched_default_camera_capture_saved
+PASS case=0 greatsword_uses_real_skill_tree_identity_track
+PASS case=0 disposable_greatsword_profile_restores_valid_FightingSpirit_investment
+PASS case=0 at_least_one_live_greatsword_skill_equipped_from_real_content
+production_greatsword_skills_equipped=5/6
+PASS case=0 production_MainHUD_has_visible_A_surface_and_atlas
+PASS case=0 only_one_combat_HUD_visible
+PASS case=0 standalone_viewport_matches_requested_capture_resolution
+PASS case=0 paint_surface_covers_MainHUD_viewport
+PASS case=0 vitals_reference_scale_and_top_left_anchor
+PASS case=0 combat_cluster_matches_approved_bottom_placement
+PASS case=0 combat_reference_scale_fits_without_covering_main_playfield
+PASS case=0 detached_capture_feet_clear_HUD gap_px=134.1
+case=0 viewport=1672x941 scale=1.0000 vitals=(26.0,22.0)-(317.0,154.0) combat=(413.0,732.0)-(1329.0,912.0)
+PASS case=0 paint_health_from_live_GAS
+PASS case=0 paint_stamina_from_live_GAS
+PASS case=0 paint_level_and_experience_from_live_progression
+PASS case=0 paint_live_greatsword_identity
+PASS case=0 greatsword_paints_gauge_without_unsupported_Ctrl
+rendered_health=104.0/135.0 stamina=64.0/100.0 level=8 identity=0.750
+PASS case=0 separate_Alt_dodge_and_live_cooldown_state
+PASS case=0 six_live_combat_action_views
+PASS case=0 slot_0_actual_input_loadout_icon_and_unlock_state
+PASS case=0 slot_1_actual_input_loadout_icon_and_unlock_state
+PASS case=0 slot_2_actual_input_loadout_icon_and_unlock_state
+PASS case=0 slot_3_actual_input_loadout_icon_and_unlock_state
+PASS case=0 slot_4_actual_input_loadout_icon_and_unlock_state
+PASS case=0 slot_5_actual_input_loadout_icon_and_unlock_state
+PASS case=0 four_live_locked_item_views
+PASS case=0 real_game_and_UI_capture_saved
+PASS case=1 production_MainHUD_has_visible_A_surface_and_atlas
+PASS case=1 only_one_combat_HUD_visible
+PASS case=1 standalone_viewport_matches_requested_capture_resolution
+PASS case=1 paint_surface_covers_MainHUD_viewport
+PASS case=1 vitals_reference_scale_and_top_left_anchor
+PASS case=1 combat_cluster_matches_approved_bottom_placement
+PASS case=1 combat_reference_scale_fits_without_covering_main_playfield
+PASS case=1 detached_capture_feet_clear_HUD gap_px=104.2
+case=1 viewport=1280x720 scale=0.7651 vitals=(19.9,16.8)-(242.6,117.8) combat=(316.3,560.1)-(1017.2,697.8)
+PASS case=1 paint_health_from_live_GAS
+PASS case=1 paint_stamina_from_live_GAS
+PASS case=1 paint_level_and_experience_from_live_progression
+PASS case=1 paint_live_greatsword_identity
+PASS case=1 greatsword_paints_gauge_without_unsupported_Ctrl
+rendered_health=72.0/135.0 stamina=83.0/100.0 level=8 identity=0.750
+PASS case=1 separate_Alt_dodge_and_live_cooldown_state
+PASS case=1 six_live_combat_action_views
+PASS case=1 slot_0_actual_input_loadout_icon_and_unlock_state
+PASS case=1 slot_1_actual_input_loadout_icon_and_unlock_state
+PASS case=1 slot_2_actual_input_loadout_icon_and_unlock_state
+PASS case=1 slot_3_actual_input_loadout_icon_and_unlock_state
+PASS case=1 slot_4_actual_input_loadout_icon_and_unlock_state
+PASS case=1 slot_5_actual_input_loadout_icon_and_unlock_state
+PASS case=1 four_live_locked_item_views
+PASS case=1 real_game_and_UI_capture_saved
+PASS case=2 live_controller_can_receive_simulated_Alt
+PASS case=2 simulated_Alt_reaches_real_HUD_positive_dodge_cooldown
+PASS case=2 cleared_Q_skill_render_state_is_locked
+PASS case=2 vitals_recovery_and_identity_gain_reach_the_current_value_immediately
+PASS case=2 large_health_and_stamina_losses_update_values_while_edges_start_at_prior_fill
+PASS case=2 greatsword_identity_payment_starts_from_the_previous_ring_fill
+PASS case=2 live_health_stamina_and_identity_edges_pass_through_intermediate_fills
+depletion_frame_health=0.622->.400 stamina=0.655->.350 identity=0.554->.000
+PASS case=2 real_game_and_dark_depletion_segment_capture_saved
+PASS case=2 second_hit_retargets_from_the_in_flight_health_edge
+PASS case=2 recovery_below_the_moving_edge_shortens_the_health_trail_without_a_jump
+PASS case=2 depletion_edges_finish_exactly_at_the_latest_health_stamina_and_identity_values
+PASS case=2 equipped_staff_uses_live_mana_in_the_same_vital_row
+PASS case=2 small_mana_loss_updates_directly_without_a_trail
+PASS case=2 large_mana_loss_starts_from_the_previous_fill
+PASS case=2 live_mana_edge_passes_through_an_intermediate_fill
+PASS case=2 weapon_swap_resets_the_resource_row_to_stamina_during_an_active_mana_trail
+PASS case=2 equipped_knuckle_shows_supported_Ctrl_input
+PASS case=2 simulated_Ctrl_activates_real_knuckle_identity_and_updates_HUD
+RESULT=COMBAT_HUD_A_PASSED cases=2 checks=75 failures=0

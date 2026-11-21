@@ -170,6 +170,7 @@ Add-Type -AssemblyName System.Drawing
 $captures = @(
     @{ Name = 'CombatHudA_1672x941.png'; Width = 1672; Height = 941 },
     @{ Name = 'CombatHudA_1280x720.png'; Width = 1280; Height = 720 },
+    @{ Name = 'CombatHudA_Depletion_1280x720.png'; Width = 1280; Height = 720 },
     @{ Name = 'CombatHudA_Unarmed_1672x941.png'; Width = 1672; Height = 941 }
 )
 foreach ($capture in $captures) {

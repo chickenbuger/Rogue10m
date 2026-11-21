@@ -6,6 +6,7 @@
 #include "Rogue10mRunHUD.h"
 #include "Rogue10mCombatHudAWidget.generated.h"
 
+class APawn;
 class APlayerController;
 class SCombatHudAHitZone;
 class UTexture2D;
@@ -25,9 +26,13 @@ public:
 		const FRogue10mHudVitalView& Mana, const FRogue10mHudProgressionView& Progression,
 		const FRogue10mHudIdentityView& Identity, bool bUseMana, float CurrentDodgeCooldown, bool bCurrentDodging);
 	void SetSlowViews(const TArray<FRogue10mHudQuickSlotView>& Skills, const TArray<FRogue10mHudQuickSlotView>& Items);
+	void AdvanceDepletionAnimations(float DeltaSeconds);
 
 	const FRogue10mHudVitalView& GetDisplayedHealth() const { return HealthView; }
 	const FRogue10mHudVitalView& GetDisplayedResource() const { return ResourceView; }
+	float GetHealthFillFraction() const { return HealthDepletion.Edge; }
+	float GetResourceFillFraction() const { return ResourceDepletion.Edge; }
+	float GetIdentityFillFraction() const { return IdentityDepletion.Edge; }
 	const FRogue10mHudProgressionView& GetDisplayedProgression() const { return ProgressionView; }
 	const FRogue10mHudIdentityView& GetDisplayedIdentity() const { return IdentityView; }
 	const TArray<FRogue10mHudQuickSlotView>& GetDisplayedSkills() const { return SkillViews; }
@@ -50,6 +55,18 @@ private:
 	bool TryAssignSkill(int32 Index, URogue10mAttackSkillData* Skill);
 	void InvalidatePaint();
 
+	struct FDepletionAnimation
+	{
+		void UpdateTarget(float Previous, float Target, bool bReset);
+		bool Advance(float DeltaSeconds, float Target);
+
+		float Edge = 0.0f;
+		float Start = 0.0f;
+		float Destination = 0.0f;
+		float ElapsedSeconds = 0.0f;
+		bool bActive = false;
+	};
+
 	UPROPERTY()
 	TObjectPtr<UTexture2D> Atlas;
 
@@ -66,8 +83,12 @@ private:
 	TArray<FRogue10mHudQuickSlotView> ItemViews;
 
 	TWeakObjectPtr<APlayerController> OwningPlayer;
+	TWeakObjectPtr<APawn> VitalSource;
 	FRogue10mHudVitalView HealthView;
 	FRogue10mHudVitalView ResourceView;
+	FDepletionAnimation HealthDepletion;
+	FDepletionAnimation ResourceDepletion;
+	FDepletionAnimation IdentityDepletion;
 	FRogue10mHudProgressionView ProgressionView;
 	float DodgeCooldownRemaining = 0.0f;
 	bool bIsDodging = false;

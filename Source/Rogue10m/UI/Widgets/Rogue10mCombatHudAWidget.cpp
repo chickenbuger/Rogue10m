@@ -6,6 +6,7 @@
 #include "Fonts/FontMeasure.h"
 #include "Fonts/SlateFontInfo.h"
 #include "Framework/Application/SlateApplication.h"
+#include "GameFramework/Pawn.h"
 #include "GameFramework/PlayerController.h"
 #include "Input/Events.h"
 #include "Layout/ArrangedChildren.h"
@@ -29,6 +30,10 @@ namespace
 {
 	const FVector2f CombatHudDesignSize(1672, 941);
 	const FVector2f AtlasSize(1024, 512);
+	constexpr float LargeDepletionFraction = 0.10f;
+	constexpr float DepletionDuration = 0.40f;
+	constexpr float DepletionTargetShade = 0.67f;
+	constexpr float DepletionEdgeShade = 0.84f;
 
 	enum class ESkin : uint8
 	{
@@ -199,25 +204,52 @@ namespace
 				&Brush, ESlateDrawEffect::None, Tint);
 		}
 
-		void DrawFill(ESkin Skin, float Fraction)
+		void DrawFill(ESkin Skin, float Fraction, float TargetFraction = 1.0f)
 		{
 			const FSprite& Fill = Sprite(Skin);
-			const float Width = Fill.Design.Width * FMath::Clamp(Fraction, 0.0f, 1.0f);
+			Fraction = FMath::Clamp(Fraction, 0.0f, 1.0f);
+			const float Width = Fill.Design.Width * Fraction;
 			if (Width <= 0.0f) { return; }
+			const float TargetX = Fill.Design.Width * FMath::Clamp(TargetFraction, 0.0f, Fraction);
 			const float Height = Fill.Design.Height;
 			const float Bevel = FMath::Min(Skin == ESkin::FillExp ? 3.5f : 2.5f, Width * 0.5f);
-			const FVector2f Corners[] = {{0.0f, 0.0f}, {Width - Bevel, 0.0f}, {Width, Bevel},
-				{Width, Height - Bevel}, {Width - Bevel, Height}, {0.0f, Height}};
+			const float BevelStart = Width - Bevel;
 			const FSlateRenderTransform RenderTransform = Geometry.GetAccumulatedRenderTransform();
 			TArray<FSlateVertex> Vertices;
-			Vertices.Reserve(UE_ARRAY_COUNT(Corners));
-			for (const FVector2f& Corner : Corners)
+			TArray<SlateIndex> Indices;
+			Vertices.Reserve(10);
+			Indices.Reserve(18);
+			const auto AddColumn = [&](float X, float Shade, bool bConnect)
 			{
-				const FVector2f Position = (Fill.Design.Min() + Corner) * Placement.Scale;
-				const FVector2f UV = (Fill.Atlas.Min() + Corner) / AtlasSize;
-				Vertices.Add(FSlateVertex::Make(RenderTransform, Position, UV, Tint.ToFColor(true)));
-			}
-			const TArray<SlateIndex> Indices{0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5};
+				const SlateIndex Top = static_cast<SlateIndex>(Vertices.Num());
+				const float Inset = FMath::Max(0.0f, X - BevelStart);
+				const FColor Color = ShadeTint(Shade);
+				for (const float Y : {Inset, Height - Inset})
+				{
+					const FVector2f Point(X, Y);
+					Vertices.Add(FSlateVertex::Make(RenderTransform,
+						(Fill.Design.Min() + Point) * Placement.Scale, (Fill.Atlas.Min() + Point) / AtlasSize, Color));
+				}
+				if (bConnect)
+				{
+					const SlateIndex Left = static_cast<SlateIndex>(Top - 2);
+					const SlateIndex Bottom = static_cast<SlateIndex>(Top + 1);
+					const SlateIndex BottomLeft = static_cast<SlateIndex>(Top - 1);
+					Indices.Append({Left, Top, Bottom, Left, Bottom, BottomLeft});
+				}
+			};
+			const auto AddSpan = [&](float StartX, float EndX, float StartShade, float EndShade)
+			{
+				if (EndX <= StartX) { return; }
+				AddColumn(StartX, StartShade, false);
+				if (StartX < BevelStart && BevelStart < EndX)
+				{
+					AddColumn(BevelStart, FMath::Lerp(StartShade, EndShade, (BevelStart - StartX) / (EndX - StartX)), true);
+				}
+				AddColumn(EndX, EndShade, true);
+			};
+			AddSpan(0.0f, TargetX, 1.0f, 1.0f);
+			AddSpan(TargetX, Width, DepletionTargetShade, DepletionEdgeShade);
 			DrawAtlasVertices(Vertices, Indices);
 		}
 
@@ -272,11 +304,12 @@ namespace
 			}
 		}
 
-		void DrawIdentityRing(float Fraction)
+		void DrawIdentityRing(float Fraction, float TargetFraction)
 		{
 			Fraction = FMath::Clamp(Fraction, 0.0f, 1.0f);
 			if (Fraction <= 0.0f) { return; }
-			if (Fraction >= 1.0f)
+			TargetFraction = FMath::Clamp(TargetFraction, 0.0f, Fraction);
+			if (TargetFraction >= 1.0f)
 			{
 				DrawSkin(ESkin::RingIdentity, true);
 				return;
@@ -289,34 +322,49 @@ namespace
 			const FVector2f Half = Ring.Design.Size() * 0.5f;
 			const FSlateRenderTransform RenderTransform = Geometry.GetAccumulatedRenderTransform();
 			const FVector2f Anchor = Placement.Offset(true);
-			const auto Vertex = [&](const FVector2f& Local)
+			const auto Vertex = [&](const FVector2f& Local, float Shade)
 			{
 				const FVector2f AtlasPoint = Ring.Atlas.Min() + (Local - Ring.Design.Min());
-				return FSlateVertex::Make(RenderTransform, Anchor + Local * Placement.Scale, AtlasPoint / AtlasSize, Tint.ToFColor(true));
+				return FSlateVertex::Make(RenderTransform, Anchor + Local * Placement.Scale, AtlasPoint / AtlasSize, ShadeTint(Shade));
 			};
 
-			const int32 Steps = FMath::Max(1, FMath::CeilToInt(Fraction * 128.0f));
 			TArray<FSlateVertex> Vertices;
 			TArray<SlateIndex> Indices;
-			Vertices.Reserve(Steps + 2);
-			Indices.Reserve(Steps * 3);
-			Vertices.Add(Vertex(Center));
-			for (int32 Segment = 0; Segment <= Steps; ++Segment)
+			const int32 EstimatedSteps = FMath::CeilToInt(Fraction * 128.0f) + 1;
+			Vertices.Reserve(EstimatedSteps + 4);
+			Indices.Reserve(EstimatedSteps * 3);
+			const auto AddArc = [&](float Start, float End, float StartShade, float EndShade)
 			{
-				const float Angle = -UE_HALF_PI + UE_TWO_PI * Fraction * static_cast<float>(Segment) / Steps;
-				const FVector2f Direction(FMath::Cos(Angle), FMath::Sin(Angle));
-				const float EndDistance = FMath::Min(Half.X / FMath::Max(FMath::Abs(Direction.X), UE_SMALL_NUMBER),
-					Half.Y / FMath::Max(FMath::Abs(Direction.Y), UE_SMALL_NUMBER));
-				Vertices.Add(Vertex(Center + Direction * EndDistance));
-				if (Segment > 0)
+				if (End <= Start) { return; }
+				const SlateIndex Hub = static_cast<SlateIndex>(Vertices.Num());
+				Vertices.Add(Vertex(Center, 0.5f * (StartShade + EndShade)));
+				const int32 Steps = FMath::CeilToInt((End - Start) * 128.0f);
+				for (int32 Segment = 0; Segment <= Steps; ++Segment)
 				{
-					Indices.Append({0, static_cast<SlateIndex>(Segment), static_cast<SlateIndex>(Segment + 1)});
+					const float Alpha = static_cast<float>(Segment) / Steps;
+					const float Angle = -UE_HALF_PI + UE_TWO_PI * FMath::Lerp(Start, End, Alpha);
+					const FVector2f Direction(FMath::Cos(Angle), FMath::Sin(Angle));
+					const float EndDistance = FMath::Min(Half.X / FMath::Max(FMath::Abs(Direction.X), UE_SMALL_NUMBER),
+						Half.Y / FMath::Max(FMath::Abs(Direction.Y), UE_SMALL_NUMBER));
+					const SlateIndex Rim = static_cast<SlateIndex>(Vertices.Num());
+					Vertices.Add(Vertex(Center + Direction * EndDistance, FMath::Lerp(StartShade, EndShade, Alpha)));
+					if (Segment > 0)
+					{
+						Indices.Append({Hub, static_cast<SlateIndex>(Rim - 1), Rim});
+					}
 				}
-			}
+			};
+			AddArc(0.0f, TargetFraction, 1.0f, 1.0f);
+			AddArc(TargetFraction, Fraction, DepletionTargetShade, DepletionEdgeShade);
 			DrawAtlasVertices(Vertices, Indices);
 		}
 
 	private:
+		FColor ShadeTint(float Shade) const
+		{
+			return (Tint * FLinearColor(Shade, Shade, Shade, 1.0f)).ToFColor(true);
+		}
+
 		void DrawAtlasVertices(const TArray<FSlateVertex>& Vertices, const TArray<SlateIndex>& Indices)
 		{
 			const FSlateResourceHandle Resource = FSlateApplication::Get().GetRenderer()->GetResourceHandle(AtlasBrush);
@@ -335,19 +383,20 @@ namespace
 	{
 		const bool bMana = HUD.IsUsingMana();
 		const FRogue10mHudProgressionView& Progression = HUD.GetDisplayedProgression();
-		const auto Vital = [&Paint](const FRogue10mHudVitalView& View, ESkin Plate, ESkin Fill,
+		const auto Vital = [&Paint](const FRogue10mHudVitalView& View, float VisibleFraction, ESkin Plate, ESkin Fill,
 			const FText& Label, float TextY)
 		{
 			if (!View.bVisible) { return; }
 			Paint.DrawSkin(Plate, false);
-			Paint.DrawFill(Fill, View.Normalized);
+			Paint.DrawFill(Fill, VisibleFraction, View.Normalized);
+			const float VisibleValue = VisibleFraction > View.Normalized ? VisibleFraction * View.Max : View.Current;
 			const FText Text = FText::Format(NSLOCTEXT("Rogue10mHUD", "LayoutAVital", "{0} {1} / {2}"),
-				Label, FText::AsNumber(FMath::RoundToInt(View.Current)), FText::AsNumber(FMath::RoundToInt(View.Max)));
+				Label, FText::AsNumber(FMath::RoundToInt(VisibleValue)), FText::AsNumber(FMath::RoundToInt(View.Max)));
 			Paint.DrawText(Text, FVector2f(171, TextY), 14.5f, false, 249.0f);
 		};
-		Vital(HUD.GetDisplayedHealth(), ESkin::PlateHealth, ESkin::FillHealth,
+		Vital(HUD.GetDisplayedHealth(), HUD.GetHealthFillFraction(), ESkin::PlateHealth, ESkin::FillHealth,
 			NSLOCTEXT("Rogue10mHUD", "HealthLabel", "체력"), 46.0f);
-		Vital(HUD.GetDisplayedResource(), ESkin::PlateStamina, bMana ? ESkin::FillMana : ESkin::FillStamina,
+		Vital(HUD.GetDisplayedResource(), HUD.GetResourceFillFraction(), ESkin::PlateStamina, bMana ? ESkin::FillMana : ESkin::FillStamina,
 			bMana ? NSLOCTEXT("Rogue10mHUD", "ManaLabel", "마력")
 				: NSLOCTEXT("Rogue10mHUD", "StaminaLabel", "스태미나"), 93.0f);
 		Paint.DrawSkin(ESkin::PlateLevel, false);
@@ -431,7 +480,7 @@ namespace
 		Paint.DrawSkin(ESkin::PlateIdentity, true);
 		if (HUD.ShowsIdentityPercent())
 		{
-			Paint.DrawIdentityRing(Identity.Normalized);
+			Paint.DrawIdentityRing(HUD.GetIdentityFillFraction(), Identity.Normalized);
 		}
 		if (Identity.WeaponType == ERogue10mWeaponType::GreatSword)
 		{
@@ -445,7 +494,7 @@ namespace
 			15.0f, true, 112.0f);
 		if (HUD.ShowsIdentityPercent())
 		{
-			const float Percent = FMath::Clamp(Identity.Normalized, 0.0f, 1.0f) * 100.0f;
+			const float Percent = HUD.GetIdentityFillFraction() * 100.0f;
 			Paint.DrawText(FText::FromString(FString::Printf(TEXT("%.0f%%"), Percent)), FVector2f(1198, 866), 14.0f, true);
 		}
 		if (HUD.ShowsIdentityKey())
@@ -619,6 +668,58 @@ TSharedRef<SWidget> URogue10mCombatHudAWidget::RebuildWidget()
 	return SNew(SCombatHudA).HUD(this).Atlas(Atlas.Get());
 }
 
+void URogue10mCombatHudAWidget::FDepletionAnimation::UpdateTarget(float Previous, float Target, bool bReset)
+{
+	Previous = FMath::Clamp(Previous, 0.0f, 1.0f);
+	Target = FMath::Clamp(Target, 0.0f, 1.0f);
+	if (bReset || Target >= Edge)
+	{
+		Edge = Target;
+		bActive = false;
+		return;
+	}
+	// Recovery below the moving edge only raises the floor. The edge keeps its current trajectory.
+	if (Target >= Previous)
+	{
+		return;
+	}
+	if (!bActive && Previous - Target + 1.e-6f < LargeDepletionFraction)
+	{
+		Edge = Target;
+		return;
+	}
+
+	bActive = true;
+	Start = Edge;
+	Destination = Target;
+	ElapsedSeconds = 0.0f;
+}
+
+bool URogue10mCombatHudAWidget::FDepletionAnimation::Advance(float DeltaSeconds, float Target)
+{
+	if (!bActive)
+	{
+		return false;
+	}
+	ElapsedSeconds += DeltaSeconds;
+	const float Alpha = FMath::Min(ElapsedSeconds / DepletionDuration, 1.0f);
+	const float Next = FMath::InterpEaseOut(Start, Destination, Alpha, 2.0f);
+	bActive = Alpha < 1.0f && Next > Target;
+	Edge = bActive ? Next : Target;
+	return true;
+}
+
+void URogue10mCombatHudAWidget::AdvanceDepletionAnimations(float DeltaSeconds)
+{
+	const bool bHealthChanged = HealthDepletion.Advance(DeltaSeconds, HealthView.Normalized);
+	const bool bResourceChanged = ResourceDepletion.Advance(DeltaSeconds, ResourceView.Normalized);
+	const bool bIdentityChanged = IdentityDepletion.Advance(DeltaSeconds, FMath::Clamp(IdentityView.Normalized, 0.0f, 1.0f));
+	if (bHealthChanged || bResourceChanged || bIdentityChanged)
+	{
+		InvalidatePaint();
+	}
+}
+
 void URogue10mCombatHudAWidget::SetFrequentViews(const FRogue10mHudVitalView& Health, const FRogue10mHudVitalView& Stamina,
 	const FRogue10mHudVitalView& Mana, const FRogue10mHudProgressionView& Progression,
 	const FRogue10mHudIdentityView& Identity, bool bUseMana, float CurrentDodgeCooldown, bool bCurrentDodging)
@@ -627,9 +728,29 @@ void URogue10mCombatHudAWidget::SetFrequentViews(const FRogue10mHudVitalView& He
 	{
 		ResolvedIdentityIcon = Identity.WeaponType == ERogue10mWeaponType::GreatSword ? nullptr : Identity.IconTexture.LoadSynchronous();
 	}
+	const APlayerController* Player = OwningPlayer.Get();
+	const TWeakObjectPtr<APawn> CurrentPawn = Player ? Player->GetPawn() : nullptr;
+	const bool bNewSource = !CurrentPawn.HasSameIndexAndSerialNumber(VitalSource);
+	VitalSource = CurrentPawn;
+	const bool bNextUsesMana = bUseMana && Mana.bVisible;
+	const FRogue10mHudVitalView& Resource = bNextUsesMana ? Mana : Stamina;
+	const auto UpdateVital = [bNewSource](FDepletionAnimation& Animation, const FRogue10mHudVitalView& Before,
+		const FRogue10mHudVitalView& Now, bool bChangedResource)
+	{
+		Animation.UpdateTarget(Before.Normalized, Now.Normalized,
+			bNewSource || bChangedResource || !Before.bVisible || !Now.bVisible || Before.Max != Now.Max || Now.Max <= 0.0f);
+	};
+	UpdateVital(HealthDepletion, HealthView, Health, false);
+	UpdateVital(ResourceDepletion, ResourceView, Resource, bUsingMana != bNextUsesMana);
+	IdentityDepletion.UpdateTarget(IdentityView.Normalized, Identity.Normalized,
+		bNewSource || !IdentityView.bHasIdentityResource || !Identity.bHasIdentityResource
+		|| IdentityView.bHasManualActivation || Identity.bHasManualActivation
+		|| IdentityView.IdentityType != Identity.IdentityType || IdentityView.WeaponType != Identity.WeaponType
+		|| IdentityView.Max != Identity.Max || Identity.Max <= 0.0f);
+
 	HealthView = Health;
-	bUsingMana = bUseMana && Mana.bVisible;
-	ResourceView = bUsingMana ? Mana : Stamina;
+	bUsingMana = bNextUsesMana;
+	ResourceView = Resource;
 	ProgressionView = Progression;
 	IdentityView = Identity;
 	DodgeCooldownRemaining = CurrentDodgeCooldown;

@@ -18,6 +18,7 @@
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
 #include "Rogue10m.h"
+#include "Rogue10mAttackSkillData.h"
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCharacterProfileSubsystem.h"
@@ -351,8 +352,100 @@ private:
 				TEXT("simulated_Alt_reaches_real_HUD_positive_dodge_cooldown"));
 			Check(View && !View->GetDisplayedSkills().IsEmpty() && !View->GetDisplayedSkills()[0].bUnlocked
 				&& !View->GetDisplayedSkills()[0].SkillData, TEXT("cleared_Q_skill_render_state_is_locked"));
-			Later(.50f, [this]() { ProbeMana(); });
+			Later(.50f, [this]() { ProbeVitalDrain(); });
 		});
+	}
+
+	const URogue10mCombatHudAWidget* RefreshHud() const
+	{
+		URogue10mMainHUDWidget* Main = FindHud();
+		if (!Main) { return nullptr; }
+		Main->RefreshBoundWidgetData();
+		return Main->GetCombatHudA();
+	}
+
+	void ProbeVitalDrain()
+	{
+		auto* Attributes = Character->GetRogueAttributeSet();
+		Attributes->SetHealth(108.f);
+		Attributes->SetStamina(90.f);
+		auto* Identity = Character->GetSkillTreeCombatComponent();
+		Identity->NotifyConfirmedAttack(ERogue10mSkillTreeTrack::GreatSword);
+		const auto* View = RefreshHud();
+		if (!Check(View && !View->IsUsingMana() && FMath::IsNearlyEqual(View->GetHealthFillFraction(), .80f, .001f)
+			&& FMath::IsNearlyEqual(View->GetResourceFillFraction(), .90f, .001f)
+			&& FMath::IsNearlyEqual(View->GetIdentityFillFraction(), 1.f, .001f),
+			TEXT("vitals_recovery_and_identity_gain_reach_the_current_value_immediately")))
+		{
+			Finish();
+			return;
+		}
+
+		Attributes->SetHealth(54.f);
+		Attributes->SetStamina(35.f);
+		auto* HeavySkill = NewObject<URogue10mAttackSkillData>(Character.Get());
+		HeavySkill->InputSlot = ERogue10mAttackInputSlot::Special;
+		const bool bIdentitySpent = Identity->AcceptAttack(*HeavySkill, false).bTriggered;
+		RefreshHud();
+		Check(FMath::IsNearlyEqual(View->GetDisplayedHealth().Normalized, .40f, .001f)
+			&& FMath::IsNearlyEqual(View->GetDisplayedResource().Normalized, .35f, .001f)
+			&& FMath::IsNearlyEqual(View->GetHealthFillFraction(), .80f, .001f)
+			&& FMath::IsNearlyEqual(View->GetResourceFillFraction(), .90f, .001f),
+			TEXT("large_health_and_stamina_losses_update_values_while_edges_start_at_prior_fill"));
+		Check(bIdentitySpent && FMath::IsNearlyZero(View->GetDisplayedIdentity().Normalized, .001f)
+			&& FMath::IsNearlyEqual(View->GetIdentityFillFraction(), 1.f, .001f),
+			TEXT("greatsword_identity_payment_starts_from_the_previous_ring_fill"));
+		Later(.10f, [this]() { ProbeVitalDrainMidflight(); });
+	}
+
+	void ProbeVitalDrainMidflight()
+	{
+		const auto* View = RefreshHud();
+		if (!Check(View && View->GetHealthFillFraction() > .40f && View->GetHealthFillFraction() < .80f
+			&& View->GetResourceFillFraction() > .35f && View->GetResourceFillFraction() < .90f
+			&& View->GetIdentityFillFraction() > 0.f && View->GetIdentityFillFraction() < 1.f,
+			TEXT("live_health_stamina_and_identity_edges_pass_through_intermediate_fills")))
+		{
+			Finish();
+			return;
+		}
+		Report += FString::Printf(TEXT("depletion_frame_health=%.3f->.400 stamina=%.3f->.350 identity=%.3f->.000\n"),
+			View->GetHealthFillFraction(), View->GetResourceFillFraction(), View->GetIdentityFillFraction());
+		const FString Screenshot = Evidence / TEXT("CombatHudA_Depletion_1280x720.png");
+		FScreenshotRequest::RequestScreenshot(Screenshot, true, false);
+		Later(.10f, [this, Screenshot]()
+		{
+			const auto* ActiveView = RefreshHud();
+			if (!Check(ActiveView && IFileManager::Get().FileSize(*Screenshot) > 24,
+				TEXT("real_game_and_dark_depletion_segment_capture_saved")))
+			{
+				Finish();
+				return;
+			}
+			auto* Attributes = Character->GetRogueAttributeSet();
+			const float PriorHealthEdge = ActiveView->GetHealthFillFraction();
+			Attributes->SetHealth(13.5f);
+			RefreshHud();
+			Check(PriorHealthEdge > .40f && FMath::IsNearlyEqual(ActiveView->GetDisplayedHealth().Normalized, .10f, .001f)
+				&& FMath::IsNearlyEqual(ActiveView->GetHealthFillFraction(), PriorHealthEdge, .001f),
+				TEXT("second_hit_retargets_from_the_in_flight_health_edge"));
+			Attributes->SetHealth(27.f);
+			RefreshHud();
+			Check(FMath::IsNearlyEqual(ActiveView->GetDisplayedHealth().Normalized, .20f, .001f)
+				&& FMath::IsNearlyEqual(ActiveView->GetHealthFillFraction(), PriorHealthEdge, .001f),
+				TEXT("recovery_below_the_moving_edge_shortens_the_health_trail_without_a_jump"));
+			Later(.85f, [this]() { ProbeVitalDrainSettled(); });
+		});
+	}
+
+	void ProbeVitalDrainSettled()
+	{
+		const auto* View = RefreshHud();
+		Check(View && FMath::IsNearlyEqual(View->GetHealthFillFraction(), .20f, .001f)
+			&& FMath::IsNearlyEqual(View->GetResourceFillFraction(), .35f, .001f)
+			&& FMath::IsNearlyZero(View->GetIdentityFillFraction(), .001f),
+			TEXT("depletion_edges_finish_exactly_at_the_latest_health_stamina_and_identity_values"));
+		ProbeMana();
 	}
 
 	void ProbeMana()
@@ -371,6 +464,31 @@ private:
 				&& FMath::IsNearlyEqual(View->GetDisplayedResource().Current, Character->GetRogueAttributeSet()->GetMana(), .01f)
 				&& FMath::IsNearlyEqual(View->GetDisplayedResource().Normalized, Main->GetManaView().Normalized, .001f),
 				TEXT("equipped_staff_uses_live_mana_in_the_same_vital_row"));
+			ProbeManaDrain();
+		});
+	}
+
+	void ProbeManaDrain()
+	{
+		auto* Attributes = Character->GetRogueAttributeSet();
+		Attributes->SetMana(39.f);
+		const auto* View = RefreshHud();
+		if (!Check(View && FMath::IsNearlyEqual(View->GetResourceFillFraction(), .39f, .001f),
+			TEXT("small_mana_loss_updates_directly_without_a_trail")))
+		{
+			Finish();
+			return;
+		}
+		Attributes->SetMana(5.f);
+		RefreshHud();
+		Check(FMath::IsNearlyEqual(View->GetDisplayedResource().Normalized, .05f, .001f)
+			&& FMath::IsNearlyEqual(View->GetResourceFillFraction(), .39f, .001f),
+			TEXT("large_mana_loss_starts_from_the_previous_fill"));
+		Later(.10f, [this]()
+		{
+			const auto* ActiveView = RefreshHud();
+			Check(ActiveView && ActiveView->GetResourceFillFraction() > .05f && ActiveView->GetResourceFillFraction() < .39f,
+				TEXT("live_mana_edge_passes_through_an_intermediate_fill"));
 			ProbeKnuckle();
 		});
 	}
@@ -379,6 +497,10 @@ private:
 	{
 		Character->SetEquippedWeaponType(ERogue10mWeaponType::Knuckle);
 		State->SetManaEnabled(false);
+		const auto* StaminaView = RefreshHud();
+		Check(StaminaView && !StaminaView->IsUsingMana()
+			&& FMath::IsNearlyEqual(StaminaView->GetResourceFillFraction(), StaminaView->GetDisplayedResource().Normalized, .001f),
+			TEXT("weapon_swap_resets_the_resource_row_to_stamina_during_an_active_mana_trail"));
 		Later(.40f, [this]()
 		{
 			const URogue10mMainHUDWidget* Main = FindHud();
