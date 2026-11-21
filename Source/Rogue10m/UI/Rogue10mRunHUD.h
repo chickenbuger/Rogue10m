@@ -56,6 +56,7 @@ struct FRogue10mHudIdentityView
 	UPROPERTY(BlueprintReadOnly, Category="Rogue10m|HUD") float Max = 1.0f;
 	UPROPERTY(BlueprintReadOnly, Category="Rogue10m|HUD") float Normalized = 0.0f;
 	UPROPERTY(BlueprintReadOnly, Category="Rogue10m|HUD") bool bHasIdentityResource = false;
+	UPROPERTY(BlueprintReadOnly, Category="Rogue10m|HUD") bool bHasManualActivation = false;
 };
 
 USTRUCT(BlueprintType)
