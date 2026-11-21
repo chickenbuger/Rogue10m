@@ -679,7 +679,7 @@ private:
 	{
 		if (bInputQA)
 		{
-			BeginInputChecks(ETrack::Brawler, [this] { PC->ToggleSkillTree(); Later(0.35, [this] { GreatSword(); }); });
+			BeginInputChecks(ETrack::Brawler, [this] { Later(0.35, [this] { GreatSword(); }); });
 			return;
 		}
 		Check(Widget->SetSelectedSkillKey(EKeys::Q), TEXT("learned_technique_key_assignment"));
@@ -913,8 +913,15 @@ private:
 		Check(B->IsDead() && Tree->GetMasteryTotalExperience(ETrack::Brawler) == 2, TEXT("killing_hit_awards_XP_once"));
 		A->Destroy(); B->Destroy(); Dummy->Destroy();
 	}
-	void GreatSword()
+	void GreatSword(int32 Attempts = 25)
 	{
+		if (!Player->CanChangeWeapon() && Attempts > 0)
+		{
+			// The skill window pauses the hub. Let the previous attack finish before opening it.
+			if (PC->IsSkillTreeVisible()) { PC->ToggleSkillTree(); }
+			Later(0.15, [this, Attempts] { GreatSword(Attempts - 1); });
+			return;
+		}
 		if (!PC->IsSkillTreeVisible()) { PC->ToggleSkillTree(); }
 		Widget->HandleAction(2);
 		const auto* BrowsingMainItem = Player->GetInventoryComponent()->GetEquippedItemData(ERogue10mInventorySlotType::MainWeapon);

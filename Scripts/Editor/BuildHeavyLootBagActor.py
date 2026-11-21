@@ -3,7 +3,7 @@
 import unreal
 
 
-ASSET_FOLDER = "/Game/World/Loot"
+ASSET_FOLDER = "/Game/Rogue10m/World/Loot"
 ASSET_NAME = "BP_HeavyLootBag"
 ASSET_PATH = f"{ASSET_FOLDER}/{ASSET_NAME}"
 

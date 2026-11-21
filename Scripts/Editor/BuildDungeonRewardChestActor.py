@@ -3,7 +3,7 @@
 import unreal
 
 
-ASSET_FOLDER = "/Game/World/Rewards"
+ASSET_FOLDER = "/Game/Rogue10m/World/Rewards"
 ASSET_NAME = "BP_DungeonRewardChest"
 ASSET_PATH = f"{ASSET_FOLDER}/{ASSET_NAME}"
 

@@ -4,7 +4,7 @@ import unreal
 
 
 WIDGET_PATH = "/Game/Widget/Lobby/WBP_CharacterLobby"
-BACKGROUND_TEXTURE_PATH = "/Game/Texture/UI/CharacterLobby/T_CharacterLobby_Background"
+BACKGROUND_TEXTURE_PATH = "/Game/Rogue10m/UI/Textures/CharacterLobby/T_CharacterLobby_Background"
 PREVIEW_MATERIAL_PATH = "/Game/Material/UI/M_CharacterPreviewTransparent"
 MAX_SLOT_PREVIEW_WIDTH = 384.0
 EXPECTED_PREVIEW_Y = 12.0

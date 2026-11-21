@@ -3,7 +3,7 @@
 import unreal
 
 
-ASSET_PATH = "/Game/World/Rewards/BP_DungeonRewardChest"
+ASSET_PATH = "/Game/Rogue10m/World/Rewards/BP_DungeonRewardChest"
 EXPECTED_MESH_COMPONENTS = {
     "ChestBase": "/Engine/BasicShapes/Cube.Cube",
     "ChestBaseFoot": "/Engine/BasicShapes/Cube.Cube",

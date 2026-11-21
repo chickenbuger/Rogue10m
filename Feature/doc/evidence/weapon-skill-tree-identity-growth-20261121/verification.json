@@ -1,16 +1,18 @@
 {
   "engine": "UE 5.8",
-  "upstream": "2011e0dec81b634330c58187b58f639a7dd5cae7",
+  "upstream": "455037c8445dfdbe649a979fce26f5b9aec1c6de",
   "build": "Rogue10mEditor Win64 Development succeeded",
   "input": "Programmatic Unreal gameplay and Slate pointer routes",
+  "renderer": "Direct3D 11 software adapter (WARP)",
+  "known_adapter_error": "Direct3D 11 initial hardware adapter probe returned 0x887A0004 before selecting the software adapter",
   "style_checks": {
     "runtime": {
       "passed": 326,
-      "new_errors": 0
+      "new_errors": 1
     },
     "read": {
       "passed": 106,
-      "new_errors": 0
+      "new_errors": 1
     },
     "automation": {
       "passed": 13,
