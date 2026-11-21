@@ -1,0 +1,27 @@
+2026-11-21, UE 5.8 Editor, StartHub 프로그램 입력
+
+실제 인벤토리에서 대검을 장착하고 공용 스킬트리로 구르기를 전수했다.
+A를 누른 뒤 왼쪽 Ctrl로 구르고, 플레이어 표시 자세와 대검 경계 상자를 기록했다.
+60Hz 활성 표본 22개, 이동 304.5587cm, 기대 이동 방향과 관측 방향의 내적 1.000000.
+금지된 구르기 중 공격, 정상 회복, 유한 정규 골격 변환을 외형마다 확인했다.
+
+외형         검사 이름                  최저 검 여유    결과
+HumanMale    LeftRollV3HumanMale              +1.235cm    통과
+HumanFemale  LeftRollV2HumanFemale           +15.391cm    통과
+DwarfMale    LeftRollV2DwarfMale               +0.511cm    통과
+DwarfFemale  LeftRollV2DwarfFemale             +0.556cm    통과
+OrcMale      LeftRollV2OrcMale                 +1.663cm    통과
+OrcFemale    LeftRollV2OrcFemale              +16.057cm    통과
+
+최종 여섯 실행의 Unreal 로그 오류 0건. 기존 저장 파일 보존을 SHA-256으로 확인했다.
+초기 두 실행은 다른 빌드와 SDK 검사 대기가 겹쳐 진입 전에 종료했다.
+병렬 초기화 모드에서 인간 남성 첫 재시도는 맵 진입 후 검사 시작 제한에 걸려, 새 이름과 충분한 대기 시간으로 재실행했다.
+측정은 평지에서 진행했다. 프로그램 입력과 수치가 검증 범위다.
+
+재현 옵션
+/Game/Rogue10m/Maps/StartHub -game -nullrhi -Multiprocess -DisablePython -UseFixedTimeStep -FPS=60
+-ExecCmds=Rogue10m.TestHybridSkillTree -RogueHybridRollQA -RogueRollAuditDirection=Left
+-RogueMotionQAAppearance=<appearance> -RogueHybridEvidenceLabel=<fresh-label>
+-RogueProfileSaveSlot=Rogue10m_Town_QA_<fresh-label>
+-RogueProgressionSavePrefix=Rogue10m_Progression_QA_<fresh-label>
+-RogueSkillKeySaveSlot=Rogue10m_Fighter_QA_<fresh-label>

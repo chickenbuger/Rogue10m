@@ -124,6 +124,7 @@ public:
 		if (bRollOnlyQA && FParse::Value(FCommandLine::Get(), TEXT("RogueRollAuditDirection="), RollAuditDirection))
 		{
 			if (RollAuditDirection == TEXT("Right")) { RollMoveKey = EKeys::D; }
+			else if (RollAuditDirection == TEXT("Left")) { RollMoveKey = EKeys::A; }
 			else if (RollAuditDirection == TEXT("Back")) { RollMoveKey = EKeys::S; }
 			else if (RollAuditDirection != TEXT("Forward"))
 			{
@@ -1662,6 +1663,7 @@ private:
 	FVector GetRollAuditDirection() const
 	{
 		if (RollMoveKey == EKeys::D) { return Player->GetActorRightVector().GetSafeNormal2D(); }
+		if (RollMoveKey == EKeys::A) { return -Player->GetActorRightVector().GetSafeNormal2D(); }
 		if (RollMoveKey == EKeys::S) { return -Player->GetActorForwardVector().GetSafeNormal2D(); }
 		return Player->GetActorForwardVector().GetSafeNormal2D();
 	}
@@ -1953,7 +1955,11 @@ private:
 		if (PC.IsValid()) { GameKey(EKeys::E, false); }
 		if (!RollMotionRows.IsEmpty())
 		{
-			if (PC.IsValid()) { GameKey(Rogue10mInput::DodgeKey(), false); }
+			if (PC.IsValid())
+			{
+				if (RollMoveKey.IsValid()) { GameKey(RollMoveKey, false); }
+				GameKey(Rogue10mInput::DodgeKey(), false);
+			}
 			if (RollPhotoCamera.IsValid())
 			{
 				for (const TCHAR* Name : { TEXT("roll-ready.png"), TEXT("roll-active.png"), TEXT("roll-recovered.png") })
