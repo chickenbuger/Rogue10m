@@ -999,7 +999,7 @@ URogue10mDamageIndicatorWidget* ARogue10mPlayerController::AcquireDamageIndicato
 void ARogue10mPlayerController::ShowDamageIndicatorAtLocation(
 	const FVector& WorldLocation, float DamageAmount, bool bCriticalHit)
 {
-	if (!IsLocalPlayerController() || !GetWorld() || !DamageIndicatorWidgetClass || DamageAmount <= 0.0f)
+	if (!IsLocalPlayerController() || !GetWorld() || !DamageIndicatorWidgetClass || DamageAmount <= 0.0f || bSkillTreeVisible)
 	{
 		return;
 	}
@@ -1192,6 +1192,17 @@ void ARogue10mPlayerController::ApplyMenuWindowVisibility()
 	if (SkillTreeWindowWidget && SkillTreeWindowWidget->IsWindowOpen() != bSkillTreeVisible)
 	{
 		SkillTreeWindowWidget->SetWindowOpen(bSkillTreeVisible);
+		if (auto* ToolsWidget = CombatTestComponent ? CombatTestComponent->GetWidget() : nullptr)
+		{
+			ToolsWidget->SetVisibility(bSkillTreeVisible ? ESlateVisibility::Collapsed : ESlateVisibility::SelfHitTestInvisible);
+		}
+		if (bSkillTreeVisible)
+		{
+			for (URogue10mDamageIndicatorWidget* Indicator : DamageIndicatorPool)
+			{
+				if (Indicator) { Indicator->DeactivateIndicator(); }
+			}
+		}
 	}
 }
 

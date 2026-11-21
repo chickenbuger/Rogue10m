@@ -207,7 +207,7 @@ public:
         Event(TEXT("started"), TEXT("input_only_programmatic; no fixtures; normal 1200-second game rule"));
         if (bPreparedBossStrategy) { Event(TEXT("prepared_strategy"), TEXT("opt_in_state_aware_input_QA; field_walking; actual_reserve; windup_escape; recovery_input; not_human_fairness_evidence")); }
         if (bOrbitBossStrategy) { Event(TEXT("orbit_strategy"), TEXT("opt_in_input_QA_only; runtime_capsule_and_range_guard; short_swept_steps; observed_warning_lower_bound_no_ETA; real_HP_loss_observation_not_win_evidence")); }
-        if (bGreatSwordGrowth) { Event(TEXT("great_sword_growth_mode"), TEXT("actual_entry_pickup_then_Slate_RMB_GS_then_natural_forest_M3_LV3_then_manual_ManaEntry_UMG; no_product_rule_or_progression_mutations")); }
+        if (bGreatSwordGrowth) { Event(TEXT("great_sword_growth_mode"), TEXT("actual_entry_pickup_then_Slate_RMB_GS_then_natural_forest_M3_LV3_then_automatic_ManaRank_then_manual_CrushingSlash_UMG; no_product_rule_or_progression_mutations")); }
         Shot(TEXT("main_menu")); Summary(TEXT("running"));
     }
 private:
@@ -1126,17 +1126,16 @@ private:
     }
     FName RequestedLearnNode() const
     {
-        return bGreatSwordGrowth ? FName(TEXT("I.Mana.Entry")) : FName(TEXT("I.InternalEnergy.Entry"));
+        return bGreatSwordGrowth ? FName(TEXT("G.CrushingSlash")) : FName(TEXT("C.MoveSpeed"));
     }
     const FRogue10mSkillTreeNodeDefinition* ReadGreatSwordGrowthNode()
     {
         const auto* GrowthCandidate = Tree.IsValid() ? Tree->FindNode(RequestedLearnNode()) : nullptr;
         if (!GrowthCandidate || GrowthCandidate->bAutomaticUnlock || GrowthCandidate->PointCost <= 0
-            || GrowthCandidate->NodeType != ERogue10mHybridSkillTreeNodeType::IdentityEntry
-            || GrowthCandidate->Identity != ERogue10mSkillTreeIdentity::Mana || !GrowthCandidate->Choices.IsEmpty()
+            || GrowthCandidate->Skill.IsNull() || !GrowthCandidate->Choices.IsEmpty()
             || !URogue10mSkillTreeDataAsset::IsNodeInTrack(*GrowthCandidate, ERogue10mSkillTreeTrack::GreatSword))
         {
-            Block(TEXT("great_sword_growth_target_not_a_manual_paid_GS_mana_entry")); return nullptr;
+            Block(TEXT("great_sword_growth_target_not_a_manual_paid_sword_technique")); return nullptr;
         }
         GreatSwordGrowthPointCost = GrowthCandidate->PointCost;
         return GrowthCandidate;
@@ -1176,7 +1175,7 @@ private:
         { Block(TEXT("great_sword_growth_target_learned_before_UMG_purchase")); return false; }
         if (!bGreatSwordGrowthReadyObserved || !bGearUiEquipped || !VerifyGearEquipped()
             || Tree->GetActiveTrack() != ERogue10mSkillTreeTrack::GreatSword
-            || GrowthWidget.GetDisplayedTab() != ERogue10mSkillTreeTab::Common
+            || GrowthWidget.GetDisplayedTab() != ERogue10mSkillTreeTab::Sword
             || GrowthWidget.GetSelectedNodeId() != RequestedLearnNode()) { return false; }
         FText GrowthPurchaseReason;
         if (!Tree->CanUnlockNode(RequestedLearnNode(), ERogue10mSkillTreeUnlockRoute::Points, NAME_None, GrowthPurchaseReason)) { return false; }
@@ -1206,10 +1205,10 @@ private:
             || GrowthPurchasedRows != 1 || !GrowthPurchasedRowMatches || !bGearUiEquipped || !VerifyGearEquipped()
             || Tree->GetActiveTrack() != ERogue10mSkillTreeTrack::GreatSword)
         { Block(TEXT("great_sword_growth_UMG_purchase_ledger_not_verified")); return false; }
-        if (Tree->GetActiveIdentity(ERogue10mSkillTreeTrack::GreatSword) != ERogue10mSkillTreeIdentity::Mana)
-        { Block(TEXT("great_sword_growth_learned_but_effective_Mana_identity_missing")); return false; }
+        if (Tree->GetIdentityRank(ERogue10mSkillTreeIdentity::Mana) < GreatSwordGrowthLevelObserved - 1)
+        { Block(TEXT("great_sword_growth_level_up_did_not_add_mana_rank")); return false; }
         bGreatSwordGrowthLearningVerified = true;
-        Event(TEXT("great_sword_growth_UMG_purchase_verified"), FString::Printf(TEXT("node=%s actual_cost=%d available_before=%d available_after=%d spent_before=%d spent_after=%d route=Points effective_GS_identity=Mana; proc_damage_not_yet_proven; no_progression_setters"),
+        Event(TEXT("great_sword_growth_UMG_purchase_verified"), FString::Printf(TEXT("node=%s actual_cost=%d available_before=%d available_after=%d spent_before=%d spent_after=%d route=Points mana_rank_from_natural_levels_verified; no_progression_setters"),
             *RequestedLearnNode().ToString(), GreatSwordGrowthPointCost, GreatSwordGrowthPointsBefore,
             GreatSwordGrowthPointsAfter, GreatSwordGrowthSpentBefore, GreatSwordGrowthSpentAfter));
         return true;
@@ -1218,11 +1217,10 @@ private:
     bool SelectLearnNode(URogue10mHybridSkillTreeWidget& Widget)
     {
         const auto* Node = Tree->FindNode(RequestedLearnNode());
-        if (Node && Node->Track == ERogue10mSkillTreeTrack::None && Widget.GetDisplayedTab() != ERogue10mSkillTreeTab::Common)
-        { Click(&Widget, TEXT("HybridTreeCommon")); return false; }
-        if (Node && Node->Identity != ERogue10mSkillTreeIdentity::None && Node->Track == ERogue10mSkillTreeTrack::None
-            && !Widget.IsShowingCommonIdentity())
-        { Click(&Widget, TEXT("HybridTreeCommonViewToggle")); return false; }
+        if (!Node) { return false; }
+        const auto Tab = bGreatSwordGrowth ? ERogue10mSkillTreeTab::Sword : ERogue10mSkillTreeTab::Common;
+        if (Widget.GetDisplayedTab() != Tab)
+        { Click(&Widget, bGreatSwordGrowth ? TEXT("HybridTreeGreatSword") : TEXT("HybridTreeCommon")); return false; }
         auto* Entry = Widget.FindNodeEntry(RequestedLearnNode());
         if (!Entry) { return false; }
         URogue10mHybridSkillTreeButton* Found = nullptr; int32 Count = 0;

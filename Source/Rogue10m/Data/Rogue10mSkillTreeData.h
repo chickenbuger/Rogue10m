@@ -139,6 +139,8 @@ struct FRogue10mSkillTreeSnapshot
 	UPROPERTY(SaveGame, BlueprintReadOnly, Category="Rogue10m|Skill Tree") TArray<FRogue10mSkillTreeInvestment> Investments;
 	UPROPERTY(SaveGame, BlueprintReadOnly, Category="Rogue10m|Skill Tree") TArray<TSoftObjectPtr<URogue10mAttackSkillData>> LegacyGrantedSkills;
 	UPROPERTY(SaveGame, BlueprintReadOnly, Category="Rogue10m|Skill Tree") ERogue10mSkillTreeIdentity ActiveIdentity = ERogue10mSkillTreeIdentity::None;
+	/** Run-scoped bonuses earned from consumed items. The character level supplies the base rank. */
+	UPROPERTY(SaveGame, BlueprintReadOnly, Category="Rogue10m|Identity") TMap<ERogue10mSkillTreeIdentity, int32> IdentityConsumableRanks;
 };
 
 /** Shared content eligibility; town/authority/choice and ledger checks remain command gates. */
@@ -184,6 +186,11 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(ClampMin="0")) float ManaBaseBonus = 0.10f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(ClampMin="0")) float ManaProcCost = 5.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(ClampMin="0")) float IdentityAdvancedGaugeBonus = 5.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(ClampMin="1")) int32 IdentityDeepenedRank = 5;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(ClampMin="1")) int32 FirstResonanceRank = 10;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(ClampMin="1")) int32 SecondResonanceRank = 15;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(ClampMin="0")) float IdentityDamageBonusPerRank = 0.005f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(ClampMin="0")) float ManaCapacityPerRank = 2.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(ClampMin="0")) float IdentityNatureDamageBonus = 0.15f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(ClampMin="1")) float IdentityRangeMultiplier = 1.35f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Identity", meta=(ClampMin="0", ClampMax="1")) float CirculationCostMultiplier = 0.75f;
@@ -197,6 +204,7 @@ public:
 	bool IsValidCatalog(FText* OutReason = nullptr) const;
 	static ERogue10mSkillTreeTrack ResolveTrack(ERogue10mWeaponType WeaponType);
 	bool IsIdentityAllowed(ERogue10mSkillTreeTrack Track, ERogue10mSkillTreeIdentity Identity) const;
+	int32 GetResonanceRank(const FRogue10mSkillTreeNodeDefinition& Node) const;
 	static bool IsNodeInTrack(const FRogue10mSkillTreeNodeDefinition& Node, ERogue10mSkillTreeTrack Track);
 	/** Implemented by the project catalog translation unit. */
 	UFUNCTION(BlueprintCallable, CallInEditor, Category="Rogue10m|Skill Tree")
@@ -204,4 +212,5 @@ public:
 private:
 	void ApplySwordInvestments();
 	void AppendDefaultCommonWeb();
+	void ApplyIdentityGrowthDescriptions();
 };

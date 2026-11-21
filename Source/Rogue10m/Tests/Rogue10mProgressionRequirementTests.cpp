@@ -193,7 +193,8 @@ bool FRogue10mRequirementAcquisitionTest::RunTest(const FString& Parameters)
 	const auto Count = F.Tree->Capture().Investments.Num(); F.Tree->RefreshAutomaticUnlocks(); F.Tree->RefreshAutomaticUnlocks();
 	TestTrue(TEXT("automatic acquisition uses same AND"), F.Tree->IsNodeUnlocked(TEXT("Test.Auto")));
 	TestEqual(TEXT("automatic acquisition is idempotent"), F.Tree->Capture().Investments.Num(), Count);
-	TestTrue(TEXT("legacy Mana identity can still be purchased"), F.Tree->TryUnlockNode(TEXT("I.Mana.Entry"),R::Points,NAME_None));
+	TestFalse(TEXT("mana rank does not use points"), F.Tree->TryUnlockNode(TEXT("I.Mana.Entry"),R::Points,NAME_None));
+	TestTrue(TEXT("mana identity can grow through a typed consumable"), F.Tree->TryAddIdentityGrowth(ERogue10mSkillTreeIdentity::Mana, 1, []{}));
 	TestEqual(TEXT("Mana identity does not imply mage rank"), F.Tree->GetRequirementContext().MageRank,0);
 	TestFalse(TEXT("live MageRank2 node remains locked"), F.Tree->IsNodeUnlocked(TEXT("Test.Mage")));
 	TestEqual(TEXT("gold untouched"), F.Character->GetInventoryComponent()->GetGold(),100000);

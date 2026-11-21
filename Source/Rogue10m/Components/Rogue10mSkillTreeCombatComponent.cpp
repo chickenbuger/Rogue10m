@@ -153,7 +153,8 @@ FRogue10mSkillTreeAttackEffect URogue10mSkillTreeCombatComponent::PreviewAttack(
 		if (Property == TEXT("Mana.Pursuit")) { Bonus += Data->IdentityNatureDamageBonus; }
 		if (Property == TEXT("Mana.Spread") && bCore) { Result.RangeMultiplier = Data->IdentityRangeMultiplier; }
 	}
-	if (bUltimate && Progression->HasResonance(CachedTrack, CachedIdentity)) { Bonus += Data->ResonanceDamageBonus; }
+	Bonus += Progression->GetIdentityRank(CachedIdentity) * Data->IdentityDamageBonusPerRank;
+	if (bUltimate) { Bonus += Progression->GetResonanceDamageBonus(CachedTrack, CachedIdentity); }
 	Result.DamageMultiplier = 1.0f + FMath::Max(0.0f, Bonus);
 	Result.bTriggered = true;
 	return Result;

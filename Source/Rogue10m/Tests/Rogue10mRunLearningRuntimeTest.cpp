@@ -53,8 +53,9 @@ namespace Rogue10mRunLearningQA
 {
 using ERoute = ERogue10mSkillTreeUnlockRoute;
 using EIdentity = ERogue10mSkillTreeIdentity;
-static const FName FirstNode(TEXT("I.InternalEnergy.Entry"));
-static const FName SecondNode(TEXT("I.FightingSpirit.Entry"));
+static const FName FirstNode(TEXT("C.AirControl"));
+static const FName SecondNode(TEXT("C.MoveSpeed"));
+static const FName ThirdNode(TEXT("C.EvadeRecovery"));
 
 class FRun : public TSharedFromThis<FRun>
 {
@@ -114,7 +115,8 @@ private:
     static bool SameLearningLedger(const FRogue10mSkillTreeSnapshot& A, const FRogue10mSkillTreeSnapshot& B)
     {
         if (A.ActiveIdentity != B.ActiveIdentity || A.Investments.Num() != B.Investments.Num()
-            || A.Masteries.Num() != B.Masteries.Num() || A.LegacyGrantedSkills.Num() != B.LegacyGrantedSkills.Num()) { return false; }
+            || A.Masteries.Num() != B.Masteries.Num() || A.LegacyGrantedSkills.Num() != B.LegacyGrantedSkills.Num()
+            || !A.IdentityConsumableRanks.OrderIndependentCompareEqual(B.IdentityConsumableRanks)) { return false; }
         for (int32 I = 0; I < A.Investments.Num(); ++I)
         {
             const auto& L = A.Investments[I]; const auto& R = B.Investments[I];
@@ -171,7 +173,8 @@ private:
         Check(!Tree->CanLearnDuringRun(), TEXT("town_is_not_run_learning_context"));
         Check(Character->GetEquippedWeaponType() == ERogue10mWeaponType::Knuckle, TEXT("starts_with_knuckle_combat_track"));
         EntryGold = Inventory->GetGold(); EntryCrystals = Inventory->GetCrystals(); EntryLobby = Saves->GetLobbyAvailablePoints();
-        Check(!Tree->IsNodeUnlocked(FirstNode) && !Tree->IsNodeUnlocked(SecondNode), TEXT("identities_start_unlearned"));
+        Check(!Tree->IsNodeUnlocked(FirstNode) && !Tree->IsNodeUnlocked(SecondNode)
+            && Tree->GetIdentityRank(EIdentity::InternalEnergy) == 0, TEXT("common_abilities_and_identity_growth_start_at_baseline"));
         if (Failures) { Finish(); return; }
         ARogue10mRunPortal* Portal = nullptr;
         for (TActorIterator<ARogue10mRunPortal> It(World.Get()); It; ++It) { Portal = *It; break; }
@@ -413,11 +416,11 @@ private:
         Check(Attributes != nullptr, TEXT("accepted_attack_has_authoritative_attributes"));
         if (Failures) { Finish(); return; }
         const float PaidStamina = Attributes->GetStamina(), PaidMana = Attributes->GetMana();
-        Check(Tree->CanLearnDuringRun() && Tree->TryUnlockNode(FirstNode, ERoute::Points, NAME_None), TEXT("first_identity_learning_is_allowed_during_active_attack"));
-        Check(Tree->GetActiveIdentity() == EIdentity::InternalEnergy, TEXT("first_learned_identity_retains_automatic_activation"));
+        Check(Tree->CanLearnDuringRun() && Tree->TryUnlockNode(FirstNode, ERoute::Points, NAME_None), TEXT("first_common_ability_learning_is_allowed_during_active_attack"));
+        Check(Tree->GetActiveIdentity() == EIdentity::InternalEnergy, TEXT("level_growth_activates_compatible_knuckle_identity"));
         Check(Combat->GetLastAcceptedAttackSkill() == AcceptedSkill && Combat->IsWeaponChangeBlocked(), TEXT("learning_does_not_replace_or_cancel_the_accepted_attack"));
-        Check(FMath::IsNearlyEqual(PaidStamina, Attributes->GetStamina()) && FMath::IsNearlyEqual(PaidMana, Attributes->GetMana()), TEXT("first_identity_learning_does_not_charge_attack_resources_again"));
-        Check(Tree->GetAvailableGrowthPoints() == Points - 1 && Inventory->GetGold() == Gold, TEXT("first_identity_consumes_one_point_and_no_gold"));
+        Check(FMath::IsNearlyEqual(PaidStamina, Attributes->GetStamina()) && FMath::IsNearlyEqual(PaidMana, Attributes->GetMana()), TEXT("common_ability_learning_does_not_charge_attack_resources_again"));
+        Check(Tree->GetAvailableGrowthPoints() == Points - 1 && Inventory->GetGold() == Gold, TEXT("first_common_ability_consumes_one_point_and_no_gold"));
         const int32 Count = Tree->Capture().Investments.Num();
         Check(!Tree->TryUnlockNode(FirstNode, ERoute::Points, NAME_None) && Tree->GetAvailableGrowthPoints() == Points - 1
             && Tree->Capture().Investments.Num() == Count && Inventory->GetGold() == Gold, TEXT("duplicate_learning_is_noop_for_points_gold_and_ledger"));
@@ -433,28 +436,29 @@ private:
             Check(PC->IsSkillTreeVisible() && Widget.IsValid(), TEXT("simulated_K_opens_actual_native_tree"));
             Check(!UGameplayStatics::IsGamePaused(this->World.Get()) && Run->IsRunActive(), TEXT("field_tree_keeps_world_and_run_active"));
             if (Failures) { Finish(); return; }
+            Widget->BrowseTab(ERogue10mSkillTreeTab::Common);
             Widget->SelectNode(SecondNode); Widget->RefreshFromData();
             auto* Button = Cast<UButton>(Widget->GetWidgetFromName(TEXT("HybridTreeLearnPoints")));
             Check(Button && Button->GetIsEnabled(), TEXT("actual_points_learning_button_enabled_in_field"));
             if (Failures) { Finish(); return; }
             const int32 Points = Tree->GetAvailableGrowthPoints(), Gold = Inventory->GetGold();
             Button->OnClicked.Broadcast();
-            Check(Tree->IsNodeUnlocked(SecondNode) && Tree->GetAvailableGrowthPoints() == Points - 1 && Inventory->GetGold() == Gold, TEXT("actual_UMG_points_delegate_learns_second_identity_once"));
-            Check(Tree->GetActiveIdentity() == EIdentity::InternalEnergy, TEXT("second_identity_does_not_replace_first_automatically"));
+            Check(Tree->IsNodeUnlocked(SecondNode) && Tree->GetAvailableGrowthPoints() == Points - 1 && Inventory->GetGold() == Gold, TEXT("actual_UMG_points_delegate_learns_second_common_ability_once"));
+            Check(Tree->GetActiveIdentity() == EIdentity::InternalEnergy, TEXT("common_ability_does_not_change_active_identity"));
             FText Reason;
             const int32 RemainingPoints = Tree->GetAvailableGrowthPoints();
             Check(!Tree->CanUnlockNode(TEXT("I.InternalEnergy.Advanced"), ERoute::Points, NAME_None, Reason)
                 && !Tree->TryUnlockNode(TEXT("I.InternalEnergy.Advanced"), ERoute::Points, NAME_None)
-                && Tree->GetAvailableGrowthPoints() == RemainingPoints, TEXT("insufficient_points_reject_purchase_without_partial_spending"));
-            Check(!Tree->TryUnlockNode(TEXT("I.InternalEnergy.Advanced"), ERoute::Mastery, NAME_None), TEXT("insufficient_mastery_rejects_free_route"));
-            // Existing mastery progression is a programmatic fixture, not confirmed player hits.
-            for (int32 Index = 0; Index < 400; ++Index) { Tree->NotifyConfirmedAttack(ERogue10mSkillTreeTrack::Brawler); }
-            Check(Tree->GetMasteryLevel(ERogue10mSkillTreeTrack::Brawler) >= 12
-                && Tree->TryUnlockNode(TEXT("I.InternalEnergy.Advanced"), ERoute::Mastery, NAME_None)
-                && Tree->GetAvailableGrowthPoints() == RemainingPoints, TEXT("satisfied_mastery_manual_route_learns_in_running_field_without_points"));
+                && !Tree->TryUnlockNode(TEXT("I.InternalEnergy.Advanced"), ERoute::Mastery, NAME_None)
+                && Tree->GetAvailableGrowthPoints() == RemainingPoints, TEXT("retired_identity_routes_never_spend_shared_points"));
             Check(!Tree->RefundNode(FirstNode) && !Tree->Respec(), TEXT("field_refund_and_respec_remain_rejected"));
             Check(!Tree->TrySetActiveIdentity(EIdentity::FightingSpirit), TEXT("field_manual_identity_switch_remains_rejected"));
             Check(Tree->GetActiveIdentity() == EIdentity::InternalEnergy, TEXT("rejected_manual_switch_preserves_active_identity"));
+            const int32 Spirit = Tree->GetIdentityRank(EIdentity::FightingSpirit);
+            Check(Tree->TryAddIdentityGrowth(EIdentity::FightingSpirit, 1, []{})
+                && Tree->GetIdentityRank(EIdentity::FightingSpirit) == Spirit + 1
+                && Tree->GetActiveIdentity() == EIdentity::FightingSpirit && Tree->GetAvailableGrowthPoints() == RemainingPoints,
+                TEXT("programmatic_typed_growth_switches_to_stronger_compatible_identity_without_spending_points"));
             Check(!Town->TryUpgradeTrait(ERogue10mTownTrait::Vitality), TEXT("run_learning_does_not_enable_lobby_trait_purchase"));
             Check(Saves->GetLobbyAvailablePoints() == EntryLobby, TEXT("run_learning_never_debits_or_credits_lobby_currency"));
             Check(Saves->SaveNow() && Saves->HasDiscoveredNode(FirstNode) && Saves->HasDiscoveredNode(SecondNode), TEXT("learned_nodes_are_saved_as_independent_discovery"));
@@ -475,7 +479,7 @@ private:
         Later(0.5, [this]
         {
             Check(Run->IsRunTerminal() && Completion->IsSettled() && PC->IsRunResultVisible(), TEXT("terminal_phase_presents_actual_result_widget"));
-            Check(!Tree->CanLearnDuringRun() && !Tree->TryUnlockNode(TEXT("I.InternalEnergy.Advanced"), ERoute::Points, NAME_None), TEXT("terminal_result_disallows_new_learning"));
+            Check(!Tree->CanLearnDuringRun() && !Tree->TryUnlockNode(ThirdNode, ERoute::Points, NAME_None), TEXT("terminal_result_disallows_new_learning"));
             Check(Completion->IsProgressionSaved(), TEXT("terminal_snapshot_is_durable_before_return"));
             Photo(TEXT("02_learning_result.png"));
             if (Failures) { Finish(); return; }
@@ -498,11 +502,11 @@ private:
         Check(!Tree->CanLearnDuringRun() && !PC->IsRunResultVisible() && !Character->IsDead(), TEXT("new_town_pawn_has_no_stale_run_learning_or_result_context"));
         Check(State->GetPlayerLevel() == 1 && State->GetCurrentExperience() == 0, TEXT("run_XP_and_level_reset"));
         Check(!Tree->IsNodeUnlocked(FirstNode) && !Tree->IsNodeUnlocked(SecondNode)
-            && !Tree->IsNodeUnlocked(TEXT("I.InternalEnergy.Advanced")) && Tree->GetActiveIdentity() == EIdentity::None, TEXT("run_learned_identities_and_active_identity_reset"));
+            && Tree->GetIdentityRank(EIdentity::FightingSpirit) == 0 && Tree->Capture().IdentityConsumableRanks.IsEmpty()
+            && Tree->GetActiveIdentity() == EIdentity::None, TEXT("run_learned_abilities_and_identity_growth_reset"));
         Check(Tree->GetAvailableGrowthPoints() == 0 && Tree->GetMasteryTotalExperience(ERogue10mSkillTreeTrack::Brawler) == 0, TEXT("run_points_and_mastery_reset_with_learning"));
         Check(Saves->HasDiscoveredNode(FirstNode) && Saves->HasDiscoveredNode(SecondNode), TEXT("permanent_discovery_survives_without_regranting_run_learning"));
         Check(InventoryEntrySwordCount() == 0, TEXT("run_acquired_entry_sword_GUID_does_not_survive_completed_run"));
-        Check(Saves->HasDiscoveredNode(TEXT("I.InternalEnergy.Advanced")), TEXT("mastery_route_discovery_survives_run_reset"));
         Check(Inventory->GetGold() == EntryGold && Inventory->GetCrystals() == EntryCrystals, TEXT("run_currency_returns_to_entry_or_starter_baseline"));
         if (Mode == TEXT("Abandon")) { Check(Saves->GetLobbyAvailablePoints() == EntryLobby, TEXT("abandonment_mints_no_lobby_reward")); }
         else { Check(Saves->GetLobbyAvailablePoints() == EntryLobby + (Mode == TEXT("Normal") ? 10 : 0), TEXT("only_existing_terminal_rule_changes_lobby_budget")); }

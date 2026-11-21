@@ -25,6 +25,23 @@ using EType = ERogue10mHybridSkillTreeNodeType;
 using ERoute = ERogue10mSkillTreeUnlockRoute;
 
 static bool IsTrack(ETrack Track) { return Track == ETrack::Brawler || Track == ETrack::GreatSword; }
+static constexpr int32 MaxConsumableRanks = 100;
+static constexpr EIdentity GrowthIdentities[] = { EIdentity::InternalEnergy, EIdentity::FightingSpirit, EIdentity::Mana };
+static bool IsGrowthIdentity(EIdentity Identity) { return Identity >= EIdentity::InternalEnergy && Identity <= EIdentity::Mana; }
+static bool IsIdentityStage(EType Type)
+{
+	return Type == EType::IdentityEntry || Type == EType::IdentityAdvanced || Type == EType::IdentityChoice;
+}
+static FText IdentityName(EIdentity Identity)
+{
+	switch (Identity)
+	{
+	case EIdentity::InternalEnergy: return NSLOCTEXT("Rogue10mTree", "InternalEnergy", "내공");
+	case EIdentity::FightingSpirit: return NSLOCTEXT("Rogue10mTree", "FightingSpirit", "투지");
+	case EIdentity::Mana: return NSLOCTEXT("Rogue10mTree", "Mana", "마나");
+	default: return FText::GetEmpty();
+	}
+}
 static int32 RequiredTotal(int32 Level)
 {
 	const int64 Steps = FMath::Clamp(Level - 1, 0, 999);
@@ -227,7 +244,12 @@ int32 URogue10mSkillTreeProgressionComponent::GetAvailableGrowthPoints() const
 	const auto* Town = Player ? Player->GetTownProgressionComponent() : nullptr;
 	return Player && Town ? FMath::Max(0, Player->GetPlayerLevel() - 1) - Town->GetRunSharedTraitSpent() - GetSpentSkillTreePoints() : 0;
 }
-bool URogue10mSkillTreeProgressionComponent::IsNodeUnlocked(FName NodeId) const { return Rogue10mSkillTree::Find(State, NodeId) != nullptr; }
+bool URogue10mSkillTreeProgressionComponent::IsNodeUnlocked(FName NodeId) const
+{
+	if (Rogue10mSkillTree::Find(State, NodeId)) { return true; }
+	const auto* Node = FindNode(NodeId);
+	return Node && Node->NodeType == ERogue10mHybridSkillTreeNodeType::Resonance && IsResonanceLearned(*Node);
+}
 bool URogue10mSkillTreeProgressionComponent::IsCommonSkillLearned(ERogue10mCommonSkill Skill) const
 {
 	const auto* Node = GetCatalog()->FindCommonSkill(Skill);
@@ -242,9 +264,6 @@ FName URogue10mSkillTreeProgressionComponent::GetSelectedChoice(FName NodeId) co
 {
 	const auto* Row = Rogue10mSkillTree::Find(State, NodeId); return Row ? Row->ChoiceId : NAME_None;
 }
-bool URogue10mSkillTreeProgressionComponent::PrerequisitesComplete(const FRogue10mSkillTreeNodeDefinition& Node) const { return Rogue10mSkillTree::Prerequisites(State, Node, *GetCatalog()); }
-bool URogue10mSkillTreeProgressionComponent::MasteryRequirementsComplete(const FRogue10mSkillTreeNodeDefinition& Node) const { return Rogue10mSkillTree::Mastery(State, Node, *GetCatalog()); }
-
 FRogue10mProgressionRequirementContext URogue10mSkillTreeProgressionComponent::GetRequirementContext() const
 {
 	return Rogue10mSkillTree::Context(State, *GetCatalog());
@@ -252,7 +271,11 @@ FRogue10mProgressionRequirementContext URogue10mSkillTreeProgressionComponent::G
 FRogue10mSkillTreeEligibility URogue10mSkillTreeProgressionComponent::EvaluateNodeEligibility(FName NodeId) const
 {
 	const auto* Node = FindNode(NodeId);
-	return Node ? Rogue10mSkillTree::Eligibility(State, *Node, *GetCatalog(), GetAvailableGrowthPoints()) : FRogue10mSkillTreeEligibility();
+	if (!Node || Rogue10mSkillTree::IsIdentityStage(Node->NodeType) || Node->NodeType == ERogue10mHybridSkillTreeNodeType::Resonance)
+	{
+		return {};
+	}
+	return Rogue10mSkillTree::Eligibility(State, *Node, *GetCatalog(), GetAvailableGrowthPoints());
 }
 
 ERogue10mSkillTreeNodeState URogue10mSkillTreeProgressionComponent::GetNodeState(FName NodeId, ERogue10mSkillTreeTrack Track) const
@@ -275,6 +298,29 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 {
 	const auto* Node = FindNode(NodeId);
 	if (!Node) { return FText::GetEmpty(); }
+	if (Rogue10mSkillTree::IsIdentityStage(Node->NodeType))
+	{
+		return NSLOCTEXT("Rogue10mTree", "IdentityGrowthRequirements", "캐릭터 레벨업과 소비 아이템으로 성장합니다.");
+	}
+	if (Node->NodeType == ERogue10mHybridSkillTreeNodeType::Resonance)
+	{
+		if (Rogue10mSkillTree::Find(State, NodeId))
+		{
+			return NSLOCTEXT("Rogue10mTree", "LegacyResonanceLearned", "이전에 전수한 공명 효과가 적용됩니다.");
+		}
+		TArray<FString> Requirements;
+		for (const auto& Group : Node->PrerequisiteGroups)
+		{
+			for (FName Id : Group.NodeIds)
+			{
+				const auto* Parent = FindNode(Id);
+				if (Parent && Parent->Track == Node->Track) { Requirements.AddUnique(Parent->DisplayName.ToString()); }
+			}
+		}
+		return FText::Format(NSLOCTEXT("Rogue10mTree", "ResonanceGrowthRequirements", "선행 기술 · {0}\n{1} 등급 {2} 필요 (현재 {3})"),
+			FText::FromString(FString::Join(Requirements, TEXT(" / "))), Rogue10mSkillTree::IdentityName(Node->Identity),
+			FText::AsNumber(GetCatalog()->GetResonanceRank(*Node)), FText::AsNumber(GetIdentityRank(Node->Identity)));
+	}
 	TArray<FString> Lines;
 	const auto Evaluation = EvaluateNodeEligibility(NodeId);
 	const auto RequirementContext = GetRequirementContext();
@@ -309,10 +355,8 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 	{
 		const bool bSword = Node->Track == ERogue10mSkillTreeTrack::GreatSword;
 		const bool bShowSwordRoutes = bSword && Node->PrerequisiteGroups.Num() > 1;
-		const bool bSwordResonance = bSword && Node->NodeType == ERogue10mHybridSkillTreeNodeType::Resonance;
 		if (bShowSwordRoutes) { Lines.Add(TEXT("선행 경로 · 아래 중 하나")); }
 		TArray<FString> Alternatives;
-		FString CommonChoiceOrigin;
 		for (const auto& Group : Node->PrerequisiteGroups)
 		{
 			TArray<FString> Parents;
@@ -321,7 +365,7 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 			{
 				const auto* Parent = FindNode(Id);
 				FString ParentName = Parent ? Parent->DisplayName.ToString() : Id.ToString();
-				bool bParentComplete = IsNodeUnlocked(Id);
+				const bool bParentComplete = IsNodeUnlocked(Id);
 				if (bShowSwordRoutes && Parent && Parent->NodeType == ERogue10mHybridSkillTreeNodeType::Stat)
 				{
 					const auto* Stage = Parent->MasteryAlternatives.FindByPredicate([](const auto& Requirement)
@@ -329,19 +373,6 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 						return Requirement.Track == ERogue10mSkillTreeTrack::GreatSword;
 					});
 					if (Stage) { ParentName += FString::Printf(TEXT(" (숙련 M%d)"), Stage->Level); }
-				}
-				if (bSwordResonance && Parent && Parent->Track == ERogue10mSkillTreeTrack::None
-					&& Parent->NodeType == ERogue10mHybridSkillTreeNodeType::IdentityChoice)
-				{
-					const auto* RequiredChoice = Parent->Choices.FindByPredicate([Node](const auto& Choice)
-					{
-						return Choice.ChoiceId == Node->RequiredChoiceId;
-					});
-					if (RequiredChoice)
-					{
-						bParentComplete &= GetSelectedChoice(Id) == RequiredChoice->ChoiceId;
-						CommonChoiceOrigin = FString::Printf(TEXT("공통 탭의 아이덴티티 · %s에서 %s 선택"), *ParentName, *RequiredChoice->DisplayName.ToString());
-					}
 				}
 				bGroupComplete &= bParentComplete;
 				Parents.Add(bShowSwordRoutes ? MoveTemp(ParentName)
@@ -352,7 +383,6 @@ FText URogue10mSkillTreeProgressionComponent::GetNodeRequirementsText(FName Node
 			else { Alternatives.Add(MoveTemp(ParentList)); }
 		}
 		if (!bShowSwordRoutes) { Lines.Add(TEXT("선행: ") + FString::Join(Alternatives, TEXT(" 또는 "))); }
-		if (!CommonChoiceOrigin.IsEmpty()) { Lines.Add(MoveTemp(CommonChoiceOrigin)); }
 	}
 	TArray<FString> Routes;
 	if (Node->PointCost > 0) { Routes.Add(FString::Printf(TEXT("포인트 %dP (잔액 %dP)"), Node->PointCost, GetAvailableGrowthPoints())); }
@@ -420,6 +450,8 @@ bool URogue10mSkillTreeProgressionComponent::CanUnlockNode(FName NodeId, ERogue1
 	OutReason = FText::GetEmpty();
 	const auto* Node = FindNode(NodeId);
 	if (!Node || !GetCatalog()->IsValidCatalog()) { return Fail(TEXT("스킬트리 설정을 확인해 주세요.")); }
+	if (Rogue10mSkillTree::IsIdentityStage(Node->NodeType)) { return Fail(TEXT("아이덴티티는 레벨업과 소비 아이템으로 성장합니다.")); }
+	if (Node->NodeType == ERogue10mHybridSkillTreeNodeType::Resonance) { return Fail(TEXT("최종기와 아이덴티티 등급 조건을 충족하면 자동 공명합니다.")); }
 	if (!CanChangeInvestments() && !CanLearnDuringRun()) { return Fail(TEXT("학습은 마을 안내원 근처 또는 저장이 준비된 진행 중 탐험에서 가능합니다.")); }
 	if (!URogue10mSkillTreeDataAsset::IsNodeInTrack(*Node, GetActiveTrack())) { return Fail(TEXT("현재 장착 무기의 계열에서 전수할 수 없습니다.")); }
 	if (Node->Identity != ERogue10mSkillTreeIdentity::None && !GetCatalog()->IsIdentityAllowed(GetActiveTrack(), Node->Identity)) { return Fail(TEXT("현재 직업에서 사용할 수 없는 아이덴티티입니다.")); }
@@ -455,18 +487,71 @@ bool URogue10mSkillTreeProgressionComponent::TryUnlockNode(FName NodeId, ERogue1
 	auto& Row = State.Investments.AddDefaulted_GetRef();
 	Row.NodeId = NodeId; Row.Route = Route; Row.ChoiceId = ChoiceId;
 	Row.SpentPoints = Route == ERogue10mSkillTreeUnlockRoute::Points ? Node.PointCost : 0;
-	const bool bFirstIdentity = Node.NodeType == ERogue10mHybridSkillTreeNodeType::IdentityEntry && State.ActiveIdentity == ERogue10mSkillTreeIdentity::None;
-	if (bFirstIdentity) { State.ActiveIdentity = Node.Identity; }
 	RefreshAutomaticUnlocks();
-	NotifyChanged(bFirstIdentity);
+	NotifyChanged();
 	return true;
 }
 
-bool URogue10mSkillTreeProgressionComponent::IsIdentityLearned(ERogue10mSkillTreeIdentity Identity) const { return Rogue10mSkillTree::LearnedIdentity(State, Identity, *GetCatalog()); }
+int32 URogue10mSkillTreeProgressionComponent::GetIdentityRank(ERogue10mSkillTreeIdentity Identity) const
+{
+	if (!Rogue10mSkillTree::IsGrowthIdentity(Identity)) { return 0; }
+	const auto* Player = GetPlayerState();
+	int64 Rank = Player ? Player->GetPlayerLevel() - 1 : 0;
+	Rank += State.IdentityConsumableRanks.FindRef(Identity);
+	for (const auto& Node : GetCatalog()->Nodes)
+	{
+		// Legacy purchases remain in the point ledger and count toward their family's rank.
+		if (Node.Identity == Identity && Rogue10mSkillTree::IsIdentityStage(Node.NodeType) && Rogue10mSkillTree::Find(State, Node.NodeId))
+		{
+			++Rank;
+		}
+	}
+	return static_cast<int32>(FMath::Min<int64>(Rank, MAX_int32));
+}
+
+bool URogue10mSkillTreeProgressionComponent::CanAddIdentityGrowth(ERogue10mSkillTreeIdentity Identity, int32 RankAmount) const
+{
+	const auto* Player = GetPlayerState();
+	return Player && Player->HasAuthority() && !Player->IsCharacterDead() && Rogue10mSkillTree::IsGrowthIdentity(Identity)
+		&& RankAmount > 0 && RankAmount <= Rogue10mSkillTree::MaxConsumableRanks - State.IdentityConsumableRanks.FindRef(Identity);
+}
+
+bool URogue10mSkillTreeProgressionComponent::TryAddIdentityGrowth(
+	ERogue10mSkillTreeIdentity Identity, int32 RankAmount, TFunctionRef<void()> CommitConsumable)
+{
+	if (!CanAddIdentityGrowth(Identity, RankAmount)) { return false; }
+	State.IdentityConsumableRanks.FindOrAdd(Identity) += RankAmount;
+	CommitConsumable();
+	NotifyChanged();
+	return true;
+}
+
+float URogue10mSkillTreeProgressionComponent::GetManaCapacityBonus() const
+{
+	return GetIdentityRank(ERogue10mSkillTreeIdentity::Mana) * GetCatalog()->ManaCapacityPerRank;
+}
+
+bool URogue10mSkillTreeProgressionComponent::IsIdentityLearned(ERogue10mSkillTreeIdentity Identity) const { return GetIdentityRank(Identity) > 0; }
 ERogue10mSkillTreeIdentity URogue10mSkillTreeProgressionComponent::GetActiveIdentity() const { return GetActiveIdentity(GetActiveTrack()); }
 ERogue10mSkillTreeIdentity URogue10mSkillTreeProgressionComponent::GetActiveIdentity(ERogue10mSkillTreeTrack Track) const
 {
-	return GetCatalog()->IsIdentityAllowed(Track, State.ActiveIdentity) && IsIdentityLearned(State.ActiveIdentity) ? State.ActiveIdentity : ERogue10mSkillTreeIdentity::None;
+	using namespace Rogue10mSkillTree;
+	if (!IsTrack(Track)) { return EIdentity::None; }
+	const auto* Data = GetCatalog();
+	if (Data->IsIdentityAllowed(Track, State.ActiveIdentity)) { return State.ActiveIdentity; }
+	EIdentity Best = EIdentity::None;
+	int32 HighestRank = 0;
+	for (EIdentity Identity : GrowthIdentities)
+	{
+		if (!Data->IsIdentityAllowed(Track, Identity)) { continue; }
+		const int32 Rank = GetIdentityRank(Identity);
+		if (Rank > HighestRank)
+		{
+			Best = Identity;
+			HighestRank = Rank;
+		}
+	}
+	return Best;
 }
 FName URogue10mSkillTreeProgressionComponent::GetSelectedProperty(ERogue10mSkillTreeIdentity Identity) const
 {
@@ -480,6 +565,7 @@ FName URogue10mSkillTreeProgressionComponent::GetSelectedProperty(ERogue10mSkill
 FName URogue10mSkillTreeProgressionComponent::GetActiveIdentityChoice() const { return GetSelectedProperty(GetActiveIdentity()); }
 bool URogue10mSkillTreeProgressionComponent::IsIdentityDeepened(ERogue10mSkillTreeIdentity Identity) const
 {
+	if (GetIdentityRank(Identity) >= GetCatalog()->IdentityDeepenedRank) { return true; }
 	for (const auto& Row : State.Investments)
 	{
 		const auto* Node = FindNode(Row.NodeId);
@@ -489,18 +575,54 @@ bool URogue10mSkillTreeProgressionComponent::IsIdentityDeepened(ERogue10mSkillTr
 }
 bool URogue10mSkillTreeProgressionComponent::HasResonance(ERogue10mSkillTreeTrack Track, ERogue10mSkillTreeIdentity Identity) const
 {
-	if (GetActiveIdentity(Track) != Identity || Identity == ERogue10mSkillTreeIdentity::None) { return false; }
-	for (const auto& Row : State.Investments)
+	return CountResonances(Track, Identity) > 0;
+}
+
+float URogue10mSkillTreeProgressionComponent::GetResonanceDamageBonus(
+	ERogue10mSkillTreeTrack Track, ERogue10mSkillTreeIdentity Identity) const
+{
+	return CountResonances(Track, Identity) * GetCatalog()->ResonanceDamageBonus;
+}
+
+int32 URogue10mSkillTreeProgressionComponent::CountResonances(
+	ERogue10mSkillTreeTrack Track, ERogue10mSkillTreeIdentity Identity) const
+{
+	if (!Rogue10mSkillTree::IsGrowthIdentity(Identity) || GetActiveIdentity(Track) != Identity) { return 0; }
+	int32 Count = 0;
+	for (const auto& Node : GetCatalog()->Nodes)
 	{
-		const auto* Node = FindNode(Row.NodeId);
-		if (Node && Node->Track == Track && Node->Identity == Identity && Node->NodeType == ERogue10mHybridSkillTreeNodeType::Resonance && PrerequisitesComplete(*Node)) { return true; }
+		if (Node.Track == Track && Node.Identity == Identity && Node.NodeType == ERogue10mHybridSkillTreeNodeType::Resonance
+			&& (Rogue10mSkillTree::Find(State, Node.NodeId) || IsResonanceLearned(Node))) { ++Count; }
+	}
+	return Count;
+}
+
+bool URogue10mSkillTreeProgressionComponent::IsResonanceLearned(const FRogue10mSkillTreeNodeDefinition& Node) const
+{
+	const auto* Data = GetCatalog();
+	if (GetIdentityRank(Node.Identity) < Data->GetResonanceRank(Node)) { return false; }
+	for (const auto& Group : Node.PrerequisiteGroups)
+	{
+		bool bHasWeaponParent = false;
+		bool bWeaponParentsLearned = true;
+		for (FName Id : Group.NodeIds)
+		{
+			const auto* Parent = Data->FindNode(Id);
+			if (Parent && Parent->Track == Node.Track)
+			{
+				bHasWeaponParent = true;
+				bWeaponParentsLearned &= Rogue10mSkillTree::Find(State, Id) != nullptr;
+			}
+		}
+		if (bHasWeaponParent && bWeaponParentsLearned) { return true; }
 	}
 	return false;
 }
 bool URogue10mSkillTreeProgressionComponent::TrySetActiveIdentity(ERogue10mSkillTreeIdentity Identity)
 {
 	if (!CanChangeInvestments() || State.ActiveIdentity == Identity) { return false; }
-	if (Identity != ERogue10mSkillTreeIdentity::None && (!GetCatalog()->IsIdentityAllowed(GetActiveTrack(), Identity) || !IsIdentityLearned(Identity))) { return false; }
+	if (Identity != ERogue10mSkillTreeIdentity::None && (!GetCatalog()->IsIdentityAllowed(GetActiveTrack(), Identity)
+		|| !Rogue10mSkillTree::LearnedIdentity(State, Identity, *GetCatalog()))) { return false; }
 	State.ActiveIdentity = Identity; NotifyChanged(true); return true;
 }
 bool URogue10mSkillTreeProgressionComponent::TrySetActiveChoice(FName NodeId, FName ChoiceId)
@@ -612,7 +734,7 @@ void URogue10mSkillTreeProgressionComponent::RefreshAutomaticUnlocks()
 		bChanged = false;
 		for (const auto& Node : GetCatalog()->Nodes)
 		{
-			if (!Node.bAutomaticUnlock || IsNodeUnlocked(Node.NodeId)
+			if (!Node.bAutomaticUnlock || Node.NodeType == ERogue10mHybridSkillTreeNodeType::Resonance || Rogue10mSkillTree::Find(State, Node.NodeId)
 				|| !Rogue10mSkillTree::Eligibility(State, Node, *GetCatalog(), GetAvailableGrowthPoints()).CanAcquire(ERogue10mSkillTreeUnlockRoute::Automatic)) { continue; }
 			auto& Row = State.Investments.AddDefaulted_GetRef(); Row.NodeId = Node.NodeId; Row.Route = ERogue10mSkillTreeUnlockRoute::Automatic;
 			bChanged = true;
@@ -634,7 +756,12 @@ bool URogue10mSkillTreeProgressionComponent::Validate(const FRogue10mSkillTreeSn
 	const auto Fail = [OutReason]() { if (OutReason) { *OutReason = NSLOCTEXT("Rogue10mTree", "InvalidSnapshot", "숙련 또는 성장 포인트 기록이 맞지 않습니다. 기존 저장은 보존됩니다."); } return false; };
 	if (!Catalog.IsValidCatalog() || EarnedPoints < 0 || TraitSpentPoints < 0 || TraitSpentPoints > EarnedPoints
 		|| Snapshot.Masteries.Num() > 2 || Snapshot.Investments.Num() > Catalog.Nodes.Num() || Snapshot.LegacyGrantedSkills.Num() > 256
+		|| Snapshot.IdentityConsumableRanks.Num() > UE_ARRAY_COUNT(GrowthIdentities)
 		|| static_cast<uint8>(Snapshot.ActiveIdentity) > static_cast<uint8>(EIdentity::Mana)) { return Fail(); }
+	for (const auto& Pair : Snapshot.IdentityConsumableRanks)
+	{
+		if (!IsGrowthIdentity(Pair.Key) || Pair.Value <= 0 || Pair.Value > MaxConsumableRanks) { return Fail(); }
+	}
 	TSet<ETrack> SeenTracks;
 	for (const auto& Row : Snapshot.Masteries)
 	{

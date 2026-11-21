@@ -857,13 +857,16 @@ void ARogue10mCharacter::RefreshCharacterStats(bool bRestoreVitals)
 	URogue10mAttributeSet* Attributes = GetRogueAttributeSet();
 	if (Attributes && HasAuthority())
 	{
+		const auto* State = GetPlayerState<ARogue10mPlayerState>();
+		const auto* Tree = State ? State->GetSkillTreeProgressionComponent() : nullptr;
+		const float MaxMana = Snapshot.Base.MaxMana + (Tree ? Tree->GetManaCapacityBonus() : 0.0f);
 		const float PreviousHealth = Attributes->GetHealth();
 		const float PreviousStamina = Attributes->GetStamina();
 		const float PreviousMana = Attributes->GetMana();
 
 		Attributes->SetMaxHealth(Snapshot.MaxHealth);
 		Attributes->SetMaxStamina(Snapshot.MaxStamina);
-		Attributes->SetMaxMana(Snapshot.Base.MaxMana);
+		Attributes->SetMaxMana(MaxMana);
 		Attributes->SetAttackPower(Snapshot.AttackPower);
 		Attributes->SetDefense(Snapshot.Defense);
 		Attributes->SetCriticalChance(Snapshot.CriticalChance);
@@ -880,7 +883,7 @@ void ARogue10mCharacter::RefreshCharacterStats(bool bRestoreVitals)
 			// Reallocation, reinvestment and equipment changes never refill current resources.
 			Attributes->SetHealth(FMath::Clamp(PreviousHealth, 0.0f, Snapshot.MaxHealth));
 			Attributes->SetStamina(FMath::Clamp(PreviousStamina, 0.0f, Snapshot.MaxStamina));
-			Attributes->SetMana(FMath::Clamp(PreviousMana, 0.0f, Snapshot.Base.MaxMana));
+			Attributes->SetMana(FMath::Clamp(PreviousMana, 0.0f, MaxMana));
 		}
 	}
 

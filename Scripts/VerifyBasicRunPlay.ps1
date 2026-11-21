@@ -118,7 +118,7 @@ function Read-DriverSummary([string]$Path,[bool]$ExpectPrepared=$false,[bool]$Ex
         if($ExpectGreatSwordGrowth){
             if(-not $ExpectGear -or $values['gear_ui_requested'] -cne '1'){$issues.Add('growth_requires_requested_gear_ui')}
             if(-not $values.Contains('great_sword_growth_requested') -or $values['great_sword_growth_requested'] -cne '1'){$issues.Add('requested_great_sword_growth_not_confirmed')}
-            if($values['requested_learning_node'] -cne 'I.Mana.Entry'){$issues.Add('growth_wrong_requested_learning_node')}
+            if($values['requested_learning_node'] -cne 'G.CrushingSlash'){$issues.Add('growth_wrong_requested_learning_node')}
             foreach($key in @('great_sword_growth_ready','great_sword_growth_ui_click','great_sword_growth_learning_verified')){
                 if(-not $values.Contains($key) -or $values[$key] -notin @('0','1')){$issues.Add('invalid_or_missing_'+$key)}
             }
@@ -128,7 +128,7 @@ function Read-DriverSummary([string]$Path,[bool]$ExpectPrepared=$false,[bool]$Ex
                 foreach($key in @('great_sword_growth_ready','great_sword_growth_ui_click','normal_UMG_run_learning','gear_ui_equipped_verified')){
                     if($values[$key] -cne '1'){$issues.Add('growth_learning_without_'+$key)}
                 }
-                if($values['confirmed_learning_node'] -cne 'I.Mana.Entry'){$issues.Add('growth_wrong_confirmed_learning_node')}
+                if($values['confirmed_learning_node'] -cne 'G.CrushingSlash'){$issues.Add('growth_wrong_confirmed_learning_node')}
                 $growthNumbers=[ordered]@{}
                 foreach($key in @('great_sword_growth_level','great_sword_growth_mastery','great_sword_growth_node_cost','great_sword_growth_points_before','great_sword_growth_points_after','great_sword_growth_spent_before','great_sword_growth_spent_after')){
                     [int]$parsedGrowthValue=0

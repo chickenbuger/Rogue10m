@@ -102,6 +102,7 @@ static bool Validate(const URogue10mProgressionSaveGame& Save, const FGuid& Prof
 {
 	if (!ProfileId.IsValid() || Save.ProfileId != ProfileId
 		|| Save.SaveVersion < 1 || Save.SaveVersion > URogue10mProgressionSaveGame::CurrentVersion
+		|| (Save.SaveVersion < 5 && !Save.SkillTree.IdentityConsumableRanks.IsEmpty())
 		|| Save.Growth.Level < 1 || Save.Growth.Level > 1000000)
 	{
 		return false;
@@ -519,9 +520,18 @@ void URogue10mProgressionSubsystem::CaptureCurrentState()
 	SaveData->Inventory = Character->GetInventoryComponent()->CaptureInventory();
 	SaveData->Combat = Character->GetCombatComponent()->CaptureCombat();
 	SaveData->Town = State->GetTownProgressionComponent()->CaptureProgression();
-	SaveData->SkillTree = State->GetSkillTreeProgressionComponent()->Capture();
+	const auto* Tree = State->GetSkillTreeProgressionComponent();
+	SaveData->SkillTree = Tree->Capture();
 	SaveData->HighestRunLevel = FMath::Max(SaveData->HighestRunLevel, SaveData->Growth.Level);
 	for (const auto& Row : SaveData->SkillTree.Investments) { SaveData->DiscoveredNodes.Add(Row.NodeId); }
+	// Rank-based resonance unlocks are derived from the current run, so they have no investment row to record above.
+	for (const auto& Node : Tree->GetCatalog()->Nodes)
+	{
+		if (Node.NodeType == ERogue10mHybridSkillTreeNodeType::Resonance && Tree->IsNodeUnlocked(Node.NodeId))
+		{
+			SaveData->DiscoveredNodes.Add(Node.NodeId);
+		}
+	}
 	State->GetTownProgressionComponent()->SetLobbyBudget(SaveData->LobbyEarnedPoints, SaveData->HighestRunLevel);
 	SaveData->SaveVersion = URogue10mProgressionSaveGame::CurrentVersion;
 }

@@ -3,9 +3,11 @@
 #include "Misc/AutomationTest.h"
 #include "AbilitySystemComponent.h"
 #include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mAttributeSet.h"
 #include "Rogue10mPlayerState.h"
+#include "Rogue10mProgressionSaveGame.h"
 #include "Rogue10mSkillTreeData.h"
 #include "Rogue10mSkillTreeProgressionComponent.h"
 #include "Rogue10mTownProgressionComponent.h"
@@ -234,7 +236,7 @@ bool FRogue10mHybridSourceTest::RunTest(const FString& Parameters)
 	TestFalse(TEXT("live trait restore cannot double spend identity point"), Fixture.Player->GetTownProgressionComponent()->RestoreProgression(TraitAttempt));
 	TestEqual(TEXT("trait failure preserves shared balance"), Fixture.Tree->GetAvailableGrowthPoints(), 0);
 	Fixture.Player->SetEquippedWeaponType(ERogue10mWeaponType::GreatSword);
-	TestEqual(TEXT("unsupported identity has no active effect after swap"), Fixture.Tree->GetActiveIdentity(), EIdentity::None);
+	TestEqual(TEXT("unsupported legacy identity gives way to a compatible rank"), Fixture.Tree->GetActiveIdentity(), EIdentity::FightingSpirit);
 	TestTrue(TEXT("learning remembered after swap"), Fixture.Tree->IsIdentityLearned(EIdentity::InternalEnergy));
 	TestEqual(TEXT("permanent source recorded independent of current weapon"), Fixture.Tree->GetMasteryStatModifiers(ETrack::Brawler).MaxStaminaBonus, 10.0f);
 	TestEqual(TEXT("no cross weapon stat accumulation"), Fixture.Tree->GetMasteryStatModifiers(ERogue10mWeaponType::GreatSword).MaxStaminaBonus, 0.0f);
@@ -293,6 +295,81 @@ bool FRogue10mHybridSourceTest::RunTest(const FString& Parameters)
 	TestEqual(TEXT("legacy technique does not retroactively award stats"), Migrated.Tree->GetMasteryStatModifiers(ETrack::Brawler).AttackPowerBonus, 0.0f);
 	TestTrue(TEXT("old ultimate remains learned"), Migrated.Tree->IsNodeUnlocked(TEXT("F.Ultimate")));
 	TestFalse(TEXT("legacy does not manufacture source stats"), Migrated.Tree->IsNodeUnlocked(TEXT("F.Power.3")));
+	return true;
+}
+
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FRogue10mIdentityGrowthTest, "Rogue10m.HybridSkillTree.LevelAndConsumableIdentityGrowth", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+bool FRogue10mIdentityGrowthTest::RunTest(const FString& Parameters)
+{
+	using namespace Rogue10mHybridTests;
+	FFixture Fixture;
+	if (!TestNotNull(TEXT("identity progression"), Fixture.Tree)) { return false; }
+	auto& Tree = *Fixture.Tree;
+	auto& Player = *Fixture.Player;
+	Player.SetEquippedWeaponType(ERogue10mWeaponType::GreatSword);
+	TestEqual(TEXT("level one starts with zero base rank"), Tree.GetIdentityRank(EIdentity::Mana), 0);
+	TestEqual(TEXT("zero rank does not activate a weapon identity"), Tree.GetActiveIdentity(), EIdentity::None);
+
+	Player.AddExperience(FMath::CeilToInt(Player.GetExperienceToNextLevel()));
+	TestEqual(TEXT("normal experience path reaches level two"), Player.GetPlayerLevel(), 2);
+	TestEqual(TEXT("leveling grows internal energy"), Tree.GetIdentityRank(EIdentity::InternalEnergy), 1);
+	TestEqual(TEXT("leveling grows fighting spirit"), Tree.GetIdentityRank(EIdentity::FightingSpirit), 1);
+	TestEqual(TEXT("leveling grows mana"), Tree.GetIdentityRank(EIdentity::Mana), 1);
+	TestEqual(TEXT("unspent level point remains available"), Tree.GetAvailableGrowthPoints(), 1);
+	FText Reason;
+	TestFalse(TEXT("retired identity nodes reject fresh point purchases"), Tree.CanUnlockNode(TEXT("I.Mana.Entry"), ERoute::Points, NAME_None, Reason));
+	TestTrue(TEXT("purchase rejection explains rank acquisition"), Reason.ToString().Contains(TEXT("레벨업")));
+
+	int32 Committed = 0;
+	const auto Commit = [&Committed]() { ++Committed; };
+	TestFalse(TEXT("invalid family cannot consume item"), Tree.TryAddIdentityGrowth(EIdentity::None, 10, Commit));
+	TestFalse(TEXT("nonpositive amount cannot consume item"), Tree.TryAddIdentityGrowth(EIdentity::Mana, 0, Commit));
+	TestFalse(TEXT("cap cannot be exceeded"), Tree.TryAddIdentityGrowth(EIdentity::Mana, 101, Commit));
+	TestEqual(TEXT("failed grants leave the item commit untouched"), Committed, 0);
+	TestTrue(TEXT("a valid bonus commits the item before notifications"), Tree.TryAddIdentityGrowth(EIdentity::Mana, 9, [&]()
+	{
+		++Committed;
+		TestEqual(TEXT("item commit observes the newly granted rank"), Tree.GetIdentityRank(EIdentity::Mana), 10);
+	}));
+	TestEqual(TEXT("item commit occurs once"), Committed, 1);
+	TestEqual(TEXT("typed mana bonus leaves fighting spirit alone"), Tree.GetIdentityRank(EIdentity::FightingSpirit), 1);
+	TestEqual(TEXT("stronger grown identity activates on the compatible weapon"), Tree.GetActiveIdentity(), EIdentity::Mana);
+	TestTrue(TEXT("rank unlocks the deepened gauge bonus"), Tree.IsIdentityDeepened(EIdentity::Mana));
+	TestEqual(TEXT("mana rank increases capacity"), Tree.GetManaCapacityBonus(), 10.0f * Tree.GetCatalog()->ManaCapacityPerRank);
+	TestFalse(TEXT("rank alone cannot grant resonance without the weapon ultimate"), Tree.IsNodeUnlocked(TEXT("G.Resonance.Pursuit")));
+
+	const auto* Ultimate = Tree.FindNode(TEXT("G.Ultimate"));
+	if (!TestNotNull(TEXT("sword ultimate definition"), Ultimate)) { return false; }
+	auto Saved = Tree.Capture();
+	const auto LegacySkill = Tree.MigrateLegacy({ Ultimate->Skill });
+	Saved.LegacyGrantedSkills = LegacySkill.LegacyGrantedSkills;
+	Saved.Investments.Append(LegacySkill.Investments);
+	auto* Save = NewObject<URogue10mProgressionSaveGame>();
+	Save->SkillTree = Saved;
+	TArray<uint8> Bytes;
+	if (!TestTrue(TEXT("run snapshot serializes through SaveGame"), UGameplayStatics::SaveGameToMemory(Save, Bytes))) { return false; }
+	const auto* Loaded = Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromMemory(Bytes));
+	if (!TestNotNull(TEXT("run snapshot deserializes"), Loaded)) { return false; }
+	TestTrue(TEXT("saved typed bonus restores in the existing run snapshot"), Tree.Restore(Loaded->SkillTree));
+	TestEqual(TEXT("item bonus is applied once after restore"), Tree.GetIdentityRank(EIdentity::Mana), 10);
+	TestEqual(TEXT("item growth and automatic resonance consume no shared points"), Tree.GetSpentSkillTreePoints(), 0);
+	TestTrue(TEXT("first resonance unlocks at rank ten with the weapon ultimate"), Tree.IsNodeUnlocked(TEXT("G.Resonance.Pursuit")));
+	TestFalse(TEXT("second resonance remains locked below rank fifteen"), Tree.IsNodeUnlocked(TEXT("G.Resonance.Spread")));
+	TestTrue(TEXT("typed bonus can reach the second resonance"), Tree.TryAddIdentityGrowth(EIdentity::Mana, 5, Commit));
+	TestTrue(TEXT("second resonance unlocks while the first stays learned"), Tree.IsNodeUnlocked(TEXT("G.Resonance.Pursuit"))
+		&& Tree.IsNodeUnlocked(TEXT("G.Resonance.Spread")));
+	TestEqual(TEXT("both earned resonances boost the active ultimate"), Tree.GetResonanceDamageBonus(ETrack::GreatSword, EIdentity::Mana),
+		2.0f * Tree.GetCatalog()->ResonanceDamageBonus);
+
+	TestTrue(TEXT("maximum valid item growth can be reached exactly"), Tree.TryAddIdentityGrowth(EIdentity::Mana, 86, Commit));
+	TestFalse(TEXT("further item use is rejected without debit"), Tree.TryAddIdentityGrowth(EIdentity::Mana, 1, Commit));
+	TestEqual(TEXT("exactly the three successful items were debited"), Committed, 3);
+	auto Invalid = Tree.Capture();
+	Invalid.IdentityConsumableRanks.Add(EIdentity::Mana, 101);
+	TestFalse(TEXT("corrupt out-of-bounds typed bonus is rejected"), Tree.Validate(Invalid, 1, 0));
+	Invalid = Tree.Capture();
+	Invalid.IdentityConsumableRanks.Add(EIdentity::None, 1);
+	TestFalse(TEXT("corrupt invalid identity key is rejected"), Tree.Validate(Invalid, 1, 0));
 	return true;
 }
 
