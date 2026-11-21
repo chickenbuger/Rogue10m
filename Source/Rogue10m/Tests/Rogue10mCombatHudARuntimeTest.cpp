@@ -29,6 +29,7 @@
 #include "Rogue10mSkillTreeCombatComponent.h"
 #include "Rogue10mSkillTreeProgressionComponent.h"
 #include "Rogue10mVitalRegenerationComponent.h"
+#include "Rogue10mWeaponIdentityComponent.h"
 #include "TimerManager.h"
 #include "UObject/UObjectIterator.h"
 #include "UnrealClient.h"
@@ -141,15 +142,52 @@ private:
 			Finish();
 			return;
 		}
+		Later(.75f, [this]() { CaptureUnarmed(); });
+	}
+
+	void CaptureUnarmed()
+	{
+		const URogue10mMainHUDWidget* Main = FindHud();
+		const auto* View = Main ? Main->GetCombatHudA() : nullptr;
+		const UGameViewportClient* ViewportClient = GEngine->GameViewport;
+		const FViewport* Viewport = ViewportClient ? ViewportClient->Viewport : nullptr;
+		const USpringArmComponent* CameraBoom = Character->GetThirdPersonCameraBoom();
+		if (!Check(View && View->IsVisible() && CameraBoom && Viewport && Viewport->GetSizeXY() == Resolutions[0],
+			TEXT("default_camera_unarmed_capture_uses_real_HUD_at_reference_resolution")))
+		{
+			Finish();
+			return;
+		}
+		const auto& Identity = View->GetDisplayedIdentity();
+		Check(Identity.WeaponType == ERogue10mWeaponType::Unarmed && !Identity.bHasIdentityResource
+			&& !View->ShowsIdentityPercent() && !View->ShowsIdentityKey(), TEXT("unarmed_hides_placeholder_percentage_and_Ctrl"));
+		Report += FString::Printf(TEXT("unarmed_default_camera_arm=%.1f target=(%.1f,%.1f,%.1f) socket=(%.1f,%.1f,%.1f)\n"),
+			CameraBoom->TargetArmLength, CameraBoom->TargetOffset.X, CameraBoom->TargetOffset.Y, CameraBoom->TargetOffset.Z,
+			CameraBoom->SocketOffset.X, CameraBoom->SocketOffset.Y, CameraBoom->SocketOffset.Z);
+		const FString Screenshot = Evidence / TEXT("CombatHudA_Unarmed_1672x941.png");
+		FScreenshotRequest::RequestScreenshot(Screenshot, true, false);
+		Later(1.0f, [this, Screenshot]()
+		{
+			Check(IFileManager::Get().FileSize(*Screenshot) > 24, TEXT("unarmed_untouched_default_camera_capture_saved"));
+			PrepareGreatsword();
+		});
+	}
+
+	void PrepareGreatsword()
+	{
+		AController* Controller = Character->GetController();
 		if (USpringArmComponent* CameraBoom = Character->GetThirdPersonCameraBoom())
 		{
 			// Frame the detached sample character for the two HUD comparison captures.
 			CameraBoom->TargetArmLength = 370.f;
 			CameraBoom->TargetOffset = FVector(0.0, 0.0, -42.0);
 			CameraBoom->SocketOffset = FVector::ZeroVector;
-			FRotator Rotation = Controller->GetControlRotation();
-			Rotation.Pitch = -20.0;
-			Controller->SetControlRotation(Rotation);
+			if (Controller)
+			{
+				FRotator Rotation = Controller->GetControlRotation();
+				Rotation.Pitch = -20.0;
+				Controller->SetControlRotation(Rotation);
+			}
 		}
 		Character->SetCanBeDamaged(false);
 		if (auto* Regeneration = Character->FindComponentByClass<URogue10mVitalRegenerationComponent>())
@@ -333,7 +371,41 @@ private:
 				&& FMath::IsNearlyEqual(View->GetDisplayedResource().Current, Character->GetRogueAttributeSet()->GetMana(), .01f)
 				&& FMath::IsNearlyEqual(View->GetDisplayedResource().Normalized, Main->GetManaView().Normalized, .001f),
 				TEXT("equipped_staff_uses_live_mana_in_the_same_vital_row"));
-			Finish();
+			ProbeKnuckle();
+		});
+	}
+
+	void ProbeKnuckle()
+	{
+		Character->SetEquippedWeaponType(ERogue10mWeaponType::Knuckle);
+		State->SetManaEnabled(false);
+		Later(.40f, [this]()
+		{
+			const URogue10mMainHUDWidget* Main = FindHud();
+			const auto* View = Main ? Main->GetCombatHudA() : nullptr;
+			auto* Controller = Cast<ARogue10mPlayerController>(World->GetFirstPlayerController());
+			if (!Check(View && Controller && View->GetDisplayedIdentity().WeaponType == ERogue10mWeaponType::Knuckle
+				&& View->ShowsIdentityKey(), TEXT("equipped_knuckle_shows_supported_Ctrl_input")))
+			{
+				Finish();
+				return;
+			}
+			Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::LeftControl, IE_Pressed, 1.f));
+			Later(.15f, [this, WeakController = TWeakObjectPtr<ARogue10mPlayerController>(Controller)]()
+			{
+				if (WeakController.IsValid())
+				{
+					WeakController->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::LeftControl, IE_Released, 0.f));
+				}
+				const auto* Burst = Character->FindComponentByClass<URogue10mWeaponIdentityComponent>();
+				URogue10mMainHUDWidget* RefreshedMain = FindHud();
+				if (RefreshedMain) { RefreshedMain->RefreshBoundWidgetData(); }
+				const auto* RefreshedView = RefreshedMain ? RefreshedMain->GetCombatHudA() : nullptr;
+				Check(Burst && Burst->IsIdentityActive() && RefreshedView && RefreshedView->ShowsIdentityKey()
+					&& RefreshedView->ShowsIdentityPercent() && RefreshedView->GetDisplayedIdentity().Normalized > 0.0f,
+					TEXT("simulated_Ctrl_activates_real_knuckle_identity_and_updates_HUD"));
+				Finish();
+			});
 		});
 	}
 
@@ -406,6 +478,7 @@ private:
 			&& Identity.IdentityType == ExpectedIdentity.IdentityType && Identity.bHasIdentityResource && Identity.Label.EqualTo(ExpectedIdentity.Label)
 			&& Identity.Normalized > 0.f && Identity.Normalized < 1.f
 			&& FMath::IsNearlyEqual(Identity.Normalized, ExpectedIdentity.Normalized, .001f), TEXT("paint_live_greatsword_identity"));
+		Check(View.ShowsIdentityPercent() && !View.ShowsIdentityKey(), TEXT("greatsword_paints_gauge_without_unsupported_Ctrl"));
 		Report += FString::Printf(TEXT("rendered_health=%.1f/%.1f stamina=%.1f/%.1f level=%d identity=%.3f\n"),
 			Health.Current, Health.Max, Resource.Current, Resource.Max, Growth.Level, Identity.Normalized);
 		Check(Rogue10mInput::DodgeKey() == EKeys::LeftAlt && Rogue10mInput::DodgeKeyLabel().ToString() == TEXT("Alt")
