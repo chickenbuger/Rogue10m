@@ -2,6 +2,9 @@
 
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mCombatVfxPlacement.h"
+#include "Rogue10mMeleeVfxComponent.h"
+#include "Rogue10mMeleeVfxGeometry.h"
+#include "Rogue10mWeaponVisualComponent.h"
 #include "Rogue10mWeaponIdentityComponent.h"
 #include "Rogue10mTechniqueMotionComponent.h"
 
@@ -9,6 +12,7 @@
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimMontage.h"
 #include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "DrawDebugHelpers.h"
 #include "Rogue10mCombatTestComponent.h"
@@ -43,6 +47,90 @@
 #include "Rogue10mSkillTreeProgressionComponent.h"
 #include "Rogue10mMonsterDataAsset.h"
 #include "TimerManager.h"
+
+namespace
+{
+int32 ResolveMeleeVfxTier(const ARogue10mCharacter& Character, const URogue10mAttackSkillData& Skill,
+	ERogue10mWeaponType Weapon, ERogue10mSkillTreeTrack Track)
+{
+	if (!Skill.bEnableMeleeReadabilityVfx || !Character.IsThirdPersonGameplayActive()
+		|| Character.GetNetMode() == NM_DedicatedServer || Skill.AttackShape == ERogue10mAttackShape::Projectile
+		|| Skill.SkillTreeNodeType != ERogue10mSkillTreeNodeType::ActiveTechnique
+		|| (Weapon != ERogue10mWeaponType::Knuckle && Weapon != ERogue10mWeaponType::GreatSword))
+	{
+		return INDEX_NONE;
+	}
+
+	const auto* State = Character.GetPlayerState<ARogue10mPlayerState>();
+	const auto* Progression = State ? State->GetSkillTreeProgressionComponent() : nullptr;
+	const auto* Catalog = Progression ? Progression->GetCatalog() : URogue10mSkillTreeProgressionComponent::GetDefaultCatalog();
+	if (Catalog)
+	{
+		for (const auto& Node : Catalog->Nodes)
+		{
+			if (Node.Track != Track || Node.Skill.Get() != &Skill) { continue; }
+			const auto MatchesTrack = [Track](const FRogue10mSkillTreeMasteryRequirement& Row) { return Row.Track == Track; };
+			const auto* Requirement = Node.MasteryAlternatives.FindByPredicate(MatchesTrack);
+			if (!Requirement)
+			{
+				// The Sword web retains the original levels for old saves after switching to point purchases.
+				Requirement = Node.HistoricalAutomaticMasteryAlternatives.FindByPredicate(MatchesTrack);
+			}
+			if (Requirement)
+			{
+				const int32 Level = Requirement->Level;
+				return Level >= 20 ? 3 : Level >= 10 ? 2 : Level >= 5 ? 1 : 0;
+			}
+			break;
+		}
+	}
+
+	// Innate charged and special actions still read heavier than a tap.
+	const bool bHeavy = Skill.InputSlot == ERogue10mAttackInputSlot::ChargedPrimary
+		|| Skill.InputSlot == ERogue10mAttackInputSlot::ChargedSpecial
+		|| Skill.InputSlot == ERogue10mAttackInputSlot::Special;
+	return FMath::Max(bHeavy ? 1 : 0, FMath::Clamp(Skill.SkillTreeTier - 1, 0, 3));
+}
+
+UStaticMeshComponent* GetMeleeBlade(const ARogue10mCharacter& Character)
+{
+	const auto* Visual = Character.FindComponentByClass<URogue10mWeaponVisualComponent>();
+	return Visual ? Visual->GetRightWeaponMesh() : nullptr;
+}
+
+Rogue10m::MeleeVfx::FImpactPoint SampleMeleeImpact(const ARogue10mCharacter& Character, const AActor& Target,
+	const URogue10mAttackSkillData& Skill, bool bSword)
+{
+	using namespace Rogue10m::MeleeVfx;
+	const FVector Origin = Character.GetPawnViewLocation();
+	if (bSword)
+	{
+		FVector Base, Tip;
+		if (const auto* Blade = GetMeleeBlade(Character); Blade && GetBladeSegment(*Blade, Base, Tip))
+		{
+			return FindImpact(Target, Base, Tip, Origin);
+		}
+	}
+
+	const auto* Mesh = Character.GetMesh();
+	const auto HandPosition = [Mesh, &Origin](FName Socket)
+	{
+		return Mesh && Mesh->DoesSocketExist(Socket) ? Mesh->GetSocketLocation(Socket) : Origin;
+	};
+	const FVector Hand = HandPosition(Skill.EffectAttachSocket);
+	const auto MainHit = FindImpact(Target, Hand, Hand, Origin);
+	if (Skill.bSpawnEffectOnOffHand)
+	{
+		const FVector OtherHand = HandPosition(Skill.OffHandEffectAttachSocket);
+		const auto OtherHit = FindImpact(Target, OtherHand, OtherHand, Origin);
+		if (FVector::DistSquared(OtherHand, OtherHit.Location) < FVector::DistSquared(Hand, MainHit.Location))
+		{
+			return OtherHit;
+		}
+	}
+	return MainHit;
+}
+}
 
 URogue10mCombatComponent::URogue10mCombatComponent()
 {
@@ -286,6 +374,7 @@ void URogue10mCombatComponent::HandleAttackReleased(bool bPrimaryAttack)
 void URogue10mCombatComponent::CancelCombatVisuals(bool bStopBasicMontage)
 {
 	++AdvanceCancellationEpoch;
+	if (MeleeVfx) { MeleeVfx->EndTrail(0); }
 	if (TechniqueMotion) { TechniqueMotion->CancelAdvance(); }
 	if (auto* Character = GetOwnerCharacter()) { Character->CancelPendingMouseAttackInput(); }
 	LastAcceptedAttackSkill.Reset();
@@ -1501,6 +1590,24 @@ void URogue10mCombatComponent::StartAttackHitSequence(const URogue10mAttackSkill
 	// Presentation belongs to the accepted attack, not to a weapon equipped between pulses.
 	Execution.bBrawlerPresentation = Brawler && Brawler->IsBasicBrawlerActive();
 	const auto& ContactTimes = AcceptedContactTimes ? *AcceptedContactTimes : SkillData.AuthoredContactTimes;
+	Execution.MeleeVfxTier = Character
+		? ResolveMeleeVfxTier(*Character, SkillData, Execution.AcceptedWeaponType, Execution.MasteryTrack) : INDEX_NONE;
+	if (Execution.MeleeVfxTier != INDEX_NONE)
+	{
+		if (!MeleeVfx)
+		{
+			MeleeVfx = NewObject<URogue10mMeleeVfxComponent>(Character);
+			Character->AddInstanceComponent(MeleeVfx);
+			MeleeVfx->RegisterComponent();
+		}
+		const bool bSword = Execution.AcceptedWeaponType == ERogue10mWeaponType::GreatSword;
+		const float FirstContact = ContactTimes.IsEmpty() || !SkillData.AttackMontage ? SkillData.HitStartDelaySeconds / Rate
+			: ContactTimes[0] / (Rate * SkillData.AttackMontage->RateScale);
+		MeleeVfx->BeginTrail(ExecutionId, AcceptedAdvanceAnim, SkillData.AttackMontage, AcceptedMontageId,
+			Character->GetMesh(), bSword ? GetMeleeBlade(*Character) : nullptr, SkillData.EffectAttachSocket,
+			SkillData.bSpawnEffectOnOffHand ? SkillData.OffHandEffectAttachSocket : NAME_None,
+			Execution.MeleeVfxTier, bSword, FirstContact);
+	}
 	if (!ContactTimes.IsEmpty())
 	{
 		Execution.bAuthoredContactSequence = true;
@@ -1793,6 +1900,14 @@ void URogue10mCombatComponent::GatherAttackTargets(
 
 	GetWorld()->OverlapMultiByObjectType(
 		Overlaps, QueryCenter, QueryRotation, ObjectQueryParams, QueryShape, QueryParams);
+	if (MeleeVfx && Execution.MeleeVfxTier != INDEX_NONE)
+	{
+		const double FeetZ = Character->GetCapsuleComponent()->GetComponentLocation().Z
+			- Character->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+		const auto Outline = Rogue10m::MeleeVfx::MakeRangeOutline(*GetWorld(), Character, SkillData.AttackShape,
+			QueryCenter, QueryRotation, QueryShape.GetExtent(), Forward, SkillData.ArcAngleDegrees, FeetZ);
+		MeleeVfx->ShowRange(Outline, Execution.MeleeVfxTier, Execution.AcceptedWeaponType == ERogue10mWeaponType::GreatSword);
+	}
 
 	TSet<TWeakObjectPtr<AActor>> UniqueActors;
 	for (const FOverlapResult& Overlap : Overlaps)
@@ -1888,6 +2003,13 @@ bool URogue10mCombatComponent::ApplyAttackDamage(
 	const float RolledDamage = SkillData.RollDamage(GetOwnerAttributes(), bCriticalHit) * TraitMultiplier
 		* Execution.IdentityEffect.DamageMultiplier;
 	if (WasInterrupted()) { return false; }
+	const bool bSwordVfx = Execution.AcceptedWeaponType == ERogue10mWeaponType::GreatSword;
+	TOptional<Rogue10m::MeleeVfx::FImpactPoint> MeleeImpact;
+	if (MeleeVfx && Execution.MeleeVfxTier != INDEX_NONE)
+	{
+		// Sample before damage callbacks can move the target, replace its collision or trigger ragdoll.
+		MeleeImpact = SampleMeleeImpact(*Character, TargetActor, SkillData, bSwordVfx);
+	}
 	const float AppliedDamage = UGameplayStatics::ApplyDamage(
 		&TargetActor, RolledDamage, Character->GetController(), Character, UDamageType::StaticClass());
 	if (!FMath::IsFinite(AppliedDamage) || AppliedDamage <= 0.0f)
@@ -1913,7 +2035,11 @@ bool URogue10mCombatComponent::ApplyAttackDamage(
 	}
 	const URogue10mBasicBrawlerComponent* Brawler = Character->FindComponentByClass<URogue10mBasicBrawlerComponent>();
 	const bool bBrawlerPresentation = Execution.bBrawlerPresentation && Brawler && Brawler->IsBasicBrawlerActive();
-	SpawnImpactEffect(SkillData, TargetActor, bBrawlerPresentation);
+	if (MeleeImpact.IsSet() && IsValid(MeleeVfx))
+	{
+		MeleeVfx->ShowImpact(MeleeImpact->Location, MeleeImpact->Normal, Execution.MeleeVfxTier, bSwordVfx);
+	}
+	SpawnImpactEffect(SkillData, TargetActor, bBrawlerPresentation, MeleeImpact.IsSet() ? &MeleeImpact.GetValue() : nullptr);
 	if (bBrawlerPresentation)
 	{
 		const float Strength = SkillData.InputSlot == ERogue10mAttackInputSlot::ChargedSpecial ? 1.0f
@@ -2090,7 +2216,8 @@ void URogue10mCombatComponent::SpawnCastEffect(const URogue10mAttackSkillData& S
 }
 
 void URogue10mCombatComponent::SpawnImpactEffect(
-	const URogue10mAttackSkillData& SkillData, const AActor& TargetActor, bool bBrawlerPresentation) const
+	const URogue10mAttackSkillData& SkillData, const AActor& TargetActor, bool bBrawlerPresentation,
+	const Rogue10m::MeleeVfx::FImpactPoint* MeleeImpact) const
 {
 	if (!SkillData.bEnableAttackEffects || !SkillData.ImpactEffect)
 	{
@@ -2110,7 +2237,12 @@ void URogue10mCombatComponent::SpawnImpactEffect(
 	FVector EffectLocation = BoundsOrigin;
 	FRotator EffectRotation = TargetActor.GetActorRotation();
 	const ARogue10mCharacter* Character = GetOwnerCharacter();
-	if (bBrawlerPresentation && Character)
+	if (MeleeImpact)
+	{
+		EffectLocation = MeleeImpact->Location;
+		EffectRotation = (-MeleeImpact->Normal).Rotation();
+	}
+	else if (bBrawlerPresentation && Character)
 	{
 		// Attack targeting is an overlap, so this is a conservative near-side bounds
 		// estimate, not an exact physics contact point. Keep it at torso height.
@@ -2196,6 +2328,7 @@ void URogue10mCombatComponent::CancelPendingAttackHits(const URogue10mAttackSkil
 			&& (It.Value().bAuthoredContactSequence || (ActiveSkill->HitStartDelaySeconds > 0.0f && It.Value().CompletedPulses == 0)))
 		{
 			if (UWorld* World = GetWorld()) { World->GetTimerManager().ClearTimer(It.Value().TimerHandle); }
+			if (MeleeVfx) { MeleeVfx->EndTrail(It.Key()); }
 			ReleaseAuthoredRecoveryAction(It.Value());
 			if (ARogue10mCharacter* Character = GetOwnerCharacter(); Character && It.Key() != ResolvingAttackExecutionId
 				&& !It.Value().bTraitHitRegistered)

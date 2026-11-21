@@ -13,7 +13,7 @@
 #include "HAL/FileManager.h"
 #include "InputKeyEventArgs.h"
 #include "Slate/UMGDragDropOp.h"
-#include "Rogue10mHudWidgetParts.h"
+#include "Rogue10mCombatHudAWidget.h"
 #include "Rogue10mMainHUDWidget.h"
 #include "Rogue10mSkillDragDropOperation.h"
 #include "Containers/Ticker.h"
@@ -26,6 +26,7 @@
 #include "HAL/IConsoleManager.h"
 #include "HAL/PlatformMisc.h"
 #include "Kismet/GameplayStatics.h"
+#include "Layout/Children.h"
 #include "Layout/WidgetPath.h"
 #include "Misc/CommandLine.h"
 #include "Misc/FileHelper.h"
@@ -42,6 +43,7 @@
 #include "Rogue10mHybridSkillTreeWidget.h"
 #include "Rogue10mInventoryComponent.h"
 #include "Rogue10mItemDataAsset.h"
+#include "Rogue10mLootTableDataAsset.h"
 #include "Rogue10mMonsterDataAsset.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
@@ -133,20 +135,27 @@ private:
 	}
 	double FixtureTime() const { return bRollOnlyQA ? World->GetTimeSeconds() : FPlatformTime::Seconds(); }
 	void Later(double Seconds, TFunction<void()> F) { NextTime = FixtureTime() + Seconds; Next = MoveTemp(F); }
-	bool HitPath(UWidget* Target, FWidgetPath& OutPath, FVector2D& Point, const FVector2D& NormalizedPoint = FVector2D(0.5, 0.5))
+	bool HitPath(const TSharedPtr<SWidget>& Target, FWidgetPath& OutPath, FVector2D& Point,
+		const FVector2D& NormalizedPoint = FVector2D(0.5, 0.5))
 	{
 		FWidgetPath FocusPath;
-		if (!Target || !Target->GetIsEnabled()
-			|| !FSlateApplication::Get().GeneratePathToWidgetUnchecked(Target->TakeWidget(), FocusPath))
+		if (!Target || !Target->IsEnabled()
+			|| !FSlateApplication::Get().GeneratePathToWidgetUnchecked(Target.ToSharedRef(), FocusPath))
 		{ Check(false, TEXT("enabled_real_widget_path")); return false; }
-		Point = Target->GetCachedGeometry().GetAbsolutePositionAtCoordinates(NormalizedPoint);
+		const FGeometry& Geometry = Target->GetTickSpaceGeometry();
+		Point = Geometry.GetAbsolutePositionAtCoordinates(NormalizedPoint);
 		OutPath = FSlateApplication::Get().LocateWindowUnderMouse(Point,
 			TArray<TSharedRef<SWindow>>{FocusPath.GetWindow()}, false, 0);
-		const bool Hit = OutPath.IsValid() && OutPath.ContainsWidget(&Target->TakeWidget().Get());
+		const bool Hit = OutPath.IsValid() && OutPath.ContainsWidget(Target.Get());
 		if (!Hit) { UE_LOG(LogRogue10m, Warning, TEXT("HYBRID_RUNTIME widget outside hit path: %s point=%s size=%s"),
-			*Target->GetName(), *Point.ToString(), *Target->GetCachedGeometry().GetLocalSize().ToString()); }
+			*Target->GetTypeAsString(), *Point.ToString(), *Geometry.GetLocalSize().ToString()); }
 		Check(Hit, TEXT("real_mouse_hit_reaches_widget"));
 		return Hit;
+	}
+	bool HitPath(UWidget* Target, FWidgetPath& OutPath, FVector2D& Point,
+		const FVector2D& NormalizedPoint = FVector2D(0.5, 0.5))
+	{
+		return HitPath(Target ? Target->GetCachedWidget() : nullptr, OutPath, Point, NormalizedPoint);
 	}
 	bool ClickWidget(UWidget* Target, const FVector2D& NormalizedPoint = FVector2D(0.5, 0.5))
 	{
@@ -165,26 +174,42 @@ private:
 	{
 		return ClickWidget(Widget.IsValid() ? Widget->GetWidgetFromName(Name) : nullptr);
 	}
-	URogue10mQuickSlotWidget* FindHUDSlot(ERogue10mAttackInputSlot Slot)
+	URogue10mCombatHudAWidget* FindCombatHUD() const
 	{
-		for (TObjectIterator<URogue10mQuickSlotWidget> It; It; ++It)
+		for (TObjectIterator<URogue10mMainHUDWidget> It; It; ++It)
 		{
-			const auto View = It->GetQuickSlotView();
-			auto* MainHUD = It->GetOwningMainHUD();
-			if (It->GetWorld() != World.Get() || It->GetOwningPlayer() != PC.Get()
-				|| View.bDodgeSlot || View.InputSlot != Slot
-				|| It->GetCachedGeometry().GetLocalSize().GetMin() <= 1.0
-				|| !MainHUD || !MainHUD->IsInViewport() || MainHUD->GetOwningPlayer() != PC.Get()) { continue; }
-			// Equipment preview widgets retain geometry even while hidden. Require
-			// the actual displayed HUD as a Slate ancestor, not merely a matching view.
-			FWidgetPath Path;
-			if (!FSlateApplication::Get().GeneratePathToWidgetUnchecked(It->TakeWidget(), Path)
-				|| !Path.ContainsWidget(&MainHUD->TakeWidget().Get())) { continue; }
-			UE_LOG(LogRogue10m, Display, TEXT("HYBRID_RUNTIME actual HUD drop target: %s owner=%s size=%s"),
-				*It->GetPathName(), *MainHUD->GetName(), *It->GetCachedGeometry().GetLocalSize().ToString());
-			return *It;
+			if (It->GetWorld() == World.Get() && It->GetOwningPlayer() == PC.Get() && It->IsInViewport())
+			{
+				if (URogue10mCombatHudAWidget* HUD = It->GetCombatHudA()) { return HUD; }
+			}
 		}
 		return nullptr;
+	}
+	TSharedPtr<SWidget> FindHUDSlot(const URogue10mCombatHudAWidget* HUD, ERogue10mAttackInputSlot Slot) const
+	{
+		const TSharedPtr<SWidget> Root = HUD ? HUD->GetCachedWidget() : nullptr;
+		if (!Root) { return nullptr; }
+		const int32 Index = HUD->GetDisplayedSkills().IndexOfByPredicate([Slot](const FRogue10mHudQuickSlotView& View)
+		{
+			return View.InputSlot == Slot;
+		});
+		// Layout A's first Slate children are the skill hit zones, in displayed slot order.
+		FChildren* HitZones = Root->GetChildren();
+		if (!HitZones || Index == INDEX_NONE || Index >= HitZones->Num()) { return nullptr; }
+		const TSharedRef<SWidget> Target = HitZones->GetChildAt(Index);
+		const FGeometry& Geometry = Target->GetTickSpaceGeometry();
+		if (Geometry.GetLocalSize().GetMin() <= 1.0) { return nullptr; }
+		UE_LOG(LogRogue10m, Display, TEXT("HYBRID_RUNTIME actual Layout A drop target: %s slot=%d size=%s"),
+			*Target->GetTypeAsString(), static_cast<int32>(Slot), *Geometry.GetLocalSize().ToString());
+		return Target;
+	}
+	static const FRogue10mHudQuickSlotView* FindHUDSlotView(
+		const URogue10mCombatHudAWidget* HUD, ERogue10mAttackInputSlot Slot)
+	{
+		return HUD ? HUD->GetDisplayedSkills().FindByPredicate([Slot](const FRogue10mHudQuickSlotView& View)
+		{
+			return View.InputSlot == Slot;
+		}) : nullptr;
 	}
 	void CheckDragPresentationRestored(ESlateVisibility BeforeVisibility, float BeforeOpacity)
 	{
@@ -198,14 +223,16 @@ private:
 		FWidgetPath SourcePath; FVector2D Start;
 		if (!HitPath(Entry, SourcePath, Start)) { Later(0.15, MoveTemp(Continuation)); return; }
 		const auto TargetSlot = bIncompatibleSlot ? IncompatibleLoadoutSlot : TestLoadoutSlot;
-		auto* Target = bExpectDrag ? FindHUDSlot(TargetSlot) : nullptr;
+		URogue10mCombatHudAWidget* HUD = bExpectDrag ? FindCombatHUD() : nullptr;
+		const TSharedPtr<SWidget> Target = FindHUDSlot(HUD, TargetSlot);
 		if (bExpectDrag)
 		{
 			Check(Target != nullptr, TEXT("input_real_HUD_target_exists"));
 			if (!Target) { Later(0.15, MoveTemp(Continuation)); return; }
 		}
 		const auto Before = Player->GetCombatComponent()->CaptureCombat().SkillBindings;
-		const auto BeforeHUD = Target ? Target->GetQuickSlotView() : FRogue10mHudQuickSlotView();
+		const FRogue10mHudQuickSlotView* DisplayedSlot = FindHUDSlotView(HUD, TargetSlot);
+		const FRogue10mHudQuickSlotView BeforeHUD = DisplayedSlot ? *DisplayedSlot : FRogue10mHudQuickSlotView();
 		const auto BeforeVisibility = Widget->GetVisibility();
 		const float BeforeOpacity = Widget->GetRenderOpacity();
 		auto& Slate = FSlateApplication::Get();
@@ -240,7 +267,8 @@ private:
 		}
 		// Visibility changes take effect in Slate's next paint/hit-test grid. Do
 		// not synthesize the drop in the same frame as drag detection.
-		Later(0.15, [this, Target = TWeakObjectPtr<URogue10mQuickSlotWidget>(Target), bIncompatibleSlot, bCloseMenu,
+		Later(0.15, [this, Target = TWeakPtr<SWidget>(Target), HUD = TWeakObjectPtr<URogue10mCombatHudAWidget>(HUD),
+			TargetSlot, bIncompatibleSlot, bCloseMenu,
 			Before, BeforeHUD, BeforeVisibility, BeforeOpacity, SourcePath, Start, Threshold,
 			Continuation = MoveTemp(Continuation)]() mutable
 		{
@@ -280,11 +308,11 @@ private:
 					: bRead ? TEXT("input-greatsword-read-drag-active.png") : TEXT("input-greatsword-drag-active-720p.png"));
 			}
 			// Leave a real frame for the requested active-drag screenshot before release.
-			Later(0.15, [this, Target, bIncompatibleSlot, Before, BeforeHUD, BeforeVisibility, BeforeOpacity,
+			Later(0.15, [this, Target, HUD, TargetSlot, bIncompatibleSlot, Before, BeforeHUD, BeforeVisibility, BeforeOpacity,
 				SourcePath, Start, Threshold, Continuation = MoveTemp(Continuation)]() mutable
 			{
 				FWidgetPath TargetPath; FVector2D End;
-				const bool TargetHit = HitPath(Target.Get(), TargetPath, End);
+				const bool TargetHit = HitPath(Target.Pin(), TargetPath, End);
 				auto& App = FSlateApplication::Get();
 				if (TargetHit)
 				{
@@ -297,22 +325,23 @@ private:
 					TSet<FKey>{}, EKeys::LeftMouseButton, 0, FModifierKeysState())); }
 				Check(!App.IsDragDropping(), TEXT("input_pointer_release_finishes_drag"));
 				if (App.IsDragDropping()) { App.CancelDragDrop(); }
-				Later(0.15, [this, Target, TargetHit, bIncompatibleSlot, Before, BeforeHUD, BeforeVisibility,
+				Later(0.15, [this, HUD, TargetSlot, TargetHit, bIncompatibleSlot, Before, BeforeHUD, BeforeVisibility,
 					BeforeOpacity, Continuation = MoveTemp(Continuation)]() mutable
 				{
 					CheckDragPresentationRestored(BeforeVisibility, BeforeOpacity);
 					Check(Widget->GetSelectedNodeId() == InputNode, TEXT("input_drag_end_preserves_selected_technique"));
-					if (TargetHit && Target.IsValid())
+					if (TargetHit)
 					{
+						const FRogue10mHudQuickSlotView* View = FindHUDSlotView(HUD.Get(), TargetSlot);
 						if (!bIncompatibleSlot)
 						{
 							Check(Player->GetCombatComponent()->GetEquippedSkill(TestLoadoutSlot) == InputSkill.Get()
-								&& Target->GetQuickSlotView().SkillData == InputSkill.Get(), TEXT("input_real_HUD_drop_equips_learned_technique"));
+								&& View && View->SkillData == InputSkill.Get(), TEXT("input_real_HUD_drop_equips_learned_technique"));
 						}
 						else
 						{
 							Check(Before.OrderIndependentCompareEqual(Player->GetCombatComponent()->CaptureCombat().SkillBindings)
-								&& Target->GetQuickSlotView().SkillData == BeforeHUD.SkillData,
+								&& View && View->SkillData == BeforeHUD.SkillData,
 								TEXT("input_mouse_chord_slot_rejects_common_skill_without_binding_change"));
 						}
 					}
@@ -357,22 +386,11 @@ private:
 		Click(TEXT("HybridTreeCommon"));
 		Later(0.35, [this]
 		{
-			Click(TEXT("HybridTreeCommonViewToggle"));
-			Later(0.35, [this] { VerifyIdentityPointer(); });
+			Check(Widget->GetDisplayedTab() == ETab::Common && Widget->FindNodeEntry(TEXT("C.Foundation"))
+				&& !Widget->GetWidgetFromName(TEXT("HybridTreeCommonViewToggle")), TEXT("input_common_uses_single_web_panel"));
+			Click(InputTrack == ETrack::Brawler ? TEXT("HybridTreeFighter") : TEXT("HybridTreeGreatSword"));
+			Later(0.35, [this] { VerifyWeaponTabInput(); });
 		});
-	}
-	void VerifyIdentityPointer()
-	{
-		const FName IdentityNode = InputTrack == ETrack::Brawler ? FName(TEXT("I.InternalEnergy.Entry")) : FName(TEXT("I.Mana.Entry"));
-		const auto Diamond = Widget->GetNodeOuterFramePoints(IdentityNode);
-		Check(Widget->GetNodeFrameShape(IdentityNode) == TEXT("IdentityDiamond") && Diamond.Num() == 5
-			&& Diamond[0].Equals(Diamond.Last()) && Widget->GetNodeFrameOutlineCount(IdentityNode) == 1,
-			TEXT("input_actual_paint_geometry_has_closed_identity_diamond"));
-		// Route a real click near the edge of the original identity hit area.
-		ClickWidget(Widget->FindNodeEntry(IdentityNode), FVector2D(0.5, 0.06));
-		Check(Widget->GetSelectedNodeId() == IdentityNode, TEXT("input_identity_outer_diamond_pointer_click_selects_node"));
-		Click(InputTrack == ETrack::Brawler ? TEXT("HybridTreeFighter") : TEXT("HybridTreeGreatSword"));
-		Later(0.35, [this] { VerifyWeaponTabInput(); });
 	}
 	void VerifyWeaponTabInput()
 	{
@@ -571,8 +589,10 @@ private:
 		ExerciseTemporaryBindings();
 		Player->SetCanBeDamaged(false);
 		Player->SetActorLocation(NPC->GetActorLocation() + FVector(100, 0, 100), false, nullptr, ETeleportType::TeleportPhysics);
-		FRogue10mGrowthSnapshot Growth = State->CaptureGrowth(); Growth.Level = 5; Growth.Experience = 0;
-		Check(State->RestoreGrowth(Growth) && State->GetPlayerLevel() == 5
+		FRogue10mGrowthSnapshot Growth = State->CaptureGrowth(); Growth.Level = 4; Growth.Experience = 0;
+		Check(State->RestoreGrowth(Growth), TEXT("level_four_growth_fixture"));
+		State->AddExperience(FMath::CeilToInt(State->GetExperienceToNextLevel()));
+		Check(State->GetPlayerLevel() == 5
 			&& Tree->GetAvailableGrowthPoints() == 4 && Tree->GetSpentSkillTreePoints() == 0,
 			TEXT("level5_exactly_four_run_points_with_empty_paid_tree_ledger"));
 		Check(Tree->CanChangeInvestments(), TEXT("near_npc_allows_tree_investment"));
@@ -611,37 +631,22 @@ private:
 		if (Failures) { Finish(); return; }
 		for (int32 I = 0; I < 385 && Tree->GetMasteryTotalExperience(ETrack::Brawler) < 385; ++I) { Tree->NotifyConfirmedAttack(ETrack::Brawler); }
 		Check(Tree->GetMasteryLevel(ETrack::Brawler) == 12 && Tree->IsNodeUnlocked(TEXT("F.DiamondStrike")), TEXT("actual_M12_auto_technique_unlock"));
-		const int32 BeforeEntryPoints = Tree->GetAvailableGrowthPoints();
-		const bool bEntryLearned = Tree->TryUnlockNode(TEXT("I.InternalEnergy.Entry"), ERoute::Points, NAME_None);
-		const auto EntryState = Tree->Capture();
-		const auto* Entry = EntryState.Investments.FindByPredicate([](const auto& Row) { return Row.NodeId == TEXT("I.InternalEnergy.Entry"); });
-		Check(bEntryLearned && BeforeEntryPoints == 4 && Tree->GetAvailableGrowthPoints() == 3
-			&& Tree->GetAvailableGrowthPoints() == BeforeEntryPoints - 1 && Tree->GetSpentSkillTreePoints() == 1
-			&& Entry && Entry->Route == ERoute::Points && Entry->SpentPoints == 1 && Entry->ChoiceId.IsNone(),
-			TEXT("inner_entry_debits_exactly_one_run_point_four_to_three"));
-		Check(!Tree->TryUnlockNode(TEXT("I.Mana.Entry"), ERoute::Points, NAME_None)
-			&& Tree->GetAvailableGrowthPoints() == 3 && Tree->GetSpentSkillTreePoints() == 1, TEXT("brawler_mana_purchase_rejected_without_spending"));
-		if (Failures) { Finish(); return; }
-		const int32 BeforeAdvancedPoints = Tree->GetAvailableGrowthPoints();
-		const bool bAdvancedLearned = Tree->TryUnlockNode(TEXT("I.InternalEnergy.Advanced"), ERoute::Points, NAME_None);
-		const auto AdvancedState = Tree->Capture();
-		const auto* Advanced = AdvancedState.Investments.FindByPredicate([](const auto& Row) { return Row.NodeId == TEXT("I.InternalEnergy.Advanced"); });
-		Check(bAdvancedLearned && BeforeAdvancedPoints == 3 && Tree->GetAvailableGrowthPoints() == 1
-			&& Tree->GetAvailableGrowthPoints() == BeforeAdvancedPoints - 2 && Tree->GetSpentSkillTreePoints() == 3
-			&& Advanced && Advanced->Route == ERoute::Points && Advanced->SpentPoints == 2 && Tree->IsIdentityDeepened(EIdentity::InternalEnergy),
-			TEXT("paid_inner_deepening_debits_exactly_two_run_points_three_to_one"));
-		if (Failures) { Finish(); return; }
-		const int32 BeforeRefundPoints = Tree->GetAvailableGrowthPoints();
-		const int32 BeforeRefundMastery = Tree->GetMasteryTotalExperience(ETrack::Brawler);
-		const bool bAdvancedRefunded = Tree->RefundNode(TEXT("I.InternalEnergy.Advanced"));
-		const auto RefundedState = Tree->Capture();
-		const auto* KeptEntry = RefundedState.Investments.FindByPredicate([](const auto& Row) { return Row.NodeId == TEXT("I.InternalEnergy.Entry"); });
-		Check(bAdvancedRefunded && BeforeRefundPoints == 1 && Tree->GetAvailableGrowthPoints() == 3
-			&& Tree->GetAvailableGrowthPoints() == BeforeRefundPoints + 2 && Tree->GetSpentSkillTreePoints() == 1
-			&& KeptEntry && KeptEntry->Route == ERoute::Points && KeptEntry->SpentPoints == 1 && KeptEntry->ChoiceId.IsNone()
-			&& Tree->IsIdentityLearned(EIdentity::InternalEnergy) && !Tree->IsIdentityDeepened(EIdentity::InternalEnergy)
-			&& !Tree->IsNodeUnlocked(TEXT("I.InternalEnergy.Advanced")) && Tree->GetMasteryTotalExperience(ETrack::Brawler) == BeforeRefundMastery,
-			TEXT("paid_inner_deepening_refund_returns_exact_two_points_one_to_three_keeps_entry_and_mastery"));
+		Check(Tree->GetIdentityRank(EIdentity::InternalEnergy) == 4
+			&& Tree->GetIdentityRank(EIdentity::FightingSpirit) == 4
+			&& Tree->GetIdentityRank(EIdentity::Mana) == 4, TEXT("level_five_grows_all_three_identity_ranks"));
+		Check(!Tree->TryUnlockNode(TEXT("I.InternalEnergy.Entry"), ERoute::Points, NAME_None)
+			&& !Tree->TryUnlockNode(TEXT("I.InternalEnergy.Advanced"), ERoute::Mastery, NAME_None)
+			&& !Tree->TryUnlockNode(TEXT("I.Mana.Entry"), ERoute::Points, NAME_None)
+			&& Tree->GetAvailableGrowthPoints() == 4 && Tree->GetSpentSkillTreePoints() == 0,
+			TEXT("legacy_identity_unlocks_reject_points_and_mastery_without_spending"));
+		UseIdentityTonic(EIdentity::InternalEnergy);
+		UseIdentityTonic(EIdentity::FightingSpirit);
+		UseIdentityTonic(EIdentity::Mana, 2);
+		Check(Tree->GetIdentityRank(EIdentity::InternalEnergy) == 5
+			&& Tree->GetIdentityRank(EIdentity::FightingSpirit) == 5
+			&& Tree->GetIdentityRank(EIdentity::Mana) == 6
+			&& Tree->GetAvailableGrowthPoints() == 4 && Tree->GetSpentSkillTreePoints() == 0,
+			TEXT("identity_tonics_stack_by_type_without_spending_growth_points"));
 		const auto TownAfterRunInvestments = Town->CaptureProgression();
 		Check(FRogue10mTownProgressionSnapshot::StaticStruct()->CompareScriptStruct(&TownBeforeRejectedPurchase, &TownAfterRunInvestments, 0)
 			&& Town->GetLobbyEarnedBudget() == 0 && Town->GetAvailableTraitPoints() == 0 && Town->GetSpentTraitPoints() == 0
@@ -686,53 +691,82 @@ private:
 		Check(Widget->GetDisplayedTab() == ETab::Common && Widget->GetVisibleNodeCount() == 16
 			&& Widget->FindNodeEntry(TEXT("C.Foundation")) && Widget->FindNodeEntry(TEXT("C.Roll"))
 			&& !Widget->FindNodeEntry(TEXT("I.InternalEnergy.Entry")), TEXT("common_tab_opens_the_sixteen_node_mobility_web"));
-		Widget->BrowseCommonIdentity();
-		Check(Widget->GetDisplayedTab() == ETab::Common && Widget->FindNodeEntry(TEXT("I.InternalEnergy.Entry"))
-			&& Widget->FindNodeEntry(TEXT("I.FightingSpirit.Entry")) && Widget->FindNodeEntry(TEXT("I.Mana.Entry"))
-			&& !Widget->FindNodeEntry(TEXT("C.DoubleJump")) && !Widget->FindNodeEntry(TEXT("F.Ultimate")),
-			TEXT("common_identity_subview_preserves_shared_identity_lanes"));
+		Check(!Widget->GetWidgetFromName(TEXT("HybridTreeCommonViewToggle"))
+			&& !Widget->FindNodeEntry(TEXT("I.Mana.Entry")), TEXT("common_has_no_legacy_identity_page_or_button"));
 		Tree->NotifyWeaponChanged();
 		Check(Widget->GetDisplayedTab() == ETab::Common, TEXT("unchanged_equipment_refresh_preserves_manual_tab"));
-		Shot(TEXT("identity-1080p.png"));
-		Widget->HandleAction(100, TEXT("I.InternalEnergy.Advanced"));
-		Later(0.7, [this]
+		Widget->BrowseTab(ETab::Knuckle);
+		Widget->SelectNode(TEXT("F.DiamondStrike"));
+		Later(0.35, [this]
 		{
-			const int32 BeforeFreeDeepening = Tree->GetAvailableGrowthPoints();
-			Click(TEXT("HybridTreeLearnMastery"));
-			const auto FreeState = Tree->Capture();
-			const auto* FreeAdvanced = FreeState.Investments.FindByPredicate([](const auto& Row) { return Row.NodeId == TEXT("I.InternalEnergy.Advanced"); });
-			Check(BeforeFreeDeepening == 3 && Tree->IsIdentityDeepened(EIdentity::InternalEnergy)
-				&& Tree->GetSpentSkillTreePoints() == 1 && Tree->GetAvailableGrowthPoints() == BeforeFreeDeepening
-				&& FreeAdvanced && FreeAdvanced->Route == ERoute::Mastery && FreeAdvanced->SpentPoints == 0,
-				TEXT("real_UI_free_mastery_deepening_keeps_exact_three_run_points"));
-			Widget->HandleAction(100, TEXT("I.InternalEnergy.Choice"));
-			Widget->HandleAction(6, NAME_None, TEXT("InternalEnergy.Release"));
-			Later(0.35, [this]
+			VerifyWeaponPresentation(TEXT("F.DiamondStrike"), TEXT("HybridTreeFighter"));
+			Shot(TEXT("knuckle-1080p.png"));
+			Later(0.4, [this]
 			{
-				const int32 BeforeChoicePoints = Tree->GetAvailableGrowthPoints();
-				Click(TEXT("HybridTreeLearnPoints"));
-				Check(BeforeChoicePoints == 3 && Tree->GetSelectedProperty(EIdentity::InternalEnergy) == TEXT("InternalEnergy.Release")
-					&& Tree->GetAvailableGrowthPoints() == BeforeChoicePoints - 2 && Tree->GetAvailableGrowthPoints() == 1
-					&& Tree->GetSpentSkillTreePoints() == 3 && State->GetTownProgressionComponent()->GetAvailableTraitPoints() == 0,
-					TEXT("UI_property_debits_exact_two_run_points_three_to_one_lobby_stays_zero"));
-				if (bInputQA)
+				PC->ConsoleCommand(TEXT("r.SetRes 1280x720w"), false);
+				Later(0.7, [this]
 				{
-					Widget->SelectNode(TEXT("F.DiamondStrike"));
-					Shot(TEXT("brawler-1080p.png"));
-					Later(0.35, [this]
+					Shot(TEXT("knuckle-720p.png"));
+					Later(0.4, [this]
 					{
-						BeginInputChecks(ETrack::Brawler, [this] { PC->ToggleSkillTree(); Later(0.35, [this] { GreatSword(); }); });
+						PC->ConsoleCommand(TEXT("r.SetRes 1920x1080w"), false);
+						Later(0.7, [this] { VerifyKnuckleInput(); });
 					});
-					return;
-				}
-				Widget->SelectNode(TEXT("F.DiamondStrike"));
-				Check(Widget->SetSelectedSkillKey(EKeys::Q), TEXT("learned_technique_key_assignment"));
-				Widget->SelectNode(TEXT("F.Ultimate"));
-				Check(!Widget->SetSelectedSkillKey(EKeys::Q), TEXT("locked_ultimate_key_rejected"));
-				Shot(TEXT("brawler-1080p.png"));
-				Later(0.6, [this] { GreatSword(); });
+				});
 			});
 		});
+	}
+	void VerifyKnuckleInput()
+	{
+		if (bInputQA)
+		{
+			BeginInputChecks(ETrack::Brawler, [this] { Later(0.35, [this] { GreatSword(); }); });
+			return;
+		}
+		Check(Widget->SetSelectedSkillKey(EKeys::Q), TEXT("learned_technique_key_assignment"));
+		Widget->SelectNode(TEXT("F.Ultimate"));
+		Check(!Widget->SetSelectedSkillKey(EKeys::Q), TEXT("locked_ultimate_key_rejected"));
+		Later(0.6, [this] { GreatSword(); });
+	}
+	void UseIdentityTonic(EIdentity Identity, int32 Quantity = 1)
+	{
+		const TCHAR* ItemName = Identity == EIdentity::InternalEnergy ? TEXT("DA_Item_InternalEnergyElixir")
+			: Identity == EIdentity::FightingSpirit ? TEXT("DA_Item_FightingSpiritElixir") : TEXT("DA_Item_ManaElixir");
+		const FString Path = FString::Printf(TEXT("/Game/DataAsset/Item/Starter/%s.%s"), ItemName, ItemName);
+		auto* Item = LoadObject<URogue10mItemDataAsset>(nullptr, *Path);
+		const auto* Crimson = LoadObject<URogue10mMonsterDataAsset>(nullptr,
+			TEXT("/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_CrimsonSlime.DA_OW_CrimsonSlime"));
+		Check(Item && Crimson && Crimson->LootTable && Crimson->LootTable->Entries.Num() == 3
+			&& Crimson->LootTable->Entries.ContainsByPredicate([Item](const FRogue10mLootEntry& Entry)
+			{
+				return Entry.ItemData == Item && FMath::IsNearlyEqual(Entry.DropChance, 0.25f)
+					&& Entry.MinQuantity == 1 && Entry.MaxQuantity == 1;
+			}), TEXT("live_crimson_slime_profile_references_typed_identity_tonic"));
+		auto* Inventory = Player->GetInventoryComponent();
+		int32 ContainerIndex = INDEX_NONE;
+		FGuid InstanceId;
+		Check(Item && Inventory->TryAddGridItem(Item, Quantity, ContainerIndex, InstanceId), TEXT("identity_tonic_asset_reaches_inventory"));
+		if (!InstanceId.IsValid()) { return; }
+		const int32 PreviousRank = Tree->GetIdentityRank(Identity);
+		const auto* Attributes = State->GetRogueAttributeSet();
+		const float PreviousMana = Attributes->GetMana();
+		const float PreviousMaxMana = Attributes->GetMaxMana();
+		for (int32 Used = 0; Used < Quantity; ++Used)
+		{
+			Check(Inventory->TryUseGridConsumable(ContainerIndex, InstanceId)
+				&& Tree->GetIdentityRank(Identity) == PreviousRank + Used + 1,
+				TEXT("identity_tonic_consumes_one_and_adds_one_rank"));
+		}
+		Check(!Inventory->TryUseGridConsumable(ContainerIndex, InstanceId)
+			&& Tree->GetIdentityRank(Identity) == PreviousRank + Quantity,
+			TEXT("depleted_identity_tonic_cannot_apply_twice"));
+		if (Identity == EIdentity::Mana)
+		{
+			const float ExpectedMaxMana = PreviousMaxMana + Quantity * Tree->GetCatalog()->ManaCapacityPerRank;
+			Check(FMath::IsNearlyEqual(Attributes->GetMaxMana(), ExpectedMaxMana)
+				&& FMath::IsNearlyEqual(Attributes->GetMana(), PreviousMana),
+				TEXT("mana_tonic_increases_live_capacity_without_refilling_current_mana"));
+		}
 	}
 	void PrepareRead(URogue10mCharacterProfileSubsystem* Profiles)
 	{
@@ -801,9 +835,9 @@ private:
 		Check(Tree->GetMasteryLevel(ETrack::Brawler) == 12 && Tree->GetMasteryTotalExperience(ETrack::Brawler) == 385
 			&& Tree->GetMasteryLevel(ETrack::GreatSword) == 20 && Tree->GetMasteryTotalExperience(ETrack::GreatSword) == 1045,
 			TEXT("read_brawler_M12_and_greatsword_M20_with_exact_XP_restored"));
-		Check(Tree->GetSpentSkillTreePoints() == (bCommonQA ? 28 : 13) && Tree->GetAvailableGrowthPoints() == (bCommonQA ? 0 : 1)
+		Check(Tree->GetSpentSkillTreePoints() == (bCommonQA ? 20 : 5) && Tree->GetAvailableGrowthPoints() == (bCommonQA ? 8 : 9)
 			&& State->GetPlayerLevel() - 1 == Tree->GetSpentSkillTreePoints() + Tree->GetAvailableGrowthPoints(),
-			TEXT("read_shared_budget_restores_sword_identity_and_common_investments"));
+			TEXT("read_budget_restores_sword_and_common_investments"));
 		if (bCommonQA)
 		{
 			for (const auto& Node : Tree->GetCatalog()->Nodes)
@@ -815,8 +849,13 @@ private:
 			}
 			Check(Player->JumpMaxCount >= 2, TEXT("read_common_double_jump_reapplied_to_equipped_greatsword"));
 		}
-		Check(Tree->GetActiveIdentity() == EIdentity::Mana && Tree->GetSelectedProperty(EIdentity::Mana) == TEXT("Mana.Spread")
-			&& Tree->HasResonance(ETrack::GreatSword, EIdentity::Mana), TEXT("read_active_mana_spread_and_ultimate_resonance_restored"));
+		const int32 LevelRank = State->GetPlayerLevel() - 1;
+		Check(Tree->GetActiveIdentity() == EIdentity::Mana
+			&& Tree->GetIdentityRank(EIdentity::InternalEnergy) == LevelRank + 1
+			&& Tree->GetIdentityRank(EIdentity::FightingSpirit) == LevelRank + 1
+			&& Tree->GetIdentityRank(EIdentity::Mana) == LevelRank + 2
+			&& Saved->SkillTree.IdentityConsumableRanks.FindRef(EIdentity::Mana) == 2
+			&& Tree->HasResonance(ETrack::GreatSword, EIdentity::Mana), TEXT("read_tonic_growth_and_ultimate_resonance_restored"));
 		auto* Combat = Player->GetCombatComponent();
 		Check(Combat && Combat->GetActiveSkillTreeSkills().Num() == 10 && Combat->GetUnlockedWeaponSkills().Num() == 10
 			&& Combat->GetEquippedSkill(ERogue10mAttackInputSlot::Primary), TEXT("read_ten_greatsword_attacks_and_playable_primary_restored"));
@@ -915,8 +954,15 @@ private:
 		Check(B->IsDead() && Tree->GetMasteryTotalExperience(ETrack::Brawler) == 2, TEXT("killing_hit_awards_XP_once"));
 		A->Destroy(); B->Destroy(); Dummy->Destroy();
 	}
-	void GreatSword()
+	void GreatSword(int32 Attempts = 25)
 	{
+		if (!Player->CanChangeWeapon() && Attempts > 0)
+		{
+			// The skill window pauses the hub. Let the previous attack finish before opening it.
+			if (PC->IsSkillTreeVisible()) { PC->ToggleSkillTree(); }
+			Later(0.15, [this, Attempts] { GreatSword(Attempts - 1); });
+			return;
+		}
 		if (!PC->IsSkillTreeVisible()) { PC->ToggleSkillTree(); }
 		Widget->HandleAction(2);
 		const auto* BrowsingMainItem = Player->GetInventoryComponent()->GetEquippedItemData(ERogue10mInventorySlotType::MainWeapon);
@@ -962,7 +1008,7 @@ private:
 				&& Player->GetCombatComponent()->GetUnlockedWeaponSkills().Num() == 5, TEXT("greatsword_five_basics_five_locked_techniques"));
 			Check(Tree->GetMasteryLevel(ETrack::GreatSword) == 1 && Tree->GetMasteryLevel(ETrack::Brawler) == 12,
 				TEXT("separate_mastery_tracks"));
-			Check(Tree->GetActiveIdentity() == EIdentity::None, TEXT("inner_energy_inactive_with_greatsword"));
+			Check(Tree->GetActiveIdentity() == EIdentity::Mana, TEXT("sword_automatically_uses_its_strongest_compatible_identity"));
 			FRogue10mGrowthSnapshot Growth = State->CaptureGrowth(); Growth.Level = 15;
 			State->RestoreGrowth(Growth);
 			auto Snapshot = Tree->Capture(); FRogue10mSkillTreeMasteryRecord Row; Row.Track = ETrack::GreatSword; Row.TotalExperience = 1045;
@@ -1002,21 +1048,9 @@ private:
 				&& Player->GetCombatComponent()->GetUnlockedWeaponSkills().Num() == 5,
 				TEXT("full_respec_refunds_paid_sword_paths_and_prunes_dependents_without_losing_mastery"));
 			Check(Tree->Restore(InvestedSword), TEXT("paid_sword_paths_restore_before_identity_checks"));
-			Check(Tree->TryUnlockNode(TEXT("I.Mana.Entry"), ERoute::Points, NAME_None)
-				&& Tree->TryUnlockNode(TEXT("I.Mana.Advanced"), ERoute::Points, NAME_None)
-				&& Tree->TryUnlockNode(TEXT("I.Mana.Choice"), ERoute::Points, TEXT("Mana.Spread"))
-				&& Tree->TrySetActiveIdentity(EIdentity::Mana), TEXT("greatsword_mana_hybrid_investment_and_activation"));
-			Check(Tree->HasResonance(ETrack::GreatSword, EIdentity::Mana), TEXT("core_and_property_both_required_for_resonance"));
-			const int32 BeforeRefund = Tree->GetSpentSkillTreePoints();
-			Check(Tree->RefundNode(TEXT("I.Mana.Advanced")) && Tree->IsIdentityLearned(EIdentity::Mana)
-				&& !Tree->IsIdentityDeepened(EIdentity::Mana) && Tree->GetSelectedProperty(EIdentity::Mana).IsNone()
-				&& !Tree->HasResonance(ETrack::GreatSword, EIdentity::Mana)
-				&& Tree->GetSpentSkillTreePoints() == BeforeRefund - 4, TEXT("advanced_refund_keeps_entry_removes_choice_and_resonance_returns_actual_cost"));
-			Check(!Tree->TryUnlockNode(TEXT("I.Mana.Advanced"), ERoute::Mastery, NAME_None),
-				TEXT("mana_deepening_remains_points_only_at_M20"));
-			Check(Tree->TryUnlockNode(TEXT("I.Mana.Advanced"), ERoute::Points, NAME_None)
-				&& Tree->TryUnlockNode(TEXT("I.Mana.Choice"), ERoute::Points, TEXT("Mana.Spread")),
-				TEXT("refunded_mana_deepening_and_choice_can_be_repurchased"));
+			Check(Tree->GetIdentityRank(EIdentity::Mana) == 16
+				&& Tree->HasResonance(ETrack::GreatSword, EIdentity::Mana),
+				TEXT("sword_ultimate_and_mana_rank_activate_resonance_without_a_purchase"));
 			IdentityAndSave();
 			CaptureSwordPanel();
 		});
@@ -1055,6 +1089,7 @@ private:
 		Widget->SelectNode(TEXT("G.EarthSplitter"));
 		Later(0.35, [this]
 		{
+			VerifyWeaponPresentation(TEXT("G.EarthSplitter"), TEXT("HybridTreeGreatSword"));
 			Shot(TEXT("greatsword-learned-1080p.png"));
 			Later(0.35, [this] { CaptureSwordPanelAt720p(); });
 		});
@@ -1080,8 +1115,8 @@ private:
 		Widget->BrowseTab(ETab::Common);
 		auto Growth = State->CaptureGrowth();
 		Growth.Level = 29;
-		Check(State->RestoreGrowth(Growth) && Tree->GetAvailableGrowthPoints() == 15,
-			TEXT("common_fixture_has_fifteen_points_after_sword_and_identity_investments"));
+		Check(State->RestoreGrowth(Growth) && Tree->GetAvailableGrowthPoints() == 23,
+			TEXT("common_fixture_keeps_all_twenty_three_points_after_sword_investments"));
 		const auto* Movement = Player->GetCharacterMovement();
 		CommonBaseWalkSpeed = Movement->MaxWalkSpeed;
 		CommonBaseAcceleration = Movement->MaxAcceleration;
@@ -1098,9 +1133,9 @@ private:
 	void InvestCommonWeb()
 	{
 		Click(TEXT("HybridTreeLearnPoints"));
-		Check(Tree->GetAvailableGrowthPoints() == 14 && Tree->IsCommonSkillLearned(ERogue10mCommonSkill::MoveSpeed)
+		Check(Tree->GetAvailableGrowthPoints() == 22 && Tree->IsCommonSkillLearned(ERogue10mCommonSkill::MoveSpeed)
 			&& Player->GetCharacterMovement()->MaxWalkSpeed > CommonBaseWalkSpeed, TEXT("common_real_UI_purchase_spends_one_point_and_applies_speed"));
-		Check(!Tree->TryUnlockNode(TEXT("C.RollCooldown"), ERoute::Points, NAME_None) && Tree->GetAvailableGrowthPoints() == 14,
+		Check(!Tree->TryUnlockNode(TEXT("C.RollCooldown"), ERoute::Points, NAME_None) && Tree->GetAvailableGrowthPoints() == 22,
 			TEXT("locked_common_skill_cannot_spend_points"));
 		for (const TCHAR* Id : {TEXT("C.GroundTurning"), TEXT("C.AirMomentum"), TEXT("C.DoubleJump")})
 		{
@@ -1108,7 +1143,7 @@ private:
 		}
 		Check(Player->JumpMaxCount >= 2 && !Tree->IsCommonSkillLearned(ERogue10mCommonSkill::AirControl)
 			&& Player->GetCharacterMovement()->BrakingDecelerationFalling < CommonBaseAirBraking
-			&& Tree->GetAvailableGrowthPoints() == 11, TEXT("common_cross_path_grants_two_jumps_on_greatsword_without_air_control"));
+			&& Tree->GetAvailableGrowthPoints() == 19, TEXT("common_cross_path_grants_two_jumps_on_greatsword_without_air_control"));
 		Widget->SelectNode(TEXT("C.DoubleJump"));
 		Later(0.35, [this]
 		{
@@ -1121,35 +1156,52 @@ private:
 					Shot(TEXT("common-720p.png"));
 					Later(0.35, [this]
 					{
-						if (bCommonPresentationQA) { VerifyCommonPresentation(); Finish(); }
-						else { ExerciseCommonMovement(); }
+						if (bCommonPresentationQA) { VerifyCommonPresentation(); }
+						ExerciseCommonMovement();
 					});
 				});
 			});
 		});
 	}
+	bool HasMedallion(const UUserWidget* Entry, FName Atlas) const
+	{
+		bool bHasMedallion = false;
+		if (!Entry || !Entry->WidgetTree) { return false; }
+		Entry->WidgetTree->ForEachWidget([&bHasMedallion, Atlas](UWidget* Child)
+		{
+			const auto* Icon = Cast<UImage>(Child);
+			bHasMedallion |= Icon && GetFNameSafe(Icon->GetBrush().GetResourceObject()) == Atlas
+				&& static_cast<FBox2f>(Icon->GetBrush().GetUVRegion()).bIsValid && Icon->IsVisible();
+		});
+		return bHasMedallion;
+	}
+	void VerifyWeaponPresentation(FName HighlightedNode, FName ActiveTab)
+	{
+		const FName WeaponAtlas(TEXT("T_WeaponSkillMedallions"));
+		for (FName NodeId : Widget->GetVisibleNodeIds())
+		{
+			Check(HasMedallion(Widget->FindNodeEntry(NodeId), WeaponAtlas), *NodeId.ToString());
+		}
+		Check(HasMedallion(Widget->FindNodeEntry(HighlightedNode), WeaponAtlas)
+			&& HasMedallion(Cast<UUserWidget>(Widget->GetWidgetFromName(TEXT("HybridTreeCommonDetailIcon"))), WeaponAtlas),
+			TEXT("weapon_graph_and_detail_use_bronze_medallion_atlas"));
+		const auto* Active = Cast<UButton>(Widget->GetWidgetFromName(ActiveTab));
+		const auto* Common = Cast<UButton>(Widget->GetWidgetFromName(TEXT("HybridTreeCommon")));
+		Check(Active && Common && Active->GetStyle().Normal.DrawAs == ESlateBrushDrawType::RoundedBox
+			&& Active->GetStyle().Normal.TintColor.GetSpecifiedColor() != Common->GetStyle().Normal.TintColor.GetSpecifiedColor(),
+			TEXT("weapon_active_tab_uses_shared_gold_tab_fill"));
+	}
 	void VerifyCommonPresentation()
 	{
-		const auto HasMedallion = [](const UUserWidget* Entry)
-		{
-			bool bHasMedallion = false;
-			if (!Entry || !Entry->WidgetTree) { return false; }
-			Entry->WidgetTree->ForEachWidget([&bHasMedallion](UWidget* Child)
-			{
-				const auto* Icon = Cast<UImage>(Child);
-				bHasMedallion |= Icon && GetNameSafe(Icon->GetBrush().GetResourceObject()) == TEXT("T_CommonSkillMedallions")
-					&& static_cast<FBox2f>(Icon->GetBrush().GetUVRegion()).bIsValid && Icon->IsVisible();
-			});
-			return bHasMedallion;
-		};
+		const FName CommonAtlas(TEXT("T_CommonSkillMedallions"));
 		for (const auto& Node : Tree->GetCatalog()->Nodes)
 		{
 			if (Node.CommonSkill != ERogue10mCommonSkill::None)
 			{
-				Check(HasMedallion(Widget->FindNodeEntry(Node.NodeId)), *FString::Printf(TEXT("common_medallion_visible_%s"), *Node.NodeId.ToString()));
+				Check(HasMedallion(Widget->FindNodeEntry(Node.NodeId), CommonAtlas), *FString::Printf(TEXT("common_medallion_visible_%s"), *Node.NodeId.ToString()));
 			}
 		}
-		Check(HasMedallion(Cast<UUserWidget>(Widget->GetWidgetFromName(TEXT("HybridTreeCommonDetailIcon"))))
+		Check(HasMedallion(Cast<UUserWidget>(Widget->GetWidgetFromName(TEXT("HybridTreeCommonDetailIcon"))), CommonAtlas)
 			&& Widget->GetSelectedNodeId() == TEXT("C.DoubleJump"), TEXT("common_detail_medallion_shows_selected_double_jump"));
 		const auto* Active = Cast<UButton>(Widget->GetWidgetFromName(TEXT("HybridTreeCommon")));
 		const auto* Inactive = Cast<UButton>(Widget->GetWidgetFromName(TEXT("HybridTreeGreatSword")));
@@ -1165,8 +1217,9 @@ private:
 		{
 			Check(Tree->TryUnlockNode(Id, ERoute::Points, NAME_None), Id);
 		}
-		Check(Tree->GetAvailableGrowthPoints() == 0 && Player->GetCharacterMovement()->MaxAcceleration > CommonBaseAcceleration
+		Check(Tree->GetAvailableGrowthPoints() == 8 && Player->GetCharacterMovement()->MaxAcceleration > CommonBaseAcceleration
 			&& Player->GetCharacterMovement()->AirControl > CommonBaseAirControl, TEXT("common_full_web_spends_fifteen_points_and_applies_acceleration_and_air_control"));
+		if (bCommonPresentationQA) { Finish(); return; }
 		PC->CloseAllBlockingPanels();
 		WaitForCommonWeaponSwap(25);
 	}
@@ -1368,35 +1421,34 @@ private:
 		auto* Attributes = State->GetRogueAttributeSet();
 		Attributes->SetMana(Attributes->GetMaxMana());
 		const float ManaBeforeProc = Attributes->GetMana();
-		auto Effect = CombatIdentity->AcceptAttack(*Ultimate, false);
-		Check(Effect.bTriggered && Effect.DamageMultiplier > 1.1f && Effect.RangeMultiplier > 1
-			&& FMath::IsNearlyEqual(Attributes->GetMana(), ManaBeforeProc - Tree->GetCatalog()->ManaProcCost),
-			TEXT("mana_core_resonance_consumes_MP_and_enlarges_actual_attack"));
+		const auto Effect = CombatIdentity->AcceptAttack(*Ultimate, false);
+		const auto* Catalog = Tree->GetCatalog();
+		const float ExpectedDamage = 1.0f + Catalog->ManaBaseBonus + 16.0f * Catalog->IdentityDamageBonusPerRank
+			+ Tree->GetResonanceDamageBonus(ETrack::GreatSword, EIdentity::Mana);
+		Check(Effect.bTriggered && FMath::IsNearlyEqual(Effect.DamageMultiplier, ExpectedDamage, UE_KINDA_SMALL_NUMBER)
+			&& FMath::IsNearlyEqual(Attributes->GetMana(), ManaBeforeProc - Catalog->ManaProcCost),
+			TEXT("mana_rank_and_both_resonances_increase_damage_and_consume_MP"));
 		const float Cooldown = CombatIdentity->GetCooldownRemaining();
-		Check(Tree->TrySetActiveIdentity(EIdentity::None) && Tree->TrySetActiveIdentity(EIdentity::Mana)
-			&& CombatIdentity->GetGauge() == 0 && CombatIdentity->GetCooldownRemaining() >= Cooldown - .1f,
-			TEXT("identity_switch_cannot_refill_or_reset_cooldown"));
+		Check(CombatIdentity->GetGauge() == 0 && Cooldown > 0
+			&& !CombatIdentity->AcceptAttack(*Ultimate, false).bTriggered
+			&& CombatIdentity->GetCooldownRemaining() >= Cooldown - .1f,
+			TEXT("identity_proc_drains_gauge_and_respects_shared_cooldown"));
 		auto* Persistence = World->GetGameInstance()->GetSubsystem<URogue10mProgressionSubsystem>();
 		Check(Persistence->SaveNow(), TEXT("actual_isolated_profile_save"));
+		Check(Persistence->HasDiscoveredNode(TEXT("G.Resonance.Pursuit"))
+			&& Persistence->HasDiscoveredNode(TEXT("G.Resonance.Spread")),
+			TEXT("derived_ultimate_resonances_are_discovered_on_checkpoint"));
 		auto* Saved = Cast<URogue10mProgressionSaveGame>(UGameplayStatics::LoadGameFromSlot(
 			Persistence->GetSaveSlotForProfile(Persistence->GetAttachedProfileId()), 0));
 		Check(Saved && URogue10mProgressionSaveGame::CurrentVersion == 5 && Saved->SaveVersion == 5
 			&& Saved->RunId.IsValid() && Saved->RunId == Persistence->GetAttachedRunId()
 			&& Saved->LobbyEarnedPoints == 0 && Saved->Town.TraitInvestments.IsEmpty()
-			&& Saved->SkillTree.Masteries.Num() == 2 && Saved->SkillTree.ActiveIdentity == EIdentity::Mana,
+			&& Saved->SkillTree.Masteries.Num() == 2 && Saved->SkillTree.IdentityConsumableRanks.FindRef(EIdentity::Mana) == 2,
 			TEXT("disk_current_v5_roundtrip_preserves_run_mastery_identity_and_zero_lobby_ledger"));
-		const float Health = State->GetRogueAttributeSet()->GetHealth();
-		Check(Tree->Respec(EIdentity::Mana) && Tree->GetMasteryLevel(ETrack::GreatSword) == 20
-			&& !Tree->IsIdentityLearned(EIdentity::Mana) && !Tree->HasResonance(ETrack::GreatSword, EIdentity::Mana)
-			&& State->GetRogueAttributeSet()->GetHealth() <= Health, TEXT("respec_removes_descendants_preserves_mastery_no_healing"));
 		Player->SetActorLocation(NPC->GetActorLocation() + FVector(1500, 0, 0), false, nullptr, ETeleportType::TeleportPhysics);
-		Check(!Tree->CanChangeInvestments() && !Tree->TryUnlockNode(TEXT("I.Mana.Entry"), ERoute::Points, NAME_None),
-			TEXT("out_of_NPC_range_rejects_purchase"));
+		Check(!Tree->CanChangeInvestments() && !Tree->TryUnlockNode(TEXT("C.MoveSpeed"), ERoute::Points, NAME_None),
+			TEXT("out_of_NPC_range_rejects_skill_investment"));
 		Player->SetActorLocation(NPC->GetActorLocation() + FVector(100, 0, 100), false, nullptr, ETeleportType::TeleportPhysics);
-		Check(Tree->TryUnlockNode(TEXT("I.Mana.Entry"), ERoute::Points, NAME_None)
-			&& Tree->TryUnlockNode(TEXT("I.Mana.Advanced"), ERoute::Points, NAME_None)
-			&& Tree->TryUnlockNode(TEXT("I.Mana.Choice"), ERoute::Points, TEXT("Mana.Spread")),
-			TEXT("mana_can_be_rebuilt_after_refund_for_final_UI"));
 	}
 	void Finish()
 	{

@@ -6,6 +6,7 @@
 #include "Engine/DataAsset.h"
 #include "Rogue10mCharacterStats.h"
 #include "Rogue10mInventoryComponent.h"
+#include "Rogue10mSkillTreeData.h"
 #include "Rogue10mItemDataAsset.generated.h"
 
 class UStaticMesh;
@@ -90,6 +91,18 @@ public:
 	/** 체력 회복형 소비 아이템을 한 번 사용할 때 회복하는 양입니다. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Items|Consumable", meta=(ClampMin="0.0"))
 	float RestoreHealth = 25.0f;
+
+	/** A growth consumable adds a rank to the specified identity for the current run. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Items|Consumable")
+	ERogue10mSkillTreeIdentity IdentityGrowthType = ERogue10mSkillTreeIdentity::None;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Items|Consumable", meta=(ClampMin="0"))
+	int32 IdentityGrowthAmount = 0;
+
+	bool UsesIdentityGrowth() const
+	{
+		return IdentityGrowthType != ERogue10mSkillTreeIdentity::None || IdentityGrowthAmount != 0;
+	}
 
 	/** 장비 Tooltip과 향후 장비 효과 계산에서 공유하는 능력치 증가량입니다. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Items|Equipment", meta=(ShowOnlyInnerProperties))

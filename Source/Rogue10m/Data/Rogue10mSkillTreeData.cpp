@@ -13,6 +13,19 @@ void URogue10mSkillTreeDataAsset::PostLoad()
 	{
 		AppendDefaultCommonWeb();
 	}
+	ApplyIdentityGrowthDescriptions();
+}
+
+void URogue10mSkillTreeDataAsset::ApplyIdentityGrowthDescriptions()
+{
+	for (auto& Node : Nodes)
+	{
+		if (Node.NodeType == ERogue10mHybridSkillTreeNodeType::Resonance)
+		{
+			Node.Description = NSLOCTEXT("Rogue10mTree", "GrowthResonanceDescription",
+				"최종 기술과 해당 등급에 도달하면 자동 공명합니다. 공명마다 활성 아이덴티티가 발동한 최종기의 추가 피해가 증가합니다.");
+		}
+	}
 }
 
 const FRogue10mSkillTreeNodeDefinition* URogue10mSkillTreeDataAsset::FindNode(FName NodeId) const
@@ -70,6 +83,19 @@ bool URogue10mSkillTreeDataAsset::IsIdentityAllowed(ERogue10mSkillTreeTrack Trac
 	});
 }
 
+int32 URogue10mSkillTreeDataAsset::GetResonanceRank(const FRogue10mSkillTreeNodeDefinition& Node) const
+{
+	const auto* Nature = Nodes.FindByPredicate([&Node](const FRogue10mSkillTreeNodeDefinition& Candidate)
+	{
+		return Candidate.NodeType == ERogue10mHybridSkillTreeNodeType::IdentityChoice && Candidate.Identity == Node.Identity;
+	});
+	const int32 Variant = Nature ? Nature->Choices.IndexOfByPredicate([&Node](const FRogue10mSkillTreeChoiceDefinition& Choice)
+	{
+		return Choice.ChoiceId == Node.RequiredChoiceId;
+	}) : INDEX_NONE;
+	return Variant > 0 ? SecondResonanceRank : FirstResonanceRank;
+}
+
 bool URogue10mSkillTreeDataAsset::IsNodeInTrack(const FRogue10mSkillTreeNodeDefinition& Node, ERogue10mSkillTreeTrack Track)
 {
 	if (Node.CommonSkill != ERogue10mCommonSkill::None) { return true; }
@@ -87,10 +113,12 @@ TArray<FRogue10mSkillTreeNodeDefinition> URogue10mSkillTreeDataAsset::GetNodes(E
 bool URogue10mSkillTreeDataAsset::IsValidCatalog(FText* OutReason) const
 {
 	const auto Fail = [OutReason]() { if (OutReason) { *OutReason = NSLOCTEXT("Rogue10mTree", "InvalidCatalog", "스킬트리 설정을 확인해 주세요."); } return false; };
-	if (Nodes.IsEmpty() || Nodes.Num() > 1024 || MaxMasteryLevel < 2 || MaxMasteryLevel > 1000) { return Fail(); }
+	if (Nodes.IsEmpty() || Nodes.Num() > 1024 || MaxMasteryLevel < 2 || MaxMasteryLevel > 1000
+		|| IdentityDeepenedRank < 1 || FirstResonanceRank < 1 || SecondResonanceRank <= FirstResonanceRank) { return Fail(); }
 	for (float Value : { IdentityGaugePerHit, IdentityGaugeThreshold, IdentityProcCooldown, InternalEnergyBaseBonus,
 		InternalEnergyStaminaScaling, FightingSpiritBaseBonus, FightingSpiritAttackScaling, ManaBaseBonus, ManaProcCost,
-		IdentityAdvancedGaugeBonus, IdentityNatureDamageBonus, IdentityRangeMultiplier, CirculationCostMultiplier, FocusRecoveryMultiplier, ResonanceDamageBonus })
+		IdentityAdvancedGaugeBonus, IdentityNatureDamageBonus, IdentityRangeMultiplier, CirculationCostMultiplier,
+		FocusRecoveryMultiplier, ResonanceDamageBonus, IdentityDamageBonusPerRank, ManaCapacityPerRank })
 	{
 		if (!FMath::IsFinite(Value) || Value < 0.0f || Value > 100000.0f) { return Fail(); }
 	}

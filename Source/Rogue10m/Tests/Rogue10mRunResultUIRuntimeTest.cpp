@@ -397,8 +397,9 @@ private:
 		TArray<uint8> BareBefore,BareAfter;
 		Check(FFileHelper::LoadFileToArray(BareBefore,*BareFile),TEXT("legacy_priority_fixture_bytes_captured"));
 		TStrongObjectPtr<URogue10mProgressionSaveGame> BadV4(DuplicateObject<URogue10mProgressionSaveGame>(Bare.Get(),GetTransientPackage()));
-		BadV4->SaveVersion=4; BadV4->ProfileId=FGuid::NewGuid(); // Invalid identity at the higher-priority v4 location.
-		Check(UGameplayStatics::SaveGameToSlot(BadV4.Get(),BadV4Slot,0),TEXT("invalid_identity_v4_fixture_written_above_valid_legacy"));
+		BadV4->SaveVersion=4;
+		BadV4->SkillTree.IdentityConsumableRanks.Add(ERogue10mSkillTreeIdentity::Mana, 1);
+		Check(UGameplayStatics::SaveGameToSlot(BadV4.Get(),BadV4Slot,0),TEXT("v4_fixture_with_v5_identity_bonus_written_above_valid_legacy"));
 		const FString BadV4File=FPaths::Combine(FPaths::ProjectSavedDir(),TEXT("SaveGames"),BadV4Slot+TEXT(".sav"));
 		TArray<uint8> BadBefore,BadAfter;
 		Check(FFileHelper::LoadFileToArray(BadBefore,*BadV4File),TEXT("invalid_v4_priority_bytes_captured"));

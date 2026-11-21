@@ -310,7 +310,6 @@ void URogue10mSkillTreeDataAsset::BuildDefaultCatalog()
 		Node.RequiredChoiceId = FName(ChoiceId);
 		Node.Color = Color;
 		Node.bShowInTree = Track != ETrack::Brawler;
-		Node.Description = FText::FromString(TEXT("최종 기술과 선택 성질을 모두 전수하면0P로 공명. 해당 아이덴티티가 활성화된 최종기의 발동 추가 피해 배율 +0.10."));
 	};
 	Resonance(TEXT("F.Resonance.Cycle"), ETrack::Brawler, EIdentity::InternalEnergy, TEXT("순환 공명"), TEXT("F.Ultimate"), TEXT("I.InternalEnergy.Choice"), TEXT("InternalEnergy.Cycle"), {-360,315}, InternalColor);
 	Resonance(TEXT("F.Resonance.Release"), ETrack::Brawler, EIdentity::InternalEnergy, TEXT("방출 공명"), TEXT("F.Ultimate"), TEXT("I.InternalEnergy.Choice"), TEXT("InternalEnergy.Release"), {-140,315}, InternalColor);
@@ -322,6 +321,7 @@ void URogue10mSkillTreeDataAsset::BuildDefaultCatalog()
 	Resonance(TEXT("G.Resonance.Focus"), ETrack::GreatSword, EIdentity::FightingSpirit, TEXT("광전 · 집중 공명"), TEXT("G.Ultimate"), TEXT("I.FightingSpirit.Choice"), TEXT("FightingSpirit.Focus"), {360,315}, SpiritColor);
 	ApplySwordInvestments();
 	AppendDefaultCommonWeb();
+	ApplyIdentityGrowthDescriptions();
 }
 
 void URogue10mSkillTreeDataAsset::AppendDefaultCommonWeb()

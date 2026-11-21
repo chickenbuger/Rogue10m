@@ -11,9 +11,35 @@
 #include "Rogue10mDroppedItem.h"
 #include "Rogue10mItemDataAsset.h"
 #include "Rogue10mPlayerController.h"
+#include "Rogue10mPlayerState.h"
+#include "Rogue10mSkillTreeProgressionComponent.h"
 #include "Engine/World.h"
 #include "Engine/GameInstance.h"
 #include "Rogue10mTutorialSupplySubsystem.h"
+#include "Templates/Function.h"
+
+namespace
+{
+bool TryUseIdentityGrowthConsumable(ARogue10mCharacter& Character, const URogue10mItemDataAsset& Item,
+	TFunctionRef<void()> CommitItem)
+{
+	const ARogue10mPlayerState* State = Character.GetPlayerState<ARogue10mPlayerState>();
+	URogue10mSkillTreeProgressionComponent* Progression = State ? State->GetSkillTreeProgressionComponent() : nullptr;
+	const FText ItemName = Item.DisplayName;
+	const int32 RankAmount = Item.IdentityGrowthAmount;
+	if (!Progression || !Progression->TryAddIdentityGrowth(Item.IdentityGrowthType, RankAmount, CommitItem))
+	{
+		return false;
+	}
+	if (ARogue10mPlayerController* Controller = Cast<ARogue10mPlayerController>(Character.GetController()))
+	{
+		Controller->AddCombatLogMessage(FText::Format(NSLOCTEXT("Rogue10mInventory", "IdentityGrowthUsed",
+			"{0} 사용 · 성장 단계 +{1}"), ItemName, FText::AsNumber(RankAmount)).ToString(),
+			FLinearColor(0.91f, 0.72f, 0.30f, 1.0f));
+	}
+	return true;
+}
+}
 
 URogue10mInventoryComponent::URogue10mInventoryComponent()
 {
@@ -571,15 +597,40 @@ bool URogue10mInventoryComponent::UseConsumableQuickSlot(int32 Index)
 		|| !ItemSlots.IsValidIndex(ItemIndex) || GetConsumableQuickSlotCooldownRemaining(Index) > 0.0f) { return false; }
 	FRogue10mItemStack& Item = ItemSlots[ItemIndex];
 	if (!Item.bOccupied || Item.Category != ERogue10mItemCategory::Consumable || Item.Quantity <= 0) { return false; }
+	const auto CommitItem = [this, Index, ItemIndex, &Item]()
+	{
+		ConsumableQuickSlotCooldownEndTimes[Index] = GetWorld() ? GetWorld()->GetTimeSeconds() + Item.UseCooldown : 0.0f;
+		if (--Item.Quantity <= 0)
+		{
+			Item = MakeEmptyItem();
+			ClearQuickSlotAssignmentsForItemSlot(ItemIndex);
+		}
+	};
+	if (Item.ItemData && Item.ItemData->UsesIdentityGrowth())
+	{
+		if (!TryUseIdentityGrowthConsumable(*Character, *Item.ItemData, CommitItem)) { return false; }
+		OnInventoryChanged.Broadcast();
+		return true;
+	}
 	const URogue10mTraitRuntimeComponent* Traits = Character->GetTraitRuntimeComponent();
 	const float RestoreHealth = FMath::Max(0.0f, Item.RestoreHealth) * (Traits ? Traits->GetPotionHealingMultiplier() : 1.0f);
 	Attributes->SetHealth(FMath::Min(Attributes->GetMaxHealth(), Attributes->GetHealth() + RestoreHealth));
-	ConsumableQuickSlotCooldownEndTimes[Index] = GetWorld() ? GetWorld()->GetTimeSeconds() + Item.UseCooldown : 0.0f;
-	if (--Item.Quantity <= 0) { Item = MakeEmptyItem(); ClearQuickSlotAssignmentsForItemSlot(ItemIndex); }
+	CommitItem();
 	OnInventoryChanged.Broadcast();
 	return true;
 }
-void URogue10mInventoryComponent::ClearQuickSlotAssignmentsForItemSlot(int32 ItemIndex){for(int32 I=0;I<ConsumableQuickSlotItemIndices.Num();++I)if(ConsumableQuickSlotItemIndices[I]==ItemIndex)UnassignConsumableQuickSlot(I);}
+
+void URogue10mInventoryComponent::ClearQuickSlotAssignmentsForItemSlot(int32 ItemIndex)
+{
+	for (int32 Index = 0; Index < ConsumableQuickSlotItemIndices.Num(); ++Index)
+	{
+		if (ConsumableQuickSlotItemIndices[Index] == ItemIndex)
+		{
+			ConsumableQuickSlotItemIndices[Index] = INDEX_NONE;
+			ConsumableQuickSlotCooldownEndTimes[Index] = 0.0f;
+		}
+	}
+}
 FRogue10mInventorySlot* URogue10mInventoryComponent::FindEquipmentSlot(ERogue10mInventorySlotType SlotType)
 {
 	for (FRogue10mInventorySlot& Slot : LeftEquipmentSlots)
@@ -1096,13 +1147,31 @@ bool URogue10mInventoryComponent::TryUseGridConsumable(int32 ContainerIndex, FGu
 
 	ARogue10mCharacter* Character = Cast<ARogue10mCharacter>(GetOwner());
 	URogue10mAttributeSet* Attributes = Character ? Character->GetRogueAttributeSet() : nullptr;
-	const URogue10mTraitRuntimeComponent* Traits = Character ? Character->GetTraitRuntimeComponent() : nullptr;
-	const float RestoreHealth = FMath::Max(0.0f, Entry->ItemData->RestoreHealth) * (Traits ? Traits->GetPotionHealingMultiplier() : 1.0f);
-	if (!Character || !Character->HasAuthority() || Character->IsDead() || !Attributes || Attributes->GetHealth() <= 0.0f
-		|| RestoreHealth <= 0.0f || Attributes->GetHealth() >= Attributes->GetMaxHealth())
+	if (!Character || !Character->HasAuthority() || Character->IsDead() || !Attributes || Attributes->GetHealth() <= 0.0f)
 	{
 		return false;
 	}
+	const auto CommitItem = [this, Entry, ContainerIndex, InstanceId]()
+	{
+		if (--Entry->Quantity <= 0)
+		{
+			InventoryContainers[ContainerIndex].Entries.RemoveAll(
+				[InstanceId](const FRogue10mInventoryGridEntry& Candidate)
+				{
+					return Candidate.InstanceId == InstanceId;
+				});
+		}
+	};
+	if (Entry->ItemData->UsesIdentityGrowth())
+	{
+		if (!TryUseIdentityGrowthConsumable(*Character, *Entry->ItemData, CommitItem)) { return false; }
+		NotifyGridChanged();
+		return true;
+	}
+
+	const URogue10mTraitRuntimeComponent* Traits = Character->GetTraitRuntimeComponent();
+	const float RestoreHealth = FMath::Max(0.0f, Entry->ItemData->RestoreHealth) * (Traits ? Traits->GetPotionHealingMultiplier() : 1.0f);
+	if (RestoreHealth <= 0.0f || Attributes->GetHealth() >= Attributes->GetMaxHealth()) { return false; }
 
 	const FText ItemName = Entry->ItemData->DisplayName;
 	const float PreviousHealth = Attributes->GetHealth();
@@ -1113,15 +1182,7 @@ bool URogue10mInventoryComponent::TryUseGridConsumable(int32 ContainerIndex, FGu
 		return false;
 	}
 
-	--Entry->Quantity;
-	if (Entry->Quantity <= 0)
-	{
-		InventoryContainers[ContainerIndex].Entries.RemoveAll(
-			[InstanceId](const FRogue10mInventoryGridEntry& Candidate)
-			{
-				return Candidate.InstanceId == InstanceId;
-			});
-	}
+	CommitItem();
 	NotifyGridChanged();
 
 	if (ARogue10mPlayerController* Controller = Character

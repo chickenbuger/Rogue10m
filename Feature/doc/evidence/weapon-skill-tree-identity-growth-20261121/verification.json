@@ -1,0 +1,74 @@
+{
+  "engine": "UE 5.8",
+  "upstream": "455037c8445dfdbe649a979fce26f5b9aec1c6de",
+  "build": "Rogue10mEditor Win64 Development succeeded",
+  "input": "Programmatic Unreal gameplay and Slate pointer routes",
+  "renderer": "Direct3D 11 software adapter (WARP)",
+  "known_adapter_error": "Direct3D 11 initial hardware adapter probe returned 0x887A0004 before selecting the software adapter",
+  "style_checks": {
+    "runtime": {
+      "passed": 326,
+      "new_errors": 1
+    },
+    "read": {
+      "passed": 106,
+      "new_errors": 1
+    },
+    "automation": {
+      "passed": 13,
+      "new_errors": 0,
+      "tests": [
+        "Rogue10m.AttackResources.AggregationAndAtomicFailure",
+        "Rogue10m.AttackResources.InvalidDataAndDiscount",
+        "Rogue10m.AttackResources.OptionalManaAndExecutionSnapshot",
+        "Rogue10m.AttackResources.ReentrantAcceptanceRejected",
+        "Rogue10m.HybridSkillTree.CommonSkillWeb",
+        "Rogue10m.HybridSkillTree.LevelAndConsumableIdentityGrowth",
+        "Rogue10m.HybridSkillTree.MasteryAlternativesAndLegacy",
+        "Rogue10m.HybridSkillTree.MasteryAndRewards",
+        "Rogue10m.HybridSkillTree.SharedLedgerAndValidation",
+        "Rogue10m.ProgressionRequirements.InvalidDataAndEmptyDefaults",
+        "Rogue10m.ProgressionRequirements.LegacyAlternativesAndGroups",
+        "Rogue10m.ProgressionRequirements.LiveAcquisitionAndAttack",
+        "Rogue10m.ProgressionRequirements.TruthTable"
+      ]
+    }
+  },
+  "editor_asset_authoring_new_errors": 0,
+  "captures": [
+    {
+      "path": "DevLog/20261121_WeaponSkillTree/knuckle-tree.png",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "path": "Feature/doc/evidence/weapon-skill-tree-identity-growth-20261121/knuckle-720p.png",
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "path": "Feature/doc/evidence/weapon-skill-tree-identity-growth-20261121/sword-1080p.png",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "path": "Feature/doc/evidence/weapon-skill-tree-identity-growth-20261121/sword-720p.png",
+      "width": 1280,
+      "height": 720
+    }
+  ],
+  "dodge_integration": {
+    "upstream": "2666013df02da3329eae98254b531c6cbb85083a",
+    "editor_build": "passed",
+    "automation_passed": 13,
+    "roll_numeric_passed": 27,
+    "roll_travel_cm": 304.56,
+    "new_errors": 0
+  },
+  "published_candidate": {
+    "upstream": "754bd05165e1b867b6b523ed8d248f1668f12657",
+    "editor_build": "passed",
+    "automation_passed": 13,
+    "new_errors": 0
+  }
+}

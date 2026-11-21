@@ -1,10 +1,13 @@
 Arin dialogue-pose runtime verification, 2026-11-21 KST
 
-Integrated candidate
-Base 2666013df02da3329eae98254b531c6cbb85083a plus this Arin scope
-UE 5.8 Development Editor Win64: 18 of 18 build actions succeeded with -NoHotReloadFromIDE, build mutex honored.
-StartHub ArinMotionIntegratedA -Motion -NullRHI: exit 0. 39 assertions passed and results were serialized (40 engine checks). CheckUnrealOutputLog.py --after-line 0: zero errors, zero new errors. Six preexisting QA saves matched SHA-256. The preserved output is results-nullrhi.txt and poses-nullrhi.csv.
-The active setup, Arin mesh, skeleton, three sequences and StartHub map match the earlier base; runtime-assets-sha256.csv records the blobs and actual byte hashes.
+Final integrated candidate
+Base c81da27c1c34dee5bcf9eee71eeafb01452888b6 (melee effects and weapon skill trees) plus this Arin scope.
+UE 5.8 Development Editor Win64: 41 of 41 build actions succeeded with -NoHotReloadFromIDE, build mutex honored.
+StartHub ArinMotionMergedA -Motion -NullRHI: exit 0. 39 assertions passed and results were serialized (40 engine checks). CheckUnrealOutputLog.py --after-line 0: zero errors, zero new errors. Eight preexisting QA saves matched SHA-256. Verification completed at 16:13 KST. The preserved output is results-nullrhi.txt and poses-nullrhi.csv.
+The active setup, Arin mesh, skeleton, three sequences and StartHub map match both older bases; runtime-assets-sha256.csv records the blobs and actual byte hashes. The StartHub external actors match the preceding integration base.
+
+Prior integrated run
+Base 2666013df02da3329eae98254b531c6cbb85083a plus the same Arin source. UE 5.8 Development Editor succeeded on 18 build actions. ArinMotionIntegratedA -Motion -NullRHI passed 39 assertions, serialized results, found zero log errors and preserved six QA saves by SHA-256.
 
 Rendered provenance
 Base 2011e0dec81b634330c58187b58f639a7dd5cae7 with the same Arin runtime files.

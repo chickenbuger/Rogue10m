@@ -335,19 +335,20 @@ private:
 		State->RecordSkillUse(TEXT("TownQaSkill"), 17);
 		State->RecordMonsterDefeat(TEXT("TownQaMonster"), 9);
         const int32 UnlocksBefore = Combat->GetUnlockedWeaponSkills().Num();
-        const FName TechniqueId(TEXT("F.Bengquan")), IdentityId(TEXT("I.InternalEnergy.Entry"));
+        const FName TechniqueId(TEXT("F.Bengquan"));
         const auto* Technique = Tree->FindNode(TechniqueId);
-        const auto* Identity = Tree->FindNode(IdentityId);
         auto* LearnedSkill = Technique ? Technique->Skill.LoadSynchronous() : nullptr;
-        Check(Technique && Identity && LearnedSkill && Technique->bAutomaticUnlock
+        Check(Technique && LearnedSkill && Technique->bAutomaticUnlock
             && LearnedSkill->IsAllowedInLoadoutSlot(ERogue10mAttackInputSlot::QSkill)
             && !Tree->IsNodeUnlocked(TechniqueId) && !Combat->IsAttackSkillUnlocked(LearnedSkill), TEXT("authored_nondefault_common_technique_starts_locked"));
         if (Failures) { Finish(); return; }
         const int32 BeforeIdentity = Tree->GetAvailableGrowthPoints();
-        Check(Tree->TryUnlockNode(IdentityId, ERogue10mSkillTreeUnlockRoute::Points, NAME_None)
-            && Tree->GetActiveIdentity() == ERogue10mSkillTreeIdentity::InternalEnergy
-            && Tree->GetAvailableGrowthPoints() == BeforeIdentity - Identity->PointCost
-            && Town->GetAvailableTraitPoints() == 0, TEXT("inner_energy_entry_spends_exact_run_points_only"));
+        const auto InternalEnergy = ERogue10mSkillTreeIdentity::InternalEnergy;
+        const int32 BeforeEnergyRank = Tree->GetIdentityRank(InternalEnergy);
+        Check(Tree->TryAddIdentityGrowth(InternalEnergy, 1, []{})
+            && Tree->GetActiveIdentity() == InternalEnergy && Tree->GetIdentityRank(InternalEnergy) == BeforeEnergyRank + 1
+            && Tree->GetAvailableGrowthPoints() == BeforeIdentity && Town->GetAvailableTraitPoints() == 0,
+            TEXT("inner_energy_growth_preserves_run_and_lobby_points"));
         // Synthetic mastery events are fixture preparation, not physical hits or full-run play.
         int32 Events = 0;
         while (!Tree->IsNodeUnlocked(TechniqueId) && Events < 2000)
@@ -470,9 +471,13 @@ private:
 			TEXT("restart_restores_nonempty_moved_health_potion_quick_slot"));
 		Check(Same(Expected->Combat, Combat->CaptureCombat()), TEXT("restart_restores_unlocked_skills_and_input_bindings"));
 		Check(Same(Expected->Town, Town->CaptureProgression()), TEXT("restart_restores_traits_difficulty_and_authored_modifiers"));
-        Check(Same(Expected->SkillTree, State->GetSkillTreeProgressionComponent()->Capture())
+        const auto* Tree = State->GetSkillTreeProgressionComponent();
+        const auto InternalEnergy = ERogue10mSkillTreeIdentity::InternalEnergy;
+        Check(Same(Expected->SkillTree, Tree->Capture())
+            && Expected->SkillTree.IdentityConsumableRanks.FindRef(InternalEnergy) == 1
+            && Tree->GetIdentityRank(InternalEnergy) == Expected->Growth.Level
             && Expected->LobbyEarnedPoints == Town->GetLobbyEarnedBudget()
-            && Expected->HighestRunLevel == Town->GetLobbyUnlockLevel(), TEXT("restart_restores_skill_tree_and_lobby_budget"));
+            && Expected->HighestRunLevel == Town->GetLobbyUnlockLevel(), TEXT("restart_restores_skill_tree_typed_growth_and_lobby_budget"));
 		Check(State->GetSkillUseCount(TEXT("TownQaSkill")) == 17 && State->GetMonsterDefeatCount(TEXT("TownQaMonster")) == 9,
 			TEXT("named_progression_counters_survive_independent_process"));
 		const FRogue10mInventorySnapshot BeforeClaim = Inventory->CaptureInventory();
@@ -491,6 +496,7 @@ private:
 		Town = State ? State->GetTownProgressionComponent() : nullptr;
 		Check(State && Inventory && Town && Persistence->GetAttachedProfileId() == OtherProfile.ProfileId
 			&& State->GetPlayerLevel() == 1 && State->GetSkillUseCount(TEXT("TownQaSkill")) == 0
+			&& State->GetSkillTreeProgressionComponent()->GetIdentityRank(InternalEnergy) == 0
 			&& Inventory->GetGold() == 0 && Town->GetTraitLevel(ERogue10mTownTrait::Vitality) == 0
 			&& Town->GetDifficulty() == ERogue10mDifficulty::Normal
 			&& !Persistence->HasClaimedReward(NPC->TutorialData->RewardId), TEXT("same_character_class_profile_progression_and_receipts_are_separated"));

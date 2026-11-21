@@ -21,9 +21,11 @@ class URogue10mCharacterDataAsset;
 class URogue10mDodgeSkillDataAsset;
 class URogue10mWeaponSkillProfileDataAsset;
 class URogue10mTechniqueMotionComponent;
+class URogue10mMeleeVfxComponent;
 class UAnimInstance;
 class USkeletalMeshComponent;
 struct FRogue10mCombatSnapshot;
+namespace Rogue10m::MeleeVfx { struct FImpactPoint; }
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRogue10mSkillTreeChanged);
 
@@ -43,6 +45,7 @@ struct FRogue10mActiveAttackExecution
 	int32 CompletedPulses = 0;
 	bool bConfirmedCameraFeedbackSent = false;
 	bool bBrawlerPresentation = false;
+	int32 MeleeVfxTier = INDEX_NONE;
 	bool bAdvanceEndpointContact = false;
 	bool bAuthoredContactSequence = false;
 	ERogue10mAttackHitMode AcceptedHitMode = ERogue10mAttackHitMode::Single;
@@ -271,7 +274,8 @@ private:
 	void StartChargeEffect(const URogue10mAttackSkillData& SkillData);
 	void StopChargeEffect();
 	void SpawnCastEffect(const URogue10mAttackSkillData& SkillData) const;
-	void SpawnImpactEffect(const URogue10mAttackSkillData& SkillData, const AActor& TargetActor, bool bBrawlerPresentation) const;
+	void SpawnImpactEffect(const URogue10mAttackSkillData& SkillData, const AActor& TargetActor, bool bBrawlerPresentation,
+		const Rogue10m::MeleeVfx::FImpactPoint* MeleeImpact) const;
 	void ConfigureTransientEffect(
 		UNiagaraComponent* EffectComponent, float UniformScale,
 		float EmissionDuration, float TimeDilation) const;
@@ -364,6 +368,8 @@ private:
 	TMap<uint32, FRogue10mActiveAttackExecution> ActiveAttackExecutions;
 	UPROPERTY(Transient)
 	TObjectPtr<URogue10mTechniqueMotionComponent> TechniqueMotion;
+	UPROPERTY(Transient)
+	TObjectPtr<URogue10mMeleeVfxComponent> MeleeVfx;
 	FQuat AcceptedAdvanceRotation = FQuat::Identity;
 	uint64 AdvanceCancellationEpoch = 0;
 	uint64 DamageInterruptionEpoch = 0;

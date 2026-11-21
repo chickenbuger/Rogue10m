@@ -45,11 +45,17 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree") bool TryUnlockNode(FName NodeId, ERogue10mSkillTreeUnlockRoute Route, FName ChoiceId);
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") ERogue10mSkillTreeIdentity GetActiveIdentity() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") ERogue10mSkillTreeIdentity GetRememberedIdentity() const { return State.ActiveIdentity; }
+	UFUNCTION(BlueprintPure, Category="Rogue10m|Identity") int32 GetIdentityRank(ERogue10mSkillTreeIdentity Identity) const;
+	bool CanAddIdentityGrowth(ERogue10mSkillTreeIdentity Identity, int32 RankAmount) const;
+	/** Commit the validated inventory debit before broadcasting either domain's completed change. */
+	bool TryAddIdentityGrowth(ERogue10mSkillTreeIdentity Identity, int32 RankAmount, TFunctionRef<void()> CommitConsumable);
+	float GetManaCapacityBonus() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") FName GetActiveIdentityChoice() const;
 	ERogue10mSkillTreeIdentity GetActiveIdentity(ERogue10mSkillTreeTrack Track) const;
 	FName GetSelectedProperty(ERogue10mSkillTreeIdentity Identity) const;
 	bool IsIdentityDeepened(ERogue10mSkillTreeIdentity Identity) const;
 	bool HasResonance(ERogue10mSkillTreeTrack Track, ERogue10mSkillTreeIdentity Identity) const;
+	float GetResonanceDamageBonus(ERogue10mSkillTreeTrack Track, ERogue10mSkillTreeIdentity Identity) const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree") bool IsIdentityLearned(ERogue10mSkillTreeIdentity Identity) const;
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree") bool TrySetActiveIdentity(ERogue10mSkillTreeIdentity Identity);
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree") bool TrySetActiveChoice(FName NodeId, FName ChoiceId);
@@ -83,8 +89,8 @@ private:
 	bool RestoreForTransaction(const FRogue10mSkillTreeSnapshot& Snapshot, bool bNotify, int32 TraitSpentPoints);
 	UPROPERTY() FRogue10mSkillTreeSnapshot State;
 	const ARogue10mPlayerState* GetPlayerState() const;
-	bool PrerequisitesComplete(const FRogue10mSkillTreeNodeDefinition& Node) const;
-	bool MasteryRequirementsComplete(const FRogue10mSkillTreeNodeDefinition& Node) const;
+	bool IsResonanceLearned(const FRogue10mSkillTreeNodeDefinition& Node) const;
+	int32 CountResonances(ERogue10mSkillTreeTrack Track, ERogue10mSkillTreeIdentity Identity) const;
 	bool ApplyRespec(FRogue10mSkillTreeSnapshot&& Candidate);
 	void NotifyChanged(bool bIdentityChanged = false);
 	bool bRefreshing = false;

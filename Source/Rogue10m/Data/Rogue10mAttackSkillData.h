@@ -296,6 +296,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Visual|Niagara")
 	bool bEnableAttackEffects = false;
 
+	/** Pose trails, range outlines and confirmed-hit sparks for third-person Knuckle and GreatSword attacks. */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Visual|Melee")
+	bool bEnableMeleeReadabilityVfx = true;
+
 	/** 공격 동작이 시작될 때 손 소켓에 재생할 UE 5.8 Niagara Cue입니다. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Rogue10m|Visual|Niagara")
 	TObjectPtr<UNiagaraSystem> CastEffect;

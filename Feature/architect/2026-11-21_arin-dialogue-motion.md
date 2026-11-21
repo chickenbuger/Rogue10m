@@ -1,6 +1,6 @@
 # 아린 대화 자세 전환
 
-작업 브랜치 `Sprint#17-5-arin-dialogue-motion`. `2011e0de`에서 렌더를 검증하고 최신 통합 기준 `2666013d`에서 수치 검사를 반복했다.
+작업 브랜치 `Sprint#17-5-arin-dialogue-motion`. `2011e0de`에서 렌더를 검증하고 후속 전투 효과와 무기 스킬을 포함한 통합 기준 `c81da27c`에서 수치 검사를 반복했다.
 
 ## 원인과 기존 리소스
 
@@ -13,7 +13,7 @@
 | 목표 | 구현 범위 | 완료 조건과 검증 | 복구 범위 |
 | --- | --- | --- | --- |
 | 대기와 대화 사이의 손·상체 연속성 | `Rogue10mTutorialGuideAnimInstance`, 안내인 액터와 애니메이션 컴포넌트 | `.\Scripts\BuildEditor.ps1 -ProjectRoot 'D:\Project\Rogue10m\tmp\ArinMotionWorktree20261121' -NoHotReload` 및 아래 StartHub 자세 검사 | 네이티브 인스턴스, 액터와 컴포넌트 연결 |
-| 실제 위치에서 전환 측정 | 기존 NPC 검증 실행기와 아린 PIE 검증기의 애니메이션 상태 조회 | `.\Scripts\VerifyNpcDialogue.ps1 -Label ArinMotionIntegratedA -Motion -NullRHI`, 별도 레이블로 화면 확인 | 실행기와 검증기 변경 |
+| 실제 위치에서 전환 측정 | 기존 NPC 검증 실행기와 아린 PIE 검증기의 애니메이션 상태 조회 | `.\Scripts\VerifyNpcDialogue.ps1 -Label ArinMotionMergedA -Motion -NullRHI`, 별도 레이블로 화면 확인 | 실행기와 검증기 변경 |
 
 안내인 전용 네이티브 그래프에서 반복 시퀀스 플레이어 하나를 유지한다. 클립을 바꾸면 직전의 실제 출력 자세와 새 클립의 진행 자세를 0.18초에 걸쳐 이어간다. 블렌드 도중 다시 바뀌면 그때까지 화면에 출력한 자세를 시작점으로 쓴다. Unreal의 자세 보간으로 뼈·커브·커스텀 속성을 함께 섞는다. LOD 변경 시 공통 뼈는 메시 인덱스로 이전 자세를 찾아 이어주고 새로 평가할 뼈와 현재 레이아웃의 커스텀 속성은 목적지 값을 쓴다. 같은 클립의 걷기 속도 변경은 클립 시계를 유지한다. 대화 우선순위, 기존 보행 감지, 호환성 검사와 Idle 대체를 애니메이션 컴포넌트에서 처리한다. 에디터의 액터 미리보기는 기존 단일 클립을 사용한다.
 

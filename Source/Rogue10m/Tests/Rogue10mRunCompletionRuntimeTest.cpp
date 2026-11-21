@@ -250,10 +250,11 @@ private:
 		State->AddExperience(100);
 		const FVector OriginalLocation = Character->GetActorLocation();
 		Character->SetActorLocation(ServiceNPC->GetActorLocation() + FVector(100, 0, 100), false, nullptr, ETeleportType::TeleportPhysics);
-		Check(Tree->CanChangeInvestments() && Tree->TryUnlockNode(TEXT("I.FightingSpirit.Entry"), ERogue10mSkillTreeUnlockRoute::Points, NAME_None),
-			TEXT("fixture_purchases_identity_entry_with_actual_shared_point"));
-		Check(Tree->GetSpentSkillTreePoints() == 1 && Tree->GetActiveIdentity() == ERogue10mSkillTreeIdentity::FightingSpirit,
-			TEXT("fixture_has_paid_ledger_and_active_identity"));
+		Check(Tree->CanChangeInvestments() && Tree->TryUnlockNode(TEXT("C.AirControl"), ERogue10mSkillTreeUnlockRoute::Points, NAME_None),
+			TEXT("fixture_purchases_common_ability_with_actual_shared_point"));
+		Check(Tree->TryAddIdentityGrowth(ERogue10mSkillTreeIdentity::FightingSpirit, 1, []{})
+			&& Tree->GetSpentSkillTreePoints() == 1 && Tree->GetActiveIdentity() == ERogue10mSkillTreeIdentity::FightingSpirit,
+			TEXT("fixture_has_paid_ledger_and_typed_identity_growth"));
 		Character->SetActorLocation(OriginalLocation, false, nullptr, ETeleportType::TeleportPhysics);
 	}
 	void VerifyRun()
@@ -498,6 +499,7 @@ private:
 			&& FreshSave->Growth.WeaponType == ERogue10mWeaponType::Unarmed, TEXT("town_return_resets_run_growth_and_equipment"));
 		const auto* Tree = State->GetSkillTreeProgressionComponent();
 		Check(Tree && Tree->GetMasteryTotalExperience(ERogue10mSkillTreeTrack::Brawler) == 0 && Tree->GetSpentSkillTreePoints() == 0
+			&& Tree->GetIdentityRank(ERogue10mSkillTreeIdentity::FightingSpirit) == 0 && FreshSave->SkillTree.IdentityConsumableRanks.IsEmpty()
 			&& FreshSave->Inventory.Gold == StarterGold && FreshSave->Inventory.Crystals == StarterCrystals,
 			TEXT("town_return_restores_starter_currency_and_resets_run_skill_investments"));
 		VerifyDiskSnapshot(TEXT("fresh_run_after_town_return"));

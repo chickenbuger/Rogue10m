@@ -15,15 +15,14 @@ class URogue10mHybridSkillTreeGraphWidget;
 class URogue10mSkillBindingComponent;
 class URogue10mSkillTreeProgressionComponent;
 class URogue10mTownProgressionComponent;
-class UBorder;
 class UCanvasPanel;
 class UComboBoxString;
 class UDragDropOperation;
 class UHorizontalBox;
 class UImage;
 class UInputKeySelector;
-class UOverlaySlot;
 class UProgressBar;
+class UScrollBox;
 class USizeBox;
 class UTextBlock;
 class UVerticalBox;
@@ -148,8 +147,6 @@ public:
 	void BrowseTrack(ERogue10mSkillTreeTrack Track);
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
 	void BrowseTab(ERogue10mSkillTreeTab Tab);
-	void BrowseCommonIdentity();
-	bool IsShowingCommonIdentity() const { return bShowingCommonIdentity; }
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
 	void SelectNode(FName NodeId);
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree")
@@ -162,9 +159,10 @@ public:
 	TArray<ERogue10mSkillTreeTab> GetTabOrder() const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree")
 	int32 GetVisibleNodeCount() const;
+	TArray<FName> GetVisibleNodeIds() const;
 	TArray<FRogue10mSkillTreeNodeDefinition> GetDisplayNodes() const;
 	URogue10mAttackSkillData* GetSelectedAttackSkill() const { return GetSelectedSkill(); }
-	/** Read-only presentation queries share the geometry used by the painted frame. */
+	/** Read-only presentation queries use the same bounds as the node hit region. */
 	URogue10mHybridSkillTreeEntryWidget* FindNodeEntry(FName NodeId) const;
 	FName GetNodeFrameShape(FName NodeId) const;
 	int32 GetNodeFrameOutlineCount(FName NodeId) const;
@@ -175,11 +173,10 @@ protected:
 	virtual void NativeDestruct() override;
 private:
 	void BuildTree();
-	void ApplyCommonChrome(bool bCommonWeb);
+	void StyleTreeChrome();
 	void BindContext();
 	void RefreshEquipmentTab();
-	void BrowseTabView(ERogue10mSkillTreeTab Tab, bool bShowCommonIdentity);
-	void SetDisplayedTab(ERogue10mSkillTreeTab Tab, bool bShowCommonIdentity = false);
+	void SetDisplayedTab(ERogue10mSkillTreeTab Tab);
 	URogue10mHybridSkillTreeButton* GetTabButton(ERogue10mSkillTreeTab Tab) const;
 	bool IsDisplayingActiveTrack() const;
 	void RefreshDetails();
@@ -215,36 +212,23 @@ private:
 	bool bSelectEquippedTabOnRefresh = false;
 	bool bUpdatingKeys = false;
 	bool bApplyingAction = false;
-	bool bRefundConfirmation = false;
 	bool bWindowActive = false;
-	bool bShowingCommonIdentity = false;
-	TOptional<bool> bCommonChromeEnabled;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeGraphWidget> Graph;
-	UPROPERTY(Transient) TObjectPtr<USizeBox> WindowSize;
-	UPROPERTY(Transient) TObjectPtr<USizeBox> LeftColumnSize;
-	UPROPERTY(Transient) TObjectPtr<USizeBox> GraphViewportSize;
-	UPROPERTY(Transient) TObjectPtr<UBorder> WindowRim;
-	UPROPERTY(Transient) TObjectPtr<UBorder> WindowInterior;
-	UPROPERTY(Transient) TObjectPtr<UOverlaySlot> DetailPanelSlot;
-	UPROPERTY(Transient) TObjectPtr<UOverlaySlot> GraphPanelSlot;
-	UPROPERTY(Transient) TArray<TObjectPtr<UWidget>> CommonChromeWidgets;
 	UPROPERTY(Transient) TObjectPtr<UHorizontalBox> TabBar;
 	UPROPERTY(Transient) TObjectPtr<UHorizontalBox> TreeBody;
 	UPROPERTY(Transient) TObjectPtr<UVerticalBox> MasterySection;
+	UPROPERTY(Transient) TObjectPtr<UScrollBox> DetailsScroll;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> MagicPlaceholder;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> CommonTab;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> FighterTab;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> GreatSwordTab;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> MagicTab;
-	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> CommonViewToggle;
-	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeEntryWidget> CommonDetailIcon;
+	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeEntryWidget> DetailIcon;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> CommonGrowthText;
-	UPROPERTY(Transient) TObjectPtr<UTextBlock> DetailHeading;
-	UPROPERTY(Transient) TObjectPtr<UTextBlock> GrowthText;
+	UPROPERTY(Transient) TObjectPtr<UTextBlock> IdentityGrowthText;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> MasteryText;
 	UPROPERTY(Transient) TObjectPtr<UProgressBar> MasteryBar;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> MasteryStatsText;
-	UPROPERTY(Transient) TObjectPtr<UTextBlock> IdentityText;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> ContextText;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> DetailName;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> DetailState;
@@ -253,15 +237,11 @@ private:
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> DetailCost;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> MessageText;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> BindingText;
-	UPROPERTY(Transient) TObjectPtr<UTextBlock> LegendText;
 	UPROPERTY(Transient) TObjectPtr<UComboBoxString> BasicSkillPicker;
 	UPROPERTY(Transient) TObjectPtr<UInputKeySelector> KeySelector;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> ClearKeyButton;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> PointsButton;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> MasteryButton;
-	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> ActivateButton;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> ChoiceAButton;
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> ChoiceBButton;
-	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> RefundButton;
-	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> RefundCancelButton;
 };

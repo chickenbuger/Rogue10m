@@ -1,4 +1,4 @@
-label=ArinMotionIntegratedA
+label=ArinMotionMergedA
 checks=39
 failures=0
 manual_mode=0
@@ -19,13 +19,13 @@ PASS required_Arin_pose_bone_exists
 PASS required_Arin_pose_bone_exists
 PASS native_motion_dialogue_opened
 PASS native_motion_dialogue_state_changed
-MOTION idle_to_talk n=15 first_step_cm=0.000000 peak_step_cm=1.412129 plant_cm=0.000006 max_sample_gap_s=0.016667
+MOTION idle_to_talk n=15 first_step_cm=0.000000 peak_step_cm=1.416856 plant_cm=0.000006 max_sample_gap_s=0.016667
 PASS motion_wrist_continuity
 PASS motion_root_and_feet_stay_planted
 PASS motion_high_rate_fresh_pose_samples
 PASS motion_destination_asset_and_time_advance
 PASS outgoing_gesture_observed_at_0_8_seconds
-GESTURE clip_s=0.816667 wrist_excursion_cm=29.917983
+GESTURE clip_s=0.816667 wrist_excursion_cm=30.338067
 PASS evaluated_Talk_pose_has_actual_gesture_excursion
 PASS native_motion_dialogue_state_changed
 MOTION talk_to_idle n=15 first_step_cm=0.000000 peak_step_cm=4.429038 plant_cm=0.000006 max_sample_gap_s=0.016667
