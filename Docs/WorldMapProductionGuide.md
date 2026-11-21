@@ -8,6 +8,8 @@
 
 `/Game/Rogue10m/Maps/StartHub`는 시작 메뉴와 마을 플레이에 사용한다. `/Game/Rogue10m/Maps/OpenRunMap`은 정상 출발 포탈, 전투, 보스 클리어에 사용한다. 이후 오픈 월드 작업은 기존 `OpenRunMap`을 열고 Map Maker에서 필요한 World Partition 작업 구역을 골라 진행한다. 지난 지형·도로·동굴 후보는 복구본과 설계 기록으로 참조하며, 배치가 필요한 요소를 기존 레벨에 작은 단위로 적용한다. [두 맵 통합 결과](../Feature/doc/2026-11-18_playable-map-consolidation.md)
 
+2026-11-22 기준 `OpenRunMap`의 지형은 X −33,750–67,500cm, Y 22,500–78,750cm다. 자연 절벽 안의 9×5 Landscape 컴포넌트에 세 마을, 두 동굴, 중앙로, 최종 보스가 있다. StartHub 포탈에서 오는 플레이어는 기획상의 남쪽 필드 입구 S에 도착한다. 옛 남쪽 진입로와 교량이 필요했던 범위는 기존 설계 보관본에서 참조할 수 있다. [플레이 영역 축소 결과](../Feature/doc/2026-11-22_openrun-playable-footprint.md)
+
 ## 제작 전 반드시 함께 읽을 자료
 
 1. 이 문서: 최신 사용자 결정, 미정 사항, 제작 순서와 인수 기준.

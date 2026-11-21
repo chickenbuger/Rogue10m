@@ -3517,3 +3517,9 @@ G2 동시작업 경계: stage 후 자연경계 소유 작업이 디스크709개�
 - 기존 필드 레벨에서 지형·두 동굴과 세 마을의 건물, 울타리, 갈색 바닥을 복구했다. 회색 외곽벽 네 개는 충돌 설정을 유지하며 표시를 껐다.
 - 새 Unreal 세션에서 376개 배치를 다시 확인했다. 실제 StartHub 포탈 보행 17개 검사와 동굴 카메라 구체 충돌 검사 48회를 수행했다.
 - 현재 브랜치에 복구 체크포인트를 남겼다. 전체 외곽 지형의 면적 정리는 추가 검증이 필요하다. [작업 계획](../Feature/architect/2026-11-22_openrun-layout-restoration.md) · [검증 결과](../Feature/doc/2026-11-22_openrun-layout-restoration.md)
+
+### Sprint#17-1 — OpenRunMap 플레이 영역 축소
+
+- 기존 OpenRunMap의 외곽 지형 211개를 제거해 자연 절벽 안쪽 1,012.5×562.5m를 남겼다. 새 도착점은 기획상의 남쪽 필드 입구다.
+- 유지 지형 높이와 충돌을 독립 재로드로 대조했다. 실제 포탈 보행, 보스 최종 타격·정산·귀환, 새 세션에서 저장 읽기를 검증했다.
+- 현재 작업 브랜치에서 검증을 마쳤다. [작업 계획](../Feature/architect/2026-11-22_openrun-playable-footprint.md) · [검증 결과](../Feature/doc/2026-11-22_openrun-playable-footprint.md)
