@@ -8,7 +8,50 @@
 #include "Rogue10mCharacter.h"
 #include "Rogue10m.h"
 #include "Animation/AnimMontage.h"
+#include "Animation/PoseSnapshot.h"
+#include "BoneContainer.h"
 #include "Math/RotationMatrix.h"
+#include "Rogue10mWeaponRetargetAnimInstance.h"
+
+void URogue10mWeaponVisualComponent::SwitchWeaponRetarget(USkeletalMeshComponent& Body, UClass* NewClass, bool bThirdPerson)
+{
+ if (bThirdPerson && NewClass->IsChildOf<URogue10mWeaponRetargetAnimInstance>() && Body.GetBoneTransformRevisionNumber() > 0)
+ {
+  if (const auto* OldAnim = Cast<URogue10mWeaponRetargetAnimInstance>(Body.GetAnimInstance()))
+  {
+   const auto& Bones = OldAnim->GetRequiredBones().GetBoneIndicesArray();
+   FPoseSnapshot PreviousPose;
+   if (!Bones.IsEmpty()) { Body.SnapshotPose(PreviousPose); }
+   if (PreviousPose.bIsValid)
+   {
+    PendingRetargetBones.Init(false, PreviousPose.LocalTransforms.Num());
+    for (const FBoneIndexType Bone : Bones)
+    {
+     if (PendingRetargetBones.IsValidIndex(Bone)) { PendingRetargetBones[Bone] = true; }
+    }
+    PendingRetargetPose = MoveTemp(PreviousPose.LocalTransforms);
+    PendingRetargetBody = &Body;
+    PendingRetargetClass = NewClass;
+   }
+  }
+ }
+ // InitAnim can immediately evaluate the new Blueprint at time zero.
+ Body.SetAnimInstanceClass(NewClass);
+ PendingRetargetBody.Reset();
+ PendingRetargetClass.Reset();
+ PendingRetargetPose.Reset();
+ PendingRetargetBones.Reset();
+}
+
+bool URogue10mWeaponVisualComponent::ConsumeEquipmentRetargetPose(UAnimInstance& Instance,
+ TArray<FTransform>& OutPose, TBitArray<>& OutBones)
+{
+ if (Instance.GetSkelMeshComponent() != PendingRetargetBody.Get() || Instance.GetClass() != PendingRetargetClass.Get()
+     || PendingRetargetPose.IsEmpty()) { return false; }
+ OutPose = MoveTemp(PendingRetargetPose);
+ OutBones = MoveTemp(PendingRetargetBones);
+ return true;
+}
 
 bool URogue10mWeaponVisualComponent::BuildSwordPalmGrip(const FVector& RightPalm, const FVector& LeftPalm, const FVector& FingerAxis, FTransform& OutGrip)
 {
@@ -243,6 +286,8 @@ void URogue10mWeaponVisualComponent::RefreshBodyRetarget(USkeletalMeshComponent*
  if (!Body) { return; }
  USkeletalMesh* Mesh = Body->GetSkeletalMeshAsset();
  UClass* Current = Body->GetAnimClass();
+ const auto* Character = Cast<ARogue10mCharacter>(GetOwner());
+ const bool bThirdPerson = Character && Character->IsThirdPersonGameplayActive();
  // Restore only our own change. A profile can replace the mesh/class independently.
  if (AppliedSwordBodyAnimClass && (Current != AppliedSwordBodyAnimClass || Body->GetAnimationMode() != EAnimationMode::AnimationBlueprint))
  {
@@ -255,7 +300,7 @@ void URogue10mWeaponVisualComponent::RefreshBodyRetarget(USkeletalMeshComponent*
   {
    if (SwordClass != Current)
    {
-    Body->SetAnimInstanceClass(SwordClass);
+    SwitchWeaponRetarget(*Body, SwordClass, bThirdPerson);
     if (Body->GetAnimClass() == SwordClass)
     {
      PreviousBodyAnimClass = Current; PreviousBodyMesh = Mesh; AppliedSwordBodyAnimClass = SwordClass;
@@ -267,7 +312,7 @@ void URogue10mWeaponVisualComponent::RefreshBodyRetarget(USkeletalMeshComponent*
  {
   if (Current == AppliedSwordBodyAnimClass && Mesh && PreviousBodyMesh && Mesh->GetSkeleton() == PreviousBodyMesh->GetSkeleton() && PreviousBodyAnimClass)
   {
-   Body->SetAnimInstanceClass(PreviousBodyAnimClass);
+   SwitchWeaponRetarget(*Body, PreviousBodyAnimClass, bThirdPerson);
    // UE can reject a switch during parallel animation evaluation. Keep ownership for a later refresh.
    if (Body->GetAnimClass() != PreviousBodyAnimClass) { return; }
   }
