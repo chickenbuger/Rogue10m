@@ -1,0 +1,2669 @@
+{
+  "integration_sha": "a605f5bc15260d15ae48fc9f68e10a9add2cf930",
+  "main_base": "ad94906da359f8394ee2c29c9eed20e4e7d9fb7b",
+  "mode": "standalone, programmatic controller input, fixed 60Hz",
+  "roll_profiles": {
+    "HumanMale": {
+      "label": "HumanMaleRollBackFixD",
+      "direction": "Back",
+      "alignment": 1.0,
+      "travel_cm": 304.5587,
+      "pose_csv_sha256": "7eea97baa8ab21eb6a8b134ab095a4f624455dafdb5005513fc142ff882b430c",
+      "active": 22,
+      "paired": 21,
+      "airborne": 0,
+      "sword_floor_min_cm": 1.2349,
+      "min_joint_floor_proxy_cm": {
+        "head": 32.2774,
+        "ball_l": 4.8736,
+        "ball_r": 3.4716,
+        "hand_r": 11.0238
+      },
+      "sword": {
+        "hilt_palm_error_max_cm": 8.660254043054661e-05,
+        "windows": {
+          "entry": {
+            "orientation_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 32.9512847166219,
+              "axis_deg": 31.684565251243615,
+              "tip_step_cm": 101.53695992194174
+            },
+            "axis_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 32.9512847166219,
+              "axis_deg": 31.684565251243615,
+              "tip_step_cm": 101.53695992194174
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 32.9512847166219,
+              "axis_deg": 31.684565251243615,
+              "tip_step_cm": 101.53695992194174
+            }
+          },
+          "carry": {
+            "orientation_deg": {
+              "phase": [
+                0.70028,
+                0.746966
+              ],
+              "orientation_deg": 8.630832269074432,
+              "axis_deg": 6.850673802837372,
+              "tip_step_cm": 21.940338024971247
+            },
+            "axis_deg": {
+              "phase": [
+                0.70028,
+                0.746966
+              ],
+              "orientation_deg": 8.630832269074432,
+              "axis_deg": 6.850673802837372,
+              "tip_step_cm": 21.940338024971247
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 8.353235497303581,
+              "axis_deg": 4.023959207112696,
+              "tip_step_cm": 39.0005517035336
+            }
+          },
+          "recovery": {
+            "orientation_deg": {
+              "phase": [
+                0.887022,
+                0.933707
+              ],
+              "orientation_deg": 59.13088178160818,
+              "axis_deg": 44.512928869629306,
+              "tip_step_cm": 110.65842024920651
+            },
+            "axis_deg": {
+              "phase": [
+                0.840336,
+                0.887022
+              ],
+              "orientation_deg": 54.61606849825976,
+              "axis_deg": 45.18725392488229,
+              "tip_step_cm": 116.78878252790372
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.840336,
+                0.887022
+              ],
+              "orientation_deg": 54.61606849825976,
+              "axis_deg": 45.18725392488229,
+              "tip_step_cm": 116.78878252790372
+            }
+          }
+        },
+        "recovered_hilt_palm_error_cm": 2.278173318171838e-13
+      },
+      "body": {
+        "release_forearm_peak": [
+          "0.3735→0.4202",
+          38.24954018471089
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 18.33198455012518,
+          "0.5602→0.6069": 12.616488304340828
+        },
+        "recovered_hand_span_delta_cm": 0.0776110246025965,
+        "support_wrist_horizontal_range_cm": 5.877502116545681,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.9999867560954184,
+            0.9999984148805368
+          ],
+          "pelvis/thigh_r": [
+            0.9999936475998623,
+            1.0000029683269336
+          ],
+          "thigh_l/calf_l": [
+            0.9999969058498026,
+            1.0000005477470975
+          ],
+          "thigh_r/calf_r": [
+            0.9999984861830717,
+            1.0000016644856222
+          ],
+          "calf_l/foot_l": [
+            0.9999998758030205,
+            1.0000031916767584
+          ],
+          "calf_r/foot_r": [
+            0.9999959367976481,
+            1.0000004312714343
+          ],
+          "upperarm_l/lowerarm_l": [
+            0.9999973753601941,
+            1.000002365543157
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999973921530214,
+            1.0000023904474336
+          ],
+          "lowerarm_l/hand_l": [
+            0.9999962798511917,
+            1.0000017611321796
+          ],
+          "lowerarm_r/hand_r": [
+            0.9999984774786314,
+            1.0000029889126318
+          ]
+        }
+      },
+      "source.": {
+        "release_forearm_peak": [
+          "0.3735→0.4202",
+          38.283141217193545
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 18.29107859322996,
+          "0.5602→0.6069": 12.62323335847275
+        },
+        "recovered_hand_span_delta_cm": -0.015446139035294237,
+        "support_wrist_horizontal_range_cm": 3.3162432389678727,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.9999835837917261,
+            1.000495674403666
+          ],
+          "pelvis/thigh_r": [
+            0.9999989124916828,
+            1.0005116930054498
+          ],
+          "thigh_l/calf_l": [
+            0.9999978685936791,
+            1.000801261567745
+          ],
+          "thigh_r/calf_r": [
+            0.9999994752479812,
+            1.0008022254730011
+          ],
+          "calf_l/foot_l": [
+            0.9999993697876167,
+            1.0008037108023342
+          ],
+          "calf_r/foot_r": [
+            0.9999973590561799,
+            1.0007994218042324
+          ],
+          "upperarm_l/lowerarm_l": [
+            0.9999956466185637,
+            1.010791555283721
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999980643578377,
+            1.0107943593264022
+          ],
+          "lowerarm_l/hand_l": [
+            0.9999975516066542,
+            1.0190237319489448
+          ],
+          "lowerarm_r/hand_r": [
+            0.999996004389989,
+            1.0190134696629403
+          ]
+        }
+      }
+    },
+    "HumanFemale": {
+      "label": "HumanFemaleRollBackFixD",
+      "direction": "Back",
+      "alignment": 1.0,
+      "travel_cm": 304.5587,
+      "pose_csv_sha256": "e98f7f4fce0f64db87330b798a0ef29a5debb69ff2d345edc7ad5a32d43d6392",
+      "active": 22,
+      "paired": 21,
+      "airborne": 0,
+      "sword_floor_min_cm": 19.376,
+      "min_joint_floor_proxy_cm": {
+        "head": 32.9694,
+        "ball_l": 4.2831,
+        "ball_r": 3.4782,
+        "hand_r": 28.4252
+      },
+      "sword": {
+        "hilt_palm_error_max_cm": 8.660254036285834e-05,
+        "windows": {
+          "entry": {
+            "orientation_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.567556425680756,
+              "axis_deg": 33.53921218356764,
+              "tip_step_cm": 104.0177392241343
+            },
+            "axis_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.567556425680756,
+              "axis_deg": 33.53921218356764,
+              "tip_step_cm": 104.0177392241343
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.567556425680756,
+              "axis_deg": 33.53921218356764,
+              "tip_step_cm": 104.0177392241343
+            }
+          },
+          "carry": {
+            "orientation_deg": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 19.135923378605533,
+              "axis_deg": 4.918930822916875,
+              "tip_step_cm": 37.371569062323275
+            },
+            "axis_deg": {
+              "phase": [
+                0.70028,
+                0.746966
+              ],
+              "orientation_deg": 12.659440117311757,
+              "axis_deg": 5.341486368358829,
+              "tip_step_cm": 21.854777887912736
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 19.135923378605533,
+              "axis_deg": 4.918930822916875,
+              "tip_step_cm": 37.371569062323275
+            }
+          },
+          "recovery": {
+            "orientation_deg": {
+              "phase": [
+                0.887022,
+                0.933707
+              ],
+              "orientation_deg": 56.8262927403163,
+              "axis_deg": 41.25145532152592,
+              "tip_step_cm": 102.48400912615583
+            },
+            "axis_deg": {
+              "phase": [
+                0.840336,
+                0.887022
+              ],
+              "orientation_deg": 52.39557045670324,
+              "axis_deg": 43.33724893626446,
+              "tip_step_cm": 114.52936510209949
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.840336,
+                0.887022
+              ],
+              "orientation_deg": 52.39557045670324,
+              "axis_deg": 43.33724893626446,
+              "tip_step_cm": 114.52936510209949
+            }
+          }
+        },
+        "recovered_hilt_palm_error_cm": 7.071067811095352e-05
+      },
+      "body": {
+        "release_forearm_peak": [
+          "0.3735→0.4202",
+          35.7997961822359
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 17.459305796098253,
+          "0.5602→0.6069": 12.012844780020906
+        },
+        "recovered_hand_span_delta_cm": 0.15513300534439622,
+        "support_wrist_horizontal_range_cm": 17.301802271728885,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.999989088339342,
+            1.0000043491854766
+          ],
+          "pelvis/thigh_r": [
+            0.9999900192209055,
+            1.0000013567104415
+          ],
+          "thigh_l/calf_l": [
+            0.9999993895931605,
+            1.000001936080219
+          ],
+          "thigh_r/calf_r": [
+            0.9999990402351729,
+            1.0000018907638264
+          ],
+          "calf_l/foot_l": [
+            0.9999978185508379,
+            1.0000018470519698
+          ],
+          "calf_r/foot_r": [
+            0.9999999081483847,
+            1.0000030953221626
+          ],
+          "upperarm_l/lowerarm_l": [
+            0.9999947204970069,
+            0.999998984778203
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999982235283322,
+            1.0000066735418753
+          ],
+          "lowerarm_l/hand_l": [
+            0.9999979572445499,
+            1.0000030388639494
+          ],
+          "lowerarm_r/hand_r": [
+            0.9999963028584505,
+            1.0000004543123902
+          ]
+        }
+      },
+      "source.": {
+        "release_forearm_peak": [
+          "0.3735→0.4202",
+          38.283141217193545
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 18.29107859322996,
+          "0.5602→0.6069": 12.62323335847275
+        },
+        "recovered_hand_span_delta_cm": -0.015446139035294237,
+        "support_wrist_horizontal_range_cm": 3.3162432389678727,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.9999835837917261,
+            1.000495674403666
+          ],
+          "pelvis/thigh_r": [
+            0.9999989124916828,
+            1.0005116930054498
+          ],
+          "thigh_l/calf_l": [
+            0.9999978685936791,
+            1.000801261567745
+          ],
+          "thigh_r/calf_r": [
+            0.9999994752479812,
+            1.0008022254730011
+          ],
+          "calf_l/foot_l": [
+            0.9999993697876167,
+            1.0008037108023342
+          ],
+          "calf_r/foot_r": [
+            0.9999973590561799,
+            1.0007994218042324
+          ],
+          "upperarm_l/lowerarm_l": [
+            0.9999956466185637,
+            1.010791555283721
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999980643578377,
+            1.0107943593264022
+          ],
+          "lowerarm_l/hand_l": [
+            0.9999975516066542,
+            1.0190237319489448
+          ],
+          "lowerarm_r/hand_r": [
+            0.999996004389989,
+            1.0190134696629403
+          ]
+        }
+      }
+    },
+    "DwarfMale": {
+      "label": "DwarfMaleRollBackFixD",
+      "direction": "Back",
+      "alignment": 1.0,
+      "travel_cm": 304.5587,
+      "pose_csv_sha256": "189a20498868ddfd0a6e4160feae856909aa8387f1650ff50936522ba22c1a10",
+      "active": 22,
+      "paired": 21,
+      "airborne": 0,
+      "sword_floor_min_cm": 0.6342,
+      "min_joint_floor_proxy_cm": {
+        "head": 12.6073,
+        "ball_l": -0.9974,
+        "ball_r": -4.4294,
+        "hand_r": 8.9428
+      },
+      "sword": {
+        "hilt_palm_error_max_cm": 8.660254042234198e-05,
+        "windows": {
+          "entry": {
+            "orientation_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.323482350827895,
+              "axis_deg": 33.19354484316632,
+              "tip_step_cm": 113.83864281205216
+            },
+            "axis_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.323482350827895,
+              "axis_deg": 33.19354484316632,
+              "tip_step_cm": 113.83864281205216
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.323482350827895,
+              "axis_deg": 33.19354484316632,
+              "tip_step_cm": 113.83864281205216
+            }
+          },
+          "carry": {
+            "orientation_deg": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 23.538105744363662,
+              "axis_deg": 7.541928783645637,
+              "tip_step_cm": 60.20100479468751
+            },
+            "axis_deg": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 23.538105744363662,
+              "axis_deg": 7.541928783645637,
+              "tip_step_cm": 60.20100479468751
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 23.538105744363662,
+              "axis_deg": 7.541928783645637,
+              "tip_step_cm": 60.20100479468751
+            }
+          },
+          "recovery": {
+            "orientation_deg": {
+              "phase": [
+                0.887022,
+                0.933707
+              ],
+              "orientation_deg": 57.08360822190687,
+              "axis_deg": 41.38313160283286,
+              "tip_step_cm": 116.15952225190148
+            },
+            "axis_deg": {
+              "phase": [
+                0.840336,
+                0.887022
+              ],
+              "orientation_deg": 52.111649008247674,
+              "axis_deg": 42.34565238521285,
+              "tip_step_cm": 128.674481163477
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.840336,
+                0.887022
+              ],
+              "orientation_deg": 52.111649008247674,
+              "axis_deg": 42.34565238521285,
+              "tip_step_cm": 128.674481163477
+            }
+          }
+        },
+        "recovered_hilt_palm_error_cm": 8.660254029927236e-05
+      },
+      "body": {
+        "release_forearm_peak": [
+          "0.3268→0.3735",
+          55.39142279000267
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 11.443950775273143,
+          "0.5602→0.6069": 12.599148297759251
+        },
+        "recovered_hand_span_delta_cm": 0.07469351849081818,
+        "support_wrist_horizontal_range_cm": 12.144800665717044,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.9999954750637804,
+            1.0000029527317318
+          ],
+          "pelvis/thigh_r": [
+            0.9999952011248693,
+            1.0000036804752923
+          ],
+          "thigh_l/calf_l": [
+            0.9999989975320293,
+            1.0000036833235517
+          ],
+          "thigh_r/calf_r": [
+            0.9999973859218478,
+            1.0000014994447122
+          ],
+          "calf_l/foot_l": [
+            0.9999954370824351,
+            1.000000449982439
+          ],
+          "calf_r/foot_r": [
+            0.999997821027971,
+            1.0000021960511734
+          ],
+          "upperarm_l/lowerarm_l": [
+            1.0000007581142816,
+            1.0000049321501447
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999993787477136,
+            1.0000030999559564
+          ],
+          "lowerarm_l/hand_l": [
+            0.9999972277650435,
+            1.000004248785322
+          ],
+          "lowerarm_r/hand_r": [
+            1.0000000823910289,
+            1.0000061807233442
+          ]
+        }
+      },
+      "source.": {
+        "release_forearm_peak": [
+          "0.3735→0.4202",
+          38.283141217193545
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 18.29107859322996,
+          "0.5602→0.6069": 12.62323335847275
+        },
+        "recovered_hand_span_delta_cm": -0.015446139035294237,
+        "support_wrist_horizontal_range_cm": 3.3162432389678727,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.9999835837917261,
+            1.000495674403666
+          ],
+          "pelvis/thigh_r": [
+            0.9999989124916828,
+            1.0005116930054498
+          ],
+          "thigh_l/calf_l": [
+            0.9999978685936791,
+            1.000801261567745
+          ],
+          "thigh_r/calf_r": [
+            0.9999994752479812,
+            1.0008022254730011
+          ],
+          "calf_l/foot_l": [
+            0.9999993697876167,
+            1.0008037108023342
+          ],
+          "calf_r/foot_r": [
+            0.9999973590561799,
+            1.0007994218042324
+          ],
+          "upperarm_l/lowerarm_l": [
+            0.9999956466185637,
+            1.010791555283721
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999980643578377,
+            1.0107943593264022
+          ],
+          "lowerarm_l/hand_l": [
+            0.9999975516066542,
+            1.0190237319489448
+          ],
+          "lowerarm_r/hand_r": [
+            0.999996004389989,
+            1.0190134696629403
+          ]
+        }
+      }
+    },
+    "DwarfFemale": {
+      "label": "DwarfFemaleRollBackFixD",
+      "direction": "Back",
+      "alignment": 1.0,
+      "travel_cm": 304.5587,
+      "pose_csv_sha256": "9ea68ea9553b1aab081b2160898a2d252a7cade2d00f0a1f8ad53b13facae424",
+      "active": 22,
+      "paired": 21,
+      "airborne": 0,
+      "sword_floor_min_cm": 0.6342,
+      "min_joint_floor_proxy_cm": {
+        "head": 19.7054,
+        "ball_l": 4.8463,
+        "ball_r": 3.1808,
+        "hand_r": 9.9026
+      },
+      "sword": {
+        "hilt_palm_error_max_cm": 8.660254043054661e-05,
+        "windows": {
+          "entry": {
+            "orientation_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.964961550097655,
+              "axis_deg": 33.858931552052304,
+              "tip_step_cm": 102.04813264156289
+            },
+            "axis_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.964961550097655,
+              "axis_deg": 33.858931552052304,
+              "tip_step_cm": 102.04813264156289
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.964961550097655,
+              "axis_deg": 33.858931552052304,
+              "tip_step_cm": 102.04813264156289
+            }
+          },
+          "carry": {
+            "orientation_deg": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 56.68476238052696,
+              "axis_deg": 11.265414865938824,
+              "tip_step_cm": 49.21565493671694
+            },
+            "axis_deg": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 56.68476238052696,
+              "axis_deg": 11.265414865938824,
+              "tip_step_cm": 49.21565493671694
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 56.68476238052696,
+              "axis_deg": 11.265414865938824,
+              "tip_step_cm": 49.21565493671694
+            }
+          },
+          "recovery": {
+            "orientation_deg": {
+              "phase": [
+                0.887022,
+                0.933707
+              ],
+              "orientation_deg": 55.982846759404495,
+              "axis_deg": 42.23073467869786,
+              "tip_step_cm": 105.02275348223355
+            },
+            "axis_deg": {
+              "phase": [
+                0.840336,
+                0.887022
+              ],
+              "orientation_deg": 51.959393327491355,
+              "axis_deg": 44.385173989909966,
+              "tip_step_cm": 116.76971786833263
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.840336,
+                0.887022
+              ],
+              "orientation_deg": 51.959393327491355,
+              "axis_deg": 44.385173989909966,
+              "tip_step_cm": 116.76971786833263
+            }
+          }
+        },
+        "recovered_hilt_palm_error_cm": 5.000000000165983e-05
+      },
+      "body": {
+        "release_forearm_peak": [
+          "0.3735→0.4202",
+          53.062460813137825
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 14.381133890446137,
+          "0.5602→0.6069": 12.602255533365982
+        },
+        "recovered_hand_span_delta_cm": 0.12819860564251684,
+        "support_wrist_horizontal_range_cm": 4.151916556242409,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            1.000003557146208,
+            1.0000126358247943
+          ],
+          "pelvis/thigh_r": [
+            0.999990364439395,
+            1.0000014606641574
+          ],
+          "thigh_l/calf_l": [
+            0.9999973680462405,
+            1.0000008498232897
+          ],
+          "thigh_r/calf_r": [
+            0.9999978523431547,
+            1.000002066120168
+          ],
+          "calf_l/foot_l": [
+            0.99999631817229,
+            1.0000016900955901
+          ],
+          "calf_r/foot_r": [
+            0.9999973484551232,
+            1.0000033882316
+          ],
+          "upperarm_l/lowerarm_l": [
+            0.9999974226522954,
+            1.0000038946213772
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999949475305202,
+            1.0000010519736995
+          ],
+          "lowerarm_l/hand_l": [
+            0.9999973700108117,
+            1.0000041439533232
+          ],
+          "lowerarm_r/hand_r": [
+            0.9999969598737181,
+            1.0000037889206976
+          ]
+        }
+      },
+      "source.": {
+        "release_forearm_peak": [
+          "0.3735→0.4202",
+          38.283141217193545
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 18.29107859322996,
+          "0.5602→0.6069": 12.62323335847275
+        },
+        "recovered_hand_span_delta_cm": -0.015446139035294237,
+        "support_wrist_horizontal_range_cm": 3.3162432389678727,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.9999835837917261,
+            1.000495674403666
+          ],
+          "pelvis/thigh_r": [
+            0.9999989124916828,
+            1.0005116930054498
+          ],
+          "thigh_l/calf_l": [
+            0.9999978685936791,
+            1.000801261567745
+          ],
+          "thigh_r/calf_r": [
+            0.9999994752479812,
+            1.0008022254730011
+          ],
+          "calf_l/foot_l": [
+            0.9999993697876167,
+            1.0008037108023342
+          ],
+          "calf_r/foot_r": [
+            0.9999973590561799,
+            1.0007994218042324
+          ],
+          "upperarm_l/lowerarm_l": [
+            0.9999956466185637,
+            1.010791555283721
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999980643578377,
+            1.0107943593264022
+          ],
+          "lowerarm_l/hand_l": [
+            0.9999975516066542,
+            1.0190237319489448
+          ],
+          "lowerarm_r/hand_r": [
+            0.999996004389989,
+            1.0190134696629403
+          ]
+        }
+      }
+    },
+    "OrcMale": {
+      "label": "OrcMaleRollBackFixD",
+      "direction": "Back",
+      "alignment": 1.0,
+      "travel_cm": 304.5587,
+      "pose_csv_sha256": "4c7bcea854ce720a51b0ffacbcfb457b4f46fee51078a9effc0374c86b71f457",
+      "active": 22,
+      "paired": 21,
+      "airborne": 0,
+      "sword_floor_min_cm": 1.6632,
+      "min_joint_floor_proxy_cm": {
+        "head": 29.5411,
+        "ball_l": 4.4068,
+        "ball_r": 3.2835,
+        "hand_r": 11.5335
+      },
+      "sword": {
+        "hilt_palm_error_max_cm": 8.660254042952104e-05,
+        "windows": {
+          "entry": {
+            "orientation_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.54184337694276,
+              "axis_deg": 33.532815947258854,
+              "tip_step_cm": 104.22785710782888
+            },
+            "axis_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.54184337694276,
+              "axis_deg": 33.532815947258854,
+              "tip_step_cm": 104.22785710782888
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.54184337694276,
+              "axis_deg": 33.532815947258854,
+              "tip_step_cm": 104.22785710782888
+            }
+          },
+          "carry": {
+            "orientation_deg": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 23.214491710152938,
+              "axis_deg": 6.924202642844262,
+              "tip_step_cm": 45.375657550827974
+            },
+            "axis_deg": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 23.214491710152938,
+              "axis_deg": 6.924202642844262,
+              "tip_step_cm": 45.375657550827974
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 23.214491710152938,
+              "axis_deg": 6.924202642844262,
+              "tip_step_cm": 45.375657550827974
+            }
+          },
+          "recovery": {
+            "orientation_deg": {
+              "phase": [
+                0.887022,
+                0.933707
+              ],
+              "orientation_deg": 57.507719452206445,
+              "axis_deg": 43.0302230132843,
+              "tip_step_cm": 106.8837254585561
+            },
+            "axis_deg": {
+              "phase": [
+                0.840336,
+                0.887022
+              ],
+              "orientation_deg": 51.990676276272765,
+              "axis_deg": 43.44837450718191,
+              "tip_step_cm": 115.59797984796276
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.840336,
+                0.887022
+              ],
+              "orientation_deg": 51.990676276272765,
+              "axis_deg": 43.44837450718191,
+              "tip_step_cm": 115.59797984796276
+            }
+          }
+        },
+        "recovered_hilt_palm_error_cm": 4.9999999873762135e-05
+      },
+      "body": {
+        "release_forearm_peak": [
+          "0.3735→0.4202",
+          38.24953902452217
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 18.332002223634543,
+          "0.5602→0.6069": 12.616485715815797
+        },
+        "recovered_hand_span_delta_cm": 0.5907986789734778,
+        "support_wrist_horizontal_range_cm": 13.938149169814485,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.9999908954332087,
+            1.0000051975095192
+          ],
+          "pelvis/thigh_r": [
+            0.9999965761432792,
+            1.0000047669900651
+          ],
+          "thigh_l/calf_l": [
+            0.999996984497773,
+            1.0000006477067278
+          ],
+          "thigh_r/calf_r": [
+            0.99999789854942,
+            1.00000100086915
+          ],
+          "calf_l/foot_l": [
+            1.0000005170261586,
+            1.0000032419887763
+          ],
+          "calf_r/foot_r": [
+            0.9999979175849603,
+            1.000000947794168
+          ],
+          "upperarm_l/lowerarm_l": [
+            0.9999957613909898,
+            1.0000004462302696
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999972678403047,
+            1.000003170008206
+          ],
+          "lowerarm_l/hand_l": [
+            0.9999956343547227,
+            1.0000013870763058
+          ],
+          "lowerarm_r/hand_r": [
+            0.9999970523020772,
+            1.000002517599683
+          ]
+        }
+      },
+      "source.": {
+        "release_forearm_peak": [
+          "0.3735→0.4202",
+          38.283141217193545
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 18.29107859322996,
+          "0.5602→0.6069": 12.62323335847275
+        },
+        "recovered_hand_span_delta_cm": -0.015446139035294237,
+        "support_wrist_horizontal_range_cm": 3.3162432389678727,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.9999835837917261,
+            1.000495674403666
+          ],
+          "pelvis/thigh_r": [
+            0.9999989124916828,
+            1.0005116930054498
+          ],
+          "thigh_l/calf_l": [
+            0.9999978685936791,
+            1.000801261567745
+          ],
+          "thigh_r/calf_r": [
+            0.9999994752479812,
+            1.0008022254730011
+          ],
+          "calf_l/foot_l": [
+            0.9999993697876167,
+            1.0008037108023342
+          ],
+          "calf_r/foot_r": [
+            0.9999973590561799,
+            1.0007994218042324
+          ],
+          "upperarm_l/lowerarm_l": [
+            0.9999956466185637,
+            1.010791555283721
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999980643578377,
+            1.0107943593264022
+          ],
+          "lowerarm_l/hand_l": [
+            0.9999975516066542,
+            1.0190237319489448
+          ],
+          "lowerarm_r/hand_r": [
+            0.999996004389989,
+            1.0190134696629403
+          ]
+        }
+      }
+    },
+    "OrcFemale": {
+      "label": "OrcFemaleRollBackFixD",
+      "direction": "Back",
+      "alignment": 1.0,
+      "travel_cm": 304.5587,
+      "pose_csv_sha256": "593429de152630d4dec0eef36c7f5af95efbcf4577a6e2ce0e2504efd4ce666a",
+      "active": 22,
+      "paired": 21,
+      "airborne": 0,
+      "sword_floor_min_cm": 19.447,
+      "min_joint_floor_proxy_cm": {
+        "head": 32.9695,
+        "ball_l": 4.24,
+        "ball_r": 3.4547,
+        "hand_r": 28.4441
+      },
+      "sword": {
+        "hilt_palm_error_max_cm": 8.660254029927236e-05,
+        "windows": {
+          "entry": {
+            "orientation_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.58022231210124,
+              "axis_deg": 33.55059731665307,
+              "tip_step_cm": 104.05830735366588
+            },
+            "axis_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.58022231210124,
+              "axis_deg": 33.55059731665307,
+              "tip_step_cm": 104.05830735366588
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 33.58022231210124,
+              "axis_deg": 33.55059731665307,
+              "tip_step_cm": 104.05830735366588
+            }
+          },
+          "carry": {
+            "orientation_deg": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 18.733454222587365,
+              "axis_deg": 4.953990881744604,
+              "tip_step_cm": 37.526521941421734
+            },
+            "axis_deg": {
+              "phase": [
+                0.70028,
+                0.746966
+              ],
+              "orientation_deg": 12.37852129859393,
+              "axis_deg": 5.272712660881146,
+              "tip_step_cm": 21.67766816910876
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 18.733454222587365,
+              "axis_deg": 4.953990881744604,
+              "tip_step_cm": 37.526521941421734
+            }
+          },
+          "recovery": {
+            "orientation_deg": {
+              "phase": [
+                0.887022,
+                0.933707
+              ],
+              "orientation_deg": 56.76756828762501,
+              "axis_deg": 41.24602586466828,
+              "tip_step_cm": 102.52389030899091
+            },
+            "axis_deg": {
+              "phase": [
+                0.840336,
+                0.887022
+              ],
+              "orientation_deg": 52.28811853256089,
+              "axis_deg": 43.248447826035324,
+              "tip_step_cm": 114.38832716732949
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.840336,
+                0.887022
+              ],
+              "orientation_deg": 52.28811853256089,
+              "axis_deg": 43.248447826035324,
+              "tip_step_cm": 114.38832716732949
+            }
+          }
+        },
+        "recovered_hilt_palm_error_cm": 7.071067811095352e-05
+      },
+      "body": {
+        "release_forearm_peak": [
+          "0.3735→0.4202",
+          35.73840680463833
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 17.4375151370199,
+          "0.5602→0.6069": 11.996831854943574
+        },
+        "recovered_hand_span_delta_cm": 0.1571906506269798,
+        "support_wrist_horizontal_range_cm": 17.323288542883525,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.999989088339342,
+            1.0000027502289897
+          ],
+          "pelvis/thigh_r": [
+            0.9999900192209055,
+            1.0000013567104415
+          ],
+          "thigh_l/calf_l": [
+            0.9999980494557767,
+            1.0000012474478943
+          ],
+          "thigh_r/calf_r": [
+            0.9999999752669962,
+            1.0000025460057493
+          ],
+          "calf_l/foot_l": [
+            0.9999996139654527,
+            1.000003017329746
+          ],
+          "calf_r/foot_r": [
+            0.9999983675325714,
+            1.0000026907038815
+          ],
+          "upperarm_l/lowerarm_l": [
+            0.9999974138546975,
+            1.000003509220723
+          ],
+          "upperarm_r/lowerarm_r": [
+            1.0000013337242766,
+            1.0000074719182246
+          ],
+          "lowerarm_l/hand_l": [
+            0.999998642037927,
+            1.000003356036859
+          ],
+          "lowerarm_r/hand_r": [
+            0.9999944996541632,
+            0.9999995119865618
+          ]
+        }
+      },
+      "source.": {
+        "release_forearm_peak": [
+          "0.3735→0.4202",
+          38.283141217193545
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 18.29107859322996,
+          "0.5602→0.6069": 12.62323335847275
+        },
+        "recovered_hand_span_delta_cm": -0.015446139035294237,
+        "support_wrist_horizontal_range_cm": 3.3162432389678727,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.9999835837917261,
+            1.000495674403666
+          ],
+          "pelvis/thigh_r": [
+            0.9999989124916828,
+            1.0005116930054498
+          ],
+          "thigh_l/calf_l": [
+            0.9999978685936791,
+            1.000801261567745
+          ],
+          "thigh_r/calf_r": [
+            0.9999994752479812,
+            1.0008022254730011
+          ],
+          "calf_l/foot_l": [
+            0.9999993697876167,
+            1.0008037108023342
+          ],
+          "calf_r/foot_r": [
+            0.9999973590561799,
+            1.0007994218042324
+          ],
+          "upperarm_l/lowerarm_l": [
+            0.9999956466185637,
+            1.010791555283721
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999980643578377,
+            1.0107943593264022
+          ],
+          "lowerarm_l/hand_l": [
+            0.9999975516066542,
+            1.0190237319489448
+          ],
+          "lowerarm_r/hand_r": [
+            0.999996004389989,
+            1.0190134696629403
+          ]
+        }
+      }
+    }
+  },
+  "visual_short": {
+    "label": "DwarfMaleRollBackShortV",
+    "direction": "Back",
+    "alignment": 1.0,
+    "travel_cm": 304.5587,
+    "pose_csv_sha256": "386f5c7d80715e4539fe886bd91733df4e01015f17af785c39a0705b4bf4bfd2",
+    "active": 22,
+    "paired": 21,
+    "airborne": 0,
+    "sword_floor_min_cm": 0.6342,
+    "min_joint_floor_proxy_cm": {
+      "head": 12.6073,
+      "ball_l": -0.9974,
+      "ball_r": -4.4294,
+      "hand_r": 8.9428
+    },
+    "sword": {
+      "hilt_palm_error_max_cm": 8.660254042234198e-05,
+      "windows": {
+        "entry": {
+          "orientation_deg": {
+            "phase": [
+              0.140056,
+              0.186741
+            ],
+            "orientation_deg": 44.32998266850334,
+            "axis_deg": 44.15323183673614,
+            "tip_step_cm": 137.33993273192618
+          },
+          "axis_deg": {
+            "phase": [
+              0.140056,
+              0.186741
+            ],
+            "orientation_deg": 44.32998266850334,
+            "axis_deg": 44.15323183673614,
+            "tip_step_cm": 137.33993273192618
+          },
+          "tip_step_cm": {
+            "phase": [
+              0.140056,
+              0.186741
+            ],
+            "orientation_deg": 44.32998266850334,
+            "axis_deg": 44.15323183673614,
+            "tip_step_cm": 137.33993273192618
+          }
+        },
+        "carry": {
+          "orientation_deg": {
+            "phase": [
+              0.746966,
+              0.793651
+            ],
+            "orientation_deg": 23.538105744363662,
+            "axis_deg": 7.541928783645637,
+            "tip_step_cm": 60.20100479468751
+          },
+          "axis_deg": {
+            "phase": [
+              0.746966,
+              0.793651
+            ],
+            "orientation_deg": 23.538105744363662,
+            "axis_deg": 7.541928783645637,
+            "tip_step_cm": 60.20100479468751
+          },
+          "tip_step_cm": {
+            "phase": [
+              0.746966,
+              0.793651
+            ],
+            "orientation_deg": 23.538105744363662,
+            "axis_deg": 7.541928783645637,
+            "tip_step_cm": 60.20100479468751
+          }
+        },
+        "recovery": {
+          "orientation_deg": {
+            "phase": [
+              0.887022,
+              0.933707
+            ],
+            "orientation_deg": 57.08360822190687,
+            "axis_deg": 41.38313160283286,
+            "tip_step_cm": 116.15952225190148
+          },
+          "axis_deg": {
+            "phase": [
+              0.840336,
+              0.887022
+            ],
+            "orientation_deg": 52.111649008247674,
+            "axis_deg": 42.34565238521285,
+            "tip_step_cm": 128.674481163477
+          },
+          "tip_step_cm": {
+            "phase": [
+              0.840336,
+              0.887022
+            ],
+            "orientation_deg": 52.111649008247674,
+            "axis_deg": 42.34565238521285,
+            "tip_step_cm": 128.674481163477
+          }
+        }
+      },
+      "recovered_hilt_palm_error_cm": 8.660254029927236e-05
+    },
+    "body": {
+      "release_forearm_peak": [
+        "0.3268→0.3735",
+        55.39142279000267
+      ],
+      "release_matched_samples_deg": {
+        "0.4669→0.5135": 11.443950775273143,
+        "0.5602→0.6069": 12.599148297759251
+      },
+      "recovered_hand_span_delta_cm": 0.07469351849081818,
+      "support_wrist_horizontal_range_cm": 12.144800665717044,
+      "active_parent_segment_length_ratio": {
+        "pelvis/thigh_l": [
+          0.9999954750637804,
+          1.0000029527317318
+        ],
+        "pelvis/thigh_r": [
+          0.9999952011248693,
+          1.0000036804752923
+        ],
+        "thigh_l/calf_l": [
+          0.9999989975320293,
+          1.0000036833235517
+        ],
+        "thigh_r/calf_r": [
+          0.9999973859218478,
+          1.0000014994447122
+        ],
+        "calf_l/foot_l": [
+          0.9999954370824351,
+          1.000000449982439
+        ],
+        "calf_r/foot_r": [
+          0.999997821027971,
+          1.0000021960511734
+        ],
+        "upperarm_l/lowerarm_l": [
+          1.0000007581142816,
+          1.0000049321501447
+        ],
+        "upperarm_r/lowerarm_r": [
+          0.9999993787477136,
+          1.0000030999559564
+        ],
+        "lowerarm_l/hand_l": [
+          0.9999972277650435,
+          1.000004248785322
+        ],
+        "lowerarm_r/hand_r": [
+          1.0000000823910289,
+          1.0000061807233442
+        ]
+      }
+    },
+    "source.": {
+      "release_forearm_peak": [
+        "0.3735→0.4202",
+        38.283141217193545
+      ],
+      "release_matched_samples_deg": {
+        "0.4669→0.5135": 18.29107859322996,
+        "0.5602→0.6069": 12.62323335847275
+      },
+      "recovered_hand_span_delta_cm": -0.015446139035294237,
+      "support_wrist_horizontal_range_cm": 3.3162432389678727,
+      "active_parent_segment_length_ratio": {
+        "pelvis/thigh_l": [
+          0.9999835837917261,
+          1.000495674403666
+        ],
+        "pelvis/thigh_r": [
+          0.9999989124916828,
+          1.0005116930054498
+        ],
+        "thigh_l/calf_l": [
+          0.9999978685936791,
+          1.000801261567745
+        ],
+        "thigh_r/calf_r": [
+          0.9999994752479812,
+          1.0008022254730011
+        ],
+        "calf_l/foot_l": [
+          0.9999993697876167,
+          1.0008037108023342
+        ],
+        "calf_r/foot_r": [
+          0.9999973590561799,
+          1.0007994218042324
+        ],
+        "upperarm_l/lowerarm_l": [
+          0.9999956466185637,
+          1.010791555283721
+        ],
+        "upperarm_r/lowerarm_r": [
+          0.9999980643578377,
+          1.0107943593264022
+        ],
+        "lowerarm_l/hand_l": [
+          0.9999975516066542,
+          1.0190237319489448
+        ],
+        "lowerarm_r/hand_r": [
+          0.999996004389989,
+          1.0190134696629403
+        ]
+      }
+    }
+  },
+  "visual_final": {
+    "label": "DwarfMaleRollBackFinalV",
+    "direction": "Back",
+    "alignment": 1.0,
+    "travel_cm": 304.5587,
+    "pose_csv_sha256": "189a20498868ddfd0a6e4160feae856909aa8387f1650ff50936522ba22c1a10",
+    "active": 22,
+    "paired": 21,
+    "airborne": 0,
+    "sword_floor_min_cm": 0.6342,
+    "min_joint_floor_proxy_cm": {
+      "head": 12.6073,
+      "ball_l": -0.9974,
+      "ball_r": -4.4294,
+      "hand_r": 8.9428
+    },
+    "sword": {
+      "hilt_palm_error_max_cm": 8.660254042234198e-05,
+      "windows": {
+        "entry": {
+          "orientation_deg": {
+            "phase": [
+              0.186741,
+              0.233427
+            ],
+            "orientation_deg": 33.323482350827895,
+            "axis_deg": 33.19354484316632,
+            "tip_step_cm": 113.83864281205216
+          },
+          "axis_deg": {
+            "phase": [
+              0.186741,
+              0.233427
+            ],
+            "orientation_deg": 33.323482350827895,
+            "axis_deg": 33.19354484316632,
+            "tip_step_cm": 113.83864281205216
+          },
+          "tip_step_cm": {
+            "phase": [
+              0.186741,
+              0.233427
+            ],
+            "orientation_deg": 33.323482350827895,
+            "axis_deg": 33.19354484316632,
+            "tip_step_cm": 113.83864281205216
+          }
+        },
+        "carry": {
+          "orientation_deg": {
+            "phase": [
+              0.746966,
+              0.793651
+            ],
+            "orientation_deg": 23.538105744363662,
+            "axis_deg": 7.541928783645637,
+            "tip_step_cm": 60.20100479468751
+          },
+          "axis_deg": {
+            "phase": [
+              0.746966,
+              0.793651
+            ],
+            "orientation_deg": 23.538105744363662,
+            "axis_deg": 7.541928783645637,
+            "tip_step_cm": 60.20100479468751
+          },
+          "tip_step_cm": {
+            "phase": [
+              0.746966,
+              0.793651
+            ],
+            "orientation_deg": 23.538105744363662,
+            "axis_deg": 7.541928783645637,
+            "tip_step_cm": 60.20100479468751
+          }
+        },
+        "recovery": {
+          "orientation_deg": {
+            "phase": [
+              0.887022,
+              0.933707
+            ],
+            "orientation_deg": 57.08360822190687,
+            "axis_deg": 41.38313160283286,
+            "tip_step_cm": 116.15952225190148
+          },
+          "axis_deg": {
+            "phase": [
+              0.840336,
+              0.887022
+            ],
+            "orientation_deg": 52.111649008247674,
+            "axis_deg": 42.34565238521285,
+            "tip_step_cm": 128.674481163477
+          },
+          "tip_step_cm": {
+            "phase": [
+              0.840336,
+              0.887022
+            ],
+            "orientation_deg": 52.111649008247674,
+            "axis_deg": 42.34565238521285,
+            "tip_step_cm": 128.674481163477
+          }
+        }
+      },
+      "recovered_hilt_palm_error_cm": 8.660254029927236e-05
+    },
+    "body": {
+      "release_forearm_peak": [
+        "0.3268→0.3735",
+        55.39142279000267
+      ],
+      "release_matched_samples_deg": {
+        "0.4669→0.5135": 11.443950775273143,
+        "0.5602→0.6069": 12.599148297759251
+      },
+      "recovered_hand_span_delta_cm": 0.07469351849081818,
+      "support_wrist_horizontal_range_cm": 12.144800665717044,
+      "active_parent_segment_length_ratio": {
+        "pelvis/thigh_l": [
+          0.9999954750637804,
+          1.0000029527317318
+        ],
+        "pelvis/thigh_r": [
+          0.9999952011248693,
+          1.0000036804752923
+        ],
+        "thigh_l/calf_l": [
+          0.9999989975320293,
+          1.0000036833235517
+        ],
+        "thigh_r/calf_r": [
+          0.9999973859218478,
+          1.0000014994447122
+        ],
+        "calf_l/foot_l": [
+          0.9999954370824351,
+          1.000000449982439
+        ],
+        "calf_r/foot_r": [
+          0.999997821027971,
+          1.0000021960511734
+        ],
+        "upperarm_l/lowerarm_l": [
+          1.0000007581142816,
+          1.0000049321501447
+        ],
+        "upperarm_r/lowerarm_r": [
+          0.9999993787477136,
+          1.0000030999559564
+        ],
+        "lowerarm_l/hand_l": [
+          0.9999972277650435,
+          1.000004248785322
+        ],
+        "lowerarm_r/hand_r": [
+          1.0000000823910289,
+          1.0000061807233442
+        ]
+      }
+    },
+    "source.": {
+      "release_forearm_peak": [
+        "0.3735→0.4202",
+        38.283141217193545
+      ],
+      "release_matched_samples_deg": {
+        "0.4669→0.5135": 18.29107859322996,
+        "0.5602→0.6069": 12.62323335847275
+      },
+      "recovered_hand_span_delta_cm": -0.015446139035294237,
+      "support_wrist_horizontal_range_cm": 3.3162432389678727,
+      "active_parent_segment_length_ratio": {
+        "pelvis/thigh_l": [
+          0.9999835837917261,
+          1.000495674403666
+        ],
+        "pelvis/thigh_r": [
+          0.9999989124916828,
+          1.0005116930054498
+        ],
+        "thigh_l/calf_l": [
+          0.9999978685936791,
+          1.000801261567745
+        ],
+        "thigh_r/calf_r": [
+          0.9999994752479812,
+          1.0008022254730011
+        ],
+        "calf_l/foot_l": [
+          0.9999993697876167,
+          1.0008037108023342
+        ],
+        "calf_r/foot_r": [
+          0.9999973590561799,
+          1.0007994218042324
+        ],
+        "upperarm_l/lowerarm_l": [
+          0.9999956466185637,
+          1.010791555283721
+        ],
+        "upperarm_r/lowerarm_r": [
+          0.9999980643578377,
+          1.0107943593264022
+        ],
+        "lowerarm_l/hand_l": [
+          0.9999975516066542,
+          1.0190237319489448
+        ],
+        "lowerarm_r/hand_r": [
+          0.999996004389989,
+          1.0190134696629403
+        ]
+      }
+    }
+  },
+  "edge_final": {
+    "label": "DwarfMaleRollBackEdgeD",
+    "direction": "Back",
+    "alignment": 1.0,
+    "travel_cm": 308.4985,
+    "pose_csv_sha256": "e2ffd638ac6fa30b7db0f65dff90c4d996141d8ab6bc7ae8b236bd95025aa00f",
+    "active": 22,
+    "paired": 21,
+    "airborne": 15,
+    "sword_floor_min_cm": 12.7835,
+    "min_joint_floor_proxy_cm": {
+      "head": 76.50989999999999,
+      "ball_l": -1.5126999999999953,
+      "ball_r": -4.944700000000012,
+      "hand_r": 33.4512
+    },
+    "sword": {
+      "hilt_palm_error_max_cm": 8.660254042234198e-05,
+      "windows": {
+        "entry": {
+          "orientation_deg": {
+            "phase": [
+              0.186741,
+              0.233427
+            ],
+            "orientation_deg": 33.33188746965288,
+            "axis_deg": 33.20283943988023,
+            "tip_step_cm": 113.85846633957433
+          },
+          "axis_deg": {
+            "phase": [
+              0.186741,
+              0.233427
+            ],
+            "orientation_deg": 33.33188746965288,
+            "axis_deg": 33.20283943988023,
+            "tip_step_cm": 113.85846633957433
+          },
+          "tip_step_cm": {
+            "phase": [
+              0.186741,
+              0.233427
+            ],
+            "orientation_deg": 33.33188746965288,
+            "axis_deg": 33.20283943988023,
+            "tip_step_cm": 113.85846633957433
+          }
+        },
+        "carry": {
+          "orientation_deg": {
+            "phase": [
+              0.746966,
+              0.793651
+            ],
+            "orientation_deg": 23.538105744363662,
+            "axis_deg": 7.541928783645637,
+            "tip_step_cm": 60.20100479468752
+          },
+          "axis_deg": {
+            "phase": [
+              0.746966,
+              0.793651
+            ],
+            "orientation_deg": 23.538105744363662,
+            "axis_deg": 7.541928783645637,
+            "tip_step_cm": 60.20100479468752
+          },
+          "tip_step_cm": {
+            "phase": [
+              0.746966,
+              0.793651
+            ],
+            "orientation_deg": 23.538105744363662,
+            "axis_deg": 7.541928783645637,
+            "tip_step_cm": 60.20100479468752
+          }
+        },
+        "recovery": {
+          "orientation_deg": {
+            "phase": [
+              0.840336,
+              0.887022
+            ],
+            "orientation_deg": 49.94253659264526,
+            "axis_deg": 42.49676095904649,
+            "tip_step_cm": 131.0245091458083
+          },
+          "axis_deg": {
+            "phase": [
+              0.887022,
+              0.933707
+            ],
+            "orientation_deg": 45.589148879006615,
+            "axis_deg": 44.3302509438155,
+            "tip_step_cm": 134.71319230316686
+          },
+          "tip_step_cm": {
+            "phase": [
+              0.887022,
+              0.933707
+            ],
+            "orientation_deg": 45.589148879006615,
+            "axis_deg": 44.3302509438155,
+            "tip_step_cm": 134.71319230316686
+          }
+        }
+      },
+      "recovered_hilt_palm_error_cm": 4.9999999873762135e-05
+    },
+    "body": {
+      "release_forearm_peak": [
+        "0.3735→0.4202",
+        38.020176057722374
+      ],
+      "release_matched_samples_deg": {
+        "0.4669→0.5135": 18.5633814747515,
+        "0.5602→0.6069": 12.599148297759251
+      },
+      "recovered_hand_span_delta_cm": 11.096179585350342,
+      "support_wrist_horizontal_range_cm": 12.144800665717044,
+      "active_parent_segment_length_ratio": {
+        "pelvis/thigh_l": [
+          0.999993580225729,
+          1.000003702876758
+        ],
+        "pelvis/thigh_r": [
+          0.9999968720984026,
+          1.0000059723210346
+        ],
+        "thigh_l/calf_l": [
+          0.9999964422374782,
+          1.0000008672541925
+        ],
+        "thigh_r/calf_r": [
+          0.9999987421779515,
+          1.0000039956584452
+        ],
+        "calf_l/foot_l": [
+          0.9999981150527432,
+          1.0000027613761795
+        ],
+        "calf_r/foot_r": [
+          0.9999969442305701,
+          1.0000021254136984
+        ],
+        "upperarm_l/lowerarm_l": [
+          1.0000005457181482,
+          1.000004719753124
+        ],
+        "upperarm_r/lowerarm_r": [
+          0.9999959319640847,
+          1.000001596163004
+        ],
+        "lowerarm_l/hand_l": [
+          0.9999981887092031,
+          1.000003347556937
+        ],
+        "lowerarm_r/hand_r": [
+          0.9999945715566364,
+          1.0000008100326674
+        ]
+      }
+    },
+    "source.": {
+      "release_forearm_peak": [
+        "0.3735→0.4202",
+        38.283141217193545
+      ],
+      "release_matched_samples_deg": {
+        "0.4669→0.5135": 18.29107859322996,
+        "0.5602→0.6069": 12.62323335847275
+      },
+      "recovered_hand_span_delta_cm": 8.34024695792603,
+      "support_wrist_horizontal_range_cm": 3.3162432389678727,
+      "active_parent_segment_length_ratio": {
+        "pelvis/thigh_l": [
+          0.9999872814789647,
+          1.0004993739844865
+        ],
+        "pelvis/thigh_r": [
+          0.9999959498638673,
+          1.0005062400026357
+        ],
+        "thigh_l/calf_l": [
+          0.9999986533023472,
+          1.0008019543129625
+        ],
+        "thigh_r/calf_r": [
+          0.999998851167515,
+          1.000804088006393
+        ],
+        "calf_l/foot_l": [
+          0.9999992765730515,
+          1.0008041233869247
+        ],
+        "calf_r/foot_r": [
+          0.9999980384489614,
+          1.0008002275698173
+        ],
+        "upperarm_l/lowerarm_l": [
+          0.9999987068268263,
+          1.0107932698011726
+        ],
+        "upperarm_r/lowerarm_r": [
+          0.9999992554834173,
+          1.0107929180223831
+        ],
+        "lowerarm_l/hand_l": [
+          0.9999955455410799,
+          1.0190187484912927
+        ],
+        "lowerarm_r/hand_r": [
+          0.99999774363026,
+          1.0190146804412783
+        ]
+      }
+    }
+  },
+  "edge_compare": {
+    "matched_airborne_carry_frames": 7,
+    "right_hand_hilt_tip_max_difference_cm": 0.0
+  },
+  "dwarf_regressions": {
+    "DwarfMale": {
+      "landing": {
+        "pose_csv_sha256": "3339dc02e3c2877af4611befd55a049392ddcbe22a65cb69b01ff5d3bfc7ab93",
+        "checks": 9641,
+        "failures": 0,
+        "support_window": {
+          "forward_620": {
+            "evaluated_pairs": 14,
+            "elapsed_frames": 15,
+            "sides": {
+              "l": {
+                "min_ball_floor_cm": -3.827893000000131,
+                "ball_path_when_both_frames_within_8cm": 40.134109770146566,
+                "evaluated_contact_pairs": 11,
+                "peak_knee_step_deg": 8.279554889350209,
+                "peak_foot_step_deg": 7.4666057448270795,
+                "max_thigh_stretch_cm": 1.4126584702012224e-06,
+                "max_calf_stretch_cm": 1.2455190372406832e-06
+              },
+              "r": {
+                "min_ball_floor_cm": -4.165806000000202,
+                "ball_path_when_both_frames_within_8cm": 147.17728919381173,
+                "evaluated_contact_pairs": 11,
+                "peak_knee_step_deg": 10.173043581810063,
+                "peak_foot_step_deg": 11.060303934775126,
+                "max_thigh_stretch_cm": 1.6813329040132885e-06,
+                "max_calf_stretch_cm": 1.4740196192519761e-06
+              }
+            }
+          },
+          "forward_610": {
+            "evaluated_pairs": 14,
+            "elapsed_frames": 15,
+            "sides": {
+              "l": {
+                "min_ball_floor_cm": -3.827894000000015,
+                "ball_path_when_both_frames_within_8cm": 38.35022990530482,
+                "evaluated_contact_pairs": 11,
+                "peak_knee_step_deg": 8.279554738134408,
+                "peak_foot_step_deg": 7.466605896456976,
+                "max_thigh_stretch_cm": 1.6453801379157085e-06,
+                "max_calf_stretch_cm": 1.2620169052013352e-06
+              },
+              "r": {
+                "min_ball_floor_cm": -4.165807000000086,
+                "ball_path_when_both_frames_within_8cm": 145.38674613056853,
+                "evaluated_contact_pairs": 11,
+                "peak_knee_step_deg": 10.1730446548422,
+                "peak_foot_step_deg": 11.060302886667078,
+                "max_thigh_stretch_cm": 2.1312092357561596e-06,
+                "max_calf_stretch_cm": 1.3042149298314598e-06
+              }
+            }
+          }
+        }
+      },
+      "standing_equip": {
+        "pose_csv_sha256": "29b47bd49764f3d62db21aa6c4d8bf4ce03da637b35ba895e1f6716fb367bb5e",
+        "transitions": {
+          "31": {
+            "maximum_cm": 1.7830520586242016,
+            "by_bone_cm": {
+              "hand_l": 0.9488963840514949,
+              "hand_r": 1.7830520586242016,
+              "foot_l": 0.16510480438800226,
+              "foot_r": 0.19180313256305317
+            }
+          },
+          "69": {
+            "maximum_cm": 1.3890442567711778,
+            "by_bone_cm": {
+              "hand_l": 0.6341537660891056,
+              "hand_r": 1.3890442567711778,
+              "foot_l": 0.1133388565409061,
+              "foot_r": 0.1670435041598432
+            }
+          }
+        }
+      },
+      "moving_equip_before": {
+        "pose_csv_sha256": "10d02c92edf36802fb4c5204cc73eec4c10bb5117dfb97e204874bd45fb8a5c4",
+        "transitions": {
+          "31": {
+            "maximum_cm": 1.7830520586242016,
+            "by_bone_cm": {
+              "hand_l": 0.9488963840514949,
+              "hand_r": 1.7830520586242016,
+              "foot_l": 0.16510480438800226,
+              "foot_r": 0.19180313256305317
+            }
+          },
+          "69": {
+            "maximum_cm": 27.060722203999692,
+            "by_bone_cm": {
+              "hand_l": 18.3000807365331,
+              "hand_r": 27.060722203999692,
+              "foot_l": 7.382711514170724,
+              "foot_r": 6.899311848385606
+            }
+          }
+        }
+      },
+      "moving_equip_after": {
+        "pose_csv_sha256": "ed2813206fd7b5df211557baa11bde65331f8b30e1ccb4cdcc0ead1875c9a864",
+        "transitions": {
+          "31": {
+            "maximum_cm": 1.7830520586242016,
+            "by_bone_cm": {
+              "hand_l": 0.9488963840514949,
+              "hand_r": 1.7830520586242016,
+              "foot_l": 0.16510480438800226,
+              "foot_r": 0.19180313256305317
+            }
+          },
+          "69": {
+            "maximum_cm": 27.060722203999692,
+            "by_bone_cm": {
+              "hand_l": 18.3000807365331,
+              "hand_r": 27.060722203999692,
+              "foot_l": 7.382711514170724,
+              "foot_r": 6.899311848385606
+            }
+          }
+        }
+      }
+    },
+    "DwarfFemale": {
+      "landing": {
+        "pose_csv_sha256": "cd6be5e7aec7a37751d137299e0b92153f693398b33c80271f5f19470f5b2a55",
+        "checks": 9641,
+        "failures": 0,
+        "support_window": {
+          "forward_620": {
+            "evaluated_pairs": 14,
+            "elapsed_frames": 15,
+            "sides": {
+              "l": {
+                "min_ball_floor_cm": 6.318130999999994,
+                "ball_path_when_both_frames_within_8cm": 25.906507656889033,
+                "evaluated_contact_pairs": 6,
+                "peak_knee_step_deg": 8.954699370454833,
+                "peak_foot_step_deg": 8.551726280955817,
+                "max_thigh_stretch_cm": 1.4235158758424404e-06,
+                "max_calf_stretch_cm": 1.6698787064228782e-06
+              },
+              "r": {
+                "min_ball_floor_cm": 7.644233999999869,
+                "ball_path_when_both_frames_within_8cm": 0,
+                "evaluated_contact_pairs": 0,
+                "peak_knee_step_deg": 10.804172846037687,
+                "peak_foot_step_deg": 9.875304967608663,
+                "max_thigh_stretch_cm": 1.825874527128235e-06,
+                "max_calf_stretch_cm": 1.9594703886127718e-06
+              }
+            }
+          },
+          "forward_610": {
+            "evaluated_pairs": 14,
+            "elapsed_frames": 15,
+            "sides": {
+              "l": {
+                "min_ball_floor_cm": 6.318130999999994,
+                "ball_path_when_both_frames_within_8cm": 24.908183799466563,
+                "evaluated_contact_pairs": 6,
+                "peak_knee_step_deg": 8.95469948772768,
+                "peak_foot_step_deg": 8.551726892337992,
+                "max_thigh_stretch_cm": 1.1528590917464498e-06,
+                "max_calf_stretch_cm": 1.4725747874422268e-06
+              },
+              "r": {
+                "min_ball_floor_cm": 7.644232999999986,
+                "ball_path_when_both_frames_within_8cm": 0,
+                "evaluated_contact_pairs": 0,
+                "peak_knee_step_deg": 10.804173242851874,
+                "peak_foot_step_deg": 9.875304967608663,
+                "max_thigh_stretch_cm": 2.4414453463350583e-06,
+                "max_calf_stretch_cm": 2.0208650965969355e-06
+              }
+            }
+          }
+        }
+      },
+      "standing_equip": {
+        "pose_csv_sha256": "c61904601000470b9a85876cdc1e75e85b054b8402eb2c7ee59314a3b4d64167",
+        "transitions": {
+          "31": {
+            "maximum_cm": 1.2364355517413739,
+            "by_bone_cm": {
+              "hand_l": 0.7476833551738327,
+              "hand_r": 1.2364355517413739,
+              "foot_l": 0.2743704943046891,
+              "foot_r": 0.25163091580527425
+            }
+          },
+          "69": {
+            "maximum_cm": 1.0935574132696462,
+            "by_bone_cm": {
+              "hand_l": 0.5801049664396984,
+              "hand_r": 1.0935574132696462,
+              "foot_l": 0.12527869049044094,
+              "foot_r": 0.18283159087532
+            }
+          }
+        }
+      },
+      "moving_equip_before": {
+        "pose_csv_sha256": "ad1f34cfeb1f9e74ed9233b7d2101d40557592c224e2b112d9c9fe86ea835769",
+        "transitions": {
+          "31": {
+            "maximum_cm": 1.2364355517413739,
+            "by_bone_cm": {
+              "hand_l": 0.7476833551738327,
+              "hand_r": 1.2364355517413739,
+              "foot_l": 0.2743704943046891,
+              "foot_r": 0.25163091580527425
+            }
+          },
+          "69": {
+            "maximum_cm": 23.880315316359578,
+            "by_bone_cm": {
+              "hand_l": 14.874072570062982,
+              "hand_r": 23.880315316359578,
+              "foot_l": 7.722364875130093,
+              "foot_r": 6.5871808160209175
+            }
+          }
+        }
+      },
+      "moving_equip_after": {
+        "pose_csv_sha256": "ed8fd5cada2f1e9514505f431a0841e5b011a587357ae7396e321400fbc162a8",
+        "transitions": {
+          "31": {
+            "maximum_cm": 1.2364355517413739,
+            "by_bone_cm": {
+              "hand_l": 0.7476833551738327,
+              "hand_r": 1.2364355517413739,
+              "foot_l": 0.2743704943046891,
+              "foot_r": 0.25163091580527425
+            }
+          },
+          "69": {
+            "maximum_cm": 23.880315316359578,
+            "by_bone_cm": {
+              "hand_l": 14.874072570062982,
+              "hand_r": 23.880315316359578,
+              "foot_l": 7.722364875130093,
+              "foot_r": 6.5871808160209175
+            }
+          }
+        }
+      }
+    }
+  },
+  "dwarf_directional": {
+    "Forward": {
+      "label": "DwarfMaleRollForwardFixD",
+      "direction": "Forward",
+      "alignment": 1.0,
+      "travel_cm": 304.5587,
+      "pose_csv_sha256": "979e4263fb2f4d892ba88d80cce7a5bd3a17e5d31a52cfcc49926057b3b5fc08",
+      "active": 22,
+      "paired": 21,
+      "airborne": 0,
+      "sword_floor_min_cm": 0.6342,
+      "min_joint_floor_proxy_cm": {
+        "head": 12.6073,
+        "ball_l": -0.9978,
+        "ball_r": -4.4297,
+        "hand_r": 8.9428
+      },
+      "sword": {
+        "hilt_palm_error_max_cm": 8.660254046336518e-05,
+        "windows": {
+          "entry": {
+            "orientation_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 25.24158787082851,
+              "axis_deg": 4.492681216302756,
+              "tip_step_cm": 23.83428873325151
+            },
+            "axis_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 25.24158787082851,
+              "axis_deg": 4.492681216302756,
+              "tip_step_cm": 23.83428873325151
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.233427,
+                0.280112
+              ],
+              "orientation_deg": 21.150077703722083,
+              "axis_deg": 3.7732595724147573,
+              "tip_step_cm": 25.834972266871024
+            }
+          },
+          "carry": {
+            "orientation_deg": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 22.821567265406028,
+              "axis_deg": 8.610765216030808,
+              "tip_step_cm": 8.030231287453734
+            },
+            "axis_deg": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 22.821567265406028,
+              "axis_deg": 8.610765216030808,
+              "tip_step_cm": 8.030231287453734
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.560224,
+                0.606909
+              ],
+              "orientation_deg": 1.7075472925031877e-06,
+              "axis_deg": 0.0,
+              "tip_step_cm": 23.486418683571166
+            }
+          },
+          "recovery": {
+            "orientation_deg": {
+              "phase": [
+                0.887022,
+                0.933707
+              ],
+              "orientation_deg": 52.72414358618096,
+              "axis_deg": 10.20249474250516,
+              "tip_step_cm": 38.20145666515877
+            },
+            "axis_deg": {
+              "phase": [
+                0.793651,
+                0.840336
+              ],
+              "orientation_deg": 34.603561655874415,
+              "axis_deg": 11.471873367323877,
+              "tip_step_cm": 22.927644835874517
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.887022,
+                0.933707
+              ],
+              "orientation_deg": 52.72414358618096,
+              "axis_deg": 10.20249474250516,
+              "tip_step_cm": 38.20145666515877
+            }
+          }
+        },
+        "recovered_hilt_palm_error_cm": 5.000000000165983e-05
+      },
+      "body": {
+        "release_forearm_peak": [
+          "0.3268→0.3735",
+          55.392067182097264
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 11.443924773862683,
+          "0.5602→0.6069": 12.599160986351635
+        },
+        "recovered_hand_span_delta_cm": 0.09324496498885537,
+        "support_wrist_horizontal_range_cm": 12.144800665717044,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.9999957464110247,
+            1.0000030850562263
+          ],
+          "pelvis/thigh_r": [
+            0.9999952437032106,
+            1.0000044911201456
+          ],
+          "thigh_l/calf_l": [
+            0.9999996221300409,
+            1.0000033326162359
+          ],
+          "thigh_r/calf_r": [
+            0.9999977411812327,
+            1.0000004104861382
+          ],
+          "calf_l/foot_l": [
+            0.9999957969701319,
+            1.0000005505146679
+          ],
+          "calf_r/foot_r": [
+            0.9999970775018122,
+            1.0000029033636046
+          ],
+          "upperarm_l/lowerarm_l": [
+            1.0000002261083742,
+            1.000004568679751
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999989558486698,
+            1.0000037437860012
+          ],
+          "lowerarm_l/hand_l": [
+            0.9999953023153327,
+            1.0000048508634347
+          ],
+          "lowerarm_r/hand_r": [
+            0.9999996732009027,
+            1.000007101340898
+          ]
+        }
+      },
+      "source.": {
+        "release_forearm_peak": [
+          "0.3735→0.4202",
+          38.28313156071889
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 18.2910872096787,
+          "0.5602→0.6069": 12.623229154407266
+        },
+        "recovered_hand_span_delta_cm": -0.008838078511626435,
+        "support_wrist_horizontal_range_cm": 3.3161811244260715,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.99998057675384,
+            0.999997796333171
+          ],
+          "pelvis/thigh_r": [
+            0.9999978868439566,
+            1.0000131308219191
+          ],
+          "thigh_l/calf_l": [
+            0.9999972744048339,
+            1.0000016003091683
+          ],
+          "thigh_r/calf_r": [
+            0.9999994752479812,
+            1.0000040730932034
+          ],
+          "calf_l/foot_l": [
+            0.999998667313486,
+            1.0000028137386483
+          ],
+          "calf_r/foot_r": [
+            0.9999972497569442,
+            1.0000017425790675
+          ],
+          "upperarm_l/lowerarm_l": [
+            0.9999959906189615,
+            1.0000020455148757
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999979407012477,
+            1.000004293769816
+          ],
+          "lowerarm_l/hand_l": [
+            0.999996893778974,
+            1.000003392278472
+          ],
+          "lowerarm_r/hand_r": [
+            0.9999954801898278,
+            1.0000014750260053
+          ]
+        }
+      }
+    },
+    "Right": {
+      "label": "DwarfMaleRollRightFixD",
+      "direction": "Right",
+      "alignment": 1.0,
+      "travel_cm": 304.5587,
+      "pose_csv_sha256": "3b4f9f3f53bfd95162af47881d90d5c8b26b97bd5a0aea57fa218b8b827646db",
+      "active": 22,
+      "paired": 21,
+      "airborne": 0,
+      "sword_floor_min_cm": 0.6342,
+      "min_joint_floor_proxy_cm": {
+        "head": 12.6073,
+        "ball_l": -0.9974,
+        "ball_r": -4.4294,
+        "hand_r": 8.9428
+      },
+      "sword": {
+        "hilt_palm_error_max_cm": 7.071067819134224e-05,
+        "windows": {
+          "entry": {
+            "orientation_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 22.90770310148154,
+              "axis_deg": 13.024565908978092,
+              "tip_step_cm": 47.782309617786545
+            },
+            "axis_deg": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 22.90770310148154,
+              "axis_deg": 13.024565908978092,
+              "tip_step_cm": 47.782309617786545
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.186741,
+                0.233427
+              ],
+              "orientation_deg": 22.90770310148154,
+              "axis_deg": 13.024565908978092,
+              "tip_step_cm": 47.782309617786545
+            }
+          },
+          "carry": {
+            "orientation_deg": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 22.26818257480619,
+              "axis_deg": 0.9606997790294886,
+              "tip_step_cm": 32.57784260137556
+            },
+            "axis_deg": {
+              "phase": [
+                0.70028,
+                0.746966
+              ],
+              "orientation_deg": 6.025056659157775,
+              "axis_deg": 3.713482550907071,
+              "tip_step_cm": 20.92142922507922
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.746966,
+                0.793651
+              ],
+              "orientation_deg": 22.26818257480619,
+              "axis_deg": 0.9606997790294886,
+              "tip_step_cm": 32.57784260137556
+            }
+          },
+          "recovery": {
+            "orientation_deg": {
+              "phase": [
+                0.887022,
+                0.933707
+              ],
+              "orientation_deg": 53.95042018140898,
+              "axis_deg": 16.77103012208016,
+              "tip_step_cm": 45.40719349860761
+            },
+            "axis_deg": {
+              "phase": [
+                0.887022,
+                0.933707
+              ],
+              "orientation_deg": 53.95042018140898,
+              "axis_deg": 16.77103012208016,
+              "tip_step_cm": 45.40719349860761
+            },
+            "tip_step_cm": {
+              "phase": [
+                0.840336,
+                0.887022
+              ],
+              "orientation_deg": 44.215800009728596,
+              "axis_deg": 16.361162425609148,
+              "tip_step_cm": 55.74472202469043
+            }
+          }
+        },
+        "recovered_hilt_palm_error_cm": 7.07106781310507e-05
+      },
+      "body": {
+        "release_forearm_peak": [
+          "0.3268→0.3735",
+          55.391372854185725
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 11.44394634594029,
+          "0.5602→0.6069": 12.599163346446268
+        },
+        "recovered_hand_span_delta_cm": 0.07469351849091765,
+        "support_wrist_horizontal_range_cm": 12.144800665717051,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.9999948610050865,
+            1.0000029527317384
+          ],
+          "pelvis/thigh_r": [
+            0.9999957689201642,
+            1.0000049726172282
+          ],
+          "thigh_l/calf_l": [
+            0.9999995476071147,
+            1.0000038150896988
+          ],
+          "thigh_r/calf_r": [
+            0.9999967497998252,
+            1.000001779903569
+          ],
+          "calf_l/foot_l": [
+            0.999995497853329,
+            0.9999992561717642
+          ],
+          "calf_r/foot_r": [
+            0.9999984444169173,
+            1.0000032141178057
+          ],
+          "upperarm_l/lowerarm_l": [
+            0.9999997945594158,
+            1.000004754998813
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999986573090456,
+            1.0000030999559508
+          ],
+          "lowerarm_l/hand_l": [
+            0.999996252646446,
+            1.0000049845361076
+          ],
+          "lowerarm_r/hand_r": [
+            1.0000007971772147,
+            1.0000069173773105
+          ]
+        }
+      },
+      "source.": {
+        "release_forearm_peak": [
+          "0.3735→0.4202",
+          38.2831339488349
+        ],
+        "release_matched_samples_deg": {
+          "0.4669→0.5135": 18.291104628333347,
+          "0.5602→0.6069": 12.62322287050058
+        },
+        "recovered_hand_span_delta_cm": -0.015446139035312001,
+        "support_wrist_horizontal_range_cm": 3.316243238967847,
+        "active_parent_segment_length_ratio": {
+          "pelvis/thigh_l": [
+            0.9999869690796218,
+            1.000501040908121
+          ],
+          "pelvis/thigh_r": [
+            0.9999989124916624,
+            1.0005057759657097
+          ],
+          "thigh_l/calf_l": [
+            0.9999972580138191,
+            1.0008019332561697
+          ],
+          "thigh_r/calf_r": [
+            0.9999997503565382,
+            1.000805849443919
+          ],
+          "calf_l/foot_l": [
+            0.9999995049377584,
+            1.0008042007352507
+          ],
+          "calf_r/foot_r": [
+            0.9999969493537062,
+            1.0008012604861551
+          ],
+          "upperarm_l/lowerarm_l": [
+            0.9999974094467404,
+            1.0107914244728513
+          ],
+          "upperarm_r/lowerarm_r": [
+            0.9999997112912766,
+            1.0107948946648833
+          ],
+          "lowerarm_l/hand_l": [
+            0.999997095450541,
+            1.0190232927933938
+          ],
+          "lowerarm_r/hand_r": [
+            0.9999954893533733,
+            1.0190159733003292
+          ]
+        }
+      }
+    }
+  },
+  "contents": {
+    "Content/Character/Customization/Retargeting/ABP_Retarget_Dw_F.uasset": "39a87155fb850d966e9896f8937360e586cfb9e14319028ca2160ce260bbc3a4",
+    "Content/Character/Customization/Retargeting/ABP_Retarget_Dw_M.uasset": "10f28b8bc2d6d7ab4c0694dfb0efedb032dc1f5def1d0fb56e3f6b0aa7a78f26"
+  }
+}

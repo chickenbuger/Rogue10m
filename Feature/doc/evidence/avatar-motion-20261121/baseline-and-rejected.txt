@@ -1,0 +1,19 @@
+Installed UE 5.8 exact logs, isolated project only. Baked roll donor remains the original Blender lead-release derivative.
+
+678e22c5 stock Back roll, programmatic Ctrl/Back, same StartHub course. All six travelled 304.5587 cm, correct input alignment, 22 active pose revisions and normal standing recovery.
+Minimum equipped sword bounding box clearance in cm
+HumanMale +1.2349
+HumanFemale -8.8630
+DwarfMale -25.7550
+DwarfFemale -18.8027
+OrcMale -23.1098
+OrcFemale -9.5649
+The stock five generic retarget cases failed only the sword-floor gate at phase 0.140056. Both dwarf profiles also intersected the floor during full carry. Actual DwarfMale hilt was -7.8434 cm relative to floor at phase 0.420168.
+DwarfMaleRollBack/roll-motion.csv SHA256 F2BA35EEFB3D08571BC8C5FD9B9C491D2454E18DD99A15AE0A3F2D294C854736.
+HumanFemaleRollBack/roll-motion.csv SHA256 D4870A33FDCD82A26D1B474EAD73BE4F97806CFC83DA8A1E771631480EF1CA4C.
+
+B floor-only entry clamp improved DwarfMale phase 0.140056 from -25.7550 to +0.5717 cm. The floor support hilt stayed at its original height because the active dwarf AnimBlueprint still inherited the base UAnimInstance. The 0.093371→0.140056 sword orientation step grew from 129.349 to 174.588 degrees and the actor-relative tip step grew from 212.511 to 242.088 cm. B was rejected. Raw FixB pose SHA256 2EBD67630346E98294A8FD1C44C3075C8A37A42F5F2C328139659DB10984F2AE.
+B edge setup was a 52-cm shelf. Character movement reported a walkable perch while stepping down and produced no falling roll samples. Raw EdgeB SHA256 FA8FF1A4C24A1A9A613A5386499438D584E692BD47CA90629422D4B0896F03FA. The next shelf is 162 cm and crosses a real falling segment. C passed the grounded and airborne cases (EdgeC SHA256 B809B8D8C07FAE37CF5F69F5E195B4343494CBC8F3AD161AF5EA7A4C23311327).
+C captured the complete pre-roll sword orientation, linked Dwarf arms, and passed all four focused cases. DwarfMale floor minimum +0.6342 cm, entry quaternion 44.330 degrees and tip 137.340 cm. D then extended from roll phase 0.03–0.27 to 0.03–0.35. Raw FixC SHA256 386F5C7D80715E4539FE886BD91733DF4E01015F17AF785C39A0705B4BF4BFD2.
+
+Initial DwarfMale flat landing comparison at 678e22c5 recorded ball bones min -4.23 and -3.89 cm on the stock landing and -3.83 and -4.17 cm on the then-new clip. This is bone position reference evidence, with no boot sole geometry test. It is separate from the confirmed sword geometry result.
