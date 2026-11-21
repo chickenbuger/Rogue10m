@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Animation/PoseSnapshot.h"
 #include "Components/ActorComponent.h"
 #include "Engine/TimerHandle.h"
 #include "Rogue10mMonsterAttackPatternProfile.h"
@@ -85,7 +86,12 @@ public:
 
 	float GetEngagementRange() const;
 	void PlayHitReaction();
-	float PlayDeathPresentation();
+	void CaptureDeathStartPose(FPoseSnapshot& Pose) const;
+	bool ConsumeDeathStartPose(const UAnimInstance& Instance, FPoseSnapshot& Pose);
+	float PlayDeathPresentation(FPoseSnapshot&& StartPose);
+#if WITH_EDITOR
+	void UseStockDeathForAudit() { bUseStockDeathForAudit = true; }
+#endif
 
 protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
@@ -155,6 +161,10 @@ private:
 	TSet<TWeakObjectPtr<ARogue10mCharacter>> HitTargets;
 	FTimerHandle StateTimer;
 	FTimerHandle HitReactionTimer;
+	FPoseSnapshot PendingDeathStartPose;
+#if WITH_EDITOR
+	bool bUseStockDeathForAudit = false;
+#endif
 	FTimerHandle LocomotionTimer;
 	FTimerHandle AttackGuardTimer;
 	ERogue10mMonsterPatternState PatternState = ERogue10mMonsterPatternState::Idle;

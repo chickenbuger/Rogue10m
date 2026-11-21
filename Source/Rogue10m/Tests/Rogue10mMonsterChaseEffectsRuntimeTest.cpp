@@ -1,10 +1,12 @@
 #if WITH_EDITOR
 #include "AI/Rogue10mMonsterAIController.h"
 #include "AbilitySystemComponent.h"
+#include "Animation/AnimMontage.h"
 #include "Animation/AnimSequence.h"
 #include "Animation/AnimSingleNodeInstance.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Camera/CameraActor.h"
+#include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Containers/Ticker.h"
 #include "Engine/Engine.h"
@@ -29,10 +31,12 @@
 #include "Rogue10mCharacterProfileSubsystem.h"
 #include "Rogue10mCombatTestComponent.h"
 #include "Rogue10mHumanoidAnimInstance.h"
+#include "Rogue10mInventoryComponent.h"
 #include "Rogue10mMonsterAttackPatternComponent.h"
 #include "Rogue10mMonsterAttackPatternProfile.h"
 #include "Rogue10mMonsterDataAsset.h"
 #include "Rogue10mPlayerController.h"
+#include "Rogue10mPlayerState.h"
 #include "UnrealClient.h"
 
 namespace Rogue10mMonsterChaseEffectsQA
@@ -52,6 +56,9 @@ static constexpr FOrdinaryGaitSpecies OrdinaryGaitSpecies[] = {
 	{TEXT("CrimsonSlime"), 2, TEXT("Crown")},
 	{TEXT("IronShell"), 3, TEXT("HornMidTip03")}
 };
+static constexpr const TCHAR* DeathSpecies[] = {TEXT("VerdantSlime"), TEXT("Sporeling"), TEXT("CrimsonSlime"),
+	TEXT("IronShell"), TEXT("ThornWarden"), TEXT("AbyssOverlordAzathor")};
+static constexpr const TCHAR* DeathStances[] = {TEXT("idle"), TEXT("walk"), TEXT("windup")};
 
 struct FSporelingWalkMeasure
 {
@@ -83,6 +90,8 @@ public:
 		bThornWalk = FParse::Param(FCommandLine::Get(), TEXT("RogueThornWardenWalkQA"));
 		bSporelingWalk = FParse::Param(FCommandLine::Get(), TEXT("RogueSporelingWalkQA"));
 		bSporelingSavedProfile = FParse::Param(FCommandLine::Get(), TEXT("RogueSporelingSavedProfile"));
+		bDeathMotion = FParse::Param(FCommandLine::Get(), TEXT("RogueMonsterDeathMotionQA"));
+		bDeathRender = bDeathMotion && FParse::Param(FCommandLine::Get(), TEXT("RogueMonsterDeathRender"));
 		FString OrdinaryId;
 		if (FParse::Value(FCommandLine::Get(), TEXT("RogueOrdinaryGaitQA="), OrdinaryId))
 		{
@@ -97,11 +106,13 @@ public:
 		bOrdinarySavedProfile = FParse::Param(FCommandLine::Get(), TEXT("RogueOrdinaryGaitSaved"));
 		if (bOrdinarySavedProfile && !OrdinaryGait)
 		{ Check(false, TEXT("ordinary_gait_saved_profile_requires_species")); Finish(); return; }
-		if ((bThornWalk && bSporelingWalk) || (bSporelingSavedProfile && !bSporelingWalk))
+		if ((bThornWalk && bSporelingWalk) || (bSporelingSavedProfile && !bSporelingWalk)
+			|| (bDeathMotion && (bThornWalk || bSporelingWalk || OrdinaryGait)))
 		{ Check(false, TEXT("incompatible_monster_walk_qa_modes")); Finish(); return; }
 		if (bThornWalk) { Species = 4; }
 		if (bSporelingWalk) { Species = 1; }
-		Deadline = FPlatformTime::Seconds() + (bThornWalk || bSporelingWalk || OrdinaryGait ? 1.0 : 7.0);
+		if (bDeathRender) { Species = 4; DeathStance = 1; }
+		Deadline = FPlatformTime::Seconds() + (bThornWalk || bSporelingWalk || OrdinaryGait || bDeathMotion ? 1.0 : 7.0);
 		FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self=AsShared()](float) { return Self->Tick(); }), 0.05f);
 	}
 private:
@@ -137,7 +148,7 @@ private:
 		Camera = World->SpawnActor<ACameraActor>();
 		for (TActorIterator<ARogue10mBasicMonster> It(World.Get()); It; ++It)
 			if (auto* ExistingAI = Cast<ARogue10mMonsterAIController>(It->GetController())) ExistingAI->StopMonsterAI();
-		Stage = 1; Deadline = FPlatformTime::Seconds()+(bThornWalk || bSporelingWalk || OrdinaryGait ? .5 : 4);
+		Stage = 1; Deadline = FPlatformTime::Seconds()+(bThornWalk || bSporelingWalk || OrdinaryGait || bDeathMotion ? .5 : 4);
 	}
 	void Spawn()
 	{
@@ -149,6 +160,7 @@ private:
 		Monster = Tools->GetTestTarget();
 		if (!Monster.IsValid()) { Finish(); return; }
 		AI = Cast<ARogue10mMonsterAIController>(Monster->GetController());
+		if (bDeathMotion) { PrepareDeathMotion(); return; }
 		if (OrdinaryGait) { PrepareOrdinaryGait(); return; }
 		if (bThornWalk || bSporelingWalk)
 		{
@@ -218,6 +230,164 @@ private:
 		bCapturePending=false;
 		Tools->ExecuteAction(ERogue10mCombatTestAction::ToggleAI);
 		Stage=2; Deadline=FPlatformTime::Seconds()+2;
+	}
+	void PrepareDeathMotion()
+	{
+		const FString Name = FString::Printf(TEXT("DA_OW_%s"), DeathSpecies[Species]);
+		const auto* Data = Monster->GetMonsterData();
+		const auto* Pattern = Monster->GetAttackPatternComponent();
+		const auto* Profile = Pattern ? Pattern->GetProfile() : nullptr;
+		Check(Data && Data->GetName() == Name && Profile && Profile == Data->AttackPatternProfile
+			&& Monster->GetMesh()->GetSkeletalMeshAsset() == Data->SkeletalMesh.Get(), TEXT("death_deployed_profile_mesh_and_class"));
+		Check(FMath::IsNearlyEqual(World->GetDeltaSeconds(), 1.f/60.f, .0001f), TEXT("death_fixed_60hz"));
+		if (Failures) { Finish(); return; }
+		DeathClip = Profile->DeathAnimation.LoadSynchronous();
+		Check(DeathClip.IsValid(), TEXT("death_original_sequence_available"));
+		if (Failures) { Finish(); return; }
+		DeathFrame = 0;
+		DeathLife = 0.f;
+		DeathOutgoingPose.Reset();
+		bSawFinalDeathClip = false;
+		ThornDirection = (Monster->GetActorLocation() - Player->GetActorLocation()).GetSafeNormal2D();
+		Monster->SetActorRotation(ThornDirection.Rotation());
+		Monster->GetCharacterMovement()->bRunPhysicsWithNoController = true;
+		Monster->GetMesh()->bEnableUpdateRateOptimizations = false;
+		Monster->GetMesh()->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+		if (bDeathRender)
+		{
+			Check(Camera.IsValid(), TEXT("death_side_camera_available"));
+			if (Failures) { Finish(); return; }
+			Camera->GetCameraComponent()->SetFieldOfView(45.f);
+			PC->SetViewTarget(Camera.Get());
+			const auto& Bounds = Monster->GetMesh()->Bounds;
+			DeathViewHeight = Bounds.Origin.Z - Monster->GetActorLocation().Z;
+			const double Distance = FMath::Max(350.0, static_cast<double>(Bounds.SphereRadius) * 3.4);
+			DeathViewOffset = Monster->GetActorRotation().RotateVector(FVector(0.5, -1.0, 0.28) * Distance);
+		}
+		if (!ThornHandle.IsValid())
+		{
+			DeathRows = TEXT("species,stance,relative_frame,world_frame,revision,death_asset,death_time_s,bone,x_cm,y_cm,z_cm,qx,qy,qz,qw,sx,sy,sz\n");
+			ThornHandle = FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* TickWorld, ELevelTick, float)
+			{
+				if (TickWorld == Self->World.Get() && !Self->bFinished && Self->Stage == 12) { Self->SampleDeathMotion(); }
+			});
+		}
+		Stage = 12;
+		Deadline = FPlatformTime::Seconds() + (bDeathRender ? 125.0 : 55.0);
+	}
+
+	void RecordDeathPose(int32 RelativeFrame)
+	{
+		const auto* Mesh = Monster->GetMesh();
+		auto* Instance = Mesh->GetAnimInstance();
+		auto* Single = Mesh->GetSingleNodeInstance();
+		const UAnimMontage* Montage = Instance ? Instance->GetCurrentActiveMontage() : nullptr;
+		const UAnimationAsset* Active = Single ? Single->GetCurrentAsset() : Montage ? Montage->GetFirstAnimReference() : nullptr;
+		const float Position = Single ? Single->GetCurrentTime() : Montage ? Instance->Montage_GetPosition(Montage) : -1.f;
+		bSawFinalDeathClip |= RelativeFrame > 0 && Active == DeathClip.Get() && Position > 0.f;
+		if (RelativeFrame < -4 || RelativeFrame > 12) { return; }
+		double SynchronousStep = 0.0;
+		double SynchronousTurn = 0.0;
+		for (const FName Bone : {FName(TEXT("Body")), FName(TEXT("Crown")), FName(TEXT("Shell")), FName(TEXT("HornMidTip03")),
+			FName(TEXT("mushroom_root")), FName(TEXT("mushroom_head")), FName(TEXT("mushroom_skirt08")), FName(TEXT("cactus_rightHandTip")),
+			FName(TEXT("cactus_root")), FName(TEXT("cactus_head")), FName(TEXT("pelvis")), FName(TEXT("head")), FName(TEXT("hand_r")), FName(TEXT("foot_l"))})
+		{
+			if (Mesh->GetBoneIndex(Bone) == INDEX_NONE) { continue; }
+			const FTransform Pose = Mesh->GetSocketTransform(Bone, RTS_Component);
+			if (Pose.ContainsNaN() || !Pose.GetRotation().IsNormalized()) { Check(false, TEXT("death_recorded_finite_pose")); return; }
+			if (RelativeFrame == -1) { DeathOutgoingPose.Add(Bone, Pose); }
+			if (RelativeFrame == 0)
+			{
+				const FTransform& Before = DeathOutgoingPose.FindChecked(Bone);
+				SynchronousStep = FMath::Max(SynchronousStep, FVector::Dist(Before.GetLocation(), Pose.GetLocation()));
+				SynchronousTurn = FMath::Max(SynchronousTurn, FMath::RadiansToDegrees(Before.GetRotation().AngularDistance(Pose.GetRotation())));
+			}
+			const FVector P = Pose.GetLocation(), S = Pose.GetScale3D();
+			const FQuat Q = Pose.GetRotation();
+			DeathRows += FString::Printf(TEXT("%s,%s,%d,%llu,%u,%s,%.6f,%s,%.6f,%.6f,%.6f,%.8f,%.8f,%.8f,%.8f,%.8f,%.8f,%.8f\n"),
+				DeathSpecies[Species], bDeathRender ? (bDeathStockCapture ? TEXT("walk_stock") : TEXT("walk_blended")) : DeathStances[DeathStance],
+				RelativeFrame, GFrameCounter, Mesh->GetBoneTransformRevisionNumber(),
+				*GetNameSafe(Active), Position, *Bone.ToString(), P.X, P.Y, P.Z, Q.X, Q.Y, Q.Z, Q.W, S.X, S.Y, S.Z);
+		}
+		if (RelativeFrame == 0)
+		{
+			Check(!DeathOutgoingPose.IsEmpty() && SynchronousStep <= .15 && SynchronousTurn <= .15,
+				TEXT("lethal_damage_keeps_last_displayed_pose_during_class_switch"));
+		}
+	}
+
+	void SampleDeathMotion()
+	{
+		constexpr int32 LethalFrame = 32;
+		const int32 RelativeFrame = ++DeathFrame - LethalFrame;
+		if (!Monster.IsValid())
+		{
+			Check(bSawFinalDeathClip && FMath::Abs(RelativeFrame / 60.f - DeathLife) <= .05f,
+				TEXT("death_original_clip_observed_and_corpse_expires_on_schedule"));
+			Results += FString::Printf(TEXT("death_case=%s/%s life_s=%.6f final_frame=%d\n"),
+				DeathSpecies[Species], DeathStances[DeathStance], DeathLife, RelativeFrame);
+			if (Failures) { Finish(); return; }
+			if (bDeathRender)
+			{
+				if (bDeathStockCapture) { bDeathStockCapture = false; Spawn(); return; }
+				Check(DeathCaptures.Num() == 6, TEXT("death_matched_three_capture_frames_per_pose"));
+				for (const FString& Capture : DeathCaptures)
+				{
+					Check(IFileManager::Get().FileSize(*Capture) > 1024, TEXT("death_comparison_capture_written"));
+				}
+				Finish(); return;
+			}
+			if (++DeathStance == UE_ARRAY_COUNT(DeathStances)) { DeathStance = 0; ++Species; }
+			if (Species == UE_ARRAY_COUNT(DeathSpecies)) { Finish(); return; }
+			Spawn();
+			return;
+		}
+		auto* Pattern = Monster->GetAttackPatternComponent();
+		if (DeathStance == 1 && RelativeFrame < 0) { Monster->AddMovementInput(ThornDirection, 1.f, true); }
+		if (DeathStance == 2 && RelativeFrame == -6)
+		{
+			Check(Tools->ExecuteAction(ERogue10mCombatTestAction::Basic), TEXT("death_actual_basic_attack_started"));
+		}
+		if (RelativeFrame == 0)
+		{
+			const double Speed = Monster->GetVelocity().Size2D();
+			Check(DeathStance == 2 ? Pattern->IsAttackActive() && Pattern->GetSuccessfulHitCount() == 0
+				: DeathStance == 1 ? Speed > 20.0 && !Pattern->IsAttackActive() : Speed < 1.0 && !Pattern->IsAttackActive(),
+				TEXT("death_exact_idle_walk_or_windup_precondition"));
+			RecordDeathPose(-1);
+			const auto* State = Player->GetPlayerState<ARogue10mPlayerState>();
+			const float Experience = State->GetCurrentExperience();
+			const int32 Gold = Player->GetInventoryComponent()->GetGold();
+			const float LifeBeforeHit = Monster->GetRogueAttributeSet()->GetHealth();
+			if (bDeathRender && bDeathStockCapture) { Pattern->UseStockDeathForAudit(); }
+			const float Accepted = UGameplayStatics::ApplyDamage(Monster.Get(), LifeBeforeHit + 100.f, PC.Get(), Player.Get(), nullptr);
+			Check(Accepted > 0.0f && Monster.IsValid() && Monster->IsDead() && !Pattern->IsAttackActive()
+				&& !Monster->GetActorEnableCollision() && Monster->GetCharacterMovement()->MovementMode == MOVE_None,
+				TEXT("actual_lethal_damage_stops_attack_movement_and_collision"));
+			Check(State->GetCurrentExperience() == Experience && Player->GetInventoryComponent()->GetGold() == Gold,
+				TEXT("isolated_field_clone_does_not_grant_rewards"));
+			if (Failures) { Finish(); return; }
+			DeathLife = Monster->GetLifeSpan();
+			Check(FMath::IsNearlyEqual(DeathLife, DeathClip->GetPlayLength() + .05f, .05f), TEXT("death_lifespan_matches_original_clip"));
+		}
+		if (RelativeFrame > 0 && (Pattern->IsAttackActive() || Pattern->GetSuccessfulHitCount() != 0))
+		{ Check(false, TEXT("dead_enemy_never_hits_during_corpse_presentation")); Finish(); return; }
+		if (RelativeFrame >= -4 && RelativeFrame != -1) { RecordDeathPose(RelativeFrame); }
+		if (bDeathRender) { UpdateDeathCapture(RelativeFrame); }
+	}
+
+	void UpdateDeathCapture(int32 RelativeFrame)
+	{
+		const FVector Focus = Monster->GetActorLocation() + FVector(0, 0, DeathViewHeight);
+		Camera->SetActorLocationAndRotation(Focus + DeathViewOffset, (-DeathViewOffset).Rotation());
+		const TCHAR* Phase = RelativeFrame == -1 ? TEXT("before") : RelativeFrame == 1 ? TEXT("first") : RelativeFrame == 10 ? TEXT("follow-through") : nullptr;
+		if (Phase)
+		{
+			const FString Name = FString::Printf(TEXT("%s-%s.png"), bDeathStockCapture ? TEXT("stock") : TEXT("blended"), Phase);
+			const FString Path = FPaths::ConvertRelativePathToFull(Output / Name);
+			DeathCaptures.Add(Path);
+			FScreenshotRequest::RequestScreenshot(Path, false, false);
+		}
 	}
 	void BeginGroundWalk(bool bBlend)
 	{
@@ -585,6 +755,11 @@ private:
 	bool Tick()
 	{
 		if (bFinished) return false;
+		if (Stage == 12)
+		{
+			if (FPlatformTime::Seconds() < Deadline) { return true; }
+			Check(false, TEXT("death_motion_watchdog")); Finish(); return false;
+		}
 		if (Stage == 11 && (bSporelingWalk || OrdinaryGait))
 		{
 			if (FPlatformTime::Seconds() < Deadline) { return true; }
@@ -747,6 +922,11 @@ private:
 			Check(FFileHelper::SaveStringToFile(OrdinaryFrames, *FPaths::Combine(Output, TEXT("ordinary-gait-frames.csv"))),
 				TEXT("ordinary_gait_pose_samples_written"));
 		}
+		if (bDeathMotion)
+		{
+			Check(FFileHelper::SaveStringToFile(DeathRows, *FPaths::Combine(Output, TEXT("death-motion-frames.csv"))),
+				TEXT("death_motion_pose_samples_written"));
+		}
 		FFileHelper::SaveStringToFile(Results,*FPaths::Combine(Output,TEXT("results.txt")),FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM);
 		UE_LOG(LogRogue10m,Display,TEXT("RESULT=MONSTER_FX_%s failures=%d"),Failures ? TEXT("FAILED") : TEXT("PASSED"),Failures);
 		FPlatformMisc::RequestExitWithStatus(false,Failures ? 1 : 0);
@@ -777,6 +957,15 @@ private:
 	FString OrdinaryFrames;
 	int32 OrdinaryHitFrame = 0, LegacyOrdinaryHitFrame = 0;
 	bool bOrdinarySavedProfile = false;
+	bool bDeathMotion = false, bSawFinalDeathClip = false, bDeathRender = false, bDeathStockCapture = true;
+	int32 DeathStance = 0, DeathFrame = 0;
+	float DeathLife = 0.f;
+	TWeakObjectPtr<UAnimSequence> DeathClip;
+	TMap<FName,FTransform> DeathOutgoingPose;
+	TArray<FString> DeathCaptures;
+	FVector DeathViewOffset = FVector::ZeroVector;
+	double DeathViewHeight = 0.0;
+	FString DeathRows;
 	FString Output,Results;
 	FVector Origin,ChaseStart;
 	double Deadline=0;
