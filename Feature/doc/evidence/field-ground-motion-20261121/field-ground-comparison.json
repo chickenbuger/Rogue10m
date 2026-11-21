@@ -1,0 +1,123 @@
+{
+  "input": "programmatic player controller W and Space, fixed 60 Hz",
+  "map": "/Game/Rogue10m/Maps/OpenRunMap",
+  "movement_and_anim_state_rows_identical": true,
+  "ankle_and_calf_phase_frames_from_contact": [
+    11,
+    27
+  ],
+  "cases": {
+    "approach_jump": {
+      "sampled_frames": 127,
+      "contact_frame": 87,
+      "contact_horizontal_speed_cm_s": 620.0,
+      "contact_floor_degrees": 0.0,
+      "manny": {
+        "right_ankle_peak_local_step_degrees_old_new": [
+          42.14409,
+          13.2169
+        ],
+        "right_calf_peak_local_step_degrees_old_new": [
+          38.90889,
+          15.13986
+        ],
+        "right_toe_min_ground_clearance_cm_old_new": [
+          0.65913,
+          0.65913
+        ],
+        "max_left_toe_world_delta_at_support_cm": 0.0
+      },
+      "visible": {
+        "right_ankle_peak_local_step_degrees_old_new": [
+          38.39797,
+          11.94005
+        ],
+        "right_calf_peak_local_step_degrees_old_new": [
+          35.09526,
+          14.2831
+        ],
+        "right_toe_min_ground_clearance_cm_old_new": [
+          4.41487,
+          4.41487
+        ],
+        "max_left_toe_world_delta_at_support_cm": 0.0
+      }
+    },
+    "downhill_jump": {
+      "sampled_frames": 145,
+      "contact_frame": 105,
+      "contact_horizontal_speed_cm_s": 620.0,
+      "contact_floor_degrees": 0.0,
+      "manny": {
+        "right_ankle_peak_local_step_degrees_old_new": [
+          42.14409,
+          13.2169
+        ],
+        "right_calf_peak_local_step_degrees_old_new": [
+          38.90889,
+          15.13986
+        ],
+        "right_toe_min_ground_clearance_cm_old_new": [
+          0.56073,
+          0.56072
+        ],
+        "max_left_toe_world_delta_at_support_cm": 0.0
+      },
+      "visible": {
+        "right_ankle_peak_local_step_degrees_old_new": [
+          38.39797,
+          11.94005
+        ],
+        "right_calf_peak_local_step_degrees_old_new": [
+          35.09526,
+          14.2831
+        ],
+        "right_toe_min_ground_clearance_cm_old_new": [
+          4.42967,
+          4.42967
+        ],
+        "max_left_toe_world_delta_at_support_cm": 0.0
+      }
+    },
+    "uphill_jump": {
+      "sampled_frames": 108,
+      "contact_frame": 68,
+      "contact_horizontal_speed_cm_s": 620.0,
+      "contact_floor_degrees": 14.036,
+      "manny": {
+        "right_ankle_peak_local_step_degrees_old_new": [
+          43.9973,
+          12.97036
+        ],
+        "right_calf_peak_local_step_degrees_old_new": [
+          40.69912,
+          7.73214
+        ],
+        "right_toe_min_ground_clearance_cm_old_new": [
+          0.6725,
+          0.55523
+        ],
+        "max_left_toe_world_delta_at_support_cm": 5.5e-05
+      },
+      "visible": {
+        "right_ankle_peak_local_step_degrees_old_new": [
+          40.13265,
+          11.7288
+        ],
+        "right_calf_peak_local_step_degrees_old_new": [
+          36.75438,
+          7.46077
+        ],
+        "right_toe_min_ground_clearance_cm_old_new": [
+          5.30498,
+          5.18127
+        ],
+        "max_left_toe_world_delta_at_support_cm": 0.027877
+      }
+    },
+    "entrance_run": {
+      "sampled_frames": 135,
+      "contact_frame": -1
+    }
+  }
+}
