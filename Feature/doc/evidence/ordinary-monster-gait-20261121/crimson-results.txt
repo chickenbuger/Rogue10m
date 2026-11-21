@@ -1,0 +1,39 @@
+PASS species=2 isolated_profile_created
+PASS species=2 actual_player_test_ui
+PASS species=2 species_spawned
+PASS species=2 actual_OpenRun_species_profile_and_mesh_loaded
+PASS species=2 ordinary_gait_uses_fixed_60hz
+PASS species=2 ground_and_hit_sequences_use_live_skeleton
+PASS species=2 ordinary_gait_pose_bone_Body_exists
+PASS species=2 ordinary_gait_pose_bone_Head_exists
+PASS species=2 ordinary_gait_pose_bone_Spine01_exists
+PASS species=2 ordinary_gait_pose_bone_Crown_exists
+PASS species=2 ordinary_gait_pose_bone_Side_L_exists
+PASS species=2 ordinary_gait_pose_bone_Side_R_exists
+species=CrimsonSlime
+profile=/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_CrimsonSlime.DA_OW_BasicAttack_CrimsonSlime
+mesh=/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_SK.Slime_SK
+idle=/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM
+walk=/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM
+attack=/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM
+hit=/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM
+PASS species=2 ordinary_gait_pose_pairs_include_full_speed_and_settled_idle
+legacy speed=235.0000 travel=391.6229 pose_pairs=169
+PASS species=2 ordinary_basic_uses_existing_single_node_clip_and_windup
+CrimsonSlime_legacy attack_first_damage_frame=21 recovery_frame=50 damage=1.0000
+PASS species=2 ordinary_same_attack_lands_once_then_recovers_into_ground_pose
+PASS species=2 ordinary_hit_plays_existing_hit_clip_after_nonlethal_damage
+PASS species=2 ordinary_hit_recovers_into_expected_ground_graph
+legacy hit_recovery_frame=50
+PASS species=2 ordinary_gait_pose_pairs_include_full_speed_and_settled_idle
+PASS species=2 ordinary_gait_keeps_legacy_speed_and_travel
+saved_blend speed=235.0000 travel=391.6229 pose_pairs=169
+PASS species=2 ordinary_basic_uses_existing_single_node_clip_and_windup
+CrimsonSlime_saved_blend attack_first_damage_frame=21 recovery_frame=50 damage=1.0000
+PASS species=2 ordinary_same_attack_lands_once_then_recovers_into_ground_pose
+PASS species=2 ordinary_gait_keeps_basic_damage_timing_and_recovery
+PASS species=2 ordinary_hit_plays_existing_hit_clip_after_nonlethal_damage
+PASS species=2 ordinary_hit_recovers_into_expected_ground_graph
+blend hit_recovery_frame=50
+PASS species=2 ordinary_hit_recovery_matches_legacy
+PASS species=2 ordinary_gait_pose_samples_written

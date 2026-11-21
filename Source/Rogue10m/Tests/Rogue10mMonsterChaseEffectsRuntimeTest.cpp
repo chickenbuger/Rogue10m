@@ -9,6 +9,7 @@
 #include "Containers/Ticker.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
+#include "Engine/SkeletalMesh.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -38,6 +39,19 @@ namespace Rogue10mMonsterChaseEffectsQA
 {
 static const FName SporelingSkirtBone(TEXT("mushroom_skirt08"));
 static const FName SporelingHeadBone(TEXT("mushroom_head"));
+
+struct FOrdinaryGaitSpecies
+{
+	const TCHAR* Id;
+	int32 CombatTestIndex;
+	const TCHAR* DetailBone;
+};
+
+static constexpr FOrdinaryGaitSpecies OrdinaryGaitSpecies[] = {
+	{TEXT("VerdantSlime"), 0, TEXT("Crown")},
+	{TEXT("CrimsonSlime"), 2, TEXT("Crown")},
+	{TEXT("IronShell"), 3, TEXT("HornMidTip03")}
+};
 
 struct FSporelingWalkMeasure
 {
@@ -69,11 +83,25 @@ public:
 		bThornWalk = FParse::Param(FCommandLine::Get(), TEXT("RogueThornWardenWalkQA"));
 		bSporelingWalk = FParse::Param(FCommandLine::Get(), TEXT("RogueSporelingWalkQA"));
 		bSporelingSavedProfile = FParse::Param(FCommandLine::Get(), TEXT("RogueSporelingSavedProfile"));
+		FString OrdinaryId;
+		if (FParse::Value(FCommandLine::Get(), TEXT("RogueOrdinaryGaitQA="), OrdinaryId))
+		{
+			for (const auto& Case : OrdinaryGaitSpecies)
+			{
+				if (OrdinaryId == Case.Id) { OrdinaryGait = &Case; break; }
+			}
+			if (!OrdinaryGait || bThornWalk || bSporelingWalk)
+			{ Check(false, TEXT("ordinary_gait_requires_one_deployed_species")); Finish(); return; }
+			Species = OrdinaryGait->CombatTestIndex;
+		}
+		bOrdinarySavedProfile = FParse::Param(FCommandLine::Get(), TEXT("RogueOrdinaryGaitSaved"));
+		if (bOrdinarySavedProfile && !OrdinaryGait)
+		{ Check(false, TEXT("ordinary_gait_saved_profile_requires_species")); Finish(); return; }
 		if ((bThornWalk && bSporelingWalk) || (bSporelingSavedProfile && !bSporelingWalk))
 		{ Check(false, TEXT("incompatible_monster_walk_qa_modes")); Finish(); return; }
 		if (bThornWalk) { Species = 4; }
 		if (bSporelingWalk) { Species = 1; }
-		Deadline = FPlatformTime::Seconds() + (bThornWalk || bSporelingWalk ? 1.0 : 7.0);
+		Deadline = FPlatformTime::Seconds() + (bThornWalk || bSporelingWalk || OrdinaryGait ? 1.0 : 7.0);
 		FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self=AsShared()](float) { return Self->Tick(); }), 0.05f);
 	}
 private:
@@ -109,7 +137,7 @@ private:
 		Camera = World->SpawnActor<ACameraActor>();
 		for (TActorIterator<ARogue10mBasicMonster> It(World.Get()); It; ++It)
 			if (auto* ExistingAI = Cast<ARogue10mMonsterAIController>(It->GetController())) ExistingAI->StopMonsterAI();
-		Stage = 1; Deadline = FPlatformTime::Seconds()+(bThornWalk || bSporelingWalk ? .5 : 4);
+		Stage = 1; Deadline = FPlatformTime::Seconds()+(bThornWalk || bSporelingWalk || OrdinaryGait ? .5 : 4);
 	}
 	void Spawn()
 	{
@@ -121,6 +149,7 @@ private:
 		Monster = Tools->GetTestTarget();
 		if (!Monster.IsValid()) { Finish(); return; }
 		AI = Cast<ARogue10mMonsterAIController>(Monster->GetController());
+		if (OrdinaryGait) { PrepareOrdinaryGait(); return; }
 		if (bThornWalk || bSporelingWalk)
 		{
 			auto* Pattern = Monster->GetAttackPatternComponent();
@@ -192,7 +221,7 @@ private:
 	}
 	void BeginGroundWalk(bool bBlend)
 	{
-		const bool bUseSavedProfile = bBlend && (!bSporelingWalk || bSporelingSavedProfile);
+		const bool bUseSavedProfile = bBlend && (OrdinaryGait ? bOrdinarySavedProfile : (!bSporelingWalk || bSporelingSavedProfile));
 		auto* Profile = bUseSavedProfile ? ThornProfile.Get()
 			: DuplicateObject<URogue10mMonsterAttackPatternProfile>(ThornProfile.Get(), GetTransientPackage());
 		if (!bUseSavedProfile) { Profile->bBlendLegacyLocomotion = bBlend; }
@@ -271,12 +300,129 @@ private:
 		SporelingAttackFrame = 0;
 		SporelingMeasure = {};
 	}
-	const TCHAR* SporelingCase() const
+	void PrepareOrdinaryGait()
+	{
+		const FString LivePath = FString::Printf(TEXT("/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_%s.DA_OW_%s"),
+			OrdinaryGait->Id, OrdinaryGait->Id);
+		const auto* Live = LoadObject<URogue10mMonsterDataAsset>(nullptr, *LivePath);
+		auto* Mesh = Monster->GetMesh();
+		auto* Pattern = Monster->GetAttackPatternComponent();
+		ThornProfile = Pattern ? Pattern->GetProfile() : nullptr;
+		const FString ExpectedProfile = FString::Printf(TEXT("/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_%s.DA_OW_BasicAttack_%s"),
+			OrdinaryGait->Id, OrdinaryGait->Id);
+		Check(Live && Monster->GetMonsterData() == Live && ThornProfile.IsValid() && ThornProfile.Get() == Live->AttackPatternProfile
+			&& ThornProfile->GetPathName() == ExpectedProfile && Mesh->GetSkeletalMeshAsset() == Live->SkeletalMesh.Get()
+			&& !ThornProfile->bUseHumanoidAnimInstance && ThornProfile->bBlendLegacyLocomotion == bOrdinarySavedProfile,
+			TEXT("actual_OpenRun_species_profile_and_mesh_loaded"));
+		Check(FMath::IsNearlyEqual(World->GetDeltaSeconds(), 1.0f / 60.0f, 0.0001f), TEXT("ordinary_gait_uses_fixed_60hz"));
+		if (Failures) { Finish(); return; }
+		const auto* Idle = ThornProfile->IdleAnimation.LoadSynchronous();
+		const auto* Walk = ThornProfile->MovementAnimation.LoadSynchronous();
+		const auto* Hit = ThornProfile->HitAnimation.LoadSynchronous();
+		const auto* Skeleton = Mesh->GetSkeletalMeshAsset()->GetSkeleton();
+		Check(Idle && Walk && Hit && Idle->GetSkeleton() == Skeleton && Walk->GetSkeleton() == Skeleton && Hit->GetSkeleton() == Skeleton,
+			TEXT("ground_and_hit_sequences_use_live_skeleton"));
+		OrdinaryBones = {TEXT("Body"), TEXT("Head"), TEXT("Spine01"), FName(OrdinaryGait->DetailBone)};
+		if (Species == 3) { OrdinaryBones.Add(TEXT("Shell")); }
+		else { OrdinaryBones.Append({TEXT("Side_L"), TEXT("Side_R")}); }
+		for (FName Bone : OrdinaryBones)
+		{
+			Check(Mesh->GetBoneIndex(Bone) != INDEX_NONE, *FString::Printf(TEXT("ordinary_gait_pose_bone_%s_exists"), *Bone.ToString()));
+		}
+		if (Failures) { Finish(); return; }
+		Results += FString::Printf(TEXT("species=%s\nprofile=%s\nmesh=%s\nidle=%s\nwalk=%s\nattack=%s\nhit=%s\n"),
+			OrdinaryGait->Id, *ExpectedProfile, *GetPathNameSafe(Mesh->GetSkeletalMeshAsset()), *GetPathNameSafe(Idle), *GetPathNameSafe(Walk),
+			*ThornProfile->AttackAnimation.ToString(), *GetPathNameSafe(Hit));
+		ThornOrigin = Monster->GetActorTransform();
+		ThornDirection = (Monster->GetActorLocation() - Player->GetActorLocation()).GetSafeNormal2D();
+		OrdinaryFrames = TEXT("case,frame,paired,input_for_next_frame,speed_cm_s,travel_cm,native_graph,gait_time_s,bone,x_cm,y_cm,z_cm,qx,qy,qz,qw,sx,sy,sz\n");
+		BeginOrdinaryGait(false);
+		Deadline = FPlatformTime::Seconds() + 45.0;
+		Stage = 11;
+		ThornHandle = FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* InWorld, ELevelTick, float)
+		{
+			if (InWorld == Self->World.Get() && !Self->bFinished) { Self->SampleOrdinaryGait(); }
+		});
+	}
+
+	void BeginOrdinaryGait(bool bBlend)
+	{
+		BeginSporelingWalk(bBlend);
+		OrdinaryHitFrame = 0;
+		if (auto* SingleNode = Monster->GetMesh()->GetSingleNodeInstance()) { SingleNode->SetPosition(0.f, false); }
+	}
+
+	void SampleOrdinaryGait()
+	{
+		if (!Monster.IsValid() || !ThornProfile.IsValid() || !Player.IsValid())
+		{ Check(false, TEXT("ordinary_gait_fixture_retains_actor_and_profile")); Finish(); return; }
+		if (OrdinaryHitFrame > 0) { ObserveOrdinaryHit(); return; }
+		if (SporelingAttackFrame > 0) { ObservePairedGaitAttack(); return; }
+		constexpr int32 MoveStart = 26, MoveEnd = 128, LastFrame = 170;
+		++SporelingFrame;
+		auto* Mesh = Monster->GetMesh();
+		const uint32 Revision = Mesh->GetBoneTransformRevisionNumber();
+		const bool bPaired = SporelingFrame > 1 && Revision != PreviousSporelingRevision;
+		const bool bMovementInput = SporelingFrame >= MoveStart && SporelingFrame < MoveEnd;
+		const auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Mesh->GetAnimInstance());
+		auto* SingleNode = Mesh->GetSingleNodeInstance();
+		const float GaitTime = Anim ? Anim->GetMovementPlaybackTime()
+			: SingleNode && SingleNode->GetCurrentAsset() == ThornProfile->MovementAnimation.Get() ? SingleNode->GetCurrentTime() : -1.f;
+		const double Speed = Monster->GetVelocity().Size2D();
+		SporelingMeasure.Travel = FVector::Dist2D(ThornOrigin.GetLocation(), Monster->GetActorLocation());
+		SporelingMeasure.PeakSpeed = FMath::Max(SporelingMeasure.PeakSpeed, Speed);
+		SporelingMeasure.PairedFrames += bPaired ? 1 : 0;
+		SporelingMeasure.bSawWalk |= Speed >= 0.95 * Monster->GetMonsterData()->WalkSpeed && HasPairedGaitGroundPose(true);
+		const TCHAR* Label = PairedGaitCase();
+		for (FName Bone : OrdinaryBones)
+		{
+			const FTransform Pose = Mesh->GetSocketTransform(Bone, RTS_Component);
+			if (Pose.ContainsNaN() || !Pose.GetRotation().IsNormalized())
+			{ Check(false, TEXT("ordinary_gait_body_pose_is_finite")); Finish(); return; }
+			const FVector P = Pose.GetLocation(), S = Pose.GetScale3D();
+			const FQuat Q = Pose.GetRotation();
+			OrdinaryFrames += FString::Printf(TEXT("%s,%d,%d,%d,%.4f,%.4f,%d,%.6f,%s,%.6f,%.6f,%.6f,%.8f,%.8f,%.8f,%.8f,%.8f,%.8f,%.8f\n"),
+				Label, SporelingFrame, bPaired, bMovementInput, Speed, SporelingMeasure.Travel, Anim != nullptr, GaitTime, *Bone.ToString(),
+				P.X, P.Y, P.Z, Q.X, Q.Y, Q.Z, Q.W, S.X, S.Y, S.Z);
+		}
+		PreviousSporelingRevision = Revision;
+		if (bMovementInput) { Monster->AddMovementInput(ThornDirection, 1.0f, true); }
+		if (SporelingFrame != LastFrame) { return; }
+		Check(SporelingMeasure.PairedFrames >= LastFrame - 2 && SporelingMeasure.bSawWalk && Speed < 1.0 && HasPairedGaitGroundPose(false),
+			TEXT("ordinary_gait_pose_pairs_include_full_speed_and_settled_idle"));
+		if (bThornBlend)
+		{
+			Check(FMath::IsNearlyEqual(SporelingMeasure.PeakSpeed, LegacySporelingMeasure.PeakSpeed, 0.1)
+				&& FMath::IsNearlyEqual(SporelingMeasure.Travel, LegacySporelingMeasure.Travel, 1.0),
+				TEXT("ordinary_gait_keeps_legacy_speed_and_travel"));
+		}
+		Results += FString::Printf(TEXT("%s speed=%.4f travel=%.4f pose_pairs=%d\n"), Label,
+			SporelingMeasure.PeakSpeed, SporelingMeasure.Travel, SporelingMeasure.PairedFrames);
+		if (Failures) { Finish(); return; }
+		StartPairedGaitAttack();
+	}
+
+	void ObserveOrdinaryHit()
+	{
+		if (!HasPairedGaitGroundPose(false) && OrdinaryHitFrame < 250) { ++OrdinaryHitFrame; return; }
+		Check(HasPairedGaitGroundPose(false), TEXT("ordinary_hit_recovers_into_expected_ground_graph"));
+		Results += FString::Printf(TEXT("%s hit_recovery_frame=%d\n"), bThornBlend ? TEXT("blend") : TEXT("legacy"), OrdinaryHitFrame);
+		if (!bThornBlend && !Failures)
+		{
+			LegacyOrdinaryHitFrame = OrdinaryHitFrame;
+			LegacySporelingMeasure = SporelingMeasure;
+			BeginOrdinaryGait(true);
+			return;
+		}
+		Check(FMath::Abs(OrdinaryHitFrame - LegacyOrdinaryHitFrame) <= 1, TEXT("ordinary_hit_recovery_matches_legacy"));
+		Finish();
+	}
+	const TCHAR* PairedGaitCase() const
 	{
 		if (!bThornBlend) { return TEXT("legacy"); }
-		return bSporelingSavedProfile ? TEXT("saved_blend") : TEXT("transient_blend");
+		return (bSporelingSavedProfile || bOrdinarySavedProfile) ? TEXT("saved_blend") : TEXT("transient_blend");
 	}
-	bool HasSporelingGroundPose(bool bMoving) const
+	bool HasPairedGaitGroundPose(bool bMoving) const
 	{
 		const auto* Mesh = Monster->GetMesh();
 		const auto* Idle = ThornProfile->IdleAnimation.Get();
@@ -294,7 +440,7 @@ private:
 	{
 		if (!Monster.IsValid() || !ThornProfile.IsValid() || !Player.IsValid())
 		{ Check(false, TEXT("Sporeling_walk_fixture_lost_actor_or_profile")); Finish(); return; }
-		if (SporelingAttackFrame > 0) { ObserveSporelingAttack(); return; }
+		if (SporelingAttackFrame > 0) { ObservePairedGaitAttack(); return; }
 
 		constexpr int32 MoveStart = 24;
 		constexpr int32 MoveEnd = 62;
@@ -313,7 +459,7 @@ private:
 		SporelingMeasure.Travel = FVector::Dist2D(ThornOrigin.GetLocation(), Monster->GetActorLocation());
 		SporelingMeasure.PeakSpeed = FMath::Max(SporelingMeasure.PeakSpeed, Speed);
 		SporelingMeasure.PairedFrames += bPaired ? 1 : 0;
-		SporelingMeasure.bSawWalk |= Speed >= 0.95 * Monster->GetMonsterData()->WalkSpeed && HasSporelingGroundPose(true);
+		SporelingMeasure.bSawWalk |= Speed >= 0.95 * Monster->GetMonsterData()->WalkSpeed && HasPairedGaitGroundPose(true);
 		if (SporelingFrame > MoveStart && SporelingFrame <= MoveStart + 18)
 		{ SporelingMeasure.StartSkirtStep = FMath::Max(SporelingMeasure.StartSkirtStep, SkirtStep); }
 		if (SporelingFrame > MoveEnd && SporelingFrame <= MoveEnd + 18)
@@ -322,7 +468,7 @@ private:
 		{ SporelingMeasure.HeadStep = FMath::Max(SporelingMeasure.HeadStep, HeadStep); }
 		const bool bNative = Cast<URogue10mHumanoidAnimInstance>(Mesh->GetAnimInstance()) != nullptr;
 		SporelingFrames += FString::Printf(TEXT("%s,%d,%.6f,%u,%d,%d,%.4f,%.4f,%d,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f\n"),
-			SporelingCase(), SporelingFrame, World->GetTimeSeconds(), Revision, bPaired, bMovementInput, Speed,
+			PairedGaitCase(), SporelingFrame, World->GetTimeSeconds(), Revision, bPaired, bMovementInput, Speed,
 			SporelingMeasure.Travel, bNative, Skirt.X, Skirt.Y, Skirt.Z, SkirtStep, Head.X, Head.Y, Head.Z, HeadStep);
 		PreviousSporelingRevision = Revision;
 		PreviousSporelingSkirt = Skirt;
@@ -331,9 +477,9 @@ private:
 		if (SporelingFrame != LastFrame) { return; }
 
 		Results += FString::Printf(TEXT("sporeling_%s start_skirt_cm=%.4f stop_skirt_cm=%.4f head_cm=%.4f speed_cm_s=%.4f travel_cm=%.4f paired_frames=%d\n"),
-			SporelingCase(), SporelingMeasure.StartSkirtStep, SporelingMeasure.StopSkirtStep, SporelingMeasure.HeadStep,
+			PairedGaitCase(), SporelingMeasure.StartSkirtStep, SporelingMeasure.StopSkirtStep, SporelingMeasure.HeadStep,
 			SporelingMeasure.PeakSpeed, SporelingMeasure.Travel, SporelingMeasure.PairedFrames);
-		Check(SporelingMeasure.PairedFrames >= LastFrame - 2 && SporelingMeasure.bSawWalk && Speed < 1.0 && HasSporelingGroundPose(false),
+		Check(SporelingMeasure.PairedFrames >= LastFrame - 2 && SporelingMeasure.bSawWalk && Speed < 1.0 && HasPairedGaitGroundPose(false),
 			TEXT("Sporeling_fresh_pose_pairs_cover_settled_walk_and_idle"));
 		if (!bThornBlend)
 		{
@@ -350,13 +496,13 @@ private:
 				TEXT("Sporeling_ground_blend_reduces_start_pop_without_larger_stop_or_head_step"));
 		}
 		if (Failures) { Finish(); return; }
-		StartSporelingAttack();
+		StartPairedGaitAttack();
 	}
-	void StartSporelingAttack()
+	void StartPairedGaitAttack()
 	{
 		auto* AbilitySystem = Player->GetAbilitySystemComponent();
 		if (!AbilitySystem)
-		{ Check(false, TEXT("Sporeling_attack_has_live_player_health_delegate")); Finish(); return; }
+		{ Check(false, TEXT("gait_attack_has_live_player_health_delegate")); Finish(); return; }
 		SporelingHealthObserver = AbilitySystem->GetGameplayAttributeValueChangeDelegate(URogue10mAttributeSet::GetHealthAttribute())
 			.AddLambda([this](const FOnAttributeChangeData& Change)
 			{
@@ -369,11 +515,12 @@ private:
 		auto* Playing = Monster->GetMesh()->GetSingleNodeInstance();
 		Check(bStarted && Playing && Playing->GetCurrentAsset() == Clip
 			&& FMath::IsNearlyEqual(Pattern->GetLockedAttackShape().WindupDuration, ThornProfile->AttackWindupSeconds),
-			TEXT("Sporeling_basic_uses_existing_single_node_clip_and_windup"));
+			OrdinaryGait ? TEXT("ordinary_basic_uses_existing_single_node_clip_and_windup")
+				: TEXT("Sporeling_basic_uses_existing_single_node_clip_and_windup"));
 		if (Failures) { Finish(); return; }
 		SporelingAttackFrame = 1;
 	}
-	void ObserveSporelingAttack()
+	void ObservePairedGaitAttack()
 	{
 		const auto* Pattern = Monster->GetAttackPatternComponent();
 		const int32 Hits = Pattern->GetSuccessfulHitCount() - SporelingHitsBefore;
@@ -382,14 +529,34 @@ private:
 			SporelingMeasure.FirstDamageFrame = SporelingAttackFrame;
 		}
 		if (Pattern->IsAttackActive() && SporelingAttackFrame < 420) { ++SporelingAttackFrame; return; }
-		RemoveSporelingHealthObserver();
+		RemovePairedGaitHealthObserver();
 		SporelingMeasure.RecoveryFrame = SporelingAttackFrame;
-		Results += FString::Printf(TEXT("sporeling_%s attack_first_damage_frame=%d recovery_frame=%d damage=%.4f\n"),
-			SporelingCase(), SporelingMeasure.FirstDamageFrame, SporelingMeasure.RecoveryFrame, SporelingMeasure.Damage);
+		Results += FString::Printf(TEXT("%s_%s attack_first_damage_frame=%d recovery_frame=%d damage=%.4f\n"),
+			OrdinaryGait ? OrdinaryGait->Id : TEXT("sporeling"), PairedGaitCase(), SporelingMeasure.FirstDamageFrame,
+			SporelingMeasure.RecoveryFrame, SporelingMeasure.Damage);
 		const int32 WindupFrames = FMath::RoundToInt(ThornProfile->AttackWindupSeconds * 60.0f);
 		Check(!Pattern->IsAttackActive() && Hits == 1 && SporelingMeasure.Damage > 0.0f
-			&& FMath::Abs(SporelingMeasure.FirstDamageFrame - WindupFrames) <= 1 && HasSporelingGroundPose(false),
-			TEXT("Sporeling_same_attack_lands_once_then_recovers_into_ground_pose"));
+			&& FMath::Abs(SporelingMeasure.FirstDamageFrame - WindupFrames) <= 1 && HasPairedGaitGroundPose(false),
+			OrdinaryGait ? TEXT("ordinary_same_attack_lands_once_then_recovers_into_ground_pose")
+				: TEXT("Sporeling_same_attack_lands_once_then_recovers_into_ground_pose"));
+		if (OrdinaryGait)
+		{
+			if (bThornBlend)
+			{
+				Check(FMath::Abs(SporelingMeasure.FirstDamageFrame - LegacySporelingMeasure.FirstDamageFrame) <= 1
+					&& FMath::Abs(SporelingMeasure.RecoveryFrame - LegacySporelingMeasure.RecoveryFrame) <= 1
+					&& FMath::IsNearlyEqual(SporelingMeasure.Damage, LegacySporelingMeasure.Damage, 0.01f),
+					TEXT("ordinary_gait_keeps_basic_damage_timing_and_recovery"));
+			}
+			if (Failures) { Finish(); return; }
+			const double Applied = UGameplayStatics::ApplyDamage(Monster.Get(), 1.f, PC.Get(), Player.Get(), nullptr);
+			auto* HitPlayer = Monster->GetMesh()->GetSingleNodeInstance();
+			Check(Applied > 0.0 && !Monster->IsDead() && HitPlayer && HitPlayer->GetCurrentAsset() == ThornProfile->HitAnimation.Get(),
+				TEXT("ordinary_hit_plays_existing_hit_clip_after_nonlethal_damage"));
+			if (Failures) { Finish(); return; }
+			OrdinaryHitFrame = 1;
+			return;
+		}
 		if (!bThornBlend && !Failures)
 		{
 			LegacySporelingMeasure = SporelingMeasure;
@@ -402,7 +569,7 @@ private:
 			TEXT("Sporeling_damage_and_attack_recovery_match_legacy"));
 		Finish();
 	}
-	void RemoveSporelingHealthObserver()
+	void RemovePairedGaitHealthObserver()
 	{
 		if (!SporelingHealthObserver.IsValid()) { return; }
 		if (Player.IsValid())
@@ -418,10 +585,10 @@ private:
 	bool Tick()
 	{
 		if (bFinished) return false;
-		if (Stage == 11 && bSporelingWalk)
+		if (Stage == 11 && (bSporelingWalk || OrdinaryGait))
 		{
 			if (FPlatformTime::Seconds() < Deadline) { return true; }
-			Check(false, TEXT("Sporeling_pose_fixture_watchdog"));
+			Check(false, TEXT("paired_gait_pose_fixture_watchdog"));
 			Finish();
 			return false;
 		}
@@ -563,7 +730,7 @@ private:
 		if (bFinished) { return; }
 		bFinished=true;
 		FWorldDelegates::OnWorldPostActorTick.Remove(ThornHandle);
-		RemoveSporelingHealthObserver();
+		RemovePairedGaitHealthObserver();
 		if (Tools.IsValid()) Tools->ExecuteAction(ERogue10mCombatTestAction::Clear);
 		if (bThornWalk)
 		{
@@ -574,6 +741,11 @@ private:
 		{
 			Check(FFileHelper::SaveStringToFile(SporelingFrames,*FPaths::Combine(Output,TEXT("sporeling-walk-frames.csv"))),
 				TEXT("Sporeling_walk_pose_samples_written"));
+		}
+		if (OrdinaryGait)
+		{
+			Check(FFileHelper::SaveStringToFile(OrdinaryFrames, *FPaths::Combine(Output, TEXT("ordinary-gait-frames.csv"))),
+				TEXT("ordinary_gait_pose_samples_written"));
 		}
 		FFileHelper::SaveStringToFile(Results,*FPaths::Combine(Output,TEXT("results.txt")),FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM);
 		UE_LOG(LogRogue10m,Display,TEXT("RESULT=MONSTER_FX_%s failures=%d"),Failures ? TEXT("FAILED") : TEXT("PASSED"),Failures);
@@ -600,6 +772,11 @@ private:
 	uint32 PreviousSporelingRevision = 0;
 	int32 SporelingFrame = 0, SporelingAttackFrame = 0, SporelingHitsBefore = 0;
 	bool bSporelingWalk = false, bSporelingSavedProfile = false;
+	const FOrdinaryGaitSpecies* OrdinaryGait = nullptr;
+	TArray<FName> OrdinaryBones;
+	FString OrdinaryFrames;
+	int32 OrdinaryHitFrame = 0, LegacyOrdinaryHitFrame = 0;
+	bool bOrdinarySavedProfile = false;
 	FString Output,Results;
 	FVector Origin,ChaseStart;
 	double Deadline=0;

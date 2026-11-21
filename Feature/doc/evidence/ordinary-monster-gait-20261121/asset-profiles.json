@@ -1,0 +1,83 @@
+{
+  "VerdantSlime": {
+    "profile": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_VerdantSlime.DA_OW_BasicAttack_VerdantSlime",
+    "mesh": "/Game/MonsterForSurvivalGame/Mesh/Polyart/Slime_SK.Slime_SK",
+    "walk_speed_cm_s": 220.0,
+    "clips": {
+      "idle_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+      "movement_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+      "attack_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+      "hit_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+      "death_animation": "/Game/MonsterForSurvivalGame/Animation/Polyart/Slime/Slime_Die_ANIM.Slime_Die_ANIM"
+    },
+    "timing_before": {
+      "attack_windup_seconds": 0.3499999940395355,
+      "attack_recovery_seconds": 0.4833333194255829,
+      "attack_damage_multiplier": 1.0,
+      "attack_cooldown_seconds": 0.6166667342185974,
+      "authored_walk_speed": 0.0
+    },
+    "timing_after": {
+      "attack_windup_seconds": 0.3499999940395355,
+      "attack_recovery_seconds": 0.4833333194255829,
+      "attack_damage_multiplier": 1.0,
+      "attack_cooldown_seconds": 0.6166667342185974,
+      "authored_walk_speed": 0.0
+    },
+    "blend_legacy_locomotion": true
+  },
+  "CrimsonSlime": {
+    "profile": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_CrimsonSlime.DA_OW_BasicAttack_CrimsonSlime",
+    "mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/Slime_SK.Slime_SK",
+    "walk_speed_cm_s": 235.0,
+    "clips": {
+      "idle_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_IdleNormal_ANIM.Slime_IdleNormal_ANIM",
+      "movement_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Walk_ANIM.Slime_Walk_ANIM",
+      "attack_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Attack01_ANIM.Slime_Attack01_ANIM",
+      "hit_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_GetHit_ANIM.Slime_GetHit_ANIM",
+      "death_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/Slime/Slime_Die_ANIM.Slime_Die_ANIM"
+    },
+    "timing_before": {
+      "attack_windup_seconds": 0.3499999940395355,
+      "attack_recovery_seconds": 0.4833333194255829,
+      "attack_damage_multiplier": 1.0,
+      "attack_cooldown_seconds": 0.5666666626930237,
+      "authored_walk_speed": 0.0
+    },
+    "timing_after": {
+      "attack_windup_seconds": 0.3499999940395355,
+      "attack_recovery_seconds": 0.4833333194255829,
+      "attack_damage_multiplier": 1.0,
+      "attack_cooldown_seconds": 0.5666666626930237,
+      "authored_walk_speed": 0.0
+    },
+    "blend_legacy_locomotion": true
+  },
+  "IronShell": {
+    "profile": "/Game/Rogue10m/World/OpenWorld/Monsters/DA_OW_BasicAttack_IronShell.DA_OW_BasicAttack_IronShell",
+    "mesh": "/Game/MonsterForSurvivalGame/Mesh/PBR/TurtleShell_SK.TurtleShell_SK",
+    "walk_speed_cm_s": 170.0,
+    "clips": {
+      "idle_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_IdleNormal_ANIM.TurtleShell_IdleNormal_ANIM",
+      "movement_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_Walk_ANIM.TurtleShell_Walk_ANIM",
+      "attack_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_Attack01_ANIM.TurtleShell_Attack01_ANIM",
+      "hit_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_GetHit_ANIM.TurtleShell_GetHit_ANIM",
+      "death_animation": "/Game/MonsterForSurvivalGame/Animation/PBR/TurtleShell/TurtleShell_Die_ANIM.TurtleShell_Die_ANIM"
+    },
+    "timing_before": {
+      "attack_windup_seconds": 0.3499999940395355,
+      "attack_recovery_seconds": 0.4833333194255829,
+      "attack_damage_multiplier": 1.0,
+      "attack_cooldown_seconds": 0.54666668176651,
+      "authored_walk_speed": 0.0
+    },
+    "timing_after": {
+      "attack_windup_seconds": 0.3499999940395355,
+      "attack_recovery_seconds": 0.4833333194255829,
+      "attack_damage_multiplier": 1.0,
+      "attack_cooldown_seconds": 0.54666668176651,
+      "authored_walk_speed": 0.0
+    },
+    "blend_legacy_locomotion": true
+  }
+}
