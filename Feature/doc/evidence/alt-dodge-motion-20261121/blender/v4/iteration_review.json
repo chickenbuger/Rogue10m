@@ -1,0 +1,74 @@
+{
+  "contract": {
+    "clip": "In-place Manny shoulder roll for learned Alt roll",
+    "target": "/Game/Rogue10m/Animation/Common/Evade/A_CommonShoulderRoll",
+    "duration_seconds": 0.4166666567325592,
+    "root_motion_extraction": false,
+    "reference_capsule_travel_cm": 250.0,
+    "runtime_dependencies_in_scope_for_parent_test": ["visible retarget", "equipped weapons", "roll blending", "collision"]
+  },
+  "candidate_evidence": {
+    "runtime_existing_render": "Feature/doc/evidence/common-skill-web-20261120/roll-active.png",
+    "blender_fixed_camera_baseline_and_repair": "roll-profile-comparison.png",
+    "blender_pose_evaluation": "roll-metrics.json"
+  },
+  "requirement_ledger": {
+    "head_floor_clearance": {
+      "baseline": "fail",
+      "final": "pass",
+      "baseline_min_gap_cm": -23.97916238307953,
+      "final_min_gap_cm": 22.12451536655426
+    },
+    "progressive_asymmetric_support": {
+      "baseline": "fail",
+      "final": "pass",
+      "right_hand_phases": [0.36, 0.4, 0.44, 0.48],
+      "right_shoulder_phases": [0.52, 0.56, 0.6, 0.64],
+      "first_right_heel_phase": 0.76,
+      "minimum_floor_proxy_gap_cm": -0.40000185966491664
+    },
+    "right_wrist_world_xy_drift_in_four_support_samples": {
+      "v2_rejected_forward_drift_approx_cm": 56.0,
+      "v4_max_pair_distance_cm": 0.00003053247564999031,
+      "modeled_default_travel_cm": 250.0
+    },
+    "root_motion_duplicate_capsule_travel": {
+      "final": "pass",
+      "root_planar_travel_cm": 0.0,
+      "root_rotation_error": 0.0
+    },
+    "edited_clip_reimport_equivalence": {
+      "final": "pass",
+      "bone_hierarchy_count": 89,
+      "sample_count": 26,
+      "fps": 60,
+      "max_blender_to_unreal_position_error_cm": 0.0004979110027600123,
+      "position_track_count_tested": 8
+    },
+    "visible_skin_and_weapon_collision_during_gameplay": {
+      "final": "unclear",
+      "evidence_boundary": "The retained comparison shows rigid anatomical proxy shapes on the real Manny armature. Runtime gameplay captures are a separate validation."
+    }
+  },
+  "selected_defect": "The procedural forward roll rotates a generic symmetric tuck past the plane on the head before recovering.",
+  "source_cause": "The existing pose rotates the full pelvis 360 degrees with sine-based limb tuck and a fixed 39 cm pelvis drop.",
+  "repair": "Original Blender curves of timed asymmetric crouch and chin tuck, lead arm IK at assumed default travel, shoulder weight transfer and gradual heel recovery.",
+  "retained_failures": [
+    "V1 let the head remain the lowest support at 48 to 52 percent.",
+    "V2 preserved head clearance but left about 56 cm of wrist drift.",
+    "V3 wrist release was abrupt, and Workbench failed during rendering with native ntdll.dll exception.",
+    "V4 Workbench failed with the same native exception. The saved scene was rendered in CPU Cycles.",
+    "Two scratch Unreal commandlets timed out waiting for the SDK-check subprocess while a build was active. The scoped UE_SKIP_UBT_SDK_SETUP run imported the package and passed the same root verification."
+  ],
+  "final_evidence": {
+    "source_authoring": "../author_manny_roll.py",
+    "editable_blend": "MannyShoulderRoll.blend",
+    "animation_only_export": "MannyShoulderRoll.fbx",
+    "fbx_sha256": "4222c1a80480016763b632eaf3b28225df2db35f832a312075be94304742f69d",
+    "production_path_ue_reimport": "production-import-report.json",
+    "production_uasset_sha256": "4a3a8f41ee061b999a0eed216abd0ba4c6fa4402567d0dcd2d8e4cdc7e6a6023",
+    "blender_and_ue_roundtrip_parity": "fresh-blender-reimport.json",
+    "comparison_image": "roll-profile-comparison.png"
+  },
+  "decision": "retain_repair"
+}

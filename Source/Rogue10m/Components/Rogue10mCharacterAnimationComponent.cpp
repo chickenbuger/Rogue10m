@@ -124,12 +124,17 @@ void URogue10mCharacterAnimationComponent::NotifyLanded()
 	RefreshFootstepTimer();
 }
 
-void URogue10mCharacterAnimationComponent::NotifyDodge(bool bRoll, float Duration)
+void URogue10mCharacterAnimationComponent::NotifyDodge(const FVector& Direction, bool bRoll, float Duration)
 {
 	RequestFighterCombatStance(Duration);
 	if (const URogue10mCharacterMotionDataAsset* Data = GetMotionData())
 	{
-		if (ARogue10mCharacter* Character = GetOwnerCharacter(); !bRoll && Character && Data->DodgeMontage)
+		ARogue10mCharacter* Character = GetOwnerCharacter();
+		// The forward step is a jog derivative. Other directions already have locomotion samples.
+		const bool bUseForwardStep = Character && (!Character->IsThirdPersonGameplayActive()
+			|| FVector::DotProduct(Character->GetActorForwardVector().GetSafeNormal2D(), Direction.GetSafeNormal2D())
+				>= FMath::Cos(FMath::DegreesToRadians(22.5)));
+		if (!bRoll && bUseForwardStep && Data->DodgeMontage)
 		{
 			RequestFighterCombatStance(Data->DodgeMontage->GetPlayLength());
 			Character->PlayCommonMontage(Data->DodgeMontage, 1.0f);
