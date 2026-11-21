@@ -205,6 +205,7 @@ public:
 	/** Exact accepted presentation skill; HUD combo previews and cooldown roots can name a different skill. */
 	const URogue10mAttackSkillData* GetLastAcceptedAttackSkill() const { return LastAcceptedAttackSkill.Get(); }
 	TOptional<float> GetGreatSwordCapstoneHoldSeconds() const;
+	TOptional<float> GetGreatSwordEarthSplitterHoldSeconds() const;
 
 protected:
 	virtual void BeginPlay() override;
@@ -228,6 +229,7 @@ private:
 	float GetAttackSpeedMultiplier() const;
 	bool CanUseCombatInput() const;
 	bool CanUseBoundSkill(const URogue10mAttackSkillData* SkillData) const;
+	TOptional<float> GetGreatSwordRightChargeHoldSeconds(const FSoftObjectPath& SkillPath) const;
 	void MonitorBoundSkillInput();
 	void ExecuteCombatAttack(bool bPrimaryAttack, bool bChargedAttack);
 	bool ExecuteAttackSkill(const URogue10mAttackSkillData& SkillData, bool bComboAttack);

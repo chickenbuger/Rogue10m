@@ -26,6 +26,14 @@ URogue10mFighterCombatStanceAnimInstance::URogue10mFighterCombatStanceAnimInstan
 		"/Game/Rogue10m/Animation/Common/Evade/A_CommonShoulderRoll.A_CommonShoulderRoll")));
 	GreatSwordCapstoneBrace = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT(
 		"/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_CapstoneChargeBrace.A_GreatSword_CapstoneChargeBrace")));
+	EarthSplitterChargePose = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT(
+		"/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_EarthSplitterCharge.A_GreatSword_EarthSplitterCharge")));
+	EarthSplitterReleasePose = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT(
+		"/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_EarthSplitterRelease.A_GreatSword_EarthSplitterRelease")));
+	EarthSplitterFemaleChargePose = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT(
+		"/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_EarthSplitterChargeFemale.A_GreatSword_EarthSplitterChargeFemale")));
+	EarthSplitterFemaleReleasePose = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT(
+		"/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_EarthSplitterReleaseFemale.A_GreatSword_EarthSplitterReleaseFemale")));
 	SecondJumpPoseAnimation = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT(
 		"/Game/Rogue10m/Animation/Common/Airborne/A_CommonSecondJumpImpulse.A_CommonSecondJumpImpulse")));
 	NonlethalFrontReaction = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT(
@@ -43,6 +51,10 @@ void URogue10mFighterCombatStanceAnimInstance::NativeInitializeAnimation()
 	CachedGreatSwordLocomotion = GreatSwordLocomotion.LoadSynchronous();
 	CachedLearnedRoll = LearnedRollAnimation.LoadSynchronous();
 	CachedCapstoneBrace = GreatSwordCapstoneBrace.LoadSynchronous();
+	CachedEarthSplitterCharge = EarthSplitterChargePose.LoadSynchronous();
+	CachedEarthSplitterRelease = EarthSplitterReleasePose.LoadSynchronous();
+	CachedEarthSplitterFemaleCharge = EarthSplitterFemaleChargePose.LoadSynchronous();
+	CachedEarthSplitterFemaleRelease = EarthSplitterFemaleReleasePose.LoadSynchronous();
 	CachedNonlethalFront = NonlethalFrontReaction.LoadSynchronous();
 	CachedNonlethalRear = NonlethalRearReaction.LoadSynchronous();
 	bLearnedRollPoseApplied = false;

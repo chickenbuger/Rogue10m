@@ -7,8 +7,10 @@
 #include "AnimationRuntime.h"
 #include "BoneContainer.h"
 #include "BonePose.h"
+#include "CollisionQueryParams.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/SkeletalMesh.h"
+#include "Engine/World.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #if WITH_EDITOR
@@ -27,12 +29,17 @@
 namespace
 {
 constexpr float GroundedDefeatBlendSeconds = .22f;
+constexpr float EarthSplitterFadeRate = 10.0f;
+constexpr float EarthSplitterMovingLowerBodyFadeRate = 15.0f;
+constexpr double EarthSplitterClearanceFadeMargin = 39.0;
 
 #if WITH_EDITOR
 TAutoConsoleVariable<int32> CVarGreatSwordCapstoneBrace(TEXT("a.Rogue10m.GreatSwordCapstoneBrace"), 1,
 	TEXT("Enable the visual-only capstone brace for editor pose comparisons."));
 TAutoConsoleVariable<int32> CVarMovingWeaponLocomotion(TEXT("a.Rogue10m.MovingWeaponLocomotion"), 1,
 	TEXT("Enable the grounded pose handoff when equipping or removing a sword while moving."));
+TAutoConsoleVariable<int32> CVarEarthSplitterPose(TEXT("a.Rogue10m.EarthSplitterPose"), 1,
+	TEXT("Enable the EarthSplitter two-palm pose for editor comparisons."));
 #endif
 
 constexpr float WeaponLocomotionUpperSeconds = 0.22f;
@@ -97,6 +104,24 @@ FQuat BoundedResidual(const FQuat& Rotation, float Weight, float LimitDegrees)
 	const double Fraction = Angle > UE_SMALL_NUMBER ? FMath::Min(static_cast<double>(Weight), Limit / Angle) : 0.0;
 	return FQuat::Slerp(FQuat::Identity, Normal, Fraction).GetNormalized();
 }
+
+bool IsEarthSplitterBladeSpaceClear(const ARogue10mCharacter& Character, const UCharacterMovementComponent& Movement, double SideMargin)
+{
+	const UWorld* World = Character.GetWorld();
+	const auto& Floor = Movement.CurrentFloor;
+	if (!World || !Floor.IsWalkableFloor() || Floor.HitResult.ImpactNormal.Z < .9995)
+	{
+		return false;
+	}
+	// Reserve the low blade's forward corridor on the current floor. This check is cosmetic;
+	// the existing attack still traces its own arc and can hit enemies inside the corridor.
+	const FVector Forward = Character.GetActorForwardVector().GetSafeNormal2D();
+	const FVector Actor = Character.GetActorLocation();
+	const FVector Origin(Actor.X, Actor.Y, Floor.HitResult.ImpactPoint.Z + 68.0);
+	FCollisionQueryParams Params(SCENE_QUERY_STAT(EarthSplitterBladeClearance), false, &Character);
+	return !World->SweepTestByObjectType(Origin + Forward * 43.0, Origin + Forward * 175.0, Forward.ToOrientationQuat(),
+		FCollisionObjectQueryParams(ECC_WorldStatic), FCollisionShape::MakeBox(FVector(9.0, 48.0 + SideMargin, 66.0)), Params);
+}
 }
 
 FRogue10mViewAlignedUpperBodyProxy::FRogue10mViewAlignedUpperBodyProxy(UAnimInstance* Instance)
@@ -121,6 +146,11 @@ void FRogue10mViewAlignedUpperBodyProxy::Initialize(UAnimInstance* InAnimInstanc
 	RollSequenceLength = 0.0f;
 	CapstoneBraceSequence = nullptr;
 	CapstoneBraceTime = CapstoneBraceBlend = CapstoneBraceWeight = 0.0f;
+	EarthSplitterSequence = nullptr;
+	EarthSplitterTime = EarthSplitterWeight = EarthSplitterLowerBodyWeight = 0.0f;
+	EarthSplitterMontageAtChargeStart = INDEX_NONE;
+	bEarthSplitterChargeContinuous = false;
+	bEarthSplitterHoldObserved = false;
 	SecondJumpSequence = nullptr;
 	SecondJumpAge = -1.0f;
 	SecondJumpInterruptionWeight = 1.0f;
@@ -395,6 +425,7 @@ void FRogue10mViewAlignedUpperBodyProxy::PreEvaluateAnimation(UAnimInstance* InA
 	const auto* Character = Instance ? Cast<ARogue10mCharacter>(Instance->TryGetPawnOwner()) : nullptr;
 	// Montage advance can start/end a contributing pose after PreUpdate. Recheck before evaluation.
 	CaptureWeightedHandMotion(Character, Instance, GetDeltaSeconds());
+	CaptureEarthSplitterPose(Character, Instance, GetDeltaSeconds());
 	if (!bUseWeightedAimFollow)
 	{
 		// Restore the continuously tracked baseline immediately when disabled or an action starts.
@@ -436,6 +467,7 @@ bool FRogue10mViewAlignedUpperBodyProxy::Evaluate_WithRoot(FPoseContext& Output,
 	}
 	ApplyWeaponLocomotionBlend(Output.Pose);
 	if (CapstoneBraceWeight > UE_SMALL_NUMBER) { ApplyCapstoneBrace(Output); }
+	if (EarthSplitterSequence && EarthSplitterWeight > UE_SMALL_NUMBER) { ApplyEarthSplitterPose(Output); }
 	if (SecondJumpSequence) { ApplySecondJumpPose(Output); }
 	if (NonlethalHitSequence) { ApplyNonlethalHit(Output); }
 	if (bApplyAim) { ApplyViewAim(Output.Pose); }
@@ -650,6 +682,126 @@ void FRogue10mViewAlignedUpperBodyProxy::ApplyCapstoneBrace(FPoseContext& Output
 	}
 	FAnimationPoseData BaseData(Output);
 	FAnimationRuntime::AccumulateAdditivePose(BaseData, BraceData, CapstoneBraceWeight, AAT_LocalSpaceBase);
+}
+
+void FRogue10mViewAlignedUpperBodyProxy::CaptureEarthSplitterPose(const ARogue10mCharacter* Character,
+	const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds)
+{
+	const auto* Movement = Character ? Character->GetCharacterMovement() : nullptr;
+	const auto* Combat = Character ? Character->GetCombatComponent() : nullptr;
+	const TOptional<float> Hold = Combat ? Combat->GetGreatSwordEarthSplitterHoldSeconds() : TOptional<float>();
+	const bool bNewHold = Hold.IsSet() && !bEarthSplitterHoldObserved;
+	bEarthSplitterHoldObserved = Hold.IsSet();
+	const auto* Source = Instance ? Instance->GetSkelMeshComponent() : nullptr;
+	const auto* Mesh = Source ? Source->GetSkeletalMeshAsset() : nullptr;
+	const auto Appearance = Character ? Character->GetCharacterAppearance() : FRogue10mCharacterAppearance();
+	const bool bFemaleRefit = Appearance.Gender == ERogue10mCharacterGender::Female
+		&& (Appearance.Race == ERogue10mCharacterRace::Human || Appearance.Race == ERogue10mCharacterRace::Orc);
+	const bool bHumanMale = Appearance.Race == ERogue10mCharacterRace::Human && Appearance.Gender == ERogue10mCharacterGender::Male;
+	const auto* Charge = Instance ? (bFemaleRefit ? Instance->CachedEarthSplitterFemaleCharge.Get() : Instance->CachedEarthSplitterCharge.Get()) : nullptr;
+	const auto* Release = Instance ? (bFemaleRefit ? Instance->CachedEarthSplitterFemaleRelease.Get() : Instance->CachedEarthSplitterRelease.Get()) : nullptr;
+	const auto* Controller = Character ? Cast<ARogue10mPlayerController>(Character->GetController()) : nullptr;
+	bool bPresentationEnabled = true;
+#if WITH_EDITOR
+	bPresentationEnabled = CVarEarthSplitterPose.GetValueOnGameThread() != 0;
+#endif
+	// The displayed retarget changes the blade axis because the mount uses both palms.
+	// Only use the authored pairs on profiles calibrated against that visible grip.
+	if (!bPresentationEnabled || (!bHumanMale && !bFemaleRefit) || !Combat || !Controller || Controller->IsAnyBlockingWindowVisible() || Character->IsDead()
+		|| !Character->IsThirdPersonGameplayActive() || Character->IsDodging() || Character->GetEquippedWeaponType() != ERogue10mWeaponType::GreatSword
+		|| Source != Character->GetAnimationPlaybackMesh() || !Mesh || !Charge || !Release || !Movement || !Movement->IsMovingOnGround()
+		|| Charge->GetSkeleton() != Mesh->GetSkeleton() || Release->GetSkeleton() != Mesh->GetSkeleton())
+	{
+		EarthSplitterSequence = nullptr;
+		EarthSplitterWeight = EarthSplitterLowerBodyWeight = 0.0f;
+		bEarthSplitterChargeContinuous = false;
+		return;
+	}
+	if (!Hold.IsSet() && EarthSplitterWeight <= UE_SMALL_NUMBER) { return; }
+	const auto* Animation = Character->GetCharacterAnimationComponent();
+	const bool bStationary = (!Animation || !Animation->HasMovementInput())
+		&& Character->GetVelocity().SizeSquared2D() <= FMath::Square(FMath::Max(0.0f, Instance->FighterCombatStationarySpeed));
+	if (!IsEarthSplitterBladeSpaceClear(*Character, *Movement, 0.0))
+	{
+		EarthSplitterSequence = nullptr;
+		EarthSplitterWeight = EarthSplitterLowerBodyWeight = 0.0f;
+		bEarthSplitterChargeContinuous = false;
+		return;
+	}
+
+	// A wall being approached by a turn gets a wider warning corridor to release the pose before
+	// it reaches the inner clearance. An immediate obstruction still takes precedence over blending.
+	const bool bCanUseLowPose = bStationary && IsEarthSplitterBladeSpaceClear(*Character, *Movement, EarthSplitterClearanceFadeMargin);
+	const UAnimSequence* Desired = nullptr;
+	if (Hold.IsSet())
+	{
+		const bool bWasContinuous = bEarthSplitterChargeContinuous;
+		// A cancelled brace can only restart with a new charge.
+		bEarthSplitterChargeContinuous = bCanUseLowPose && (bWasContinuous || (bNewHold && Hold.GetValue() <= .10f));
+		if (bEarthSplitterChargeContinuous)
+		{
+			if (!bWasContinuous)
+			{
+				const auto* Bound = Combat->GetEquippedSkill(ERogue10mAttackInputSlot::ChargedSpecial);
+				const auto* BoundMontage = Bound ? Bound->AttackMontage.Get() : nullptr;
+				const auto* Existing = BoundMontage ? Instance->GetActiveInstanceForMontage(BoundMontage) : nullptr;
+				EarthSplitterMontageAtChargeStart = Existing ? Existing->GetInstanceID() : INDEX_NONE;
+			}
+			Desired = Charge;
+			EarthSplitterTime = FMath::Min(Hold.GetValue(), Charge->GetPlayLength());
+		}
+	}
+	else if (bCanUseLowPose && bEarthSplitterChargeContinuous)
+	{
+		const auto* Accepted = Combat->GetLastAcceptedAttackSkill();
+		static const FSoftObjectPath EarthSplitter(TEXT("/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_EarthSplitter.DA_Hybrid_GreatSword_EarthSplitter"));
+		const UAnimMontage* Montage = Accepted && FSoftObjectPath(Accepted) == EarthSplitter ? Accepted->AttackMontage.Get() : nullptr;
+		const FAnimMontageInstance* Playback = Montage ? Instance->GetActiveInstanceForMontage(Montage) : nullptr;
+		// A newly accepted attack instance proves release even if a frame hitch skipped late hold poses.
+		if (Playback && Playback->GetInstanceID() != EarthSplitterMontageAtChargeStart
+			&& FMath::IsNearlyEqual(Montage->GetPlayLength(), Release->GetPlayLength(), .001f))
+		{
+			Desired = Release;
+			EarthSplitterTime = FMath::Clamp(Playback->GetPosition(), 0.0f, Release->GetPlayLength());
+		}
+		else { bEarthSplitterChargeContinuous = false; }
+	}
+	else { bEarthSplitterChargeContinuous = false; }
+
+	const float FadeTarget = Desired ? 1.0f : 0.0f;
+	const float Delta = FMath::Max(0.0f, DeltaSeconds);
+	EarthSplitterWeight = FMath::FInterpConstantTo(EarthSplitterWeight, FadeTarget, Delta, EarthSplitterFadeRate);
+	// Let the live legs take over sooner during locomotion. Never restore a discarded brace
+	// when the player stops again with the same charge still held.
+	EarthSplitterLowerBodyWeight = FMath::FInterpConstantTo(EarthSplitterLowerBodyWeight, FadeTarget, Delta,
+		bStationary ? EarthSplitterFadeRate : EarthSplitterMovingLowerBodyFadeRate);
+	if (Desired) { EarthSplitterSequence = Desired; }
+	if (EarthSplitterWeight <= UE_SMALL_NUMBER) { EarthSplitterSequence = nullptr; }
+}
+
+void FRogue10mViewAlignedUpperBodyProxy::ApplyEarthSplitterPose(FPoseContext& Output)
+{
+	const FBoneContainer& Bones = Output.Pose.GetBoneContainer();
+	if (!bBoneCacheValid || BoneCacheSerial != Bones.GetSerialNumber()) { RebuildBoneCache(Bones); }
+	FPoseContext Strike(Output);
+	FAnimationPoseData StrikeData(Strike);
+	EarthSplitterSequence->GetAnimationPose(StrikeData, FAnimExtractContext(EarthSplitterTime, false));
+	for (const FCompactPoseBoneIndex Bone : Strike.Pose.ForEachBoneIndex())
+	{
+		if (Bone == Root || Strike.Pose[Bone].ContainsNaN()) { continue; }
+		const bool bUsesLowerBodyWeight = EarthSplitterLowerBodyWeight < EarthSplitterWeight
+			&& (!Strike.Pose.IsValidIndex(Spine[0]) || (Bone != Spine[0] && !Bones.BoneIsChildOf(Bone, Spine[0])));
+		const float Weight = bUsesLowerBodyWeight ? EarthSplitterLowerBodyWeight : EarthSplitterWeight;
+		if (Weight <= UE_SMALL_NUMBER) { continue; }
+		FTransform Authored = Strike.Pose[Bone];
+		if (Root != INDEX_NONE && Bones.GetParentBoneIndex(Bone) == Root)
+		{
+			// The live graph can carry a translated root during the charged stance. Keep its root
+			// while placing the authored children in the same component space as their Blender rig.
+			Authored = (Authored * Strike.Pose[Root]).GetRelativeTransform(Output.Pose[Root]);
+		}
+		Output.Pose[Bone].BlendWith(Authored, Weight);
+	}
 }
 
 void FRogue10mViewAlignedUpperBodyProxy::CaptureSecondJumpPose(const ARogue10mCharacter& Character,

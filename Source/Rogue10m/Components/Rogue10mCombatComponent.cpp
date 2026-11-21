@@ -654,13 +654,24 @@ bool URogue10mCombatComponent::ActivateTreeSkill(URogue10mAttackSkillData* Skill
 TOptional<float> URogue10mCombatComponent::GetGreatSwordCapstoneHoldSeconds() const
 {
 	static const FSoftObjectPath Capstone(TEXT("/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_Ultimate.DA_Hybrid_GreatSword_Ultimate"));
+	return GetGreatSwordRightChargeHoldSeconds(Capstone);
+}
+
+TOptional<float> URogue10mCombatComponent::GetGreatSwordEarthSplitterHoldSeconds() const
+{
+	static const FSoftObjectPath EarthSplitter(TEXT("/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_EarthSplitter.DA_Hybrid_GreatSword_EarthSplitter"));
+	return GetGreatSwordRightChargeHoldSeconds(EarthSplitter);
+}
+
+TOptional<float> URogue10mCombatComponent::GetGreatSwordRightChargeHoldSeconds(const FSoftObjectPath& SkillPath) const
+{
 	const auto* Skill = HeldBoundSkill.Get();
 	const auto* Character = GetOwnerCharacter();
 	const auto* World = GetWorld();
 	if (!Skill || !Character || !World || BoundSkillPressedTime < 0.0f
 		|| Character->GetEquippedWeaponType() != ERogue10mWeaponType::GreatSword
 		|| Skill != GetEquippedSkill(ERogue10mAttackInputSlot::ChargedSpecial)
-		|| FSoftObjectPath(Skill) != Capstone || !CanUseBoundSkill(Skill))
+		|| FSoftObjectPath(Skill) != SkillPath || !CanUseBoundSkill(Skill))
 	{
 		return {};
 	}

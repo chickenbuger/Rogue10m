@@ -36,6 +36,8 @@ private:
 	void ApplyRollPose(FCompactPose& Pose);
 	void CaptureCapstoneBrace(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
 	void ApplyCapstoneBrace(FPoseContext& Output);
+	void CaptureEarthSplitterPose(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
+	void ApplyEarthSplitterPose(FPoseContext& Output);
 	void ApplySecondJumpPose(FPoseContext& Output);
 	void CaptureSecondJumpPose(const ARogue10mCharacter& Character, const URogue10mFighterCombatStanceAnimInstance& Instance,
 		const USkeletalMeshComponent& Mesh, float DeltaSeconds);
@@ -76,6 +78,13 @@ private:
 	float CapstoneBraceTime = 0.0f;
 	float CapstoneBraceBlend = 0.0f;
 	float CapstoneBraceWeight = 0.0f;
+	const UAnimSequence* EarthSplitterSequence = nullptr;
+	float EarthSplitterTime = 0.0f;
+	float EarthSplitterWeight = 0.0f;
+	float EarthSplitterLowerBodyWeight = 0.0f;
+	int32 EarthSplitterMontageAtChargeStart = INDEX_NONE;
+	bool bEarthSplitterChargeContinuous = false;
+	bool bEarthSplitterHoldObserved = false;
 	const UAnimSequence* NonlethalHitSequence = nullptr;
 	float NonlethalHitAge = 0.0f;
 	float NonlethalHitWeight = 0.0f;

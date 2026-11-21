@@ -136,6 +136,18 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Weapon")
 	TSoftObjectPtr<UAnimSequence> GreatSwordCapstoneBrace;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Weapon")
+	TSoftObjectPtr<UAnimSequence> EarthSplitterChargePose;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Weapon")
+	TSoftObjectPtr<UAnimSequence> EarthSplitterReleasePose;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|GreatSword")
+	TSoftObjectPtr<UAnimSequence> EarthSplitterFemaleChargePose;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|GreatSword")
+	TSoftObjectPtr<UAnimSequence> EarthSplitterFemaleReleasePose;
+
 	/** Scale the Manny brace to the visible retargeted grip. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Weapon", meta=(ClampMin="0.0", ClampMax="1.0"))
 	float GreatSwordCapstoneBraceStrength = 0.40f;
@@ -187,6 +199,10 @@ private:
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedGreatSwordIdle;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedLearnedRoll;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedCapstoneBrace;
+	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedEarthSplitterCharge;
+	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedEarthSplitterRelease;
+	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedEarthSplitterFemaleCharge;
+	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedEarthSplitterFemaleRelease;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedSecondJumpPose;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedNonlethalFront;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedNonlethalRear;
