@@ -116,6 +116,15 @@ public:
 				FPlatformMisc::RequestExitWithStatus(false, 1); return;
 			}
 		}
+		if (bRollOnlyQA && FParse::Value(FCommandLine::Get(), TEXT("RogueRollAuditDirection="), RollAuditDirection))
+		{
+			if (RollAuditDirection == TEXT("Right")) { RollMoveKey = EKeys::D; }
+			else if (RollAuditDirection == TEXT("Back")) { RollMoveKey = EKeys::S; }
+			else if (RollAuditDirection != TEXT("Forward"))
+			{
+				Check(false, TEXT("known_directional_roll_audit_case")); Finish(); return;
+			}
+		}
 		IFileManager::Get().MakeDirectory(*Output, true);
 		Later(bRollOnlyQA ? 0.15 : 3.0, [this] { Prepare(); });
 		FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self = AsShared()](float)
@@ -1375,18 +1384,31 @@ private:
 		BeginRollMotionEvidence();
 		Later(0.12, [this] { VerifyCommonRollInput(); });
 	}
+	FVector GetRollAuditDirection() const
+	{
+		if (RollMoveKey == EKeys::D) { return Player->GetActorRightVector().GetSafeNormal2D(); }
+		if (RollMoveKey == EKeys::S) { return -Player->GetActorForwardVector().GetSafeNormal2D(); }
+		return Player->GetActorForwardVector().GetSafeNormal2D();
+	}
 	void VerifyCommonRollInput()
 	{
 		const double PelvisBefore = LogCommonRollPelvis(TEXT("ready"));
 		RollPelvisBefore = PelvisBefore;
 		RecordRollMotion(TEXT("ready"), 0.0f);
 		Shot(TEXT("roll-ready.png"));
-		Later(0.12, [this, PelvisBefore]
+		if (RollMoveKey.IsValid()) { GameKey(RollMoveKey, true); }
+		Later(RollMoveKey.IsValid() ? 0.10 : 0.12, [this, PelvisBefore]
 		{
 			const FVector Origin = Player->GetActorLocation();
-			GameKey(Rogue10mInput::DodgeKey(), true);
-			Later(0.12, [this, Origin, PelvisBefore]
+			if (!RollAuditDirection.IsEmpty())
 			{
+				RollExpectedDirection = GetRollAuditDirection();
+				Player->GetCharacterMovement()->StopMovementImmediately();
+			}
+			GameKey(Rogue10mInput::DodgeKey(), true);
+			Later(RollMoveKey.IsValid() ? 0.05 : 0.12, [this, Origin, PelvisBefore]
+			{
+				if (RollMoveKey.IsValid()) { GameKey(RollMoveKey, false); }
 				GameKey(Rogue10mInput::DodgeKey(), false);
 				Later(0.75, [this, Origin, PelvisBefore]
 				{
@@ -1395,6 +1417,16 @@ private:
 					Check(!Player->IsRolling() && !Player->IsDodging() && Travel > 100.0 && Travel < 370.0,
 						TEXT("common_roll_travels_plausible_distance_and_finishes"));
 					UE_LOG(LogRogue10m, Display, TEXT("COMMON_ROLL travel_cm=%.2f"), Travel);
+					if (!RollAuditDirection.IsEmpty())
+					{
+						const FVector Displacement = Player->GetActorLocation() - Origin;
+						const double Along = FVector::DotProduct(Displacement, RollExpectedDirection);
+						const double Alignment = FVector::DotProduct(RollObservedDirection, RollExpectedDirection);
+						Check(Alignment > 0.98 && Along >= Travel * 0.95, TEXT("actual_ctrl_roll_matches_held_direction"));
+						Report += FString::Printf(TEXT("roll_direction=%s alignment=%.6f travel_cm=%.4f along_cm=%.4f expected=(%.4f,%.4f) actual=(%.4f,%.4f)\n"),
+							*RollAuditDirection, Alignment, Travel, Along, RollExpectedDirection.X, RollExpectedDirection.Y,
+							RollObservedDirection.X, RollObservedDirection.Y);
+					}
 					const double PelvisAfter = LogCommonRollPelvis(TEXT("recovered"));
 					Check(FMath::Abs(PelvisBefore - PelvisAfter) < 15.0, TEXT("common_roll_restores_the_standing_pose"));
 					RecordRollMotion(TEXT("recovered"), 1.0f);
@@ -1422,18 +1454,34 @@ private:
 			if (InWorld != Self->World.Get() || !Self->Player.IsValid() || Self->RollMotionFrames >= 120
 				|| !Self->Player->GetRollPresentation(Progress, Direction)) { return; }
 			++Self->RollMotionFrames;
+			Self->RollObservedDirection = Direction.GetSafeNormal2D();
 			Self->RollMotionMin = FMath::Min(Self->RollMotionMin, Progress);
 			Self->RollMotionMax = FMath::Max(Self->RollMotionMax, Progress);
 			Self->RecordRollMotion(TEXT("active"), Progress);
+			if (Self->RollPhotoCamera.IsValid() && !Self->RollAuditDirection.IsEmpty())
+			{
+				if (!Self->bRollReleaseEntryCaptured && Progress >= 0.50f)
+				{
+					Self->bRollReleaseEntryCaptured = true;
+					Self->Shot(TEXT("roll-release-entry.png"));
+				}
+				if (!Self->bRollReleaseExitCaptured && Progress >= 0.60f)
+				{
+					Self->bRollReleaseExitCaptured = true;
+					Self->Shot(TEXT("roll-release-exit.png"));
+				}
+			}
 			if (!Self->bRollTuckCaptured && Progress >= 0.54f && Progress <= 0.70f)
 			{
 				Self->CaptureRollTuck();
 			}
 		});
 		if (FParse::Param(FCommandLine::Get(), TEXT("nullrhi"))) { return; }
-		const FVector Target = Player->GetActorLocation() + Player->GetActorForwardVector() * 140.0 - FVector::UpVector * 24.0;
-		const FVector Position = Target + Player->GetActorRightVector() * 385.0
-			- Player->GetActorForwardVector() * 120.0 + FVector::UpVector * 45.0;
+		const FVector TravelDirection = GetRollAuditDirection();
+		const FVector Side = FVector::CrossProduct(FVector::UpVector, TravelDirection);
+		const FVector Target = Player->GetActorLocation() + TravelDirection * 140.0 - FVector::UpVector * 24.0;
+		const FVector Position = Target + Side * 385.0
+			- TravelDirection * 120.0 + FVector::UpVector * 45.0;
 		FActorSpawnParameters Params;
 		Params.ObjectFlags |= RF_Transient;
 		RollPhotoCamera = World->SpawnActor<ACameraActor>(Position, (Target - Position).Rotation(), Params);
@@ -1486,16 +1534,29 @@ private:
 			Origin.X, Origin.Y, Origin.Z, Origin.Z - Capsule->GetScaledCapsuleHalfHeight(), Floor.IsWalkableFloor(), FloorZ, SwordClearance);
 		static const FName Bones[] = { TEXT("pelvis"), TEXT("head"), TEXT("clavicle_l"), TEXT("clavicle_r"),
 			TEXT("hand_l"), TEXT("hand_r"), TEXT("calf_l"), TEXT("calf_r"), TEXT("foot_l"), TEXT("foot_r") };
+		static const FName ExtraBones[] = { TEXT("thigh_l"), TEXT("thigh_r"), TEXT("ball_l"), TEXT("ball_r"),
+			TEXT("upperarm_l"), TEXT("upperarm_r"), TEXT("lowerarm_l"), TEXT("lowerarm_r"), TEXT("neck_01") };
 		bRollMotionValid &= !Origin.ContainsNaN() && FMath::IsFinite(FloorZ) && FMath::IsFinite(Progress);
-		for (const FName Bone : Bones)
+		const auto RecordBone = [&](const USkeletalMeshComponent* SampleMesh, FName Bone, const TCHAR* Prefix)
 		{
-			if (Mesh->GetBoneIndex(Bone) == INDEX_NONE) { bRollMotionValid = false; continue; }
-			const FTransform Pose = Mesh->GetBoneTransform(Bone, RTS_World);
+			if (!SampleMesh || SampleMesh->GetBoneIndex(Bone) == INDEX_NONE) { bRollMotionValid = false; return; }
+			const FTransform Pose = SampleMesh->GetBoneTransform(Bone, RTS_World);
 			const FVector Location = Pose.GetLocation();
 			const FQuat Rotation = Pose.GetRotation();
 			bRollMotionValid &= !Pose.ContainsNaN() && Rotation.IsNormalized();
-			RollMotionRows += FString::Printf(TEXT("%s,%s,%.4f,%.4f,%.4f,%.7f,%.7f,%.7f,%.7f\n"),
-				*Measure, *Bone.ToString(), Location.X, Location.Y, Location.Z, Rotation.X, Rotation.Y, Rotation.Z, Rotation.W);
+			RollMotionRows += FString::Printf(TEXT("%s,%s%s,%.4f,%.4f,%.4f,%.7f,%.7f,%.7f,%.7f\n"),
+				*Measure, Prefix, *Bone.ToString(), Location.X, Location.Y, Location.Z, Rotation.X, Rotation.Y, Rotation.Z, Rotation.W);
+		};
+		for (const FName Bone : Bones) { RecordBone(Mesh, Bone, TEXT("")); }
+		if (!RollAuditDirection.IsEmpty())
+		{
+			const auto* Source = Player->GetAnimationPlaybackMesh();
+			for (const FName Bone : Bones) { RecordBone(Source, Bone, TEXT("source.")); }
+			for (const FName Bone : ExtraBones)
+			{
+				RecordBone(Mesh, Bone, TEXT(""));
+				RecordBone(Source, Bone, TEXT("source."));
+			}
 		}
 	}
 	double LogCommonRollPelvis(const TCHAR* Stage)
@@ -1566,6 +1627,13 @@ private:
 				{
 					Check(IFileManager::Get().FileSize(*FPaths::Combine(Output, Name)) > 1024, TEXT("common_roll_profile_capture_written"));
 				}
+				if (!RollAuditDirection.IsEmpty())
+				{
+					for (const TCHAR* Name : {TEXT("roll-release-entry.png"), TEXT("roll-release-exit.png")})
+					{
+						Check(IFileManager::Get().FileSize(*FPaths::Combine(Output, Name)) > 1024, TEXT("directional_roll_release_capture_written"));
+					}
+				}
 				if (PC.IsValid() && RollPreviousViewTarget.IsValid()) { PC->SetViewTarget(RollPreviousViewTarget.Get()); }
 				RollPhotoCamera->Destroy();
 			}
@@ -1628,6 +1696,10 @@ private:
 	TWeakObjectPtr<ACameraActor> RollPhotoCamera;
 	TWeakObjectPtr<AActor> RollPreviousViewTarget;
 	FString RollMotionRows;
+	FString RollAuditDirection;
+	FKey RollMoveKey;
+	FVector RollExpectedDirection = FVector::ZeroVector;
+	FVector RollObservedDirection = FVector::ZeroVector;
 	double RollPelvisBefore = 0.0;
 	double MinRollSwordClearance = TNumericLimits<double>::Max();
 	int32 RollMotionFrames = 0;
@@ -1635,6 +1707,8 @@ private:
 	float RollMotionMax = 0.0f;
 	bool bRollMotionValid = true;
 	bool bRollTuckCaptured = false;
+	bool bRollReleaseEntryCaptured = false;
+	bool bRollReleaseExitCaptured = false;
 	bool bSawDodgeDuringE = false;
 	TWeakObjectPtr<URogue10mAttackSkillData> InputSkill;
 	TSet<ETrack> InputCompletedTracks;

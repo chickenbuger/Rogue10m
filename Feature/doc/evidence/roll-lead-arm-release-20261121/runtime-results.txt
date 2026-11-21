@@ -1,0 +1,245 @@
+b662c3b5 baseline, 96b1e21d candidate WARP and import, a710c576 exact candidate NullRHI.
+Game: StartHub, fresh Human Male profile, Novice GreatSword through inventory; C.EvadeRecovery, C.Roll, C.EvadeDistance, C.RollCooldown.
+Command: Rogue10m.TestHybridSkillTree with -RogueHybridRollQA -RogueRollAuditDirection=Forward|Right|Back -UseFixedTimeStep -FPS=60.
+Input: actual PlayerController dispatch of Ctrl, D+Ctrl or S+Ctrl. Fixed simulation, not physical input.
+Direction travel, learned authored pose, attack lockout, standing recovery, finite source/body bones and weapon clearance passed.
+
+DirRollForwardB; UE errors: 0
+PASS fresh_isolated_profile
+PASS new_profile_created
+PASS roll_only_player_tree_and_town_npc_exist
+PASS roll_only_equips_real_sword_through_inventory
+PASS roll_only_restores_growth_in_isolated_profile
+PASS C.EvadeRecovery
+PASS C.Roll
+PASS C.EvadeDistance
+PASS C.RollCooldown
+PASS roll_only_learns_common_roll
+PASS common_roll_starts_after_landing
+PASS common_roll_has_loaded_authored_sequence
+roll_sequence=/Game/Rogue10m/Animation/Common/Evade/A_CommonShoulderRoll.A_CommonShoulderRoll length_s=0.416667
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_tuck_uses_the_authored_pose
+PASS common_dodge_key_starts_timed_grounded_roll_with_cooldown
+PASS common_roll_blocks_attack_acceptance_until_recovery
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_lowers_rendered_pelvis_into_tuck
+PASS common_roll_observed_a_tucked_simulation_frame
+PASS common_roll_travels_plausible_distance_and_finishes
+PASS actual_ctrl_roll_matches_held_direction
+roll_direction=Forward alignment=1.000000 travel_cm=304.5587 along_cm=304.5587 expected=(0.0000,1.0000) actual=(0.0000,1.0000)
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_restores_the_standing_pose
+roll_samples=22 progress_min=0.0000 progress_max=0.9804
+sword_bounds_min_clearance_cm=1.045
+PASS common_roll_visible_bone_transforms_finite_and_normalized
+PASS common_roll_motion_sampled_across_active_phases
+PASS common_roll_keeps_equipped_sword_above_floor
+PASS common_roll_motion_csv_saved
+PASS write_final_skill_tree_state_before_exit
+RESULT=HYBRID_RUNTIME_PASSED failures=0
+
+DirRollRightB; UE errors: 0
+PASS fresh_isolated_profile
+PASS new_profile_created
+PASS roll_only_player_tree_and_town_npc_exist
+PASS roll_only_equips_real_sword_through_inventory
+PASS roll_only_restores_growth_in_isolated_profile
+PASS C.EvadeRecovery
+PASS C.Roll
+PASS C.EvadeDistance
+PASS C.RollCooldown
+PASS roll_only_learns_common_roll
+PASS common_roll_starts_after_landing
+PASS common_roll_has_loaded_authored_sequence
+roll_sequence=/Game/Rogue10m/Animation/Common/Evade/A_CommonShoulderRoll.A_CommonShoulderRoll length_s=0.416667
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_tuck_uses_the_authored_pose
+PASS common_dodge_key_starts_timed_grounded_roll_with_cooldown
+PASS common_roll_blocks_attack_acceptance_until_recovery
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_lowers_rendered_pelvis_into_tuck
+PASS common_roll_observed_a_tucked_simulation_frame
+PASS common_roll_travels_plausible_distance_and_finishes
+PASS actual_ctrl_roll_matches_held_direction
+roll_direction=Right alignment=1.000000 travel_cm=304.5587 along_cm=304.5587 expected=(-1.0000,0.0000) actual=(-1.0000,0.0000)
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_restores_the_standing_pose
+roll_samples=22 progress_min=0.0000 progress_max=0.9804
+sword_bounds_min_clearance_cm=1.045
+PASS common_roll_visible_bone_transforms_finite_and_normalized
+PASS common_roll_motion_sampled_across_active_phases
+PASS common_roll_keeps_equipped_sword_above_floor
+PASS common_roll_motion_csv_saved
+PASS write_final_skill_tree_state_before_exit
+RESULT=HYBRID_RUNTIME_PASSED failures=0
+
+DirRollBackB; UE errors: 0
+PASS fresh_isolated_profile
+PASS new_profile_created
+PASS roll_only_player_tree_and_town_npc_exist
+PASS roll_only_equips_real_sword_through_inventory
+PASS roll_only_restores_growth_in_isolated_profile
+PASS C.EvadeRecovery
+PASS C.Roll
+PASS C.EvadeDistance
+PASS C.RollCooldown
+PASS roll_only_learns_common_roll
+PASS common_roll_starts_after_landing
+PASS common_roll_has_loaded_authored_sequence
+roll_sequence=/Game/Rogue10m/Animation/Common/Evade/A_CommonShoulderRoll.A_CommonShoulderRoll length_s=0.416667
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_tuck_uses_the_authored_pose
+PASS common_dodge_key_starts_timed_grounded_roll_with_cooldown
+PASS common_roll_blocks_attack_acceptance_until_recovery
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_lowers_rendered_pelvis_into_tuck
+PASS common_roll_observed_a_tucked_simulation_frame
+PASS common_roll_travels_plausible_distance_and_finishes
+PASS actual_ctrl_roll_matches_held_direction
+roll_direction=Back alignment=1.000000 travel_cm=304.5587 along_cm=304.5587 expected=(-0.0000,-1.0000) actual=(-0.0000,-1.0000)
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_restores_the_standing_pose
+roll_samples=22 progress_min=0.0000 progress_max=0.9804
+sword_bounds_min_clearance_cm=1.045
+PASS common_roll_visible_bone_transforms_finite_and_normalized
+PASS common_roll_motion_sampled_across_active_phases
+PASS common_roll_keeps_equipped_sword_above_floor
+PASS common_roll_motion_csv_saved
+PASS write_final_skill_tree_state_before_exit
+RESULT=HYBRID_RUNTIME_PASSED failures=0
+
+DirRollForwardFinal; UE errors: 0
+PASS fresh_isolated_profile
+PASS new_profile_created
+PASS roll_only_player_tree_and_town_npc_exist
+PASS roll_only_equips_real_sword_through_inventory
+PASS roll_only_restores_growth_in_isolated_profile
+PASS C.EvadeRecovery
+PASS C.Roll
+PASS C.EvadeDistance
+PASS C.RollCooldown
+PASS roll_only_learns_common_roll
+PASS common_roll_starts_after_landing
+PASS common_roll_has_loaded_authored_sequence
+roll_sequence=/Game/Rogue10m/Animation/Common/Evade/A_CommonShoulderRoll.A_CommonShoulderRoll length_s=0.416667
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_tuck_uses_the_authored_pose
+PASS common_dodge_key_starts_timed_grounded_roll_with_cooldown
+PASS common_roll_blocks_attack_acceptance_until_recovery
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_lowers_rendered_pelvis_into_tuck
+PASS common_roll_observed_a_tucked_simulation_frame
+PASS common_roll_travels_plausible_distance_and_finishes
+PASS actual_ctrl_roll_matches_held_direction
+roll_direction=Forward alignment=1.000000 travel_cm=304.5587 along_cm=304.5587 expected=(0.0000,1.0000) actual=(0.0000,1.0000)
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_restores_the_standing_pose
+roll_samples=22 progress_min=0.0000 progress_max=0.9804
+sword_bounds_min_clearance_cm=1.235
+PASS common_roll_visible_bone_transforms_finite_and_normalized
+PASS common_roll_motion_sampled_across_active_phases
+PASS common_roll_keeps_equipped_sword_above_floor
+PASS common_roll_motion_csv_saved
+PASS write_final_skill_tree_state_before_exit
+RESULT=HYBRID_RUNTIME_PASSED failures=0
+
+DirRollRightFinal; UE errors: 0
+PASS fresh_isolated_profile
+PASS new_profile_created
+PASS roll_only_player_tree_and_town_npc_exist
+PASS roll_only_equips_real_sword_through_inventory
+PASS roll_only_restores_growth_in_isolated_profile
+PASS C.EvadeRecovery
+PASS C.Roll
+PASS C.EvadeDistance
+PASS C.RollCooldown
+PASS roll_only_learns_common_roll
+PASS common_roll_starts_after_landing
+PASS common_roll_has_loaded_authored_sequence
+roll_sequence=/Game/Rogue10m/Animation/Common/Evade/A_CommonShoulderRoll.A_CommonShoulderRoll length_s=0.416667
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_tuck_uses_the_authored_pose
+PASS common_dodge_key_starts_timed_grounded_roll_with_cooldown
+PASS common_roll_blocks_attack_acceptance_until_recovery
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_lowers_rendered_pelvis_into_tuck
+PASS common_roll_observed_a_tucked_simulation_frame
+PASS common_roll_travels_plausible_distance_and_finishes
+PASS actual_ctrl_roll_matches_held_direction
+roll_direction=Right alignment=1.000000 travel_cm=304.5587 along_cm=304.5587 expected=(-1.0000,0.0000) actual=(-1.0000,0.0000)
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_restores_the_standing_pose
+roll_samples=22 progress_min=0.0000 progress_max=0.9804
+sword_bounds_min_clearance_cm=1.235
+PASS common_roll_visible_bone_transforms_finite_and_normalized
+PASS common_roll_motion_sampled_across_active_phases
+PASS common_roll_keeps_equipped_sword_above_floor
+PASS common_roll_motion_csv_saved
+PASS write_final_skill_tree_state_before_exit
+RESULT=HYBRID_RUNTIME_PASSED failures=0
+
+DirRollBackFinal; UE errors: 0
+PASS fresh_isolated_profile
+PASS new_profile_created
+PASS roll_only_player_tree_and_town_npc_exist
+PASS roll_only_equips_real_sword_through_inventory
+PASS roll_only_restores_growth_in_isolated_profile
+PASS C.EvadeRecovery
+PASS C.Roll
+PASS C.EvadeDistance
+PASS C.RollCooldown
+PASS roll_only_learns_common_roll
+PASS common_roll_starts_after_landing
+PASS common_roll_has_loaded_authored_sequence
+roll_sequence=/Game/Rogue10m/Animation/Common/Evade/A_CommonShoulderRoll.A_CommonShoulderRoll length_s=0.416667
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_tuck_uses_the_authored_pose
+PASS common_dodge_key_starts_timed_grounded_roll_with_cooldown
+PASS common_roll_blocks_attack_acceptance_until_recovery
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_lowers_rendered_pelvis_into_tuck
+PASS common_roll_observed_a_tucked_simulation_frame
+PASS common_roll_travels_plausible_distance_and_finishes
+PASS actual_ctrl_roll_matches_held_direction
+roll_direction=Back alignment=1.000000 travel_cm=304.5587 along_cm=304.5587 expected=(-0.0000,-1.0000) actual=(-0.0000,-1.0000)
+PASS common_roll_visible_body_has_sampled_bones
+PASS common_roll_restores_the_standing_pose
+roll_samples=22 progress_min=0.0000 progress_max=0.9804
+sword_bounds_min_clearance_cm=1.235
+PASS common_roll_visible_bone_transforms_finite_and_normalized
+PASS common_roll_motion_sampled_across_active_phases
+PASS common_roll_keeps_equipped_sword_above_floor
+PASS common_roll_motion_csv_saved
+PASS write_final_skill_tree_state_before_exit
+RESULT=HYBRID_RUNTIME_PASSED failures=0
+
+Blender candidate reimport: 60Hz, 25 intervals, duration 0.4166666567s; root translation 0cm and rotation error 0; extracted root motion off.
+Unreal isolated commandlet import-Integrated.log: zero errors.
+Forward A, Right A, Back A: one extra visible-bone gate failed because Human Male has no spine_05. The recorder removed that nonessential probe, and B passed. Numeric right/forearm defect reproduced in both versions of the probe.
+Forward Exact before launch retry: UE Turnkey ValidatePlatforms stalled before reaching StartHub; stopped only its owned process tree. Final reran on the same binary with UE_SKIP_UBT_SDK_SETUP=1.
+
+DirRollBackBaseWarp; Microsoft Basic Render Driver, 1280x720, all five planned screenshots written. Non-selected hardware probe failed before software adapter startup.
+924: [2026.11.21-09.41.52:024][  0]LogD3D11RHI: Error: Result failed with error 887A0004
+roll_direction=Back alignment=1.000000 travel_cm=304.5587 along_cm=304.5587 expected=(-0.0000,-1.0000) actual=(-0.0000,-1.0000)
+roll_samples=22 progress_min=0.0000 progress_max=0.9804
+sword_bounds_min_clearance_cm=1.045
+RESULT=HYBRID_RUNTIME_PASSED failures=0
+
+DirRollBackCandWarp; Microsoft Basic Render Driver, 1280x720, all five planned screenshots written. Non-selected hardware probe failed before software adapter startup.
+924: [2026.11.21-09.48.33:983][  0]LogD3D11RHI: Error: Result failed with error 887A0004
+roll_direction=Back alignment=1.000000 travel_cm=304.5587 along_cm=304.5587 expected=(-0.0000,-1.0000) actual=(-0.0000,-1.0000)
+roll_samples=22 progress_min=0.0000 progress_max=0.9804
+sword_bounds_min_clearance_cm=1.235
+RESULT=HYBRID_RUNTIME_PASSED failures=0
+
+Standard third-person smoke on exact a710c576 candidate.
+configured_dodge_cm=1000.000000
+free_dodge_cm=259.2151 forward_step=1
+wall_dodge_cm=39.9713 forward_step=1
+backward_dodge_cm=259.2151 forward_step=0
+right_dodge_cm=259.2154 forward_step=0
+checks=1168
+failures=0
+free_dodge_cm=259.215057
+wall_dodge_cm=39.971264
