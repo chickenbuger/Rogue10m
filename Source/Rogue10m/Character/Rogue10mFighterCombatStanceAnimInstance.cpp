@@ -22,6 +22,8 @@ URogue10mFighterCombatStanceAnimInstance::URogue10mFighterCombatStanceAnimInstan
 		"/Game/Rogue10m/Animation/Combat/FighterStance/A_Fighter_CombatIdle.A_Fighter_CombatIdle")));
 	GreatSwordIdleSequence = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT("/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle")));
 	GreatSwordLocomotion = TSoftObjectPtr<UBlendSpace>(FSoftObjectPath(TEXT("/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground")));
+	LearnedRollAnimation = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT(
+		"/Game/Rogue10m/Animation/Common/Evade/A_CommonShoulderRoll.A_CommonShoulderRoll")));
 }
 
 void URogue10mFighterCombatStanceAnimInstance::NativeInitializeAnimation()
@@ -31,6 +33,8 @@ void URogue10mFighterCombatStanceAnimInstance::NativeInitializeAnimation()
 	CachedGreatSwordIdle = GreatSwordIdleSequence.LoadSynchronous();
 	CachedUnarmedLocomotion = LoadObject<UBlendSpace>(nullptr, TEXT("/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference"));
 	CachedGreatSwordLocomotion = GreatSwordLocomotion.LoadSynchronous();
+	CachedLearnedRoll = LearnedRollAnimation.LoadSynchronous();
+	bLearnedRollPoseApplied = false;
 	FighterCombatStanceAnimation = CachedFighterIdle;
 	GroundLocomotionBlendSpace = CachedUnarmedLocomotion;
 	FighterCombatBlendProgress = FighterCombatStanceAlpha = 0.0f;

@@ -1,4 +1,5 @@
 #if WITH_EDITOR
+#include "Animation/AnimMontage.h"
 #include "Camera/CameraActor.h"
 #include "Camera/CameraComponent.h"
 #include "AssetCompilingManager.h"
@@ -31,6 +32,7 @@
 #include "Rogue10mAppearanceCameraComponent.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCharacterAnimationComponent.h"
+#include "Rogue10mCharacterMotionDataAsset.h"
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mFighterCombatStanceAnimInstance.h"
@@ -389,16 +391,74 @@ private:
  }
  void BeginDodge(bool WallCase)
  {
-  Stage=WallCase?TEXT("wall_dodge"):TEXT("free_dodge");DodgeStart=Character->GetActorLocation();bWallDodge=WallCase;bSawDodge=false;bDodgePhoto=false;Character->GetCharacterMovement()->StopMovementImmediately();if(WallCase)Wall=MakeBox(DodgeStart+Character->GetActorForwardVector()*85,FVector(10,180,180),Character->GetActorRotation());Key(Rogue10mInput::DodgeKey(),true);
-  Later(.35,[this,WallCase]{Key(Rogue10mInput::DodgeKey(),false);const float Travel=FVector::Dist2D(DodgeStart,Character->GetActorLocation());Check(bSawDodge,TEXT("production_LeftCtrl_activates_dodge"));Check(!Character->IsDodging(),TEXT("dodge_finishes"));if(WallCase){WallTravel=Travel;Check(Travel<=43&&Travel<FreeTravel,TEXT("dodge_stops_before_wall"));Photo(TEXT("05_wall_dodge_result.png"));Later(.35,[this]{MaybeMouse();});}else{FreeTravel=Travel;Check(Travel>FMath::Min(20.f,ConfiguredDodgeDistance*.05f)&&Travel<=ConfiguredDodgeDistance+5.f,TEXT("free_dodge_travel_within_actual_configuration"));Later(.5,[this]{BeginDodge(true);});}});
+  Stage=WallCase?TEXT("wall_dodge"):TEXT("free_dodge");DodgeStart=Character->GetActorLocation();bSawDodge=false;bSawForwardDodgeMontage=false;bDodgePhoto=false;Character->GetCharacterMovement()->StopMovementImmediately();if(WallCase)Wall=MakeBox(DodgeStart+Character->GetActorForwardVector()*85,FVector(10,180,180),Character->GetActorRotation());Key(Rogue10mInput::DodgeKey(),true);
+  Later(.35,[this,WallCase]
+  {
+   Key(Rogue10mInput::DodgeKey(),false);
+   const float Travel=FVector::Dist2D(DodgeStart,Character->GetActorLocation());
+   Check(bSawDodge,TEXT("production_dodge_key_activates_dodge"));
+   Check(bSawForwardDodgeMontage,TEXT("forward_dodge_uses_configured_step_montage"));
+   Check(!Character->IsDodging(),TEXT("dodge_finishes"));
+   Results+=FString::Printf(TEXT("%s_cm=%.4f forward_step=%d\n"),*Stage,Travel,bSawForwardDodgeMontage);
+   if(WallCase)
+   {
+    WallTravel=Travel;Check(Travel<=43&&Travel<FreeTravel,TEXT("dodge_stops_before_wall"));Photo(TEXT("05_wall_dodge_result.png"));
+    Later(DodgeWait(),[this]{if(Wall.IsValid()){Wall->Destroy();}Wall.Reset();BeginOffAxisDodge(true);});
+   }
+   else
+   {
+    FreeTravel=Travel;
+    Check(Travel>FMath::Min(20.f,ConfiguredDodgeDistance*.05f)&&Travel<=ConfiguredDodgeDistance+5.f,TEXT("free_dodge_travel_within_actual_configuration"));
+    Later(DodgeWait(),[this]{BeginDodge(true);});
+   }
+  });
+ }
+ double DodgeWait()const{return FMath::Max(.35,static_cast<double>(Character->GetDodgeCooldownRemaining())+.1);}
+ void BeginOffAxisDodge(bool bBackward)
+ {
+  const FKey MoveKey=bBackward?EKeys::S:EKeys::D;
+  Stage=bBackward?TEXT("backward_dodge"):TEXT("right_dodge");
+  bSawDodge=false;bSawForwardDodgeMontage=false;
+  Key(MoveKey,true);
+  Later(.10,[this,MoveKey,bBackward]
+  {
+   DodgeStart=Character->GetActorLocation();
+   const FVector Expected=(bBackward?-Character->GetActorForwardVector():Character->GetActorRightVector()).GetSafeNormal2D();
+   Character->GetCharacterMovement()->StopMovementImmediately();
+   Key(Rogue10mInput::DodgeKey(),true);
+   Later(.05,[this,MoveKey,bBackward,Expected]
+   {
+    Key(MoveKey,false);Key(Rogue10mInput::DodgeKey(),false);
+    Later(FMath::Max(.35,static_cast<double>(ConfiguredDodgeDuration)+.1),[this,bBackward,Expected]
+    {
+     const FVector Displacement=Character->GetActorLocation()-DodgeStart;
+     const double Along=FVector::DotProduct(Displacement,Expected);
+     Check(bSawDodge&&!Character->IsDodging(),TEXT("off_axis_Alt_starts_and_finishes_dodge"));
+     Check(Along>2.0&&Along>=Displacement.Size2D()*.85,TEXT("off_axis_dodge_travels_in_requested_direction"));
+     Check(!bSawForwardDodgeMontage,TEXT("off_axis_dodge_never_uses_forward_step"));
+     Results+=FString::Printf(TEXT("%s_cm=%.4f forward_step=%d\n"),*Stage,Along,bSawForwardDodgeMontage);
+     Later(DodgeWait(),[this,bBackward]{if(bBackward){BeginOffAxisDodge(false);}else{MaybeMouse();}});
+    });
+   });
+  });
  }
  void Sample()
  {
-  if(bFinished||!Character.IsValid()||!PC.IsValid()||!PC->PlayerCameraManager)return;const auto& V=PC->PlayerCameraManager->GetCameraCacheView();const FVector P=Character->GetActorLocation();++Samples;Check(!V.Location.ContainsNaN()&&!V.Rotation.ContainsNaN()&&FMath::IsFinite(V.FOV),TEXT("sample_camera_finite"));if(Stage.EndsWith(TEXT("dodge"))&&Character->IsDodging()){bSawDodge=true;++DodgeSamples;if(!bWallDodge&&!bDodgePhoto){bDodgePhoto=true;Photo(TEXT("04_active_third_person_dodge.png"));}}Frames+=FString::Printf(TEXT("%llu,%s,%d,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.3f\n"),GFrameCounter,*Stage,Character->IsDodging(),V.Location.X,V.Location.Y,V.Location.Z,P.X,P.Y,P.Z,V.FOV);
+  if(bFinished||!Character.IsValid()||!PC.IsValid()||!PC->PlayerCameraManager)return;const auto& V=PC->PlayerCameraManager->GetCameraCacheView();const FVector P=Character->GetActorLocation();++Samples;Check(!V.Location.ContainsNaN()&&!V.Rotation.ContainsNaN()&&FMath::IsFinite(V.FOV),TEXT("sample_camera_finite"));
+  if(Stage.EndsWith(TEXT("dodge"))&&Character->IsDodging())
+  {
+   bSawDodge=true;++DodgeSamples;
+   const auto* Source=Character->GetAnimationPlaybackMesh();
+   const auto* Anim=Source?Source->GetAnimInstance():nullptr;
+   const auto* Motion=Character->GetCharacterAnimationComponent()->GetMotionData();
+   bSawForwardDodgeMontage|=Anim&&Motion&&Motion->DodgeMontage&&Anim->Montage_IsActive(Motion->DodgeMontage.Get());
+   if(Stage==TEXT("free_dodge")&&!bDodgePhoto){bDodgePhoto=true;Photo(TEXT("04_active_third_person_dodge.png"));}
+  }
+  Frames+=FString::Printf(TEXT("%llu,%s,%d,%.5f,%.5f,%.5f,%.5f,%.5f,%.5f,%.3f\n"),GFrameCounter,*Stage,Character->IsDodging(),V.Location.X,V.Location.Y,V.Location.Z,P.X,P.Y,P.Z,V.FOV);
  }
  void Finish(bool Exit=true)
  {
-  if(bFinished)return;bFinished=true;Next=nullptr;RestoreHeadPitchCheck();FWorldDelegates::OnWorldPostActorTick.Remove(SampleHandle);FWorldDelegates::OnWorldCleanup.Remove(Cleanup);UGameViewportClient::OnScreenshotCaptured().Remove(CaptureHandle);Key(EKeys::W,false);Key(Rogue10mInput::DodgeKey(),false);if(Character.IsValid()){if(Saves.IsValid()&&Saves->IsAttachedTo(*Character))Saves->DetachCharacter(*Character,false);Character->GetCharacterMovement()->StopMovementImmediately();}for(auto A:{Floor,Obstacle,Wall})if(A.IsValid())A->Destroy();if(bRendered)Check(RequestedPhotos==7&&CompletedPhotos==7&&PendingPhoto.IsEmpty(),TEXT("seven_rendered_captures"));
+  if(bFinished)return;bFinished=true;Next=nullptr;RestoreHeadPitchCheck();FWorldDelegates::OnWorldPostActorTick.Remove(SampleHandle);FWorldDelegates::OnWorldCleanup.Remove(Cleanup);UGameViewportClient::OnScreenshotCaptured().Remove(CaptureHandle);Key(EKeys::W,false);Key(EKeys::S,false);Key(EKeys::D,false);Key(Rogue10mInput::DodgeKey(),false);if(Character.IsValid()){if(Saves.IsValid()&&Saves->IsAttachedTo(*Character))Saves->DetachCharacter(*Character,false);Character->GetCharacterMovement()->StopMovementImmediately();}for(auto A:{Floor,Obstacle,Wall})if(A.IsValid())A->Destroy();if(bRendered)Check(RequestedPhotos==7&&CompletedPhotos==7&&PendingPhoto.IsEmpty(),TEXT("seven_rendered_captures"));
   for(const auto& Pic:Photos){TArray64<uint8> Bytes;FImageUtils::PNGCompressImageArray(Pic.Width,Pic.Height,Pic.Pixels,Bytes);Check(FFileHelper::SaveArrayToFile(Bytes,*(Output/Pic.Name)),TEXT("captured_PNG_saved"));}Check(FFileHelper::SaveStringToFile(Frames,*(Output/TEXT("frames.csv"))),TEXT("frame_evidence_saved"));Results+=FString::Printf(TEXT("mouse_cases=%d\nmouse_passed=%d\n"),MouseCases,MousePassed);Results+=FString::Printf(TEXT("checks=%d\nfailures=%d\nsamples=%d\ndodge_samples=%d\nopen_cm=%.6f\nblocked_cm=%.6f\nrecovered_cm=%.6f\nmove_cm=%.6f\nfree_dodge_cm=%.6f\nwall_dodge_cm=%.6f\nrendered=%d\ncaptures=%d\ninput=programmatic_Controller_InputKey\nphysical_input=not_performed\nfull_run=not_performed\nmap_changes=none_transient_fixture_only\nfirst_person_QA=paused\n"),Checks,Failures,Samples,DodgeSamples,OpenDistance,BlockedDistance,RecoveredDistance,MoveTravel,FreeTravel,WallTravel,bRendered,CompletedPhotos);if(!FFileHelper::SaveStringToFile(Results,*(Output/TEXT("results.txt"))))++Failures;UE_LOG(LogRogue10m,Display,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_%s checks=%d failures=%d output=%s"),Failures?TEXT("FAILED"):TEXT("PASSED"),Checks,Failures,*Output);if(Exit)FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Code=Failures?1:0](float){FPlatformMisc::RequestExitWithStatus(false,Code);return false;}),.5f);
  }
  TStrongObjectPtr<URogue10mAttackSkillData> RealNovicePrimary;TSubclassOf<UGameplayAbility> RealNoviceAbility;int32 BeforeRealNoviceUses=0;
@@ -415,7 +475,7 @@ private:
  uint32 HeadPitchSourceRevision=0,HeadPitchBodyRevision=0;
  int32 HeadPitchCaseIndex=0;
  bool bHeadPitchCheckActive=false,bHeadPitchOriginalControllerYaw=false;
- struct FPhoto{FString Name;int32 Width=0,Height=0;TArray<FColor> Pixels;};TWeakObjectPtr<UWorld> World;TWeakObjectPtr<ARogue10mPlayerController> PC;TWeakObjectPtr<ARogue10mCharacter> Character;TWeakObjectPtr<URogue10mProgressionSubsystem> Saves;TWeakObjectPtr<AActor> Floor,Obstacle,Wall;TFunction<void()> Next;FDelegateHandle Cleanup,SampleHandle,CaptureHandle;TArray<FPhoto> Photos;FString Label,Output,Results,Frames,Stage=TEXT("prepare"),PendingPhoto;FVector MoveStart,DodgeStart;double Deadline=0,NextAt=0;float ConfiguredDodgeDistance=100.f,ConfiguredDodgeDuration=.16f;float OpenDistance=0,BlockedDistance=0,RecoveredDistance=0,MoveTravel=0,FreeTravel=0,WallTravel=0;int32 Checks=0,Failures=0,Samples=0,DodgeSamples=0,RequestedPhotos=0,CompletedPhotos=0;bool bFinished=false,bRendered=false,bWallDodge=false,bSawDodge=false,bDodgePhoto=false;
+ struct FPhoto{FString Name;int32 Width=0,Height=0;TArray<FColor> Pixels;};TWeakObjectPtr<UWorld> World;TWeakObjectPtr<ARogue10mPlayerController> PC;TWeakObjectPtr<ARogue10mCharacter> Character;TWeakObjectPtr<URogue10mProgressionSubsystem> Saves;TWeakObjectPtr<AActor> Floor,Obstacle,Wall;TFunction<void()> Next;FDelegateHandle Cleanup,SampleHandle,CaptureHandle;TArray<FPhoto> Photos;FString Label,Output,Results,Frames,Stage=TEXT("prepare"),PendingPhoto;FVector MoveStart,DodgeStart;double Deadline=0,NextAt=0;float ConfiguredDodgeDistance=100.f,ConfiguredDodgeDuration=.16f;float OpenDistance=0,BlockedDistance=0,RecoveredDistance=0,MoveTravel=0,FreeTravel=0,WallTravel=0;int32 Checks=0,Failures=0,Samples=0,DodgeSamples=0,RequestedPhotos=0,CompletedPhotos=0;bool bFinished=false,bRendered=false,bSawDodge=false,bSawForwardDodgeMontage=false,bDodgePhoto=false;
 };
 static TSharedPtr<FRun> Active;static void Run(){if(!GEngine||GIsEditor||(Active&&!Active->Finished()))return;for(const FWorldContext& C:GEngine->GetWorldContexts())if(UWorld* W=C.World();W&&C.WorldType==EWorldType::Game){Active=MakeShared<FRun>();Active->Start(*W);return;}UE_LOG(LogRogue10m,Error,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_FAILED reason=no_game_world"));FPlatformMisc::RequestExitWithStatus(false,1);}static FAutoConsoleCommand Command(TEXT("Rogue10m.TestThirdPersonGameplay"),TEXT("Isolated fresh ThirdPerson namespace: default camera, mesh, collision, W and Left Ctrl; first-person QA paused."),FConsoleCommandDelegate::CreateStatic(&Run));
 }

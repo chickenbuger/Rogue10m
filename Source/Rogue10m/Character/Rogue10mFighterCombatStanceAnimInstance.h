@@ -25,6 +25,8 @@ public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 	/** Read-only GT state used by the shared head-motion budget. */
 	bool IsViewAimDodgeActive() const;
+	const UAnimSequence* GetLearnedRollAnimation() const { return CachedLearnedRoll.Get(); }
+	bool WasLearnedRollPoseApplied() const { return bLearnedRollPoseApplied; }
 
 	/** The final head orientation follows the mouse separately from the authored body motion. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Head Aim")
@@ -108,6 +110,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Weapon")
 	TSoftObjectPtr<UBlendSpace> GreatSwordLocomotion;
 
+	/** In-place Manny animation sampled over the learned roll's existing movement duration. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Dodge")
+	TSoftObjectPtr<UAnimSequence> LearnedRollAnimation;
+
 	/** Fixed provenance of the sequence player configured in ABP_Common_Unarmed. */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Fighter Stance")
 	TSoftObjectPtr<UAnimSequence> FighterCombatStanceSequence;
@@ -134,7 +140,9 @@ private:
 	bool bDodgeMontageCacheAttempted = false;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedFighterIdle;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedGreatSwordIdle;
+	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedLearnedRoll;
 	UPROPERTY(Transient) TObjectPtr<UBlendSpace> CachedUnarmedLocomotion;
 	UPROPERTY(Transient) TObjectPtr<UBlendSpace> CachedGreatSwordLocomotion;
 	float FighterCombatBlendProgress = 0.0f;
+	bool bLearnedRollPoseApplied = false;
 };

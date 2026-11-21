@@ -2,10 +2,14 @@ param(
     [ValidateSet('assets','automation','runtime','read')][string]$Phase = 'automation',
     [string]$TestId = 'Hybrid20261020',
     [switch]$InputChecks,
+    [switch]$CommonRoll,
+    [switch]$NullRHI,
     [int]$TimeoutSeconds = 240
 )
 $ErrorActionPreference = 'Stop'
 if ($TestId -notmatch '^[A-Za-z0-9_]{1,38}$') { throw 'Invalid isolated test ID.' }
+if ($CommonRoll -and ($Phase -ne 'runtime' -or $InputChecks -or $TestId.Length -gt 24)) { throw 'Common Roll requires its own runtime run and a fresh ID of up to 24 characters.' }
+if ($NullRHI -and -not $CommonRoll) { throw 'NullRHI requires the dedicated Common Roll fixture.' }
 function Confirm-HybridAutomationReport {
     param([Parameter(Mandatory=$true)][string]$ReportPath)
     if (-not (Test-Path -LiteralPath $ReportPath -PathType Leaf)) { throw "Missing automation report: $ReportPath" }
@@ -37,6 +41,7 @@ $evidenceName = if ($InputChecks) { 'hybrid-tree-input-polish-20261020' } else {
 $evidence = Join-Path $projectRoot ('Feature\doc\evidence\' + $evidenceName)
 New-Item -ItemType Directory -Path $evidence -Force | Out-Null
 $log = Join-Path $evidence ($Phase + '-' + $TestId + '.log')
+if ($CommonRoll -and (Test-Path -LiteralPath $log)) { throw 'Common Roll requires a fresh evidence ID.' }
 $editor = 'D:\Program Files\UE_5.8\Engine\Binaries\Win64\UnrealEditor-Cmd.exe'
 $arguments = @('"' + (Join-Path $projectRoot 'Rogue10m.uproject') + '"',
     '-unattended','-nosplash','-nosound','-NoLiveCoding','-NoRemoteShaderCompile',
@@ -56,8 +61,15 @@ if ($Phase -eq 'assets') {
         ('-ReportExportPath="' + (Join-Path $evidence 'automation-report') + '"'))
     $marker = 'Automation Test Queue Empty 5 tests performed.'
 } else {
-    $arguments += @('/Game/Rogue10m/Maps/StartHub','-game','-windowed','-ForceRes','-ResX=1920','-ResY=1080',
-        '-ExecCmds="Rogue10m.TestHybridSkillTree"')
+    $arguments += @('/Game/Rogue10m/Maps/StartHub','-game','-windowed','-ForceRes','-ResX=1920','-ResY=1080')
+    if ($CommonRoll) {
+        $arguments += @('-DisablePython','-language=en','-locale=en-US','-RogueHybridRollQA',
+            ('-RogueHybridEvidenceLabel=' + $TestId), '-UseFixedTimeStep', '-FPS=60',
+            '-ExecCmds="r.SetRes 1280x720w,t.MaxFPS 60,r.MotionBlurQuality 0,r.ScreenPercentage 50,Rogue10m.TestHybridSkillTree"')
+        $arguments += if ($NullRHI) { '-nullrhi' } else { @('-d3d11','-RenderOffScreen','-AllowSoftwareRendering') }
+    } else {
+        $arguments += '-ExecCmds="Rogue10m.TestHybridSkillTree"'
+    }
     if ($Phase -eq 'read') {
         $arguments += '-RogueHybridRead'
         $marker = 'RESULT=HYBRID_READ_PASSED'

@@ -57,6 +57,21 @@ void URogue10mWeaponVisualComponent::UpdateSwordGrip()
    FTransform Grip;
    if (!Hand.ContainsNaN() && BuildSwordPalmGrip((RH+RF)*.5,(LH+LF)*.5,RF-RH,Grip))
    {
+    float RollProgress = 0.0f;
+    FVector RollDirection;
+    if (Character->GetRollPresentation(RollProgress, RollDirection))
+    {
+     // Keep the hilt in the right palm while the support hand separates from the grip.
+     // Carry the blade on the rolling side with its flat face nearly parallel to the floor.
+     const FVector RollSide = FVector::CrossProduct(FVector::UpVector, RollDirection);
+     const FVector Blade = (RollDirection * 0.4 + RollSide * 0.9 + FVector::UpVector * 0.05).GetSafeNormal();
+     const FQuat ComponentRotation = Body->GetComponentQuat();
+     const FQuat Carry = FRotationMatrix::MakeFromZY(ComponentRotation.UnrotateVector(Blade),
+      ComponentRotation.UnrotateVector(FVector::UpVector)).ToQuat();
+     const float CarryWeight = FMath::SmoothStep(0.03f, 0.27f, RollProgress)
+      * (1.0f - FMath::SmoothStep(0.76f, 0.99f, RollProgress));
+     Grip.SetRotation(FQuat::Slerp(Grip.GetRotation(), Carry, CarryWeight).GetNormalized());
+    }
     const FTransform Candidate=Grip.GetRelativeTransform(Hand);
     if (!Candidate.ContainsNaN()) { Relative=Candidate; }
    }
