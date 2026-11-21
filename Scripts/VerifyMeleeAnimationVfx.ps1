@@ -6,13 +6,16 @@ param(
     [switch]$RequireAuthoredSword,
     [switch]$LogicOnly,
     [switch]$CapstoneBrace,
-    [switch]$CapstoneBraceRender
+    [switch]$CapstoneBraceRender,
+    [ValidateSet('HumanMale','HumanFemale','DwarfMale','DwarfFemale','OrcMale','OrcFemale')][string]$SwordEquipAppearance
 )
 
 $ErrorActionPreference = 'Stop'
 if ($CapstoneBraceRender -and $LogicOnly) { throw 'Capstone brace rendering requires D3D11.' }
 if ($CapstoneBraceRender) { $CapstoneBrace = $true }
 if ($CapstoneBrace -and $RequireAuthoredSword) { throw 'Choose a single fixture mode.' }
+if ($SwordEquipAppearance -and ($CapstoneBrace -or $RequireAuthoredSword)) { throw 'Choose a single fixture mode.' }
+$softwareRender = $CapstoneBraceRender -or ($SwordEquipAppearance -and -not $LogicOnly)
 $projectRoot = (Resolve-Path -LiteralPath (Split-Path -Parent $PSScriptRoot)).Path
 $projectFile = Join-Path $projectRoot 'Rogue10m.uproject'
 $editor = Join-Path $EngineRoot 'Engine\Binaries\Win64\UnrealEditor.exe'
@@ -35,7 +38,7 @@ function Get-SaveHashes {
 }
 
 $before = Get-SaveHashes
-$exec = if ($CapstoneBraceRender) { 't.MaxFPS 60,r.MotionBlurQuality 0,r.ScreenPercentage 50,Rogue10m.TestWeaponThirdPerson' }
+$exec = if ($softwareRender) { 't.MaxFPS 60,r.MotionBlurQuality 0,r.ScreenPercentage 50,Rogue10m.TestWeaponThirdPerson' }
 else { 't.MaxFPS 60,Rogue10m.TestWeaponThirdPerson' }
 $argsList = @(
     ('"' + $projectFile + '"'), '/Game/Rogue10m/Maps/StartHub',
@@ -49,7 +52,9 @@ if ($LogicOnly) { $argsList += @('-nullrhi', '-RogueMeleeVfxLogicOnly') }
 else { $argsList += '-d3d11' }
 if ($RequireAuthoredSword) { $argsList += '-RogueRequireAuthoredSword' }
 if ($CapstoneBrace) { $argsList += '-RogueCapstoneBraceQA' }
-if ($CapstoneBraceRender) { $argsList += @('-RogueCapstoneBraceRender', '-AllowSoftwareRendering', '-graphicsadapter=1') }
+if ($CapstoneBraceRender) { $argsList += '-RogueCapstoneBraceRender' }
+if ($softwareRender) { $argsList += @('-AllowSoftwareRendering', '-graphicsadapter=1') }
+if ($SwordEquipAppearance) { $argsList += "-RogueSwordEquipAppearance=$SwordEquipAppearance" }
 
 $process = $null
 $started = $null
@@ -62,9 +67,9 @@ try {
     $logReport = Join-Path $output 'log-check.json'
     & $python -B (Join-Path $PSScriptRoot 'CheckUnrealOutputLog.py') --log $log --after-line 0 --json-output $logReport
     $logCheck = $LASTEXITCODE
-    if ($CapstoneBraceRender) {
+    if ($softwareRender) {
         $adapter = Select-String -LiteralPath $log -Pattern 'LogRHI:\s+Name:\s+Microsoft Basic Render Driver' | Select-Object -First 1
-        if (-not $adapter) { throw 'Capstone brace rendering must use the software adapter.' }
+        if (-not $adapter) { throw 'This capture requires the software adapter.' }
         $errors = (Get-Content -LiteralPath $logReport -Raw | ConvertFrom-Json).new_errors
         if ($logCheck -eq 1 -and $errors.Count -eq 1 -and $errors[0].line -lt $adapter.LineNumber -and
             $errors[0].category -eq 'LogD3D11RHI' -and $errors[0].message.Trim() -eq 'Result failed with error 887A0004') {
@@ -76,9 +81,42 @@ try {
     $result = if ($CapstoneBraceRender) { 'CAPSTONE_BRACE_RENDER' } elseif ($CapstoneBrace) { 'CAPSTONE_BRACE' }
     elseif ($LogicOnly) { 'MELEE_VFX_LOGIC' } else { 'MELEE_VFX' }
     $expectedCases = if ($CapstoneBraceRender) { 2 } elseif ($CapstoneBrace) { 4 } else { 14 }
-    if ($process.ExitCode -ne 0 -or $logCheck -ne 0 -or
-        -not (Select-String -LiteralPath $log -SimpleMatch "RESULT=${result}_PASSED completed=$expectedCases failures=0" -Quiet)) {
+    $expected = if ($SwordEquipAppearance) { "RESULT=SWORD_EQUIP_POSE_PASSED appearance=$SwordEquipAppearance frames=88 failures=0" }
+    else { "RESULT=${result}_PASSED completed=$expectedCases failures=0" }
+    if ($process.ExitCode -ne 0 -or $logCheck -ne 0 -or -not (Select-String -LiteralPath $log -SimpleMatch $expected -Quiet)) {
         throw "Melee VFX runtime failed. Exit=$($process.ExitCode) LogCheck=$logCheck Evidence=$output"
+    }
+
+    if ($SwordEquipAppearance) {
+        $rows = @(Import-Csv -LiteralPath (Join-Path $output 'sword-equip.csv'))
+        $steps = @{ before_equip = 30; equipped = 31; unequipped = 69 }
+        foreach ($stage in @('source','display')) {
+            foreach ($phase in $steps.Keys) {
+                if (-not ($rows | Where-Object { $_.stage -eq $stage -and $_.phase -eq $phase -and [int]$_.frame -eq $steps[$phase] })) {
+                    throw "Missing pose evidence for $stage and $phase."
+                }
+            }
+        }
+        $culture = [Globalization.CultureInfo]::InvariantCulture
+        $display = @{}
+        foreach ($row in $rows | Where-Object stage -eq 'display') { $display["$($row.frame)/$($row.bone)"] = $row }
+        foreach ($frame in @(31,69)) {
+            $largest = 0.0
+            foreach ($bone in @('hand_l','hand_r','foot_l','foot_r')) {
+                $oldPose = $display["$($frame - 1)/$bone"]
+                $newPose = $display["$frame/$bone"]
+                if (-not $oldPose -or -not $newPose) { throw "Missing displayed $bone around frame $frame." }
+                $distanceSquared = 0.0
+                foreach ($axis in @('x','y','z')) {
+                    $distanceSquared += [math]::Pow([double]::Parse($newPose.$axis, $culture) - [double]::Parse($oldPose.$axis, $culture), 2)
+                }
+                $largest = [math]::Max($largest, [math]::Sqrt($distanceSquared))
+            }
+            if ($largest -gt 2.5) { throw "Displayed transition at frame $frame exceeded 2.5 cm ($largest cm)." }
+            Write-Output ('Displayed transition at frame ' + $frame + ' maximum=' + $largest.ToString('0.0000', $culture) + ' cm')
+        }
+        Write-Output $expected
+        if ($LogicOnly) { return }
     }
 
     if ($CapstoneBrace -and -not $CapstoneBraceRender) {
@@ -98,7 +136,7 @@ try {
     $captures = @(Import-Csv -LiteralPath (Join-Path $output 'captures.csv'))
     $requests = @($captures | Where-Object event -eq 'request')
     $processed = @($captures | Where-Object event -eq 'processed')
-    $expectedCaptures = if ($CapstoneBraceRender) { 2 } elseif ($LogicOnly) { 0 } else { 46 }
+    $expectedCaptures = if ($SwordEquipAppearance) { 4 } elseif ($CapstoneBraceRender) { 2 } elseif ($LogicOnly) { 0 } else { 46 }
     if ($requests.Count -ne $expectedCaptures -or $processed.Count -ne $expectedCaptures -or
         ($expectedCaptures -gt 0 -and @($requests.file | Select-Object -Unique).Count -ne $expectedCaptures)) {
         throw "Expected $expectedCaptures unique requested and processed screenshots."
@@ -107,6 +145,17 @@ try {
         if ([long]$capture.bytes -lt 1024 -or (Get-Item -LiteralPath $capture.file).Length -ne [long]$capture.bytes) {
             throw "Invalid rendered capture: $($capture.file)"
         }
+    }
+    if ($SwordEquipAppearance) {
+        foreach ($phase in @('before_equip','first_equip','sword_guard','first_unequip')) {
+            $request = @($requests | Where-Object phase -eq $phase)
+            $saved = @($processed | Where-Object phase -eq $phase)
+            if ($request.Count -ne 1 -or $saved.Count -ne 1 -or [int]$request[0].fixture_frame -ne [int]$saved[0].fixture_frame) {
+                throw "Expected a same-frame capture for $phase."
+            }
+            Write-Output $saved[0].file
+        }
+        return
     }
     if ($CapstoneBraceRender) {
         $evidence = @(Import-Csv -LiteralPath (Join-Path $output 'capstone-brace.csv'))

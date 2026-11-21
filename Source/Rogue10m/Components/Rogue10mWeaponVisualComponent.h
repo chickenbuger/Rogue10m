@@ -7,8 +7,10 @@
 class UStaticMesh;
 class UAnimInstance;
 class USkeletalMesh;
+class USkeletalMeshComponent;
 class USkeleton;
 class UStaticMeshComponent;
+class URogue10mWeaponRetargetAnimInstance;
 /** Event-driven weapon meshes attached to the rendered character, never the hidden animation source. */
 UCLASS(ClassGroup=(Rogue10m), meta=(BlueprintSpawnableComponent))
 class ROGUE10M_API URogue10mWeaponVisualComponent : public UActorComponent
@@ -57,6 +59,13 @@ protected:
  virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
  virtual void OnComponentDestroyed(bool bDestroyingHierarchy) override;
 private:
+ friend class URogue10mWeaponRetargetAnimInstance;
+ bool ConsumeEquipmentRetargetPose(UAnimInstance& Instance, TArray<FTransform>& OutPose, TBitArray<>& OutBones);
+ void SwitchWeaponRetarget(USkeletalMeshComponent& Body, UClass* NewClass, bool bThirdPerson);
+ TWeakObjectPtr<USkeletalMeshComponent> PendingRetargetBody;
+ TWeakObjectPtr<UClass> PendingRetargetClass;
+ TArray<FTransform> PendingRetargetPose;
+ TBitArray<> PendingRetargetBones;
  void UnbindSwordGrip();
  void UpdateSwordGrip();
  void UnbindStaffGrip();

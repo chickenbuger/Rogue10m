@@ -40,6 +40,8 @@
 #include "Rogue10mCharacterProfileSubsystem.h"
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mFighterCombatStanceAnimInstance.h"
+#include "Rogue10mInventoryComponent.h"
+#include "Rogue10mItemDataAsset.h"
 #include "Rogue10mMeleeVfxComponent.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
@@ -69,6 +71,7 @@ public:
   bMeleeVfxLogicOnly=bMeleeVfxRun&&FParse::Param(FCommandLine::Get(),TEXT("RogueMeleeVfxLogicOnly"));
   bCapstoneBraceRun=bMeleeVfxRun&&FParse::Param(FCommandLine::Get(),TEXT("RogueCapstoneBraceQA"));
   bCapstoneBraceRender=bCapstoneBraceRun&&!bMeleeVfxLogicOnly&&FParse::Param(FCommandLine::Get(),TEXT("RogueCapstoneBraceRender"));
+  bSwordEquipAudit=bMeleeVfxRun&&FParse::Value(FCommandLine::Get(),TEXT("RogueSwordEquipAppearance="),SwordEquipAppearance);
   if(bMeleeVfxRun)
   {
    FString ProfileSlot,ProgressionPrefix,KeySlot;
@@ -266,8 +269,15 @@ private:
   auto* Profiles=Instance?Instance->GetSubsystem<URogue10mCharacterProfileSubsystem>():nullptr;
   auto* Saves=Instance?Instance->GetSubsystem<URogue10mProgressionSubsystem>():nullptr;
   FRogue10mCharacterProfile Profile;
+  FRogue10mCharacterAppearance Appearance;
+  if(bSwordEquipAudit)
+  {
+   if(SwordEquipAppearance.StartsWith(TEXT("Dwarf"))){Appearance.Race=ERogue10mCharacterRace::Dwarf;}
+   if(SwordEquipAppearance.StartsWith(TEXT("Orc"))){Appearance.Race=ERogue10mCharacterRace::Orc;}
+   if(SwordEquipAppearance.EndsWith(TEXT("Female"))){Appearance.Gender=ERogue10mCharacterGender::Female;}
+  }
   if(!Controller.IsValid()||!Profiles||!Saves||Profiles->GetProfileCount()!=0||
-   !Profiles->CreateProfile(TEXT("MeleeVfxQA"),FRogue10mCharacterAppearance(),Profile)||!Profiles->SelectProfile(Profile.ProfileId)){return false;}
+   !Profiles->CreateProfile(TEXT("MeleeVfxQA"),Appearance,Profile)||!Profiles->SelectProfile(Profile.ProfileId)){return false;}
   Controller->EnterSelectedCharacter();
   Controller->CloseAllBlockingPanels();
   Character=Cast<ARogue10mCharacter>(Controller->GetPawn());
@@ -339,6 +349,7 @@ private:
    {Playback->VisibilityBasedAnimTickOption=EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;}
   }
   for(TActorIterator<ARogue10mBasicMonster> It(World.Get());It;++It){It->ClearAITarget();if(It->GetController()){It->GetController()->UnPossess();}It->SetActorEnableCollision(false);It->GetCharacterMovement()->DisableMovement();}
+  if(bSwordEquipAudit){PrepareSwordEquipAudit();return;}
   Target=World->SpawnActor<ARogue10mBasicMonster>(ARogue10mBasicMonster::StaticClass(),Character->GetActorLocation()+FVector(110,0,0),FRotator::ZeroRotator,P);
   if(!Target.IsValid()){Check(false,TEXT("target_failed"));Finish();return;}
   Target->GetMesh()->SetSkeletalMeshAsset(LoadObject<USkeletalMesh>(nullptr,TEXT("/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple")));
@@ -832,6 +843,117 @@ private:
   FPlatformMisc::RequestExitWithStatus(false,bPassed?0:1);
  }
 
+ void PrepareSwordEquipAudit()
+ {
+  SwordEquipRows=TEXT("frame,world_s,phase,stage,revision,lod,mesh,anim_class,weapon_visible,bone,x,y,z,qx,qy,qz,qw\n");
+  auto* Inventory=Character->GetInventoryComponent();
+  const auto* Item=LoadObject<URogue10mItemDataAsset>(nullptr,TEXT("/Game/DataAsset/Item/Starter/DA_Item_IronLongsword.DA_Item_IronLongsword"));
+  Check(Inventory&&Item&&Character->GetEquippedWeaponType()==ERogue10mWeaponType::Unarmed
+   &&Inventory->TryAddGridItem(Item,1,SwordEquipGrid,SwordEquipItem),TEXT("equip_audit_existing_sword_added_to_unarmed_inventory"));
+  if(Failures){Finish();return;}
+  OldFixed=FApp::UseFixedTimeStep();
+  OldDelta=FApp::GetFixedDeltaTime();
+  FApp::SetUseFixedTimeStep(true);
+  FApp::SetFixedDeltaTime(1./60.);
+  bOwnFixed=true;
+  if(!bMeleeVfxLogicOnly)
+  {
+   const FVector Origin=Character->GetActorLocation();
+   const FVector Position=Origin+Character->GetActorForwardVector()*300.+Character->GetActorRightVector()*280.+FVector(0,0,55);
+   FActorSpawnParameters Params;
+   Params.ObjectFlags|=RF_Transient;
+   auto* Camera=World->SpawnActor<ACameraActor>(Position,(Origin-Position).Rotation(),Params);
+   Check(Camera!=nullptr,TEXT("equip_audit_render_fixed_camera_spawned"));
+   if(!Camera){Finish();return;}
+   Camera->GetCameraComponent()->SetFieldOfView(46.f);
+   Controller->SetViewTarget(Camera);
+   ScreenshotProcessed=FScreenshotRequest::OnScreenshotRequestProcessed().AddLambda([Self=AsShared()]{Self->CaptureProcessed();});
+  }
+  Tick=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* W,ELevelTick,float)
+  {
+   if(Self->World.Get()==W){Self->StepSwordEquipAudit();}
+  });
+ }
+ void StepSwordEquipAudit()
+ {
+  ++Frame;
+  if(Frame<23){return;}
+  const auto* Source=Character->GetAnimationPlaybackMesh();
+  const auto* Display=Character->GetMesh();
+  Check(Source&&Display&&Character->GetCharacterMovement()->IsMovingOnGround(),TEXT("equip_audit_fresh_grounded_meshes"));
+  if(Failures){Finish();return;}
+  const auto* Visual=Character->FindComponentByClass<URogue10mWeaponVisualComponent>();
+  const auto* Sword=Visual?Visual->GetRightWeaponMesh():nullptr;
+  const bool bSwordVisible=Sword&&Sword->IsVisible()&&!Sword->bHiddenInGame;
+  const TCHAR* Phase=Frame<=30?TEXT("before_equip"):Frame<=68?TEXT("equipped"):TEXT("unequipped");
+  if(Frame>=23)
+  {
+   for(const auto* Mesh:{Source,Display})
+   {
+    const FString MeshPath=GetPathNameSafe(Mesh->GetSkeletalMeshAsset());
+    const auto* Anim=Mesh->GetAnimInstance();
+    const FString ClassPath=Anim?Anim->GetClass()->GetPathName():FString();
+    const TCHAR* Stage=Mesh==Source?TEXT("source"):TEXT("display");
+    for(const FName Bone:{FName(TEXT("pelvis")),FName(TEXT("clavicle_l")),FName(TEXT("clavicle_r")),
+     FName(TEXT("upperarm_l")),FName(TEXT("upperarm_r")),FName(TEXT("lowerarm_l")),FName(TEXT("lowerarm_r")),
+     FName(TEXT("hand_l")),FName(TEXT("hand_r")),FName(TEXT("foot_l")),FName(TEXT("foot_r"))})
+    {
+     const int32 BoneIndex=Mesh->GetBoneIndex(Bone);
+     if(BoneIndex==INDEX_NONE){continue;}
+     const FTransform T=Mesh->GetBoneTransform(BoneIndex,FTransform::Identity);
+     const FVector V=T.GetLocation();const FQuat Q=T.GetRotation();
+     SwordEquipRows+=FString::Printf(TEXT("%d,%.6f,%s,%s,%u,%d,%s,%s,%d,%s,%.6f,%.6f,%.6f,%.8f,%.8f,%.8f,%.8f\n"),
+      Frame,World->GetTimeSeconds(),Phase,Stage,Mesh->GetBoneTransformRevisionNumber(),Mesh->GetPredictedLODLevel(),
+      *MeshPath,*ClassPath,bSwordVisible?1:0,*Bone.ToString(),V.X,V.Y,V.Z,Q.X,Q.Y,Q.Z,Q.W);
+    }
+   }
+  }
+  auto* Inventory=Character->GetInventoryComponent();
+  if(Frame==30||Frame==68)
+  {
+   const bool bEquip=Frame==30;
+   static const FName Bones[]={TEXT("hand_l"),TEXT("hand_r"),TEXT("foot_l"),TEXT("foot_r")};
+   FTransform Before[UE_ARRAY_COUNT(Bones)];
+   for(int32 IndexBone=0;IndexBone<UE_ARRAY_COUNT(Bones);++IndexBone)
+   {
+    Before[IndexBone]=Display->GetSocketTransform(Bones[IndexBone],RTS_Component);
+   }
+   const auto Revision=Display->GetBoneTransformRevisionNumber();
+   if(bEquip)
+   {
+    Check(Inventory->TryEquipGridItem(SwordEquipGrid,SwordEquipItem)
+     &&Character->GetEquippedWeaponType()==ERogue10mWeaponType::GreatSword,TEXT("equip_audit_inventory_equipped_sword"));
+   }
+   else
+   {
+    Check(bSwordVisible&&Inventory->TryUnequipItemToFirstAvailableGrid(ERogue10mInventorySlotType::MainWeapon)
+     &&Character->GetEquippedWeaponType()==ERogue10mWeaponType::Unarmed,TEXT("equip_audit_inventory_unequipped_sword"));
+   }
+   double LargestMove=0.0,LargestAngle=0.0;
+   for(int32 IndexBone=0;IndexBone<UE_ARRAY_COUNT(Bones);++IndexBone)
+   {
+    const FTransform After=Display->GetSocketTransform(Bones[IndexBone],RTS_Component);
+    LargestMove=FMath::Max(LargestMove,FVector::Distance(Before[IndexBone].GetLocation(),After.GetLocation()));
+    LargestAngle=FMath::Max(LargestAngle,FMath::RadiansToDegrees(Before[IndexBone].GetRotation().AngularDistance(After.GetRotation())));
+   }
+   UE_LOG(LogRogue10m,Display,TEXT("SWORD_EQUIP_SYNC appearance=%s equip=%d before_revision=%u after_revision=%u maximum_cm=%.6f maximum_deg=%.6f"),
+    *SwordEquipAppearance,bEquip?1:0,Revision,Display->GetBoneTransformRevisionNumber(),LargestMove,LargestAngle);
+   Check(LargestMove<=.8&&LargestAngle<=1.,TEXT("equip_audit_pose_preserved_during_inventory_call"));
+  }
+  if(!bMeleeVfxLogicOnly)
+  {
+   if(Frame==29){Capture(TEXT("before_equip"));}
+   if(Frame==31){Capture(TEXT("first_equip"));}
+   if(Frame==67){Capture(TEXT("sword_guard"));}
+   if(Frame==69){Capture(TEXT("first_unequip"));}
+  }
+  if(Frame==88)
+  {
+   Check(!bSwordVisible,TEXT("equip_audit_sword_hidden_after_unequip"));
+   Check(bMeleeVfxLogicOnly||CompletedCaptures==4,TEXT("equip_audit_four_render_captures"));
+   Finish();
+  }
+ }
  void Next()
  {
   if(Index>=Skills.Num()){Finish();return;}
@@ -1160,6 +1282,19 @@ private:
   if(bFinished)return;
   if(bCapturePending){bFinishRequested=true;return;}
   bFinished=true;FWorldDelegates::OnWorldPostActorTick.Remove(Tick);FScreenshotRequest::OnScreenshotRequestProcessed().Remove(ScreenshotProcessed);
+  if(bSwordEquipAudit)
+  {
+   if(bOwnFixed){FApp::SetUseFixedTimeStep(OldFixed);FApp::SetFixedDeltaTime(OldDelta);}
+   Check(FFileHelper::SaveStringToFile(SwordEquipRows,*(Output/TEXT("sword-equip.csv"))),TEXT("equip_audit_trace_saved"));
+   if(!bMeleeVfxLogicOnly)
+   {
+    Check(FFileHelper::SaveStringToFile(CaptureRows,*(Output/TEXT("captures.csv"))),TEXT("equip_audit_captures_saved"));
+   }
+   const bool bPassed=Failures==0&&Frame==88;
+   UE_LOG(LogRogue10m,Display,TEXT("RESULT=SWORD_EQUIP_POSE_%s appearance=%s frames=%d failures=%d"),
+    bPassed?TEXT("PASSED"):TEXT("FAILED"),*SwordEquipAppearance,Frame,Failures);
+   FPlatformMisc::RequestExitWithStatus(false,bPassed?0:1);return;
+  }
   if(bCapstoneBraceRun){FinishCapstoneBrace();return;}
   for(const FString& Path:CapturePaths){Check(IFileManager::Get().FileSize(*Path)>0,TEXT("final_screenshot_file_missing_or_empty"));}
   const int32 ExpectedCases=bMeleeVfxRun?14:10,ExpectedCaptures=bMeleeVfxLogicOnly?0:(bMeleeVfxRun?46:34);
@@ -1196,6 +1331,10 @@ private:
  TArray<TWeakObjectPtr<UNiagaraComponent>> VfxExcluded;
  TMap<TWeakObjectPtr<UNiagaraComponent>,FVfxObservation> VfxObservations;FString VfxRows;bool bVfxTimedOut=false;
  FString MeleeVfxRows;
+ FString SwordEquipAppearance,SwordEquipRows;
+ int32 SwordEquipGrid=INDEX_NONE;
+ FGuid SwordEquipItem;
+ bool bSwordEquipAudit=false;
  TWeakObjectPtr<URogue10mAttackSkillData> BraceSkill,BraceSpecial;
  EBraceStep BraceStep=EBraceStep::Settle;
  IConsoleVariable* BraceCVar=nullptr;

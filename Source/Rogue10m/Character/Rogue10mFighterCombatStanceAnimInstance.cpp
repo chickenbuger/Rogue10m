@@ -175,7 +175,17 @@ void URogue10mFighterCombatStanceAnimInstance::NativeUpdateAnimation(float Delta
 
 	const ERogue10mWeaponType Weapon = Character ? Character->GetEquippedWeaponType() : ERogue10mWeaponType::Unarmed;
 	const bool bGreatSword = Weapon == ERogue10mWeaponType::GreatSword;
-	FighterCombatStanceAnimation = bGreatSword && CachedGreatSwordIdle ? CachedGreatSwordIdle : CachedFighterIdle;
+	UAnimSequence* DesiredStance = bGreatSword && CachedGreatSwordIdle ? CachedGreatSwordIdle.Get() : CachedFighterIdle.Get();
+	// Replacing an already weighted sequence swaps the entire guard in a single frame.
+	// Let the outgoing guard reach the locomotion pose before selecting the next sequence.
+	const bool bLowerOutgoingGuard = Character && Character->IsThirdPersonGameplayActive() && !Character->IsDead()
+		&& Movement && Movement->IsMovingOnGround() && !Character->IsDodging() && !bAnyMontageContributes
+		&& FighterCombatStanceAnimation && DesiredStance != FighterCombatStanceAnimation.Get()
+		&& FighterCombatBlendProgress > UE_SMALL_NUMBER;
+	if (!bLowerOutgoingGuard)
+	{
+		FighterCombatStanceAnimation = DesiredStance;
+	}
 	GroundLocomotionBlendSpace = bGreatSword && CachedGreatSwordLocomotion ? CachedGreatSwordLocomotion : CachedUnarmedLocomotion;
 	const bool bFighterWeapon = bGreatSword || Weapon == ERogue10mWeaponType::Unarmed || Weapon == ERogue10mWeaponType::Knuckle;
 	const bool bContextValid = Character && Animation && Movement && Character->GetController()
@@ -197,14 +207,15 @@ void URogue10mFighterCombatStanceAnimInstance::NativeUpdateAnimation(float Delta
 	const bool bBlendSwordGuardIntoMovement = bLeavesStandingPose && bContextValid && bGreatSword && Character->IsThirdPersonGameplayActive()
 		&& Movement->IsMovingOnGround() && !Character->IsDodging() && !bDodgePoseContributes
 		&& !bAnyMontageContributes && !(Combat && Combat->IsWeaponChangeBlocked());
-	if (bLeavesStandingPose && !bBlendSwordGuardIntoMovement)
+	if (bLeavesStandingPose && !bBlendSwordGuardIntoMovement && !bLowerOutgoingGuard)
 	{
 		FighterCombatBlendProgress = FighterCombatStanceAlpha = 0.0f;
 		return;
 	}
 	const bool bStanding = bContextValid && Movement->IsMovingOnGround() && !Character->IsSprinting()
 		&& !Animation->HasMovementInput() && GroundSpeed <= FMath::Max(0.0f, FighterCombatStationarySpeed);
-	const bool bRaise = FighterCombatStanceAnimation && bStanding && (bGreatSword || Animation->IsFighterCombatStanceRequested());
+	const bool bRaise = !bLowerOutgoingGuard && FighterCombatStanceAnimation && bStanding
+		&& (bGreatSword || Animation->IsFighterCombatStanceRequested());
 	const auto* Appearance = Character ? Character->GetAppearanceCameraComponent() : nullptr;
 	const bool bWeightedGuard = bContextValid && !bAnyMontageContributes && Appearance && Appearance->IsWeightedFirstPersonActive();
 	const FRogue10mWeightedFirstPersonSettings WeightedSettings = bWeightedGuard
@@ -213,9 +224,9 @@ void URogue10mFighterCombatStanceAnimInstance::NativeUpdateAnimation(float Delta
 		? FMath::Lerp(FighterCombatRaiseSeconds, WeightedSettings.GuardRaiseSeconds, WeightedSettings.HandMotionScale) : FighterCombatRaiseSeconds;
 	const float LowerSeconds = bWeightedGuard
 		? FMath::Lerp(FighterCombatLowerSeconds, WeightedSettings.GuardLowerSeconds, WeightedSettings.HandMotionScale) : FighterCombatLowerSeconds;
-	const float MoveLowerSeconds = bBlendSwordGuardIntoMovement
+	const float FastLowerSeconds = bBlendSwordGuardIntoMovement || bLowerOutgoingGuard
 		? FMath::Min(LowerSeconds, FMath::Max(0.01f, GreatSwordMoveGuardLowerSeconds)) : LowerSeconds;
-	const float Duration = bRaise ? RaiseSeconds : MoveLowerSeconds;
+	const float Duration = bRaise ? RaiseSeconds : FastLowerSeconds;
 	const float Step = FMath::Max(0.0f, DeltaSeconds) / FMath::Max(0.01f, Duration);
 	FighterCombatBlendProgress = FMath::Clamp(FighterCombatBlendProgress + (bRaise ? Step : -Step), 0.0f, 1.0f);
 	FighterCombatStanceAlpha = FMath::SmoothStep(0.0f, 1.0f, FighterCombatBlendProgress);
