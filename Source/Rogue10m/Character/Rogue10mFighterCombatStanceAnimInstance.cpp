@@ -223,7 +223,14 @@ void URogue10mFighterCombatStanceAnimInstance::NativeUpdateAnimation(float Delta
 	{
 		FighterCombatStanceAnimation = DesiredStance;
 	}
-	GroundLocomotionBlendSpace = bGreatSword && CachedGreatSwordLocomotion ? CachedGreatSwordLocomotion : CachedUnarmedLocomotion;
+	UBlendSpace* NextLocomotion = bGreatSword && CachedGreatSwordLocomotion ? CachedGreatSwordLocomotion.Get() : CachedUnarmedLocomotion.Get();
+	const bool bCanBlendWeaponLocomotion = Character && Movement && GetSkelMeshComponent() == Character->GetAnimationPlaybackMesh()
+		&& Character->IsThirdPersonGameplayActive() && !Character->IsDead() && Movement->IsMovingOnGround()
+		&& !Character->IsDodging() && !bDodgePoseContributes && !bAnyMontageContributes && !bUseForwardRunLanding;
+	const bool bChangeMovingLocomotion = GroundLocomotionBlendSpace && NextLocomotion && GroundLocomotionBlendSpace.Get() != NextLocomotion
+		&& GroundSpeed > FMath::Max(0.0f, FighterCombatStationarySpeed);
+	GetProxyOnGameThread<FRogue10mViewAlignedUpperBodyProxy>().UpdateWeaponLocomotionBlend(bCanBlendWeaponLocomotion, bChangeMovingLocomotion, DeltaSeconds);
+	GroundLocomotionBlendSpace = NextLocomotion;
 	const bool bFighterWeapon = bGreatSword || Weapon == ERogue10mWeaponType::Unarmed || Weapon == ERogue10mWeaponType::Knuckle;
 	const bool bContextValid = Character && Animation && Movement && Character->GetController()
 		&& !Character->IsDead() && bFighterWeapon && !(Controller && Controller->IsAnyBlockingWindowVisible());

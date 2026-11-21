@@ -1,8 +1,11 @@
 #if WITH_EDITOR
 #include "AbilitySystemComponent.h"
+#include "Animation/AnimClassInterface.h"
 #include "Animation/AnimMontage.h"
 #include "Animation/AnimInstance.h"
 #include "Animation/AnimSequenceBase.h"
+#include "Animation/BlendSpace.h"
+#include "AnimNodes/AnimNode_BlendSpacePlayer.h"
 #include "AssetCompilingManager.h"
 #include "Camera/CameraActor.h"
 #include "Camera/CameraComponent.h"
@@ -75,6 +78,7 @@ public:
   bCapstoneBraceRender=bCapstoneBraceRun&&!bMeleeVfxLogicOnly&&FParse::Param(FCommandLine::Get(),TEXT("RogueCapstoneBraceRender"));
   bSwordEquipAudit=bMeleeVfxRun&&FParse::Value(FCommandLine::Get(),TEXT("RogueSwordEquipAppearance="),SwordEquipAppearance);
   bSwordEquipWalking=bSwordEquipAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueSwordEquipWalking"));
+  bSwordEquipMovingBoth=bSwordEquipWalking&&FParse::Param(FCommandLine::Get(),TEXT("RogueSwordEquipMovingBoth"));
   bSwordTechniqueAudit=FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordTechniqueQA"));
   const bool bWhirlwindCapture=FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordWhirlwindCapture"));
   const bool bGuardBreakCapture=FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordGuardBreakCapture"));
@@ -1013,7 +1017,12 @@ private:
    auto* Camera=World->SpawnActor<ACameraActor>(Position,(Origin-Position).Rotation(),Params);
    Check(Camera!=nullptr,TEXT("equip_audit_render_fixed_camera_spawned"));
    if(!Camera){Finish();return;}
-   Camera->GetCameraComponent()->SetFieldOfView(46.f);
+   Camera->GetCameraComponent()->SetFieldOfView(bSwordEquipMovingBoth?52.f:46.f);
+   if(bSwordEquipMovingBoth)
+   {
+    SwordEquipCamera=Camera;
+    SwordEquipCameraOffset=Position-Origin;
+   }
    Controller->SetViewTarget(Camera);
    ScreenshotProcessed=FScreenshotRequest::OnScreenshotRequestProcessed().AddLambda([Self=AsShared()]{Self->CaptureProcessed();});
   }
@@ -1025,6 +1034,10 @@ private:
  void StepSwordEquipAudit()
  {
   ++Frame;
+  if(auto* Camera=SwordEquipCamera.Get())
+  {
+   Camera->SetActorLocation(Character->GetActorLocation()+SwordEquipCameraOffset);
+  }
   if(Frame<23){return;}
   const auto* Source=Character->GetAnimationPlaybackMesh();
   const auto* Display=Character->GetMesh();
@@ -1042,7 +1055,7 @@ private:
     const auto* Anim=Mesh->GetAnimInstance();
     const FString ClassPath=Anim?Anim->GetClass()->GetPathName():FString();
     const TCHAR* Stage=Mesh==Source?TEXT("source"):TEXT("display");
-    for(const FName Bone:{FName(TEXT("pelvis")),FName(TEXT("clavicle_l")),FName(TEXT("clavicle_r")),
+    for(const FName Bone:{FName(TEXT("root")),FName(TEXT("pelvis")),FName(TEXT("clavicle_l")),FName(TEXT("clavicle_r")),
      FName(TEXT("upperarm_l")),FName(TEXT("upperarm_r")),FName(TEXT("lowerarm_l")),FName(TEXT("lowerarm_r")),
      FName(TEXT("hand_l")),FName(TEXT("hand_r")),FName(TEXT("foot_l")),FName(TEXT("foot_r"))})
     {
@@ -1057,6 +1070,29 @@ private:
    }
   }
   auto* Inventory=Character->GetInventoryComponent();
+  if(bSwordEquipWalking&&(FMath::Abs(Frame-30)<=8||FMath::Abs(Frame-68)<=8))
+  {
+   const auto* Anim=Cast<URogue10mFighterCombatStanceAnimInstance>(Source->GetAnimInstance());
+   const auto* Interface=Anim?IAnimClassInterface::GetFromClass(Anim->GetClass()):nullptr;
+   const FAnimNode_BlendSpacePlayerBase* Ground=nullptr;
+   if(Interface)for(const auto* Property:Interface->GetAnimNodeProperties())
+   {
+    if(!Property||!Property->Struct->IsChildOf(FAnimNode_BlendSpacePlayerBase::StaticStruct())){continue;}
+    const auto* Node=Property->ContainerPtrToValuePtr<FAnimNode_BlendSpacePlayerBase>(Anim);
+    if(Node->GetBlendSpace()==Anim->GroundLocomotionBlendSpace&&(!Ground||Node->GetCachedBlendWeight()>Ground->GetCachedBlendWeight())){Ground=Node;}
+   }
+   if(Ground)
+   {
+    const FVector Input=Ground->GetPosition();
+    const FVector Filtered=Ground->GetFilteredPosition();
+    UE_LOG(LogRogue10m,Display,TEXT("SWORD_EQUIP_SOURCE frame=%d speed=%.5f guard=%.6f guard_asset=%s locomotion=%s gait=%.6f sample_s=%.6f weight=%.6f x=%.5f y=%.5f filtered_x=%.5f filtered_y=%.5f"),
+     Frame,Character->GetVelocity().Size2D(),Anim->FighterCombatStanceAlpha,*GetPathNameSafe(Anim->FighterCombatStanceAnimation),
+     *GetPathNameSafe(Anim->GroundLocomotionBlendSpace),Ground->GetAccumulatedTime(),Ground->GetCurrentAssetTime(),
+     Ground->GetCachedBlendWeight(),Input.X,Input.Y,Filtered.X,Filtered.Y);
+   }
+  }
+  if(bSwordEquipMovingBoth&&Frame==26){BraceKey(EKeys::W,true);}
+  if(bSwordEquipMovingBoth&&Frame==47){BraceKey(EKeys::W,false);}
   if(bSwordEquipWalking&&Frame==64){BraceKey(EKeys::W,true);}
   if(Frame==30||Frame==68)
   {
@@ -1070,6 +1106,10 @@ private:
    const auto Revision=Display->GetBoneTransformRevisionNumber();
    if(bEquip)
    {
+    if(bSwordEquipMovingBoth)
+    {
+     Check(Character->GetVelocity().Size2D()>=65.0,TEXT("equip_audit_equip_during_actual_walk_input"));
+    }
     Check(Inventory->TryEquipGridItem(SwordEquipGrid,SwordEquipItem)
      &&Character->GetEquippedWeaponType()==ERogue10mWeaponType::GreatSword,TEXT("equip_audit_inventory_equipped_sword"));
    }
@@ -1101,12 +1141,13 @@ private:
    if(Frame==31){Capture(TEXT("first_equip"));}
    if(Frame==67){Capture(TEXT("sword_guard"));}
    if(Frame==69){Capture(TEXT("first_unequip"));}
+   if(bSwordEquipMovingBoth&&Frame==82){Capture(TEXT("walk_recovered"));}
   }
   if(Frame==88)
   {
    if(bSwordEquipWalking){BraceKey(EKeys::W,false);}
    Check(!bSwordVisible,TEXT("equip_audit_sword_hidden_after_unequip"));
-   Check(bMeleeVfxLogicOnly||CompletedCaptures==4,TEXT("equip_audit_four_render_captures"));
+   Check(bMeleeVfxLogicOnly||CompletedCaptures==(bSwordEquipMovingBoth?5:4),TEXT("equip_audit_expected_render_captures"));
    Finish();
   }
  }
@@ -1571,13 +1612,15 @@ private:
  TMap<TWeakObjectPtr<UNiagaraComponent>,FVfxObservation> VfxObservations;FString VfxRows;bool bVfxTimedOut=false;
  FString MeleeVfxRows;
  FString SwordEquipAppearance,SwordEquipRows,SwordTechniquePoses,SwordTechniqueActor;
+ TWeakObjectPtr<ACameraActor> SwordEquipCamera;
+ FVector SwordEquipCameraOffset=FVector::ZeroVector;
  TWeakObjectPtr<UGameViewportClient> TechniqueViewport;
  double GuardBreakNearestBladeGap=TNumericLimits<double>::Max();
  bool bPreviousWorldRenderingDisabled=false;
  bool bSwordTechniqueAudit=false,bSwordTechniqueRender=false,bSwordGuardBreakAudit=false;
  int32 SwordEquipGrid=INDEX_NONE;
  FGuid SwordEquipItem;
- bool bSwordEquipAudit=false,bSwordEquipWalking=false;
+ bool bSwordEquipAudit=false,bSwordEquipWalking=false,bSwordEquipMovingBoth=false;
  TWeakObjectPtr<URogue10mAttackSkillData> BraceSkill,BraceSpecial;
  EBraceStep BraceStep=EBraceStep::Settle;
  IConsoleVariable* BraceCVar=nullptr;

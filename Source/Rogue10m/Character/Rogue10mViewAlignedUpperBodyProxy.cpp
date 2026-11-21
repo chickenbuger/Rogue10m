@@ -31,7 +31,12 @@ constexpr float GroundedDefeatBlendSeconds = .22f;
 #if WITH_EDITOR
 TAutoConsoleVariable<int32> CVarGreatSwordCapstoneBrace(TEXT("a.Rogue10m.GreatSwordCapstoneBrace"), 1,
 	TEXT("Enable the visual-only capstone brace for editor pose comparisons."));
+TAutoConsoleVariable<int32> CVarMovingWeaponLocomotion(TEXT("a.Rogue10m.MovingWeaponLocomotion"), 1,
+	TEXT("Enable the grounded pose handoff when equipping or removing a sword while moving."));
 #endif
+
+constexpr float WeaponLocomotionUpperSeconds = 0.22f;
+constexpr float WeaponLocomotionLowerSeconds = 0.16f;
 
 FQuat ComponentRotation(const FCompactPose& Pose, FCompactPoseBoneIndex Bone)
 {
@@ -120,6 +125,7 @@ void FRogue10mViewAlignedUpperBodyProxy::Initialize(UAnimInstance* InAnimInstanc
 	SecondJumpAge = -1.0f;
 	SecondJumpInterruptionWeight = 1.0f;
 	bSecondJumpPoseEvaluated = false;
+	UpdateWeaponLocomotionBlend(false, false, 0.0f);
 	NonlethalHitSequence = nullptr;
 	NonlethalHitAge = NonlethalHitWeight = 0.0f;
 	GroundedDefeatStartPose.Reset();
@@ -428,6 +434,7 @@ bool FRogue10mViewAlignedUpperBodyProxy::Evaluate_WithRoot(FPoseContext& Output,
 		if (!ApplyAuthoredRoll(Output)) { ApplyRollPose(Output.Pose); }
 		return true;
 	}
+	ApplyWeaponLocomotionBlend(Output.Pose);
 	if (CapstoneBraceWeight > UE_SMALL_NUMBER) { ApplyCapstoneBrace(Output); }
 	if (SecondJumpSequence) { ApplySecondJumpPose(Output); }
 	if (NonlethalHitSequence) { ApplyNonlethalHit(Output); }
@@ -435,6 +442,82 @@ bool FRogue10mViewAlignedUpperBodyProxy::Evaluate_WithRoot(FPoseContext& Output,
 	if (bApplyWeightedHandMotion) { ApplyWeightedHandMotion(Output.Pose); }
 	if (bApplyMouseHead) { ApplyMouseDrivenHead(Output.Pose); }
 	return true;
+}
+
+void FRogue10mViewAlignedUpperBodyProxy::UpdateWeaponLocomotionBlend(bool bEligible, bool bChangedWhileMoving, float DeltaSeconds)
+{
+#if WITH_EDITOR
+	bEligible = bEligible && CVarMovingWeaponLocomotion.GetValueOnGameThread() != 0;
+#endif
+	bRecordGroundPose = bEligible;
+	if (!bEligible)
+	{
+		LastGroundPose.Reset();
+		WeaponLocomotionOffsets.Reset();
+		bCaptureOutgoingGroundPose = false;
+		return;
+	}
+	if (bChangedWhileMoving)
+	{
+		bCaptureOutgoingGroundPose = true;
+		WeaponLocomotionElapsed = 0.0f;
+	}
+	else if (!bCaptureOutgoingGroundPose && !WeaponLocomotionOffsets.IsEmpty())
+	{
+		WeaponLocomotionElapsed += FMath::Max(0.0f, DeltaSeconds);
+		if (WeaponLocomotionElapsed >= WeaponLocomotionUpperSeconds) { WeaponLocomotionOffsets.Reset(); }
+	}
+}
+
+void FRogue10mViewAlignedUpperBodyProxy::ApplyWeaponLocomotionBlend(FCompactPose& Pose)
+{
+	if (!bRecordGroundPose) { return; }
+	const FBoneContainer& Bones = Pose.GetBoneContainer();
+	if (GroundPoseBoneSerial != Bones.GetSerialNumber() || LastGroundPose.Num() != Pose.GetNumBones())
+	{
+		LastGroundPose.Reset();
+		WeaponLocomotionOffsets.Reset();
+		GroundPoseBoneSerial = Bones.GetSerialNumber();
+	}
+	if (bCaptureOutgoingGroundPose || !WeaponLocomotionOffsets.IsEmpty())
+	{
+		if (!bBoneCacheValid || BoneCacheSerial != Bones.GetSerialNumber()) { RebuildBoneCache(Bones); }
+	}
+	if (bCaptureOutgoingGroundPose)
+	{
+		bCaptureOutgoingGroundPose = false;
+		WeaponLocomotionOffsets.SetNum(LastGroundPose.Num());
+		if (!LastGroundPose.IsEmpty())
+		{
+			for (const FCompactPoseBoneIndex Bone : Pose.ForEachBoneIndex())
+			{
+				if (Bone == Root) { continue; }
+				FTransform Outgoing = LastGroundPose[Bone.GetInt()];
+				if (Root != INDEX_NONE && Bones.GetParentBoneIndex(Bone) == Root)
+				{
+					// Express the old visible position under the new root without modifying the live root.
+					Outgoing = (Outgoing * LastGroundPose[Root.GetInt()]).GetRelativeTransform(Pose[Root]);
+				}
+				WeaponLocomotionOffsets[Bone.GetInt()] = Outgoing.GetRelativeTransform(Pose[Bone]);
+			}
+		}
+	}
+	if (!WeaponLocomotionOffsets.IsEmpty())
+	{
+		const float OldUpper = 1.0f - FMath::SmoothStep(0.0f, WeaponLocomotionUpperSeconds, WeaponLocomotionElapsed);
+		const float OldLower = 1.0f - FMath::SmoothStep(0.0f, WeaponLocomotionLowerSeconds, WeaponLocomotionElapsed);
+		for (const FCompactPoseBoneIndex Bone : Pose.ForEachBoneIndex())
+		{
+			if (Bone == Root) { continue; }
+			const bool bUpper = Spine[0] != INDEX_NONE && (Bone == Spine[0] || Bones.BoneIsChildOf(Bone, Spine[0]));
+			FTransform Offset = FTransform::Identity;
+			Offset.BlendWith(WeaponLocomotionOffsets[Bone.GetInt()], bUpper ? OldUpper : OldLower);
+			// Let the destination stride advance with its own velocity while the presentation offset decays.
+			Pose[Bone] = Offset * Pose[Bone];
+		}
+	}
+	// Capture the evaluated graph before camera aim and layer-specific corrections.
+	LastGroundPose = Pose.GetBones();
 }
 
 void FRogue10mViewAlignedUpperBodyProxy::PostEvaluate(UAnimInstance* InAnimInstance)

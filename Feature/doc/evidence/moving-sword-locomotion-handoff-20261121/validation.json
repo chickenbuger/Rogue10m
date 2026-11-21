@@ -1,0 +1,2526 @@
+{
+  "base_baseline": "b29a5efbc5f9b954ed4076f059521604d1f84b08",
+  "base_selected": "62e1f6d4b99353e66e005e49f35603195e039d5d",
+  "frame_rate": 60,
+  "input": "Programmatic W and real inventory equipment, fixed flat StartHub",
+  "published_baseline": {
+    "DwarfMale": {
+      "equip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              0.469116,
+              2.327464
+            ],
+            "hand_r": [
+              0.151906,
+              2.556814
+            ],
+            "foot_l": [
+              0.208807,
+              0.239135
+            ],
+            "foot_r": [
+              0.182924,
+              0.207023
+            ]
+          },
+          "first": {
+            "hand_l": [
+              2.56516,
+              4.374831
+            ],
+            "hand_r": [
+              4.454653,
+              5.497089
+            ],
+            "foot_l": [
+              1.415811,
+              0.537092
+            ],
+            "foot_r": [
+              1.259014,
+              1.072059
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              1.620313,
+              2.997961
+            ],
+            "hand_r": [
+              3.259242,
+              5.236664
+            ],
+            "foot_l": [
+              5.112574,
+              8.338579
+            ],
+            "foot_r": [
+              3.592937,
+              2.50599
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              0.438787,
+              2.327465
+            ],
+            "hand_r": [
+              0.226008,
+              2.556814
+            ],
+            "foot_l": [
+              0.326802,
+              0.213357
+            ],
+            "foot_r": [
+              0.100263,
+              0.262177
+            ]
+          },
+          "first": {
+            "hand_l": [
+              2.715574,
+              4.37483
+            ],
+            "hand_r": [
+              5.555521,
+              5.497089
+            ],
+            "foot_l": [
+              1.229729,
+              0.559944
+            ],
+            "foot_r": [
+              1.094154,
+              1.055347
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              1.493401,
+              2.997962
+            ],
+            "hand_r": [
+              4.77089,
+              5.236663
+            ],
+            "foot_l": [
+              3.630241,
+              7.960778
+            ],
+            "foot_r": [
+              3.252558,
+              2.374364
+            ]
+          }
+        }
+      },
+      "unequip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              2.265083,
+              3.259323
+            ],
+            "hand_r": [
+              2.401906,
+              3.254734
+            ],
+            "foot_l": [
+              1.822133,
+              0.959918
+            ],
+            "foot_r": [
+              1.615945,
+              0.998963
+            ]
+          },
+          "first": {
+            "hand_l": [
+              15.490471,
+              26.298919
+            ],
+            "hand_r": [
+              24.446397,
+              41.268988
+            ],
+            "foot_l": [
+              9.261508,
+              1.713866
+            ],
+            "foot_r": [
+              7.82983,
+              6.220437
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.014976,
+              8.881572
+            ],
+            "hand_r": [
+              10.336362,
+              13.272768
+            ],
+            "foot_l": [
+              10.810281,
+              16.071627
+            ],
+            "foot_r": [
+              8.27584,
+              6.48932
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              3.516047,
+              3.259323
+            ],
+            "hand_r": [
+              2.933665,
+              3.254733
+            ],
+            "foot_l": [
+              1.347723,
+              0.942746
+            ],
+            "foot_r": [
+              1.20466,
+              1.121259
+            ]
+          },
+          "first": {
+            "hand_l": [
+              18.185226,
+              26.29892
+            ],
+            "hand_r": [
+              27.145293,
+              41.268988
+            ],
+            "foot_l": [
+              7.278428,
+              3.184127
+            ],
+            "foot_r": [
+              7.044022,
+              6.723462
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.200216,
+              8.881573
+            ],
+            "hand_r": [
+              11.184417,
+              13.272768
+            ],
+            "foot_l": [
+              9.106481,
+              13.577358
+            ],
+            "foot_r": [
+              6.923006,
+              7.15462
+            ]
+          }
+        }
+      },
+      "telemetry": [
+        "SWORD_EQUIP_SOURCE frame=30 speed=136.53334 guard=0.000000 guard_asset=/Game/Rogue10m/Animation/Combat/FighterStance/A_Fighter_CombatIdle.A_Fighter_CombatIdle locomotion=/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference phase=0.336296 weight=0.048593 x=0.00000 y=136.53334",
+        "SWORD_EQUIP_SOURCE frame=31 speed=170.66668 guard=0.000000 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground phase=0.083333 weight=0.074074 x=0.00000 y=170.66667",
+        "SWORD_EQUIP_SOURCE frame=68 speed=136.53334 guard=0.690088 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground phase=0.336296 weight=0.309912 x=0.00000 y=136.53334",
+        "SWORD_EQUIP_SOURCE frame=69 speed=170.66668 guard=0.555454 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference phase=0.083333 weight=0.444546 x=0.00000 y=170.66667"
+      ],
+      "result": [
+        "RESULT=SWORD_EQUIP_POSE_PASSED appearance=DwarfMale frames=88 failures=0"
+      ],
+      "sword_equip_sha256": "afefd97f45fbce1c442fc5634e6981ceae172bf4d86037666ce258d098bc157e",
+      "engine_log_sha256": "fef7f95ba987e60dfea2468350e22b076b3a38ff6070fa66d0e2540cbb06d23a"
+    },
+    "DwarfFemale": {
+      "equip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              0.469116,
+              2.327464
+            ],
+            "hand_r": [
+              0.151906,
+              2.556814
+            ],
+            "foot_l": [
+              0.208807,
+              0.239135
+            ],
+            "foot_r": [
+              0.182924,
+              0.207023
+            ]
+          },
+          "first": {
+            "hand_l": [
+              2.56516,
+              4.374831
+            ],
+            "hand_r": [
+              4.454653,
+              5.497089
+            ],
+            "foot_l": [
+              1.415811,
+              0.537092
+            ],
+            "foot_r": [
+              1.259014,
+              1.072059
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              1.620313,
+              2.997961
+            ],
+            "hand_r": [
+              3.259242,
+              5.236664
+            ],
+            "foot_l": [
+              5.112574,
+              8.338579
+            ],
+            "foot_r": [
+              3.592937,
+              2.50599
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              0.375018,
+              2.327465
+            ],
+            "hand_r": [
+              0.113827,
+              2.556815
+            ],
+            "foot_l": [
+              0.232858,
+              0.217475
+            ],
+            "foot_r": [
+              0.143799,
+              0.20355
+            ]
+          },
+          "first": {
+            "hand_l": [
+              2.399678,
+              4.374831
+            ],
+            "hand_r": [
+              4.433808,
+              5.497089
+            ],
+            "foot_l": [
+              1.207673,
+              0.539861
+            ],
+            "foot_r": [
+              1.102777,
+              1.062807
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              1.539434,
+              2.997961
+            ],
+            "hand_r": [
+              3.440719,
+              5.236664
+            ],
+            "foot_l": [
+              4.093958,
+              8.197435
+            ],
+            "foot_r": [
+              3.127254,
+              2.450519
+            ]
+          }
+        }
+      },
+      "unequip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              2.265083,
+              3.259323
+            ],
+            "hand_r": [
+              2.401906,
+              3.254734
+            ],
+            "foot_l": [
+              1.822133,
+              0.959918
+            ],
+            "foot_r": [
+              1.615945,
+              0.998963
+            ]
+          },
+          "first": {
+            "hand_l": [
+              15.490471,
+              26.298919
+            ],
+            "hand_r": [
+              24.446397,
+              41.268988
+            ],
+            "foot_l": [
+              9.261508,
+              1.713866
+            ],
+            "foot_r": [
+              7.82983,
+              6.220437
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.014976,
+              8.881572
+            ],
+            "hand_r": [
+              10.336362,
+              13.272768
+            ],
+            "foot_l": [
+              10.810281,
+              16.071627
+            ],
+            "foot_r": [
+              8.27584,
+              6.48932
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              2.281393,
+              3.259323
+            ],
+            "hand_r": [
+              2.094206,
+              3.254733
+            ],
+            "foot_l": [
+              1.443482,
+              0.940867
+            ],
+            "foot_r": [
+              1.268176,
+              1.024615
+            ]
+          },
+          "first": {
+            "hand_l": [
+              14.815587,
+              26.29892
+            ],
+            "hand_r": [
+              23.923553,
+              41.268988
+            ],
+            "foot_l": [
+              7.590063,
+              2.232074
+            ],
+            "foot_r": [
+              6.752474,
+              6.395989
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              2.509566,
+              8.881573
+            ],
+            "hand_r": [
+              9.652526,
+              13.272768
+            ],
+            "foot_l": [
+              9.17886,
+              15.138827
+            ],
+            "foot_r": [
+              7.034063,
+              6.735132
+            ]
+          }
+        }
+      },
+      "telemetry": [
+        "SWORD_EQUIP_SOURCE frame=30 speed=136.53334 guard=0.000000 guard_asset=/Game/Rogue10m/Animation/Combat/FighterStance/A_Fighter_CombatIdle.A_Fighter_CombatIdle locomotion=/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference phase=0.336296 weight=0.048593 x=0.00000 y=136.53334",
+        "SWORD_EQUIP_SOURCE frame=31 speed=170.66668 guard=0.000000 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground phase=0.083333 weight=0.074074 x=0.00000 y=170.66667",
+        "SWORD_EQUIP_SOURCE frame=68 speed=136.53334 guard=0.690088 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground phase=0.336296 weight=0.309912 x=0.00000 y=136.53334",
+        "SWORD_EQUIP_SOURCE frame=69 speed=170.66668 guard=0.555454 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference phase=0.083333 weight=0.444546 x=0.00000 y=170.66667"
+      ],
+      "result": [
+        "RESULT=SWORD_EQUIP_POSE_PASSED appearance=DwarfFemale frames=88 failures=0"
+      ],
+      "sword_equip_sha256": "d4c1f18ed6ae8bd7e438592ea02fa643fc9e976feb2714a4bfb9089d5e896f82",
+      "engine_log_sha256": "7f1f7dd5346c8579dec63d9f82107b1879c5e23217eda10fd8553404c8eb95a6"
+    },
+    "HumanMale": {
+      "equip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              0.469116,
+              2.327464
+            ],
+            "hand_r": [
+              0.151906,
+              2.556814
+            ],
+            "foot_l": [
+              0.208807,
+              0.239135
+            ],
+            "foot_r": [
+              0.182924,
+              0.207023
+            ]
+          },
+          "first": {
+            "hand_l": [
+              2.56516,
+              4.374831
+            ],
+            "hand_r": [
+              4.454653,
+              5.497089
+            ],
+            "foot_l": [
+              1.415811,
+              0.537092
+            ],
+            "foot_r": [
+              1.259014,
+              1.072059
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              1.620313,
+              2.997961
+            ],
+            "hand_r": [
+              3.259242,
+              5.236664
+            ],
+            "foot_l": [
+              5.112574,
+              8.338579
+            ],
+            "foot_r": [
+              3.592937,
+              2.50599
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              0.456984,
+              2.327465
+            ],
+            "hand_r": [
+              0.189923,
+              2.556814
+            ],
+            "foot_l": [
+              0.336652,
+              0.243381
+            ],
+            "foot_r": [
+              0.118231,
+              0.1736
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.421559,
+              0.568423
+            ],
+            "hand_r": [
+              0.673884,
+              0.764551
+            ],
+            "foot_l": [
+              0.758906,
+              0.797273
+            ],
+            "foot_r": [
+              1.150033,
+              0.854249
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              4.561114,
+              7.128396
+            ],
+            "hand_r": [
+              6.424644,
+              9.214286
+            ],
+            "foot_l": [
+              5.342793,
+              8.405384
+            ],
+            "foot_r": [
+              4.375896,
+              2.721539
+            ]
+          }
+        }
+      },
+      "unequip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              2.265083,
+              3.259323
+            ],
+            "hand_r": [
+              2.401906,
+              3.254734
+            ],
+            "foot_l": [
+              1.822133,
+              0.959918
+            ],
+            "foot_r": [
+              1.615945,
+              0.998963
+            ]
+          },
+          "first": {
+            "hand_l": [
+              15.490471,
+              26.298919
+            ],
+            "hand_r": [
+              24.446397,
+              41.268988
+            ],
+            "foot_l": [
+              9.261508,
+              1.713866
+            ],
+            "foot_r": [
+              7.82983,
+              6.220437
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.014976,
+              8.881572
+            ],
+            "hand_r": [
+              10.336362,
+              13.272768
+            ],
+            "foot_l": [
+              10.810281,
+              16.071627
+            ],
+            "foot_r": [
+              8.27584,
+              6.48932
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              2.63416,
+              3.259323
+            ],
+            "hand_r": [
+              2.322271,
+              3.254734
+            ],
+            "foot_l": [
+              1.89897,
+              0.959918
+            ],
+            "foot_r": [
+              1.689433,
+              0.998963
+            ]
+          },
+          "first": {
+            "hand_l": [
+              1.270931,
+              1.486617
+            ],
+            "hand_r": [
+              0.589162,
+              1.425476
+            ],
+            "foot_l": [
+              3.255969,
+              1.250322
+            ],
+            "foot_r": [
+              1.680576,
+              1.956332
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              5.517192,
+              8.923386
+            ],
+            "hand_r": [
+              15.449254,
+              22.521175
+            ],
+            "foot_l": [
+              13.630309,
+              16.173475
+            ],
+            "foot_r": [
+              9.699175,
+              7.108625
+            ]
+          }
+        }
+      },
+      "telemetry": [
+        "SWORD_EQUIP_SOURCE frame=30 speed=136.53334 guard=0.000000 guard_asset=/Game/Rogue10m/Animation/Combat/FighterStance/A_Fighter_CombatIdle.A_Fighter_CombatIdle locomotion=/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference phase=0.336296 weight=0.048593 x=0.00000 y=136.53334",
+        "SWORD_EQUIP_SOURCE frame=31 speed=170.66668 guard=0.000000 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground phase=0.083333 weight=0.074074 x=0.00000 y=170.66667",
+        "SWORD_EQUIP_SOURCE frame=68 speed=136.53334 guard=0.690088 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground phase=0.336296 weight=0.309912 x=0.00000 y=136.53334",
+        "SWORD_EQUIP_SOURCE frame=69 speed=170.66668 guard=0.555454 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference phase=0.083333 weight=0.444546 x=0.00000 y=170.66667"
+      ],
+      "result": [
+        "RESULT=SWORD_EQUIP_POSE_PASSED appearance=HumanMale frames=88 failures=0"
+      ],
+      "sword_equip_sha256": "bb6e51c70e850aeed008387bfcba6bb9a5ab8c3d2be92f917e20cdf0d5dddb87",
+      "engine_log_sha256": "142946f115cbbb3ace69c09a65819357f0a48462c2aa26193540f31ebcf5b209"
+    }
+  },
+  "selected": {
+    "DwarfMale": {
+      "equip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              0.469116,
+              2.327464
+            ],
+            "hand_r": [
+              0.151906,
+              2.556814
+            ],
+            "foot_l": [
+              0.208807,
+              0.239135
+            ],
+            "foot_r": [
+              0.182924,
+              0.207023
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.0,
+              0.0
+            ],
+            "hand_r": [
+              0.0,
+              0.0
+            ],
+            "foot_l": [
+              0.0,
+              0.0
+            ],
+            "foot_r": [
+              0.0,
+              2e-06
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              1.908556,
+              3.462012
+            ],
+            "hand_r": [
+              3.779803,
+              5.792461
+            ],
+            "foot_l": [
+              5.248639,
+              8.36648
+            ],
+            "foot_r": [
+              3.790855,
+              2.608273
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              0.438787,
+              2.327465
+            ],
+            "hand_r": [
+              0.226008,
+              2.556814
+            ],
+            "foot_l": [
+              0.326802,
+              0.213357
+            ],
+            "foot_r": [
+              0.100263,
+              0.262177
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.0,
+              0.0
+            ],
+            "hand_r": [
+              0.0,
+              0.0
+            ],
+            "foot_l": [
+              0.0,
+              0.0
+            ],
+            "foot_r": [
+              0.0,
+              0.0
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              1.704024,
+              3.462011
+            ],
+            "hand_r": [
+              5.42127,
+              5.79246
+            ],
+            "foot_l": [
+              3.792353,
+              8.001458
+            ],
+            "foot_r": [
+              3.423789,
+              2.505096
+            ]
+          }
+        }
+      },
+      "unequip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              2.265083,
+              3.259323
+            ],
+            "hand_r": [
+              2.401906,
+              3.254734
+            ],
+            "foot_l": [
+              1.822133,
+              0.959918
+            ],
+            "foot_r": [
+              1.615945,
+              0.998963
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.0,
+              2e-06
+            ],
+            "hand_r": [
+              0.0,
+              2e-06
+            ],
+            "foot_l": [
+              0.0,
+              0.0
+            ],
+            "foot_r": [
+              0.0,
+              2e-06
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.399359,
+              8.431611
+            ],
+            "hand_r": [
+              11.799511,
+              16.863351
+            ],
+            "foot_l": [
+              12.285501,
+              16.215209
+            ],
+            "foot_r": [
+              9.595377,
+              6.980793
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              3.516047,
+              3.259323
+            ],
+            "hand_r": [
+              2.933665,
+              3.254733
+            ],
+            "foot_l": [
+              1.347723,
+              0.942746
+            ],
+            "foot_r": [
+              1.20466,
+              1.121259
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.0,
+              0.0
+            ],
+            "hand_r": [
+              0.0,
+              2e-06
+            ],
+            "foot_l": [
+              0.0,
+              0.0
+            ],
+            "foot_r": [
+              0.0,
+              0.0
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.793724,
+              8.431612
+            ],
+            "hand_r": [
+              12.590961,
+              16.86335
+            ],
+            "foot_l": [
+              10.262066,
+              13.886134
+            ],
+            "foot_r": [
+              8.121421,
+              7.762947
+            ]
+          }
+        }
+      },
+      "telemetry": [
+        "SWORD_EQUIP_SOURCE frame=30 speed=136.53334 guard=0.000000 guard_asset=/Game/Rogue10m/Animation/Combat/FighterStance/A_Fighter_CombatIdle.A_Fighter_CombatIdle locomotion=/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference gait=0.044444 sample_s=0.336296 weight=0.048593 x=0.00000 y=136.53334 filtered_x=0.00000 filtered_y=136.53334",
+        "SWORD_EQUIP_SOURCE frame=31 speed=170.66668 guard=0.000000 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground gait=0.055556 sample_s=0.083333 weight=0.074074 x=0.00000 y=170.66667 filtered_x=0.00000 filtered_y=170.66667",
+        "SWORD_EQUIP_SOURCE frame=68 speed=136.53334 guard=0.690088 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground gait=0.044444 sample_s=0.336296 weight=0.309912 x=0.00000 y=136.53334 filtered_x=0.00000 filtered_y=136.53334",
+        "SWORD_EQUIP_SOURCE frame=69 speed=170.66668 guard=0.555454 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference gait=0.055556 sample_s=0.083333 weight=0.444546 x=0.00000 y=170.66667 filtered_x=0.00000 filtered_y=170.66667"
+      ],
+      "result": [
+        "RESULT=SWORD_EQUIP_POSE_PASSED appearance=DwarfMale frames=88 failures=0"
+      ],
+      "sword_equip_sha256": "6e69fa625db15b2641d5458c50eb14bbc0e59e65fd4b811e3cde56c1d38e82fc",
+      "engine_log_sha256": "a73c26f988346eb45e6d877f3c45f987d325967b1fd32a08265139139584bb2b"
+    },
+    "DwarfFemale": {
+      "equip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              0.469116,
+              2.327464
+            ],
+            "hand_r": [
+              0.151906,
+              2.556814
+            ],
+            "foot_l": [
+              0.208807,
+              0.239135
+            ],
+            "foot_r": [
+              0.182924,
+              0.207023
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.0,
+              0.0
+            ],
+            "hand_r": [
+              0.0,
+              0.0
+            ],
+            "foot_l": [
+              0.0,
+              0.0
+            ],
+            "foot_r": [
+              0.0,
+              2e-06
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              1.908556,
+              3.462012
+            ],
+            "hand_r": [
+              3.779803,
+              5.792461
+            ],
+            "foot_l": [
+              5.248639,
+              8.36648
+            ],
+            "foot_r": [
+              3.790855,
+              2.608273
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              0.375018,
+              2.327465
+            ],
+            "hand_r": [
+              0.113827,
+              2.556815
+            ],
+            "foot_l": [
+              0.232858,
+              0.217475
+            ],
+            "foot_r": [
+              0.143799,
+              0.20355
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.0,
+              0.0
+            ],
+            "hand_r": [
+              0.0,
+              0.0
+            ],
+            "foot_l": [
+              0.0,
+              0.0
+            ],
+            "foot_r": [
+              0.0,
+              0.0
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              1.79613,
+              3.462012
+            ],
+            "hand_r": [
+              3.969517,
+              5.792461
+            ],
+            "foot_l": [
+              4.246441,
+              8.230013
+            ],
+            "foot_r": [
+              3.300754,
+              2.564067
+            ]
+          }
+        }
+      },
+      "unequip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              2.265083,
+              3.259323
+            ],
+            "hand_r": [
+              2.401906,
+              3.254734
+            ],
+            "foot_l": [
+              1.822133,
+              0.959918
+            ],
+            "foot_r": [
+              1.615945,
+              0.998963
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.0,
+              2e-06
+            ],
+            "hand_r": [
+              0.0,
+              2e-06
+            ],
+            "foot_l": [
+              0.0,
+              0.0
+            ],
+            "foot_r": [
+              0.0,
+              2e-06
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.399359,
+              8.431611
+            ],
+            "hand_r": [
+              11.799511,
+              16.863351
+            ],
+            "foot_l": [
+              12.285501,
+              16.215209
+            ],
+            "foot_r": [
+              9.595377,
+              6.980793
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              2.281393,
+              3.259323
+            ],
+            "hand_r": [
+              2.094206,
+              3.254733
+            ],
+            "foot_l": [
+              1.443482,
+              0.940867
+            ],
+            "foot_r": [
+              1.268176,
+              1.024615
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.0,
+              0.0
+            ],
+            "hand_r": [
+              0.0,
+              2e-06
+            ],
+            "foot_l": [
+              0.0,
+              0.0
+            ],
+            "foot_r": [
+              0.0,
+              0.0
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              2.963981,
+              8.431611
+            ],
+            "hand_r": [
+              11.207709,
+              16.863351
+            ],
+            "foot_l": [
+              10.382722,
+              15.342998
+            ],
+            "foot_r": [
+              8.171058,
+              7.269923
+            ]
+          }
+        }
+      },
+      "telemetry": [
+        "SWORD_EQUIP_SOURCE frame=30 speed=136.53334 guard=0.000000 guard_asset=/Game/Rogue10m/Animation/Combat/FighterStance/A_Fighter_CombatIdle.A_Fighter_CombatIdle locomotion=/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference gait=0.044444 sample_s=0.336296 weight=0.048593 x=0.00000 y=136.53334 filtered_x=0.00000 filtered_y=136.53334",
+        "SWORD_EQUIP_SOURCE frame=31 speed=170.66668 guard=0.000000 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground gait=0.055556 sample_s=0.083333 weight=0.074074 x=0.00000 y=170.66667 filtered_x=0.00000 filtered_y=170.66667",
+        "SWORD_EQUIP_SOURCE frame=68 speed=136.53334 guard=0.690088 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground gait=0.044444 sample_s=0.336296 weight=0.309912 x=0.00000 y=136.53334 filtered_x=0.00000 filtered_y=136.53334",
+        "SWORD_EQUIP_SOURCE frame=69 speed=170.66668 guard=0.555454 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference gait=0.055556 sample_s=0.083333 weight=0.444546 x=0.00000 y=170.66667 filtered_x=0.00000 filtered_y=170.66667"
+      ],
+      "result": [
+        "RESULT=SWORD_EQUIP_POSE_PASSED appearance=DwarfFemale frames=88 failures=0"
+      ],
+      "sword_equip_sha256": "5b17fb124e07f6682b8bc2ed94570b1e41a2b5a9f591f9973e18e5fddd06a090",
+      "engine_log_sha256": "9816d1f57e864a4a26f80a8c8969f87a40fc861a0d679c9289e9b24a8bc87f76"
+    },
+    "HumanMale": {
+      "equip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              0.469116,
+              2.327464
+            ],
+            "hand_r": [
+              0.151906,
+              2.556814
+            ],
+            "foot_l": [
+              0.208807,
+              0.239135
+            ],
+            "foot_r": [
+              0.182924,
+              0.207023
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.0,
+              0.0
+            ],
+            "hand_r": [
+              0.0,
+              0.0
+            ],
+            "foot_l": [
+              0.0,
+              0.0
+            ],
+            "foot_r": [
+              0.0,
+              2e-06
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              1.908556,
+              3.462012
+            ],
+            "hand_r": [
+              3.779803,
+              5.792461
+            ],
+            "foot_l": [
+              5.248639,
+              8.36648
+            ],
+            "foot_r": [
+              3.790855,
+              2.608273
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              0.456984,
+              2.327465
+            ],
+            "hand_r": [
+              0.189923,
+              2.556814
+            ],
+            "foot_l": [
+              0.336652,
+              0.243381
+            ],
+            "foot_r": [
+              0.118231,
+              0.1736
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.359665,
+              0.404944
+            ],
+            "hand_r": [
+              0.359673,
+              0.40827
+            ],
+            "foot_l": [
+              0.862372,
+              0.885572
+            ],
+            "foot_r": [
+              0.793288,
+              0.832139
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              4.642311,
+              7.240926
+            ],
+            "hand_r": [
+              6.576146,
+              9.448424
+            ],
+            "foot_l": [
+              5.512706,
+              8.432996
+            ],
+            "foot_r": [
+              4.527647,
+              2.792108
+            ]
+          }
+        }
+      },
+      "unequip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              2.265083,
+              3.259323
+            ],
+            "hand_r": [
+              2.401906,
+              3.254734
+            ],
+            "foot_l": [
+              1.822133,
+              0.959918
+            ],
+            "foot_r": [
+              1.615945,
+              0.998963
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.0,
+              2e-06
+            ],
+            "hand_r": [
+              0.0,
+              2e-06
+            ],
+            "foot_l": [
+              0.0,
+              0.0
+            ],
+            "foot_r": [
+              0.0,
+              2e-06
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.399359,
+              8.431611
+            ],
+            "hand_r": [
+              11.799511,
+              16.863351
+            ],
+            "foot_l": [
+              12.285501,
+              16.215209
+            ],
+            "foot_r": [
+              9.595377,
+              6.980793
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              2.63416,
+              3.259323
+            ],
+            "hand_r": [
+              2.322271,
+              3.254734
+            ],
+            "foot_l": [
+              1.89897,
+              0.959918
+            ],
+            "foot_r": [
+              1.689433,
+              0.998963
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.307694,
+              0.452599
+            ],
+            "hand_r": [
+              0.25341,
+              0.482035
+            ],
+            "foot_l": [
+              0.853113,
+              0.818259
+            ],
+            "foot_r": [
+              0.733255,
+              0.743329
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              4.59123,
+              8.631724
+            ],
+            "hand_r": [
+              14.143527,
+              20.821126
+            ],
+            "foot_l": [
+              14.746258,
+              16.313621
+            ],
+            "foot_r": [
+              10.801855,
+              7.52505
+            ]
+          }
+        }
+      },
+      "telemetry": [
+        "SWORD_EQUIP_SOURCE frame=30 speed=136.53334 guard=0.000000 guard_asset=/Game/Rogue10m/Animation/Combat/FighterStance/A_Fighter_CombatIdle.A_Fighter_CombatIdle locomotion=/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference gait=0.044444 sample_s=0.336296 weight=0.048593 x=0.00000 y=136.53334 filtered_x=0.00000 filtered_y=136.53334",
+        "SWORD_EQUIP_SOURCE frame=31 speed=170.66668 guard=0.000000 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground gait=0.055556 sample_s=0.083333 weight=0.074074 x=0.00000 y=170.66667 filtered_x=0.00000 filtered_y=170.66667",
+        "SWORD_EQUIP_SOURCE frame=68 speed=136.53334 guard=0.690088 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Combat/GreatSword20261110/BS_GreatSword_Ground.BS_GreatSword_Ground gait=0.044444 sample_s=0.336296 weight=0.309912 x=0.00000 y=136.53334 filtered_x=0.00000 filtered_y=136.53334",
+        "SWORD_EQUIP_SOURCE frame=69 speed=170.66668 guard=0.555454 guard_asset=/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Idle.A_GreatSword_Idle locomotion=/Game/Rogue10m/Animation/Locomotion/PalmReference/BS_Unarmed_PalmReference.BS_Unarmed_PalmReference gait=0.055556 sample_s=0.083333 weight=0.444546 x=0.00000 y=170.66667 filtered_x=0.00000 filtered_y=170.66667"
+      ],
+      "result": [
+        "RESULT=SWORD_EQUIP_POSE_PASSED appearance=HumanMale frames=88 failures=0"
+      ],
+      "sword_equip_sha256": "b04fe5ad346aa73f2e9530462ae1469acb1480ae88d9c9c2c2443a1129680e25",
+      "engine_log_sha256": "908f2a8b5166f04d4089f462b716bdd2abb962c398075cd02dfa9f8579409963"
+    }
+  },
+  "standing": {
+    "DwarfMale": {
+      "equip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              0.439662,
+              2.136836
+            ],
+            "hand_r": [
+              0.201832,
+              2.397497
+            ],
+            "foot_l": [
+              0.005079,
+              0.191419
+            ],
+            "foot_r": [
+              0.005298,
+              0.154047
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.876439,
+              2.540269
+            ],
+            "hand_r": [
+              1.192619,
+              1.863368
+            ],
+            "foot_l": [
+              0.40412,
+              0.298903
+            ],
+            "foot_r": [
+              0.334235,
+              0.241002
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              4.098237,
+              6.730104
+            ],
+            "hand_r": [
+              7.300296,
+              10.971718
+            ],
+            "foot_l": [
+              1.739297,
+              1.131434
+            ],
+            "foot_r": [
+              1.462211,
+              0.634467
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              0.407184,
+              2.136836
+            ],
+            "hand_r": [
+              0.0794,
+              2.397496
+            ],
+            "foot_l": [
+              0.162747,
+              0.211411
+            ],
+            "foot_r": [
+              0.16739,
+              0.283444
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.948896,
+              2.540269
+            ],
+            "hand_r": [
+              1.783052,
+              1.863368
+            ],
+            "foot_l": [
+              0.165105,
+              0.341658
+            ],
+            "foot_r": [
+              0.191803,
+              0.365442
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.672664,
+              6.730104
+            ],
+            "hand_r": [
+              9.76539,
+              10.971717
+            ],
+            "foot_l": [
+              1.253977,
+              0.929013
+            ],
+            "foot_r": [
+              1.261166,
+              0.427774
+            ]
+          }
+        }
+      },
+      "unequip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              0.032051,
+              0.063761
+            ],
+            "hand_r": [
+              0.029404,
+              0.063048
+            ],
+            "foot_l": [
+              0.055789,
+              0.015747
+            ],
+            "foot_r": [
+              0.054618,
+              0.005567
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.597042,
+              1.341665
+            ],
+            "hand_r": [
+              1.049999,
+              1.990324
+            ],
+            "foot_l": [
+              0.149133,
+              0.221857
+            ],
+            "foot_r": [
+              0.214875,
+              0.114651
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.890505,
+              7.289001
+            ],
+            "hand_r": [
+              7.407824,
+              11.383176
+            ],
+            "foot_l": [
+              1.948873,
+              1.259059
+            ],
+            "foot_r": [
+              1.560863,
+              0.575062
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              0.044878,
+              0.063761
+            ],
+            "hand_r": [
+              0.040354,
+              0.063048
+            ],
+            "foot_l": [
+              0.037773,
+              0.011646
+            ],
+            "foot_r": [
+              0.045164,
+              0.01876
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.634154,
+              1.341665
+            ],
+            "hand_r": [
+              1.389044,
+              1.990324
+            ],
+            "foot_l": [
+              0.113339,
+              0.156277
+            ],
+            "foot_r": [
+              0.167044,
+              0.050302
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.415619,
+              7.289001
+            ],
+            "hand_r": [
+              9.117235,
+              11.383177
+            ],
+            "foot_l": [
+              1.509134,
+              0.89748
+            ],
+            "foot_r": [
+              1.466598,
+              0.228505
+            ]
+          }
+        }
+      },
+      "telemetry": [],
+      "result": [
+        "RESULT=SWORD_EQUIP_POSE_PASSED appearance=DwarfMale frames=88 failures=0"
+      ],
+      "sword_equip_sha256": "f48593c64ea671d4b63f730ee491b176a1a7fb0b9915efa7b3d82b6f6062fcef",
+      "engine_log_sha256": "259be8a99b4b9a4c187600be3dce0bd2eef657cf5db837d5856b153c3d7c5648"
+    },
+    "DwarfFemale": {
+      "equip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              0.439662,
+              2.136836
+            ],
+            "hand_r": [
+              0.201832,
+              2.397497
+            ],
+            "foot_l": [
+              0.005079,
+              0.191419
+            ],
+            "foot_r": [
+              0.005298,
+              0.154047
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.876439,
+              2.540269
+            ],
+            "hand_r": [
+              1.192619,
+              1.863368
+            ],
+            "foot_l": [
+              0.40412,
+              0.298903
+            ],
+            "foot_r": [
+              0.334235,
+              0.241002
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              4.098237,
+              6.730104
+            ],
+            "hand_r": [
+              7.300296,
+              10.971718
+            ],
+            "foot_l": [
+              1.739297,
+              1.131434
+            ],
+            "foot_r": [
+              1.462211,
+              0.634467
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              0.337706,
+              2.136837
+            ],
+            "hand_r": [
+              0.161569,
+              2.397496
+            ],
+            "foot_l": [
+              0.068443,
+              0.176014
+            ],
+            "foot_r": [
+              0.103298,
+              0.183269
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.747683,
+              2.540269
+            ],
+            "hand_r": [
+              1.236436,
+              1.863367
+            ],
+            "foot_l": [
+              0.27437,
+              0.296876
+            ],
+            "foot_r": [
+              0.251631,
+              0.270725
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.688996,
+              6.730103
+            ],
+            "hand_r": [
+              7.496362,
+              10.971718
+            ],
+            "foot_l": [
+              1.394935,
+              1.048373
+            ],
+            "foot_r": [
+              1.261089,
+              0.500122
+            ]
+          }
+        }
+      },
+      "unequip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              0.032051,
+              0.063761
+            ],
+            "hand_r": [
+              0.029404,
+              0.063048
+            ],
+            "foot_l": [
+              0.055789,
+              0.015747
+            ],
+            "foot_r": [
+              0.054618,
+              0.005567
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.597042,
+              1.341665
+            ],
+            "hand_r": [
+              1.049999,
+              1.990324
+            ],
+            "foot_l": [
+              0.149133,
+              0.221857
+            ],
+            "foot_r": [
+              0.214875,
+              0.114651
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.890505,
+              7.289001
+            ],
+            "hand_r": [
+              7.407824,
+              11.383176
+            ],
+            "foot_l": [
+              1.948873,
+              1.259059
+            ],
+            "foot_r": [
+              1.560863,
+              0.575062
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              0.031859,
+              0.063761
+            ],
+            "hand_r": [
+              0.029612,
+              0.063048
+            ],
+            "foot_l": [
+              0.042558,
+              0.013062
+            ],
+            "foot_r": [
+              0.047363,
+              0.009655
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.580105,
+              1.341664
+            ],
+            "hand_r": [
+              1.093557,
+              1.990324
+            ],
+            "foot_l": [
+              0.125279,
+              0.197255
+            ],
+            "foot_r": [
+              0.182832,
+              0.089129
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.491774,
+              7.289
+            ],
+            "hand_r": [
+              7.456562,
+              11.383177
+            ],
+            "foot_l": [
+              1.612444,
+              1.122498
+            ],
+            "foot_r": [
+              1.431486,
+              0.428078
+            ]
+          }
+        }
+      },
+      "telemetry": [],
+      "result": [
+        "RESULT=SWORD_EQUIP_POSE_PASSED appearance=DwarfFemale frames=88 failures=0"
+      ],
+      "sword_equip_sha256": "fb5b29b182bdf654e3b86b100a030a4c2ec4fe1bc596f7f5a89a09a7c6cb1e14",
+      "engine_log_sha256": "5a5ef01d70b1aca8ace0b4db386fdd651dbd9554aa9498489bd75071d9b7624f"
+    },
+    "HumanMale": {
+      "equip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              0.439662,
+              2.136836
+            ],
+            "hand_r": [
+              0.201832,
+              2.397497
+            ],
+            "foot_l": [
+              0.005079,
+              0.191419
+            ],
+            "foot_r": [
+              0.005298,
+              0.154047
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.876439,
+              2.540269
+            ],
+            "hand_r": [
+              1.192619,
+              1.863368
+            ],
+            "foot_l": [
+              0.40412,
+              0.298903
+            ],
+            "foot_r": [
+              0.334235,
+              0.241002
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              4.098237,
+              6.730104
+            ],
+            "hand_r": [
+              7.300296,
+              10.971718
+            ],
+            "foot_l": [
+              1.739297,
+              1.131434
+            ],
+            "foot_r": [
+              1.462211,
+              0.634467
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              0.398326,
+              2.136836
+            ],
+            "hand_r": [
+              0.103268,
+              2.397495
+            ],
+            "foot_l": [
+              0.119507,
+              0.195141
+            ],
+            "foot_r": [
+              0.150106,
+              0.13125
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.391908,
+              0.512877
+            ],
+            "hand_r": [
+              0.396149,
+              0.522691
+            ],
+            "foot_l": [
+              0.081626,
+              0.07563
+            ],
+            "foot_r": [
+              0.073525,
+              0.072092
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              6.629088,
+              11.14405
+            ],
+            "hand_r": [
+              10.959258,
+              16.815169
+            ],
+            "foot_l": [
+              2.672171,
+              1.66454
+            ],
+            "foot_r": [
+              2.265464,
+              0.997234
+            ]
+          }
+        }
+      },
+      "unequip": {
+        "source": {
+          "before": {
+            "hand_l": [
+              0.032051,
+              0.063761
+            ],
+            "hand_r": [
+              0.029404,
+              0.063048
+            ],
+            "foot_l": [
+              0.055789,
+              0.015747
+            ],
+            "foot_r": [
+              0.054618,
+              0.005567
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.597042,
+              1.341665
+            ],
+            "hand_r": [
+              1.049999,
+              1.990324
+            ],
+            "foot_l": [
+              0.149133,
+              0.221857
+            ],
+            "foot_r": [
+              0.214875,
+              0.114651
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              3.890505,
+              7.289001
+            ],
+            "hand_r": [
+              7.407824,
+              11.383176
+            ],
+            "foot_l": [
+              1.948873,
+              1.259059
+            ],
+            "foot_r": [
+              1.560863,
+              0.575062
+            ]
+          }
+        },
+        "display": {
+          "before": {
+            "hand_l": [
+              0.030299,
+              0.06376
+            ],
+            "hand_r": [
+              0.03084,
+              0.063048
+            ],
+            "foot_l": [
+              0.056949,
+              0.015747
+            ],
+            "foot_r": [
+              0.057826,
+              0.005568
+            ]
+          },
+          "first": {
+            "hand_l": [
+              0.356199,
+              0.566758
+            ],
+            "hand_r": [
+              0.336132,
+              0.585235
+            ],
+            "foot_l": [
+              0.079325,
+              0.07082
+            ],
+            "foot_r": [
+              0.061678,
+              0.065325
+            ]
+          },
+          "max_next_8": {
+            "hand_l": [
+              6.24288,
+              11.970115
+            ],
+            "hand_r": [
+              11.308751,
+              17.291307
+            ],
+            "foot_l": [
+              3.171908,
+              1.712791
+            ],
+            "foot_r": [
+              2.718975,
+              0.976221
+            ]
+          }
+        }
+      },
+      "telemetry": [],
+      "result": [
+        "RESULT=SWORD_EQUIP_POSE_PASSED appearance=HumanMale frames=88 failures=0"
+      ],
+      "sword_equip_sha256": "16fdb87b99a588bad8b46b3ec0c358aa8b2d6aecc63c1a81f22dd701db2406e5",
+      "engine_log_sha256": "622974ec9eb6b6fd6bfe7d8598745cbe0cce5bb88bd62b6498854f2843ce8f61"
+    }
+  },
+  "roll": {
+    "DwarfMale": [
+      "appearance=DwarfMale body=/Game/StylizedCharacter/Meshes/Character/Dwarf/Male/SK_Dw_M_FullBody.SK_Dw_M_FullBody retarget=/Game/Character/Customization/Retargeting/ABP_Retarget_Dw_M.ABP_Retarget_Dw_M_C",
+      "roll_direction=Back alignment=1.000000 travel_cm=304.5587 along_cm=304.5587 expected=(-0.0000,-1.0000) actual=(-0.0000,-1.0000)",
+      "sword_bounds_min_clearance_cm=0.634",
+      "RESULT=HYBRID_RUNTIME_PASSED failures=0"
+    ],
+    "DwarfFemale": [
+      "appearance=DwarfFemale body=/Game/StylizedCharacter/Meshes/Character/Dwarf/Female/SK_Dw_F_FullBody.SK_Dw_F_FullBody retarget=/Game/Character/Customization/Retargeting/ABP_Retarget_Dw_F.ABP_Retarget_Dw_F_C",
+      "roll_direction=Back alignment=1.000000 travel_cm=304.5587 along_cm=304.5587 expected=(-0.0000,-1.0000) actual=(-0.0000,-1.0000)",
+      "sword_bounds_min_clearance_cm=0.634",
+      "RESULT=HYBRID_RUNTIME_PASSED failures=0"
+    ]
+  },
+  "third_person_mouse": {
+    "passes": 13,
+    "checks": 1639,
+    "selected_errors": 0,
+    "report_sha256": "c4c86549cbe7d2a1bd793d2f55aa6d0d23c28bc562fd6a22ddb68904ec751f6a",
+    "head_pitch": [
+      "head_pitch_input=0.000 pose=unarmed_idle camera_pitch=0.000 upper_body_pitch=-0.000 upper_body_yaw=20.000 stance_alpha=0.000 residual_yaw=20.000 basis_error=0.000002 max_bone_delta=0.000000 max_bone_travel_cm=0.000000",
+      "head_pitch_input=65.000 pose=unarmed_idle camera_pitch=65.000 upper_body_pitch=-0.000 upper_body_yaw=20.000 stance_alpha=0.000 residual_yaw=20.000 basis_error=0.000002 max_bone_delta=0.000002 max_bone_travel_cm=0.000000",
+      "head_pitch_input=-65.000 pose=unarmed_idle camera_pitch=-65.000 upper_body_pitch=-0.000 upper_body_yaw=20.000 stance_alpha=0.000 residual_yaw=20.000 basis_error=0.000002 max_bone_delta=0.000002 max_bone_travel_cm=0.000000",
+      "head_pitch_input=0.000 pose=unarmed_guard camera_pitch=0.000 upper_body_pitch=-0.000 upper_body_yaw=20.000 stance_alpha=1.000 residual_yaw=20.000 basis_error=0.000002 max_bone_delta=0.000000 max_bone_travel_cm=0.000000",
+      "head_pitch_input=65.000 pose=unarmed_guard camera_pitch=65.000 upper_body_pitch=-0.000 upper_body_yaw=20.000 stance_alpha=1.000 residual_yaw=20.000 basis_error=0.000002 max_bone_delta=0.000002 max_bone_travel_cm=0.000000",
+      "head_pitch_input=-65.000 pose=unarmed_guard camera_pitch=-65.000 upper_body_pitch=-0.000 upper_body_yaw=20.000 stance_alpha=1.000 residual_yaw=20.000 basis_error=0.000002 max_bone_delta=0.000002 max_bone_travel_cm=0.000000",
+      "head_pitch_input=0.000 pose=greatsword_ready camera_pitch=0.000 upper_body_pitch=-0.000 upper_body_yaw=20.000 stance_alpha=1.000 residual_yaw=20.000 basis_error=0.000002 max_bone_delta=0.000000 max_bone_travel_cm=0.000000",
+      "head_pitch_input=65.000 pose=greatsword_ready camera_pitch=65.000 upper_body_pitch=-0.000 upper_body_yaw=20.000 stance_alpha=1.000 residual_yaw=20.000 basis_error=0.000002 max_bone_delta=0.000002 max_bone_travel_cm=0.000000",
+      "head_pitch_input=-65.000 pose=greatsword_ready camera_pitch=-65.000 upper_body_pitch=-0.000 upper_body_yaw=20.000 stance_alpha=1.000 residual_yaw=20.000 basis_error=0.000002 max_bone_delta=0.000002 max_bone_travel_cm=0.000000"
+    ]
+  },
+  "rejected": {
+    "A": {
+      "DwarfMale": {
+        "before": {
+          "hand_l": [
+            3.516047,
+            3.259323
+          ],
+          "hand_r": [
+            2.933665,
+            3.254733
+          ],
+          "foot_l": [
+            1.347723,
+            0.942746
+          ],
+          "foot_r": [
+            1.20466,
+            1.121259
+          ]
+        },
+        "first": {
+          "hand_l": [
+            10.906692,
+            2.244981
+          ],
+          "hand_r": [
+            10.985461,
+            2.244981
+          ],
+          "foot_l": [
+            11.02423,
+            2.244981
+          ],
+          "foot_r": [
+            11.515309,
+            2.244981
+          ]
+        },
+        "max_next_8": {
+          "hand_l": [
+            10.983237,
+            7.17941
+          ],
+          "hand_r": [
+            15.586194,
+            17.805401
+          ],
+          "foot_l": [
+            16.94637,
+            13.676542
+          ],
+          "foot_r": [
+            13.154619,
+            8.89694
+          ]
+        }
+      },
+      "DwarfFemale": {
+        "before": {
+          "hand_l": [
+            2.281393,
+            3.259323
+          ],
+          "hand_r": [
+            2.094206,
+            3.254733
+          ],
+          "foot_l": [
+            1.443482,
+            0.940867
+          ],
+          "foot_r": [
+            1.268176,
+            1.024615
+          ]
+        },
+        "first": {
+          "hand_l": [
+            11.394896,
+            2.244982
+          ],
+          "hand_r": [
+            11.375013,
+            2.244981
+          ],
+          "foot_l": [
+            11.49775,
+            2.244982
+          ],
+          "foot_r": [
+            11.949195,
+            2.244982
+          ]
+        },
+        "max_next_8": {
+          "hand_l": [
+            10.586266,
+            7.179411
+          ],
+          "hand_r": [
+            14.007373,
+            17.805401
+          ],
+          "foot_l": [
+            17.677405,
+            15.233904
+          ],
+          "foot_r": [
+            13.35926,
+            8.151037
+          ]
+        }
+      }
+    },
+    "B": {
+      "DwarfMale": {
+        "before": {
+          "hand_l": [
+            3.516047,
+            3.259323
+          ],
+          "hand_r": [
+            2.933665,
+            3.254733
+          ],
+          "foot_l": [
+            1.347723,
+            0.942746
+          ],
+          "foot_r": [
+            1.20466,
+            1.121259
+          ]
+        },
+        "first": {
+          "hand_l": [
+            0.0,
+            0.0
+          ],
+          "hand_r": [
+            0.0,
+            2e-06
+          ],
+          "foot_l": [
+            0.0,
+            0.0
+          ],
+          "foot_r": [
+            0.0,
+            0.0
+          ]
+        },
+        "max_next_8": {
+          "hand_l": [
+            5.757108,
+            8.099344
+          ],
+          "hand_r": [
+            12.159799,
+            17.233763
+          ],
+          "foot_l": [
+            14.246552,
+            13.671598
+          ],
+          "foot_r": [
+            11.25942,
+            10.42646
+          ]
+        }
+      },
+      "DwarfFemale": {
+        "before": {
+          "hand_l": [
+            2.281393,
+            3.259323
+          ],
+          "hand_r": [
+            2.094206,
+            3.254733
+          ],
+          "foot_l": [
+            1.443482,
+            0.940867
+          ],
+          "foot_r": [
+            1.268176,
+            1.024615
+          ]
+        },
+        "first": {
+          "hand_l": [
+            0.0,
+            0.0
+          ],
+          "hand_r": [
+            0.0,
+            2e-06
+          ],
+          "foot_l": [
+            0.0,
+            0.0
+          ],
+          "foot_r": [
+            0.0,
+            0.0
+          ]
+        },
+        "max_next_8": {
+          "hand_l": [
+            3.723472,
+            8.099343
+          ],
+          "hand_r": [
+            10.552088,
+            17.233763
+          ],
+          "foot_l": [
+            14.491731,
+            15.229319
+          ],
+          "foot_r": [
+            11.23835,
+            9.690636
+          ]
+        }
+      }
+    },
+    "first_WARP": "MFinalDwarfMaleWarp displayed waist and upper arm at edge; feet/cut hand outside the legacy fixed framing. Numeric strict pass."
+  },
+  "render": {
+    "label": "MFinalDwarfMaleFullWarp",
+    "adapter": "Microsoft Basic Render Driver",
+    "post_adapter_errors": 0,
+    "engine_log_sha256": "a6520609a19bb443cd0d495aa8e27bfda02f84ce20ee0bca4b07546549bf71a7",
+    "captures": [
+      {
+        "event": "request",
+        "phase": "before_equip",
+        "fixture_frame": "29",
+        "world_s": "3.071661",
+        "bytes": "-1",
+        "file": "setup_before_equip_08B4A3644438316DCDFF53B8277741C1.png",
+        "sha256": "82937562d2fc73a8d5619e2cd8748d98374579cfb4ee4ed69a193b65bdf72ba3"
+      },
+      {
+        "event": "processed",
+        "phase": "before_equip",
+        "fixture_frame": "29",
+        "world_s": "3.071661",
+        "bytes": "1330527",
+        "file": "setup_before_equip_08B4A3644438316DCDFF53B8277741C1.png",
+        "sha256": "82937562d2fc73a8d5619e2cd8748d98374579cfb4ee4ed69a193b65bdf72ba3"
+      },
+      {
+        "event": "request",
+        "phase": "first_equip",
+        "fixture_frame": "31",
+        "world_s": "3.104995",
+        "bytes": "-1",
+        "file": "setup_first_equip_08B4A3644438316DCDFF53B8277741C1.png",
+        "sha256": "38d6b0ce3281780c340b7e61425595b893ce86898211d1b5020ea93e7fa40116"
+      },
+      {
+        "event": "processed",
+        "phase": "first_equip",
+        "fixture_frame": "31",
+        "world_s": "3.104995",
+        "bytes": "1369210",
+        "file": "setup_first_equip_08B4A3644438316DCDFF53B8277741C1.png",
+        "sha256": "38d6b0ce3281780c340b7e61425595b893ce86898211d1b5020ea93e7fa40116"
+      },
+      {
+        "event": "request",
+        "phase": "sword_guard",
+        "fixture_frame": "67",
+        "world_s": "3.704995",
+        "bytes": "-1",
+        "file": "setup_sword_guard_08B4A3644438316DCDFF53B8277741C1.png",
+        "sha256": "feb837150b1b6dd485273a2c55ac49f4b0693807e9e934172251fd8407beb021"
+      },
+      {
+        "event": "processed",
+        "phase": "sword_guard",
+        "fixture_frame": "67",
+        "world_s": "3.704995",
+        "bytes": "1453917",
+        "file": "setup_sword_guard_08B4A3644438316DCDFF53B8277741C1.png",
+        "sha256": "feb837150b1b6dd485273a2c55ac49f4b0693807e9e934172251fd8407beb021"
+      },
+      {
+        "event": "request",
+        "phase": "first_unequip",
+        "fixture_frame": "69",
+        "world_s": "3.738328",
+        "bytes": "-1",
+        "file": "setup_first_unequip_08B4A3644438316DCDFF53B8277741C1.png",
+        "sha256": "dbacac4ca69c952ac00cbe3c63757ff2987e6dae7ed01c06f3eeaf82b4bbebfc"
+      },
+      {
+        "event": "processed",
+        "phase": "first_unequip",
+        "fixture_frame": "69",
+        "world_s": "3.738328",
+        "bytes": "1452318",
+        "file": "setup_first_unequip_08B4A3644438316DCDFF53B8277741C1.png",
+        "sha256": "dbacac4ca69c952ac00cbe3c63757ff2987e6dae7ed01c06f3eeaf82b4bbebfc"
+      },
+      {
+        "event": "request",
+        "phase": "walk_recovered",
+        "fixture_frame": "82",
+        "world_s": "3.954995",
+        "bytes": "-1",
+        "file": "setup_walk_recovered_08B4A3644438316DCDFF53B8277741C1.png",
+        "sha256": "659513b9c7f07a918ec25121484c5154aa6c07cf9e867b84478d5599ab9a8d4f"
+      },
+      {
+        "event": "processed",
+        "phase": "walk_recovered",
+        "fixture_frame": "82",
+        "world_s": "3.954995",
+        "bytes": "1437690",
+        "file": "setup_walk_recovered_08B4A3644438316DCDFF53B8277741C1.png",
+        "sha256": "659513b9c7f07a918ec25121484c5154aa6c07cf9e867b84478d5599ab9a8d4f"
+      }
+    ]
+  }
+}

@@ -8,7 +8,8 @@ param(
     [switch]$CapstoneBrace,
     [switch]$CapstoneBraceRender,
     [ValidateSet('HumanMale','HumanFemale','DwarfMale','DwarfFemale','OrcMale','OrcFemale')][string]$SwordEquipAppearance,
-    [switch]$SwordEquipWalking
+    [switch]$SwordEquipWalking,
+    [switch]$SwordEquipMovingBoth
 )
 
 $ErrorActionPreference = 'Stop'
@@ -17,6 +18,7 @@ if ($CapstoneBraceRender) { $CapstoneBrace = $true }
 if ($CapstoneBrace -and $RequireAuthoredSword) { throw 'Choose a single fixture mode.' }
 if ($SwordEquipAppearance -and ($CapstoneBrace -or $RequireAuthoredSword)) { throw 'Choose a single fixture mode.' }
 if ($SwordEquipWalking -and -not $SwordEquipAppearance) { throw 'Choose the character profile for the walking test.' }
+if ($SwordEquipMovingBoth -and -not $SwordEquipWalking) { throw 'Both moving transitions require the walking test.' }
 $softwareRender = $CapstoneBraceRender -or ($SwordEquipAppearance -and -not $LogicOnly)
 $projectRoot = (Resolve-Path -LiteralPath (Split-Path -Parent $PSScriptRoot)).Path
 $projectFile = Join-Path $projectRoot 'Rogue10m.uproject'
@@ -58,6 +60,7 @@ if ($CapstoneBraceRender) { $argsList += '-RogueCapstoneBraceRender' }
 if ($softwareRender) { $argsList += @('-AllowSoftwareRendering', '-graphicsadapter=1') }
 if ($SwordEquipAppearance) { $argsList += "-RogueSwordEquipAppearance=$SwordEquipAppearance" }
 if ($SwordEquipWalking) { $argsList += '-RogueSwordEquipWalking' }
+if ($SwordEquipMovingBoth) { $argsList += '-RogueSwordEquipMovingBoth' }
 
 $process = $null
 $started = $null
@@ -103,21 +106,40 @@ try {
         $culture = [Globalization.CultureInfo]::InvariantCulture
         $display = @{}
         foreach ($row in $rows | Where-Object stage -eq 'display') { $display["$($row.frame)/$($row.bone)"] = $row }
-        foreach ($frame in @(31,69)) {
+        foreach ($firstFrame in @(31,69)) {
             $largest = 0.0
-            foreach ($bone in @('hand_l','hand_r','foot_l','foot_r')) {
-                $oldPose = $display["$($frame - 1)/$bone"]
-                $newPose = $display["$frame/$bone"]
-                if (-not $oldPose -or -not $newPose) { throw "Missing displayed $bone around frame $frame." }
-                $distanceSquared = 0.0
-                foreach ($axis in @('x','y','z')) {
-                    $distanceSquared += [math]::Pow([double]::Parse($newPose.$axis, $culture) - [double]::Parse($oldPose.$axis, $culture), 2)
+            $handPeak = $footPeak = $anglePeak = 0.0
+            $lastFrame = if ($SwordEquipMovingBoth) { $firstFrame + 8 } else { $firstFrame }
+            foreach ($frame in $firstFrame..$lastFrame) {
+                foreach ($bone in @('hand_l','hand_r','foot_l','foot_r')) {
+                    $oldPose = $display["$($frame - 1)/$bone"]
+                    $newPose = $display["$frame/$bone"]
+                    if (-not $oldPose -or -not $newPose) { throw "Missing displayed $bone around frame $frame." }
+                    $distanceSquared = 0.0
+                    foreach ($axis in @('x','y','z')) {
+                        $distanceSquared += [math]::Pow([double]::Parse($newPose.$axis, $culture) - [double]::Parse($oldPose.$axis, $culture), 2)
+                    }
+                    $distance = [math]::Sqrt($distanceSquared)
+                    if ($frame -eq $firstFrame) { $largest = [math]::Max($largest,$distance); continue }
+                    if ($bone.StartsWith('hand')) { $handPeak = [math]::Max($handPeak,$distance) }
+                    else { $footPeak = [math]::Max($footPeak,$distance) }
+                    $dot = 0.0
+                    foreach ($axis in @('qx','qy','qz','qw')) {
+                        $dot += [double]::Parse($oldPose.$axis,$culture) * [double]::Parse($newPose.$axis,$culture)
+                    }
+                    $anglePeak = [math]::Max($anglePeak,2 * [math]::Acos([math]::Min(1.0,[math]::Abs($dot))) * 180 / [math]::PI)
                 }
-                $largest = [math]::Max($largest, [math]::Sqrt($distanceSquared))
             }
-            $limit = if ($SwordEquipWalking -and $frame -eq 69) { 4.5 } else { 2.5 }
-            if ($largest -gt $limit) { throw "Displayed transition at frame $frame exceeded $limit cm ($largest cm)." }
-            Write-Output ('Displayed transition at frame ' + $frame + ' maximum=' + $largest.ToString('0.0000', $culture) + ' cm')
+            $limit = if ($SwordEquipMovingBoth -or ($SwordEquipWalking -and $firstFrame -eq 69)) { 4.5 } else { 2.5 }
+            if ($largest -gt $limit) { throw "Displayed transition at frame $firstFrame exceeded $limit cm ($largest cm)." }
+            Write-Output ('Displayed transition at frame ' + $firstFrame + ' maximum=' + $largest.ToString('0.0000', $culture) + ' cm')
+            if ($SwordEquipMovingBoth) {
+                $footLimit = if ($SwordEquipAppearance.StartsWith('Dwarf')) { 12.0 } else { 16.5 }
+                Write-Output ('Following 8 frames: wrist {0:F4} cm, foot {1:F4} cm, angle {2:F4} degrees' -f $handPeak,$footPeak,$anglePeak)
+                if ($handPeak -lt 0.5 -or $footPeak -lt 0.5 -or $handPeak -gt 17.0 -or $footPeak -gt $footLimit -or $anglePeak -gt 24.0) {
+                    throw "Displayed transition around frame $firstFrame lost live motion or exceeded the follow-through limits."
+                }
+            }
         }
         Write-Output $expected
         if ($LogicOnly) { return }
@@ -140,7 +162,7 @@ try {
     $captures = @(Import-Csv -LiteralPath (Join-Path $output 'captures.csv'))
     $requests = @($captures | Where-Object event -eq 'request')
     $processed = @($captures | Where-Object event -eq 'processed')
-    $expectedCaptures = if ($SwordEquipAppearance) { 4 } elseif ($CapstoneBraceRender) { 2 } elseif ($LogicOnly) { 0 } else { 46 }
+    $expectedCaptures = if ($SwordEquipMovingBoth) { 5 } elseif ($SwordEquipAppearance) { 4 } elseif ($CapstoneBraceRender) { 2 } elseif ($LogicOnly) { 0 } else { 46 }
     if ($requests.Count -ne $expectedCaptures -or $processed.Count -ne $expectedCaptures -or
         ($expectedCaptures -gt 0 -and @($requests.file | Select-Object -Unique).Count -ne $expectedCaptures)) {
         throw "Expected $expectedCaptures unique requested and processed screenshots."
@@ -151,7 +173,9 @@ try {
         }
     }
     if ($SwordEquipAppearance) {
-        foreach ($phase in @('before_equip','first_equip','sword_guard','first_unequip')) {
+        $equipPhases = @('before_equip','first_equip','sword_guard','first_unequip')
+        if ($SwordEquipMovingBoth) { $equipPhases += 'walk_recovered' }
+        foreach ($phase in $equipPhases) {
             $request = @($requests | Where-Object phase -eq $phase)
             $saved = @($processed | Where-Object phase -eq $phase)
             if ($request.Count -ne 1 -or $saved.Count -ne 1 -or [int]$request[0].fixture_frame -ne [int]$saved[0].fixture_frame) {

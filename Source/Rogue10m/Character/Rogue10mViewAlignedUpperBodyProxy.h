@@ -23,9 +23,11 @@ public:
 	virtual bool Evaluate_WithRoot(FPoseContext& Output, FAnimNode_Base* InRootNode) override;
 	virtual void PostEvaluate(UAnimInstance* InAnimInstance) override;
 	void SetGroundedDefeatStartPose(FPoseSnapshot&& Pose);
+	void UpdateWeaponLocomotionBlend(bool bEligible, bool bChangedWhileMoving, float DeltaSeconds);
 
 private:
 	void RebuildBoneCache(const FBoneContainer& Bones);
+	void ApplyWeaponLocomotionBlend(FCompactPose& Pose);
 	void ApplyViewAim(FCompactPose& Pose);
 	void ApplyWeightedHandMotion(FCompactPose& Pose);
 	void SyncHandIKHelpers(FCompactPose& Pose);
@@ -86,6 +88,12 @@ private:
 	const UAnimSequence* SecondJumpSequence = nullptr;
 	float SecondJumpAge = -1.0f;
 	float SecondJumpInterruptionWeight = 1.0f;
+	TArray<FTransform> LastGroundPose;
+	TArray<FTransform> WeaponLocomotionOffsets;
+	float WeaponLocomotionElapsed = 0.0f;
+	uint16 GroundPoseBoneSerial = 0;
+	bool bRecordGroundPose = false;
+	bool bCaptureOutgoingGroundPose = false;
 	uint16 BoneCacheSerial = 0;
 	bool bBoneCacheValid = false;
 	bool bApplyAim = false;
