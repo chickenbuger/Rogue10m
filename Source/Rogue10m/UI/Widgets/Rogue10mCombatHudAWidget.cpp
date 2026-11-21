@@ -4,11 +4,13 @@
 
 #include "Engine/Texture2D.h"
 #include "Fonts/FontMeasure.h"
+#include "Fonts/SlateFontInfo.h"
 #include "Framework/Application/SlateApplication.h"
 #include "GameFramework/PlayerController.h"
 #include "Input/Events.h"
 #include "Layout/ArrangedChildren.h"
 #include "Layout/Children.h"
+#include "Layout/Clipping.h"
 #include "Rendering/DrawElements.h"
 #include "Rendering/SlateRenderer.h"
 #include "Rogue10mCharacter.h"
@@ -239,22 +241,35 @@ namespace
 				&Brush, ESlateDrawEffect::None, Tint * Color);
 		}
 
-		void DrawText(const FText& Text, const FVector2f& Center, float Size, bool bCombat, float MaxWidth = 0.0f)
+		void DrawText(const FText& Text, const FVector2f& Center, float Size, bool bCombat,
+			float MaxWidth = 0.0f, const FRegion* Clip = nullptr)
 		{
 			if (Text.IsEmpty()) { return; }
-			FSlateFontInfo Font = FCoreStyle::GetDefaultFontStyle("Bold", Size);
+			// Font sizes are in points, but the approved HUD and its atlas use design pixels.
+			constexpr float TextReduction = 2.0f * 72.0f / FontConstants::RenderDPI;
+			const float ReducedSize = Size - TextReduction;
+			FSlateFontInfo Font = FCoreStyle::GetDefaultFontStyle("Bold", ReducedSize);
 			Font.OutlineSettings.OutlineSize = 1;
 			Font.OutlineSettings.OutlineColor = FLinearColor(0.015f, 0.011f, 0.007f, 0.92f);
 			const auto Measure = FSlateApplication::Get().GetRenderer()->GetFontMeasureService();
 			FVector2f TextSize(Measure->Measure(Text, Font));
 			if (MaxWidth > 0.0f && TextSize.X > MaxWidth)
 			{
-				Font.Size = Size * MaxWidth / TextSize.X;
+				Font.Size = ReducedSize * MaxWidth / TextSize.X;
 				TextSize = FVector2f(Measure->Measure(Text, Font));
+			}
+			if (Clip)
+			{
+				Elements.PushClip(FSlateClippingZone(
+					Geometry.ToPaintGeometry(Clip->Size(), Placement.Transform(Clip->Min(), bCombat))));
 			}
 			FSlateDrawElement::MakeText(Elements, ++LastLayer,
 				Geometry.ToPaintGeometry(TextSize, Placement.Transform(Center - 0.5f * TextSize, bCombat)),
 				Text, Font, ESlateDrawEffect::None, FLinearColor(0.92f, 0.90f, 0.85f) * Tint);
+			if (Clip)
+			{
+				Elements.PopClip();
+			}
 		}
 
 		void DrawIdentityRing(float Fraction)
@@ -361,7 +376,8 @@ namespace
 			if (!bApprovedArt)
 			{
 				Paint.DrawTexture(View ? View->SkillIcon.Get() : nullptr, Icon, View && View->bUnlocked ? View->IconColor : FLinearColor::White);
-				Paint.DrawText(Key, FVector2f(Region.Center().X, Region.Y + 84.0f), 16.0f, true, Region.Width - 13.0f);
+				const FRegion KeyBand{Region.X + 10.0f, Region.Y + 72.0f, Region.Width - 20.0f, 24.0f};
+				Paint.DrawText(Key, KeyBand.Center(), 16.0f, true, KeyBand.Width - 6.0f, &KeyBand);
 			}
 			if (!View || !View->bUnlocked)
 			{
@@ -413,7 +429,7 @@ namespace
 	{
 		const FRogue10mHudIdentityView& Identity = HUD.GetDisplayedIdentity();
 		Paint.DrawSkin(ESkin::PlateIdentity, true);
-		if (Identity.bHasIdentityResource)
+		if (HUD.ShowsIdentityPercent())
 		{
 			Paint.DrawIdentityRing(Identity.Normalized);
 		}
@@ -425,12 +441,17 @@ namespace
 		{
 			Paint.DrawTexture(HUD.GetDisplayedIdentityIcon(), {1165, 751, 66, 75}, FLinearColor::White);
 		}
-		Paint.DrawText(WeaponName(Identity), FVector2f(1198, 844), 15.0f, true, 112.0f);
-		const FText Percent = Identity.bHasIdentityResource
-			? FText::FromString(FString::Printf(TEXT("%.0f%%"), FMath::Clamp(Identity.Normalized, 0.0f, 1.0f) * 100.0f))
-			: FText::FromString(TEXT("--"));
-		Paint.DrawText(Percent, FVector2f(1198, 866), 14.0f, true);
-		Paint.DrawSkin(ESkin::PlateCtrl, true);
+		Paint.DrawText(WeaponName(Identity), FVector2f(1198, HUD.ShowsIdentityPercent() ? 844.0f : 851.0f),
+			15.0f, true, 112.0f);
+		if (HUD.ShowsIdentityPercent())
+		{
+			const float Percent = FMath::Clamp(Identity.Normalized, 0.0f, 1.0f) * 100.0f;
+			Paint.DrawText(FText::FromString(FString::Printf(TEXT("%.0f%%"), Percent)), FVector2f(1198, 866), 14.0f, true);
+		}
+		if (HUD.ShowsIdentityKey())
+		{
+			Paint.DrawSkin(ESkin::PlateCtrl, true);
+		}
 	}
 
 	constexpr int32 SkillZoneCount = UE_ARRAY_COUNT(SkillPlates);
@@ -459,7 +480,13 @@ private:
 		if (!RejectedDropText.IsEmpty()) { return RejectedDropText; }
 		const URogue10mCombatHudAWidget* Widget = HUD.Get();
 		if (!Widget) { return FText::GetEmpty(); }
-		if (Index == IdentityZone) { return Widget->GetDisplayedIdentity().Label; }
+		if (Index == IdentityZone)
+		{
+			const FRogue10mHudIdentityView& Identity = Widget->GetDisplayedIdentity();
+			return Identity.ResourceLabel.IsEmpty() ? Identity.Label
+				: FText::Format(NSLOCTEXT("Rogue10mHUD", "LayoutAIdentityTooltip", "{0}\n{1}"),
+					Identity.Label, Identity.ResourceLabel);
+		}
 		if (Index == ExperienceZone)
 		{
 			const FRogue10mHudProgressionView& View = Widget->GetDisplayedProgression();

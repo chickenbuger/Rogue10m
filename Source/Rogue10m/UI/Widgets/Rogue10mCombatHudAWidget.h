@@ -35,6 +35,8 @@ public:
 	float GetDodgeCooldownRemaining() const { return DodgeCooldownRemaining; }
 	bool IsDodging() const { return bIsDodging; }
 	bool IsUsingMana() const { return bUsingMana; }
+	bool ShowsIdentityPercent() const { return IdentityView.bHasIdentityResource; }
+	bool ShowsIdentityKey() const { return IdentityView.bHasManualActivation; }
 	UTexture2D* GetDisplayedIdentityIcon() const { return ResolvedIdentityIcon; }
 
 	static FBox2D GetVitalsBounds(const FVector2D& ViewportSize);

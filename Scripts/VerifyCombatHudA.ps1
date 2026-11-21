@@ -167,11 +167,16 @@ if ($process.ExitCode -ne 0 -or -not (Test-Path -LiteralPath $report -PathType L
 }
 
 Add-Type -AssemblyName System.Drawing
-foreach ($size in @(@{ Width = 1672; Height = 941 }, @{ Width = 1280; Height = 720 })) {
-    $imagePath = Join-Path $evidence ('CombatHudA_{0}x{1}.png' -f $size.Width, $size.Height)
+$captures = @(
+    @{ Name = 'CombatHudA_1672x941.png'; Width = 1672; Height = 941 },
+    @{ Name = 'CombatHudA_1280x720.png'; Width = 1280; Height = 720 },
+    @{ Name = 'CombatHudA_Unarmed_1672x941.png'; Width = 1672; Height = 941 }
+)
+foreach ($capture in $captures) {
+    $imagePath = Join-Path $evidence $capture.Name
     $image = [Drawing.Bitmap]::new($imagePath)
     try {
-        if ($image.Width -ne $size.Width -or $image.Height -ne $size.Height -or
+        if ($image.Width -ne $capture.Width -or $image.Height -ne $capture.Height -or
                 $image.RawFormat.Guid -ne [Drawing.Imaging.ImageFormat]::Png.Guid) {
             throw "Capture is not a PNG at the requested resolution: $imagePath"
         }

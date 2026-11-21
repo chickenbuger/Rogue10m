@@ -261,6 +261,7 @@ FRogue10mHudIdentityView URogue10mRunHUD::GetIdentityView() const
 	else if (WeaponType == ERogue10mWeaponType::Knuckle)
 	{
 		const auto* Burst = Character ? Character->FindComponentByClass<URogue10mWeaponIdentityComponent>() : nullptr;
+		View.bHasManualActivation = Burst != nullptr;
 		const bool bActive = Burst && Burst->IsIdentityActive();
 		View.ResourceLabel = FText::FromString(bActive ? TEXT("Ctrl · 질풍투기 활성") : TEXT("Ctrl · 질풍투기"));
 		View.Current = Burst ? (bActive ? Burst->GetRemainingSeconds() : Burst->GetCooldownRemaining()) : 0.f;

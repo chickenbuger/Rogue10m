@@ -40,6 +40,21 @@ IDENTITY = (1118, 737, 160, 160)
 IDENTITY_CENTER = (1197.7, 816.6)
 CTRL = (1265, 850, 59, 35)
 
+# Each caption rectangle contains the original antialiased letters and their
+# outline, but stays inside the metal frame. The adjacent sample supplies the
+# same row lighting underneath the old letters.
+BAKED_CAPTIONS = {
+    "PlateExp": ((103, 126, 33, 16), (134, 126, 4, 16)),
+    "SlotQ": ((570, 833, 19, 20), (550, 833, 13, 20)),
+    "SlotE": ((662, 833, 17, 18), (641, 833, 13, 18)),
+    "SlotR": ((752, 833, 18, 19), (731, 833, 13, 19)),
+    "SlotRMB": ((830, 833, 45, 18), (819, 833, 9, 18)),
+    "SlotChord": ((923, 833, 38, 18), (910, 833, 11, 18)),
+    "SlotCharge": ((993, 833, 82, 18), (546, 833, 17, 18)),
+    "SlotAlt": ((438, 834, 28, 18), (429, 834, 7, 18)),
+    "PlateCtrl": ((1277, 857, 36, 20), (1273, 857, 5, 20)),
+}
+
 
 def box(rect):
     x, y, width, height = rect
@@ -109,6 +124,36 @@ def replace_from_patch(target, source, rect, patch_rect, fill_mask=None, blur=0.
     target.paste(field, rect[:2], fill_mask.filter(ImageFilter.GaussianBlur(blur)))
 
 
+def caption_ink(source, rect):
+    area = source.crop(box(rect))
+    pixels = area.load()
+    ink = Image.new("L", area.size)
+    for y in range(area.height):
+        for x in range(area.width):
+            pixel = pixels[x, y]
+            if min(pixel) >= 88 and max(pixel) - min(pixel) < 32:
+                ink.putpixel((x, y), 255)
+    return ink
+
+
+def shrink_caption(target, source, rect, patch_rect):
+    ink = caption_ink(source, rect)
+    if ink.getbbox() is None:
+        raise ValueError(f"No caption pixels at {rect}")
+
+    replace_from_patch(target, source, rect, patch_rect, ink.filter(ImageFilter.MaxFilter(7)), blur=1.0)
+    image = source.crop(box(rect)).convert("RGBA")
+    image.putalpha(ink.filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(0.45)))
+    image_bounds = image.getbbox()
+    image = image.crop(image_bounds)
+    height = image.height - 2
+    width = round(image.width * height / image.height)
+    scaled = image.resize((width, height), Image.Resampling.LANCZOS)
+    left = rect[0] + round((image_bounds[0] + image_bounds[2] - scaled.width) / 2)
+    top = rect[1] + round((image_bounds[1] + image_bounds[3] - scaled.height) / 2)
+    target.paste(scaled, (left, top), scaled.getchannel("A"))
+
+
 def bar_fill(source, rect, sample_x, exp=False, mana=False):
     colors = []
     for y in range(rect[1], rect[1] + rect[3]):
@@ -159,9 +204,23 @@ def identity_layers(source):
     sword_mask = mask(sword_rect, points=sword_outline)
     replace_from_patch(clean, source, sword_rect, (1145, 776, 31, 78),
                        fill_mask=sword_mask.filter(ImageFilter.MaxFilter(7)), blur=2.1)
-    caption = (1173, 832, 50, 45)
-    replace_from_patch(clean, source, caption, (1146, 781, 29, 51),
-                       fill_mask=mask(caption, round_radius=4), blur=2.1)
+    caption = (1166, 822, 64, 63)
+    caption_matte = (caption_ink(source, caption)
+                     .filter(ImageFilter.MaxFilter(13))
+                     .filter(ImageFilter.GaussianBlur(2.6)))
+    # Sample the same distance from the center so the original radial
+    # shading continues through the erased letters on the medallion face.
+    caption_texture = Image.new("RGB", caption[2:])
+    for py in range(caption[3]):
+        for px in range(caption[2]):
+            dx, dy = px + caption[0] - cx, py + caption[1] - cy
+            radius = math.hypot(dx, dy)
+            if radius < 67.9:
+                sample_angle = 4.70 + dx * 0.013 + dy * 0.002
+                caption_texture.putpixel((px, py), angular_pixel(source, sample_angle, radius))
+            else:
+                caption_matte.putpixel((px, py), 0)
+    clean.paste(caption_texture, caption[:2], caption_matte)
     # Preserve the original clean rim outside the colored identity track.
     # The inactive sector above-left contains the authentic dark rim profile.
     ring_rect = outside(IDENTITY, 5)
@@ -199,6 +258,10 @@ def identity_layers(source):
 
 
 def sprites(source):
+    caption_face = source.copy()
+    for rect, sample in BAKED_CAPTIONS.values():
+        shrink_caption(caption_face, source, rect, sample)
+
     health_face = source.copy()
     hp_clean = (37, 33, 216, 29)
     replace_from_patch(health_face, source, hp_clean, (263, 34, 33, 28),
@@ -211,7 +274,7 @@ def sprites(source):
     level_face = source.copy()
     replace_from_patch(level_face, source, (41, 126, 46, 16), (542, 832, 23, 16),
                        mask((41, 126, 46, 16), round_radius=3))
-    exp_face = source.copy()
+    exp_face = caption_face.copy()
     replace_from_patch(exp_face, source, (144, 129, 72, 10), (246, 129, 48, 10),
                        mask((144, 129, 72, 10), round_radius=3), blur=0.4)
 
@@ -225,11 +288,11 @@ def sprites(source):
     yield "FillExp", bar_fill(source, (144, 129, 160, 10), range(157, 208), exp=True)
 
     for name, rect in ATTACKS.items():
-        yield name, cutout(source, rect, points=bevel(rect, 9))
-    yield "SlotAlt", cutout(source, ALT, points=bevel(ALT, 9))
+        yield name, cutout(caption_face, rect, points=bevel(rect, 9))
+    yield "SlotAlt", cutout(caption_face, ALT, points=bevel(ALT, 9))
     for index, rect in enumerate(LOCKS, start=1):
         yield f"SlotLock{index}", cutout(source, rect, points=bevel(rect, 9))
-    yield "PlateCtrl", cutout(source, CTRL, points=bevel(CTRL, 9))
+    yield "PlateCtrl", cutout(caption_face, CTRL, points=bevel(CTRL, 9))
 
     # Reuse the original Q tile's perimeter and key divider; its interior is
     # filled by native skill art, key captions, cooldown and lock overlays.

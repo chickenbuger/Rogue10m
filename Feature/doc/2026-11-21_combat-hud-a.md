@@ -1,5 +1,7 @@
 # 승인 시안 A 전투 HUD 적용
 
+후속 HUD 글자·아이덴티티 표시와 최신 검수는 [A안 HUD 글자 정리](2026-11-21_hud-label-polish.md)에 있다.
+
 StartHub와 전투 화면에서 좌측 상단에 체력·스태미나·레벨·경험치를 표시한다. 하단에는 왼쪽부터 `Alt` 회피, 공격 슬롯 6개, `Ctrl` 대검 아이덴티티가 있고, 스킬 아래에 잠금 아이템 4칸이 있다. 기준 좌표는 1672×941 승인 PNG에서 가져왔다. [승인 원본](evidence/main-combat-hud-concept-20261121/layout-a-single-row.png) · [설계](../architect/2026-11-21_combat-hud-a.md)
 
 ## 구성과 데이터
