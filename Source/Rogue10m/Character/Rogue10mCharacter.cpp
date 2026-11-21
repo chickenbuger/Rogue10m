@@ -376,7 +376,7 @@ void ARogue10mCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 		PlayerInputComponent->BindKey(Key, IE_Pressed, this, &ARogue10mCharacter::DoEquippedSkillPressed);
 		PlayerInputComponent->BindKey(Key, IE_Released, this, &ARogue10mCharacter::DoEquippedSkillReleased);
 	}
-	PlayerInputComponent->BindKey(EKeys::LeftControl, IE_Pressed, this, &ARogue10mCharacter::DoWeaponIdentity);
+	PlayerInputComponent->BindKey(Rogue10mInput::IdentityKey(), IE_Pressed, this, &ARogue10mCharacter::DoWeaponIdentity);
 	PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Pressed, this, &ARogue10mCharacter::DoSprintStart);
 	PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Released, this, &ARogue10mCharacter::DoSprintEnd);
 	PlayerInputComponent->BindKey(Rogue10mInput::DodgeKey(), IE_Pressed, this, &ARogue10mCharacter::DoDodge);

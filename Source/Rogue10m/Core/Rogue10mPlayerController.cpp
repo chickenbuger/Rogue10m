@@ -1,6 +1,8 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "Rogue10mPlayerController.h"
+
+#include "Rogue10mInputKeys.h"
 #include "HAL/IConsoleManager.h"
 #include "Data/Rogue10mItemDataAsset.h"
 
@@ -195,7 +197,7 @@ void ARogue10mPlayerController::SetupInputComponent()
 	InputComponent->BindKey(EKeys::Escape, IE_Pressed, this, &ARogue10mPlayerController::ToggleSettings).bExecuteWhenPaused = true;
 	InputComponent->BindKey(EKeys::F10, IE_Pressed, this, &ARogue10mPlayerController::ToggleSettings).bExecuteWhenPaused = true;
 	InputComponent->BindKey(EKeys::L, IE_Pressed, this, &ARogue10mPlayerController::HandleToggleCombatLog);
-	InputComponent->BindKey(EKeys::V, IE_Pressed, this, &ARogue10mPlayerController::ToggleInspectionCamera);
+	InputComponent->BindKey(Rogue10mInput::InspectionCameraKey(), IE_Pressed, this, &ARogue10mPlayerController::ToggleInspectionCamera);
 
 	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
 	{
@@ -403,7 +405,7 @@ void ARogue10mPlayerController::HandleAbandonConfirmation()
 
 void ARogue10mPlayerController::ToggleInspectionCamera()
 {
-	// GameAndUI input can reach this binding when a focused widget does not handle V.
+	// GameAndUI input can reach this binding when a focused widget leaves the key unhandled.
 	// Reject it explicitly, including programmatic calls while gameplay input is blocked.
 	if (!IsLocalPlayerController() || IsMenuWorld() || IsAnyBlockingWindowVisible()
 		|| bShowMouseCursor || IsLookInputIgnored() || IsMoveInputIgnored()

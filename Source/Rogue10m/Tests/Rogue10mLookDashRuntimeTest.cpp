@@ -108,10 +108,10 @@ private:
   Saves->DetachCharacter(*Character,false);Check(!Saves->IsAttachedTo(*Character),TEXT("autosave_detached_before_transient_fixture"));
   Appearance=Character->GetAppearanceCameraComponent();Body=Character->GetMesh();Source=Character->GetAnimationPlaybackMesh();Camera=Character->GetFirstPersonCameraComponent();Combat=Character->GetCombatComponent();
   Check(Appearance.IsValid()&&Body.IsValid()&&Source.IsValid()&&Camera.IsValid()&&Combat.IsValid()&&Character->GetRogueAttributeSet()&&PC->PlayerCameraManager,TEXT("camera_body_source_combat_attributes_available"));if(Failures){Finish();return;}
-  Check(Rogue10mInput::DodgeKey()==EKeys::LeftAlt,TEXT("dodge_contract_is_independent_LeftAlt_not_legacy_E"));
-  bool bHasLeftAlt=false,bHasLegacyE=false;
-  if(const UInputComponent* Input=Character->InputComponent){for(const FInputKeyBinding& Binding:Input->KeyBindings){if(Binding.KeyEvent!=IE_Pressed)continue;bHasLeftAlt|=Binding.Chord.Key==EKeys::LeftAlt;bHasLegacyE|=Binding.Chord.Key==EKeys::E;}}
-  Check(bHasLeftAlt&&!bHasLegacyE,TEXT("actual_pawn_pressed_bindings_have_LeftAlt_and_no_legacy_E_alias"));
+  Check(Rogue10mInput::DodgeKey()==EKeys::LeftControl,TEXT("dodge_contract_is_fixed_to_LeftCtrl"));
+  bool bHasLeftCtrl=false,bHasOldLeftAlt=false;
+  if(const UInputComponent* Input=Character->InputComponent){for(const FInputKeyBinding& Binding:Input->KeyBindings){if(Binding.KeyEvent!=IE_Pressed)continue;bHasLeftCtrl|=Binding.Chord.Key==EKeys::LeftControl;bHasOldLeftAlt|=Binding.Chord.Key==EKeys::LeftAlt;}}
+  Check(bHasLeftCtrl&&!bHasOldLeftAlt,TEXT("actual_pawn_pressed_bindings_have_LeftCtrl_and_no_old_LeftAlt_alias"));
   Results+=FString::Printf(TEXT("dodge_key=%s\ndodge_label=%s\nlegacy_E_image_names=retained_for_wrapper_compatibility_not_input_proof\n"),*Rogue10mInput::DodgeKey().ToString(),*Rogue10mInput::DodgeKeyLabel().ToString());
   if(Failures){Finish();return;}
   Dodge=Combat->GetActiveDodgeSkill();DodgeConfig=Dodge.IsValid()?Editable(*Dodge):TEXT("actual_character_fallback");
@@ -191,7 +191,7 @@ private:
   if(Character->IsDodging()){if(FPlatformTime::Seconds()>DodgeRequestWall+6.||World->GetTimeSeconds()>DodgeRequestWorld+Duration+MaxDodgeDT+.3){Check(false,TEXT("active_dodge_exceeds_bounded_authored_timer_window"));Finish();return;}Later(.025,[this,Index]{WaitDodgeEnd(Index);});return;}
   const double Travel=FVector::DotProduct(Character->GetActorLocation()-DodgeOrigin,Forward);const double DZ=FMath::Abs(Character->GetActorLocation().Z-DodgeOrigin.Z);
   Check(DashSamples>0&&DZ<1.f,TEXT("dodge_has_actual_sampled_horizontal_movement_without_vertical_launch"));
-   Check(DodgeActivationCount==1,TEXT("one_LeftAlt_press_and_guarded_repeats_produce_exactly_one_sampled_dodge_activation"));
+   Check(DodgeActivationCount==1,TEXT("one_LeftCtrl_press_and_guarded_repeats_produce_exactly_one_sampled_dodge_activation"));
   const double Elapsed=DodgeEndObserved-AcceptedAt;const double Early=FMath::Max(0.,static_cast<double>(Duration)-FirstActiveDT-.002);const double Late=Duration+EndObservedDT+.002;
   Check(DodgeEndObserved>=AcceptedAt&&Elapsed>=Early&&Elapsed<=Late,TEXT("active_dodge_ends_within_authored_duration_and_recorded_frame_quantization"));
   Check(Character->GetRogueAttributeSet()->GetStamina()>=BeforeStamina-Cost-.05f,TEXT("observed_stamina_not_below_single_effective_cost_ceiling"));

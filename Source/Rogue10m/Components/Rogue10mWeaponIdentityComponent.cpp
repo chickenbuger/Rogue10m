@@ -74,7 +74,7 @@ bool URogue10mWeaponIdentityComponent::TryActivate()
 	}
 	if (auto* GameState = GetWorld()->GetGameState<ARogue10mGameState>()) { GameState->OnRunPhaseChanged.AddUniqueDynamic(this, &ThisClass::HandleRunPhase); }
 	GetWorld()->GetTimerManager().SetTimer(MonitorTimer, this, &ThisClass::Monitor, .1f, true);
-	UE_LOG(LogRogue10m, Log, TEXT("Knuckle Ctrl identity start (prototype): duration %.2f speed %.2f move %.2f damage %.2f"), DurationSeconds, AttackSpeedMultiplier, MovementMultiplier, DamageMultiplier);
+	UE_LOG(LogRogue10m, Log, TEXT("Knuckle identity start (prototype): duration %.2f speed %.2f move %.2f damage %.2f"), DurationSeconds, AttackSpeedMultiplier, MovementMultiplier, DamageMultiplier);
 	return true;
 }
 void URogue10mWeaponIdentityComponent::ClearVisuals()
@@ -90,7 +90,7 @@ void URogue10mWeaponIdentityComponent::DeactivateIdentity()
 	if (bWasActive)
 	{
 		if (auto* Character = Cast<ARogue10mCharacter>(GetOwner()); Character && !Character->IsActorBeingDestroyed()) { Character->RefreshCharacterStats(false); }
-		UE_LOG(LogRogue10m, Log, TEXT("Knuckle Ctrl identity cleared; durable attributes unchanged"));
+		UE_LOG(LogRogue10m, Log, TEXT("Knuckle identity cleared; durable attributes unchanged"));
 	}
 }
 void URogue10mWeaponIdentityComponent::Monitor() { if (!IsIdentityActive()) { DeactivateIdentity(); } }

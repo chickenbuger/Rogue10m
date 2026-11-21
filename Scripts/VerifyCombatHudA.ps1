@@ -19,7 +19,7 @@ $active = @(Get-CimInstance Win32_Process -Filter "Name LIKE 'UnrealEditor%' OR 
     Where-Object {
         if ($_.Name -eq 'Rogue10m.exe') { return $true }
         if ([string]::IsNullOrEmpty($_.CommandLine)) { return $_.Name -ne 'dotnet.exe' }
-        return $_.CommandLine.Replace('/', '\').Contains($projectRoot, [StringComparison]::OrdinalIgnoreCase)
+        return $_.CommandLine.Replace('/', '\').Contains($project, [StringComparison]::OrdinalIgnoreCase)
     })
 if ($active.Count) { throw 'Rogue10m already has an editor, game or build session. Preserve it before starting this fixture.' }
 
@@ -171,7 +171,8 @@ $captures = @(
     @{ Name = 'CombatHudA_1672x941.png'; Width = 1672; Height = 941 },
     @{ Name = 'CombatHudA_1280x720.png'; Width = 1280; Height = 720 },
     @{ Name = 'CombatHudA_Depletion_1280x720.png'; Width = 1280; Height = 720 },
-    @{ Name = 'CombatHudA_Unarmed_1672x941.png'; Width = 1672; Height = 941 }
+    @{ Name = 'CombatHudA_Unarmed_1672x941.png'; Width = 1672; Height = 941 },
+    @{ Name = 'CombatHudA_Knuckle_1280x720.png'; Width = 1280; Height = 720 }
 )
 foreach ($capture in $captures) {
     $imagePath = Join-Path $evidence $capture.Name

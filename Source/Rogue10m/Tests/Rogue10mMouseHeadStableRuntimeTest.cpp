@@ -37,6 +37,7 @@
 #include "Rogue10mCharacterMotionDataAsset.h"
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mFighterCombatStanceAnimInstance.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
 #include "Rogue10mVitalRegenerationComponent.h"
@@ -346,7 +347,7 @@ private:
         const auto& C=Cases[CaseIndex];int32 Uses=0;if(C.Attack>0&&C.Attack<4){const int32 I=ExpectedSkillIndex();Uses=Progress->GetSkillUseCount(Skills[I]->GetFName())-BeforeUses[I];Check(Uses==1,TEXT("expected_input_attack_not_accepted_exactly_once"));Check(AttackSamples>=2,TEXT("accepted_attack_not_visibly_playing"));if(C.Speed==0&&C.Pitch==0&&C.Attack==1){Check(DamagePulses==1,TEXT("real_rate_test_target_not_hit_once"));}}
         Check(PairSamples>=3,TEXT("insufficient_same_phase_lower_body_samples"));if(C.Speed>0&&C.Attack!=5){Check(PeakSpeed>=C.Speed*.65,TEXT("actual_move_input_did_not_reach_requested_speed"));Check(FootTravel>1,TEXT("moving_lower_body_was_frozen"));}
         if(C.Attack==5){Check(AirSamples>=3&&JumpHeight>10,TEXT("actual_jump_and_capsule_motion_not_observed"));}
-        Check(Character->GetAppearanceCameraComponent()->IsThirdPersonInspectionActive()==C.bInspection,TEXT("actual_V_key_inspection_state_wrong"));
+        Check(Character->GetAppearanceCameraComponent()->IsThirdPersonInspectionActive()==C.bInspection,TEXT("actual_inspection_key_state_wrong"));
         Results+=FString::Printf(TEXT("%s,%d,%d,%d,%d,%.6f,%.6f,%.9f,%d,%.6f,%.6f,%.6f,%d,%.6f,%.9f,%.9f,%.9f,%.9f\n"),C.Name,CaseFrame,PairSamples,AttackSamples,Uses,C.AttackSpeed,ObservedRate,FirstDamageError,DamagePulses,PeakSpeed,PeakGait,FootTravel,AirSamples,JumpHeight,CaseHead,CaseVisibleHead,CaseCamera,CaseOffset);
         UE_LOG(LogRogue10m,Display,TEXT("MOUSE_HEAD_STABLE CASE_RESULT name=%s source_head=%.6f appearance_head=%.6f camera=%.6f position=%.6f pair=%d uses=%d rate=%.3f speed=%.3f gait=%.3f"),C.Name,CaseHead,CaseVisibleHead,CaseCamera,CaseOffset,PairSamples,Uses,ObservedRate,PeakSpeed,PeakGait);
     }
@@ -355,7 +356,7 @@ private:
         if(Warmup>0){--Warmup;if(Warmup==0){Check(bPolicyChecked,TEXT("forbidden_runtime_gate_proof_missing"));Check(Target->GetRogueAttributeSet()->GetHealth()==100000,TEXT("rejected_forbidden_attack_scheduled_damage"));BeginCase();}return;}
         if(!Character.IsValid()||!Source.IsValid()||!Body.IsValid()||!Baseline.IsValid()||!Stance.IsValid()){Check(false,TEXT("runtime_fixture_object_lost"));Finish();return;}
         const auto& C=Cases[CaseIndex];Controller->RotationInput=FRotator::ZeroRotator;if(C.Speed>0){Move(1);}Observe();
-        if(C.bInspection&&CaseFrame==4){Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::V,IE_Pressed,1.f));}if(C.bInspection&&CaseFrame==5){Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::V,IE_Released,0.f));}
+        if(C.bInspection&&CaseFrame==4){Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Rogue10mInput::InspectionCameraKey(),IE_Pressed,1.f));}if(C.bInspection&&CaseFrame==5){Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Rogue10mInput::InspectionCameraKey(),IE_Released,0.f));}
         if(C.bYawWrap&&CaseFrame==18){Controller->SetControlRotation(FRotator(C.Pitch,-179,0));}
         if(CaseFrame==12){if(C.Attack==1){Attack(true,true);Attack(false,true);}if(C.Attack==2||C.Attack==3){Attack(true,false);}if(C.Attack==4){Refill();Input(TEXT("DoDodge"));MirrorMontage();}if(C.Attack==5){Input(TEXT("DoJumpStart"));}}
         if(CaseFrame==15&&C.Attack==2){Attack(false,false);}if(CaseFrame==43&&C.Attack==3){Attack(false,false);}if(CaseFrame==17&&C.Attack==5){Input(TEXT("DoJumpEnd"));}
