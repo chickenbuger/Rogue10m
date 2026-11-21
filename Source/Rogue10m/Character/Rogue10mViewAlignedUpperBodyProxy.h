@@ -29,6 +29,8 @@ private:
 	void ApplyMouseDrivenHead(FCompactPose& Pose);
 	bool ApplyAuthoredRoll(FPoseContext& Output);
 	void ApplyRollPose(FCompactPose& Pose);
+	void CaptureCapstoneBrace(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
+	void ApplyCapstoneBrace(FPoseContext& Output);
 	void CaptureHeadMotionSettings(const ARogue10mCharacter* Character, float DeltaSeconds);
 	void CaptureWeightedHandMotion(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
 
@@ -59,6 +61,10 @@ private:
 	// The animation instance owns the sequence while the worker evaluates this snapshot.
 	const UAnimSequence* RollSequence = nullptr;
 	float RollSequenceLength = 0.0f;
+	const UAnimSequence* CapstoneBraceSequence = nullptr;
+	float CapstoneBraceTime = 0.0f;
+	float CapstoneBraceBlend = 0.0f;
+	float CapstoneBraceWeight = 0.0f;
 	float RollProgress = 0.0f;
 	float RollYawRadians = 0.0f;
 	FVector RollRight = FVector::RightVector;

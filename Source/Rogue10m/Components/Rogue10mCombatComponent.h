@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Misc/Optional.h"
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mWeaponTypes.h"
 #include "Rogue10mSkillTreeCombatComponent.h"
@@ -203,6 +204,7 @@ public:
 	const URogue10mAttackSkillData* GetDisplayedAttackSkill() const;
 	/** Exact accepted presentation skill; HUD combo previews and cooldown roots can name a different skill. */
 	const URogue10mAttackSkillData* GetLastAcceptedAttackSkill() const { return LastAcceptedAttackSkill.Get(); }
+	TOptional<float> GetGreatSwordCapstoneHoldSeconds() const;
 
 protected:
 	virtual void BeginPlay() override;

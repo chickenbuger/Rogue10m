@@ -1,0 +1,21 @@
+UE 5.8 development / StartHub / NullRHI / controller RMB / 60 Hz game step
+Base: 531a7668f5ad5b259cca7afbf4fe652323f77b62 + Capstone Brace alpha .40
+Label: CapstoneBrace1121E (final combined build)
+Existing saves preserved: 14
+Unreal errors: 0 across 1614 lines
+
+[2026.11.21-08.43.22:497][356]LogRogue10m: Display: CAPSTONE_BRACE HOLD case=stock samples=56 max_left_wrist_axial_drift_cm=0.0000 max_added_blade_deg=0.0000 max_wrist_travel_cm=1.1494
+[2026.11.21-08.43.22:497][356]LogRogue10m: Display: CAPSTONE_BRACE FEET case=stock mode=stock_travel hold_s=0.916667 left_max_cm=2.1688 right_max_cm=2.2230
+[2026.11.21-08.43.22:498][357]LogRogue10m: Display: CAPSTONE_BRACE DAMAGE case=stock world=5.958417 montage_s=0.000000 drop=136.320
+[2026.11.21-08.43.22:499][357]LogRogue10m: Display: CAPSTONE_BRACE RELEASE case=stock montage_s=0.010953 wrist_l_cm=0.8442 wrist_r_cm=0.6209 blade_deg=2.3200
+[2026.11.21-08.43.22:643][580]LogRogue10m: Display: CAPSTONE_BRACE HOLD case=brace samples=55 max_left_wrist_axial_drift_cm=3.0590 max_added_blade_deg=6.4652 max_wrist_travel_cm=3.7355
+[2026.11.21-08.43.22:643][580]LogRogue10m: Display: CAPSTONE_BRACE FEET case=brace mode=above_stock hold_s=0.900000 left_max_cm=0.2603 right_max_cm=0.2996
+[2026.11.21-08.43.22:644][581]LogRogue10m: Display: CAPSTONE_BRACE DAMAGE case=brace world=9.691750 montage_s=0.000000 drop=80.039
+[2026.11.21-08.43.22:644][581]LogRogue10m: Display: CAPSTONE_BRACE RELEASE case=brace montage_s=0.010953 wrist_l_cm=0.8631 wrist_r_cm=0.5071 blade_deg=2.4196
+[2026.11.21-08.43.22:764][763]LogRogue10m: Display: CAPSTONE_BRACE HOLD case=early samples=14 max_left_wrist_axial_drift_cm=1.8670 max_added_blade_deg=4.6309 max_wrist_travel_cm=2.3938
+[2026.11.21-08.43.22:764][763]LogRogue10m: Display: CAPSTONE_BRACE FEET case=early mode=above_stock hold_s=0.216667 left_max_cm=0.0024 right_max_cm=0.0165
+[2026.11.21-08.43.22:888][958]LogRogue10m: Display: CAPSTONE_BRACE HOLD case=pitch_cancel samples=56 max_left_wrist_axial_drift_cm=3.0400 max_added_blade_deg=6.6724 max_wrist_travel_cm=3.5863
+[2026.11.21-08.43.22:888][958]LogRogue10m: Display: CAPSTONE_BRACE FEET case=pitch_cancel mode=above_stock hold_s=0.916667 left_max_cm=0.2448 right_max_cm=0.2671
+[2026.11.21-08.43.22:924][ 13]LogRogue10m: Display: RESULT=CAPSTONE_BRACE_PASSED completed=4 failures=0
+
+Independent first successful run: CapstoneBrace1121D, 4 pass / 0 fail, 0 Unreal errors; matched thresholds and release timing.

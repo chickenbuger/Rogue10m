@@ -114,6 +114,13 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Dodge")
 	TSoftObjectPtr<UAnimSequence> LearnedRollAnimation;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Weapon")
+	TSoftObjectPtr<UAnimSequence> GreatSwordCapstoneBrace;
+
+	/** Scale the Manny brace to the visible retargeted grip. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Weapon", meta=(ClampMin="0.0", ClampMax="1.0"))
+	float GreatSwordCapstoneBraceStrength = 0.40f;
+
 	/** Fixed provenance of the sequence player configured in ABP_Common_Unarmed. */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Fighter Stance")
 	TSoftObjectPtr<UAnimSequence> FighterCombatStanceSequence;
@@ -145,6 +152,7 @@ private:
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedFighterIdle;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedGreatSwordIdle;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedLearnedRoll;
+	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedCapstoneBrace;
 	UPROPERTY(Transient) TObjectPtr<UBlendSpace> CachedUnarmedLocomotion;
 	UPROPERTY(Transient) TObjectPtr<UBlendSpace> CachedGreatSwordLocomotion;
 	float FighterCombatBlendProgress = 0.0f;

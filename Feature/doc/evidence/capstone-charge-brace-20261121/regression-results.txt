@@ -1,0 +1,28 @@
+UE 5.8 development / StartHub / NullRHI
+Label: BraceMeleeRegression1121
+Existing saves preserved: 8
+Unreal errors: 0 across 1750 lines
+
+frames=2640
+failures=0
+completed_skills=14
+requested_captures=0
+completed_captures=0
+require_authored_sword=0
+authored_sword_validated=0
+sword_first_damage_checks=0
+[2026.11.21-08.36.33:994][374]LogRogue10m: Display: MELEE_VFX CASE index=0 skill=DA_Attack_GreatSword_Primary01 miss=0 tier=0 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-08.36.34:099][503]LogRogue10m: Display: MELEE_VFX CASE index=1 skill=DA_Attack_GreatSword_Primary02 miss=0 tier=0 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-08.36.34:211][656]LogRogue10m: Display: MELEE_VFX CASE index=2 skill=DA_Attack_GreatSword_Primary03 miss=0 tier=0 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-08.36.34:347][856]LogRogue10m: Display: MELEE_VFX CASE index=3 skill=DA_Attack_GreatSword_Special miss=0 tier=1 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-08.36.34:541][144]LogRogue10m: Display: MELEE_VFX CASE index=4 skill=DA_Attack_GreatSword_Charged miss=0 tier=1 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-08.36.34:633][255]LogRogue10m: Display: MELEE_VFX CASE index=5 skill=DA_Attack_Knuckle_Primary01 miss=0 tier=0 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-08.36.34:717][366]LogRogue10m: Display: MELEE_VFX CASE index=6 skill=DA_Attack_Knuckle_Primary02 miss=0 tier=1 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-08.36.34:822][505]LogRogue10m: Display: MELEE_VFX CASE index=7 skill=DA_Attack_Knuckle_Primary03 miss=0 tier=2 damage_pulses=6 trail=1 range=1 impact=1
+[2026.11.21-08.36.34:927][650]LogRogue10m: Display: MELEE_VFX CASE index=8 skill=DA_Attack_Knuckle_Special miss=0 tier=2 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-08.36.35:078][875]LogRogue10m: Display: MELEE_VFX CASE index=9 skill=DA_Attack_Knuckle_Charged miss=0 tier=1 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-08.36.35:265][152]LogRogue10m: Display: MELEE_VFX CASE index=10 skill=DA_Hybrid_GreatSword_Ultimate miss=0 tier=3 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-08.36.35:452][429]LogRogue10m: Display: MELEE_VFX CASE index=11 skill=DA_Hybrid_GreatSword_Ultimate miss=1 tier=3 damage_pulses=0 trail=1 range=1 impact=0
+[2026.11.21-08.36.35:579][601]LogRogue10m: Display: MELEE_VFX CASE index=12 skill=DA_Attack_StoneFist_ChargedShockwave miss=0 tier=3 damage_pulses=1 trail=1 range=1 impact=1
+[2026.11.21-08.36.35:791][879]LogRogue10m: Display: MELEE_VFX CASE index=13 skill=DA_Attack_StoneFist_ChargedShockwave miss=1 tier=3 damage_pulses=0 trail=1 range=1 impact=0
+[2026.11.21-08.36.35:799][880]LogRogue10m: Display: RESULT=MELEE_VFX_LOGIC_PASSED completed=14 failures=0

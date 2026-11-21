@@ -4,23 +4,33 @@
 #include "Animation/AnimNodeBase.h"
 #include "Animation/AnimMontage.h"
 #include "Animation/AnimSequence.h"
+#include "AnimationRuntime.h"
 #include "BoneContainer.h"
 #include "BonePose.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/SkeletalMesh.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#if WITH_EDITOR
+#include "HAL/IConsoleManager.h"
+#endif
 #include "Rogue10mCharacter.h"
 #include "Rogue10mFighterCombatStanceAnimInstance.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mAppearanceCameraComponent.h"
 #include "Rogue10mAttackSkillData.h"
 #include "Rogue10mBasicBrawlerComponent.h"
+#include "Rogue10mCharacterAnimationComponent.h"
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mWeightedFirstPersonSettings.h"
 
 namespace
 {
+#if WITH_EDITOR
+TAutoConsoleVariable<int32> CVarGreatSwordCapstoneBrace(TEXT("a.Rogue10m.GreatSwordCapstoneBrace"), 1,
+	TEXT("Enable the visual-only capstone brace for editor pose comparisons."));
+#endif
+
 FQuat ComponentRotation(const FCompactPose& Pose, FCompactPoseBoneIndex Bone)
 {
 	FQuat Rotation = Pose[Bone].GetRotation();
@@ -102,6 +112,8 @@ void FRogue10mViewAlignedUpperBodyProxy::Initialize(UAnimInstance* InAnimInstanc
 	bLearnedRollPoseEvaluated = false;
 	RollSequence = nullptr;
 	RollSequenceLength = 0.0f;
+	CapstoneBraceSequence = nullptr;
+	CapstoneBraceTime = CapstoneBraceBlend = CapstoneBraceWeight = 0.0f;
 	SmoothedHeadResidual = SmoothedNeckResidual = FQuat::Identity;
 	HeadAimInMesh = HeadWorldAim = FQuat::Identity;
 	HeadSourceMeshRotation = FQuat::Identity;
@@ -123,6 +135,7 @@ void FRogue10mViewAlignedUpperBodyProxy::PreUpdate(UAnimInstance* InAnimInstance
 	bApplyWeightedHandMotion = false;
 	bWeightedHandContextValid = false;
 	bUseWeightedAimFollow = false;
+	CaptureCapstoneBrace(bContextValid ? Character : nullptr, Instance, DeltaSeconds);
 	RollSequence = nullptr;
 	FVector RollDirection;
 	bApplyRollPose = Character && SourceMesh && Character->GetRollPresentation(RollProgress, RollDirection);
@@ -384,6 +397,7 @@ bool FRogue10mViewAlignedUpperBodyProxy::Evaluate_WithRoot(FPoseContext& Output,
 		if (!ApplyAuthoredRoll(Output)) { ApplyRollPose(Output.Pose); }
 		return true;
 	}
+	if (CapstoneBraceWeight > UE_SMALL_NUMBER) { ApplyCapstoneBrace(Output); }
 	if (bApplyAim) { ApplyViewAim(Output.Pose); }
 	if (bApplyWeightedHandMotion) { ApplyWeightedHandMotion(Output.Pose); }
 	if (bApplyMouseHead) { ApplyMouseDrivenHead(Output.Pose); }
@@ -431,6 +445,70 @@ void FRogue10mViewAlignedUpperBodyProxy::RebuildBoneCache(const FBoneContainer& 
 	ReferenceNeckRotation = Neck != INDEX_NONE ? ReferenceComponentRotation(Bones, Neck) : FQuat::Identity;
 	BoneCacheSerial = Bones.GetSerialNumber();
 	bBoneCacheValid = true;
+}
+
+void FRogue10mViewAlignedUpperBodyProxy::CaptureCapstoneBrace(const ARogue10mCharacter* Character,
+	const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds)
+{
+	CapstoneBraceSequence = nullptr;
+	CapstoneBraceWeight = 0.0f;
+#if WITH_EDITOR
+	if (CVarGreatSwordCapstoneBrace.GetValueOnGameThread() == 0)
+	{
+		CapstoneBraceBlend = CapstoneBraceTime = 0.0f;
+		return;
+	}
+#endif
+	const auto* Sequence = Instance ? Instance->CachedCapstoneBrace.Get() : nullptr;
+	const auto* Mesh = Instance ? Instance->GetSkelMeshComponent() : nullptr;
+	const auto* MeshAsset = Mesh ? Mesh->GetSkeletalMeshAsset() : nullptr;
+	const auto* Movement = Character ? Character->GetCharacterMovement() : nullptr;
+	if (!Character || !Movement || !Movement->IsMovingOnGround() || Character->IsDodging()
+		|| !Character->IsThirdPersonGameplayActive() || Character->GetEquippedWeaponType() != ERogue10mWeaponType::GreatSword
+		|| Mesh != Character->GetAnimationPlaybackMesh() || !MeshAsset || !Sequence || !Sequence->IsValidAdditive()
+		|| Sequence->GetAdditiveAnimType() != AAT_LocalSpaceBase || Sequence->GetSkeleton() != MeshAsset->GetSkeleton())
+	{
+		CapstoneBraceBlend = CapstoneBraceTime = 0.0f;
+		return;
+	}
+
+	const auto* Combat = Character->GetCombatComponent();
+	const auto* CharacterAnimation = Character->FindComponentByClass<URogue10mCharacterAnimationComponent>();
+	const bool bStationary = (!CharacterAnimation || !CharacterAnimation->HasMovementInput())
+		&& Character->GetVelocity().SizeSquared2D() <= FMath::Square(FMath::Max(0.0f, Instance->FighterCombatStationarySpeed));
+	const TOptional<float> Hold = bStationary && Combat ? Combat->GetGreatSwordCapstoneHoldSeconds() : TOptional<float>();
+	if (Hold.IsSet()) { CapstoneBraceTime = FMath::Clamp(Hold.GetValue(), 0.0f, Sequence->GetPlayLength()); }
+	CapstoneBraceBlend = FMath::FInterpConstantTo(CapstoneBraceBlend, Hold.IsSet() ? 1.0f : 0.0f,
+		FMath::Max(0.0f, DeltaSeconds), Hold.IsSet() ? 10.0f : 8.0f);
+	// The existing release slot progressively replaces the held posture during its own blend-in.
+	const float Slot = FMath::Clamp(Instance->GetSlotMontageGlobalWeight(TEXT("DefaultSlot")), 0.0f, 1.0f);
+	CapstoneBraceWeight = CapstoneBraceBlend * (1.0f - Slot) * FMath::Clamp(Instance->GreatSwordCapstoneBraceStrength, 0.0f, 1.0f);
+	CapstoneBraceSequence = Sequence;
+}
+
+void FRogue10mViewAlignedUpperBodyProxy::ApplyCapstoneBrace(FPoseContext& Output)
+{
+	const FBoneContainer& Bones = Output.Pose.GetBoneContainer();
+	if (!bBoneCacheValid || BoneCacheSerial != Bones.GetSerialNumber()) { RebuildBoneCache(Bones); }
+	if (!Output.Pose.IsValidIndex(Spine[0])) { return; }
+
+	FPoseContext Brace(Output, true);
+	Brace.ResetToAdditiveIdentity();
+	FAnimationPoseData BraceData(Brace);
+	CapstoneBraceSequence->GetAnimationPose(BraceData, FAnimExtractContext(CapstoneBraceTime, false));
+	const FTransform IdentityDelta(FQuat::Identity, FVector::ZeroVector, FVector::ZeroVector);
+	for (const FCompactPoseBoneIndex Bone : Brace.Pose.ForEachBoneIndex())
+	{
+		FCompactPoseBoneIndex Ancestor = Bone;
+		while (Ancestor != INDEX_NONE && Ancestor != Spine[0])
+		{
+			Ancestor = Brace.Pose.GetParentBoneIndex(Ancestor);
+		}
+		if (Ancestor == INDEX_NONE) { Brace.Pose[Bone] = IdentityDelta; }
+		else if (Brace.Pose[Bone].ContainsNaN()) { return; }
+	}
+	FAnimationPoseData BaseData(Output);
+	FAnimationRuntime::AccumulateAdditivePose(BaseData, BraceData, CapstoneBraceWeight, AAT_LocalSpaceBase);
 }
 
 bool FRogue10mViewAlignedUpperBodyProxy::ApplyAuthoredRoll(FPoseContext& Output)

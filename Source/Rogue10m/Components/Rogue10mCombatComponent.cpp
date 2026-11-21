@@ -47,6 +47,7 @@
 #include "Rogue10mSkillTreeProgressionComponent.h"
 #include "Rogue10mMonsterDataAsset.h"
 #include "TimerManager.h"
+#include "UObject/SoftObjectPath.h"
 
 namespace
 {
@@ -648,6 +649,22 @@ bool URogue10mCombatComponent::ActivateTreeSkill(URogue10mAttackSkillData* Skill
 		return TryActivateAttackAbility(*Skill, false) && bLastAbilityAttackExecuted;
 	}
 	return ExecuteAttackSkill(*Skill, false);
+}
+
+TOptional<float> URogue10mCombatComponent::GetGreatSwordCapstoneHoldSeconds() const
+{
+	static const FSoftObjectPath Capstone(TEXT("/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_Ultimate.DA_Hybrid_GreatSword_Ultimate"));
+	const auto* Skill = HeldBoundSkill.Get();
+	const auto* Character = GetOwnerCharacter();
+	const auto* World = GetWorld();
+	if (!Skill || !Character || !World || BoundSkillPressedTime < 0.0f
+		|| Character->GetEquippedWeaponType() != ERogue10mWeaponType::GreatSword
+		|| Skill != GetEquippedSkill(ERogue10mAttackInputSlot::ChargedSpecial)
+		|| FSoftObjectPath(Skill) != Capstone || !CanUseBoundSkill(Skill))
+	{
+		return {};
+	}
+	return FMath::Max(0.0f, static_cast<float>(World->GetTimeSeconds() - BoundSkillPressedTime));
 }
 
 void URogue10mCombatComponent::HandleBoundSkillPressed(URogue10mAttackSkillData* Skill)
