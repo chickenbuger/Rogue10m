@@ -58,8 +58,10 @@ class ROGUE10M_API URogue10mHybridSkillTreeEntryWidget : public UUserWidget
 	GENERATED_BODY()
 public:
 	void Configure(URogue10mHybridSkillTreeWidget* Owner, const FRogue10mSkillTreeNodeDefinition& Definition,
-		ERogue10mSkillTreeNodeState State, bool bSelected, bool bCurrentTrack, float DiameterOverride = 0.0f);
+		ERogue10mSkillTreeNodeState State, bool bSelected, bool bCurrentTrack, bool bShowMystery, float DiameterOverride = 0.0f);
 	FName GetNodeId() const { return NodeId; }
+	bool IsMystery() const { return bMystery; }
+	bool HasLockBadge() const { return bHasLockBadge; }
 	bool CanDragSkill() const { return bCanDrag; }
 	URogue10mAttackSkillData* GetDragSkill() const { return Skill.Get(); }
 protected:
@@ -76,6 +78,9 @@ private:
 	bool bCanDrag = false;
 	bool bHasOuterFrame = false;
 	bool bPaintSwordGlyph = false;
+	bool bMystery = false;
+	bool bHasLockBadge = false;
+	bool bReadyToLearn = false;
 	ERogue10mCommonSkill CommonGlyph = ERogue10mCommonSkill::None;
 	FLinearColor GlyphTint;
 	UPROPERTY(Transient) TObjectPtr<URogue10mAttackSkillData> Skill;
@@ -83,6 +88,7 @@ private:
 	UPROPERTY(Transient) TObjectPtr<URogue10mHybridSkillTreeButton> NodeButton;
 	UPROPERTY(Transient) TObjectPtr<UImage> Icon;
 	UPROPERTY(Transient) TObjectPtr<UTextBlock> Symbol;
+	UPROPERTY(Transient) TObjectPtr<UTextBlock> MysteryGlyph;
 };
 
 /** A separate lower canvas layer keeps painted edges below node labels and buttons. */
@@ -109,6 +115,7 @@ public:
 		ERogue10mSkillTreeTab InTab, ERogue10mSkillTreeTrack ContextTrack, FName SelectedNode);
 	int32 PaintConnections(const FGeometry& Geometry, FSlateWindowElementList& Elements, int32 LayerId) const;
 	URogue10mHybridSkillTreeEntryWidget* FindNodeEntry(FName NodeId) const;
+	FText GetNodeLabel(FName NodeId) const;
 	FName GetNodeFrameShape(FName NodeId) const;
 	int32 GetNodeFrameOutlineCount(FName NodeId) const;
 	TArray<FVector2f> GetNodeOuterFramePoints(FName NodeId) const;
@@ -149,6 +156,9 @@ public:
 	void BrowseTab(ERogue10mSkillTreeTab Tab);
 	UFUNCTION(BlueprintCallable, Category="Rogue10m|Skill Tree")
 	void SelectNode(FName NodeId);
+	bool IsNodeDiscovered(FName NodeId) const;
+	bool IsMysteryNode(const FRogue10mSkillTreeNodeDefinition& Node) const;
+	FText GetNodeLabel(FName NodeId) const;
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree")
 	FName GetSelectedNodeId() const { return SelectedNodeId; }
 	UFUNCTION(BlueprintPure, Category="Rogue10m|Skill Tree")

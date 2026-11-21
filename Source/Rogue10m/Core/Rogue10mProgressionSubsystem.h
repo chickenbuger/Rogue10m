@@ -56,6 +56,7 @@ private:
 	void CaptureCurrentState();
 	void SetError(const FText& Error) const;
 	UFUNCTION() void HandleStateChanged();
+	UFUNCTION() void HandleSkillTreeChanged();
 	UFUNCTION() void HandleRunPhaseChanged(ERogue10mRunPhase Phase);
 	TWeakObjectPtr<ARogue10mGameState> ObservedRun;
 	FGuid SettlementProfileId;
