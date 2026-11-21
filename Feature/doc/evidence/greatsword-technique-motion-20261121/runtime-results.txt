@@ -1,0 +1,149 @@
+[isolated Editor build]
+Result: Succeeded
+Total execution time: 17.87 seconds
+
+[legacy build invocation blocked by active live coding]
+Unable to build while Live Coding is active. Exit the editor and game, or press Ctrl+Alt+F11 if iterating on code in the editor or game
+Result: Failed (OtherCompilationError)
+
+[learning in fresh test after possession was initially too early]
+[2026.11.21-10.49.06:051][240]LogRogue10m: Error: WEAPON3P FAIL skill=0 frame=0 sword_technique_inventory_and_real_point_investments_required
+[2026.11.21-10.49.06:051][240]LogRogue10m: Error: WEAPON3P FAIL skill=0 frame=0 fresh_profile_start_hub_and_test_floor_required
+
+[earlier stock repeat]
+[2026.11.21-10.51.49:684][713]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak frame=459 world=11.900001 montage_s=0.014840 source_s=0.014840 source=/Game/Rogue10m/Animation/Combat/HeadSafe/A_Safe_Hook.A_Safe_Hook sword_capsule_gap_cm=47.772832 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-10.51.51:349][956]LogRogue10m: Display: RESULT=GREAT_SWORD_TECHNIQUES_PASSED completed=8 failures=0
+
+[exact stock]
+[2026.11.21-10.56.41:393][255]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=0 skill=DA_Hybrid_GreatSword_CrushingSlash miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=109.34, Y=12.03)
+[2026.11.21-10.56.41:438][317]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_CrushingSlash frame=63 world=5.300000 montage_s=0.012720 source_s=0.012720 source=/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.MM_ChargedAttack sword_capsule_gap_cm=44.853869 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-10.56.41:438][317]LogRogue10m: Display: WEAPON3P DAMAGE skill=DA_Hybrid_GreatSword_CrushingSlash pulse=1 elapsed=0.000000 expected=0.000000 blade_target_cm=78.854
+[2026.11.21-10.56.41:544][463]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_CrushingSlash instance_samples=129 damage_pulses=1 rendered_hand_travel_cm=92.706
+[2026.11.21-10.56.41:545][463]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=1 skill=DA_Hybrid_GreatSword_Whirlwind miss=0 shape=ERogue10mAttackShape::Circle range=300.000 circle_offset=55.000 charge_s=0.650000 target_offset=V(X=-68.77, Y=50.20)
+[2026.11.21-10.56.41:587][525]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_Whirlwind frame=271 world=8.766667 montage_s=0.013427 source_s=0.013427 source=/Game/Rogue10m/Animation/Combat/HeadSafe/A_Safe_Hook.A_Safe_Hook sword_capsule_gap_cm=65.808460 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-10.56.41:587][525]LogRogue10m: Display: WEAPON3P DAMAGE skill=DA_Hybrid_GreatSword_Whirlwind pulse=1 elapsed=0.000000 expected=0.000000 blade_target_cm=99.808
+[2026.11.21-10.56.41:685][651]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_Whirlwind instance_samples=109 damage_pulses=1 rendered_hand_travel_cm=45.620
+[2026.11.21-10.56.41:685][651]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=2 skill=DA_Hybrid_GreatSword_GuardBreak miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=109.99, Y=1.13)
+[2026.11.21-10.56.41:726][713]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak frame=459 world=11.900001 montage_s=0.014840 source_s=0.014840 source=/Game/Rogue10m/Animation/Combat/HeadSafe/A_Safe_Hook.A_Safe_Hook sword_capsule_gap_cm=47.772832 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-10.56.41:726][713]LogRogue10m: Display: WEAPON3P DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak pulse=1 elapsed=0.000000 expected=0.000000 blade_target_cm=81.773
+[2026.11.21-10.56.41:813][827]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_GuardBreak instance_samples=97 damage_pulses=1 rendered_hand_travel_cm=45.837
+[2026.11.21-10.56.41:813][827]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=3 skill=DA_Hybrid_GreatSword_EarthSplitter miss=0 shape=ERogue10mAttackShape::Arc range=330.000 circle_offset=0.000 charge_s=0.720000 target_offset=V(X=109.72, Y=7.88)
+[2026.11.21-10.56.41:892][936]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_EarthSplitter frame=682 world=15.616667 montage_s=0.010953 source_s=0.010953 source=/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.MM_ChargedAttack sword_capsule_gap_cm=46.104684 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-10.56.41:892][936]LogRogue10m: Display: WEAPON3P DAMAGE skill=DA_Hybrid_GreatSword_EarthSplitter pulse=1 elapsed=0.000000 expected=0.000000 blade_target_cm=80.105
+[2026.11.21-10.56.42:033][105]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_EarthSplitter instance_samples=152 damage_pulses=1 rendered_hand_travel_cm=92.510
+[2026.11.21-10.56.42:033][105]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=4 skill=DA_Hybrid_GreatSword_CrushingSlash miss=1 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=-50.65, Y=146.75)
+[2026.11.21-10.56.42:191][313]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_CrushingSlash instance_samples=129 damage_pulses=0 rendered_hand_travel_cm=93.189
+[2026.11.21-10.56.42:191][313]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=5 skill=DA_Hybrid_GreatSword_Whirlwind miss=1 shape=ERogue10mAttackShape::Circle range=300.000 circle_offset=55.000 charge_s=0.650000 target_offset=V(X=417.92, Y=30.03)
+[2026.11.21-10.56.42:333][501]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_Whirlwind instance_samples=109 damage_pulses=0 rendered_hand_travel_cm=45.877
+[2026.11.21-10.56.42:333][501]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=6 skill=DA_Hybrid_GreatSword_GuardBreak miss=1 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=-50.65, Y=146.75)
+[2026.11.21-10.56.42:463][677]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_GuardBreak instance_samples=97 damage_pulses=0 rendered_hand_travel_cm=46.067
+[2026.11.21-10.56.42:463][677]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=7 skill=DA_Hybrid_GreatSword_EarthSplitter miss=1 shape=ERogue10mAttackShape::Arc range=330.000 circle_offset=0.000 charge_s=0.720000 target_offset=V(X=-50.65, Y=146.75)
+[2026.11.21-10.56.42:671][955]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_EarthSplitter instance_samples=152 damage_pulses=0 rendered_hand_travel_cm=92.489
+[2026.11.21-10.56.42:682][955]LogRogue10m: Display: RESULT=GREAT_SWORD_TECHNIQUES_PASSED completed=8 failures=0
+
+[exact modified]
+[2026.11.21-11.19.36:109][255]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=0 skill=DA_Hybrid_GreatSword_CrushingSlash miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=109.34, Y=12.03)
+[2026.11.21-11.19.36:155][317]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_CrushingSlash frame=63 world=5.300000 montage_s=0.012720 source_s=0.012720 source=/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.MM_ChargedAttack sword_capsule_gap_cm=44.853869 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.19.36:155][317]LogRogue10m: Display: WEAPON3P DAMAGE skill=DA_Hybrid_GreatSword_CrushingSlash pulse=1 elapsed=0.000000 expected=0.000000 blade_target_cm=78.854
+[2026.11.21-11.19.36:264][463]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_CrushingSlash instance_samples=129 damage_pulses=1 rendered_hand_travel_cm=92.706
+[2026.11.21-11.19.36:264][463]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=1 skill=DA_Hybrid_GreatSword_Whirlwind miss=0 shape=ERogue10mAttackShape::Circle range=300.000 circle_offset=55.000 charge_s=0.650000 target_offset=V(X=-68.77, Y=50.20)
+[2026.11.21-11.19.36:305][525]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_Whirlwind frame=271 world=8.766667 montage_s=0.013427 source_s=0.013427 source=/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_Whirlwind.A_GreatSword_Whirlwind sword_capsule_gap_cm=66.252060 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.19.36:305][525]LogRogue10m: Display: WEAPON3P DAMAGE skill=DA_Hybrid_GreatSword_Whirlwind pulse=1 elapsed=0.000000 expected=0.000000 blade_target_cm=100.252
+[2026.11.21-11.19.36:397][651]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_Whirlwind instance_samples=109 damage_pulses=1 rendered_hand_travel_cm=101.175
+[2026.11.21-11.19.36:398][651]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=2 skill=DA_Hybrid_GreatSword_GuardBreak miss=0 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=109.99, Y=1.13)
+[2026.11.21-11.19.36:438][713]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak frame=459 world=11.900001 montage_s=0.014840 source_s=0.014840 source=/Game/Rogue10m/Animation/Combat/HeadSafe/A_Safe_Hook.A_Safe_Hook sword_capsule_gap_cm=47.772832 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.19.36:438][713]LogRogue10m: Display: WEAPON3P DAMAGE skill=DA_Hybrid_GreatSword_GuardBreak pulse=1 elapsed=0.000000 expected=0.000000 blade_target_cm=81.773
+[2026.11.21-11.19.36:523][827]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_GuardBreak instance_samples=97 damage_pulses=1 rendered_hand_travel_cm=45.837
+[2026.11.21-11.19.36:523][827]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=3 skill=DA_Hybrid_GreatSword_EarthSplitter miss=0 shape=ERogue10mAttackShape::Arc range=330.000 circle_offset=0.000 charge_s=0.720000 target_offset=V(X=109.72, Y=7.88)
+[2026.11.21-11.19.36:596][936]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_EarthSplitter frame=682 world=15.616667 montage_s=0.010953 source_s=0.010953 source=/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.MM_ChargedAttack sword_capsule_gap_cm=46.104684 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.19.36:596][936]LogRogue10m: Display: WEAPON3P DAMAGE skill=DA_Hybrid_GreatSword_EarthSplitter pulse=1 elapsed=0.000000 expected=0.000000 blade_target_cm=80.105
+[2026.11.21-11.19.36:726][105]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_EarthSplitter instance_samples=152 damage_pulses=1 rendered_hand_travel_cm=92.510
+[2026.11.21-11.19.36:726][105]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=4 skill=DA_Hybrid_GreatSword_CrushingSlash miss=1 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=-50.65, Y=146.75)
+[2026.11.21-11.19.36:880][313]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_CrushingSlash instance_samples=129 damage_pulses=0 rendered_hand_travel_cm=93.189
+[2026.11.21-11.19.36:880][313]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=5 skill=DA_Hybrid_GreatSword_Whirlwind miss=1 shape=ERogue10mAttackShape::Circle range=300.000 circle_offset=55.000 charge_s=0.650000 target_offset=V(X=417.92, Y=30.03)
+[2026.11.21-11.19.37:014][501]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_Whirlwind instance_samples=109 damage_pulses=0 rendered_hand_travel_cm=101.238
+[2026.11.21-11.19.37:014][501]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=6 skill=DA_Hybrid_GreatSword_GuardBreak miss=1 shape=ERogue10mAttackShape::Arc range=285.000 circle_offset=0.000 charge_s=0.650000 target_offset=V(X=-50.65, Y=146.75)
+[2026.11.21-11.19.37:137][677]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_GuardBreak instance_samples=97 damage_pulses=0 rendered_hand_travel_cm=46.067
+[2026.11.21-11.19.37:138][677]LogRogue10m: Display: GREAT_SWORD_TECHNIQUE case=7 skill=DA_Hybrid_GreatSword_EarthSplitter miss=1 shape=ERogue10mAttackShape::Arc range=330.000 circle_offset=0.000 charge_s=0.720000 target_offset=V(X=-50.65, Y=146.75)
+[2026.11.21-11.19.37:342][955]LogRogue10m: Display: WEAPON3P COMPLETE skill=DA_Hybrid_GreatSword_EarthSplitter instance_samples=152 damage_pulses=0 rendered_hand_travel_cm=92.489
+[2026.11.21-11.19.37:350][955]LogRogue10m: Display: RESULT=GREAT_SWORD_TECHNIQUES_PASSED completed=8 failures=0
+
+[rejected candidate B before save, donor import reset the scene FPS]
+[2026.11.21-11.04.34:586][  0]LogPython: Error: RuntimeError: Manny skeleton or montage clock mismatch: <Struct 'FrameRate' (0x000001947E5AEC80) {numerator: 60, denominator: 1}>, 200, 3.3333332538604736
+[2026.11.21-11.04.34:587][  0]LogInit: Display: LogPython: Error: RuntimeError: Manny skeleton or montage clock mismatch: <Struct 'FrameRate' (0x000001947E5AEC80) {numerator: 60, denominator: 1}>, 200, 3.3333332538604736
+
+[readback comparison rejected pointer string before any package save]
+[2026.11.21-11.06.11:209][  0]LogPython: Error: RuntimeError: Clip/montage readback changed the clock: {'montage_s': 1.6666666269302368, 'rate_scale': 1.0, 'slot_segment': {'start_pos': 0.0, 'anim_start_time': 0.0, 'anim_end_time': 1.6666666269302368, 'anim_play_rate': 1.0, 'looping_count': 1}, 'blend_in': "<Struct 'AlphaBlend' (0x00000245D77E4100) {}>", 'blend_out': "<Struct 'AlphaBlend' (0x00000245D77E4138) {}>", 'blend_out_trigger_time': -1.0}, {'montage_s': 1.6666666269302368, 'rate_scale': 1.0, 'slot_segment': {'start_pos': 0.0, 'anim_start_time': 0.0, 'anim_end_time': 1.6666666269302368, 'anim_play_rate': 1.0, 'looping_count': 1}, 'blend_in': "<Struct 'AlphaBlend' (0x000002451AD31000) {}>", 'blend_out': "<Struct 'AlphaBlend' (0x000002451AD31038) {}>", 'blend_out_trigger_time': -1.0}, <Object '/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_Whirlwind.A_GreatSword_Whirlwind' (0x00000245E07F2300) Class 'AnimSequence'>
+[2026.11.21-11.06.11:210][  0]LogInit: Display: LogPython: Error: RuntimeError: Clip/montage readback changed the clock: {'montage_s': 1.6666666269302368, 'rate_scale': 1.0, 'slot_segment': {'start_pos': 0.0, 'anim_start_time': 0.0, 'anim_end_time': 1.6666666269302368, 'anim_play_rate': 1.0, 'looping_count': 1}, 'blend_in': "<Struct 'AlphaBlend' (0x00000245D77E4100) {}>", 'blend_out': "<Struct 'AlphaBlend' (0x00000245D77E4138) {}>", 'blend_out_trigger_time': -1.0}, {'montage_s': 1.6666666269302368, 'rate_scale': 1.0, 'slot_segment': {'start_pos': 0.0, 'anim_start_time': 0.0, 'anim_end_time': 1.6666666269302368, 'anim_play_rate': 1.0, 'looping_count': 1}, 'blend_in': "<Struct 'AlphaBlend' (0x000002451AD31000) {}>", 'blend_out': "<Struct 'AlphaBlend' (0x000002451AD31038) {}>", 'blend_out_trigger_time': -1.0}, <Object '/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_Whirlwind.A_GreatSword_Whirlwind' (0x00000245E07F2300) Class 'AnimSequence'>
+
+[import after FPS and property-readback correction]
+[2026.11.21-11.07.23:373][  0]LogPython: RESULT=GREAT_SWORD_WHIRLWIND_IMPORTED
+
+[rendered Whirlwind SwordWhirlwindWarp]
+[2026.11.21-11.10.56:228][  0]LogD3D: D3D12CreateDevice failed with code 0x887A0004
+[2026.11.21-11.10.56:247][  0]LogD3D: D3D11CreateDevice failed with code 0x887A0004
+[2026.11.21-11.10.56:254][  0]LogD3D11RHI: Error: Result failed with error 887A0004
+[2026.11.21-11.10.56:254][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-11.10.56:254][  0]LogD3D11RHI:    1. 'Microsoft Basic Render Driver' (Feature Level 11_1)
+[2026.11.21-11.10.56:254][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-11.10.56:256][  0]LogWindows: Unable to find requested device 'Microsoft Basic Render Driver' using Setup API.
+[2026.11.21-11.10.56:257][  0]LogWindows: Failed to get driver data for device 'Microsoft Basic Render Driver' using Setup API. Switching to fallback method.
+[2026.11.21-11.10.56:259][  0]LogRHI:             Name: Microsoft Basic Render Driver
+[2026.11.21-11.10.56:259][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-11.10.56:268][  0]LogCsvProfiler: Display: Metadata set : gpu="Microsoft Basic Render Driver"
+[2026.11.21-11.13.46:909][276]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_Whirlwind phase=ready frame=22 world=4.616667 montage=0.000000 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordWhirlwindWarp/images/DA_Hybrid_GreatSword_Whirlwind_ready_3D0BDC6B4B86C525F423189075ADA221.png
+[2026.11.21-11.13.47:929][276]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_Whirlwind phase=ready frame=22 world=4.616667 montage=0.000000 bytes=1090982
+[2026.11.21-11.13.47:965][286]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_Whirlwind frame=32 world=4.783334 montage_s=0.013427 source_s=0.013427 source=/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_Whirlwind.A_GreatSword_Whirlwind sword_capsule_gap_cm=67.515003 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.13.47:965][286]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_Whirlwind phase=after_first_damage frame=32 world=4.783334 montage=0.013427 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordWhirlwindWarp/images/DA_Hybrid_GreatSword_Whirlwind_after_first_damage_3D0BDC6B4B86C525F423189075ADA221.png
+[2026.11.21-11.13.48:604][286]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_Whirlwind phase=after_first_damage frame=32 world=4.783334 montage=0.013427 bytes=1138364
+[2026.11.21-11.13.48:786][324]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_Whirlwind phase=motion frame=70 world=5.416667 montage=0.523640 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordWhirlwindWarp/images/DA_Hybrid_GreatSword_Whirlwind_motion_3D0BDC6B4B86C525F423189075ADA221.png
+[2026.11.21-11.13.49:446][324]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_Whirlwind phase=motion frame=70 world=5.416667 montage=0.523640 bytes=1247679
+[2026.11.21-11.13.49:801][411]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_Whirlwind phase=recovery frame=157 world=6.866667 montage=0.000000 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordWhirlwindWarp/images/DA_Hybrid_GreatSword_Whirlwind_recovery_3D0BDC6B4B86C525F423189075ADA221.png
+[2026.11.21-11.13.50:346][411]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_Whirlwind phase=recovery frame=157 world=6.866667 montage=0.000000 bytes=1176410
+[2026.11.21-11.13.50:358][412]LogRogue10m: Display: RESULT=GREAT_SWORD_TECHNIQUES_PASSED completed=1 failures=0
+
+[rendered Whirlwind SwordWhirlwindSideWarp]
+[2026.11.21-11.15.54:514][  0]LogD3D: D3D12CreateDevice failed with code 0x887A0004
+[2026.11.21-11.15.54:559][  0]LogD3D: D3D11CreateDevice failed with code 0x887A0004
+[2026.11.21-11.15.54:575][  0]LogD3D11RHI: Error: Result failed with error 887A0004
+[2026.11.21-11.15.54:575][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-11.15.54:576][  0]LogD3D11RHI:    1. 'Microsoft Basic Render Driver' (Feature Level 11_1)
+[2026.11.21-11.15.54:576][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-11.15.54:581][  0]LogWindows: Unable to find requested device 'Microsoft Basic Render Driver' using Setup API.
+[2026.11.21-11.15.54:581][  0]LogWindows: Failed to get driver data for device 'Microsoft Basic Render Driver' using Setup API. Switching to fallback method.
+[2026.11.21-11.15.54:585][  0]LogRHI:             Name: Microsoft Basic Render Driver
+[2026.11.21-11.15.54:585][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-11.15.54:603][  0]LogCsvProfiler: Display: Metadata set : gpu="Microsoft Basic Render Driver"
+[2026.11.21-11.16.34:817][276]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_Whirlwind phase=ready frame=22 world=4.616667 montage=0.000000 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordWhirlwindSideWarp/images/DA_Hybrid_GreatSword_Whirlwind_ready_FA2239EC474B2307118CDEA307040C40.png
+[2026.11.21-11.16.36:617][276]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_Whirlwind phase=ready frame=22 world=4.616667 montage=0.000000 bytes=1080813
+[2026.11.21-11.16.36:649][286]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_Whirlwind frame=32 world=4.783334 montage_s=0.013427 source_s=0.013427 source=/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_Whirlwind.A_GreatSword_Whirlwind sword_capsule_gap_cm=67.515003 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.16.36:649][286]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_Whirlwind phase=after_first_damage frame=32 world=4.783334 montage=0.013427 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordWhirlwindSideWarp/images/DA_Hybrid_GreatSword_Whirlwind_after_first_damage_FA2239EC474B2307118CDEA307040C40.png
+[2026.11.21-11.16.37:797][286]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_Whirlwind phase=after_first_damage frame=32 world=4.783334 montage=0.013427 bytes=1177821
+[2026.11.21-11.16.37:973][324]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_Whirlwind phase=motion frame=70 world=5.416667 montage=0.523640 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordWhirlwindSideWarp/images/DA_Hybrid_GreatSword_Whirlwind_motion_FA2239EC474B2307118CDEA307040C40.png
+[2026.11.21-11.16.39:011][324]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_Whirlwind phase=motion frame=70 world=5.416667 montage=0.523640 bytes=1214163
+[2026.11.21-11.16.39:368][411]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_Whirlwind phase=recovery frame=157 world=6.866667 montage=0.000000 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordWhirlwindSideWarp/images/DA_Hybrid_GreatSword_Whirlwind_recovery_FA2239EC474B2307118CDEA307040C40.png
+[2026.11.21-11.16.40:225][411]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_Whirlwind phase=recovery frame=157 world=6.866667 montage=0.000000 bytes=1210581
+[2026.11.21-11.16.40:238][412]LogRogue10m: Display: RESULT=GREAT_SWORD_TECHNIQUES_PASSED completed=1 failures=0
+
+[rendered Whirlwind SwordWhirlwindWideWarp]
+[2026.11.21-11.17.55:527][  0]LogD3D: D3D12CreateDevice failed with code 0x887A0004
+[2026.11.21-11.17.55:549][  0]LogD3D: D3D11CreateDevice failed with code 0x887A0004
+[2026.11.21-11.17.55:557][  0]LogD3D11RHI: Error: Result failed with error 887A0004
+[2026.11.21-11.17.55:558][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-11.17.55:558][  0]LogD3D11RHI:    1. 'Microsoft Basic Render Driver' (Feature Level 11_1)
+[2026.11.21-11.17.55:558][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-11.17.55:561][  0]LogWindows: Unable to find requested device 'Microsoft Basic Render Driver' using Setup API.
+[2026.11.21-11.17.55:561][  0]LogWindows: Failed to get driver data for device 'Microsoft Basic Render Driver' using Setup API. Switching to fallback method.
+[2026.11.21-11.17.55:565][  0]LogRHI:             Name: Microsoft Basic Render Driver
+[2026.11.21-11.17.55:565][  0]LogD3D11RHI:     Description : Microsoft Basic Render Driver
+[2026.11.21-11.17.55:578][  0]LogCsvProfiler: Display: Metadata set : gpu="Microsoft Basic Render Driver"
+[2026.11.21-11.18.19:860][276]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_Whirlwind phase=ready frame=22 world=4.616667 montage=0.000000 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordWhirlwindWideWarp/images/DA_Hybrid_GreatSword_Whirlwind_ready_328ED2CA42987B37A5802B9472316DCB.png
+[2026.11.21-11.18.21:210][276]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_Whirlwind phase=ready frame=22 world=4.616667 montage=0.000000 bytes=995687
+[2026.11.21-11.18.21:233][286]LogRogue10m: Display: WEAPON3P FIRST_DAMAGE skill=DA_Hybrid_GreatSword_Whirlwind frame=32 world=4.783334 montage_s=0.013427 source_s=0.013427 source=/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/A_GreatSword_Whirlwind.A_GreatSword_Whirlwind sword_capsule_gap_cm=67.515003 target_radius_cm=34.000000 target_halfheight_cm=88.000000 require_authored_sword=0 sword_gate=0 limit_cm=10 criterion=abstract_capsule_intersection_timing_proxy
+[2026.11.21-11.18.21:233][286]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_Whirlwind phase=after_first_damage frame=32 world=4.783334 montage=0.013427 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordWhirlwindWideWarp/images/DA_Hybrid_GreatSword_Whirlwind_after_first_damage_328ED2CA42987B37A5802B9472316DCB.png
+[2026.11.21-11.18.22:068][286]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_Whirlwind phase=after_first_damage frame=32 world=4.783334 montage=0.013427 bytes=1074337
+[2026.11.21-11.18.22:316][361]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_Whirlwind phase=motion frame=107 world=6.033334 montage=1.020426 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordWhirlwindWideWarp/images/DA_Hybrid_GreatSword_Whirlwind_motion_328ED2CA42987B37A5802B9472316DCB.png
+[2026.11.21-11.18.23:027][361]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_Whirlwind phase=motion frame=107 world=6.033334 montage=1.020426 bytes=1119501
+[2026.11.21-11.18.23:137][411]LogRogue10m: Display: WEAPON3P CAPTURE_REQUEST skill=DA_Hybrid_GreatSword_Whirlwind phase=recovery frame=157 world=6.866667 montage=0.000000 file=D:/Project/Rogue10m/tmp/GreatSwordTechniqueWorktree20261121/tmp/MeleeVfxQARuns/SwordWhirlwindWideWarp/images/DA_Hybrid_GreatSword_Whirlwind_recovery_328ED2CA42987B37A5802B9472316DCB.png
+[2026.11.21-11.18.23:688][411]LogRogue10m: Display: WEAPON3P CAPTURE_PROCESSED skill=DA_Hybrid_GreatSword_Whirlwind phase=recovery frame=157 world=6.866667 montage=0.000000 bytes=1117806
+[2026.11.21-11.18.23:698][412]LogRogue10m: Display: RESULT=GREAT_SWORD_TECHNIQUES_PASSED completed=1 failures=0

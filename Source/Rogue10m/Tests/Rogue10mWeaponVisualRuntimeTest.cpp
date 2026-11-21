@@ -13,6 +13,7 @@
 #include "Containers/Ticker.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
+#include "Engine/GameViewportClient.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/World.h"
 #include "Engine/SkeletalMesh.h"
@@ -49,6 +50,7 @@
 #include "Rogue10mProgressionSubsystem.h"
 #include "Rogue10mSkillTreeProgressionComponent.h"
 #include "Rogue10mStylizedCharacter.h"
+#include "Rogue10mTutorialNPC.h"
 #include "Rogue10mVitalRegenerationComponent.h"
 #include "Rogue10mWeaponVisualComponent.h"
 #include "TimerManager.h"
@@ -73,6 +75,17 @@ public:
   bCapstoneBraceRender=bCapstoneBraceRun&&!bMeleeVfxLogicOnly&&FParse::Param(FCommandLine::Get(),TEXT("RogueCapstoneBraceRender"));
   bSwordEquipAudit=bMeleeVfxRun&&FParse::Value(FCommandLine::Get(),TEXT("RogueSwordEquipAppearance="),SwordEquipAppearance);
   bSwordEquipWalking=bSwordEquipAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueSwordEquipWalking"));
+  bSwordTechniqueAudit=FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordTechniqueQA"));
+  bSwordTechniqueRender=bSwordTechniqueAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordWhirlwindCapture"));
+  const bool bNullRhi=FParse::Param(FCommandLine::Get(),TEXT("nullrhi"));
+  const bool bTechniqueModeOK=bSwordTechniqueRender?(!bMeleeVfxLogicOnly&&!bNullRhi):(bMeleeVfxLogicOnly&&bNullRhi);
+  if(bSwordTechniqueAudit&&(!bMeleeVfxRun||bSwordEquipAudit||bCapstoneBraceRun||!bTechniqueModeOK))
+  {
+   bFinished=true;
+   UE_LOG(LogRogue10m,Error,TEXT("RESULT=GREAT_SWORD_TECHNIQUES_FAILED reason=select_dedicated_nullrhi_or_render_mode"));
+   FPlatformMisc::RequestExitWithStatus(false,1);
+   return;
+  }
   if(bMeleeVfxRun)
   {
    FString ProfileSlot,ProgressionPrefix,KeySlot;
@@ -89,6 +102,13 @@ public:
   }
   Output=FPaths::ProjectDir()/(bMeleeVfxRun?TEXT("tmp/MeleeVfxQARuns"):TEXT("Feature/doc/evidence/sword-knuckle-20261110"))/FPaths::MakeValidFileName(Label);
   Images=bMeleeVfxRun?Output/TEXT("images"):FPaths::ProjectDir()/TEXT("DevLog/20261110_SwordKnuckle")/FPaths::MakeValidFileName(Label);
+  if(bSwordTechniqueAudit&&IFileManager::Get().DirectoryExists(*Output))
+  {
+   bFinished=true;
+   UE_LOG(LogRogue10m,Error,TEXT("RESULT=GREAT_SWORD_TECHNIQUES_FAILED reason=fresh_output_required"));
+   FPlatformMisc::RequestExitWithStatus(false,1);
+   return;
+  }
   IFileManager::Get().MakeDirectory(*Output,true);IFileManager::Get().MakeDirectory(*Images,true);
   CaptureRunId=FGuid::NewGuid().ToString(EGuidFormats::Digits);
   bRequireAuthoredSword=FParse::Param(FCommandLine::Get(),TEXT("RogueRequireAuthoredSword"));
@@ -97,6 +117,19 @@ public:
   CaptureRows=TEXT("event,skill,phase,fixture_frame,world_s,montage_s,file,bytes\n");
   VfxRows=TEXT("event,skill,kind,fixture_frame,world_s,world_path,component_path,asset_path,attach_socket,first_seen_frame,observed_frame_delta,controller_valid,actual_sim_age_s,age_source,active,visible,registered,complete,eligible,location_x,location_y,location_z,scale_x,scale_y,scale_z,bounds_origin_x,bounds_origin_y,bounds_origin_z,bounds_extent_x,bounds_extent_y,bounds_extent_z,custom_time_dilation,damage_pulses_observed,first_observed_damage_pulse,pinned_first_impact,attach_parent_path,expected_3p_scale,third_person_parent_valid,third_person_scale_valid\n");
   MeleeVfxRows=TEXT("case,skill,frame,world_s,observed_damage,range_count,impact_count,trail_samples,trail_triangles,range_triangles,impact_triangles,tier,outline_vertices,outline_diameter_cm,capsule_surface_gap_cm\n");
+  if(bSwordTechniqueAudit)
+  {
+   SwordTechniquePoses=TEXT("case,skill,case_frame,elapsed,montage_s,montage_weight,mesh,revision,bone,x,y,z,qx,qy,qz,qw\n");
+   SwordTechniqueActor=TEXT("case,skill,case_frame,elapsed,montage_s,actor_x,actor_y,actor_z,actor_yaw\n");
+  }
+  if(bSwordTechniqueRender)
+  {
+   TechniqueViewport=GEngine?GEngine->GameViewport:nullptr;
+   Check(TechniqueViewport.IsValid(),TEXT("whirlwind_capture_game_viewport_required"));
+   if(Failures){Finish();return;}
+   bPreviousWorldRenderingDisabled=TechniqueViewport->bDisableWorldRendering;
+   TechniqueViewport->bDisableWorldRendering=true;
+  }
   if(bMeleeVfxRun)
   {
    FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self=AsShared()](float){Self->Prepare();return false;}),4.f);
@@ -106,9 +139,15 @@ public:
  bool Finished()const{return bFinished;}
 private:
  void Check(bool B,const TCHAR* Reason){if(!B){++Failures;UE_LOG(LogRogue10m,Error,TEXT("WEAPON3P FAIL skill=%d frame=%d %s"),Index,Frame,*FString(Reason));}}
- bool IsSwordCase() const {return Index<5||(Index>=10&&Index<12);}
- bool IsMeleeMissCase() const {return bMeleeVfxRun&&(Index==11||Index==13);}
- bool IsMeleeMotionCase() const {return bMeleeVfxRun&&(Index==0||Index==5||Index==10||Index==12);}
+ static constexpr int32 TechniqueCount=4;
+ bool IsSwordCase() const {return bSwordTechniqueAudit||Index<5||(Index>=10&&Index<12);}
+ bool IsMeleeMissCase() const {return bSwordTechniqueAudit?Index>=TechniqueCount:bMeleeVfxRun&&(Index==11||Index==13);}
+ bool IsMeleeMotionCase() const {return !bSwordTechniqueAudit&&bMeleeVfxRun&&(Index==0||Index==5||Index==10||Index==12);}
+ void SendSwordTechniqueKey(bool bPressed)
+ {
+  const FKey Key=CaseSlot==ERogue10mAttackInputSlot::ChargedSpecial?EKeys::RightMouseButton:EKeys::Q;
+  Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Key,bPressed?IE_Pressed:IE_Released,bPressed?1.f:0.f));
+ }
  float CaptureMontagePosition() const
  {
   const auto* Source=Character.IsValid()?Character->GetAnimationPlaybackMesh():nullptr;
@@ -135,7 +174,8 @@ private:
   bCapturePending=true;CaptureRequestedAt=FPlatformTime::Seconds();CapturePaths.Add(PendingCapturePath);
   CaptureRows+=FString::Printf(TEXT("request,%s,%s,%d,%.6f,%.6f,%s,-1\n"),*PendingCaptureSkill,*PendingCapturePhase,Frame,World.IsValid()?World->GetTimeSeconds():-1.,CaptureMontagePosition(),*PendingCapturePath);
   UE_LOG(LogRogue10m,Display,TEXT("WEAPON3P CAPTURE_REQUEST skill=%s phase=%s frame=%d world=%.6f montage=%.6f file=%s"),*PendingCaptureSkill,*PendingCapturePhase,Frame,World.IsValid()?World->GetTimeSeconds():-1.,CaptureMontagePosition(),*PendingCapturePath);
-  FScreenshotRequest::RequestScreenshot(PendingCapturePath,true,false);
+  if(TechniqueViewport.IsValid()){TechniqueViewport->bDisableWorldRendering=false;}
+  FScreenshotRequest::RequestScreenshot(PendingCapturePath,!bSwordTechniqueRender,false);
   return true;
  }
  void CaptureProcessed()
@@ -263,9 +303,58 @@ private:
   }
   return true;
  }
- bool PrepareMeleeFixture()
+ bool LearnSwordTechniqueCases()
  {
-  // StartHub uses the normal character lobby. Detach this one isolated profile after possession.
+  auto* Inventory=Character->GetInventoryComponent();
+  auto* Item=LoadObject<URogue10mItemDataAsset>(nullptr,
+   TEXT("/Game/DataAsset/Item/Starter/DA_Item_IronLongsword.DA_Item_IronLongsword"));
+  auto* State=Character->GetPlayerState<ARogue10mPlayerState>();
+  auto* Tree=State?State->GetSkillTreeProgressionComponent():nullptr;
+  TActorIterator<ARogue10mTutorialNPC> Guide(World.Get());
+  int32 Grid=INDEX_NONE;
+  FGuid ItemId;
+  const bool bReady=Inventory&&Item&&Tree&&Guide&&Character->CanChangeWeapon();
+  Check(bReady,TEXT("sword_technique_spawn_settled_and_services_ready"));
+  if(!bReady){return false;}
+  const bool bEquipped=Inventory->TryAddGridItem(Item,1,Grid,ItemId)&&Inventory->TryEquipGridItem(Grid,ItemId)
+   &&Character->GetEquippedWeaponType()==ERogue10mWeaponType::GreatSword;
+  Check(bEquipped,TEXT("sword_technique_actual_inventory_equip"));
+  if(!bEquipped){return false;}
+  Character->SetActorLocation(Guide->GetActorLocation()+FVector(100.,0.,100.),false,nullptr,ETeleportType::TeleportPhysics);
+  auto Growth=State->CaptureGrowth();
+  Growth.Level=15;
+  if(!State->RestoreGrowth(Growth)){return false;}
+  auto Snapshot=Tree->Capture();
+  auto* Mastery=Snapshot.Masteries.FindByPredicate([](const auto& Record){return Record.Track==ERogue10mSkillTreeTrack::GreatSword;});
+  if(!Mastery){Mastery=&Snapshot.Masteries.AddDefaulted_GetRef();}
+  Mastery->Track=ERogue10mSkillTreeTrack::GreatSword;
+  Mastery->TotalExperience=1045;
+  if(!Tree->Restore(Snapshot)||!Tree->CanChangeInvestments()){return false;}
+  const int32 Points=Tree->GetAvailableGrowthPoints();
+  const TCHAR* Nodes[]={TEXT("G.CrushingSlash"),TEXT("G.Whirlwind"),TEXT("G.GuardBreak"),TEXT("G.EarthSplitter")};
+  for(const TCHAR* Node:Nodes)
+  {
+   const auto* Entry=Tree->FindNode(Node);
+   if(!Entry||!Tree->TryUnlockNode(Node,ERogue10mSkillTreeUnlockRoute::Points,NAME_None))
+   {
+    FText Reason;
+    Tree->CanUnlockNode(Node,ERogue10mSkillTreeUnlockRoute::Points,NAME_None,Reason);
+    UE_LOG(LogRogue10m,Error,TEXT("GREAT_SWORD_TECHNIQUE could not learn %s reason=%s"),Node,*Reason.ToString());
+    return false;
+   }
+   auto* Skill=Entry->Skill.LoadSynchronous();
+   if(!Skill||!Skill->AttackMontage||!Tree->IsSkillGranted(Skill)){return false;}
+   if(!bSwordTechniqueRender||Skill->GetFName()==TEXT("DA_Hybrid_GreatSword_Whirlwind")){Skills.Add(Skill);}
+  }
+  if(Tree->GetAvailableGrowthPoints()!=Points-TechniqueCount){return false;}
+  if(bSwordTechniqueRender){return Skills.Num()==1;}
+  for(int32 I=0;I<TechniqueCount;++I){const auto Skill=Skills[I];Skills.Add(Skill);}
+  return true;
+ }
+
+ bool EnterMeleeProfile()
+ {
+  // StartHub uses the normal character lobby.
   auto* Instance=World->GetGameInstance();
   auto* Profiles=Instance?Instance->GetSubsystem<URogue10mCharacterProfileSubsystem>():nullptr;
   auto* Saves=Instance?Instance->GetSubsystem<URogue10mProgressionSubsystem>():nullptr;
@@ -283,6 +372,20 @@ private:
   Controller->CloseAllBlockingPanels();
   Character=Cast<ARogue10mCharacter>(Controller->GetPawn());
   if(!Character.IsValid()||!Saves->IsAttachedTo(*Character)){return false;}
+  return true;
+ }
+
+ bool PrepareMeleeFixture()
+ {
+  if(!bSwordTechniqueAudit&&!EnterMeleeProfile()){return false;}
+  auto* Instance=World->GetGameInstance();
+  auto* Saves=Instance?Instance->GetSubsystem<URogue10mProgressionSubsystem>():nullptr;
+  if(!Character.IsValid()||!Saves||!Saves->IsAttachedTo(*Character)){return false;}
+  if(bSwordTechniqueAudit&&!LearnSwordTechniqueCases())
+  {
+   Check(false,TEXT("sword_technique_inventory_and_real_point_investments_required"));
+   return false;
+  }
   Saves->DetachCharacter(*Character,false);
 
   // Use the same flat, transient test surface as the third-person and identity runtime fixtures.
@@ -318,6 +421,13 @@ private:
  void Prepare()
  {
   Controller=Cast<ARogue10mPlayerController>(World->GetFirstPlayerController());
+  if(bSwordTechniqueAudit&&!Character.IsValid())
+  {
+   Check(EnterMeleeProfile(),TEXT("sword_technique_live_profile_required"));
+   if(Failures){Finish();return;}
+   World->GetTimerManager().SetTimer(PrepareTimer,FTimerDelegate::CreateLambda([Self=AsShared()]{Self->Prepare();}),.25f,false);
+   return;
+  }
   FActorSpawnParameters P;P.SpawnCollisionHandlingOverride=ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
   if(bMeleeVfxRun)
   {
@@ -337,13 +447,13 @@ private:
    }
   }
   Character->SetCanBeDamaged(false);
-  if(!bCapstoneBraceRun&&!bSwordEquipWalking){Character->DisableInput(Controller.Get());}
+  if(!bCapstoneBraceRun&&!bSwordEquipWalking&&!bSwordTechniqueAudit){Character->DisableInput(Controller.Get());}
   Character->GetCharacterMovement()->StopMovementImmediately();
   Character->SetActorRotation(FRotator(0,0,0));Controller->SetControlRotation(FRotator(-8,0,0));
   // The current user-requested default is third person. This fixture never toggles into first person.
   Check(Character->IsThirdPersonGameplayActive(),TEXT("third_person_mode_required"));
   Character->GetMesh()->SetOwnerNoSee(false);Character->GetMesh()->SetVisibility(true,false);
-  if(bMeleeVfxLogicOnly)
+  if(bMeleeVfxLogicOnly||bSwordTechniqueRender)
   {
    Character->GetMesh()->VisibilityBasedAnimTickOption=EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
    if(auto* Playback=Character->GetAnimationPlaybackMesh())
@@ -360,6 +470,8 @@ private:
   if(auto* R=Target->FindComponentByClass<URogue10mVitalRegenerationComponent>()){R->ConfigureRegeneration(0,0,0);}
   Target->GetRogueAttributeSet()->SetMaxHealth(100000);Target->GetRogueAttributeSet()->SetHealth(100000);
   Target->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);Target->GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Pawn,ECR_Block);
+  if(!bSwordTechniqueAudit)
+  {
   for(const TCHAR* Weapon:{TEXT("GreatSword"),TEXT("Knuckle")})for(const TCHAR* Variant:{TEXT("Primary01"),TEXT("Primary02"),TEXT("Primary03"),TEXT("Special"),TEXT("Charged")})
   {
    const FString Path=FString::Printf(TEXT("/Game/DataAsset/AttackSkill/ClassCombat/%s/DA_Attack_%s_%s"),Weapon,Weapon,Variant);
@@ -389,6 +501,7 @@ private:
   for(const auto& Entry:Skills){Check(Tree->IsSkillGranted(Entry.Get()),TEXT("fixture_catalog_skill_not_granted"));}
   if(bMeleeVfxRun){UE_LOG(LogRogue10m,Display,TEXT("WEAPON3P FIXTURE progression=validated_M20_1045XP_each four_point_sword_route identity=None"));}
   else{UE_LOG(LogRogue10m,Display,TEXT("WEAPON3P FIXTURE progression=validated_M13_450XP_each automatic_grants_only identity=None"));}
+  }
   if(Failures){Finish();return;}
   TSet<UNiagaraSystem*> Effects;
   for(const auto& Entry:Skills){const auto* Skill=Entry.Get();for(UNiagaraSystem* FX:{Skill->CastEffect.Get(),Skill->ChargeEffect.Get(),Skill->ImpactEffect.Get()}){if(FX){Effects.Add(FX);}}}
@@ -403,6 +516,19 @@ private:
    FAssetCompilingManager::Get().FinishAllCompilation();
   }
   if(GShaderCompilingManager){GShaderCompilingManager->FinishAllCompilation();}
+  if(bSwordTechniqueRender)
+  {
+   const FVector Origin=Character->GetActorLocation();
+   const FVector Position=Origin-Character->GetActorForwardVector()*290.-Character->GetActorRightVector()*300.+FVector(0,0,65);
+   const FVector Focus=Origin+FVector(0,0,35);
+   FActorSpawnParameters CameraParams;
+   CameraParams.ObjectFlags|=RF_Transient;
+   auto* Camera=World->SpawnActor<ACameraActor>(Position,(Focus-Position).Rotation(),CameraParams);
+   Check(Camera!=nullptr,TEXT("whirlwind_capture_fixed_camera_spawned"));
+   if(!Camera){Finish();return;}
+   Camera->GetCameraComponent()->SetFieldOfView(63.f);
+   Controller->SetViewTarget(Camera);
+  }
   OldFixed=FApp::UseFixedTimeStep();OldDelta=FApp::GetFixedDeltaTime();FApp::SetUseFixedTimeStep(true);FApp::SetFixedDeltaTime(1./60.);bOwnFixed=true;
   ScreenshotProcessed=FScreenshotRequest::OnScreenshotRequestProcessed().AddLambda([Self=AsShared()]{Self->CaptureProcessed();});
   Tick=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* W,ELevelTick,float){if(W==Self->World.Get()){Self->Step();}});
@@ -967,7 +1093,7 @@ private:
  {
   if(Index>=Skills.Num()){Finish();return;}
   auto* C=Character->GetCombatComponent();C->CancelBoundSkillInput();C->CancelCombatVisuals();
-  Character->RestoreEquippedWeaponType(IsSwordCase()?ERogue10mWeaponType::GreatSword:ERogue10mWeaponType::Knuckle);
+  if(!bSwordTechniqueAudit){Character->RestoreEquippedWeaponType(IsSwordCase()?ERogue10mWeaponType::GreatSword:ERogue10mWeaponType::Knuckle);}
   const UClass* BodyClass=Character->GetMesh()->GetAnimClass();
   const bool SwordRetarget=BodyClass&&BodyClass->GetPathName().Contains(TEXT("/GreatSword20261110/ABP_Human_GreatSword"));
   Check(IsSwordCase()?SwordRetarget:!SwordRetarget,TEXT("weapon_specific_body_retarget_selection_failed"));
@@ -977,6 +1103,10 @@ private:
   auto* Skill=Skills[Index].Get();
   const FVector Right=FVector::CrossProduct(FVector::UpVector,Forward);
   FVector TargetOffset=Forward*110.;
+  if(bSwordTechniqueAudit&&!IsMeleeMissCase()&&Skill->AttackShape==ERogue10mAttackShape::Circle)
+  {
+   TargetOffset=Forward*(Skill->CircleForwardOffset-0.40*Skill->AttackRange)+Right*55.;
+  }
   if(IsMeleeMissCase())
   {
    const double Radius=Target->GetCapsuleComponent()->GetScaledCapsuleRadius();
@@ -992,9 +1122,19 @@ private:
   UE_LOG(LogRogue10m,Display,TEXT("WEAPON3P TARGET skill=%s combat_origin=%s aim=%s grounded_target=%s"),*Skills[Index]->GetName(),*CombatView.GetLocation().ToCompactString(),*Forward.ToCompactString(),*CloseTarget.ToCompactString());
   Check(C->IsAttackSkillUnlocked(Skill),TEXT("fixture_catalog_unlock_failed"));
   auto* Basic=C->GetEquippedSkill(ERogue10mAttackInputSlot::Primary);
-  Check(Basic==Skills[IsSwordCase()?0:5].Get(),TEXT("production_primary_binding_changed"));
+  Check(bSwordTechniqueAudit?(Basic&&Basic->GetFName()==TEXT("DA_Attack_GreatSword_Primary01")):
+   Basic==Skills[IsSwordCase()?0:5].Get(),TEXT("production_primary_binding_changed"));
   CaseSlot=ERogue10mAttackInputSlot::Primary;Chain.Reset();ChainStep=0;ChainAcceptedAt=-1.;ChainNextAt=-1.;
-  if(Skill!=Basic)
+  if(bSwordTechniqueAudit)
+  {
+   CaseSlot=Skill->RequiresLoadoutCharge()?ERogue10mAttackInputSlot::ChargedSpecial:ERogue10mAttackInputSlot::QSkill;
+   Check(C->CanEquipSkillInSlot(Skill,CaseSlot)&&C->AssignSkillToInputSlot(Skill,CaseSlot)
+    &&C->GetEquippedSkill(CaseSlot)==Skill,TEXT("confirmed_technique_assigned_to_actual_q_or_rmb_lane"));
+   UE_LOG(LogRogue10m,Display,TEXT("GREAT_SWORD_TECHNIQUE case=%d skill=%s miss=%d shape=%s range=%.3f circle_offset=%.3f charge_s=%.6f target_offset=%s"),
+    Index,*Skill->GetName(),IsMeleeMissCase(),*UEnum::GetValueAsString(Skill->AttackShape),Skill->AttackRange,
+    Skill->CircleForwardOffset,Skill->ChargeSeconds,*TargetOffset.ToCompactString());
+  }
+  else if(Skill!=Basic)
   {
    bool bAssigned=false;
    const ERogue10mAttackInputSlot Preferred[]={ERogue10mAttackInputSlot::Primary,ERogue10mAttackInputSlot::QSkill,ERogue10mAttackInputSlot::ESkill,ERogue10mAttackInputSlot::Special,ERogue10mAttackInputSlot::ChargedSpecial};
@@ -1108,6 +1248,7 @@ private:
  void Step()
  {
   if(bFinished){return;}
+  if(TechniqueViewport.IsValid()){TechniqueViewport->bDisableWorldRendering=!FScreenshotRequest::IsScreenshotRequested();}
   if(bCapturePending&&FPlatformTime::Seconds()-CaptureRequestedAt>30.)
   {
    Check(false,TEXT("screenshot_processing_timeout"));
@@ -1133,7 +1274,7 @@ private:
   const double CapsuleBottomZ=Character->GetActorLocation().Z-Character->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
   const double FootAboveCapsuleBottomCm=MinFootZ-CapsuleBottomZ;
   const bool Charged=Skill->RequiresLoadoutCharge();
-  if(!AttackSent&&Age>=1.)
+  if(!AttackSent&&Age>=(bSwordTechniqueRender?.35:1.))
   {
    if(!bReadyRequested)
    {
@@ -1148,9 +1289,16 @@ private:
    // CancelCombatVisuals does not erase the real shared cooldown.
    if(C->GetAttackCooldownRemaining()>0.f||C->IsWeaponChangeBlocked()){return;}
    if(!Chain.IsEmpty()){ChainUses=Character->GetPlayerState<ARogue10mPlayerState>()->GetSkillUseCount(Chain[0]->GetFName());}
-   BaselineVfx();C->HandleEquippedSkillPressed(CaseSlot);AttackSent=true;Pressed=Now;
+   BaselineVfx();
+   if(bSwordTechniqueAudit){SendSwordTechniqueKey(true);}else{C->HandleEquippedSkillPressed(CaseSlot);}
+   AttackSent=true;Pressed=Now;
   }
-  if(AttackSent&&Charged&&!ChargeReleased&&Now-Pressed>Skill->ChargeSeconds+.05){BaselineVfx();C->HandleEquippedSkillReleased(CaseSlot);ChargeReleased=true;}
+  if(AttackSent&&!ChargeReleased&&(Charged?Now-Pressed>Skill->ChargeSeconds+.05:bSwordTechniqueAudit&&Now-Pressed>.025))
+  {
+   if(Charged){BaselineVfx();}
+   if(bSwordTechniqueAudit){SendSwordTechniqueKey(false);}else{C->HandleEquippedSkillReleased(CaseSlot);}
+   ChargeReleased=true;
+  }
   if(AttackSent&&!Chain.IsEmpty()&&ChainStep<Chain.Num()-1)
   {
    auto* Precursor=Chain[ChainStep].Get();
@@ -1252,10 +1400,15 @@ private:
    UE_LOG(LogRogue10m,Display,TEXT("WEAPON3P DAMAGE skill=%s pulse=%d elapsed=%.6f expected=%.6f blade_target_cm=%.3f"),*Skill->GetName(),PulseCount,Now-Accepted,Expected,BladeDistance);
   }
   PreviousHealth=Health;
-  const bool bMeleeContact=bMeleeVfxRun&&Accepted>=0&&ObserveMeleeVfx(*Skill,Now,Drop);
+  const bool bMeleeContact=bSwordTechniqueAudit?(Accepted>=0&&(PulseCount>0||IsMeleeMissCase()))
+   :bMeleeVfxRun&&Accepted>=0&&ObserveMeleeVfx(*Skill,Now,Drop);
   if((bMeleeVfxRun?bMeleeContact:PulseCount>0)&&!bFirstDamageRequested&&!bCapturePending)
   {
    bFirstDamageRequested=Capture(IsMeleeMissCase()?TEXT("contact_miss"):TEXT("after_first_damage"));
+  }
+  else if(bSwordTechniqueRender&&Playing&&bFirstDamageCaptured&&!bMotionRequested&&!bCapturePending&&MontageTime>=1.02)
+  {
+   bMotionRequested=Capture(TEXT("motion"));
   }
   else if(IsMeleeMotionCase()&&Accepted>=0&&!bMotionRequested&&!bCapturePending
    &&TrailTrianglesThisFrame>0&&Frame>FirstTrailMeshFrame
@@ -1274,6 +1427,29 @@ private:
    UE_LOG(LogRogue10m,Error,TEXT("WEAPON3P VFX_TIMEOUT skill=%s frame=%d acceptance_requested=%d impact_requested=%d elapsed=%.6f"),*Skill->GetName(),Frame,bAcceptanceRequested?1:0,bImpactResidualRequested?1:0,Now-Accepted);
   }
   Rows+=FString::Printf(TEXT("%d,%.6f,%s,%s,%.6f,%.3f,%.3f,%.6f,%.6f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%s\n"),Frame,Now,*Skill->GetName(),Accepted<0?TEXT("ready"):Playing?TEXT("attack"):TEXT("recovery"),MontageTime,Health,Drop,Accepted<0?-1:Now-Accepted,Expected,BladeDistance,RH.X,RH.Y,RH.Z,LH.X,LH.Y,LH.Z,Base.X,Base.Y,Base.Z,Tip.X,Tip.Y,Tip.Z,MinFootZ,CapsuleBottomZ,FootAboveCapsuleBottomCm,TargetCenter.X,TargetCenter.Y,TargetCenter.Z,TargetRadius,TargetHalfHeight,TargetUp.X,TargetUp.Y,TargetUp.Z,SwordCapsuleGap,MontageSourceTime,*MontageSourcePath);
+  if(bSwordTechniqueAudit&&Accepted>=0)
+  {
+   const auto* Instance=Anim?Anim->GetActiveInstanceForMontage(Skill->AttackMontage):nullptr;
+   const FString Sample=FString::Printf(TEXT("%d,%s,%d,%.6f,%.6f,%.6f"),Index,*Skill->GetName(),
+    Frame,Now-Accepted,MontageTime,Instance?Instance->GetWeight():0.f);
+   const FVector Actor=Character->GetActorLocation();
+   SwordTechniqueActor+=FString::Printf(TEXT("%d,%s,%d,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f\n"),Index,*Skill->GetName(),
+    Frame,Now-Accepted,MontageTime,Actor.X,Actor.Y,Actor.Z,Character->GetActorRotation().Yaw);
+   static const FName Bones[]={TEXT("pelvis"),TEXT("head"),TEXT("upperarm_r"),TEXT("upperarm_l"),TEXT("hand_r"),TEXT("hand_l"),TEXT("foot_r"),TEXT("foot_l")};
+   const USkeletalMeshComponent* Meshes[]={Source,Character->GetMesh()};
+   for(const auto* Mesh:Meshes)
+   {
+    for(const FName Bone:Bones)
+    {
+     const FTransform Pose=Mesh->GetBoneTransform(Bone,RTS_Component);
+     Check(!Pose.ContainsNaN()&&Mesh->GetBoneIndex(Bone)!=INDEX_NONE,TEXT("learned_technique_source_and_visible_bones_are_finite"));
+     const FVector P=Pose.GetLocation();
+     const FQuat Q=Pose.GetRotation();
+     SwordTechniquePoses+=FString::Printf(TEXT("%s,%s,%u,%s,%.4f,%.4f,%.4f,%.7f,%.7f,%.7f,%.7f\n"),
+      *Sample,Mesh==Source?TEXT("manny"):TEXT("visible"),Mesh->GetBoneTransformRevisionNumber(),*Bone.ToString(),P.X,P.Y,P.Z,Q.X,Q.Y,Q.Z,Q.W);
+    }
+   }
+  }
   if(Accepted>=0&&!Playing&&Now-Accepted>Expected+.7&&!C->IsWeaponChangeBlocked())
   {
    if(bCapturePending){return;}
@@ -1281,7 +1457,8 @@ private:
    const int32 Wanted=IsMeleeMissCase()?0:Skill->HitMode==ERogue10mAttackHitMode::Single?1:Skill->HitCount;
    Check(PulseCount==Wanted,TEXT("actual_damage_count_mismatch"));Check(MontageSamples>5,TEXT("montage_instance_not_playing_enough_samples"));
    Check(RenderedHandMaxTravelCm>2.,TEXT("rendered_body_hand_motion_missing"));Check(bFirstDamageCaptured,TEXT("after_first_damage_capture_not_completed"));
-   if(bMeleeVfxRun){CheckMeleeVfxRecovery();}
+   if(bSwordTechniqueRender){Check(bMotionCaptured,TEXT("whirlwind_rendered_sweep_missing"));}
+   if(bMeleeVfxRun&&!bSwordTechniqueAudit){CheckMeleeVfxRecovery();}
    bRecoveryRequested=true;if(!Capture(TEXT("recovery"))){Finish();return;}
   }
   else if(Accepted<0&&AttackSent&&Now-Pressed>16.){Check(false,TEXT("attack_not_accepted"));++Index;Next();}
@@ -1290,6 +1467,7 @@ private:
  {
   if(bFinished)return;
   if(bCapturePending){bFinishRequested=true;return;}
+  if(TechniqueViewport.IsValid()){TechniqueViewport->bDisableWorldRendering=bPreviousWorldRenderingDisabled;}
   bFinished=true;FWorldDelegates::OnWorldPostActorTick.Remove(Tick);FScreenshotRequest::OnScreenshotRequestProcessed().Remove(ScreenshotProcessed);
   if(bSwordEquipAudit)
   {
@@ -1306,7 +1484,15 @@ private:
   }
   if(bCapstoneBraceRun){FinishCapstoneBrace();return;}
   for(const FString& Path:CapturePaths){Check(IFileManager::Get().FileSize(*Path)>0,TEXT("final_screenshot_file_missing_or_empty"));}
-  const int32 ExpectedCases=bMeleeVfxRun?14:10,ExpectedCaptures=bMeleeVfxLogicOnly?0:(bMeleeVfxRun?46:34);
+  const int32 ExpectedCases=bSwordTechniqueAudit?(bSwordTechniqueRender?1:TechniqueCount*2):bMeleeVfxRun?14:10;
+  const int32 ExpectedCaptures=bMeleeVfxLogicOnly?0:(bSwordTechniqueRender?4:bMeleeVfxRun?46:34);
+  if(bSwordTechniqueAudit)
+  {
+   Check(FFileHelper::SaveStringToFile(SwordTechniquePoses,*(Output/TEXT("technique-poses.csv"))),
+    TEXT("sword_technique_source_and_visible_trajectory_saved"));
+   Check(FFileHelper::SaveStringToFile(SwordTechniqueActor,*(Output/TEXT("technique-actor.csv"))),
+    TEXT("sword_technique_capsule_trajectory_saved"));
+  }
   if(Index==ExpectedCases){Check(CapturePaths.Num()==ExpectedCaptures&&CompletedCaptures==ExpectedCaptures,TEXT("all_phase_captures_required"));}
   if(bRequireAuthoredSword){Check(AuthoredSwordValidated==5&&SwordFirstDamageChecks==5,TEXT("all_five_authored_sword_contracts_and_first_damage_gates_required"));}
   Check(FFileHelper::SaveStringToFile(Rows,*(Output/TEXT("frames.csv"))),TEXT("frame_evidence_save_failed"));
@@ -1325,10 +1511,13 @@ private:
    TEXT("Capture mode: %s. A capsule measurement is a collision proxy and visual quality requires inspecting the rendered PNGs.\n"),
    Frame,Failures,Index,CapturePaths.Num(),CompletedCaptures,bRequireAuthoredSword?1:0,AuthoredSwordValidated,SwordFirstDamageChecks,
    bMeleeVfxLogicOnly?TEXT("NullRHI, numeric phases only"):TEXT("rendered PNGs"));
-  Check(FFileHelper::SaveStringToFile(bMeleeVfxRun?MeleeSummary:Summary,*(Output/TEXT("metrics.txt"))),TEXT("summary_evidence_save_failed"));
+  const FString TechniqueSummary=FString::Printf(TEXT("completed_skills=%d\nfailures=%d\nframes=%d\nNOTE=%s Real Q/RMB controller input, Manny and visible pose.\n"),Index,Failures,Frame,
+   bSwordTechniqueRender?TEXT("One Whirlwind case with a rear target and rendered phases."):TEXT("Four learned GreatSword skills, each inside and outside its combat query."));
+  Check(FFileHelper::SaveStringToFile(bSwordTechniqueAudit?TechniqueSummary:bMeleeVfxRun?MeleeSummary:Summary,*(Output/TEXT("metrics.txt"))),TEXT("summary_evidence_save_failed"));
   if(bOwnFixed){FApp::SetUseFixedTimeStep(OldFixed);FApp::SetFixedDeltaTime(OldDelta);}
   const bool Passed=Failures==0&&Index==ExpectedCases;
-  const TCHAR* ResultName=bMeleeVfxLogicOnly?TEXT("MELEE_VFX_LOGIC"):(bMeleeVfxRun?TEXT("MELEE_VFX"):TEXT("WEAPON_THIRDPERSON"));
+  const TCHAR* ResultName=bSwordTechniqueAudit?TEXT("GREAT_SWORD_TECHNIQUES"):
+   bMeleeVfxLogicOnly?TEXT("MELEE_VFX_LOGIC"):(bMeleeVfxRun?TEXT("MELEE_VFX"):TEXT("WEAPON_THIRDPERSON"));
   UE_LOG(LogRogue10m,Display,TEXT("RESULT=%s_%s completed=%d failures=%d"),ResultName,
    Passed?TEXT("PASSED"):TEXT("FAILED"),Index,Failures);
   FPlatformMisc::RequestExitWithStatus(false,Passed?0:1);
@@ -1340,7 +1529,10 @@ private:
  TArray<TWeakObjectPtr<UNiagaraComponent>> VfxExcluded;
  TMap<TWeakObjectPtr<UNiagaraComponent>,FVfxObservation> VfxObservations;FString VfxRows;bool bVfxTimedOut=false;
  FString MeleeVfxRows;
- FString SwordEquipAppearance,SwordEquipRows;
+ FString SwordEquipAppearance,SwordEquipRows,SwordTechniquePoses,SwordTechniqueActor;
+ TWeakObjectPtr<UGameViewportClient> TechniqueViewport;
+ bool bPreviousWorldRenderingDisabled=false;
+ bool bSwordTechniqueAudit=false,bSwordTechniqueRender=false;
  int32 SwordEquipGrid=INDEX_NONE;
  FGuid SwordEquipItem;
  bool bSwordEquipAudit=false,bSwordEquipWalking=false;
