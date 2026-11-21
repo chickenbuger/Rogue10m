@@ -69,6 +69,11 @@ static bool IsSafeSequence(const UAnimSequenceBase* Sequence, TSet<const UAnimSe
 }
 }
 
+namespace
+{
+constexpr double PlayerHitReactionSeconds = 0.25;
+}
+
 bool URogue10mCharacterAnimationComponent::IsHeadViewSafeAttackMontage(const UAnimMontage* Montage)
 {
 	TSet<const UAnimSequenceBase*> Visiting;
@@ -157,6 +162,7 @@ void URogue10mCharacterAnimationComponent::NotifyDodge(const FVector& Direction,
 void URogue10mCharacterAnimationComponent::StopMotionEffects()
 {
 	ResetFighterCombatStance();
+	NonlethalHitStartedAt = -1.0;
 	bMovementInputActive = false;
 	bSprintActive = false;
 	bNextFootstepRight = false;
@@ -164,6 +170,33 @@ void URogue10mCharacterAnimationComponent::StopMotionEffects()
 	{
 		World->GetTimerManager().ClearTimer(FootstepTimerHandle);
 	}
+}
+
+void URogue10mCharacterAnimationComponent::NotifyNonlethalHit(const FVector& ShotDirection)
+{
+	const auto* Character = GetOwnerCharacter();
+	const auto* World = GetWorld();
+	const auto* Movement = Character ? Character->GetCharacterMovement() : nullptr;
+	if (!World || !Movement || !Movement->IsMovingOnGround() || !Character->IsThirdPersonGameplayActive()
+		|| Character->IsDodging() || Character->IsDead()) { return; }
+
+	const double Now = World->GetTimeSeconds();
+	// Let one short response reach neutral. Rapid accepted hits still follow normal damage and interruption.
+	if (NonlethalHitStartedAt >= 0.0 && Now - NonlethalHitStartedAt < PlayerHitReactionSeconds) { return; }
+	NonlethalHitStartedAt = Now;
+	bNonlethalHitFromRear = !ShotDirection.ContainsNaN()
+		&& FVector::DotProduct(ShotDirection.GetSafeNormal2D(), Character->GetActorForwardVector()) > 0.25;
+}
+
+bool URogue10mCharacterAnimationComponent::GetNonlethalHitPresentation(float& AgeSeconds, bool& bFromRear) const
+{
+	const auto* World = GetWorld();
+	if (!World || NonlethalHitStartedAt < 0.0) { return false; }
+	const double Age = World->GetTimeSeconds() - NonlethalHitStartedAt;
+	if (Age < 0.0 || Age >= PlayerHitReactionSeconds) { return false; }
+	AgeSeconds = static_cast<float>(Age);
+	bFromRear = bNonlethalHitFromRear;
+	return true;
 }
 
 void URogue10mCharacterAnimationComponent::RequestFighterCombatStance(float BusySeconds)

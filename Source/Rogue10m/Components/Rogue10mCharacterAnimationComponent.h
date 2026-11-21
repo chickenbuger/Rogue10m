@@ -25,6 +25,8 @@ public:
 	void NotifyLanded();
 	float GetSecondJumpPresentationAge() const;
 	void NotifyDodge(const FVector& Direction, bool bRoll, float Duration);
+	void NotifyNonlethalHit(const FVector& ShotDirection);
+	bool GetNonlethalHitPresentation(float& AgeSeconds, bool& bFromRear) const;
 	void StopMotionEffects();
 	/** Accepted attacks, charging and dodges keep the fighter's guard ready briefly. */
 	void RequestFighterCombatStance(float BusySeconds = 0.0f);
@@ -68,4 +70,6 @@ private:
 	bool bFighterCombatChargeHeld = false;
 	float FighterCombatReadyUntil = -1.0f;
 	double SecondJumpPresentationStartedAt = -1.0;
+	double NonlethalHitStartedAt = -1.0;
+	bool bNonlethalHitFromRear = false;
 };

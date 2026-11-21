@@ -118,6 +118,8 @@ void FRogue10mViewAlignedUpperBodyProxy::Initialize(UAnimInstance* InAnimInstanc
 	SecondJumpAge = -1.0f;
 	SecondJumpInterruptionWeight = 1.0f;
 	bSecondJumpPoseEvaluated = false;
+	NonlethalHitSequence = nullptr;
+	NonlethalHitAge = NonlethalHitWeight = 0.0f;
 	SmoothedHeadResidual = SmoothedNeckResidual = FQuat::Identity;
 	HeadAimInMesh = HeadWorldAim = FQuat::Identity;
 	HeadSourceMeshRotation = FQuat::Identity;
@@ -140,6 +142,7 @@ void FRogue10mViewAlignedUpperBodyProxy::PreUpdate(UAnimInstance* InAnimInstance
 	bWeightedHandContextValid = false;
 	bUseWeightedAimFollow = false;
 	CaptureCapstoneBrace(bContextValid ? Character : nullptr, Instance, DeltaSeconds);
+	CaptureNonlethalHit(bContextValid ? Character : nullptr, Instance);
 	RollSequence = nullptr;
 	SecondJumpSequence = nullptr;
 	FVector RollDirection;
@@ -414,6 +417,7 @@ bool FRogue10mViewAlignedUpperBodyProxy::Evaluate_WithRoot(FPoseContext& Output,
 	}
 	if (CapstoneBraceWeight > UE_SMALL_NUMBER) { ApplyCapstoneBrace(Output); }
 	if (SecondJumpSequence) { ApplySecondJumpPose(Output); }
+	if (NonlethalHitSequence) { ApplyNonlethalHit(Output); }
 	if (bApplyAim) { ApplyViewAim(Output.Pose); }
 	if (bApplyWeightedHandMotion) { ApplyWeightedHandMotion(Output.Pose); }
 	if (bApplyMouseHead) { ApplyMouseDrivenHead(Output.Pose); }
@@ -447,7 +451,7 @@ void FRogue10mViewAlignedUpperBodyProxy::RebuildBoneCache(const FBoneContainer& 
 		return MeshIndex == INDEX_NONE ? FCompactPoseBoneIndex(INDEX_NONE)
 			: Bones.MakeCompactPoseIndex(FMeshPoseBoneIndex(MeshIndex));
 	};
-	Spine[0] = Find(TEXT("spine_01")); Spine[1] = Find(TEXT("spine_02")); Spine[2] = Find(TEXT("spine_03"));
+	Spine[0] = Find(TEXT("spine_01")); Spine[1] = Find(TEXT("spine_02")); Spine[2] = Find(TEXT("spine_03")); Spine[3] = Find(TEXT("spine_04"));
 	UpperArm[0] = Find(TEXT("upperarm_l")); UpperArm[1] = Find(TEXT("upperarm_r"));
 	Neck = Find(TEXT("neck_01")); Head = Find(TEXT("head"));
 	Hand[0] = Find(TEXT("hand_l")); Hand[1] = Find(TEXT("hand_r"));
@@ -589,6 +593,49 @@ void FRogue10mViewAlignedUpperBodyProxy::ApplySecondJumpPose(FPoseContext& Outpu
 		if (Applied.AngularDistance(FQuat::Identity) <= UE_KINDA_SMALL_NUMBER) { continue; }
 		Output.Pose[Bone].SetRotation((Output.Pose[Bone].GetRotation() * Applied).GetNormalized());
 		bSecondJumpPoseEvaluated = true;
+	}
+}
+
+void FRogue10mViewAlignedUpperBodyProxy::CaptureNonlethalHit(const ARogue10mCharacter* Character,
+	const URogue10mFighterCombatStanceAnimInstance* Instance)
+{
+	NonlethalHitSequence = nullptr;
+	const auto* Source = Instance ? Instance->GetSkelMeshComponent() : nullptr;
+	const auto* Movement = Character ? Character->GetCharacterMovement() : nullptr;
+	const auto* Animation = Character ? Character->GetCharacterAnimationComponent() : nullptr;
+	if (!Animation || !Movement || !Movement->IsMovingOnGround() || Character->IsDodging()
+		|| !Character->IsThirdPersonGameplayActive() || !Source || Source != Character->GetAnimationPlaybackMesh()) { return; }
+	bool bFromRear = false;
+	if (!Animation->GetNonlethalHitPresentation(NonlethalHitAge, bFromRear)) { return; }
+
+	const auto* Sequence = bFromRear ? Instance->CachedNonlethalRear.Get() : Instance->CachedNonlethalFront.Get();
+	const auto* Mesh = Source->GetSkeletalMeshAsset();
+	NonlethalHitWeight = FMath::Clamp(Instance->NonlethalReactionStrength, 0.0f, 1.0f);
+	if (Sequence && Mesh && Sequence->GetSkeleton() == Mesh->GetSkeleton()
+		&& Sequence->IsValidAdditive() && Sequence->GetAdditiveAnimType() == AAT_LocalSpaceBase
+		&& NonlethalHitAge <= Sequence->GetPlayLength() && NonlethalHitWeight > UE_SMALL_NUMBER)
+	{
+		NonlethalHitSequence = Sequence;
+	}
+}
+
+void FRogue10mViewAlignedUpperBodyProxy::ApplyNonlethalHit(FPoseContext& Output)
+{
+	const FBoneContainer& Bones = Output.Pose.GetBoneContainer();
+	if (!bBoneCacheValid || BoneCacheSerial != Bones.GetSerialNumber()) { RebuildBoneCache(Bones); }
+	FPoseContext Reaction(Output, true);
+	Reaction.ResetToAdditiveIdentity();
+	FAnimationPoseData ReactionData(Reaction);
+	NonlethalHitSequence->GetAnimationPose(ReactionData, FAnimExtractContext(NonlethalHitAge, false));
+	// Apply the Blender-authored spine rotations only. Hands inherit the torso movement;
+	// the base pose owns roots, leg contacts, hand articulation, curves and attributes.
+	for (const FCompactPoseBoneIndex Bone : Spine)
+	{
+		if (!Output.Pose.IsValidIndex(Bone)) { continue; }
+		const FQuat Delta = Reaction.Pose[Bone].GetRotation();
+		if (Delta.ContainsNaN()) { continue; }
+		const FQuat Applied = FQuat::Slerp(FQuat::Identity, Delta, NonlethalHitWeight);
+		Output.Pose[Bone].SetRotation((Applied * Output.Pose[Bone].GetRotation()).GetNormalized());
 	}
 }
 

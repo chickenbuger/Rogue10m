@@ -11,12 +11,14 @@
 #include "Camera/PlayerCameraManager.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SceneComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Containers/Ticker.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"
 #include "Engine/GameViewportClient.h"
+#include "Engine/HitResult.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
@@ -36,6 +38,7 @@
 #include "NiagaraSystem.h"
 #include "Rogue10m.h"
 #include "Rogue10mAppearanceCameraComponent.h"
+#include "Rogue10mAttributeSet.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCharacterAnimationComponent.h"
 #include "Rogue10mCharacterMotionDataAsset.h"
@@ -92,6 +95,25 @@ static const TCHAR* MotionCaseNames[]={TEXT("sword_guard_to_walk"),TEXT("sword_g
  TEXT("unarmed_punch_still"),TEXT("unarmed_punch_to_walk"),TEXT("sword_charge_to_swing")};
 static const FName MotionBones[]={TEXT("pelvis"),TEXT("spine_03"),TEXT("hand_l"),TEXT("hand_r"),TEXT("foot_l"),TEXT("foot_r")};
 
+struct FPlayerHitPoseCase
+{
+ const TCHAR* Name;
+ bool bAttack;
+ int32 IncomingSide;
+ bool bBlocked=false;
+ bool bRepeat=false;
+ bool bVisualControl=false;
+};
+static constexpr FPlayerHitPoseCase PlayerHitPoseCases[]={
+ {TEXT("idle_control"),false,0},{TEXT("front_idle"),false,1},{TEXT("rear_idle"),false,-1},
+ {TEXT("attack_control"),true,0},{TEXT("front_interrupted_stock"),true,1,false,false,true},
+ {TEXT("front_interrupted_attack"),true,1},
+ {TEXT("blocked_front"),false,1,true},{TEXT("rapid_front_rear"),false,1,false,true}
+};
+static const FName PlayerHitPoseBones[]={TEXT("root"),TEXT("pelvis"),TEXT("spine_01"),TEXT("spine_03"),
+ TEXT("neck_01"),TEXT("head"),TEXT("clavicle_l"),TEXT("clavicle_r"),TEXT("upperarm_l"),TEXT("upperarm_r"),
+ TEXT("lowerarm_l"),TEXT("lowerarm_r"),TEXT("hand_l"),TEXT("hand_r"),TEXT("foot_l"),TEXT("foot_r")};
+
 static bool IsPacedSwordGuard(EMotionCase Case)
 {
  return Case==EMotionCase::SwordGuard300Long||Case==EMotionCase::SwordGuard300;
@@ -146,10 +168,12 @@ public:
   FParse::Value(Args,TEXT("RogueThirdPersonQALabel="),Label);FParse::Value(Args,TEXT("RogueProfileSaveSlot="),Town);FParse::Value(Args,TEXT("RogueProgressionSavePrefix="),Prefix);FParse::Value(Args,TEXT("RogueSkillKeySaveSlot="),Keys);
   bCombatMotion=FParse::Param(Args,TEXT("RogueThirdPersonCombatMotionQA"));
   bCombatMotionCapture=bCombatMotion&&FParse::Param(Args,TEXT("RogueThirdPersonCombatMotionCapture"));
+  bPlayerHitMotion=FParse::Param(Args,TEXT("RoguePlayerHitMotionQA"));
+  bPlayerHitMotionRender=bPlayerHitMotion&&FParse::Param(Args,TEXT("RoguePlayerHitMotionCapture"));
   bDoubleJumpMotion=FParse::Param(Args,TEXT("RogueThirdPersonDoubleJumpQA"));
   bDoubleJumpCapture=bDoubleJumpMotion&&FParse::Param(Args,TEXT("RogueThirdPersonDoubleJumpCapture"));
   bExpectSecondJumpPose=FParse::Param(Args,TEXT("RogueExpectSecondJumpPose"));
-  if(bDoubleJumpMotion&&(bCombatMotion||bDoubleJumpCapture==FParse::Param(Args,TEXT("nullrhi"))))
+  if(bDoubleJumpMotion&&(bPlayerHitMotion||bCombatMotion||bDoubleJumpCapture==FParse::Param(Args,TEXT("nullrhi"))))
   {UE_LOG(LogRogue10m,Error,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_FAILED reason=jump_audit_requires_its_own_explicit_capture_or_nullrhi_run"));FPlatformMisc::RequestExitWithStatus(false,1);return;}
   bool Valid=!Label.IsEmpty()&&Label.Len()<=24;for(TCHAR C:Label)Valid&=FChar::IsAlnum(C)||C==TEXT('_');
   TArray<FString> Existing;IFileManager::Get().FindFiles(Existing,*(FPaths::ProjectSavedDir()/TEXT("SaveGames")/(Prefix+TEXT("_*.sav"))),true,false);
@@ -157,7 +181,7 @@ public:
   {UE_LOG(LogRogue10m,Error,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_FAILED reason=exact_fresh_QA_namespace_required"));FPlatformMisc::RequestExitWithStatus(false,1);return;}
   Output=FPaths::ProjectDir()/TEXT("DevLog/20261110_ThirdPerson")/Label;
   if(IFileManager::Get().DirectoryExists(*Output)){UE_LOG(LogRogue10m,Error,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_FAILED reason=fresh_evidence_required"));FPlatformMisc::RequestExitWithStatus(false,1);return;}
-  IFileManager::Get().MakeDirectory(*Output,true);bRendered=!FParse::Param(Args,TEXT("nullrhi"));Deadline=FPlatformTime::Seconds()+180.;Frames=TEXT("frame,stage,dodging,view_x,view_y,view_z,actor_x,actor_y,actor_z,fov\n");
+  IFileManager::Get().MakeDirectory(*Output,true);bRendered=!FParse::Param(Args,TEXT("nullrhi"));Deadline=FPlatformTime::Seconds()+(bPlayerHitMotionRender?660.:180.);Frames=TEXT("frame,stage,dodging,view_x,view_y,view_z,actor_x,actor_y,actor_z,fov\n");
   FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self=AsShared()](float){if(Self->bFinished)return false;if(FPlatformTime::Seconds()>Self->Deadline){Self->Check(false,TEXT("watchdog"));Self->Finish();return false;}if(Self->Next&&FPlatformTime::Seconds()>=Self->NextAt){auto Work=MoveTemp(Self->Next);Work();}return !Self->bFinished;}),.01f);
   Cleanup=FWorldDelegates::OnWorldCleanup.AddLambda([Self=AsShared()](UWorld* X,bool,bool){if(X==Self->World.Get()&&!Self->bFinished){Self->Check(false,TEXT("early_world_cleanup"));Self->Finish(false);}});Later(3.,[this]{Prepare();});
  }
@@ -165,7 +189,7 @@ private:
  void Check(bool Value,const TCHAR* Why){++Checks;if(!Value){++Failures;Results+=FString(TEXT("FAIL "))+Why+TEXT("\n");if(Failures<25)UE_LOG(LogRogue10m,Error,TEXT("THIRD_PERSON FAIL %s"),Why);}}
  void Later(double Delay,TFunction<void()> Work){NextAt=FPlatformTime::Seconds()+Delay;Next=MoveTemp(Work);}
  void Key(FKey K,bool Down){if(PC.IsValid())PC->InputKey(FInputKeyEventArgs::CreateSimulated(K,Down?IE_Pressed:IE_Released,Down?1.f:0.f));}
- void Photo(const TCHAR* Name){if(!bRendered)return;Check(PendingPhoto.IsEmpty(),TEXT("previous_capture_completed"));PendingPhoto=Name;++RequestedPhotos;FScreenshotRequest::RequestScreenshot(Output/Name,!bCombatMotionCapture&&!bDoubleJumpCapture,false);}
+ void Photo(const TCHAR* Name){if(!bRendered)return;Check(PendingPhoto.IsEmpty(),TEXT("previous_capture_completed"));PendingPhoto=Name;++RequestedPhotos;FScreenshotRequest::RequestScreenshot(Output/Name,!bCombatMotionCapture&&!bDoubleJumpCapture&&!bPlayerHitMotionRender,false);}
  AActor* MakeBox(const FVector& Center,const FVector& Extent,const FRotator& Rotation)
  {
   FActorSpawnParameters P;P.ObjectFlags|=RF_Transient;auto* A=World->SpawnActor<AActor>(AActor::StaticClass(),FTransform(Rotation,Center),P);if(!A)return nullptr;
@@ -179,7 +203,7 @@ private:
   FRogue10mCharacterProfile P;Check(Profiles->GetProfileCount()==0&&Profiles->CreateProfile(TEXT("ThirdQa"),FRogue10mCharacterAppearance(),P)&&Profiles->SelectProfile(P.ProfileId),TEXT("fresh_profile_selected"));if(Failures){Finish();return;}
   PC->EnterSelectedCharacter();PC->CloseAllBlockingPanels();Character=Cast<ARogue10mCharacter>(PC->GetPawn());Check(Character.IsValid()&&Saves->IsAttachedTo(*Character),TEXT("normal_entry_pawn_and_save_attach"));if(Failures){Finish();return;}
   if(bDoubleJumpMotion){TrainDoubleJump();if(Failures){Finish();return;}}
-  Saves->DetachCharacter(*Character,false);Character->SetCanBeDamaged(false);Check(Character->IsThirdPersonGameplayActive()&&Character->GetGameplayCameraComponent()&&Character->GetThirdPersonCameraBoom(),TEXT("third_person_default_components"));if(Failures){Finish();return;}
+  Saves->DetachCharacter(*Character,false);Character->SetCanBeDamaged(bPlayerHitMotion);Check(Character->IsThirdPersonGameplayActive()&&Character->GetGameplayCameraComponent()&&Character->GetThirdPersonCameraBoom(),TEXT("third_person_default_components"));if(Failures){Finish();return;}
   RealNovicePrimary.Reset(Character->GetCombatComponent()->GetEquippedSkill(ERogue10mAttackInputSlot::Primary));RealNoviceAbility=FRogue10mMouseCombatTestAccess::Ability(*Character->GetCombatComponent());
   const auto* DodgeData=Character->GetCombatComponent()->GetActiveDodgeSkill();
   const auto* DistanceField=FindFProperty<FFloatProperty>(Character->GetClass(),TEXT("DodgeDistance"));
@@ -193,7 +217,7 @@ private:
   CaptureHandle=UGameViewportClient::OnScreenshotCaptured().AddLambda([Self=AsShared()](int32 W,int32 H,const TArray<FColor>& Pixels){if(Self->PendingPhoto.IsEmpty()||Self->bFinished)return;auto& Pic=Self->Photos.AddDefaulted_GetRef();Pic.Name=Self->PendingPhoto;Pic.Width=W;Pic.Height=H;Pic.Pixels=Pixels;Self->PendingPhoto.Empty();++Self->CompletedPhotos;});
   if(bRendered){FAssetCompilingManager::Get().FinishAllCompilation();if(GShaderCompilingManager)GShaderCompilingManager->FinishAllCompilation();Check(!GShaderCompilingManager||!GShaderCompilingManager->IsCompiling(),TEXT("first_capture_waits_for_material_shaders"));}
   SampleHandle=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* X,ELevelTick,float){if(X==Self->World.Get())Self->Sample();});
-  Later(.8,[this]{if(bDoubleJumpMotion){BeginDoubleJumpMotion();}else if(bCombatMotion){BeginCombatMotion();}else{OpenView();}});
+  Later(.8,[this]{if(bPlayerHitMotion){BeginPlayerHitMotion();}else if(bDoubleJumpMotion){BeginDoubleJumpMotion();}else if(bCombatMotion){BeginCombatMotion();}else{OpenView();}});
  }
 
  void TrainDoubleJump()
@@ -383,6 +407,234 @@ private:
   AppliedSecondJumpFrames=0;
   JumpPrevious[0]={};
   JumpPrevious[1]={};
+ }
+
+ void BeginPlayerHitMotion()
+ {
+  auto* Source=Character->GetAnimationPlaybackMesh();
+  auto* Body=Character->GetMesh();
+  HitMotionTunedAnimation=Source?Cast<URogue10mFighterCombatStanceAnimInstance>(Source->GetAnimInstance()):nullptr;
+  if(HitMotionTunedAnimation.IsValid()){HitMotionOriginalStrength=HitMotionTunedAnimation->NonlethalReactionStrength;}
+  Check(bRendered==bPlayerHitMotionRender&&FMath::IsNearlyEqual(World->GetDeltaSeconds(),1.f/60.f,.001f)
+   &&Source&&Body&&Source!=Body&&HitMotionTunedAnimation.IsValid()&&Body->GetAnimInstance(),TEXT("hit_motion_fixed_step_and_two_active_meshes"));
+  if(Failures){Finish();return;}
+  for(USkeletalMeshComponent* Mesh:{Source,Body})
+  {
+   Mesh->bEnableUpdateRateOptimizations=false;
+   Mesh->VisibilityBasedAnimTickOption=EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+   for(const FName Bone:PlayerHitPoseBones)
+   {
+    const bool bPresent=Mesh->GetBoneIndex(Bone)!=INDEX_NONE;
+    if(!bPresent){Results+=FString::Printf(TEXT("hit_motion_missing_bone=%s mesh=%s\n"),*Bone.ToString(),*GetNameSafe(Mesh->GetSkeletalMeshAsset()));}
+    Check(bPresent,TEXT("hit_motion_sampled_bone_present"));
+   }
+  }
+  FActorSpawnParameters Spawn;
+  Spawn.ObjectFlags|=RF_Transient;
+  IncomingHitSource=World->SpawnActor<AActor>(AActor::StaticClass(),FTransform::Identity,Spawn);
+  Check(IncomingHitSource.IsValid()&&Character->GetRogueAttributeSet(),TEXT("hit_motion_damage_source_and_attributes"));
+  if(Failures){Finish();return;}
+  auto* ImpactOrigin=NewObject<USceneComponent>(IncomingHitSource.Get(),NAME_None,RF_Transient);
+  IncomingHitSource->AddInstanceComponent(ImpactOrigin);
+  IncomingHitSource->SetRootComponent(ImpactOrigin);
+  ImpactOrigin->RegisterComponent();
+  if(bPlayerHitMotionRender)
+  {
+   const FVector Origin=Character->GetActorLocation();
+   const FVector Position=Origin+Character->GetActorForwardVector()*210.+Character->GetActorRightVector()*215.+FVector(0,0,67);
+   const FVector Focus=Origin+FVector(0,0,25);
+   MotionCamera=World->SpawnActor<ACameraActor>(Position,(Focus-Position).Rotation(),Spawn);
+   Check(MotionCamera.IsValid(),TEXT("hit_motion_fixed_front_side_camera"));
+   if(!MotionCamera.IsValid()){Finish();return;}
+   MotionCamera->GetCameraComponent()->SetFieldOfView(44.f);
+   PC->SetViewTarget(MotionCamera.Get());
+  }
+  HitMotionRows=TEXT("case,frame_from_event,world_s,mesh,revision,health,applied_damage,side,shot_x,shot_y,shot_z,attack_montage,attack_montage_id,attack_position_s,attack_weight,attack_stopped,active_montage,bone,cs_x,cs_y,cs_z,cs_qx,cs_qy,cs_qz,cs_qw,local_x,local_y,local_z,local_qx,local_qy,local_qz,local_qw,reaction_age_s,reaction_rear\n");
+  HitMotionPhaseAt=World->GetTimeSeconds();
+  bHitMotionSampling=true;
+ }
+
+ float SendPlayerHitDamage(const FVector& ShotDirection)
+ {
+  const FVector Point=Character->GetActorLocation()+FVector(0,0,38);
+  IncomingHitSource->SetActorLocation(Point-ShotDirection*110.);
+  Check(FVector::DotProduct((Point-IncomingHitSource->GetActorLocation()).GetSafeNormal(),ShotDirection)>.99,
+   TEXT("hit_motion_causer_and_shot_direction_agree"));
+  const FHitResult Hit(Character.Get(),Character->GetCapsuleComponent(),Point,-ShotDirection);
+  return UGameplayStatics::ApplyPointDamage(Character.Get(),8.f,ShotDirection,Hit,nullptr,IncomingHitSource.Get(),nullptr);
+ }
+
+ int32 PlayerHitCaseLimit() const
+ {return bPlayerHitMotionRender?2:UE_ARRAY_COUNT(PlayerHitPoseCases);}
+
+ void StepPlayerHitMotion()
+ {
+  if(!bHitMotionSampling){return;}
+  if(bPlayerHitMotionRender&&HitMotionFrame==6&&!PendingPhoto.IsEmpty()){return;}
+  auto* Source=Character->GetAnimationPlaybackMesh();
+  auto* Body=Character->GetMesh();
+  auto* Anim=Source?Source->GetAnimInstance():nullptr;
+  auto* State=Character->GetPlayerState<ARogue10mPlayerState>();
+  auto* Combat=Character->GetCombatComponent();
+  auto* Attributes=Character->GetRogueAttributeSet();
+  auto* Motion=Character->GetCharacterAnimationComponent();
+  if(!Anim||!Body||!State||!Combat||!Attributes||!Motion||HitMotionTunedAnimation.Get()!=Anim)
+  {Check(false,TEXT("hit_motion_runtime_lost"));Finish();return;}
+  const auto& Case=PlayerHitPoseCases[HitMotionIndex];
+  const double Now=World->GetTimeSeconds();
+  HitMotionTunedAnimation->NonlethalReactionStrength=Case.bVisualControl?0.f:HitMotionOriginalStrength;
+  if(Now-HitMotionPhaseAt>6.)
+  {Check(false,TEXT("hit_motion_case_timeout"));Finish();return;}
+  if(HitMotionFrame==INDEX_NONE)
+  {
+   if(Now-HitMotionPhaseAt<.65||Combat->GetAttackCooldownRemaining()>0.f||!Character->GetCharacterMovement()->IsMovingOnGround()){return;}
+   if(Case.bAttack&&!bHitMotionAttackSent)
+   {
+    if(Anim->IsAnyMontagePlaying()||Anim->GetSlotMontageGlobalWeight(TEXT("DefaultSlot"))>.001f
+     ||(HitMotionPreviousAttackId!=INDEX_NONE&&Anim->GetMontageInstanceForID(HitMotionPreviousAttackId))){return;}
+    Check(RealNovicePrimary.IsValid(),TEXT("hit_motion_real_default_attack_available"));
+    if(Failures){Finish();return;}
+    HitMotionUses=State->GetSkillUseCount(RealNovicePrimary->GetFName());
+    bHitMotionAttackSent=true;
+    Key(EKeys::LeftMouseButton,true);
+    return;
+   }
+   const auto* Montage=Anim->GetCurrentActiveMontage();
+   if(Case.bAttack)
+   {
+    const auto* Instance=Montage?Anim->GetActiveInstanceForMontage(Montage):nullptr;
+    if(!Instance||Instance->GetPosition()<.08f){return;}
+    Key(EKeys::LeftMouseButton,false);
+    Check(Combat->GetLastAcceptedAttackSkill()==RealNovicePrimary.Get()
+     &&State->GetSkillUseCount(RealNovicePrimary->GetFName())==HitMotionUses+1,TEXT("hit_motion_actual_LMB_attack_accepted"));
+    HitMotionMontage=Montage->GetPathName();
+    HitMotionMontageId=Instance->GetInstanceID();
+    const FVector BodyPelvis=Body->GetSocketTransform(TEXT("pelvis"),RTS_Component).GetLocation();
+    if(Case.IncomingSide==0)
+    {
+     HitMotionControlAttack=HitMotionMontage;
+     HitMotionControlPosition=Instance->GetPosition();
+     HitMotionControlPelvis=BodyPelvis;
+    }
+    else
+    {
+     Check(HitMotionMontage==HitMotionControlAttack&&FMath::IsNearlyEqual(Instance->GetPosition(),HitMotionControlPosition,.001f),
+      TEXT("hit_motion_attack_pair_same_montage_and_phase"));
+     Check(FVector::Distance(BodyPelvis,HitMotionControlPelvis)<=2.,TEXT("hit_motion_attack_pair_same_ready_pose"));
+    }
+   }
+   else if(Montage){return;}
+   HitMotionHealth=Attributes->GetHealth();
+   HitMotionShot=Character->GetActorForwardVector()*(-Case.IncomingSide);
+   HitMotionFrame=0;
+  }
+
+  const auto* Instance=HitMotionMontageId!=INDEX_NONE?Anim->GetMontageInstanceForID(HitMotionMontageId):nullptr;
+  const auto* Active=Anim->GetCurrentActiveMontage();
+  const FString ActivePath=GetPathNameSafe(Active);
+  if(!Case.bAttack)
+  {
+   const FQuat Chest=Body->GetSocketTransform(TEXT("spine_03"),RTS_Component).GetRotation();
+   const auto& View=PC->PlayerCameraManager->GetCameraCacheView();
+   if(HitMotionFrame==0)
+   {
+    HitMotionChestAtEvent=Chest;
+    HitMotionCameraAtEvent=View.Location;
+    HitMotionCameraRotationAtEvent=View.Rotation.Quaternion();
+    HitMotionChestMax=HitMotionCameraMax=HitMotionCameraRotationMax=0.;
+   }
+   HitMotionChestMax=FMath::Max(HitMotionChestMax,FMath::RadiansToDegrees(HitMotionChestAtEvent.AngularDistance(Chest)));
+   HitMotionCameraMax=FMath::Max(HitMotionCameraMax,FVector::Distance(HitMotionCameraAtEvent,View.Location));
+   HitMotionCameraRotationMax=FMath::Max(HitMotionCameraRotationMax,
+    FMath::RadiansToDegrees(HitMotionCameraRotationAtEvent.AngularDistance(View.Rotation.Quaternion())));
+  }
+  float ReactionAge=-1.f;
+  bool bRear=false;
+  const bool bReaction=Motion->GetNonlethalHitPresentation(ReactionAge,bRear);
+  Check(bReaction==(HitMotionFrame>0&&Case.IncomingSide!=0&&!Case.bBlocked),TEXT("hit_motion_reaction_only_on_accepted_damage"));
+  for(int32 StageIndex=0;StageIndex<2;++StageIndex)
+  {
+   auto* Mesh=StageIndex==0?Source:Body;
+   const auto Revision=Mesh->GetBoneTransformRevisionNumber();
+   Check(HitMotionFrame==0||Revision!=HitMotionPreviousRevision[StageIndex],TEXT("hit_motion_fresh_pose_each_frame"));
+   HitMotionPreviousRevision[StageIndex]=Revision;
+   for(const FName Bone:PlayerHitPoseBones)
+   {
+    const FTransform Component=Mesh->GetSocketTransform(Bone,RTS_Component);
+    const FTransform Local=Mesh->GetSocketTransform(Bone,RTS_ParentBoneSpace);
+    Check(!Component.ContainsNaN()&&!Local.ContainsNaN(),TEXT("hit_motion_finite_pose"));
+    const FVector C=Component.GetLocation(),L=Local.GetLocation();
+    const FQuat CQ=Component.GetRotation(),LQ=Local.GetRotation();
+    HitMotionRows+=FString::Printf(TEXT("%s,%d,%.6f,%s,%u,%.6f,%.6f,%d,%.6f,%.6f,%.6f,%s,%d,%.6f,%.6f,%d,%s,%s,%.6f,%.6f,%.6f,%.8f,%.8f,%.8f,%.8f,%.6f,%.6f,%.6f,%.8f,%.8f,%.8f,%.8f,%.6f,%d\n"),
+     Case.Name,HitMotionFrame,Now,StageIndex==0?TEXT("manny"):TEXT("displayed"),Revision,Attributes->GetHealth(),AppliedHitMotionDamage,
+     Case.IncomingSide,HitMotionShot.X,HitMotionShot.Y,HitMotionShot.Z,*HitMotionMontage,HitMotionMontageId,
+     Instance?Instance->GetPosition():-1.f,Instance?Instance->GetWeight():0.f,Instance&&Instance->IsStopped()?1:0,*ActivePath,*Bone.ToString(),
+     C.X,C.Y,C.Z,CQ.X,CQ.Y,CQ.Z,CQ.W,L.X,L.Y,L.Z,LQ.X,LQ.Y,LQ.Z,LQ.W,ReactionAge,bRear?1:0);
+   }
+  }
+  if(HitMotionFrame==0&&Case.IncomingSide!=0)
+  {
+   if(Case.bBlocked){Character->SetCanBeDamaged(false);}
+   AppliedHitMotionDamage=SendPlayerHitDamage(HitMotionShot);
+   if(Case.bBlocked)
+   {
+    Character->SetCanBeDamaged(true);
+    Check(AppliedHitMotionDamage==0.f&&Attributes->GetHealth()==HitMotionHealth,TEXT("hit_motion_rejected_damage_preserves_health"));
+   }
+   else
+   {
+    Check(AppliedHitMotionDamage>0.f&&Attributes->GetHealth()<HitMotionHealth&&!Character->IsDead(),TEXT("hit_motion_real_damage_is_positive_and_nonlethal"));
+    Check(Motion->GetNonlethalHitPresentation(ReactionAge,bRear)&&FMath::IsNearlyZero(ReactionAge,.001f)
+     &&bRear==(Case.IncomingSide<0),TEXT("hit_motion_reaction_uses_accepted_direction_and_event_time"));
+   }
+   const auto* Stopped=HitMotionMontageId!=INDEX_NONE?Anim->GetMontageInstanceForID(HitMotionMontageId):nullptr;
+   Check(!Case.bAttack||(Stopped&&Stopped->IsStopped()),TEXT("hit_motion_exact_owned_attack_interruption_starts"));
+   Results+=FString::Printf(TEXT("hit_motion_event=%s damage=%.6f hp_before=%.6f hp_after=%.6f montage=%s instance=%d shot=%s\n"),
+    Case.Name,AppliedHitMotionDamage,HitMotionHealth,Attributes->GetHealth(),*HitMotionMontage,HitMotionMontageId,*HitMotionShot.ToCompactString());
+  }
+  if(HitMotionFrame==2&&Case.bRepeat)
+  {
+   const float Before=Attributes->GetHealth();
+   const float SecondDamage=SendPlayerHitDamage(-HitMotionShot);
+   float SameReactionAge=-1.f;
+   bool bSameReactionRear=true;
+   Check(SecondDamage>0.f&&Attributes->GetHealth()<Before&&Motion->GetNonlethalHitPresentation(SameReactionAge,bSameReactionRear)
+    &&FMath::IsNearlyEqual(SameReactionAge,ReactionAge,.001f)&&bSameReactionRear==bRear,
+    TEXT("hit_motion_rapid_accepted_hit_does_not_restart_or_flip_reaction"));
+   Results+=FString::Printf(TEXT("hit_motion_repeat=%s damage=%.6f reaction_age=%.6f\n"),Case.Name,SecondDamage,SameReactionAge);
+  }
+  if(bPlayerHitMotionRender&&HitMotionFrame==5)
+  {
+   Photo(HitMotionIndex==0?TEXT("01_idle_control.png"):TEXT("02_front_recoil.png"));
+   Results+=FString::Printf(TEXT("hit_motion_capture=%s event_frame=%d world=%.6f revision=%u\n"),
+    Case.Name,HitMotionFrame,Now,Body->GetBoneTransformRevisionNumber());
+  }
+  if(HitMotionFrame==6)
+  {
+   if(!Case.bAttack)
+   {
+    const bool bExpectMotion=Case.IncomingSide!=0&&!Case.bBlocked;
+    Check(bExpectMotion?HitMotionChestMax>=2.&&HitMotionChestMax<=9.:HitMotionChestMax<2.,
+     TEXT("hit_motion_actual_displayed_chest_responds_only_to_accepted_damage"));
+    Check(HitMotionCameraMax<=.2&&HitMotionCameraRotationMax<=.1,TEXT("hit_motion_keeps_third_person_camera_stable"));
+    Results+=FString::Printf(TEXT("hit_motion_stability=%s chest_deg=%.6f camera_cm=%.6f camera_deg=%.6f\n"),
+     Case.Name,HitMotionChestMax,HitMotionCameraMax,HitMotionCameraRotationMax);
+   }
+   ++HitMotionIndex;
+   if(HitMotionIndex==PlayerHitCaseLimit()){Finish();return;}
+   if(HitMotionMontageId!=INDEX_NONE)
+   {
+    HitMotionPreviousAttackId=HitMotionMontageId;
+    Motion->ResetFighterCombatStance();
+   }
+   HitMotionFrame=INDEX_NONE;
+   HitMotionMontageId=INDEX_NONE;
+   HitMotionMontage=TEXT("None");
+   HitMotionPhaseAt=Now;
+   bHitMotionAttackSent=false;
+   AppliedHitMotionDamage=0.f;
+  }
+  else{++HitMotionFrame;}
  }
 
  void BeginCombatMotion()
@@ -908,7 +1160,9 @@ private:
    return;
   }
   if(bCombatMotion){if(bCombatMotionStarted&&!bFinished){ObserveCombatMotion();}return;}
-  if(bFinished||!Character.IsValid()||!PC.IsValid()||!PC->PlayerCameraManager)return;const auto& V=PC->PlayerCameraManager->GetCameraCacheView();const FVector P=Character->GetActorLocation();++Samples;Check(!V.Location.ContainsNaN()&&!V.Rotation.ContainsNaN()&&FMath::IsFinite(V.FOV),TEXT("sample_camera_finite"));
+  if(bFinished||!Character.IsValid()||!PC.IsValid()||!PC->PlayerCameraManager)return;
+  if(bPlayerHitMotion){StepPlayerHitMotion();return;}
+  const auto& V=PC->PlayerCameraManager->GetCameraCacheView();const FVector P=Character->GetActorLocation();++Samples;Check(!V.Location.ContainsNaN()&&!V.Rotation.ContainsNaN()&&FMath::IsFinite(V.FOV),TEXT("sample_camera_finite"));
   if(Stage.EndsWith(TEXT("dodge"))&&Character->IsDodging())
   {
    bSawDodge=true;++DodgeSamples;
@@ -933,6 +1187,21 @@ private:
    if(PC.IsValid()&&Character.IsValid()){PC->SetViewTarget(Character.Get());}
    MotionCamera->Destroy();
   }
+  if(bPlayerHitMotion&&!bFinished)
+  {
+   Key(EKeys::LeftMouseButton,false);
+   if(HitMotionTunedAnimation.IsValid()){HitMotionTunedAnimation->NonlethalReactionStrength=HitMotionOriginalStrength;}
+   if(IncomingHitSource.IsValid()){IncomingHitSource->Destroy();}
+   if(bPlayerHitMotionRender&&MotionCamera.IsValid())
+   {
+    if(PC.IsValid()&&Character.IsValid()){PC->SetViewTarget(Character.Get());}
+    MotionCamera->Destroy();
+   }
+   Check(HitMotionIndex==PlayerHitCaseLimit(),TEXT("hit_motion_all_cases_sampled"));
+   Check(!HitMotionRows.IsEmpty()&&FFileHelper::SaveStringToFile(HitMotionRows,*(Output/TEXT("hit-motion-poses.csv"))),
+    TEXT("hit_motion_pose_evidence_saved"));
+   Results+=FString::Printf(TEXT("hit_motion_completed=%d\n"),HitMotionIndex);
+  }
   if(bCombatMotion&&!bFinished)
   {
    RestoreMotionTuning();
@@ -947,7 +1216,7 @@ private:
   if(bFinished)return;bFinished=true;Next=nullptr;RestoreHeadPitchCheck();FWorldDelegates::OnWorldPostActorTick.Remove(SampleHandle);FWorldDelegates::OnWorldCleanup.Remove(Cleanup);UGameViewportClient::OnScreenshotCaptured().Remove(CaptureHandle);Key(EKeys::W,false);Key(EKeys::S,false);Key(EKeys::D,false);Key(Rogue10mInput::DodgeKey(),false);if(Character.IsValid()){if(Saves.IsValid()&&Saves->IsAttachedTo(*Character))Saves->DetachCharacter(*Character,false);Character->GetCharacterMovement()->StopMovementImmediately();}for(auto A:{Floor,Obstacle,Wall})if(A.IsValid())A->Destroy();
   if(bRendered)
   {
-   const int32 ExpectedCaptures=bCombatMotionCapture||bDoubleJumpCapture?2:7;
+   const int32 ExpectedCaptures=bCombatMotionCapture||bDoubleJumpCapture||bPlayerHitMotionRender?2:7;
    Check(RequestedPhotos==ExpectedCaptures&&CompletedPhotos==ExpectedCaptures&&PendingPhoto.IsEmpty(),TEXT("all_requested_rendered_captures_completed"));
   }
   for(const auto& Pic:Photos){TArray64<uint8> Bytes;FImageUtils::PNGCompressImageArray(Pic.Width,Pic.Height,Pic.Pixels,Bytes);Check(FFileHelper::SaveArrayToFile(Bytes,*(Output/Pic.Name)),TEXT("captured_PNG_saved"));}Check(FFileHelper::SaveStringToFile(Frames,*(Output/TEXT("frames.csv"))),TEXT("frame_evidence_saved"));Results+=FString::Printf(TEXT("mouse_cases=%d\nmouse_passed=%d\n"),MouseCases,MousePassed);Results+=FString::Printf(TEXT("checks=%d\nfailures=%d\nsamples=%d\ndodge_samples=%d\nopen_cm=%.6f\nblocked_cm=%.6f\nrecovered_cm=%.6f\nmove_cm=%.6f\nfree_dodge_cm=%.6f\nwall_dodge_cm=%.6f\nrendered=%d\ncaptures=%d\ninput=programmatic_Controller_InputKey\nphysical_input=not_performed\nfull_run=not_performed\nmap_changes=none_transient_fixture_only\nfirst_person_QA=paused\n"),Checks,Failures,Samples,DodgeSamples,OpenDistance,BlockedDistance,RecoveredDistance,MoveTravel,FreeTravel,WallTravel,bRendered,CompletedPhotos);if(!FFileHelper::SaveStringToFile(Results,*(Output/TEXT("results.txt"))))++Failures;UE_LOG(LogRogue10m,Display,TEXT("RESULT=THIRD_PERSON_GAMEPLAY_%s checks=%d failures=%d output=%s"),Failures?TEXT("FAILED"):TEXT("PASSED"),Checks,Failures,*Output);if(Exit)FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Code=Failures?1:0](float){FPlatformMisc::RequestExitWithStatus(false,Code);return false;}),.5f);
@@ -960,6 +1229,19 @@ private:
  int32 AppliedSecondJumpFrames=0;
  float JumpTakeoffVelocity=0.0f,JumpBoostVelocity=0.0f,JumpBeforeBoostVelocity=0.0f,PreviousJumpVelocity=0.0f;
  bool bDoubleJumpMotion=false,bDoubleJumpCapture=false,bJumpMotionStarted=false,bSecondJumpInput=false,bExpectSecondJumpPose=false;
+ TWeakObjectPtr<AActor> IncomingHitSource;
+ TWeakObjectPtr<URogue10mFighterCombatStanceAnimInstance> HitMotionTunedAnimation;
+ FString HitMotionRows,HitMotionMontage=TEXT("None"),HitMotionControlAttack;
+ FVector HitMotionShot=FVector::ZeroVector;
+ FVector HitMotionControlPelvis=FVector::ZeroVector;
+ FVector HitMotionCameraAtEvent=FVector::ZeroVector;
+ FQuat HitMotionChestAtEvent=FQuat::Identity,HitMotionCameraRotationAtEvent=FQuat::Identity;
+ double HitMotionPhaseAt=0.;
+ double HitMotionChestMax=0.,HitMotionCameraMax=0.,HitMotionCameraRotationMax=0.;
+ uint32 HitMotionPreviousRevision[2]={};
+ float HitMotionHealth=0.f,AppliedHitMotionDamage=0.f,HitMotionControlPosition=-1.f,HitMotionOriginalStrength=1.f;
+ int32 HitMotionIndex=0,HitMotionFrame=INDEX_NONE,HitMotionMontageId=INDEX_NONE,HitMotionPreviousAttackId=INDEX_NONE,HitMotionUses=0;
+ bool bPlayerHitMotion=false,bPlayerHitMotionRender=false,bHitMotionSampling=false,bHitMotionAttackSent=false;
  TWeakObjectPtr<const URogue10mAttackSkillData> MotionSkill;
  TWeakObjectPtr<URogue10mFighterCombatStanceAnimInstance> MotionTunedAnimation;
  TWeakObjectPtr<ACameraActor> MotionCamera;

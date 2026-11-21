@@ -35,6 +35,8 @@ private:
 	void ApplySecondJumpPose(FPoseContext& Output);
 	void CaptureSecondJumpPose(const ARogue10mCharacter& Character, const URogue10mFighterCombatStanceAnimInstance& Instance,
 		const USkeletalMeshComponent& Mesh, float DeltaSeconds);
+	void CaptureNonlethalHit(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance);
+	void ApplyNonlethalHit(FPoseContext& Output);
 	void CaptureHeadMotionSettings(const ARogue10mCharacter* Character, float DeltaSeconds);
 	void CaptureWeightedHandMotion(const ARogue10mCharacter* Character, const URogue10mFighterCombatStanceAnimInstance* Instance, float DeltaSeconds);
 
@@ -69,6 +71,9 @@ private:
 	float CapstoneBraceTime = 0.0f;
 	float CapstoneBraceBlend = 0.0f;
 	float CapstoneBraceWeight = 0.0f;
+	const UAnimSequence* NonlethalHitSequence = nullptr;
+	float NonlethalHitAge = 0.0f;
+	float NonlethalHitWeight = 0.0f;
 	float RollProgress = 0.0f;
 	float RollYawRadians = 0.0f;
 	FVector RollRight = FVector::RightVector;
@@ -95,7 +100,8 @@ private:
 	FCompactPoseBoneIndex Calf[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
 	FCompactPoseBoneIndex Foot[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
 	FCompactPoseBoneIndex Ball[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
-	FCompactPoseBoneIndex Spine[3] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
+	FCompactPoseBoneIndex Spine[4] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE),
+		FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
 	FCompactPoseBoneIndex UpperArm[2] = { FCompactPoseBoneIndex(INDEX_NONE), FCompactPoseBoneIndex(INDEX_NONE) };
 	FCompactPoseBoneIndex Neck = FCompactPoseBoneIndex(INDEX_NONE);
 	FCompactPoseBoneIndex Head = FCompactPoseBoneIndex(INDEX_NONE);

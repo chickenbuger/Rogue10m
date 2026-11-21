@@ -9,6 +9,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "EnhancedInputComponent.h"
+#include "Engine/DamageEvents.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Rogue10mMouseCombatInputComponent.h"
@@ -325,7 +326,28 @@ float ARogue10mCharacter::TakeDamage(
 
 	if (!TraitRuntimeComponent || !TraitRuntimeComponent->TryPreventLethalDamage(AppliedDamage, DamageCauser))
 	{
-		Attributes->SetHealth(Attributes->GetHealth() - AppliedDamage);
+		const float HealthBefore = Attributes->GetHealth();
+		Attributes->SetHealth(HealthBefore - AppliedDamage);
+		const float HealthAfter = Attributes->GetHealth();
+		if (CharacterAnimationComponent && HealthAfter > 0.0f && HealthAfter < HealthBefore)
+		{
+			FVector ShotDirection = FVector::ZeroVector;
+			if (DamageEvent.IsOfType(FPointDamageEvent::ClassID))
+			{
+				ShotDirection = static_cast<const FPointDamageEvent&>(DamageEvent).ShotDirection;
+			}
+			else if (DamageEvent.IsOfType(FRadialDamageEvent::ClassID))
+			{
+				ShotDirection = GetActorLocation() - static_cast<const FRadialDamageEvent&>(DamageEvent).Origin;
+			}
+			if (ShotDirection.ContainsNaN() || ShotDirection.IsNearlyZero())
+			{
+				const AActor* Origin = DamageCauser != this ? DamageCauser : nullptr;
+				if (!Origin && EventInstigator) { Origin = EventInstigator->GetPawn(); }
+				if (Origin) { ShotDirection = GetActorLocation() - Origin->GetActorLocation(); }
+			}
+			CharacterAnimationComponent->NotifyNonlethalHit(ShotDirection);
+		}
 	}
 	if (PlayerFeedbackComponent)
 	{

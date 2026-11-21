@@ -28,6 +28,10 @@ URogue10mFighterCombatStanceAnimInstance::URogue10mFighterCombatStanceAnimInstan
 		"/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_CapstoneChargeBrace.A_GreatSword_CapstoneChargeBrace")));
 	SecondJumpPoseAnimation = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT(
 		"/Game/Rogue10m/Animation/Common/Airborne/A_CommonSecondJumpImpulse.A_CommonSecondJumpImpulse")));
+	NonlethalFrontReaction = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT(
+		"/Game/Rogue10m/Animation/Combat/FighterStance/A_PlayerHitRecoil_Front.A_PlayerHitRecoil_Front")));
+	NonlethalRearReaction = TSoftObjectPtr<UAnimSequence>(FSoftObjectPath(TEXT(
+		"/Game/Rogue10m/Animation/Combat/FighterStance/A_PlayerHitRecoil_Rear.A_PlayerHitRecoil_Rear")));
 }
 
 void URogue10mFighterCombatStanceAnimInstance::NativeInitializeAnimation()
@@ -39,6 +43,8 @@ void URogue10mFighterCombatStanceAnimInstance::NativeInitializeAnimation()
 	CachedGreatSwordLocomotion = GreatSwordLocomotion.LoadSynchronous();
 	CachedLearnedRoll = LearnedRollAnimation.LoadSynchronous();
 	CachedCapstoneBrace = GreatSwordCapstoneBrace.LoadSynchronous();
+	CachedNonlethalFront = NonlethalFrontReaction.LoadSynchronous();
+	CachedNonlethalRear = NonlethalRearReaction.LoadSynchronous();
 	bLearnedRollPoseApplied = false;
 	CachedSecondJumpPose = SecondJumpPoseAnimation.LoadSynchronous();
 	bSecondJumpPoseApplied = false;

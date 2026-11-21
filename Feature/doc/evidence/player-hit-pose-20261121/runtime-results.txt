@@ -1,0 +1,23 @@
+base=48de957d9de4cc2be9424421e185d38283130a3d
+input=simulated controller LeftMouse plus accepted engine point damage
+runtime=PlayerHitPoseE
+frames=1 before and 6 after each event at 60Hz
+source_and_displayed=16 corresponding bones
+checks=2048
+failures=0
+engine_errors=0
+completed_cases=8
+accepted idle front and rear each reduced HP by 1 after defense
+blocked accepted damage=0 and HP delta=0
+maximum departure of camera pose: 0.000000 cm / 0.000003 degrees
+camera control chest=0.135387 deg; blocked=0.213392 deg; accepted front=5.670635 deg; accepted rear=5.550645 deg
+accepted repeat rear at 0.033333 seconds reduces HP without resetting original front age and direction
+extra displayed component motion after repeat vs first front trial=0.3795 cm max (upperarm_l)
+interrupted exact active montage=/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_LeftJab.AM_Unarmed_LeftJab
+stock and brace montage weights: 0.376157,0.333981,0.234663,0.119019,0.027864,0.000000,0.000000
+added recoil for interrupted attack at frame 5: chest 5.8037 degrees, head 0.2354 degrees, right wrist 3.7784 cm
+added feet motion in interrupted attack versus stock control max=0.058814 cm
+runtime-poses.csv SHA256=1B7CA59654461547380C9A68A86CE36CCBCB7A459471FE910A5551A940511E7B
+JumpPlayerHitRegression: 2976 checks, failures 0, engine errors 0, second_pose_frames=14 and first_jump_pose_frames=0
+CapstonePlayerHitReg: four cases, failures 0, engine errors 0, damage at montage 0, continuity gates passed
+RESULT=THIRD_PERSON_GAMEPLAY_PASSED checks=2048 failures=0

@@ -127,6 +127,15 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Jump")
 	TSoftObjectPtr<UAnimSequence> SecondJumpPoseAnimation;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Hit Reaction")
+	TSoftObjectPtr<UAnimSequence> NonlethalFrontReaction;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Hit Reaction")
+	TSoftObjectPtr<UAnimSequence> NonlethalRearReaction;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Hit Reaction", meta=(ClampMin="0.0", ClampMax="1.0"))
+	float NonlethalReactionStrength = 0.78f;
+
 	/** Fixed provenance of the sequence player configured in ABP_Common_Unarmed. */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category="Rogue10m|Animation|Fighter Stance")
 	TSoftObjectPtr<UAnimSequence> FighterCombatStanceSequence;
@@ -160,6 +169,8 @@ private:
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedLearnedRoll;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedCapstoneBrace;
 	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedSecondJumpPose;
+	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedNonlethalFront;
+	UPROPERTY(Transient) TObjectPtr<UAnimSequence> CachedNonlethalRear;
 	UPROPERTY(Transient) TObjectPtr<UBlendSpace> CachedUnarmedLocomotion;
 	UPROPERTY(Transient) TObjectPtr<UBlendSpace> CachedGreatSwordLocomotion;
 	float FighterCombatBlendProgress = 0.0f;
