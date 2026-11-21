@@ -17,7 +17,7 @@ COMPONENT_ROOT = "/Game/Widget/Component"
 OLD_LOBBY_PATH = "/Game/Widget/Character/WBP_CharacterLobby"
 LOBBY_PATH = "/Game/Widget/Lobby/WBP_CharacterLobby"
 MAIN_MENU_PATH = "/Game/Widget/Menu/WBP_MainMenu"
-BACKGROUND_TEXTURE_PATH = "/Game/Texture/UI/CharacterLobby/T_CharacterLobby_Background"
+BACKGROUND_TEXTURE_PATH = "/Game/Rogue10m/UI/Textures/CharacterLobby/T_CharacterLobby_Background"
 
 
 def log(message):

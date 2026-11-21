@@ -18,7 +18,7 @@ import CreateCharacterCustomizationAssets as base  # noqa: E402
 
 WIDGET_PATH = "/Game/Widget/Lobby/WBP_CharacterLobby"
 BACKGROUND_TEXTURE_PATH = (
-    "/Game/Texture/UI/CharacterLobby/T_CharacterLobby_Background"
+    "/Game/Rogue10m/UI/Textures/CharacterLobby/T_CharacterLobby_Background"
 )
 PREVIEW_MATERIAL_PATH = "/Game/Material/UI/M_CharacterPreviewTransparent"
 BACKGROUND_SOURCE = (
@@ -61,7 +61,7 @@ def import_background():
     task = unreal.AssetImportTask()
     task.set_editor_property("filename", str(BACKGROUND_SOURCE))
     task.set_editor_property(
-        "destination_path", "/Game/Texture/UI/CharacterLobby"
+        "destination_path", "/Game/Rogue10m/UI/Textures/CharacterLobby"
     )
     task.set_editor_property(
         "destination_name", "T_CharacterLobby_Background"

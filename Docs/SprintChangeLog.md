@@ -1,5 +1,12 @@
 # Sprint 변경 이력
 
+### Sprint#17-3 — Content 기능별 정리와 레거시 제거
+
+- **목표** 현재 프로젝트의 에셋을 기능별로 탐색하고 사용이 끝난 콘텐츠를 제거한다.
+- **변경** 공유 동적 컬렉션 17개, 에셋 9개 경로 정리, 레거시 패키지 118개 삭제.
+- **검증** 독립 Unreal 프로세스에서 이전 경로 참조 0개, 이동·참조 에셋 18개 로드, StartHub·OpenRunMap Map Check 오류·경고 0건을 확인했다.
+- **상태** 원본 Content 적용 및 검수 완료. [설계](../Feature/architect/2026-11-21_content-organization.md) · [콘텐츠 인덱스와 검증](../Feature/doc/2026-11-21_content-organization.md)
+
 ### Sprint#17-1 — 전투 키 변경
 
 - **목표** 대시를 왼쪽 Ctrl로 옮기고 V로 무기 아이덴티티를 발동한다.

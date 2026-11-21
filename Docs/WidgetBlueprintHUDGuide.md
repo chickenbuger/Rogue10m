@@ -12,7 +12,7 @@ Rogue10m의 화면 UI는 Canvas HUD를 사용하지 않고 UMG Widget Blueprint�
 - 패널/설정/로그 상태 소유자: ARogue10mPlayerController
 - 체력과 자원 데이터: ARogue10mPlayerState가 소유한 URogue10mAttributeSet
 
-ARogue10mHUD는 기존 BP_Rogue10mHUD 에셋의 부모 참조를 유지하기 위한 빈 호환 클래스이며 화면을 그리지 않는다.
+화면 UI는 플레이어 컨트롤러가 생성하는 `WBP_Rogue10mMainHUD`와 하위 위젯이 관리한다. 게임 모드는 엔진의 기본 `AHUD`를 사용한다.
 
 ## 메인 Widget Blueprint
 
