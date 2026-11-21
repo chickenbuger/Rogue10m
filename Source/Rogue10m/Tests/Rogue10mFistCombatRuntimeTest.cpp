@@ -38,6 +38,7 @@
 #include "Rogue10mCharacterAnimationComponent.h"
 #include "Rogue10mCharacterMotionDataAsset.h"
 #include "Rogue10mFighterCombatStanceAnimInstance.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mPlayerController.h"
 #include "TimerManager.h"
 #include "UnrealClient.h"
@@ -340,7 +341,7 @@ private:
         FApp::SetFixedDeltaTime(1.0/30.0);FApp::SetUseFixedTimeStep(true);
         RecordSkeleton(Character->GetAnimationPlaybackMesh(),TEXT("source"));RecordSkeleton(Character->GetMesh(),TEXT("appearance"));
         Tick=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* W,ELevelTick,float){if(W==Self->World.Get()){Self->Frame();}});
-        UE_LOG(LogRogue10m,Display,TEXT("FIST_COMBAT TIMELINE frames=840 fps=30 unarmed=45/48,135/138,210/246 knuckle=330/332,395/397,455/457,510/512,550/%d switch_cancel=620/625/626 V=20/95/310/495 walk=700:730 jump=755/761 class=%s capture=%d all=%d keyframes=%d first_person_only=%d"),ChargedRelease,*Character->GetClass()->GetPathName(),bCapture,bCaptureAll,bCaptureKeyframes,bFirstPersonOnly);
+        UE_LOG(LogRogue10m,Display,TEXT("FIST_COMBAT TIMELINE frames=840 fps=30 unarmed=45/48,135/138,210/246 knuckle=330/332,395/397,455/457,510/512,550/%d switch_cancel=620/625/626 inspection=20/95/310/495 walk=700:730 jump=755/761 class=%s capture=%d all=%d keyframes=%d first_person_only=%d"),ChargedRelease,*Character->GetClass()->GetPathName(),bCapture,bCaptureAll,bCaptureKeyframes,bFirstPersonOnly);
     }
     void RecordSkeleton(USkeletalMeshComponent* Mesh,const TCHAR* Stage)
     {
@@ -416,9 +417,9 @@ private:
         RecordPose(Source,TEXT("source"));RecordPose(Body,TEXT("appearance"));
         if(FrameIndex>0){CheckCameraAndShadow();}
         if(!bFirstPersonOnly && (FrameIndex==20 || FrameIndex==95 || FrameIndex==310 || FrameIndex==495))
-        {Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::V,IE_Pressed,1.f));}
+        {Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Rogue10mInput::InspectionCameraKey(),IE_Pressed,1.f));}
         if(!bFirstPersonOnly && (FrameIndex==21 || FrameIndex==96 || FrameIndex==311 || FrameIndex==496))
-        {Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::V,IE_Released,0.f));}
+        {Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Rogue10mInput::InspectionCameraKey(),IE_Released,0.f));}
         auto* Combat=Character->GetCombatComponent();
         if(FrameIndex==45 || FrameIndex==48){RefillResources();Combat->HandleAttackPressed(true);Combat->HandleAttackReleased(true);}
         if(FrameIndex==135 || FrameIndex==210){RefillResources();Combat->HandleAttackPressed(false);}
@@ -517,6 +518,6 @@ static void Run()
     {if(UWorld* W=Context.World();W && W->WorldType==EWorldType::Game){Active=MakeShared<FRun>();Active->Start(W);return;}}
 }
 static FAutoConsoleCommand Command(TEXT("Rogue10m.TestFistCombat"),
-    TEXT("Real input Unarmed4/Knuckle5, bounded head camera, bones/shadow, V, switch cancellation and locomotion. -RogueFistLabel=name -RogueFistCaptureAll -RogueFistCaptureKeyframes -RogueFistDamageTarget -RogueFistFirstPersonOnly -RogueFistCharacterClass=/Game/..._C"),FConsoleCommandDelegate::CreateStatic(&Run));
+    TEXT("Real input Unarmed4/Knuckle5, bounded head camera, bones/shadow, inspection, switch cancellation and locomotion. -RogueFistLabel=name -RogueFistCaptureAll -RogueFistCaptureKeyframes -RogueFistDamageTarget -RogueFistFirstPersonOnly -RogueFistCharacterClass=/Game/..._C"),FConsoleCommandDelegate::CreateStatic(&Run));
 }
 #endif

@@ -3,7 +3,7 @@
 import unreal
 
 
-ASSET_PATH = "/Game/World/Loot/BP_HeavyLootBag"
+ASSET_PATH = "/Game/Rogue10m/World/Loot/BP_HeavyLootBag"
 EXPECTED_COMPONENTS = {
     "LootBagBody": "/Engine/BasicShapes/Sphere.Sphere",
     "LootBagNeck": "/Engine/BasicShapes/Cylinder.Cylinder",

@@ -183,7 +183,7 @@ public:
             || !WriteNew(TEXT("movement-diagnostics.csv"), TEXT("wall,stage,map,has_pawn,has_movement,has_attributes,has_capsule,has_mesh,has_anim_instance,movement_mode,custom_movement_mode,max_walk_speed,max_speed,velocity_x,velocity_y,velocity_z,acceleration_x,acceleration_y,acceleration_z,movement_active,movement_tick_enabled,can_jump,jump_current_count,dodging,sprinting,stamina,max_stamina,capsule_radius,capsule_half_height,mesh_root_motion,character_root_motion,active_montage_path,floor_blocking,floor_walkable,floor_line_trace,floor_impact_normal_x,floor_impact_normal_y,floor_impact_normal_z,floor_hit_normal_x,floor_hit_normal_y,floor_hit_normal_z,floor_dist,line_dist,floor_actor_path,floor_component_path\n"))
             || !WriteNew(TEXT("events.csv"), TEXT("wall,event,stage,detail\n"))
             || !WriteNew(TEXT("screenshots.csv"), TEXT("wall,event,file,request_stage,observed_stage,bytes\n"))
-            || !WriteNew(TEXT("input-frames.csv"), TEXT("frame,wall,stage,map,dt,world_dt,x,y,z,yaw,pitch,desired_w,actual_w,desired_a,actual_a,desired_s,actual_s,desired_d,actual_d,desired_shift,actual_shift,actual_alt,actual_lmb,last_input_x,last_input_y,move_ignored,look_ignored,paused,streaming_ready,waypoint,remaining\n")))
+            || !WriteNew(TEXT("input-frames.csv"), TEXT("frame,wall,stage,map,dt,world_dt,x,y,z,yaw,pitch,desired_w,actual_w,desired_a,actual_a,desired_s,actual_s,desired_d,actual_d,desired_shift,actual_shift,actual_dodge,actual_lmb,last_input_x,last_input_y,move_ignored,look_ignored,paused,streaming_ready,waypoint,remaining\n")))
         { FPlatformMisc::RequestExitWithStatus(false, 3); return; }
         if ((bNextRunConnection || bRecordingRequired) && !WriteNew(TEXT("next-run-skill-state.csv"),TEXT("wall,stage,map,boundary,detail\n")))
         { FPlatformMisc::RequestExitWithStatus(false,3); return; }
@@ -804,7 +804,7 @@ private:
             {
                 PreparedDodgeAttemptedAttack = Count; ++PreparedDodgeRequested;
                 PreparedDodgeStaminaBefore = A->GetStamina(); PreparedDodgeCooldownBefore = Character->GetDodgeCooldownRemaining();
-                PreparedDodgePendingAt = Now(); Pulse(EKeys::LeftAlt);
+                PreparedDodgePendingAt = Now(); Pulse(Rogue10mInput::DodgeKey());
                 Event(TEXT("prepared_dodge_requested"), FString::Printf(TEXT("count=%d cost=%.3f timing_known=%d warning_lower_remaining=%.3f margin=%.3f; no_walk_ETA_or_arrival_claim"), Count, DodgeCost, TimingKnown, RemainingLower, Margin));
             }
             return;
@@ -877,7 +877,7 @@ private:
             {
                 PreparedDodgeAttemptedAttack = Count; ++PreparedDodgeRequested;
                 PreparedDodgeStaminaBefore = A->GetStamina(); PreparedDodgeCooldownBefore = Character->GetDodgeCooldownRemaining();
-                PreparedDodgePendingAt = Now(); Pulse(EKeys::LeftAlt);
+                PreparedDodgePendingAt = Now(); Pulse(Rogue10mInput::DodgeKey());
                 Event(TEXT("prepared_dodge_requested"), FString::Printf(TEXT("count=%d cost=%.3f cached_direction=%s desired=%s"), Count, DodgeCost, *Last.ToString(), *Desired.ToString()));
             }
             return;
@@ -919,8 +919,8 @@ private:
         Key(EKeys::LeftShift, false); Key(EKeys::W, Facing && Distance > Reach); Key(EKeys::S, Distance < 55.f);
         if (Target->IsPatternAttackActive() && Distance < 350.f && Now() > NextDodge)
         {
-            Pulse(EKeys::LeftAlt); Key(EKeys::D, true); RecoverUntil = Now() + 0.4; NextDodge = Now() + 2.0;
-            Event(TEXT("normal_dodge_input"), TEXT("LeftAlt; no invulnerability/stat mutation"));
+            Pulse(Rogue10mInput::DodgeKey()); Key(EKeys::D, true); RecoverUntil = Now() + 0.4; NextDodge = Now() + 2.0;
+            Event(TEXT("normal_dodge_input"), FString::Printf(TEXT("%s; no invulnerability/stat mutation"), *Rogue10mInput::DodgeKey().ToString()));
         }
         if (Now() >= RecoverUntil) { Key(EKeys::A, false); Key(EKeys::D, false); }
         if (Facing && Distance < Reach + 50.f && Now() >= NextAttack && !Combat->IsWeaponChangeBlocked() && Combat->GetAttackCooldownRemaining() <= 0.02f)
@@ -1899,7 +1899,7 @@ private:
         const auto Down = [this](const FKey& K) { return PC.IsValid() && PC->IsInputKeyDown(K); };
         InputBuffer += FString::Printf(TEXT("%llu,%.3f,%s,%s,%.6f,%.6f,%.3f,%.3f,%.3f,%.3f,%.3f,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%.4f,%.4f,%d,%d,%d,%d,%d,%.3f\n"),
             static_cast<unsigned long long>(GFrameCounter),Now()-Started,*Csv(Stage),*Csv(Map()),Delta,World.IsValid()?World->GetDeltaSeconds():0.,P.X,P.Y,P.Z,Rotation.Yaw,Rotation.Pitch,
-            Held.FindRef(EKeys::W),Down(EKeys::W),Held.FindRef(EKeys::A),Down(EKeys::A),Held.FindRef(EKeys::S),Down(EKeys::S),Held.FindRef(EKeys::D),Down(EKeys::D),Held.FindRef(EKeys::LeftShift),Down(EKeys::LeftShift),Down(EKeys::LeftAlt),Down(EKeys::LeftMouseButton),
+            Held.FindRef(EKeys::W),Down(EKeys::W),Held.FindRef(EKeys::A),Down(EKeys::A),Held.FindRef(EKeys::S),Down(EKeys::S),Held.FindRef(EKeys::D),Down(EKeys::D),Held.FindRef(EKeys::LeftShift),Down(EKeys::LeftShift),Down(Rogue10mInput::DodgeKey()),Down(EKeys::LeftMouseButton),
             Input.X,Input.Y,PC.IsValid()&&PC->IsMoveInputIgnored(),PC.IsValid()&&PC->IsLookInputIgnored(),World.IsValid()&&UGameplayStatics::IsGamePaused(World.Get()),StreamingReady(),Waypoint,Run.IsValid()?Run->GetRemainingRunSeconds():0.);
         if (Now() - LastInputFlush >= 1.) { FlushFrames(); }
     }

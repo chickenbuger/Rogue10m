@@ -9,7 +9,7 @@ import unreal
 
 PROJECT_ROOT = Path(unreal.Paths.project_dir()).resolve()
 SOURCE_ROOT = PROJECT_ROOT / "SourceArt" / "ItemIcons" / "Starter"
-TEXTURE_ROOT = "/Game/Texture/Item/Starter"
+TEXTURE_ROOT = "/Game/Rogue10m/Items/Textures/Starter"
 ITEM_ROOT = "/Game/DataAsset/Item/Starter"
 
 ITEMS = (

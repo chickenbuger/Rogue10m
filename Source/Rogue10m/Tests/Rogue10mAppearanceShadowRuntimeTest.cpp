@@ -28,6 +28,7 @@
 #include "Rogue10mBasicMonster.h"
 #include "Rogue10mCharacter.h"
 #include "Rogue10mCombatComponent.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mPlayerController.h"
 #include "TimerManager.h"
 #include "UnrealClient.h"
@@ -92,7 +93,7 @@ private:
         {It->ClearAITarget();if(auto* AI=It->GetController()){AI->UnPossess();}It->GetCharacterMovement()->StopMovementImmediately();It->GetCharacterMovement()->DisableMovement();}
         OldFixed=FApp::UseFixedTimeStep();OldDelta=FApp::GetFixedDeltaTime();bOwnFixed=true;FApp::SetFixedDeltaTime(1.0/30.0);FApp::SetUseFixedTimeStep(true);
         Tick=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* W,ELevelTick,float){if(W==Self->World.Get()){Self->Frame();}});
-        UE_LOG(LogRogue10m,Display,TEXT("SHADOW TIMELINE frozen=[0,120) baseline=[0,30) proxy=[30,60) V=60/80 disable=100 enable=110 jabs=135/138 straight=220/223 hook=290/326 finish=390 light=%s ground=%.3f control=%s"),*LightDirection.ToString(),GroundZ,*LockedControl.ToString());
+        UE_LOG(LogRogue10m,Display,TEXT("SHADOW TIMELINE frozen=[0,120) baseline=[0,30) proxy=[30,60) inspection=60/80 disable=100 enable=110 jabs=135/138 straight=220/223 hook=290/326 finish=390 light=%s ground=%.3f control=%s"),*LightDirection.ToString(),GroundZ,*LockedControl.ToString());
     }
     void ValidatePose()
     {
@@ -115,7 +116,7 @@ private:
         ++PoseSamples;
     }
     void Key(EInputEvent Event)
-    {Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::V,Event,Event==IE_Pressed?1.f:0.f));}
+    {Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Rogue10mInput::InspectionCameraKey(),Event,Event==IE_Pressed?1.f:0.f));}
     void Frame()
     {
         if(!Character.IsValid() || !Controller.IsValid() || !Shadow.IsValid()){Check(false,TEXT("player_or_shadow_lost"));Finish();return;}
@@ -204,6 +205,6 @@ static void Run()
     for(const FWorldContext& Context:GEngine->GetWorldContexts())
     {if(UWorld* W=Context.World();W && W->WorldType==EWorldType::Game){Active=MakeShared<FRun>();Active->Start(W);return;}}
 }
-static FAutoConsoleCommand Command(TEXT("Rogue10m.TestAppearanceShadow"),TEXT("Compares frozen head-shadow off/on, validates raw-pose shadow proxy and V restoration, then four attacks. -RogueShadowNoCapture skips images."),FConsoleCommandDelegate::CreateStatic(&Run));
+static FAutoConsoleCommand Command(TEXT("Rogue10m.TestAppearanceShadow"),TEXT("Compares frozen head-shadow off/on, validates raw-pose shadow proxy and inspection restoration, then four attacks. -RogueShadowNoCapture skips images."),FConsoleCommandDelegate::CreateStatic(&Run));
 }
 #endif

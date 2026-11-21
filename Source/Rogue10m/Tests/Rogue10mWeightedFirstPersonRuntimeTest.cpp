@@ -32,6 +32,7 @@
 #include "Rogue10mFighterCombatStanceAnimInstance.h"
 #include "Rogue10mInventoryComponent.h"
 #include "Rogue10mItemDataAsset.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
 #include "Rogue10mProgressionSubsystem.h"
@@ -357,12 +358,12 @@ private:
     }
     void Inspection()
     {
-        Stage=TEXT("inspection"); Key(EKeys::V,true); Key(EKeys::V,false);
+        Stage=TEXT("inspection"); Key(Rogue10mInput::InspectionCameraKey(),true); Key(Rogue10mInput::InspectionCameraKey(),false);
         Later(.4,[this]
         {
-            Check(Appearance->IsThirdPersonInspectionActive(),TEXT("real_V_InputKey_enters_inspection"));
+            Check(Appearance->IsThirdPersonInspectionActive(),TEXT("real_inspection_InputKey_enters_inspection"));
             ValidateView(false); Photo(TEXT("06_inspection_profile_skipped.png"));
-            Later(.6,[this]{Key(EKeys::V,true); Key(EKeys::V,false); Later(.4,[this]{WeaponBoundary();});});
+            Later(.6,[this]{Key(Rogue10mInput::InspectionCameraKey(),true); Key(Rogue10mInput::InspectionCameraKey(),false); Later(.4,[this]{WeaponBoundary();});});
         });
     }
     void WeaponBoundary()
@@ -434,7 +435,7 @@ private:
     {
         if (bFinished) { return; } bFinished=true; Next=nullptr;
         FWorldDelegates::OnWorldPostActorTick.Remove(SampleHandle); FWorldDelegates::OnWorldCleanup.Remove(Cleanup);
-        Key(EKeys::W,false); Key(EKeys::LeftShift,false); Key(EKeys::LeftMouseButton,false); Key(EKeys::V,false);
+        Key(EKeys::W,false); Key(EKeys::LeftShift,false); Key(EKeys::LeftMouseButton,false); Key(Rogue10mInput::InspectionCameraKey(),false);
         if (bPrepared && Character.IsValid())
         {
             State->SetCharacterDead(false); PC->CloseAllBlockingPanels(); Combat->CancelBoundSkillInput(); Combat->CancelCombatVisuals();

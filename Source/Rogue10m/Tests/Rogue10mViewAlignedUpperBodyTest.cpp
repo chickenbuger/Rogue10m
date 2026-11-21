@@ -30,6 +30,7 @@
 #include "Rogue10mCharacterMotionDataAsset.h"
 #include "Rogue10mCombatComponent.h"
 #include "Rogue10mFighterCombatStanceAnimInstance.h"
+#include "Rogue10mInputKeys.h"
 #include "Rogue10mPlayerController.h"
 #include "Rogue10mPlayerState.h"
 #include "TimerManager.h"
@@ -273,7 +274,7 @@ private:
             // need not coincide with FK. Every nonzero aimed output must resync them.
             if((FMath::Abs(Stance->UpperBodyAimPitch)>UE_SMALL_NUMBER||FMath::Abs(Stance->UpperBodyAimYaw)>UE_SMALL_NUMBER)&&!bDodgeActive){Check(IK<.02,TEXT("FK_IK_hands_diverged"));}
             for(const TCHAR* Name:LowerBones){const int32 I=Body->GetBoneIndex(Name);if(VL.IsValidIndex(I)&&VBL.IsValidIndex(I)){const double Degrees=Angle(VL[I].GetRotation(),VBL[I].GetRotation());MaxVisibleLowerDeg=FMath::Max(MaxVisibleLowerDeg,Degrees);Check(Degrees<2.&&FVector::Distance(VL[I].GetLocation(),VBL[I].GetLocation())<.3,TEXT("visible_retarget_lowerbody_changed_with_aim"));}}
-            Check(Character->GetAppearanceCameraComponent()->IsThirdPersonInspectionActive()==C.bInspection,TEXT("actual_V_key_inspection_state_did_not_match_case"));
+            Check(Character->GetAppearanceCameraComponent()->IsThirdPersonInspectionActive()==C.bInspection,TEXT("actual_inspection_key_state_did_not_match_case"));
             // Independent camera rotation oracle uses the DISABLED visible pose's
             // authored head motion. View aim must not be folded into head motion again.
             const auto& VRef=BodyBaseline->GetSkeletalMeshAsset()->GetRefSkeleton();FTransform RefHead=VRef.GetRefBonePose()[VH];
@@ -297,8 +298,8 @@ private:
         if(!Character.IsValid()||!Source.IsValid()||!Baseline.IsValid()||!Stance.IsValid()){Check(false,TEXT("runtime_fixture_object_lost"));Finish();return;}
         const auto& C=Cases[CaseIndex];Controller->RotationInput=FRotator::ZeroRotator;Controller->SetControlRotation(FRotator(C.Pitch,C.Yaw+C.ResidualYaw,0));
         if(C.bMoving){Move(.35f);}Observe();
-        if(C.bInspection&&CaseFrame==4){Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::V,IE_Pressed,1.f));}
-        if(C.bInspection&&CaseFrame==5){Controller->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::V,IE_Released,0.f));}
+        if(C.bInspection&&CaseFrame==4){Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Rogue10mInput::InspectionCameraKey(),IE_Pressed,1.f));}
+        if(C.bInspection&&CaseFrame==5){Controller->InputKey(FInputKeyEventArgs::CreateSimulated(Rogue10mInput::InspectionCameraKey(),IE_Released,0.f));}
         if(CaseFrame==12){if(C.Attack==1||C.Attack==4){Press(true);Release(true);}if(C.Attack==2||C.Attack==3){Press(false);}}
         if(CaseFrame==12&&C.Attack==5){Refill();Character->ProcessEvent(Character->FindFunctionChecked(TEXT("DoDodge")),nullptr);MirrorMontage();}
         if(CaseFrame==SecondJabFrame&&C.Attack==4){Press(true);Release(true);}
@@ -352,6 +353,6 @@ static void Run()
     if(!GEngine||GIsEditor||(Active.IsValid()&&!Active->IsFinished())){return;}
     for(const FWorldContext& C:GEngine->GetWorldContexts()){if(UWorld* W=C.World();W&&W->WorldType==EWorldType::Game){Active=MakeShared<FRun>();Active->Start(W);return;}}
 }
-static FAutoConsoleCommand Command(TEXT("Rogue10m.TestViewAlignedUpperBody"),TEXT("Production source/Appearance aim integration; exact disabled graph baseline, pitch sign/world yaw/limits, actual LMB/RMB and movement/V. Requires isolated Rogue10m_Fighter_QA_ slot."),FConsoleCommandDelegate::CreateStatic(&Run));
+static FAutoConsoleCommand Command(TEXT("Rogue10m.TestViewAlignedUpperBody"),TEXT("Production source/Appearance aim integration; exact disabled graph baseline, pitch sign/world yaw/limits, actual LMB/RMB and movement/inspection. Requires isolated Rogue10m_Fighter_QA_ slot."),FConsoleCommandDelegate::CreateStatic(&Run));
 }
 #endif

@@ -61,6 +61,7 @@ public:
  {
   World=W; FString Label=TEXT("Weapon3P");FParse::Value(FCommandLine::Get(),TEXT("RogueWeaponLabel="),Label);
   bMeleeVfxRun=FParse::Param(FCommandLine::Get(),TEXT("RogueMeleeVfxRun"));
+  bMeleeVfxLogicOnly=bMeleeVfxRun&&FParse::Param(FCommandLine::Get(),TEXT("RogueMeleeVfxLogicOnly"));
   if(bMeleeVfxRun)
   {
    FString ProfileSlot,ProgressionPrefix,KeySlot;
@@ -106,6 +107,12 @@ private:
  }
  bool Capture(const TCHAR* Phase)
  {
+  if(bMeleeVfxLogicOnly)
+  {
+   // Run the same phase checks without counting screenshots on a NullRHI session.
+   CompletePhase(FString(Phase),true);
+   return true;
+  }
   if(bCapturePending||FScreenshotRequest::IsScreenshotRequested()){Check(false,TEXT("screenshot_request_already_pending"));return false;}
   PendingCaptureSkill=Skills.IsValidIndex(Index)&&Skills[Index].IsValid()?Skills[Index]->GetName():TEXT("setup");
   if(IsMeleeMissCase()){PendingCaptureSkill+=TEXT("_Outside");}
@@ -128,12 +135,16 @@ private:
   CaptureRows+=FString::Printf(TEXT("processed,%s,%s,%d,%.6f,%.6f,%s,%lld\n"),*PendingCaptureSkill,*PendingCapturePhase,Frame,World.IsValid()?World->GetTimeSeconds():-1.,CaptureMontagePosition(),*PendingCapturePath,static_cast<long long>(Bytes));
   UE_LOG(LogRogue10m,Display,TEXT("WEAPON3P CAPTURE_PROCESSED skill=%s phase=%s frame=%d world=%.6f montage=%.6f bytes=%lld"),*PendingCaptureSkill,*PendingCapturePhase,Frame,World.IsValid()?World->GetTimeSeconds():-1.,CaptureMontagePosition(),static_cast<long long>(Bytes));
   if(bSaved){++CompletedCaptures;}
-  if(PendingCapturePhase==TEXT("ready")){bReadyCaptured=bSaved;}
-  else if(PendingCapturePhase==TEXT("after_first_damage")||PendingCapturePhase==TEXT("contact_miss")){bFirstDamageCaptured=bSaved;}
-  else if(PendingCapturePhase==TEXT("motion")){bMotionCaptured=bSaved;}
-  else if(PendingCapturePhase==TEXT("recovery")){bRecoveryCaptured=bSaved;}
+  CompletePhase(PendingCapturePhase,bSaved);
   bCapturePending=false;
   if(!bSaved){bFinishRequested=true;}
+ }
+ void CompletePhase(const FString& Phase,bool bCompleted)
+ {
+  if(Phase==TEXT("ready")){bReadyCaptured=bCompleted;}
+  else if(Phase==TEXT("after_first_damage")||Phase==TEXT("contact_miss")){bFirstDamageCaptured=bCompleted;}
+  else if(Phase==TEXT("motion")){bMotionCaptured=bCompleted;}
+  else if(Phase==TEXT("recovery")){bRecoveryCaptured=bCompleted;}
  }
  // Read-only, per-component evidence. Exact asset pointers distinguish cast from impact.
  // Production spawns these transient components without pooling; exclude pre-input instances.
@@ -310,6 +321,12 @@ private:
   // The current user-requested default is third person. This fixture never toggles into first person.
   Check(Character->IsThirdPersonGameplayActive(),TEXT("third_person_mode_required"));
   Character->GetMesh()->SetOwnerNoSee(false);Character->GetMesh()->SetVisibility(true,false);
+  if(bMeleeVfxLogicOnly)
+  {
+   Character->GetMesh()->VisibilityBasedAnimTickOption=EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+   if(auto* Playback=Character->GetAnimationPlaybackMesh())
+   {Playback->VisibilityBasedAnimTickOption=EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;}
+  }
   for(TActorIterator<ARogue10mBasicMonster> It(World.Get());It;++It){It->ClearAITarget();if(It->GetController()){It->GetController()->UnPossess();}It->SetActorEnableCollision(false);It->GetCharacterMovement()->DisableMovement();}
   Target=World->SpawnActor<ARogue10mBasicMonster>(ARogue10mBasicMonster::StaticClass(),Character->GetActorLocation()+FVector(110,0,0),FRotator::ZeroRotator,P);
   if(!Target.IsValid()){Check(false,TEXT("target_failed"));Finish();return;}
@@ -696,7 +713,7 @@ private:
   if(bCapturePending){bFinishRequested=true;return;}
   bFinished=true;FWorldDelegates::OnWorldPostActorTick.Remove(Tick);FScreenshotRequest::OnScreenshotRequestProcessed().Remove(ScreenshotProcessed);
   for(const FString& Path:CapturePaths){Check(IFileManager::Get().FileSize(*Path)>0,TEXT("final_screenshot_file_missing_or_empty"));}
-  const int32 ExpectedCases=bMeleeVfxRun?14:10,ExpectedCaptures=bMeleeVfxRun?46:34;
+  const int32 ExpectedCases=bMeleeVfxRun?14:10,ExpectedCaptures=bMeleeVfxLogicOnly?0:(bMeleeVfxRun?46:34);
   if(Index==ExpectedCases){Check(CapturePaths.Num()==ExpectedCaptures&&CompletedCaptures==ExpectedCaptures,TEXT("all_phase_captures_required"));}
   if(bRequireAuthoredSword){Check(AuthoredSwordValidated==5&&SwordFirstDamageChecks==5,TEXT("all_five_authored_sword_contracts_and_first_damage_gates_required"));}
   Check(FFileHelper::SaveStringToFile(Rows,*(Output/TEXT("frames.csv"))),TEXT("frame_evidence_save_failed"));
@@ -712,12 +729,14 @@ private:
    TEXT("NOTE=Actual third-person animation on a transient flat platform in StartHub, legal programmatic bindings and combo inputs, default camera, separate saves, M20 mastery with four paid Sword nodes. ")
    TEXT("The same montage/weapon path is checked for each capstone against an in-range target and a position outside the query. ")
    TEXT("A contact capture is deferred until after mesh sections report geometry. Four separate motion captures sample a frame after the trail appears. ")
-   TEXT("A capsule measurement is a collision proxy and visual quality requires inspecting the rendered PNGs.\n"),
-   Frame,Failures,Index,CapturePaths.Num(),CompletedCaptures,bRequireAuthoredSword?1:0,AuthoredSwordValidated,SwordFirstDamageChecks);
+   TEXT("Capture mode: %s. A capsule measurement is a collision proxy and visual quality requires inspecting the rendered PNGs.\n"),
+   Frame,Failures,Index,CapturePaths.Num(),CompletedCaptures,bRequireAuthoredSword?1:0,AuthoredSwordValidated,SwordFirstDamageChecks,
+   bMeleeVfxLogicOnly?TEXT("NullRHI, numeric phases only"):TEXT("rendered PNGs"));
   Check(FFileHelper::SaveStringToFile(bMeleeVfxRun?MeleeSummary:Summary,*(Output/TEXT("metrics.txt"))),TEXT("summary_evidence_save_failed"));
   if(bOwnFixed){FApp::SetUseFixedTimeStep(OldFixed);FApp::SetFixedDeltaTime(OldDelta);}
   const bool Passed=Failures==0&&Index==ExpectedCases;
-  UE_LOG(LogRogue10m,Display,TEXT("RESULT=%s_%s completed=%d failures=%d"),bMeleeVfxRun?TEXT("MELEE_VFX"):TEXT("WEAPON_THIRDPERSON"),
+  const TCHAR* ResultName=bMeleeVfxLogicOnly?TEXT("MELEE_VFX_LOGIC"):(bMeleeVfxRun?TEXT("MELEE_VFX"):TEXT("WEAPON_THIRDPERSON"));
+  UE_LOG(LogRogue10m,Display,TEXT("RESULT=%s_%s completed=%d failures=%d"),ResultName,
    Passed?TEXT("PASSED"):TEXT("FAILED"),Index,Failures);
   FPlatformMisc::RequestExitWithStatus(false,Passed?0:1);
  }
@@ -728,7 +747,7 @@ private:
  TArray<TWeakObjectPtr<UNiagaraComponent>> VfxExcluded;
  TMap<TWeakObjectPtr<UNiagaraComponent>,FVfxObservation> VfxObservations;FString VfxRows;bool bVfxTimedOut=false;
  FString MeleeVfxRows;
- bool bMeleeVfxRun=false,bSawMeleeTrail=false,bSawMeleeRange=false,bSawMeleeImpact=false,bMotionRequested=false,bMotionCaptured=false;
+ bool bMeleeVfxRun=false,bMeleeVfxLogicOnly=false,bSawMeleeTrail=false,bSawMeleeRange=false,bSawMeleeImpact=false,bMotionRequested=false,bMotionCaptured=false;
  int32 CasePresentationTier=INDEX_NONE,FirstTrailMeshFrame=INDEX_NONE,TrailTrianglesThisFrame=0;
  ERogue10mAttackInputSlot CaseSlot=ERogue10mAttackInputSlot::Primary;
  int32 Index=0,Frame=0,Failures=0,Uses=0,PulseCount=0,MontageSamples=0,CompletedCaptures=0;double CaseStartedAt=0,Pressed=0,Accepted=-1,Expected=0,PreviousHealth=0,OldDelta=1./60.,CaptureRequestedAt=0,RenderedHandMaxTravelCm=0;

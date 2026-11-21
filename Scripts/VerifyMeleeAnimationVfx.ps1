@@ -3,7 +3,8 @@ param(
     [ValidateSet('720p','1080p')][string]$Resolution = '720p',
     [ValidateRange(30,900)][int]$TimeoutSeconds = 330,
     [string]$EngineRoot = 'D:\Program Files\UE_5.8',
-    [switch]$RequireAuthoredSword
+    [switch]$RequireAuthoredSword,
+    [switch]$LogicOnly
 )
 
 $ErrorActionPreference = 'Stop'
@@ -32,11 +33,13 @@ $before = Get-SaveHashes
 $argsList = @(
     ('"' + $projectFile + '"'), '/Game/Rogue10m/Maps/StartHub',
     '-game', '-DisablePython', '-unattended', '-nosplash', '-nosound', '-NoLiveCoding', '-NoRemoteShaderCompile',
-    '-language=en', '-locale=en-US', '-windowed', '-ForceRes', "-ResX=$width", "-ResY=$height", '-d3d11', '-RenderOffScreen',
+    '-language=en', '-locale=en-US', '-windowed', '-ForceRes', "-ResX=$width", "-ResY=$height", '-RenderOffScreen',
     ('-AbsLog="' + $log + '"'), "-RogueProfileSaveSlot=Rogue10m_Town_QA_MeleeVfx_$Label",
     "-RogueProgressionSavePrefix=Rogue10m_Progression_QA_MeleeVfx_$Label", "-RogueSkillKeySaveSlot=Rogue10m_Fighter_QA_MeleeVfx_$Label",
     "-RogueWeaponLabel=$Label", '-RogueMeleeVfxRun', '-ExecCmds="t.MaxFPS 60,Rogue10m.TestWeaponThirdPerson"'
 )
+if ($LogicOnly) { $argsList += @('-nullrhi', '-RogueMeleeVfxLogicOnly') }
+else { $argsList += '-d3d11' }
 if ($RequireAuthoredSword) { $argsList += '-RogueRequireAuthoredSword' }
 
 $process = $null
@@ -49,16 +52,19 @@ try {
     $process.Refresh()
     & $python -B (Join-Path $PSScriptRoot 'CheckUnrealOutputLog.py') --log $log --after-line 0 --json-output (Join-Path $output 'log-check.json')
     $logCheck = $LASTEXITCODE
+    $result = if ($LogicOnly) { 'MELEE_VFX_LOGIC' } else { 'MELEE_VFX' }
     if ($process.ExitCode -ne 0 -or $logCheck -ne 0 -or
-        -not (Select-String -LiteralPath $log -SimpleMatch 'RESULT=MELEE_VFX_PASSED completed=14 failures=0' -Quiet)) {
+        -not (Select-String -LiteralPath $log -SimpleMatch "RESULT=${result}_PASSED completed=14 failures=0" -Quiet)) {
         throw "Melee VFX runtime failed. Exit=$($process.ExitCode) LogCheck=$logCheck Evidence=$output"
     }
 
     $captures = @(Import-Csv -LiteralPath (Join-Path $output 'captures.csv'))
     $requests = @($captures | Where-Object event -eq 'request')
     $processed = @($captures | Where-Object event -eq 'processed')
-    if ($requests.Count -ne 46 -or $processed.Count -ne 46 -or @($requests.file | Select-Object -Unique).Count -ne 46) {
-        throw 'Expected 46 unique requested and processed screenshots.'
+    $expectedCaptures = if ($LogicOnly) { 0 } else { 46 }
+    if ($requests.Count -ne $expectedCaptures -or $processed.Count -ne $expectedCaptures -or
+        ($expectedCaptures -gt 0 -and @($requests.file | Select-Object -Unique).Count -ne $expectedCaptures)) {
+        throw "Expected $expectedCaptures unique requested and processed screenshots."
     }
     foreach ($capture in $processed) {
         if ([long]$capture.bytes -lt 1024 -or (Get-Item -LiteralPath $capture.file).Length -ne [long]$capture.bytes) {
@@ -67,7 +73,8 @@ try {
     }
     Get-Content -LiteralPath (Join-Path $output 'metrics.txt') | Select-Object -First 8
     Select-String -LiteralPath $log -Pattern 'MELEE_VFX CASE' | ForEach-Object { $_.Line }
-    Write-Output "Melee VFX numerical and rendered capture gates passed. Visual inspection uses raw screenshots under $output."
+    if ($LogicOnly) { Write-Output "Melee VFX numeric gates passed without rendering. Evidence is under $output." }
+    else { Write-Output "Melee VFX numerical and rendered capture gates passed. Visual inspection uses raw screenshots under $output." }
 } finally {
     if ($process -and -not $process.HasExited) {
         $owned = Get-Process -Id $process.Id -ErrorAction SilentlyContinue

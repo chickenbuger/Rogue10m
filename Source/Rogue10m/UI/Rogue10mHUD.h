@@ -7,7 +7,7 @@
 #include "Rogue10mHUD.generated.h"
 
 /**
- * 기존 BP_Rogue10mHUD 에셋의 부모 클래스 호환성을 위한 빈 HUD입니다.
+ * 보관된 구형 HUD Blueprint를 열 수 있게 유지하는 빈 호환 클래스입니다.
  * 실제 화면과 UI 상태는 PlayerController와 UMG Widget이 관리합니다.
  */
 UCLASS()
