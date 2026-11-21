@@ -76,6 +76,8 @@ public:
   bMeleeVfxLogicOnly=bMeleeVfxRun&&FParse::Param(FCommandLine::Get(),TEXT("RogueMeleeVfxLogicOnly"));
   bBreakingKickAudit=bMeleeVfxRun&&FParse::Param(FCommandLine::Get(),TEXT("RogueBreakingKickQA"));
   bBreakingKickAuthored=bBreakingKickAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueBreakingKickAuthored"));
+  bShoulderBashAudit=bMeleeVfxRun&&FParse::Param(FCommandLine::Get(),TEXT("RogueShoulderBashQA"));
+  bShoulderBashAuthored=bShoulderBashAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueShoulderBashAuthored"));
   bCapstoneBraceRun=bMeleeVfxRun&&FParse::Param(FCommandLine::Get(),TEXT("RogueCapstoneBraceQA"));
   bCapstoneBraceRender=bCapstoneBraceRun&&!bMeleeVfxLogicOnly&&FParse::Param(FCommandLine::Get(),TEXT("RogueCapstoneBraceRender"));
   bSwordEquipAudit=bMeleeVfxRun&&FParse::Value(FCommandLine::Get(),TEXT("RogueSwordEquipAppearance="),SwordEquipAppearance);
@@ -99,6 +101,14 @@ public:
   const bool bTechniqueModeOK=bSwordTechniqueRender?(!bMeleeVfxLogicOnly&&!bNullRhi):(bMeleeVfxLogicOnly&&bNullRhi);
   const bool bConflictingTechnique=(bSwordGuardBreakAudit&&(bWhirlwindCapture||bCrushingCapture||bCrushingEdge))
    ||(bWhirlwindCapture&&(bCrushingCapture||bCrushingEdge))||(bCrushingStock&&(!bCrushingEdge||!bMeleeVfxLogicOnly));
+  if(bShoulderBashAudit&&(bBreakingKickAudit||bSwordTechniqueAudit||bSwordEquipAudit||bCapstoneBraceRun
+   ||FParse::Param(FCommandLine::Get(),TEXT("RogueRequireAuthoredSword"))||bMeleeVfxLogicOnly!=bNullRhi))
+  {
+   bFinished=true;
+   UE_LOG(LogRogue10m,Error,TEXT("RESULT=SHOULDER_BASH_FAILED reason=select_dedicated_nullrhi_or_render_mode"));
+   FPlatformMisc::RequestExitWithStatus(false,1);
+   return;
+  }
   if(bSwordTechniqueAudit&&(!bMeleeVfxRun||bSwordEquipAudit||bCapstoneBraceRun||!bTechniqueModeOK||bConflictingTechnique))
   {
    bFinished=true;
@@ -142,7 +152,7 @@ public:
    SwordTechniquePoses=TEXT("case,skill,case_frame,elapsed,montage_s,montage_weight,mesh,revision,bone,x,y,z,qx,qy,qz,qw\n");
    SwordTechniqueActor=TEXT("case,skill,case_frame,elapsed,montage_s,actor_x,actor_y,actor_z,actor_yaw\n");
   }
-  if(bSwordTechniqueRender||(bBreakingKickAudit&&!bMeleeVfxLogicOnly))
+  if(bSwordTechniqueRender||(IsFocusedKnuckleCase()&&!bMeleeVfxLogicOnly))
   {
    TechniqueViewport=GEngine?GEngine->GameViewport:nullptr;
    Check(TechniqueViewport.IsValid(),TEXT("technique_capture_game_viewport_required"));
@@ -151,6 +161,11 @@ public:
    TechniqueViewport->bDisableWorldRendering=true;
   }
   if(bBreakingKickAudit){BreakingKickPoseRows=TEXT("frame,world_s,montage_s,damage,mesh,bone,x,y,z,actor_x,actor_y,actor_z,toe_capsule_gap_cm\n");}
+  if(bShoulderBashAudit)
+  {
+   ShoulderBashPoseRows=TEXT("frame,world_s,montage_s,source_s,damage,source_path,mesh,bone,x,y,z,actor_x,actor_y,actor_z,")
+    TEXT("forward_x,forward_y,forward_z,forward_cm,shoulder_lead_cm\n");
+  }
   if(bMeleeVfxRun)
   {
    FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([Self=AsShared()](float){Self->Prepare();return false;}),4.f);
@@ -168,6 +183,8 @@ private:
  {
   return bSwordTechniqueAudit&&Skills.IsValidIndex(Index)&&Skills[Index].IsValid()&&Skills[Index]->GetFName()==TEXT("DA_Hybrid_GreatSword_EarthSplitter");
  }
+  bool IsFocusedKnuckleCase() const {return bBreakingKickAudit||bShoulderBashAudit;}
+  int32 FocusedKnuckleCaseIndex() const {return bShoulderBashAudit?ShoulderBashIndex:BreakingKickIndex;}
  bool IsSwordCase() const {return bSwordTechniqueAudit||Index<5||(Index>=10&&Index<12);}
  bool IsMeleeMissCase() const
  {
@@ -207,7 +224,7 @@ private:
   CaptureRows+=FString::Printf(TEXT("request,%s,%s,%d,%.6f,%.6f,%s,-1\n"),*PendingCaptureSkill,*PendingCapturePhase,Frame,World.IsValid()?World->GetTimeSeconds():-1.,CaptureMontagePosition(),*PendingCapturePath);
   UE_LOG(LogRogue10m,Display,TEXT("WEAPON3P CAPTURE_REQUEST skill=%s phase=%s frame=%d world=%.6f montage=%.6f file=%s"),*PendingCaptureSkill,*PendingCapturePhase,Frame,World.IsValid()?World->GetTimeSeconds():-1.,CaptureMontagePosition(),*PendingCapturePath);
   if(TechniqueViewport.IsValid()){TechniqueViewport->bDisableWorldRendering=false;}
-  FScreenshotRequest::RequestScreenshot(PendingCapturePath,!bSwordTechniqueRender&&!bBreakingKickAudit,false);
+  FScreenshotRequest::RequestScreenshot(PendingCapturePath,!bSwordTechniqueRender&&!IsFocusedKnuckleCase(),false);
   return true;
  }
  void CaptureProcessed()
@@ -430,11 +447,11 @@ private:
 
  bool PrepareMeleeFixture()
  {
-  if(!bSwordTechniqueAudit&&!bBreakingKickAudit&&!EnterMeleeProfile()){return false;}
+  if(!bSwordTechniqueAudit&&!IsFocusedKnuckleCase()&&!EnterMeleeProfile()){return false;}
   auto* Instance=World->GetGameInstance();
   auto* Saves=Instance?Instance->GetSubsystem<URogue10mProgressionSubsystem>():nullptr;
   if(!Character.IsValid()||!Saves||!Saves->IsAttachedTo(*Character)){return false;}
-  if(bBreakingKickAudit)
+  if(IsFocusedKnuckleCase())
   {
    auto* Inventory=Character->GetInventoryComponent();
    auto* Item=LoadObject<URogue10mItemDataAsset>(nullptr,TEXT("/Game/DataAsset/Item/Starter/DA_Item_StarterKnuckle"));
@@ -482,9 +499,9 @@ private:
  void Prepare()
  {
   Controller=Cast<ARogue10mPlayerController>(World->GetFirstPlayerController());
-  if((bSwordTechniqueAudit||bBreakingKickAudit)&&!Character.IsValid())
+  if((bSwordTechniqueAudit||IsFocusedKnuckleCase())&&!Character.IsValid())
   {
-   Check(EnterMeleeProfile(),TEXT("sword_technique_live_profile_required"));
+   Check(EnterMeleeProfile(),TEXT("technique_live_profile_required"));
    if(Failures){Finish();return;}
    World->GetTimerManager().SetTimer(PrepareTimer,FTimerDelegate::CreateLambda([Self=AsShared()]{Self->Prepare();}),.25f,false);
    return;
@@ -508,13 +525,13 @@ private:
    }
   }
   Character->SetCanBeDamaged(false);
-  if(!bCapstoneBraceRun&&!bSwordEquipWalking&&!bSwordTechniqueAudit&&!bBreakingKickAudit){Character->DisableInput(Controller.Get());}
+  if(!bCapstoneBraceRun&&!bSwordEquipWalking&&!bSwordTechniqueAudit&&!IsFocusedKnuckleCase()){Character->DisableInput(Controller.Get());}
   Character->GetCharacterMovement()->StopMovementImmediately();
   Character->SetActorRotation(FRotator(0,0,0));Controller->SetControlRotation(FRotator(-8,0,0));
   // The current user-requested default is third person. This fixture never toggles into first person.
   Check(Character->IsThirdPersonGameplayActive(),TEXT("third_person_mode_required"));
   Character->GetMesh()->SetOwnerNoSee(false);Character->GetMesh()->SetVisibility(true,false);
-  if(bMeleeVfxLogicOnly||bSwordTechniqueRender||bBreakingKickAudit)
+  if(bMeleeVfxLogicOnly||bSwordTechniqueRender||IsFocusedKnuckleCase())
   {
    Character->GetMesh()->VisibilityBasedAnimTickOption=EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
    if(auto* Playback=Character->GetAnimationPlaybackMesh())
@@ -536,7 +553,16 @@ private:
   for(const TCHAR* Weapon:{TEXT("GreatSword"),TEXT("Knuckle")})for(const TCHAR* Variant:{TEXT("Primary01"),TEXT("Primary02"),TEXT("Primary03"),TEXT("Special"),TEXT("Charged")})
   {
    const FString Path=FString::Printf(TEXT("/Game/DataAsset/AttackSkill/ClassCombat/%s/DA_Attack_%s_%s"),Weapon,Weapon,Variant);
-   auto* S=LoadObject<URogue10mAttackSkillData>(nullptr,*Path);if(!S||!S->AttackMontage){Check(false,TEXT("skill_missing"));Finish();return;}Skills.Add(S);
+   auto* S=LoadObject<URogue10mAttackSkillData>(nullptr,*Path);
+   if(!S||!S->AttackMontage){Check(false,TEXT("skill_missing"));Finish();return;}
+   if(bShoulderBashAudit&&!bShoulderBashAuthored&&S->GetFName()==TEXT("DA_Attack_Knuckle_Charged"))
+   {
+    // Keep identical input and combat conditions while sampling the original asset in this test process.
+    auto* Original=LoadObject<UAnimMontage>(nullptr,TEXT("/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_ShortBlow.AM_Knuckle_ShortBlow"));
+    if(!Original){Check(false,TEXT("shoulder_bash_stock_montage_missing"));Finish();return;}
+    S->AttackMontage=Original;
+   }
+   Skills.Add(S);
    if(bRequireAuthoredSword&&FString(Weapon)==TEXT("GreatSword"))
    {
     const bool bAuthored=S->AttackMontage->GetPathName().StartsWith(TEXT("/Game/Rogue10m/Animation/Combat/GreatSword20261110/AM_"));
@@ -577,30 +603,30 @@ private:
    FAssetCompilingManager::Get().FinishAllCompilation();
   }
   if(GShaderCompilingManager){GShaderCompilingManager->FinishAllCompilation();}
-  if(bSwordTechniqueRender||(bBreakingKickAudit&&!bMeleeVfxLogicOnly))
+  if(bSwordTechniqueRender||(IsFocusedKnuckleCase()&&!bMeleeVfxLogicOnly))
   {
    const FVector Origin=Character->GetActorLocation();
    const FVector Forward=Character->GetActorForwardVector();
    const FVector Right=Character->GetActorRightVector();
    const bool bFrontalCapture=bSwordGuardBreakAudit||bCrushingCapture||bEarthSplitterRender;
-   const FVector Position=bBreakingKickAudit?Origin+Forward*136.-Right*365.+FVector(0,0,48):
+   const FVector Position=IsFocusedKnuckleCase()?Origin+Forward*136.+Right*(bShoulderBashAudit?365.:-365.)+FVector(0,0,48):
     bFrontalCapture?Origin+Forward*120.-Right*420.+FVector(0,0,85):
     Origin-Forward*290.-Right*300.+FVector(0,0,65);
-   const FVector Focus=bBreakingKickAudit?Origin+Forward*52.+FVector(0,0,2):
+   const FVector Focus=IsFocusedKnuckleCase()?Origin+Forward*52.+FVector(0,0,2):
     Origin+FVector(0,0,35)+(bFrontalCapture?Forward*(bCrushingEdge?100.:52.):FVector::ZeroVector);
    FActorSpawnParameters CameraParams;
    CameraParams.ObjectFlags|=RF_Transient;
    auto* Camera=World->SpawnActor<ACameraActor>(Position,(Focus-Position).Rotation(),CameraParams);
    Check(Camera!=nullptr,TEXT("technique_capture_fixed_camera_spawned"));
    if(!Camera){Finish();return;}
-   Camera->GetCameraComponent()->SetFieldOfView(bBreakingKickAudit?55.f:63.f);
+   Camera->GetCameraComponent()->SetFieldOfView(IsFocusedKnuckleCase()?55.f:63.f);
    Controller->SetViewTarget(Camera);
   }
   OldFixed=FApp::UseFixedTimeStep();OldDelta=FApp::GetFixedDeltaTime();FApp::SetUseFixedTimeStep(true);FApp::SetFixedDeltaTime(1./60.);bOwnFixed=true;
   ScreenshotProcessed=FScreenshotRequest::OnScreenshotRequestProcessed().AddLambda([Self=AsShared()]{Self->CaptureProcessed();});
   Tick=FWorldDelegates::OnWorldPostActorTick.AddLambda([Self=AsShared()](UWorld* W,ELevelTick,float){if(W==Self->World.Get()){Self->Step();}});
   if(bCapstoneBraceRun){PrepareCapstoneBrace();}
-  else{if(bBreakingKickAudit){Index=BreakingKickIndex;}Next();}
+  else{if(IsFocusedKnuckleCase()){Index=FocusedKnuckleCaseIndex();}Next();}
  }
  enum class EBraceStep : uint8 { Settle, Hold, Release, PitchHigh, PitchLow, Cancel, Recenter, RenderCapture };
  static constexpr int32 BraceCaseCount=4;
@@ -1195,9 +1221,9 @@ private:
  }
  void Next()
  {
-  if(Index>=Skills.Num()||(bBreakingKickAudit&&Index>BreakingKickIndex)){Finish();return;}
+  if(Index>=Skills.Num()||(IsFocusedKnuckleCase()&&Index>FocusedKnuckleCaseIndex())){Finish();return;}
   auto* C=Character->GetCombatComponent();C->CancelBoundSkillInput();C->CancelCombatVisuals();
-  if(!bSwordTechniqueAudit&&!bBreakingKickAudit){Character->RestoreEquippedWeaponType(IsSwordCase()?ERogue10mWeaponType::GreatSword:ERogue10mWeaponType::Knuckle);}
+  if(!bSwordTechniqueAudit&&!IsFocusedKnuckleCase()){Character->RestoreEquippedWeaponType(IsSwordCase()?ERogue10mWeaponType::GreatSword:ERogue10mWeaponType::Knuckle);}
   const UClass* BodyClass=Character->GetMesh()->GetAnimClass();
   const bool SwordRetarget=BodyClass&&BodyClass->GetPathName().Contains(TEXT("/GreatSword20261110/ABP_Human_GreatSword"));
   const auto Appearance=Character->GetCharacterAppearance();
@@ -1240,13 +1266,18 @@ private:
   Check(bSwordTechniqueAudit?(Basic&&Basic->GetFName()==TEXT("DA_Attack_GreatSword_Primary01")):
    Basic==Skills[IsSwordCase()?0:5].Get(),TEXT("production_primary_binding_changed"));
   CaseSlot=ERogue10mAttackInputSlot::Primary;Chain.Reset();ChainStep=0;ChainAcceptedAt=-1.;ChainNextAt=-1.;
-  if(bSwordTechniqueAudit||bBreakingKickAudit)
+  if(bSwordTechniqueAudit||IsFocusedKnuckleCase())
   {
    CaseSlot=Skill->RequiresLoadoutCharge()?ERogue10mAttackInputSlot::ChargedSpecial:ERogue10mAttackInputSlot::QSkill;
+   if(bShoulderBashAudit)
+   {
+    Check(Skill->GetFName()==TEXT("DA_Attack_Knuckle_Charged")&&CaseSlot==ERogue10mAttackInputSlot::ChargedSpecial,
+     TEXT("shoulder_bash_actual_knuckle_charge_lane"));
+   }
    Check(C->CanEquipSkillInSlot(Skill,CaseSlot)&&C->AssignSkillToInputSlot(Skill,CaseSlot)
     &&C->GetEquippedSkill(CaseSlot)==Skill,TEXT("confirmed_technique_assigned_to_actual_q_or_rmb_lane"));
    UE_LOG(LogRogue10m,Display,TEXT("%s case=%d skill=%s miss=%d shape=%s range=%.3f circle_offset=%.3f charge_s=%.6f target_offset=%s"),
-    bBreakingKickAudit?TEXT("BREAKING_KICK_BINDING"):TEXT("GREAT_SWORD_TECHNIQUE"),
+    bShoulderBashAudit?TEXT("SHOULDER_BASH_BINDING"):bBreakingKickAudit?TEXT("BREAKING_KICK_BINDING"):TEXT("GREAT_SWORD_TECHNIQUE"),
     Index,*Skill->GetName(),IsMeleeMissCase(),*UEnum::GetValueAsString(Skill->AttackShape),Skill->AttackRange,
     Skill->CircleForwardOffset,Skill->ChargeSeconds,*TargetOffset.ToCompactString());
   }
@@ -1425,6 +1456,46 @@ private:
    }
   }
  }
+ void RecordShoulderBashContact(const USkeletalMeshComponent& Source,double Now,float MontageTime,
+   float SourceTime,double Damage,const FString& SourcePath)
+ {
+  static const FName Bones[]={TEXT("upperarm_r"),TEXT("hand_r"),TEXT("hand_l"),TEXT("foot_r"),TEXT("foot_l")};
+  const FVector Origin=Character->GetActorLocation();
+  const FVector Forward=Character->GetActorForwardVector();
+  const USkeletalMeshComponent* Display=Character->GetMesh();
+  const FString Sample=FString::Printf(TEXT("%d,%.6f,%.6f,%.6f,%.3f,%s"),Frame,Now,MontageTime,SourceTime,Damage,*SourcePath);
+  const TCHAR* ExpectedPath=bShoulderBashAuthored
+   ?TEXT("/Game/Rogue10m/Animation/Combat/FighterSkills/A_Fighter_ShoulderBash.A_Fighter_ShoulderBash")
+   :TEXT("/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_ShortBlow.A_Knuckle_ShortBlow");
+  Check(SourcePath==ExpectedPath&&FMath::IsFinite(SourceTime)&&SourceTime>=0.f,TEXT("shoulder_bash_expected_source_at_first_damage"));
+  Check(!Origin.ContainsNaN()&&Forward.IsNormalized(),TEXT("shoulder_bash_actor_frame_valid"));
+  for(const auto* Mesh:{&Source,Display})
+  {
+   FVector Position[UE_ARRAY_COUNT(Bones)];
+   double Projection[UE_ARRAY_COUNT(Bones)];
+   for(int32 BoneIndex=0;BoneIndex<UE_ARRAY_COUNT(Bones);++BoneIndex)
+   {
+    Position[BoneIndex]=Mesh->GetSocketLocation(Bones[BoneIndex]);
+    Projection[BoneIndex]=FVector::DotProduct(Position[BoneIndex]-Origin,Forward);
+    Check(Mesh->GetBoneIndex(Bones[BoneIndex])!=INDEX_NONE&&!Position[BoneIndex].ContainsNaN(),
+     TEXT("shoulder_bash_measured_bone_valid"));
+   }
+   const double Lead=Projection[0]-FMath::Max(Projection[1],Projection[2]);
+   for(int32 BoneIndex=0;BoneIndex<UE_ARRAY_COUNT(Bones);++BoneIndex)
+   {
+    const FVector& Point=Position[BoneIndex];
+    ShoulderBashPoseRows+=FString::Printf(TEXT("%s,%s,%s,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f\n"),
+     *Sample,Mesh==&Source?TEXT("manny"):TEXT("display"),*Bones[BoneIndex].ToString(),Point.X,Point.Y,Point.Z,
+     Origin.X,Origin.Y,Origin.Z,Forward.X,Forward.Y,Forward.Z,Projection[BoneIndex],Lead);
+   }
+   if(Mesh==Display)
+   {
+    UE_LOG(LogRogue10m,Display,TEXT("SHOULDER_BASH_CONTACT frame=%d montage=%.6f shoulder_forward=%.4f right_hand_forward=%.4f left_hand_forward=%.4f lead_cm=%.4f clip=%s"),
+     Frame,MontageTime,Projection[0],Projection[1],Projection[2],Lead,*SourcePath);
+    if(bShoulderBashAuthored){Check(FMath::IsFinite(Lead)&&Lead>0.,TEXT("shoulder_bash_visible_shoulder_leads_both_hands"));}
+   }
+  }
+ }
  void Step()
  {
   if(bFinished){return;}
@@ -1470,7 +1541,7 @@ private:
    if(C->GetAttackCooldownRemaining()>0.f||C->IsWeaponChangeBlocked()){return;}
    if(!Chain.IsEmpty()){ChainUses=Character->GetPlayerState<ARogue10mPlayerState>()->GetSkillUseCount(Chain[0]->GetFName());}
    BaselineVfx();
-   if(bSwordTechniqueAudit||bBreakingKickAudit){SendTechniqueKey(true);}else{C->HandleEquippedSkillPressed(CaseSlot);}
+   if(bSwordTechniqueAudit||IsFocusedKnuckleCase()){SendTechniqueKey(true);}else{C->HandleEquippedSkillPressed(CaseSlot);}
    AttackSent=true;Pressed=Now;
   }
   if(IsEarthSplitterCase()&&AttackSent&&!ChargeReleased&&bEarthSplitterMoving)
@@ -1497,7 +1568,7 @@ private:
   {
    bMotionRequested=Capture(TEXT("motion"));
   }
-  if(AttackSent&&!ChargeReleased&&(Charged?Now-Pressed>Skill->ChargeSeconds+.05:(bSwordTechniqueAudit||bBreakingKickAudit)&&Now-Pressed>.025))
+  if(AttackSent&&!ChargeReleased&&(Charged?Now-Pressed>Skill->ChargeSeconds+.05:(bSwordTechniqueAudit||IsFocusedKnuckleCase())&&Now-Pressed>.025))
   {
    if(bEarthSplitterRender&&!bEarthHeldCaptureRequested)
    {
@@ -1507,7 +1578,7 @@ private:
    }
    if(bEarthSplitterRender&&bCapturePending){return;}
    if(Charged){BaselineVfx();}
-   if(bSwordTechniqueAudit||bBreakingKickAudit){SendTechniqueKey(false);}else{C->HandleEquippedSkillReleased(CaseSlot);}
+   if(bSwordTechniqueAudit||IsFocusedKnuckleCase()){SendTechniqueKey(false);}else{C->HandleEquippedSkillReleased(CaseSlot);}
    ChargeReleased=true;
   }
   if(AttackSent&&!Chain.IsEmpty()&&ChainStep<Chain.Num()-1)
@@ -1603,6 +1674,7 @@ private:
    ++PulseCount;if(PulseCount==1){Check(Accepted>=0,TEXT("damage_before_acceptance"));Check(FMath::Abs((Now-Accepted)-Expected)<.05,TEXT("actual_damage_delay_mismatch"));}
    if(PulseCount==1)
    {
+    if(bShoulderBashAudit){RecordShoulderBashContact(*Source,Now,MontageTime,MontageSourceTime,Drop,MontageSourcePath);}
     const bool bStrictSword=bRequireAuthoredSword&&Index<5;
     if(bStrictSword)
     {
@@ -1618,7 +1690,7 @@ private:
   }
   PreviousHealth=Health;
   const bool bMeleeVfxReady=!bSwordTechniqueAudit&&bMeleeVfxRun&&Accepted>=0&&ObserveMeleeVfx(*Skill,Now,Drop);
-  const bool bMeleeContact=bSwordTechniqueAudit||bBreakingKickAudit?Accepted>=0&&(PulseCount>0||IsMeleeMissCase()):bMeleeVfxReady;
+  const bool bMeleeContact=bSwordTechniqueAudit||IsFocusedKnuckleCase()?Accepted>=0&&(PulseCount>0||IsMeleeMissCase()):bMeleeVfxReady;
   if((bMeleeVfxRun?bMeleeContact:PulseCount>0)&&!bFirstDamageRequested&&!bCapturePending)
   {
    bFirstDamageRequested=Capture(IsMeleeMissCase()?TEXT("contact_miss"):TEXT("after_first_damage"));
@@ -1750,14 +1822,17 @@ private:
    FPlatformMisc::RequestExitWithStatus(false,bPassed?0:1);return;
   }
   if(bCapstoneBraceRun){FinishCapstoneBrace();return;}
-  if(bBreakingKickAudit)
+  if(IsFocusedKnuckleCase())
   {
    if(bOwnFixed){FApp::SetUseFixedTimeStep(OldFixed);FApp::SetFixedDeltaTime(OldDelta);}
-   Check(FFileHelper::SaveStringToFile(BreakingKickPoseRows,*(Output/TEXT("breaking-kick-poses.csv"))),TEXT("breaking_kick_pose_report_saved"));
-   Check(FFileHelper::SaveStringToFile(CaptureRows,*(Output/TEXT("captures.csv"))),TEXT("breaking_kick_captures_saved"));
-   Check(bMeleeVfxLogicOnly||CompletedCaptures==3,TEXT("breaking_kick_ready_contact_recovery_captures"));
-   const bool bPass=Failures==0&&Index==BreakingKickIndex+1;
-   UE_LOG(LogRogue10m,Display,TEXT("RESULT=BREAKING_KICK_%s completed=%d failures=%d"),bPass?TEXT("PASSED"):TEXT("FAILED"),bPass?1:0,Failures);
+   const FString& Poses=bShoulderBashAudit?ShoulderBashPoseRows:BreakingKickPoseRows;
+   const TCHAR* PoseFile=bShoulderBashAudit?TEXT("shoulder-bash-poses.csv"):TEXT("breaking-kick-poses.csv");
+   Check(FFileHelper::SaveStringToFile(Poses,*(Output/PoseFile)),TEXT("focused_knuckle_pose_report_saved"));
+   Check(FFileHelper::SaveStringToFile(CaptureRows,*(Output/TEXT("captures.csv"))),TEXT("focused_knuckle_captures_saved"));
+   Check(bMeleeVfxLogicOnly||CompletedCaptures==3,TEXT("focused_knuckle_ready_contact_recovery_captures"));
+   const bool bPass=Failures==0&&Index==FocusedKnuckleCaseIndex()+1;
+   UE_LOG(LogRogue10m,Display,TEXT("RESULT=%s_%s completed=%d failures=%d"),
+    bShoulderBashAudit?TEXT("SHOULDER_BASH"):TEXT("BREAKING_KICK"),bPass?TEXT("PASSED"):TEXT("FAILED"),bPass?1:0,Failures);
    FPlatformMisc::RequestExitWithStatus(false,bPass?0:1);return;
   }
   for(const FString& Path:CapturePaths){Check(IFileManager::Get().FileSize(*Path)>0,TEXT("final_screenshot_file_missing_or_empty"));}
@@ -1811,9 +1886,10 @@ private:
   FPlatformMisc::RequestExitWithStatus(false,Passed?0:1);
  }
  TWeakObjectPtr<UWorld> World;TWeakObjectPtr<ARogue10mCharacter> Character;TWeakObjectPtr<ARogue10mPlayerController> Controller;TWeakObjectPtr<ARogue10mBasicMonster> Target;
- static constexpr int32 BreakingKickIndex=8;
+  static constexpr int32 BreakingKickIndex=8,ShoulderBashIndex=9;
  bool bBreakingKickAudit=false,bBreakingKickAuthored=false;
- FString BreakingKickPoseRows;
+  bool bShoulderBashAudit=false,bShoulderBashAuthored=false;
+  FString BreakingKickPoseRows,ShoulderBashPoseRows;
  TArray<TWeakObjectPtr<URogue10mAttackSkillData>> Chain;int32 ChainStep=0,ChainUses=0;double ChainAcceptedAt=-1.,ChainNextAt=-1.;
  TArray<TWeakObjectPtr<URogue10mAttackSkillData>> Skills;FTimerHandle PrepareTimer;FDelegateHandle Tick,ScreenshotProcessed;FString Output,Images,Rows,CaptureRows,CaptureRunId,PendingCaptureSkill,PendingCapturePhase,PendingCapturePath;TArray<FString> CapturePaths;
  TWeakObjectPtr<UNiagaraComponent> FirstImpactComponent;bool bFirstImpactObserved=false;

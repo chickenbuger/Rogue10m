@@ -11,7 +11,9 @@ param(
     [switch]$SwordEquipWalking,
     [switch]$SwordEquipMovingBoth,
     [switch]$BreakingKick,
-    [switch]$ExpectAuthoredKick
+    [switch]$ExpectAuthoredKick,
+    [switch]$ShoulderBash,
+    [switch]$ExpectAuthoredShoulder
 )
 
 $ErrorActionPreference = 'Stop'
@@ -23,7 +25,10 @@ if ($SwordEquipWalking -and -not $SwordEquipAppearance) { throw 'Choose the char
 if ($SwordEquipMovingBoth -and -not $SwordEquipWalking) { throw 'Both moving transitions require the walking test.' }
 if ($ExpectAuthoredKick -and -not $BreakingKick) { throw 'The authored kick gate requires the dedicated kick test.' }
 if ($BreakingKick -and ($CapstoneBrace -or $SwordEquipAppearance -or $RequireAuthoredSword)) { throw 'Choose a single fixture mode.' }
-$softwareRender = $CapstoneBraceRender -or (($BreakingKick -or $SwordEquipAppearance) -and -not $LogicOnly)
+if ($ExpectAuthoredShoulder -and -not $ShoulderBash) { throw 'The authored shoulder gate requires the dedicated shoulder test.' }
+if ($ShoulderBash -and ($BreakingKick -or $CapstoneBrace -or $SwordEquipAppearance -or $RequireAuthoredSword)) { throw 'Choose a single fixture mode.' }
+$focusedKnuckle = $BreakingKick -or $ShoulderBash
+$softwareRender = $CapstoneBraceRender -or (($focusedKnuckle -or $SwordEquipAppearance) -and -not $LogicOnly)
 $projectRoot = (Resolve-Path -LiteralPath (Split-Path -Parent $PSScriptRoot)).Path
 $projectFile = Join-Path $projectRoot 'Rogue10m.uproject'
 $editor = Join-Path $EngineRoot 'Engine\Binaries\Win64\UnrealEditor.exe'
@@ -67,6 +72,8 @@ if ($SwordEquipWalking) { $argsList += '-RogueSwordEquipWalking' }
 if ($SwordEquipMovingBoth) { $argsList += '-RogueSwordEquipMovingBoth' }
 if ($BreakingKick) { $argsList += '-RogueBreakingKickQA' }
 if ($ExpectAuthoredKick) { $argsList += '-RogueBreakingKickAuthored' }
+if ($ShoulderBash) { $argsList += '-RogueShoulderBashQA' }
+if ($ExpectAuthoredShoulder) { $argsList += '-RogueShoulderBashAuthored' }
 
 $process = $null
 $started = $null
@@ -90,9 +97,9 @@ try {
             $logCheck = $LASTEXITCODE
         }
     }
-    $result = if ($BreakingKick) { 'BREAKING_KICK' } elseif ($CapstoneBraceRender) { 'CAPSTONE_BRACE_RENDER' } elseif ($CapstoneBrace) { 'CAPSTONE_BRACE' }
+    $result = if ($ShoulderBash) { 'SHOULDER_BASH' } elseif ($BreakingKick) { 'BREAKING_KICK' } elseif ($CapstoneBraceRender) { 'CAPSTONE_BRACE_RENDER' } elseif ($CapstoneBrace) { 'CAPSTONE_BRACE' }
     elseif ($LogicOnly) { 'MELEE_VFX_LOGIC' } else { 'MELEE_VFX' }
-    $expectedCases = if ($BreakingKick) { 1 } elseif ($CapstoneBraceRender) { 2 } elseif ($CapstoneBrace) { 4 } else { 14 }
+    $expectedCases = if ($focusedKnuckle) { 1 } elseif ($CapstoneBraceRender) { 2 } elseif ($CapstoneBrace) { 4 } else { 14 }
     $expected = if ($SwordEquipAppearance) { "RESULT=SWORD_EQUIP_POSE_PASSED appearance=$SwordEquipAppearance frames=88 failures=0" }
     else { "RESULT=${result}_PASSED completed=$expectedCases failures=0" }
     if ($process.ExitCode -ne 0 -or $logCheck -ne 0 -or -not (Select-String -LiteralPath $log -SimpleMatch $expected -Quiet)) {
@@ -154,6 +161,23 @@ try {
         Select-String -LiteralPath $log -Pattern 'BREAKING_KICK_CONTACT|RESULT=BREAKING_KICK' | ForEach-Object { $_.Line }
         if ($LogicOnly) { return }
     }
+    if ($ShoulderBash) {
+        $poses = @(Import-Csv -LiteralPath (Join-Path $output 'shoulder-bash-poses.csv'))
+        $contactFrames = @($poses.frame | Select-Object -Unique)
+        $bones = @('upperarm_r', 'hand_r', 'hand_l', 'foot_r', 'foot_l')
+        if ($contactFrames.Count -ne 1 -or $poses.Count -ne 2 * $bones.Count) {
+            throw 'Expected one first-damage frame and complete live shoulder poses.'
+        }
+        foreach ($mesh in @('manny','display')) {
+            foreach ($bone in $bones) {
+                if (@($poses | Where-Object { $_.mesh -eq $mesh -and $_.bone -eq $bone }).Count -ne 1) {
+                    throw "Missing unique first-damage pose for $mesh $bone."
+                }
+            }
+        }
+        Select-String -LiteralPath $log -Pattern 'SHOULDER_BASH_CONTACT|RESULT=SHOULDER_BASH' | ForEach-Object { $_.Line }
+        if ($LogicOnly) { return }
+    }
 
     if ($CapstoneBrace -and -not $CapstoneBraceRender) {
         $evidence = @(Import-Csv -LiteralPath (Join-Path $output 'capstone-brace.csv'))
@@ -172,7 +196,7 @@ try {
     $captures = @(Import-Csv -LiteralPath (Join-Path $output 'captures.csv'))
     $requests = @($captures | Where-Object event -eq 'request')
     $processed = @($captures | Where-Object event -eq 'processed')
-    $expectedCaptures = if ($BreakingKick) { 3 } elseif ($SwordEquipMovingBoth) { 5 } elseif ($SwordEquipAppearance) { 4 } elseif ($CapstoneBraceRender) { 2 } elseif ($LogicOnly) { 0 } else { 46 }
+    $expectedCaptures = if ($focusedKnuckle) { 3 } elseif ($SwordEquipMovingBoth) { 5 } elseif ($SwordEquipAppearance) { 4 } elseif ($CapstoneBraceRender) { 2 } elseif ($LogicOnly) { 0 } else { 46 }
     if ($requests.Count -ne $expectedCaptures -or $processed.Count -ne $expectedCaptures -or
         ($expectedCaptures -gt 0 -and @($requests.file | Select-Object -Unique).Count -ne $expectedCaptures)) {
         throw "Expected $expectedCaptures unique requested and processed screenshots."
@@ -182,12 +206,15 @@ try {
             throw "Invalid rendered capture: $($capture.file)"
         }
     }
-    if ($BreakingKick) {
+    if ($focusedKnuckle) {
         foreach ($phase in @('ready','after_first_damage','recovery')) {
             $request = @($requests | Where-Object phase -eq $phase)
             $saved = @($processed | Where-Object phase -eq $phase)
             if ($request.Count -ne 1 -or $saved.Count -ne 1 -or [int]$request[0].fixture_frame -ne [int]$saved[0].fixture_frame) {
-                throw "Expected a same-frame BreakingKick capture for $phase."
+                throw "Expected a same-frame $result capture for $phase."
+            }
+            if ($ShoulderBash -and $phase -eq 'after_first_damage' -and $saved[0].fixture_frame -ne $contactFrames[0]) {
+                throw 'The shoulder capture does not match the first HP drop.'
             }
             Write-Output $saved[0].file
         }

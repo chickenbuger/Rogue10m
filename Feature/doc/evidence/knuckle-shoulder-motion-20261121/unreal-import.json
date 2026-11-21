@@ -1,0 +1,83 @@
+{
+  "original_montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_ShortBlow.AM_Knuckle_ShortBlow",
+  "clip": "/Game/Rogue10m/Animation/Combat/FighterSkills/A_Fighter_ShoulderBash.A_Fighter_ShoulderBash",
+  "montage": "/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_ShoulderBash.AM_Fighter_ShoulderBash",
+  "skill": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.DA_Attack_Knuckle_Charged",
+  "original_skeleton": "/Game/Characters/Mannequins/Meshes/SK_Mannequin.SK_Mannequin",
+  "duration_s": 1.8333333730697632,
+  "fps": 60,
+  "intervals": 110,
+  "segment": {
+    "anim_start_time": 0.0,
+    "anim_end_time": 1.8333333730697632,
+    "start_pos": 0.0,
+    "anim_play_rate": 1.0,
+    "looping_count": 1
+  },
+  "preserved_skill_fields": {
+    "input_slot": "<Rogue10mAttackInputSlot.CHARGED_PRIMARY: 4>",
+    "hit_start_delay_seconds": "0.2199999988079071",
+    "animation_play_rate": "0.8999999761581421",
+    "attack_range": "184.8000030517578",
+    "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+    "charge_seconds": "0.7200000286102295",
+    "hit_count": "1",
+    "hit_mode": "<Rogue10mAttackHitMode.SINGLE: 0>",
+    "hit_interval": "0.07999999821186066",
+    "max_hits_per_target": "1",
+    "max_targets_per_hit": "8",
+    "attack_cooldown": "1.0499999523162842",
+    "damage": "25.200000762939453",
+    "enable_combo": "False",
+    "effect_attach_socket": "hand_r",
+    "box_half_width": "44.0",
+    "box_half_height": "62.0"
+  },
+  "digest": "c3c0caec500a05bc62663c94bdfacad284822e99bdb5884ff408711c585ed5ed",
+  "raw_max_travel_cm": {
+    "root": 0.0,
+    "pelvis": 26.57066365621082,
+    "upperarm_r": 48.709375705407986,
+    "hand_r": 29.776232475053252,
+    "hand_l": 19.56625795823976,
+    "ball_r": 24.00000836682394,
+    "ball_l": 0.0001000782086314919
+  },
+  "raw_frame_13_cm": {
+    "root": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "pelvis": [
+      -1.475681185722351,
+      26.532047271728516,
+      73.39730072021484
+    ],
+    "upperarm_r": [
+      -17.467367798810685,
+      40.82230366430966,
+      117.83746972040427
+    ],
+    "hand_r": [
+      -1.4673930172971836,
+      28.822289777305603,
+      97.83747870789016
+    ],
+    "hand_l": [
+      9.951449926415233,
+      18.311276000284685,
+      108.40786231215631
+    ],
+    "ball_r": [
+      -21.296109123986565,
+      -4.916023368078772,
+      1.5788794547251834
+    ],
+    "ball_l": [
+      14.68845799810424,
+      44.382757353023365,
+      1.7455443799121166
+    ]
+  }
+}
