@@ -1,0 +1,22 @@
+패왕참 발동 자세, Sprint#28-2-capstone-release-motion, 2026-11-21
+기준과 이미지 검증의 소스 기준 55ab2ddcb4cbe99322b90b33d60902a99b45e02e
+
+기준 실입력: UltimateReleaseBase, CAPSTONE_RELEASE_PASSED completed=2 failures=0. 60 Hz, StartHub, held-RMB, dedicated separate save slots. 'stock' case disables the held brace in both comparison runs; 'brace' enables the deployed held brace. Both cases traverse whichever release montage is bound in the asset.
+Blender A: contact proxy +6.17cm (required 7cm) and separation 31.82cm. Rejected, no content save. Raw working source A and logs retained locally.
+Blender B: 89-bone Manny, 111 keys at 60 Hz, independent blend reopen and FBX reimport; maximum landmark error .000265cm and root travel 0. See blender-and-import.json.
+Editor attempt 1: Python getattr get_editor_property('notifies') returned protected-property error. No package was written.
+Editor attempt 2: actual ScriptName for UAnimationBlueprintLibrary is AnimationLibrary. Loading or accessing the old Python name raised AttributeError before any package save.
+Editor accepted: exact event count and empty old/new notify arrays, clock and root policy preserved, RESULT=GREAT_SWORD_CAPSTONE_RELEASE_IMPORTED, log checker selected errors=0.
+Candidate: UltimateReleaseCandidateB, CAPSTONE_RELEASE_PASSED completed=2 failures=0. 152 active release pose samples per case. Each case had exactly one damage event per interval at montage time 0. Off/on held-brace cases recorded against the same wall-clock policy. Damage amount varies with the existing damage calculation. Log checker selected errors=0.
+Regression: UltimateReleaseBraceB, CAPSTONE_BRACE_PASSED completed=4 failures=0; UltimateReleaseMeleeB, MELEE_VFX_LOGIC_PASSED completed=14 failures=0. Log checking selected errors=0 in both.
+Render: UltimateReleaseWarpB, CAPSTONE_RELEASE_RENDER_PASSED completed=1 failures=0. Software D3D11 Microsoft Basic Render Driver, 1280 × 720, log checker selected errors=0.
+
+WARP phase, verification frame, world-s, screenshot request montage time, matching completion frame, byte size
+held, 116, 5.950000, 0.000000 marker before release, 116, 983257
+swing, 209, 7.500000, 1.007706, 209, 1059095
+recovery, 286, 8.783334, 0.000000 inactive marker, 286, 1098323
+Release damage world time 5.983334s at montage-local 0.000000, first displayed evaluation 0.010953. Measured closest 3D blade-to-110cm capsule = −33.931431cm, rendered swing pose. First overlap occurred earlier.
+
+Raw private scratch: tmp/UltimateReleaseRuns; tmp/MeleeVfxQARuns/{UltimateReleaseBase,UltimateReleaseCandidateB,UltimateReleaseBraceB,UltimateReleaseMeleeB,UltimateReleaseWarpB}. Runtime results use programmatic input through StartHub. A whole-world playthrough and physical mouse input were outside these checks.
+
+Final integrated base 8f64906656600893c90b51ea30be53c1a96cf689. The three capstone package blobs are identical to the 55ab-based WARP review. Editor target built successfully. UltimateReleaseIntegrated8F passed the 2 RMB cases, UltimateBraceIntegrated8F passed all 4 existing brace, short release and cancellation cases, and UltimateMeleeIntegrated8F passed all 14 general attacks. Log checker selected errors=0 in each. The 8f-based release geometry and clock matched the earlier candidate, including −33.931431cm closest 3D capsule gap, 67.278925cm blade-floor margin, zero mature samples above 33cm palm separation, and one damage event at montage 0. The numeric evidence separates values obtained on each base.

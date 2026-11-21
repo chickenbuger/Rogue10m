@@ -80,6 +80,8 @@ public:
   bShoulderBashAuthored=bShoulderBashAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueShoulderBashAuthored"));
   bCapstoneBraceRun=bMeleeVfxRun&&FParse::Param(FCommandLine::Get(),TEXT("RogueCapstoneBraceQA"));
   bCapstoneBraceRender=bCapstoneBraceRun&&!bMeleeVfxLogicOnly&&FParse::Param(FCommandLine::Get(),TEXT("RogueCapstoneBraceRender"));
+  bCapstoneReleaseAudit=bCapstoneBraceRun&&FParse::Param(FCommandLine::Get(),TEXT("RogueCapstoneReleaseQA"));
+  bCapstoneReleaseRender=bCapstoneReleaseAudit&&!bMeleeVfxLogicOnly&&FParse::Param(FCommandLine::Get(),TEXT("RogueCapstoneReleaseRender"));
   bSwordEquipAudit=bMeleeVfxRun&&FParse::Value(FCommandLine::Get(),TEXT("RogueSwordEquipAppearance="),SwordEquipAppearance);
   bSwordEquipWalking=bSwordEquipAudit&&FParse::Param(FCommandLine::Get(),TEXT("RogueSwordEquipWalking"));
   bSwordEquipMovingBoth=bSwordEquipWalking&&FParse::Param(FCommandLine::Get(),TEXT("RogueSwordEquipMovingBoth"));
@@ -98,6 +100,13 @@ public:
   bSwordTechniqueRender=bSwordTechniqueAudit&&(bWhirlwindCapture||bGuardBreakCapture||bCrushingCapture||bEarthSplitterRender);
   bSwordGuardBreakAudit=bSwordTechniqueAudit&&(bGuardBreakCapture||FParse::Param(FCommandLine::Get(),TEXT("RogueGreatSwordGuardBreakAudit")));
   const bool bNullRhi=FParse::Param(FCommandLine::Get(),TEXT("nullrhi"));
+  const bool bReleaseModeOK=bCapstoneReleaseRender?(!bNullRhi&&!bMeleeVfxLogicOnly):(bNullRhi&&bMeleeVfxLogicOnly);
+  if(bCapstoneReleaseAudit&&(bCapstoneBraceRender||!bReleaseModeOK))
+  {
+   bFinished=true;
+   UE_LOG(LogRogue10m,Error,TEXT("RESULT=CAPSTONE_RELEASE_FAILED reason=select_dedicated_nullrhi_or_render_mode"));
+   FPlatformMisc::RequestExitWithStatus(false,1);return;
+  }
   const bool bTechniqueModeOK=bSwordTechniqueRender?(!bMeleeVfxLogicOnly&&!bNullRhi):(bMeleeVfxLogicOnly&&bNullRhi);
   const bool bConflictingTechnique=(bSwordGuardBreakAudit&&(bWhirlwindCapture||bCrushingCapture||bCrushingEdge))
    ||(bWhirlwindCapture&&(bCrushingCapture||bCrushingEdge))||(bCrushingStock&&(!bCrushingEdge||!bMeleeVfxLogicOnly));
@@ -152,7 +161,7 @@ public:
    SwordTechniquePoses=TEXT("case,skill,case_frame,elapsed,montage_s,montage_weight,mesh,revision,bone,x,y,z,qx,qy,qz,qw\n");
    SwordTechniqueActor=TEXT("case,skill,case_frame,elapsed,montage_s,actor_x,actor_y,actor_z,actor_yaw\n");
   }
-  if(bSwordTechniqueRender||(IsFocusedKnuckleCase()&&!bMeleeVfxLogicOnly))
+  if(bSwordTechniqueRender||bCapstoneReleaseRender||(IsFocusedKnuckleCase()&&!bMeleeVfxLogicOnly))
   {
    TechniqueViewport=GEngine?GEngine->GameViewport:nullptr;
    Check(TechniqueViewport.IsValid(),TEXT("technique_capture_game_viewport_required"));
@@ -201,7 +210,7 @@ private:
  {
   const auto* Source=Character.IsValid()?Character->GetAnimationPlaybackMesh():nullptr;
   const auto* Anim=Source?Source->GetAnimInstance():nullptr;
-  const auto* Skill=bCapstoneBraceRender?BraceSkill.Get():(Skills.IsValidIndex(Index)?Skills[Index].Get():nullptr);
+  const auto* Skill=bCapstoneBraceRender||bCapstoneReleaseRender?BraceSkill.Get():(Skills.IsValidIndex(Index)?Skills[Index].Get():nullptr);
   return Anim&&Skill?Anim->Montage_GetPosition(Skill->AttackMontage):-1.f;
  }
  bool Capture(const TCHAR* Phase)
@@ -215,6 +224,7 @@ private:
   if(bCapturePending||FScreenshotRequest::IsScreenshotRequested()){Check(false,TEXT("screenshot_request_already_pending"));return false;}
   PendingCaptureSkill=Skills.IsValidIndex(Index)&&Skills[Index].IsValid()?Skills[Index]->GetName():TEXT("setup");
   if(bCapstoneBraceRender){PendingCaptureSkill=BraceCaseNames[Index];}
+  if(bCapstoneReleaseRender){PendingCaptureSkill=TEXT("capstone");}
   if(IsMeleeMissCase()){PendingCaptureSkill+=TEXT("_Outside");}
   PendingCapturePhase=Phase;
   // A unique file cannot be mistaken for a successful capture left by an earlier run.
@@ -224,7 +234,7 @@ private:
   CaptureRows+=FString::Printf(TEXT("request,%s,%s,%d,%.6f,%.6f,%s,-1\n"),*PendingCaptureSkill,*PendingCapturePhase,Frame,World.IsValid()?World->GetTimeSeconds():-1.,CaptureMontagePosition(),*PendingCapturePath);
   UE_LOG(LogRogue10m,Display,TEXT("WEAPON3P CAPTURE_REQUEST skill=%s phase=%s frame=%d world=%.6f montage=%.6f file=%s"),*PendingCaptureSkill,*PendingCapturePhase,Frame,World.IsValid()?World->GetTimeSeconds():-1.,CaptureMontagePosition(),*PendingCapturePath);
   if(TechniqueViewport.IsValid()){TechniqueViewport->bDisableWorldRendering=false;}
-  FScreenshotRequest::RequestScreenshot(PendingCapturePath,!bSwordTechniqueRender&&!IsFocusedKnuckleCase(),false);
+  FScreenshotRequest::RequestScreenshot(PendingCapturePath,!bSwordTechniqueRender&&!bCapstoneReleaseRender&&!IsFocusedKnuckleCase(),false);
   return true;
  }
  void CaptureProcessed()
@@ -531,7 +541,7 @@ private:
   // The current user-requested default is third person. This fixture never toggles into first person.
   Check(Character->IsThirdPersonGameplayActive(),TEXT("third_person_mode_required"));
   Character->GetMesh()->SetOwnerNoSee(false);Character->GetMesh()->SetVisibility(true,false);
-  if(bMeleeVfxLogicOnly||bSwordTechniqueRender||IsFocusedKnuckleCase())
+  if(bMeleeVfxLogicOnly||bSwordTechniqueRender||bCapstoneReleaseRender||IsFocusedKnuckleCase())
   {
    Character->GetMesh()->VisibilityBasedAnimTickOption=EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
    if(auto* Playback=Character->GetAnimationPlaybackMesh())
@@ -633,8 +643,10 @@ private:
  static constexpr int32 BraceRenderCaseCount=2;
  static constexpr float BraceRenderHoldSeconds=20.f/60.f;
  static constexpr const TCHAR* BraceCaseNames[]={TEXT("stock"),TEXT("brace"),TEXT("early"),TEXT("pitch_cancel")};
+ const TCHAR* BraceCaseLabel() const {return bCapstoneReleaseRender?TEXT("brace_release"):BraceCaseNames[Index];}
  static constexpr const TCHAR* BraceBones[]={TEXT("hand_l"),TEXT("hand_r"),TEXT("clavicle_l"),TEXT("clavicle_r"),
-  TEXT("upperarm_l"),TEXT("upperarm_r"),TEXT("lowerarm_l"),TEXT("lowerarm_r"),TEXT("foot_l"),TEXT("foot_r")};
+  TEXT("upperarm_l"),TEXT("upperarm_r"),TEXT("lowerarm_l"),TEXT("lowerarm_r"),TEXT("foot_l"),TEXT("foot_r"),
+  TEXT("middle_01_l"),TEXT("middle_01_r"),TEXT("pelvis")};
 
  struct FBracePose
  {
@@ -757,7 +769,7 @@ private:
   const auto* Camera=Character->GetGameplayCameraComponent();
   const double Pitch=Camera?Camera->GetComponentRotation().Pitch:0.;
   BraceRows+=FString::Printf(TEXT("%s,%s,%d,%.6f,%.6f,%.3f,%u,%d,%.6f,%.6f,%.6f,%.3f,%.6f,%.6f,"),
-   BraceCaseNames[Index],Phase,Frame,World->GetTimeSeconds(),Hold,Pitch,Pose.Revision,
+   BraceCaseLabel(),Phase,Frame,World->GetTimeSeconds(),Hold,Pitch,Pose.Revision,
    Montage?Montage->GetInstanceID():INDEX_NONE,Montage?Montage->GetPosition():-1.f,
    Montage?Montage->GetWeight():0.f,BraceDamagePosition,Target->GetRogueAttributeSet()->GetHealth(),
    BraceLeftWristAxialPosition(Pose),FVector::Distance(Pose.Bones[0].GetLocation(),Pose.Bones[1].GetLocation()));
@@ -768,6 +780,26 @@ private:
    AppendVector(Bone.GetLocation());
    const FQuat Q=Bone.GetRotation();
    BraceRows+=FString::Printf(TEXT("%.8f,%.8f,%.8f,%.8f,"),Q.X,Q.Y,Q.Z,Q.W);
+  }
+  if(bCapstoneReleaseAudit)
+  {
+   const FTransform Body=Character->GetMesh()->GetComponentTransform();
+   const auto* Capsule=Target->GetCapsuleComponent();
+   const double Radius=Capsule->GetScaledCapsuleRadius();
+   const FVector Axis=Capsule->GetUpVector()*FMath::Max(0.,Capsule->GetScaledCapsuleHalfHeight()-Radius);
+   const FVector Center=Capsule->GetComponentLocation();
+   FVector BladeClosest,CapsuleClosest;
+   FMath::SegmentDistToSegmentSafe(Body.TransformPosition(Pose.BladeBase),Body.TransformPosition(Pose.BladeTip),
+    Center-Axis,Center+Axis,BladeClosest,CapsuleClosest);
+   const FVector LeftPalm=(Pose.Bones[0].GetLocation()+Pose.Bones[10].GetLocation())*.5;
+   const FVector RightPalm=(Pose.Bones[1].GetLocation()+Pose.Bones[11].GetLocation())*.5;
+   const FVector Actor=Character->GetActorLocation();
+   const auto* OwnCapsule=Character->GetCapsuleComponent();
+   const double Floor=OwnCapsule->GetComponentLocation().Z-OwnCapsule->GetScaledCapsuleHalfHeight();
+   const double BladeFloor=FMath::Min(Body.TransformPosition(Pose.BladeBase).Z,Body.TransformPosition(Pose.BladeTip).Z)-Floor;
+   BraceRows+=FString::Printf(TEXT("%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,"),
+    FVector::Distance(LeftPalm,RightPalm),FVector::Distance(BladeClosest,CapsuleClosest)-Radius,
+    Actor.X,Actor.Y,Actor.Z,Character->GetActorRotation().Yaw,BladeFloor);
   }
   BraceRows.RemoveAt(BraceRows.Len()-1);
   BraceRows+=TEXT("\n");
@@ -781,9 +813,13 @@ private:
   BraceSkill=Skills[10];
   BraceSpecial=Skills[3];
   auto* Skill=BraceSkill.Get();
+  const FString MontagePath=Skill&&Skill->AttackMontage?Skill->AttackMontage->GetPathName():FString();
+  const bool bExpectedRelease=MontagePath==TEXT("/Game/Rogue10m/Animation/Combat/GreatSword/AM_GreatSword_Charged.AM_GreatSword_Charged")
+   ||MontagePath==TEXT("/Game/Rogue10m/Animation/Combat/FighterSkills/GreatSword/AM_GreatSword_CapstoneRelease.AM_GreatSword_CapstoneRelease");
   Check(Skill&&Skill->AttackMontage&&Skill->GetFName()==TEXT("DA_Hybrid_GreatSword_Ultimate")
-   &&Skill->AttackMontage->GetPathName()==TEXT("/Game/Rogue10m/Animation/Combat/GreatSword/AM_GreatSword_Charged.AM_GreatSword_Charged")
-   &&Skill->HitStartDelaySeconds==0.f&&FMath::IsNearlyEqual(Skill->ChargeSeconds,.72f),TEXT("capstone_stock_charge_and_release_contract"));
+   &&bExpectedRelease&&Skill->HitStartDelaySeconds==0.f&&FMath::IsNearlyEqual(Skill->ChargeSeconds,.72f)
+   &&FMath::IsNearlyEqual(Skill->AttackRange,360.f)&&Skill->AttackShape==ERogue10mAttackShape::Arc,
+   TEXT("capstone_stock_charge_and_release_contract"));
   Check(BraceCVar&&Combat&&TargetAbility&&BraceSpecial.IsValid()&&Character->GetGameplayCameraComponent(),TEXT("capstone_test_dependencies_missing"));
   if(Failures){Finish();return;}
   Character->RestoreEquippedWeaponType(ERogue10mWeaponType::GreatSword);
@@ -804,7 +840,7 @@ private:
     {
      BraceDamagePosition=BraceMontagePosition();
      UE_LOG(LogRogue10m,Display,TEXT("CAPSTONE_BRACE DAMAGE case=%s world=%.6f montage_s=%.6f drop=%.3f"),
-      BraceCaseNames[Index],World->GetTimeSeconds(),BraceDamagePosition,Change.OldValue-Change.NewValue);
+      BraceCaseLabel(),World->GetTimeSeconds(),BraceDamagePosition,Change.OldValue-Change.NewValue);
     }
    });
   BraceOriginalCVar=BraceCVar->GetInt();
@@ -815,20 +851,24 @@ private:
    for(const TCHAR* Field:{TEXT("x"),TEXT("y"),TEXT("z"),TEXT("qx"),TEXT("qy"),TEXT("qz"),TEXT("qw")})
    {BraceRows+=FString::Printf(TEXT(",%s_%s"),Bone,Field);}
   }
+  if(bCapstoneReleaseAudit){BraceRows+=TEXT(",palm_span_cm,blade_capsule_gap_cm,actor_x,actor_y,actor_z,actor_yaw,blade_floor_cm");}
   BraceRows+=TEXT("\n");
-  if(bCapstoneBraceRender)
+  if(bCapstoneBraceRender||bCapstoneReleaseRender)
   {
    const FVector Origin=Character->GetActorLocation();
-   const FVector Position=Origin+Character->GetActorForwardVector()*230.+Character->GetActorRightVector()*245.+FVector(0,0,75);
-   const FVector Focus=Origin+FVector(0,0,27);
+   const FVector Forward=Character->GetActorForwardVector();
+   const FVector Right=Character->GetActorRightVector();
+   const FVector Position=bCapstoneReleaseRender?Origin+Forward*120.-Right*420.+FVector(0,0,85):
+    Origin+Forward*230.+Right*245.+FVector(0,0,75);
+   const FVector Focus=Origin+(bCapstoneReleaseRender?Forward*52.+FVector(0,0,35):FVector(0,0,27));
    FActorSpawnParameters Params;
    Params.ObjectFlags|=RF_Transient;
    auto* Camera=World->SpawnActor<ACameraActor>(Position,(Focus-Position).Rotation(),Params);
    Check(Camera!=nullptr,TEXT("capstone_render_fixed_camera_spawned"));
    if(!Camera){Finish();return;}
-   Camera->GetCameraComponent()->SetFieldOfView(43.f);
+   Camera->GetCameraComponent()->SetFieldOfView(bCapstoneReleaseRender?63.f:43.f);
    Controller->SetViewTarget(Camera);
-   Target->SetActorHiddenInGame(true);
+   if(bCapstoneBraceRender){Target->SetActorHiddenInGame(true);}
   }
   NextBraceCase();
  }
@@ -838,8 +878,8 @@ private:
 
  void NextBraceCase()
  {
-  if(Index>=(bCapstoneBraceRender?BraceRenderCaseCount:BraceCaseCount)){Finish();return;}
-  BraceCVar->Set(Index==0?0:1,ECVF_SetByCode);
+  if(Index>=ExpectedBraceCases()){Finish();return;}
+  BraceCVar->Set(Index==0&&!bCapstoneReleaseRender?0:1,ECVF_SetByCode);
   Controller->SetControlRotation(FRotator::ZeroRotator);
   Target->SetActorLocation(Character->GetActorLocation()+Character->GetActorForwardVector()*110.,
    false,nullptr,ETeleportType::TeleportPhysics);
@@ -848,6 +888,8 @@ private:
   BraceFirstReleaseSampled=false;
   bBracePeakCaptured=false;
   BraceReleaseSamples=0;
+  BraceRecoveryStartedAt=-1.;
+  bBraceReleaseHoldShot=bBraceReleaseMotionShot=bBraceReleaseRecoveryShot=false;
   BraceHoldSamples=0;
   BraceFeetMax=FVector2D::ZeroVector;
   BraceAxialDriftMax=BraceAddedBladeMax=BraceWristMax=0.;
@@ -906,6 +948,13 @@ private:
    }
    const float Threshold=Index==2?.20f:.90f;
    if(Hold.GetValue()<Threshold){return;}
+   if(bCapstoneReleaseRender&&!bBraceReleaseHoldShot)
+   {
+    bBraceReleaseHoldShot=Capture(TEXT("held"));
+    if(!bBraceReleaseHoldShot){Finish();}
+    return;
+   }
+   if(bCapturePending){return;}
    CheckBraceHoldMotion();
    UE_LOG(LogRogue10m,Display,TEXT("CAPSTONE_BRACE FEET case=%s mode=%s hold_s=%.6f left_max_cm=%.4f right_max_cm=%.4f"),
     BraceCaseNames[Index],Index==0?TEXT("stock_travel"):TEXT("above_stock"),Hold.GetValue(),BraceFeetMax.X,BraceFeetMax.Y);
@@ -960,7 +1009,7 @@ private:
     const double Left=BraceBoneTravel(BraceBeforeRelease,Pose,0),Right=BraceBoneTravel(BraceBeforeRelease,Pose,1),
      Blade=BraceBladeAngle(BraceBeforeRelease,Pose);
     UE_LOG(LogRogue10m,Display,TEXT("CAPSTONE_BRACE RELEASE case=%s montage_s=%.6f wrist_l_cm=%.4f wrist_r_cm=%.4f blade_deg=%.4f"),
-     BraceCaseNames[Index],Montage,Left,Right,Blade);
+     BraceCaseLabel(),Montage,Left,Right,Blade);
     if(Index==0){BraceStockLeft=Left;BraceStockRight=Right;BraceStockBlade=Blade;BraceStockMontage=Montage;}
     else
     {
@@ -969,9 +1018,31 @@ private:
       TEXT("capstone_brace_first_release_wrist_or_blade_discontinuity"));
     }
    }
+   if(bCapstoneReleaseAudit&&Montage<0.f&&BraceFirstReleaseSampled)
+   {
+    const double Now=World->GetTimeSeconds();
+    if(BraceRecoveryStartedAt<0.){BraceRecoveryStartedAt=Now;}
+    if(Now-BraceRecoveryStartedAt<.20||Combat->IsWeaponChangeBlocked()){return;}
+    if(bCapturePending){return;}
+    if(bCapstoneReleaseRender&&!bBraceReleaseRecoveryShot)
+    {
+     RecordBracePose(TEXT("recovery"),Pose,-1.);
+     bBraceReleaseRecoveryShot=Capture(TEXT("recovery"));
+     if(!bBraceReleaseRecoveryShot){Finish();}
+     return;
+    }
+    if(!bCapstoneReleaseRender){RecordBracePose(TEXT("recovery"),Pose,-1.);}
+    Check(BraceDamageCount==1&&BraceReleaseSamples>=90,TEXT("capstone_full_release_recovery_and_one_damage"));
+    ++Index;NextBraceCase();return;
+   }
    RecordBracePose(TEXT("release"),Pose,-1.);
    ++BraceReleaseSamples;
-   if(Montage>=.20f)
+   if(bCapstoneReleaseRender&&Montage>=1.f&&!bBraceReleaseMotionShot&&!bCapturePending)
+   {
+    bBraceReleaseMotionShot=Capture(TEXT("swing"));
+    if(!bBraceReleaseMotionShot){Finish();}
+   }
+   if(!bCapstoneReleaseAudit&&Montage>=.20f)
    {
     Check(BraceDamageCount==1&&BraceReleaseSamples>=12,TEXT("capstone_single_hit_and_release_trajectory_recorded"));
     ++Index;NextBraceCase();
@@ -1036,6 +1107,9 @@ private:
   }
  }
 
+ int32 ExpectedBraceCases() const
+ {return bCapstoneReleaseRender?1:bCapstoneBraceRender||bCapstoneReleaseAudit?BraceRenderCaseCount:BraceCaseCount;}
+
  void FinishCapstoneBrace()
  {
   if(Target.IsValid())
@@ -1056,10 +1130,18 @@ private:
    Check(CapturePaths.Num()==BraceRenderCaseCount&&CompletedCaptures==BraceRenderCaseCount,TEXT("capstone_render_pair_required"));
    Check(FFileHelper::SaveStringToFile(CaptureRows,*(Output/TEXT("captures.csv"))),TEXT("capstone_capture_evidence_save_failed"));
   }
-  const int32 ExpectedCases=bCapstoneBraceRender?BraceRenderCaseCount:BraceCaseCount;
+  if(bCapstoneReleaseRender)
+  {
+   constexpr int32 ReleaseCaptureCount=3;
+   Check(CapturePaths.Num()==ReleaseCaptureCount&&CompletedCaptures==ReleaseCaptureCount,TEXT("capstone_full_release_render_phases_required"));
+   Check(FFileHelper::SaveStringToFile(CaptureRows,*(Output/TEXT("captures.csv"))),TEXT("capstone_release_capture_evidence_saved"));
+  }
+  const int32 ExpectedCases=ExpectedBraceCases();
   const bool bPassed=Failures==0&&Index==ExpectedCases;
   UE_LOG(LogRogue10m,Display,TEXT("RESULT=%s_%s completed=%d failures=%d"),
-   bCapstoneBraceRender?TEXT("CAPSTONE_BRACE_RENDER"):TEXT("CAPSTONE_BRACE"),bPassed?TEXT("PASSED"):TEXT("FAILED"),Index,Failures);
+   bCapstoneReleaseRender?TEXT("CAPSTONE_RELEASE_RENDER"):bCapstoneBraceRender?TEXT("CAPSTONE_BRACE_RENDER"):
+    bCapstoneReleaseAudit?TEXT("CAPSTONE_RELEASE"):TEXT("CAPSTONE_BRACE"),
+   bPassed?TEXT("PASSED"):TEXT("FAILED"),Index,Failures);
   FPlatformMisc::RequestExitWithStatus(false,bPassed?0:1);
  }
 
@@ -1926,9 +2008,11 @@ private:
  int32 BraceOriginalCVar=1,BraceStartUses=0,BraceStartSpecialUses=0,BraceDamageCount=0,BraceReleaseSamples=0,BraceHoldSamples=0;
  float BraceDamagePosition=-1.f,BraceStockMontage=-1.f,BraceReadyHealth=0.f,BraceSourceRate=1.f,BraceBodyRate=1.f;
  double BraceStepStarted=0.,BraceStockLeft=0.,BraceStockRight=0.,BraceStockBlade=0.;
+ double BraceRecoveryStartedAt=-1.;
  double BraceAxialDriftMax=0.,BraceAddedBladeMax=0.,BraceWristMax=0.;
- bool bCapstoneBraceRun=false,bCapstoneBraceRender=false,bBracePeakCaptured=false,bBraceCVarOwned=false,bBracePoseFrozen=false,
+ bool bCapstoneBraceRun=false,bCapstoneBraceRender=false,bCapstoneReleaseAudit=false,bBracePeakCaptured=false,bBraceCVarOwned=false,bBracePoseFrozen=false,
   BraceFirstReleaseSampled=false,BracePitchStarting=false;
+ bool bCapstoneReleaseRender=false,bBraceReleaseHoldShot=false,bBraceReleaseMotionShot=false,bBraceReleaseRecoveryShot=false;
  bool bMeleeVfxRun=false,bMeleeVfxLogicOnly=false,bSawMeleeTrail=false,bSawMeleeRange=false,bSawMeleeImpact=false,bMotionRequested=false,bMotionCaptured=false;
  int32 CasePresentationTier=INDEX_NONE,FirstTrailMeshFrame=INDEX_NONE,TrailTrianglesThisFrame=0;
  ERogue10mAttackInputSlot CaseSlot=ERogue10mAttackInputSlot::Primary;
