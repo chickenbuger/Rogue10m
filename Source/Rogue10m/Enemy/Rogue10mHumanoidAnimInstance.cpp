@@ -4,8 +4,10 @@
 #include "Animation/AnimNode_SequencePlayer.h"
 #include "Animation/AnimMontage.h"
 #include "Animation/AnimSequence.h"
+#include "Animation/PoseSnapshot.h"
 #include "AnimNodes/AnimNode_Slot.h"
 #include "AnimNodes/AnimNode_TwoWayBlend.h"
+#include "BoneContainer.h"
 #include "GameFramework/Pawn.h"
 #include "Rogue10mMonsterAttackPatternComponent.h"
 #include "Rogue10mMonsterAttackPatternProfile.h"
@@ -26,12 +28,21 @@ public:
   Slot.bAlwaysUpdateSourcePose = true;
  }
  virtual FAnimNode_Base* GetCustomRootNode() override { return &Slot; }
+ void SetDeathStartPose(FPoseSnapshot&& Pose)
+ {
+  DeathStartPose = MoveTemp(Pose);
+  DeathBlendElapsed = 0.f;
+ }
 #if WITH_EDITOR
  float GetMovementPlaybackTime() const { return Movement.GetAccumulatedTime(); }
 #endif
  virtual void PreUpdate(UAnimInstance* Instance, float DeltaSeconds) override
  {
   FAnimInstanceProxy::PreUpdate(Instance, DeltaSeconds);
+  if (DeathStartPose.bIsValid && (DeathBlendElapsed += FMath::Max(0.f, DeltaSeconds)) >= DeathBlendSeconds)
+  {
+   DeathStartPose = FPoseSnapshot();
+  }
   const auto* Humanoid = CastChecked<URogue10mHumanoidAnimInstance>(Instance);
   Idle.SetSequence(Humanoid->GetIdleSequence());
   Movement.SetSequence(Humanoid->GetMovementSequence() ? Humanoid->GetMovementSequence() : Humanoid->GetIdleSequence());
@@ -41,7 +52,30 @@ public:
   const float TargetAlpha = Speed > 10.f ? 1.f : 0.f;
   Locomotion.Alpha = FMath::FInterpTo(Locomotion.Alpha, TargetAlpha, DeltaSeconds, 8.f);
  }
+
+ bool Evaluate_WithRoot(FPoseContext& Output, FAnimNode_Base* Root) override
+ {
+  if (!Root || Root != GetRootNode()) { return false; }
+  EvaluateAnimationNode_WithRoot(Output, Root);
+  if (!DeathStartPose.bIsValid) { return true; }
+  const FBoneContainer& Bones = Output.Pose.GetBoneContainer();
+  const FReferenceSkeleton& ReferenceSkeleton = Bones.GetReferenceSkeleton();
+  const float Weight = 1.f - FMath::SmoothStep(0.f, 1.f, DeathBlendElapsed / DeathBlendSeconds);
+  for (FCompactPoseBoneIndex Bone : Output.Pose.ForEachBoneIndex())
+  {
+   const int32 Index = Bones.MakeMeshPoseIndex(Bone).GetInt();
+   if (DeathStartPose.LocalTransforms.IsValidIndex(Index) && DeathStartPose.BoneNames.IsValidIndex(Index)
+    && ReferenceSkeleton.GetBoneName(Index) == DeathStartPose.BoneNames[Index])
+   {
+    Output.Pose[Bone].BlendWith(DeathStartPose.LocalTransforms[Index], Weight);
+   }
+  }
+  return true;
+ }
 private:
+ static constexpr float DeathBlendSeconds = .15f;
+ FPoseSnapshot DeathStartPose;
+ float DeathBlendElapsed = 0.f;
  FAnimNode_SequencePlayer_Standalone Idle;
  FAnimNode_SequencePlayer_Standalone Movement;
  FAnimNode_TwoWayBlend Locomotion;
@@ -56,7 +90,17 @@ void URogue10mHumanoidAnimInstance::NativeInitializeAnimation()
  Super::NativeInitializeAnimation();
  SetRootMotionMode(ERootMotionMode::IgnoreRootMotion);
  if (AActor* Owner = GetOwningActor())
-  if (auto* Component = Owner->FindComponentByClass<URogue10mMonsterAttackPatternComponent>()) Configure(Component->GetProfile());
+ {
+  if (auto* Component = Owner->FindComponentByClass<URogue10mMonsterAttackPatternComponent>())
+  {
+   Configure(Component->GetProfile());
+   FPoseSnapshot StartPose;
+   if (Component->ConsumeDeathStartPose(*this, StartPose))
+   {
+    GetProxyOnGameThread<FHumanoidAnimProxy>().SetDeathStartPose(MoveTemp(StartPose));
+   }
+  }
+ }
 }
 void URogue10mHumanoidAnimInstance::Configure(URogue10mMonsterAttackPatternProfile* Profile)
 {
@@ -89,12 +133,12 @@ float URogue10mHumanoidAnimInstance::CalculatePhaseRate(float ClipSeconds, float
  return FMath::Max(0.001f, ClipSeconds) / GameplaySeconds;
 }
 float URogue10mHumanoidAnimInstance::PlayPresentation(UAnimMontage* Montage, UAnimSequence* Sequence,
- float ContactSeconds, float WindupSeconds, bool bHoldFinalPose)
+ float ContactSeconds, float WindupSeconds, bool bHoldFinalPose, float SequenceBlendInSeconds)
 {
  StopPresentation();
  // Clone authored montages: runtime settings must never mutate shared assets.
  PresentationMontage = Montage ? DuplicateObject<UAnimMontage>(Montage, this)
-  : (Sequence ? UAnimMontage::CreateSlotAnimationAsDynamicMontage(Sequence, TEXT("DefaultSlot"), 0.08f, 0.1f) : nullptr);
+  : (Sequence ? UAnimMontage::CreateSlotAnimationAsDynamicMontage(Sequence, TEXT("DefaultSlot"), SequenceBlendInSeconds, 0.1f) : nullptr);
  if (!PresentationMontage) return 0.f;
  // Phase mapping owns rate; an authored asset RateScale must not multiply it again.
  PresentationMontage->RateScale = 1.f;
@@ -106,6 +150,13 @@ float URogue10mHumanoidAnimInstance::PlayPresentation(UAnimMontage* Montage, UAn
  // Hold timed attacks through contact; the authoritative recovery timer blends them out.
  PresentationMontage->bEnableAutoBlendOut = !bTimedAttack && !bHoldFinalPose;
  return Montage_Play(PresentationMontage, Rate, EMontagePlayReturnType::Duration);
+}
+bool URogue10mHumanoidAnimInstance::PlayDeathFromPose(UAnimSequence& Sequence, FPoseSnapshot&& StartPose)
+{
+ // Use the visible pose for the blend-in while the original clip advances at its normal rate.
+ if (PlayPresentation(nullptr, &Sequence, 0.f, 0.f, true, 0.f) <= 0.f) { return false; }
+ if (StartPose.bIsValid) { GetProxyOnGameThread<FHumanoidAnimProxy>().SetDeathStartPose(MoveTemp(StartPose)); }
+ return true;
 }
 void URogue10mHumanoidAnimInstance::BeginRecovery(float RecoverySeconds)
 {

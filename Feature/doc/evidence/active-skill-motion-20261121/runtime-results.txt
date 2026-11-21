@@ -1,0 +1,163 @@
+Baseline and rendered candidate source: 678e22c5d56992b2c0473f57d66ae7e6a233516c.
+Final candidate numeric source: 41d5a224d2090df2471eeb8e21c23ec8f84d16eb plus the three authored/bound assets and test fixture.
+60Hz fixed. Actual starter Knuckle inventory, valid mastery snapshot, NPC Common training, actual Q keybinding; programmatic controller input.
+Fresh isolated profiles, no player data slots. Target stationary in a real StartHub floor near player.
+Two paired runs match 205 frames for physical jumping, movement mode, position, velocity, second jump layer state, montage time/weight, and use count.
+The target receives exactly one damage event on the accepted frame in each route, before the visible downstroke. Normal damage variance still applies.
+
+Slam1Baseline result; selected Unreal errors: 0
+PASS fresh_isolated_profile
+PASS new_profile_created
+PASS aerial_player_tree_and_town_guide_exist
+PASS aerial_equips_real_starter_knuckle_through_inventory
+PASS aerial_learns_two_real_jumps_from_common_tree
+PASS aerial_restores_valid_knuckle_mastery_with_common_nodes
+PASS aerial_learned_mountain_slam_bound_to_real_q
+aerial_skill=/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_JumpSlam.DA_Attack_StoneFist_JumpSlam slot=2 montage=/Game/Rogue10m/Animation/Combat/HeadSafe/AM_Safe_Knuckle_Special.AM_Safe_Knuckle_Special configured_damage_delay=0.000000
+PASS aerial_initially_grounded_on_starthub_floor
+PASS aerial_uses_60_hz
+PASS aerial_uses_live_manny_and_visible_mesh
+PASS aerial_stationary_target_on_actual_floor
+PASS aerial_q_on_ground_rejected_and_player_grounded
+PASS aerial_q_begins_after_requested_actual_space_count
+PASS aerial_exact_mountain_slam_accepted_after_actual_jump
+PASS aerial_input_accepted_once
+PASS aerial_montage_evaluated_on_source
+PASS aerial_ground_recovery_and_both_meshes_sampled
+aerial_case=1 first=11 second=0 q=16 accepted=17 montage=17 montage_samples=79 first_damage=17 land=62
+PASS aerial_pose_evidence_saved
+PASS write_final_skill_tree_state_before_exit
+RESULT=HYBRID_RUNTIME_PASSED failures=0
+
+Slam2Baseline result; selected Unreal errors: 0
+PASS fresh_isolated_profile
+PASS new_profile_created
+PASS aerial_player_tree_and_town_guide_exist
+PASS aerial_equips_real_starter_knuckle_through_inventory
+PASS aerial_learns_two_real_jumps_from_common_tree
+PASS aerial_restores_valid_knuckle_mastery_with_common_nodes
+PASS aerial_learned_mountain_slam_bound_to_real_q
+aerial_skill=/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_JumpSlam.DA_Attack_StoneFist_JumpSlam slot=2 montage=/Game/Rogue10m/Animation/Combat/HeadSafe/AM_Safe_Knuckle_Special.AM_Safe_Knuckle_Special configured_damage_delay=0.000000
+PASS aerial_initially_grounded_on_starthub_floor
+PASS aerial_uses_60_hz
+PASS aerial_uses_live_manny_and_visible_mesh
+PASS aerial_stationary_target_on_actual_floor
+PASS aerial_q_on_ground_rejected_and_player_grounded
+PASS aerial_q_begins_after_requested_actual_space_count
+PASS aerial_exact_mountain_slam_accepted_after_actual_jump
+PASS aerial_input_accepted_once
+PASS aerial_montage_evaluated_on_source
+PASS aerial_ground_recovery_and_both_meshes_sampled
+aerial_case=2 first=11 second=24 q=29 accepted=30 montage=30 montage_samples=79 first_damage=30 land=84
+PASS aerial_pose_evidence_saved
+PASS write_final_skill_tree_state_before_exit
+RESULT=HYBRID_RUNTIME_PASSED failures=0
+
+Slam1Exact result; selected Unreal errors: 0
+PASS fresh_isolated_profile
+PASS new_profile_created
+PASS aerial_player_tree_and_town_guide_exist
+PASS aerial_equips_real_starter_knuckle_through_inventory
+PASS aerial_learns_two_real_jumps_from_common_tree
+PASS aerial_restores_valid_knuckle_mastery_with_common_nodes
+PASS aerial_learned_mountain_slam_bound_to_real_q
+aerial_skill=/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_JumpSlam.DA_Attack_StoneFist_JumpSlam slot=2 montage=/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_MountainSlam.AM_Fighter_MountainSlam configured_damage_delay=0.000000
+PASS aerial_initially_grounded_on_starthub_floor
+PASS aerial_uses_60_hz
+PASS aerial_uses_live_manny_and_visible_mesh
+PASS aerial_stationary_target_on_actual_floor
+aerial_manny=/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple display=/Game/StylizedCharacter/Meshes/Character/Human/Male/SK_Hu_M_FullBody.SK_Hu_M_FullBody
+PASS aerial_q_on_ground_rejected_and_player_grounded
+PASS aerial_q_begins_after_requested_actual_space_count
+PASS aerial_exact_mountain_slam_accepted_after_actual_jump
+PASS aerial_input_accepted_once
+PASS aerial_montage_evaluated_on_source
+PASS aerial_ground_recovery_and_both_meshes_sampled
+aerial_case=1 first=11 second=0 q=16 accepted=17 montage=17 montage_samples=79 first_damage=17 land=62
+PASS aerial_pose_evidence_saved
+PASS write_final_skill_tree_state_before_exit
+RESULT=HYBRID_RUNTIME_PASSED failures=0
+
+Slam2Exact result; selected Unreal errors: 0
+PASS fresh_isolated_profile
+PASS new_profile_created
+PASS aerial_player_tree_and_town_guide_exist
+PASS aerial_equips_real_starter_knuckle_through_inventory
+PASS aerial_learns_two_real_jumps_from_common_tree
+PASS aerial_restores_valid_knuckle_mastery_with_common_nodes
+PASS aerial_learned_mountain_slam_bound_to_real_q
+aerial_skill=/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_JumpSlam.DA_Attack_StoneFist_JumpSlam slot=2 montage=/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_MountainSlam.AM_Fighter_MountainSlam configured_damage_delay=0.000000
+PASS aerial_initially_grounded_on_starthub_floor
+PASS aerial_uses_60_hz
+PASS aerial_uses_live_manny_and_visible_mesh
+PASS aerial_stationary_target_on_actual_floor
+aerial_manny=/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple display=/Game/StylizedCharacter/Meshes/Character/Human/Male/SK_Hu_M_FullBody.SK_Hu_M_FullBody
+PASS aerial_q_on_ground_rejected_and_player_grounded
+PASS aerial_q_begins_after_requested_actual_space_count
+PASS aerial_exact_mountain_slam_accepted_after_actual_jump
+PASS aerial_input_accepted_once
+PASS aerial_montage_evaluated_on_source
+PASS aerial_ground_recovery_and_both_meshes_sampled
+aerial_case=2 first=11 second=24 q=29 accepted=30 montage=30 montage_samples=79 first_damage=30 land=84
+PASS aerial_pose_evidence_saved
+PASS write_final_skill_tree_state_before_exit
+RESULT=HYBRID_RUNTIME_PASSED failures=0
+
+Slam2OrcExact result; selected Unreal errors: 0
+PASS fresh_isolated_profile
+PASS new_profile_created
+PASS aerial_player_tree_and_town_guide_exist
+PASS aerial_equips_real_starter_knuckle_through_inventory
+PASS aerial_learns_two_real_jumps_from_common_tree
+PASS aerial_restores_valid_knuckle_mastery_with_common_nodes
+PASS aerial_learned_mountain_slam_bound_to_real_q
+aerial_skill=/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_JumpSlam.DA_Attack_StoneFist_JumpSlam slot=2 montage=/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_MountainSlam.AM_Fighter_MountainSlam configured_damage_delay=0.000000
+PASS aerial_initially_grounded_on_starthub_floor
+PASS aerial_uses_60_hz
+PASS aerial_uses_live_manny_and_visible_mesh
+PASS aerial_stationary_target_on_actual_floor
+aerial_manny=/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple display=/Game/StylizedCharacter/Meshes/Character/Orc/Female/SK_Or_F_FullBody.SK_Or_F_FullBody
+PASS aerial_q_on_ground_rejected_and_player_grounded
+PASS aerial_q_begins_after_requested_actual_space_count
+PASS aerial_exact_mountain_slam_accepted_after_actual_jump
+PASS aerial_input_accepted_once
+PASS aerial_montage_evaluated_on_source
+PASS aerial_ground_recovery_and_both_meshes_sampled
+aerial_case=2 first=11 second=24 q=29 accepted=30 montage=30 montage_samples=79 first_damage=30 land=84
+PASS aerial_pose_evidence_saved
+PASS write_final_skill_tree_state_before_exit
+RESULT=HYBRID_RUNTIME_PASSED failures=0
+
+Slam2Warp result; selected Unreal errors: 1
+PASS fresh_isolated_profile
+PASS new_profile_created
+PASS aerial_player_tree_and_town_guide_exist
+PASS aerial_equips_real_starter_knuckle_through_inventory
+PASS aerial_learns_two_real_jumps_from_common_tree
+PASS aerial_restores_valid_knuckle_mastery_with_common_nodes
+PASS aerial_learned_mountain_slam_bound_to_real_q
+aerial_skill=/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_JumpSlam.DA_Attack_StoneFist_JumpSlam slot=2 montage=/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_MountainSlam.AM_Fighter_MountainSlam configured_damage_delay=0.000000
+PASS aerial_initially_grounded_on_starthub_floor
+PASS aerial_uses_60_hz
+PASS aerial_uses_live_manny_and_visible_mesh
+PASS aerial_stationary_target_on_actual_floor
+PASS aerial_camera_exists
+aerial_manny=/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple.SKM_Manny_Simple display=/Game/StylizedCharacter/Meshes/Character/Human/Male/SK_Hu_M_FullBody.SK_Hu_M_FullBody
+PASS aerial_q_on_ground_rejected_and_player_grounded
+PASS aerial_q_begins_after_requested_actual_space_count
+PASS aerial_exact_mountain_slam_accepted_after_actual_jump
+PASS aerial_input_accepted_once
+PASS aerial_montage_evaluated_on_source
+PASS aerial_ground_recovery_and_both_meshes_sampled
+aerial_case=2 first=11 second=24 q=29 accepted=30 montage=30 montage_samples=79 first_damage=30 land=84
+PASS aerial_pose_evidence_saved
+PASS aerial_phase_capture_written
+PASS aerial_phase_capture_written
+PASS aerial_phase_capture_written
+PASS aerial_phase_capture_written
+PASS write_final_skill_tree_state_before_exit
+RESULT=HYBRID_RUNTIME_PASSED failures=0
+
+Initial package attempt: replacement montage path was saved, but editing copies returned by nested Unreal struct arrays left its A_Safe_Hook segment unchanged. Runtime showed bit-equal old arm and foot motion. Explicitly writing the leaf segment and slot back into both arrays fixed the binding. A cold runtime load then showed the new additive behavior.
+Slam2Warp: visible Human Male, Microsoft Basic Render Driver. One expected prior physical adapter detection error remained visible in the checker, and 4 captures were produced by the software device.
+924: [2026.11.21-10.29.15:865][  0]LogD3D11RHI: Error: Result failed with error 887A0004

@@ -3,6 +3,7 @@
 #include "Rogue10mBasicMonster.h"
 
 #include "AIController.h"
+#include "Animation/PoseSnapshot.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/DamageType.h"
@@ -327,6 +328,8 @@ void ARogue10mBasicMonster::Die()
 		return;
 	}
 
+	FPoseSnapshot DeathStartPose;
+	if (AttackPatternComponent) { AttackPatternComponent->CaptureDeathStartPose(DeathStartPose); }
 	bIsDead = true;
 	OnDeathStarted();
 	if (AttackPatternComponent) AttackPatternComponent->CancelAttack();
@@ -389,7 +392,8 @@ void ARogue10mBasicMonster::Die()
 	GetCharacterMovement()->StopMovementImmediately();
 	GetCharacterMovement()->DisableMovement();
 	SetActorEnableCollision(false);
-	const float DeathPresentationSeconds = AttackPatternComponent ? AttackPatternComponent->PlayDeathPresentation() : 0.0f;
+	const float DeathPresentationSeconds = AttackPatternComponent
+		? AttackPatternComponent->PlayDeathPresentation(MoveTemp(DeathStartPose)) : 0.0f;
 	if (ARogue10mGameMode* Mode = GetWorld() ? GetWorld()->GetAuthGameMode<ARogue10mGameMode>() : nullptr)
 	{
 		if (URogue10mRunCompletionComponent* Completion = Mode->GetRunCompletionComponent())

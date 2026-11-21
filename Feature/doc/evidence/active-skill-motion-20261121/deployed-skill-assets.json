@@ -1,0 +1,648 @@
+{
+  "weapon_items": [
+    {
+      "path": "/Game/DataAsset/Item/Starter/DA_Item_IronLongsword.DA_Item_IronLongsword",
+      "display_name": "철제 장검",
+      "weapon_type": "<Rogue10mWeaponType.GREAT_SWORD: 2>",
+      "equip_slot_type": "<Rogue10mInventorySlotType.MAIN_WEAPON: 0>"
+    },
+    {
+      "path": "/Game/DataAsset/Item/Starter/DA_Item_StarterKnuckle.DA_Item_StarterKnuckle",
+      "display_name": "수련용 너클",
+      "weapon_type": "<Rogue10mWeaponType.KNUCKLE: 6>",
+      "equip_slot_type": "<Rogue10mInventorySlotType.MAIN_WEAPON: 0>"
+    }
+  ],
+  "profiles": [
+    {
+      "profile": "/Game/DataAsset/SkillProfile/DA_SkillProfile_Combat_GreatSword.DA_SkillProfile_Combat_GreatSword",
+      "default_bindings": {
+        "<Rogue10mAttackInputSlot.PRIMARY: 0>": "/Game/DataAsset/AttackSkill/ClassCombat/GreatSword/DA_Attack_GreatSword_Primary01.DA_Attack_GreatSword_Primary01",
+        "<Rogue10mAttackInputSlot.SPECIAL: 1>": "/Game/DataAsset/AttackSkill/ClassCombat/GreatSword/DA_Attack_GreatSword_Special.DA_Attack_GreatSword_Special",
+        "<Rogue10mAttackInputSlot.CHARGED_PRIMARY: 4>": "/Game/DataAsset/AttackSkill/ClassCombat/GreatSword/DA_Attack_GreatSword_Charged.DA_Attack_GreatSword_Charged",
+        "<Rogue10mAttackInputSlot.CHARGED_SPECIAL: 5>": "/Game/DataAsset/AttackSkill/ClassCombat/GreatSword/DA_Attack_GreatSword_Charged.DA_Attack_GreatSword_Charged"
+      },
+      "explicit_active_catalog": [],
+      "available_profile_skills": [
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 0.7799999713897705,
+          "hit_start_delay_seconds": 0.383333295583725,
+          "attack_shape": "<Rogue10mAttackShape.ARC: 2>",
+          "attack_range": 285.0,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/GreatSword/DA_Attack_GreatSword_Primary01.DA_Attack_GreatSword_Primary01",
+          "montage": "/Game/Rogue10m/Animation/Combat/GreatSword20261110/AM_GreatSword_Primary01.AM_GreatSword_Primary01",
+          "montage_length": 1.0,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_AltSlash05Repair1.A_GreatSword_AltSlash05Repair1",
+              "anim_start_time": 0.10000000149011612,
+              "anim_end_time": 1.100000023841858,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 0.8399999737739563,
+          "hit_start_delay_seconds": 0.366666704416275,
+          "attack_shape": "<Rogue10mAttackShape.ARC: 2>",
+          "attack_range": 285.0,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/GreatSword/DA_Attack_GreatSword_Primary02.DA_Attack_GreatSword_Primary02",
+          "montage": "/Game/Rogue10m/Animation/Combat/GreatSword20261110/AM_GreatSword_Primary02.AM_GreatSword_Primary02",
+          "montage_length": 0.8999999761581421,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Primary02.A_GreatSword_Primary02",
+              "anim_start_time": 0.30000001192092896,
+              "anim_end_time": 1.2000000476837158,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 0.7200000286102295,
+          "hit_start_delay_seconds": 0.3333333134651184,
+          "attack_shape": "<Rogue10mAttackShape.ARC: 2>",
+          "attack_range": 285.0,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/GreatSword/DA_Attack_GreatSword_Primary03.DA_Attack_GreatSword_Primary03",
+          "montage": "/Game/Rogue10m/Animation/Combat/GreatSword20261110/AM_GreatSword_Primary03.AM_GreatSword_Primary03",
+          "montage_length": 1.149999976158142,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Primary03.A_GreatSword_Primary03",
+              "anim_start_time": 0.6000000238418579,
+              "anim_end_time": 1.75,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 0.7599999904632568,
+          "hit_start_delay_seconds": 1.1333333253860474,
+          "attack_shape": "<Rogue10mAttackShape.CIRCLE: 3>",
+          "attack_range": 285.0,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/GreatSword/DA_Attack_GreatSword_Special.DA_Attack_GreatSword_Special",
+          "montage": "/Game/Rogue10m/Animation/Combat/GreatSword20261110/AM_GreatSword_Special.AM_GreatSword_Special",
+          "montage_length": 1.850000023841858,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Special.A_GreatSword_Special",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.850000023841858,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.CHARGED_PRIMARY: 4>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 0.6200000047683716,
+          "hit_start_delay_seconds": 0.4000000059604645,
+          "attack_shape": "<Rogue10mAttackShape.ARC: 2>",
+          "attack_range": 319.20001220703125,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/GreatSword/DA_Attack_GreatSword_Charged.DA_Attack_GreatSword_Charged",
+          "montage": "/Game/Rogue10m/Animation/Combat/GreatSword20261110/AM_GreatSword_Charged.AM_GreatSword_Charged",
+          "montage_length": 1.9500000476837158,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/GreatSword20261110/A_GreatSword_Charged.A_GreatSword_Charged",
+              "anim_start_time": 1.350000023841858,
+              "anim_end_time": 3.299999952316284,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 0.7200000286102295,
+          "hit_start_delay_seconds": 0.0,
+          "attack_shape": "<Rogue10mAttackShape.ARC: 2>",
+          "attack_range": 285.0,
+          "path": "/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_CrushingSlash.DA_Hybrid_GreatSword_CrushingSlash",
+          "montage": "/Game/Rogue10m/Animation/Combat/GreatSword/AM_GreatSword_Primary03.AM_GreatSword_Primary03",
+          "montage_length": 1.8333333730697632,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.MM_ChargedAttack",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.8333333730697632,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 0.7599999904632568,
+          "hit_start_delay_seconds": 0.0,
+          "attack_shape": "<Rogue10mAttackShape.CIRCLE: 3>",
+          "attack_range": 300.0,
+          "path": "/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_Whirlwind.DA_Hybrid_GreatSword_Whirlwind",
+          "montage": "/Game/Rogue10m/Animation/Combat/HeadSafe/AM_Safe_GreatSword_Special.AM_Safe_GreatSword_Special",
+          "montage_length": 1.6666666269302368,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/HeadSafe/A_Safe_Hook.A_Safe_Hook",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.6666666269302368,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 0.8399999737739563,
+          "hit_start_delay_seconds": 0.0,
+          "attack_shape": "<Rogue10mAttackShape.ARC: 2>",
+          "attack_range": 285.0,
+          "path": "/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_GuardBreak.DA_Hybrid_GreatSword_GuardBreak",
+          "montage": "/Game/Rogue10m/Animation/Combat/HeadSafe/AM_Safe_GreatSword_Primary02.AM_Safe_GreatSword_Primary02",
+          "montage_length": 1.6666666269302368,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/HeadSafe/A_Safe_Hook.A_Safe_Hook",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.6666666269302368,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.CHARGED_PRIMARY: 4>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 0.6200000047683716,
+          "hit_start_delay_seconds": 0.0,
+          "attack_shape": "<Rogue10mAttackShape.ARC: 2>",
+          "attack_range": 330.0,
+          "path": "/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_EarthSplitter.DA_Hybrid_GreatSword_EarthSplitter",
+          "montage": "/Game/Rogue10m/Animation/Combat/GreatSword/AM_GreatSword_Charged.AM_GreatSword_Charged",
+          "montage_length": 1.8333333730697632,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.MM_ChargedAttack",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.8333333730697632,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.CHARGED_PRIMARY: 4>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 0.6200000047683716,
+          "hit_start_delay_seconds": 0.0,
+          "attack_shape": "<Rogue10mAttackShape.ARC: 2>",
+          "attack_range": 360.0,
+          "path": "/Game/DataAsset/AttackSkill/HybridSkillTree/GreatSword/DA_Hybrid_GreatSword_Ultimate.DA_Hybrid_GreatSword_Ultimate",
+          "montage": "/Game/Rogue10m/Animation/Combat/GreatSword/AM_GreatSword_Charged.AM_GreatSword_Charged",
+          "montage_length": 1.8333333730697632,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.MM_ChargedAttack",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.8333333730697632,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "profile": "/Game/DataAsset/SkillProfile/DA_SkillProfile_Combat_Knuckle.DA_SkillProfile_Combat_Knuckle",
+      "default_bindings": {
+        "<Rogue10mAttackInputSlot.PRIMARY: 0>": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01"
+      },
+      "explicit_active_catalog": [],
+      "available_profile_skills": [
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.340000033378601,
+          "hit_start_delay_seconds": 0.15000000596046448,
+          "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+          "attack_range": 165.0,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary01.DA_Attack_Knuckle_Primary01",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Jab.AM_Knuckle_Jab",
+          "montage_length": 1.0,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Jab.A_Knuckle_Jab",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.0,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.399999976158142,
+          "hit_start_delay_seconds": 0.1599999964237213,
+          "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+          "attack_range": 165.0,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary02.DA_Attack_Knuckle_Primary02",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_BodyStraight.AM_Knuckle_BodyStraight",
+          "montage_length": 1.0,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_BodyStraight.A_Knuckle_BodyStraight",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.0,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.1399999856948853,
+          "hit_start_delay_seconds": 0.20999999344348907,
+          "attack_shape": "<Rogue10mAttackShape.ARC: 2>",
+          "attack_range": 165.0,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Special.DA_Attack_Knuckle_Special",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_Uppercut.AM_Knuckle_Uppercut",
+          "montage_length": 1.6666666269302368,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_Uppercut.A_Knuckle_Uppercut",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.6666666269302368,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.CHARGED_PRIMARY: 4>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 0.8999999761581421,
+          "hit_start_delay_seconds": 0.2199999988079071,
+          "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+          "attack_range": 184.8000030517578,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Charged.DA_Attack_Knuckle_Charged",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_ShortBlow.AM_Knuckle_ShortBlow",
+          "montage_length": 1.8333333730697632,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_ShortBlow.A_Knuckle_ShortBlow",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.8333333730697632,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.0,
+          "hit_start_delay_seconds": 0.05000000074505806,
+          "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+          "attack_range": 140.0,
+          "path": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Jab.DA_Attack_StoneFist_Jab",
+          "montage": "/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_FlowingCloud_LeftCounter.AM_Fighter_FlowingCloud_LeftCounter",
+          "montage_length": 0.6000000238418579,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/FighterSkills/A_Fighter_FlowingCloud_LeftCounter.A_Fighter_FlowingCloud_LeftCounter",
+              "anim_start_time": 0.0,
+              "anim_end_time": 0.6000000238418579,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.0,
+          "hit_start_delay_seconds": 0.27300000190734863,
+          "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+          "attack_range": 165.0,
+          "path": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_Straight.DA_Attack_StoneFist_Straight",
+          "montage": "/Game/Rogue10m/Animation/Combat/FighterSkills/AM_Fighter_IronChain_TwoPunch.AM_Fighter_IronChain_TwoPunch",
+          "montage_length": 0.699999988079071,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/FighterSkills/A_Fighter_IronChain_TwoPunch.A_Fighter_IronChain_TwoPunch",
+              "anim_start_time": 0.0,
+              "anim_end_time": 0.699999988079071,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.2400000095367432,
+          "hit_start_delay_seconds": 0.18000000715255737,
+          "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+          "attack_range": 165.0,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/Knuckle/DA_Attack_Knuckle_Primary03.DA_Attack_Knuckle_Primary03",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Knuckle_HookFlurry.AM_Knuckle_HookFlurry",
+          "montage_length": 1.6666666269302368,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Knuckle_HookFlurry.A_Knuckle_HookFlurry",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.6666666269302368,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.PASSIVE_TECHNIQUE: 1>",
+          "animation_play_rate": 1.0,
+          "hit_start_delay_seconds": 0.0,
+          "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+          "attack_range": 180.0,
+          "path": "/Game/DataAsset/AttackSkill/MartialArts/DA_MartialArt_GoldenBody.DA_MartialArt_GoldenBody"
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.JUMP_PRIMARY: 2>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.0,
+          "hit_start_delay_seconds": 0.0,
+          "attack_shape": "<Rogue10mAttackShape.CIRCLE: 3>",
+          "attack_range": 220.0,
+          "path": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_JumpSlam.DA_Attack_StoneFist_JumpSlam",
+          "montage": "/Game/Rogue10m/Animation/Combat/HeadSafe/AM_Safe_Knuckle_Special.AM_Safe_Knuckle_Special",
+          "montage_length": 1.6666666269302368,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/HeadSafe/A_Safe_Hook.A_Safe_Hook",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.6666666269302368,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.CHARGED_SPECIAL: 5>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.0,
+          "hit_start_delay_seconds": 0.28333333134651184,
+          "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+          "attack_range": 600.0,
+          "path": "/Game/DataAsset/AttackSkill/StoneFist/DA_Attack_StoneFist_ChargedShockwave.DA_Attack_StoneFist_ChargedShockwave",
+          "montage": "/Game/Rogue10m/Animation/Combat/HeadSafe/AM_Safe_Fighter_Overlord_PowerPunch.AM_Safe_Fighter_Overlord_PowerPunch",
+          "montage_length": 1.0,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/HeadSafe/A_Safe_OverlordForwardPunch.A_Safe_OverlordForwardPunch",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.0,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.5,
+          "hit_start_delay_seconds": 0.3400000035762787,
+          "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+          "attack_range": 180.0,
+          "path": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_LeftJab.DA_BasicBrawler_LeftJab",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_LeftJab.AM_Unarmed_LeftJab",
+          "montage_length": 1.0,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Unarmed_LeftJab.A_Unarmed_LeftJab",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.0,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.5,
+          "hit_start_delay_seconds": 0.3400000035762787,
+          "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+          "attack_range": 180.0,
+          "path": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightJab.DA_BasicBrawler_RightJab",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_RightJab.AM_Unarmed_RightJab",
+          "montage_length": 1.0,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Unarmed_RightJab.A_Unarmed_RightJab",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.0,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.0,
+          "hit_start_delay_seconds": 0.3400000035762787,
+          "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+          "attack_range": 180.0,
+          "path": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightStraight.DA_BasicBrawler_RightStraight",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Straight.AM_Unarmed_Straight",
+          "montage_length": 1.0,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Unarmed_Straight.A_Unarmed_Straight",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.0,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.CHARGED_SPECIAL: 5>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.5,
+          "hit_start_delay_seconds": 0.6333333253860474,
+          "attack_shape": "<Rogue10mAttackShape.LINEAR_BOX: 0>",
+          "attack_range": 180.0,
+          "path": "/Game/DataAsset/AttackSkill/BasicBrawler/DA_BasicBrawler_RightHook.DA_BasicBrawler_RightHook",
+          "montage": "/Game/Rogue10m/Animation/Combat/FistAuthored/AM_Unarmed_Hook.AM_Unarmed_Hook",
+          "montage_length": 1.6666666269302368,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/Rogue10m/Animation/Combat/FistAuthored/A_Unarmed_Hook.A_Unarmed_Hook",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.6666666269302368,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "profile": "/Game/DataAsset/SkillProfile/DA_SkillProfile_Combat_Staff.DA_SkillProfile_Combat_Staff",
+      "default_bindings": {
+        "<Rogue10mAttackInputSlot.PRIMARY: 0>": "/Game/DataAsset/AttackSkill/ClassCombat/Staff/DA_Attack_Staff_Primary01.DA_Attack_Staff_Primary01",
+        "<Rogue10mAttackInputSlot.SPECIAL: 1>": "/Game/DataAsset/AttackSkill/ClassCombat/Staff/DA_Attack_Staff_Special.DA_Attack_Staff_Special",
+        "<Rogue10mAttackInputSlot.CHARGED_PRIMARY: 4>": "/Game/DataAsset/AttackSkill/ClassCombat/Staff/DA_Attack_Staff_Charged.DA_Attack_Staff_Charged",
+        "<Rogue10mAttackInputSlot.CHARGED_SPECIAL: 5>": "/Game/DataAsset/AttackSkill/ClassCombat/Staff/DA_Attack_Staff_Charged.DA_Attack_Staff_Charged"
+      },
+      "explicit_active_catalog": [],
+      "available_profile_skills": [
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.0800000429153442,
+          "hit_start_delay_seconds": 0.0,
+          "attack_shape": "<Rogue10mAttackShape.PROJECTILE: 1>",
+          "attack_range": 1150.0,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/Staff/DA_Attack_Staff_Primary01.DA_Attack_Staff_Primary01",
+          "montage": "/Game/Rogue10m/Animation/Combat/Staff/AM_Staff_Primary01.AM_Staff_Primary01",
+          "montage_length": 2.0,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/CombatMagicAnims/Animations/AS_StaffStrike.AS_StaffStrike",
+              "anim_start_time": 0.0,
+              "anim_end_time": 2.0,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.059999942779541,
+          "hit_start_delay_seconds": 0.0,
+          "attack_shape": "<Rogue10mAttackShape.PROJECTILE: 1>",
+          "attack_range": 1150.0,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/Staff/DA_Attack_Staff_Primary02.DA_Attack_Staff_Primary02",
+          "montage": "/Game/Rogue10m/Animation/Combat/Staff/AM_Staff_Primary02.AM_Staff_Primary02",
+          "montage_length": 2.9000000953674316,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/CombatMagicAnims/Animations/AS_StaffShot.AS_StaffShot",
+              "anim_start_time": 0.0,
+              "anim_end_time": 2.9000000953674316,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.PRIMARY: 0>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 1.0,
+          "hit_start_delay_seconds": 0.0,
+          "attack_shape": "<Rogue10mAttackShape.PROJECTILE: 1>",
+          "attack_range": 1150.0,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/Staff/DA_Attack_Staff_Primary03.DA_Attack_Staff_Primary03",
+          "montage": "/Game/Rogue10m/Animation/Combat/Staff/AM_Staff_Primary03.AM_Staff_Primary03",
+          "montage_length": 1.7000000476837158,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/CombatMagicAnims/Animations/AS_MagicStrike2.AS_MagicStrike2",
+              "anim_start_time": 0.0,
+              "anim_end_time": 1.7000000476837158,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.SPECIAL: 1>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 0.9399999976158142,
+          "hit_start_delay_seconds": 0.0,
+          "attack_shape": "<Rogue10mAttackShape.CIRCLE: 3>",
+          "attack_range": 1150.0,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/Staff/DA_Attack_Staff_Special.DA_Attack_Staff_Special",
+          "montage": "/Game/Rogue10m/Animation/Combat/Staff/AM_Staff_Special.AM_Staff_Special",
+          "montage_length": 7.800000190734863,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/CombatMagicAnims/Animations/AS_ManaCastShot.AS_ManaCastShot",
+              "anim_start_time": 0.0,
+              "anim_end_time": 7.800000190734863,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        },
+        {
+          "input_slot": "<Rogue10mAttackInputSlot.CHARGED_PRIMARY: 4>",
+          "skill_tree_node_type": "<Rogue10mSkillTreeNodeType.ACTIVE_TECHNIQUE: 0>",
+          "animation_play_rate": 0.7799999713897705,
+          "hit_start_delay_seconds": 0.0,
+          "attack_shape": "<Rogue10mAttackShape.PROJECTILE: 1>",
+          "attack_range": 1288.0,
+          "path": "/Game/DataAsset/AttackSkill/ClassCombat/Staff/DA_Attack_Staff_Charged.DA_Attack_Staff_Charged",
+          "montage": "/Game/Rogue10m/Animation/Combat/Staff/AM_Staff_Charged.AM_Staff_Charged",
+          "montage_length": 5.400000095367432,
+          "tracks": [
+            {
+              "slot": "DefaultSlot",
+              "sequence": "/Game/CombatMagicAnims/Animations/AS_SpellAndCastFireball.AS_SpellAndCastFireball",
+              "anim_start_time": 0.0,
+              "anim_end_time": 5.400000095367432,
+              "start_pos": 0.0,
+              "anim_play_rate": 1.0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

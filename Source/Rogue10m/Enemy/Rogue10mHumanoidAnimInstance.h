@@ -6,6 +6,7 @@
 class UAnimSequence;
 class UAnimMontage;
 class URogue10mMonsterAttackPatternProfile;
+struct FPoseSnapshot;
 
 /** Native locomotion graph with a full-body DefaultSlot. Gameplay remains timer-authoritative. */
 UCLASS(Transient, BlueprintType)
@@ -19,7 +20,8 @@ public:
  static float CalculatePhaseRate(float ClipSeconds, float GameplaySeconds);
  void Configure(URogue10mMonsterAttackPatternProfile* Profile);
  float PlayPresentation(UAnimMontage* Montage, UAnimSequence* Sequence, float ContactSeconds = 0.f,
-   float WindupSeconds = 0.f, bool bHoldFinalPose = false);
+   float WindupSeconds = 0.f, bool bHoldFinalPose = false, float SequenceBlendInSeconds = 0.08f);
+ bool PlayDeathFromPose(UAnimSequence& Sequence, FPoseSnapshot&& StartPose);
  void BeginRecovery(float RecoverySeconds);
  void StopPresentation();
  UAnimSequence* GetIdleSequence() const { return IdleSequence; }

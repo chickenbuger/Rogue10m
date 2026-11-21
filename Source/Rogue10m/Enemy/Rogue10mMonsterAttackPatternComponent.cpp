@@ -10,6 +10,7 @@
 #include "AbilitySystemComponent.h"
 #include "Animation/AnimSequence.h"
 #include "Animation/AnimMontage.h"
+#include "Animation/PoseSnapshot.h"
 #include "Rogue10mHumanoidAnimInstance.h"
 #include "Animation/AnimSingleNodeInstance.h"
 #include "Components/CapsuleComponent.h"
@@ -766,7 +767,30 @@ void URogue10mMonsterAttackPatternComponent::PlayHitReaction()
 	}
 }
 
-float URogue10mMonsterAttackPatternComponent::PlayDeathPresentation()
+void URogue10mMonsterAttackPatternComponent::CaptureDeathStartPose(FPoseSnapshot& Pose) const
+{
+#if WITH_EDITOR
+	if (bUseStockDeathForAudit) { return; }
+#endif
+	if (!Profile || !Profile->bBlendLegacyLocomotion || Profile->bUseHumanoidAnimInstance) { return; }
+	const ARogue10mBasicMonster* Monster = GetMonster();
+	USkeletalMeshComponent* Mesh = Monster ? Monster->GetMesh() : nullptr;
+	if (Mesh && Mesh->GetSkeletalMeshAsset() && !Mesh->GetComponentSpaceTransforms().IsEmpty())
+	{
+		Mesh->SnapshotPose(Pose);
+	}
+}
+
+bool URogue10mMonsterAttackPatternComponent::ConsumeDeathStartPose(const UAnimInstance& Instance, FPoseSnapshot& Pose)
+{
+	const ARogue10mBasicMonster* Monster = GetMonster();
+	if (!PendingDeathStartPose.bIsValid || !Monster || Instance.GetSkelMeshComponent() != Monster->GetMesh()) { return false; }
+	Pose = MoveTemp(PendingDeathStartPose);
+	PendingDeathStartPose = FPoseSnapshot();
+	return true;
+}
+
+float URogue10mMonsterAttackPatternComponent::PlayDeathPresentation(FPoseSnapshot&& StartPose)
 {
 	CancelAttack();
 	if (GetWorld()) GetWorld()->GetTimerManager().ClearTimer(LocomotionTimer);
@@ -780,8 +804,22 @@ float URogue10mMonsterAttackPatternComponent::PlayDeathPresentation()
  }
 	if (UAnimSequence* Animation = Profile->DeathAnimation.LoadSynchronous())
 	{
-		Monster->GetMesh()->PlayAnimation(Animation, false);
-		Monster->GetMesh()->SetPlayRate(1.0f);
+		USkeletalMeshComponent* Mesh = Monster->GetMesh();
+		if (StartPose.bIsValid)
+		{
+			// InitAnim may evaluate the new graph inside this class switch.
+			PendingDeathStartPose = MoveTemp(StartPose);
+			Mesh->SetAnimInstanceClass(URogue10mHumanoidAnimInstance::StaticClass());
+			FPoseSnapshot RemainingPose = MoveTemp(PendingDeathStartPose);
+			PendingDeathStartPose = FPoseSnapshot();
+			if (auto* Anim = Cast<URogue10mHumanoidAnimInstance>(Mesh->GetAnimInstance());
+				Anim && Anim->PlayDeathFromPose(*Animation, MoveTemp(RemainingPose)))
+			{
+				return Positive(Animation->GetPlayLength(), 1.0f) + 0.05f;
+			}
+		}
+		Mesh->PlayAnimation(Animation, false);
+		Mesh->SetPlayRate(1.0f);
 		return Positive(Animation->GetPlayLength(), 1.0f) + 0.05f;
 	}
 	return 0.0f;
